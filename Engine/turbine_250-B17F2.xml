@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<!--
+  File:      250-B17F/2.xml
+  Author:   Dirk Dittmann
+
+  Inputs:
+    name:           Rolls Royce 250-B17F/2
+    type:           turboprop
+    power:          450 hp
+    augmented?      no
+    injected?       no
+    
+    
+    Rolls-Royce (Allison) 250-B17F cutaway. 
+    450 hp @ takeoff, 
+    380 hp @ normal cruise, 
+    377 hp @ 90%, 
+    314 hp @ 75%, 
+    pressure ratio 7.9:1, 
+    output shaft 2,013 rpm @ 100%, 
+    gas generator 50,970 rpm @ 100%, 
+    power turbine 33,290 rpm @ 100%, 
+    specific fuel consumption ranges from 
+    0.613 lb/shp-hr @ takeoff  
+    0.635 lb/shp-hr @ normal cruise, 
+    0.637 lb/shp-hr @ 90% cruise, 
+    0.673 lb/shp-hr @ 75% cruise, 
+    205 lb dry weight.
+
+    
+-->
+
+<turboprop_engine name="turbine_250-B17F2">
+	<!--  -->
+	<milthrust unit="LBS">       1009.3   </milthrust>
+	<idlen1>                       60.0   </idlen1>
+	<maxn1>                       106.0   </maxn1>
+	
+	<maxpower unit="HP">          500   </maxpower>
+	<psfc unit="LBS/HR/HP">         0.613 </psfc>
+	<idlefuelflow>                 50.0   </idlefuelflow>
+	<n1idle_max_delay>              1     </n1idle_max_delay>
+	<maxstartingtime>              30     </maxstartingtime>
+	<startern1>                    20     </startern1>
+	<ielumaxtorque unit="FT*LB"> 640     </ielumaxtorque>
+	<itt_delay>                     0.05  </itt_delay>
+	<betarangeend>                 0     </betarangeend>
+	<reversemaxpower>              70     </reversemaxpower>
+	
+	
+	<table name="EnginePowerVC">
+		<description> Engine power, function of airspeed and pressure </description>
+		<independentVar lookup="row">atmosphere/P-psf</independentVar>
+		<independentVar lookup="column">velocities/ve-kts</independentVar>
+		<tableData>
+	0	50	100	150	200	250
+503	0.357	0.38	0.4	0.425	0.457	0.486
+1048	0.586	0.589	0.6	0.621	0.65	0.686
+1328	0.707	0.721	0.731	0.757	0.786	0.821
+1496	0.779	0.786	0.808	0.821	0.857	0.9
+1684	0.85	0.857	0.874	0.9	0.943	0.979
+1896	0.914	0.929	0.946	0.971	1	1.057
+2135	1	1.011	1.029	1.043	1.083	1.15
+2213	1.029	1.043	1.057	1.079	1.114	1.171
+
+		</tableData>
+	</table>
+	
+	<table name="EnginePowerRPM_N1" type="internal">
+		<description> Engine Power, function of RPM and N1 </description>
+		<tableData>
+			<!--
+0   5   60    86   94   95   96   97   98   99  100  101
+0  0   0.5  0.5   0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5
+800  0   0.5 35   200  350  380  420  460  500  530  580  620
+1200  0   0.5 30   230  400  430  470  505  550  590  640  680
+1600  0   0.5  5   240  440  475  510  550  595  630  680  720
+2000  0   0.1  0.1 225  450  495  525  565  610  650  700  745
+2200  0   0.1  0.1 205  440  480  515  560  605  645  695  743
+	-->
+
+<!-- orginal -->
+	0	20	60	75	90	100	105	106
+0	0	0.5	0.5	0.5	0.5	0.5	0.5	0.5
+800	0	0.5	35	314	377	420	450	451
+1200	0	0.5	30	314	377	420	450	451
+1600	0	0.5	5	314	377	420	450	451
+2000	0	0.1	0.1	314	377	420	450	451
+2200	0	0.1	0.1	314	377	420	450	451
+2400	0	0.1	0.1	314	377	420	450	451
+
+	
+	
+<!--	
+	0	5	60	70	80	86	88	90	92	93	94	95	96	97	98	99	100	101
+0	0	0.5	0.5	0.5	0.5	0.5	0.5	0.5	0.5	0.5	0.5	0.5	0.5	0.5	0.5	0.5	0.5	0.5
+800	0	0.5	35	62	90	160	255	270	280	289	298	310	322	334	346	358	370	382
+1200	0	0.5	30	64	100	165	270	290	307	319	332	345	358	371	384	397	410	423
+1600	0	0.5	5	62	95	160	268	305	326	346	358	370	382	394	406	418	430	442
+2000	0	0.1	0.1	57	88	155	270	300	332	356	368	380	392	406	420	435	450	465
+2200	0	0.1	0.1	48	82	148	260	292	328	354	366	378	390	402	415	430	448	466
+2400	0	0.1	0.1	32	71	142	250	280	312	342	356	370	382	394	406	420	440	460
+-->
+		</tableData>
+	</table>
+	
+		
+  <table name="ITT_N1" type="internal">
+    <description> Inter-Turbine Temperature ITT [deg C] depending on N1 and engine run (0=off / 1=running) </description>
+    <tableData>
+              0     1
+        0     0     0
+       15   100   100
+       60   180   520
+       96   270   680
+      100   280   730
+      108   290   920
+    </tableData>
+  </table>
+
+</turboprop_engine>

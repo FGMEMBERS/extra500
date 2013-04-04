@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+       <default>
+	       <menu n="10">
+		       <label>EXTRA 500</label>
+		       <enabled type="bool">true</enabled>
+		       <item>
+			       <name>chklst01</name>
+			       <label>Before engine start - battery</label>
+				<binding>
+				       <command>nasal</command>
+				       <script><![CDATA[
+					       CoPilot.performChecklist("Before engine start - battery");
+				       ]]></script>
+			       </binding>
+			</item>
+			<item>
+			       <name>chklst02</name>
+			       <label>Engine start</label>
+				<binding>
+				       <command>nasal</command>
+				       <script><![CDATA[
+					       CoPilot.performChecklist("Engine start");
+				       ]]></script>
+			       </binding>
+			</item>
+			<item>
+			       <name>chklst03</name>
+			       <label>After starting engine</label>
+				<binding>
+				       <command>nasal</command>
+				       <script><![CDATA[
+					       CoPilot.performChecklist("After starting engine");
+				       ]]></script>
+			       </binding>
+			</item>
+			<item>
+			       <name>chklst04</name>
+			       <label>Engine shutdown</label>
+				<binding>
+				       <command>nasal</command>
+				       <script><![CDATA[
+					       CoPilot.performChecklist("Engine shutdown");
+				       ]]></script>
+			       </binding>
+			</item>
+			<item>
+				<name>UI-echo</name>
+				<label>UI echo</label>
+				<binding>
+					<command>nasal</command>
+					<script><![CDATA[
+						UI.echo();
+					]]></script>
+				</binding>
+			</item>
+			<item>
+			       <name>auto_start</name>
+			       <label>Autostart</label>
+				<binding>
+				       <command>nasal</command>
+				       <script><![CDATA[
+					       CoPilot.auto_start();
+				       ]]></script>
+			       </binding>
+			</item>
+			
+		</menu>
+  </default>
+
+</PropertyList>
+

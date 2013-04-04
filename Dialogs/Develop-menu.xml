@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+       <default>
+	       <menu n="11">
+		       <label>Develop</label>
+		       <enabled type="bool">true</enabled>
+		       
+			<item>
+				<name>Fuel_Transfer_Left</name>
+				<binding>
+					<command>nasal</command>
+					<script><![CDATA[
+						UI.oCockpit.click("Fuel Transfer Left");
+					]]></script>
+				</binding>
+			</item>
+			<item>
+				<name>Fuel_Transfer_Right</name>
+				<binding>
+					<command>nasal</command>
+					<script><![CDATA[
+						UI.oCockpit.click("Fuel Transfer Right");
+					]]></script>
+				</binding>
+			</item>
+	       </menu>
+       </default>
+
+</PropertyList>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<PropertyList>
+	<title>Engine Start</title>
+	<item>
+		<name>NIGHT/DAY</name>
+		<value>TEST</value>
+	</item> 
+	<item>
+		<name>FUEL TRANSFER LEFT and RIGHT</name>
+		<value>Check both ON</value>
+	</item> 
+	<item>
+		<name>FUEL PUMP 1 or 2</name>
+		<value>ON</value>
+	</item> 
+	<item>
+		<name>Fuel Pressure</name>
+		<value>Check reading &gt; 10 psi</value>
+	</item> 
+	<item>
+		<name>TOT</name>
+		<value>Check reading &lt; 100 °C</value>
+	</item> 
+	<item>
+		<name>ENGINE MOTORING</name>
+		<value>Check NORMAL</value>
+	</item> 
+	<item>
+		<name>ENGINE START</name>
+		<value>Momentary START</value>
+	</item> 
+	<item>
+		<name>Condition Lever</name>
+		<value>Fully forward </value>
+	</item>
+	<item>
+		<name>TOT</name>
+		<value>Monitor &lt; 850 °C</value>
+	</item> 
+	<item>
+		<name>Oil Pressure</name>
+		<value>Check indication</value>
+	</item> 
+	<item>
+		<name>OIL PRESS</name>
+		<value>Check extinguished</value>
+	</item> 
+	<item>
+		<name>Propeller RPM</name>
+		<value>Check positive indication at 25% N1</value>
+	</item> 
+	<item>
+		<name>PNEUMATIC LOW</name>
+		<value>Check extinguished </value>
+	</item>
+
+</PropertyList>

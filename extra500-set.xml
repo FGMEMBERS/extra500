@@ -1,0 +1,377 @@
+<?xml version="1.0"?>
+<!--
+************************************************************************
+JSBSim Extra Aircraft - Extra 500.
+
+Started March 13 2013 by Thomas Grossberger and Dirk Dittmann
+************************************************************************
+-->
+
+<PropertyList>
+
+<sim>
+	
+	<description>Extra 500</description>
+	<long-description>
+		Stepping into an EA-500 is stepping into luxury. The impressively large six-seater cabin makes traveling 
+		the ultimate experience in comfort, and an ergonomically arranged cockpit and state-of-the-art avionics 
+		ensure that you have the best at your fingertips. 
+		It’s also one of the smartest investments you’ll ever make. 
+		Our engineers have found that perfect balance of power and weight to make the advanced carbon-fiber 
+		EXTRA 500 the most cost effective single-engine turboprop aircraft available. 
+	</long-description>
+
+	<tags>
+		<tag>Extra Aircraft</tag>
+		<tag>turboprop</tag>
+		<tag>single-engine</tag>
+	</tags>
+
+	<author>Thomas Grossberger, Dirk Dittmann</author>
+	<status>alpha production 0.1.0</status>
+	<!--
+	<rating>
+		<FDM type="int">0</FDM>
+		<systems type="int">0</systems>
+		<model type="int">0</model>
+		<cockpit type="int">0</cockpit>
+	</rating>
+	-->
+
+	<flight-model archive="y">jsb</flight-model>
+	<aero archive="y">extra500</aero>
+	
+	<allow-toggle-cockpit type="bool">true</allow-toggle-cockpit>
+	
+	<model>
+		<path archive="y">Aircraft/extra500/Models/extra500.xml</path>
+	</model>
+
+	<startup>
+		<splash-texture>Aircraft/extra500/splash.png</splash-texture>
+	</startup>
+
+	<dimensions>
+		<radius-m type="double">6</radius-m>
+	</dimensions>
+	<aircraft-class type="string">ga</aircraft-class>
+	<aircraft-operator type="string">NONE</aircraft-operator>
+	
+	<!-- position the pilot viewpoint and angle -->
+	<view>
+		<internal type="bool" archive="y">true</internal>
+		<config>
+			<x-offset-m archive="y" type="double">-0.21</x-offset-m>
+			<y-offset-m archive="y" type="double">0.235</y-offset-m>
+			<z-offset-m archive="y" type="double">0.36</z-offset-m>
+			<pitch-offset-deg type="double">-12</pitch-offset-deg>
+		</config>
+	</view>
+	<view n="103">
+		<name>Officer View</name>
+		<enabled type="bool">true</enabled>
+		<type>lookfrom</type>
+		<internal type="bool">true</internal>
+		<config>
+			<from-model type="bool">true</from-model>
+			<from-model-idx type="int">true</from-model-idx>
+			<!-- x/y/z == right/up/back -->
+			<x-offset-m archive="y"> 0.0</x-offset-m>
+			<y-offset-m archive="y"> 1.27</y-offset-m>
+			<z-offset-m archive="y">-17.8</z-offset-m>
+			<pitch-offset-deg archive="y">-5.0</pitch-offset-deg>
+		</config>
+	</view>
+	<systems>
+		<autopilot>
+			<path>Aircraft/extra500/system/generic-autopilot.xml</path>
+		</autopilot>
+	</systems>
+
+       <!-- -->
+       <sound>
+	       <path archive="y">Aircraft/extra500/Sounds/extra500-sound.xml</path>
+	       <click n="0" type="bool">0</click>
+	       <click n="1" type="bool">0</click>
+	       <click n="2" type="bool">0</click>
+	       <click n="3" type="bool">0</click>
+	       <click n="4" type="bool">0</click>
+	       <click n="5" type="bool">0</click>
+       </sound> 
+ 
+  <!-- <help include="extra500-help.xml"/> -->
+  
+  <!-- <checklists include="extra500-checklists.xml"/> -->
+	  <checklists>
+		  <checklist include="checklist/engine-start.xml"/>
+		  <checklist include="checklist/before-starting-engine-batt.xml"/>
+		  <checklist include="checklist/engine-shutdown.xml"/>
+		  <checklist include="checklist/after-starting-engine.xml"/>
+		  
+	  </checklists>
+  <!-- <tutorials include="Tutorials/extra500-tutorials.xml"/> -->
+
+
+
+  <multiplay>
+      <chat_display>1</chat_display>
+      <generic>
+        <float n="0" alias="/sim/model/door-positions/rightDoor/position-norm"/>
+        <float n="1" alias="/sim/model/door-positions/leftDoor/position-norm"/>
+        <float n="2" alias="/sim/model/door-positions/baggageDoor/position-norm"/>
+        <int type="int">0</int>
+        <int type="int">0</int>
+        <int type="int">0</int>
+        <int type="int">0</int>
+        <int type="int">0</int>
+        <int type="int">0</int>
+      </generic>
+  </multiplay>
+
+  <flight-recorder>
+    <replay-config type="int">0</replay-config>
+    <config n="0" include="/Aircraft/Generic/flightrecorder/generic-turboprop-2.xml">
+      <name type="string">extra500 Flight Recorder</name>
+    </config>
+  </flight-recorder>
+
+  <menubar include="Dialogs/extra500-menu.xml"/>
+ 
+  
+  <instrumentation n="0">
+    <path>Aircraft/extra500/Systems/instrumentation.xml</path>
+  </instrumentation>
+ </sim>
+
+ <!-- trim for level cruise -->
+
+ <controls>
+  <flight>
+   <aileron-trim type="double">0.027</aileron-trim>
+   <rudder-trim type="double">0.0</rudder-trim>
+  </flight>
+  <engines>
+   <engine n="0">
+    <magnetos type="int">3</magnetos>
+    <master-bat type="bool">true</master-bat>
+    <master-alt type="bool">true</master-alt>
+   </engine>
+  </engines>
+  <lighting>
+   <landing-lights type="bool">false</landing-lights>
+   <taxi-light type="bool">false</taxi-light>
+   <strobe type="bool">false</strobe>
+   <beacon type="bool">false</beacon>
+   <nav-lights type="bool">false</nav-lights>
+  </lighting>
+  <switches>
+   <master-avionics type="bool">true</master-avionics>
+   <starter type="bool">false</starter>
+  </switches>
+  <engines>
+    <engine>
+      <master-bat type="bool">true</master-bat>
+      <master-alt type="bool">true</master-alt>
+    </engine>
+  </engines>
+ </controls>
+
+ <autopilot>
+  <KAP140>
+   <settings>
+    <auto-pitch-trim type="bool">true</auto-pitch-trim>
+   </settings>
+  </KAP140>
+ </autopilot>
+
+ <consumables>
+	 
+  <fuel>
+   <tank n="0">
+    <level-gal_us type="double">20</level-gal_us>
+    <selected type="bool">true</selected>
+   </tank>
+   <tank n="1">
+    <level-gal_us type="double">20</level-gal_us>
+    <selected type="bool">true</selected>
+   </tank>
+  <tank n="2">
+    <level-gal_us type="double">20</level-gal_us>
+    <selected type="bool">true</selected>
+   </tank>
+   
+<tank n="3">
+    <level-gal_us type="double">20</level-gal_us>
+    <selected type="bool">true</selected>
+   </tank>
+
+  <tank n="4">
+    <level-gal_us type="double">20</level-gal_us>
+    <selected type="bool">true</selected>
+   </tank>
+
+  <tank n="5">
+    <level-gal_us type="double">20</level-gal_us>
+    <selected type="bool">true</selected>
+   </tank>
+  <tank n="6">
+    <level-gal_us type="double">20</level-gal_us>
+    <selected type="bool">true</selected>
+   </tank>
+  </fuel>
+  
+ </consumables>
+
+ <instrumentation>
+  <kma20 include="Aircraft/Instruments-3d/kma20/kma20init.xml"/>
+  <attitude-indicator>
+   <config>
+    <tumble-flag archive="y" type="bool">true</tumble-flag>
+   </config>
+  </attitude-indicator>
+  <encoder>
+   <serviceable type="bool">true</serviceable>
+  </encoder>
+  <adf n="0">
+    <ident-audible type="bool">false</ident-audible>
+    <volume type="double">0.7</volume>
+  </adf>
+  <nav n="0">
+    <volume type="double">0.7</volume>
+  </nav>
+  <nav n="1">
+    <volume type="double">0.7</volume>
+  </nav>
+ </instrumentation>
+
+ <engines>
+  <engine>
+   <rpm type="double">0</rpm>
+   <magnetos type="int">0</magnetos>
+   <mixture type="double">0</mixture>
+   <running type="bool">false</running>
+  </engine>
+ </engines>
+<!-- -->
+<nasal>
+	<global>
+		<file>Aircraft/extra500/Nasal/global.nas</file>
+	</global>
+	<sound>
+		<file>Aircraft/extra500/Nasal/sound.nas</file>
+	</sound>
+	<UI>
+		<file>Aircraft/extra500/UserInterface/ui.nas</file>
+	</UI>
+	<Part>
+		<file>Aircraft/extra500/system/part.nas</file>
+	</Part>
+	<extra500>
+		<file>Aircraft/extra500/system/ElectricSystem.nas</file>
+		<file>Aircraft/extra500/system/panel/CircuitBreakerPanel.nas</file>
+		<file>Aircraft/extra500/system/panel/MasterPanel.nas</file>
+		<file>Aircraft/extra500/system/panel/SidePanel.nas</file>
+		<file>Aircraft/extra500/system/FuelSystem.nas</file>
+	</extra500>
+	<CoPilot>
+		<file>Aircraft/extra500/Nasal/coPilot.nas</file>
+	</CoPilot>
+	<run>
+		<file>Aircraft/extra500/system/init_ui.nas</file>
+		<file>Aircraft/extra500/system/init_cycle.nas</file>
+	</run>
+
+</nasal>
+
+ 
+ <payload>
+  <weight>
+   <name type="string">Pilot</name>
+   <weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[0]"/>
+   <min-lb type="double">0.0</min-lb>
+   <max-lb type="double">330</max-lb>
+  </weight>
+  <weight>
+   <name type="string">Co-Pilot</name>
+   <weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[1]"/>
+   <min-lb type="double">0.0</min-lb>
+   <max-lb type="double">330</max-lb>
+  </weight>
+  <weight>
+   <name type="string">Row 1 Left Passenger</name>
+   <weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[2]"/>
+   <min-lb type="double">0.0</min-lb>
+   <max-lb type="double">330</max-lb>
+  </weight>
+  <weight>
+   <name type="string">Row 1 Right Passenger</name>
+   <weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[3]"/>
+   <min-lb type="double">0.0</min-lb>
+   <max-lb type="double">330</max-lb>
+  </weight>
+  <weight>
+   <name type="string">Row 2 Left Passenger</name>
+   <weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[4]"/>
+   <min-lb type="double">0.0</min-lb>
+   <max-lb type="double">330</max-lb>
+  </weight>
+  <weight>
+   <name type="string">Row 2 Right Passenger</name>
+   <weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[5]"/>
+   <min-lb type="double">0.0</min-lb>
+   <max-lb type="double">330</max-lb>
+  </weight>
+  <weight>
+   <name type="string">Baggage</name>
+   <weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[6]"/>
+   <min-lb type="double">0.0</min-lb>
+   <max-lb type="double">198.4</max-lb> <!-- WARNING: Max baggage "by the book" is 120lbs or less! -->
+  </weight>
+ </payload>
+
+ <limits>
+  <mass-and-balance>
+   <maximum-ramp-mass-lbs>4696</maximum-ramp-mass-lbs>
+   <maximum-takeoff-mass-lbs>4696</maximum-takeoff-mass-lbs>
+   <maximum-landing-mass-lbs>4409</maximum-landing-mass-lbs>
+  </mass-and-balance>
+ </limits>
+
+ <input>
+	 <keyboard>
+		 <key n="32">
+			 <name>space</name>
+			 <desc>reload-model</desc>
+			 <repeatable type="bool">false</repeatable>
+			 <binding>
+				 <command>reinit</command>
+				 <subsystem>aircraft-model</subsystem>
+			 </binding>
+		 </key>
+		 <key n="114">
+			 <name>r</name>
+			 <desc>run simulation cycle once</desc>
+			 <repeatable type="bool">false</repeatable>
+			 <binding>
+				 <command>nasal</command>
+				 <script><![CDATA[
+					run.cycle_run = 0;
+					run.simulation_cycle();
+				]]></script>
+			 </binding>
+		 </key>
+		 <key n="82">
+			 <name>R</name>
+			 <desc>run simulation cycle continous</desc>
+			 <repeatable type="bool">false</repeatable>
+			 <binding>
+				 <command>nasal</command>
+				 <script><![CDATA[
+					run.cycle_run = 1;
+				]]></script>
+			 </binding>
+		 </key>
+	 </keyboard> 
+ </input>
+
+</PropertyList>

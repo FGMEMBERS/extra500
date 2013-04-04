@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+<path>extra500_FWbug.ac</path>
+
+<!-- drehende Raeder -->
+<animation>
+  <type>spin</type>
+  <object-name>RadBug</object-name>
+  
+  <condition>
+    <equals>
+      <property>gear/gear[0]/position-norm</property>
+      <value>1</value>
+    </equals>
+  </condition>
+  
+  <property>gear/gear[0]/rollspeed-ms</property>
+  <factor>-20</factor>
+  <center>
+    <x-m>-1.69785</x-m>
+    <y-m>0</y-m>
+    <z-m>-1.63446</z-m>
+  </center>
+  <axis>
+    <x>0</x>
+    <y>1</y>
+    <z>0</z>
+  </axis>
+ </animation>
+ 
+</PropertyList>

@@ -1,0 +1,246 @@
+<?xml version="1.0"?>
+ 
+<PropertyList>
+
+    <fx>
+
+<!-- Engine 1 -->
+
+       <crank>
+	       <name>engine_start</name>
+	       <reference-dist>3.0</reference-dist>
+	       <max-dist>6.0</max-dist>
+	       <mode>once</mode>
+	       <path>Sounds/extra500turbineUP.wav</path>
+	       <condition>
+		       <or>
+			       <property>/engines/engine[0]/starting</property>
+			       <property>/engines/engine[0]/cranking</property>
+		       </or>
+	       </condition>
+	       <volume>
+		       <offset>0.9</offset>
+	       </volume>
+	       <position>
+		       <x>0</x>
+		       <y>0</y>
+		       <z>0</z>
+	       </position>
+       </crank>
+<!---->
+       <propeller>
+	       <name>propeller</name>
+	       <mode>looped</mode>
+	       <path>Sounds/wasp.wav</path>
+	       <position>
+		       <x>0</x>
+		       <y>0</y>
+		       <z>0</z>
+	       </position>
+	       <!---->
+	       <condition>
+		       <or>
+			       <property>/engines/engine[0]/cranking</property>
+			       <property>/engines/engine[0]/running</property>
+			       
+		       </or>
+	       </condition>
+	       <volume>
+		       <property>/engines/engine[0]/thrust_lb</property>
+		       <type>abs</type>
+		       <factor>0.0005</factor>
+		       <offset>-0</offset>
+		       <min>0.15</min>
+		       <max>0.35</max>
+	       </volume>
+	       <pitch>
+		       <property>/engines/engine[0]/thruster/rpm</property>
+		       <offset>0.5</offset>
+			<factor>0.0005</factor>
+			<min>0.5</min>
+			<max>1.5</max>
+	       </pitch>
+
+	       
+	       
+       </propeller>
+       
+        <turbine>
+            <name>turbine</name>
+            <reference-dist>1.0</reference-dist>
+            <max-dist>4.0</max-dist>
+            <mode>looped</mode>
+            <path>Sounds/extra500turbineLOOP.wav</path>
+	    <condition>
+		       <or>
+			       <property>/engines/engine[0]/cranking</property>
+			       <property>/engines/engine[0]/running</property>
+		       </or>
+	    </condition>
+	    <position>
+                 <x>0</x>
+                <y>0</y>
+                <z>0</z>
+            </position>
+            <pitch>
+                <property>engines/engine[0]/n1</property>
+                <offset>0.5</offset>
+                <factor>0.01</factor>
+		<min>0.5</min>
+		<max>1.5</max>
+            </pitch>
+        </turbine>
+
+        <shutdown>
+            <name>shutdown</name>
+            <reference-dist>1.0</reference-dist>
+            <max-dist>4.0</max-dist>
+            <mode>once</mode>
+            <path>Sounds/extra500turbineDOWN.wav</path>
+	    <condition>
+		    <and>
+			    <!----><not>
+				    <property>/engines/engine[0]/cranking</property>
+			    </not>
+			    <not>
+				    <property>/engines/engine[0]/running</property>
+			    </not>
+			    <!----><not>
+				    <property>/engines/engine[0]/starting</property>
+			    </not>
+			    <greater-than>
+				    <property>/engines/engine[0]/n1</property>
+				    <value>5</value>
+			    </greater-than>
+		    </and>
+	    </condition>
+	    <volume>
+		    <offset>0.9</offset>
+	    </volume>
+            <position>
+                 <x>0</x>
+                <y>0</y>
+                <z>0</z>
+            </position>
+        </shutdown>
+	
+	
+	<tire-rumble>
+		<name>tire-rumble</name>
+		<mode>looped</mode>
+		<path>Sounds/rumble.wav</path>
+		<condition>
+			<or>
+				<property>/gear/gear[0]/wow</property>
+				<property>/gear/gear[1]/wow</property>
+				<property>/gear/gear[2]/wow</property>
+			</or>
+		</condition>
+		<volume>
+			<property>/velocities/groundspeed-kt</property>
+			<factor>0.01</factor>
+			<max>0.9</max>
+		</volume>
+	</tire-rumble>
+    
+<!-- stho-TEST: fahrwerk und klappen -->	
+	        <gear>
+            <name>gear</name>
+            <mode>in-transit</mode>
+            <path>Sounds/gear.wav</path>
+            <property>gear/gear[0]/position-norm</property>
+            <volume>
+              <max>0.25</max>
+            </volume>
+        </gear>
+        <gear-lock>
+            <name>gear-lock</name>
+            <path>Sounds/gear-lck.wav</path>
+            <condition>
+                <equals>
+                    <property>gear/gear[0]/position-norm</property>
+                    <value>0</value>
+                </equals>
+            </condition>
+            <reference-dist>10.0</reference-dist>
+            <max-dist>20.0</max-dist>
+        </gear-lock>
+	        <flap>
+            <name>flaps</name>
+            <mode>in-transit</mode>
+            <path>Sounds/flaps.wav</path>
+            <property>surface-positions/flap-pos-norm</property>
+            <volume>
+                <factor>0.45</factor>
+            </volume>
+            <reference-dist>10.0</reference-dist>
+            <max-dist>20.0</max-dist>
+        </flap>
+	
+<!--
+	Sounds for the Switches
+	
+-->
+	<switch>
+		<name>switch0</name>
+		<mode>once</mode>
+		<path>Aircraft/extra500/Sounds/click0.wav</path>
+		<condition>
+			<property>sim/sound/click[0]</property>
+		</condition>
+		<volume>
+			<factor>1</factor>
+		</volume>
+	</switch>
+	
+	<switch>
+		<name>switch1</name>
+		<mode>once</mode>
+		<path>Aircraft/extra500/Sounds/click1.wav</path>
+		<condition>
+			<property>sim/sound/click[1]</property>
+		</condition>
+		<volume>
+			<factor>1</factor>
+		</volume>
+	</switch>
+	
+	<switch>
+		<name>switch2</name>
+		<mode>once</mode>
+		<path>Aircraft/extra500/Sounds/click2.wav</path>
+		<condition>
+			<property>sim/sound/click[2]</property>
+		</condition>
+		<volume>
+			<factor>1</factor>
+		</volume>
+	</switch>
+	
+	<switch>
+		<name>switch3</name>
+		<mode>once</mode>
+		<path>Aircraft/extra500/Sounds/click3.wav</path>
+		<condition>
+			<property>sim/sound/click[3]</property>
+		</condition>
+		<volume>
+			<factor>1</factor>
+		</volume>
+	</switch>
+	
+	<switch>
+		<name>switch4</name>
+		<mode>once</mode>
+		<path>Aircraft/extra500/Sounds/click4.wav</path>
+		<condition>
+			<property>sim/sound/click[4]</property>
+		</condition>
+		<volume>
+			<factor>1</factor>
+		</volume>
+	</switch>
+
+        
+	</fx>
+</PropertyList>

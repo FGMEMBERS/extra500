@@ -1,0 +1,2221 @@
+<?xml version="1.0"?>
+<PropertyList>
+<path>extra500_CircuitBreakerPanel.ac</path>
+<!-- automated creted animation -->
+<!--
+	#Group slot Nr Lable
+	property
+-->
+<animation>
+	<type>translate</type>
+	<object-name>property</object-name>
+	<property>extra500/property/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>property</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				ui
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank A slot 0 AIR-CON
+	CircuitBreakerPanel.BankA.AirCondition
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankA.AirCondition</object-name>
+	<property>extra500/CircuitBreakerPanel/BankA/AirCondition/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankA.AirCondition</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Air Condition");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!-- # Bank A slot 1 unused -->
+
+<!-- # Bank A slot 2 unused -->
+
+<!-- # Bank A slot 3 unused -->
+
+<!-- # Bank A slot 4 unused -->
+
+<!-- # Bank A slot 5 unused -->
+
+<!--
+	# Bank A slot 6 CIGA-LTR
+	CircuitBreakerPanel.BankA.CigaretteLighter
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankA.CigaretteLighter</object-name>
+	<property>extra500/CircuitBreakerPanel/BankA/CigaretteLighter/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankA.CigaretteLighter</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Cigarette Lighter");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank A slot 7 12-VDC
+	CircuitBreakerPanel.BankA.VDC12
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankA.VDC12</object-name>
+	<property>extra500/CircuitBreakerPanel/BankA/VDC12/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankA.VDC12</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker VDC12");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank A slot 8 AUDIO-MRK
+	CircuitBreakerPanel.BankA.AudioMarker
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankA.AudioMarker</object-name>
+	<property>extra500/CircuitBreakerPanel/BankA/AudioMarker/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankA.AudioMarker</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Audio Marker");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank A slot 9 DME
+	CircuitBreakerPanel.BankA.DME
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankA.DME</object-name>
+	<property>extra500/CircuitBreakerPanel/BankA/DME/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankA.DME</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker DME");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank A slot 10 WTHR-DET
+	CircuitBreakerPanel.BankA.WeatherDetection
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankA.WeatherDetection</object-name>
+	<property>extra500/CircuitBreakerPanel/BankA/WeatherDetection/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankA.WeatherDetection</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Weather Detection");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank A slot 11 SIRIUS
+	CircuitBreakerPanel.BankA.Sirius
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankA.Sirius</object-name>
+	<property>extra500/CircuitBreakerPanel/BankA/Sirius/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankA.Sirius</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Sirius");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank A slot 12 IRIDIUM
+	CircuitBreakerPanel.BankA.Iridium
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankA.Iridium</object-name>
+	<property>extra500/CircuitBreakerPanel/BankA/Iridium/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankA.Iridium</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Iridium");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank A slot 13 IFD-RH-A
+	CircuitBreakerPanel.BankA.IFD-RH-A
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankA.IFD-RH-A</object-name>
+	<property>extra500/CircuitBreakerPanel/BankA/IFD-RH-A/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankA.IFD-RH-A</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker IFD Right A");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank A slot 14 P-VENT
+	CircuitBreakerPanel.BankA.PanelVent
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankA.PanelVent</object-name>
+	<property>extra500/CircuitBreakerPanel/BankA/PanelVent/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankA.PanelVent</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Panel Vent");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank A slot 15 VENT
+	CircuitBreakerPanel.BankA.Vent
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankA.Vent</object-name>
+	<property>extra500/CircuitBreakerPanel/BankA/Vent/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankA.Vent</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Vent");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank A slot 16 AIR-CTRL
+	CircuitBreakerPanel.BankA.AirControl
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankA.AirControl</object-name>
+	<property>extra500/CircuitBreakerPanel/BankA/AirControl/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankA.AirControl</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Air Control");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank B slot 17 BUS-TIE
+	CircuitBreakerPanel.BankB.BusTie
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankB.BusTie</object-name>
+	<property>extra500/CircuitBreakerPanel/BankB/BusTie/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankB.BusTie</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Bus Tie");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank B slot 18 EMGC-2
+	CircuitBreakerPanel.BankB.Emergency2
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankB.Emergency2</object-name>
+	<property>extra500/CircuitBreakerPanel/BankB/Emergency2/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankB.Emergency2</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Emergency 2");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!-- # Bank B slot 19 unused -->
+
+<!--
+	# Bank B slot 20 CABIN-LT
+	CircuitBreakerPanel.BankB.CabinLight
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankB.CabinLight</object-name>
+	<property>extra500/CircuitBreakerPanel/BankB/CabinLight/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankB.CabinLight</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Cabin Light");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank B slot 21 RECO-LT
+	CircuitBreakerPanel.BankB.RecognitionLight
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankB.RecognitionLight</object-name>
+	<property>extra500/CircuitBreakerPanel/BankB/RecognitionLight/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankB.RecognitionLight</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Recognition Light");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank B slot 22 NAV-LT
+	CircuitBreakerPanel.BankB.NavLight
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankB.NavLight</object-name>
+	<property>extra500/CircuitBreakerPanel/BankB/NavLight/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankB.NavLight</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Nav Light");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank B slot 23 O-SP-Test
+	CircuitBreakerPanel.BankB.OverSpeed
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankB.OverSpeed</object-name>
+	<property>extra500/CircuitBreakerPanel/BankB/OverSpeed/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankB.OverSpeed</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Over Speed Test");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank B slot 24 FUEL-TR-L
+	CircuitBreakerPanel.BankB.FuelTransferL
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankB.FuelTransferL</object-name>
+	<property>extra500/CircuitBreakerPanel/BankB/FuelTransferL/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankB.FuelTransferL</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Fuel Transfer L");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank B slot 25 FUEL-TR-R
+	CircuitBreakerPanel.BankB.FuelTransferR
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankB.FuelTransferR</object-name>
+	<property>extra500/CircuitBreakerPanel/BankB/FuelTransferR/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankB.FuelTransferR</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Fuel Transfer R");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank B slot 26 PITOT-R
+	CircuitBreakerPanel.BankB.PitotR
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankB.PitotR</object-name>
+	<property>extra500/CircuitBreakerPanel/BankB/PitotR/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankB.PitotR</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Pitot R");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!-- # Bank B slot 27 unused -->
+
+<!--
+	# Bank B slot 28 ENG-INS-2
+	CircuitBreakerPanel.BankB.EngineInstrument2
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankB.EngineInstrument2</object-name>
+	<property>extra500/CircuitBreakerPanel/BankB/EngineInstrument2/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankB.EngineInstrument2</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Engine Instrument 2");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank B slot 29 DIP-2
+	CircuitBreakerPanel.BankB.DIP2
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankB.DIP2</object-name>
+	<property>extra500/CircuitBreakerPanel/BankB/DIP2/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankB.DIP2</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker DIP-2");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!-- # Bank B slot  unused -->
+
+<!--
+	# Bank B slot 30 IFD-RH-B
+	CircuitBreakerPanel.BankB.IFD-RH-B
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankB.IFD-RH-B</object-name>
+	<property>extra500/CircuitBreakerPanel/BankB/IFD-RH-B/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankB.IFD-RH-B</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker IFD Right B");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank B slot 31 TAS
+	CircuitBreakerPanel.BankB.TAS
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankB.TAS</object-name>
+	<property>extra500/CircuitBreakerPanel/BankB/TAS/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankB.TAS</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker TAS");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!-- # Bank B slot 32 unused -->
+
+<!-- # Bank B slot 33 unused -->
+
+<!--
+	# Bank B slot 34 AP-CMPTR
+	CircuitBreakerPanel.BankB.AutopilotComputer
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankB.AutopilotComputer</object-name>
+	<property>extra500/CircuitBreakerPanel/BankB/AutopilotComputer/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankB.AutopilotComputer</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Autopilot Computer");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank B slot 35 Turn-Coord
+	CircuitBreakerPanel.BankB.TurnCoordinator
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankB.TurnCoordinator</object-name>
+	<property>extra500/CircuitBreakerPanel/BankB/TurnCoordinator/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankB.TurnCoordinator</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Turn Coordinator");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!-- # Bank B slot 36 unused -->
+
+<!--
+	# Bank B slot 37 RCCB
+	CircuitBreakerPanel.BankB.RCCB
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankB.RCCB</object-name>
+	<property>extra500/CircuitBreakerPanel/BankB/RCCB/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankB.RCCB</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker RCCB");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank C slot 38 FLAP-UNB
+	CircuitBreakerPanel.BankC.FlapUNB
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankC.FlapUNB</object-name>
+	<property>extra500/CircuitBreakerPanel/BankC/FlapUNB/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankC.FlapUNB</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Flap UNB");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank C slot 39 FLAP-CTRL
+	CircuitBreakerPanel.BankC.FlapControl
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankC.FlapControl</object-name>
+	<property>extra500/CircuitBreakerPanel/BankC/FlapControl/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankC.FlapControl</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Flap Control");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank C slot 40 FLAP
+	CircuitBreakerPanel.BankC.Flap
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankC.Flap</object-name>
+	<property>extra500/CircuitBreakerPanel/BankC/Flap/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankC.Flap</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Flap");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank C slot 41 EMGC1
+	CircuitBreakerPanel.BankC.Emergency1
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankC.Emergency1</object-name>
+	<property>extra500/CircuitBreakerPanel/BankC/Emergency1/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankC.Emergency1</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Emergency 1");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank C slot 42 AV-BUS
+	CircuitBreakerPanel.BankC.AvBus
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankC.AvBus</object-name>
+	<property>extra500/CircuitBreakerPanel/BankC/AvBus/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankC.AvBus</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker AV Bus");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank C slot 43 INST-LT
+	CircuitBreakerPanel.BankC.InstrumentLight
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankC.InstrumentLight</object-name>
+	<property>extra500/CircuitBreakerPanel/BankC/InstrumentLight/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankC.InstrumentLight</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Instrument Light");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank C slot 44 STROBE-LT
+	CircuitBreakerPanel.BankC.StrobeLight
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankC.StrobeLight</object-name>
+	<property>extra500/CircuitBreakerPanel/BankC/StrobeLight/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankC.StrobeLight</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Strobe Light");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank C slot 45 ICE-LT
+	CircuitBreakerPanel.BankC.IceLight
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankC.IceLight</object-name>
+	<property>extra500/CircuitBreakerPanel/BankC/IceLight/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankC.IceLight</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Ice Light");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank C slot 46 VNE-WARN
+	CircuitBreakerPanel.BankC.VneWarn
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankC.VneWarn</object-name>
+	<property>extra500/CircuitBreakerPanel/BankC/VneWarn/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankC.VneWarn</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Vne Warn");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank C slot 47 FUEL FLOW
+	CircuitBreakerPanel.BankC.FuelFlow
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankC.FuelFlow</object-name>
+	<property>extra500/CircuitBreakerPanel/BankC/FuelFlow/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankC.FuelFlow</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Fuel Flow");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank C slot 48 FUEL-P-2
+	CircuitBreakerPanel.BankC.FuelPump2
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankC.FuelPump2</object-name>
+	<property>extra500/CircuitBreakerPanel/BankC/FuelPump2/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankC.FuelPump2</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Fuel Pump 2");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank C slot 49 WSH-CTRL
+	CircuitBreakerPanel.BankC.WindShieldControl
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankC.WindShieldControl</object-name>
+	<property>extra500/CircuitBreakerPanel/BankC/WindShieldControl/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankC.WindShieldControl</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Wind Shield Control");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank C slot 50 WSH-HT
+	CircuitBreakerPanel.BankC.WindShieldHeat
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankC.WindShieldHeat</object-name>
+	<property>extra500/CircuitBreakerPanel/BankC/WindShieldHeat/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankC.WindShieldHeat</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Wind Shield Heat");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank C slot 51 BOOTS
+	CircuitBreakerPanel.BankC.Boots
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankC.Boots</object-name>
+	<property>extra500/CircuitBreakerPanel/BankC/Boots/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankC.Boots</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Boots");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank C slot 52 PROP-HT
+	CircuitBreakerPanel.BankC.PropellerHeat
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankC.PropellerHeat</object-name>
+	<property>extra500/CircuitBreakerPanel/BankC/PropellerHeat/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankC.PropellerHeat</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker PropellerHeat");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank C slot 53 IFD-LH-B
+	CircuitBreakerPanel.BankC.IFD-LH-B
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankC.IFD-LH-B</object-name>
+	<property>extra500/CircuitBreakerPanel/BankC/IFD-LH-B/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankC.IFD-LH-B</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker IFD Left B");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank C slot 54 IGN
+	CircuitBreakerPanel.BankC.Ignition
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankC.Ignition</object-name>
+	<property>extra500/CircuitBreakerPanel/BankC/Ignition/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankC.Ignition</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Ignition");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank C slot 55 START
+	CircuitBreakerPanel.BankC.Start
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankC.Start</object-name>
+	<property>extra500/CircuitBreakerPanel/BankC/Start/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankC.Start</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Start");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!-- # Bank C slot 56 unused -->
+
+<!--
+	# Bank C slot 57 AP SERVO
+	CircuitBreakerPanel.BankC.AutopilotServo
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankC.AutopilotServo</object-name>
+	<property>extra500/CircuitBreakerPanel/BankC/AutopilotServo/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankC.AutopilotServo</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Autopilot Servo");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank C slot 58 ENV BLEED
+	CircuitBreakerPanel.BankC.EnvironmentalBleed
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankC.EnvironmentalBleed</object-name>
+	<property>extra500/CircuitBreakerPanel/BankC/EnvironmentalBleed/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankC.EnvironmentalBleed</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Environmental Bleed");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank C slot 59 HYDR
+	CircuitBreakerPanel.BankC.Hydraulic
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankC.Hydraulic</object-name>
+	<property>extra500/CircuitBreakerPanel/BankC/Hydraulic/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankC.Hydraulic</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Hydraulic");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank C slot 60 GEAR-CTRL
+	CircuitBreakerPanel.BankC.GearControl
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankC.GearControl</object-name>
+	<property>extra500/CircuitBreakerPanel/BankC/GearControl/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankC.GearControl</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Gear Control");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!-- # Bank D slot 61 unused -->
+
+<!--
+	# Bank D slot 62 LOW-VOLT
+	CircuitBreakerPanel.BankD.LowVolt
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankD.LowVolt</object-name>
+	<property>extra500/CircuitBreakerPanel/BankD/LowVolt/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankD.LowVolt</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Low Volt");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank D slot 63 VOLT-MON
+	CircuitBreakerPanel.BankD.VoltMonitor
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankD.VoltMonitor</object-name>
+	<property>extra500/CircuitBreakerPanel/BankD/VoltMonitor/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankD.VoltMonitor</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Volt Monitor");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank D slot 64 ALT
+	CircuitBreakerPanel.BankD.Alt
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankD.Alt</object-name>
+	<property>extra500/CircuitBreakerPanel/BankD/Alt/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankD.Alt</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Alt");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank D slot 65 GEN-RESET
+	CircuitBreakerPanel.BankD.GeneratorReset
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankD.GeneratorReset</object-name>
+	<property>extra500/CircuitBreakerPanel/BankD/GeneratorReset/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankD.GeneratorReset</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Generator Reset");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank D slot 66 GLARE-LT
+	CircuitBreakerPanel.BankD.GlareLight
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankD.GlareLight</object-name>
+	<property>extra500/CircuitBreakerPanel/BankD/GlareLight/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankD.GlareLight</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Glare Light");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank D slot 67 WARN-LT
+	CircuitBreakerPanel.BankD.WarnLight
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankD.WarnLight</object-name>
+	<property>extra500/CircuitBreakerPanel/BankD/WarnLight/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankD.WarnLight</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Warn Light");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank D slot 68 LDG-LT
+	CircuitBreakerPanel.BankD.LandingLight
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankD.LandingLight</object-name>
+	<property>extra500/CircuitBreakerPanel/BankD/LandingLight/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankD.LandingLight</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Landing Light");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank D slot 69 STALL-WARN
+	CircuitBreakerPanel.BankD.StallWarning
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankD.StallWarning</object-name>
+	<property>extra500/CircuitBreakerPanel/BankD/StallWarning/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankD.StallWarning</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Stall Warning");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank D slot 70 FUEL-QTY
+	CircuitBreakerPanel.BankD.FuelQuantity
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankD.FuelQuantity</object-name>
+	<property>extra500/CircuitBreakerPanel/BankD/FuelQuantity/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankD.FuelQuantity</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Fuel Quantity");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank D slot 71 FUEL-P-1
+	CircuitBreakerPanel.BankD.FuelPump1
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankD.FuelPump1</object-name>
+	<property>extra500/CircuitBreakerPanel/BankD/FuelPump1/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankD.FuelPump1</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Fuel Pump 1");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank D slot 72 PITOT-L
+	CircuitBreakerPanel.BankD.PitotL
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankD.PitotL</object-name>
+	<property>extra500/CircuitBreakerPanel/BankD/PitotL/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankD.PitotL</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Pitot L");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank D slot 73 INTAKE-AI
+	CircuitBreakerPanel.BankD.IntakeAI
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankD.IntakeAI</object-name>
+	<property>extra500/CircuitBreakerPanel/BankD/IntakeAI/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankD.IntakeAI</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Intake AI");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank D slot 74 ENG-INS-1
+	CircuitBreakerPanel.BankD.EngineInstrument1
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankD.EngineInstrument1</object-name>
+	<property>extra500/CircuitBreakerPanel/BankD/EngineInstrument1/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankD.EngineInstrument1</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Engine Instrument 1");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank D slot 75 DIP-1
+	CircuitBreakerPanel.BankD.DIP1
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankD.DIP1</object-name>
+	<property>extra500/CircuitBreakerPanel/BankD/DIP1/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankD.DIP1</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker DIP 1");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank D slot 76 IFD-LH-A
+	CircuitBreakerPanel.BankD.IFD-LH-A
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankD.IFD-LH-A</object-name>
+	<property>extra500/CircuitBreakerPanel/BankD/IFD-LH-A/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankD.IFD-LH-A</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker IFD Left A");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank D slot 77 KEYPAD
+	CircuitBreakerPanel.BankD.Keypad
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankD.Keypad</object-name>
+	<property>extra500/CircuitBreakerPanel/BankD/Keypad/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankD.Keypad</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Keypad");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank D slot 78 ATC
+	CircuitBreakerPanel.BankD.ATC
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankD.ATC</object-name>
+	<property>extra500/CircuitBreakerPanel/BankD/ATC/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankD.ATC</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker ATC");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank D slot 79 STBY-GYRO
+	CircuitBreakerPanel.BankD.StandbyGyroskop
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankD.StandbyGyroskop</object-name>
+	<property>extra500/CircuitBreakerPanel/BankD/StandbyGyroskop/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankD.StandbyGyroskop</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Standby Gyroskop");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank D slot 80 DUMP
+	CircuitBreakerPanel.BankD.Dump
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankD.Dump</object-name>
+	<property>extra500/CircuitBreakerPanel/BankD/Dump/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankD.Dump</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Dump");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank D slot 81 C-PRESS
+	CircuitBreakerPanel.BankD.CabinPressure
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankD.CabinPressure</object-name>
+	<property>extra500/CircuitBreakerPanel/BankD/CabinPressure/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankD.CabinPressure</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Cabin Pressure");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank D slot 82 GEAR-WARN
+	CircuitBreakerPanel.BankD.GearWarn
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankD.GearWarn</object-name>
+	<property>extra500/CircuitBreakerPanel/BankD/GearWarn/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankD.GearWarn</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Gear Warn");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--
+	# Bank D slot 83 GEAR-AUX-1
+	CircuitBreakerPanel.BankD.GearAux1
+-->
+<animation>
+	<type>translate</type>
+	<object-name>CircuitBreakerPanel.BankD.GearAux1</object-name>
+	<property>extra500/CircuitBreakerPanel/BankD/GearAux1/state</property>
+	<factor>-0.0025</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CircuitBreakerPanel.BankD.GearAux1</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Gear Aux 1");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+</PropertyList>

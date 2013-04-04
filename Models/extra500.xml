@@ -1,0 +1,490 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+<path>extra500_frame.ac</path>
+
+<!-- Submodels -->
+<model>
+  <name>FWbug</name>
+  <path>Aircraft/extra500/Models/extra500_FWbug.xml</path>	
+</model>
+<model>
+  <name>FWlinks</name>
+  <path>Aircraft/extra500/Models/extra500_FWlinks.xml</path>	
+</model>
+<model>
+  <name>FWrechts</name>
+  <path>Aircraft/extra500/Models/extra500_FWrechts.xml</path>	
+</model>
+<model>
+  <name>MasterPanel</name>
+  <path>Aircraft/extra500/Models/extra500_MasterPanel.xml</path>
+	<offsets>
+		<x-m>-0.66442</x-m>
+		<y-m>0.004577</y-m>	
+		<z-m>-0.35327</z-m>
+	<pitch-deg>-13</pitch-deg>
+	</offsets>
+</model>
+
+<!--test-->
+<model>
+  <name>InstrumentFlapsGear</name>
+  <path>Aircraft/extra500/Models/extra500_InstrumentFlapsGear.xml</path>
+	<offsets>
+		<x-m>-0.61</x-m>
+		<y-m>0</y-m>	
+		<z-m>-0.435</z-m>
+	<pitch-deg>-50</pitch-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>LH IFD</name>
+  <path>Aircraft/extra500/Models/extra500_IFD.ac</path>
+	<offsets>
+		<x-m>-0.7</x-m>
+		<y-m>-0.302</y-m>	
+		<z-m>-0.20</z-m>
+	<pitch-deg>-13</pitch-deg>
+	</offsets>
+</model>
+<model>
+  <name>SidePanelWORK</name>
+  <path>Aircraft/extra500/Models/extra500_SidePanel.xml</path>
+	<!--position waehrend entwicklung anders-->
+	<offsets>
+		<x-m>-.60</x-m>
+		<y-m>-.665</y-m>	
+		<z-m>-.092</z-m>
+	<pitch-deg>77</pitch-deg>
+	</offsets>
+</model>
+<model>
+  <name>SidePanel</name>
+  <path>Aircraft/extra500/Models/extra500_SidePanel.xml</path>
+	<offsets>
+		<x-m>-.35</x-m>
+		<y-m>-.65</y-m>	
+		<z-m>-0.45</z-m>
+	<pitch-deg>0</pitch-deg>
+	</offsets>
+</model>
+<model>
+  <name>CircuitBreakerPanelWORK</name>
+  	<!--position waehrend entwicklung anders-->
+  <path>Aircraft/extra500/Models/extra500_CircuitBreakerPanel.xml</path>
+	<offsets>
+		<x-m>-.68</x-m>
+		<y-m>-.59</y-m>	
+		<z-m>-.06</z-m>
+		<roll-deg>0</roll-deg>
+		<pitch-deg>77</pitch-deg>
+
+	</offsets>
+</model>
+<model>
+  <name>CircuitBreakerPanel</name>
+  <path>Aircraft/extra500/Models/extra500_CircuitBreakerPanel.xml</path>
+	<offsets>
+		<x-m>-.395</x-m>
+		<y-m>-.622</y-m>	
+		<z-m>-0.545</z-m>
+	<roll-deg>-40</roll-deg>
+	</offsets>
+</model>
+<!--test-->
+
+<!--habe piloten waehrend cockpitentwicklung deaktiviert
+<model>
+      <path>Aircraft/Generic/Pilot/Airliner/pilot.xml</path>
+      <offsets>
+		<x-m>-0.30</x-m>
+		<y-m>-0.27</y-m>	
+		<z-m>-0.30</z-m>
+         <pitch-deg>0</pitch-deg>
+      </offsets>
+      <condition>
+         <not>
+            <property>/sim/current-view/internal</property>
+         </not>
+      </condition>
+</model>
+<model>
+      <path>Aircraft/Generic/Pilot/General/pilot.xml</path>
+      <offsets>
+		<x-m>-0.4</x-m>
+		<y-m>0.27</y-m>	
+		<z-m>-0.35</z-m>
+         <pitch-deg>0</pitch-deg>
+      </offsets>
+      <condition>
+         <not>
+            <property>/sim/current-view/internal</property>
+         </not>
+      </condition>
+</model>
+-->
+
+<!-- Start livery machine 
+<nasal>
+  <load>
+    var livery_update = aircraft.livery_update.new("Aircraft/extra500/Models/Liveries");
+  </load>
+  <unload>
+    livery_update.stop();
+  </unload>
+</nasal>
+
+<sound><path>Aircraft/extra500/Sounds/mp-sound.xml</path></sound>
+-->
+
+<!--Propeller-->
+<animation>
+  <type>select</type>
+  <object-name>Propeller</object-name>
+  <condition>
+    <less-than>
+      <property>engines/engine[0]/thruster/rpm</property>
+      <value>1000</value>
+    </less-than>
+  </condition>
+</animation>
+
+<animation>
+  <type>select</type>
+  <object-name>PropSlow</object-name>
+  <condition>
+    <and>
+      <greater-than-equals>
+        <property>engines/engine[0]/thruster/rpm</property>
+        <value>1000</value>
+      </greater-than-equals>
+      <less-than>
+        <property>engines/engine[0]/thruster/rpm</property>
+        <value>2000</value>
+      </less-than>
+    </and>
+  </condition>
+</animation>
+
+<animation>
+  <type>select</type>
+  <object-name>PropFast</object-name>
+  <condition>
+    <greater-than-equals>
+      <property>engines/engine[0]/thruster/rpm</property>
+      <value>2000</value>
+    </greater-than-equals>
+  </condition>
+</animation>
+
+<animation>
+  <type>spin</type>
+  <object-name>Spinner</object-name>
+  <object-name>Propeller</object-name>
+  <object-name>PropSlow</object-name>
+  <object-name>PropFast</object-name>
+  <property>engines/engine[0]/thruster/rpm</property>
+  <factor>-1</factor>
+  <axis>
+   <x1-m>-3.31</x1-m>
+   <y1-m> 0.00</y1-m>
+   <z1-m>-0.50</z1-m>
+   <x2-m>-2.82780</x2-m>
+   <y2-m> 0.00</y2-m>
+   <z2-m>-0.47304</z2-m>
+  </axis>
+  <center>
+   <x-m>-3.06890</x-m>
+   <y-m>0</y-m>
+   <z-m>-0.48652</z-m>
+  </center>
+ </animation>
+ 
+<!-- Bugradeinzug  -->
+ <animation>
+  <type>rotate</type>
+  <object-name>FWbug</object-name>
+<property>gear/gear[0]/position-norm</property>
+<!--    <property>controls/engines/engine[0]/throttle</property> -->
+  <interpolation>
+            <entry>
+                <ind>0.0</ind>
+                <dep>90</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>0</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>-1.69785</x1-m>
+    <y1-m>1.0</y1-m>
+    <z1-m>-0.9</z1-m>
+	<x2-m>-1.69785</x2-m>
+    <y2-m>-1.0</y2-m>
+    <z2-m>-0.9</z2-m>
+  </axis>
+  </animation> 
+
+<!-- FWeinzug links  -->
+<animation>
+  <type>rotate</type>
+  <object-name>FWlinks</object-name>
+ <property>gear/gear[0]/position-norm</property> 
+ <!--  <property>controls/engines/engine[0]/throttle</property> -->
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>89</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>0</dep>
+            </entry>
+        </interpolation>
+  <axis>
+  <x1-m>1.005</x1-m>
+  <y1-m>-0.41601</y1-m>
+  <z1-m>-0.70543</z1-m>
+  <x2-m>1.005</x2-m>
+  <y2-m>0.41601</y2-m>
+  <z2-m>-1.30543</z2-m>
+  </axis>
+<!--  Drehpunkt
+  <x>1.005</x>
+  <y>-0.41601</y>
+  <z>-1.00543</z>
+   -->
+  </animation>
+
+<!-- FWeinzug rechts  -->
+<animation>
+  <type>rotate</type>
+  <object-name>FWrechts</object-name>
+ <property>gear/gear[1]/position-norm</property> 
+ <!--  <property>controls/engines/engine[0]/throttle</property> -->
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>-89</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>0</dep>
+            </entry>
+        </interpolation>
+  <axis>
+  <x1-m>1.005</x1-m>
+  <y1-m>0.41601</y1-m>
+  <z1-m>-0.70543</z1-m>
+  <x2-m>1.005</x2-m>
+  <y2-m>-0.41601</y2-m>
+  <z2-m>-1.30543</z2-m>
+  </axis>
+<!--  Drehpunkt
+  <x>1.005</x>
+  <y>0.41601</y>
+  <z>-1.00543</z>
+   -->
+  </animation>
+  
+<!-- Seitenruder -->  
+ <animation>
+  <type>rotate</type>
+  <object-name>SR</object-name>
+  <property>/controls/flight/rudder</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>-15</dep></entry>
+   <entry><ind> 0</ind><dep>  0</dep></entry>
+   <entry><ind> 1</ind><dep> 15</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>5.53867</x1-m>
+    <y1-m>0</y1-m>
+    <z1-m>-0.16366</z1-m>
+    <x2-m>6.3755</x2-m>
+    <y2-m>0</y2-m>
+    <z2-m>1.16616</z2-m>
+  </axis>
+</animation>
+
+<!-- lenkung Bugfahrwerk-->  
+ <animation>
+  <type>rotate</type>
+  <object-name>FWbug</object-name>
+  <condition>
+    <equals>
+      <property>gear/gear[0]/position-norm</property>
+      <value>1</value>
+    </equals>
+  </condition>
+  <property>/controls/flight/rudder</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>-40</dep></entry>
+   <entry><ind> 0</ind><dep>  0</dep></entry>
+   <entry><ind> 1</ind><dep> 40</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>-1.69785</x1-m>
+    <y1-m>0</y1-m>
+    <z1-m>-1.03680</z1-m>
+    <x2-m>-1.69785</x2-m>
+    <y2-m>0</y2-m>
+    <z2-m>-1.38026</z2-m>
+  </axis>
+</animation>
+
+<!-- Hoehenruder -->
+<animation>
+  <type>rotate</type>
+  <object-name>HRlinks</object-name>
+  <property>controls/flight/elevator</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>-15</dep></entry>
+   <entry><ind>0</ind><dep>  0</dep></entry>
+   <entry><ind>1</ind><dep> 15</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>6.43221</x1-m>
+    <y1-m>-1.66764</y1-m>
+    <z1-m>1.08282</z1-m>
+    <x2-m>6.31921</x2-m>
+    <y2-m>-0.12235</y2-m>
+    <z2-m>1.15570</z2-m>
+  </axis>
+</animation>	
+
+<animation>
+  <type>rotate</type>
+  <object-name>HRrechts</object-name>
+  <property>controls/flight/elevator</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>-15</dep></entry>
+   <entry><ind>0</ind><dep>  0</dep></entry>
+   <entry><ind>1</ind><dep> 15</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>6.31921</x1-m>
+    <y1-m>0.12235</y1-m>
+    <z1-m>1.15570</z1-m>
+    <x2-m>6.43221</x2-m>
+    <y2-m>1.66764</y2-m>
+    <z2-m>1.08282</z2-m>
+  </axis>
+</animation>
+
+<!-- Querruder -->
+<animation>
+  <type>rotate</type>	
+  <object-name>QRlinks</object-name>
+  <property>/controls/flight/aileron</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>-15</dep></entry>
+   <entry><ind> 0</ind><dep>  0</dep></entry>
+   <entry><ind> 1</ind><dep> 15</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>1.16760</x1-m>
+    <y1-m>-5.56752</y1-m>
+    <z1-m>0.33370</z1-m>
+    <x2-m>1.16760</x2-m>
+    <y2-m>-4.46124</y2-m>
+    <z2-m>0.33370</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>rotate</type>
+  <object-name>QRrechts</object-name>
+  <property>/controls/flight/aileron</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>15</dep></entry>
+   <entry><ind> 0</ind><dep>  0</dep></entry>
+   <entry><ind> 1</ind><dep>-15</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>1.16760</x1-m>
+    <y1-m>4.46124</y1-m>
+    <z1-m>0.33370</z1-m>
+    <x2-m>1.16760</x2-m>
+    <y2-m>5.56752</y2-m>
+    <z2-m>0.33370</z2-m>
+  </axis>
+</animation>
+
+<!-- Flaps -->
+<animation>
+  <type>rotate</type>
+  <object-name>FlapInnenL</object-name>
+  <property>surface-positions/flap-pos-norm</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>40</dep></entry>
+  </interpolation>   
+  <axis>
+    <x2-m> 1.19543</x2-m>
+    <y2-m>-0.58371</y2-m>
+    <z2-m> 0.33370</z2-m>
+    <x1-m> 1.23491</x1-m>
+    <y1-m>-2.54332</y1-m>
+    <z1-m> 0.33370</z1-m>
+  </axis>
+</animation>
+<animation>
+  <type>rotate</type>
+  <object-name>FlapInnenR</object-name>
+  <property>surface-positions/flap-pos-norm</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>40</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m> 1.19543</x1-m>
+    <y1-m> 0.58371</y1-m>
+    <z1-m> 0.33370</z1-m>
+    <x2-m> 1.23491</x2-m>
+    <y2-m> 2.54332</y2-m>
+    <z2-m> 0.33370</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>rotate</type>
+  <object-name>FlapAussenL</object-name>
+  <property>surface-positions/flap-pos-norm</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>.6</ind><dep> 25</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>1.28327</x1-m>
+    <y1-m>-4.42776</y1-m>
+    <z1-m>0.33370</z1-m>
+    <x2-m>1.24379</x2-m>
+    <y2-m>-2.56010</y2-m>
+    <z2-m>0.33370</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>rotate</type>
+  <object-name>FlapAussenR</object-name>
+  <property>surface-positions/flap-pos-norm</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>.5</ind><dep> 25</dep></entry>
+  </interpolation>   
+  <axis>
+    <x2-m>1.28327</x2-m>
+    <y2-m>4.42776</y2-m>
+    <z2-m>0.33370</z2-m>
+    <x1-m>1.24379</x1-m>
+    <y1-m>2.56010</y1-m>
+    <z1-m>0.33370</z1-m>
+  </axis>
+</animation>
+
+</PropertyList>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<PropertyList>
+	<title>Engine Shutdown</title>
+	<item>
+		<name>Power Lever</name>
+		<value>GRD IDLE (at least 2 minutes)</value>
+	</item> 
+	<item>
+		<name>ENV AIR</name>
+		<value>OFF</value>
+	</item> 
+	<item>
+		<name>AVIONICS</name>
+		<value>OFF</value>
+	</item>
+	<item>
+		<name>Lights</name>
+		<value>OFF</value>
+	</item> 
+	<item>
+		<name>STDBY ALT</name>
+		<value>OFF</value>
+	</item> 
+	<item>
+		<name>GEN</name>
+		<value>OFF</value>
+	</item> 
+	<item>
+		<name>Condition Lever</name>
+		<value>FUEL OFF</value>
+	</item> 
+	<item>
+		<name>BATT</name>
+		<value>OFF</value>
+	</item> 
+	<item>
+		<name>PARKING BRAKE</name>
+		<value>Set as required</value>
+	</item> 
+
+
+</PropertyList>

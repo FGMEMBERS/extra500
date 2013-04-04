@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<PropertyList>
+	<title>After Starting Engine</title>
+	<item>
+		<name>ENGINE START</name>
+		<value>IGN OFF</value>
+	</item> 
+	<item>
+		<name>FUEL PUMP (other)</name>
+		<value>ON</value>
+	</item>
+	<item>
+		<name>FUEL PUMP (original)</name>
+		<value>OFF</value>
+	</item>
+	<item>
+		<name>Fuel Pressure</name>
+		<value>Check reading > 10 psi</value>
+	</item>
+	<item>
+		<name>STDBY ALT</name>
+		<value>ON</value>
+	</item>
+	<item>
+		<name>STANDBY ALTERN ON</name>
+		<value>Check illumination</value>
+	</item>
+	<item>
+		<name>GEN</name>
+		<value>ON</value>
+	</item>
+	<item>
+		<name>STANDBY ALTERN ON</name>
+		<value>Check extinguished</value>
+	</item>
+	<item>
+		<name>GENERATOR FAIL</name>
+		<value>Check extinguished</value>
+	</item>
+	<item>
+		<name>FUEL TRANS LEFT</name>
+		<value>Check extinguished</value>
+	</item>
+	<item>
+		<name>FUEL TRANS RIGHT</name>
+		<value>Check extinguished</value>
+	</item>
+	<item>
+		<name>AVIONICS</name>
+		<value>ON</value>
+	</item>
+	<item>
+		<name>Altimeter</name>
+		<value>Set</value>
+	</item>
+	<item>
+		<name>Radios</name>
+		<value>Set as required</value>
+	</item>
+	<item>
+		<name>Navigation Equipment</name>
+		<value>Set as required</value>
+	</item>
+	<item>
+		<name>ENV AIR</name>
+		<value>ON</value>
+	</item>
+	<item>
+		<name>Cabin Pressure</name>
+		<value>Set as required</value>
+	</item>
+	<item>
+		<name>Air Conditioning</name>
+		<value>Set as required</value>
+	</item>
+
+
+
+</PropertyList>
