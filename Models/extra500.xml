@@ -42,7 +42,7 @@
 
 <model>
   <name>LH IFD</name>
-  <path>Aircraft/extra500/Models/extra500_IFD.ac</path>
+  <path>Aircraft/extra500/Models/extra500_IFD.xml</path>
 	<offsets>
 		<x-m>-0.7</x-m>
 		<y-m>-0.302</y-m>	

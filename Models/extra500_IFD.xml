@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+<path>extra500_IFD.ac</path>
+
+<animation>
+  <type>texmultiple</type>
+  <object-name>Oben</object-name>
+  <transform>
+    <property>/orientation/pitch-deg</property>
+    <subtype>textranslate</subtype>
+    <factor>0.0045</factor>
+    <axis>
+     <x>0</x>
+     <y>1</y>
+     <z>0</z>
+   </axis>
+  </transform>
+  <transform>
+    <property>/orientation/roll-deg</property>
+    <subtype>texrotate</subtype>
+    <center>
+     <x>0.50</x>
+     <y>0.50</y>
+   </center>
+    <axis>
+     <x>0</x>
+     <y>0</y>
+     <z>-1</z>
+   </axis>
+  </transform>
+ </animation>
+
+
+<!--
+<animation>
+  <type>textranslate</type>
+  <object-name>Oben</object-name>
+  <property>orientation/pitch-deg</property>
+  <factor>.01</factor>
+  <axis>
+   <x>0</x>
+   <y>1</y>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>texrotate</type>
+  <object-name>Oben</object-name>
+  <property>orientation/roll-deg</property>
+  <factor>1</factor>
+<center>
+   <x>0.5</x>
+   <y>0.5</y>
+  </center>
+  <axis>
+   <z>-1</z>
+   <y>0</y>
+  </axis>
+ </animation>
+-->
+</PropertyList>
+
