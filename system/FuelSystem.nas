@@ -14,37 +14,37 @@ var FuelSystem = {
 		
 		var node = nil; 
 		
-		node = m.nFuel.addChild("valve");
+		node = m.nFuel.initNode("valve");
 		m.oSelectorValve = Part.SelectorValve.new(node,"Tank Selector Valve");
 		m.oSelectorValve.flowConfig("JET-A",0.05,"gal_us/sec");
 		
-		node = m.nFuel.addChild("pump");
+		node = m.nFuel.initNode("pump");
 		m.oPump1= Part.ElectricPump.new(node,"Fuel Pump 1");
 		m.oPump1.flowConfig("JET-A",0.05,"gal_us/sec");
 		
-		node = m.nFuel.addChild("pump");
+		node = m.nFuel.initNode("pump");
 		m.oPump2= Part.ElectricPump.new(node,"Fuel Pump 2");
 		m.oPump2.electricConfig(18.0,20);
 		m.oPump2.flowConfig("JET-A",0.05,"gal_us/sec");
 		
 		
-		node = m.nFuel.addChild("pump");
+		node = m.nFuel.initNode("pump");
 		m.oPumpLeft= Part.ElectricPump.new(node,"Fuel Transfer Pump Left");
 		m.oPumpLeft.flowConfig("JET-A",0.05,"gal_us/sec");
 		
-		node = m.nFuel.addChild("pump");
+		node = m.nFuel.initNode("pump");
 		m.oPumpRight= Part.ElectricPump.new(node,"Fuel Transfer Pump Right");
 		m.oPumpRight.flowConfig("JET-A",0.1,"gal_us/sec");
 				
-		node = m.nFuel.addChild("Filter");
+		node = m.nFuel.initNode("Filter");
 		m.oMainFilter= Part.Filter.new(node,"Fuel Main Filter");
 		m.oMainFilter.flowConfig("JET-A",0.1,"gal_us/sec");
 		
-		node = m.nFuel.addChild("Filter");
+		node = m.nFuel.initNode("Filter");
 		m.oLeftFilter = Part.Filter.new(node,"Fuel Left Filter");
 		m.oLeftFilter.flowConfig("JET-A",0.05,"gal_us/sec");
 		
-		node = m.nFuel.addChild("Filter");
+		node = m.nFuel.initNode("Filter");
 		m.oRightFilter = Part.Filter.new(node,"Fuel Right Filter");
 		m.oRightFilter.flowConfig("JET-A",0.05,"gal_us/sec");
 		

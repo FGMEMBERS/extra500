@@ -321,7 +321,7 @@ var Part = {
 var ElectricCircuitBraker = {
 	new : func(nRoot,name,state=1){
 		
-		#nRoot = nRoot.addChild("switch");
+		#nRoot = nRoot.initNode("switch");
 		
 		var m = {parents:[
 			ElectricCircuitBraker,
@@ -389,7 +389,7 @@ var ElectricCircuitBraker = {
 var ElectricSwitch = {
 	new : func(nRoot,name){
 		
-		#nRoot = nRoot.addChild("switch");
+		#nRoot = nRoot.initNode("switch");
 		
 		var m = {parents:[
 			ElectricSwitch,
@@ -517,9 +517,9 @@ var ElectricRelais = {
 			ElectricDecider.new(nRoot,name),
 		]};
 		var nNode = nil;
-		nNode = nRoot.addChild("connector");
+		nNode = nRoot.initNode("connector");
 		m.oLeft = ElectricAskingOutputAble.new(nNode,name);
-		nNode = nRoot.addChild("connector");
+		nNode = nRoot.initNode("connector");
 		m.oRight = ElectricAskingOutputAble.new(nNode,name);
 		
 		return m;
@@ -553,9 +553,9 @@ var ElectricBusTie = {
 			Decider.new(nRoot,name)
 		]};
 		var nNode = nil;
-		nNode = nRoot.addChild("connector");
+		nNode = nRoot.initNode("connector");
 		m.oLeft = ElectricAskingOutputAble.new(nNode,name);
-		nNode = nRoot.addChild("connector");
+		nNode = nRoot.initNode("connector");
 		m.oRight = ElectricAskingOutputAble.new(nNode,name);
 		
 		m.nState = nRoot.initNode("state",0,"BOOL");
