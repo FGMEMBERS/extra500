@@ -11,7 +11,7 @@
 	       <reference-dist>3.0</reference-dist>
 	       <max-dist>6.0</max-dist>
 	       <mode>once</mode>
-	       <path>Sounds/extra500turbineUP.wav</path>
+	       <path>Aircraft/extra500/Sounds/extra500turbineUP.wav</path>
 	       <condition>
 		       <or>
 			       <property>/engines/engine[0]/starting</property>
@@ -70,7 +70,7 @@
             <reference-dist>1.0</reference-dist>
             <max-dist>4.0</max-dist>
             <mode>looped</mode>
-            <path>Sounds/extra500turbineLOOP.wav</path>
+            <path>Aircraft/extra500/Sounds/extra500turbineLOOP.wav</path>
 	    <condition>
 		       <or>
 			       <property>/engines/engine[0]/cranking</property>
@@ -96,7 +96,7 @@
             <reference-dist>1.0</reference-dist>
             <max-dist>4.0</max-dist>
             <mode>once</mode>
-            <path>Sounds/extra500turbineDOWN.wav</path>
+            <path>Aircraft/extra500/Sounds/extra500turbineDOWN.wav</path>
 	    <condition>
 		    <and>
 			    <!----><not>
@@ -128,7 +128,7 @@
 	<tire-rumble>
 		<name>tire-rumble</name>
 		<mode>looped</mode>
-		<path>Sounds/rumble.wav</path>
+		<path>Aircraft/extra500/Sounds/rumble.wav</path>
 		<condition>
 			<or>
 				<property>/gear/gear[0]/wow</property>
