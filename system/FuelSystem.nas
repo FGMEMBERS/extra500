@@ -262,9 +262,6 @@ var FuelSystem = {
 		me.nLevelRightAuxiliary.setValue(me.levelRightAuxiliary);
 			
 	},
-	test : func(){
-		print("bin im fuel modul");
-	},
 	
 	
 };
