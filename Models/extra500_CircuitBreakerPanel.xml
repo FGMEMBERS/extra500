@@ -1,36 +1,6 @@
 <?xml version="1.0"?>
 <PropertyList>
 <path>extra500_CircuitBreakerPanel.ac</path>
-<!-- automated creted animation -->
-<!--
-	#Group slot Nr Lable
-	property
--->
-<animation>
-	<type>translate</type>
-	<object-name>property</object-name>
-	<property>extra500/property/state</property>
-	<factor>-0.0025</factor>
-	<axis>
-		<x>0</x>
-		<y>1</y>
-		<z>0</z>
-	</axis>
-</animation>
-<animation>
-	<type>pick</type>
-	<object-name>property</object-name>
-	<action>
-		<button>0</button>
-		<repeatable>false</repeatable>
-		<binding>
-			<command>nasal</command>
-			<script><![CDATA[
-				ui
-			]]></script>
-		</binding>
-	</action>
-</animation>
 
 <!--
 	# Bank A slot 0 AIR-CON
@@ -496,6 +466,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankB.CabinLight</object-name>
+	<object-name>CircuitBreakerPanel.BankB.CabinLight.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -526,6 +497,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankB.RecognitionLight</object-name>
+	<object-name>CircuitBreakerPanel.BankB.RecognitionLight.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -556,6 +528,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankB.NavLight</object-name>
+	<object-name>CircuitBreakerPanel.BankB.NavLight.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -586,6 +559,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankB.OverSpeed</object-name>
+	<object-name>CircuitBreakerPanel.BankB.OverSpeed.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -616,6 +590,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankB.FuelTransferL</object-name>
+	<object-name>CircuitBreakerPanel.BankB.FuelTransferL.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -646,6 +621,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankB.FuelTransferR</object-name>
+	<object-name>CircuitBreakerPanel.BankB.FuelTransferR.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -676,6 +652,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankB.PitotR</object-name>
+	<object-name>CircuitBreakerPanel.BankB.PitotR.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -708,6 +685,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankB.EngineInstrument2</object-name>
+	<object-name>CircuitBreakerPanel.BankB.EngineInstrument2.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -738,6 +716,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankB.DIP2</object-name>
+	<object-name>CircuitBreakerPanel.BankB.DIP2.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -770,6 +749,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankB.IFD-RH-B</object-name>
+	<object-name>CircuitBreakerPanel.BankB.IFD-RH-B.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -800,6 +780,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankB.TAS</object-name>
+	<object-name>CircuitBreakerPanel.BankB.TAS.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -834,6 +815,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankB.AutopilotComputer</object-name>
+	<object-name>CircuitBreakerPanel.BankB.AutopilotComputer.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -864,6 +846,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankB.TurnCoordinator</object-name>
+	<object-name>CircuitBreakerPanel.BankB.TurnCoordinator.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -896,6 +879,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankB.RCCB</object-name>
+	<object-name>CircuitBreakerPanel.BankB.RCCB.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -926,6 +910,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankC.FlapUNB</object-name>
+	<object-name>CircuitBreakerPanel.BankC.FlapUNB.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -956,6 +941,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankC.FlapControl</object-name>
+	<object-name>CircuitBreakerPanel.BankC.FlapControl.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -986,6 +972,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankC.Flap</object-name>
+	<object-name>CircuitBreakerPanel.BankC.Flap.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1016,6 +1003,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankC.Emergency1</object-name>
+	<object-name>CircuitBreakerPanel.BankC.Emergency1.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1046,6 +1034,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankC.AvBus</object-name>
+	<object-name>CircuitBreakerPanel.BankC.AvBus.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1076,6 +1065,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankC.InstrumentLight</object-name>
+	<object-name>CircuitBreakerPanel.BankC.InstrumentLight.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1106,6 +1096,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankC.StrobeLight</object-name>
+	<object-name>CircuitBreakerPanel.BankC.StrobeLight.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1136,6 +1127,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankC.IceLight</object-name>
+	<object-name>CircuitBreakerPanel.BankC.IceLight.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1166,6 +1158,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankC.VneWarn</object-name>
+	<object-name>CircuitBreakerPanel.BankC.VneWarn.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1196,6 +1189,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankC.FuelFlow</object-name>
+	<object-name>CircuitBreakerPanel.BankC.FuelFlow.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1226,6 +1220,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankC.FuelPump2</object-name>
+	<object-name>CircuitBreakerPanel.BankC.FuelPump2.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1256,6 +1251,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankC.WindShieldControl</object-name>
+	<object-name>CircuitBreakerPanel.BankC.WindShieldControl.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1286,6 +1282,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankC.WindShieldHeat</object-name>
+	<object-name>CircuitBreakerPanel.BankC.WindShieldHeat.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1316,6 +1313,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankC.Boots</object-name>
+	<object-name>CircuitBreakerPanel.BankC.Boots.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1346,6 +1344,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankC.PropellerHeat</object-name>
+	<object-name>CircuitBreakerPanel.BankC.PropellerHeat.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1376,6 +1375,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankC.IFD-LH-B</object-name>
+	<object-name>CircuitBreakerPanel.BankC.IFD-LH-B.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1406,6 +1406,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankC.Ignition</object-name>
+	<object-name>CircuitBreakerPanel.BankC.Ignition.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1436,6 +1437,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankC.Start</object-name>
+	<object-name>CircuitBreakerPanel.BankC.Start.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1468,6 +1470,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankC.AutopilotServo</object-name>
+	<object-name>CircuitBreakerPanel.BankC.AutopilotServo.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1498,6 +1501,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankC.EnvironmentalBleed</object-name>
+	<object-name>CircuitBreakerPanel.BankC.EnvironmentalBleed.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1528,6 +1532,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankC.Hydraulic</object-name>
+	<object-name>CircuitBreakerPanel.BankC.Hydraulic.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1558,6 +1563,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankC.GearControl</object-name>
+	<object-name>CircuitBreakerPanel.BankC.GearControl.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1590,6 +1596,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankD.LowVolt</object-name>
+	<object-name>CircuitBreakerPanel.BankD.LowVolt.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1620,6 +1627,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankD.VoltMonitor</object-name>
+	<object-name>CircuitBreakerPanel.BankD.VoltMonitor.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1650,6 +1658,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankD.Alt</object-name>
+	<object-name>CircuitBreakerPanel.BankD.Alt.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1680,6 +1689,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankD.GeneratorReset</object-name>
+	<object-name>CircuitBreakerPanel.BankD.GeneratorReset.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1710,6 +1720,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankD.GlareLight</object-name>
+	<object-name>CircuitBreakerPanel.BankD.GlareLight.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1740,6 +1751,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankD.WarnLight</object-name>
+	<object-name>CircuitBreakerPanel.BankD.WarnLight.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1770,6 +1782,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankD.LandingLight</object-name>
+	<object-name>CircuitBreakerPanel.BankD.LandingLight.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1800,6 +1813,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankD.StallWarning</object-name>
+	<object-name>CircuitBreakerPanel.BankD.StallWarning.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1830,6 +1844,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankD.FuelQuantity</object-name>
+	<object-name>CircuitBreakerPanel.BankD.FuelQuantity.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1860,6 +1875,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankD.FuelPump1</object-name>
+	<object-name>CircuitBreakerPanel.BankD.FuelPump1.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1890,6 +1906,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankD.PitotL</object-name>
+	<object-name>CircuitBreakerPanel.BankD.PitotL.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1920,6 +1937,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankD.IntakeAI</object-name>
+	<object-name>CircuitBreakerPanel.BankD.IntakeAI.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1950,6 +1968,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankD.EngineInstrument1</object-name>
+	<object-name>CircuitBreakerPanel.BankD.EngineInstrument1.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -1980,6 +1999,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankD.DIP1</object-name>
+	<object-name>CircuitBreakerPanel.BankD.DIP1.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -2010,6 +2030,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankD.IFD-LH-A</object-name>
+	<object-name>CircuitBreakerPanel.BankD.IFD-LH-A.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -2040,6 +2061,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankD.Keypad</object-name>
+	<object-name>CircuitBreakerPanel.BankD.Keypad.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -2070,6 +2092,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankD.ATC</object-name>
+	<object-name>CircuitBreakerPanel.BankD.ATC.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -2100,6 +2123,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankD.StandbyGyroskop</object-name>
+	<object-name>CircuitBreakerPanel.BankD.StandbyGyroskop.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -2130,6 +2154,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankD.Dump</object-name>
+	<object-name>CircuitBreakerPanel.BankD.Dump.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -2160,6 +2185,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankD.CabinPressure</object-name>
+	<object-name>CircuitBreakerPanel.BankD.CabinPressure.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -2190,6 +2216,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankD.GearWarn</object-name>
+	<object-name>CircuitBreakerPanel.BankD.GearWarn.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>
@@ -2220,6 +2247,7 @@
 <animation>
 	<type>pick</type>
 	<object-name>CircuitBreakerPanel.BankD.GearAux1</object-name>
+	<object-name>CircuitBreakerPanel.BankD.GearAux1.Ring</object-name>
 	<action>
 		<button>0</button>
 		<repeatable>false</repeatable>

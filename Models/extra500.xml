@@ -234,11 +234,10 @@
   <type>rotate</type>
   <object-name>FWlinks</object-name>
  <property>gear/gear[0]/position-norm</property> 
- <!--  <property>controls/engines/engine[0]/throttle</property> -->
   <interpolation>
             <entry>
                 <ind>0</ind>
-                <dep>89</dep>
+                <dep>79</dep>
             </entry>
             <entry>
                 <ind>1</ind>
@@ -253,23 +252,17 @@
   <y2-m>0.41601</y2-m>
   <z2-m>-1.30543</z2-m>
   </axis>
-<!--  Drehpunkt
-  <x>1.005</x>
-  <y>-0.41601</y>
-  <z>-1.00543</z>
-   -->
-  </animation>
+</animation>
 
 <!-- FWeinzug rechts  -->
 <animation>
   <type>rotate</type>
   <object-name>FWrechts</object-name>
  <property>gear/gear[1]/position-norm</property> 
- <!--  <property>controls/engines/engine[0]/throttle</property> -->
   <interpolation>
             <entry>
                 <ind>0</ind>
-                <dep>-89</dep>
+                <dep>-79</dep>
             </entry>
             <entry>
                 <ind>1</ind>
@@ -284,12 +277,7 @@
   <y2-m>-0.41601</y2-m>
   <z2-m>-1.30543</z2-m>
   </axis>
-<!--  Drehpunkt
-  <x>1.005</x>
-  <y>0.41601</y>
-  <z>-1.00543</z>
-   -->
-  </animation>
+</animation>
   
 <!-- Seitenruder -->  
  <animation>
