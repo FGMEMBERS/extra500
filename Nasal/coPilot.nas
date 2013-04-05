@@ -19,17 +19,21 @@ var auto_start = func(){
 
 var auto_engine_start = func(){
 	setprop("/controls/electric/engine/generator",1);
-	UI.oCockpit.click("Fuel Pump 1 on");
+	UI.oCockpit.click("Main Battery on");
+	UI.oCockpit.click("Fuel Pump 2 on");
 	setprop("/controls/engines/engine[0]/cutoff",0);
 	setprop("/controls/engines/engine[0]/starter",1);
 	
 };
 
 var auto_engine_shutdown = func(){
-	setprop("/controls/electric/engine/generator",0);
-	UI.oCockpit.click("Fuel Pump 1 off");
-	setprop("/controls/engines/engine[0]/cutoff",1);
 	setprop("/controls/engines/engine[0]/starter",0);
+	setprop("/controls/engines/engine[0]/cutoff",1);
+	setprop("/controls/electric/engine/generator",0);
+	UI.oCockpit.click("Fuel Pump 2 off");
+	UI.oCockpit.click("Main Battery off");
+	
+	
 };
 
 
