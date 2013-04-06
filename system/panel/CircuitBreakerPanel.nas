@@ -154,7 +154,7 @@ var CircuitBreakerPanel = {
 		nParent = m.nPanel.initNode("BankB");
 		
 		nCompNode = nParent.initNode("BusTie");
-		m.cbBusTie = Part.ElectricBusTie.new(nCompNode,"Circuit Breaker Bus Tie",0);
+		m.cbBusTie = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Bus Tie",0);
 		
 		nCompNode = nParent.initNode("Emergency2");
 		m.cbEmergency2 = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Emergency 2");
@@ -349,90 +349,116 @@ var CircuitBreakerPanel = {
 		
 		#me.cb.plugElectricSource(oElectric.oLoadBus);
 	# Bank A
-		me.cbAirCondition.plugElectricSource(oElectric.oLoadBus);
-		me.cbCigaretteLighter.plugElectricSource(oElectric.oLoadBus);
-		me.cbVDC12.plugElectricSource(oElectric.oLoadBus);
-		me.cbAudioMarker.plugElectricSource(oElectric.oLoadBus);
-		me.cbDME.plugElectricSource(oElectric.oLoadBus);
-		me.cbWeatherDetection.plugElectricSource(oElectric.oLoadBus);
-		me.cbSirius.plugElectricSource(oElectric.oLoadBus);
-		me.cbIridium.plugElectricSource(oElectric.oLoadBus);
-		me.cbIFD_RH_A.plugElectricSource(oElectric.oLoadBus);
-		me.cbPanelVent.plugElectricSource(oElectric.oLoadBus);
-		me.cbAirControl.plugElectricSource(oElectric.oLoadBus);
+# 		me.cbAirCondition.plugElectricSource(oElectric.oLoadBus);
+# 		me.cbCigaretteLighter.plugElectricSource(oElectric.oLoadBus);
+# 		me.cbVDC12.plugElectricSource(oElectric.oLoadBus);
+# 		me.cbAudioMarker.plugElectricSource(oElectric.oLoadBus);
+# 		me.cbDME.plugElectricSource(oElectric.oLoadBus);
+# 		me.cbWeatherDetection.plugElectricSource(oElectric.oLoadBus);
+# 		me.cbSirius.plugElectricSource(oElectric.oLoadBus);
+# 		me.cbIridium.plugElectricSource(oElectric.oLoadBus);
+# 		me.cbIFD_RH_A.plugElectricSource(oElectric.oLoadBus);
+# 		me.cbPanelVent.plugElectricSource(oElectric.oLoadBus);
+# 		me.cbAirControl.plugElectricSource(oElectric.oLoadBus);
+		
+		
+		oElectric.loadBus.plug(me.cbAirCondition.In);
+		oElectric.loadBus.plug(me.cbCigaretteLighter.In);
+		oElectric.loadBus.plug(me.cbVDC12.In);
+		oElectric.loadBus.plug(me.cbAudioMarker.In);
+		oElectric.loadBus.plug(me.cbDME.In);
+		oElectric.loadBus.plug(me.cbWeatherDetection.In);
+		oElectric.loadBus.plug(me.cbSirius.In);
+		oElectric.loadBus.plug(me.cbIridium.In);
+		oElectric.loadBus.plug(me.cbIFD_RH_A.In);
+		oElectric.loadBus.plug(me.cbPanelVent.In);
+		oElectric.loadBus.plug(me.cbAirControl.In);
+		
 		
 	# Bank B
 		
-	me.cbBusTie.plugElectricSource(oElectric.oBatteryBus,oElectric.oLoadBus);
-	
-	me.cbEmergency2.plugElectricSource(oElectric.oLoadBus);
-		me.cbCabinLight.plugElectricSource(oElectric.oLoadBus);
-		me.cbRecognitionLight.plugElectricSource(oElectric.oLoadBus);
-		me.cbNavLight.plugElectricSource(oElectric.oLoadBus);
-		me.cbOverSpeed.plugElectricSource(oElectric.oLoadBus);
-		me.cbFuelTransferL.plugElectricSource(oElectric.oLoadBus);
-		me.cbFuelTransferR.plugElectricSource(oElectric.oLoadBus);
-		me.cbPitotR.plugElectricSource(oElectric.oLoadBus);
-		me.cbEngineInstrument2.plugElectricSource(oElectric.oLoadBus);
-		me.cbDIP2.plugElectricSource(oElectric.oLoadBus);
+		oElectric.loadBus.plug(me.cbBusTie.In);
+		oElectric.batteryBus.plug(me.cbBusTie.Out);
 		
-		me.cbIFD_RH_B.plugElectricSource(oElectric.oAvionicsBus);
-		me.cbTAS.plugElectricSource(oElectric.oAvionicsBus);
-		me.cbAutopilotComputer.plugElectricSource(oElectric.oAvionicsBus);
-		me.cbTurnCoordinator.plugElectricSource(oElectric.oAvionicsBus);
+		oElectric.loadBus.plug(me.cbEmergency2.In);
+		oElectric.loadBus.plug(me.cbCabinLight.In);
+		oElectric.loadBus.plug(me.cbRecognitionLight.In);
+		oElectric.loadBus.plug(me.cbNavLight.In);
+		oElectric.loadBus.plug(me.cbOverSpeed.In);
+		oElectric.loadBus.plug(me.cbFuelTransferL.In);
+		oElectric.loadBus.plug(me.cbFuelTransferR.In);
+		oElectric.loadBus.plug(me.cbPitotR.In);
+		oElectric.loadBus.plug(me.cbEngineInstrument2.In);
+		oElectric.loadBus.plug(me.cbDIP2.In);
 		
-		me.cbRCCB.plugElectricSource(oElectric.oHotBus);
+		oElectric.avionicsBus.plug(me.cbIFD_RH_B.In);
+		oElectric.avionicsBus.plug(me.cbTAS.In);
+		oElectric.avionicsBus.plug(me.cbAutopilotComputer.In);
+		oElectric.avionicsBus.plug(me.cbTurnCoordinator.In);
+		
+		me.cbRCCB.Out.plug(oElectric.GND);
+		oElectric.hotBus.plug(me.cbRCCB.In);
+		
+		
+		
 		
 	# Bank C
 		
-		me.cbFlapUNB.plugElectricSource(oElectric.oHotBus);
-		me.cbFlapControl.plugElectricSource(oElectric.oBatteryBus);
-		me.cbFlap.plugElectricSource(oElectric.oBatteryBus);
-	me.cbEmergency1.plugElectricSource(oElectric.oBatteryBus);
-	me.cbAvBus.plugElectricSource(oElectric.oBatteryBus);
-		me.cbInstrumentLight.plugElectricSource(oElectric.oBatteryBus);
-		me.cbStrobeLight.plugElectricSource(oElectric.oBatteryBus);
-		me.cbIceLight.plugElectricSource(oElectric.oBatteryBus);
-		me.cbVneWarn.plugElectricSource(oElectric.oBatteryBus);
-		me.cbFuelFlow.plugElectricSource(oElectric.oBatteryBus);
-		me.cbFuelPump2.plugElectricSource(oElectric.oBatteryBus);
-		me.cbWindShieldControl.plugElectricSource(oElectric.oBatteryBus);
-		me.cbWindShieldHeat.plugElectricSource(oElectric.oBatteryBus);
-		me.cbBoots.plugElectricSource(oElectric.oBatteryBus);
-		me.cbPropellerHeat.plugElectricSource(oElectric.oBatteryBus);
-		me.cbIFD_LH_B.plugElectricSource(oElectric.oBatteryBus);
-		me.cbIgnition.plugElectricSource(oElectric.oBatteryBus);
-		me.cbStart.plugElectricSource(oElectric.oBatteryBus);
-		me.cbAutopilotServo.plugElectricSource(oElectric.oBatteryBus);
-		me.cbEnvironmentalBleed.plugElectricSource(oElectric.oBatteryBus);
-		me.cbHydraulic.plugElectricSource(oElectric.oBatteryBus);
-		me.cbGearControl.plugElectricSource(oElectric.oHotBus);
+		oElectric.hotBus.plug(me.cbFlapUNB.In);
+		
+		oElectric.batteryBus.plug(me.cbFlapControl.In);
+		oElectric.batteryBus.plug(me.cbFlap.In);
+		oElectric.batteryBus.plug(me.cbEmergency1.In);
+		oElectric.batteryBus.plug(me.cbAvBus.In);
+		oElectric.batteryBus.plug(me.cbInstrumentLight.In);
+		oElectric.batteryBus.plug(me.cbStrobeLight.In);
+		oElectric.batteryBus.plug(me.cbIceLight.In);
+		oElectric.batteryBus.plug(me.cbVneWarn.In);
+		oElectric.batteryBus.plug(me.cbFuelFlow.In);
+		oElectric.batteryBus.plug(me.cbFuelPump2.In);
+		oElectric.batteryBus.plug(me.cbWindShieldControl.In);
+		oElectric.batteryBus.plug(me.cbWindShieldHeat.In);
+		oElectric.batteryBus.plug(me.cbBoots.In);
+		oElectric.batteryBus.plug(me.cbPropellerHeat.In);
+		oElectric.batteryBus.plug(me.cbIFD_LH_B.In);
+		oElectric.batteryBus.plug(me.cbIgnition.In);
+		oElectric.batteryBus.plug(me.cbStart.In);
+		oElectric.batteryBus.plug(me.cbAutopilotServo.In);
+		oElectric.batteryBus.plug(me.cbEnvironmentalBleed.In);
+		oElectric.batteryBus.plug(me.cbHydraulic.In);
+		
+		oElectric.hotBus.plug(me.cbGearControl.In);
+		
 		
 	# Bank D
 		
-		me.cbLowVolt.plugElectricSource(oElectric.oEmergencyBus);
-		me.cbVoltMonitor.plugElectricSource(oElectric.oEmergencyBus);
-		me.cbAlt.plugElectricSource(oElectric.oEmergencyBus);
-		me.cbGeneratorReset.plugElectricSource(oElectric.oEmergencyBus);
-		me.cbGlareLight.plugElectricSource(oElectric.oEmergencyBus);
-		me.cbWarnLight.plugElectricSource(oElectric.oEmergencyBus);
-		me.cbLandingLight.plugElectricSource(oElectric.oEmergencyBus);
-		me.cbStallWarning.plugElectricSource(oElectric.oEmergencyBus);
-		me.cbFuelQuantity.plugElectricSource(oElectric.oEmergencyBus);
-		me.cbFuelPump1.plugElectricSource(oElectric.oEmergencyBus);
-		me.cbPitotL.plugElectricSource(oElectric.oEmergencyBus);
-		me.cbIntakeAI.plugElectricSource(oElectric.oEmergencyBus);
-		me.cbEngineInstrument1.plugElectricSource(oElectric.oEmergencyBus);
-		me.cbDIP1.plugElectricSource(oElectric.oEmergencyBus);
-		me.cbIFD_LH_A.plugElectricSource(oElectric.oEmergencyBus);
-		me.cbKeypad.plugElectricSource(oElectric.oEmergencyBus);
-		me.cbATC.plugElectricSource(oElectric.oEmergencyBus);
-		me.cbStandbyGyroskop.plugElectricSource(oElectric.oEmergencyBus);
-		me.cbDump.plugElectricSource(oElectric.oEmergencyBus);
-		me.cbCabinPressure.plugElectricSource(oElectric.oEmergencyBus);
-		me.cbGearWarn.plugElectricSource(oElectric.oEmergencyBus);
-		me.cbGearAux1.plugElectricSource(oElectric.oHotBus);
-			
+		oElectric.emergencyBus.plug(me.cbLowVolt.In);
+		oElectric.emergencyBus.plug(me.cbVoltMonitor.In);
+		oElectric.emergencyBus.plug(me.cbAlt.In);
+		oElectric.emergencyBus.plug(me.cbGeneratorReset.In);
+		oElectric.emergencyBus.plug(me.cbGlareLight.In);
+		oElectric.emergencyBus.plug(me.cbWarnLight.In);
+		oElectric.emergencyBus.plug(me.cbLandingLight.In);
+		oElectric.emergencyBus.plug(me.cbStallWarning.In);
+		oElectric.emergencyBus.plug(me.cbFuelQuantity.In);
+		oElectric.emergencyBus.plug(me.cbFuelPump1.In);
+		oElectric.emergencyBus.plug(me.cbPitotL.In);
+		oElectric.emergencyBus.plug(me.cbIntakeAI.In);
+		oElectric.emergencyBus.plug(me.cbEngineInstrument1.In);
+		oElectric.emergencyBus.plug(me.cbDIP1.In);
+		oElectric.emergencyBus.plug(me.cbIFD_LH_A.In);
+		oElectric.emergencyBus.plug(me.cbKeypad.In);
+		oElectric.emergencyBus.plug(me.cbATC.In);
+		oElectric.emergencyBus.plug(me.cbStandbyGyroskop.In);
+		oElectric.emergencyBus.plug(me.cbDump.In);
+		oElectric.emergencyBus.plug(me.cbCabinPressure.In);
+		oElectric.emergencyBus.plug(me.cbGearWarn.In);
+		
+		oElectric.hotBus.plug(me.cbGearAux1.In);
+
+		
+		
+		
 	},
 	# can only used when Module extra500 is completly loaded.
 	# All callback functions must called from a global namespace
