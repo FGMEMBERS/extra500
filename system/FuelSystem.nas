@@ -228,7 +228,7 @@ var FuelSystem = {
 		var flown = 0;
 		flown += me.oPump1.flow(flow);
 		flown += me.oPump2.flow(flow-flown);
-		return flown;
+		return flow;
 	},
 	_pumpToEngine: func(){
 		var need = me.capEngine - me.levelEngine;
