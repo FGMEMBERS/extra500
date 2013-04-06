@@ -32,33 +32,36 @@
   </transform>
  </animation>
 
-
-<!--
+ 	<animation>
+		<type>textranslate</type>
+		<object-name>IAS</object-name>
+		<property>/velocities/airspeed-kt</property>
+		<factor>.0022</factor>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+<!--Dimming Test -->
 <animation>
-  <type>textranslate</type>
-  <object-name>Oben</object-name>
-  <property>orientation/pitch-deg</property>
-  <factor>.01</factor>
-  <axis>
-   <x>0</x>
-   <y>1</y>
-  </axis>
- </animation>
+        <type>material</type>
+        <object-name>Oben</object-name>
+        <object-name>IAS</object-name>
+		<condition>
+		<equals>
+		<property>extra500/SidePanel/Light/Instrument/state</property>
+		<value>1</value>
+		</equals>
+	</condition>
+        <emission>
+            <red>.7</red>
+            <green>.7</green>
+            <blue>.7</blue>
+            <factor-prop>extra500/MasterPanel/Dimming/Instrument/state</factor-prop>
+        </emission>
+</animation>
 
- <animation>
-  <type>texrotate</type>
-  <object-name>Oben</object-name>
-  <property>orientation/roll-deg</property>
-  <factor>1</factor>
-<center>
-   <x>0.5</x>
-   <y>0.5</y>
-  </center>
-  <axis>
-   <z>-1</z>
-   <y>0</y>
-  </axis>
- </animation>
--->
 </PropertyList>
 
