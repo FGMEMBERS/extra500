@@ -44,6 +44,7 @@ var ElectricSystem = {
 		me.oBatteryBus.plugElectricSource(me.oBatteryRelais.oRight);
 		me.oLoadBus.plugElectricSource(me.oBatteryRelais.oRight);
 		me.oEmergencyBus.plugElectricSource(me.oBatteryRelais.oRight);
+		me.oAvionicsBus.plugElectricSource(me.oBatteryRelais.oRight);
 		
 		
 		
