@@ -128,7 +128,7 @@
 	<tire-rumble>
 		<name>tire-rumble</name>
 		<mode>looped</mode>
-		<path>Aircraft/extra500/Sounds/rumble.wav</path>
+		<path>Sounds/rumble.wav</path>
 		<condition>
 			<or>
 				<property>/gear/gear[0]/wow</property>
