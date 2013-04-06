@@ -2260,4 +2260,26 @@
 	</action>
 </animation>
 
+<!--Dimming Test -->
+<animation>
+        <type>material</type>
+        <object-name>blende.000</object-name>
+        <object-name>blende.001</object-name>
+        <object-name>blende.003</object-name>
+        <object-name>blende.004</object-name>
+
+		<condition>
+		<equals>
+		<property>extra500/SidePanel/Light/Instrument/state</property>
+		<value>1</value>
+		</equals>
+	</condition>
+        <emission>
+            <red>.4</red>
+            <green>.4</green>
+            <blue>.4</blue>
+            <factor-prop>extra500/MasterPanel/Dimming/Instrument/state</factor-prop>
+        </emission>
+</animation>
+
 </PropertyList>
