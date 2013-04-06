@@ -15,9 +15,9 @@ var simulation_cycle = func(){
 	extra500.oElectric.update();
 	extra500.oFuelSystem.update();
 	
-	foreach(var fuse;Part.aListElectricFuseAble){
-		fuse.fuseReset();
-	}
+# 	foreach(var fuse;Part.aListElectricFuseAble){
+# 		fuse.fuseReset();
+# 	}
 	var used = systime() - start;
 	nCycleTimeUsed.setValue(used);
 	
