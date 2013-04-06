@@ -32,23 +32,66 @@
   </transform>
  </animation>
 
- 	<animation>
-		<type>textranslate</type>
-		<object-name>IAS</object-name>
-		<property>/velocities/airspeed-kt</property>
-		<factor>.0022</factor>
-		<axis>
-			<x>0</x>
-			<y>1</y>
-			<z>0</z>
-		</axis>
-	</animation>
-	
+<animation>
+	<type>textranslate</type>
+	<object-name>IAS</object-name>
+	<property>/velocities/airspeed-kt</property>
+	<factor>.00289</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+
+<animation>
+	<type>textranslate</type>
+	<object-name>001er</object-name>
+	<property>/velocities/airspeed-kt</property>
+	<factor>.1</factor>
+	<step>1</step>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>010er</object-name>
+	<property>/velocities/airspeed-kt</property>
+	<factor>.01</factor>
+	<step>10</step>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>100er</object-name>
+	<property>/velocities/airspeed-kt</property>
+	<factor>.001</factor>
+	<step>100</step>
+
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+
+
 <!--Dimming Test -->
 <animation>
         <type>material</type>
         <object-name>Oben</object-name>
         <object-name>IAS</object-name>
+		<object-name>001er</object-name>
+		<object-name>010er</object-name>
+		<object-name>100er</object-name>
+
 		<condition>
 		<equals>
 		<property>extra500/SidePanel/Light/Instrument/state</property>
