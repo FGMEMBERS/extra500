@@ -39,58 +39,58 @@ var MasterPanel = {
 		nParent = m.nPanel.initNode("Autopilot");
 		
 		nCompNode = nParent.initNode("Master");
-		m.swtAutopilotMaster = Part.ElectricKnob.new(nCompNode,"Autopilot Master","INT",-1,1,1);
+		m.swtAutopilotMaster = Part.ElectricSwitch3P.new(nCompNode,"Autopilot Master");
 		
 		nCompNode = nParent.initNode("PitchTrim");
-		m.swtAutopilotPitchTrim = Part.ElectricSwitch.new(nCompNode,"Autopilot Pitch Trim");
+		m.swtAutopilotPitchTrim = Part.ElectricSwitch2P.new(nCompNode,"Autopilot Pitch Trim");
 		
 		nCompNode = nParent.initNode("YawDamper");
-		m.swtAutopilotYawDamper = Part.ElectricSwitch.new(nCompNode,"Autopilot Yaw Damper");
+		m.swtAutopilotYawDamper = Part.ElectricSwitch2P.new(nCompNode,"Autopilot Yaw Damper");
 		
 		nCompNode = nParent.initNode("YawTrim");
-		m.swtAutopilotYawTrim = Part.ElectricKnob.new(nCompNode,"Autopilot Yaw Trim","DOUBLE",-1.0,1.0,0.1);
+		m.swtAutopilotYawTrim = Part.ElectricDimmer.new(nCompNode,"Autopilot Yaw Trim","DOUBLE",-1.0,1.0,0.1);
 # Fuel
 		nParent = m.nPanel.initNode("Fuel");
 		
 		nCompNode = nParent.initNode("TransferLeft");
-		m.swtFuelTransferLeft = Part.ElectricSwitch.new(nCompNode,"Fuel Transfer Left");
+		m.swtFuelTransferLeft = Part.ElectricSwitch2P.new(nCompNode,"Fuel Transfer Left");
 		
 		nCompNode = nParent.initNode("TransferRight");
-		m.swtFuelTransferRight = Part.ElectricSwitch.new(nCompNode,"Fuel Transfer Right");
+		m.swtFuelTransferRight = Part.ElectricSwitch2P.new(nCompNode,"Fuel Transfer Right");
 		
 		nCompNode = nParent.initNode("Pump1");
-		m.swtFuelPump1 = Part.ElectricSwitch.new(nCompNode,"Fuel Pump 1");
+		m.swtFuelPump1 = Part.ElectricSwitch2P.new(nCompNode,"Fuel Pump 1");
 		
 		nCompNode = nParent.initNode("Pump2");
-		m.swtFuelPump2 = Part.ElectricSwitch.new(nCompNode,"Fuel Pump 2");
+		m.swtFuelPump2 = Part.ElectricSwitch2P.new(nCompNode,"Fuel Pump 2");
 # Engine
 		nParent = m.nPanel.initNode("Engine");
 		
 		nCompNode = nParent.initNode("OverSpeed");
-		m.swtEngineOverSpeed = Part.ElectricSwitch.new(nCompNode,"Engine over speed test");
+		m.swtEngineOverSpeed = Part.ElectricSwitch2P.new(nCompNode,"Engine over speed test");
 		
 		nCompNode = nParent.initNode("Motoring");
-		m.swtEngineMotoring = Part.ElectricKnob.new(nCompNode,"Engine Motoring","INT",-1,1,1);
+		m.swtEngineMotoring = Part.ElectricSwitch3P.new(nCompNode,"Engine Motoring");
 		
 		nCompNode = nParent.initNode("Start");
-		m.swtEngineStart = Part.ElectricKnob.new(nCompNode,"Engine Start","INT",-1,1,1);
+		m.swtEngineStart = Part.ElectricSwitch3P.new(nCompNode,"Engine Start");
 # Dimming
 		nParent = m.nPanel.initNode("Dimming");
 		
 		nCompNode = nParent.initNode("Keypad");
-		m.swtDimmerKeypad = Part.ElectricKnob.new(nCompNode,"Dimmer Keypad Light","DOUBLE",0,1.0,0.1);
+		m.swtDimmerKeypad = Part.ElectricDimmer.new(nCompNode,"Dimmer Keypad Light","DOUBLE",0,1.0,0.1);
 		
 		nCompNode = nParent.initNode("Glare");
-		m.swtDimmerGlare = Part.ElectricKnob.new(nCompNode,"Dimmer Glare Light","DOUBLE",0,1.0,0.1);
+		m.swtDimmerGlare = Part.ElectricDimmer.new(nCompNode,"Dimmer Glare Light","DOUBLE",0,1.0,0.1);
 		
 		nCompNode = nParent.initNode("Instrument");
-		m.swtDimmerInstrument = Part.ElectricKnob.new(nCompNode,"Dimmer Instrument Light","DOUBLE",0,1.0,0.1);
+		m.swtDimmerInstrument = Part.ElectricDimmer.new(nCompNode,"Dimmer Instrument Light","DOUBLE",0,1.0,0.1);
 		
 		nCompNode = nParent.initNode("Switch");
-		m.swtDimmerSwitch = Part.ElectricKnob.new(nCompNode,"Dimmer Switch Light","DOUBLE",0,1.0,0.1);
+		m.swtDimmerSwitch = Part.ElectricDimmer.new(nCompNode,"Dimmer Switch Light","DOUBLE",0,1.0,0.1);
 		
 		nCompNode = nParent.initNode("Annunciator");
-		m.swtDimmerAnnunciator = Part.ElectricKnob.new(nCompNode,"Dimmer Annunciator Light","DOUBLE",0,1.0,0.1);
+		m.swtDimmerAnnunciator = Part.ElectricDimmer.new(nCompNode,"Dimmer Annunciator Light","DOUBLE",0,1.0,0.1);
 		
 		return m;
 	},
@@ -101,10 +101,15 @@ var MasterPanel = {
 		
 		
 		#Fuel
-		me.swtFuelTransferLeft.plugElectricSource(oCircuitBreakerPanel.cbFuelTransferL);
-		me.swtFuelTransferRight.plugElectricSource(oCircuitBreakerPanel.cbFuelTransferR);
-		me.swtFuelPump1.plugElectricSource(oCircuitBreakerPanel.cbFuelPump1);
-		me.swtFuelPump2.plugElectricSource(oCircuitBreakerPanel.cbFuelPump2);
+# 		me.swtFuelTransferLeft.plugElectricSource(oCircuitBreakerPanel.cbFuelTransferL);
+# 		me.swtFuelTransferRight.plugElectricSource(oCircuitBreakerPanel.cbFuelTransferR);
+# 		me.swtFuelPump1.plugElectricSource(oCircuitBreakerPanel.cbFuelPump1);
+# 		me.swtFuelPump2.plugElectricSource(oCircuitBreakerPanel.cbFuelPump2);
+		
+		me.swtFuelTransferLeft.In.plug(oCircuitBreakerPanel.cbFuelTransferL.Out);
+		me.swtFuelTransferRight.In.plug(oCircuitBreakerPanel.cbFuelTransferR.Out);
+		me.swtFuelPump1.In.plug(oCircuitBreakerPanel.cbFuelPump1.Out);
+		me.swtFuelPump2.In.plug(oCircuitBreakerPanel.cbFuelPump2.Out);
 		
 		# Engine
 		

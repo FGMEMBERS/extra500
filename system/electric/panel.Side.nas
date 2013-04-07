@@ -52,102 +52,102 @@ var SidePanel = {
 		nParent = m.nPanel.initNode("Main");
 		
 		nCompNode = nParent.initNode("Battery");
-		m.swtMainBattery = Part.ElectricSwitch.new(nCompNode,"Main Battery");
+		m.swtMainBattery = Part.ElectricSwitch2P.new(nCompNode,"Main Battery");
 		
 		nCompNode = nParent.initNode("StandbyAlt");
-		m.swtMainStandbyAlt = Part.ElectricSwitch.new(nCompNode,"Main Standby Alternator");
+		m.swtMainStandbyAlt = Part.ElectricSwitch2P.new(nCompNode,"Main Standby Alternator");
 		
 		nCompNode = nParent.initNode("Generator");
-		m.swtMainGenerator = Part.ElectricKnob.new(nCompNode,"Main Generator","INT",-1,1,1);
+		m.swtMainGenerator = Part.ElectricSwitch3P.new(nCompNode,"Main Generator");
 		
 		nCompNode = nParent.initNode("ExternalPower");
-		m.swtMainExternalPower = Part.ElectricSwitch.new(nCompNode,"Main External Power");
+		m.swtMainExternalPower = Part.ElectricSwitch2P.new(nCompNode,"Main External Power");
 		
 		nCompNode = nParent.initNode("GeneratorTest");
-		m.swtMainGeneratorTest = Part.ElectricKnob.new(nCompNode,"Main Generator Test","INT",-1,1,1);
+		m.swtMainGeneratorTest = Part.ElectricSwitch3P.new(nCompNode,"Main Generator Test");
 		
 		nCompNode = nParent.initNode("Avionics");
-		m.swtMainAvionics = Part.ElectricSwitch.new(nCompNode,"Main Avionics");
+		m.swtMainAvionics = Part.ElectricSwitch2P.new(nCompNode,"Main Avionics");
 
 # Light
 		nParent = m.nPanel.initNode("Light");
 		
 		nCompNode = nParent.initNode("Strobe");
-		m.swtLightStrobe = Part.ElectricSwitch.new(nCompNode,"Light Strobe");
+		m.swtLightStrobe = Part.ElectricSwitch2P.new(nCompNode,"Light Strobe");
 		
 		nCompNode = nParent.initNode("Navigation");
-		m.swtLightNavigation = Part.ElectricSwitch.new(nCompNode,"Light Navigation");
+		m.swtLightNavigation = Part.ElectricSwitch2P.new(nCompNode,"Light Navigation");
 		
 		nCompNode = nParent.initNode("Landing");
-		m.swtLightLanding = Part.ElectricSwitch.new(nCompNode,"Light Landing");
+		m.swtLightLanding = Part.ElectricSwitch2P.new(nCompNode,"Light Landing");
 				
 		nCompNode = nParent.initNode("Recognition");
-		m.swtLightRecognition = Part.ElectricSwitch.new(nCompNode,"Light Recognition");
+		m.swtLightRecognition = Part.ElectricSwitch2P.new(nCompNode,"Light Recognition");
 		
 		nCompNode = nParent.initNode("Cabin");
-		m.swtLightCabin = Part.ElectricSwitch.new(nCompNode,"Light Cabin");
+		m.swtLightCabin = Part.ElectricSwitch2P.new(nCompNode,"Light Cabin");
 		
 		nCompNode = nParent.initNode("Map");
-		m.swtLightMap = Part.ElectricSwitch.new(nCompNode,"Light Map");
+		m.swtLightMap = Part.ElectricSwitch2P.new(nCompNode,"Light Map");
 		
 		nCompNode = nParent.initNode("Instrument");
-		m.swtLightInstrument = Part.ElectricSwitch.new(nCompNode,"Light Instrument");
+		m.swtLightInstrument = Part.ElectricSwitch2P.new(nCompNode,"Light Instrument");
 		
 		nCompNode = nParent.initNode("Glare");
-		m.swtLightGlare = Part.ElectricSwitch.new(nCompNode,"Light Glare");
+		m.swtLightGlare = Part.ElectricSwitch2P.new(nCompNode,"Light Glare");
 		
 		nCompNode = nParent.initNode("Night");
-		m.swtLightNight = Part.ElectricKnob.new(nCompNode,"Light Night","INT",-1,1,1);
+		m.swtLightNight = Part.ElectricSwitch3P.new(nCompNode,"Light Night");
 		
 		nCompNode = nParent.initNode("Ice");
-		m.swtLightIce = Part.ElectricSwitch.new(nCompNode,"Light Ice");
+		m.swtLightIce = Part.ElectricSwitch2P.new(nCompNode,"Light Ice");
 		
 # Deicing
 		nParent = m.nPanel.initNode("Deicing");
 		
 		nCompNode = nParent.initNode("Propeller");
-		m.swtDeicingPropeller = Part.ElectricSwitch.new(nCompNode,"Deicing Propeller");
+		m.swtDeicingPropeller = Part.ElectricSwitch2P.new(nCompNode,"Deicing Propeller");
 		
 		nCompNode = nParent.initNode("PitotL");
-		m.swtDeicingPitotL = Part.ElectricKnob.new(nCompNode,"Deicing Pitot Left","INT",-1,1,1);
+		m.swtDeicingPitotL = Part.ElectricSwitch3P.new(nCompNode,"Deicing Pitot Left");
 		
 		nCompNode = nParent.initNode("PitotR");
-		m.swtDeicingPitotR = Part.ElectricKnob.new(nCompNode,"Deicing Pitot Right","INT",-1,1,1);
+		m.swtDeicingPitotR = Part.ElectricSwitch3P.new(nCompNode,"Deicing Pitot Right");
 		
 		nCompNode = nParent.initNode("Windshield");
-		m.swtDeicingWindshield = Part.ElectricSwitch.new(nCompNode,"Deicing Windshield");
+		m.swtDeicingWindshield = Part.ElectricSwitch2P.new(nCompNode,"Deicing Windshield");
 		
 		nCompNode = nParent.initNode("Boots");
-		m.swtDeicingBoots = Part.ElectricSwitch.new(nCompNode,"Deicing Boots");
+		m.swtDeicingBoots = Part.ElectricSwitch2P.new(nCompNode,"Deicing Boots");
 	
 # Cabin
 		nParent = m.nPanel.initNode("Cabin");
 		
 		nCompNode = nParent.initNode("Pressure");
-		m.swtCabinPressure = Part.ElectricKnob.new(nCompNode,"Cabin Pressure Controller","INT",-1,1,1);
+		m.swtCabinPressure = Part.ElectricSwitch3P.new(nCompNode,"Cabin Pressure Controller");
 		
 		nCompNode = nParent.initNode("AirCondition");
-		m.swtCabinAirCondition = Part.ElectricSwitch.new(nCompNode,"Cabin Air Condition");
+		m.swtCabinAirCondition = Part.ElectricSwitch2P.new(nCompNode,"Cabin Air Condition");
 		
 		nCompNode = nParent.initNode("Vent");
-		m.swtCabinVent = Part.ElectricKnob.new(nCompNode,"Cabin Vent","INT",-1,1,1);
+		m.swtCabinVent = Part.ElectricSwitch3P.new(nCompNode,"Cabin Vent");
 		
 		nCompNode = nParent.initNode("EnvironmentalAir");
-		m.swtCabinEnvironmentalAir = Part.ElectricSwitch.new(nCompNode,"Cabin Environmental Air");
+		m.swtCabinEnvironmentalAir = Part.ElectricSwitch2P.new(nCompNode,"Cabin Environmental Air");
 		
 		nCompNode = nParent.initNode("TempMode");
-		m.swtCabinTempMode = Part.ElectricKnob.new(nCompNode,"Cabin Temperature Controller Mode","INT",-1,1,1);
+		m.swtCabinTempMode = Part.ElectricSwitch3P.new(nCompNode,"Cabin Temperature Controller Mode");
 		
 		nCompNode = nParent.initNode("TempCtrl");
-		m.swtCabinTempCtrl = Part.ElectricSwitch.new(nCompNode,"Cabin Temperature Controller");
+		m.swtCabinTempCtrl = Part.ElectricSwitch2P.new(nCompNode,"Cabin Temperature Controller");
 		
 		nCompNode = nParent.initNode("Temperature");
-		m.swtCabinTemperature = Part.ElectricKnob.new(nCompNode,"Cabin Temperature","DOUBLE",0.0,1.0,0.05,0.5);
+		m.swtCabinTemperature = Part.ElectricDimmer.new(nCompNode,"Cabin Temperature","DOUBLE",0.0,1.0,0.05,0.5);
 		
 # Emergency	
 		
 		nCompNode = nParent.initNode("Emergency");
-		m.swtEmergency = Part.ElectricSwitch.new(nCompNode,"Emergency");
+		m.swtEmergency = Part.ElectricSwitch2P.new(nCompNode,"Emergency");
 		
 		
 		return m;
@@ -155,8 +155,13 @@ var SidePanel = {
 	plugElectric : func(){
 		global.fnAnnounce("debug","SidePanel.plugElectric() ...");
 
-		me.swtMainBattery.plugElectricSource(extra500.oElectric.oHotBus);
-			
+		me.swtEmergency.In.plug(oElectric.GND);
+		
+		me.swtMainBattery.In.plug(me.swtEmergency.Off);
+		
+		me.swtLightLanding.In.plug(oCircuitBreakerPanel.cbLandingLight.Out);
+		me.swtLightInstrument.In.plug(oCircuitBreakerPanel.cbInstrumentLight.Out);
+		
 	},
 	# can only used when Module extra500 is completly loaded.
 	# All callback functions must called from a global namespace

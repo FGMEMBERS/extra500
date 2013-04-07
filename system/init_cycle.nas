@@ -5,6 +5,8 @@ extra500.oElectric.plugElectric();
 extra500.oCircuitBreakerPanel.plugElectric();
 extra500.oSidePanel.plugElectric();
 extra500.oMasterPanel.plugElectric();
+extra500.oLight.plugElectric();
+
 extra500.oFuelSystem.plugElectric();
 
 
@@ -23,7 +25,7 @@ var simulation_cycle = func(){
 	
 };
 
-var cycle_sec = 1;
+var cycle_sec = 1.0;
 var cycle_run = 1;
 var cycle = func(){
 	#debug.benchmark("Simulation Cycle ... ",func simulation_cycle());

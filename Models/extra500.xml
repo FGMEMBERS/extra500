@@ -3,6 +3,11 @@
 <PropertyList>
 
 <path>extra500_frame.ac</path>
+<!-- Canvas Test -->
+ <model>
+  <path>canvas-test.xml</path>
+ </model>
+
 
 <!-- Submodels -->
 <model>
