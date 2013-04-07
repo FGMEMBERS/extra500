@@ -641,20 +641,22 @@ var ElectricShunt = {
 		etd.in("Shunt",me.name,name,volt);
 		var ampere = 0;
 		me.setVolt(volt);
+		me.voltIndicated = volt;
 		
 		if (name == "+"){
 			ampere += me.Minus.applyVoltage(volt);
 			me.ampereIndicated = -ampere;
-			me.nVoltIndicated = -volt;
+			me.voltIndicated = -volt;
 			
 		}else if(name == "-"){
 			ampere += me.Plus.applyVoltage(volt);
 			me.ampereIndicated = ampere;
-			me.nVoltIndicated = volt;
+			me.voltIndicated = volt;
 		}
 		
 		me.setAmpere(ampere);
 		me.nAmpereIndicated.setValue(me.ampereIndicated);
+		me.nVoltIndicated.setValue(me.voltIndicated);
 		
 		etd.out("Shunt",me.name,name,volt,ampere);
 		return ampere;

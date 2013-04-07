@@ -38,21 +38,31 @@ var canvas_demo = {
        .setFontSize(70, 1.5)
        .setTranslation(384, 5);
 
-    m.dynamic_text =
+    m.textSim =
       g.createChild("text", "dynamic-text")
        .setText("Text node created at runtime.")
-       .setFont("Helvetica.txf")
-       .setFontSize(50)
-       .setAlignment("center-center")
-       .setTranslation(384, 200);
+       .setFont("LiberationFonts/LiberationMono-Bold.ttf")
+       .setFontSize(40)
+       .setAlignment("left-top")
+       .setTranslation(20, 20);
+    m.textElectric =
+      g.createChild("text", "dynamic-text")
+       .setText("Text node created at runtime.")
+       .setFont("LiberationFonts/LiberationMono-Bold.ttf")
+       .setFontSize(40)
+       .setAlignment("left-top")
+       .setTranslation(20, 200);
     #m.tf = m.dynamic_text.createTransform();
     #m.tf.setTranslation(384, 200);
 
     
     return m;
   },
-  setShunt : func(text){
-	me.dynamic_text.setText(text);
+  setSim : func(text){
+	me.textSim.setText(text);
+  },
+  setElectric : func(text){
+	me.textElectric.setText(text);
   },
   update: func()
   {

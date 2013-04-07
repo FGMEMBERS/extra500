@@ -15,6 +15,18 @@ var LightBoard = {
 		m.Instrument = Part.ElectricLight.new(nCompNode,"Instrument");
 		m.Instrument.electricConfig(12.0,26.0,50.0);
 		
+		nCompNode = m.nPanel.initNode("Ice");
+		m.Ice = Part.ElectricLight.new(nCompNode,"Ice");
+		m.Ice.electricConfig(12.0,26.0,100.0);
+		
+		nCompNode = m.nPanel.initNode("Glare");
+		m.Glare = Part.ElectricLight.new(nCompNode,"Glare");
+		m.Glare.electricConfig(12.0,26.0,25.0);
+		
+		nCompNode = m.nPanel.initNode("Strobe");
+		m.Strobe = Part.ElectricLight.new(nCompNode,"Strobe");
+		m.Strobe.electricConfig(12.0,26.0,30.0);
+		
 		
 		return m;
 	},
@@ -26,6 +38,16 @@ var LightBoard = {
 		
 		me.Instrument.Plus.plug(oSidePanel.swtLightInstrument.On);
 		me.Instrument.Minus.plug(oElectric.GND);
+		
+		me.Ice.Plus.plug(oSidePanel.swtLightIce.On);
+		me.Ice.Minus.plug(oElectric.GND);
+		
+		me.Glare.Plus.plug(oSidePanel.swtLightGlare.On);
+		me.Glare.Minus.plug(oElectric.GND);
+		
+		me.Strobe.Plus.plug(oSidePanel.swtLightStrobe.On);
+		me.Strobe.Minus.plug(oElectric.GND);
+		
 			
 	},
 };

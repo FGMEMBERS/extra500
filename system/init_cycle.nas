@@ -22,7 +22,8 @@ var simulation_cycle = func(){
 	}
 	var used = systime() - start;
 	nCycleTimeUsed.setValue(used);
-	
+	var text = sprintf("Cycle time used : %.4f sec",used);
+	IFD.demo.setSim(text);
 };
 
 var cycle_sec = 1.0;
