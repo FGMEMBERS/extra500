@@ -6,31 +6,35 @@ var ElectricTreeDebugger = {
 			ElectricTreeDebugger
 		]};
 		m.depth 	= 0;
-		m.defaultStr 	= "                               "; 
+		m.defaultStr 	= "                                       ";
+		m.debugLevel	=0;
 		return m;
 
 	},
 	in : func(type,name,connector,volt,icon="└┬"){
-		
-		var space = substr(me.defaultStr,0,me.depth);
-		var output = sprintf("%s %s %s %s %s %.4fV",space,icon,type,name,connector,volt);
-		print(output);
-		me.depth += 1;
-
+		if (me.debugLevel > 0){
+			var space = substr(me.defaultStr,0,me.depth);
+			var output = sprintf("%s %s %s %s %s %.4fV",space,icon,type,name,connector,volt);
+			print(output);
+			me.depth += 1;
+		}
 		
 	},
 	out : func(type,name,connector,volt,ampere,icon="┌┴"){
-		
-		var space = substr(me.defaultStr,0,me.depth);
-		var output = sprintf("%s%s %s %s %s %.4fV %.4fA",space,icon,type,name,connector,volt,ampere);
-		print(output);
-		me.depth -= 1;
+		if (me.debugLevel > 0){
+			var space = substr(me.defaultStr,0,me.depth);
+			var output = sprintf("%s%s %s %s %s %.4fV %.4fA",space,icon,type,name,connector,volt,ampere);
+			print(output);
+			me.depth -= 1;
+		}
 
 	},
 	echo : func(msg,icon="**"){
-		var space = substr(me.defaultStr,0,me.depth);
-		var output = sprintf("%s%s %s",space,icon,msg);
-		print(output);
+		if (me.debugLevel > 0){
+			var space = substr(me.defaultStr,0,me.depth);
+			var output = sprintf("%s%s %s",space,icon,msg);
+			print(output);
+		}
 	}
 		
 };

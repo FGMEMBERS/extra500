@@ -306,6 +306,9 @@ Started March 13 2013 by Thomas Grossberger and Dirk Dittmann
 		<file>Aircraft/extra500/system/electric/light.nas</file>
 		<file>Aircraft/extra500/system/fuel/fuelSystem.nas</file>
 	</extra500>
+	<IFD>
+		<file>Aircraft/extra500/system/IFD/IFD_test.nas</file>
+	</IFD>
 	<CoPilot>
 		<file>Aircraft/extra500/Nasal/coPilot.nas</file>
 	</CoPilot>

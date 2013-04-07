@@ -47,6 +47,8 @@ var MainBoard = {
 	},
 	update : func(){
 		me.oBattery.update();
+		var text = sprintf("Shunt Battery \t: %0.4f Amp",me.batteryShunt.ampereIndicated);
+		IFD.demo.setShunt(text);
 	},
 	applyVoltage : func(volt,name=""){ 
 		if (name == "GND"){
