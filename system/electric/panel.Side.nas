@@ -159,7 +159,9 @@ var SidePanel = {
 		
 		me.swtMainBattery.In.plug(me.swtEmergency.Off);
 		
-			
+		me.swtLightLanding.In.plug(oCircuitBreakerPanel.cbLandingLight.Out);
+		me.swtLightInstrument.In.plug(oCircuitBreakerPanel.cbInstrumentLight.Out);
+		
 	},
 	# can only used when Module extra500 is completly loaded.
 	# All callback functions must called from a global namespace

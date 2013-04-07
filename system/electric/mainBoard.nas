@@ -1,7 +1,7 @@
-var ElectricSystem = {
+var MainBoard = {
 	new : func{
 		var m = {parents:[
-			ElectricSystem
+			MainBoard
 		]};
 		m.nRoot = props.globals.getNode("extra500/electric",1);
 		
@@ -14,12 +14,13 @@ var ElectricSystem = {
 		
 		# Relais
 		var node = m.nRoot.initNode("BatteryRelais");
-		m.BatteryRelais = Part.ElectricRelais.new(node,"Battery Relais");
+		m.batteryRelais = Part.ElectricRelais.new(node,"Battery Relais");
 
 		
 		#internal Buses
 		
 		m.iBus20 = Part.ElectricBus.new("#20");
+		m.iBus10 = Part.ElectricBus.new("#20");
 		
 		# main Buses
 		
@@ -30,7 +31,16 @@ var ElectricSystem = {
 		m.emergencyBus = Part.ElectricBus.new("EmergencyBus");
 		m.emergencyBus = Part.ElectricBus.new("EmergencyBus");
 		
+		# shunts
+		var node = m.nRoot.initNode("BatteryShunt");
+		m.batteryShunt = Part.ElectricShunt.new(node,"Battery Shunt");
 		
+		# Fuse
+		var node = m.nRoot.initNode("BatteryFuse");
+		m.batteryFuse = Part.ElectricCircuitBraker.new(node,"Battery Fuse");
+		m.batteryFuse.fuseConfig(150.0);
+		
+		#### solder Connectors
 		m.GND.solder(m);
 		
 		return m;
@@ -40,7 +50,7 @@ var ElectricSystem = {
 	},
 	applyVoltage : func(volt,name=""){ 
 		if (name == "GND"){
-			print("ElectricSystem.applyVoltage("~volt~","~name~") ... touch GND");
+			#etd.echo("MainBoard.applyVoltage("~volt~","~name~") ... touch GND");
 			return 0.000000001;
 		}
 		return 0;
@@ -51,10 +61,24 @@ var ElectricSystem = {
 		
 		me.hotBus.plug(me.oBattery.plus);
 		
-		#me.iBus20.plug(me.oBattery.plus);
-		#me.iBus20.plug(me.GND);
+		# Battery Relais
+		me.hotBus.plug(me.batteryRelais.Plus);
+		me.batteryRelais.Minus.plug(oSidePanel.swtMainBattery.On);
+		me.hotBus.plug(me.batteryRelais.In);
+		me.iBus20.plug(me.batteryRelais.Out);
+		
+		# Battery Shunt
+		me.iBus20.plug(me.batteryShunt.Minus);
+		me.iBus10.plug(me.batteryShunt.Plus);
+		
+		# battery Fuse
+		me.iBus10.plug(me.batteryFuse.In);
+		me.batteryBus.plug(me.batteryFuse.Out);
+		
+		
+		
 		
 	},
 };
 
-var oElectric = ElectricSystem.new();
+var oElectric = MainBoard.new();

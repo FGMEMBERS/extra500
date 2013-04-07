@@ -84,7 +84,7 @@ Started March 13 2013 by Thomas Grossberger and Dirk Dittmann
 	</view>
 	<systems>
 		<autopilot>
-			<path>Aircraft/extra500/system/generic-autopilot.xml</path>
+			<path>Aircraft/extra500/system/autopilot/generic-autopilot.xml</path>
 		</autopilot>
 	</systems>
 
@@ -293,15 +293,17 @@ Started March 13 2013 by Thomas Grossberger and Dirk Dittmann
 		<file>Aircraft/extra500/UserInterface/ui.nas</file>
 	</UI>
 	<Part>
-		<file>Aircraft/extra500/system/part/able.nas</file>
-		<file>Aircraft/extra500/system/part/part.nas</file>
-		<file>Aircraft/extra500/system/part/part.electric.nas</file>
+		<file>Aircraft/extra500/Nasal/part/able.nas</file>
+		<file>Aircraft/extra500/Nasal/part/part.nas</file>
+		<file>Aircraft/extra500/Nasal/part/part.electric.nas</file>
+		<file>Aircraft/extra500/Nasal/part/part.fuel.nas</file>
 	</Part>
 	<extra500>
-		<file>Aircraft/extra500/system/electric/electricSystem.nas</file>
-		<file>Aircraft/extra500/system/panel/CircuitBreakerPanel.nas</file>
-		<file>Aircraft/extra500/system/panel/MasterPanel.nas</file>
-		<file>Aircraft/extra500/system/panel/SidePanel.nas</file>
+		<file>Aircraft/extra500/system/electric/mainBoard.nas</file>
+		<file>Aircraft/extra500/system/electric/panel.CircuitBreaker.nas</file>
+		<file>Aircraft/extra500/system/electric/panel.Master.nas</file>
+		<file>Aircraft/extra500/system/electric/panel.Side.nas</file>
+		<file>Aircraft/extra500/system/electric/light.nas</file>
 		<file>Aircraft/extra500/system/fuel/fuelSystem.nas</file>
 	</extra500>
 	<CoPilot>

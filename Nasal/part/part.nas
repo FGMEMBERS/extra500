@@ -9,4 +9,6 @@ var Part = {
 		m.name = name;
 		return m;
 	},
-}; 
+};
+
+var aListElectricFuseAble = [];
