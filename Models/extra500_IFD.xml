@@ -4,6 +4,7 @@
 
 <path>extra500_IFD.ac</path>
 
+<!-- kuenstlicher horizont -->
 <animation>
   <type>texmultiple</type>
   <object-name>Oben</object-name>
@@ -32,6 +33,7 @@
   </transform>
  </animation>
 
+<!-- IAS -->
 <animation>
 	<type>textranslate</type>
 	<object-name>IAS</object-name>
@@ -43,13 +45,12 @@
 		<z>0</z>
 	</axis>
 </animation>
-
 <animation>
 	<type>textranslate</type>
-	<object-name>001er</object-name>
+	<object-name>IAS.001er</object-name>
 	<property>/velocities/airspeed-kt</property>
 	<factor>.1</factor>
-	<step>1</step>
+<!--	<step>1</step>-->
 	<axis>
 		<x>0</x>
 		<y>1</y>
@@ -58,7 +59,7 @@
 </animation>
 <animation>
 	<type>textranslate</type>
-	<object-name>010er</object-name>
+	<object-name>IAS.010er</object-name>
 	<property>/velocities/airspeed-kt</property>
 	<factor>.01</factor>
 	<step>10</step>
@@ -70,7 +71,7 @@
 </animation>
 <animation>
 	<type>textranslate</type>
-	<object-name>100er</object-name>
+	<object-name>IAS.100er</object-name>
 	<property>/velocities/airspeed-kt</property>
 	<factor>.001</factor>
 	<step>100</step>
@@ -82,16 +83,129 @@
 	</axis>
 </animation>
 
+<!-- Altitude -->
+<animation>
+	<type>textranslate</type>
+	<object-name>Altitude.00011er</object-name>
+	<property>/position/altitude-ft</property>
+	<factor>.01</factor>
+<!--	<step>10</step>-->
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>Altitude.00100er</object-name>
+	<property>/position/altitude-ft</property>
+	<factor>.001</factor>
+	<step>100</step>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>Altitude.01000er</object-name>
+	<property>/position/altitude-ft</property>
+	<factor>.0001</factor>
+	<step>1000</step>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>Altitude.10000er</object-name>
+	<property>/position/altitude-ft</property>
+	<factor>.00001</factor>
+	<step>10000</step>
+
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+
+<!-- Heading -->
+<animation>
+	<type>textranslate</type>
+	<object-name>Heading.001er</object-name>
+	<property>/orientation/heading-deg</property>
+	<factor>.1</factor>
+	<step>1</step>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>Heading.010er</object-name>
+	<property>/orientation/heading-deg</property>
+	<factor>.01</factor>
+	<step>10</step>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>Heading.100er</object-name>
+	<property>/orientation/heading-deg</property>
+	<factor>.001</factor>
+	<step>100</step>
+
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+
+<!-- Kompass -->
+<animation>
+	<type>texrotate</type>
+	<object-name>Kompass</object-name>
+	<property>/orientation/heading-deg</property>
+	<factor>1</factor>
+	<axis>
+		<x>0</x>
+		<y>0</y>
+		<z>-1</z>
+	</axis>
+	<center>
+		<x>0.5</x>
+		<y>0.5</y>
+	</center>
+</animation>
 
 <!--Dimming Test -->
 <animation>
         <type>material</type>
         <object-name>Oben</object-name>
         <object-name>IAS</object-name>
-		<object-name>001er</object-name>
-		<object-name>010er</object-name>
-		<object-name>100er</object-name>
-
+		<object-name>IAS.001er</object-name>
+		<object-name>IAS.010er</object-name>
+		<object-name>IAS.100er</object-name>
+		<object-name>Heading.001er</object-name>
+		<object-name>Heading.010er</object-name>
+		<object-name>Heading.100er</object-name>
+		<object-name>Altitude.10000er</object-name>
+		<object-name>Altitude.01000er</object-name>
+		<object-name>Altitude.00100er</object-name>
+		<object-name>Altitude.00011er</object-name>
+		<object-name>Kompass</object-name>
 		<condition>
 		<equals>
 		<property>extra500/SidePanel/Light/Instrument/state</property>
