@@ -61,8 +61,9 @@ var LightBoard = {
 		me.Map.Plus.plug(oSidePanel.swtLightMap.On);
 		me.Map.Minus.plug(oElectric.GND);
 		
-		me.Instrument.Plus.plug(oSidePanel.swtLightInstrument.On);
-		me.Instrument.Minus.plug(oElectric.GND);
+		me.Instrument.Plus.plug(oCircuitBreakerPanel.cbInstrumentLight.Out);
+		oSidePanel.testBus.plug(me.Instrument.Minus);
+		
 		
 		me.Glare.Plus.plug(oSidePanel.swtLightGlare.On);
 		me.Glare.Minus.plug(oElectric.GND);

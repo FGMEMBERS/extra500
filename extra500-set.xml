@@ -406,6 +406,28 @@ Started March 13 2013 by Thomas Grossberger and Dirk Dittmann
 				]]></script>
 			 </binding>
 		 </key>
+		 <key n="101">
+			 <name>e</name>
+			 <desc>run simulation cycle once</desc>
+			 <repeatable type="bool">false</repeatable>
+			 <binding>
+				 <command>nasal</command>
+				 <script><![CDATA[
+					Part.etd.debugLevel = 1;
+				]]></script>
+			 </binding>
+		 </key>
+		 <key n="69">
+			 <name>E</name>
+			 <desc>run simulation cycle continous</desc>
+			 <repeatable type="bool">false</repeatable>
+			 <binding>
+				 <command>nasal</command>
+				 <script><![CDATA[
+					Part.etd.debugLevel = 0;
+				]]></script>
+			 </binding>
+		 </key>
 	 </keyboard> 
  </input>
 

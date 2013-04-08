@@ -51,8 +51,35 @@ var Electron ={
 		m.ampere	= 0.0;
 		return m;
 	},
+	copyConstructor : func (){
+		var electron = Electron.new();
+		electron.volt		= me.volt;
+		electron.resistor	= me.resistor;
+		electron.ampere		= me.ampere;
+		return electron;
+	},
+	copy : func(electron){
+		me.volt		= electron.volt;
+		me.resistor	= electron.resistor;
+		me.ampere	= electron.ampere;
+	},
+	paste : func(electron){
+		electron.volt		= me.volt;
+		electron.resistor	= me.resistor;
+		electron.ampere		= me.ampere;
+	},
+	zero : func(){
+		me.volt		= 0.0;
+		me.resistor	= 0.0;
+		me.ampere	= 0.0;
+	},
+	set : func(volt,resistor,ampere){
+		me.volt		= volt;
+		me.resistor	= resistor;
+		me.ampere	= ampere;
+	},
 	getText : func(){
-		return sprintf("%0.4fV %0.4fO %0.4fA",me.volt,me.resistor,me.ampere);
+		return sprintf("%0.4fV %0.4fΩ %0.4fA",me.volt,me.resistor,me.ampere);
 	}
 };
 
@@ -219,6 +246,8 @@ var ElectricBus = {
 		]};
 		m.name = name;
 		m.connectors = {};
+		m.electron = Electron.new();
+		m.electronTmp = Electron.new();
 		return m;
 	},
 	plug : func(connector,name="default"){
@@ -235,19 +264,21 @@ var ElectricBus = {
 		var GND = 0;
 		var ampereSum = 0;
 		if ( electron != nil){
-			var electronTmp = electron;
+			me.electron.copy(electron);
 			
 			foreach(var i;keys(me.connectors)) {
-				var electronBus = electron;
+				me.electronTmp.set(me.electron.volt,me.electron.resistor,0.0);
 				if (i != name){
-					GND = me.connectors[i].applyVoltage(electronBus);
-					if (GND){
-						electronTmp.ampere += electronBus.ampere;
+					if ( me.connectors[i].applyVoltage(me.electronTmp) ){
+						GND = 1;
+						me.electron.ampere += me.electronTmp.ampere;
 					}
 				}
 			}
+			me.electron.resirstor = me.electron.volt / me.electron.ampere;
+			etd.echo("Bus electron " ~me.electron.getText());
 			
-			electronTmp.resirstor = electronTmp.volt / electronTmp.ampere;
+			me.electron.paste(electron);
 			
 		}
 		etd.out("Bus",me.name,name,electron);
@@ -452,7 +483,12 @@ var ElectricSwitch3P = {
 					GND = me.Low.applyVoltage(electron);
 				}
 			}else{
-				GND = me.In.applyVoltage(electron);
+				if (	(me.state == 1 and name == "high") 
+					or (me.state == 0 and name == "mid")
+					or (me.state == -1 and name == "low")
+				){
+					GND = me.In.applyVoltage(electron);
+				}
 			}
 		}
 		etd.out("Switch3P",me.name,name,electron);
@@ -528,7 +564,7 @@ var ElectricDimmer = {
 	applyVoltage : func(electron,name=""){
 		etd.in("Dimmer",me.name,name,electron);
 		var GND = 0;
-		if ( electron > 0){
+		if ( electron != nil){
 			electron.resistor += me.resistor * (1.0-me.state) * me.qos;
 			if (name == "in"){
 				GND =  me.Out.applyVoltage(electron);
@@ -616,17 +652,20 @@ var ElectricCircuitBraker = {
 				
 				if (name == "in"){
 					GND = me.Out.applyVoltage(electron);
-					if (GND){
-						me.fuseAddAmpere(electron.ampere);
-					}
 				}else{
 					GND = me.In.applyVoltage(electron);
-					if (GND){
-						me.fuseAddAmpere(GND);
+				}
+				if (GND){
+					if(me.fuseAddAmpere(electron.ampere)){
+						electron.ampere = 0;
+						sound.click(2);
 					}
 				}
+				
 			}
 		}
+		
+		
 		etd.out("CircuitBraker",me.name,name,electron);
 		return GND;
 	},
@@ -789,7 +828,7 @@ var ElectricLight = {
 		me.state = value;
 	},
 	_dimm : func(watt){
-		var percentage = (watt / me.watt) * me.qos;
+		var percentage = (watt* me.qos / me.watt) ;
 		me._setValue(percentage);
 		
 	},

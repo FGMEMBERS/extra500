@@ -164,7 +164,9 @@ var ElectricFuseAble = {
 		
 		if (me.ampereUsed > me.ampereMax){
 			me.state = 0;
+			return 1;
 		}
+		return 0;
 	},
 	fuseConfig : func(ampereMax){
 		me.ampereMax = ampereMax;
