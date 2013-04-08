@@ -61,10 +61,15 @@ var MainBoard = {
 		
 		IFD.demo.setElectric(text);
 	},
-	applyVoltage : func(volt,name=""){ 
+	applyVoltage : func(electron,name=""){ 
 		if (name == "GND"){
 			#etd.echo("MainBoard.applyVoltage("~volt~","~name~") ... touch GND");
-			return 0.000000001;
+			if (electron.resistor > 0){
+				electron.ampere = electron.volt / electron.resistor;
+			}else{
+				Part.etd.echo("MainBoard.applyVoltage("~name~") ... touch GND Kurzschluß !!!!!");
+			}
+			return 1;
 		}
 		return 0;
 	},
