@@ -19,6 +19,10 @@ var simulation_cycle = func(){
 	
 	foreach(var fuse;Part.aListElectricFuseAble){
 		fuse.fuseReset();
+		fuse.simUpdate();
+	}
+	foreach(var o;Part.aListSimStateAble){
+		o.simReset();
 	}
 	var used = systime() - start;
 	nCycleTimeUsed.setValue(used);

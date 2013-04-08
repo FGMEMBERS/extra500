@@ -11,4 +11,5 @@ var Part = {
 	},
 };
 
+var aListSimStateAble = [];
 var aListElectricFuseAble = [];
