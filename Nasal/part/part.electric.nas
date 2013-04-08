@@ -63,10 +63,12 @@ var ElectricConnector = {
 	applyVoltage : func(volt,name=""){ 
 		etd.in("Connector",me.name,name,volt);
 		var ampere = 0;
-		if (me.connector != nil){
-			ampere = me.connector.applyInputVoltage(volt);
-		}else{
-			etd.echo("ElectricConnector.applyVoltage() ... no connector");
+		if ( volt > 0){
+			if (me.connector != nil){
+				ampere = me.connector.applyInputVoltage(volt);
+			}else{
+				etd.echo("ElectricConnector.applyVoltage() ... no connector");
+			}
 		}
 		etd.out("Connector",me.name,name,volt,ampere);
 		return ampere;
@@ -74,15 +76,119 @@ var ElectricConnector = {
 	applyInputVoltage : func(volt){ 
 		etd.in("Connector",me.name,"input",volt);
 		var ampere = 0;
-		if (me.electricAble != nil){
-			var ampere = 0;
-			ampere =  me.electricAble.applyVoltage(volt,me.name);
-		}else{
-			etd.echo("ElectricConnector.applyInputVoltage() ... no electricAble");
+		if ( volt > 0){
+			if (me.electricAble != nil){
+				var ampere = 0;
+				ampere =  me.electricAble.applyVoltage(volt,me.name);
+			}else{
+				etd.echo("ElectricConnector.applyInputVoltage() ... no electricAble");
+			}
 		}
 		etd.out("Connector",me.name,"input",volt,ampere);
 		return ampere;
 	}
+};
+
+var ElectricDiode = {
+	new : func(nRoot,name){
+				
+		var m = {parents:[
+			ElectricDiode,
+			#Part.new(nRoot,name),
+			#ElectricAble.new(nRoot,name)
+		]};
+								
+		m.Plus = ElectricConnector.new("+");
+		m.Minus = ElectricConnector.new("-");
+						
+		m.Plus.solder(m);
+		m.Minus.solder(m);
+		return m;
+
+	},
+	applyVoltage : func(volt,name=""){ 
+		etd.in("Diode",me.name,name,volt);
+		var ampere = 0;
+		if ( volt > 0){
+			if (name == "+"){
+				ampere = me.Minus.applyVoltage(volt);
+			}
+		}
+		etd.out("Diode",me.name,name,volt,ampere);
+		return ampere;
+	},
+	
+	
+};
+
+var ElectricShunt = {
+	new : func(nRoot,name){
+				
+		var m = {parents:[
+			ElectricShunt,
+			Part.new(nRoot,name),
+			SimStateAble.new(nRoot,"DOUBLE",0.0),
+			ElectricAble.new(nRoot,name)
+		]};
+		
+		#m.ampereUsed = 0.0;
+		m.ampereIndicated = 0.0;
+		m.voltIndicated = 0.0;
+		
+		#m.nAmpereUsed = m.nFuse.initNode("ampereUsed",m.ampereUsed,"DOUBLE");
+		m.nAmpereIndicated = nRoot.initNode("ampereIndicated",0.0,"DOUBLE");
+		m.nVoltIndicated = nRoot.initNode("voltIndicated",0.0,"DOUBLE");
+		
+		
+		m.Plus = ElectricConnector.new("+");
+		m.Minus = ElectricConnector.new("-");
+		
+		m.Plus.solder(m);
+		m.Minus.solder(m);
+		
+		append(aListSimStateAble,m);
+		
+		return m;
+
+	},
+	applyVoltage : func(volt,name=""){ 
+		etd.in("Shunt",me.name,name,volt);
+		var ampere = 0;
+		me.setVolt(volt);
+		me.voltIndicated = volt;
+		if ( volt > 0){
+			if (name == "+"){
+				ampere += me.Minus.applyVoltage(volt);
+				me.ampereIndicated = -ampere;
+				me.voltIndicated = -volt;
+				
+			}else if(name == "-"){
+				ampere += me.Plus.applyVoltage(volt);
+				me.ampereIndicated = ampere;
+				me.voltIndicated = volt;
+			}
+		}
+		me.setAmpere(ampere);
+		
+		etd.out("Shunt",me.name,name,volt,ampere);
+		return ampere;
+	},
+	simUpdate : func(){
+		me.nState.setValue(me.state);
+		me.nAmpereIndicated.setValue(me.ampereIndicated);
+		me.nVoltIndicated.setValue(me.voltIndicated);
+	},
+	simReset : func(){
+		me.nAmpereIndicated.setValue(me.ampereIndicated);
+		me.nVoltIndicated.setValue(me.voltIndicated);
+		me.nState.setValue(me.state);
+		
+		me.state = me.default;
+		me.voltIndicated = 0.0;
+		me.ampereIndicated = 0.0;
+	},
+	
+	
 };
 
 var ElectricBus = {
@@ -107,10 +213,12 @@ var ElectricBus = {
 		etd.in("Bus",me.name,name,volt);
 		var ampere = 0;
 		var ampereSum = 0;
-		foreach(var i;keys(me.connectors)) {
-			if (i != name){
-				ampere = me.connectors[i].applyVoltage(volt);
-				ampereSum += ampere;
+		if ( volt > 0){
+			foreach(var i;keys(me.connectors)) {
+				if (i != name){
+					ampere = me.connectors[i].applyVoltage(volt);
+					ampereSum += ampere;
+				}
 			}
 		}
 		etd.out("Bus",me.name,name,volt,ampere);
@@ -212,28 +320,23 @@ var ElectricSwitch2P = {
 		etd.in("Switch2P",me.name,name,volt);
 		var ampere = 0;
 		volt *= me.qos ;
-		if (name == "in"){
-			if (me.state){
-				ampere = me.On.applyVoltage(volt);
-				me.Off.applyVoltage(0);
-			}else{
-				me.On.applyVoltage(0);
-				ampere = me.Off.applyVoltage(volt);
-			}
-		}else if (name == "on"){
-			if (me.state){
-				ampere = me.In.applyVoltage(volt);
-			}else{
-				me.In.applyVoltage(0);
-			}
-		}else if (name == "off"){
-			if (!me.state){
-				ampere = me.In.applyVoltage(volt);
-			}else{
-				me.In.applyVoltage(0);
+		if ( volt > 0){
+			if (name == "in"){
+				if (me.state){
+					ampere = me.On.applyVoltage(volt);
+				}else{
+					ampere = me.Off.applyVoltage(volt);
+				}
+			}else if (name == "on"){
+				if (me.state){
+					ampere = me.In.applyVoltage(volt);
+				}
+			}else if (name == "off"){
+				if (!me.state){
+					ampere = me.In.applyVoltage(volt);
+				}
 			}
 		}
-				
 		etd.out("Switch2P",me.name,name,volt,ampere);
 		return ampere;
 	},
@@ -297,25 +400,19 @@ var ElectricSwitch3P = {
 		etd.in("Switch3P",me.name,name,volt);
 		var ampere = 0;
 		volt *= me.qos;
-		
-		if (name == "in"){
-			if (me.state == 1){
-				ampere = me.High.applyVoltage(volt);
-				me.Mid.applyVoltage(0);
-				me.Low.applyVoltage(0);
-			}else if(me.state == 0){
-				me.High.applyVoltage(0);
-				ampere = me.Mid.applyVoltage(volt);
-				me.Low.applyVoltage(0);
-			}else if(me.state == -1){
-				me.High.applyVoltage(0);
-				me.Mid.applyVoltage(0);
-				ampere = me.Low.applyVoltage(volt);
+		if ( volt > 0){
+			if (name == "in"){
+				if (me.state == 1){
+					ampere = me.High.applyVoltage(volt);
+				}else if(me.state == 0){
+					ampere = me.Mid.applyVoltage(volt);
+				}else if(me.state == -1){
+					ampere = me.Low.applyVoltage(volt);
+				}
+			}else{
+				ampere = me.In.applyVoltage(volt);
 			}
-		}else{
-			ampere = me.In.applyVoltage(volt);
 		}
-		
 		etd.out("Switch3P",me.name,name,volt,ampere);
 		return ampere;
 	},
@@ -390,15 +487,17 @@ var ElectricDimmer = {
 		etd.in("Dimmer",me.name,name,volt);
 		var ampere = 0;
 		volt *= me.state * me.qos;
-		if (name == "in"){
-			ampere =  me.Out.applyVoltage(volt);
-			if (ampere){
-				ampere += me.electricWork(volt);
-			}
-		}else{
-			ampere =  me.In.applyVoltage(volt);
-			if (ampere){
-				ampere += me.electricWork(volt);
+		if ( volt > 0){
+			if (name == "in"){
+				ampere =  me.Out.applyVoltage(volt);
+				if (ampere){
+					ampere += me.electricWork(volt);
+				}
+			}else{
+				ampere =  me.In.applyVoltage(volt);
+				if (ampere){
+					ampere += me.electricWork(volt);
+				}
 			}
 		}
 		etd.out("Switch2P",me.name,name,volt,ampere);
@@ -455,11 +554,11 @@ var ElectricCircuitBraker = {
 		var m = {parents:[
 			ElectricCircuitBraker,
 			Part.new(nRoot,name),
+			SimStateAble.new(nRoot,"BOOL",state),
 			ElectricAble.new(nRoot,name),
 			ElectricFuseAble.new(nRoot,name)
+			
 		]};
-		m.state = state;
-		m.nState = nRoot.initNode("state",m.state,"BOOL");
 		
 		m.In = ElectricConnector.new("in");
 		m.Out = ElectricConnector.new("out");
@@ -468,32 +567,29 @@ var ElectricCircuitBraker = {
 		m.Out.solder(m);
 		
 		append(aListElectricFuseAble,m);
+		
 		return m;
 
 	},
 	applyVoltage : func(volt,name=""){
 		etd.in("CircuitBraker",me.name,name,volt);
 		var ampere = 0;
-		if (me.state){
-			volt *= me.qos;
-			if (name == "in"){
-				ampere = me.Out.applyVoltage(volt);
-				if (ampere){
-					ampere += me.electricWork(volt);
-					me.fuseAddAmpere(ampere);
+		if ( volt > 0){
+			if (me.state){
+				volt *= me.qos;
+				if (name == "in"){
+					ampere = me.Out.applyVoltage(volt);
+					if (ampere){
+						ampere += me.electricWork(volt);
+						me.fuseAddAmpere(ampere);
+					}
+				}else{
+					ampere = me.In.applyVoltage(volt);
+					if (ampere){
+						ampere += me.electricWork(volt);
+						me.fuseAddAmpere(ampere);
+					}
 				}
-			}else{
-				ampere = me.In.applyVoltage(volt);
-				if (ampere){
-					ampere += me.electricWork(volt);
-					me.fuseAddAmpere(ampere);
-				}
-			}
-		}else{
-			if (name == "in"){
-				me.Out.applyVoltage(0);
-			}else{
-				me.In.applyVoltage(0);
 			}
 		}
 		etd.out("CircuitBraker",me.name,name,volt,ampere);
@@ -501,15 +597,16 @@ var ElectricCircuitBraker = {
 	},
 	_setValue : func(value){
 		me.state = value;
-		me.nState.setValue(value);
-		sound.click(2);
+		me.simUpdate();
 	},
 	open : func(){
 		me._setValue(0);
+		sound.click(2);
 	},
 	close : func(){
 		me.fuseReset();
 		me._setValue(1);
+		sound.click(2);
 	},
 	toggle : func(){
 		me.state = me.nState.getValue();
@@ -518,6 +615,7 @@ var ElectricCircuitBraker = {
 		}else{
 			me._setValue(1);
 		}
+		sound.click(2);
 		#global.fnAnnounce("debug",""~me.name~"\t\tElectricSwitch.toggle() ... "~me.nState.getValue());
 	},
 	
@@ -532,10 +630,9 @@ var ElectricRelais = {
 		var m = {parents:[
 			ElectricRelais,
 			Part.new(nRoot,name),
+			SimStateAble.new(nRoot,"BOOL",state),
 			ElectricAble.new(nRoot,name)
 		]};
-		m.state = state;
-		m.nState = nRoot.initNode("state",m.state,"BOOL");
 		
 		m.Plus = ElectricConnector.new("+");
 		m.Minus = ElectricConnector.new("-");
@@ -551,7 +648,7 @@ var ElectricRelais = {
 		m.In.solder(m);
 		m.Out.solder(m);
 		
-		#append(aListElectricFuseAble,m);
+		append(aListSimStateAble,m);
 		return m;
 
 	},
@@ -559,27 +656,23 @@ var ElectricRelais = {
 		etd.in("Relais",me.name,name,volt);
 		var ampere = 0;
 		volt *= me.qos;
-		if (me.state){
-			if (name == "in"){
-				ampere = me.Out.applyVoltage(volt);
-			}else if (name == "out"){
-				ampere = me.In.applyVoltage(volt);
+		if(volt > 0){
+			if (me.state){
+				if (name == "in"){
+					ampere = me.Out.applyVoltage(volt);
+				}else if (name == "out"){
+					ampere = me.In.applyVoltage(volt);
+				}
 			}
-		}else{
-			if (name == "in"){
-				me.Out.applyVoltage(0);
-			}else if (name == "out"){
-				me.In.applyVoltage(0);
-			}
-		}
-		
-		if (name == "+"){
-			ampere = me.Minus.applyVoltage(volt);
-			if (ampere > 0 ){
-				ampere += me.electricWork(volt);
-				me._setValue(1);
-			}else{
-				me._setValue(0);
+			
+			if (name == "+"){
+				ampere = me.Minus.applyVoltage(volt);
+				if (ampere > 0 ){
+					ampere += me.electricWork(volt);
+					me._setValue(1);
+				}else{
+					me._setValue(0);
+				}
 			}
 		}
 		etd.out("Relais",me.name,name,volt,ampere);
@@ -587,7 +680,6 @@ var ElectricRelais = {
 	},
 	_setValue : func(value){
 		me.state = value;
-		me.nState.setValue(value);
 	},
 	open : func(){
 		me._setValue(0);
@@ -611,77 +703,25 @@ var ElectricRelais = {
 	
 };
 
-var ElectricShunt = {
-	new : func(nRoot,name){
-				
-		var m = {parents:[
-			ElectricShunt,
-			Part.new(nRoot,name),
-			ElectricAble.new(nRoot,name)
-		]};
-		
-		#m.ampereUsed = 0.0;
-		m.ampereIndicated = 0.0;
-		m.voltIndicated = 0.0;
-		
-		#m.nAmpereUsed = m.nFuse.initNode("ampereUsed",m.ampereUsed,"DOUBLE");
-		m.nAmpereIndicated = nRoot.initNode("ampereIndicated",0.0,"DOUBLE");
-		m.nVoltIndicated = nRoot.initNode("voltIndicated",0.0,"DOUBLE");
-		
-		
-		m.Plus = ElectricConnector.new("+");
-		m.Minus = ElectricConnector.new("-");
-		
-		m.Plus.solder(m);
-		m.Minus.solder(m);
-		return m;
-
-	},
-	applyVoltage : func(volt,name=""){ 
-		etd.in("Shunt",me.name,name,volt);
-		var ampere = 0;
-		me.setVolt(volt);
-		me.voltIndicated = volt;
-		
-		if (name == "+"){
-			ampere += me.Minus.applyVoltage(volt);
-			me.ampereIndicated = -ampere;
-			me.voltIndicated = -volt;
-			
-		}else if(name == "-"){
-			ampere += me.Plus.applyVoltage(volt);
-			me.ampereIndicated = ampere;
-			me.voltIndicated = volt;
-		}
-		
-		me.setAmpere(ampere);
-		me.nAmpereIndicated.setValue(me.ampereIndicated);
-		me.nVoltIndicated.setValue(me.voltIndicated);
-		
-		etd.out("Shunt",me.name,name,volt,ampere);
-		return ampere;
-	},
-	
-};
-
 var ElectricLight = {
 	new : func(nRoot,name){
 				
 		var m = {parents:[
 			ElectricLight,
 			Part.new(nRoot,name),
+			SimStateAble.new(nRoot,"DOUBLE",0.0),
 			ElectricAble.new(nRoot,name)
 		]};
 		
-		m.state = 0.0;
 						
 		m.Plus = ElectricConnector.new("+");
 		m.Minus = ElectricConnector.new("-");
-		
-		m.nState = nRoot.initNode("state",m.state,"DOUBLE");
-				
+						
 		m.Plus.solder(m);
 		m.Minus.solder(m);
+		
+		append(aListSimStateAble,m);
+		
 		return m;
 
 	},
@@ -709,7 +749,6 @@ var ElectricLight = {
 		if (value < 0.0) { value = 0.0 };
 		
 		me.state = value;
-		me.nState.setValue(value);
 	},
 	_dimm : func(volt){
 		
@@ -719,4 +758,6 @@ var ElectricLight = {
 	},
 	
 };
+
+
 

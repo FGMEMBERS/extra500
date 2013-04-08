@@ -150,6 +150,11 @@ var SidePanel = {
 		m.swtEmergency = Part.ElectricSwitch2P.new(nCompNode,"Emergency");
 		
 		
+		m.nightBus = Part.ElectricBus.new("NightBus");
+		m.dayBus = Part.ElectricBus.new("DayBus");
+		m.testBus = Part.ElectricBus.new("DayBus");
+		
+		
 		return m;
 	},
 	plugElectric : func(){
@@ -159,12 +164,14 @@ var SidePanel = {
 		
 		me.swtMainBattery.In.plug(me.swtEmergency.Off);
 		
-		me.swtLightLanding.In.plug(oCircuitBreakerPanel.cbLandingLight.Out);
-		me.swtLightInstrument.In.plug(oCircuitBreakerPanel.cbInstrumentLight.Out);
-		
-		me.swtLightIce.In.plug(oCircuitBreakerPanel.cbIceLight.Out);
-		me.swtLightGlare.In.plug(oCircuitBreakerPanel.cbGlareLight.Out);
-		me.swtLightStrobe.In.plug(oCircuitBreakerPanel.cbStrobeLight.Out);
+		me.swtLightStrobe.In.plug(	oCircuitBreakerPanel.cbStrobeLight.Out);
+		me.swtLightNavigation.In.plug(	oCircuitBreakerPanel.cbNavLight.Out);
+		me.swtLightLanding.In.plug(	oCircuitBreakerPanel.cbLandingLight.Out);
+		me.swtLightCabin.In.plug(	oCircuitBreakerPanel.cbCabinLight.Out);
+		#me.swtLightMap.In.plug(		oCircuitBreakerPanel.cbMapLight.Out);
+		me.swtLightInstrument.In.plug(	oCircuitBreakerPanel.cbInstrumentLight.Out);
+		me.swtLightGlare.In.plug(	oCircuitBreakerPanel.cbGlareLight.Out);
+		me.swtLightIce.In.plug(		oCircuitBreakerPanel.cbIceLight.Out);
 		
 		
 		

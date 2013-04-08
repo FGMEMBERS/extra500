@@ -1,4 +1,24 @@
- 
+
+var SimStateAble = {
+	new : func(nRoot,type,default=0){
+		var m = {parents:[
+			SimStateAble
+		]};
+		m.default = default;
+		m.state = m.default;
+		m.nState = nRoot.initNode("state",m.state,type);
+		return m;
+	},
+	simReset : func(){
+		me.nState.setValue(me.state);
+		me.state = me.default;
+	},
+	simUpdate : func(){
+		me.nState.setValue(me.state);
+	},
+	
+};
+
 var ServiceAble = {
 	new : func(nRoot){
 		var m = {parents:[

@@ -5,24 +5,24 @@ var MainBoard = {
 		]};
 		m.nRoot = props.globals.getNode("extra500/electric",1);
 		
-		# Ground Connector
+	# Ground Connector
 		m.GND = Part.ElectricConnector.new("GND");
 		
 		var node = m.nRoot.initNode("Battery");
 		m.oBattery = Part.ElectricBattery.new(node,"Battery");
 		m.oBattery.setVolt(24.0);
 		
-		# Relais
+	# Relais
 		var node = m.nRoot.initNode("BatteryRelais");
 		m.batteryRelais = Part.ElectricRelais.new(node,"Battery Relais");
 
 		
-		#internal Buses
+	#internal Buses
 		
 		m.iBus20 = Part.ElectricBus.new("#20");
 		m.iBus10 = Part.ElectricBus.new("#20");
 		
-		# main Buses
+	# main Buses
 		
 		m.hotBus = Part.ElectricBus.new("HotBus");
 		m.loadBus = Part.ElectricBus.new("LoadBus");
@@ -31,16 +31,22 @@ var MainBoard = {
 		m.emergencyBus = Part.ElectricBus.new("EmergencyBus");
 		m.emergencyBus = Part.ElectricBus.new("EmergencyBus");
 		
-		# shunts
+	# shunts
 		var node = m.nRoot.initNode("BatteryShunt");
 		m.batteryShunt = Part.ElectricShunt.new(node,"Battery Shunt");
 		
-		# Fuse
+		var node = m.nRoot.initNode("GeneratorShunt");
+		m.generatorShunt = Part.ElectricShunt.new(node,"Generator Shunt");
+		
+		var node = m.nRoot.initNode("AlternatorShunt");
+		m.alternatorShunt = Part.ElectricShunt.new(node,"Alternator Shunt");
+		
+	# Fuse
 		var node = m.nRoot.initNode("BatteryFuse");
 		m.batteryFuse = Part.ElectricCircuitBraker.new(node,"Battery Fuse");
 		m.batteryFuse.fuseConfig(150.0);
 		
-		#### solder Connectors
+	#### solder Connectors
 		m.GND.solder(m);
 		
 		return m;
