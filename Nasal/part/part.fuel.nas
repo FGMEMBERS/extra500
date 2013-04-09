@@ -31,7 +31,7 @@ var FuelPump = {
 		etd.in("Pump",me.name,name,electron);
 		var GND = 0;
 		#volt *= me.qos;
-		me.setVolt(volt);
+		me.setVolt(electron.volt);
 		
 		if (name == "+"){
 			GND = me.Minus.applyVoltage(electron);
