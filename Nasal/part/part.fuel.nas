@@ -27,25 +27,25 @@ var FuelPump = {
 		
 		return flow;
 	},
-	applyVoltage : func(volt,name=""){ 
-		etd.in("Pump",me.name,name,volt);
-		var ampere = 0;
-		volt *= me.qos;
+	applyVoltage : func(electron,name=""){ 
+		etd.in("Pump",me.name,name,electron);
+		var GND = 0;
+		#volt *= me.qos;
 		me.setVolt(volt);
 		
 		if (name == "+"){
-			ampere = me.Minus.applyVoltage(volt);
-			if (ampere){
-				ampere += me.electricWork(volt);
+			GND = me.Minus.applyVoltage(electron);
+			if (GND){
+				var watt = me.electricWork(electron);
 				me.state = 1;
 			}else{
 				me.state = 0;
 			}
 		}
 		
-		me.setAmpere(ampere);
-		etd.out("Pump",me.name,name,volt,ampere);
-		return ampere;
+		me.setAmpere(electron.ampere);
+		etd.out("Pump",me.name,name,electron);
+		return GND;
 	},
 	
 };
