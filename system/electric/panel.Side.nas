@@ -146,13 +146,28 @@ var SidePanel = {
 		
 # Emergency	
 		
-		nCompNode = nParent.initNode("Emergency");
+		nCompNode = m.nPanel.initNode("Emergency");
 		m.swtEmergency = Part.ElectricSwitch2P.new(nCompNode,"Emergency");
 		
 		
-		m.nightBus = Part.ElectricBus.new("NightBus");
-		m.dayBus = Part.ElectricBus.new("DayBus");
-		m.testBus = Part.ElectricBus.new("DayBus");
+		#m.nightBus = Part.ElectricBus.new("NightBus");
+		#m.dayBus = Part.ElectricBus.new("DayBus");
+		#m.testBus = Part.ElectricBus.new("TestBus");
+#Buses
+		m.instrumentGNDBus = Part.ElectricBusDiode.new("instrumentGNDBus");
+		m.glareGNDBus = Part.ElectricBusDiode.new("glareGNDBus");
+		
+#Relais
+		nParent = m.nPanel.initNode("Relais");
+		
+		nCompNode = nParent.initNode("NightRelais");
+		m.nightRelais = Part.ElectricRelais6PST.new(nCompNode,"Night Relais");
+		
+		nCompNode = nParent.initNode("DayRelais");
+		m.dayRelais = Part.ElectricRelais6PST.new(nCompNode,"Day Relais");
+		
+		nCompNode = nParent.initNode("TestRelais");
+		m.testRelais = Part.ElectricRelais6PST.new(nCompNode,"Test Relais");
 		
 		
 		return m;
@@ -169,9 +184,41 @@ var SidePanel = {
 		me.swtLightLanding.In.plug(	oCircuitBreakerPanel.cbLandingLight.Out);
 		me.swtLightCabin.In.plug(	oCircuitBreakerPanel.cbCabinLight.Out);
 		#me.swtLightMap.In.plug(		oCircuitBreakerPanel.cbMapLight.Out);
-		me.swtLightInstrument.In.plug(	oCircuitBreakerPanel.cbInstrumentLight.Out);
-		me.swtLightGlare.In.plug(	oCircuitBreakerPanel.cbGlareLight.Out);
-		me.swtLightIce.In.plug(		oCircuitBreakerPanel.cbIceLight.Out);
+
+	### Dimmer cabling
+		oElectric.batteryBus.plug(me.nightRelais.A1);		
+		oElectric.batteryBus.plug(me.dayRelais.A1);		
+		oElectric.batteryBus.plug(me.testRelais.A1);
+		
+		me.swtLightNight.In.plug(oElectric.GND);
+		me.swtLightNight.High.plug(me.nightRelais.A2);
+		me.swtLightNight.Mid.plug(me.dayRelais.A2);
+		me.swtLightNight.Low.plug(me.testRelais.A2);
+		
+		me.swtLightInstrument.In.plug(oElectric.GND);
+		me.swtLightInstrument.On.plug(me.instrumentGNDBus.Minus);
+		
+		me.swtLightGlare.In.plug(oElectric.GND);
+		me.swtLightGlare.On.plug(me.glareGNDBus.Minus);
+		
+		me.testRelais.P14.plug(oElectric.GND);#GLARE
+		me.testRelais.P24.plug(oElectric.GND);#INSTR
+		me.testRelais.P34.plug(oElectric.GND);#SWITCHES
+		me.testRelais.P44.plug(oElectric.GND);#KEYPAD
+		me.testRelais.P54.plug(oElectric.GND);#ANNUNCIATOR
+		
+		me.glareGNDBus.plug(me.dayRelais.P14);#Glare
+		me.instrumentGNDBus.plug(me.dayRelais.P24);#INSTR
+		me.instrumentGNDBus.plug(me.dayRelais.P34);#SWITCHES
+		me.instrumentGNDBus.plug(me.dayRelais.P44);#KEYPAD
+		me.instrumentGNDBus.plug(me.dayRelais.P54);#ANNUNCIATOR
+		
+		me.glareGNDBus.plug(me.nightRelais.P14);#Glare
+		me.instrumentGNDBus.plug(me.nightRelais.P24);#INSTR
+		me.instrumentGNDBus.plug(me.nightRelais.P34);#SWITCHES
+		me.instrumentGNDBus.plug(me.nightRelais.P44);#KEYPAD
+		me.instrumentGNDBus.plug(me.nightRelais.P54);#ANNUNCIATOR
+		
 		
 		
 		

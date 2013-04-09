@@ -20,7 +20,7 @@ var MainBoard = {
 	#internal Buses
 		
 		m.iBus20 = Part.ElectricBus.new("#20");
-		m.iBus10 = Part.ElectricBus.new("#20");
+		m.iBus10 = Part.ElectricBus.new("#10");
 		
 	# main Buses
 		
@@ -53,18 +53,19 @@ var MainBoard = {
 	},
 	update : func(){
 		me.oBattery.update();
-		var text = "";
-		text ~= sprintf("Battery    %0.2f V   %0.2f A\n",me.batteryShunt.voltIndicated,me.batteryShunt.ampereIndicated);
-		text ~= sprintf("Generator  %0.2f V   %0.2f A\n",me.batteryShunt.voltIndicated,me.batteryShunt.ampereIndicated);
-		text ~= sprintf("Altenator  %0.2f V   %0.2f A\n",me.batteryShunt.voltIndicated,me.batteryShunt.ampereIndicated);
+				
 		
-		
-		IFD.demo.setElectric(text);
 	},
-	applyVoltage : func(volt,name=""){ 
+	applyVoltage : func(electron,name=""){ 
 		if (name == "GND"){
 			#etd.echo("MainBoard.applyVoltage("~volt~","~name~") ... touch GND");
-			return 0.000000001;
+			if (electron.resistor > 0){
+				electron.ampere = electron.volt / electron.resistor;
+			}else{
+				Part.etd.echo("MainBoard.applyVoltage("~name~") ... touch GND Kurzschluß !!!!!");
+				electron.ampere = electron.volt / 0.0024;
+			}
+			return 1;
 		}
 		return 0;
 	},
