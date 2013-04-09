@@ -85,7 +85,7 @@ var MasterPanel = {
 		
 		nCompNode = nParent.initNode("Instrument");
 		m.swtDimmerInstrument = Part.ElectricDimmer.new(nCompNode,"Dimmer Instrument Light","DOUBLE",0,1.0,0.1);
-		m.swtDimmerInstrument.electricConfig(12.0,26.0,50.0);
+		m.swtDimmerInstrument.electricConfig(12.0,26.0,25.0);
 		
 		nCompNode = nParent.initNode("Switch");
 		m.swtDimmerSwitch = Part.ElectricDimmer.new(nCompNode,"Dimmer Switch Light","DOUBLE",0,1.0,0.1);
@@ -114,9 +114,13 @@ var MasterPanel = {
 		
 		# Engine
 		
-		oSidePanel.dayBus.plug(me.swtDimmerInstrument.In);
-		oSidePanel.nightBus.plug(me.swtDimmerInstrument.Out);
 		
+		me.swtDimmerGlare.Out.plug(oSidePanel.nightRelais.P13);
+		me.swtDimmerInstrument.Out.plug(oSidePanel.nightRelais.P23);
+		me.swtDimmerSwitch.Out.plug(oSidePanel.nightRelais.P33);
+		me.swtDimmerKeypad.Out.plug(oSidePanel.nightRelais.P43);
+		me.swtDimmerAnnunciator.Out.plug(oSidePanel.nightRelais.P43);
+			
 			
 	},
 	# can only used when Module extra500 is completly loaded.

@@ -53,15 +53,8 @@ var MainBoard = {
 	},
 	update : func(){
 		me.oBattery.update();
-		var text = "";
-		text ~= sprintf("Battery    %0.2f V   %0.2f A\n",me.batteryShunt.voltIndicated,me.batteryShunt.ampereIndicated);
-		text ~= sprintf("Generator  %0.2f V   %0.2f A\n",me.batteryShunt.voltIndicated,me.batteryShunt.ampereIndicated);
-		text ~= sprintf("Altenator  %0.2f V   %0.2f A\n",me.batteryShunt.voltIndicated,me.batteryShunt.ampereIndicated);
-		text ~="\n";
-		text ~= sprintf("Instrument Light  %0.2f %%\n",oLight.Instrument.state);
+				
 		
-		
-		IFD.demo.setElectric(text);
 	},
 	applyVoltage : func(electron,name=""){ 
 		if (name == "GND"){
