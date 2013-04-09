@@ -85,6 +85,7 @@ var MasterPanel = {
 		
 		nCompNode = nParent.initNode("Instrument");
 		m.swtDimmerInstrument = Part.ElectricDimmer.new(nCompNode,"Dimmer Instrument Light","DOUBLE",0,1.0,0.1);
+		m.swtDimmerInstrument.electricConfig(12.0,26.0,50.0);
 		
 		nCompNode = nParent.initNode("Switch");
 		m.swtDimmerSwitch = Part.ElectricDimmer.new(nCompNode,"Dimmer Switch Light","DOUBLE",0,1.0,0.1);
@@ -113,7 +114,8 @@ var MasterPanel = {
 		
 		# Engine
 		
-		
+		oSidePanel.dayBus.plug(me.swtDimmerInstrument.In);
+		oSidePanel.nightBus.plug(me.swtDimmerInstrument.Out);
 		
 			
 	},

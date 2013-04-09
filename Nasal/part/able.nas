@@ -65,11 +65,13 @@ var ElectricAble = {
 		m.maxVolt 	= 30.0;
 		m.ampere 	= 0.0;
 		m.watt 		= 0.0001;
+		m.resistor	= 300;
 		
 		m.nElectric = nRoot.getNode("electric",1);
 		
 		m.nAmpere 	= m.nElectric.initNode("ampere",m.ampere,"DOUBLE");
 		m.nVolt 	= m.nElectric.initNode("volt",m.volt,"DOUBLE");
+		m.nResistor 	= m.nElectric.initNode("resistor",m.resistor,"DOUBLE");
 		m.nMinVolt 	= m.nElectric.initNode("voltMin",m.minVolt,"DOUBLE");
 		m.nMaxVolt 	= m.nElectric.initNode("voltMax",m.maxVolt,"DOUBLE");
 		m.nWatt 	= m.nElectric.initNode("watt",m.watt,"DOUBLE");
@@ -78,23 +80,23 @@ var ElectricAble = {
 	},
 	electricConfig : func(minVolt,maxVolt,watt){
 		
-		me.minVolt = minVolt;
-		me.maxVolt = maxVolt;
-		me.watt = watt;
+		me.minVolt 	= minVolt;
+		me.maxVolt 	= maxVolt;
+		me.resistor	= maxVolt / (watt/maxVolt);
+		me.watt 	= watt;
 		
 		me.nMinVolt.setValue(me.minVolt);
 		me.nMaxVolt.setValue(me.maxVolt);
+		me.nResistor.setValue(me.resistor);
 		me.nWatt.setValue(me.watt);
 		
 	},
-	electricWork : func(volt) {
-		var ampere = 0.0;
-		me.setVolt(volt);
-		if (volt > 0){
-			ampere = me.watt / volt;
-		}
-		me.setAmpere(ampere);
-		return ampere;
+	electricWork : func(electron) {
+		var watt = 0.0;
+		me.setVolt(electron.volt);
+		me.setAmpere(electron.ampere);
+		watt = electron.volt * electron.ampere;
+		return watt;
 	},
 	setVolt : func(value){
 		me.volt = value;
@@ -162,7 +164,9 @@ var ElectricFuseAble = {
 		
 		if (me.ampereUsed > me.ampereMax){
 			me.state = 0;
+			return 1;
 		}
+		return 0;
 	},
 	fuseConfig : func(ampereMax){
 		me.ampereMax = ampereMax;

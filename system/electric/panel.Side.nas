@@ -152,7 +152,7 @@ var SidePanel = {
 		
 		m.nightBus = Part.ElectricBus.new("NightBus");
 		m.dayBus = Part.ElectricBus.new("DayBus");
-		m.testBus = Part.ElectricBus.new("DayBus");
+		m.testBus = Part.ElectricBus.new("TestBus");
 		
 		
 		return m;
@@ -169,9 +169,20 @@ var SidePanel = {
 		me.swtLightLanding.In.plug(	oCircuitBreakerPanel.cbLandingLight.Out);
 		me.swtLightCabin.In.plug(	oCircuitBreakerPanel.cbCabinLight.Out);
 		#me.swtLightMap.In.plug(		oCircuitBreakerPanel.cbMapLight.Out);
-		me.swtLightInstrument.In.plug(	oCircuitBreakerPanel.cbInstrumentLight.Out);
+
 		me.swtLightGlare.In.plug(	oCircuitBreakerPanel.cbGlareLight.Out);
 		me.swtLightIce.In.plug(		oCircuitBreakerPanel.cbIceLight.Out);
+		
+		
+		me.swtLightNight.In.plug(oElectric.GND);
+		
+		me.nightBus.plug(me.swtLightNight.High);
+		me.dayBus.plug(me.swtLightNight.Mid);
+		me.testBus.plug(me.swtLightNight.Low);
+		
+		me.testBus.plug(me.swtLightInstrument.In);
+		me.dayBus.plug(me.swtLightInstrument.On);
+		
 		
 		
 		
