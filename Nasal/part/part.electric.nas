@@ -9,11 +9,16 @@ var ElectricTreeDebugger = {
 		m.depth 	= 0;
 		m.defaultStr 	= "                                       ";
 		m.debugLevel	=0;
+		m.highLightType = "ElectricRelais6PST";
 		return m;
 
 	},
+	colorRed : func(s) { return globals.string.color("32", s)},
 	in : func(type,name,connector,electron,icon="└┬"){
 		if (me.debugLevel > 0){
+			if (find(type,me.highLightType) > -1){
+				type = me.colorRed(type);
+			}
 			var space = substr(me.defaultStr,0,me.depth);
 			var output = sprintf("%s %s %s %s %s %s",space,icon,type,name,connector,electron.getText());
 			print(output);
@@ -23,6 +28,9 @@ var ElectricTreeDebugger = {
 	},
 	out : func(type,name,connector,electron,icon="┌┴"){
 		if (me.debugLevel > 0){
+			if (find(type,me.highLightType) > -1){
+				type = me.colorRed(type);
+			}
 			var space = substr(me.defaultStr,0,me.depth);
 			var output = sprintf("%s%s %s %s %s %s",space,icon,type,name,connector,electron.getText());
 			print(output);
@@ -39,6 +47,7 @@ var ElectricTreeDebugger = {
 	}
 		
 };
+
 var etd = ElectricTreeDebugger.new();
 
 var Electron ={
@@ -282,6 +291,46 @@ var ElectricBus = {
 			
 		}
 		etd.out("Bus",me.name,name,electron);
+		return GND;
+	}
+};
+
+var ElectricBusDiode = {
+	new : func(name){		
+		var m = {parents:[
+			ElectricBusDiode
+		]};
+		m.name = name;
+		m.connectors = {};
+		m.electron = Electron.new();
+		m.electronTmp = Electron.new();
+		
+		m.Minus = ElectricConnector.new("-");
+		m.Minus.solder(m);
+		
+		return m;
+	},
+	plug : func(connector,name="default"){
+		if (name == "default"){
+			name = me.name~"-"~size(me.connectors);
+		}
+		me.connectors[name] = ElectricConnector.new(name);
+		me.connectors[name].solder(me);
+		me.connectors[name].plug(connector);
+		connector.plug(me.connectors[name]);
+	},
+	applyVoltage : func(electron,name=""){ 
+		etd.in("BusDiode",me.name,name,electron);
+		var GND = 0;
+		var ampereSum = 0;
+		
+		if ( electron != nil){
+			if ( name != "-" ){
+				GND = me.Minus.applyVoltage(electron);
+			}
+		}
+		
+		etd.out("BusDiode",me.name,name,electron);
 		return GND;
 	}
 };
@@ -730,7 +779,6 @@ var ElectricRelais = {
 		etd.in("Relais",me.name,name,electron);
 		var GND = 0;
 		if(electron != nil){
-			#electron.resistor += me.qos;
 			if (me.state){
 				if (name == "in"){
 					GND = me.Out.applyVoltage(electron);
@@ -740,9 +788,10 @@ var ElectricRelais = {
 			}
 			
 			if (name == "+"){
+				electron.resistor += 190.0;
 				GND = me.Minus.applyVoltage(electron);
 				if (GND > 0 ){
-					GND += me.electricWork(electron);
+					#GND += me.electricWork(electron);
 					me._setValue(1);
 				}else{
 					me._setValue(0);
@@ -776,6 +825,138 @@ var ElectricRelais = {
 	
 	
 };
+
+var ElectricRelais6PST = {
+	new : func(nRoot,name,state=0){
+		
+		#nRoot = nRoot.initNode("switch");
+		
+		var m = {parents:[
+			ElectricRelais6PST,
+			Part.new(nRoot,name),
+			SimStateAble.new(nRoot,"BOOL",state),
+			ElectricAble.new(nRoot,name)
+		]};
+		
+		m.A1 = ElectricConnector.new("A1");
+		m.A2 = ElectricConnector.new("A2");
+		
+		m.P13 = ElectricConnector.new("P13");
+		m.P14 = ElectricConnector.new("P14");
+			
+		m.P23 = ElectricConnector.new("P23");
+		m.P24 = ElectricConnector.new("P24");
+			
+		m.P33 = ElectricConnector.new("P33");
+		m.P34 = ElectricConnector.new("P34");
+			
+		m.P43 = ElectricConnector.new("P43");
+		m.P44 = ElectricConnector.new("P44");
+			
+		m.P53 = ElectricConnector.new("P53");
+		m.P54 = ElectricConnector.new("P54");
+		
+		m.P63 = ElectricConnector.new("P63");
+		m.P64 = ElectricConnector.new("P64");
+		
+		
+		m.output = {};
+		
+		m.output["A1"] = m.A2;
+		m.output["A2"] = m.A1;
+		
+		m.output["P13"] = m.P14;
+		m.output["P14"] = m.P13;
+		
+		m.output["P23"] = m.P24;
+		m.output["P24"] = m.P23;
+		
+		m.output["P33"] = m.P34;
+		m.output["P34"] = m.P33;
+		
+		m.output["P43"] = m.P44;
+		m.output["P44"] = m.P43;
+		
+		m.output["P53"] = m.P54;
+		m.output["P54"] = m.P53;
+		
+		m.output["P63"] = m.P64;
+		m.output["P64"] = m.P63;
+		
+		m.A1.solder(m);
+		m.A2.solder(m);
+		
+		m.P13.solder(m);
+		m.P14.solder(m);
+		
+		m.P23.solder(m);
+		m.P24.solder(m);
+		
+		m.P33.solder(m);
+		m.P34.solder(m);
+		
+		m.P43.solder(m);
+		m.P44.solder(m);
+		
+		m.P53.solder(m);
+		m.P54.solder(m);
+		
+		m.P63.solder(m);
+		m.P64.solder(m);
+		
+		append(aListSimStateAble,m);
+		return m;
+
+	},
+	applyVoltage : func(electron,name=""){
+		etd.in("Relais6PST",me.name,name,electron);
+		var GND = 0;
+		if(electron != nil){
+			#electron.resistor += me.qos;
+						
+			if (name == "A1" or name == "A2"){
+				electron.resistor += 190.0;
+				GND = me.output[name].applyVoltage(electron);
+				if (GND > 0 ){
+					#GND += me.electricWork(electron);
+					me._setValue(1);
+				}else{
+					me._setValue(0);
+				}
+			}else{
+				if (me.state){
+					GND = me.output[name].applyVoltage(electron);
+				}
+			}
+		}
+		etd.out("Relais6PST",me.name,name,electron);
+		return GND;
+	},
+	_setValue : func(value){
+		me.state = value;
+	},
+	open : func(){
+		me._setValue(0);
+		sound.click(2);
+	},
+	close : func(){
+		me._setValue(1);
+		sound.click(2);
+	},
+	toggle : func(){
+		me.state = me.nState.getValue();
+		if (me.state){
+			me._setValue(0);
+		}else{
+			me._setValue(1);
+		}
+		sound.click(2);
+		#global.fnAnnounce("debug",""~me.name~"\t\tElectricSwitch.toggle() ... "~me.nState.getValue());
+	},
+	
+	
+};
+
 
 var ElectricLight = {
 	new : func(nRoot,name){

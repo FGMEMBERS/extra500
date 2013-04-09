@@ -1,6 +1,6 @@
 
 var nCycleTimeUsed = props.globals.getNode("extra500/CycleTimeUsed",1);
-
+var cycleTimeUsed = 0;
 extra500.oElectric.plugElectric();
 extra500.oCircuitBreakerPanel.plugElectric();
 extra500.oSidePanel.plugElectric();
@@ -17,6 +17,8 @@ var simulation_cycle = func(){
 	extra500.oElectric.update();
 	extra500.oFuelSystem.update();
 	
+	IFD.demo.update();
+	
 	foreach(var fuse;Part.aListElectricFuseAble){
 		fuse.fuseReset();
 		fuse.simUpdate();
@@ -24,10 +26,10 @@ var simulation_cycle = func(){
 	foreach(var o;Part.aListSimStateAble){
 		o.simReset();
 	}
-	var used = systime() - start;
-	nCycleTimeUsed.setValue(used);
-	var text = sprintf("Cycle time used : %.4f sec",used);
-	IFD.demo.setSim(text);
+	cycleTimeUsed = systime() - start;
+	nCycleTimeUsed.setValue(cycleTimeUsed);
+	
+	
 };
 
 var cycle_sec = 1.0;

@@ -58,15 +58,27 @@ var canvas_demo = {
     
     return m;
   },
-  setSim : func(text){
-	me.textSim.setText(text);
-  },
-  setElectric : func(text){
-	me.textElectric.setText(text);
-  },
   update: func()
   {
-
+		
+		
+		var text = "";
+		var text = sprintf("Cycle time used : %.4f sec",run.cycleTimeUsed);
+	
+		me.textSim.setText(text);
+		
+		text = "";
+		text ~= sprintf("Battery    %0.2f V   %0.2f A\n",extra500.oElectric.batteryShunt.voltIndicated,extra500.oElectric.batteryShunt.ampereIndicated);
+		text ~= sprintf("Generator  %0.2f V   %0.2f A\n",extra500.oElectric.batteryShunt.voltIndicated,extra500.oElectric.batteryShunt.ampereIndicated);
+		text ~= sprintf("Altenator  %0.2f V   %0.2f A\n",extra500.oElectric.batteryShunt.voltIndicated,extra500.oElectric.batteryShunt.ampereIndicated);
+		text ~="\nLight\n";
+		text ~= sprintf("Keypad     %0.2f %%\n",extra500.oLight.Keypad.state);
+		text ~= sprintf("Glare      %0.2f %%\n",extra500.oLight.Glare.state);
+		text ~= sprintf("Instrument %0.2f %%\n",extra500.oLight.Instrument.state);
+		text ~= sprintf("Switches   %0.2f %%\n",extra500.oLight.Switches.state);
+		text ~= sprintf("Annuciator %0.2f %%\n",extra500.oLight.Annuciator.state);
+		
+		me.textElectric.setText(text);
   },
 };
 var demo = canvas_demo.new();
