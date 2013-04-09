@@ -38,34 +38,28 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		-->
 			
 	<metrics>
-		<wingarea  unit="FT2">  335.48 </wingarea>
-		<wingspan  unit="FT" >   38.06 </wingspan>
-		<wing_incidence>          2.00 </wing_incidence>
-		<chord     unit="FT" >    8.81 </chord>
-		<htailarea unit="FT2">   53.68 </htailarea>
-		<htailarm  unit="FT" >   17.28 </htailarm>
-		<vtailarea unit="FT2">   33.55 </vtailarea>
-		<vtailarm  unit="FT" >   16.62 </vtailarm>
+		<wingarea  unit="M2">  14.025 </wingarea>
+		<wingspan  unit="M" >  11.0 </wingspan>
+		<wing_incidence>        2.00 </wing_incidence>
+		<chord     unit="M" >   1.322 </chord>
+		<htailarea unit="M2">   2.812 </htailarea>
+		<htailarm  unit="M" >   5.562 </htailarm>
+		<vtailarea unit="M2">   2.735 </vtailarea>
+		<vtailarm  unit="M" >   4.736 </vtailarm>
 		<location name="AERORP" unit="M">
-			<x> 3.115 </x>
-			<y>   0.00 </y>
-			<z>   0.00 </z>
+			<x> 3.5305 </x>
+			<y> 0.00 </y>
+			<z> 2.40 </z>
 		</location>
 		<location name="EYEPOINT" unit="IN">
-			<x>  51.85 </x>
-			<y> -18.00 </y>
-			<z>  45.00 </z>
+			<x>  45.393 </x>
+			<y> -26.00 </y>
+			<z>  80 </z>
 		</location>
 		<location name="VRP" unit="M">
-			<!-- model center 
-				<x>0</x>
-				<y>0</y>
-				<z>0</z>
-				-->
-			<x>3.31</x>
+			<x>3.146</x>
 			<y>0</y>
-			<z>0.5</z>
-			
+			<z>1.98</z>	
 		</location>
 	</metrics>
 						
@@ -87,64 +81,64 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		<izz unit="SLUG*FT2">      6136 </izz>
 		<emptywt unit="KG" >      1445 </emptywt>
 		<location name="CG" unit="M">
-			<x> 3.115 </x>
-			<y>   0.00 </y>
-			<z>  -0.03 </z>
+			<x> 3.65 </x>
+			<y> 0.00 </y>
+			<z> 1.8 </z>
 		</location>
 		<pointmass name="Pilot">
 			<weight unit="KG"> 80 </weight>
 			<location name="POINTMASS" unit="M">
-				<x> 3.1 </x>
-				<y> -0.35 </y>
-				<z> 0 </z>
+				<x> 2.977 </x>
+				<y> -0.42 </y>
+				<z> 1.8 </z>
 			</location>
 		</pointmass>
 		<pointmass name="Co-Pilot">
 			<weight unit="KG"> 80 </weight>
 			<location name="POINTMASS" unit="M">
-				<x> 3.1 </x>
-				<y> 0.35 </y>
-				<z> 0 </z>
+				<x> 2.977 </x>
+				<y> 0.42 </y>
+				<z> 1.8 </z>
 			</location>
 		</pointmass>
 		<pointmass name="Row 1 Left Passenger">
 			<weight unit="KG"> 0 </weight>
 			<location name="POINTMASS" unit="M">
-				<x> 4.0 </x>
-				<y> -0.4 </y>
-				<z> 0 </z>
+				<x> 3.93 </x>
+				<y> -0.42 </y>
+				<z> 1.80 </z>
 			</location>
 		</pointmass>
 		<pointmass name="Row 1 Right Passenger">
 			<weight unit="KG"> 0 </weight>
 			<location name="POINTMASS" unit="M">
-				<x> 4.0 </x>
-				<y> 0.4 </y>
-				<z> 0 </z>
+				<x> 3.93 </x>
+				<y> 0.42 </y>
+				<z> 1.80 </z>
 			</location>
 		</pointmass>
 		<pointmass name="Row 2 Left Passenger">
 			<weight unit="KG"> 0 </weight>
 			<location name="POINTMASS" unit="M">
-				<x> 5.3 </x>
+				<x> 5.05 </x>
 				<y> -0.35 </y>
-				<z> 0 </z>
+				<z> 1.80 </z>
 			</location>
 		</pointmass>
 		<pointmass name="Row 2 Right Passenger">
 			<weight unit="KG"> 0 </weight>
 			<location name="POINTMASS" unit="M">
-				<x> 5.3 </x>
+				<x> 5.05 </x>
 				<y> 0.35 </y>
-				<z> 0 </z>
+				<z> 1.80 </z>
 			</location>
 		</pointmass>
 		<pointmass name="Baggage">
-			<weight unit="KG"> 0 </weight>
+			<weight unit="KG"> 0 </weight>  <!--max 90kg -->
 			<location name="POINTMASS" unit="M">
-				<x> 6.15 </x>
+				<x> 5.75 </x>
 				<y>  0 </y>
-				<z> 0.15 </z>
+				<z> 1.6 </z>
 			</location>
 		</pointmass>
 	</mass_balance>
@@ -153,31 +147,30 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		
 		<contact type="BOGEY" name="NOSE">
 			<location unit="M">
-				<x>  1.61 </x>
-				<y>   0.00 </y>
-				<z> -1.43 </z><!--stho<z> -1.33 </z>-->
-				<!-- -47.86-->
+				<x>  1.416 </x>
+				<y>  0.00 </y>
+				<z>  0.05 </z>				
 			</location>
 			<static_friction>  0.80 </static_friction>
 			<dynamic_friction> 0.50 </dynamic_friction>
-			<rolling_friction> 0.02 </rolling_friction>
-			<spring_coeff unit="N/M">        69951.45 </spring_coeff>
+			<rolling_friction> 0.03 </rolling_friction>
+			<spring_coeff unit="N/M">        40000 </spring_coeff>
 			<damping_coeff unit="N/M/SEC">  34271.30 </damping_coeff>
-			<max_steer unit="DEG"> 5.00 </max_steer>
+			<max_steer unit="DEG"> 30 </max_steer>
 			<brake_group>NONE</brake_group>
 			<retractable>1</retractable>
 		</contact>
 			
 		<contact type="BOGEY" name="LEFT_MAIN">
 			<location unit="M">
-				<x> 4.32 </x>
+				<x> 4.07 </x>
 				<y> -1.06 </y>
-				<z> -1.36 </z><!--stho<z> -1.26 </z>-->
+				<z> 0.150 </z>
 			</location>
 			<static_friction>  0.80 </static_friction>
 			<dynamic_friction> 0.50 </dynamic_friction>
-			<rolling_friction> 0.02 </rolling_friction>
-			<spring_coeff unit="N/M">        69951.45 </spring_coeff>
+			<rolling_friction> 0.03 </rolling_friction>
+			<spring_coeff unit="N/M">        183000 </spring_coeff>
 			<damping_coeff unit="N/M/SEC">  34271.30 </damping_coeff>
 			<max_steer unit="DEG">0</max_steer>
 			<brake_group>LEFT</brake_group>
@@ -186,14 +179,14 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			
 		<contact type="BOGEY" name="RIGHT_MAIN">
 			<location unit="M">
-				<x> 4.32 </x>
+				<x> 4.07 </x>
 				<y>  1.06 </y>
-				<z> -1.36 </z><!--stho<z> -1.26 </z>-->
+				<z> 0.150 </z>
 			</location>
 			<static_friction>  0.80 </static_friction>
 			<dynamic_friction> 0.50 </dynamic_friction>
-			<rolling_friction> 0.02 </rolling_friction>
-			<spring_coeff unit="N/M">        69951.45 </spring_coeff>
+			<rolling_friction> 0.03 </rolling_friction>
+			<spring_coeff unit="N/M">        183000 </spring_coeff>
 			<damping_coeff unit="N/M/SEC">  34271.30 </damping_coeff>
 			<max_steer unit="DEG">0</max_steer>
 			<brake_group>RIGHT</brake_group>
@@ -208,8 +201,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			</location>
 			<static_friction>  1.00 </static_friction>
 			<dynamic_friction> 1.00 </dynamic_friction>
-			<spring_coeff unit="LBS/FT">       4696.65 </spring_coeff>
-			<damping_coeff unit="LBS/FT/SEC">  4696.65 </damping_coeff>
+			<spring_coeff unit="LBS/FT">   183000 </spring_coeff>
+			<damping_coeff unit="LBS/FT/SEC">  18300 </damping_coeff>
 		</contact>
 		
 		<contact type="STRUCTURE" name="RIGHT_WING">
@@ -220,8 +213,20 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			</location>
 			<static_friction>  1.00 </static_friction>
 			<dynamic_friction> 1.00 </dynamic_friction>
-			<spring_coeff unit="LBS/FT">       4696.65 </spring_coeff>
-			<damping_coeff unit="LBS/FT/SEC">  4696.65 </damping_coeff>
+			<spring_coeff unit="LBS/FT">183000 </spring_coeff>
+			<damping_coeff unit="LBS/FT/SEC">18300</damping_coeff>
+		</contact>
+
+		<contact type="STRUCTURE" name="VENTRAL FIN">
+			<location unit="M">
+				<x> 8.795 </x>
+				<y> 0 </y>
+				<z> 1.229 </z>
+			</location>
+			<static_friction>  1.00 </static_friction>
+			<dynamic_friction> 1.00 </dynamic_friction>
+			<spring_coeff unit="LBS/FT">183000</spring_coeff>
+			<damping_coeff unit="LBS/FT/SEC">18300</damping_coeff>
 		</contact>
 		
 	</ground_reactions>
@@ -229,24 +234,24 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	<propulsion>
 		<engine file="turbine_250-B17F2">
 			<location unit="IN">
-				<x>  36.00 </x>
+				<x>   9.00 </x>
 				<y>   0.00 </y>
-				<z>   0.00 </z>
+				<z>   59.00 </z>
 			</location>
 			<orient unit="DEG">
-				<pitch> 0.00 </pitch>
+				<pitch> -3.00 </pitch>
 				<roll>  0.00 </roll>
 				<yaw>   0.00 </yaw>
 			</orient>
 			<feed>3</feed>
 			<thruster file="propeller_MTV-5-1-D-C-F-R(A)">
 				<location unit="IN">
-					<x>  36.00 </x>
+					<x>  9.00 </x>
 					<y>   0.00 </y>
-					<z>   0.00 </z>
+					<z>   59.00 </z>
 				</location>
 				<orient unit="DEG">
-					<pitch> 0.00 </pitch>
+					<pitch> -3.00 </pitch>
 					<roll>  0.00 </roll>
 					<yaw>   0.00 </yaw>
 				</orient>
@@ -259,21 +264,21 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		<tank type="FUEL" number="0">
 			<!-- left auxiliary compartment -->
 			<location unit="M">
-				<x>  4.03 </x>
+				<x>  3.9 </x>
 				<y> -2.23 </y>
-				<z>  0.86 </z>
+				<z>  2.357 </z>
 			</location>
 			<priority> 0 </priority>
 			<type>JET-A</type> 
 			<capacity unit="KG"> 86.3 </capacity>
-			<contents unit="KG"> 86.3 </contents>
+			<contents unit="KG"> 0.0 </contents>
 		</tank>
 		<tank type="FUEL" number="1">
 			<!-- left main compartment -->
 			<location unit="M">
-				<x>  3.95 </x>
+				<x>  3.768 </x>
 				<y> -1.42 </y>
-				<z>  0.86 </z>
+				<z>  2.357 </z>
 			</location>
 			<priority> 0 </priority>
 			<type>JET-A</type> 
@@ -283,9 +288,9 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		<tank type="FUEL" number="2">
 			<!-- left collector compartment -->
 			<location unit="M">
-				<x>  3.91 </x>
+				<x>  3.768 </x>
 				<y> -0.82 </y>
-				<z>  0.86 </z>
+				<z>  2.357 </z>
 			</location>
 			<priority> 0 </priority>
 			<type>JET-A</type> 
@@ -307,9 +312,9 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		<tank type="FUEL" number="4">
 			<!-- right collector compartment -->
 			<location unit="M">
-				<x>  3.91 </x>
+				<x>  3.768 </x>
 				<y>  0.82 </y>
-				<z>  0.86 </z>
+				<z>  2.357 </z>
 			</location>
 			<priority> 0 </priority>
 			<type>JET-A</type> 
@@ -319,9 +324,9 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		<tank type="FUEL" number="5">
 			<!-- right main compartment -->
 			<location unit="M">
-				<x>  3.95 </x>
+				<x>  3.768 </x>
 				<y>  1.42 </y>
-				<z>  0.86 </z>
+				<z>  2.357 </z>
 			</location>
 			<priority> 0 </priority>
 			<type>JET-A</type> 
@@ -331,14 +336,14 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		<tank type="FUEL" number="6">
 			<!-- right auxiliary compartment -->
 			<location unit="M">
-				<x>  4.03 </x>
+				<x>  3.9 </x>
 				<y>  2.23 </y>
-				<z>  0.86 </z>
+				<z>  2.357 </z>
 			</location>
 			<priority> 0 </priority>
 			<type>JET-A</type> 
 			<capacity unit="KG"> 86.3 </capacity>
-			<contents unit="KG"> 86.3 </contents>
+			<contents unit="KG"> 0.0 </contents>
 		</tank>
 	</propulsion>
 							
@@ -506,28 +511,28 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						<time>      0 </time>
 					</setting>
 					<setting>
-						<position> 15 </position>
-						<time>      4 </time>
+						<position> 0.5 </position>
+						<time>     3 </time>
 					</setting>
 					<setting>
-						<position> 30 </position>
-						<time>      3 </time>
+						<position> 1 </position>
+						<time>     5 </time>
 					</setting>
 				</traverse>
-				<output>fcs/flap-pos-deg</output>
+				<output>fcs/flap-pos-norm</output>
 			</kinematic>
 			
 			<aerosurface_scale name="flap normalization">
-				<input>fcs/flap-pos-deg</input>
+				<input>fcs/flap-pos-norm</input>
 				<domain>
 					<min>  0 </min>
-					<max> 30 </max>
+					<max> 1 </max>
 				</domain>
 				<range>
 					<min> 0 </min>
-					<max> 1 </max>
+					<max> 30 </max>
 				</range>
-				<output>fcs/flap-pos-norm</output>
+				<output>fcs/flap-pos-deg</output>
 			</aerosurface_scale>
 			
 		</channel>
