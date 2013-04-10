@@ -4,6 +4,29 @@
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://jsbsim.sourceforge.net/JSBSim.xsd">
 	
+<!--
+    This file is part of extra500
+
+    The Changer is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The Changer is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: -
+      Date: 2013-03-13
+
+      Last change:      Eric van den Berg
+      Date:             10.04.13
+-->
+
 	<fileheader>
 		<author> Aeromatic v 0.95 </author>
 		<filecreationdate>2013-03-13</filecreationdate>
@@ -265,7 +288,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<!-- left auxiliary compartment -->
 			<location unit="M">
 				<x>  3.9 </x>
-				<y> -2.23 </y>
+				<y> -3.576 </y>
 				<z>  2.357 </z>
 			</location>
 			<priority> 0 </priority>
@@ -277,7 +300,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<!-- left main compartment -->
 			<location unit="M">
 				<x>  3.768 </x>
-				<y> -1.42 </y>
+				<y> -1.787 </y>
 				<z>  2.357 </z>
 			</location>
 			<priority> 0 </priority>
@@ -289,7 +312,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<!-- left collector compartment -->
 			<location unit="M">
 				<x>  3.768 </x>
-				<y> -0.82 </y>
+				<y> -0.625 </y>
 				<z>  2.357 </z>
 			</location>
 			<priority> 0 </priority>
@@ -313,7 +336,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<!-- right collector compartment -->
 			<location unit="M">
 				<x>  3.768 </x>
-				<y>  0.82 </y>
+				<y>  0.625 </y>
 				<z>  2.357 </z>
 			</location>
 			<priority> 0 </priority>
@@ -325,7 +348,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<!-- right main compartment -->
 			<location unit="M">
 				<x>  3.768 </x>
-				<y>  1.42 </y>
+				<y>  1.787 </y>
 				<z>  2.357 </z>
 			</location>
 			<priority> 0 </priority>
@@ -337,7 +360,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<!-- right auxiliary compartment -->
 			<location unit="M">
 				<x>  3.9 </x>
-				<y>  2.23 </y>
+				<y>  3.576 </y>
 				<z>  2.357 </z>
 			</location>
 			<priority> 0 </priority>
@@ -363,8 +386,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<aerosurface_scale name="Elevator Control">
 				<input>fcs/pitch-trim-sum</input>
 				<range>
-					<min> -0.35 </min>
-					<max>  0.35 </max>
+					<min> -0.5759 </min>
+					<max>  0.3141 </max>
 				</range>
 				<output>fcs/elevator-pos-rad</output>
 			</aerosurface_scale>
@@ -372,8 +395,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<aerosurface_scale name="elevator normalization">
 				<input>fcs/elevator-pos-rad</input>
 				<domain>
-					<min> -0.35 </min>
-					<max>  0.35 </max>
+					<min> -0.5759 </min>
+					<max>  0.3141 </max>
 				</domain>
 				<range>
 					<min> -1 </min>
@@ -385,30 +408,21 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		</channel>
 		
 		<channel name="Roll">
-			
-			<summer name="Roll Trim Sum">
-				<input>fcs/aileron-cmd-norm</input>
-				<input>fcs/roll-trim-cmd-norm</input>
-				<clipto>
-					<min> -1 </min>
-					<max>  1 </max>
-				</clipto>
-			</summer>
-			
+				
 			<aerosurface_scale name="Left Aileron Control">
-				<input>fcs/roll-trim-sum</input>
+				<input>fcs/aileron-cmd-norm</input>
 				<range>
-					<min> -0.35 </min>
-					<max>  0.35 </max>
+					<min> -0.4712 </min>
+					<max>  0.3316 </max>
 				</range>
 				<output>fcs/left-aileron-pos-rad</output>
 			</aerosurface_scale>
 			
 			<aerosurface_scale name="Right Aileron Control">
-				<input>fcs/roll-trim-sum</input>
+				<input>fcs/aileron-cmd-norm</input>
 				<range>
-					<min> -0.35 </min>
-					<max>  0.35 </max>
+					<min> -0.3316 </min>
+					<max>  0.4712 </max>
 				</range>
 				<output>fcs/right-aileron-pos-rad</output>
 			</aerosurface_scale>
@@ -416,8 +430,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<aerosurface_scale name="left aileron normalization">
 				<input>fcs/left-aileron-pos-rad</input>
 				<domain>
-					<min> -0.35 </min>
-					<max>  0.35 </max>
+					<min> -0.4712 </min>
+					<max>  0.3316 </max>
 				</domain>
 				<range>
 					<min> -1 </min>
@@ -429,8 +443,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<aerosurface_scale name="right aileron normalization">
 				<input>fcs/right-aileron-pos-rad</input>
 				<domain>
-					<min> -0.35 </min>
-					<max>  0.35 </max>
+					<min> -0.3316 </min>
+					<max>  0.4712 </max>
 				</domain>
 				<range>
 					<min> -1 </min>
@@ -481,8 +495,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 					<max>  1.1 </max>
 				</domain>
 				<range>
-					<min> -0.35 </min>
-					<max>  0.35 </max>
+					<min> -0.4363 </min>
+					<max>  0.4363 </max>
 				</range>
 				<output>fcs/rudder-pos-rad</output>
 			</aerosurface_scale>
@@ -490,8 +504,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<aerosurface_scale name="rudder normalization">
 				<input>fcs/rudder-pos-rad</input>
 				<domain>
-					<min> -0.35 </min>
-					<max>  0.35 </max>
+					<min> -0.4363 </min>
+					<max>  0.4363 </max>
 				</domain>
 				<range>
 					<min> -1 </min>
@@ -503,38 +517,39 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		</channel>
 		
 		<channel name="Flaps">
+
 			<kinematic name="Flaps Control">
 				<input>fcs/flap-cmd-norm</input>
 				<traverse>
 					<setting>
-						<position>  0 </position>
-						<time>      0 </time>
+						<position>0</position>
+						<time>0</time>
 					</setting>
 					<setting>
-						<position> 0.5 </position>
-						<time>     3 </time>
+						<position>15</position>
+						<time>4</time>
 					</setting>
 					<setting>
-						<position> 1 </position>
-						<time>     5 </time>
+						<position>30</position>
+						<time>6</time>
 					</setting>
 				</traverse>
-				<output>fcs/flap-pos-norm</output>
+				<output>fcs/flap-pos-deg</output>
 			</kinematic>
-			
-			<aerosurface_scale name="flap normalization">
-				<input>fcs/flap-pos-norm</input>
+
+			<aerosurface_scale name="Flap Normalization">
+				<input>fcs/flap-pos-deg</input>
 				<domain>
-					<min>  0 </min>
-					<max> 1 </max>
+					<min>0</min>
+					<max>30</max>
 				</domain>
 				<range>
-					<min> 0 </min>
-					<max> 30 </max>
+					<min>0</min>
+					<max>1</max>
 				</range>
-				<output>fcs/flap-pos-deg</output>
+				<output>fcs/flap-pos-norm</output>
 			</aerosurface_scale>
-			
+
 		</channel>
 		
 		<channel name="Landing Gear">
@@ -547,32 +562,14 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 					</setting>
 					<setting>
 						<position> 1 </position>
-						<time>     5 </time>
+						<time>     8 </time>
 					</setting>
 				</traverse>
 				<output>gear/gear-pos-norm</output>
 			</kinematic>
 			
 		</channel>
-		
-		<channel name="Speedbrake">
-			<kinematic name="Speedbrake Control">
-				<input>fcs/speedbrake-cmd-norm</input>
-				<traverse>
-					<setting>
-						<position> 0 </position>
-						<time>     0 </time>
-					</setting>
-					<setting>
-						<position> 1 </position>
-						<time>     1 </time>
-					</setting>
-				</traverse>
-				<output>fcs/speedbrake-pos-norm</output>
-			</kinematic>
 			
-		</channel>
-		
 	</flight_control>
 	
 	<aerodynamics>
@@ -603,16 +600,6 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 					<property>metrics/Sw-sqft</property>
 					<property>fcs/flap-pos-deg</property>
 					<value> 0.01333 </value>
-				</product>
-			</function>
-			
-			<function name="aero/force/Lift_speedbrake">
-				<description>Delta Lift due to speedbrake</description>
-				<product>
-					<property>aero/qbar-psf</property>
-					<property>metrics/Sw-sqft</property>
-					<property>fcs/speedbrake-pos-norm</property>
-					<value>0</value>
 				</product>
 			</function>
 			
@@ -694,17 +681,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 					<value>0.03</value>
 				</product>
 			</function>
-			
-			<function name="aero/force/Drag_speedbrake">
-				<description>Drag due to speedbrakes</description>
-				<product>
-					<property>aero/qbar-psf</property>
-					<property>metrics/Sw-sqft</property>
-					<property>fcs/speedbrake-pos-norm</property>
-					<value>0.024</value>
-				</product>
-			</function>
-			
+					
 			<function name="aero/force/Drag_beta">
 				<description>Drag due to sideslip</description>
 				<product>
