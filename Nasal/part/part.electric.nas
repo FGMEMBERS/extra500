@@ -6,43 +6,64 @@ var ElectricTreeDebugger = {
 		var m = {parents:[
 			ElectricTreeDebugger
 		]};
+		m.on	 	= 0;
 		m.depth 	= 0;
 		m.defaultStr 	= "                                       ";
 		m.debugLevel	=0;
-		m.highLightType = "ElectricRelais6PST";
+		m.highLightType = "ElectricRelaisXPST";
+		m.excludeType 	= "";
+		m.debugName 	= "";
 		return m;
 
 	},
 	colorRed : func(s) { return globals.string.color("32", s)},
 	in : func(type,name,connector,electron,icon="└┬"){
-		if (me.debugLevel > 0){
-			if (find(type,me.highLightType) > -1){
-				type = me.colorRed(type);
+		if (me.on){
+			if (find(me.debugName,name) > -1){
+				me.debugLevel+=1;
+				#print("ElectricTreeDebugger     found "~name);
 			}
-			var space = substr(me.defaultStr,0,me.depth);
-			var output = sprintf("%s %s %s %s %s %s",space,icon,type,name,connector,electron.getText());
-			print(output);
+			
+			if (me.debugLevel > 0){
+				
+				if (find(type,me.highLightType) > -1){
+					type = me.colorRed(type);
+				}
+				if (find(type,me.excludeType) == -1){
+					var space = substr(me.defaultStr,0,me.depth);
+					var output = sprintf("%s %s %s %s %s %s",space,icon,type,name,connector,electron.getText());
+					print(output);
+				}
+				
+			}
 			me.depth += 1;
 		}
-		
 	},
 	out : func(type,name,connector,electron,icon="┌┴"){
-		if (me.debugLevel > 0){
-			if (find(type,me.highLightType) > -1){
-				type = me.colorRed(type);
+		if (me.on){
+			if (me.debugLevel > 0){
+				if (find(type,me.highLightType) > -1){
+					type = me.colorRed(type);
+				}
+				if (find(type,me.excludeType) == -1){
+					var space = substr(me.defaultStr,0,me.depth);
+					var output = sprintf("%s%s %s %s %s %s",space,icon,type,name,connector,electron.getText());
+					print(output);
+				}
 			}
-			var space = substr(me.defaultStr,0,me.depth);
-			var output = sprintf("%s%s %s %s %s %s",space,icon,type,name,connector,electron.getText());
-			print(output);
+			if (find(me.debugName,name) > -1){
+				me.debugLevel-=1;
+			}
 			me.depth -= 1;
 		}
-
 	},
 	echo : func(msg,icon="**"){
 		if (me.debugLevel > 0){
+			
 			var space = substr(me.defaultStr,0,me.depth);
 			var output = sprintf("%s%s %s",space,icon,msg);
 			print(output);
+			
 		}
 	}
 		
@@ -91,8 +112,6 @@ var Electron ={
 		return sprintf("%0.4fV %0.4fΩ %0.4fA",me.volt,me.resistor,me.ampere);
 	}
 };
-
-
 
 var ElectricConnector = {
 	new : func(name){
@@ -257,6 +276,7 @@ var ElectricBus = {
 		m.connectors = {};
 		m.electron = Electron.new();
 		m.electronTmp = Electron.new();
+		m.index = nil;
 		return m;
 	},
 	plug : func(connector,name="default"){
@@ -267,6 +287,7 @@ var ElectricBus = {
 		me.connectors[name].solder(me);
 		me.connectors[name].plug(connector);
 		connector.plug(me.connectors[name]);
+		me.order();
 	},
 	applyVoltage : func(electron,name=""){ 
 		etd.in("Bus",me.name,name,electron);
@@ -275,7 +296,7 @@ var ElectricBus = {
 		if ( electron != nil){
 			me.electron.copy(electron);
 			
-			foreach(var i;keys(me.connectors)) {
+			foreach(var i;me.index) {
 				me.electronTmp.set(me.electron.volt,me.electron.resistor,0.0);
 				if (i != name){
 					if ( me.connectors[i].applyVoltage(me.electronTmp) ){
@@ -292,6 +313,14 @@ var ElectricBus = {
 		}
 		etd.out("Bus",me.name,name,electron);
 		return GND;
+	},
+	order : func(){
+		me.index = sort(keys(me.connectors), func (a,b) cmp (me.connectors[a].name, me.connectors[b].name)) ;
+	},
+	echoOrder : func(){
+		foreach(var i;me.index) {
+			print(sprintf("Bus %s %s %s",me.connectors[i].name,me.connectors[i].connector.name,me.connectors[i].connector.electricAble.name));
+		}
 	}
 };
 
@@ -318,6 +347,7 @@ var ElectricBusDiode = {
 		me.connectors[name].solder(me);
 		me.connectors[name].plug(connector);
 		connector.plug(me.connectors[name]);
+		me.order();
 	},
 	applyVoltage : func(electron,name=""){ 
 		etd.in("BusDiode",me.name,name,electron);
@@ -332,6 +362,14 @@ var ElectricBusDiode = {
 		
 		etd.out("BusDiode",me.name,name,electron);
 		return GND;
+	},
+	order : func(){
+		me.index = sort(keys(me.connectors), func (a,b) cmp (me.connectors[a].name, me.connectors[b].name)) ;
+	},
+	echoOrder : func(){
+		foreach(var i;me.index) {
+			print(sprintf("Bus %s %s %s",me.connectors[i].name,me.connectors[i].connector.name,me.connectors[i].connector.electricAble.name));
+		}
 	}
 };
  
@@ -389,7 +427,10 @@ var ElectricBattery = {
 		
 	},
 	update : func(){
-		etd.echo("Battery.update() ...");
+		
+		etd.echo("--- Battery.update() ...          ---");
+		etd.echo("-------------------------------------");
+		#etd.echo("Battery.update() ...");
 		
 		me.electron.volt = 24.0;
 		me.electron.resistor = 0.0;
@@ -401,270 +442,13 @@ var ElectricBattery = {
 		if (GND > 0){
 			me.setAmpereOutput(me.electron.ampere);
 		}
+		etd.echo("-------------------------------------");
 	},
 	test_consumer : func(electron){
 		electron.resistor += 100.0;
 		print(electron.getText());
 	}
 	
-};
-
-var ElectricSwitch2P = {
-	new : func(nRoot,name){
-		
-		#nRoot = nRoot.initNode("switch");
-		
-		var m = {parents:[
-			ElectricSwitch2P,
-			Part.new(nRoot,name),
-			#ElectricAble.new(nRoot,name)
-		]};
-		m.state = 0;
-		m.In = ElectricConnector.new("in");
-		m.On = ElectricConnector.new("on");
-		m.Off = ElectricConnector.new("off");
-		
-		m.nState = nRoot.initNode("state",m.state,"BOOL");
-		
-		
-		
-		m.In.solder(m);
-		m.On.solder(m);
-		m.Off.solder(m);
-		
-		return m;
-
-	},
-	setAlias:func(alias){
-		me.nState.alias(alias);
-	},
-	applyVoltage : func(electron,name=""){ 
-		etd.in("Switch2P",me.name,name,electron);
-		var GND = 0;
-		#electron.resistor += me.qos  ;
-		if ( electron != nil){
-			if (name == "in"){
-				if (me.state){
-					GND = me.On.applyVoltage(electron);
-				}else{
-					GND = me.Off.applyVoltage(electron);
-				}
-			}else if (name == "on"){
-				if (me.state){
-					GND = me.In.applyVoltage(electron);
-				}
-			}else if (name == "off"){
-				if (!me.state){
-					GND = me.In.applyVoltage(electron);
-				}
-			}
-		}
-		etd.out("Switch2P",me.name,name,electron);
-		return GND;
-	},
-	_setValue : func(value){
-		me.state = value;
-		me.nState.setValue(value);
-	},
-	on : func(){
-		me._setValue(1);
-		sound.click(4);
-	},
-	off : func(){
-		me._setValue(0);
-		sound.click(4);
-	},
-	toggle : func(){
-		me.state = me.nState.getValue();
-		if (me.state){
-			me._setValue(0);
-		}else{
-			me._setValue(1);
-		}
-		sound.click(4);
-		#global.fnAnnounce("debug",""~me.name~"\t\tElectricSwitch.toggle() ... "~me.nState.getValue());
-	},
-};
-
-var ElectricSwitch3P = {
-	new : func(nRoot,name,state=0){
-		
-		#nRoot = nRoot.initNode("switch");
-		
-		var m = {parents:[
-			ElectricSwitch3P,
-			Part.new(nRoot,name),
-			#ElectricAble.new(nRoot,name)
-		]};
-		m.state = state;
-		m.nState = nRoot.initNode("state",state,"INT");
-		m.min = -1;
-		m.max = 1;
-		m.step = 1;
-		
-		m.In = ElectricConnector.new("in");
-		m.High = ElectricConnector.new("high");
-		m.Mid = ElectricConnector.new("mid");
-		m.Low = ElectricConnector.new("low");
-		
-		m.In.solder(m);
-		m.High.solder(m);
-		m.Mid.solder(m);
-		m.Low.solder(m);
-		
-		return m;
-
-	},
-	setAlias:func(alias){
-		me.nState.alias(alias);
-	},
-	applyVoltage : func(electron,name=""){ 
-		etd.in("Switch3P",me.name,name,electron);
-		var GND = 0;
-		#electron.resistor *= me.qos;
-		if ( electron != nil){
-			if (name == "in"){
-				if (me.state == 1){
-					GND = me.High.applyVoltage(electron);
-				}else if(me.state == 0){
-					GND = me.Mid.applyVoltage(electron);
-				}else if(me.state == -1){
-					GND = me.Low.applyVoltage(electron);
-				}
-			}else{
-				if (	(me.state == 1 and name == "high") 
-					or (me.state == 0 and name == "mid")
-					or (me.state == -1 and name == "low")
-				){
-					GND = me.In.applyVoltage(electron);
-				}
-			}
-		}
-		etd.out("Switch3P",me.name,name,electron);
-		return GND;
-	},
-	_setValue : func(value){
-		#global.fnAnnounce("debug",""~me.name~"\t\ElectricKnob._setValue("~value~") ... ");
-		if (me.min != nil){
-			if (value < me.min){
-				value = me.min;
-			}
-		}
-		if (me.max != nil){
-			if (value > me.max){
-				value = me.max;
-			}
-		}
-		me.state = value;
-		me.nState.setValue(me.state);
-		
-	},
-	adjust : func(value){
-		var state = me.nState.getValue();
-		
-		me._setValue(state + value);
-		sound.click(4);
-	},
-	setValue : func(value){
-		me._setValue(value);
-		sound.click(4);
-	},
-	left : func(){
-		if (me.step != nil){
-			var state = me.nState.getValue();
-			me._setValue(state - me.step);
-		}
-		sound.click(4);
-	},
-	right : func(){
-		#global.fnAnnounce("debug",""~me.name~"\t\ElectricKnob.right() ... ");
-		if (me.step != nil){
-			var state = me.nState.getValue();
-			me._setValue(state + me.step);
-		}
-		sound.click(4);
-	}
-};
-
-var ElectricDimmer = {
-	new : func(nRoot,name,type="DOUBLE",min=0.0,max=1.0,step=0.05,state=0.0){
-				
-		var m = {parents:[
-			ElectricDimmer,
-			Part.new(nRoot,name),
-			ElectricAble.new(nRoot,name)
-		]};
-		m.state = state;
-		m.min = min;
-		m.max = max;
-		m.step = step;
-		
-		m.nState = nRoot.initNode("state",m.state,type);
-		
-		m.In = ElectricConnector.new("in");
-		m.Out = ElectricConnector.new("out");
-			
-		m.In.solder(m);
-		m.Out.solder(m);
-				
-		return m;
-
-	},
-	applyVoltage : func(electron,name=""){
-		etd.in("Dimmer",me.name,name,electron);
-		var GND = 0;
-		if ( electron != nil){
-			electron.resistor += me.resistor * (1.0-me.state) * me.qos;
-			if (name == "in"){
-				GND =  me.Out.applyVoltage(electron);
-			}else{
-				GND =  me.In.applyVoltage(electron);
-			}
-		}
-		etd.out("Switch2P",me.name,name,electron);
-		return GND;
-	},
-	_setValue : func(value){
-		#global.fnAnnounce("debug",""~me.name~"\t\ElectricKnob._setValue("~value~") ... ");
-		if (me.min != nil){
-			if (value < me.min){
-				value = me.min;
-			}
-		}
-		if (me.max != nil){
-			if (value > me.max){
-				value = me.max;
-			}
-		}
-		me.state = value;
-		me.nState.setValue(me.state);
-		
-	},
-	adjust : func(value){
-		var state = me.nState.getValue();
-		
-		me._setValue(state + value);
-		sound.click(4);
-	},
-	setValue : func(value){
-		me._setValue(value);
-		sound.click(4);
-	},
-	left : func(){
-		if (me.step != nil){
-			var state = me.nState.getValue();
-			me._setValue(state - me.step);
-		}
-		sound.click(4);
-	},
-	right : func(){
-		#global.fnAnnounce("debug",""~me.name~"\t\ElectricKnob.right() ... ");
-		if (me.step != nil){
-			var state = me.nState.getValue();
-			me._setValue(state + me.step);
-		}
-		sound.click(4);
-	}
 };
 
 var ElectricCircuitBraker = {
@@ -745,72 +529,86 @@ var ElectricCircuitBraker = {
 	
 };
 
-var ElectricRelais = {
+# ElectricSwitchDT	Double Throw
+# 0	      ┌── L11
+# 1	Com1 ─┘ ─ L12
+var ElectricSwitchDT = {
+
 	new : func(nRoot,name,state=0){
 		
 		#nRoot = nRoot.initNode("switch");
 		
 		var m = {parents:[
-			ElectricRelais,
+			ElectricSwitchDT,
 			Part.new(nRoot,name),
 			SimStateAble.new(nRoot,"BOOL",state),
 			ElectricAble.new(nRoot,name)
 		]};
-		
-		m.Plus = ElectricConnector.new("+");
-		m.Minus = ElectricConnector.new("-");
-		
-		m.In = ElectricConnector.new("in");
-		m.Out = ElectricConnector.new("out");
 			
+		m.min = 0;
+		m.max = 1;
+		m.step = 1;
 		
-		
-		m.Plus.solder(m);
-		m.Minus.solder(m);
-		
-		m.In.solder(m);
-		m.Out.solder(m);
-		
-		append(aListSimStateAble,m);
+		m.output = {};
+		m.output[0] = {};
+		m.output[1] = {};
+			
 		return m;
 
 	},
+	setPoles : func(count){
+		var Com = "";
+		var L1 = "";
+		var L2 = "";
+		for(var i=1; i<=count; i += 1) {
+			Com = "Com"~i;
+			L1 = "L"~i~"1";
+			L2 = "L"~i~"2";
+			
+			me[Com] = ElectricConnector.new(Com);
+			me[L1] = ElectricConnector.new(L1);
+			me[L2] = ElectricConnector.new(L2);
+						
+			me.output[0][Com] = me[L1];
+			me.output[0][L1] = me[Com];
+			me.output[1][Com] = me[L2];
+			me.output[1][L2] = me[Com];
+					
+			me[Com].solder(me);
+			me[L1].solder(me);
+			me[L2].solder(me);
+			
+		}
+		
+# 		foreach(var i ;keys(me.output[0]) ){
+# 			print("Pole [0]["~i~"] = "~typeof(me.output[0][i]));
+# 		}
+	},
 	applyVoltage : func(electron,name=""){
-		etd.in("Relais",me.name,name,electron);
+		etd.in("SwitchDT",me.name,name,electron);
 		var GND = 0;
 		if(electron != nil){
-			if (me.state){
-				if (name == "in"){
-					GND = me.Out.applyVoltage(electron);
-				}else if (name == "out"){
-					GND = me.In.applyVoltage(electron);
-				}
-			}
+			#electron.resistor += me.qos;
+			#print("Pole ["~me.state~"]["~name~"] = "~typeof(me.output[me.state][name]));
+			if (contains(me.output[me.state],name)){
+				GND = me.output[me.state][name].applyVoltage(electron);
+			}	
 			
-			if (name == "+"){
-				electron.resistor += 190.0;
-				GND = me.Minus.applyVoltage(electron);
-				if (GND > 0 ){
-					#GND += me.electricWork(electron);
-					me._setValue(1);
-				}else{
-					me._setValue(0);
-				}
-			}
 		}
-		etd.out("Relais",me.name,name,electron);
+		etd.out("SwitchDT",me.name,name,electron);
 		return GND;
 	},
 	_setValue : func(value){
 		me.state = value;
+		me.nState.setValue(value);
 	},
-	open : func(){
-		me._setValue(0);
-		sound.click(2);
-	},
-	close : func(){
+	on : func(){
 		me._setValue(1);
-		sound.click(2);
+		sound.click(4);
+	},
+	off : func(){
+		me._setValue(0);
+		sound.click(4);
 	},
 	toggle : func(){
 		me.state = me.nState.getValue();
@@ -819,20 +617,244 @@ var ElectricRelais = {
 		}else{
 			me._setValue(1);
 		}
-		sound.click(2);
+		sound.click(4);
 		#global.fnAnnounce("debug",""~me.name~"\t\tElectricSwitch.toggle() ... "~me.nState.getValue());
 	},
-	
-	
+
 };
 
-var ElectricRelais6PST = {
+# ElectricSwitchCO	Center Off
+# 1	        ─ L11
+# 0	Com1 ────
+# -1	        ─ L12
+var ElectricSwitchCO = {
 	new : func(nRoot,name,state=0){
 		
 		#nRoot = nRoot.initNode("switch");
 		
 		var m = {parents:[
-			ElectricRelais6PST,
+			ElectricSwitchCO,
+			Part.new(nRoot,name),
+			SimStateAble.new(nRoot,"INT",state),
+			ElectricAble.new(nRoot,name)
+		]};
+			
+		m.min = -1;
+		m.max = 1;
+		m.step = 1;
+		m.output = {};
+		m.output[1] = {};
+		m.output[-1] = {};
+			
+		return m;
+
+	},
+	setPoles : func(count){
+		var Com = "";
+		var L1 = "";
+		var L2 = "";
+		for(var i=1; i<=count; i += 1) {
+			Com = "Com"~i;
+			L1 = "L"~i~"1";
+			L2 = "L"~i~"2";
+			
+			me[Com] = ElectricConnector.new(Com);
+			me[L1] = ElectricConnector.new(L1);
+			me[L2] = ElectricConnector.new(L2);
+			
+						
+			me.output[1][Com] = me[L1];
+			me.output[1][L1] = me[Com];
+			me.output[-1][Com] = me[L2];
+			me.output[-1][L2] = me[Com];
+					
+			me[Com].solder(me);
+			me[L1].solder(me);
+			me[L2].solder(me);
+			
+		}
+	},
+	applyVoltage : func(electron,name=""){
+		etd.in("SwitchCO",me.name,name,electron);
+		var GND = 0;
+		if(electron != nil){
+			#electron.resistor += me.qos;
+			if(me.state != 0){
+				if (contains(me.output[me.state],name)){
+					GND = me.output[me.state][name].applyVoltage(electron);
+				}	
+			}
+		}
+		etd.out("SwitchCO",me.name,name,electron);
+		return GND;
+	},
+	_setValue : func(value){
+		#global.fnAnnounce("debug",""~me.name~"\t\ElectricKnob._setValue("~value~") ... ");
+		if (me.min != nil){
+			if (value < me.min){
+				value = me.min;
+			}
+		}
+		if (me.max != nil){
+			if (value > me.max){
+				value = me.max;
+			}
+		}
+		me.state = value;
+		me.nState.setValue(me.state);
+	},
+	adjust : func(value){
+		var state = me.nState.getValue();
+		
+		me._setValue(state + value);
+		sound.click(4);
+	},
+	setValue : func(value){
+		me._setValue(value);
+		sound.click(4);
+	},
+	left : func(){
+		if (me.step != nil){
+			var state = me.nState.getValue();
+			me._setValue(state - me.step);
+		}
+		sound.click(4);
+	},
+	right : func(){
+		#global.fnAnnounce("debug",""~me.name~"\t\ElectricKnob.right() ... ");
+		if (me.step != nil){
+			var state = me.nState.getValue();
+			me._setValue(state + me.step);
+		}
+		sound.click(4);
+	},
+
+};
+
+# ElectricSwitchTT	Tripple Throw
+# 1	        ─ L11
+# 0	Com1 ──── L12
+# -1	        ─ L13
+var ElectricSwitchTT = {
+	new : func(nRoot,name,state=0){
+		
+		#nRoot = nRoot.initNode("switch");
+		
+		var m = {parents:[
+			ElectricSwitchTT,
+			Part.new(nRoot,name),
+			SimStateAble.new(nRoot,"INT",state),
+			ElectricAble.new(nRoot,name)
+		]};
+			
+		m.min = -1;
+		m.max = 1;
+		m.step = 1;
+		m.output = {};
+		m.output[-1] = {};
+		m.output[0] = {};
+		m.output[1] = {};
+			
+		return m;
+
+	},
+	setPoles : func(count){
+		var Com = "";
+		var L1 = "";
+		var L2 = "";
+		var L3 = "";
+		for(var i=1; i<=count; i += 1) {
+			Com = "Com"~i;
+			L1 = "L"~i~"1";
+			L2 = "L"~i~"2";
+			L3 = "L"~i~"3";
+			
+			me[Com] = ElectricConnector.new(Com);
+			me[L1] = ElectricConnector.new(L1);
+			me[L2] = ElectricConnector.new(L2);
+			me[L3] = ElectricConnector.new(L3);
+			
+			me.output[1][Com] = me[L1];
+			me.output[1][L1] = me[Com];
+			me.output[0][Com] = me[L2];
+			me.output[0][L2] = me[Com];
+			me.output[-1][Com] = me[L3];
+			me.output[-1][L3] = me[Com];
+					
+			me[Com].solder(me);
+			me[L1].solder(me);
+			me[L2].solder(me);
+			me[L3].solder(me);
+		}
+	},
+	applyVoltage : func(electron,name=""){
+		etd.in("SwitchTT",me.name,name,electron);
+		var GND = 0;
+		if(electron != nil){
+			#electron.resistor += me.qos;
+			if (contains(me.output[me.state],name)){
+				GND = me.output[me.state][name].applyVoltage(electron);
+			}	
+		}
+		etd.out("SwitchTT",me.name,name,electron);
+		return GND;
+	},
+	_setValue : func(value){
+		#global.fnAnnounce("debug",""~me.name~"\t\ElectricKnob._setValue("~value~") ... ");
+		if (me.min != nil){
+			if (value < me.min){
+				value = me.min;
+			}
+		}
+		if (me.max != nil){
+			if (value > me.max){
+				value = me.max;
+			}
+		}
+		me.state = value;
+		me.nState.setValue(me.state);
+		
+	},
+	adjust : func(value){
+		var state = me.nState.getValue();
+		
+		me._setValue(state + value);
+		sound.click(4);
+	},
+	setValue : func(value){
+		me._setValue(value);
+		sound.click(4);
+	},
+	left : func(){
+		if (me.step != nil){
+			var state = me.nState.getValue();
+			me._setValue(state - me.step);
+		}
+		sound.click(4);
+	},
+	right : func(){
+		#global.fnAnnounce("debug",""~me.name~"\t\ElectricKnob.right() ... ");
+		if (me.step != nil){
+			var state = me.nState.getValue();
+			me._setValue(state + me.step);
+		}
+		sound.click(4);
+	},
+
+};
+
+# ElectricRelaisXPDT	Double Throw
+# 0	      ┌── L12
+# 1	 P11 ─┘ ─ L24
+var ElectricRelaisXPDT = {
+
+	
+	new : func(nRoot,name,state=0){
+		
+		#nRoot = nRoot.initNode("switch");
+		
+		var m = {parents:[
+			ElectricRelaisXPDT,
 			Part.new(nRoot,name),
 			SimStateAble.new(nRoot,"BOOL",state),
 			ElectricAble.new(nRoot,name)
@@ -841,77 +863,49 @@ var ElectricRelais6PST = {
 		m.A1 = ElectricConnector.new("A1");
 		m.A2 = ElectricConnector.new("A2");
 		
-		m.P13 = ElectricConnector.new("P13");
-		m.P14 = ElectricConnector.new("P14");
-			
-		m.P23 = ElectricConnector.new("P23");
-		m.P24 = ElectricConnector.new("P24");
-			
-		m.P33 = ElectricConnector.new("P33");
-		m.P34 = ElectricConnector.new("P34");
-			
-		m.P43 = ElectricConnector.new("P43");
-		m.P44 = ElectricConnector.new("P44");
-			
-		m.P53 = ElectricConnector.new("P53");
-		m.P54 = ElectricConnector.new("P54");
-		
-		m.P63 = ElectricConnector.new("P63");
-		m.P64 = ElectricConnector.new("P64");
-		
-		
 		m.output = {};
-		
+		m.output[0] = {};
+		m.output[1] = {};
+			
 		m.output["A1"] = m.A2;
 		m.output["A2"] = m.A1;
 		
-		m.output["P13"] = m.P14;
-		m.output["P14"] = m.P13;
-		
-		m.output["P23"] = m.P24;
-		m.output["P24"] = m.P23;
-		
-		m.output["P33"] = m.P34;
-		m.output["P34"] = m.P33;
-		
-		m.output["P43"] = m.P44;
-		m.output["P44"] = m.P43;
-		
-		m.output["P53"] = m.P54;
-		m.output["P54"] = m.P53;
-		
-		m.output["P63"] = m.P64;
-		m.output["P64"] = m.P63;
-		
 		m.A1.solder(m);
 		m.A2.solder(m);
-		
-		m.P13.solder(m);
-		m.P14.solder(m);
-		
-		m.P23.solder(m);
-		m.P24.solder(m);
-		
-		m.P33.solder(m);
-		m.P34.solder(m);
-		
-		m.P43.solder(m);
-		m.P44.solder(m);
-		
-		m.P53.solder(m);
-		m.P54.solder(m);
-		
-		m.P63.solder(m);
-		m.P64.solder(m);
 		
 		append(aListSimStateAble,m);
 		return m;
 
 	},
+	setPoles : func(count){
+		var p1 = "";
+		var p2 = "";
+		var p4 = "";
+		for(var i=1; i<=count; i += 1) {
+			p1 = "P"~i~"1";
+			p2 = "P"~i~"2";
+			p4 = "P"~i~"4";
+			
+			me[p1] = ElectricConnector.new(p1);
+			me[p2] = ElectricConnector.new(p2);
+			me[p4] = ElectricConnector.new(p4);
+			
+			
+			me.output[0][p1] = me[p2];
+			me.output[0][p2] = me[p1];
+			me.output[1][p1] = me[p4];
+			me.output[1][p4] = me[p1];
+					
+			me[p1].solder(me);
+			me[p2].solder(me);
+			me[p4].solder(me);
+		}
+	},
 	applyVoltage : func(electron,name=""){
-		etd.in("Relais6PST",me.name,name,electron);
+		etd.in("Relais",me.name,name,electron);
 		var GND = 0;
 		if(electron != nil){
+			
 			#electron.resistor += me.qos;
 						
 			if (name == "A1" or name == "A2"){
@@ -924,12 +918,14 @@ var ElectricRelais6PST = {
 					me._setValue(0);
 				}
 			}else{
-				if (me.state){
-					GND = me.output[name].applyVoltage(electron);
+				if (contains(me.output[me.state],name)){
+					GND = me.output[me.state][name].applyVoltage(electron);
 				}
 			}
+		
+			
 		}
-		etd.out("Relais6PST",me.name,name,electron);
+		etd.out("Relais",me.name,name,electron);
 		return GND;
 	},
 	_setValue : func(value){
@@ -937,11 +933,11 @@ var ElectricRelais6PST = {
 	},
 	open : func(){
 		me._setValue(0);
-		sound.click(2);
+		
 	},
 	close : func(){
 		me._setValue(1);
-		sound.click(2);
+		
 	},
 	toggle : func(){
 		me.state = me.nState.getValue();
@@ -950,13 +946,194 @@ var ElectricRelais6PST = {
 		}else{
 			me._setValue(1);
 		}
-		sound.click(2);
+		
 		#global.fnAnnounce("debug",""~me.name~"\t\tElectricSwitch.toggle() ... "~me.nState.getValue());
 	},
 	
 	
 };
 
+# ElectricRelaisXPST	Single Throw
+# 0	      ┌── 
+# 1	 P11 ─┘ ─ L14
+var ElectricRelaisXPST = {
+
+	new : func(nRoot,name,state=0){
+		
+		#nRoot = nRoot.initNode("switch");
+		
+		var m = {parents:[
+			ElectricRelaisXPST,
+			Part.new(nRoot,name),
+			SimStateAble.new(nRoot,"BOOL",state),
+			ElectricAble.new(nRoot,name)
+		]};
+		
+		m.A1 = ElectricConnector.new("A1");
+		m.A2 = ElectricConnector.new("A2");
+		
+		m.output = {};
+		
+		m.output["A1"] = m.A2;
+		m.output["A2"] = m.A1;
+		
+		m.A1.solder(m);
+		m.A2.solder(m);
+		
+		append(aListSimStateAble,m);
+		return m;
+
+	},
+	setPoles : func(count){
+		var p1 = "";
+		var p4 = "";
+		for(var i=1; i<=count; i += 1) {
+			p1 = "P"~i~"1";
+			p4 = "P"~i~"4";
+			
+			me[p1] = ElectricConnector.new(p1);
+			me[p4] = ElectricConnector.new(p4);
+			
+			me.output[p1] = me[p4];
+			me.output[p4] = me[p1];
+					
+			me[p1].solder(me);
+			me[p4].solder(me);
+			
+		}
+	},
+	applyVoltage : func(electron,name=""){
+		etd.in("ElectricRelaisXPST",me.name,name,electron);
+		var GND = 0;
+		if(electron != nil){
+			
+			#electron.resistor += me.qos;
+						
+			if (name == "A1" or name == "A2"){
+				electron.resistor += 190.0;
+				GND = me.output[name].applyVoltage(electron);
+				if (GND > 0 ){
+					#GND += me.electricWork(electron);
+					me._setValue(1);
+				}else{
+					me._setValue(0);
+				}
+			}else{
+				if (me.state == 1){
+					GND = me.output[name].applyVoltage(electron);
+				}
+			}
+		
+			
+		}
+		etd.out("ElectricRelaisXPST",me.name,name,electron);
+		return GND;
+	},
+	_setValue : func(value){
+		me.state = value;
+	},
+	open : func(){
+		me._setValue(0);
+		
+	},
+	close : func(){
+		me._setValue(1);
+		
+	},
+	toggle : func(){
+		me.state = me.nState.getValue();
+		if (me.state){
+			me._setValue(0);
+		}else{
+			me._setValue(1);
+		}
+		
+		#global.fnAnnounce("debug",""~me.name~"\t\tElectricSwitch.toggle() ... "~me.nState.getValue());
+	},
+	
+	
+};
+
+var ElectricDimmer = {
+	new : func(nRoot,name,type="DOUBLE",min=0.0,max=1.0,step=0.05,state=0.0){
+				
+		var m = {parents:[
+			ElectricDimmer,
+			Part.new(nRoot,name),
+			ElectricAble.new(nRoot,name)
+		]};
+		m.state = state;
+		m.min = min;
+		m.max = max;
+		m.step = step;
+		
+		m.nState = nRoot.initNode("state",m.state,type);
+		
+		m.In = ElectricConnector.new("in");
+		m.Out = ElectricConnector.new("out");
+			
+		m.In.solder(m);
+		m.Out.solder(m);
+				
+		return m;
+
+	},
+	applyVoltage : func(electron,name=""){
+		etd.in("Dimmer",me.name,name,electron);
+		var GND = 0;
+		if ( electron != nil){
+			electron.resistor += me.resistor * (1.0-me.state) * me.qos;
+			if (name == "in"){
+				GND =  me.Out.applyVoltage(electron);
+			}else{
+				GND =  me.In.applyVoltage(electron);
+			}
+		}
+		etd.out("Dimmer",me.name,name,electron);
+		return GND;
+	},
+	_setValue : func(value){
+		#global.fnAnnounce("debug",""~me.name~"\t\ElectricKnob._setValue("~value~") ... ");
+		if (me.min != nil){
+			if (value < me.min){
+				value = me.min;
+			}
+		}
+		if (me.max != nil){
+			if (value > me.max){
+				value = me.max;
+			}
+		}
+		me.state = value;
+		me.nState.setValue(me.state);
+		
+	},
+	adjust : func(value){
+		var state = me.nState.getValue();
+		
+		me._setValue(state + value);
+		sound.click(4);
+	},
+	setValue : func(value){
+		me._setValue(value);
+		sound.click(4);
+	},
+	left : func(){
+		if (me.step != nil){
+			var state = me.nState.getValue();
+			me._setValue(state - me.step);
+		}
+		sound.click(4);
+	},
+	right : func(){
+		#global.fnAnnounce("debug",""~me.name~"\t\ElectricKnob.right() ... ");
+		if (me.step != nil){
+			var state = me.nState.getValue();
+			me._setValue(state + me.step);
+		}
+		sound.click(4);
+	}
+};
 
 var ElectricLight = {
 	new : func(nRoot,name){

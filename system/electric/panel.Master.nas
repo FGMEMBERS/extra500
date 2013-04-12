@@ -39,89 +39,88 @@ var MasterPanel = {
 		nParent = m.nPanel.initNode("Autopilot");
 		
 		nCompNode = nParent.initNode("Master");
-		m.swtAutopilotMaster = Part.ElectricSwitch3P.new(nCompNode,"Autopilot Master");
+		m.AutopilotMaster = Part.ElectricSwitchTT.new(nCompNode,"Autopilot Master");
+		m.AutopilotMaster.setPoles(1);
 		
 		nCompNode = nParent.initNode("PitchTrim");
-		m.swtAutopilotPitchTrim = Part.ElectricSwitch2P.new(nCompNode,"Autopilot Pitch Trim");
+		m.AutopilotPitchTrim = Part.ElectricSwitchDT.new(nCompNode,"Autopilot Pitch Trim");
+		m.AutopilotPitchTrim.setPoles(1);
 		
 		nCompNode = nParent.initNode("YawDamper");
-		m.swtAutopilotYawDamper = Part.ElectricSwitch2P.new(nCompNode,"Autopilot Yaw Damper");
+		m.AutopilotYawDamper = Part.ElectricSwitchDT.new(nCompNode,"Autopilot Yaw Damper");
+		m.AutopilotYawDamper.setPoles(1);
 		
 		nCompNode = nParent.initNode("YawTrim");
-		m.swtAutopilotYawTrim = Part.ElectricDimmer.new(nCompNode,"Autopilot Yaw Trim","DOUBLE",-1.0,1.0,0.1);
+		m.AutopilotYawTrim = Part.ElectricDimmer.new(nCompNode,"Autopilot Yaw Trim","DOUBLE",-1.0,1.0,0.1);
+
+		
 # Fuel
 		nParent = m.nPanel.initNode("Fuel");
 		
 		nCompNode = nParent.initNode("TransferLeft");
-		m.swtFuelTransferLeft = Part.ElectricSwitch2P.new(nCompNode,"Fuel Transfer Left");
+		m.FuelTransferLeft = Part.ElectricSwitchDT.new(nCompNode,"Fuel Transfer Left");
+		m.FuelTransferLeft.setPoles(1);
 		
 		nCompNode = nParent.initNode("TransferRight");
-		m.swtFuelTransferRight = Part.ElectricSwitch2P.new(nCompNode,"Fuel Transfer Right");
+		m.FuelTransferRight = Part.ElectricSwitchDT.new(nCompNode,"Fuel Transfer Right");
+		m.FuelTransferRight.setPoles(1);
 		
 		nCompNode = nParent.initNode("Pump1");
-		m.swtFuelPump1 = Part.ElectricSwitch2P.new(nCompNode,"Fuel Pump 1");
+		m.FuelPump1 = Part.ElectricSwitchDT.new(nCompNode,"Fuel Pump 1");
+		m.FuelPump1.setPoles(1);
 		
 		nCompNode = nParent.initNode("Pump2");
-		m.swtFuelPump2 = Part.ElectricSwitch2P.new(nCompNode,"Fuel Pump 2");
+		m.FuelPump2 = Part.ElectricSwitchDT.new(nCompNode,"Fuel Pump 2");
+		m.FuelPump2.setPoles(1);
 # Engine
 		nParent = m.nPanel.initNode("Engine");
 		
 		nCompNode = nParent.initNode("OverSpeed");
-		m.swtEngineOverSpeed = Part.ElectricSwitch2P.new(nCompNode,"Engine over speed test");
+		m.EngineOverSpeed = Part.ElectricSwitchDT.new(nCompNode,"Engine over speed test");
+		m.EngineOverSpeed.setPoles(1);
 		
 		nCompNode = nParent.initNode("Motoring");
-		m.swtEngineMotoring = Part.ElectricSwitch3P.new(nCompNode,"Engine Motoring");
+		m.EngineMotoring = Part.ElectricSwitchTT.new(nCompNode,"Engine Motoring");
+		m.EngineMotoring.setPoles(1);
 		
 		nCompNode = nParent.initNode("Start");
-		m.swtEngineStart = Part.ElectricSwitch3P.new(nCompNode,"Engine Start");
+		m.EngineStart = Part.ElectricSwitchTT.new(nCompNode,"Engine Start");
+		m.EngineStart.setPoles(1);
+		
 # Dimming
 		nParent = m.nPanel.initNode("Dimming");
 		
 		nCompNode = nParent.initNode("Keypad");
-		m.swtDimmerKeypad = Part.ElectricDimmer.new(nCompNode,"Dimmer Keypad Light","DOUBLE",0,1.0,0.1);
+		m.DimmerKeypad = Part.ElectricDimmer.new(nCompNode,"Dimmer Keypad Light","DOUBLE",0,1.0,0.1);
 		
 		nCompNode = nParent.initNode("Glare");
-		m.swtDimmerGlare = Part.ElectricDimmer.new(nCompNode,"Dimmer Glare Light","DOUBLE",0,1.0,0.1);
+		m.DimmerGlare = Part.ElectricDimmer.new(nCompNode,"Dimmer Glare Light","DOUBLE",0,1.0,0.1);
 		
 		nCompNode = nParent.initNode("Instrument");
-		m.swtDimmerInstrument = Part.ElectricDimmer.new(nCompNode,"Dimmer Instrument Light","DOUBLE",0,1.0,0.1);
-		m.swtDimmerInstrument.electricConfig(12.0,26.0,25.0);
+		m.DimmerInstrument = Part.ElectricDimmer.new(nCompNode,"Dimmer Instrument Light","DOUBLE",0,1.0,0.1);
+		m.DimmerInstrument.electricConfig(12.0,26.0,25.0);
 		
 		nCompNode = nParent.initNode("Switch");
-		m.swtDimmerSwitch = Part.ElectricDimmer.new(nCompNode,"Dimmer Switch Light","DOUBLE",0,1.0,0.1);
+		m.DimmerSwitch = Part.ElectricDimmer.new(nCompNode,"Dimmer Switch Light","DOUBLE",0,1.0,0.1);
 		
 		nCompNode = nParent.initNode("Annunciator");
-		m.swtDimmerAnnunciator = Part.ElectricDimmer.new(nCompNode,"Dimmer Annunciator Light","DOUBLE",0,1.0,0.1);
+		m.DimmerAnnunciator = Part.ElectricDimmer.new(nCompNode,"Dimmer Annunciator Light","DOUBLE",0,1.0,0.1);
+		
+		
+		#internal Buses
+# 		m.instrumentSourceBus = Part.ElectricBus.new("#InstrumentSourceBus");
+# 		m.cabinSourceBus = Part.ElectricBus.new("#CabinSourceBus");
+		
+		m.keypadBus = Part.ElectricBus.new("#KeypadLightBus");
+		m.glareLightBus = Part.ElectricBus.new("#GlareLightBus");
+		m.instrumentLightBus = Part.ElectricBus.new("#InstrumentLightBus");
+		
+		m.switchesLightBus = Part.ElectricBus.new("#SwitchesLightBus");
+		m.warnLightBus = Part.ElectricBus.new("#WarnLightBus");
+		
+		
 		
 		return m;
-	},
-	plugElectric : func(){
-		global.fnAnnounce("debug","MasterPanel.plugElectric() ...");
-		#debug.dump(oElectric);
-		
-		
-		
-		#Fuel
-# 		me.swtFuelTransferLeft.plugElectricSource(oCircuitBreakerPanel.cbFuelTransferL);
-# 		me.swtFuelTransferRight.plugElectricSource(oCircuitBreakerPanel.cbFuelTransferR);
-# 		me.swtFuelPump1.plugElectricSource(oCircuitBreakerPanel.cbFuelPump1);
-# 		me.swtFuelPump2.plugElectricSource(oCircuitBreakerPanel.cbFuelPump2);
-		
-		me.swtFuelTransferLeft.In.plug(oCircuitBreakerPanel.cbFuelTransferL.Out);
-		me.swtFuelTransferRight.In.plug(oCircuitBreakerPanel.cbFuelTransferR.Out);
-		me.swtFuelPump1.In.plug(oCircuitBreakerPanel.cbFuelPump1.Out);
-		me.swtFuelPump2.In.plug(oCircuitBreakerPanel.cbFuelPump2.Out);
-		
-		# Engine
-		
-		
-		me.swtDimmerGlare.Out.plug(oSidePanel.nightRelais.P13);
-		me.swtDimmerInstrument.Out.plug(oSidePanel.nightRelais.P23);
-		me.swtDimmerSwitch.Out.plug(oSidePanel.nightRelais.P33);
-		me.swtDimmerKeypad.Out.plug(oSidePanel.nightRelais.P43);
-		me.swtDimmerAnnunciator.Out.plug(oSidePanel.nightRelais.P43);
-			
-			
 	},
 	# can only used when Module extra500 is completly loaded.
 	# All callback functions must called from a global namespace
@@ -129,89 +128,89 @@ var MasterPanel = {
 		
 	# Autopilot
 
-		UI.register("Autopilot Master <", 	func{extra500.oMasterPanel.swtAutopilotMaster.left(); } 		);
-		UI.register("Autopilot Master >", 	func{extra500.oMasterPanel.swtAutopilotMaster.right(); } 		);
-		UI.register("Autopilot Master on", 	func{extra500.oMasterPanel.swtAutopilotMaster.setValue(1); } 	);
-		UI.register("Autopilot Master fd", 	func{extra500.oMasterPanel.swtAutopilotMaster.setValue(0); } 	);
-		UI.register("Autopilot Master off", 	func{extra500.oMasterPanel.swtAutopilotMaster.setValue(-1); } 	);
+		UI.register("Autopilot Master <", 	func{extra500.masterPanel.AutopilotMaster.left(); } 		);
+		UI.register("Autopilot Master >", 	func{extra500.masterPanel.AutopilotMaster.right(); } 		);
+		UI.register("Autopilot Master on", 	func{extra500.masterPanel.AutopilotMaster.setValue(1); } 	);
+		UI.register("Autopilot Master fd", 	func{extra500.masterPanel.AutopilotMaster.setValue(0); } 	);
+		UI.register("Autopilot Master off", 	func{extra500.masterPanel.AutopilotMaster.setValue(-1); } 	);
 		
-		UI.register("Autopilot PitchTrim", 	func{extra500.oMasterPanel.swtAutopilotPitchTrim.toggle(); } 	);
-		UI.register("Autopilot PitchTrim on", 	func{extra500.oMasterPanel.swtAutopilotPitchTrim.on(); } 		);
-		UI.register("Autopilot PitchTrim off", 	func{extra500.oMasterPanel.swtAutopilotPitchTrim.off(); } 		);
+		UI.register("Autopilot PitchTrim", 	func{extra500.masterPanel.AutopilotPitchTrim.toggle(); } 	);
+		UI.register("Autopilot PitchTrim on", 	func{extra500.masterPanel.AutopilotPitchTrim.on(); } 		);
+		UI.register("Autopilot PitchTrim off", 	func{extra500.masterPanel.AutopilotPitchTrim.off(); } 		);
 		
-		UI.register("Autopilot YawDamper", 	func{extra500.oMasterPanel.swtAutopilotYawDamper.toggle(); } 	);
-		UI.register("Autopilot YawDamper on", 	func{extra500.oMasterPanel.swtAutopilotYawDamper.on(); } 		);
-		UI.register("Autopilot YawDamper off", 	func{extra500.oMasterPanel.swtAutopilotYawDamper.off(); } 		);
+		UI.register("Autopilot YawDamper", 	func{extra500.masterPanel.AutopilotYawDamper.toggle(); } 	);
+		UI.register("Autopilot YawDamper on", 	func{extra500.masterPanel.AutopilotYawDamper.on(); } 		);
+		UI.register("Autopilot YawDamper off", 	func{extra500.masterPanel.AutopilotYawDamper.off(); } 		);
 		
-		UI.register("Autopilot Yaw Trim <", 	func{extra500.oMasterPanel.swtAutopilotYawTrim.left(); } 		);
-		UI.register("Autopilot Yaw Trim >", 	func{extra500.oMasterPanel.swtAutopilotYawTrim.right(); } 		);
-		UI.register("Autopilot Yaw Trim =", 	func(v=0){extra500.oMasterPanel.swtAutopilotYawTrim.setValue(v);} 	);
-		UI.register("Autopilot Yaw Trim +=", 	func(v=0){extra500.oMasterPanel.swtAutopilotYawTrim.adjust(v);} 	);
+		UI.register("Autopilot Yaw Trim <", 	func{extra500.masterPanel.AutopilotYawTrim.left(); } 		);
+		UI.register("Autopilot Yaw Trim >", 	func{extra500.masterPanel.AutopilotYawTrim.right(); } 		);
+		UI.register("Autopilot Yaw Trim =", 	func(v=0){extra500.masterPanel.AutopilotYawTrim.setValue(v);} 	);
+		UI.register("Autopilot Yaw Trim +=", 	func(v=0){extra500.masterPanel.AutopilotYawTrim.adjust(v);} 	);
 	# Fuel
-		UI.register("Fuel Transfer Left", 	func{extra500.oMasterPanel.swtFuelTransferLeft.toggle(); } 	);
-		UI.register("Fuel Transfer Left on", 	func{extra500.oMasterPanel.swtFuelTransferLeft.on(); } 		);
-		UI.register("Fuel Transfer Left off", 	func{extra500.oMasterPanel.swtFuelTransferLeft.off(); } 		);
+		UI.register("Fuel Transfer Left", 	func{extra500.masterPanel.FuelTransferLeft.toggle(); } 	);
+		UI.register("Fuel Transfer Left on", 	func{extra500.masterPanel.FuelTransferLeft.on(); } 		);
+		UI.register("Fuel Transfer Left off", 	func{extra500.masterPanel.FuelTransferLeft.off(); } 		);
 		
-		UI.register("Fuel Transfer Right", 	func{extra500.oMasterPanel.swtFuelTransferRight.toggle(); } 	);
-		UI.register("Fuel Transfer Right on", 	func{extra500.oMasterPanel.swtFuelTransferRight.on(); } 		);
-		UI.register("Fuel Transfer Right off", 	func{extra500.oMasterPanel.swtFuelTransferRight.off(); } 		);
+		UI.register("Fuel Transfer Right", 	func{extra500.masterPanel.FuelTransferRight.toggle(); } 	);
+		UI.register("Fuel Transfer Right on", 	func{extra500.masterPanel.FuelTransferRight.on(); } 		);
+		UI.register("Fuel Transfer Right off", 	func{extra500.masterPanel.FuelTransferRight.off(); } 		);
 		
-		UI.register("Fuel Pump 1", 		func{extra500.oMasterPanel.swtFuelPump1.toggle(); } 		);
-		UI.register("Fuel Pump 1 on", 		func{extra500.oMasterPanel.swtFuelPump1.on(); } 			);
-		UI.register("Fuel Pump 1 off", 		func{extra500.oMasterPanel.swtFuelPump1.off(); } 			);
+		UI.register("Fuel Pump 1", 		func{extra500.masterPanel.FuelPump1.toggle(); } 		);
+		UI.register("Fuel Pump 1 on", 		func{extra500.masterPanel.FuelPump1.on(); } 			);
+		UI.register("Fuel Pump 1 off", 		func{extra500.masterPanel.FuelPump1.off(); } 			);
 		
-		UI.register("Fuel Pump 2", 		func{extra500.oMasterPanel.swtFuelPump2.toggle(); } 		);
-		UI.register("Fuel Pump 2 on", 		func{extra500.oMasterPanel.swtFuelPump2.on(); } 			);
-		UI.register("Fuel Pump 2 off", 		func{extra500.oMasterPanel.swtFuelPump2.off(); } 			);
+		UI.register("Fuel Pump 2", 		func{extra500.masterPanel.FuelPump2.toggle(); } 		);
+		UI.register("Fuel Pump 2 on", 		func{extra500.masterPanel.FuelPump2.on(); } 			);
+		UI.register("Fuel Pump 2 off", 		func{extra500.masterPanel.FuelPump2.off(); } 			);
 		
 	# Engine
 		
-		UI.register("Engine OverSpeed", 	func{extra500.oMasterPanel.swtEngineOverSpeed.toggle(); } 		);
-		UI.register("Engine OverSpeed on", 	func{extra500.oMasterPanel.swtEngineOverSpeed.on(); } 		);
-		UI.register("Engine OverSpeed off", 	func{extra500.oMasterPanel.swtEngineOverSpeed.off(); } 		);
+		UI.register("Engine OverSpeed", 	func{extra500.masterPanel.EngineOverSpeed.toggle(); } 		);
+		UI.register("Engine OverSpeed on", 	func{extra500.masterPanel.EngineOverSpeed.on(); } 		);
+		UI.register("Engine OverSpeed off", 	func{extra500.masterPanel.EngineOverSpeed.off(); } 		);
 	
-		UI.register("Engine Motoring <", 	func{extra500.oMasterPanel.swtEngineMotoring.left(); } 		);
-		UI.register("Engine Motoring >", 	func{extra500.oMasterPanel.swtEngineMotoring.right(); } 		);
-		UI.register("Engine Motoring on", 	func{extra500.oMasterPanel.swtEngineMotoring.setValue(1); } 	);
-		UI.register("Engine Motoring abort", 	func{extra500.oMasterPanel.swtEngineMotoring.setValue(0); } 	);
-		UI.register("Engine Motoring normal", 	func{extra500.oMasterPanel.swtEngineMotoring.setValue(-1); } 	);
+		UI.register("Engine Motoring <", 	func{extra500.masterPanel.EngineMotoring.left(); } 		);
+		UI.register("Engine Motoring >", 	func{extra500.masterPanel.EngineMotoring.right(); } 		);
+		UI.register("Engine Motoring on", 	func{extra500.masterPanel.EngineMotoring.setValue(1); } 	);
+		UI.register("Engine Motoring abort", 	func{extra500.masterPanel.EngineMotoring.setValue(0); } 	);
+		UI.register("Engine Motoring normal", 	func{extra500.masterPanel.EngineMotoring.setValue(-1); } 	);
 		
-		UI.register("Engine Start <", 		func{extra500.oMasterPanel.swtEngineStart.left(); } 		);
-		UI.register("Engine Start >", 		func{extra500.oMasterPanel.swtEngineStart.right(); } 		);
-		UI.register("Engine Start on", 		func{extra500.oMasterPanel.swtEngineStart.setValue(1); } 		);
-		UI.register("Engine Start ign", 	func{extra500.oMasterPanel.swtEngineStart.setValue(0); } 		);
-		UI.register("Engine Start off", 	func{extra500.oMasterPanel.swtEngineStart.setValue(-1); } 		);
+		UI.register("Engine Start <", 		func{extra500.masterPanel.EngineStart.left(); } 		);
+		UI.register("Engine Start >", 		func{extra500.masterPanel.EngineStart.right(); } 		);
+		UI.register("Engine Start on", 		func{extra500.masterPanel.EngineStart.setValue(1); } 		);
+		UI.register("Engine Start ign", 	func{extra500.masterPanel.EngineStart.setValue(0); } 		);
+		UI.register("Engine Start off", 	func{extra500.masterPanel.EngineStart.setValue(-1); } 		);
 		
 	# DIMMING
 		
-		UI.register("Dimmer Keypad <", 		func{extra500.oMasterPanel.swtDimmerKeypad.left(); } 		);
-		UI.register("Dimmer Keypad >", 		func{extra500.oMasterPanel.swtDimmerKeypad.right(); } 		);
-		UI.register("Dimmer Keypad =", 		func(v=0){extra500.oMasterPanel.swtDimmerKeypad.setValue(v);} 	);
-		UI.register("Dimmer Keypad +=", 	func(v=0){extra500.oMasterPanel.swtDimmerKeypad.adjust(v);} 	);
+		UI.register("Dimmer Keypad <", 		func{extra500.masterPanel.DimmerKeypad.left(); } 		);
+		UI.register("Dimmer Keypad >", 		func{extra500.masterPanel.DimmerKeypad.right(); } 		);
+		UI.register("Dimmer Keypad =", 		func(v=0){extra500.masterPanel.DimmerKeypad.setValue(v);} 	);
+		UI.register("Dimmer Keypad +=", 	func(v=0){extra500.masterPanel.DimmerKeypad.adjust(v);} 	);
 	
-		UI.register("Dimmer Glare <", 		func{extra500.oMasterPanel.swtDimmerGlare.left(); } 		);
-		UI.register("Dimmer Glare >", 		func{extra500.oMasterPanel.swtDimmerGlare.right(); } 		);
-		UI.register("Dimmer Glare =", 		func(v=0){extra500.oMasterPanel.swtDimmerGlare.setValue(v);} 	);
-		UI.register("Dimmer Glare +=", 		func(v=0){extra500.oMasterPanel.swtDimmerGlare.adjust(v);} 	);
+		UI.register("Dimmer Glare <", 		func{extra500.masterPanel.DimmerGlare.left(); } 		);
+		UI.register("Dimmer Glare >", 		func{extra500.masterPanel.DimmerGlare.right(); } 		);
+		UI.register("Dimmer Glare =", 		func(v=0){extra500.masterPanel.DimmerGlare.setValue(v);} 	);
+		UI.register("Dimmer Glare +=", 		func(v=0){extra500.masterPanel.DimmerGlare.adjust(v);} 	);
 	
-		UI.register("Dimmer Instrument <", 	func{extra500.oMasterPanel.swtDimmerInstrument.left(); } 		);
-		UI.register("Dimmer Instrument >", 	func{extra500.oMasterPanel.swtDimmerInstrument.right(); } 		);
-		UI.register("Dimmer Instrument =", 	func(v=0){extra500.oMasterPanel.swtDimmerInstrument.setValue(v);} 	);
-		UI.register("Dimmer Instrument +=", 	func(v=0){extra500.oMasterPanel.swtDimmerInstrument.adjust(v);} 	);
+		UI.register("Dimmer Instrument <", 	func{extra500.masterPanel.DimmerInstrument.left(); } 		);
+		UI.register("Dimmer Instrument >", 	func{extra500.masterPanel.DimmerInstrument.right(); } 		);
+		UI.register("Dimmer Instrument =", 	func(v=0){extra500.masterPanel.DimmerInstrument.setValue(v);} 	);
+		UI.register("Dimmer Instrument +=", 	func(v=0){extra500.masterPanel.DimmerInstrument.adjust(v);} 	);
 	
-		UI.register("Dimmer Switch <", 		func{extra500.oMasterPanel.swtDimmerSwitch.left(); } 		);
-		UI.register("Dimmer Switch >", 		func{extra500.oMasterPanel.swtDimmerSwitch.right(); } 		);
-		UI.register("Dimmer Switch =", 		func(v=0){extra500.oMasterPanel.swtDimmerSwitch.setValue(v);} 	);
-		UI.register("Dimmer Switch +=", 	func(v=0){extra500.oMasterPanel.swtDimmerSwitch.adjust(v);} 	);
+		UI.register("Dimmer Switch <", 		func{extra500.masterPanel.DimmerSwitch.left(); } 		);
+		UI.register("Dimmer Switch >", 		func{extra500.masterPanel.DimmerSwitch.right(); } 		);
+		UI.register("Dimmer Switch =", 		func(v=0){extra500.masterPanel.DimmerSwitch.setValue(v);} 	);
+		UI.register("Dimmer Switch +=", 	func(v=0){extra500.masterPanel.DimmerSwitch.adjust(v);} 	);
 	
-		UI.register("Dimmer Annunciator <", 	func{extra500.oMasterPanel.swtDimmerAnnunciator.left(); } 		);
-		UI.register("Dimmer Annunciator >", 	func{extra500.oMasterPanel.swtDimmerAnnunciator.right(); } 	);
-		UI.register("Dimmer Annunciator =", 	func(v=0){extra500.oMasterPanel.swtDimmerAnnunciator.setValue(v);} 	);
-		UI.register("Dimmer Annunciator +=", 	func(v=0){extra500.oMasterPanel.swtDimmerAnnunciator.adjust(v);} 	);
+		UI.register("Dimmer Annunciator <", 	func{extra500.masterPanel.DimmerAnnunciator.left(); } 		);
+		UI.register("Dimmer Annunciator >", 	func{extra500.masterPanel.DimmerAnnunciator.right(); } 	);
+		UI.register("Dimmer Annunciator =", 	func(v=0){extra500.masterPanel.DimmerAnnunciator.setValue(v);} 	);
+		UI.register("Dimmer Annunciator +=", 	func(v=0){extra500.masterPanel.DimmerAnnunciator.adjust(v);} 	);
 		
 		global.fnAnnounce("debug","MasterPanel.initUI() ... check");
 	
 	}
 };
 
-var oMasterPanel = MasterPanel.new();
+var masterPanel = MasterPanel.new();

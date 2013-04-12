@@ -9,3 +9,4 @@ var fnAnnounce = func(type,msg){
 		print (msg);
 	}
 }
+

@@ -1,11 +1,9 @@
 
 var nCycleTimeUsed = props.globals.getNode("extra500/CycleTimeUsed",1);
 var cycleTimeUsed = 0;
-extra500.oElectric.plugElectric();
-extra500.oCircuitBreakerPanel.plugElectric();
-extra500.oSidePanel.plugElectric();
-extra500.oMasterPanel.plugElectric();
-extra500.oLight.plugElectric();
+
+
+extra500.plugElectric();
 
 extra500.oFuelSystem.plugElectric();
 
@@ -14,7 +12,7 @@ extra500.oFuelSystem.plugElectric();
 var simulation_cycle = func(){
 	var start = systime();
 	
-	extra500.oElectric.update();
+	extra500.mainBoard.update();
 	extra500.oFuelSystem.update();
 	
 	IFD.demo.update();

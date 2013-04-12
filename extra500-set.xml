@@ -300,11 +300,13 @@ Started March 13 2013 by Thomas Grossberger and Dirk Dittmann
 	</Part>
 	<extra500>
 		<file>Aircraft/extra500/system/electric/mainBoard.nas</file>
+		<file>Aircraft/extra500/system/electric/panel.Fuse.nas</file>
 		<file>Aircraft/extra500/system/electric/panel.CircuitBreaker.nas</file>
 		<file>Aircraft/extra500/system/electric/panel.Master.nas</file>
 		<file>Aircraft/extra500/system/electric/panel.Side.nas</file>
 		<file>Aircraft/extra500/system/electric/light.nas</file>
 		<file>Aircraft/extra500/system/fuel/fuelSystem.nas</file>
+		<file>Aircraft/extra500/system/electric/cabling.nas</file>
 	</extra500>
 	<IFD>
 		<file>Aircraft/extra500/system/IFD/IFD_test.nas</file>
@@ -413,7 +415,7 @@ Started March 13 2013 by Thomas Grossberger and Dirk Dittmann
 			 <binding>
 				 <command>nasal</command>
 				 <script><![CDATA[
-					Part.etd.debugLevel = 1;
+					Part.etd.on = 1;
 				]]></script>
 			 </binding>
 		 </key>
@@ -424,7 +426,7 @@ Started March 13 2013 by Thomas Grossberger and Dirk Dittmann
 			 <binding>
 				 <command>nasal</command>
 				 <script><![CDATA[
-					Part.etd.debugLevel = 0;
+					Part.etd.on = 0;
 				]]></script>
 			 </binding>
 		 </key>

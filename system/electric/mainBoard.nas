@@ -3,8 +3,8 @@ var MainBoard = {
 		var m = {parents:[
 			MainBoard
 		]};
-		m.nRoot = props.globals.getNode("extra500/electric",1);
-		
+		m.nRoot = props.globals.getNode("extra500/mainBoard",1);
+		var nParent = nil;
 	# Ground Connector
 		m.GND = Part.ElectricConnector.new("GND");
 		
@@ -13,14 +13,37 @@ var MainBoard = {
 		m.oBattery.setVolt(24.0);
 		
 	# Relais
-		var node = m.nRoot.initNode("BatteryRelais");
-		m.batteryRelais = Part.ElectricRelais.new(node,"Battery Relais");
-
+		nParent = m.nRoot.initNode("Relais");
+				
+		var node = nParent.initNode("BatteryRelais");
+		m.batteryRelais = Part.ElectricRelaisXPST.new(node,"Battery Relais");
+		m.batteryRelais.setPoles(2);
+		
+		nCompNode = nParent.initNode("DayNightRelais");
+		m.dayNightRelais = Part.ElectricRelaisXPDT.new(nCompNode,"Day/Night Relais");
+		m.dayNightRelais.setPoles(5);
+		# 1 KEYPAD
+		# 2 GLARE
+		# 3 INSTR
+		# 4 SWITCHES
+		# 5 ANNUNCIATOR
+		
+		nCompNode = nParent.initNode("RCCBRelais");
+		m.rccbRelais = Part.ElectricRelaisXPST.new(nCompNode,"RCCB Relais");
+		m.rccbRelais.setPoles(1);
+		
+		nCompNode = nParent.initNode("EmergencyRelais");
+		m.emergencyRelais = Part.ElectricRelaisXPDT.new(nCompNode,"Emergency Relais");
+		m.emergencyRelais.setPoles(1);
+		
 		
 	#internal Buses
 		
 		m.iBus20 = Part.ElectricBus.new("#20");
 		m.iBus10 = Part.ElectricBus.new("#10");
+		m.iBus11 = Part.ElectricBus.new("#11");
+		m.iBus01 = Part.ElectricBus.new("#01");
+		m.iBus12 = Part.ElectricBus.new("#01");
 		
 	# main Buses
 		
@@ -28,7 +51,6 @@ var MainBoard = {
 		m.loadBus = Part.ElectricBus.new("LoadBus");
 		m.batteryBus = Part.ElectricBus.new("BatteryBus");
 		m.avionicsBus = Part.ElectricBus.new("AvionicsBus");
-		m.emergencyBus = Part.ElectricBus.new("EmergencyBus");
 		m.emergencyBus = Part.ElectricBus.new("EmergencyBus");
 		
 	# shunts
@@ -41,10 +63,6 @@ var MainBoard = {
 		var node = m.nRoot.initNode("AlternatorShunt");
 		m.alternatorShunt = Part.ElectricShunt.new(node,"Alternator Shunt");
 		
-	# Fuse
-		var node = m.nRoot.initNode("BatteryFuse");
-		m.batteryFuse = Part.ElectricCircuitBraker.new(node,"Battery Fuse");
-		m.batteryFuse.fuseConfig(150.0);
 		
 	#### solder Connectors
 		m.GND.solder(m);
@@ -69,30 +87,7 @@ var MainBoard = {
 		}
 		return 0;
 	},
-	plugElectric : func(){
-		
-		me.oBattery.minus.plug(me.GND);
-		
-		me.hotBus.plug(me.oBattery.plus);
-		
-		# Battery Relais
-		me.hotBus.plug(me.batteryRelais.Plus);
-		me.batteryRelais.Minus.plug(oSidePanel.swtMainBattery.On);
-		me.hotBus.plug(me.batteryRelais.In);
-		me.iBus20.plug(me.batteryRelais.Out);
-		
-		# Battery Shunt
-		me.iBus20.plug(me.batteryShunt.Minus);
-		me.iBus10.plug(me.batteryShunt.Plus);
-		
-		# battery Fuse
-		me.iBus10.plug(me.batteryFuse.In);
-		me.batteryBus.plug(me.batteryFuse.Out);
-		
-		
-		
-		
-	},
+	
 };
 
-var oElectric = MainBoard.new();
+var mainBoard = MainBoard.new();

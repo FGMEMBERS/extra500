@@ -87,11 +87,11 @@ var FuelSystem = {
 	plugElectric : func(){
 		global.fnAnnounce("debug","FuelSystem.plugElectric() ...");
 		
-		me.oPump1.Plus.plug(oMasterPanel.swtFuelPump1.On);
-		me.oPump2.Plus.plug(oMasterPanel.swtFuelPump2.On);
+		me.oPump1.Plus.plug(masterPanel.FuelPump1.L12);
+		me.oPump2.Plus.plug(masterPanel.FuelPump2.L12);
 		
-		me.oPumpLeft.Plus.plug(oMasterPanel.swtFuelTransferLeft.On);
-		me.oPumpRight.Plus.plug(oMasterPanel.swtFuelTransferRight.On);
+		me.oPumpLeft.Plus.plug(masterPanel.FuelTransferLeft.L12);
+		me.oPumpRight.Plus.plug(masterPanel.FuelTransferRight.L12);
 	
 			
 	},

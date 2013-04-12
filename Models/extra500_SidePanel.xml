@@ -2409,7 +2409,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Cabin.Emergency</object-name>
-  <property>extra500/SidePanel/Cabin/Emergency/state</property>
+  <property>extra500/SidePanel/Emergency/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -2479,7 +2479,7 @@
   <object-name>SidePanel.Cabin.Emergency.Ring</object-name>
 	<condition>
 		<equals>
-		<property>extra500/SidePanel/Cabin/Emergency/state</property>
+		<property>extra500/SidePanel/Emergency/state</property>
 		<value>1</value>
 		</equals>
 	</condition>

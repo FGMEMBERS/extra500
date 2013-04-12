@@ -37,7 +37,7 @@ var ElectricSystem = {
 		
 		me.oHotBus.plugElectricSource(me.oBattery);
 		
-		me.oBatteryRelais.plugElectricSource(extra500.oSidePanel.swtMainBattery);
+		me.oBatteryRelais.plugElectricSource(extra500.sidePanel.MainBattery);
 		me.oBatteryRelais.plugLeftElectricSource(me.oBatteryBus);
 		me.oBatteryRelais.plugRightElectricSource(me.oHotBus);
 		
@@ -65,4 +65,4 @@ var GenaratorControlUnit = {
 	},
 };
 
-var oElectric = ElectricSystem.new();
+var mainBoard = ElectricSystem.new();

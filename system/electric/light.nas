@@ -22,6 +22,10 @@ var LightBoard = {
 		m.Cabin = Part.ElectricLight.new(nCompNode,"Cabin Light");
 		m.Cabin.electricConfig(12.0,26.0,45.0);
 		
+		nCompNode = m.nPanel.initNode("Recognition");
+		m.Recognition = Part.ElectricLight.new(nCompNode,"Recognition Light");
+		m.Recognition.electricConfig(12.0,26.0,60.0);
+		
 		nCompNode = m.nPanel.initNode("Map");
 		m.Map = Part.ElectricLight.new(nCompNode,"Map Light");
 		m.Map.electricConfig(12.0,26.0,20.0);
@@ -46,59 +50,14 @@ var LightBoard = {
 		m.Switches = Part.ElectricLight.new(nCompNode,"Switches");
 		m.Switches.electricConfig(12.0,26.0,8.0);
 		
-		nCompNode = m.nPanel.initNode("Annuciator");
-		m.Annuciator = Part.ElectricLight.new(nCompNode,"Annuciator");
-		m.Annuciator.electricConfig(12.0,26.0,50.0);
+		nCompNode = m.nPanel.initNode("Annunciator");
+		m.Annunciator = Part.ElectricLight.new(nCompNode,"Annunciator");
+		m.Annunciator.electricConfig(12.0,26.0,50.0);
 		
-		
-		#internal Buses
-		
-		m.instrumentBus = Part.ElectricBus.new("#InstrumentLightBus");
-	
-		
+		#m.annunciatorBus = Part.ElectricBus.new("#annunciatorBus");
+
 		return m;
-	},
-	plugElectric : func(){
-		global.fnAnnounce("debug","LightBoard.plugElectric() ...");
-
-		me.Strobe.Plus.plug(oSidePanel.swtLightStrobe.On);
-		me.Strobe.Minus.plug(oElectric.GND);
-		
-		me.Navigation.Plus.plug(oSidePanel.swtLightNavigation.On);
-		me.Navigation.Minus.plug(oElectric.GND);
-		
-		me.Landing.Plus.plug(oSidePanel.swtLightLanding.On);
-		me.Landing.Minus.plug(oElectric.GND);
-		
-		me.Cabin.Plus.plug(oSidePanel.swtLightCabin.On);
-		me.Cabin.Minus.plug(oElectric.GND);
-		
-		me.Map.Plus.plug(oSidePanel.swtLightMap.On);
-		me.Map.Minus.plug(oElectric.GND);
-		
-		me.Ice.Plus.plug(oSidePanel.swtLightIce.On);
-		me.Ice.Minus.plug(oElectric.GND);
-		
-		
-		#me.Keypad.Plus.plug(oCircuitBreakerPanel.cbKeypad.Out);
-		#oSidePanel.testBus.plug(me.Keypad.Minus);
-		
-		#me.Glare.Plus.plug(oCircuitBreakerPanel.cbGlareLight.Out);
-		#oSidePanel.testBus.plug(me.Glare.Minus);
-		
-		me.Instrument.Plus.plug(oCircuitBreakerPanel.cbInstrumentLight.Out);
-		me.instrumentBus.plug(me.Instrument.Minus);
-		me.instrumentBus.plug(oMasterPanel.swtDimmerInstrument.In);
-		me.instrumentBus.plug(oSidePanel.dayRelais.P23);
-		me.instrumentBus.plug(oSidePanel.testRelais.P23);
-
-		
-		#me.Annuciator.Plus.plug(oCircuitBreakerPanel.cbWarnLight.Out);
-		#oSidePanel.testBus.plug(me.Annuciator.Minus);
-		
-		
-			
 	},
 };
 
-var oLight = LightBoard.new();
+var lightBoard = LightBoard.new();

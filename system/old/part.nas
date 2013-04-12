@@ -105,27 +105,27 @@ var ElectricInputAble = {
 			ElectricInputAble,
 			ElectricAble.new(nRoot,name)
 		]};
-		m.oElectricSource = nil;
+		m.mainBoardSource = nil;
 		m.sourceSlot = 0;
 		return m;
 	},
-	plugElectricSource : func(oElectricOutputAble,slot=1){
-		#debug.dump(oElectricOutputAble);
-		me.oElectricSource = oElectricOutputAble;
+	plugElectricSource : func(mainBoardOutputAble,slot=1){
+		#debug.dump(mainBoardOutputAble);
+		me.mainBoardSource = mainBoardOutputAble;
 		me.sourceSlot = slot;
-		#global.fnAnnounce("debug",""~me.name~"\t\tElectricInputAble.plugElectricSource() ... "~me.oElectricSource.name);
+		#global.fnAnnounce("debug",""~me.name~"\t\tElectricInputAble.plugElectricSource() ... "~me.mainBoardSource.name);
 		
 	},
 	electricWork : func() {
 		var volt = 0.0;
 		var ampere = 0.0;
 				
-		if (me.oElectricSource != nil){
+		if (me.mainBoardSource != nil){
 			
-			volt = me.oElectricSource.getVoltOutput(me.sourceSlot);
+			volt = me.mainBoardSource.getVoltOutput(me.sourceSlot);
 			if (me.hasPower()){
 				ampere = me.watt / volt;
-				#me.oElectricSource.setAmpereOutput(ampere);
+				#me.mainBoardSource.setAmpereOutput(ampere);
 			}
 		}
 		
@@ -136,8 +136,8 @@ var ElectricInputAble = {
 		
 	},
 	setAmpereUsage : func(){
-		if (me.oElectricSource != nil){
-			me.oElectricSource.setAmpereOutput(me.ampere);
+		if (me.mainBoardSource != nil){
+			me.mainBoardSource.setAmpereOutput(me.ampere);
 		}
 	}
 
@@ -159,8 +159,8 @@ var ElectricOutputAble = {
 		return voltOutput;
 	},
 	setAmpereOutput : func(ampere){
-		if (me.oElectricSource != nil){
-			me.oElectricSource.setAmpereOutput(ampere + me.ampere);
+		if (me.mainBoardSource != nil){
+			me.mainBoardSource.setAmpereOutput(ampere + me.ampere);
 		}
 	},
 	
@@ -337,9 +337,9 @@ var ElectricCircuitBraker = {
 
 	},
 	setAmpereOutput : func(ampere){
-		if (me.oElectricSource != nil){
+		if (me.mainBoardSource != nil){
 			ampere+=me.ampere;
-			me.oElectricSource.setAmpereOutput(ampere);
+			me.mainBoardSource.setAmpereOutput(ampere);
 			me.fuseAddAmpere(ampere);
 			if (!me.fuseCheck()){
 				me._setValue(0);
@@ -669,8 +669,8 @@ var ElectricBus = {
 # 	setAmpereOutput : func(ampere){
 # 		#global.fnAnnounce("debug",""~me.name~"\t\t ElectricBus.setAmpereOutput("~ampere~"A) ... ");
 # 		
-# 		if (me.oElectricSource != nil){
-# 			me.oElectricSource.setAmpereOutput(ampere);
+# 		if (me.mainBoardSource != nil){
+# 			me.mainBoardSource.setAmpereOutput(ampere);
 # 		}
 # 		
 # 		ampere += me.ampere;
