@@ -1,4 +1,27 @@
 <?xml version="1.0"?>
+<!--
+    This file is part of extra500
+
+    The Changer is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The Changer is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Thomas Grossberger and Dirk Dittmann
+      Date: March 13 2013
+
+      Last change:      Eric van den Berg
+      Date:             10.04.13
+
+-->
 
 <PropertyList>
 
@@ -288,11 +311,11 @@
  <animation>
   <type>rotate</type>
   <object-name>SR</object-name>
-  <property>/controls/flight/rudder</property>
+  <property>/fdm/jsbsim/fcs/rudder-pos-norm</property>
   <interpolation>
-   <entry><ind>-1</ind><dep>-15</dep></entry>
+   <entry><ind>-1</ind><dep> 25</dep></entry>
    <entry><ind> 0</ind><dep>  0</dep></entry>
-   <entry><ind> 1</ind><dep> 15</dep></entry>
+   <entry><ind> 1</ind><dep>-25</dep></entry>
   </interpolation>   
   <axis>
     <x1-m>5.53867</x1-m>
@@ -314,11 +337,11 @@
       <value>1</value>
     </equals>
   </condition>
-  <property>/controls/flight/rudder</property>
+  <property>/fdm/jsbsim/fcs/rudder-pos-norm</property>
   <interpolation>
-   <entry><ind>-1</ind><dep>-40</dep></entry>
+   <entry><ind>-1</ind><dep> 30</dep></entry>
    <entry><ind> 0</ind><dep>  0</dep></entry>
-   <entry><ind> 1</ind><dep> 40</dep></entry>
+   <entry><ind> 1</ind><dep>-30</dep></entry>
   </interpolation>   
   <axis>
     <x1-m>-1.69785</x1-m>
@@ -334,11 +357,11 @@
 <animation>
   <type>rotate</type>
   <object-name>HRlinks</object-name>
-  <property>controls/flight/elevator</property>
+  <property>/fdm/jsbsim/fcs/elevator-pos-norm</property>
   <interpolation>
-   <entry><ind>-1</ind><dep>-15</dep></entry>
+   <entry><ind>-1</ind><dep>-27</dep></entry>
    <entry><ind>0</ind><dep>  0</dep></entry>
-   <entry><ind>1</ind><dep> 15</dep></entry>
+   <entry><ind>1</ind><dep> 19</dep></entry>
   </interpolation>   
   <axis>
     <x1-m>6.43221</x1-m>
@@ -353,11 +376,11 @@
 <animation>
   <type>rotate</type>
   <object-name>HRrechts</object-name>
-  <property>controls/flight/elevator</property>
+  <property>/fdm/jsbsim/fcs/elevator-pos-norm</property>
   <interpolation>
-   <entry><ind>-1</ind><dep>-15</dep></entry>
+   <entry><ind>-1</ind><dep>-27</dep></entry>
    <entry><ind>0</ind><dep>  0</dep></entry>
-   <entry><ind>1</ind><dep> 15</dep></entry>
+   <entry><ind>1</ind><dep> 19</dep></entry>
   </interpolation>   
   <axis>
     <x1-m>6.31921</x1-m>
@@ -373,11 +396,11 @@
 <animation>
   <type>rotate</type>	
   <object-name>QRlinks</object-name>
-  <property>/controls/flight/aileron</property>
+  <property>/fdm/jsbsim/fcs/left-aileron-pos-norm</property>
   <interpolation>
-   <entry><ind>-1</ind><dep>-15</dep></entry>
+   <entry><ind>-1</ind><dep>-27</dep></entry>
    <entry><ind> 0</ind><dep>  0</dep></entry>
-   <entry><ind> 1</ind><dep> 15</dep></entry>
+   <entry><ind> 1</ind><dep> 19</dep></entry>
   </interpolation>   
   <axis>
     <x1-m>1.16760</x1-m>
@@ -392,11 +415,11 @@
 <animation>
   <type>rotate</type>
   <object-name>QRrechts</object-name>
-  <property>/controls/flight/aileron</property>
+  <property>/fdm/jsbsim/fcs/left-aileron-pos-norm</property>
   <interpolation>
-   <entry><ind>-1</ind><dep>15</dep></entry>
+   <entry><ind>-1</ind><dep>19</dep></entry>
    <entry><ind> 0</ind><dep>  0</dep></entry>
-   <entry><ind> 1</ind><dep>-15</dep></entry>
+   <entry><ind> 1</ind><dep>-27</dep></entry>
   </interpolation>   
   <axis>
     <x1-m>1.16760</x1-m>
@@ -412,10 +435,10 @@
 <animation>
   <type>rotate</type>
   <object-name>FlapInnenL</object-name>
-  <property>surface-positions/flap-pos-norm</property>
+  <property>/fdm/jsbsim/fcs/flap-pos-norm</property>
   <interpolation>
    <entry><ind>0</ind><dep>0</dep></entry>
-   <entry><ind>1</ind><dep>40</dep></entry>
+   <entry><ind>1</ind><dep>30</dep></entry>
   </interpolation>   
   <axis>
     <x2-m> 1.19543</x2-m>
@@ -429,10 +452,10 @@
 <animation>
   <type>rotate</type>
   <object-name>FlapInnenR</object-name>
-  <property>surface-positions/flap-pos-norm</property>
+  <property>/fdm/jsbsim/fcs/flap-pos-norm</property>
   <interpolation>
    <entry><ind>0</ind><dep>0</dep></entry>
-   <entry><ind>1</ind><dep>40</dep></entry>
+   <entry><ind>1</ind><dep>30</dep></entry>
   </interpolation>   
   <axis>
     <x1-m> 1.19543</x1-m>
@@ -447,10 +470,10 @@
 <animation>
   <type>rotate</type>
   <object-name>FlapAussenL</object-name>
-  <property>surface-positions/flap-pos-norm</property>
+  <property>/fdm/jsbsim/fcs/flap-pos-norm</property>
   <interpolation>
    <entry><ind>0</ind><dep>0</dep></entry>
-   <entry><ind>.6</ind><dep> 25</dep></entry>
+   <entry><ind>1</ind><dep> 30</dep></entry>
   </interpolation>   
   <axis>
     <x1-m>1.28327</x1-m>
@@ -465,10 +488,10 @@
 <animation>
   <type>rotate</type>
   <object-name>FlapAussenR</object-name>
-  <property>surface-positions/flap-pos-norm</property>
+  <property>/fdm/jsbsim/fcs/flap-pos-norm</property>
   <interpolation>
    <entry><ind>0</ind><dep>0</dep></entry>
-   <entry><ind>.5</ind><dep> 25</dep></entry>
+   <entry><ind>1</ind><dep>30</dep></entry>
   </interpolation>   
   <axis>
     <x2-m>1.28327</x2-m>

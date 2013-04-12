@@ -1,9 +1,29 @@
 <?xml version="1.0"?>
 <!--
+    This file is part of extra500
+
+    The Changer is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The Changer is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Thomas Grossberger and Dirk Dittmann
+      Date: March 13 2013
+
+      Last change:      Eric van den Berg
+      Date:             10.04.13
+
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
 
-Started March 13 2013 by Thomas Grossberger and Dirk Dittmann
 ************************************************************************
 -->
 
@@ -87,6 +107,12 @@ Started March 13 2013 by Thomas Grossberger and Dirk Dittmann
 			<path>Aircraft/extra500/system/autopilot/generic-autopilot.xml</path>
 		</autopilot>
 	</systems>
+
+	<flaps>
+		<setting>0</setting>
+		<setting>0.5</setting>
+		<setting>1</setting>
+	</flaps>
 
        <!-- -->
        <sound>

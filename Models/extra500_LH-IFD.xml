@@ -50,7 +50,6 @@
 	<object-name>IAS.001er</object-name>
 	<property>/velocities/airspeed-kt</property>
 	<factor>.1</factor>
-<!--	<step>1</step>-->
 	<axis>
 		<x>0</x>
 		<y>1</y>
@@ -129,7 +128,6 @@
 	<object-name>Altitude.00011er</object-name>
 	<property>/position/altitude-ft</property>
 	<factor>.01</factor>
-<!--	<step>10</step>-->
 	<axis>
 		<x>0</x>
 		<y>1</y>
