@@ -183,7 +183,7 @@ var SidePanel = {
 		#m.testBus = Part.ElectricBus.new("TestBus");
 #Buses
 		m.instrumentBus = Part.ElectricBus.new("instrumentBus");
-#Relais
+		m.testLightBus = Part.ElectricBus.new("testLight");
 				
 		return m;
 	},

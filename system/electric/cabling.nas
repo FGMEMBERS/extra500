@@ -141,18 +141,18 @@ var plugSidePanel = func(){
 		sidePanel.LightRecognition.Com1.plug(	circuitBreakerPanel.RecognitionLight.Out);
 		sidePanel.LightCabin.Com1.plug(		circuitBreakerPanel.CabinLight.Out);
 		sidePanel.LightIce.Com1.plug(		circuitBreakerPanel.IceLight.Out);
-
+		sidePanel.LightGlare.Com1.plug(		circuitBreakerPanel.GlareLight.Out);
+		
 	# Dimmer cabling
 		sidePanel.instrumentBus.plug(	sidePanel.LightMap.Com1);
 		sidePanel.instrumentBus.plug(	sidePanel.LightNight.Com1);
 		sidePanel.instrumentBus.plug(	sidePanel.LightInstrument.Com1);
 				
 		sidePanel.LightNight.Com2.plug(mainBoard.dayNightRelais.A2);
- 		sidePanel.LightNight.L12.plug(lightBoard.Annunciator.Plus);
  		sidePanel.LightNight.L21.plug(mainBoard.GND);
 # 				
-		sidePanel.LightGlare.Com1.plug(circuitBreakerPanel.GlareLight.Out);
 				
+		sidePanel.testLightBus.plug(sidePanel.LightNight.L12);
 	
 };
 

@@ -56,6 +56,12 @@ var LightBoard = {
 		
 		#m.annunciatorBus = Part.ElectricBus.new("#annunciatorBus");
 
+		nCompNode = nParent.initNode("testLightRelais");
+		m.testLightRelais = Part.ElectricRelaisXPDT.new(nCompNode,"testLight Relais");
+		m.testLightRelais.setPoles(1);
+		
+		
+		
 		return m;
 	},
 };
