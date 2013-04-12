@@ -1,4 +1,26 @@
 <?xml version="1.0"?>
+<!--
+    This file is part of extra500
+
+    The Changer is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The Changer is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Thomas Grossberger and Dirk Dittmann
+      Date: March 13 2013
+
+      Last change:      Eric van den Berg
+      Date:             12.04.13
+-->
 
 <PropertyList>
 
@@ -8,11 +30,39 @@
 <animation>
 	<type>material</type>
 	<object-name>LightGear0.Lampe</object-name>
+	  <condition>
+    <equals>
+      <property>/gear/gear[0]/position-norm</property>
+      <value>1</value>
+    </equals>
+  </condition>
+	<emission>	
+		<red>0.0</red>	
+		<green>0.5</green>	
+		<blue>0.0</blue>
+	</emission>
+</animation>
+<animation>
+	<type>material</type>
 	<object-name>LightGear1.Lampe</object-name>
+	  <condition>
+    <equals>
+      <property>/gear/gear[1]/position-norm</property>
+      <value>1</value>
+    </equals>
+  </condition>
+	<emission>	
+		<red>0.0</red>	
+		<green>0.5</green>	
+		<blue>0.0</blue>
+	</emission>
+</animation>
+<animation>
+	<type>material</type>
 	<object-name>LightGear2.Lampe</object-name>
 	  <condition>
     <equals>
-      <property>gear/gear[0]/position-norm</property>
+      <property>/gear/gear[2]/position-norm</property>
       <value>1</value>
     </equals>
   </condition>
@@ -23,56 +73,57 @@
 	</emission>
 </animation>
 
-<animation>
-	<type>material</type>
-	<object-name>LightGear0.Lampe</object-name>
-	<object-name>LightGear1.Lampe</object-name>
-	<object-name>LightGear2.Lampe</object-name>
-	  <condition>
-	  <and>
-    <greater-than>
-      <property>gear/gear[0]/position-norm</property>
-      <value>0</value>
-    </greater-than>
-    <less-than>
-      <property>gear/gear[0]/position-norm</property>
-      <value>1</value>
-    </less-than>
-	</and>
-  </condition>
-  
-	<emission>	
-		<red>0.5</red>	
-		<green>0.0</green>	
-		<blue>0.0</blue>
-	</emission>
-</animation>
+
 
 <!--FlapsLampen-->
 <animation>
 	<type>material</type>
 	<object-name>LightFlapTrans.Lampe</object-name>
-	  <condition>
-    <greater-than>
-      <property>surface-positions/flap-pos-norm</property>
-      <value>0.17</value>
-    </greater-than>
-  </condition>
+	<condition> <!-- this is an ugly hack the trans lamp is solely dependent on the flap motor running -->
+      <or>
+            <and>
+                  <greater-than>
+                        <property>/fdm/jsbsim/fcs/flap-pos-deg</property>
+                        <value>0.1</value>
+                  </greater-than>
+                  <less-than>
+                        <property>/fdm/jsbsim/fcs/flap-pos-deg</property>
+                        <value>14.9</value>
+                  </less-than>
+            </and>
+            <and>
+                  <greater-than>
+                        <property>/fdm/jsbsim/fcs/flap-pos-deg</property>
+                        <value>15.1</value>
+                  </greater-than>
+                  <less-than>
+                        <property>/fdm/jsbsim/fcs/flap-pos-deg</property>
+                        <value>29.9</value>
+                  </less-than>
+            </and>
+      </or>
+      </condition>
 	<emission>	
-		<red>0.0</red>	
-		<green>0.5</green>	
-		<blue>0.0</blue>
+		<red>0.9</red>	
+		<green>0.4</green>	
+		<blue>0.1</blue>
 	</emission>
 </animation>
 <animation>
 	<type>material</type>
 	<object-name>LightFlap15.Lampe</object-name>
-	  <condition>
-    <greater-than>
-      <property>surface-positions/flap-pos-norm</property>
-      <value>0.55</value>
-    </greater-than>
-  </condition>
+	<condition>
+      <and>
+            <greater-than>
+                  <property>/fdm/jsbsim/fcs/flap-pos-deg</property>
+                  <value>14</value>
+            </greater-than>
+            <less-than>
+                  <property>/fdm/jsbsim/fcs/flap-pos-deg</property>
+                  <value>16</value>
+            </less-than>
+      </and>
+      </condition>
 	<emission>	
 		<red>0.0</red>	
 		<green>0.5</green>	
@@ -82,12 +133,12 @@
 <animation>
 	<type>material</type>
 	<object-name>LightFlap30.Lampe</object-name>
-	  <condition>
-    <greater-than>
-      <property>surface-positions/flap-pos-norm</property>
-      <value>.85</value>
-    </greater-than>
-  </condition>
+	<condition>
+      <greater-than>
+            <property>/fdm/jsbsim/fcs/flap-pos-deg</property>
+            <value>29</value>
+      </greater-than>
+      </condition>
 	<emission>	
 		<red>0.0</red>	
 		<green>0.5</green>	
@@ -99,7 +150,7 @@
 <animation>
   <type>rotate</type>
   <object-name>GearHebel</object-name>
- <property>gear/gear[0]/position-norm</property> 
+ <property>/fdm/jsbsim/gear/gear-cmd-norm</property> 
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -124,7 +175,7 @@
 <animation>
   <type>rotate</type>
   <object-name>FlapHebel</object-name>
- <property>surface-positions/flap-pos-norm</property> 
+ <property>/fdm/jsbsim/fcs/flap-cmd-norm</property> 
   <interpolation>
             <entry>
                 <ind>0</ind>

@@ -24,7 +24,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             10.04.13
+      Date:             11.04.13
 -->
 
 	<fileheader>
@@ -104,9 +104,9 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		<izz unit="SLUG*FT2">      6136 </izz>
 		<emptywt unit="KG" >      1445 </emptywt>
 		<location name="CG" unit="M">
-			<x> 3.65 </x>
+			<x> 3.53 </x>
 			<y> 0.00 </y>
-			<z> 1.8 </z>
+			<z> 1.615 </z>
 		</location>
 		<pointmass name="Pilot">
 			<weight unit="KG"> 80 </weight>
@@ -218,26 +218,26 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		
 		<contact type="STRUCTURE" name="LEFT_WING">
 			<location unit="M">
-				<x> 3.2 </x>
-				<y> -6.3 </y>
-				<z>  0.75 </z>
+				<x> 4.5 </x>
+				<y> -5.8 </y>
+				<z>  2.2 </z>
 			</location>
 			<static_friction>  1.00 </static_friction>
 			<dynamic_friction> 1.00 </dynamic_friction>
-			<spring_coeff unit="LBS/FT">   183000 </spring_coeff>
-			<damping_coeff unit="LBS/FT/SEC">  18300 </damping_coeff>
+			<spring_coeff unit="LBS/FT">   1830 </spring_coeff>
+			<damping_coeff unit="LBS/FT/SEC">  183 </damping_coeff>
 		</contact>
 		
 		<contact type="STRUCTURE" name="RIGHT_WING">
 			<location unit="M">
-				<x> 3.2 </x>
-				<y>  6.3 </y>
-				<z>  0.75 </z>
+				<x> 4.5 </x>
+				<y>  5.8 </y>
+				<z>  2.2 </z>
 			</location>
 			<static_friction>  1.00 </static_friction>
 			<dynamic_friction> 1.00 </dynamic_friction>
-			<spring_coeff unit="LBS/FT">183000 </spring_coeff>
-			<damping_coeff unit="LBS/FT/SEC">18300</damping_coeff>
+			<spring_coeff unit="LBS/FT">1830 </spring_coeff>
+			<damping_coeff unit="LBS/FT/SEC">183</damping_coeff>
 		</contact>
 
 		<contact type="STRUCTURE" name="VENTRAL FIN">
@@ -248,8 +248,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			</location>
 			<static_friction>  1.00 </static_friction>
 			<dynamic_friction> 1.00 </dynamic_friction>
-			<spring_coeff unit="LBS/FT">183000</spring_coeff>
-			<damping_coeff unit="LBS/FT/SEC">18300</damping_coeff>
+			<spring_coeff unit="LBS/FT">1830</spring_coeff>
+			<damping_coeff unit="LBS/FT/SEC">183</damping_coeff>
 		</contact>
 		
 	</ground_reactions>
