@@ -93,9 +93,9 @@ var ElectricAble = {
 	},
 	electricWork : func(electron) {
 		var watt = 0.0;
-		me.setVolt(electron.volt);
+		me.setVolt(electron.volt * (me.resistor / electron.resistor));
 		me.setAmpere(electron.ampere);
-		watt = electron.volt * electron.ampere;
+		watt = me.volt * electron.ampere;
 		return watt;
 	},
 	setVolt : func(value){

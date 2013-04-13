@@ -6,7 +6,6 @@ var plugMainBoard = func(){
 		mainBoard.hotBus.plug(mainBoard.batteryRelais.A1);
 		mainBoard.hotBus.plug(mainBoard.dayNightRelais.A1);
 		mainBoard.hotBus.plug(fusePanel.emergency3.In);
-		mainBoard.hotBus.plug(fusePanel.emergencyBus.In);
 		mainBoard.hotBus.plug(mainBoard.batteryRelais.P21);
 		mainBoard.hotBus.plug(mainBoard.batteryRelais.P11);
 		
@@ -14,6 +13,7 @@ var plugMainBoard = func(){
 		mainBoard.iBus20.plug(mainBoard.batteryShunt.Minus);
 		
 		mainBoard.iBus10.plug(mainBoard.batteryShunt.Plus);
+		mainBoard.iBus10.plug(fusePanel.emergencyBus.In);
 		mainBoard.iBus10.plug(fusePanel.batteryBus.In);
 		mainBoard.iBus10.plug(mainBoard.rccbRelais.P14);
 		
@@ -30,6 +30,14 @@ var plugMainBoard = func(){
 		
 		
 		mainBoard.batteryBus.plug(fusePanel.batteryBus.Out);
+		mainBoard.batteryBus.plug(circuitBreakerPanel.avionicBus.In);
+		
+		mainBoard.iBus13.plug(circuitBreakerPanel.avionicBus.Out);
+		mainBoard.iBus13.plug(mainBoard.avionicsRelais.A1);
+		mainBoard.iBus13.plug(mainBoard.avionicsRelais.P11);
+		
+		mainBoard.avionicBus.plug(mainBoard.avionicsRelais.P14);
+		
 		
 		mainBoard.loadBus.plug(fusePanel.loadBus.Out);
 		
@@ -66,16 +74,16 @@ var plugCircuitBreaker = func(){
 		mainBoard.loadBus.plug(circuitBreakerPanel.EngineInstrument2.In);
 		mainBoard.loadBus.plug(circuitBreakerPanel.DIP2.In);
 		
-		mainBoard.avionicsBus.plug(circuitBreakerPanel.IFD_RH_B.In);
-		mainBoard.avionicsBus.plug(circuitBreakerPanel.TAS.In);
-		mainBoard.avionicsBus.plug(circuitBreakerPanel.AutopilotComputer.In);
-		mainBoard.avionicsBus.plug(circuitBreakerPanel.TurnCoordinator.In);
+		mainBoard.avionicBus.plug(circuitBreakerPanel.IFD_RH_B.In);
+		mainBoard.avionicBus.plug(circuitBreakerPanel.TAS.In);
+		mainBoard.avionicBus.plug(circuitBreakerPanel.AutopilotComputer.In);
+		mainBoard.avionicBus.plug(circuitBreakerPanel.TurnCoordinator.In);
 		
 		mainBoard.batteryBus.plug(circuitBreakerPanel.BusTie.Out);
 		mainBoard.batteryBus.plug(circuitBreakerPanel.FlapControl.In);
 		mainBoard.batteryBus.plug(circuitBreakerPanel.Flap.In);
 		mainBoard.batteryBus.plug(circuitBreakerPanel.Emergency1.In);
-		mainBoard.batteryBus.plug(circuitBreakerPanel.AvBus.In);
+		mainBoard.batteryBus.plug(circuitBreakerPanel.avionicBus.In);
 		mainBoard.batteryBus.plug(circuitBreakerPanel.InstrumentLight.In);
 		mainBoard.batteryBus.plug(circuitBreakerPanel.StrobeLight.In);
 		mainBoard.batteryBus.plug(circuitBreakerPanel.IceLight.In);
@@ -134,6 +142,11 @@ var plugSidePanel = func(){
 		sidePanel.Emergency.L12.plug(mainBoard.emergencyRelais.A2);
 		
 		sidePanel.MainBattery.L12.plug(mainBoard.batteryRelais.A2);
+		
+		sidePanel.MainAvionics.Com1.plug(mainBoard.GND);
+		sidePanel.MainAvionics.L12.plug(mainBoard.avionicsRelais.A2);
+		
+		
 	# Light
 		sidePanel.LightStrobe.Com1.plug(	circuitBreakerPanel.StrobeLight.Out);
 		sidePanel.LightNavigation.Com1.plug(	circuitBreakerPanel.NavLight.Out);

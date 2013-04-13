@@ -12,7 +12,7 @@ extra500.oFuelSystem.plugElectric();
 var simulation_cycle = func(){
 	var start = systime();
 	
-	extra500.mainBoard.update();
+	extra500.mainBoard.update(start);
 	extra500.oFuelSystem.update();
 	
 	IFD.demo.update();
@@ -30,7 +30,7 @@ var simulation_cycle = func(){
 	
 };
 
-var cycle_sec = 1.0;
+var cycle_sec = 0.1;
 var cycle_run = 1;
 var cycle = func(){
 	#debug.benchmark("Simulation Cycle ... ",func simulation_cycle());

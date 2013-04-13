@@ -79,6 +79,7 @@ var Electron ={
 		m.volt		= 0.0;
 		m.resistor	= 0.0;
 		m.ampere	= 0.0;
+		m.timestamp	= 0.0;
 		return m;
 	},
 	copyConstructor : func (){
@@ -86,30 +87,35 @@ var Electron ={
 		electron.volt		= me.volt;
 		electron.resistor	= me.resistor;
 		electron.ampere		= me.ampere;
+		electron.timestamp	= me.timestamp;
 		return electron;
 	},
 	copy : func(electron){
 		me.volt		= electron.volt;
 		me.resistor	= electron.resistor;
 		me.ampere	= electron.ampere;
+		me.timestamp	= electron.timestamp;
+		
 	},
 	paste : func(electron){
 		electron.volt		= me.volt;
 		electron.resistor	= me.resistor;
 		electron.ampere		= me.ampere;
+		electron.timestamp	= me.timestamp;
 	},
 	zero : func(){
 		me.volt		= 0.0;
 		me.resistor	= 0.0;
-		me.ampere	= 0.0;
+		me.ampere	= 0.0
 	},
-	set : func(volt,resistor,ampere){
+	set : func(volt,resistor,ampere,timestamp){
 		me.volt		= volt;
 		me.resistor	= resistor;
 		me.ampere	= ampere;
+		me.timestamp	= timestamp;
 	},
 	getText : func(){
-		return sprintf("%0.4fV %0.4fΩ %0.4fA",me.volt,me.resistor,me.ampere);
+		return sprintf("%0.4fV %0.4fΩ %0.4fA %f",me.volt,me.resistor,me.ampere,me.timestamp);
 	}
 };
 
@@ -235,13 +241,13 @@ var ElectricShunt = {
 		if ( electron != nil){
 			if (name == "+"){
 				GND = me.Minus.applyVoltage(electron);
-				me.ampereIndicated = -electron.ampere;
-				me.voltIndicated = -electron.volt;
+				me.ampereIndicated = electron.ampere;
+				me.voltIndicated = electron.volt;
 				
 			}else if(name == "-"){
 				GND = me.Plus.applyVoltage(electron);
-				me.ampereIndicated = electron.ampere;
-				me.voltIndicated = electron.volt;
+				me.ampereIndicated = -electron.ampere;
+				me.voltIndicated = -electron.volt;
 			}
 		}
 		me.setAmpere(electron.ampere);
@@ -294,22 +300,25 @@ var ElectricBus = {
 		var GND = 0;
 		var ampereSum = 0;
 		if ( electron != nil){
-			me.electron.copy(electron);
-			
-			foreach(var i;me.index) {
-				me.electronTmp.set(me.electron.volt,me.electron.resistor,0.0);
-				if (i != name){
-					if ( me.connectors[i].applyVoltage(me.electronTmp) ){
-						GND = 1;
-						me.electron.ampere += me.electronTmp.ampere;
+			if (me.electron.timestamp != electron.timestamp){
+				me.electron.copy(electron);
+								
+				foreach(var i;me.index) {
+					me.electronTmp.set(me.electron.volt,me.electron.resistor,0.0,me.electron.timestamp);
+					if (i != name){
+						if ( me.connectors[i].applyVoltage(me.electronTmp) ){
+							GND = 1;
+							me.electron.ampere += me.electronTmp.ampere;
+						}
 					}
 				}
+				me.electron.resirstor = me.electron.volt / me.electron.ampere;
+				etd.echo("Bus electron " ~me.electron.getText());
+				
+				me.electron.paste(electron);
+			}else{
+				etd.echo("X-X-X Bus not CYCLE again " ~me.electron.getText());
 			}
-			me.electron.resirstor = me.electron.volt / me.electron.ampere;
-			etd.echo("Bus electron " ~me.electron.getText());
-			
-			me.electron.paste(electron);
-			
 		}
 		etd.out("Bus",me.name,name,electron);
 		return GND;
@@ -426,7 +435,7 @@ var ElectricBattery = {
 		me.nLoadLevel.setValue(me.loadLevel);
 		
 	},
-	update : func(){
+	update : func(timestamp){
 		
 		etd.echo("--- Battery.update() ...          ---");
 		etd.echo("-------------------------------------");
@@ -435,7 +444,7 @@ var ElectricBattery = {
 		me.electron.volt = 24.0;
 		me.electron.resistor = 0.0;
 		me.electron.ampere = 0.0;
-		
+		me.electron.timestamp = timestamp;
 		
 		var GND = 0;
 		GND = me.plus.applyVoltage(me.electron);
@@ -1169,7 +1178,7 @@ var ElectricLight = {
 				GND = me.Minus.applyVoltage(electron);
 				if (GND){
 					var watt = me.electricWork(electron);
-					me._dimm(watt);
+					me._dimm();
 				}
 			}
 			
@@ -1185,8 +1194,8 @@ var ElectricLight = {
 		
 		me.state = value;
 	},
-	_dimm : func(watt){
-		var percentage = (watt* me.qos / me.watt) ;
+	_dimm : func(){
+		var percentage = ((me.volt-me.minVolt) * me.qos / (me.maxVolt-me.minVolt)) ;
 		me._setValue(percentage);
 		
 	},

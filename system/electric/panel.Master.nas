@@ -92,19 +92,23 @@ var MasterPanel = {
 		
 		nCompNode = nParent.initNode("Keypad");
 		m.DimmerKeypad = Part.ElectricDimmer.new(nCompNode,"Dimmer Keypad Light","DOUBLE",0,1.0,0.1);
+		m.DimmerKeypad.electricConfig(12.0,24.0,5.0);
 		
 		nCompNode = nParent.initNode("Glare");
 		m.DimmerGlare = Part.ElectricDimmer.new(nCompNode,"Dimmer Glare Light","DOUBLE",0,1.0,0.1);
+		m.DimmerGlare.electricConfig(12.0,24.0,15.0);
 		
 		nCompNode = nParent.initNode("Instrument");
 		m.DimmerInstrument = Part.ElectricDimmer.new(nCompNode,"Dimmer Instrument Light","DOUBLE",0,1.0,0.1);
-		m.DimmerInstrument.electricConfig(12.0,26.0,25.0);
+		m.DimmerInstrument.electricConfig(12.0,24.0,25.0);
 		
 		nCompNode = nParent.initNode("Switch");
 		m.DimmerSwitch = Part.ElectricDimmer.new(nCompNode,"Dimmer Switch Light","DOUBLE",0,1.0,0.1);
+		m.DimmerSwitch.electricConfig(12.0,24.0,8.0);
 		
 		nCompNode = nParent.initNode("Annunciator");
 		m.DimmerAnnunciator = Part.ElectricDimmer.new(nCompNode,"Dimmer Annunciator Light","DOUBLE",0,1.0,0.1);
+		m.DimmerAnnunciator.electricConfig(12.0,24.0,36.0);
 		
 		
 		#internal Buses
