@@ -1078,6 +1078,9 @@ var ElectricDimmer = {
 		
 		m.nState = nRoot.initNode("state",m.state,type);
 		
+		m.electron = Electron.new();		
+		
+		
 		m.In = ElectricConnector.new("in");
 		m.Out = ElectricConnector.new("out");
 			
@@ -1091,11 +1094,21 @@ var ElectricDimmer = {
 		etd.in("Dimmer",me.name,name,electron);
 		var GND = 0;
 		if ( electron != nil){
-			electron.resistor += me.resistor * (1.0-me.state) * me.qos;
+			me.electron.copy(electron);
+			var volt = me.voltMin + me.voltDelta * me.state * me.qos;
+			if (volt < me.electron.volt){
+				me.electron.volt = volt;
+			}
+			me.electron.resistor += me.resistor;
+			me.setVolt(me.electron.volt);
 			if (name == "in"){
-				GND =  me.Out.applyVoltage(electron);
+				GND =  me.Out.applyVoltage(me.electron);
 			}else{
-				GND =  me.In.applyVoltage(electron);
+				GND =  me.In.applyVoltage(me.electron);
+			}
+			
+			if (GND){
+				electron.ampere += me.electron.ampere;
 			}
 		}
 		etd.out("Dimmer",me.name,name,electron);
@@ -1154,7 +1167,6 @@ var ElectricLight = {
 			ElectricAble.new(nRoot,name)
 		]};
 		
-						
 		m.Plus = ElectricConnector.new("+");
 		m.Minus = ElectricConnector.new("-");
 						
@@ -1195,7 +1207,7 @@ var ElectricLight = {
 		me.state = value;
 	},
 	_dimm : func(){
-		var percentage = ((me.volt-me.minVolt) * me.qos / (me.maxVolt-me.minVolt)) ;
+		var percentage = ((me.volt-me.voltMin) * me.qos / (me.voltDelta)) ;
 		me._setValue(percentage);
 		
 	},

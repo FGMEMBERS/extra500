@@ -28,6 +28,15 @@ var MainBoard = {
 		# 4 SWITCHES
 		# 5 ANNUNCIATOR
 		
+		nCompNode = nParent.initNode("TestLightRelais");
+		m.testLightRelais = Part.ElectricRelaisXPDT.new(nCompNode,"Test Light Relais");
+		m.testLightRelais.setPoles(5);
+		# 1 ANNUNCIATOR
+		# 2 Gear
+		# 3 Flaps
+		# 4 DME
+		
+		
 		nCompNode = nParent.initNode("RCCBRelais");
 		m.rccbRelais = Part.ElectricRelaisXPST.new(nCompNode,"RCCB Relais");
 		m.rccbRelais.setPoles(1);
@@ -49,7 +58,7 @@ var MainBoard = {
 		m.iBus01 = Part.ElectricBus.new("#01");
 		m.iBus12 = Part.ElectricBus.new("#12");
 		m.iBus13 = Part.ElectricBus.new("#13");
-		
+	
 	# main Buses
 		
 		m.hotBus = Part.ElectricBus.new("HotBus");

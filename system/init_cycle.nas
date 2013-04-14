@@ -45,7 +45,7 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 	removelistener(init_listener);
 	init_listener = nil;
 	
-	settimer(cycle,6);
+	settimer(cycle,2);
 	print("Simulation Cycle ... check");
 	
 	

@@ -5,6 +5,8 @@ var plugMainBoard = func(){
 		mainBoard.hotBus.plug(mainBoard.oBattery.plus);
 		mainBoard.hotBus.plug(mainBoard.batteryRelais.A1);
 		mainBoard.hotBus.plug(mainBoard.dayNightRelais.A1);
+		mainBoard.hotBus.plug(mainBoard.dayNightRelais.A1);
+		mainBoard.hotBus.plug(mainBoard.testLightRelais.A1);
 		mainBoard.hotBus.plug(fusePanel.emergency3.In);
 		mainBoard.hotBus.plug(mainBoard.batteryRelais.P21);
 		mainBoard.hotBus.plug(mainBoard.batteryRelais.P11);
@@ -37,12 +39,12 @@ var plugMainBoard = func(){
 		mainBoard.iBus13.plug(mainBoard.avionicsRelais.P11);
 		
 		mainBoard.avionicBus.plug(mainBoard.avionicsRelais.P14);
-		
-		
+				
 		mainBoard.loadBus.plug(fusePanel.loadBus.Out);
 		
 		mainBoard.emergencyBus.plug(mainBoard.emergencyRelais.P11);
-	
+			
+		
 	# relais	
 		mainBoard.emergencyRelais.P12.plug(fusePanel.emergencyBus.Out);
 		
@@ -129,12 +131,12 @@ var plugCircuitBreaker = func(){
 		circuitBreakerPanel.RCCB.Out.plug(mainBoard.GND);
 		circuitBreakerPanel.RCCB.In.plug(mainBoard.rccbRelais.A2);
 
-	
+
+		
 };
 
 var plugSidePanel = func(){
 		
-		sidePanel.instrumentBus.plug(	circuitBreakerPanel.InstrumentLight.Out);
 		
 	
 		sidePanel.Emergency.Com1.plug(mainBoard.GND);
@@ -156,16 +158,17 @@ var plugSidePanel = func(){
 		sidePanel.LightIce.Com1.plug(		circuitBreakerPanel.IceLight.Out);
 		sidePanel.LightGlare.Com1.plug(		circuitBreakerPanel.GlareLight.Out);
 		
+		sidePanel.LightInstrument.Com1.plug ( circuitBreakerPanel.InstrumentLight.Out);
+		
 	# Dimmer cabling
-		sidePanel.instrumentBus.plug(	sidePanel.LightMap.Com1);
-		sidePanel.instrumentBus.plug(	sidePanel.LightNight.Com1);
-		sidePanel.instrumentBus.plug(	sidePanel.LightInstrument.Com1);
-				
-		sidePanel.LightNight.Com2.plug(mainBoard.dayNightRelais.A2);
- 		sidePanel.LightNight.L21.plug(mainBoard.GND);
-# 				
-				
-		sidePanel.testLightBus.plug(sidePanel.LightNight.L12);
+		
+		
+		sidePanel.LightNight.Com1.plug(mainBoard.GND);
+ 		sidePanel.LightNight.Com2.plug(mainBoard.GND);
+ 		sidePanel.LightNight.L11.plug(mainBoard.dayNightRelais.A2);
+ 		sidePanel.LightNight.L12.plug(mainBoard.testLightRelais.A2);
+ 		
+		
 	
 };
 

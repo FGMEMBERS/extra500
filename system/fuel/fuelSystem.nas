@@ -19,21 +19,25 @@ var FuelSystem = {
 		
 		node = m.nFuel.initNode("FuelPump1");
 		m.oPump1= Part.FuelPump.new(node,"Fuel Pump 1");
-		m.oPump1.electricConfig(18.0,30.0,40);
+		m.oPump1.electricConfig(18.0,30.0);
+		m.oPump1.setPower(26.0,40.0);
 		
 		node = m.nFuel.initNode("FuelPump2");
 		m.oPump2= Part.FuelPump.new(node,"Fuel Pump 2");
-		m.oPump2.electricConfig(18.0,30.0,40);
+		m.oPump2.electricConfig(18.0,30.0);
+		m.oPump2.setPower(26.0,40.0);
 		
 		
 		node = m.nFuel.initNode("FuelTransferPumpLeft");
 		m.oPumpLeft= Part.FuelPump.new(node,"Fuel Transfer Pump Left");
-		m.oPumpLeft.electricConfig(18.0,30.0,40);
+		m.oPumpLeft.electricConfig(18.0,30.0);
+		m.oPumpLeft.setPower(26.0,40.0);
 		
 		node = m.nFuel.initNode("pump");
 		m.oPumpRight= Part.FuelPump.new(node,"Fuel Transfer Pump Right");
-		m.oPumpRight.electricConfig(18.0,30.0,40);
-
+		m.oPumpRight.electricConfig(18.0,30.0);
+		m.oPumpRight.setPower(26.0,40.0);
+		
 				
 		node = m.nFuel.initNode("FilterMain");
 		m.oMainFilter= Part.FuelFilter.new(node,"Fuel Main Filter");

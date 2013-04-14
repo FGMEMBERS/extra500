@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="Neues Dokument 1">
+   sodipodi:docname="IFD01.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -24,17 +24,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="318.30847"
-     inkscape:cy="797.78298"
+     inkscape:zoom="2.8"
+     inkscape:cx="288.71562"
+     inkscape:cy="842.60029"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="988"
-     inkscape:window-height="781"
-     inkscape:window-x="754"
-     inkscape:window-y="164"
-     inkscape:window-maximized="0" />
+     inkscape:window-width="1920"
+     inkscape:window-height="1025"
+     inkscape:window-x="-3"
+     inkscape:window-y="-3"
+     inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -51,63 +51,28 @@
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <flowRoot
-       xml:space="preserve"
-       id="flowRoot2985"
-       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Sans;font-style:normal;font-weight:normal;font-size:40px;line-height:125%;letter-spacing:0px;word-spacing:0px"><flowRegion
-         id="flowRegion2987"><rect
-           id="rect2989"
-           width="120"
-           height="85.714287"
-           x="125.71429"
-           y="200.93361" /></flowRegion><flowPara
-         id="flowPara2991"></flowPara></flowRoot>    <flowRoot
-       xml:space="preserve"
-       id="flowRoot2993"
-       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Sans;font-style:normal;font-weight:normal;font-size:40px;line-height:125%;letter-spacing:0px;word-spacing:0px"><flowRegion
-         id="flowRegion2995"><rect
-           id="rect2997"
-           width="71.428574"
-           height="100"
-           x="125.71429"
-           y="189.50504" /></flowRegion><flowPara
-         id="flowPara2999"></flowPara></flowRoot>    <text
-       xml:space="preserve"
-       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="154.28571"
-       y="229.50504"
-       id="T01"
-       sodipodi:linespacing="125%"
-       inkscape:label="#text3001"><tspan
-         sodipodi:role="line"
-         id="tspan3003"
-         x="154.28571"
-         y="229.50504">T01</tspan><tspan
-         sodipodi:role="line"
-         x="154.28571"
-         y="279.50504"
-         id="tspan3017" /></text>
-    <flowRoot
-       xml:space="preserve"
-       id="flowRoot3005"
-       style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:Sans;font-style:normal;font-weight:normal;font-size:40px;line-height:125%;letter-spacing:0px;word-spacing:0px"><flowRegion
-         id="flowRegion3007"><rect
-           id="rect3009"
-           width="173.74623"
-           height="42.426407"
-           x="154.55334"
-           y="245.25031" /></flowRegion><flowPara
-         id="flowPara3011"></flowPara></flowRoot>    <text
-       xml:space="preserve"
-       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="159.6041"
-       y="279.59549"
-       id="T02"
-       sodipodi:linespacing="125%"
-       inkscape:label="#text3013"><tspan
-         sodipodi:role="line"
-         id="tspan3015"
-         x="159.6041"
-         y="279.59549">T02</tspan></text>
+    <rect
+       style="fill:#1c25de;fill-opacity:1"
+       id="simTime.bar"
+       width="400"
+       height="50"
+       x="100"
+       y="152.36218"
+       inkscape:label="#rect2985" />
+    <rect
+       style="fill:none;stroke:#081ffa;stroke-width:1.06648195;stroke-opacity:1"
+       id="rect2987"
+       width="398.9335"
+       height="48.933517"
+       x="100.53324"
+       y="152.89543" />
+    <rect
+       style="fill:#de1c32;fill-opacity:1;stroke:#fa0828;stroke-opacity:1"
+       id="simTime.needle"
+       width="5"
+       height="70"
+       x="100.5"
+       y="141.86218"
+       inkscape:label="#rect3817" />
   </g>
 </svg>

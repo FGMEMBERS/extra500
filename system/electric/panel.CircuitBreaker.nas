@@ -340,7 +340,7 @@ var CircuitBreakerPanel = {
 		nCompNode = nParent.initNode("GearAux1");
 		m.GearAux1 = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Gear Aux 1",0);
 		
-		
+
 		
 		return m;
 	},
