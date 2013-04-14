@@ -34,10 +34,6 @@
 
 <!-- Submodels -->
 <model>
-  <name>FWbug</name>
-  <path>Aircraft/extra500/Models/extra500_FWbug.xml</path>	
-</model>
-<model>
   <name>FWlinks</name>
   <path>Aircraft/extra500/Models/extra500_FWlinks.xml</path>	
 </model>
@@ -55,8 +51,10 @@
 	<pitch-deg>-13</pitch-deg>
 	</offsets>
 </model>
-
 <!--test-->
+<model>
+  <path>Aircraft/extra500/Models/TESTbugfahrwerk.xml</path>	
+</model>
 <model>
   <name>InstrumentFlapsGear</name>
   <path>Aircraft/extra500/Models/extra500_InstrumentFlapsGear.xml</path>
@@ -67,7 +65,6 @@
 	<pitch-deg>-50</pitch-deg>
 	</offsets>
 </model>
-
 <model>
   <name>LH_IFD</name>
   <path>Aircraft/extra500/Models/extra500_LH-IFD.xml</path>
@@ -179,7 +176,6 @@
     </less-than>
   </condition>
 </animation>
-
 <animation>
   <type>select</type>
   <object-name>PropSlow</object-name>
@@ -196,7 +192,6 @@
     </and>
   </condition>
 </animation>
-
 <animation>
   <type>select</type>
   <object-name>PropFast</object-name>
@@ -207,7 +202,6 @@
     </greater-than-equals>
   </condition>
 </animation>
-
 <animation>
   <type>spin</type>
   <object-name>Spinner</object-name>
@@ -230,33 +224,8 @@
    <z-m>-0.48652</z-m>
   </center>
  </animation>
- 
-<!-- Bugradeinzug  -->
- <animation>
-  <type>rotate</type>
-  <object-name>FWbug</object-name>
-<property>gear/gear[0]/position-norm</property>
-  <interpolation>
-            <entry>
-                <ind>0.0</ind>
-                <dep>105</dep>
-            </entry>
-            <entry>
-                <ind>1</ind>
-                <dep>0</dep>
-            </entry>
-        </interpolation>
-  <axis>
-    <x1-m>-1.60481</x1-m>
-    <y1-m>1.0</y1-m>
-    <z1-m>-0.98046</z1-m>
-	<x2-m>-1.60481</x2-m>
-    <y2-m>-1.0</y2-m>
-    <z2-m>-0.98046</z2-m>
-  </axis>
-  </animation> 
- 
- <!-- FWeinzug links  -->
+
+<!-- FWeinzug links  -->
 <animation>
   <type>rotate</type>
   <object-name>FWlinks</object-name>
@@ -326,32 +295,6 @@
   </axis>
 </animation>
 
-<!-- lenkung Bugfahrwerk-->  
- <animation>
-  <type>rotate</type>
-  <object-name>FWbug</object-name>
-  <condition>
-    <equals>
-      <property>gear/gear[0]/position-norm</property>
-      <value>1</value>
-    </equals>
-  </condition>
-  <property>/fdm/jsbsim/fcs/rudder-pos-norm</property>
-  <interpolation>
-   <entry><ind>-1</ind><dep> 30</dep></entry>
-   <entry><ind> 0</ind><dep>  0</dep></entry>
-   <entry><ind> 1</ind><dep>-30</dep></entry>
-  </interpolation>   
-  <axis>
-    <x1-m>-1.69785</x1-m>
-    <y1-m>0</y1-m>
-    <z1-m>-1.03680</z1-m>
-    <x2-m>-1.69785</x2-m>
-    <y2-m>0</y2-m>
-    <z2-m>-1.38026</z2-m>
-  </axis>
-</animation>
-
 <!-- Hoehenruder -->
 <animation>
   <type>rotate</type>
@@ -371,7 +314,6 @@
     <z2-m>1.15570</z2-m>
   </axis>
 </animation>	
-
 <animation>
   <type>rotate</type>
   <object-name>HRrechts</object-name>
@@ -410,7 +352,6 @@
     <z2-m>0.33370</z2-m>
   </axis>
 </animation>
-
 <animation>
   <type>rotate</type>
   <object-name>QRrechts</object-name>
@@ -465,7 +406,6 @@
     <z2-m> 0.33370</z2-m>
   </axis>
 </animation>
-
 <animation>
   <type>rotate</type>
   <object-name>FlapAussenL</object-name>
@@ -483,7 +423,6 @@
     <z2-m>0.33370</z2-m>
   </axis>
 </animation>
-
 <animation>
   <type>rotate</type>
   <object-name>FlapAussenR</object-name>
