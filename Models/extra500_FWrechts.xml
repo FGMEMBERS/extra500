@@ -35,8 +35,6 @@
   <type>rotate</type>
   <object-name>Radrechts</object-name>
 <property>gear/gear[1]/position-norm</property>
-<!--  <property>controls/engines/engine[0]/throttle</property> -->
-
   <interpolation>
             <entry>
                 <ind>0.2</ind>

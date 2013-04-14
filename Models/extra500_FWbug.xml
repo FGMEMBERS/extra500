@@ -2,32 +2,38 @@
 
 <PropertyList>
 
-<path>extra500_FWbug.ac</path>
+<path>extra500_Bugfahrwerk.ac</path>
 
-<!-- drehende Raeder -->
+<model>
+<name>Bugrad_drehend</name>
+  <path>extra500_Bugrad.xml</path>
+</model>
+ 
+<!-- Bugfahrwerksdaempfung -->
 <animation>
-  <type>spin</type>
-  <object-name>RadBug</object-name>
-  
-  <condition>
-    <equals>
-      <property>gear/gear[0]/position-norm</property>
-      <value>1</value>
-    </equals>
-  </condition>
-  
-  <property>gear/gear[0]/rollspeed-ms</property>
-  <factor>-20</factor>
-  <center>
-    <x-m>-1.69785</x-m>
-    <y-m>0</y-m>
-    <z-m>-1.63446</z-m>
-  </center>
+  <type>translate</type>
+  <object-name>BugradGabel</object-name>
+  <object-name>BugradGelenkUnten</object-name>
+  <object-name>Bugrad_drehend</object-name>
+<property>gear/gear/compression-norm</property>
+<interpolation>
+            <entry>
+                <ind>0.73</ind>
+                <dep>-0.12</dep>
+            </entry>
+            <entry>
+                <ind>.3</ind>
+                <dep>.0</dep>
+            </entry>
+        </interpolation>
   <axis>
-    <x>0</x>
-    <y>1</y>
-    <z>0</z>
+  <x1-m>-1.63609</x1-m>
+  <y1-m>0</y1-m>
+  <z1-m>-1.14638</z1-m>
+  <x2-m>-1.69078</x2-m>
+  <y2-m>0</y2-m>
+  <z2-m>-1.43637</z2-m>
   </axis>
- </animation>
+</animation> 
  
 </PropertyList>
