@@ -34,14 +34,6 @@
 
 <!-- Submodels -->
 <model>
-  <name>FWlinks</name>
-  <path>Aircraft/extra500/Models/extra500_FWlinks.xml</path>	
-</model>
-<model>
-  <name>FWrechts</name>
-  <path>Aircraft/extra500/Models/extra500_FWrechts.xml</path>	
-</model>
-<model>
   <name>MasterPanel</name>
   <path>Aircraft/extra500/Models/extra500_MasterPanel.xml</path>
 	<offsets>
@@ -53,7 +45,7 @@
 </model>
 <!--test-->
 <model>
-  <path>Aircraft/extra500/Models/TESTbugfahrwerk.xml</path>	
+  <path>Aircraft/extra500/Models/TEST.fahrwerk.komplett.xml</path>	
 </model>
 <model>
   <name>InstrumentFlapsGear</name>
@@ -225,56 +217,6 @@
   </center>
  </animation>
 
-<!-- FWeinzug links  -->
-<animation>
-  <type>rotate</type>
-  <object-name>FWlinks</object-name>
- <property>gear/gear[0]/position-norm</property> 
-  <interpolation>
-            <entry>
-                <ind>0</ind>
-                <dep>79</dep>
-            </entry>
-            <entry>
-                <ind>1</ind>
-                <dep>0</dep>
-            </entry>
-        </interpolation>
-  <axis>
-  <x1-m>1.005</x1-m>
-  <y1-m>-0.41601</y1-m>
-  <z1-m>-0.70543</z1-m>
-  <x2-m>1.005</x2-m>
-  <y2-m>0.41601</y2-m>
-  <z2-m>-1.30543</z2-m>
-  </axis>
-</animation>
-
-<!-- FWeinzug rechts  -->
-<animation>
-  <type>rotate</type>
-  <object-name>FWrechts</object-name>
- <property>gear/gear[1]/position-norm</property> 
-  <interpolation>
-            <entry>
-                <ind>0</ind>
-                <dep>-79</dep>
-            </entry>
-            <entry>
-                <ind>1</ind>
-                <dep>0</dep>
-            </entry>
-        </interpolation>
-  <axis>
-  <x1-m>1.005</x1-m>
-  <y1-m>0.41601</y1-m>
-  <z1-m>-0.70543</z1-m>
-  <x2-m>1.005</x2-m>
-  <y2-m>-0.41601</y2-m>
-  <z2-m>-1.30543</z2-m>
-  </axis>
-</animation>
-  
 <!-- Seitenruder -->  
  <animation>
   <type>rotate</type>

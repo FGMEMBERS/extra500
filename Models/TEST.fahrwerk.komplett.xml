@@ -1,0 +1,327 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+<path>TEST.fahrwerk.komplett.ac</path>
+
+<animation>
+  <name>BugFahrwerkKomplett</name>
+  <object-name>Bugrad_Daempfer</object-name>
+  <object-name>BugradGabel</object-name>
+  <object-name>Bugrad</object-name>
+  <object-name>BugradGelenkUnten</object-name>
+  <object-name>BugradGelenkOben</object-name>
+ </animation>
+ 
+<animation>
+  <name>LinksFahrwerkKomplett</name>
+  <object-name>Radlinks</object-name>
+  <object-name>RadStangelinks</object-name>
+  <object-name>RadStangelinks.001</object-name>
+</animation>
+  
+<animation>
+  <name>RechtsFahrwerkKomplett</name>
+  <object-name>Radrechts</object-name>
+  <object-name>RadStangerechts</object-name>
+</animation> 
+
+<!-- BUGFAHRWERK --> 
+<!-- lenkung Bugfahrwerk-->  
+<animation>
+  <type>rotate</type>
+  <object-name>BugFahrwerkKomplett</object-name>
+  <condition>
+    <equals>
+      <property>gear/gear[0]/position-norm</property>
+      <value>1</value>
+    </equals>
+  </condition>
+  <property>/fdm/jsbsim/fcs/rudder-pos-norm</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep> 30</dep></entry>
+   <entry><ind> 0</ind><dep>  0</dep></entry>
+   <entry><ind> 1</ind><dep>-30</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>-1.63609</x1-m>
+    <y1-m>0</y1-m>
+    <z1-m>-1.14638</z1-m>
+    <x2-m>-1.69078</x2-m>
+    <y2-m>0</y2-m>
+    <z2-m>-1.43637</z2-m>
+  </axis>
+</animation>
+<!-- Bugradeinzug  -->
+<animation>
+  <type>rotate</type>
+  <object-name>BugFahrwerkKomplett</object-name>
+<property>gear/gear[0]/position-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0.0</ind>
+                <dep>105</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>0</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>-1.60481</x1-m>
+    <y1-m>1.0</y1-m>
+    <z1-m>-0.98046</z1-m>
+	<x2-m>-1.60481</x2-m>
+    <y2-m>-1.0</y2-m>
+    <z2-m>-0.98046</z2-m>
+  </axis>
+  </animation> 
+<!-- Bugfahrwerksdaempfung -->
+<animation>
+  <type>translate</type>
+  <object-name>BugradGabel</object-name>
+  <object-name>BugradGelenkUnten</object-name>
+  <object-name>Bugrad</object-name>
+<property>gear/gear/compression-norm</property>
+<interpolation>
+            <entry>
+                <ind>0.73</ind>
+                <dep>-0.12</dep>
+            </entry>
+            <entry>
+                <ind>.3</ind>
+                <dep>.0</dep>
+            </entry>
+        </interpolation>
+  <axis>
+  <x1-m>-1.63609</x1-m>
+  <y1-m>0</y1-m>
+  <z1-m>-1.14638</z1-m>
+  <x2-m>-1.69078</x2-m>
+  <y2-m>0</y2-m>
+  <z2-m>-1.43637</z2-m>
+  </axis>
+</animation> 
+<animation>
+  <type>rotate</type>
+  <object-name>BugradGelenkOben</object-name>
+<property>gear/gear/compression-norm</property>
+<interpolation>
+            <entry>
+                <ind>0.73</ind>
+                <dep>-50</dep>
+            </entry>
+            <entry>
+                <ind>.3</ind>
+                <dep>.0</dep>
+            </entry>
+        </interpolation>
+  <axis>
+  <x1-m>-1.70422</x1-m>
+  <y1-m>1</y1-m>
+  <z1-m>-1.19225</z1-m>
+  <x2-m>-1.70422</x2-m>
+  <y2-m>-1</y2-m>
+  <z2-m>-1.19225</z2-m>
+  </axis>
+</animation> 
+<animation>
+  <type>rotate</type>
+  <object-name>BugradGelenkUnten</object-name>
+<property>gear/gear/compression-norm</property>
+<interpolation>
+            <entry>
+                <ind>0.73</ind>
+                <dep>-50</dep>
+            </entry>
+            <entry>
+                <ind>.3</ind>
+                <dep>.0</dep>
+            </entry>
+        </interpolation>
+  <axis>
+  <x1-m>-1.74406</x1-m>
+  <y1-m>-1</y1-m>
+  <z1-m>-1.40423</z1-m>
+  <x2-m>-1.74406</x2-m>
+  <y2-m>1</y2-m>
+  <z2-m>-1.40423</z2-m>
+  </axis>
+</animation>
+ <!-- drehende Raeder -->
+<animation>
+  <type>spin</type>
+  <object-name>Bugrad</object-name>
+  <condition>
+    <equals>
+      <property>gear/gear[0]/position-norm</property>
+      <value>1</value>
+    </equals>
+  </condition>
+  <property>gear/gear[0]/rollspeed-ms</property>
+  <factor>-20</factor>
+  <center>
+    <x-m>-1.73131</x-m>
+    <y-m>0</y-m>
+    <z-m>-1.65133</z-m>
+  </center>
+  <axis>
+    <x>0</x>
+    <y>1</y>
+    <z>0</z>
+  </axis>
+ </animation>
+ 
+<!-- FAHRWERK LINKS-->
+<!-- Radeinklapp --> 
+ <animation>
+  <type>rotate</type>
+  <object-name>Radlinks</object-name>
+  <object-name>RadStangelinks.001</object-name>
+<property>gear/gear[1]/position-norm</property>
+<!--  <property>controls/engines/engine[0]/throttle</property> -->
+
+  <interpolation>
+            <entry>
+                <ind>0.4</ind>
+                <dep>90</dep>
+            </entry>
+            <entry>
+                <ind>0.8</ind>
+                <dep>0</dep>
+            </entry>
+        </interpolation>
+  <axis>
+	<x1-m>0.93253</x1-m>
+    <y1-m>-0.89046</y1-m>
+    <z1-m>-1.43954</z1-m>
+    <x2-m>0.93253</x2-m>
+    <y2-m>-0.89046</y2-m>
+    <z2-m>-1.68062</z2-m>
+  </axis>
+  </animation>
+<!-- FWeinzug links  -->
+<animation>
+  <type>rotate</type>
+  <object-name>LinksFahrwerkKomplett</object-name>
+ <property>gear/gear[0]/position-norm</property> 
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>-93</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>0</dep>
+            </entry>
+        </interpolation>
+  <axis>
+  <x1-m> 0.95079</x1-m>
+  <y1-m>-0.11558</y1-m>
+  <z1-m>-1.15490</z1-m>
+  <x2-m> 0.95079</x2-m>
+  <y2-m>-0.39384</y2-m>
+  <z2-m>-0.99401</z2-m>
+  </axis>
+</animation>
+<!-- drehende Raeder -->
+<animation>
+  <type>spin</type>
+  <object-name>Radlinks</object-name>
+  
+  <condition>
+    <equals>
+      <property>gear/gear[1]/position-norm</property>
+      <value>1</value>
+    </equals>
+  </condition>
+  
+  <property>gear/gear[1]/rollspeed-ms</property>
+  <factor>-20</factor>
+  <center>
+    <x-m> 1.005</x-m>
+    <y-m>-1.056</y-m>
+    <z-m>-1.57131</z-m>
+  </center>
+  <axis>
+    <x>0</x>
+    <y>1</y>
+    <z>0</z>
+  </axis>
+ </animation>
+
+<!-- FAHRWERK RECHTS-->
+<!-- Radeinklapp --> 
+ <animation>
+  <type>rotate</type>
+  <object-name>Radrechts</object-name>
+<property>gear/gear[1]/position-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0.2</ind>
+                <dep>-90</dep>
+            </entry>
+            <entry>
+                <ind>0.8</ind>
+                <dep>0</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>1.005</x1-m>
+    <y1-m>0.96447</y1-m>
+    <z1-m>-1.56073</z1-m>
+	<x2-m>1.005</x2-m>
+    <y2-m>0.96447</y2-m>
+    <z2-m>-1.60681</z2-m>
+  </axis>
+  </animation>  
+<!-- FWeinzug rechts  -->
+<animation>
+  <type>rotate</type>
+  <object-name>RechtsFahrwerkKomplett</object-name>
+ <property>gear/gear[1]/position-norm</property> 
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>-79</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>0</dep>
+            </entry>
+        </interpolation>
+  <axis>
+  <x1-m>1.005</x1-m>
+  <y1-m>0.41601</y1-m>
+  <z1-m>-0.70543</z1-m>
+  <x2-m>1.005</x2-m>
+  <y2-m>-0.41601</y2-m>
+  <z2-m>-1.30543</z2-m>
+  </axis>
+</animation>
+<!-- drehende Raeder -->
+<animation>
+  <type>spin</type>
+  <object-name>Radrechts</object-name>
+  <condition>
+    <equals>
+      <property>gear/gear[2]/position-norm</property>
+      <value>1</value>
+    </equals>
+  </condition>
+  <property>gear/gear[2]/rollspeed-ms</property>
+  <factor>-20</factor>
+  <center>
+    <x-m> 1.005</x-m>
+    <y-m>-1.056</y-m>
+    <z-m>-1.57131</z-m>
+  </center>
+  <axis>
+    <x>0</x>
+    <y>1</y>
+    <z>0</z>
+  </axis>
+ </animation>
+ 
+ 
+</PropertyList>
