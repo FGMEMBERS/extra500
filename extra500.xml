@@ -24,7 +24,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             11.04.13
+      Date:             15.04.13
 -->
 
 	<fileheader>
@@ -372,40 +372,55 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 							
 	<flight_control name="FCS: extra500">
 		
-		<channel name="Pitch">
-			
-			<summer name="Pitch Trim Sum">
-				<input>fcs/elevator-cmd-norm</input>
-				<input>fcs/pitch-trim-cmd-norm</input>
-				<clipto>
-					<min> -1 </min>
-					<max>  1 </max>
-				</clipto>
-			</summer>
-			
-			<aerosurface_scale name="Elevator Control">
-				<input>fcs/pitch-trim-sum</input>
-				<range>
-					<min> -0.5759 </min>
-					<max>  0.3141 </max>
-				</range>
-				<output>fcs/elevator-pos-rad</output>
-			</aerosurface_scale>
-			
-			<aerosurface_scale name="elevator normalization">
-				<input>fcs/elevator-pos-rad</input>
-				<domain>
-					<min> -0.5759 </min>
-					<max>  0.3141 </max>
-				</domain>
-				<range>
-					<min> -1 </min>
-					<max>  1 </max>
-				</range>
-				<output>fcs/elevator-pos-norm</output>
-			</aerosurface_scale>
-			
-		</channel>
+  <channel name="Pitch">
+
+   <summer name="Pitch Trim Sum">
+      <input>fcs/elevator-cmd-norm</input>   
+      <clipto>
+        <min> -1 </min>
+        <max>  1 </max>
+      </clipto>
+   </summer>
+
+   <aerosurface_scale name="Elevator Control">
+      <input>fcs/pitch-trim-sum</input>
+      <range>
+        <min> -0.35 </min>
+        <max>  0.35 </max>
+      </range>
+      <output>fcs/elevator-pos-rad</output>
+   </aerosurface_scale>
+
+   <aerosurface_scale name="elevator normalization">
+      <input>fcs/elevator-pos-rad</input>
+      <domain>
+        <min> -0.436 </min>
+        <max>  0.35 </max>
+      </domain>
+      <range>
+        <min> -1 </min>
+        <max>  1 </max>
+      </range>
+      <output>fcs/elevator-pos-norm</output>
+   </aerosurface_scale>
+
+  </channel>
+
+  <channel name="Pitch trim">
+    <summer name="aircraft/hstab/elevator/d_e_free-clipped-rad">
+      <description>stick-free elevator deflection rad</description>
+      <input>aircraft/hstab/elevator/d_e_free-rad</input>
+      <clipto>
+            <min>
+                  <property>aircraft/hstab/elevator/min-defl-rad</property>
+            </min>
+            <max>
+                  <property>aircraft/hstab/elevator/max-defl-rad</property>            
+            </max>
+      </clipto>
+    </summer>  
+  </channel> 
+
 		
 		<channel name="Roll">
 				
@@ -573,6 +588,516 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	</flight_control>
 	
 	<aerodynamics>
+
+<!--PRE-CALCS for Forces and Moments-->
+<!-- local angles -->
+    <function name="aircraft/wing/alpha0-deg">
+      <description>negative alpha0-deg</description>
+      <table>
+	      <independentVar lookup="row">fcs/flap-pos-deg</independentVar>
+		<tableData>
+		      0   3.85
+			15  9.97
+			30  18.1
+		</tableData>
+	</table>
+    </function>
+
+    <function name="aircraft/wing/etha-deg">
+      <description>downwash angle due to wing lift</description>
+      <product>
+            <value>0.3764</value> <!--de/dalpha -->
+            <sum>
+                  <property>aero/alpha-deg</property>
+                  <property>aircraft/wing/alpha0-deg</property> <!--alpha0-deg (neg) -->
+            </sum>  
+      </product>
+      </function>
+
+    <function name="aircraft/hstab/alpha-deg">
+      <description>angle of attack at stabilizer</description>
+      <sum>
+            <value>-1</value> <!--a_h_i-deg -->
+            <product>
+                  <value>57.297</value>
+                  <atan2>
+                        <sum>
+                              <property>velocities/w-aero-fps</property>    
+                              <product>
+                                    <property>velocities/q-aero-rad_sec</property> 
+                                    <value>18.25</value> <!--xac_h - xac_wing -->
+                              </product>  
+                        </sum>
+                        <property>velocities/u-aero-fps</property>
+                  </atan2>
+            </product>
+            <product>
+                  <value>-1</value>
+                  <property>aircraft/wing/etha-deg</property>
+            </product>
+      </sum>
+    </function>
+
+<!--wing and fuselage coefficients-->
+
+    <function name="aero/coefficients/cl_ac-h">
+       <description>CL of aircraft less tail</description>
+       <table>
+            <independentVar lookup="row">aero/alpha-deg</independentVar>
+            <independentVar lookup="column">fcs/flap-pos-deg</independentVar>
+            <independentVar lookup="table">velocities/mach</independentVar>
+            <tableData breakPoint="0">
+                        0 15 30
+                  -10   -0.543 -0.003 0.717
+                  0     0.34 0.88 1.6
+                  10    1.223 1.763 2.483    
+                  11    1.311 1.87  2.571
+                  11.5  1.355 1.7   2.62
+                  12    1.4   1.55  2.5
+                  13    1.2   1.3   2
+                  14    1     1.1   1.6
+                  15    0.8   1     1.3
+                  16    0.7   0.9   1.1   
+                  17    0.7   0.9   1
+            </tableData>
+            <tableData breakPoint="0.4">
+                        0 15 30
+                  -10   -0.598 -0.058 0.662
+                  0     0.35 0.89 1.61
+                  9.5   1.251 1.791 2.511    
+                  10    1.298 1.838 2.558
+                  10.5  1.346 1.87  2.606
+                  11    1.393 1.55  2.62
+                  12    1.2  1.35  2.2
+                  13    1   1.15  1.7
+                  14    0.8   1     1.5
+                  15    0.7   0.9   1.3   
+                  16    0.7   0.9   1.1
+              </tableData>
+      </table>
+    </function>
+
+    <function name="aero/coefficients/cd_ac-h">
+       <description>CD of aircraft less tail</description>
+            <table>
+                  <independentVar lookup="row">aero/coefficients/cl_ac-h</independentVar>
+                  <tableData>
+                  -2.62  0.439
+                  -2.4   0.373
+                  -2.2   0.317
+                  -2.0   0.267
+                  -1.8   0.221
+                  -1.6   0.181
+                  -1.4   0.16
+                  -1.2   0.11
+                  -0.8   0.055
+                  -0.6   0.043
+                  -0.4   0.035
+                  -0.2   0.0295
+                  0     0.027
+                  0.2   0.0295
+                  0.4   0.035
+                  0.6   0.043
+                  0.8   0.055
+                  1.2   0.11
+                  1.4   0.16
+                  1.6   0.181
+                  1.8   0.221
+                  2.0   0.267
+                  2.2   0.317
+                  2.4   0.373
+                  2.62  0.439
+                  </tableData>
+            </table>
+    </function>
+
+    <function name="aero/coefficients/cdi_ac-h">
+      <description>CDi of aircraft less tail</description>
+      <sum>
+            <property>aero/coefficients/cd_ac-h</property>
+            <value>-0.027</value>
+      </sum>
+    </function>
+
+    <function name="aero/coefficients/cd_gear">
+      <description>CD of gear</description>
+      <sum>
+            <product> <!-- drag change due to nose landing gear -->
+                  <value>0.002</value>
+                  <property>/gear/gear[0]/position-norm</property>
+            </product>
+            <product> <!-- drag change due to left landing gear -->
+                  <value>0.014</value>
+                  <property>/gear/gear[1]/position-norm</property>
+            </product>
+            <product> <!-- drag change due to right landing gear -->
+                  <value>0.014</value>
+                  <property>/gear/gear[2]/position-norm</property>
+            </product>
+      </sum>
+    </function>
+
+    <function name="aero/coefficients/cm_ac-h">
+       <description>Cm of aircraft less tail</description>
+       <sum>
+            <product> <!--shift of lift vector due to increase of aoa --> 
+                  <value>-0.4</value>
+                  <property>aero/coefficients/cl_ac-h</property>
+                  <property>aero/alpha-rad</property>      
+            </product>
+            <product> <!-- moment change due to wing drag vector not in ac cg -->
+                  <value>-0.01921</value> <!--1/c 1/inch-->
+                  <sum>
+                        <value>-92.8</value> 
+                        <property>inertia/z-cg-in</property>     
+                  </sum>
+                  <property>aero/coefficients/cdi_ac-h</property>
+            </product>
+            <table>  <!--flap moment change -->
+                  <independentVar lookup="row">fcs/flap-pos-deg</independentVar>
+                  <tableData>
+                        0     -0.116
+                        15    -0.226
+                        30    -0.416
+                  </tableData>
+            </table>
+            <product> <!-- moment change due to drag of nose landing gear -->
+                  <value>-0.002</value>
+                  <property>/gear/gear[0]/position-norm</property>
+            </product>
+            <product> <!-- moment change due to drag of left landing gear -->
+                  <value>-0.014</value>
+                  <property>/gear/gear[1]/position-norm</property>
+            </product>
+            <product> <!-- moment change due to drag of right landing gear -->
+                  <value>-0.014</value>
+                  <property>/gear/gear[2]/position-norm</property>
+            </product>
+      </sum>
+    </function>
+
+<!--horizontal stab coefficients-->
+
+    <function name="velocities/hstab/v-fps">
+      <description>airspeed at stabilizer in xz plane</description>
+      <pow>
+           <sum>
+                  <pow>
+                        <sum>
+                              <property>velocities/w-aero-fps</property>    
+                              <product>
+                                    <property>velocities/q-aero-rad_sec</property> 
+                                    <property>aircraft/hstab/x_ac-ft</property>
+                              </product>
+                        </sum>
+                        <value>2</value>
+                  </pow>  
+                  <product>
+                        <property>velocities/u-aero-fps</property>
+                        <property>velocities/u-aero-fps</property>
+                  </product>
+            </sum>
+            <value>0.5</value>
+      </pow>
+    </function>
+
+    <function name="aircraft/hstab/elevator/ch_alpha-prad">
+      <description>moment coeff around elevator hinge line due to alpha</description>
+            <value>-0.1</value>
+    </function>
+
+    <function name="aircraft/hstab/elevator/ch_de-prad">
+      <description>moment coeff around elevator hinge line due to its deflection</description>
+            <sum>            
+                  <property>aircraft/hstab/elevator/Ch_de</property>
+                  <product>
+                        <property>aircraft/hstab/elevator/Ch_de2</property>
+                        <abs>
+                              <property>aircraft/hstab/elevator/elevator-pos-rad</property>
+                        </abs>
+                  </product>
+            </sum>
+    </function>
+
+    <function name="aircraft/hstab/elevator/H-nz-lbsft">
+      <description>static moment coeff around elevator hinge line times nz</description>
+            <product>
+                       <property>aircraft/hstab/elevator/H-static-lbsft</property>
+                       <property>accelerations/Nz</property>  <!-- ensuring stick force per g-->
+            </product>
+    </function>
+    
+    <function name="aircraft/hstab/elevator/H-ds-lbsft">
+      <description>moment coeff around elevator hinge line due to down spring</description>
+      <sum>
+            <property>aircraft/hstab/elevator/downspring0-lbsft</property>
+            <product>
+                       <property>aircraft/hstab/elevator/downspring-lbsftprad</property>
+                       <property>aircraft/hstab/elevator/elevator-pos-rad</property>  
+            </product>
+      </sum>
+    </function>
+
+    <function name="aircraft/hstab/elevator/H-bw-lbsft">
+      <description>moment coeff around elevator hinge line due to bobweight</description>
+      <product>
+            <property>aircraft/hstab/elevator/bobweight-lbsft</property>
+            <property>accelerations/Nz</property>
+      </product>
+    </function>
+
+    <function name="aircraft/hstab/elevator/H-alpha-lbsft">
+      <product>
+            <value>0.5</value>
+            <property>atmosphere/rho-slugs_ft3</property>
+            <property>velocities/hstab/v-fps</property>
+            <property>velocities/hstab/v-fps</property>
+            <property>aircraft/hstab/elevator/S-ft2</property>
+            <property>aircraft/hstab/elevator/c_aero-ft</property>
+            <property>aircraft/hstab/elevator/ch_alpha-prad</property>
+            <product>
+                  <value>0.017452933</value>
+                  <property>aircraft/hstab/alpha-deg</property>
+            </product>
+      </product>
+    </function>
+
+    <function name="aircraft/hstab/elevator/H-trim-lbsft">
+      <product>
+            <property>aircraft/hstab/elevator/trim/coeff-norm</property>
+            <property>fcs/pitch-trim-cmd-norm</property>
+      </product>
+    </function>
+
+    <function name="aircraft/hstab/elevator/d_e_free-rad">
+      <description>stick-free elevator deflection rad</description>
+      <product>
+            <value>-1</value>
+            <pow>
+                  <product>
+                        <value>0.5</value>
+                        <property>atmosphere/rho-slugs_ft3</property>
+                        <property>velocities/hstab/v-fps</property>
+                        <property>velocities/hstab/v-fps</property>
+                        <property>aircraft/hstab/elevator/S-ft2</property>
+                        <property>aircraft/hstab/elevator/c_aero-ft</property>
+                        <property>aircraft/hstab/elevator/ch_de-prad</property>
+                  </product>
+                  <value>-1</value>   
+            </pow>
+            <sum>
+                  <property>aircraft/hstab/elevator/H-nz-lbsft</property>
+                  <property>aircraft/hstab/elevator/H-ds-lbsft</property>
+                  <property>aircraft/hstab/elevator/H-bw-lbsft</property>
+                  <property>aircraft/hstab/elevator/H-alpha-lbsft</property>
+                  <property>aircraft/hstab/elevator/H-trim-lbsft</property>                 
+            </sum>
+      </product>
+    </function>
+
+    <function name="aircraft/hstab/elevator/elevator-pos-rad">
+            <sum>
+                   <product>                              
+                           <property>state/controls-fixed</property> 
+                           <property>fcs/elevator-pos-rad</property>
+                  </product>
+                  <product>
+                         <abs>
+                               <sum>
+                                  <property>state/controls-fixed</property>
+                                  <value>-1</value> 
+                              </sum>
+                         </abs>
+                         <property>aircraft/hstab/elevator/d_e_free-clipped-rad</property>
+                  </product>
+            </sum>
+    </function>
+
+    <function name="aircraft/hstab/elevator/elevator-pos-deg">
+      <product>
+            <property>aircraft/hstab/elevator/elevator-pos-rad</property>      
+            <value>57.297</value>
+      </product>
+    </function>
+
+    <function name="aircraft/hstab/elevator/H-de-lbsft">
+      <product>
+            <value>0.5</value>
+            <property>atmosphere/rho-slugs_ft3</property>
+            <property>velocities/hstab/v-fps</property>
+            <property>velocities/hstab/v-fps</property>
+            <property>aircraft/hstab/elevator/S-ft2</property>
+            <property>aircraft/hstab/elevator/c_aero-ft</property>
+            <property>aircraft/hstab/elevator/ch_de-prad</property>
+            <property>aircraft/hstab/elevator/elevator-pos-rad</property>
+      </product>
+    </function>
+
+    <function name="aircraft/hstab/elevator/H-total-lbsft">
+      <sum>
+            <property>aircraft/hstab/elevator/H-nz-lbsft</property>
+            <property>aircraft/hstab/elevator/H-ds-lbsft</property>
+            <property>aircraft/hstab/elevator/H-bw-lbsft</property>
+            <property>aircraft/hstab/elevator/H-alpha-lbsft</property>
+            <property>aircraft/hstab/elevator/H-trim-lbsft</property>
+            <property>aircraft/hstab/elevator/H-de-lbsft</property>
+      </sum>
+    </function>
+
+    <function name="aero/coefficients/cl_stab0">
+       <description>Stabilizer liftcoeff</description>
+       <sum>
+            <value>0.0</value>            
+            <table>
+                  <independentVar lookup="row">aircraft/hstab/alpha-deg</independentVar>
+                  <tableData>
+                        -20         -0.75
+                        -19         -1.3618
+                        19          1.3618
+                        20          0.75
+                  </tableData>
+            </table>
+      </sum>
+    </function>
+
+    <function name="aero/coefficients/cd_stab0">
+       <description>Stabilizer dragcoeff</description>
+       <sum>
+            <value>0.02</value>            
+            <table>
+                  <independentVar lookup="row">aircraft/hstab/alpha-deg</independentVar>
+                  <tableData>
+				-20 0.15
+		      	-19 0.115 
+                        -18 0.1035
+                        -17 0.0923
+                        -16 0.0817
+                        -15 0.0718
+                        -12.5 0.0499
+                        -10   0.0319
+                        -7.5  0.018
+                        -5    0.008
+                        -2.5  0.002
+                        0     0
+                        2.5   0.002
+                        5     0.008
+                        7.5   0.018
+                        10    0.0319
+                        12.5  0.0499
+                        15    0.0718
+                        16    0.0817
+                        17    0.0923
+                        18    0.1035
+				19  0.115
+				20  0.15
+                  </tableData>
+            </table>
+      </sum>
+    </function>
+
+    <function name="aero/coefficients/cn_stab0">
+       <description>Stabilizer normcoeff</description>
+       <sum>
+            <product>
+                  <property>aero/coefficients/cl_stab0</property>
+                  <cos>
+                        <product>
+                              <value>0.017452933</value>
+                              <property>aircraft/hstab/alpha-deg</property>
+                        </product>
+                  </cos>     
+            </product>
+            <product>
+                  <property>aero/coefficients/cd_stab0</property>
+                  <sin>
+                        <product>
+                              <value>0.017452933</value>
+                              <property>aircraft/hstab/alpha-deg</property>
+                        </product>
+                  </sin>     
+            </product>
+      </sum>
+    </function>
+
+    <function name="aero/coefficients/cn_stab_de">
+       <description>Stabilizer normcoeff</description>
+             <product>
+                  <table>
+                        <independentVar lookup="row">aircraft/hstab/alpha-deg</independentVar>
+                        <tableData>
+                              -180        0
+                              -19.5       0
+                              -19         1
+                              19          1
+                              19.5        0
+                              180         0
+                        </tableData>
+                  </table>
+                  <property>aircraft/hstab/elevator/elevator-pos-rad</property>
+                  <value>2.094</value>                 
+            </product>
+    </function>
+
+    <function name="aero/coefficients/cn_stab">
+       <description>Stabilizer tang coeff</description>
+       <sum>
+            <property>aero/coefficients/cn_stab0</property>
+            <property>aero/coefficients/cn_stab_de</property>
+       </sum>
+    </function>
+
+    <function name="aero/coefficients/ct_stab">
+       <description>Stabilizer tang coeff</description>
+       <sum>
+            <product>
+                  <value>-1</value>
+                  <property>aero/coefficients/cl_stab0</property>
+                  <sin>
+                        <product>
+                              <value>0.017452933</value>
+                              <property>aircraft/hstab/alpha-deg</property>
+                        </product>
+                  </sin>     
+            </product>
+            <product>
+                  <property>aero/coefficients/cd_stab0</property>
+                  <cos>
+                        <product>
+                              <value>0.017452933</value>
+                              <property>aircraft/hstab/alpha-deg</property>
+                        </product>
+                  </cos>     
+            </product>
+      </sum>
+    </function>
+
+    <function name="aero/force/normal_stab">
+       <description>Stabilizer normal force</description>
+       <product>
+            <value>0.5</value>
+            <property>atmosphere/rho-slugs_ft3</property>
+            <property>velocities/hstab/v-fps</property>
+            <property>velocities/hstab/v-fps</property>
+            <property>aircraft/hstab/S-ft2</property>
+            <property>aero/coefficients/cn_stab</property>
+       </product>
+    </function>
+
+    <function name="aero/force/tangent_stab">
+       <description>Stabilizer tangent force</description>
+       <product>
+            <value>0.5</value>
+            <property>atmosphere/rho-slugs_ft3</property>
+            <property>velocities/hstab/v-fps</property>
+            <property>velocities/hstab/v-fps</property>
+            <property>aircraft/hstab/S-ft2</property>
+            <property>aero/coefficients/ct_stab</property> 
+       </product>
+    </function>
+
+
+
+<!--START of real summation of FORCES and MOMENTS -->
 		
 		<axis name="LIFT">
 			
