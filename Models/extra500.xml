@@ -254,6 +254,7 @@
 <animation>
   <type>rotate</type>
   <object-name>HRrechts</object-name>
+  <object-name>HRtrim</object-name>
   <property>/fdm/jsbsim/aircraft/hstab/elevator/elevator-pos-deg</property> 
   <axis>
     <x1-m>6.31921</x1-m>
@@ -262,6 +263,22 @@
     <x2-m>6.43221</x2-m>
     <y2-m>1.66764</y2-m>
     <z2-m>1.08282</z2-m>
+  </axis>
+</animation>
+
+<!-- Hoehenruder TRIM-->
+<animation>
+  <type>rotate</type>
+  <object-name>HRtrim</object-name>
+  <property>/fdm/jsbsim/aircraft/hstab/elevator/trim/coeff-norm</property> 
+  <factor>5</factor>
+  <axis>
+    <x1-m>6.80398</x1-m>
+    <y1-m>0.12235</y1-m>
+    <z1-m>1.15570</z1-m>
+    <x2-m>6.80398</x2-m>
+    <y2-m>0.95948</y2-m>
+    <z2-m>1.11622</z2-m>
   </axis>
 </animation>
 
