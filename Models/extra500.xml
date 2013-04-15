@@ -357,12 +357,7 @@
 <animation>
   <type>rotate</type>
   <object-name>HRlinks</object-name>
-  <property>/fdm/jsbsim/fcs/elevator-pos-norm</property>
-  <interpolation>
-   <entry><ind>-1</ind><dep>-27</dep></entry>
-   <entry><ind>0</ind><dep>  0</dep></entry>
-   <entry><ind>1</ind><dep> 19</dep></entry>
-  </interpolation>   
+  <property>/fdm/jsbsim/aircraft/hstab/elevator/elevator-pos-deg</property> 
   <axis>
     <x1-m>6.43221</x1-m>
     <y1-m>-1.66764</y1-m>
@@ -376,12 +371,7 @@
 <animation>
   <type>rotate</type>
   <object-name>HRrechts</object-name>
-  <property>/fdm/jsbsim/fcs/elevator-pos-norm</property>
-  <interpolation>
-   <entry><ind>-1</ind><dep>-27</dep></entry>
-   <entry><ind>0</ind><dep>  0</dep></entry>
-   <entry><ind>1</ind><dep> 19</dep></entry>
-  </interpolation>   
+  <property>/fdm/jsbsim/aircraft/hstab/elevator/elevator-pos-deg</property> 
   <axis>
     <x1-m>6.31921</x1-m>
     <y1-m>0.12235</y1-m>

@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             10.04.13
+      Date:             15.04.13
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -76,6 +76,14 @@ JSBSim Extra Aircraft - Extra 500.
 	</dimensions>
 	<aircraft-class type="string">ga</aircraft-class>
 	<aircraft-operator type="string">NONE</aircraft-operator>
+
+	<help>
+		<title>The Extra500 very special keys</title>
+     	      <key>
+			<name>Ctrl-F</name>
+			<desc>Pitch control by pitch trim only</desc>
+		</key>
+	</help>
 	
 	<!-- position the pilot viewpoint and angle -->
 	<view>
@@ -344,6 +352,9 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/system/init_ui.nas</file>
 		<file>Aircraft/extra500/system/init_cycle.nas</file>
 	</run>
+	<e1>
+		<file>Nasal/e1.nas</file>
+	</e1>
 
 </nasal>
  
@@ -392,6 +403,49 @@ JSBSim Extra Aircraft - Extra 500.
   </weight>
  </payload>
 
+ <fdm>
+	<jsbsim>
+            <state>
+                  <controls-fixed type="int">1</controls-fixed>
+            </state>
+            <aircraft>
+                  <wing>
+                        <x_ac-ft>11.00</x_ac-ft>
+                        <y_ac-ft>8.018</y_ac-ft>
+                        <S-ft2>150.96</S-ft2>
+                        <c-ft>4.337</c-ft>
+                  </wing>
+                  <hstab>
+                        <S-ft2>30.268</S-ft2>
+                        <x_ac-ft>18.25</x_ac-ft>
+                        <elevator>
+                              <H-static-lbsft>0.2</H-static-lbsft>
+                              <Ch_de>-0.4</Ch_de>
+                              <Ch_de2>-100</Ch_de2>                     <!--non linear part of Ch_de -->
+                              <downspring0-lbsft>0.2</downspring0-lbsft>
+                              <downspring-lbsftprad>1</downspring-lbsftprad>
+                              <bobweight-lbsft>0</bobweight-lbsft>
+                              <chord-frac>0.24</chord-frac>
+                              <S-ft2>7.264</S-ft2>
+                              <c_aero-ft>2.5796</c_aero-ft>
+                              <max-defl-rad>0.3141</max-defl-rad>
+                              <min-defl-rad>-0.5759</min-defl-rad>
+                              <elevator-pos-rad>0</elevator-pos-rad>    <!--dummy value -->
+                              <elevator-pos-deg>0</elevator-pos-deg>    <!--dummy value -->
+                              <trim>
+                                    <coeff-norm>5</coeff-norm>          <!--this is multiplied with normalized trim position to get hinge moment of elevator -->
+                              </trim>
+                        </elevator>
+                  </hstab>
+            </aircraft>
+            <inertia>
+                  <x-cg-in>0</x-cg-in> <!-- dummy values for initialization-->
+                  <y-cg-in>0</y-cg-in>
+                  <z-cg-in>0</z-cg-in>
+            </inertia>
+      </jsbsim>
+ </fdm>
+
  <limits>
   <mass-and-balance>
    <maximum-ramp-mass-lbs>4696</maximum-ramp-mass-lbs>
@@ -402,6 +456,15 @@ JSBSim Extra Aircraft - Extra 500.
 
  <input>
 	 <keyboard>
+            <key n="6">
+            <!-- toggle stick-fixed/loose -->
+		      <name>CRTL-F</name>
+		      <desc>Toggle stick fixed</desc>
+		      <binding n="0">
+			      <command>nasal</command>
+			      <script>e1.bitswap("fdm/jsbsim/state/controls-fixed")</script>                        
+		      </binding>
+	      </key>
 		 <key n="32">
 			 <name>space</name>
 			 <desc>reload-model</desc>
