@@ -424,7 +424,7 @@ JSBSim Extra Aircraft - Extra 500.
                               <Ch_de>-0.4</Ch_de>
                               <Ch_de2>-100</Ch_de2>                     <!--non linear part of Ch_de -->
                               <downspring0-lbsft>0.2</downspring0-lbsft>
-                              <downspring-lbsftprad>1</downspring-lbsftprad>
+                              <downspring-lbsftprad>-0.2</downspring-lbsftprad>
                               <bobweight-lbsft>0</bobweight-lbsft>
                               <chord-frac>0.24</chord-frac>
                               <S-ft2>7.264</S-ft2>
@@ -434,7 +434,9 @@ JSBSim Extra Aircraft - Extra 500.
                               <elevator-pos-rad>0</elevator-pos-rad>    <!--dummy value -->
                               <elevator-pos-deg>0</elevator-pos-deg>    <!--dummy value -->
                               <trim>
-                                    <coeff-norm>5</coeff-norm>          <!--this is multiplied with normalized trim position to get hinge moment of elevator -->
+                                    <S-ft2>1.114</S-ft2>
+                                    <c_aero-ft>0.4019</c_aero-ft>
+                                    <coeff-norm>1</coeff-norm>          <!--this is multiplied with normalized trim position to get hinge moment of elevator -->
                               </trim>
                         </elevator>
                   </hstab>
