@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             15.04.13
+      Date:             16.04.13
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -420,11 +420,11 @@ JSBSim Extra Aircraft - Extra 500.
                         <S-ft2>30.268</S-ft2>
                         <x_ac-ft>18.25</x_ac-ft>
                         <elevator>
-                              <H-static-lbsft>0.2</H-static-lbsft>
+                              <H-static-lbsft>2</H-static-lbsft>
                               <Ch_de>-0.4</Ch_de>
                               <Ch_de2>-100</Ch_de2>                     <!--non linear part of Ch_de -->
-                              <downspring0-lbsft>0.2</downspring0-lbsft>
-                              <downspring-lbsftprad>-0.2</downspring-lbsftprad>
+                              <downspring0-lbsft>2</downspring0-lbsft>
+                              <downspring-lbsftprad>0.5</downspring-lbsftprad>
                               <bobweight-lbsft>0</bobweight-lbsft>
                               <chord-frac>0.24</chord-frac>
                               <S-ft2>7.264</S-ft2>
