@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PropertyList>
+
+	 <keyboard>
+		 <key n="32">
+			 <name>space</name>
+			 <desc>reload-model</desc>
+			 <repeatable type="bool">false</repeatable>
+			 <binding>
+				 <command>reinit</command>
+				 <subsystem>aircraft-model</subsystem>
+			 </binding>
+		 </key>
+		 <key n="114">
+			 <name>r</name>
+			 <desc>run simulation cycle once</desc>
+			 <repeatable type="bool">false</repeatable>
+			 <binding>
+				 <command>nasal</command>
+				 <script><![CDATA[
+					run.cycle_run = 0;
+					run.simulation_cycle();
+				]]></script>
+			 </binding>
+		 </key>
+		 <key n="82">
+			 <name>R</name>
+			 <desc>run simulation cycle continous</desc>
+			 <repeatable type="bool">false</repeatable>
+			 <binding>
+				 <command>nasal</command>
+				 <script><![CDATA[
+					run.cycle_run = 1;
+				]]></script>
+			 </binding>
+		 </key>
+		 <key n="101">
+			 <name>e</name>
+			 <desc>Debug output on</desc>
+			 <repeatable type="bool">false</repeatable>
+			 <binding>
+				 <command>nasal</command>
+				 <script><![CDATA[
+					Part.etd.on = 1;
+				]]></script>
+			 </binding>
+		 </key>
+		 <key n="69">
+			 <name>E</name>
+			 <desc>Debug output off</desc>
+			 <repeatable type="bool">false</repeatable>
+			 <binding>
+				 <command>nasal</command>
+				 <script><![CDATA[
+					Part.etd.on = 0;
+				]]></script>
+			 </binding>
+		 </key>
+		 <key n="357">
+			 <name>up</name>
+			 <desc>Engineer Screen on</desc>
+			 <repeatable type="bool">false</repeatable>
+			 <binding>
+				 <command>nasal</command>
+				 <script><![CDATA[
+					Dev.engineerScreen.open();
+				]]></script>
+			 </binding>
+		 </key>
+		 <key n="359">
+			 <name>down</name>
+			 <desc>Engineer Screen off</desc>
+			 <repeatable type="bool">false</repeatable>
+			 <binding>
+				 <command>nasal</command>
+				 <script><![CDATA[
+					Dev.engineerScreen.close();
+				]]></script>
+			 </binding>
+		 </key>
+		 <key n="358">
+			 <name>right</name>
+			 <desc>Engineer Screen next page</desc>
+			 <repeatable type="bool">false</repeatable>
+			 <binding>
+				 <command>nasal</command>
+				 <script><![CDATA[
+					Dev.engineerScreen.browse(1);
+				]]></script>
+			 </binding>
+		 </key>
+		 <key n="356">
+			 <name>left</name>
+			 <desc>Engineer Screen previous page</desc>
+			 <repeatable type="bool">false</repeatable>
+			 <binding>
+				 <command>nasal</command>
+				 <script><![CDATA[
+					Dev.engineerScreen.browse(-1);
+				]]></script>
+			 </binding>
+		 </key>
+	 </keyboard> 
+
+</PropertyList>

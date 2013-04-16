@@ -121,7 +121,7 @@ var canvas_svg = {
   },
 };
 
-var demo = canvas_svg.new();
+var demo = canvas_demo.new();
 # setlistener("/nasal/canvas/loaded", func {
 #   
 #   demo.update();
