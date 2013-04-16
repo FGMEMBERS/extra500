@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             10.04.13
+      Date:             16.04.13
 
 -->
 
@@ -270,8 +270,8 @@
 <animation>
   <type>rotate</type>
   <object-name>HRtrim</object-name>
-  <property>/fdm/jsbsim/aircraft/hstab/elevator/trim/coeff-norm</property> 
-  <factor>5</factor>
+  <property>/fdm/jsbsim/fcs/pitch-trim-pos-deg</property> 
+  <factor>-1</factor>
   <axis>
     <x1-m>6.80398</x1-m>
     <y1-m>0.12235</y1-m>
