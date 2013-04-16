@@ -341,6 +341,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/system/electric/light.nas</file>
 		<file>Aircraft/extra500/system/fuel/fuelSystem.nas</file>
 		<file>Aircraft/extra500/system/electric/cabling.nas</file>
+		<file>Aircraft/extra500/system/default.nas</file>
 	</extra500>
 	<IFD>
 		<file>Aircraft/extra500/system/IFD/IFD_test.nas</file>

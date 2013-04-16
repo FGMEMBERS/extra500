@@ -451,6 +451,8 @@ var ElectricBattery = {
 	
 };
 
+# 0	In ─  ─ Out
+# 1	In ──── Out
 var ElectricCircuitBraker = {
 	new : func(nRoot,name,state=1){
 		
@@ -844,6 +846,7 @@ var ElectricSwitchTT = {
 };
 
 # ElectricRelaisXPDT	Double Throw
+#	 A1  ─[]─ A2
 # 0	      ┌── L12
 # 1	 P11 ─┘ ─ L24
 var ElectricRelaisXPDT = {
@@ -954,6 +957,7 @@ var ElectricRelaisXPDT = {
 };
 
 # ElectricRelaisXPST	Single Throw
+#	 A1  ─[]─ A2
 # 0	      ┌── 
 # 1	 P11 ─┘ ─ L14
 var ElectricRelaisXPST = {
@@ -1054,6 +1058,7 @@ var ElectricRelaisXPST = {
 	
 };
 
+# 1	In ==>─ Out
 var ElectricDimmer = {
 	new : func(nRoot,name,type="DOUBLE",min=0.0,max=1.0,step=0.05,state=0.0){
 				
@@ -1135,6 +1140,7 @@ var ElectricDimmer = {
 	}
 };
 
+#	plus ─⊗─ Out
 var ElectricLight = {
 	new : func(nRoot,name){
 				
