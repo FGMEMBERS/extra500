@@ -23,7 +23,6 @@ var auto_engine_start = func(){
 	UI.oCockpit.click("Fuel Pump 2 on");
 	setprop("/controls/engines/engine[0]/cutoff",0);
 	setprop("/controls/engines/engine[0]/starter",1);
-	
 };
 
 var auto_engine_shutdown = func(){
@@ -32,8 +31,6 @@ var auto_engine_shutdown = func(){
 	setprop("/controls/electric/engine/generator",0);
 	UI.oCockpit.click("Fuel Pump 2 off");
 	UI.oCockpit.click("Main Battery off");
-	
-	
 };
 
 
@@ -215,7 +212,7 @@ var engine_shutdown = func(){
 			CoPilot.say("Lights OFF ... check");
 		}, 10.0 );
 	settimer(func{
-			UI.click("Main Standby Alternatory off");
+			UI.click("Main Standby Alternator off");
 			CoPilot.say("STDBY ALT - OFF ... check");
 		}, 12.0 );
 	settimer(func{

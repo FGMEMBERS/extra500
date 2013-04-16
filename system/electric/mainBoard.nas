@@ -28,6 +28,15 @@ var MainBoard = {
 		# 4 SWITCHES
 		# 5 ANNUNCIATOR
 		
+		nCompNode = nParent.initNode("TestLightRelais");
+		m.testLightRelais = Part.ElectricRelaisXPDT.new(nCompNode,"Test Light Relais");
+		m.testLightRelais.setPoles(5);
+		# 1 ANNUNCIATOR
+		# 2 Gear
+		# 3 Flaps
+		# 4 DME
+		
+		
 		nCompNode = nParent.initNode("RCCBRelais");
 		m.rccbRelais = Part.ElectricRelaisXPST.new(nCompNode,"RCCB Relais");
 		m.rccbRelais.setPoles(1);
@@ -36,6 +45,10 @@ var MainBoard = {
 		m.emergencyRelais = Part.ElectricRelaisXPDT.new(nCompNode,"Emergency Relais");
 		m.emergencyRelais.setPoles(1);
 		
+		nCompNode = nParent.initNode("AvionicsRelais");
+		m.avionicsRelais = Part.ElectricRelaisXPST.new(nCompNode,"Avionics Relais");
+		m.avionicsRelais.setPoles(1);
+		
 		
 	#internal Buses
 		
@@ -43,14 +56,15 @@ var MainBoard = {
 		m.iBus10 = Part.ElectricBus.new("#10");
 		m.iBus11 = Part.ElectricBus.new("#11");
 		m.iBus01 = Part.ElectricBus.new("#01");
-		m.iBus12 = Part.ElectricBus.new("#01");
-		
+		m.iBus12 = Part.ElectricBus.new("#12");
+		m.iBus13 = Part.ElectricBus.new("#13");
+	
 	# main Buses
 		
 		m.hotBus = Part.ElectricBus.new("HotBus");
 		m.loadBus = Part.ElectricBus.new("LoadBus");
 		m.batteryBus = Part.ElectricBus.new("BatteryBus");
-		m.avionicsBus = Part.ElectricBus.new("AvionicsBus");
+		m.avionicBus = Part.ElectricBus.new("AvionicsBus");
 		m.emergencyBus = Part.ElectricBus.new("EmergencyBus");
 		
 	# shunts
@@ -69,9 +83,9 @@ var MainBoard = {
 		
 		return m;
 	},
-	update : func(){
-		me.oBattery.update();
-				
+	update : func(timestamp){
+		
+		me.oBattery.update(timestamp);
 		
 	},
 	applyVoltage : func(electron,name=""){ 

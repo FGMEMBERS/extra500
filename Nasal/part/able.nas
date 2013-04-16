@@ -61,41 +61,48 @@ var ElectricAble = {
 		]};
 		m.isPowered 	= 0.0;
 		m.volt 		= 0.0;
-		m.minVolt 	= 18.0;
-		m.maxVolt 	= 30.0;
+		m.voltMin 	= 18.0;
+		m.voltMax 	= 30.0;
+		m.voltDelta	= 0.0;
 		m.ampere 	= 0.0;
 		m.watt 		= 0.0001;
-		m.resistor	= 300;
+		m.resistor	= 0.01;
 		
 		m.nElectric = nRoot.getNode("electric",1);
 		
 		m.nAmpere 	= m.nElectric.initNode("ampere",m.ampere,"DOUBLE");
 		m.nVolt 	= m.nElectric.initNode("volt",m.volt,"DOUBLE");
 		m.nResistor 	= m.nElectric.initNode("resistor",m.resistor,"DOUBLE");
-		m.nMinVolt 	= m.nElectric.initNode("voltMin",m.minVolt,"DOUBLE");
-		m.nMaxVolt 	= m.nElectric.initNode("voltMax",m.maxVolt,"DOUBLE");
+		m.nMinVolt 	= m.nElectric.initNode("voltMin",m.voltMin,"DOUBLE");
+		m.nMaxVolt 	= m.nElectric.initNode("voltMax",m.voltMax,"DOUBLE");
 		m.nWatt 	= m.nElectric.initNode("watt",m.watt,"DOUBLE");
 		
 		return m;
 	},
-	electricConfig : func(minVolt,maxVolt,watt){
+	electricConfig : func(voltMin,voltMax){
 		
-		me.minVolt 	= minVolt;
-		me.maxVolt 	= maxVolt;
-		me.resistor	= maxVolt / (watt/maxVolt);
-		me.watt 	= watt;
+		me.voltMin 	= voltMin;
+		me.voltMax 	= voltMax;
+		me.voltDelta	= voltMax-voltMin;
 		
-		me.nMinVolt.setValue(me.minVolt);
-		me.nMaxVolt.setValue(me.maxVolt);
+		me.nMinVolt.setValue(me.voltMin);
+		me.nMaxVolt.setValue(me.voltMax);
+		
+	},
+	setResistor : func(resistor){
+		me.resistor	= resistor;
 		me.nResistor.setValue(me.resistor);
-		me.nWatt.setValue(me.watt);
-		
+	},
+	setPower : func(volt,watt){
+		me.resistor	= volt / (watt / volt)  ;
+		me.nResistor.setValue(me.resistor);
 	},
 	electricWork : func(electron) {
 		var watt = 0.0;
-		me.setVolt(electron.volt);
+		me.setVolt(electron.volt * (me.resistor / electron.resistor));
 		me.setAmpere(electron.ampere);
-		watt = electron.volt * electron.ampere;
+		watt = me.volt * electron.ampere;
+		me.setWatt(watt);
 		return watt;
 	},
 	setVolt : func(value){
@@ -103,7 +110,7 @@ var ElectricAble = {
 		me.nVolt.setValue(value);
 	},
 	setMinVolt : func(value){
-		me.minVolt = value;
+		me.voltMin = value;
 		me.nMinVolt.setValue(value);
 	},
 	setAmpere : func(value){
@@ -114,15 +121,15 @@ var ElectricAble = {
 		me.watt = value;
 		me.nWatt.setValue(value);
 	},
-	hasPower : func(minVolt=nil){
-		if (minVolt!=nil){
-			if (me.volt >= minVolt){
+	hasPower : func(voltMin=nil){
+		if (voltMin!=nil){
+			if (me.volt >= voltMin){
 				me.isPowered = 1;
 			}else{
 				me.isPowered = 0;
 			}
 		}else{
-			if (me.volt >= me.minVolt){
+			if (me.volt >= me.voltMin){
 				me.isPowered = 1;
 			}else{
 				me.isPowered = 0;

@@ -286,37 +286,11 @@ JSBSim Extra Aircraft - Extra 500.
    <running type="bool">false</running>
   </engine>
  </engines>
-<!--
-<nasal>
-	<global>
-		<file>Aircraft/extra500/Nasal/global.nas</file>
-	</global>
-	<sound>
-		<file>Aircraft/extra500/Nasal/sound.nas</file>
-	</sound>
-	<UI>
-		<file>Aircraft/extra500/UserInterface/ui.nas</file>
-	</UI>
-	<Part>
-		<file>Aircraft/extra500/system/part.nas</file>
-	</Part>
-	<extra500>
-		<file>Aircraft/extra500/system/ElectricSystem.nas</file>
-		<file>Aircraft/extra500/system/panel/CircuitBreakerPanel.nas</file>
-		<file>Aircraft/extra500/system/panel/MasterPanel.nas</file>
-		<file>Aircraft/extra500/system/panel/SidePanel.nas</file>
-		<file>Aircraft/extra500/system/FuelSystem.nas</file>
-	</extra500>
-	<CoPilot>
-		<file>Aircraft/extra500/Nasal/coPilot.nas</file>
-	</CoPilot>
-	<run>
-		<file>Aircraft/extra500/system/init_ui.nas</file>
-		<file>Aircraft/extra500/system/init_cycle.nas</file>
-	</run>
 
-</nasal> -->
 <nasal>
+	<Dev>
+		<file>Aircraft/extra500/Nasal/DevTools/screen.nas</file>
+	</Dev>
 	<global>
 		<file>Aircraft/extra500/Nasal/global.nas</file>
 	</global>
@@ -356,6 +330,10 @@ JSBSim Extra Aircraft - Extra 500.
 	<e1>
 		<file>Nasal/e1.nas</file>
 	</e1>
+	<Dev>
+		<file>Aircraft/extra500/Nasal/DevTools/engineer.book.nas</file>
+	</Dev>
+	
 
 </nasal>
  
@@ -455,8 +433,8 @@ JSBSim Extra Aircraft - Extra 500.
   </mass-and-balance>
  </limits>
 
- <input>
-	 <keyboard>
+<input include="keyboard.xml"/>
+
             <key n="6">
             <!-- toggle stick-fixed/loose -->
 		      <name>CRTL-F</name>
@@ -466,61 +444,5 @@ JSBSim Extra Aircraft - Extra 500.
 			      <script>e1.bitswap("fdm/jsbsim/state/controls-fixed")</script>                        
 		      </binding>
 	      </key>
-		 <key n="32">
-			 <name>space</name>
-			 <desc>reload-model</desc>
-			 <repeatable type="bool">false</repeatable>
-			 <binding>
-				 <command>reinit</command>
-				 <subsystem>aircraft-model</subsystem>
-			 </binding>
-		 </key>
-		 <key n="114">
-			 <name>r</name>
-			 <desc>run simulation cycle once</desc>
-			 <repeatable type="bool">false</repeatable>
-			 <binding>
-				 <command>nasal</command>
-				 <script><![CDATA[
-					run.cycle_run = 0;
-					run.simulation_cycle();
-				]]></script>
-			 </binding>
-		 </key>
-		 <key n="82">
-			 <name>R</name>
-			 <desc>run simulation cycle continous</desc>
-			 <repeatable type="bool">false</repeatable>
-			 <binding>
-				 <command>nasal</command>
-				 <script><![CDATA[
-					run.cycle_run = 1;
-				]]></script>
-			 </binding>
-		 </key>
-		 <key n="101">
-			 <name>e</name>
-			 <desc>run simulation cycle once</desc>
-			 <repeatable type="bool">false</repeatable>
-			 <binding>
-				 <command>nasal</command>
-				 <script><![CDATA[
-					Part.etd.on = 1;
-				]]></script>
-			 </binding>
-		 </key>
-		 <key n="69">
-			 <name>E</name>
-			 <desc>run simulation cycle continous</desc>
-			 <repeatable type="bool">false</repeatable>
-			 <binding>
-				 <command>nasal</command>
-				 <script><![CDATA[
-					Part.etd.on = 0;
-				]]></script>
-			 </binding>
-		 </key>
-	 </keyboard> 
- </input>
 
 </PropertyList>

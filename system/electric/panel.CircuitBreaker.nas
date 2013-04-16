@@ -34,12 +34,12 @@
 #	28	ENG-INS-2	LoadBus		1	extra500/CircuitBreakerPanel/BankB/EngineInstrument2
 #	29	DIP-2		LoadBus		1	extra500/CircuitBreakerPanel/BankB/DIP2
 
-#	30	IFD-RH-B	AvBus		1	extra500/CircuitBreakerPanel/BankB/IFD-RH-B
-#	31	TAS		AvBus		1	extra500/CircuitBreakerPanel/BankB/TAS
+#	30	IFD-RH-B	avionicBus		1	extra500/CircuitBreakerPanel/BankB/IFD-RH-B
+#	31	TAS		avionicBus		1	extra500/CircuitBreakerPanel/BankB/TAS
 #	32
 #	33
-#	34	AP-CMPTR	AvBus		1	extra500/CircuitBreakerPanel/BankB/AutopilotComputer
-#	35	Turn-Coord	AvBus		1	extra500/CircuitBreakerPanel/BankB/TurnCoordinator
+#	34	AP-CMPTR	avionicBus		1	extra500/CircuitBreakerPanel/BankB/AutopilotComputer
+#	35	Turn-Coord	avionicBus		1	extra500/CircuitBreakerPanel/BankB/TurnCoordinator
 #	36
 #	37	RCCB		HotBus		0	extra500/CircuitBreakerPanel/BankB/RCCB
 
@@ -49,7 +49,7 @@
 #	39	FLAP-CTRL	BatteryBus	1	extra500/CircuitBreakerPanel/BankC/FlapControl
 #	40	FLAP		BatteryBus	1	extra500/CircuitBreakerPanel/BankC/Flap
 #	41	EMGC1		BatteryBus	1	extra500/CircuitBreakerPanel/BankC/Emergency1
-#	42	AV-BUS		BatteryBus	1	extra500/CircuitBreakerPanel/BankC/AvBus
+#	42	AV-BUS		BatteryBus	1	extra500/CircuitBreakerPanel/BankC/avionicBus
 #	43	INST-LT		BatteryBus	1	extra500/CircuitBreakerPanel/BankC/InstrumentLight
 #	44	STROBE-LT	BatteryBus	1	extra500/CircuitBreakerPanel/BankC/StrobeLight
 #	45	ICE-LT		BatteryBus	1	extra500/CircuitBreakerPanel/BankC/IceLight
@@ -218,7 +218,7 @@ var CircuitBreakerPanel = {
 		m.Emergency1 = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Emergency 1");
 		
 		nCompNode = nParent.initNode("AvBus");
-		m.AvBus = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker AV Bus");
+		m.avionicBus = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker AV Bus");
 		
 		nCompNode = nParent.initNode("InstrumentLight");
 		m.InstrumentLight = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Instrument Light");
@@ -340,7 +340,7 @@ var CircuitBreakerPanel = {
 		nCompNode = nParent.initNode("GearAux1");
 		m.GearAux1 = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Gear Aux 1",0);
 		
-		
+
 		
 		return m;
 	},
@@ -478,9 +478,9 @@ var CircuitBreakerPanel = {
 		UI.register("Circuit Breaker Emergency 1 open", 	func{extra500.circuitBreakerPanel.Emergency1.open(); } 		);
 		UI.register("Circuit Breaker Emergency 1 close", 	func{extra500.circuitBreakerPanel.Emergency1.close(); } 		);
 		
-		UI.register("Circuit Breaker AV Bus", 	func{extra500.circuitBreakerPanel.AvBus.toggle(); } 	);
-		UI.register("Circuit Breaker AV Bus open", 	func{extra500.circuitBreakerPanel.AvBus.open(); } 		);
-		UI.register("Circuit Breaker AV Bus close", 	func{extra500.circuitBreakerPanel.AvBus.close(); } 		);
+		UI.register("Circuit Breaker AV Bus", 	func{extra500.circuitBreakerPanel.avionicBus.toggle(); } 	);
+		UI.register("Circuit Breaker AV Bus open", 	func{extra500.circuitBreakerPanel.avionicBus.open(); } 		);
+		UI.register("Circuit Breaker AV Bus close", 	func{extra500.circuitBreakerPanel.avionicBus.close(); } 		);
 		
 		UI.register("Circuit Breaker Instrument Light", 	func{extra500.circuitBreakerPanel.InstrumentLight.toggle(); } 	);
 		UI.register("Circuit Breaker Instrument Light open", 	func{extra500.circuitBreakerPanel.InstrumentLight.open(); } 		);

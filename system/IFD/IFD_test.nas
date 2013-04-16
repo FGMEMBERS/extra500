@@ -81,6 +81,46 @@ var canvas_demo = {
 		me.textElectric.setText(text);
   },
 };
+
+
+var canvas_svg = {
+  new: func()
+  {
+    var m = { parents: [canvas_svg] };
+    
+    # create a new canvas...
+    m.canvas = canvas.new({
+      "name": "PFD-Test",
+      "size": [1024, 1024],
+      "view": [768, 1024],
+      "mipmapping": 1
+    });
+    
+    # ... and place it on the object called PFD-Screen
+    m.canvas.addPlacement({"node": "PFD-Screen"});
+    m.canvas.setColorBackground(0,0.04,0);
+     
+    var g = m.canvas.createGroup();
+#     var g_tf = g.createTransform();
+#     g_tf.setRotation(0.1 * math.pi);
+    canvas.parsesvg(g, "system/IFD/IFD01.svg");
+    m.bar = g.getElementById("simTime.bar");
+    #m.bar.setCenter(100,0);
+    m.needle = g.getElementById("simTime.needle");
+    
+   # debug.dump(m.bar);
+     return m;
+  },
+  update: func()
+  {
+	me.needle.setTranslation(run.cycleTimeUsed*4000,0);
+	me.bar.setScale(run.cycleTimeUsed*10,1);
+	#me.bar.set("width",run.cycleTimeUsed*4000);
+	me.bar.width = run.cycleTimeUsed*4000;
+	
+  },
+};
+
 var demo = canvas_demo.new();
 # setlistener("/nasal/canvas/loaded", func {
 #   
