@@ -372,30 +372,26 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 							
 	<flight_control name="FCS: extra500">
 		
-  <channel name="Pitch">
+      <channel name="Pitch">
 
-   <summer name="Pitch Trim Sum">
-      <input>fcs/elevator-cmd-norm</input>   
-      <clipto>
-        <min> -1 </min>
-        <max>  1 </max>
-      </clipto>
-   </summer>
-
-   <aerosurface_scale name="Elevator Control">
-      <input>fcs/pitch-trim-sum</input>
-      <range>
-        <min> -0.35 </min>
-        <max>  0.35 </max>
-      </range>
-      <output>fcs/elevator-pos-rad</output>
-   </aerosurface_scale>
+      <aerosurface_scale name="Elevator Control">
+	      <input>fcs/elevator-cmd-norm</input>
+	      <range>
+                  <min> 
+                        <property>aircraft/hstab/elevator/min-defl-rad</property> 
+                  </min>
+                  <max>  
+                        <property>aircraft/hstab/elevator/max-defl-rad</property> 
+                  </max>
+	      </range>
+	      <output>fcs/elevator-pos-rad</output>
+      </aerosurface_scale>
 
    <aerosurface_scale name="elevator normalization">
       <input>fcs/elevator-pos-rad</input>
       <domain>
-        <min> -0.436 </min>
-        <max>  0.35 </max>
+        <min> -0.5759 </min>
+        <max>  0.3141 </max>
       </domain>
       <range>
         <min> -1 </min>
@@ -404,9 +400,6 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       <output>fcs/elevator-pos-norm</output>
    </aerosurface_scale>
 
-  </channel>
-
-  <channel name="Pitch trim">
     <summer name="aircraft/hstab/elevator/d_e_free-clipped-rad">
       <description>stick-free elevator deflection rad</description>
       <input>aircraft/hstab/elevator/d_e_free-rad</input>
@@ -419,6 +412,20 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             </max>
       </clipto>
     </summer>  
+
+  </channel>
+
+  <channel name="Pitch trim">
+
+      <aerosurface_scale name="Pitch trim Control">
+	      <input>fcs/pitch-trim-cmd-norm</input>
+	      <range>
+                  <min> -30 </min>
+                  <max>  20 </max>
+	      </range>
+	      <output>fcs/pitch-trim-pos-deg</output>
+      </aerosurface_scale>
+
   </channel> 
 
 		
@@ -866,6 +873,12 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       <product>
             <property>aircraft/hstab/elevator/trim/coeff-norm</property>
             <property>fcs/pitch-trim-cmd-norm</property>
+            <value>0.5</value>
+            <property>atmosphere/rho-slugs_ft3</property>
+            <property>velocities/hstab/v-fps</property>
+            <property>velocities/hstab/v-fps</property>
+            <property>aircraft/hstab/elevator/trim/S-ft2</property>
+            <property>aircraft/hstab/elevator/trim/c_aero-ft</property>
       </product>
     </function>
 
