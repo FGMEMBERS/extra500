@@ -3,6 +3,19 @@
 <PropertyList>
 
 	 <keyboard>
+		 
+		 <key n="6">
+			 <!-- toggle stick-fixed/loose -->
+			 <name>CRTL-F</name>
+			 <desc>Toggle stick fixed</desc>
+			 <binding n="0">
+				 <command>nasal</command>
+				 <script>e1.bitswap("fdm/jsbsim/state/controls-fixed")</script>                        
+			 </binding>
+		 </key>
+		 
+		 
+		 <!-- keys only for development -->
 		 <key n="32">
 			 <name>space</name>
 			 <desc>reload-model</desc>

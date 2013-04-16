@@ -435,14 +435,4 @@ JSBSim Extra Aircraft - Extra 500.
 
 <input include="keyboard.xml"/>
 
-            <key n="6">
-            <!-- toggle stick-fixed/loose -->
-		      <name>CRTL-F</name>
-		      <desc>Toggle stick fixed</desc>
-		      <binding n="0">
-			      <command>nasal</command>
-			      <script>e1.bitswap("fdm/jsbsim/state/controls-fixed")</script>                        
-		      </binding>
-	      </key>
-
 </PropertyList>
