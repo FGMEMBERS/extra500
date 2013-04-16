@@ -7,6 +7,9 @@ var Display = {
 		# "public"
 		m.x = x;
 		m.y = y;
+		m.width = 100;
+		m.height = 100;
+		m.padding = 5;
 		m.tags = show_tags;
 		m.font = "HELVETICA_14";
 		m.bg = [0.5, 0.5, 0.5, 0];		# background color
@@ -42,8 +45,10 @@ var Display = {
 		me.dialog.set("name", me.name);
 		me.dialog.set("x", me.x);
 		me.dialog.set("y", me.y);
+		me.dialog.set("width", me.width);
+		me.dialog.set("height", me.height);
 		me.dialog.set("layout", "vbox");
-		me.dialog.set("default-padding", 2);
+		me.dialog.set("default-padding", me.padding);
 		me.dialog.setFont(me.font);
 		me.dialog.setColor(me.bg[0], me.bg[1], me.bg[2], me.bg[3]);
 

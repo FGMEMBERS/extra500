@@ -5,9 +5,6 @@ var cycleTimeUsed = 0;
 
 extra500.plugElectric();
 
-extra500.oFuelSystem.plugElectric();
-
-
 
 var simulation_cycle = func(){
 	var start = systime();

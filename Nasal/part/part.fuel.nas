@@ -1,25 +1,26 @@
 var FuelPump = {
-	new : func(nRoot,name){
+	new : func(nRoot,name,state=0){
 		var m = {parents:[
 			FuelPump,
 			Part.new(nRoot,name),
+			SimStateAble.new(nRoot,"BOOL",state),
 			ElectricAble.new(nRoot,name)
 		]};
-		m.state = 0;
+		
 		m.max = 0.1;	
 		
 		m.Plus = ElectricConnector.new("+");
 		m.Minus = ElectricConnector.new("-");
-		
-		m.nState = nRoot.initNode("state",m.state,"BOOL");
-				
+						
 		m.Plus.solder(m);
 		m.Minus.solder(m);
+		
+		append(aListSimStateAble,m);
 		return m;
 
 	},
 	flow : func(flow){
-		if (me.hasPower()){
+		if (me.state){
 			flow = flow * me.qos;
 		}else{
 			flow = 0;
@@ -31,8 +32,7 @@ var FuelPump = {
 		etd.in("Pump",me.name,name,electron);
 		var GND = 0;
 		#volt *= me.qos;
-		me.setVolt(electron.volt);
-		
+		electron.resistor += me.resistor;
 		if (name == "+"){
 			GND = me.Minus.applyVoltage(electron);
 			if (GND){
@@ -42,7 +42,7 @@ var FuelPump = {
 				me.state = 0;
 			}
 		}
-		
+		me.setVolt(electron.volt);
 		me.setAmpere(electron.ampere);
 		etd.out("Pump",me.name,name,electron);
 		return GND;

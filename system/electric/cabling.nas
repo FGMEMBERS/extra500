@@ -247,10 +247,27 @@ var plugLight = func(){
 		
 };
 
+var plugFuel = func(){
+	
+	oFuelSystem.oPump1.Plus.plug(masterPanel.FuelPump1.L12);
+	oFuelSystem.oPump1.Minus.plug(mainBoard.GND);
+	
+	oFuelSystem.oPump2.Plus.plug(masterPanel.FuelPump2.L12);
+	oFuelSystem.oPump2.Minus.plug(mainBoard.GND);
+	
+	oFuelSystem.oPumpLeft.Plus.plug(masterPanel.FuelTransferLeft.L12);
+	oFuelSystem.oPumpLeft.Minus.plug(mainBoard.GND);
+	
+	oFuelSystem.oPumpRight.Plus.plug(masterPanel.FuelTransferRight.L12);
+	oFuelSystem.oPumpRight.Minus.plug(mainBoard.GND);
+	
+}
+
 var plugElectric = func(){
 	plugMainBoard();
 	plugCircuitBreaker();
 	plugSidePanel();
 	plugMasterPanel();
 	plugLight();
+	plugFuel();
 };
