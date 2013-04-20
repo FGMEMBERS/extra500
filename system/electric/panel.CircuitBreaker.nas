@@ -147,7 +147,7 @@ var CircuitBreakerPanel = {
 		m.Vent = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Vent");
 		
 		nCompNode = nParent.initNode("AirControl");
-		m.AirControl = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Air Control",0);
+		m.AirControl = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Air Control");
 		
 # Bank B	
 		
@@ -199,14 +199,14 @@ var CircuitBreakerPanel = {
 		m.TurnCoordinator = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Turn Coordinator");
 		
 		nCompNode = nParent.initNode("RCCB");
-		m.RCCB = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker RCCB",1);
+		m.RCCB = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker RCCB");
 
 		
 # Bank C
 		nParent = m.nPanel.initNode("BankC");
 		
 		nCompNode = nParent.initNode("FlapUNB");
-		m.FlapUNB = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Flap UNB",0);
+		m.FlapUNB = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Flap UNB");
 		
 		nCompNode = nParent.initNode("FlapControl");
 		m.FlapControl = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Flap Control");
@@ -269,7 +269,7 @@ var CircuitBreakerPanel = {
 		m.Hydraulic = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Hydraulic");
 		
 		nCompNode = nParent.initNode("GearControl");
-		m.GearControl = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Gear Control",0);
+		m.GearControl = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Gear Control");
 		
 # Bank D		
 		nParent = m.nPanel.initNode("BankD");
@@ -338,9 +338,11 @@ var CircuitBreakerPanel = {
 		m.GearWarn = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Gear Warn");
 		
 		nCompNode = nParent.initNode("GearAux1");
-		m.GearAux1 = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Gear Aux 1",0);
+		m.GearAux1 = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Gear Aux 1");
 		
-
+#Buses
+		m.instrumentLightBus = Part.ElectricBus.new("InstrumentLightBus");
+		
 		
 		return m;
 	},

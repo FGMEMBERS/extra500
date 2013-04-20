@@ -7,12 +7,14 @@ var aerodynamicPage	= Page.new("Aerodynamic");
 var enginePage		= Page.new("Engine");
 var modelPage		= Page.new("Model");
 var electricPage	= Page.new("Electric");
+var electricLightPage	= Page.new("Electric Lights");
 var fuelPage		= Page.new("Fuel");
 
 engineerScreen.add(aerodynamicPage);
 engineerScreen.add(enginePage);
 engineerScreen.add(modelPage);
 engineerScreen.add(electricPage);
+engineerScreen.add(electricLightPage);
 engineerScreen.add(fuelPage);
 
 
@@ -43,32 +45,143 @@ var display = nil;
 # 	
 # electricPage.add(display);
 
+# display = Display.new(10,-200);
+# 	display.setfont("FIXED_9x15");
+# 	display.setcolor(1, 1, 1);
+# 	display.bg = [0.5, 0.5, 0.5, 0.85];
+# 	display.width = 250;
+# 	display.height = 600;
+# 	
+# electricPage.add(display);
+
+#---------------------------------
+
+### Lights Screen ##############
+
+display = Display.new(10,-50);
+	display.setfont("FIXED_9x15");
+	display.setcolor(1, 1, 1);
+	display.bg = [0.5, 0.5, 0.5, 0.85];
+	display.width = 250;
+	display.height = 140;
+		
+	display.addNamed("Strobe         %.2f %%", props.globals.getNode("/extra500/Light/Strobe/state") );
+	display.addNamed("Navigation     %.2f %%", props.globals.getNode("/extra500/Light/Navigation/state") );
+	display.addNamed("Landing        %.2f %%", props.globals.getNode("/extra500/Light/Landing/state") );
+	display.addNamed("Recognition    %.2f %%", props.globals.getNode("/extra500/Light/Recognition/state") );
+	display.addNamed("Ice            %.2f %%", props.globals.getNode("/extra500/Light/Ice/state") );
+	
+electricLightPage.add(display);
+	
 display = Display.new(10,-200);
 	display.setfont("FIXED_9x15");
 	display.setcolor(1, 1, 1);
 	display.bg = [0.5, 0.5, 0.5, 0.85];
 	display.width = 250;
-	display.height = 600;
+	display.height = 450;
 	
 	
-	display.addNamed("Strobe         %.2f %%", props.globals.getNode("/extra500/Light/Strobe/state") );
-	display.addNamed("Navigation     %.2f %%", props.globals.getNode("/extra500/Light/Navigation/state") );
-	display.addNamed("Landing        %.2f %%", props.globals.getNode("/extra500/Light/Landing/state") );
-	display.addNamed("Recognition    %.2f %%", props.globals.getNode("/extra500/Light/Recognition/state") );
-	display.addNamed("Cabin          %.2f %%", props.globals.getNode("/extra500/Light/Cabin/state") );
-	display.addNamed("Map            %.2f %%", props.globals.getNode("/extra500/Light/Map/state") );
-	display.addNamed("Instrument     %.2f %%", props.globals.getNode("/extra500/Light/Instrument/state") );
-	display.addNamed("Glare          %.2f %%", props.globals.getNode("/extra500/Light/Glare/state") );
-	display.addNamed("Ice            %.2f %%", props.globals.getNode("/extra500/Light/Ice/state") );
-	display.addNamed("Keypad         %.2f %%", props.globals.getNode("/extra500/Light/Keypad/state") );
-	display.addNamed("Switches       %.2f %%", props.globals.getNode("/extra500/Light/Switches/state") );
-	display.addNamed("Annunciator    %.2f %%", props.globals.getNode("/extra500/Light/Annunciator/state") );
-# 	display.addNamed("    %.2f %%", props.globals.getNode("/extra500/Light//state") );
-# 	display.addNamed("    %.2f %%", props.globals.getNode("/extra500/Light//state") );
-# 	display.addNamed("    %.2f %%", props.globals.getNode("/extra500/Light//state") );
-# 	display.addNamed("    %.2f %%", props.globals.getNode("/extra500/Light//state") );
+	display.addNamed("Cabin              %.2f %%", props.globals.getNode("/extra500/Light/Cabin/state") );
+	display.addNamed("Map                %.2f %%", props.globals.getNode("/extra500/Light/Map/state") );
+	#display.addNamed("Instrument     %.2f %%", props.globals.getNode("/extra500/Light/Instrument/state") );
+	#display.addNamed("Keypad         %.2f %%", props.globals.getNode("/extra500/Light/Keypad/state") );
+	#display.addNamed("Switches       %.2f %%", props.globals.getNode("/extra500/Light/Switches/state") );
+
+	display.addNamed("Airpath            %.2f %%", props.globals.getNode("/extra500/Light/Instrument/state") );
+	display.addNamed("Glare              %.2f %%", props.globals.getNode("/extra500/Light/Glare/state") );
+	display.addNamed("Autopilot          %.2f %%", props.globals.getNode("/extra500/Light/Instrument/state") );
+	display.addNamed("IFDs               %.2f %%", props.globals.getNode("/extra500/Light/Instrument/state") );
+	display.addNamed("Airspeed           %.2f %%", props.globals.getNode("/extra500/Light/Instrument/state") );
+	display.addNamed("Altimeter          %.2f %%", props.globals.getNode("/extra500/Light/Instrument/state") );
+	display.addNamed("Engines            %.2f %%", props.globals.getNode("/extra500/Light/Instrument/state") );
+	display.addNamed("Altitute Gyro      %.2f %%", props.globals.getNode("/extra500/Light/Instrument/state") );
+	display.addNamed("Propeller Heat     %.2f %%", props.globals.getNode("/extra500/Light/Instrument/state") );
+	display.addNamed("Cabin Press Ctrl   %.2f %%", props.globals.getNode("/extra500/Light/Instrument/state") );
+	display.addNamed("Cabin Press        %.2f %%", props.globals.getNode("/extra500/Light/Instrument/state") );
+	display.addNamed("Cabin Altitude     %.2f %%", props.globals.getNode("/extra500/Light/Instrument/state") );
+	display.addNamed("Fuels              %.2f %%", props.globals.getNode("/extra500/Light/Instrument/state") );
+	display.addNamed("Turn Coordinator   %.2f %%", props.globals.getNode("/extra500/Light/Instrument/state") );
+	display.addNamed("Audio Marker       %.2f %%", props.globals.getNode("/extra500/Light/Instrument/state") );
+	display.addNamed("Switches Lumi      %.2f %%", props.globals.getNode("/extra500/Light/Switches/state") );
 	
-electricPage.add(display);
+	
+electricLightPage.add(display);
+
+display = Display.new(-10,-50);
+	display.setfont("FIXED_9x15");
+	display.setcolor(1, 1, 1);
+	display.bg = [0.5, 0.5, 0.5, 0.85];
+	display.width = 270;
+	display.height = 100;
+	
+	display.add_Node("Day/Night Relais       ", props.globals.getNode("/extra500/mainBoard/Relais/DayNightRelais/state") );
+	display.add_Node("mainBoard Test Relais  ", props.globals.getNode("/extra500/mainBoard/Relais/TestLightRelais/state") );
+	display.add_Node("Dim/Test Relais        ", props.globals.getNode("/extra500/AnnunciatorPanel/dimTestRelais/state") );
+	display.add_Node("Ext Power Relais       ", props.globals.getNode("/extra500/AnnunciatorPanel/ExternalPowerRelais/state") );
+	
+electricLightPage.add(display);	
+	
+
+display = Display.new(-10,-200);
+	display.setfont("FIXED_9x15");
+	display.setcolor(1, 1, 1);
+	display.bg = [0.5, 0.5, 0.5, 0.85];
+	display.width = 270;
+	display.height = 800;
+	
+	
+	display.addNamed("Generator Fail        %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/GeneratorFail/state") );
+	display.addNamed("AFT Door              %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/AFTDoor/state") );
+	display.addNamed("Stall Heat            %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/StallHeat/state") );
+	display.addNamed("Oil Press             %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/OilPress/state") );
+	display.addNamed("Chip Detection        %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/HydraulicPump/state") );
+	display.addNamed("Hydraulic Pump        %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/GearWarn/state") );
+	display.addNamed("Gear Warn             %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/GeneratorFail/state") );
+	display.addNamed("Stall Warn            %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/StallWarn/state") );
+	display.addNamed("Windshield Heat Fail  %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/WindshieldHeatFail/state") );
+	display.addNamed("Fuel Press            %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/FuelPress/state") );
+	display.addNamed("Pitot Heat Left       %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/PitotHeatLeft/state") );
+	display.addNamed("Pitot Heat Right      %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/PitotHeatRight/state") );
+	display.addNamed("Flaps                 %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/Flaps/state") );
+	display.addNamed("Cabin Pressure        %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/CabinPressure/state") );
+	display.addNamed("Bleed Overtemp        %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/BleedOvertemp/state") );
+	display.addNamed("Static Heat Left      %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/StaticHeatLeft/state") );
+	display.addNamed("Static Heat Right     %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/StaticHeatRight/state") );
+	display.addNamed("Fuel Trans Left       %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/FuelTransLeft/state") );
+	display.addNamed("Fuel Trans Right      %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/FuelTransRight/state") );
+	display.addNamed("StandBy Altern On     %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/StandByAlternOn/state") );
+	display.addNamed("Ignition Active       %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/IgnitionActive/state") );
+	display.addNamed("Intake Heat           %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/IntakeHeat/state") );
+	display.addNamed("Recogn Light          %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/RecognLight/state") );
+	display.addNamed("Fuel Filter ByPass    %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/FuelFilterByPass/state") );
+	display.addNamed("Pneumatic Low         %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/PneumaticLow/state") );
+	display.addNamed("Deice Boots           %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/DeiceBoots/state") );
+	display.addNamed("Landing Light         %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/LandingLight/state") );
+	display.addNamed("Fuel Low Left         %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/FuelLowLeft/state") );
+	display.addNamed("Fuel Low Right        %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/FuelLowRight/state") );
+	display.addNamed("Propeller Low Pitch   %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/PropellerLowPitch/state") );
+	display.addNamed("External Power        %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/ExternalPower/state") );
+	display.addNamed("Windshield Heat On    %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/WindshieldHeatOn/state") );
+	
+	
+electricLightPage.add(display);
+
+display = Display.new(-320,-50);
+	display.setfont("FIXED_9x15");
+	display.setcolor(1, 1, 1);
+	display.bg = [0.5, 0.5, 0.5, 0.85];
+	display.width = 270;
+	display.height = 200;
+	
+	display.addNamed("Flap Transition  %.2f %%", props.globals.getNode("/extra500/Light/FlapTransition/state") );
+	display.addNamed("Flap 15          %.2f %%", props.globals.getNode("/extra500/Light/Flap15/state") );
+	display.addNamed("Flap 30          %.2f %%", props.globals.getNode("/extra500/Light/Flap30/state") );
+	display.addNamed("Gear Nose        %.2f %%", props.globals.getNode("/extra500/Light/GearNose/state") );
+	display.addNamed("Gear Right       %.2f %%", props.globals.getNode("/extra500/Light/GearRight/state") );
+	display.addNamed("Gear Left        %.2f %%", props.globals.getNode("/extra500/Light/GearLeft/state") );
+	display.addNamed("DME-Hold         %.2f %%", props.globals.getNode("/extra500/Light/DMEHold/state") );
+	
+electricLightPage.add(display);	
 
 #---------------------------------
 

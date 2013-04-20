@@ -84,7 +84,7 @@ var MainBoard = {
 		return m;
 	},
 	update : func(timestamp){
-		
+		Part.etd.print("\n\n\n---------------- update -----------\n");
 		me.oBattery.update(timestamp);
 		
 	},

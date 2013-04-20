@@ -5,10 +5,10 @@
  <path>Aircraft/Instruments-3d/canvas-test/CMDU.ac</path>
  <offsets>
    <heading-deg>90</heading-deg>
-   <roll-deg>75</roll-deg>
+   <roll-deg>40</roll-deg>
    <pitch-deg>0</pitch-deg>
-   <x-m>-0.70 </x-m>
-   <y-m> 0.35 </y-m>
-   <z-m>-0.2 </z-m>
+   <x-m> -0.45 </x-m>
+   <y-m> -0.35 </y-m>
+   <z-m>-0.35 </z-m>
  </offsets>
 </PropertyList>

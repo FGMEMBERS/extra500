@@ -10,15 +10,15 @@ var ElectricTreeDebugger = {
 		m.depth 	= 0;
 		m.defaultStr 	= "                                       ";
 		m.debugLevel	=0;
-		m.highLightType = "ElectricRelaisXPST";
-		m.excludeType 	= "";
+		m.highLightType = "Relais";
+		m.excludeType 	= "Connector";
 		m.debugName 	= "";
 		return m;
 
 	},
 	colorRed : func(s) { return globals.string.color("32", s)},
 	in : func(type,name,connector,electron,icon="└┬"){
-		if (me.on){
+		if (me.on == 1){
 			if (find(me.debugName,name) > -1){
 				me.debugLevel+=1;
 				#print("ElectricTreeDebugger     found "~name);
@@ -40,7 +40,7 @@ var ElectricTreeDebugger = {
 		}
 	},
 	out : func(type,name,connector,electron,icon="┌┴"){
-		if (me.on){
+		if (me.on == 1){
 			if (me.debugLevel > 0){
 				if (find(type,me.highLightType) > -1){
 					type = me.colorRed(type);
@@ -65,8 +65,12 @@ var ElectricTreeDebugger = {
 			print(output);
 			
 		}
-	}
-		
+	},
+	print : func(msg){
+		if (me.on == 1){
+			print(msg);
+		}
+	},
 };
 
 var etd = ElectricTreeDebugger.new();
@@ -287,7 +291,7 @@ var ElectricBus = {
 	},
 	plug : func(connector,name="default"){
 		if (name == "default"){
-			name = me.name~"-"~size(me.connectors);
+			name = sprintf("%s-%03i",me.name,size(me.connectors));
 		}
 		me.connectors[name] = ElectricConnector.new(name);
 		me.connectors[name].solder(me);
@@ -350,7 +354,7 @@ var ElectricBusDiode = {
 	},
 	plug : func(connector,name="default"){
 		if (name == "default"){
-			name = me.name~"-"~size(me.connectors);
+			name = sprintf("%s-%03i",me.name,size(me.connectors));
 		}
 		me.connectors[name] = ElectricConnector.new(name);
 		me.connectors[name].solder(me);
@@ -381,6 +385,58 @@ var ElectricBusDiode = {
 		}
 	}
 };
+
+# var ElectricBusGND = {
+# 	new : func(name){		
+# 		var m = {parents:[
+# 			ElectricBusDiode
+# 		]};
+# 		m.name = name;
+# 		m.connectors = {};
+# 		m.electron = Electron.new();
+# 		m.electronTmp = Electron.new();
+# 		
+# 		m.Minus = ElectricConnector.new("-");
+# 		m.Minus.solder(m);
+# 		
+# 		return m;
+# 	},
+# 	plug : func(connector,name="default"){
+# 		if (name == "default"){
+# 			name = me.name~"-"~size(me.connectors);
+# 		}
+# 		me.connectors[name] = ElectricConnector.new(name);
+# 		me.connectors[name].solder(me);
+# 		me.connectors[name].plug(connector);
+# 		connector.plug(me.connectors[name]);
+# 		me.order();
+# 	},
+# 	applyVoltage : func(electron,name=""){ 
+# 		etd.in("Bus",me.name,name,electron);
+# 		var GND = 0;
+# 		var ampereSum = 0;
+# 		if ( electron != nil){
+# 			foreach(LOOP;var i;me.index) {
+# 				if (i != name){
+# 					if ( me.connectors[i].applyVoltage(electron) ){
+# 						GND = 1;
+# 						break LOOP;
+# 					}
+# 				}
+# 			}
+# 		}
+# 		etd.out("Bus",me.name,name,electron);
+# 		return GND;
+# 	},
+# 	order : func(){
+# 		me.index = sort(keys(me.connectors), func (a,b) cmp (me.connectors[a].name, me.connectors[b].name)) ;
+# 	},
+# 	echoOrder : func(){
+# 		foreach(var i;me.index) {
+# 			print(sprintf("Bus %s %s %s",me.connectors[i].name,me.connectors[i].connector.name,me.connectors[i].connector.electricAble.name));
+# 		}
+# 	}
+# };
  
 var ElectricBattery = {
 	new : func(nRoot,name){

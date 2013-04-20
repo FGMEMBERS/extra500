@@ -3,10 +3,12 @@ var plugMainBoard = func(){
 		mainBoard.oBattery.minus.plug(mainBoard.GND);
 	# Bus	
 		mainBoard.hotBus.plug(mainBoard.oBattery.plus);
+		
 		mainBoard.hotBus.plug(mainBoard.batteryRelais.A1);
-		mainBoard.hotBus.plug(mainBoard.dayNightRelais.A1);
-		mainBoard.hotBus.plug(mainBoard.dayNightRelais.A1);
-		mainBoard.hotBus.plug(mainBoard.testLightRelais.A1);
+		mainBoard.hotBus.plug(lightBoard.dayNightRelais.A1);
+		mainBoard.hotBus.plug(lightBoard.testLightRelais.A1);
+		mainBoard.hotBus.plug(annunciatorPanel.dimTestRelais.A1);
+		
 		mainBoard.hotBus.plug(fusePanel.emergency3.In);
 		mainBoard.hotBus.plug(mainBoard.batteryRelais.P21);
 		mainBoard.hotBus.plug(mainBoard.batteryRelais.P11);
@@ -130,8 +132,10 @@ var plugCircuitBreaker = func(){
 		#mainBoard.hotBus.plug(circuitBreakerPanel.GearAux1.In);
 		circuitBreakerPanel.RCCB.Out.plug(mainBoard.GND);
 		circuitBreakerPanel.RCCB.In.plug(mainBoard.rccbRelais.A2);
-
-
+		
+		circuitBreakerPanel.instrumentLightBus.plug(circuitBreakerPanel.InstrumentLight.Out);
+		
+		circuitBreakerPanel.instrumentLightBus.plug(lightBoard.testLightRelais.P14);
 		
 };
 
@@ -158,16 +162,22 @@ var plugSidePanel = func(){
 		sidePanel.LightIce.Com1.plug(		circuitBreakerPanel.IceLight.Out);
 		sidePanel.LightGlare.Com1.plug(		circuitBreakerPanel.GlareLight.Out);
 		
-		sidePanel.LightInstrument.Com1.plug ( circuitBreakerPanel.InstrumentLight.Out);
+		#sidePanel.LightInstrument.Com1.plug ( circuitBreakerPanel.InstrumentLight.Out);
+		circuitBreakerPanel.instrumentLightBus.plug(sidePanel.LightInstrument.Com1);
+		circuitBreakerPanel.instrumentLightBus.plug(lightBoard.testLightRelais.P14);
+		
 		
 	# Dimmer cabling
 		
 		
 		sidePanel.LightNight.Com1.plug(mainBoard.GND);
  		sidePanel.LightNight.Com2.plug(mainBoard.GND);
- 		sidePanel.LightNight.L11.plug(mainBoard.dayNightRelais.A2);
- 		sidePanel.LightNight.L12.plug(mainBoard.testLightRelais.A2);
+ 		sidePanel.LightNight.L11.plug(lightBoard.dayNightRelais.A2);
+ 		sidePanel.LightNight.L12.plug(lightBoard.testLightRelais.A2);
+ 		sidePanel.LightNight.L22.plug(annunciatorPanel.dimTestRelais.A2);
  		
+		
+		
 		
 	
 };
@@ -185,67 +195,86 @@ var plugMasterPanel = func(){
 	# dimming
 		masterPanel.glareLightBus.plug(sidePanel.LightGlare.L12);
 		masterPanel.glareLightBus.plug(masterPanel.DimmerGlare.In);
-		masterPanel.glareLightBus.plug(mainBoard.dayNightRelais.P22);
+		masterPanel.glareLightBus.plug(lightBoard.dayNightRelais.P22);
 		
 		masterPanel.warnLightBus.plug(circuitBreakerPanel.WarnLight.Out);
 		masterPanel.warnLightBus.plug(masterPanel.DimmerAnnunciator.In);
-		masterPanel.warnLightBus.plug(mainBoard.dayNightRelais.P52);
+		masterPanel.warnLightBus.plug(lightBoard.dayNightRelais.P52);
 		
 		masterPanel.instrumentLightBus.plug(sidePanel.LightInstrument.L12);
 		masterPanel.instrumentLightBus.plug(masterPanel.DimmerInstrument.In);
-		masterPanel.instrumentLightBus.plug(mainBoard.dayNightRelais.P32);
+		masterPanel.instrumentLightBus.plug(lightBoard.dayNightRelais.P32);
 		masterPanel.instrumentLightBus.plug(masterPanel.DimmerKeypad.In);
-		masterPanel.instrumentLightBus.plug(mainBoard.dayNightRelais.P12);
+		masterPanel.instrumentLightBus.plug(lightBoard.dayNightRelais.P12);
 		masterPanel.instrumentLightBus.plug(masterPanel.DimmerSwitch.In);
-		masterPanel.instrumentLightBus.plug(mainBoard.dayNightRelais.P42);
+		masterPanel.instrumentLightBus.plug(lightBoard.dayNightRelais.P42);
 		
 		
-		masterPanel.DimmerKeypad.Out.plug(mainBoard.dayNightRelais.P14);
-		masterPanel.DimmerGlare.Out.plug(mainBoard.dayNightRelais.P24);
-		masterPanel.DimmerInstrument.Out.plug(mainBoard.dayNightRelais.P34);
-		masterPanel.DimmerSwitch.Out.plug(mainBoard.dayNightRelais.P44);
-		masterPanel.DimmerAnnunciator.Out.plug(mainBoard.dayNightRelais.P54);
+		masterPanel.DimmerKeypad.Out.plug(lightBoard.dayNightRelais.P14);
+		masterPanel.DimmerGlare.Out.plug(lightBoard.dayNightRelais.P24);
+		masterPanel.DimmerInstrument.Out.plug(lightBoard.dayNightRelais.P34);
+		masterPanel.DimmerSwitch.Out.plug(lightBoard.dayNightRelais.P44);
+		masterPanel.DimmerAnnunciator.Out.plug(lightBoard.dayNightRelais.P54);
 		
 };
 
 var plugLight = func(){
-		lightBoard.Strobe.Plus.plug(sidePanel.LightStrobe.L12);
-		lightBoard.Strobe.Minus.plug(mainBoard.GND);
+	
+	lightBoard.GNDBus.Minus.plug(mainBoard.GND);
+	
+	lightBoard.plugElectric();
+	
+	lightBoard.Strobe.Plus.plug(sidePanel.LightStrobe.L12);
+	
+	lightBoard.Navigation.Plus.plug(sidePanel.LightNavigation.L12);
+	
+	lightBoard.Landing.Plus.plug(sidePanel.LightLanding.L12);
+					
+	lightBoard.Cabin.Plus.plug(sidePanel.LightCabin.L12);
+	
+	lightBoard.Recognition.Plus.plug(sidePanel.LightRecognition.L12);
+	
+	lightBoard.Map.Plus.plug(sidePanel.LightMap.L12);
+	
+	lightBoard.Ice.Plus.plug(sidePanel.LightIce.L12);
+			
+	lightBoard.Keypad.Plus.plug(lightBoard.dayNightRelais.P11);
+	
+	lightBoard.Glare.Plus.plug(lightBoard.dayNightRelais.P21);
+	
+	lightBoard.Instrument.Plus.plug(lightBoard.dayNightRelais.P31);
+	
+	lightBoard.Switches.Plus.plug(lightBoard.dayNightRelais.P41);
+	
+	
+	
+	lightBoard.testLightRelais.P22.plug(flapSystem.FlapTransition);
+	lightBoard.testLightRelais.P32.plug(flapSystem.Flap15);
+	lightBoard.testLightRelais.P42.plug(flapSystem.Flap30);
+	
+	lightBoard.testLightRelais.P52.plug(gearSystem.GearNose);
+	lightBoard.testLightRelais.P62.plug(gearSystem.GearLeft);
+	lightBoard.testLightRelais.P72.plug(gearSystem.GearRight);
 		
-		lightBoard.Navigation.Plus.plug(sidePanel.LightNavigation.L12);
-		lightBoard.Navigation.Minus.plug(mainBoard.GND);
-		
-		lightBoard.Landing.Plus.plug(sidePanel.LightLanding.L12);
-		lightBoard.Landing.Minus.plug(mainBoard.GND);
-						
-		lightBoard.Cabin.Plus.plug(sidePanel.LightCabin.L12);
-		lightBoard.Cabin.Minus.plug(mainBoard.GND);
-		
-		lightBoard.Recognition.Plus.plug(sidePanel.LightRecognition.L12);
-		lightBoard.Recognition.Minus.plug(mainBoard.GND);
-		
-		lightBoard.Map.Plus.plug(sidePanel.LightMap.L12);
-		lightBoard.Map.Minus.plug(mainBoard.GND);
-		
-		lightBoard.Ice.Plus.plug(sidePanel.LightIce.L12);
-		lightBoard.Ice.Minus.plug(mainBoard.GND);
-				
-		lightBoard.Keypad.Plus.plug(mainBoard.dayNightRelais.P11);
-		lightBoard.Keypad.Minus.plug(mainBoard.GND);
-		
-		lightBoard.Glare.Plus.plug(mainBoard.dayNightRelais.P21);
-		lightBoard.Glare.Minus.plug(mainBoard.GND);
-		
-		lightBoard.Instrument.Plus.plug(mainBoard.dayNightRelais.P31);
-		lightBoard.Instrument.Minus.plug(mainBoard.GND);
-		
-		lightBoard.Switches.Plus.plug(mainBoard.dayNightRelais.P41);
-		lightBoard.Switches.Minus.plug(mainBoard.GND);
-		
-		lightBoard.Annunciator.Plus.plug(mainBoard.dayNightRelais.P51);
-		lightBoard.Annunciator.Minus.plug(mainBoard.GND);
-		
+	
+	
+	
+	
 };
+
+var plugFlap =func(){
+	flapSystem.GND.plug(mainBoard.GND);
+};
+var plugGear =func(){
+	gearSystem.GND.plug(mainBoard.GND);
+};
+
+var plugAnnuciator = func(){
+	annunciatorPanel.GNDBus.Minus.plug(mainBoard.GND);
+	annunciatorPanel.plugElectric();
+	lightBoard.annuciatorDimBus.plug(annunciatorPanel.dimTestRelais.P12);# +14-28V Dim Voltage
+	lightBoard.testLightRelais.P11.plug(annunciatorPanel.dimTestRelais.P14);# +28V Light-Test
+}
 
 var plugFuel = func(){
 	
@@ -269,5 +298,8 @@ var plugElectric = func(){
 	plugSidePanel();
 	plugMasterPanel();
 	plugLight();
+	plugAnnuciator();
+	plugFlap();
+	plugGear();
 	plugFuel();
 };

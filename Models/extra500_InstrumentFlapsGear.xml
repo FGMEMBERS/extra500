@@ -30,46 +30,49 @@
 <animation>
 	<type>material</type>
 	<object-name>LightGear0.Lampe</object-name>
-	  <condition>
+	  <!--<condition>
     <equals>
       <property>/gear/gear[0]/position-norm</property>
       <value>1</value>
     </equals>
-  </condition>
+  </condition>-->
 	<emission>	
 		<red>0.0</red>	
 		<green>0.5</green>	
 		<blue>0.0</blue>
+		<factor-prop>extra500/Light/GearNose/state</factor-prop>
 	</emission>
 </animation>
 <animation>
 	<type>material</type>
 	<object-name>LightGear1.Lampe</object-name>
-	  <condition>
+	  <!--<condition>
     <equals>
       <property>/gear/gear[1]/position-norm</property>
       <value>1</value>
     </equals>
-  </condition>
+  </condition>-->
 	<emission>	
 		<red>0.0</red>	
 		<green>0.5</green>	
 		<blue>0.0</blue>
+		<factor-prop>extra500/Light/GearLeft/state</factor-prop>
 	</emission>
 </animation>
 <animation>
 	<type>material</type>
 	<object-name>LightGear2.Lampe</object-name>
-	  <condition>
+	  <!--<condition>
     <equals>
       <property>/gear/gear[2]/position-norm</property>
       <value>1</value>
     </equals>
-  </condition>
+  </condition>-->
 	<emission>	
 		<red>0.0</red>	
 		<green>0.5</green>	
 		<blue>0.0</blue>
+		<factor-prop>extra500/Light/GearRight/state</factor-prop>
 	</emission>
 </animation>
 
@@ -79,7 +82,7 @@
 <animation>
 	<type>material</type>
 	<object-name>LightFlapTrans.Lampe</object-name>
-	<condition> <!-- this is an ugly hack the trans lamp is solely dependent on the flap motor running -->
+	<!--<condition>  this is an ugly hack the trans lamp is solely dependent on the flap motor running 
       <or>
             <and>
                   <greater-than>
@@ -102,17 +105,18 @@
                   </less-than>
             </and>
       </or>
-      </condition>
+      </condition>-->
 	<emission>	
 		<red>0.9</red>	
 		<green>0.4</green>	
 		<blue>0.1</blue>
+		<factor-prop>extra500/Light/FlapTransition/state</factor-prop>
 	</emission>
 </animation>
 <animation>
 	<type>material</type>
 	<object-name>LightFlap15.Lampe</object-name>
-	<condition>
+	<!--<condition>
       <and>
             <greater-than>
                   <property>/fdm/jsbsim/fcs/flap-pos-deg</property>
@@ -123,26 +127,28 @@
                   <value>16</value>
             </less-than>
       </and>
-      </condition>
+      </condition>-->
 	<emission>	
 		<red>0.0</red>	
 		<green>0.5</green>	
 		<blue>0.0</blue>
+		<factor-prop>extra500/Light/Flap15/state</factor-prop>
 	</emission>
 </animation>
 <animation>
 	<type>material</type>
 	<object-name>LightFlap30.Lampe</object-name>
-	<condition>
+	<!--<condition>
       <greater-than>
             <property>/fdm/jsbsim/fcs/flap-pos-deg</property>
             <value>29</value>
       </greater-than>
-      </condition>
+      </condition>-->
 	<emission>	
 		<red>0.0</red>	
 		<green>0.5</green>	
 		<blue>0.0</blue>
+		<factor-prop>extra500/Light/Flap30/state</factor-prop>
 	</emission>
 </animation>
 

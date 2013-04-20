@@ -37,6 +37,9 @@ var cycle = func(){
 	settimer(cycle, cycle_sec);
 }
 
+
+
+
 var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 	
 	removelistener(init_listener);

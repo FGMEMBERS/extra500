@@ -312,7 +312,11 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/system/electric/panel.CircuitBreaker.nas</file>
 		<file>Aircraft/extra500/system/electric/panel.Master.nas</file>
 		<file>Aircraft/extra500/system/electric/panel.Side.nas</file>
+		<file>Aircraft/extra500/system/electric/panel.Annunciator.nas</file>
 		<file>Aircraft/extra500/system/electric/light.nas</file>
+		<file>Aircraft/extra500/system/electric/system.flap.nas</file>
+		<file>Aircraft/extra500/system/electric/system.gear.nas</file>
+		
 		<file>Aircraft/extra500/system/fuel/fuelSystem.nas</file>
 		<file>Aircraft/extra500/system/electric/cabling.nas</file>
 		<file>Aircraft/extra500/system/default.nas</file>

@@ -150,7 +150,10 @@ var Display = {
 	},
 	addNamed : func(format,n){
 			append(me.entries, {mode:2, node: n, parent: n, format:format,
-					tag: sprintf(me.tagformat, me.nameof(n)),
+					target: me.base.getChild("entry", size(me.entries), 1) });
+	},
+	add_Node: func(lable,n){
+			append(me.entries, {mode:3, node: n, parent: n, lable:lable,
 					target: me.base.getChild("entry", size(me.entries), 1) });
 	},
 	update : func {
@@ -170,15 +173,18 @@ var Display = {
 				var val = sprintf(e.format, e.callback());
 				e.target.setValue(val);
 			}else if (e.mode == 2){
+				var val = sprintf(e.format, ( e.node.getValue() ));
+				e.target.setValue(val);
+			}else if (e.mode == 3){
 				var type = e.node.getType();
 				if (type == "NONE")
-					var val = "nil";
+					var val = sprintf("%s %s",e.lable,"nil");
 				elsif (type == "BOOL")
-					var val = e.node.getValue() ? "true" : "false";
+					var val = sprintf("%s %s",e.lable,(e.node.getValue() ? "true" : "false"));
 				elsif (type == "STRING" or type == "UNSPECIFIED")
-					var val = "'" ~ sanitize(e.node.getValue(), 1) ~ "'";
+					var val = lable~"'" ~ sanitize(e.node.getValue(), 1) ~ "'";
 				else
-					var val = sprintf(e.format, e.node.getValue());
+					var val = sprintf("%s %s",e.lable, e.node.getValue());
 				
 				e.target.setValue(val);
 			}
