@@ -228,10 +228,10 @@
    <entry><ind> 1</ind><dep>-25</dep></entry>
   </interpolation>   
   <axis>
-    <x1-m>5.53867</x1-m>
+    <x1-m>5.37867</x1-m>
     <y1-m>0</y1-m>
     <z1-m>-0.16366</z1-m>
-    <x2-m>6.3755</x2-m>
+    <x2-m>6.1655</x2-m>
     <y2-m>0</y2-m>
     <z2-m>1.16616</z2-m>
   </axis>
@@ -243,24 +243,24 @@
   <object-name>HRlinks</object-name>
   <property>/fdm/jsbsim/aircraft/hstab/elevator/elevator-pos-deg</property> 
   <axis>
-    <x1-m>6.43221</x1-m>
-    <y1-m>-1.66764</y1-m>
-    <z1-m>1.08282</z1-m>
-    <x2-m>6.31921</x2-m>
-    <y2-m>-0.12235</y2-m>
-    <z2-m>1.15570</z2-m>
+    <x1-m>6.28506</x1-m>
+    <y1-m>-1.64490</y1-m>
+    <z1-m>1.14061</z1-m>
+    <x2-m>6.17177</x2-m>
+    <y2-m>-0.12085</y2-m>
+    <z2-m>1.19365</z2-m>
   </axis>
-</animation>	
+</animation>
 <animation>
   <type>rotate</type>
   <object-name>HRrechts</object-name>
   <object-name>HRtrim</object-name>
   <property>/fdm/jsbsim/aircraft/hstab/elevator/elevator-pos-deg</property> 
   <axis>
-    <x1-m>6.31921</x1-m>
+    <x1-m>6.15921</x1-m>
     <y1-m>0.12235</y1-m>
     <z1-m>1.15570</z1-m>
-    <x2-m>6.43221</x2-m>
+    <x2-m>6.27221</x2-m>
     <y2-m>1.66764</y2-m>
     <z2-m>1.08282</z2-m>
   </axis>
