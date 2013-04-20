@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             18.04.13
+      Date:             20.04.13
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -396,12 +396,13 @@ JSBSim Extra Aircraft - Extra 500.
                         <x_ac-ft>11.01</x_ac-ft>      <!--dummy value -->
                         <y_ac-ft>8.018</y_ac-ft>
                         <S-ft2>150.96</S-ft2>
-                        <c-ft>4.337</c-ft>
+                        <c_aero-ft>4.337</c_aero-ft>
                   </wing>
                   <hstab>
                         <S-ft2>30.268</S-ft2>
                         <x_ac-ft>29.857</x_ac-ft>
                         <z_ac-ft>10.285</z_ac-ft>
+                        <incidence-deg>0</incidence-deg>
                         <elevator>
                               <H-static-lbsft>2</H-static-lbsft>
                               <Ch_de>-0.4</Ch_de>
@@ -419,16 +420,11 @@ JSBSim Extra Aircraft - Extra 500.
                               <trim>
                                     <S-ft2>1.114</S-ft2>
                                     <c_aero-ft>0.4019</c_aero-ft>
-                                    <coeff-norm>1</coeff-norm>          <!--this is multiplied with normalized trim position to get hinge moment of elevator -->
+                                    <coeff-norm>2</coeff-norm>          <!--this is multiplied with normalized trim position to get hinge moment of elevator -->
                               </trim>
                         </elevator>
                   </hstab>
             </aircraft>
-            <inertia>
-                  <x-cg-in>0</x-cg-in> <!-- dummy values for initialization-->
-                  <y-cg-in>0</y-cg-in>
-                  <z-cg-in>0</z-cg-in>
-            </inertia>
       </jsbsim>
  </fdm>
 
