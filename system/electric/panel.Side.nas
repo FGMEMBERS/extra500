@@ -88,11 +88,11 @@ var SidePanel = {
 		
 		nCompNode = nParent.initNode("Landing");
 		m.LightLanding = Part.ElectricSwitchDT.new(nCompNode,"Light Landing");
-		m.LightLanding.setPoles(1);
+		m.LightLanding.setPoles(2);
 				
 		nCompNode = nParent.initNode("Recognition");
 		m.LightRecognition = Part.ElectricSwitchDT.new(nCompNode,"Light Recognition");
-		m.LightRecognition.setPoles(1);
+		m.LightRecognition.setPoles(2);
 		
 		nCompNode = nParent.initNode("Cabin");
 		m.LightCabin = Part.ElectricSwitchDT.new(nCompNode,"Light Cabin");

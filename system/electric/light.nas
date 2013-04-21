@@ -19,7 +19,7 @@ var LightBoard = {
 		nCompNode = m.nRoot.initNode("Landing");
 		m.Landing = Part.ElectricLight.new(nCompNode,"Landing Light");
 		m.Landing.electricConfig(10.0,24.0);
-		m.Landing.setPower(24.0,500.0);
+		m.Landing.setPower(24.0,100.0);
 		
 		nCompNode = m.nRoot.initNode("Recognition");
 		m.Recognition = Part.ElectricLight.new(nCompNode,"Recognition Light");

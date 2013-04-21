@@ -156,8 +156,15 @@ var plugSidePanel = func(){
 	# Light
 		sidePanel.LightStrobe.Com1.plug(	circuitBreakerPanel.StrobeLight.Out);
 		sidePanel.LightNavigation.Com1.plug(	circuitBreakerPanel.NavLight.Out);
+		
 		sidePanel.LightLanding.Com1.plug(	circuitBreakerPanel.LandingLight.Out);
+		sidePanel.LightLanding.Com2.plug(	mainBoard.GND);
+		sidePanel.LightLanding.L22.plug(	annunciatorPanel.dimTestRelais.P312);
+		
 		sidePanel.LightRecognition.Com1.plug(	circuitBreakerPanel.RecognitionLight.Out);
+		sidePanel.LightRecognition.Com2.plug(	mainBoard.GND);
+		sidePanel.LightRecognition.L22.plug(	annunciatorPanel.dimTestRelais.P302);
+		
 		sidePanel.LightCabin.Com1.plug(		circuitBreakerPanel.CabinLight.Out);
 		sidePanel.LightIce.Com1.plug(		circuitBreakerPanel.IceLight.Out);
 		sidePanel.LightGlare.Com1.plug(		circuitBreakerPanel.GlareLight.Out);
@@ -274,6 +281,8 @@ var plugAnnuciator = func(){
 	annunciatorPanel.plugElectric();
 	lightBoard.annuciatorDimBus.plug(annunciatorPanel.dimTestRelais.P12);# +14-28V Dim Voltage
 	lightBoard.testLightRelais.P11.plug(annunciatorPanel.dimTestRelais.P14);# +28V Light-Test
+	
+	
 }
 
 var plugFuel = func(){
