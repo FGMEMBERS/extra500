@@ -33,7 +33,7 @@
 <turboprop_engine name="turbine_250-B17F2">
 	<!--  -->
 	<milthrust unit="LBS">       1009.3   </milthrust>
-	<idlen1>                       60.0   </idlen1>
+	<idlen1>                       65.0   </idlen1>
 	<maxn1>                       106.0   </maxn1>
 	
 	<maxpower unit="HP">          500   </maxpower>

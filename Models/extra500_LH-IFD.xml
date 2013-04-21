@@ -1,5 +1,29 @@
 <?xml version="1.0"?>
 
+<!--
+    This file is part of extra500
+
+    The Changer is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The Changer is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Thomas Grossberger and Dirk Dittmann
+      Date: March 13 2013
+
+      Last change:      Eric van den Berg
+      Date:             21.04.13
+
+-->
+
 <PropertyList>
 
 <path>extra500_LH-IFD.ac</path>
@@ -37,7 +61,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>IAS</object-name>
-	<property>/velocities/airspeed-kt</property>
+	<property>/instrumentation/airspeed-IFD-LH/indicated-speed-kt</property>
 	<factor>.00289</factor>
 	<axis>
 		<x>0</x>
@@ -48,7 +72,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>IAS.001er</object-name>
-	<property>/velocities/airspeed-kt</property>
+	<property>/instrumentation/airspeed-IFD-LH/indicated-speed-kt</property>
 	<factor>.1</factor>
 	<axis>
 		<x>0</x>
@@ -59,7 +83,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>IAS.010er</object-name>
-	<property>/velocities/airspeed-kt</property>
+	<property>/instrumentation/airspeed-IFD-LH/indicated-speed-kt</property>
 	<factor>.01</factor>
 	<step>10</step>
 	<axis>
@@ -71,7 +95,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>IAS.100er</object-name>
-	<property>/velocities/airspeed-kt</property>
+	<property>/instrumentation/airspeed-IFD-LH/indicated-speed-kt</property>
 	<factor>.001</factor>
 	<step>100</step>
 
@@ -126,7 +150,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>Altitude.00011er</object-name>
-	<property>/position/altitude-ft</property>
+	<property>/instrumentation/altimeter-IFD-LH/indicated-altitude-ft</property>
 	<factor>.01</factor>
 	<axis>
 		<x>0</x>
@@ -137,7 +161,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>Altitude.00100er</object-name>
-	<property>/position/altitude-ft</property>
+	<property>/instrumentation/altimeter-IFD-LH/indicated-altitude-ft</property>
 	<factor>.001</factor>
 	<step>100</step>
 	<axis>
@@ -149,7 +173,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>Altitude.01000er</object-name>
-	<property>/position/altitude-ft</property>
+	<property>/instrumentation/altimeter-IFD-LH/indicated-altitude-ft</property>
 	<factor>.0001</factor>
 	<step>1000</step>
 	<axis>
@@ -161,7 +185,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>Altitude.10000er</object-name>
-	<property>/position/altitude-ft</property>
+	<property>/instrumentation/altimeter-IFD-LH/indicated-altitude-ft</property>
 	<factor>.00001</factor>
 	<step>10000</step>
 
@@ -306,7 +330,7 @@
 <animation>
 	<type>texrotate</type>
 	<object-name>Kompass</object-name>
-	<property>/orientation/heading-deg</property>
+	<property>/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg</property>
 	<factor>1</factor>
 	<axis>
 		<x>0</x>
