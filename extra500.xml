@@ -24,7 +24,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             20.04.13
+      Date:             23.04.13
 -->
 
 	<fileheader>
@@ -174,8 +174,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				<y>  0.00 </y>
 				<z>  0.05 </z>				
 			</location>
-			<static_friction>  0.80 </static_friction>
-			<dynamic_friction> 0.50 </dynamic_friction>
+			<static_friction>  0.70 </static_friction>
+			<dynamic_friction> 0.40 </dynamic_friction>
 			<rolling_friction> 0.03 </rolling_friction>
 			<spring_coeff unit="N/M">        40000 </spring_coeff>
 			<damping_coeff unit="N/M/SEC">  34271.30 </damping_coeff>
@@ -190,8 +190,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				<y> -1.06 </y>
 				<z> 0.150 </z>
 			</location>
-			<static_friction>  0.80 </static_friction>
-			<dynamic_friction> 0.50 </dynamic_friction>
+			<static_friction>  0.70 </static_friction>
+			<dynamic_friction> 0.40 </dynamic_friction>
 			<rolling_friction> 0.03 </rolling_friction>
 			<spring_coeff unit="N/M">        183000 </spring_coeff>
 			<damping_coeff unit="N/M/SEC">  34271.30 </damping_coeff>
@@ -206,8 +206,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				<y>  1.06 </y>
 				<z> 0.150 </z>
 			</location>
-			<static_friction>  0.80 </static_friction>
-			<dynamic_friction> 0.50 </dynamic_friction>
+			<static_friction>  0.70 </static_friction>
+			<dynamic_friction> 0.40 </dynamic_friction>
 			<rolling_friction> 0.03 </rolling_friction>
 			<spring_coeff unit="N/M">        183000 </spring_coeff>
 			<damping_coeff unit="N/M/SEC">  34271.30 </damping_coeff>
@@ -556,7 +556,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			</kinematic>
 
 			<kinematic name="Flaps Control aero">
-                  <!--this is for the earodynamic part of the flap deflection. Much slower to prevent dynamic effects-->
+                  <!--this is for the aerodynamic part of the flap deflection. Much slower to prevent dynamic effects-->
 				<input>fcs/flap-cmd-norm</input>
 				<traverse>
 					<setting>
@@ -1100,30 +1100,30 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   <independentVar lookup="row">aircraft/hstab/alpha-deg</independentVar>
                   <independentVar lookup="column">aircraft/hstab/elevator/elevator-pos-deg</independentVar>
                   <tableData>
-            -20         -10         0           10          20
-  -20   -1.1            -1.1        -1.43354511 -1.06803262 -0.89791721
-  -19   -1.1            -1.1        -1.36186779 -0.99635559 -0.82624018
-  -18   -1.1            -1.1        -1.29019070 -0.92467827 -0.75456303
-  -17   -1.1            -1.1        -1.21851325 -0.85300112 -0.68288565
-  -16   -1.1            -1.1        -1.14683628 -0.78132379 -0.61120844
-  -15   -1.1            -1.44067109 -1.07515895 -0.70964670 -0.53953135
-  -12.5 -1.43159306     -1.26147795 -0.89596575 -0.53045338 -0.36033806
-  -10   -1.25240028     -1.08228481 -0.71677268 -0.35126033 -0.18114504
-  -7.5  -1.07320702     -0.90309167 -0.53757942 -0.17206706 -0.00195173
-  -5    -0.89401394     -0.72389859 -0.35838634  0.00712598  0.17724131
-  -2.5 -0.71482074 -0.54470551 -0.17919315  0.18631916  0.35643455
-   0   -0.53562766 -0.36551225 0           0.36551225     0.53562766  
-   2.5 -0.35643455 -0.18631916 0.17919315  0.54470551  0.71482074
-   5   -0.17724131 -0.00712598 0.35838634  0.72389859  0.89401394
-   7.5  0.00195173  0.17206706 0.53757942  0.90309167  1.07320702
-  10    0.18114504  0.35126033 0.71677268  1.08228481  1.25240028
-  12.5  0.36033806  0.53045338 0.89596575  1.26147795  1.43159306
-  15  0.53953135  0.70964670  1.07515895  1.44067109   1.1
-  16  0.61120844  0.78132379  1.14683628  1.1          1.1
-  17  0.68288565  0.85300112  1.21851325  1.1          1.1 
-  18  0.75456303  0.92467827  1.29019070  1.1          1.1
-  19  0.82624018  0.99635559  1.36186779  1.1          1.1
-  20  0.89791721  1.06803262  1.43354511  1.1          1.1
+        -33    -20         -10         0           10          20
+  -20   -1.1      -1.1            -1.1        -1.43354511 -0.96981937 -0.75369388
+  -19   -1.1      -1.1            -1.1        -1.36186779 -0.89814192 -0.68201661
+  -18   -1.1      -1.1            -1.75391638 -1.29019070 -0.82646489 -0.61033946
+  -17   -2.05238581 -1.89836454     -1.68223906 -1.21851325 -0.75478756 -0.53866220
+  -16   -1.98070824 -1.82668722     -1.61056185 -1.14683628 -0.68311036 -0.46698490
+  -15   -1.90903115 -1.75501013     -1.53888488 -1.07515895 -0.61143321 -0.39530781
+  -12.5 -1.72983789 -1.57581687     -1.35969138 -0.89596575 -0.43223998 -0.21611448
+  -10   -1.55064511 -1.39662397     -1.18049824 -0.71677268 -0.25304693 -0.03692145
+  -7.5  -1.37145138 -1.21743059     -1.00130498 -0.53757942 -0.07385367 0.14227186
+  -5    -1.19225848 -1.03823769     -0.82211196 -0.35838634  0.10533938  0.32146487
+  -2.5 -1.01306534  -0.85904449 -0.64291888 -0.17919315  0.28453258  0.50065804
+   0   -0.83387232  -0.67985106 -0.46372569 0           0.46372569     0.67985106  
+   2.5 -0.65467900  -0.50065804 -0.28453258 0.17919315  0.64291888  0.85904449
+   5   -0.47548580  -0.32146487 -0.10533938 0.35838634  0.82211196  1.03823769
+   7.5 -0.29629281  -0.14227186  0.07385367 0.53757942  1.00130498  1.21743059
+  10   -0.11709952  0.03692145  0.25304693 0.71677268  1.18049824  1.39662397
+  12.5  0.06209352  0.21611448  0.43223998 0.89596575  1.35969138  1.57581687
+  15  0.24128677  0.39530781  0.61143321  1.07515895  1.53888488   1.75501013
+  16  0.31296390  0.46698490  0.68311036  1.14683628  1.61056185   1.82668722
+  17  0.38464120  0.53866220  0.75478756  1.21851325  1.68223906   1.89836454 
+  18  0.45631850  0.61033946  0.82646489  1.29019070  1.75391638   1.1
+  19  0.52799571  0.68201661  0.89814192  1.36186779  1.1          1.1
+  20  0.25	      0.3  		0.5         1.43354511  1.1          1.1
 
                   </tableData>
             </table>
@@ -1138,30 +1138,30 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   <independentVar lookup="row">aircraft/hstab/alpha-deg</independentVar>
                   <independentVar lookup="column">aircraft/hstab/elevator/elevator-pos-deg</independentVar>
                   <tableData>
-                              -20   -10   0     10    20
- -20   0.24109903 0.20124161 0.12777638 0.07092464 0.05013036
- -19   0.22386666 0.18552549 0.11531816 0.06172433 0.04244638
- -18   0.20727308 0.17044824 0.10349887 0.05316296 0.03540127
- -17   0.19131842 0.15600991 0.09231845 0.04524044 0.02899505
- -16   0.17600267 0.14221045 0.08177685 0.03795683 0.02322773
- -15   0.16132590 0.12904991 0.07187422 0.03131210 0.01809927
- -12.5 0.12742873 0.09894346 0.04991267 0.01749534 0.00807324
- -10   0.09752458 0.07283012 0.03194411 0.00767160 0.00204024
- -7.5  0.07161351 0.05070976 0.01796855 0.00184087 0.00000024
- -5    0.04969544 0.03258242 0.00798603 0.00000316 0.00195325
- -2.5  0.03177036 0.01844809 0.00199651 0.00215846 0.00789928
-   0   0.01783831 0.00830676 0          0.00830676  0.01783831 
-   2.5 0.00789928 0.00215846 0.00199651 0.01844809  0.03177036  
-   5   0.00195325 0.00000316 0.00798603 0.03258242  0.04969544
-   7.5 0.00000024 0.00184087 0.01796855 0.05070976  0.07161351 
-  10   0.00204024 0.00767160 0.03194411 0.07283012  0.09752458        
-  12.5 0.00807324 0.01749534 0.04991267 0.09894346  0.12742873  
-  15  0.01809927  0.03131210  0.07187422  0.12904991  0.16132590  
-  16  0.02322773  0.03795683  0.08177685  0.14221045  0.17600267 
-  17  0.02899505  0.04524044  0.09231845  0.15600991  0.19131842
-  18  0.03540127  0.05316296  0.10349887  0.17044824  0.20727308      
-  19  0.04244638  0.06172433  0.11531816  0.18552549  0.22386666
-  20  0.05013036  0.07092464  0.12777638  0.20124161  0.24109903 
+                          -33    -20   -10   0     10    20
+ -20   0.31966200 0.27770889 0.22381367 0.12777638 0.05848028 0.03531977
+ -19   0.29977092 0.25919092 0.20722206 0.11531816 0.05015542 0.02892133
+ -18   0.28051928 0.24131195 0.19126952 0.10349887 0.04246944 0.02316171
+ -17   0.26190627 0.22407174 0.17595576 0.09231845 0.03542237 0.01804101
+ -16   0.24393201 0.20747052 0.16128083 0.08177685 0.02901414 0.01355918
+ -15   0.22659689 0.19150814 0.14724483 0.07187422 0.02324481 0.00971625
+ -12.5 0.18605386 0.15439719 0.11494987 0.04991267 0.01161657 0.00290399
+ -10   0.14950392 0.12127930 0.08664804 0.03194411 0.00398135 0.00008476
+ -7.5  0.11694697 0.09215446 0.06233911 0.01796855 0.00033913 0.00125854
+ -5    0.08838305 0.06702262 0.04202328 0.00798603 0.00068994 0.00642532
+ -2.5  0.06381207 0.04588377 0.02570042 0.00199651 0.00503375 0.01558512
+   0   0.04323414 0.02873794 0.01337058 0          0.01337058  0.02873794 
+   2.5 0.02664924 0.01558512 0.00503375 0.00199651 0.02570042  0.04588377 
+   5   0.01405734 0.00642532 0.00068994 0.00798603 0.04202328  0.06702262
+   7.5 0.00545846 0.00125854 0.00033913 0.01796855 0.06233911  0.09215446 
+  10   0.00085259 0.00008476 0.00398135 0.03194411 0.08664804  0.12127930        
+  12.5 0.00023973 0.00290399 0.01161657 0.04991267 0.11494987  0.15439719  
+  15  0.00361989  0.00971625  0.02324481  0.07187422  0.14724483  0.19150814  
+  16  0.00608998  0.01355918  0.02901414  0.08177685  0.16128083  0.20747052 
+  17  0.00919897  0.01804101  0.03542237  0.09231845  0.17595576  0.22407174
+  18  0.01294685  0.02316171  0.04246944  0.10349887  0.19126952  0.24131195      
+  19  0.01733360  0.02892133  0.05015542  0.11531816  0.20722206  0.25919092
+  20  0.02235922  0.03531977  0.05848028  0.12777638  0.22381367  0.27770889 
                   </tableData>
             </table>
       </sum>
@@ -1267,24 +1267,105 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     </function>
 
 
+<!-- VERTICAL STABILIZER -->
+
+    <function name="aircraft/vstab/beta-stab-deg">
+      <description>sideslip angle at stabilizer</description>
+      <product>
+      <value>57.297</value>
+            <atan2>
+                  <sum>
+                        <property>velocities/v-aero-fps</property>    
+                        <product>
+                              <value>-1</value>
+                              <property>velocities/r-aero-rad_sec</property> 
+                              <sum>
+                              	<property>aircraft/vstab/x_ac-ft</property>
+                                    <value>-11.581</value>
+                              </sum>      
+                        </product>  
+                  </sum>
+                  <pow>
+                        <sum>
+                              <product>
+                                    <property>velocities/u-aero-fps</property>
+                                    <property>velocities/u-aero-fps</property>
+                              </product>
+                              <product>
+                                    <property>velocities/w-aero-fps</property>
+                                    <property>velocities/w-aero-fps</property>
+                              </product>
+                        </sum>
+                        <value>0.5</value>
+                  </pow>
+            </atan2>
+      </product>
+    </function>
+
+    <function name="aircraft/vstab/beta-stab-rad">
+	<product>
+		<property>aircraft/vstab/beta-stab-deg</property> 
+		<value>0.01745</value>
+	</product>
+    </function>
+
+    <function name="velocities/vstab/v-fps">
+      <description>airspeed at vert stabilizer uv</description>
+      <pow>
+            <sum>
+                  <pow>
+                        <sum>
+                              <property>velocities/v-aero-fps</property>    
+                              <product>
+                                    <value>-1</value>
+                                    <property>velocities/r-aero-rad_sec</property> 
+                              	<sum>
+                              		<property>aircraft/vstab/x_ac-ft</property>
+                                    	<value>-11.581</value>
+                              	</sum> 
+                              </product>  
+                        </sum>
+                        <value>2</value>
+                  </pow>
+                  <product>
+                        <property>velocities/u-aero-fps</property>
+                        <property>velocities/u-aero-fps</property>
+                  </product>
+            </sum>
+            <value>0.5</value>
+      </pow>
+    </function>
+
+
 
 <!--START of real summation of FORCES and MOMENTS -->
 		
-		<axis name="X">
-                  <function name="aero/force/X-total">
-                  <product>
-                        <value>-1</value>
-                        <sum>
-                              <property>aero/force/tangent_wing</property>
-			            <property>aero/force/tangent_stab</property>
-                        </sum>
-                  </product>
-                  </function>
+<axis name="X">
+	<function name="aero/force/X-total">
+	<product>
+		<value>-1</value>
+		<sum>
+			<property>aero/force/tangent_wing</property>
+			<property>aero/force/tangent_stab</property>
+		</sum>
+	</product>
+	</function>
+
+	<function name="aero/force/X-aileron">
+	<product>
+		<value>-1</value>
+		<abs>
+			<property>fcs/left-aileron-pos-norm</property>
+		</abs>
+		<property>aero/qbar-psf</property>
+		<property>metrics/Sw-sqft</property>
+		<value>0.00006</value>
+	</product>
+	</function>
 	
-		</axis>
+</axis>
 		
-		<axis name="Y">
-			
+<axis name="Y">
 			<function name="aero/force/Side_beta">
 				<description>Side force due to beta</description>
 				<product>
@@ -1295,22 +1376,22 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				</product>
 			</function>
 			
-		</axis>
+</axis>
 		
-		<axis name="Z">
-                  <function name="aero/force/Z-total">   
-                  <product>
-                        <value>-1</value>               
-                        <sum>
-                              <property>aero/force/normal_wing</property>
-			            <property>aero/force/normal_stab</property>
-                        </sum>
-                  </product>
-                  </function>
+<axis name="Z">
+	<function name="aero/force/Z-total">   
+	<product>
+		<value>-1</value>               
+		<sum>
+			<property>aero/force/normal_wing</property>
+			<property>aero/force/normal_stab</property>
+		</sum>
+	</product>
+	</function>
 			
-		</axis>
+</axis>
 		
-		<axis name="ROLL">
+<axis name="ROLL">
 			
 			<function name="aero/moment/Roll_beta">
 				<description>Roll moment due to beta</description>
@@ -1323,17 +1404,17 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				</product>
 			</function>
 			
-			<function name="aero/moment/Roll_damp">
-				<description>Roll moment due to roll rate</description>
-				<product>
-					<property>aero/qbar-psf</property>
-					<property>metrics/Sw-sqft</property>
-					<property>metrics/bw-ft</property>
-					<property>aero/bi2vel</property>
-					<property>velocities/p-aero-rad_sec</property>
-					<value>-0.4</value>
-				</product>
-			</function>
+	<function name="aero/moment/Roll_damp">
+	<description>Roll moment due to roll rate</description>
+		<product>
+			<property>aero/qbar-psf</property>
+			<property>metrics/Sw-sqft</property>
+			<property>metrics/bw-ft</property>
+			<property>aero/bi2vel</property>
+			<property>velocities/p-aero-rad_sec</property>
+			<value>-0.445</value>
+		</product>
+	</function>
 			
 			<function name="aero/moment/Roll_yaw">
 				<description>Roll moment due to yaw rate</description>
@@ -1347,16 +1428,16 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				</product>
 			</function>
 			
-			<function name="aero/moment/Roll_aileron">
-				<description>Roll moment due to aileron</description>
-				<product>
-					<property>aero/qbar-psf</property>
-					<property>metrics/Sw-sqft</property>
-					<property>metrics/bw-ft</property>
-					<property>fcs/left-aileron-pos-rad</property>
-					<value>0.17</value>
-				</product>
-			</function>
+	<function name="aero/moment/Roll_aileron">
+	<description>Roll moment due to aileron</description>
+		<product>
+			<property>aero/qbar-psf</property>
+			<property>metrics/Sw-sqft</property>
+			<property>metrics/bw-ft</property>
+			<property>fcs/left-aileron-pos-norm</property>
+			<value>0.0277</value>
+		</product>
+	</function>
 			
 			<function name="aero/moment/Roll_rudder">
 				<description>Roll moment due to rudder</description>
@@ -1369,29 +1450,40 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				</product>
 			</function>
 			
-		</axis>
+</axis>
 		
-		<axis name="PITCH">
-                  <function name="aero/moment/M-total">                  
-                        <sum>
-			            <property>aero/moment/M_ac-h</property>			            
-                              <property>aero/moment/M_stab</property>
-                        </sum>
-                  </function>
-		</axis>
+<axis name="PITCH">
+	<function name="aero/moment/M-total">                  
+		<sum>
+			<property>aero/moment/M_ac-h</property>			            
+			<property>aero/moment/M_stab</property>
+		</sum>
+	</function>
+</axis>
 
-		<axis name="YAW">
+<axis name="YAW">
 			
-			<function name="aero/moment/Yaw_beta">
-				<description>Yaw moment due to beta</description>
-				<product>
-					<property>aero/qbar-psf</property>
-					<property>metrics/Sw-sqft</property>
-					<property>metrics/bw-ft</property>
-					<property>aero/beta-rad</property>
-					<value>0.12</value>
+	<function name="aero/moment/Yaw_beta">
+	<description>Yaw moment due to beta</description>
+		<product>
+           		<value>0.5</value>
+            	<property>atmosphere/rho-slugs_ft3</property>
+            	<property>velocities/vstab/v-fps</property>
+            	<property>velocities/vstab/v-fps</property>
+            	<property>aircraft/wing/S-ft2</property>
+			<property>aircraft/wing/b-ft</property>
+			<property>aircraft/vstab/beta-stab-rad</property>
+			<sum>
+				<value>-0.01134</value> 	<!-- fuselage -->
+				<value>-0.0124</value> 		<!-- prop -->
+				<product> 				<!-- wing -->
+					<value>0.023</value>
+					<property>aero/coefficients/cl_ac-h</property>
+					<property>aero/coefficients/cl_ac-h</property>
 				</product>
-			</function>
+			</sum>
+		</product>
+	</function>
 			
 			<function name="aero/moment/Yaw_damp">
 				<description>Yaw moment due to yaw rate</description>
@@ -1416,20 +1508,19 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				</product>
 			</function>
 			
-			<function name="aero/moment/Yaw_aileron">
-				<description>Adverse yaw</description>
-				<product>
-					<property>aero/qbar-psf</property>
-					<property>metrics/Sw-sqft</property>
-					<property>metrics/bw-ft</property>
-					<property>fcs/left-aileron-pos-rad</property>
-					<value>-0.01</value>
-				</product>
-			</function>
+	<function name="aero/moment/Yaw_aileron">
+	<description>Adverse yaw</description>
+		<product>
+			<property>aero/qbar-psf</property>
+			<property>metrics/Sw-sqft</property>
+			<property>fcs/left-aileron-pos-rad</property>
+			<value>0.00254375</value>
+		</product>
+	</function>
 			
-		</axis>
+</axis>
 		
-	</aerodynamics>
+</aerodynamics>
 	
 	<external_reactions>
 	</external_reactions>

@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             20.04.13
+      Date:             23.04.13
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -111,10 +111,15 @@ JSBSim Extra Aircraft - Extra 500.
 		</config>
 	</view>
 	<systems>
+            <path>Aircraft/extra500/system/instrumentation/systems.xml</path>
 		<autopilot>
 			<path>Aircraft/extra500/system/autopilot/generic-autopilot.xml</path>
 		</autopilot>
 	</systems>
+
+      <instrumentation>
+            <path>Aircraft/extra500/system/instrumentation/instrumentation.xml</path>
+      </instrumentation>
 
 	<flaps>
 		<setting>0</setting>
@@ -171,11 +176,7 @@ JSBSim Extra Aircraft - Extra 500.
 
   <menubar include="Dialogs/extra500-menu.xml"/>
  
-  
-  <instrumentation n="0">
-    <path>Aircraft/extra500/Systems/instrumentation.xml</path>
-  </instrumentation>
- </sim>
+</sim>
 
  <!-- trim for level cruise -->
 
@@ -218,6 +219,84 @@ JSBSim Extra Aircraft - Extra 500.
   </KAP140>
  </autopilot>
 
+ <systems>
+      <pitotL>
+            <serviceable>1</serviceable>
+      </pitotL>
+      <pitotR>
+            <serviceable>1</serviceable>
+      </pitotR>
+      <staticL>
+            <serviceable>1</serviceable>
+            <sideslip-error-factor>1</sideslip-error-factor>
+      </staticL>
+      <staticR>
+            <serviceable>1</serviceable>
+            <sideslip-error-factor>1</sideslip-error-factor>
+      </staticR>
+      <staticAP>
+            <serviceable>1</serviceable>
+            <sideslip-error-factor>0.1</sideslip-error-factor>
+      </staticAP>
+ </systems>
+
+ <instrumentation>
+    <airspeed-IFD-LH>
+	  <serviceable type="bool" archive="y">true</serviceable>
+    </airspeed-IFD-LH>
+    <airspeed-IFD-RH>
+	  <serviceable type="bool" archive="y">true</serviceable>
+    </airspeed-IFD-RH>
+    <airspeed-backup>
+	  <serviceable type="bool" archive="y">true</serviceable>
+    </airspeed-backup>
+
+    <altimeter-IFD-LH>
+	  <serviceable type="bool" archive="y">true</serviceable>
+    </altimeter-IFD-LH>
+    <altimeter-IFD-RH>
+	  <serviceable type="bool" archive="y">true</serviceable>
+    </altimeter-IFD-RH>
+    <altimeter-backup>
+	  <serviceable type="bool" archive="y">true</serviceable>
+    </altimeter-backup>
+    <altimeter-AP>
+	  <serviceable type="bool" archive="y">true</serviceable>
+    </altimeter-AP>
+    <cabin-altitude>
+	  <serviceable type="bool" archive="y">true</serviceable>
+    </cabin-altitude>
+
+    <ivsi-IFD-LH>
+        <serviceable type="bool">true</serviceable>
+    </ivsi-IFD-LH>
+    <ivsi-IFD-RH>
+        <serviceable type="bool">true</serviceable>
+    </ivsi-IFD-RH>
+    <cabin-rate-climb>
+        <serviceable type="bool">true</serviceable>
+    </cabin-rate-climb>
+
+    <dme>                                                             
+      <frequencies>
+            <source>/instrumentation/nav-IFD-LH/frequencies/selected-mhz</source>
+      </frequencies>
+      <selector type="int">0</selector>                                     
+    </dme>
+
+    <tcas>
+        <serviceable type="bool">true</serviceable>
+    </tcas>
+
+    <nav-IFD-LH>
+      <volume type="double">0.7</volume>
+    </nav-IFD-LH>
+    <nav-IFD-RH>
+      <volume type="double">0.7</volume>
+    </nav-IFD-RH>
+
+ </instrumentation>
+
  <consumables>
 	 
   <fuel>
@@ -255,28 +334,6 @@ JSBSim Extra Aircraft - Extra 500.
   </fuel>
   
  </consumables>
-
- <instrumentation>
-  <kma20 include="Aircraft/Instruments-3d/kma20/kma20init.xml"/>
-  <attitude-indicator>
-   <config>
-    <tumble-flag archive="y" type="bool">true</tumble-flag>
-   </config>
-  </attitude-indicator>
-  <encoder>
-   <serviceable type="bool">true</serviceable>
-  </encoder>
-  <adf n="0">
-    <ident-audible type="bool">false</ident-audible>
-    <volume type="double">0.7</volume>
-  </adf>
-  <nav n="0">
-    <volume type="double">0.7</volume>
-  </nav>
-  <nav n="1">
-    <volume type="double">0.7</volume>
-  </nav>
- </instrumentation>
 
  <engines>
   <engine>
@@ -400,6 +457,7 @@ JSBSim Extra Aircraft - Extra 500.
                         <y_ac-ft>8.018</y_ac-ft>
                         <S-ft2>150.96</S-ft2>
                         <c_aero-ft>4.337</c_aero-ft>
+				<b-ft>36.089</b-ft>
                   </wing>
                   <hstab>
                         <S-ft2>30.268</S-ft2>
@@ -427,6 +485,11 @@ JSBSim Extra Aircraft - Extra 500.
                               </trim>
                         </elevator>
                   </hstab>
+			<vstab>
+                        <S-ft2>29.439</S-ft2>
+                        <x_ac-ft>27.128</x_ac-ft>
+                        <z_ac-ft>8.294</z_ac-ft>				
+			</vstab>
             </aircraft>
       </jsbsim>
  </fdm>
