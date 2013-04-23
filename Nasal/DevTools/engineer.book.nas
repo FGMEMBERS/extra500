@@ -22,48 +22,76 @@ engineerScreen.add(fuelPage);
 
 ### Electric Screen ##############
 var display = nil;
-# display = Display.new(10,100);
-# 
-# 	display.setfont("FIXED_9x15");
-# 	display.setcolor(1, 1, 1);
-# 	
-# 	display.add(props.globals.getNode("/extra500/EngineerScreen/index"));
-# 	display.add(props.globals.getNode("/extra500/CycleTimeUsed"));
-# 	display.addNamed("cycleTimeUsed    %.4f sec", props.globals.getNode("/extra500/CycleTimeUsed") );
-# 	display.addNasal("cycleTimeUsed    %.4f sec", func()run.cycleTimeUsed );
-# 
-# electricPage.add(display);
 
-# display = Display.new(-300,100);
-# 	display.setfont("FIXED_9x15");
-# 	display.setcolor(1, 1, 1);
+# display = Display.new(10,-100);
+# 	display.title = "Generator Control Unit";
+# 	display.font = "FIXED_9x15";
+# 	display.fg = [1.0, 1.0, 1.0, 1.0];
+# 	display.bg = [0.5, 0.5, 0.5, 0.85];
+# 	display.width = 270;
+# 	display.height = 250;
 # 	
-# 	display.add(props.globals.getNode("/extra500/CycleTimeUsed"));
-# 	display.add(props.globals.getNode("/extra500/EngineerScreen/index"));
-# 	display.addNasal("cycleTimeUsed    %.4f sec", func()run.cycleTimeUsed );
-# 	display.addNamed("cycleTimeUsed    %.4f sec", props.globals.getNode("/extra500/CycleTimeUsed") );
+# 	display.addNasal("generatorHasPower  %i", func()extra500.generatorControlUnit.generatorHasPower );
+# 	display.addNasal("controlGenerator   %i", func()extra500.generatorControlUnit.controlGenerator );
+# 	display.addNasal("controlStarter     %i", func()extra500.generatorControlUnit.controlStarter );
 # 	
 # electricPage.add(display);
 
+display = Display.new(10,350);
+	display.title = "Battery";
+	display.font = "FIXED_9x15";
+	display.fg = [1.0, 1.0, 1.0, 1.0];
+	display.bg = [0.5, 0.5, 0.5, 0.85];
+	display.width = 270;
+	display.height = 90;
+	
+	display.addNamed("used    %.2f As", props.globals.getNode("/extra500/Battery/usedAs") );
+	display.addNamed("level   %.2f %%", (props.globals.getNode("/extra500/Battery/loadLevel")) );
+	
+electricPage.add(display);
+
+display = Display.new(10,100);
+
+	display.title = "Main Relais";
+	display.font = "FIXED_9x15";
+	display.fg = [1.0, 1.0, 1.0, 1.0];
+	display.bg = [0.5, 0.5, 0.5, 0.85];
+	display.width = 270;
+	display.height = 240;
+	
+	display.add_Node("Battery      ", props.globals.getNode("/extra500/mainBoard/Relais/BatteryRelais/state") );
+	display.add_Node("DayNight     ", props.globals.getNode("/extra500/mainBoard/Relais/DayNightRelais/state") );
+	display.add_Node("TestLight    ", props.globals.getNode("/extra500/mainBoard/Relais/TestLightRelais/state") );
+	display.add_Node("RCCB         ", props.globals.getNode("/extra500/mainBoard/Relais/RCCBRelais/state") );
+	display.add_Node("Emergency    ", props.globals.getNode("/extra500/mainBoard/Relais/EmergencyRelais/state") );
+	display.add_Node("Avionics     ", props.globals.getNode("/extra500/mainBoard/Relais/AvionicsRelais/state") );
+	display.add_Node("Start        ", props.globals.getNode("/extra500/mainBoard/Relais/StartRelais/state") );
+	display.add_Node("Generator    ", props.globals.getNode("/extra500/mainBoard/Relais/GeneratorRelais/state") );
+	
+electricPage.add(display);
+
+
+# 
 # display = Display.new(10,-200);
-# 	display.setfont("FIXED_9x15");
-# 	display.setcolor(1, 1, 1);
+# 	display.font = "FIXED_9x15";
+# 	display.fg = [1.0, 1.0, 1.0, 1.0];
 # 	display.bg = [0.5, 0.5, 0.5, 0.85];
 # 	display.width = 250;
 # 	display.height = 600;
-# 	
-# electricPage.add(display);
+	
+electricPage.add(display);
 
 #---------------------------------
 
 ### Lights Screen ##############
 
 display = Display.new(10,-50);
-	display.setfont("FIXED_9x15");
-	display.setcolor(1, 1, 1);
+	display.title = "Lights Outside";
+	display.font = "FIXED_9x15";
+	display.fg = [1.0, 1.0, 1.0, 1.0];
 	display.bg = [0.5, 0.5, 0.5, 0.85];
 	display.width = 250;
-	display.height = 140;
+	display.height = 170;
 		
 	display.addNamed("Strobe         %.2f %%", props.globals.getNode("/extra500/Light/Strobe/state") );
 	display.addNamed("Navigation     %.2f %%", props.globals.getNode("/extra500/Light/Navigation/state") );
@@ -73,12 +101,13 @@ display = Display.new(10,-50);
 	
 electricLightPage.add(display);
 	
-display = Display.new(10,-200);
-	display.setfont("FIXED_9x15");
-	display.setcolor(1, 1, 1);
+display = Display.new(10,-300);
+	display.title = "Lights Inside";
+	display.font = "FIXED_9x15";
+	display.fg = [1.0, 1.0, 1.0, 1.0];
 	display.bg = [0.5, 0.5, 0.5, 0.85];
 	display.width = 250;
-	display.height = 450;
+	display.height = 490;
 	
 	
 	display.addNamed("Cabin              %.2f %%", props.globals.getNode("/extra500/Light/Cabin/state") );
@@ -108,11 +137,12 @@ display = Display.new(10,-200);
 electricLightPage.add(display);
 
 display = Display.new(-10,-50);
-	display.setfont("FIXED_9x15");
-	display.setcolor(1, 1, 1);
+	display.title = "Lights Relais";
+	display.font = "FIXED_9x15";
+	display.fg = [1.0, 1.0, 1.0, 1.0];
 	display.bg = [0.5, 0.5, 0.5, 0.85];
 	display.width = 270;
-	display.height = 100;
+	display.height = 140;
 	
 	display.add_Node("Day/Night Relais       ", props.globals.getNode("/extra500/mainBoard/Relais/DayNightRelais/state") );
 	display.add_Node("mainBoard Test Relais  ", props.globals.getNode("/extra500/mainBoard/Relais/TestLightRelais/state") );
@@ -123,11 +153,12 @@ electricLightPage.add(display);
 	
 
 display = Display.new(-10,-200);
-	display.setfont("FIXED_9x15");
-	display.setcolor(1, 1, 1);
+	display.title = "Lights Annuciator";
+	display.font = "FIXED_9x15";
+	display.fg = [1.0, 1.0, 1.0, 1.0];
 	display.bg = [0.5, 0.5, 0.5, 0.85];
 	display.width = 270;
-	display.height = 800;
+	display.height = 840;
 	
 	
 	display.addNamed("Generator Fail        %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/GeneratorFail/state") );
@@ -167,11 +198,12 @@ display = Display.new(-10,-200);
 electricLightPage.add(display);
 
 display = Display.new(-320,-50);
-	display.setfont("FIXED_9x15");
-	display.setcolor(1, 1, 1);
+	display.title = "Lights Indication";
+	display.font = "FIXED_9x15";
+	display.fg = [1.0, 1.0, 1.0, 1.0];
 	display.bg = [0.5, 0.5, 0.5, 0.85];
 	display.width = 270;
-	display.height = 200;
+	display.height = 220;
 	
 	display.addNamed("Flap Transition  %.2f %%", props.globals.getNode("/extra500/Light/FlapTransition/state") );
 	display.addNamed("Flap 15          %.2f %%", props.globals.getNode("/extra500/Light/Flap15/state") );

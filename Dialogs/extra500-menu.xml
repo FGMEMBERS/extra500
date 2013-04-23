@@ -47,16 +47,6 @@
 			       </binding>
 			</item>
 			<item>
-				<name>UI-echo</name>
-				<label>UI echo</label>
-				<binding>
-					<command>nasal</command>
-					<script><![CDATA[
-						UI.echo();
-					]]></script>
-				</binding>
-			</item>
-			<item>
 			       <name>auto_start</name>
 			       <label>Autostart</label>
 				<binding>

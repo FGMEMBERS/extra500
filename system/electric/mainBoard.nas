@@ -1,3 +1,5 @@
+
+
 var MainBoard = {
 	new : func{
 		var m = {parents:[
@@ -8,9 +10,6 @@ var MainBoard = {
 	# Ground Connector
 		m.GND = Part.ElectricConnector.new("GND");
 		
-		var node = m.nRoot.initNode("Battery");
-		m.oBattery = Part.ElectricBattery.new(node,"Battery");
-		m.oBattery.setVolt(24.0);
 		
 	# Relais
 		nParent = m.nRoot.initNode("Relais");
@@ -49,15 +48,40 @@ var MainBoard = {
 		m.avionicsRelais = Part.ElectricRelaisXPST.new(nCompNode,"Avionics Relais");
 		m.avionicsRelais.setPoles(1);
 		
+		nCompNode = nParent.initNode("StartRelais");
+		m.startRelais = Part.ElectricRelaisXPDT.new(nCompNode,"Start Relais");
+		m.startRelais.setPoles(3);
+		# 1 iBus20 	- iBus30
+		# 2 RCCB 	- CB/GND
+		# 3 JB4E20 	- JB3E20
+		
+		nCompNode = nParent.initNode("GeneratorRelais");
+		m.generatorRelais = Part.ElectricRelaisXPDT.new(nCompNode,"Generator Relais");
+		m.generatorRelais.setPoles(3);
+		# 1 Bus30 	- Shunt
+		# 2 iBus01
+		
+		
+		
+		
+	# Pre Bus
+		m.iHotSourceBus = Part.ElectricBusDiode.new("#HotSourceBus");
+		m.iHotRelaisBus = Part.ElectricBus.new("#HotRelaisBus");
+		
 		
 	#internal Buses
 		
 		m.iBus20 = Part.ElectricBus.new("#20");
 		m.iBus10 = Part.ElectricBus.new("#10");
 		m.iBus11 = Part.ElectricBus.new("#11");
-		m.iBus01 = Part.ElectricBus.new("#01");
+		m.iBus01 = Part.ElectricBusDiode.new("#01");
 		m.iBus12 = Part.ElectricBus.new("#12");
 		m.iBus13 = Part.ElectricBus.new("#13");
+		m.iBus30 = Part.ElectricBus.new("#30");
+		
+		m.JB3E20 = Part.ElectricBus.new("#JB3E20");
+		m.JB4E20 = Part.ElectricBus.new("#JB4E20");
+		
 	
 	# main Buses
 		
@@ -84,8 +108,8 @@ var MainBoard = {
 		return m;
 	},
 	update : func(timestamp){
-		Part.etd.print("\n\n\n---------------- update -----------\n");
-		me.oBattery.update(timestamp);
+		#Part.etd.print("\n\n\n---------------- update -----------\n");
+		#battery.update(timestamp);
 		
 	},
 	applyVoltage : func(electron,name=""){ 
@@ -104,4 +128,13 @@ var MainBoard = {
 	
 };
 
+	
+
 var mainBoard = MainBoard.new();
+
+var generatorControlUnit = Part.GeneratorControlUnit.new(props.globals.getNode("extra500/GeneratorControlUnit",1),"Generator Control Unit");
+
+var battery = Part.ElectricBattery.new(props.globals.getNode("extra500/Battery",1),"Battery");
+
+var generator = Part.ElectricGenerator.new(props.globals.getNode("extra500/Generator",1),"Generator");
+generator.setPower(24.0,6000.0);

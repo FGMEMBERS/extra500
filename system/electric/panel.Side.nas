@@ -61,7 +61,7 @@ var SidePanel = {
 		
 		nCompNode = nParent.initNode("Generator");
 		m.MainGenerator = Part.ElectricSwitchCO.new(nCompNode,"Main Generator");
-		m.MainGenerator.setPoles(1);
+		m.MainGenerator.setPoles(2);
 		
 		nCompNode = nParent.initNode("ExternalPower");
 		m.MainExternalPower = Part.ElectricSwitchDT.new(nCompNode,"Main External Power");

@@ -68,9 +68,9 @@ var canvas_demo = {
 		me.textSim.setText(text);
 # 		
 		text = "";
+		text ~= sprintf("Generator  %0.2f V   %0.2f A\n",extra500.mainBoard.generatorShunt.voltIndicated,extra500.mainBoard.generatorShunt.ampereIndicated);
 		text ~= sprintf("Battery    %0.2f V   %0.2f A\n",extra500.mainBoard.batteryShunt.voltIndicated,extra500.mainBoard.batteryShunt.ampereIndicated);
-		text ~= sprintf("Generator  %0.2f V   %0.2f A\n",0.0,0.0);
-		text ~= sprintf("Altenator  %0.2f V   %0.2f A\n",0.0,0.0);
+		text ~= sprintf("Altenator  %0.2f V   %0.2f A\n",extra500.mainBoard.alternatorShunt.voltIndicated,extra500.mainBoard.alternatorShunt.ampereIndicated);
 		#text ~="\nLight\n";
 # 		text ~= sprintf("Keypad     %0.2f %%\n",extra500.lightBoard.Keypad.state);
 # 		text ~= sprintf("Glare      %0.2f %%\n",extra500.lightBoard.Glare.state);

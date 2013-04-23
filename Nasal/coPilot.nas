@@ -18,19 +18,28 @@ var auto_start = func(){
 };
 
 var auto_engine_start = func(){
-	setprop("/controls/electric/engine/generator",1);
-	UI.oCockpit.click("Main Battery on");
-	UI.oCockpit.click("Fuel Pump 2 on");
+	#setprop("/controls/electric/engine/generator",1);
 	setprop("/controls/engines/engine[0]/cutoff",0);
-	setprop("/controls/engines/engine[0]/starter",1);
+	
+	UI.oCockpit.click("Main Battery on");
+	UI.click("Main Generator on");
+	UI.oCockpit.click("Fuel Pump 2 on");
+	
+	UI.click("Engine Motoring normal");
+	UI.click("Engine Start on");
+	#setprop("/controls/engines/engine[0]/starter",1);
 };
 
 var auto_engine_shutdown = func(){
-	setprop("/controls/engines/engine[0]/starter",0);
+	#setprop("/controls/engines/engine[0]/starter",0);
 	setprop("/controls/engines/engine[0]/cutoff",1);
-	setprop("/controls/electric/engine/generator",0);
+	#setprop("/controls/electric/engine/generator",0);
+	
+	UI.click("Engine Start off");
 	UI.oCockpit.click("Fuel Pump 2 off");
 	UI.oCockpit.click("Main Battery off");
+	UI.click("Main Standby Alternator off");
+	UI.click("Main Generator off");
 };
 
 
@@ -161,6 +170,7 @@ var engine_start = func(){
 	settimer(func{
 		
 			CoPilot.say("Condition Lever - Fully forward ... ???");
+			setprop("/controls/engines/engine[0]/cutoff",0);
 		}, 22.0 );
 	settimer(func{
 			CoPilot.say("TOT - Monitor < 850 °C ... ???");
@@ -222,6 +232,7 @@ var engine_shutdown = func(){
 	settimer(func{
 			
 			CoPilot.say("Condition Lever - FUEL OFF ... ???");
+			setprop("/controls/engines/engine[0]/cutoff",1);
 		}, 16.0 );
 	settimer(func{
 			UI.click("Main Battery off");

@@ -182,6 +182,6 @@ var ElectricFuseAble = {
 	fuseReset : func(){
 		#global.fnAnnounce("debug",""~me.name~"\t\t ElectricFuseAble.fuseReset() ... ");
 		me.ampereUsed = 0.0;
-		me.nAmpereUsed.setValue(me.ampereUsed);
+		#me.nAmpereUsed.setValue(me.ampereUsed);
 	},
 };

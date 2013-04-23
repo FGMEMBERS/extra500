@@ -8,8 +8,11 @@ extra500.plugElectric();
 
 var simulation_cycle = func(){
 	var start = systime();
+	Part.etd.cls();
+	#extra500.mainBoard.update(start);
+	extra500.generator.update(start);
+	extra500.battery.update(start);
 	
-	extra500.mainBoard.update(start);
 	extra500.oFuelSystem.update();
 	
 	IFD.demo.update();

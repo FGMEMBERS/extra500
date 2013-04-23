@@ -56,6 +56,7 @@
 				 <command>nasal</command>
 				 <script><![CDATA[
 					Part.etd.on = 1;
+					Dialogs.debug_electric.open();
 				]]></script>
 			 </binding>
 		 </key>
@@ -67,6 +68,7 @@
 				 <command>nasal</command>
 				 <script><![CDATA[
 					Part.etd.on = 0;
+					Dialogs.debug_electric.close();
 				]]></script>
 			 </binding>
 		 </key>

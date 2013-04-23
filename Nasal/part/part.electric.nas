@@ -11,13 +11,14 @@ var ElectricTreeDebugger = {
 		m.defaultStr 	= "                                       ";
 		m.debugLevel	=0;
 		m.highLightType = "Relais";
-		m.excludeType 	= "Connector";
+		m.excludeType 	= "";
 		m.debugName 	= "";
+		m.nDebugOutput = props.globals.initNode("extra500/DebugOutput","","STRING");
 		return m;
 
 	},
 	colorRed : func(s) { return globals.string.color("32", s)},
-	in : func(type,name,connector,electron,icon="└┬"){
+	in : func(type,name,connector,electron,icon=""){#└┬
 		if (me.on == 1){
 			if (find(me.debugName,name) > -1){
 				me.debugLevel+=1;
@@ -31,15 +32,17 @@ var ElectricTreeDebugger = {
 				}
 				if (find(type,me.excludeType) == -1){
 					var space = substr(me.defaultStr,0,me.depth);
-					var output = sprintf("%s %s %s %s %s %s",space,icon,type,name,connector,electron.getText());
-					print(output);
+					var output = me.nDebugOutput.getValue();
+					output ~= sprintf("%s %s %s %s %s %s\n",space,icon,type,name,connector,electron.getText());
+					#print(output);
+					me.nDebugOutput.setValue(output);
 				}
 				
 			}
 			me.depth += 1;
 		}
 	},
-	out : func(type,name,connector,electron,icon="┌┴"){
+	out : func(type,name,connector,electron,icon=""){#┌┴
 		if (me.on == 1){
 			if (me.debugLevel > 0){
 				if (find(type,me.highLightType) > -1){
@@ -47,8 +50,10 @@ var ElectricTreeDebugger = {
 				}
 				if (find(type,me.excludeType) == -1){
 					var space = substr(me.defaultStr,0,me.depth);
-					var output = sprintf("%s%s %s %s %s %s",space,icon,type,name,connector,electron.getText());
-					print(output);
+					var output = me.nDebugOutput.getValue();
+					output ~= sprintf("%s%s %s %s %s %s\n",space,icon,type,name,connector,electron.getText());
+					#print(output);
+					#me.nDebugOutput.setValue(output);
 				}
 			}
 			if (find(me.debugName,name) > -1){
@@ -59,17 +64,25 @@ var ElectricTreeDebugger = {
 	},
 	echo : func(msg,icon="**"){
 		if (me.debugLevel > 0){
-			
 			var space = substr(me.defaultStr,0,me.depth);
-			var output = sprintf("%s%s %s",space,icon,msg);
-			print(output);
+			var output = me.nDebugOutput.getValue();
+			output ~= sprintf("%s%s %s\n",space,icon,msg);
+			#print(output);
+			me.nDebugOutput.setValue(output);
 			
 		}
 	},
 	print : func(msg){
 		if (me.on == 1){
-			print(msg);
+			var output = me.nDebugOutput.getValue();
+			output ~= msg~"\n";
+			#print(msg);
+			me.nDebugOutput.setValue(output);
+			
 		}
+	},
+	cls : func(){
+		me.nDebugOutput.setValue("");
 	},
 };
 
@@ -119,7 +132,7 @@ var Electron ={
 		me.timestamp	= timestamp;
 	},
 	getText : func(){
-		return sprintf("%0.4fV %0.4fΩ %0.4fA %f",me.volt,me.resistor,me.ampere,me.timestamp);
+		return sprintf("%0.4fV %0.4fR %0.4fA %f",me.volt,me.resistor,me.ampere,me.timestamp);
 	}
 };
 
@@ -299,6 +312,15 @@ var ElectricBus = {
 		connector.plug(me.connectors[name]);
 		me.order();
 	},
+	con : func(name="default"){
+		if (name == "default"){
+			name = sprintf("%s-%03i",me.name,size(me.connectors));
+		}
+		me.connectors[name] =  ElectricConnector.new(name);
+		me.connectors[name].solder(me);
+		me.order();
+		return me.connectors[name];
+	},
 	applyVoltage : func(electron,name=""){ 
 		etd.in("Bus",me.name,name,electron);
 		var GND = 0;
@@ -362,6 +384,15 @@ var ElectricBusDiode = {
 		connector.plug(me.connectors[name]);
 		me.order();
 	},
+	con : func(name="default"){
+		if (name == "default"){
+			name = sprintf("%s-%03i",me.name,size(me.connectors));
+		}
+		me.connectors[name] =  ElectricConnector.new(name);
+		me.connectors[name].solder(me);
+		me.order();
+		return me.connectors[name];
+	},
 	applyVoltage : func(electron,name=""){ 
 		etd.in("BusDiode",me.name,name,electron);
 		var GND = 0;
@@ -386,60 +417,8 @@ var ElectricBusDiode = {
 	}
 };
 
-# var ElectricBusGND = {
-# 	new : func(name){		
-# 		var m = {parents:[
-# 			ElectricBusDiode
-# 		]};
-# 		m.name = name;
-# 		m.connectors = {};
-# 		m.electron = Electron.new();
-# 		m.electronTmp = Electron.new();
-# 		
-# 		m.Minus = ElectricConnector.new("-");
-# 		m.Minus.solder(m);
-# 		
-# 		return m;
-# 	},
-# 	plug : func(connector,name="default"){
-# 		if (name == "default"){
-# 			name = me.name~"-"~size(me.connectors);
-# 		}
-# 		me.connectors[name] = ElectricConnector.new(name);
-# 		me.connectors[name].solder(me);
-# 		me.connectors[name].plug(connector);
-# 		connector.plug(me.connectors[name]);
-# 		me.order();
-# 	},
-# 	applyVoltage : func(electron,name=""){ 
-# 		etd.in("Bus",me.name,name,electron);
-# 		var GND = 0;
-# 		var ampereSum = 0;
-# 		if ( electron != nil){
-# 			foreach(LOOP;var i;me.index) {
-# 				if (i != name){
-# 					if ( me.connectors[i].applyVoltage(electron) ){
-# 						GND = 1;
-# 						break LOOP;
-# 					}
-# 				}
-# 			}
-# 		}
-# 		etd.out("Bus",me.name,name,electron);
-# 		return GND;
-# 	},
-# 	order : func(){
-# 		me.index = sort(keys(me.connectors), func (a,b) cmp (me.connectors[a].name, me.connectors[b].name)) ;
-# 	},
-# 	echoOrder : func(){
-# 		foreach(var i;me.index) {
-# 			print(sprintf("Bus %s %s %s",me.connectors[i].name,me.connectors[i].connector.name,me.connectors[i].connector.electricAble.name));
-# 		}
-# 	}
-# };
- 
 var ElectricBattery = {
-	new : func(nRoot,name){
+	new : func(nRoot,name,capacityAh=28.0){
 				
 		var m = {parents:[
 			ElectricBattery,
@@ -447,30 +426,43 @@ var ElectricBattery = {
 			ElectricAble.new(nRoot,name)
 		]};
 		
-		m.capacityAs = 230400.0;
-		m.usedAs = 0.0;
-		m.loadLevel = 1.0;
+		m.capacityAs = capacityAh*3600;
+		m.loadLevel = 0.8;
+		m.usedAs = -(m.capacityAs * (1.0-m.loadLevel));
 		m.nCapacityAs = nRoot.initNode("capacityAs",m.capacityAs,"DOUBLE");
-		m.nUsedAs = nRoot.initNode("usedAs",0.0,"DOUBLE");
+		m.nUsedAs = nRoot.initNode("usedAs",m.usedAs,"DOUBLE");
 		m.nLoadLevel = nRoot.initNode("loadLevel",m.loadLevel,"DOUBLE");
 		m.simTime = systime();
 		
 		m.electron = Electron.new();
 		
-		m.plus = ElectricConnector.new("+");
-		m.minus = ElectricConnector.new("-");
+		m.Plus = ElectricConnector.new("+");
+		m.Minus = ElectricConnector.new("-");
 		
-		m.plus.solder(m);
-		m.minus.solder(m);
+		m.Plus.solder(m);
+		m.Minus.solder(m);
 		return m;
 
 	},
 	applyVoltage : func(electron,name=""){ 
-		if (name == "+"){
-			return 1.0;
+		etd.in("Battery",me.name,name,electron);
+		var GND = 0;
+		
+		if (electron != nil){
+			
+			if (name == "+"){
+				etd.print("Battery loading ...");
+				electron.ampere = 2.8 * (1-me.loadLevel);
+				me.setAmpereUsage(electron.ampere);
+				GND = 1;
+			}
+			
+			
 		}
+		etd.out("Battery",me.name,name,electron);
+		return GND;
 	},
-	setAmpereOutput : func(ampere){
+	setAmpereUsage : func(ampere){
 		#global.fnAnnounce("debug",""~me.name~"\t\t ElectricBattery.setAmpereOutput("~ampere~"A) ... ");
 		
 		var simNow = systime();
@@ -485,7 +477,7 @@ var ElectricBattery = {
 		
 		me.usedAs += usedAs;
 				
-		me.loadLevel = (me.capacityAs - me.usedAs) / me.capacityAs;
+		me.loadLevel = (me.capacityAs + me.usedAs) / me.capacityAs;
 		
 		me.nUsedAs.setValue(me.usedAs);
 		me.nLoadLevel.setValue(me.loadLevel);
@@ -493,8 +485,8 @@ var ElectricBattery = {
 	},
 	update : func(timestamp){
 		
-		etd.echo("--- Battery.update() ...          ---");
-		etd.echo("-------------------------------------");
+		etd.print("--- Battery.update() ...          ---");
+		etd.print("-------------------------------------");
 		#etd.echo("Battery.update() ...");
 		
 		me.electron.volt = 24.0;
@@ -503,11 +495,11 @@ var ElectricBattery = {
 		me.electron.timestamp = timestamp;
 		
 		var GND = 0;
-		GND = me.plus.applyVoltage(me.electron);
+		GND = me.Plus.applyVoltage(me.electron);
 		if (GND > 0){
-			me.setAmpereOutput(me.electron.ampere);
+			me.setAmpereUsage(-me.electron.ampere);
 		}
-		etd.echo("-------------------------------------");
+		etd.print("-------------------------------------");
 	},
 	test_consumer : func(electron){
 		electron.resistor += 100.0;
@@ -515,6 +507,216 @@ var ElectricBattery = {
 	}
 	
 };
+
+var ElectricGenerator = {
+	new : func(nRoot,name){
+				
+		var m = {parents:[
+			ElectricGenerator,
+			Part.new(nRoot,name),
+			ElectricAble.new(nRoot,name)
+		]};
+		
+		m.simTime = systime();
+		
+		m.electron = Electron.new();
+		m.capStarter = 0;
+		
+		m.Plus = ElectricConnector.new("+");
+		m.Minus = ElectricConnector.new("-");
+		m.InterPole = ElectricConnector.new("InterPole");
+		
+		m.nEngineRunning = props.globals.getNode("engines/engine[0]/running",1);
+		m.nControlStarter = props.globals.getNode("controls/engines/engine[0]/starter",1);
+		m.nControlGenerator = props.globals.getNode("controls/electric/engine/generator",1);
+		
+		m.Plus.solder(m);
+		m.Minus.solder(m);
+		m.InterPole.solder(m);
+		return m;
+
+	},
+	capacitorStarter : func (amount){
+		me.capStarter += amount;
+		if (me.capStarter > 3){me.capStarter=3;}
+		if (me.capStarter < 0){me.capStarter=0;}
+		
+
+		me.nControlStarter.setValue(me.capStarter);
+		me.nControlGenerator.setValue(me.capStarter);
+
+	},
+	applyVoltage : func(electron,name=""){ 
+		etd.in("Generator",me.name,name,electron);
+		var GND = 0;
+		
+		if (electron != nil){
+			me.setVolt(electron.volt);
+			electron.resistor += me.resistor;# * me.qos
+			
+			if (name == "+"){
+				GND = me.Minus.applyVoltage(electron);
+				if (GND){
+					var watt = me.electricWork(electron);
+					me.nControlStarter.setValue(1);
+					me.nControlGenerator.setValue(1);
+					me.capacitorStarter(3);
+					#print("Generator.applyVoltage ... starting");
+				}
+				
+			}
+			
+			me.setAmpere(electron.ampere);
+		}
+		etd.out("Generator",me.name,name,electron);
+		return GND;
+	},
+	setAmpereOutput : func(ampere){
+		#global.fnAnnounce("debug",""~me.name~"\t\t ElectricBattery.setAmpereOutput("~ampere~"A) ... ");
+		
+		var simNow = systime();
+
+		me.setAmpere(ampere);
+		
+	},
+	update : func(timestamp){
+		
+		etd.print("--- Generator.update() ...        ---");
+		
+		me.capacitorStarter(-1);
+		
+		if (me.nEngineRunning.getValue()){
+			#etd.echo("Battery.update() ...");
+			#me.nControlStarter.setValue(0);
+			#me.nControlGenerator.setValue(0);
+			
+			etd.print("-------------------------------------");
+			me.electron.volt = 28.0;
+			me.electron.resistor = 0.0;
+			me.electron.ampere = 0.0;
+			me.electron.timestamp = timestamp;
+			
+			var GND = 0;
+			GND = me.InterPole.applyVoltage(me.electron);
+			me.electron.resistor = 0;
+			me.electron.ampere = 0;
+			GND = me.Plus.applyVoltage(me.electron);
+			if (GND > 0){
+				me.setAmpereOutput(me.electron.ampere);
+			}
+		}else{
+			me.electron.volt = 0.1;
+			me.electron.resistor = 0.0;
+			me.electron.ampere = 0.0;
+			me.electron.timestamp = timestamp;
+			GND = me.InterPole.applyVoltage(me.electron);
+			etd.print("--- Engine not running            ---");
+		}
+		etd.print("-------------------------------------");
+	}
+};
+
+var GeneratorControlUnit = {
+	new : func(nRoot,name){
+		var m = {parents:[
+			GeneratorControlUnit,
+			Part.new(nRoot,name),
+			ElectricAble.new(nRoot,name)
+		]};
+		
+		m.generatorHasPower = 0;
+		m.controlStarter = 0;
+		
+		m.StartPower = ElectricConnector.new("StartPower");
+		m.StartContactor = ElectricConnector.new("StartContactor");
+		m.RemoteTrip = ElectricConnector.new("RemoteTrip");
+		m.OverVoltageSelfTest = ElectricConnector.new("OverVoltageSelfTest");
+		m.InterPole = ElectricConnector.new("InterPole");
+		m.GeneratorControlSwitch = ElectricConnector.new("GeneratorControlSwitch");
+		m.Reset = ElectricConnector.new("Reset");
+		m.AntiCycle = ElectricConnector.new("AntiCycle");
+		m.LoadBus = ElectricConnector.new("LoadBus");
+		m.POR = ElectricConnector.new("POR");
+		m.LineContactorCoil = ElectricConnector.new("LineContactorCoil");
+		m.GeneratorOutput = ElectricConnector.new("GeneratorOutput");
+		m.GND = ElectricConnector.new("GND");
+		
+		
+		m.generatorOutputBus = ElectricBus.new("GeneratorOutputBus");
+		
+		m.nControlGenerator = props.globals.getNode("controls/electric/engine/generator",1);
+		
+		m.StartPower.solder(m);
+		m.StartContactor.solder(m);
+		m.RemoteTrip.solder(m);
+		m.OverVoltageSelfTest.solder(m);
+		m.InterPole.solder(m);
+		m.GeneratorControlSwitch.solder(m);
+		m.Reset.solder(m);
+		m.AntiCycle.solder(m);
+		m.LoadBus.solder(m);
+		m.POR.solder(m);
+		m.LineContactorCoil.solder(m);
+		m.GeneratorOutput.solder(m);
+			
+		append(aListSimStateAble,m);
+		return m;
+	},
+	simReset : func(){
+		me.capacitorStarter(-1);
+	},
+	simUpdate : func(){
+
+	},
+	capacitorStarter : func (amount){
+		me.controlStarter += amount;
+		if (me.controlStarter > 3){me.controlStarter=3;}
+		if (me.controlStarter < 0){me.controlStarter=0;}
+	},
+	applyVoltage : func(electron,name=""){ 
+		etd.in("GeneratorControlUnit",me.name,name,electron);
+		var GND = 0;
+		if(electron != nil){
+			electron.resistor += 4700;
+			if (name == "POR" or name == "LoadBus"){
+				if (me.controlStarter>0){
+					GND = me.StartContactor.applyVoltage(electron);
+				}
+				GND = me.GeneratorOutput.applyVoltage(electron);
+			}elsif (name == "InterPole"){
+				if (electron.volt >= 27.0){
+					me.generatorHasPower = 1;
+					me.capacitorStarter(-4);
+				}else{
+					me.generatorHasPower = 0;
+				}
+				GND = me.GND.applyVoltage(electron);
+			}elsif (name == "RemoteTrip"){
+				GND = me.GND.applyVoltage(electron);
+			}elsif (name == "OverVoltageSelfTest"){
+				GND = me.GND.applyVoltage(electron);
+			}elsif (name == "GeneratorControlSwitch"){
+				if (me.generatorHasPower == 1){
+					GND = me.LineContactorCoil.applyVoltage(electron);
+				}
+				GND = me.GND.applyVoltage(electron);
+			}elsif (name == "Reset"){
+				GND = me.GND.applyVoltage(electron);
+			}elsif (name == "AntiCycle"){
+				GND = me.GND.applyVoltage(electron);
+			}elsif (name == "StartPower"){
+				if (me.generatorHasPower == 0){
+					me.capacitorStarter(3);
+					GND = me.StartContactor.applyVoltage(electron);
+				}
+			}
+		}
+		etd.out("GeneratorControlUnit",me.name,name,electron);
+		return GND;
+	},
+	
+};
+
 
 # 0	In ─  ─ Out
 # 1	In ──── Out

@@ -16,6 +16,7 @@ var Display = {
 		m.fg = [0.9, 0.4, 0.2, 1];	# default foreground color
 		m.tagformat = "%s";
 		m.format = "%.12g";
+		m.title = "";
 		m.interval = 0.1;
 		#
 		# "private"
@@ -51,7 +52,12 @@ var Display = {
 		me.dialog.set("default-padding", me.padding);
 		me.dialog.setFont(me.font);
 		me.dialog.setColor(me.bg[0], me.bg[1], me.bg[2], me.bg[3]);
-
+		if (me.title != ""){
+			var t = me.dialog.addChild("text");
+			t.set("label",me.title);
+			me.dialog.addChild("hrule");
+		}
+		
 		foreach (var e; me.entries) {
 			if (e.mode == 0){
 				var w = me.dialog.addChild("text");

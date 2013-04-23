@@ -81,11 +81,11 @@ var MasterPanel = {
 		
 		nCompNode = nParent.initNode("Motoring");
 		m.EngineMotoring = Part.ElectricSwitchTT.new(nCompNode,"Engine Motoring");
-		m.EngineMotoring.setPoles(1);
+		m.EngineMotoring.setPoles(2);
 		
 		nCompNode = nParent.initNode("Start");
 		m.EngineStart = Part.ElectricSwitchTT.new(nCompNode,"Engine Start");
-		m.EngineStart.setPoles(1);
+		m.EngineStart.setPoles(2);
 		
 # Dimming
 		nParent = m.nPanel.initNode("Dimming");
