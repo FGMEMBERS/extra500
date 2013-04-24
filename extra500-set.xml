@@ -95,8 +95,8 @@ JSBSim Extra Aircraft - Extra 500.
 			<pitch-offset-deg type="double">-12</pitch-offset-deg>
 		</config>
 	</view>
-	<view n="103">
-		<name>Officer View</name>
+	<view n="101">
+		<name>Model Front View</name>
 		<enabled type="bool">true</enabled>
 		<type>lookfrom</type>
 		<internal type="bool">true</internal>
@@ -105,9 +105,58 @@ JSBSim Extra Aircraft - Extra 500.
 			<from-model-idx type="int">true</from-model-idx>
 			<!-- x/y/z == right/up/back -->
 			<x-offset-m archive="y"> 0.0</x-offset-m>
-			<y-offset-m archive="y"> 1.27</y-offset-m>
-			<z-offset-m archive="y">-17.8</z-offset-m>
-			<pitch-offset-deg archive="y">-5.0</pitch-offset-deg>
+			<y-offset-m archive="y"> 0.0</y-offset-m>
+			<z-offset-m archive="y">-10.0</z-offset-m>
+			<pitch-offset-deg archive="y">0.0</pitch-offset-deg>
+			<heading-offset-deg archive="y">180.0</heading-offset-deg>
+		</config>
+	</view>
+	<view n="102">
+		<name>Model Right View</name>
+		<enabled type="bool">true</enabled>
+		<type>lookfrom</type>
+		<internal type="bool">true</internal>
+		<config>
+			<from-model type="bool">true</from-model>
+			<from-model-idx type="int">true</from-model-idx>
+			<!-- x/y/z == right/up/back -->
+			<x-offset-m archive="y"> 10.0</x-offset-m>
+			<y-offset-m archive="y"> 0.0</y-offset-m>
+			<z-offset-m archive="y"> 0.0</z-offset-m>
+			<pitch-offset-deg archive="y">0.0</pitch-offset-deg>
+			<heading-offset-deg archive="y">90.0</heading-offset-deg>
+		</config>
+	</view>
+	<view n="103">
+		<name>Model Left View</name>
+		<enabled type="bool">true</enabled>
+		<type>lookfrom</type>
+		<internal type="bool">true</internal>
+		<config>
+			<from-model type="bool">true</from-model>
+			<from-model-idx type="int">true</from-model-idx>
+			<!-- x/y/z == right/up/back -->
+			<x-offset-m archive="y"> -10.0</x-offset-m>
+			<y-offset-m archive="y"> 0.0</y-offset-m>
+			<z-offset-m archive="y"> 0.0</z-offset-m>
+			<pitch-offset-deg archive="y">0.0</pitch-offset-deg>
+			<heading-offset-deg archive="y">-90.0</heading-offset-deg>
+		</config>
+	</view>
+	<view n="104">
+		<name>Model Back View</name>
+		<enabled type="bool">true</enabled>
+		<type>lookfrom</type>
+		<internal type="bool">true</internal>
+		<config>
+			<from-model type="bool">true</from-model>
+			<from-model-idx type="int">true</from-model-idx>
+			<!-- x/y/z == right/up/back -->
+			<x-offset-m archive="y"> 0.0</x-offset-m>
+			<y-offset-m archive="y"> 0.0</y-offset-m>
+			<z-offset-m archive="y"> 10.0</z-offset-m>
+			<pitch-offset-deg archive="y">0.0</pitch-offset-deg>
+			<heading-offset-deg archive="y">0.0</heading-offset-deg>
 		</config>
 	</view>
 	<systems>
