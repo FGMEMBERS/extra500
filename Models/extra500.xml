@@ -229,12 +229,12 @@
    <entry><ind> 1</ind><dep>-25</dep></entry>
   </interpolation>   
   <axis>
-    <x1-m>5.37867</x1-m>
+    <x1-m>5.37140</x1-m>
     <y1-m>0</y1-m>
-    <z1-m>-0.16366</z1-m>
-    <x2-m>6.1655</x2-m>
+    <z1-m>-0.17273</z1-m>
+    <x2-m>6.17376</x2-m>
     <y2-m>0</y2-m>
-    <z2-m>1.16616</z2-m>
+    <z2-m>1.13973</z2-m>
   </axis>
 </animation>
 
