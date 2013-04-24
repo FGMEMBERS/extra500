@@ -67,10 +67,10 @@
 	<pitch-deg>-13</pitch-deg>
 	</offsets>
 </model>
+<!--
 <model>
   <name>SidePanelWORK</name>
   <path>Aircraft/extra500/Models/extra500_SidePanel.xml</path>
-	<!--position waehrend entwicklung anders-->
 	<offsets>
 		<x-m>-.60</x-m>
 		<y-m>-.665</y-m>	
@@ -78,6 +78,7 @@
 	<pitch-deg>77</pitch-deg>
 	</offsets>
 </model>
+-->
 <model>
   <name>SidePanel</name>
   <path>Aircraft/extra500/Models/extra500_SidePanel.xml</path>
@@ -88,9 +89,9 @@
 	<pitch-deg>0</pitch-deg>
 	</offsets>
 </model>
+<!--
 <model>
   <name>CircuitBreakerPanelWORK</name>
-  	<!--position waehrend entwicklung anders-->
   <path>Aircraft/extra500/Models/extra500_CircuitBreakerPanel.xml</path>
 	<offsets>
 		<x-m>-.68</x-m>
@@ -98,9 +99,9 @@
 		<z-m>-.06</z-m>
 		<roll-deg>0</roll-deg>
 		<pitch-deg>77</pitch-deg>
-
 	</offsets>
 </model>
+-->
 <model>
   <name>CircuitBreakerPanel</name>
   <path>Aircraft/extra500/Models/extra500_CircuitBreakerPanel.xml</path>
@@ -256,14 +257,14 @@
   <object-name>HRrechts</object-name>
   <object-name>HRtrim</object-name>
   <property>/fdm/jsbsim/aircraft/hstab/elevator/elevator-pos-deg</property> 
-  <axis>
-    <x1-m>6.15921</x1-m>
-    <y1-m>0.12235</y1-m>
-    <z1-m>1.15570</z1-m>
-    <x2-m>6.27221</x2-m>
-    <y2-m>1.66764</y2-m>
-    <z2-m>1.08282</z2-m>
-  </axis>
+    <axis>
+    <x1-m>6.17177</x1-m>
+    <y1-m>0.12085</y1-m>
+    <z1-m>1.19365</z1-m>
+    <x2-m>6.28506</x2-m>
+    <y2-m>1.64490</y2-m>
+    <z2-m>1.14061</z2-m>
+	</axis>
 </animation>
 
 <!-- Hoehenruder TRIM-->
@@ -273,12 +274,12 @@
   <property>/fdm/jsbsim/fcs/pitch-trim-pos-deg</property> 
   <factor>-1</factor>
   <axis>
-    <x1-m>6.80398</x1-m>
-    <y1-m>0.12235</y1-m>
-    <z1-m>1.15570</z1-m>
-    <x2-m>6.80398</x2-m>
-    <y2-m>0.95948</y2-m>
-    <z2-m>1.11622</z2-m>
+    <x1-m>6.51483</x1-m>
+    <y1-m>0.12085</y1-m>
+    <z1-m>1.19365</z1-m>
+    <x2-m>6.51483</x2-m>
+    <y2-m>0.96698</y2-m>
+    <z2-m>1.16420</z2-m>
   </axis>
 </animation>
 
