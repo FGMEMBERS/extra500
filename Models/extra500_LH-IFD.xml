@@ -58,6 +58,16 @@
  </animation>
 
 <!-- IAS -->
+	<animation>
+		<type>select</type>
+		<object-name>IAS.100er</object-name>
+		<condition>
+		  <greater-than-equals>
+		    <property>/instrumentation/airspeed-IFD-LH/indicated-speed-kt</property>
+		    <value>100</value>
+		  </greater-than-equals>
+		</condition>
+	</animation>
 <animation>
 	<type>textranslate</type>
 	<object-name>IAS</object-name>
@@ -86,6 +96,7 @@
 	<property>/instrumentation/airspeed-IFD-LH/indicated-speed-kt</property>
 	<factor>.01</factor>
 	<step>10</step>
+	<scroll>1</scroll>
 	<axis>
 		<x>0</x>
 		<y>1</y>
@@ -98,7 +109,7 @@
 	<property>/instrumentation/airspeed-IFD-LH/indicated-speed-kt</property>
 	<factor>.001</factor>
 	<step>100</step>
-
+	<scroll>1</scroll>
 	<axis>
 		<x>0</x>
 		<y>1</y>
@@ -147,6 +158,26 @@
 
 
 <!-- Altitude -->
+	<animation>
+		<type>select</type>
+	<object-name>Altitude.10000er</object-name>
+		<condition>
+		  <greater-than-equals>
+			<property>/instrumentation/altimeter-IFD-LH/indicated-altitude-ft</property>
+		    <value>10000</value>
+		  </greater-than-equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+	<object-name>Altitude.01000er</object-name>
+		<condition>
+		  <greater-than-equals>
+			<property>/instrumentation/altimeter-IFD-LH/indicated-altitude-ft</property>
+		    <value>1000</value>
+		  </greater-than-equals>
+		</condition>
+	</animation>
 <animation>
 	<type>textranslate</type>
 	<object-name>Altitude.00011er</object-name>
@@ -164,6 +195,7 @@
 	<property>/instrumentation/altimeter-IFD-LH/indicated-altitude-ft</property>
 	<factor>.001</factor>
 	<step>100</step>
+	<scroll>10</scroll>
 	<axis>
 		<x>0</x>
 		<y>1</y>
@@ -176,6 +208,7 @@
 	<property>/instrumentation/altimeter-IFD-LH/indicated-altitude-ft</property>
 	<factor>.0001</factor>
 	<step>1000</step>
+	<scroll>10</scroll>
 	<axis>
 		<x>0</x>
 		<y>1</y>
@@ -188,7 +221,7 @@
 	<property>/instrumentation/altimeter-IFD-LH/indicated-altitude-ft</property>
 	<factor>.00001</factor>
 	<step>10000</step>
-
+	<scroll>10</scroll>
 	<axis>
 		<x>0</x>
 		<y>1</y>
