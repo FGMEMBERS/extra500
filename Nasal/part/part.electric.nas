@@ -1,4 +1,24 @@
-
+#    This file is part of extra500
+#
+#    The Changer is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    The Changer is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+#
+#      Authors: Dirk Dittmann
+#      Date: April 07 2013
+#
+#      Last change:      Dirk Dittmann
+#      Date:             26.04.13
+#
 
 var ElectricTreeDebugger = {
 	new : func(){
@@ -136,6 +156,24 @@ var Electron ={
 	}
 };
 
+var Capacitor ={
+	new : func(capacity){
+				
+		var m = {parents:[
+			Capacitor
+		]};
+		m.capacity 	= capacity;
+		m.value 	= 0;
+		return m;
+	},
+	load : func(amount){
+		me.value += amount;
+		if (me.value > me.capacity){me.value = me.capacity;}
+		if (me.value < 0) {me.value = 0;}
+	}
+	
+};
+
 var ElectricConnector = {
 	new : func(name){
 				
@@ -219,6 +257,7 @@ var ElectricDiode = {
 	
 };
 
+#	Plus ─⊗─ Minus
 var ElectricShunt = {
 	new : func(nRoot,name){
 				
@@ -518,13 +557,14 @@ var ElectricGenerator = {
 		]};
 		
 		m.simTime = systime();
+		m.capacitor = Capacitor.new(3);
 		
 		m.electron = Electron.new();
 		m.capStarter = 0;
 		
 		m.Plus = ElectricConnector.new("+");
 		m.Minus = ElectricConnector.new("-");
-		m.InterPole = ElectricConnector.new("InterPole");
+		m.InterPole = ElectricConnector.new("InterPole");# umbau auf drehzahl N1
 		
 		m.nEngineRunning = props.globals.getNode("engines/engine[0]/running",1);
 		m.nControlStarter = props.globals.getNode("controls/engines/engine[0]/starter",1);
@@ -537,13 +577,10 @@ var ElectricGenerator = {
 
 	},
 	capacitorStarter : func (amount){
-		me.capStarter += amount;
-		if (me.capStarter > 3){me.capStarter=3;}
-		if (me.capStarter < 0){me.capStarter=0;}
-		
+		me.capacitor.load(amount);
 
-		me.nControlStarter.setValue(me.capStarter);
-		me.nControlGenerator.setValue(me.capStarter);
+		me.nControlStarter.setValue(me.capacitor.value);
+		me.nControlGenerator.setValue(me.capacitor.value);
 
 	},
 	applyVoltage : func(electron,name=""){ 
@@ -560,7 +597,7 @@ var ElectricGenerator = {
 					var watt = me.electricWork(electron);
 					me.nControlStarter.setValue(1);
 					me.nControlGenerator.setValue(1);
-					me.capacitorStarter(3);
+					me.capacitorStarter(10);
 					#print("Generator.applyVoltage ... starting");
 				}
 				
@@ -626,6 +663,7 @@ var GeneratorControlUnit = {
 		
 		m.generatorHasPower = 0;
 		m.controlStarter = 0;
+		m.capacitor = Capacitor.new(3);
 		
 		m.StartPower = ElectricConnector.new("StartPower");
 		m.StartContactor = ElectricConnector.new("StartContactor");
@@ -636,7 +674,7 @@ var GeneratorControlUnit = {
 		m.Reset = ElectricConnector.new("Reset");
 		m.AntiCycle = ElectricConnector.new("AntiCycle");
 		m.LoadBus = ElectricConnector.new("LoadBus");
-		m.POR = ElectricConnector.new("POR");
+		m.POR = ElectricConnector.new("POR");		#Point of Regulation !!! 
 		m.LineContactorCoil = ElectricConnector.new("LineContactorCoil");
 		m.GeneratorOutput = ElectricConnector.new("GeneratorOutput");
 		m.GND = ElectricConnector.new("GND");
@@ -663,15 +701,10 @@ var GeneratorControlUnit = {
 		return m;
 	},
 	simReset : func(){
-		me.capacitorStarter(-1);
+		me.capacitor.load(-1);
 	},
 	simUpdate : func(){
 
-	},
-	capacitorStarter : func (amount){
-		me.controlStarter += amount;
-		if (me.controlStarter > 3){me.controlStarter=3;}
-		if (me.controlStarter < 0){me.controlStarter=0;}
 	},
 	applyVoltage : func(electron,name=""){ 
 		etd.in("GeneratorControlUnit",me.name,name,electron);
@@ -679,14 +712,14 @@ var GeneratorControlUnit = {
 		if(electron != nil){
 			electron.resistor += 4700;
 			if (name == "POR" or name == "LoadBus"){
-				if (me.controlStarter>0){
+				if (me.capacitor.value > 0){
 					GND = me.StartContactor.applyVoltage(electron);
 				}
 				GND = me.GeneratorOutput.applyVoltage(electron);
 			}elsif (name == "InterPole"){
 				if (electron.volt >= 27.0){
 					me.generatorHasPower = 1;
-					me.capacitorStarter(-4);
+					me.capacitor.load(-4);
 				}else{
 					me.generatorHasPower = 0;
 				}
@@ -706,7 +739,7 @@ var GeneratorControlUnit = {
 				GND = me.GND.applyVoltage(electron);
 			}elsif (name == "StartPower"){
 				if (me.generatorHasPower == 0){
-					me.capacitorStarter(3);
+					me.capacitor.load(3);
 					GND = me.StartContactor.applyVoltage(electron);
 				}
 			}
@@ -1115,7 +1148,7 @@ var ElectricSwitchTT = {
 # ElectricRelaisXPDT	Double Throw
 #	 A1  ─[]─ A2
 # 0	      ┌── L12
-# 1	 P11 ─┘ ─ L24
+# 1	 P11 ─┘ ─ L14
 var ElectricRelaisXPDT = {
 
 	
@@ -1129,6 +1162,8 @@ var ElectricRelaisXPDT = {
 			SimStateAble.new(nRoot,"BOOL",state),
 			ElectricAble.new(nRoot,name)
 		]};
+		
+		m.capacitor = Capacitor.new(2);
 		
 		m.A1 = ElectricConnector.new("A1");
 		m.A2 = ElectricConnector.new("A2");
@@ -1183,8 +1218,10 @@ var ElectricRelaisXPDT = {
 				GND = me.output[name].applyVoltage(electron);
 				if (GND > 0 ){
 					#GND += me.electricWork(electron);
+					me.capacitor.load(10);
 					me._setValue(1);
 				}else{
+					me.capacitor.load(-10);
 					me._setValue(0);
 				}
 			}else{
@@ -1197,6 +1234,11 @@ var ElectricRelaisXPDT = {
 		}
 		etd.out("Relais",me.name,name,electron);
 		return GND;
+	},
+	simReset : func(){
+		me.capacitor.load(-1);
+		me.nState.setValue(me.state);
+		me.state = me.capacitor.value > 0 ? 1 : 0;
 	},
 	_setValue : func(value){
 		me.state = value;
@@ -1239,6 +1281,8 @@ var ElectricRelaisXPST = {
 			SimStateAble.new(nRoot,"BOOL",state),
 			ElectricAble.new(nRoot,name)
 		]};
+		
+		m.capacitor = Capacitor.new(2);
 		
 		m.A1 = ElectricConnector.new("A1");
 		m.A2 = ElectricConnector.new("A2");
@@ -1285,8 +1329,10 @@ var ElectricRelaisXPST = {
 				GND = me.output[name].applyVoltage(electron);
 				if (GND > 0 ){
 					#GND += me.electricWork(electron);
+					me.capacitor.load(10);
 					me._setValue(1);
 				}else{
+					me.capacitor.load(-10);
 					me._setValue(0);
 				}
 			}else{
@@ -1299,6 +1345,11 @@ var ElectricRelaisXPST = {
 		}
 		etd.out("ElectricRelaisXPST",me.name,name,electron);
 		return GND;
+	},
+	simReset : func(){
+		me.capacitor.load(-1);
+		me.nState.setValue(me.state);
+		me.state = me.capacitor.value > 0 ? 1 : 0;
 	},
 	_setValue : func(value){
 		me.state = value;
@@ -1420,7 +1471,7 @@ var ElectricDimmer = {
 	}
 };
 
-#	plus ─⊗─ Out
+#	Plus ─⊗─ Minus
 var ElectricLight = {
 	new : func(nRoot,name){
 				
@@ -1478,5 +1529,60 @@ var ElectricLight = {
 	
 };
 
+#	Plus ─⊗─ Minus
+var ElectricMotor = {
+	new : func(nRoot,name){
+				
+		var m = {parents:[
+			ElectricMotor,
+			Part.new(nRoot,name),
+			SimStateAble.new(nRoot,"DOUBLE",0.0),
+			ElectricAble.new(nRoot,name)
+		]};
+		
+		m.Plus = ElectricConnector.new("+");
+		m.Minus = ElectricConnector.new("-");
+						
+		m.Plus.solder(m);
+		m.Minus.solder(m);
+		
+		append(aListSimStateAble,m);
+		
+		return m;
 
-
+	},
+	applyVoltage : func(electron,name=""){ 
+		etd.in("Motor",me.name,name,electron);
+		var GND = 0;
+		
+		if (electron != nil){
+			me.setVolt(electron.volt);
+			electron.resistor += me.resistor;# * me.qos
+			
+			if (name == "+"){
+				GND = me.Minus.applyVoltage(electron);
+				if (GND){
+					var watt = me.electricWork(electron);
+					me._dimm();
+				}
+			}
+			
+			me.setAmpere(electron.ampere);
+		}
+		etd.out("Motor",me.name,name,electron);
+		return GND;
+	},
+	_setValue : func(value){
+		
+		if (value > 1.0) { value = 1.0 };
+		if (value < 0.0) { value = 0.0 };
+		
+		me.state = value;
+	},
+	_dimm : func(){
+		var percentage = ((me.volt-me.voltMin) * me.qos / (me.voltDelta)) ;
+		me._setValue(percentage);
+		
+	},
+	
+}

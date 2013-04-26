@@ -1,22 +1,40 @@
-var plugMainBoard = func(){
+#    This file is part of extra500
+#
+#    The Changer is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    The Changer is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+#
+#      Authors: Dirk Dittmann
+#      Date: April 12 2013
+#
+#      Last change:      Dirk Dittmann
+#      Date:             26.04.13
+#
+ var plugMainBoard = func(){
 	
 	
 	# Sources
 		battery.Minus.plug(mainBoard.GND);
 				
 	# Bus	
-		mainBoard.iHotSourceBus.plug(mainBoard.hotBus.con());
-		mainBoard.iHotSourceBus.plug(mainBoard.iBus30.con());
-		
-		mainBoard.iHotRelaisBus.plug(mainBoard.iHotSourceBus.Minus);
-		mainBoard.iHotRelaisBus.plug(mainBoard.batteryRelais.A1);
-		mainBoard.iHotRelaisBus.plug(lightBoard.dayNightRelais.A1);
-		mainBoard.iHotRelaisBus.plug(lightBoard.testLightRelais.A1);
-		mainBoard.iHotRelaisBus.plug(annunciatorPanel.dimTestRelais.A1);
+		#mainBoard.iHotSourceBus.plug(mainBoard.hotBus.con());
+		#mainBoard.iHotSourceBus.plug(mainBoard.iBus30.con());
+		#mainBoard.iHotRelaisBus.plug(mainBoard.iHotSourceBus.Minus);
+		#mainBoard.iHotRelaisBus.plug(mainBoard.batteryRelais.A1);
 		
 	
 		mainBoard.hotBus.plug(battery.Plus);
 		
+		mainBoard.hotBus.plug(mainBoard.batteryRelais.A1);
 		mainBoard.hotBus.plug(fusePanel.emergency3.In);
 		mainBoard.hotBus.plug(mainBoard.batteryRelais.P21);
 		mainBoard.hotBus.plug(mainBoard.batteryRelais.P11);
@@ -160,7 +178,7 @@ var plugCircuitBreaker = func(){
 		mainBoard.batteryBus.plug(circuitBreakerPanel.PropellerHeat.In);
 		mainBoard.batteryBus.plug(circuitBreakerPanel.IFD_LH_B.In);
 		mainBoard.batteryBus.plug(circuitBreakerPanel.Ignition.In);
-		mainBoard.iHotRelaisBus.plug(circuitBreakerPanel.Start.In);
+		mainBoard.batteryBus.plug(circuitBreakerPanel.Start.In);
 		mainBoard.batteryBus.plug(circuitBreakerPanel.AutopilotServo.In);
 		mainBoard.batteryBus.plug(circuitBreakerPanel.EnvironmentalBleed.In);
 		mainBoard.batteryBus.plug(circuitBreakerPanel.Hydraulic.In);
@@ -196,6 +214,9 @@ var plugCircuitBreaker = func(){
 		circuitBreakerPanel.instrumentLightBus.plug(circuitBreakerPanel.InstrumentLight.Out);
 		
 		circuitBreakerPanel.instrumentLightBus.plug(lightBoard.testLightRelais.P14);
+		circuitBreakerPanel.instrumentLightBus.plug(lightBoard.dayNightRelais.A1);
+		circuitBreakerPanel.instrumentLightBus.plug(lightBoard.testLightRelais.A1);
+		circuitBreakerPanel.instrumentLightBus.plug(annunciatorPanel.dimTestRelais.A1);
 		
 };
 

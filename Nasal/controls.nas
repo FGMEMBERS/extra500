@@ -14,21 +14,20 @@
 #    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
 #
 #      Authors: Dirk Dittmann
-#      Date: April 04 2013
+#      Date: April 26 2013
 #
 #      Last change:      Dirk Dittmann
 #      Date:             26.04.13
 #
+#
+#
+# overloaded functions from Flightgear $fgdata/Nasal/controls.nas
 
-print("#############################################");
-print("#                                           #");
-print("#              Extra500                     #");
-print("#                                           #");
-print("#############################################");
-
-var fnAnnounce = func(type,msg){
-	if (type = "debug"){
-		print (msg);
+var flapsDown = func(step) {
+	if(step == 0) return;
+	if(step > 0){
+		UI.click("Flaps down");
+	}else{
+		UI.click("Flaps up");
 	}
 }
-
