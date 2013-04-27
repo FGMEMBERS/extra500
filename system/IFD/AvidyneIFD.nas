@@ -19,7 +19,11 @@
 #      Last change:      Dirk Dittmann
 #      Date:             27.04.13
 #
-
+var TODEG = 180/math.pi;
+var TORAD = math.pi/180;
+var deg = func(rad){ return rad*TODEG; }
+var rad = func(deg){ return deg*TORAD; }
+var course = func(deg){ return math.mod(deg,360.0);}
 
 var AvidyneIFD = {
 	new: func(){
@@ -34,7 +38,7 @@ var AvidyneIFD = {
     
 		# ... and place it on the object called PFD-Screen
 		m.canvas.addPlacement({"node": "RH-IFD.Screen"});
-		m.canvas.setColorBackground(0,0.04,0);
+		m.canvas.setColorBackground(1,1,1);
 		
 		
 		m.primaryFlightDisplay = m.canvas.createGroup();
@@ -42,6 +46,10 @@ var AvidyneIFD = {
 		
 		
 		m.hdg = 0;
+		m.speed = 0 ;
+		
+		m.nIndicatedHeading = props.globals.initNode("/instrumentation/heading-indicator-IFD-RH/indicated-heading-deg",0.0,"DOUBLE");
+		m.nIndicatedAirspeed = props.globals.initNode("/instrumentation/airspeed-indicator-IFD-RH/indicated-speed-kts",0.0,"DOUBLE");
 		m.TestText = m.primaryFlightDisplay.getElementById("TestText");
 		m.TestText.updateCenter();
 		
@@ -56,10 +64,15 @@ var AvidyneIFD = {
 		return m;
 	},
 	update : func(){
-		me.hdg += 0.1;
-		me.CompassRose.setRotation(me.hdg);
+		me.speed += 1;
+		if (me.speed > 200){
+			me.speed = 0;
+		}
+		me.hdg = me.nIndicatedHeading.getValue();
+		me.CompassRose.setRotation(-me.hdg * TORAD);
 		
-		me.TestText.setRotation(-me.hdg);
+		#me.TestText.setTranslation(0,me.nIndicatedAirspeed.getValue());
+		me.TestText.setTranslation(0,me.speed);
 	},	
 	
 };
