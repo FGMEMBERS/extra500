@@ -24,7 +24,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             23.04.13
+      Date:             27.04.13
 -->
 
 	<fileheader>
@@ -475,43 +475,9 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		
 		<property value="1">fcs/yaw-damper-enable</property>
 		<channel name="Yaw">
-			
-			<summer name="Rudder Command Sum">
-				<input>fcs/rudder-cmd-norm</input>
-				<input>fcs/yaw-trim-cmd-norm</input>
-				<clipto>
-					<min> -1 </min>
-					<max>  1 </max>
-				</clipto>
-			</summer>
-			
-			<scheduled_gain name="Yaw Damper Rate">
-				<input>velocities/r-aero-rad_sec</input>
-				<table>
-					<independentVar lookup="row">velocities/ve-kts</independentVar>
-					<tableData>
-						30     0.00
-						60     2.00
-					</tableData>
-				</table>
-				<gain>fcs/yaw-damper-enable</gain>
-			</scheduled_gain>
-			
-			<summer name="Rudder Sum">
-				<input>fcs/rudder-command-sum</input>
-				<input>fcs/yaw-damper-rate</input>
-				<clipto>
-					<min> -1.1 </min>
-					<max>  1.1 </max>
-				</clipto>
-			</summer>
-			
+				
 			<aerosurface_scale name="Rudder Control">
-				<input>fcs/rudder-sum</input>
-				<domain>
-					<min> -1.1 </min>
-					<max>  1.1 </max>
-				</domain>
+				<input>fcs/rudder-cmd-norm</input>
 				<range>
 					<min> -0.4363 </min>
 					<max>  0.4363 </max>
@@ -1092,7 +1058,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       </sum>
     </function>
 
-    <function name="aero/coefficients/cl_stab">
+    <function name="aero/coefficients/cl_hstab">
        <description>Stabilizer liftcoeff</description>
        <sum>
             <value>0.0</value>            
@@ -1130,7 +1096,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       </sum>
     </function>
 
-    <function name="aero/coefficients/cd_stab">
+    <function name="aero/coefficients/cd_hstab">
        <description>Stabilizer dragcoeff</description>
        <sum>
             <value>0.02</value>            
@@ -1167,11 +1133,11 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       </sum>
     </function>
 
-    <function name="aero/coefficients/cn_stab">
+    <function name="aero/coefficients/cn_hstab">
        <description>Stabilizer normcoeff</description>
        <sum>
             <product>
-                  <property>aero/coefficients/cl_stab</property>
+                  <property>aero/coefficients/cl_hstab</property>
                   <cos>
                         <product>
                               <value>0.017452933</value>
@@ -1180,7 +1146,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   </cos>     
             </product>
             <product>
-                  <property>aero/coefficients/cd_stab</property>
+                  <property>aero/coefficients/cd_hstab</property>
                   <sin>
                         <product>
                               <value>0.017452933</value>
@@ -1191,12 +1157,12 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       </sum>
     </function>
 
-    <function name="aero/coefficients/ct_stab">
+    <function name="aero/coefficients/ct_hstab">
        <description>Stabilizer tang coeff</description>
        <sum>
             <product>
                   <value>-1</value>
-                  <property>aero/coefficients/cl_stab</property>
+                  <property>aero/coefficients/cl_hstab</property>
                   <sin>
                         <product>
                               <value>0.017452933</value>
@@ -1205,7 +1171,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   </sin>     
             </product>
             <product>
-                  <property>aero/coefficients/cd_stab</property>
+                  <property>aero/coefficients/cd_hstab</property>
                   <cos>
                         <product>
                               <value>0.017452933</value>
@@ -1216,7 +1182,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       </sum>
     </function>
 
-    <function name="aero/force/normal_stab">
+    <function name="aero/force/normal_hstab">
        <description>Stabilizer normal force</description>
        <product>
             <value>0.5</value>
@@ -1224,11 +1190,11 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             <property>velocities/hstab/v-fps</property>
             <property>velocities/hstab/v-fps</property>
             <property>aircraft/hstab/S-ft2</property>
-            <property>aero/coefficients/cn_stab</property>
+            <property>aero/coefficients/cn_hstab</property>
        </product>
     </function>
 
-    <function name="aero/force/tangent_stab">
+    <function name="aero/force/tangent_hstab">
        <description>Stabilizer tangent force</description>
        <product>
             <value>0.5</value>
@@ -1236,15 +1202,15 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             <property>velocities/hstab/v-fps</property>
             <property>velocities/hstab/v-fps</property>
             <property>aircraft/hstab/S-ft2</property>
-            <property>aero/coefficients/ct_stab</property> 
+            <property>aero/coefficients/ct_hstab</property> 
        </product>
     </function>
 
-    <function name="aero/moment/M_stab">
+    <function name="aero/moment/M_hstab">
        <description>hor stab pitch moment</description>
        <sum>          
             <product>
-                  <property>aero/force/normal_stab</property>
+                  <property>aero/force/normal_hstab</property>
                   <sum>
                         <value>11.581</value>  <!--xcg empty -->
                         <product>
@@ -1254,7 +1220,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   </sum>
             </product>
             <product>
-                  <property>aero/force/tangent_stab</property>
+                  <property>aero/force/tangent_hstab</property>
                   <sum>
                         <property>aircraft/hstab/z_ac-ft</property>
                         <product>
@@ -1336,6 +1302,80 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       </pow>
     </function>
 
+    <function name="aircraft/vstab/rudder-pos-deg">
+	<product>
+		<property>fcs/rudder-pos-norm</property> 
+		<value>25</value>
+	</product>
+    </function>
+
+
+    <function name="aero/coefficients/cn_vstab">
+       <description> vertical Stabilizer liftcoeff</description>
+       <sum>
+            <value>0.0</value>            
+            <table>
+                  <independentVar lookup="row">aircraft/vstab/beta-stab-deg</independentVar>
+                  <independentVar lookup="column">aircraft/vstab/rudder-pos-deg</independentVar>
+                  <tableData>
+					-25	0	25
+				-30	-0.87793833 -1.14538741	-1.42209208		
+				-15	-0.33292782	-0.60425246	-0.88036811
+				-5	0.06869595	-0.20453504	-0.47937939	
+				0	0.27407178	0		-0.27407178
+				5	0.47937939	0.20453504	-0.06869595
+				15	0.88036811	0.60425246	0.33292782
+				30	1.42209208	1.14538741	0.87793833
+                  </tableData>
+            </table>
+      </sum>
+    </function>
+
+    <function name="aero/coefficients/ct_vstab">
+       <description> vertical Stabilizer dragcoeff</description>
+       <sum>
+            <value>0.2</value>            
+            <table>
+                  <independentVar lookup="row">aircraft/vstab/beta-stab-deg</independentVar>
+                  <independentVar lookup="column">aircraft/vstab/rudder-pos-deg</independentVar>
+                  <tableData>
+					-25	0	25
+				-30	-0.39031905 -0.47522721	-0.54410434		
+				-15	-0.07386956	-0.12020416	-0.14865842
+				-5	0.00817531	-0.01340143	-0.0165374	
+				0	0.00925556	0		0.00925556
+				5	-0.0165374	-0.01340143	0.00817531
+				15	-0.14865842	-0.12020416	-0.07386956
+				30	-0.54410434	-0.47522721	-0.39031905
+                  </tableData>
+            </table>
+      </sum>
+    </function>
+
+    <function name="aero/force/normal_vstab">
+       <description>vert Stabilizer normal force</description>
+       <product>
+            <value>0.5</value>
+            <property>atmosphere/rho-slugs_ft3</property>
+            <property>velocities/vstab/v-fps</property>
+            <property>velocities/vstab/v-fps</property>
+            <property>aircraft/vstab/S-ft2</property>
+            <property>aero/coefficients/cn_vstab</property>
+       </product>
+    </function>
+
+    <function name="aero/force/tangent_vstab">
+       <description>vert Stabilizer tangent force</description>
+       <product>
+            <value>0.5</value>
+            <property>atmosphere/rho-slugs_ft3</property>
+            <property>velocities/vstab/v-fps</property>
+            <property>velocities/vstab/v-fps</property>
+            <property>aircraft/vstab/S-ft2</property>
+            <property>aero/coefficients/ct_vstab</property> 
+       </product>
+    </function>
+
 
 
 <!--START of real summation of FORCES and MOMENTS -->
@@ -1346,7 +1386,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		<value>-1</value>
 		<sum>
 			<property>aero/force/tangent_wing</property>
-			<property>aero/force/tangent_stab</property>
+			<property>aero/force/tangent_hstab</property>
+			<property>aero/force/tangent_vstab</property>
 		</sum>
 	</product>
 	</function>
@@ -1366,15 +1407,13 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 </axis>
 		
 <axis name="Y">
-			<function name="aero/force/Side_beta">
-				<description>Side force due to beta</description>
-				<product>
-					<property>aero/qbar-psf</property>
-					<property>metrics/Sw-sqft</property>
-					<property>aero/beta-rad</property>
-					<value>-1</value>
-				</product>
-			</function>
+	<function name="aero/force/Side_vstab">
+		<description>Side force due to vert fin</description>
+		<product>
+			<property>aero/force/normal_vstab</property>
+			<value>-1</value>
+		</product>
+</function>
 			
 </axis>
 		
@@ -1384,7 +1423,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		<value>-1</value>               
 		<sum>
 			<property>aero/force/normal_wing</property>
-			<property>aero/force/normal_stab</property>
+			<property>aero/force/normal_hstab</property>
 		</sum>
 	</product>
 	</function>
@@ -1393,16 +1432,16 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		
 <axis name="ROLL">
 			
-			<function name="aero/moment/Roll_beta">
-				<description>Roll moment due to beta</description>
-				<product>
-					<property>aero/qbar-psf</property>
-					<property>metrics/Sw-sqft</property>
-					<property>metrics/bw-ft</property>
-					<property>aero/beta-rad</property>
-					<value>-0.1</value>
-				</product>
-			</function>
+	<function name="aero/moment/Roll_beta">
+	<description>Roll moment due to vert fin</description>
+		<product>
+			<property>aero/force/Side_vstab</property>
+			<sum>
+				<property>aircraft/vstab/z_ac-ft</property>
+				<value>-5.413</value>
+			</sum>
+		</product>
+	</function>
 			
 	<function name="aero/moment/Roll_damp">
 	<description>Roll moment due to roll rate</description>
@@ -1438,27 +1477,28 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<value>0.0277</value>
 		</product>
 	</function>
-			
-			<function name="aero/moment/Roll_rudder">
-				<description>Roll moment due to rudder</description>
-				<product>
-					<property>aero/qbar-psf</property>
-					<property>metrics/Sw-sqft</property>
-					<property>metrics/bw-ft</property>
-					<property>fcs/rudder-pos-rad</property>
-					<value>0.01</value>
-				</product>
-			</function>
-			
+					
 </axis>
 		
 <axis name="PITCH">
 	<function name="aero/moment/M-total">                  
 		<sum>
 			<property>aero/moment/M_ac-h</property>			            
-			<property>aero/moment/M_stab</property>
+			<property>aero/moment/M_hstab</property>
 		</sum>
 	</function>
+
+	<function name="aero/moment/M_beta">
+	<description>Pitch moment due to vert fin</description>
+		<product>
+			<property>aero/force/tangent_vstab</property>
+			<sum>
+				<property>aircraft/vstab/z_ac-ft</property>
+				<value>-5.413</value>
+			</sum>
+		</product>
+	</function>
+
 </axis>
 
 <axis name="YAW">
@@ -1484,30 +1524,18 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			</sum>
 		</product>
 	</function>
-			
-			<function name="aero/moment/Yaw_damp">
-				<description>Yaw moment due to yaw rate</description>
-				<product>
-					<property>aero/qbar-psf</property>
-					<property>metrics/Sw-sqft</property>
-					<property>metrics/bw-ft</property>
-					<property>aero/bi2vel</property>
-					<property>velocities/r-aero-rad_sec</property>
-					<value>-0.15</value>
-				</product>
-			</function>
-			
-			<function name="aero/moment/Yaw_rudder">
-				<description>Yaw moment due to rudder</description>
-				<product>
-					<property>aero/qbar-psf</property>
-					<property>metrics/Sw-sqft</property>
-					<property>metrics/bw-ft</property>
-					<property>fcs/rudder-pos-rad</property>
-					<value>-0.1</value>
-				</product>
-			</function>
-			
+
+	<function name="aero/moment/N_beta">
+	<description>yaw moment due to vert fin</description>
+		<product>
+			<property>aero/force/normal_vstab</property>
+			<sum>
+				<property>aircraft/vstab/x_ac-ft</property>
+				<value>-11.581</value>
+			</sum>
+		</product>
+	</function>			
+		
 	<function name="aero/moment/Yaw_aileron">
 	<description>Adverse yaw</description>
 		<product>

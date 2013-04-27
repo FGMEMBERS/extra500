@@ -658,7 +658,7 @@ JSBSim Extra Aircraft - Extra 500.
                         </elevator>
                   </hstab>
 			<vstab>
-                        <S-ft2>29.439</S-ft2>
+                        <S-ft2>30.236</S-ft2>
                         <x_ac-ft>27.128</x_ac-ft>
                         <z_ac-ft>8.294</z_ac-ft>				
 			</vstab>
