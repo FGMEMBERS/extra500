@@ -549,6 +549,7 @@ JSBSim Extra Aircraft - Extra 500.
 	</extra500>
 	<IFD>
 		<file>Aircraft/extra500/system/IFD/IFD_test.nas</file>
+		<file>Aircraft/extra500/system/IFD/AvidyneIFD.nas</file>
 	</IFD>
 	<CoPilot>
 		<file>Aircraft/extra500/Nasal/coPilot.nas</file>

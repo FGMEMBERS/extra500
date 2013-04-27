@@ -37,6 +37,8 @@ var simulation_cycle = func(){
 	extra500.oFuelSystem.update();
 	
 	IFD.demo.update();
+	IFD.RH.update();
+	
 	
 	foreach(var fuse;Part.aListElectricFuseAble){
 		fuse.fuseReset();
