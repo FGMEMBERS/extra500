@@ -1,15 +1,27 @@
 <?xml version="1.0"?>
 <!--
-  File:      250-B17F/2.xml
-  Author:   Dirk Dittmann
+    This file is part of extra500
 
-  Inputs:
-    name:           Rolls Royce 250-B17F/2
-    type:           turboprop
-    power:          450 hp
-    augmented?      no
-    injected?       no
-    
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Dirk Dittmann
+      Date: 2013-03-13
+
+      Last change:      Eric van den Berg
+      Date:             27.04.13
+-->
+<!--
     
     Rolls-Royce (Allison) 250-B17F cutaway. 
     450 hp @ takeoff, 
@@ -25,24 +37,22 @@
     0.635 lb/shp-hr @ normal cruise, 
     0.637 lb/shp-hr @ 90% cruise, 
     0.673 lb/shp-hr @ 75% cruise, 
-    205 lb dry weight.
-
-    
+    205 lb dry weight.    
 -->
 
 <turboprop_engine name="turbine_250-B17F2">
 	<!--  -->
-	<milthrust unit="LBS">       1009.3   </milthrust>
+	<milthrust unit="LBS">       1270.0   </milthrust>
 	<idlen1>                       65.0   </idlen1>
-	<maxn1>                       106.0   </maxn1>
+	<idlen2>                     1400.0   </idlen2>
+	<maxn1>                       100.0   </maxn1>
 	
-	<maxpower unit="HP">          500   </maxpower>
+	<maxpower unit="HP">          450   </maxpower>
 	<psfc unit="LBS/HR/HP">         0.613 </psfc>
-	<idlefuelflow>                 50.0   </idlefuelflow>
+	<idlefuelflow>                 75.0   </idlefuelflow>
 	<n1idle_max_delay>              1     </n1idle_max_delay>
 	<maxstartingtime>              30     </maxstartingtime>
 	<startern1>                    20     </startern1>
-	<ielumaxtorque unit="FT*LB"> 640     </ielumaxtorque>
 	<itt_delay>                     0.05  </itt_delay>
 	<betarangeend>                 0     </betarangeend>
 	<reversemaxpower>              70     </reversemaxpower>
