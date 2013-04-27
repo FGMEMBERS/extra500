@@ -27,8 +27,8 @@ var AvidyneIFD = {
 		
 		 m.canvas = canvas.new({
 		"name": "IFD",
-		"size": [1024, 1024],
-		"view": [1024, 1024],
+		"size": [2410, 1810],
+		"view": [2410, 1810],
 		"mipmapping": 1
 		});
     
