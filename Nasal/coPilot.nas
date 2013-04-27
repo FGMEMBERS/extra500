@@ -1,11 +1,11 @@
 #    This file is part of extra500
 #
-#    The Changer is free software: you can redistribute it and/or modify
+#    The extra500 is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 2 of the License, or
 #    (at your option) any later version.
 #
-#    The Changer is distributed in the hope that it will be useful,
+#    The extra500 is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: April 04 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             26.04.13
+#      Last change:      Eric van den Berg
+#      Date:             27.04.13
 #
 var buisy = 0;
 var checklist = "";
@@ -48,18 +48,22 @@ var auto_engine_start = func(){
 	UI.click("Engine Motoring normal");
 	UI.click("Engine Start on");
 	#setprop("/controls/engines/engine[0]/starter",1);
+	setprop("/controls/engines/engine[0]/propeller-feather",0);		# set to true in -set file for initial condition, FIXME: should be set to 0 when N1>~55%
 };
 
 var auto_engine_shutdown = func(){
 	#setprop("/controls/engines/engine[0]/starter",0);
 	setprop("/controls/engines/engine[0]/cutoff",1);
 	#setprop("/controls/electric/engine/generator",0);
+	setprop("/controls/engines/engine[0]/propeller-feather",1);		# FIXME: should be set to 1 when N1 drops below ~55% 
 	
 	UI.click("Engine Start off");
+	UI.click("Main Generator off");
+	UI.click("Main Standby Alternator off");
 	UI.oCockpit.click("Fuel Pump 2 off");
 	UI.oCockpit.click("Main Battery off");
-	UI.click("Main Standby Alternator off");
-	UI.click("Main Generator off");
+	
+	
 };
 
 

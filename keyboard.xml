@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+    This file is part of extra500
 
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Thomas Grossberger and Dirk Dittmann
+      Date: March 13 2013
+
+      Last change:      Eric van den Berg
+      Date:             27.04.13
+-->
 <PropertyList>
 
 	 <keyboard>
@@ -11,6 +32,26 @@
 			 <binding n="0">
 				 <command>nasal</command>
 				 <script>e1.bitswap("fdm/jsbsim/state/controls-fixed")</script>                        
+			 </binding>
+		 </key>
+
+		 <key n="18">
+			 <!-- toggle prop beta range WOULD LIKE TO USE r HERE, but is taken below!!!-->
+			 <name>CTRL-R</name>
+			 <desc>Toggle prop beta range</desc>
+			 <binding n="0">
+				 <command>nasal</command>
+				 <script>e1.bitswap("controls/engines/engine[0]/reverser")</script>                        
+			 </binding>
+		 </key>
+
+		 <key n="3">
+			 <!-- toggle engine cutoff-->
+			 <name>Ctrl-c</name>
+			 <desc>Toggle engine cutoff</desc>
+			 <binding n="0">
+				 <command>nasal</command>
+				 <script>e1.cutoff()</script>                        
 			 </binding>
 		 </key>
 		 
