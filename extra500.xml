@@ -7,12 +7,12 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 <!--
     This file is part of extra500
 
-    The Changer is free software: you can redistribute it and/or modify
+    The extra500 is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 2 of the License, or
     (at your option) any later version.
 
-    The Changer is distributed in the hope that it will be useful,
+    The extra500 is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
@@ -238,6 +238,30 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<dynamic_friction> 1.00 </dynamic_friction>
 			<spring_coeff unit="LBS/FT">1830 </spring_coeff>
 			<damping_coeff unit="LBS/FT/SEC">183</damping_coeff>
+		</contact>
+
+		<contact type="STRUCTURE" name="NOSE">
+			<location unit="M">
+				<x> 1.0 </x>
+				<y> 0 </y>
+				<z> 0.99 </z>
+			</location>
+			<static_friction>  1.00 </static_friction>
+			<dynamic_friction> 1.00 </dynamic_friction>
+			<spring_coeff unit="LBS/FT">10000</spring_coeff>
+			<damping_coeff unit="LBS/FT/SEC">1000</damping_coeff>
+		</contact>
+
+		<contact type="STRUCTURE" name="BELLEY">
+			<location unit="M">
+				<x> 3.5 </x>
+				<y> 0 </y>
+				<z> 0.57 </z>
+			</location>
+			<static_friction>  1.00 </static_friction>
+			<dynamic_friction> 1.00 </dynamic_friction>
+			<spring_coeff unit="LBS/FT">10000</spring_coeff>
+			<damping_coeff unit="LBS/FT/SEC">1000</damping_coeff>
 		</contact>
 
 		<contact type="STRUCTURE" name="VENTRAL FIN">
