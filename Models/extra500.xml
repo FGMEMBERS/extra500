@@ -18,7 +18,7 @@
       Authors: Thomas Grossberger and Dirk Dittmann
       Date: March 13 2013
 
-      Last change:      Eric van den Berg
+      Last change:      Thomas Grossberger
       Date:             27.04.13
 
 -->
@@ -63,6 +63,16 @@
 	<offsets>
 		<x-m>-0.7</x-m>
 		<y-m>-0.302</y-m>	
+		<z-m>-0.20</z-m>
+	<pitch-deg>-13</pitch-deg>
+	</offsets>
+</model>
+<model>
+  <name>RH_IFD</name>
+  <path>Aircraft/extra500/Models/extra500_RH-IFD.xml</path>
+	<offsets>
+		<x-m>-0.7</x-m>
+		<y-m>0.007</y-m>	
 		<z-m>-0.20</z-m>
 	<pitch-deg>-13</pitch-deg>
 	</offsets>
