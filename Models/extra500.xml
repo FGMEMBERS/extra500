@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             16.04.13
+      Date:             27.04.13
 
 -->
 
@@ -222,11 +222,11 @@
  <animation>
   <type>rotate</type>
   <object-name>SR</object-name>
-  <property>/fdm/jsbsim/fcs/rudder-pos-norm</property>
+  <property>surface-positions/rudder-pos-norm</property>
   <interpolation>
-   <entry><ind>-1</ind><dep> 25</dep></entry>
+   <entry><ind>-1</ind><dep>-25</dep></entry>
    <entry><ind> 0</ind><dep>  0</dep></entry>
-   <entry><ind> 1</ind><dep>-25</dep></entry>
+   <entry><ind> 1</ind><dep> 25</dep></entry>
   </interpolation>   
   <axis>
     <x1-m>5.37140</x1-m>
@@ -242,7 +242,12 @@
 <animation>
   <type>rotate</type>
   <object-name>HRlinks</object-name>
-  <property>/fdm/jsbsim/aircraft/hstab/elevator/elevator-pos-deg</property> 
+  <property>surface-positions/elevator-pos-norm</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>-33</dep></entry>
+   <entry><ind> 0</ind><dep>  0</dep></entry>
+   <entry><ind> 1</ind><dep> 18</dep></entry>
+  </interpolation>    
   <axis>
     <x1-m>6.28506</x1-m>
     <y1-m>-1.64490</y1-m>
@@ -256,7 +261,12 @@
   <type>rotate</type>
   <object-name>HRrechts</object-name>
   <object-name>HRtrim</object-name>
-  <property>/fdm/jsbsim/aircraft/hstab/elevator/elevator-pos-deg</property> 
+  <property>surface-positions/elevator-pos-norm</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>-33</dep></entry>
+   <entry><ind> 0</ind><dep>  0</dep></entry>
+   <entry><ind> 1</ind><dep> 18</dep></entry>
+  </interpolation>
     <axis>
     <x1-m>6.17177</x1-m>
     <y1-m>0.12085</y1-m>
@@ -287,7 +297,7 @@
 <animation>
   <type>rotate</type>	
   <object-name>QRlinks</object-name>
-  <property>/fdm/jsbsim/fcs/left-aileron-pos-norm</property>
+  <property>surface-positions/left-aileron-pos-norm</property>
   <interpolation>
    <entry><ind>-1</ind><dep>-27</dep></entry>
    <entry><ind> 0</ind><dep>  0</dep></entry>
@@ -305,7 +315,7 @@
 <animation>
   <type>rotate</type>
   <object-name>QRrechts</object-name>
-  <property>/fdm/jsbsim/fcs/left-aileron-pos-norm</property>
+  <property>surface-positions/left-aileron-pos-norm</property>
   <interpolation>
    <entry><ind>-1</ind><dep>19</dep></entry>
    <entry><ind> 0</ind><dep>  0</dep></entry>
@@ -325,7 +335,7 @@
 <animation>
   <type>rotate</type>
   <object-name>FlapInnenL</object-name>
-  <property>/fdm/jsbsim/fcs/flap-pos-norm</property>
+  <property>surface-positions/flap-pos-norm</property>
   <interpolation>
    <entry><ind>0</ind><dep>0</dep></entry>
    <entry><ind>1</ind><dep>30</dep></entry>
@@ -342,7 +352,7 @@
 <animation>
   <type>rotate</type>
   <object-name>FlapInnenR</object-name>
-  <property>/fdm/jsbsim/fcs/flap-pos-norm</property>
+  <property>surface-positions/flap-pos-norm</property>
   <interpolation>
    <entry><ind>0</ind><dep>0</dep></entry>
    <entry><ind>1</ind><dep>30</dep></entry>
@@ -359,7 +369,7 @@
 <animation>
   <type>rotate</type>
   <object-name>FlapAussenL</object-name>
-  <property>/fdm/jsbsim/fcs/flap-pos-norm</property>
+  <property>surface-positions/flap-pos-norm</property>
   <interpolation>
    <entry><ind>0</ind><dep>0</dep></entry>
    <entry><ind>1</ind><dep> 30</dep></entry>
@@ -376,7 +386,7 @@
 <animation>
   <type>rotate</type>
   <object-name>FlapAussenR</object-name>
-  <property>/fdm/jsbsim/fcs/flap-pos-norm</property>
+  <property>surface-positions/flap-pos-norm</property>
   <interpolation>
    <entry><ind>0</ind><dep>0</dep></entry>
    <entry><ind>1</ind><dep>30</dep></entry>
