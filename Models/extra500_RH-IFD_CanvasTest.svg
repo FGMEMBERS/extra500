@@ -27,7 +27,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.86267027"
      inkscape:cx="361.55016"
-     inkscape:cy="445.8738"
+     inkscape:cy="399.50614"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -39,14 +39,16 @@
      borderlayer="true"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:snap-bbox="true"
-     inkscape:snap-bbox-edge-midpoints="false"
+     inkscape:snap-bbox="false"
+     inkscape:snap-bbox-edge-midpoints="true"
      inkscape:snap-center="false"
      inkscape:snap-object-midpoints="true"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
-     fit-margin-bottom="0">
+     fit-margin-bottom="0"
+     inkscape:snap-bbox-midpoints="false"
+     inkscape:snap-nodes="false">
     <sodipodi:guide
        orientation="1,0"
        position="512,1036.8967"
@@ -174,10 +176,13 @@
     <g
        transform="matrix(1.0303618,0,0,1.0303613,247.61373,-280.13327)"
        inkscape:label="#g3183"
-       id="CompassRose">
+       id="CompassRose"
+       inkscape-center-x="512.0"
+       inkscape-center-y="512.0"
+       inkscape:transform-center-y="-255">
       <path
          transform="matrix(0.5,0,0,0.5,3.0472727,537.86647)"
-         d="m 996.01041,516.90344 c 0,270.01965 -218.89418,488.91386 -488.91382,488.91386 -270.01965,0 -488.91382,-218.89421 -488.91382,-488.91386 0,-270.01964 218.89417,-488.913816 488.91382,-488.913816 270.01964,0 488.91382,218.894176 488.91382,488.913816 z"
+         d="m 996.01041,516.90344 a 488.91382,488.91382 0 1 1 -977.82764,0 488.91382,488.91382 0 1 1 977.82764,0 z"
          sodipodi:ry="488.91382"
          sodipodi:rx="488.91382"
          sodipodi:cy="516.90344"

@@ -47,8 +47,9 @@ var AvidyneIFD = {
 		
 		m.CompassRose = m.primaryFlightDisplay.getElementById("CompassRose");
 		#m.CompassRose.updateCenter();
-		#m.CompassRose.setTranslation(512, 256);
-		m.CompassRose.setCenter(512,512);
+		#m.CompassRose.setTranslation(100, -100);
+		#m.CompassRose.setCenter(356,-356);
+		m.CompassRose.updateCenter();
 		#m.tfCompassRose = m.CompassRose.createTransform();
 		debug.dump("AvidyneIFD.new() ... IFD created.");
 		#debug.dump(m.CompassRose.getBoundingBox());
@@ -56,7 +57,6 @@ var AvidyneIFD = {
 	},
 	update : func(){
 		me.hdg += 0.1;
-		
 		me.CompassRose.setRotation(me.hdg);
 		
 		me.TestText.setRotation(-me.hdg);
