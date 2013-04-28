@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             27.04.13
+      Date:             28.04.13
 
 -->
 
@@ -239,12 +239,12 @@
    <entry><ind> 1</ind><dep> 25</dep></entry>
   </interpolation>   
   <axis>
-    <x1-m>5.37140</x1-m>
+    <x1-m>5.36605</x1-m>
     <y1-m>0</y1-m>
-    <z1-m>-0.17273</z1-m>
-    <x2-m>6.17376</x2-m>
+    <z1-m>-0.17360</z1-m>
+    <x2-m>6.15595</x2-m>
     <y2-m>0</y2-m>
-    <z2-m>1.13973</z2-m>
+    <z2-m>1.14097</z2-m>
   </axis>
 </animation>
 
