@@ -38,30 +38,25 @@ var auto_start = func(){
 };
 
 var auto_engine_start = func(){
-	#setprop("/controls/electric/engine/generator",1);
-	setprop("/controls/engines/engine[0]/cutoff",0);
-	
-	UI.oCockpit.click("Main Battery on");
+	UI.click("Engine cutoff off");
+	UI.click("Main Battery on");
 	UI.click("Main Generator on");
-	UI.oCockpit.click("Fuel Pump 2 on");
+	UI.click("Fuel Pump 2 on");
 	
 	UI.click("Engine Motoring normal");
 	UI.click("Engine Start on");
 	#setprop("/controls/engines/engine[0]/starter",1);
-	setprop("/controls/engines/engine[0]/propeller-feather",0);		# set to true in -set file for initial condition, FIXME: should be set to 0 when N1>~55%
+	#setprop("/controls/engines/engine[0]/propeller-feather",0);		# set to true in -set file for initial condition, FIXME: should be set to 0 when N1>~55%
 };
 
 var auto_engine_shutdown = func(){
-	#setprop("/controls/engines/engine[0]/starter",0);
-	setprop("/controls/engines/engine[0]/cutoff",1);
-	#setprop("/controls/electric/engine/generator",0);
-	setprop("/controls/engines/engine[0]/propeller-feather",1);		# FIXME: should be set to 1 when N1 drops below ~55% 
-	
+	UI.click("Engine cutoff on");
+	#setprop("/controls/engines/engine[0]/propeller-feather",1);		# FIXME: should be set to 1 when N1 drops below ~55% 
 	UI.click("Engine Start off");
 	UI.click("Main Generator off");
 	UI.click("Main Standby Alternator off");
-	UI.oCockpit.click("Fuel Pump 2 off");
-	UI.oCockpit.click("Main Battery off");
+	UI.click("Fuel Pump 2 off");
+	UI.click("Main Battery off");
 	
 	
 };

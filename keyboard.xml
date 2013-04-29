@@ -35,13 +35,18 @@
 			 </binding>
 		 </key>
 
-		 <key n="18">
-			 <!-- toggle prop beta range WOULD LIKE TO USE r HERE, but is taken below!!!-->
-			 <name>CTRL-R</name>
+		 <key n="114">
+			 <!-- toggle prop beta range WOULD LIKE TO USE r HERE, but is taken below!!!
+				there it is :-)
+			 -->
+			 <name>r</name>
 			 <desc>Toggle prop beta range</desc>
 			 <binding n="0">
 				 <command>nasal</command>
-				 <script>e1.bitswap("controls/engines/engine[0]/reverser")</script>                        
+				 <!--<script>e1.bitswap("controls/engines/engine[0]/reverser")</script>-->
+				 <script><![CDATA[
+					UI.click("Engine reverser");
+				]]></script> 
 			 </binding>
 		 </key>
 
@@ -51,7 +56,10 @@
 			 <desc>Toggle engine cutoff</desc>
 			 <binding n="0">
 				 <command>nasal</command>
-				 <script>e1.cutoff()</script>                        
+				 <!--<script>e1.cutoff()</script> -->
+				 <script><![CDATA[
+					UI.click("Engine cutoff");
+				]]></script>
 			 </binding>
 		 </key>
 		 
@@ -66,8 +74,8 @@
 				 <subsystem>aircraft-model</subsystem>
 			 </binding>
 		 </key>
-		 <key n="114">
-			 <name>r</name>
+		 <key n="119">
+			 <name>w</name>
 			 <desc>run simulation cycle once</desc>
 			 <repeatable type="bool">false</repeatable>
 			 <binding>
@@ -78,8 +86,8 @@
 				]]></script>
 			 </binding>
 		 </key>
-		 <key n="82">
-			 <name>R</name>
+		 <key n="87">
+			 <name>W</name>
 			 <desc>run simulation cycle continous</desc>
 			 <repeatable type="bool">false</repeatable>
 			 <binding>
@@ -89,8 +97,8 @@
 				]]></script>
 			 </binding>
 		 </key>
-		 <key n="101">
-			 <name>e</name>
+		 <key n="113">
+			 <name>q</name>
 			 <desc>Debug output on</desc>
 			 <repeatable type="bool">false</repeatable>
 			 <binding>
@@ -101,8 +109,8 @@
 				]]></script>
 			 </binding>
 		 </key>
-		 <key n="69">
-			 <name>E</name>
+		 <key n="81">
+			 <name>Q</name>
 			 <desc>Debug output off</desc>
 			 <repeatable type="bool">false</repeatable>
 			 <binding>
