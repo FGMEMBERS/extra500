@@ -17,11 +17,11 @@
 #      Date: April 07 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             26.04.13
+#      Date:             29.04.13
 #
 extra500.circuitBreakerPanel.initUI();
 extra500.sidePanel.initUI();
 extra500.masterPanel.initUI();
 extra500.oFuelSystem.initUI();
-
+extra500.flapSystem.initUI();
 #UI.echo();

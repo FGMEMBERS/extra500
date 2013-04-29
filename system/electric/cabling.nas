@@ -17,7 +17,7 @@
 #      Date: April 12 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             26.04.13
+#      Date:             29.04.13
 #
  var plugMainBoard = func(){
 	
@@ -205,7 +205,9 @@ var plugCircuitBreaker = func(){
 		mainBoard.emergencyBus.plug(circuitBreakerPanel.CabinPressure.In);
 		mainBoard.emergencyBus.plug(circuitBreakerPanel.GearWarn.In);
 
-		#mainBoard.hotBus.plug(circuitBreakerPanel.FlapUNB.In);
+		flapSystem.powerInBus.plug(circuitBreakerPanel.FlapUNB.In);
+		flapSystem.inhibitBus.plug(circuitBreakerPanel.FlapUNB.Out);
+		
 		#mainBoard.hotBus.plug(circuitBreakerPanel.GearControl.In);
 		#mainBoard.hotBus.plug(circuitBreakerPanel.GearAux1.In);
 		circuitBreakerPanel.RCCB.Out.plug(mainBoard.GND);
@@ -347,9 +349,9 @@ var plugLight = func(){
 	
 	
 	
-	lightBoard.testLightRelais.P22.plug(flapSystem.FlapTransition);
-	lightBoard.testLightRelais.P32.plug(flapSystem.Flap15);
-	lightBoard.testLightRelais.P42.plug(flapSystem.Flap30);
+	lightBoard.testLightRelais.P22.plug(flapSystem.transitionRelais.P11);
+	lightBoard.testLightRelais.P32.plug(flapSystem.pos14Relais.P31);
+	lightBoard.testLightRelais.P42.plug(flapSystem.limitDown.L22);
 	
 	lightBoard.testLightRelais.P52.plug(gearSystem.GearNose);
 	lightBoard.testLightRelais.P62.plug(gearSystem.GearLeft);
@@ -362,7 +364,13 @@ var plugLight = func(){
 };
 
 var plugFlap =func(){
-	flapSystem.GND.plug(mainBoard.GND);
+	flapSystem.GNDBus.Minus.plug(mainBoard.GND);
+	flapSystem.flapPowerBus.plug(circuitBreakerPanel.Flap.Out);
+	flapSystem.powerInBus.plug(circuitBreakerPanel.FlapControl.Out);
+	flapSystem.plugElectric();
+	
+	
+	
 };
 var plugGear =func(){
 	gearSystem.GND.plug(mainBoard.GND);
@@ -392,6 +400,8 @@ var plugFuel = func(){
 	oFuelSystem.oPumpRight.Minus.plug(mainBoard.GND);
 	
 }
+
+
 
 var plugElectric = func(){
 	plugMainBoard();

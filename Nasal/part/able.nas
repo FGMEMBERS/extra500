@@ -17,7 +17,7 @@
 #      Date: April 07 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             26.04.13
+#      Date:             29.04.13
 #
 var SimStateAble = {
 	new : func(nRoot,type,default=0){
@@ -116,6 +116,7 @@ var ElectricAble = {
 	setPower : func(volt,watt){
 		me.resistor	= volt / (watt / volt)  ;
 		me.nResistor.setValue(me.resistor);
+		
 	},
 	electricWork : func(electron) {
 		var watt = 0.0;
@@ -205,3 +206,26 @@ var ElectricFuseAble = {
 		#me.nAmpereUsed.setValue(me.ampereUsed);
 	},
 };
+
+
+var GearAble = {
+	new : func(ratio=1.0){
+		var m = {parents:[
+			GearAble
+			
+		]};
+		m.gearRatio = ratio;
+		m.gearOutput = 0.0;
+		m.gearOutputShaft = nil;
+		return m;
+	},
+	driveShaft : func(input){
+		me.gearOutput = input * me.gearRatio;
+		if(me.gearOutputShaft != nil){
+			me.gearOutputShaft.driveShaft(me.gearOutput);
+		}
+	},
+	connectOutputShaft : func (gearAble){
+		me.gearOutputShaft = gearAble;
+	},
+}

@@ -17,7 +17,7 @@
 #      Date: April 07 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             26.04.13
+#      Date:             29.04.13
 #
 
 var ElectricTreeDebugger = {
@@ -28,11 +28,11 @@ var ElectricTreeDebugger = {
 		]};
 		m.on	 	= 0;
 		m.depth 	= 0;
-		m.defaultStr 	= "                                       ";
+		m.defaultStr 	= "                                                                                        ";
 		m.debugLevel	=0;
-		m.highLightType = "Relais";
+		m.highLightType = "";
 		m.excludeType 	= "";
-		m.debugName 	= "";
+		m.debugName 	= "Flap30";
 		m.nDebugOutput = props.globals.initNode("extra500/DebugOutput","","STRING");
 		return m;
 
@@ -73,7 +73,7 @@ var ElectricTreeDebugger = {
 					var output = me.nDebugOutput.getValue();
 					output ~= sprintf("%s%s %s %s %s %s\n",space,icon,type,name,connector,electron.getText());
 					#print(output);
-					#me.nDebugOutput.setValue(output);
+					me.nDebugOutput.setValue(output);
 				}
 			}
 			if (find(me.debugName,name) > -1){
@@ -1164,6 +1164,7 @@ var ElectricRelaisXPDT = {
 		]};
 		
 		m.capacitor = Capacitor.new(2);
+		m.resistor = 190.0;
 		
 		m.A1 = ElectricConnector.new("A1");
 		m.A2 = ElectricConnector.new("A2");
@@ -1214,13 +1215,15 @@ var ElectricRelaisXPDT = {
 			#electron.resistor += me.qos;
 						
 			if (name == "A1" or name == "A2"){
-				electron.resistor += 190.0;
+				electron.resistor += me.resistor;
 				GND = me.output[name].applyVoltage(electron);
 				if (GND > 0 ){
 					#GND += me.electricWork(electron);
+					
 					me.capacitor.load(10);
 					me._setValue(1);
 				}else{
+					
 					me.capacitor.load(-10);
 					me._setValue(0);
 				}
@@ -1283,6 +1286,7 @@ var ElectricRelaisXPST = {
 		]};
 		
 		m.capacitor = Capacitor.new(2);
+		m.resistor = 190.0;
 		
 		m.A1 = ElectricConnector.new("A1");
 		m.A2 = ElectricConnector.new("A2");
@@ -1325,7 +1329,7 @@ var ElectricRelaisXPST = {
 			#electron.resistor += me.qos;
 						
 			if (name == "A1" or name == "A2"){
-				electron.resistor += 190.0;
+				electron.resistor += me.resistor;
 				GND = me.output[name].applyVoltage(electron);
 				if (GND > 0 ){
 					#GND += me.electricWork(electron);
@@ -1522,14 +1526,15 @@ var ElectricLight = {
 		me.state = value;
 	},
 	_dimm : func(){
-		var percentage = ((me.volt-me.voltMin) * me.qos / (me.voltDelta)) ;
-		me._setValue(percentage);
+		var norm = ((me.volt-me.voltMin) * me.qos / (me.voltDelta)) ;
+		me._setValue(norm);
 		
 	},
 	
 };
-
-#	Plus ─⊗─ Minus
+#	PlusRight ─┐
+#		   ⊗─ Minus
+#	PlusLeft  ─┘
 var ElectricMotor = {
 	new : func(nRoot,name){
 				
@@ -1540,16 +1545,23 @@ var ElectricMotor = {
 			ElectricAble.new(nRoot,name)
 		]};
 		
-		m.Plus = ElectricConnector.new("+");
+		m.gear = nil;
+		
+		m.PlusLeft = ElectricConnector.new("Left");
+		m.PlusRight = ElectricConnector.new("Right");
 		m.Minus = ElectricConnector.new("-");
 						
-		m.Plus.solder(m);
+		m.PlusLeft.solder(m);
+		m.PlusRight.solder(m);
 		m.Minus.solder(m);
 		
 		append(aListSimStateAble,m);
 		
 		return m;
 
+	},
+	connectGear : func (gear){
+		me.gear = gear;
 	},
 	applyVoltage : func(electron,name=""){ 
 		etd.in("Motor",me.name,name,electron);
@@ -1559,13 +1571,20 @@ var ElectricMotor = {
 			me.setVolt(electron.volt);
 			electron.resistor += me.resistor;# * me.qos
 			
-			if (name == "+"){
+			if (name == "Right"){
 				GND = me.Minus.applyVoltage(electron);
 				if (GND){
 					var watt = me.electricWork(electron);
-					me._dimm();
+					me._drive(me.qos);
+				}
+			}elsif (name == "Left"){
+				GND = me.Minus.applyVoltage(electron);
+				if (GND){
+					var watt = me.electricWork(electron);
+					me._drive(-me.qos);
 				}
 			}
+			
 			
 			me.setAmpere(electron.ampere);
 		}
@@ -1575,14 +1594,16 @@ var ElectricMotor = {
 	_setValue : func(value){
 		
 		if (value > 1.0) { value = 1.0 };
-		if (value < 0.0) { value = 0.0 };
+		if (value < -1.0) { value = -1.0 };
 		
 		me.state = value;
+		if (me.gear!=nil){
+			me.gear.driveShaft(me.state);
+		}
 	},
-	_dimm : func(){
-		var percentage = ((me.volt-me.voltMin) * me.qos / (me.voltDelta)) ;
-		me._setValue(percentage);
-		
+	_drive : func(qos){
+		var norm =  ((me.volt-me.voltMin) / (me.voltDelta)) * qos ;
+		me._setValue(norm);
 	},
 	
 }

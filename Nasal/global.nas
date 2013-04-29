@@ -17,7 +17,7 @@
 #      Date: April 04 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             26.04.13
+#      Date:             29.04.13
 #
 
 print("#############################################");
@@ -31,4 +31,6 @@ var fnAnnounce = func(type,msg){
 		print (msg);
 	}
 }
+
+
 

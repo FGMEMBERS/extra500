@@ -17,7 +17,7 @@
 #      Date: April 07 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             26.04.13
+#      Date:             29.04.13
 #
 
 
@@ -86,7 +86,7 @@ var canvas_demo = {
 		
 		
 		var text = "";
-		var text = sprintf("Cycle time used : %.4f sec",run.cycleTimeUsed);
+		var text = sprintf("Sim time : %.4f sec",run.cycleTimeUsed);
 	
 		me.textSim.setText(text);
 # 		
