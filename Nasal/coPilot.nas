@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: April 04 2013
 #
-#      Last change:      Eric van den Berg
-#      Date:             27.04.13
+#      Last change:      Dirk Dittmann
+#      Date:             29.04.13
 #
 var buisy = 0;
 var checklist = "";
@@ -38,20 +38,17 @@ var auto_start = func(){
 };
 
 var auto_engine_start = func(){
-	UI.click("Engine cutoff off");
 	UI.click("Main Battery on");
 	UI.click("Main Generator on");
 	UI.click("Fuel Pump 2 on");
-	
 	UI.click("Engine Motoring normal");
 	UI.click("Engine Start on");
-	#setprop("/controls/engines/engine[0]/starter",1);
-	#setprop("/controls/engines/engine[0]/propeller-feather",0);		# set to true in -set file for initial condition, FIXME: should be set to 0 when N1>~55%
+	UI.click("Engine cutoff off");
+	
 };
 
 var auto_engine_shutdown = func(){
 	UI.click("Engine cutoff on");
-	#setprop("/controls/engines/engine[0]/propeller-feather",1);		# FIXME: should be set to 1 when N1 drops below ~55% 
 	UI.click("Engine Start off");
 	UI.click("Main Generator off");
 	UI.click("Main Standby Alternator off");
@@ -187,9 +184,8 @@ var engine_start = func(){
 			CoPilot.say("ENGINE START - Momentary START ... check");
 		}, 20.0 );
 	settimer(func{
-		
+			UI.click("Engine cutoff off");
 			CoPilot.say("Condition Lever - Fully forward ... ???");
-			setprop("/controls/engines/engine[0]/cutoff",0);
 		}, 22.0 );
 	settimer(func{
 			CoPilot.say("TOT - Monitor < 850 °C ... ???");
@@ -249,9 +245,9 @@ var engine_shutdown = func(){
 			CoPilot.say("GEN - OFF ... check");
 		}, 14.0 );
 	settimer(func{
-			
+			UI.click("Engine cutoff on");
 			CoPilot.say("Condition Lever - FUEL OFF ... ???");
-			setprop("/controls/engines/engine[0]/cutoff",1);
+			
 		}, 16.0 );
 	settimer(func{
 			UI.click("Main Battery off");
