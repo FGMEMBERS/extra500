@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             28.04.13
+      Date:             29.04.13
 
 -->
 
@@ -167,6 +167,28 @@
 
 <sound><path>Aircraft/extra500/Sounds/mp-sound.xml</path></sound>
 -->
+
+<!-- Test: Frame-Toggle -->
+<animation>
+  <type>select</type>
+  <object-name>Rumpftest</object-name>
+  <condition>
+  <equals>
+      <property>controls/gear/brake-parking</property>
+      <value>1</value>
+  </equals>
+  </condition>
+</animation>
+<animation>
+  <type>select</type>
+  <object-name>Rumpftest.trans</object-name>
+  <condition>
+  <equals>
+      <property>controls/gear/brake-parking</property>
+      <value>0</value>
+  </equals>
+  </condition>
+</animation>
 
 <!--Propeller-->
 <animation>
