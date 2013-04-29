@@ -18,8 +18,8 @@
       Authors: Thomas Grossberger and Dirk Dittmann
       Date: March 13 2013
 
-      Last change:      Eric van den Berg
-      Date:             27.04.13
+      Last change:      Dirk Dittmann
+      Date:             29.04.13
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -571,9 +571,10 @@ JSBSim Extra Aircraft - Extra 500.
 	<Dev>
 		<file>Aircraft/extra500/Nasal/DevTools/engineer.book.nas</file>
 	</Dev>
-	<!--<controls>
+	<!---->
+	<controls>
 		<file>Aircraft/extra500/Nasal/controls.nas</file>
-	</controls>-->
+	</controls>
 	
 
 </nasal>
