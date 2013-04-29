@@ -1,11 +1,11 @@
 #    This file is part of extra500
 #
-#    The Changer is free software: you can redistribute it and/or modify
+#    extra500 is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 2 of the License, or
 #    (at your option) any later version.
 #
-#    The Changer is distributed in the hope that it will be useful,
+#    extra500 is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
@@ -16,7 +16,7 @@
 #      Authors: Dirk Dittmann
 #      Date: April 16 2013
 #
-#      Last change:      Dirk Dittmann
+#      Last change:      Eric van den Berg
 #      Date:             29.04.13
 #
  
@@ -301,5 +301,29 @@ engineerScreen.add(electricLightPage);
 	
 
 	
+
+#---------------------------------
+
+### Engine Screen ##############
+
+display = Display.new(10,100);
+
+	display.title = "Engine indication";
+	display.font = "FIXED_9x15";
+	display.fg = [1.0, 1.0, 1.0, 1.0];
+	display.bg = [0.5, 0.5, 0.5, 0.85];
+	display.width = 270;
+	display.height = 240;
+	
+	display.add_Node("TRQ %    ", props.globals.getNode("/fdm/jsbsim/aircraft/engine/TRQ-perc") );
+	display.add_Node("TOT degC ", props.globals.getNode("/fdm/jsbsim/aircraft/engine/TOTr-degC") );
+	display.add_Node("N1  %    ", props.globals.getNode("/fdm/jsbsim/propulsion/engine/n1") );
+	display.add_Node("N2  RPM  ", props.globals.getNode("/fdm/jsbsim/propulsion/engine/propeller-rpm") );
+#	display.add_Node("OP   ", props.globals.getNode("/fdm/jsbsim/") );
+#	display.add_Node("OT   ", props.globals.getNode("/fdm/jsbsim/") );
+#	display.add_Node("FP   ", props.globals.getNode("/fdm/jsbsim/") );
+#	display.add_Node("FT   ", props.globals.getNode("/fdm/jsbsim/") );
+	
+enginePage.add(display);
 
 #---------------------------------

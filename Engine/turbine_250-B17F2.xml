@@ -19,7 +19,7 @@
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             28.04.13
+      Date:             29.04.13
 -->
 <!--
     
@@ -58,33 +58,26 @@
 	
 	
 	<table name="EnginePowerVC">
-		<description> Engine power, function of airspeed and pressure </description>
-		<independentVar lookup="row">atmosphere/P-psf</independentVar>
-		<independentVar lookup="column">velocities/ve-kts</independentVar>
+	<description> Engine power, function of airspeed and pressure </description>
+		<independentVar lookup="row">atmosphere/pressure-altitude</independentVar>
+		<independentVar lookup="column">velocities/vtrue-kts</independentVar>
 		<tableData>
-	0	50	100	150	200	250
-503	0.357	0.38	0.4	0.425	0.457	0.486
-1048	0.586	0.589	0.6	0.621	0.65	0.686
-1328	0.707	0.721	0.731	0.757	0.786	0.821
-1496	0.779	0.786	0.808	0.821	0.857	0.9
-1684	0.85	0.857	0.874	0.9	0.943	0.979
-1896	0.914	0.929	0.946	0.971	1	1.057
-2135	1	1.011	1.029	1.043	1.083	1.15
-2213	1.029	1.043	1.057	1.079	1.114	1.171
-
+					0	100	300
+			0		1.0	1.	1.
+			25000		1	1	1
 		</tableData>
 	</table>
 	
 	<table name="EnginePowerRPM_N1" type="internal">
-		<description> Engine Power, function of RPM and N1 </description>
+	<description> Engine Power, function of RPM and N1 </description>
 		<tableData>
-	0	65	88	93	96.1	96.3	99.7	105	106
-0	0	0.5	0.5	0.5	0.5	0.5	0.5	0.5	0.5
-800	0	35	50	60	63	64	65	66	67	
-1300	0	35	190	201	241	243	288	303	306
-1850	0	35	205	286	344	346	410	432	436
-2030	0	35	225	314	377	380	450	474	478
-2100	0	35	233	325	390	393	466	490	495
+				0	65	88	93	96.1	96.3	99.7	105	106
+			0	0	0.5	0.5	0.5	0.5	0.5	0.5	0.5	0.5
+			800	0	35	50	60	63	64	65	66	67	
+			1300	0	35	190	201	241	243	288	303	306
+			1850	0	35	205	286	344	346	410	432	436
+			2030	0	35	225	314	377	380	450	474	478
+			2100	0	35	233	325	390	393	466	490	495
 		</tableData>
 	</table>
 	
