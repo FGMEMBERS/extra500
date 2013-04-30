@@ -43,8 +43,19 @@ var FusePanel = {
 		m.emergency3 = Part.ElectricCircuitBraker.new(node,"Emergency3 Fuse",1);
 		m.emergency3.fuseConfig(35.0);
 		
+		var node = m.nRoot.initNode("ExternalPower");
+		m.externalPower = Part.ElectricCircuitBraker.new(node,"External Power",1);
+		m.externalPower.fuseConfig(2.0);
+		
+		# ### TODO : aninciator same Bus ! put in Once  
+		m.externalPowerBus = Part.ElectricBus.new("fusedExternalPowerBus");
+		
+		
 		return m;
 		
+	},
+	plugElectric : func(){
+		me.externalPowerBus.plug(me.externalPower.Out);
 	},
 };
 

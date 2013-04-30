@@ -93,6 +93,7 @@ engineerScreen.add(electricPage);
 		display.add_Node("Avionics     ", props.globals.getNode("/extra500/mainBoard/Relais/AvionicsRelais/state") );
 		display.add_Node("Start        ", props.globals.getNode("/extra500/mainBoard/Relais/StartRelais/state") );
 		display.add_Node("Generator    ", props.globals.getNode("/extra500/mainBoard/Relais/GeneratorRelais/state") );
+		display.add_Node("External     ", props.globals.getNode("/extra500/mainBoard/Relais/ExternalPowerRelais/state") );
 		
 	electricPage.add(display);
 

@@ -63,6 +63,17 @@
 			 </binding>
 		 </key>
 		 
+		 <key n="5">
+			 <name>Ctrl-e</name>
+			 <desc>Toggle Ground External Power Generator</desc>
+			 <binding n="0">
+				 <command>nasal</command>
+				 <script><![CDATA[
+					UI.click("Ground External Power Generator");
+				]]></script>
+			 </binding>
+		 </key>
+		 
 		 
 		 <!-- keys only for development -->
 		 <key n="32">
