@@ -491,7 +491,7 @@ var ElectricBattery = {
 			
 			if (name == "+"){
 				etd.print("Battery loading ...");
-				electron.ampere = 2.8 * (1-me.loadLevel);
+				electron.ampere = 48.0 * (1-me.loadLevel); # ### TODO : real loading
 				me.setAmpereUsage(electron.ampere);
 				GND = 1;
 			}
@@ -529,7 +529,7 @@ var ElectricBattery = {
 		etd.print("-------------------------------------");
 		#etd.echo("Battery.update() ...");
 		
-		me.electron.volt = 24.0;
+		me.electron.volt = 24.0; # ### TODO real voltage based on capacity
 		me.electron.resistor = 0.0;
 		me.electron.ampere = 0.0;
 		me.electron.timestamp = timestamp;
