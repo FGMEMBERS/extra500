@@ -84,7 +84,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<desc>Pitch control by pitch trim only</desc>
 		</key>
      	      <key>
-			<name>Ctrl-r</name>
+			<name>r</name>
 			<desc>Put propeller in beta range (for reverse)</desc>
 		</key>
      	      <key>

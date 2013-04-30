@@ -53,7 +53,7 @@
 	<maxstartingtime>              30     </maxstartingtime>
 	<startern1>                    20     </startern1>
 	<itt_delay>                     0.05  </itt_delay>
-	<betarangeend>                  70     </betarangeend>
+	<betarangeend>                 70     </betarangeend>
 	<reversemaxpower>              30     </reversemaxpower>
 	
 	

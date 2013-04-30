@@ -527,7 +527,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		<channel name="Flaps">
 
 			<kinematic name="Flaps Control">
-				<input>fcs/flap-cmd-norm</input>
+				<input>fcs/flap-wp-cmd-norm</input>
 				<traverse>
 					<setting>
 						<position>0</position>
@@ -547,7 +547,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 
 			<kinematic name="Flaps Control aero">
                   <!--this is for the aerodynamic part of the flap deflection. Much slower to prevent dynamic effects-->
-				<input>fcs/flap-cmd-norm</input>
+				<input>fcs/flap-wp-cmd-norm</input>
 				<traverse>
 					<setting>
 						<position>0</position>
