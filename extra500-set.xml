@@ -18,8 +18,8 @@
       Authors: Thomas Grossberger and Dirk Dittmann
       Date: March 13 2013
 
-      Last change:      Dirk Dittmann
-      Date:             29.04.13
+      Last change:      Eric van den Berg
+      Date:             30.04.13
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -670,6 +670,9 @@ JSBSim Extra Aircraft - Extra 500.
                         <x_ac-ft>27.128</x_ac-ft>
                         <z_ac-ft>8.294</z_ac-ft>				
 			</vstab>
+			<engine>
+				<OP-maxsetting-psi>125</OP-maxsetting-psi>
+			</engine>
             </aircraft>
       </jsbsim>
  </fdm>
