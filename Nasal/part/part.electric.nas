@@ -511,6 +511,7 @@ var ElectricBattery = {
 		
 		
 		var simElapsed = simNow - me.simTime;
+		me.simTime = simNow;
 		
 		var usedAs = ampere * simElapsed;
 		
