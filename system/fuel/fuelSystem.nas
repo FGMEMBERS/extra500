@@ -26,6 +26,9 @@
 # 	
 #1 Gallone US  = 3,785411784 Liter
 
+
+# 1x JetPump  2,5 Kg 0.8117 Us Gallone
+
 var FuelSystem = {
 	new : func{
 		var m = {parents:[FuelSystem]};

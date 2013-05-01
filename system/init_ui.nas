@@ -17,12 +17,27 @@
 #      Date: April 07 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             29.04.13
+#      Date:             30.04.13
 #
+
+
+var initUI = func(){
+	UI.register("Ground External Power Generator", 		func{extra500.externalPower.generator(); } 	);
+	UI.register("Ground External Power Generator on",	func{extra500.externalPower.generator(1); } 	);
+	UI.register("Ground External Power Generator off",	func{extra500.externalPower.generator(0); } 	);
+};
+
+
+
 extra500.circuitBreakerPanel.initUI();
 extra500.sidePanel.initUI();
 extra500.masterPanel.initUI();
 extra500.oFuelSystem.initUI();
 extra500.flapSystem.initUI();
 extra500.engine.initUI();
+
+initUI();
+
+
+
 #UI.echo();

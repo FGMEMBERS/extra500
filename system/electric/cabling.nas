@@ -21,86 +21,88 @@
 #
  var plugMainBoard = func(){
 	
-	
+		
 	# Sources
 		battery.Minus.plug(mainBoard.GND);
-				
+		externalPower.Minus.plug(mainBoard.GND);
 	# Bus	
-		#mainBoard.iHotSourceBus.plug(mainBoard.hotBus.con());
-		#mainBoard.iHotSourceBus.plug(mainBoard.iBus30.con());
-		#mainBoard.iHotRelaisBus.plug(mainBoard.iHotSourceBus.Minus);
-		#mainBoard.iHotRelaisBus.plug(mainBoard.batteryRelais.A1);
-		
 	
 		mainBoard.hotBus.plug(battery.Plus);
+		mainBoard.iBus40.plug(fusePanel.externalPower.In);
+		mainBoard.iBus40.plug(externalPower.Plus);
 		
-		mainBoard.hotBus.plug(mainBoard.batteryRelais.A1);
+		mainBoard.iBus30.plug(generator.Plus);
+ 		mainBoard.iBus30.plug(generatorControlUnit.POR);
+		mainBoard.iBus30.plug(mainBoard.startRelais.P14);
+		
+		
+		mainBoard.plugElectric();
+		
+		
+# 		mainBoard.hotBus.plug(mainBoard.batteryRelais.A1);
 		mainBoard.hotBus.plug(fusePanel.emergency3.In);
-		mainBoard.hotBus.plug(mainBoard.batteryRelais.P21);
-		mainBoard.hotBus.plug(mainBoard.batteryRelais.P11);
+# 		mainBoard.hotBus.plug(mainBoard.batteryRelais.P21);
+# 		mainBoard.hotBus.plug(mainBoard.batteryRelais.P11);
 		
-		mainBoard.iBus20.plug(mainBoard.batteryRelais.P14);
-		mainBoard.iBus20.plug(mainBoard.startRelais.P11);
-		mainBoard.iBus20.plug(mainBoard.batteryShunt.Minus);
+# 		mainBoard.iBus20.plug(mainBoard.batteryRelais.P14);
+# 		mainBoard.iBus20.plug(mainBoard.startRelais.P11);
+# 		mainBoard.iBus20.plug(mainBoard.batteryShunt.Minus);
 		
-		mainBoard.iBus10.plug(mainBoard.batteryShunt.Plus);
+# 		mainBoard.iBus10.plug(mainBoard.batteryShunt.Plus);
 		mainBoard.iBus10.plug(generatorControlUnit.LoadBus);
 		
 		mainBoard.iBus10.plug(fusePanel.emergencyBus.In);
 		mainBoard.iBus10.plug(fusePanel.batteryBus.In);
 		mainBoard.iBus10.plug(mainBoard.rccbRelais.P14);
 		
-		mainBoard.iBus11.plug(mainBoard.generatorShunt.Minus);
-		mainBoard.iBus11.plug(mainBoard.rccbRelais.P11);
+# 		mainBoard.iBus11.plug(mainBoard.generatorShunt.Minus);
+# 		mainBoard.iBus11.plug(mainBoard.rccbRelais.P11);
 		mainBoard.iBus11.plug(fusePanel.loadBus.In);
 		
-		mainBoard.iBus01.plug(mainBoard.batteryRelais.P24);
-		mainBoard.iBus01.plug(mainBoard.generatorRelais.P24);
-		mainBoard.iBus01.Minus.plug(mainBoard.rccbRelais.A1);
-		
+# 		mainBoard.iBus01.plug(mainBoard.batteryRelais.P24);
+# 		mainBoard.iBus01.plug(mainBoard.generatorRelais.P24);
+# 		mainBoard.iBus01.Minus.plug(mainBoard.rccbRelais.A1);
+# 		
 		mainBoard.iBus12.plug(fusePanel.emergency3.Out);
-		mainBoard.iBus12.plug(mainBoard.emergencyRelais.A1);
-		mainBoard.iBus12.plug(mainBoard.emergencyRelais.P14);
+# 		mainBoard.iBus12.plug(mainBoard.emergencyRelais.A1);
+# 		mainBoard.iBus12.plug(mainBoard.emergencyRelais.P14);
 		
 		
 		mainBoard.batteryBus.plug(fusePanel.batteryBus.Out);
-		mainBoard.batteryBus.plug(circuitBreakerPanel.avionicBus.In);
+		
 		
 		mainBoard.iBus13.plug(circuitBreakerPanel.avionicBus.Out);
-		mainBoard.iBus13.plug(mainBoard.avionicsRelais.A1);
-		mainBoard.iBus13.plug(mainBoard.avionicsRelais.P11);
+# 		mainBoard.iBus13.plug(mainBoard.avionicsRelais.A1);
+# 		mainBoard.iBus13.plug(mainBoard.avionicsRelais.P11);
 		
-		mainBoard.avionicBus.plug(mainBoard.avionicsRelais.P14);
+# 		mainBoard.avionicBus.plug(mainBoard.avionicsRelais.P14);
 				
 		mainBoard.loadBus.plug(fusePanel.loadBus.Out);
 		
-		mainBoard.emergencyBus.plug(mainBoard.emergencyRelais.P11);
+# 		mainBoard.emergencyBus.plug(mainBoard.emergencyRelais.P11);
 		
-		mainBoard.iBus30.plug(generator.Plus);
-		mainBoard.iBus30.plug(mainBoard.startRelais.P14);
-		mainBoard.iBus30.plug(generatorControlUnit.POR);
-		mainBoard.iBus30.plug(mainBoard.generatorRelais.P21);
-		mainBoard.iBus30.plug(mainBoard.generatorRelais.P11);
+		
+# 		mainBoard.iBus30.plug(mainBoard.generatorRelais.P21);
+# 		mainBoard.iBus30.plug(mainBoard.generatorRelais.P11);
 	
-		mainBoard.JB3E20.plug(mainBoard.startRelais.P34);
+# 		mainBoard.JB3E20.plug(mainBoard.startRelais.P34);
 		mainBoard.JB3E20.plug(generatorControlUnit.StartPower);
-		mainBoard.JB4E20.plug(mainBoard.startRelais.P31);
+# 		mainBoard.JB4E20.plug(mainBoard.startRelais.P31);
 		
 		
 		
 	# relais	
 		mainBoard.emergencyRelais.P12.plug(fusePanel.emergencyBus.Out);
-		mainBoard.startRelais.A2.plug(mainBoard.GND);
 		
-		mainBoard.generatorRelais.A2.plug(mainBoard.GND);
-		
-		mainBoard.generatorRelais.P14.plug(mainBoard.generatorShunt.Plus);
+# 		mainBoard.generatorRelais.A2.plug(mainBoard.GND);
+# 		
+# 		mainBoard.generatorRelais.P14.plug(mainBoard.generatorShunt.Plus);
 		
 		#start
 		mainBoard.startRelais.A1.plug(generatorControlUnit.StartContactor);
-		mainBoard.startRelais.A2.plug(mainBoard.GND);
+		#mainBoard.startRelais.A2.plug(mainBoard.GND);
 		
-		mainBoard.startRelais.P21.plug(mainBoard.rccbRelais.A2);
+		#mainBoard.startRelais.P21.plug(mainBoard.rccbRelais.A2);
 		
 
 };
@@ -211,7 +213,7 @@ var plugCircuitBreaker = func(){
 		#mainBoard.hotBus.plug(circuitBreakerPanel.GearControl.In);
 		#mainBoard.hotBus.plug(circuitBreakerPanel.GearAux1.In);
 		circuitBreakerPanel.RCCB.Out.plug(mainBoard.GND);
-		circuitBreakerPanel.RCCB.In.plug(mainBoard.startRelais.P22);
+		circuitBreakerPanel.RCCB.In.plug(mainBoard.k8Relais.P21);
 		
 		circuitBreakerPanel.instrumentLightBus.plug(circuitBreakerPanel.InstrumentLight.Out);
 		
@@ -235,6 +237,8 @@ var plugSidePanel = func(){
 		sidePanel.MainAvionics.Com1.plug(mainBoard.GND);
 		sidePanel.MainAvionics.L12.plug(mainBoard.avionicsRelais.A2);
 		
+		sidePanel.MainExternalPower.L12.plug(fusePanel.externalPowerBus.con());
+		sidePanel.MainExternalPower.Com1.plug(mainBoard.externalPowerRelais.A1);
 		
 		
 		
@@ -382,7 +386,8 @@ var plugAnnuciator = func(){
 	lightBoard.annuciatorDimBus.plug(annunciatorPanel.dimTestRelais.P12);# +14-28V Dim Voltage
 	lightBoard.testLightRelais.P11.plug(annunciatorPanel.dimTestRelais.P14);# +28V Light-Test
 	
-	
+	mainBoard.iBus03.plug(annunciatorPanel.dimTestRelais.P482); # Gernator 1 Fail
+	annunciatorPanel.externalPowerBus.plug(fusePanel.externalPowerBus.con());
 }
 
 var plugFuel = func(){
@@ -401,7 +406,13 @@ var plugFuel = func(){
 	
 }
 
+var plugFusePanel = func(){
+	
+	fusePanel.plugElectric();
+	
 
+	
+}
 
 var plugElectric = func(){
 	plugMainBoard();
@@ -409,9 +420,11 @@ var plugElectric = func(){
 	plugCircuitBreaker();
 	plugSidePanel();
 	plugMasterPanel();
+	plugFusePanel();
 	plugLight();
 	plugAnnuciator();
 	plugFlap();
 	plugGear();
 	plugFuel();
+	
 };

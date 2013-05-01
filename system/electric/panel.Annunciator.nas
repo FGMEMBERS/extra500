@@ -266,7 +266,7 @@ var AnnunciatorPanel = {
 		m.GNDBus = Part.ElectricBusDiode.new("Annunciator.GNDBus");
 		m.TestPlusBus = Part.ElectricBus.new("Annunciator.TestPlusBus");
 		m.iBusPlus = Part.ElectricBus.new("#iBusPlus");
-		
+		m.externalPowerBus = Part.ElectricBus.new("Annunciator.externalPowerBus");
 	
 	#relais
 		nCompNode = m.nPanel.initNode("dimTestRelais");
@@ -328,7 +328,15 @@ var AnnunciatorPanel = {
 		me.iBusPlus.plug(me.WindshieldHeatOn.Plus);
 		
 		me.ExternalPower.Plus.plug(me.externalPowerRelais.P11);
+		me.ExternalPower.Minus.plug(me.externalPowerRelais.P21);
 		
+		me.externalPowerRelais.P14.plug(me.externalPowerBus.con());
+		
+		me.externalPowerRelais.P22.plug(me.dimTestRelais.P261);
+		me.externalPowerRelais.P24.plug(mainBoard.GND);
+		
+		me.externalPowerRelais.A1.plug(me.externalPowerBus.con());
+		me.externalPowerRelais.A2.plug(mainBoard.GND);
 		
 		
 	# ---
@@ -344,7 +352,7 @@ var AnnunciatorPanel = {
 		me.PropellerLowPitch.Minus.plug(	me.dimTestRelais.P231); #	Propeller Low Pitch
 		me.IgnitionActive.Minus.plug(		me.dimTestRelais.P241); #	Ignition System
 		
-		me.ExternalPower.Minus.plug(		me.dimTestRelais.P261); #	ExternalPowe
+		#me.ExternalPower.Minus.plug(		me.dimTestRelais.P261); #	ExternalPowe
 		me.IntakeHeat.Minus.plug(		me.dimTestRelais.P271); #	Anti Ice Intake
 		me.DeiceBoots.Minus.plug(		me.dimTestRelais.P281); #	Boots
 		me.WindshieldHeatOn.Minus.plug(		me.dimTestRelais.P291); #	Windshield Heat On
@@ -384,7 +392,7 @@ var AnnunciatorPanel = {
 		me.GNDBus.plug(	me.dimTestRelais.P234); #	Propeller Low Pitch
 		me.GNDBus.plug(	me.dimTestRelais.P244); #	Ignition System
 		
-		me.GNDBus.plug(	me.dimTestRelais.P264); #	ExternalPowe
+		me.GNDBus.plug(	me.dimTestRelais.P264); #	ExternalPower
 		me.GNDBus.plug(	me.dimTestRelais.P274); #	Anti Ice Intake
 		me.GNDBus.plug(	me.dimTestRelais.P284); #	Boots
 		me.GNDBus.plug(	me.dimTestRelais.P294); #	Windshield Heat On

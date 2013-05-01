@@ -17,7 +17,7 @@
 #      Date: April 07 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             29.04.13
+#      Date:             30.04.13
 #
 
 var ElectricTreeDebugger = {
@@ -32,7 +32,7 @@ var ElectricTreeDebugger = {
 		m.debugLevel	=0;
 		m.highLightType = "";
 		m.excludeType 	= "";
-		m.debugName 	= "Flap30";
+		m.debugName 	= "";
 		m.nDebugOutput = props.globals.initNode("extra500/DebugOutput","","STRING");
 		return m;
 
@@ -303,7 +303,7 @@ var ElectricShunt = {
 			}else if(name == "-"){
 				GND = me.Plus.applyVoltage(electron);
 				me.ampereIndicated = -electron.ampere;
-				me.voltIndicated = -electron.volt;
+				me.voltIndicated = electron.volt;
 			}
 		}
 		me.setAmpere(electron.ampere);
@@ -343,7 +343,9 @@ var ElectricBus = {
 	},
 	plug : func(connector,name="default"){
 		if (name == "default"){
-			name = sprintf("%s-%03i",me.name,size(me.connectors));
+			#name = sprintf("%s-%03i",me.name,size(me.connectors));
+			name = sprintf("%03i-%s",size(me.connectors),me.name);
+			
 		}
 		me.connectors[name] = ElectricConnector.new(name);
 		me.connectors[name].solder(me);
@@ -353,7 +355,7 @@ var ElectricBus = {
 	},
 	con : func(name="default"){
 		if (name == "default"){
-			name = sprintf("%s-%03i",me.name,size(me.connectors));
+			name = sprintf("%03i-%s",size(me.connectors),me.name);
 		}
 		me.connectors[name] =  ElectricConnector.new(name);
 		me.connectors[name].solder(me);
@@ -415,7 +417,7 @@ var ElectricBusDiode = {
 	},
 	plug : func(connector,name="default"){
 		if (name == "default"){
-			name = sprintf("%s-%03i",me.name,size(me.connectors));
+			name = sprintf("%03i-%s",size(me.connectors),me.name);
 		}
 		me.connectors[name] = ElectricConnector.new(name);
 		me.connectors[name].solder(me);
@@ -425,7 +427,7 @@ var ElectricBusDiode = {
 	},
 	con : func(name="default"){
 		if (name == "default"){
-			name = sprintf("%s-%03i",me.name,size(me.connectors));
+			name = sprintf("%03i-%s",size(me.connectors),me.name);
 		}
 		me.connectors[name] =  ElectricConnector.new(name);
 		me.connectors[name].solder(me);
@@ -546,6 +548,73 @@ var ElectricBattery = {
 		print(electron.getText());
 	}
 	
+};
+
+var ElectricExternalPower = {
+	new : func(nRoot,name){
+				
+		var m = {parents:[
+			ElectricExternalPower,
+			Part.new(nRoot,name),
+			ElectricAble.new(nRoot,name)
+		]};
+		m.electron = Electron.new();
+		
+		m.generatorActive = 0;
+		
+		m.Plus = ElectricConnector.new("+");
+		m.Minus = ElectricConnector.new("-");
+		
+		m.Plus.solder(m);
+		m.Minus.solder(m);
+		return m;
+
+	},
+	generator : func(value=nil){
+		if (value == nil){
+			me.generatorActive = !me.generatorActive;
+		}else{
+			me.nCutOff.setValue(value);
+		}
+	},
+	applyVoltage : func(electron,name=""){ 
+		etd.in("Generator",me.name,name,electron);
+		var GND = 0;
+		
+		etd.out("Generator",me.name,name,electron);
+		return GND;
+	},
+	setAmpereOutput : func(ampere){
+		#global.fnAnnounce("debug",""~me.name~"\t\t ElectricBattery.setAmpereOutput("~ampere~"A) ... ");
+		
+		var simNow = systime();
+
+		me.setAmpere(ampere);
+		
+	},
+	update : func(timestamp){
+		
+		etd.print("--- ExternalPower.update() ...    ---");
+		etd.print("-------------------------------------");
+		
+		if (me.generatorActive == 0){
+			etd.print("--- Generator offline             ---");
+		}else{
+			#etd.echo("Battery.update() ...");
+			
+			me.electron.volt = 28.5;
+			me.electron.resistor = 0.0;
+			me.electron.ampere = 0.0;
+			me.electron.timestamp = timestamp;
+			
+			var GND = 0;
+			GND = me.Plus.applyVoltage(me.electron);
+			if (GND > 0){
+				me.setAmpere(me.electron.ampere);
+			}
+		}
+		etd.print("-------------------------------------");
+	}
 };
 
 var ElectricGenerator = {
