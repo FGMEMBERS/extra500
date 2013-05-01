@@ -60,7 +60,7 @@ var MainBoard = {
 		nCompNode = nParent.initNode("RCCBRelais");
 		m.rccbRelais = Part.ElectricRelaisXPST.new(nCompNode,"RCCB Relais");
 		m.rccbRelais.setPoles(1);
-		m.rccbRelais.capacitor.capacity = 0;
+		#m.rccbRelais.capacitor.capacity = 2;
 		
 		nCompNode = nParent.initNode("EmergencyRelais");
 		m.emergencyRelais = Part.ElectricRelaisXPDT.new(nCompNode,"Emergency Relais");
@@ -80,16 +80,24 @@ var MainBoard = {
 		nCompNode = nParent.initNode("GeneratorRelais");
 		m.generatorRelais = Part.ElectricRelaisXPDT.new(nCompNode,"Generator Relais");
 		m.generatorRelais.setPoles(3);
+		m.generatorRelais.capacitor.capacity = 2;
 		# 1 Bus30 	- Shunt
 		# 2 RCCB	- GND
-		# 3 GND		- iBus02  = K1 GenFail
+		# 3 GND		- iBus03  = K1 GenFail
 		
 		nCompNode = nParent.initNode("ExternalPowerRelais");
 		m.externalPowerRelais = Part.ElectricRelaisXPDT.new(nCompNode,"External Power Relais");
 		m.externalPowerRelais.setPoles(3);
+		m.externalPowerRelais.capacitor.capacity = 0;
 		# 1 Bus40 	- Bus20 	= Power
 		# 2 RCCB	- GND
 		# 2 iBus01
+		
+		nCompNode = nParent.initNode("K8Relais");
+		m.k8Relais = Part.ElectricRelaisXPDT.new(nCompNode,"K8 Relais");
+		m.k8Relais.setPoles(2);
+		# 1 Bus40 	- Bus20 	= Power
+
 		
 		
 		
@@ -104,12 +112,13 @@ var MainBoard = {
 		m.iBus20 = Part.ElectricBus.new("#20");			
 		m.iBus10 = Part.ElectricBus.new("#10");
 		m.iBus11 = Part.ElectricBus.new("#11");
-		m.iBus01 = Part.ElectricBusDiode.new("#01");
+		m.iBus01 = Part.ElectricBusDiode.new("#01");		#K8 	Source
+		m.iBus02 = Part.ElectricBusDiode.new("#02");		#RCCB	Source
 		m.iBus12 = Part.ElectricBus.new("#12");
 		m.iBus13 = Part.ElectricBus.new("#13");
 		m.iBus30 = Part.ElectricBus.new("#30");			#Gernerator hot
 		m.iBus40 = Part.ElectricBus.new("#40");			#External hot
-		m.iBus02 = Part.ElectricBusDiode.new("#02");		#GND K1 GenFail
+		m.iBus03 = Part.ElectricBusDiode.new("#03");		#GND K1 GenFail
 		
 		m.JB3E20 = Part.ElectricBus.new("#JB3E20");
 		m.JB4E20 = Part.ElectricBus.new("#JB4E20");
@@ -148,17 +157,21 @@ var MainBoard = {
 		
 		mainBoard.iBus20.plug(mainBoard.batteryRelais.P14);
 		mainBoard.iBus20.plug(mainBoard.startRelais.P11);
+		mainBoard.iBus20.plug(mainBoard.iBus01.con());
+		mainBoard.iBus20.plug(mainBoard.iBus02.con());
 		mainBoard.iBus20.plug(mainBoard.batteryShunt.Minus);
 		
 		mainBoard.iBus10.plug(mainBoard.batteryShunt.Plus);
 		
 		mainBoard.iBus11.plug(mainBoard.generatorShunt.Minus);
 		mainBoard.iBus11.plug(mainBoard.iBus01.con());
+		mainBoard.iBus20.plug(mainBoard.iBus02.con());
 		mainBoard.iBus11.plug(mainBoard.rccbRelais.P11);
 # 		
+		mainBoard.iBus01.Minus.plug(mainBoard.k8Relais.A1);
+		mainBoard.iBus02.Minus.plug(mainBoard.rccbRelais.A1);
 		
-		mainBoard.iBus01.plug(mainBoard.iBus20.con());
-		mainBoard.iBus01.Minus.plug(mainBoard.rccbRelais.A1);
+		
 		
 		mainBoard.iBus12.plug(mainBoard.emergencyRelais.A1);
 		mainBoard.iBus12.plug(mainBoard.emergencyRelais.P14);
@@ -181,20 +194,24 @@ var MainBoard = {
 		
 		
 		
-		me.externalPowerRelais.A2.plug(me.iBus02.con());
+		me.externalPowerRelais.A2.plug(me.iBus03.con());
 		me.externalPowerRelais.P11.plug(me.iBus40.con());
 		me.externalPowerRelais.P14.plug(me.iBus20.con());
+		me.externalPowerRelais.P21.plug(me.iBus03.con());
 		
 		
 		mainBoard.generatorRelais.A2.plug(mainBoard.GND);
 		mainBoard.generatorRelais.P14.plug(mainBoard.generatorShunt.Plus);
 		mainBoard.generatorRelais.P31.plug(me.GND);
-		mainBoard.generatorRelais.P32.plug(me.iBus02.Minus);
+		mainBoard.generatorRelais.P32.plug(me.iBus03.Minus);
 		
 		
 		mainBoard.startRelais.A2.plug(mainBoard.GND);
 		mainBoard.startRelais.P21.plug(mainBoard.rccbRelais.A2);
-		mainBoard.startRelais.P22.plug(mainBoard.externalPowerRelais.P21);
+		mainBoard.startRelais.P22.plug(mainBoard.k8Relais.P22);
+		
+		
+		mainBoard.k8Relais.A2.plug(mainBoard.externalPowerRelais.P22);
 		
 		
 		

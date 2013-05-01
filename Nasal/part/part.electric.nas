@@ -303,7 +303,7 @@ var ElectricShunt = {
 			}else if(name == "-"){
 				GND = me.Plus.applyVoltage(electron);
 				me.ampereIndicated = -electron.ampere;
-				me.voltIndicated = -electron.volt;
+				me.voltIndicated = electron.volt;
 			}
 		}
 		me.setAmpere(electron.ampere);

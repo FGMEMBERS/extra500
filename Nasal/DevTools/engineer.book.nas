@@ -63,7 +63,7 @@ engineerScreen.add(electricPage);
 	# 	
 	# electricPage.add(display);
 
-	display = Display.new(10,350);
+	display = Display.new(10,-200);
 		display.title = "Battery";
 		display.font = "FIXED_9x15";
 		display.fg = [1.0, 1.0, 1.0, 1.0];
@@ -76,14 +76,14 @@ engineerScreen.add(electricPage);
 		
 	electricPage.add(display);
 
-	display = Display.new(10,100);
+	display = Display.new(10,400);
 
 		display.title = "Main Relais";
 		display.font = "FIXED_9x15";
 		display.fg = [1.0, 1.0, 1.0, 1.0];
 		display.bg = [0.5, 0.5, 0.5, 0.85];
 		display.width = 270;
-		display.height = 240;
+		display.height = 300;
 		
 		display.add_Node("Battery      ", props.globals.getNode("/extra500/mainBoard/Relais/BatteryRelais/state") );
 		display.add_Node("DayNight     ", props.globals.getNode("/extra500/mainBoard/Relais/DayNightRelais/state") );
@@ -94,6 +94,7 @@ engineerScreen.add(electricPage);
 		display.add_Node("Start        ", props.globals.getNode("/extra500/mainBoard/Relais/StartRelais/state") );
 		display.add_Node("Generator    ", props.globals.getNode("/extra500/mainBoard/Relais/GeneratorRelais/state") );
 		display.add_Node("External     ", props.globals.getNode("/extra500/mainBoard/Relais/ExternalPowerRelais/state") );
+		display.add_Node("External     ", props.globals.getNode("/extra500/mainBoard/Relais/K8Relais/state") );
 		
 	electricPage.add(display);
 

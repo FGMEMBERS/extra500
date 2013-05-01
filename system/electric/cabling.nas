@@ -28,7 +28,13 @@
 	# Bus	
 	
 		mainBoard.hotBus.plug(battery.Plus);
+		mainBoard.iBus40.plug(fusePanel.externalPower.In);
 		mainBoard.iBus40.plug(externalPower.Plus);
+		
+		mainBoard.iBus30.plug(generator.Plus);
+ 		mainBoard.iBus30.plug(generatorControlUnit.POR);
+		mainBoard.iBus30.plug(mainBoard.startRelais.P14);
+		
 		
 		mainBoard.plugElectric();
 		
@@ -75,9 +81,7 @@
 		
 # 		mainBoard.emergencyBus.plug(mainBoard.emergencyRelais.P11);
 		
-		mainBoard.iBus30.plug(generator.Plus);
-# 		mainBoard.iBus30.plug(mainBoard.startRelais.P14);
-		mainBoard.iBus30.plug(generatorControlUnit.POR);
+		
 # 		mainBoard.iBus30.plug(mainBoard.generatorRelais.P21);
 # 		mainBoard.iBus30.plug(mainBoard.generatorRelais.P11);
 	
@@ -85,7 +89,6 @@
 		mainBoard.JB3E20.plug(generatorControlUnit.StartPower);
 # 		mainBoard.JB4E20.plug(mainBoard.startRelais.P31);
 		
-		mainBoard.iBus40.plug(fusePanel.externalPower.In);
 		
 		
 	# relais	
@@ -210,7 +213,7 @@ var plugCircuitBreaker = func(){
 		#mainBoard.hotBus.plug(circuitBreakerPanel.GearControl.In);
 		#mainBoard.hotBus.plug(circuitBreakerPanel.GearAux1.In);
 		circuitBreakerPanel.RCCB.Out.plug(mainBoard.GND);
-		circuitBreakerPanel.RCCB.In.plug(mainBoard.externalPowerRelais.P22);
+		circuitBreakerPanel.RCCB.In.plug(mainBoard.k8Relais.P21);
 		
 		circuitBreakerPanel.instrumentLightBus.plug(circuitBreakerPanel.InstrumentLight.Out);
 		
@@ -383,7 +386,7 @@ var plugAnnuciator = func(){
 	lightBoard.annuciatorDimBus.plug(annunciatorPanel.dimTestRelais.P12);# +14-28V Dim Voltage
 	lightBoard.testLightRelais.P11.plug(annunciatorPanel.dimTestRelais.P14);# +28V Light-Test
 	
-	mainBoard.iBus02.plug(annunciatorPanel.dimTestRelais.P482); # Gernator 1 Fail
+	mainBoard.iBus03.plug(annunciatorPanel.dimTestRelais.P482); # Gernator 1 Fail
 	annunciatorPanel.externalPowerBus.plug(fusePanel.externalPowerBus.con());
 }
 
