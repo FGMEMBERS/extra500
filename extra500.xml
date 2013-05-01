@@ -1187,7 +1187,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     <function name="aero/coefficients/cd_hstab">
        <description>Stabilizer dragcoeff</description>
        <sum>
-            <value>0.01625</value>            
+            <property>aircraft/hstab/cd0</property>           
             <table>
                   <independentVar lookup="row">aircraft/hstab/alpha-deg</independentVar>
                   <independentVar lookup="column">aircraft/hstab/elevator/elevator-pos-deg</independentVar>
@@ -1422,7 +1422,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     <function name="aero/coefficients/ct_vstab">
        <description> vertical Stabilizer dragcoeff</description>
        <sum>
-            <value>0.01625</value>            
+            <property>aircraft/vstab/cd0</property>            
             <table>
                   <independentVar lookup="row">aircraft/vstab/beta-stab-deg</independentVar>
                   <independentVar lookup="column">aircraft/vstab/rudder-pos-deg</independentVar>

@@ -638,13 +638,14 @@ JSBSim Extra Aircraft - Extra 500.
                         <S-ft2>150.96</S-ft2>
                         <c_aero-ft>4.337</c_aero-ft>
 				<b-ft>36.089</b-ft>
-				<cd0>0.0155</cd0>
+				<cd0>0.017</cd0>
                   </wing>
                   <hstab>
                         <S-ft2>30.268</S-ft2>
                         <x_ac-ft>29.857</x_ac-ft>
                         <z_ac-ft>10.285</z_ac-ft>
                         <incidence-deg>0</incidence-deg>
+				<cd0>0.015</cd0>
                         <elevator>
                               <H-static-lbsft>2</H-static-lbsft>
                               <Ch_de>-0.4</Ch_de>
@@ -669,7 +670,8 @@ JSBSim Extra Aircraft - Extra 500.
 			<vstab>
                         <S-ft2>30.236</S-ft2>
                         <x_ac-ft>27.128</x_ac-ft>
-                        <z_ac-ft>8.294</z_ac-ft>				
+                        <z_ac-ft>8.294</z_ac-ft>
+				<cd0>0.015</cd0>				
 			</vstab>
 			<engine>
 				<OP-maxsetting-psi>125</OP-maxsetting-psi>
