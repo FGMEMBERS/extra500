@@ -289,11 +289,21 @@ var plugMasterPanel = func(){
 		
 	# engine
 		masterPanel.EngineMotoring.Com1.plug(circuitBreakerPanel.Start.Out);
-		mainBoard.JB3E20.plug(masterPanel.EngineMotoring.L11);
-		mainBoard.JB4E20.plug(masterPanel.EngineMotoring.L13);
+		masterPanel.EngineMotoring.L11.plug(	mainBoard.JB3E20.con() );
+		masterPanel.EngineMotoring.L13.plug(	mainBoard.JB4E20.con() );
 		
-		mainBoard.JB4E20.plug(masterPanel.EngineStart.Com2);
-		mainBoard.JB3E20.plug(masterPanel.EngineStart.L21);
+		masterPanel.EngineMotoring.Com2.plug(	mainBoard.JB2G20.Minus );
+		masterPanel.EngineMotoring.L23.plug(	engine.IgnitionPlus );		#ignition
+		masterPanel.EngineMotoring.Com3.plug(	mainBoard.JB2G20.con() );
+		#masterPanel.EngineMotoring.L33.plug(	engine.IgnitionPlus );		#Anunciator
+		
+		
+		masterPanel.EngineStart.Com1.plug(	circuitBreakerPanel.Ignition.Out );
+		masterPanel.EngineStart.L11.plug(	mainBoard.JB2G20.con() );
+		masterPanel.EngineStart.L12.plug(	mainBoard.JB2G20.con() );
+		
+		masterPanel.EngineStart.Com2.plug(	mainBoard.JB4E20.con() );
+		masterPanel.EngineStart.L21.plug(	mainBoard.JB3E20.con() );
 		
 		
 		
@@ -409,11 +419,11 @@ var plugFuel = func(){
 var plugFusePanel = func(){
 	
 	fusePanel.plugElectric();
-	
-
-	
 }
-
+var plugEngine = func(){
+	
+	engine.GND.plug(mainBoard.GND);
+}
 var plugElectric = func(){
 	plugMainBoard();
 	plugGenerator();
@@ -426,5 +436,6 @@ var plugElectric = func(){
 	plugFlap();
 	plugGear();
 	plugFuel();
+	plugEngine();
 	
 };

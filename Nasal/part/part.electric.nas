@@ -574,7 +574,7 @@ var ElectricExternalPower = {
 		if (value == nil){
 			me.generatorActive = !me.generatorActive;
 		}else{
-			me.nCutOff.setValue(value);
+			me.generatorActive = value;
 		}
 	},
 	applyVoltage : func(electron,name=""){ 

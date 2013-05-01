@@ -104,7 +104,7 @@ var MasterPanel = {
 		
 		nCompNode = nParent.initNode("Motoring");
 		m.EngineMotoring = Part.ElectricSwitchTT.new(nCompNode,"Engine Motoring");
-		m.EngineMotoring.setPoles(2);
+		m.EngineMotoring.setPoles(3);
 		
 		nCompNode = nParent.initNode("Start");
 		m.EngineStart = Part.ElectricSwitchTT.new(nCompNode,"Engine Start");

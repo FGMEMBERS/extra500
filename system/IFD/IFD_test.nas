@@ -94,7 +94,12 @@ var canvas_demo = {
 		text ~= sprintf("Generator  %0.2f V   %0.2f A\n",extra500.mainBoard.generatorShunt.voltIndicated,extra500.mainBoard.generatorShunt.ampereIndicated);
 		text ~= sprintf("Battery    %0.2f V   %0.2f A\n",extra500.mainBoard.batteryShunt.voltIndicated,extra500.mainBoard.batteryShunt.ampereIndicated);
 		text ~= sprintf("Altenator  %0.2f V   %0.2f A\n",extra500.mainBoard.alternatorShunt.voltIndicated,extra500.mainBoard.alternatorShunt.ampereIndicated);
-		#text ~="\nLight\n";
+		text ~="\nEngine\n";
+		text ~= sprintf("Fuel cutoff      %s\n",extra500.engine._cutoffState==0?"off":"on");
+		text ~= sprintf("Reverser         %s\n",extra500.engine.nReverser.getValue()==0?"off":"on");
+		text ~="\nGround\n";
+		text ~= sprintf("External Power   %s\n",extra500.externalPower.generatorActive==0?"off":"on");
+		
 # 		text ~= sprintf("Keypad     %0.2f %%\n",extra500.lightBoard.Keypad.state);
 # 		text ~= sprintf("Glare      %0.2f %%\n",extra500.lightBoard.Glare.state);
 # 		text ~= sprintf("Instrument %0.2f %%\n",extra500.lightBoard.Instrument.state);

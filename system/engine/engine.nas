@@ -22,24 +22,82 @@
 
 
 var Engine = {
-	new : func{
+	new : func(nRoot,name){
 		var m = {parents:[
-			Engine
+			Engine,
+			Part.Part.new(nRoot,name),
+			Part.ElectricAble.new(nRoot,name)
 		]};
+		m.nIsRunning		= props.globals.getNode("/fdm/jsbsim/propulsion/engine/set-running");
+		m.nN1			= props.globals.getNode("/engines/engine[0]/n1");
 		m.nPropellerFeather 	= props.globals.getNode("/controls/engines/engine[0]/propeller-feather");
 		m.nCutOff		= props.globals.getNode("/controls/engines/engine[0]/cutoff");
 		m.nReverser		= props.globals.getNode("/controls/engines/engine[0]/reverser");
-		m.nN1			= props.globals.getNode("/engines/engine[0]/n1");
 		m.nThrottle		= props.globals.getNode("/controls/engines/engine[0]/throttle");
+		m.nIgnition		= props.globals.getNode("/controls/engines/engine[0]/ignition");
+		
+		
+		m._cutoffState		= m.nCutOff.getValue();
+		m._ignitionState 	= 0;
+		m.IgnitionPlus 		= Part.ElectricConnector.new("IgnitionPlus");
+		m.GND 			= Part.ElectricConnector.new("GND");
+		
+		m.IgnitionPlus.solder(m);
+		m.GND.solder(m);
+		
+		append(Part.aListSimStateAble,m);
 		return m;
 		
 	},
+	simReset : func(){
+		me.nIgnition.setValue(me._ignitionState);
+		me._checkIgnitionCutoff();
+		me._ignitionState = 0;	
+	},
+	simUpdate : func(){
+		me.nIgnition.setValue(me._ignitionState);
+	},
+	applyVoltage : func(electron,name=""){ 
+		Part.etd.in("Engine",me.name,name,electron);
+		var GND = 0;
+		
+		if (electron != nil){
+			me.setVolt(electron.volt);
+			electron.resistor += me.resistor;# * me.qos
+			
+			if (name == "IgnitionPlus"){
+				GND = me.GND.applyVoltage(electron);
+				if (GND){
+					me._ignitionState = 1;
+					me._checkIgnitionCutoff();
+					var watt = me.electricWork(electron);
+				}
+			}
+			
+			me.setAmpere(electron.ampere);
+		}
+		Part.etd.out("Engine",me.name,name,electron);
+		return GND;
+	},
 	cutoff : func(value = nil){
 		if (value == nil){
-			me.nCutOff.setValue(!me.nCutOff.getValue());
+			me._cutoffState = me._cutoffState == 0 ? 1 : 0 ;
 		}else{
-			me.nCutOff.setValue(value);
+			me._cutoffState = value == 0 ? 0 : 1 ;
 		}
+		me._checkIgnitionCutoff();
+	},
+	_checkIgnitionCutoff : func(){
+		if (me.nIsRunning.getValue()){
+			me.nCutOff.setValue(me._cutoffState);
+		}else{
+			if (me._ignitionState == 1 and me._cutoffState == 0){
+				me.nCutOff.setValue(0);
+			}else{
+				me.nCutOff.setValue(1);
+			}
+		}
+
 	},
 	reverser : func(value = nil){
 		if (me.nThrottle.getValue() < 0.01) {
@@ -69,4 +127,5 @@ var Engine = {
 	}
 };
 
-var engine = Engine.new();
+var engine = Engine.new(props.globals.initNode("/extra500/Engine"),"RR 250-B17F2");
+engine.setPower(24.0,5.0);
