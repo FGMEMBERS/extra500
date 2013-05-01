@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             30.04.13
+      Date:             01.05.13
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -638,6 +638,7 @@ JSBSim Extra Aircraft - Extra 500.
                         <S-ft2>150.96</S-ft2>
                         <c_aero-ft>4.337</c_aero-ft>
 				<b-ft>36.089</b-ft>
+				<cd0>0.0155</cd0>
                   </wing>
                   <hstab>
                         <S-ft2>30.268</S-ft2>

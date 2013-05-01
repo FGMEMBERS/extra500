@@ -17,7 +17,7 @@
 #      Date: April 16 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             30.04.13
+#      Date:             01.05.13
 #
  
 var node = props.globals.getNode("/extra500/EngineerScreen",1);
@@ -304,7 +304,22 @@ engineerScreen.add(electricLightPage);
 
 #---------------------------------
 
-### Engine Screen ##############
+### Engine and Performance Screen ##############
+
+	display = Display.new(10,400);
+
+		display.title = "Performance";
+		display.font = "FIXED_9x15";
+		display.fg = [1.0, 1.0, 1.0, 1.0];
+		display.bg = [0.5, 0.5, 0.5, 0.85];
+		display.width = 270;
+		display.height = 240;
+		
+	display.add_Node("OAT   degC", props.globals.getNode("/environment/temperature-degc") );
+	display.add_Node("Weight lbm", props.globals.getNode("/fdm/jsbsim/inertia/weight-lbs") );
+	display.add_Node("TAS  knots", props.globals.getNode("/fdm/jsbsim/velocities/vtrue-kts") );
+		
+	enginePage.add(display);
 
 display = Display.new(10,100);
 
@@ -323,6 +338,7 @@ display = Display.new(10,100);
 #	display.add_Node("OT   ", props.globals.getNode("/fdm/jsbsim/") );
 #	display.add_Node("FP   ", props.globals.getNode("/fdm/jsbsim/") );
 #	display.add_Node("FT   ", props.globals.getNode("/fdm/jsbsim/") );
+
 	
 enginePage.add(display);
 
