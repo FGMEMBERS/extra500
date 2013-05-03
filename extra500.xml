@@ -996,11 +996,6 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       </pow>
     </function>
 
-    <function name="aircraft/hstab/elevator/ch_alpha-prad">
-      <description>moment coeff around elevator hinge line due to alpha</description>
-            <value>-0.1</value>
-    </function>
-
     <function name="aircraft/hstab/elevator/ch_de-prad">
       <description>moment coeff around elevator hinge line due to its deflection</description>
             <sum>            
@@ -1009,6 +1004,22 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                         <property>aircraft/hstab/elevator/Ch_de2</property>
                         <abs>
                               <property>aircraft/hstab/elevator/elevator-pos-rad</property>
+                        </abs>
+                  </product>
+            </sum>
+    </function>
+
+    <function name="aircraft/hstab/elevator/ch_alpha-prad">
+      <description>moment coeff around elevator hinge line due to local angle of attack</description>
+            <sum>            
+                  <property>aircraft/hstab/elevator/Ch_alpha</property>
+                  <product>
+                        <property>aircraft/hstab/elevator/Ch_alpha2</property>
+                        <abs>
+					<product>
+                              	<value>0.017452933</value>
+                  			<property>aircraft/hstab/alpha-deg</property>
+					</product>
                         </abs>
                   </product>
             </sum>

@@ -345,3 +345,22 @@ display = Display.new(10,100);
 enginePage.add(display);
 
 #---------------------------------
+
+### Aerodynamic screen ##############
+
+display = Display.new(10,400);
+
+		display.title = "Aerodynamic";
+		display.font = "FIXED_9x15";
+		display.fg = [1.0, 1.0, 1.0, 1.0];
+		display.bg = [0.5, 0.5, 0.5, 0.85];
+		display.width = 270;
+		display.height = 240;
+		
+	display.add_Node("Total moment lbsft", props.globals.getNode("/fdm/jsbsim/aircraft/hstab/elevator/H-total-lbsft") );
+	display.add_Node("Trim moment  lbsft", props.globals.getNode("/fdm/jsbsim/aircraft/hstab/elevator/H-trim-lbsft") );
+#	display.add_Node("Trim tab coeff    ", props.globals.getNode("/fdm/jsbsim/aircraft/hstab/elevator/trim/coeff-norm") );
+		
+aerodynamicPage.add(display);
+
+#---------------------------------
