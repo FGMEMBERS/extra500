@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             01.05.13
+      Date:             04.05.13
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -628,6 +628,7 @@ JSBSim Extra Aircraft - Extra 500.
 
  <fdm>
 	<jsbsim>
+		<sim-time-sec-old>0</sim-time-sec-old>
             <state>
                   <controls-fixed type="int">1</controls-fixed>
             </state>
@@ -656,6 +657,9 @@ JSBSim Extra Aircraft - Extra 500.
                               <downspring-lbsftprad>0.5</downspring-lbsftprad>
                               <bobweight-lbsft>0</bobweight-lbsft>
 					<Ip-lbsft2>1</Ip-lbsft2>
+					<de_dot>0.0</de_dot>				<!--dummy value -->
+					<de_ddot>0.0</de_ddot>				<!--dummy value -->
+					<de_dot-help>0.0</de_dot-help>		<!--dummy value -->
                               <chord-frac>0.24</chord-frac>
                               <S-ft2>7.264</S-ft2>
                               <c_aero-ft>2.5796</c_aero-ft>
@@ -663,6 +667,7 @@ JSBSim Extra Aircraft - Extra 500.
                               <min-defl-rad>-0.5759</min-defl-rad>
                               <elevator-pos-rad>0</elevator-pos-rad>    <!--dummy value -->
                               <elevator-pos-deg>0</elevator-pos-deg>    <!--dummy value -->
+					<d_e_free-rad>0</d_e_free-rad>		<!--dummy value -->
                               <trim>
                                     <S-ft2>1.114</S-ft2>
                                     <c_aero-ft>0.4019</c_aero-ft>
