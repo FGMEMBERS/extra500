@@ -204,7 +204,7 @@ var SidePanel = {
 		#m.dayBus = Part.ElectricBus.new("DayBus");
 		#m.testBus = Part.ElectricBus.new("TestBus");
 #Buses
-		#m.testLightBus = Part.ElectricBus.new("testLight");
+		m.standbyAlternatorPowerBus = Part.ElectricBusDiode.new("StbyAltPowerBus");
 				
 		return m;
 	},

@@ -233,12 +233,20 @@ var plugSidePanel = func(){
 		sidePanel.Emergency.L12.plug(mainBoard.emergencyRelais.A2);
 		
 		sidePanel.MainBattery.L12.plug(mainBoard.batteryRelais.A2);
+		sidePanel.MainBattery.L22.plug(sidePanel.standbyAlternatorPowerBus.con());
 		
 		sidePanel.MainAvionics.Com1.plug(mainBoard.GND);
 		sidePanel.MainAvionics.L12.plug(mainBoard.avionicsRelais.A2);
 		
 		sidePanel.MainExternalPower.L12.plug(fusePanel.externalPowerBus.con());
 		sidePanel.MainExternalPower.Com1.plug(mainBoard.externalPowerRelais.A1);
+		
+		sidePanel.MainStandbyAlt.Com1.plug(sidePanel.MainBattery.Com2);
+		sidePanel.MainStandbyAlt.L12.plug(mainBoard.hotBus.con());
+		
+		sidePanel.MainStandbyAlt.Com2.plug(circuitBreakerPanel.Alt.Out);
+		sidePanel.MainStandbyAlt.L21.plug(mainBoard.alternatorRelais.A1);
+		sidePanel.MainStandbyAlt.L22.plug(sidePanel.standbyAlternatorPowerBus.con());
 		
 		
 		
@@ -424,6 +432,19 @@ var plugEngine = func(){
 	
 	engine.GND.plug(mainBoard.GND);
 }
+
+var plugAlternator = func(){
+	
+	standbyAlternatorRegulator.GND.plug(mainBoard.GND);
+	standbyAlternatorRegulator.Sense.plug(mainBoard.emergencyBus.con());
+	standbyAlternatorRegulator.PowerVoltage.plug(sidePanel.standbyAlternatorPowerBus.Minus);
+	standbyAlternatorRegulator.AnnuciatorLight.plug(annunciatorPanel.dimTestRelais.P212);
+		
+	alternator.Minus.plug(mainBoard.GND);
+	alternator.Field.plug(standbyAlternatorRegulator.Field);
+	alternator.Plus.plug(mainBoard.alternatorRelais.P11);
+}
+
 var plugElectric = func(){
 	plugMainBoard();
 	plugGenerator();
@@ -437,5 +458,6 @@ var plugElectric = func(){
 	plugGear();
 	plugFuel();
 	plugEngine();
+	plugAlternator();
 	
 };

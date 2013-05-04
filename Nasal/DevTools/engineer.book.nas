@@ -94,7 +94,8 @@ engineerScreen.add(electricPage);
 		display.add_Node("Start        ", props.globals.getNode("/extra500/mainBoard/Relais/StartRelais/state") );
 		display.add_Node("Generator    ", props.globals.getNode("/extra500/mainBoard/Relais/GeneratorRelais/state") );
 		display.add_Node("External     ", props.globals.getNode("/extra500/mainBoard/Relais/ExternalPowerRelais/state") );
-		display.add_Node("External     ", props.globals.getNode("/extra500/mainBoard/Relais/K8Relais/state") );
+		display.add_Node("K8 RCCB GND  ", props.globals.getNode("/extra500/mainBoard/Relais/K8Relais/state") );
+		display.add_Node("Alternator   ", props.globals.getNode("/extra500/mainBoard/Relais/AlternatorRelais/state") );
 		
 	electricPage.add(display);
 
@@ -195,9 +196,9 @@ engineerScreen.add(electricLightPage);
 		display.addNamed("AFT Door              %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/AFTDoor/state") );
 		display.addNamed("Stall Heat            %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/StallHeat/state") );
 		display.addNamed("Oil Press             %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/OilPress/state") );
-		display.addNamed("Chip Detection        %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/HydraulicPump/state") );
-		display.addNamed("Hydraulic Pump        %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/GearWarn/state") );
-		display.addNamed("Gear Warn             %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/GeneratorFail/state") );
+		display.addNamed("Chip Detection        %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/ChipDetection/state") );
+		display.addNamed("Hydraulic Pump        %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/HydraulicPump/state") );
+		display.addNamed("Gear Warn             %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/GearWarn/state") );
 		display.addNamed("Stall Warn            %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/StallWarn/state") );
 		display.addNamed("Windshield Heat Fail  %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/WindshieldHeatFail/state") );
 		display.addNamed("Fuel Press            %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/FuelPress/state") );

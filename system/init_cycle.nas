@@ -31,8 +31,9 @@ var simulation_cycle = func(){
 	var start = systime();
 	Part.etd.cls();
 	#extra500.mainBoard.update(start);
-	extra500.generator.update(start);
 	extra500.externalPower.update(start);
+	extra500.generator.update(start);
+	extra500.alternator.update(start);
 	extra500.battery.update(start);
 	
 	extra500.oFuelSystem.update();
