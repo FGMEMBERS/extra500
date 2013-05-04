@@ -287,7 +287,15 @@ var AnnunciatorPanel = {
 		m.ignitionRelais = Part.ElectricRelaisXPDT.new(nCompNode,"Ignition Relais");
 		m.ignitionRelais.setPoles(1);
 		
-	
+		nCompNode = m.nPanel.initNode("LandingRelais");
+		m.landingRelais = Part.ElectricRelaisXPDT.new(nCompNode,"Landing Relais");
+		m.landingRelais.setPoles(1);
+		
+		nCompNode = m.nPanel.initNode("RecognitionRelais");
+		m.recognitionRelais = Part.ElectricRelaisXPDT.new(nCompNode,"Recognition Relais");
+		m.recognitionRelais.setPoles(1);
+		
+		
 		return m;
 	},
 	applyVoltage : func(electron,name=""){ 
@@ -428,6 +436,18 @@ var AnnunciatorPanel = {
 		me.ignitionRelais.A2.plug(mainBoard.GND);
 		me.ignitionRelais.P11.plug(mainBoard.GND);
 		me.ignitionRelais.P14.plug(me.dimTestRelais.P242);
+		
+		# Landing Light
+		
+		me.landingRelais.A2.plug(mainBoard.GND);
+		me.landingRelais.P11.plug(mainBoard.GND);
+		me.landingRelais.P14.plug(me.dimTestRelais.P312);
+		
+		# Recognition Light
+		
+		me.recognitionRelais.A2.plug(mainBoard.GND);
+		me.recognitionRelais.P11.plug(mainBoard.GND);
+		me.recognitionRelais.P14.plug(me.dimTestRelais.P302);
 		
 		
 		

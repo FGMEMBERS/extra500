@@ -110,11 +110,11 @@ var SidePanel = {
 		
 		nCompNode = nParent.initNode("Landing");
 		m.LightLanding = Part.ElectricSwitchDT.new(nCompNode,"Light Landing");
-		m.LightLanding.setPoles(2);
+		m.LightLanding.setPoles(1);
 				
 		nCompNode = nParent.initNode("Recognition");
 		m.LightRecognition = Part.ElectricSwitchDT.new(nCompNode,"Light Recognition");
-		m.LightRecognition.setPoles(2);
+		m.LightRecognition.setPoles(1);
 		
 		nCompNode = nParent.initNode("Cabin");
 		m.LightCabin = Part.ElectricSwitchDT.new(nCompNode,"Light Cabin");
@@ -204,8 +204,10 @@ var SidePanel = {
 		#m.dayBus = Part.ElectricBus.new("DayBus");
 		#m.testBus = Part.ElectricBus.new("TestBus");
 #Buses
-		m.standbyAlternatorPowerBus = Part.ElectricBusDiode.new("StbyAltPowerBus");
-				
+		m.standbyAlternatorPowerBus 	= Part.ElectricBusDiode.new("StbyAltPowerBus");
+		m.landingLightBus 		= Part.ElectricBus.new("LandingLightBus");
+		m.recognitionLightBus 		= Part.ElectricBus.new("RecognitionLightBus");
+		
 		return m;
 	},
 	# can only used when Module extra500 is completly loaded.

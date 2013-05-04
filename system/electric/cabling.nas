@@ -256,12 +256,14 @@ var plugSidePanel = func(){
 		sidePanel.LightNavigation.Com1.plug(	circuitBreakerPanel.NavLight.Out);
 		
 		sidePanel.LightLanding.Com1.plug(	circuitBreakerPanel.LandingLight.Out);
-		sidePanel.LightLanding.Com2.plug(	mainBoard.GND);
-		sidePanel.LightLanding.L22.plug(	annunciatorPanel.dimTestRelais.P312);
+		sidePanel.LightLanding.L12.plug(	sidePanel.landingLightBus.con());
+		sidePanel.landingLightBus.plug(		annunciatorPanel.landingRelais.A1);
+		
 		
 		sidePanel.LightRecognition.Com1.plug(	circuitBreakerPanel.RecognitionLight.Out);
-		sidePanel.LightRecognition.Com2.plug(	mainBoard.GND);
-		sidePanel.LightRecognition.L22.plug(	annunciatorPanel.dimTestRelais.P302);
+		sidePanel.LightRecognition.L12.plug(	sidePanel.recognitionLightBus.con());
+		sidePanel.recognitionLightBus.plug(	annunciatorPanel.recognitionRelais.A1);
+		
 		
 		sidePanel.LightCabin.Com1.plug(		circuitBreakerPanel.CabinLight.Out);
 		sidePanel.LightIce.Com1.plug(		circuitBreakerPanel.IceLight.Out);
@@ -352,11 +354,11 @@ var plugLight = func(){
 	
 	lightBoard.Navigation.Plus.plug(sidePanel.LightNavigation.L12);
 	
-	lightBoard.Landing.Plus.plug(sidePanel.LightLanding.L12);
+	lightBoard.Landing.Plus.plug(sidePanel.landingLightBus.con());
 					
 	lightBoard.Cabin.Plus.plug(sidePanel.LightCabin.L12);
 	
-	lightBoard.Recognition.Plus.plug(sidePanel.LightRecognition.L12);
+	lightBoard.Recognition.Plus.plug(sidePanel.recognitionLightBus.con());
 	
 	lightBoard.Map.Plus.plug(sidePanel.LightMap.L12);
 	
