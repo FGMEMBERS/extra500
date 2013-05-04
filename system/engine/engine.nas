@@ -35,15 +35,18 @@ var Engine = {
 		m.nReverser		= props.globals.getNode("/controls/engines/engine[0]/reverser");
 		m.nThrottle		= props.globals.getNode("/controls/engines/engine[0]/throttle");
 		m.nIgnition		= props.globals.getNode("/controls/engines/engine[0]/ignition");
+		m.nOilPress		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/OP-psi");
 		
 		
 		m._cutoffState		= m.nCutOff.getValue();
 		m._ignitionState 	= 0;
 		m.IgnitionPlus 		= Part.ElectricConnector.new("IgnitionPlus");
+		m.LowOilPress		= Part.ElectricConnector.new("LowOilPress");
 		m.GND 			= Part.ElectricConnector.new("GND");
 		
 		m.IgnitionPlus.solder(m);
 		m.GND.solder(m);
+		m.LowOilPress.solder(m);
 		
 		append(Part.aListSimStateAble,m);
 		return m;
@@ -63,14 +66,20 @@ var Engine = {
 		
 		if (electron != nil){
 			me.setVolt(electron.volt);
-			electron.resistor += me.resistor;# * me.qos
 			
 			if (name == "IgnitionPlus"){
+				electron.resistor += me.resistor;# * me.qos
+			
 				GND = me.GND.applyVoltage(electron);
 				if (GND){
 					me._ignitionState = 1;
 					me._checkIgnitionCutoff();
 					var watt = me.electricWork(electron);
+				}
+			}elsif(name == "LowOilPress"){
+				
+				if (me.nOilPress.getValue() < 35.0){
+					GND = me.GND.applyVoltage(electron);
 				}
 			}
 			
@@ -114,6 +123,8 @@ var Engine = {
 		}else{
 			me.nPropellerFeather.setValue(1);
 		}
+		
+		
 	},
 	initUI : func(){
 		UI.register("Engine cutoff", 		func{extra500.engine.cutoff(); } 	);

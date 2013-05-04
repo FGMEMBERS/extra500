@@ -432,6 +432,8 @@ var plugFusePanel = func(){
 var plugEngine = func(){
 	
 	engine.GND.plug(mainBoard.GND);
+	engine.LowOilPress.plug(annunciatorPanel.dimTestRelais.P392);
+	
 }
 
 var plugAlternator = func(){
