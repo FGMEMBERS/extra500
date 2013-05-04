@@ -34,32 +34,6 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		<description> Models a extra500. </description>
 	</fileheader>
 	
-	<!--
-	File:     extra500.xml
-	Inputs:
-	name:          extra500
-	type:          light single
-	max weight:    2130 KG
-	wing span:     38.0596 ft
-	length:        33.23653 ft
-	wing area:     unspecified
-	gear type:     tricycle
-	retractable?:  yes
-	# engines:     1
-	engine type:   turboprop
-	engine layout: forward fuselage
-	yaw damper?    yes
-	Outputs:
-	wing loading:  14.00 lb/sq-ft
-	payload:       475.8 lbs
-	CL-alpha:      5 per radian
-	CL-0:          0.25
-	CL-max:        1.4
-	CD-0:          0.024
-	K:             0.04
-	
-		-->
-			
 	<metrics>
 		<wingarea  unit="M2">  14.025 </wingarea>
 		<wingspan  unit="M" >  11.0 </wingspan>
@@ -190,7 +164,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				<y>  0.00 </y>
 				<z>  0.05 </z>				
 			</location>
-			<static_friction>  0.70 </static_friction>
+			<static_friction>  0.60 </static_friction>
 			<dynamic_friction> 0.40 </dynamic_friction>
 			<rolling_friction> 0.03 </rolling_friction>
 			<spring_coeff unit="N/M">        40000 </spring_coeff>
@@ -206,7 +180,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				<y> -1.06 </y>
 				<z> 0.150 </z>
 			</location>
-			<static_friction>  0.70 </static_friction>
+			<static_friction>  0.60 </static_friction>
 			<dynamic_friction> 0.40 </dynamic_friction>
 			<rolling_friction> 0.03 </rolling_friction>
 			<spring_coeff unit="N/M">        183000 </spring_coeff>
@@ -222,7 +196,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				<y>  1.06 </y>
 				<z> 0.150 </z>
 			</location>
-			<static_friction>  0.70 </static_friction>
+			<static_friction>  0.60 </static_friction>
 			<dynamic_friction> 0.40 </dynamic_friction>
 			<rolling_friction> 0.03 </rolling_friction>
 			<spring_coeff unit="N/M">        183000 </spring_coeff>
@@ -665,23 +639,63 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 
     <function name="aircraft/engine/OPr-psi">
        <description>Indicated Oil Pressure when eng running</description>
+	 <product>
+		<property>propulsion/engine/set-running</property>
+	 	<sum>	
+			<property>aircraft/engine/OP-maxsetting-psi</property>
+			<value>-125</value>
+       		<table>
+            		<independentVar lookup="row">propulsion/engine/n1</independentVar>
+            		<!--independentVar lookup="column">aircraft/engine/OTr-degC</independentVar-->
+            		<tableData>
+					60	60
+					70	100
+					72.5	116
+					75	119
+					80	122
+					90	124
+					100	125
+					110	125
+            		</tableData>
+      		</table>
+		</sum>
+	</product>
+    </function>
+
+    <function name="aircraft/engine/OPnr-psi">
+       <description>Indicated Oil Pressure when eng not running</description>
+	 <product>
+		<abs>	
+			<sum>
+				<property>propulsion/engine/set-running</property>
+				<value>-1</value>
+			</sum>
+		</abs>
+	 	<sum>	
+			<property>aircraft/engine/OP-maxsetting-psi</property>
+			<value>-125</value>
+       		<table>
+            		<independentVar lookup="row">propulsion/engine/n1</independentVar>
+            		<!--independentVar lookup="column">aircraft/engine/OTr-degC</independentVar-->
+            		<tableData>
+					0	0
+					12	0
+					21	20
+					26	46
+					42	123
+					60	135
+					70	140
+            		</tableData>
+      		</table>
+		</sum>
+	</product>
+    </function>
+
+    <function name="aircraft/engine/OP-psi">
+       <description>Indicated Oil Pressure</description>
 	 <sum>	
-		<property>aircraft/engine/OP-maxsetting-psi</property>
-		<value>-125</value>
-       	<table>
-            	<independentVar lookup="row">propulsion/engine/n1</independentVar>
-            	<!--independentVar lookup="column">aircraft/engine/OTr-degC</independentVar-->
-            	<tableData>
-				60	60
-				70	100
-				72.5	116
-				75	119
-				80	122
-				90	124
-				100	125
-				110	125
-            	</tableData>
-      	</table>
+		<property>aircraft/engine/OPr-psi</property>
+		<property>aircraft/engine/OPnr-psi</property>
 	</sum>
     </function>
 
