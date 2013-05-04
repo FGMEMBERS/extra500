@@ -26,6 +26,16 @@
 
 <path>extra500_AnnunciatorPanel.ac</path>
 
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.GeneratorFail</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>0.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/AnnunciatorPanel/GeneratorFail/state</factor-prop>
+	</emission>
+</animation>
 
 
 </PropertyList>
