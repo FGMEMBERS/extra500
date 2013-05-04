@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             29.04.13
+      Date:             04.05.13
 
 -->
 
@@ -77,18 +77,17 @@
 	<pitch-deg>-13</pitch-deg>
 	</offsets>
 </model>
-<!--
 <model>
-  <name>SidePanelWORK</name>
-  <path>Aircraft/extra500/Models/extra500_SidePanel.xml</path>
+  <name>AnnunciatorPanel</name>
+  <path>Aircraft/extra500/Models/extra500_AnnunciatorPanel.xml</path>
 	<offsets>
-		<x-m>-.60</x-m>
-		<y-m>-.665</y-m>	
-		<z-m>-.092</z-m>
-	<pitch-deg>77</pitch-deg>
+		<x-m>-0.741</x-m>
+		<y-m>.2905</y-m>	
+		<z-m>-0.054</z-m>
+	<pitch-deg>-13</pitch-deg>
 	</offsets>
 </model>
--->
+
 <model>
   <name>SidePanel</name>
   <path>Aircraft/extra500/Models/extra500_SidePanel.xml</path>
@@ -99,19 +98,6 @@
 	<pitch-deg>0</pitch-deg>
 	</offsets>
 </model>
-<!--
-<model>
-  <name>CircuitBreakerPanelWORK</name>
-  <path>Aircraft/extra500/Models/extra500_CircuitBreakerPanel.xml</path>
-	<offsets>
-		<x-m>-.68</x-m>
-		<y-m>-.59</y-m>	
-		<z-m>-.06</z-m>
-		<roll-deg>0</roll-deg>
-		<pitch-deg>77</pitch-deg>
-	</offsets>
-</model>
--->
 <model>
   <name>CircuitBreakerPanel</name>
   <path>Aircraft/extra500/Models/extra500_CircuitBreakerPanel.xml</path>
@@ -168,27 +154,6 @@
 <sound><path>Aircraft/extra500/Sounds/mp-sound.xml</path></sound>
 -->
 
-<!-- Test: Frame-Toggle -->
-<animation>
-  <type>select</type>
-  <object-name>Rumpftest</object-name>
-  <condition>
-  <equals>
-      <property>controls/gear/brake-parking</property>
-      <value>1</value>
-  </equals>
-  </condition>
-</animation>
-<animation>
-  <type>select</type>
-  <object-name>Rumpftest.trans</object-name>
-  <condition>
-  <equals>
-      <property>controls/gear/brake-parking</property>
-      <value>0</value>
-  </equals>
-  </condition>
-</animation>
 
 <!--Propeller-->
 <animation>
