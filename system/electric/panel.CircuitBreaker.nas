@@ -307,7 +307,7 @@ var CircuitBreakerPanel = {
 		m.VoltMonitor = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Volt Monitor");
 		
 		nCompNode = nParent.initNode("Alt");
-		m.Alt = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Alt");
+		m.Alt = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Alt",2.0);
 		
 		nCompNode = nParent.initNode("GeneratorReset");
 		m.GeneratorReset = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Generator Reset");

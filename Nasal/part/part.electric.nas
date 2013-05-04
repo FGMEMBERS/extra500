@@ -379,7 +379,7 @@ var ElectricBus = {
 						}
 					}
 				}
-				me.electron.resirstor = me.electron.volt / me.electron.ampere;
+				me.electron.resistor = me.electron.volt / me.electron.ampere;
 				etd.echo("Bus electron " ~me.electron.getText());
 				
 				me.electron.paste(electron);
@@ -598,7 +598,7 @@ var ElectricExternalPower = {
 		etd.print("-------------------------------------");
 		
 		if (me.generatorActive == 0){
-			etd.print("--- Generator offline             ---");
+			etd.print("--- Ground Generator offline      ---");
 		}else{
 			#etd.echo("Battery.update() ...");
 			
@@ -681,7 +681,7 @@ var ElectricGenerator = {
 	setAmpereOutput : func(ampere){
 		#global.fnAnnounce("debug",""~me.name~"\t\t ElectricBattery.setAmpereOutput("~ampere~"A) ... ");
 		
-		var simNow = systime();
+		#var simNow = systime();
 
 		me.setAmpere(ampere);
 		
@@ -820,6 +820,154 @@ var GeneratorControlUnit = {
 	
 };
 
+
+var ElectricAlternator = {
+	new : func(nRoot,name){
+				
+		var m = {parents:[
+			ElectricAlternator,
+			Part.new(nRoot,name),
+			ElectricAble.new(nRoot,name)
+		]};
+		
+		m.simTime = systime();
+		#m.capacitor = Capacitor.new(3);
+		
+		m.electron = Electron.new();
+		m.capacitorField = Capacitor.new(3);
+		
+		m.Plus = ElectricConnector.new("+");
+		m.Minus = ElectricConnector.new("-");
+		m.Field = ElectricConnector.new("Field"); # Field to generate output
+
+		m.nEngineRunning = props.globals.getNode("engines/engine[0]/running",1);
+		
+		m.Plus.solder(m);
+		m.Minus.solder(m);
+		m.Field.solder(m);
+
+		
+		return m;
+
+	},
+	applyVoltage : func(electron,name=""){ 
+		etd.in("Generator",me.name,name,electron);
+		var GND = 0;
+		
+		if (electron != nil){
+			me.setVolt(electron.volt);
+			electron.resistor += me.resistor;# * me.qos
+			
+			if (name == "Field"){
+				GND = me.Minus.applyVoltage(me.electron);
+				me.capacitorField.load(10);
+			}
+			
+			me.setAmpere(electron.ampere);
+		}
+		etd.out("Generator",me.name,name,electron);
+		return GND;
+	},
+	setAmpereOutput : func(ampere){
+		#global.fnAnnounce("debug",""~me.name~"\t\t ElectricBattery.setAmpereOutput("~ampere~"A) ... ");
+		
+		#var simNow = systime();
+
+		me.setAmpere(ampere);
+		
+	},
+	update : func(timestamp){
+		
+		etd.print("--- Alternator.update() ...        ---");
+		
+		me.capacitorField.load(-1);
+		
+		if (me.nEngineRunning.getValue()){
+			if (me.capacitorField.value > 0){
+				
+				etd.print("-------------------------------------");
+				me.electron.volt = 26.0;
+				me.electron.resistor = 0.0;
+				me.electron.ampere = 0.0;
+				me.electron.timestamp = timestamp;
+				
+				var GND = 0;
+				GND = me.Plus.applyVoltage(me.electron);
+				if (GND > 0){
+					me.setAmpereOutput(me.electron.ampere);
+				}
+			}else{
+				etd.print("--- No Field                      ---");
+			}
+		}else{
+			etd.print("--- Engine not running            ---");
+		}
+		etd.print("-------------------------------------");
+	}
+};
+
+
+var StandbyAlternatorRegulator = {
+	new : func(nRoot,name){
+		var m = {parents:[
+			StandbyAlternatorRegulator,
+			Part.new(nRoot,name),
+			#SimStateAble.new(nRoot,"BOOL",0),
+			ElectricAble.new(nRoot,name)
+		]};
+		
+		m.capacitor = Capacitor.new(3);
+		
+		m.Sense = ElectricConnector.new("Sense"); # measuring input
+		m.PowerVoltage = ElectricConnector.new("PowerVoltage"); # operating voltage 
+		m.Field = ElectricConnector.new("Field"); # Field output for altinator
+		m.AnnuciatorLight = ElectricConnector.new("AnnuciatorLight"); # annuciate field active
+		m.GND = ElectricConnector.new("GND"); # Field output for altinator
+		
+				
+		m.Sense.solder(m);
+		m.PowerVoltage.solder(m);
+		m.Field.solder(m);
+		m.AnnuciatorLight.solder(m);
+		m.GND.solder(m);
+		
+		append(aListSimStateAble,m);
+		return m;
+	},
+	simReset : func(){
+		me.capacitor.load(-1);
+	},
+	simUpdate : func(){
+
+	},
+	applyVoltage : func(electron,name=""){ 
+		etd.in("StandbyAlternatorRegulator",me.name,name,electron);
+		var GND = 0;
+		if(electron != nil){
+			if (name == "PowerVoltage"){
+				electron.resistor = 4700.0;
+				if (me.capacitor.value > 0){
+					GND = me.Field.applyVoltage(electron);
+				}else{
+					GND = me.GND.applyVoltage(electron);
+				}
+			}elsif(name == "Sense"){
+				electron.resistor = 4700.0;
+				if (electron.volt < 26.5){
+					me.capacitor.load(10);;
+				}
+				GND = me.GND.applyVoltage(electron);
+			}elsif(name == "AnnuciatorLight"){
+				if (me.capacitor.value > 0){
+					GND = me.GND.applyVoltage(electron);
+				}
+			}
+		}
+		etd.out("StandbyAlternatorRegulator",me.name,name,electron);
+		return GND;
+	},
+	
+};
 
 # 0	In ─  ─ Out
 # 1	In ──── Out
@@ -1602,6 +1750,7 @@ var ElectricLight = {
 	},
 	
 };
+
 #	PlusRight ─┐
 #		   ⊗─ Minus
 #	PlusLeft  ─┘

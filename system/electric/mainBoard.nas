@@ -98,6 +98,11 @@ var MainBoard = {
 		m.k8Relais.setPoles(2);
 		# 1 Bus40 	- Bus20 	= Power
 
+		nCompNode = nParent.initNode("AlternatorRelais");
+		m.alternatorRelais = Part.ElectricRelaisXPDT.new(nCompNode,"Alternator Relais");
+		m.alternatorRelais.setPoles(1);
+		# 1 Alternator 	- Bus20 	= Power
+
 		
 		
 		
@@ -182,6 +187,7 @@ var MainBoard = {
 		
 		mainBoard.avionicBus.plug(mainBoard.avionicsRelais.P14);
 		mainBoard.emergencyBus.plug(mainBoard.emergencyRelais.P11);
+		mainBoard.emergencyBus.plug(mainBoard.alternatorShunt.Plus);
 		
 		mainBoard.iBus30.plug(mainBoard.startRelais.P14);
 		mainBoard.iBus30.plug(mainBoard.generatorRelais.P21);
@@ -214,7 +220,8 @@ var MainBoard = {
 		
 		mainBoard.k8Relais.A2.plug(mainBoard.externalPowerRelais.P22);
 		
-		
+		me.alternatorRelais.P12.plug(me.alternatorShunt.Minus);
+		me.alternatorRelais.A2.plug(me.GND);
 		
 		
 	},
@@ -244,12 +251,16 @@ var MainBoard = {
 var mainBoard = MainBoard.new();
 
 var generatorControlUnit = Part.GeneratorControlUnit.new(props.globals.getNode("extra500/GeneratorControlUnit",1),"Generator Control Unit");
+var standbyAlternatorRegulator = Part.StandbyAlternatorRegulator.new(props.globals.getNode("extra500/StandbyAlternatorRegulator",1),"Standby Alternator Regulator");
 
-var battery = Part.ElectricBattery.new(props.globals.getNode("extra500/Battery",1),"Battery");
+
+var externalPower = Part.ElectricExternalPower.new(props.globals.getNode("extra500/Ground/ExternalPower",1),"External Power");
 
 var generator = Part.ElectricGenerator.new(props.globals.getNode("extra500/Generator",1),"Generator");
 generator.setPower(24.0,24000.0);
 
-var externalPower = Part.ElectricExternalPower.new(props.globals.getNode("extra500/Ground/ExternalPower",1),"External Power");
+var alternator = Part.ElectricAlternator.new(props.globals.getNode("extra500/Alternator",1),"Alternator");
+
+var battery = Part.ElectricBattery.new(props.globals.getNode("extra500/Battery",1),"Battery");
 
 
