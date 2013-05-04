@@ -283,6 +283,10 @@ var AnnunciatorPanel = {
 		# P12	+14-28V iBusPlus
 	# P14	+28V Generator 
 			
+		nCompNode = m.nPanel.initNode("IgnitionRelais");
+		m.ignitionRelais = Part.ElectricRelaisXPDT.new(nCompNode,"Ignition Relais");
+		m.ignitionRelais.setPoles(1);
+		
 	
 		return m;
 	},
@@ -337,6 +341,7 @@ var AnnunciatorPanel = {
 		
 		me.externalPowerRelais.A1.plug(me.externalPowerBus.con());
 		me.externalPowerRelais.A2.plug(mainBoard.GND);
+		
 		
 		
 	# ---
@@ -416,6 +421,15 @@ var AnnunciatorPanel = {
 		me.GNDBus.plug(	me.dimTestRelais.P484); #	Generator 1
 		me.GNDBus.plug(	me.dimTestRelais.P494); #	Gear Warning
 		me.GNDBus.plug(	me.dimTestRelais.P504); #	Flap System
+		
+		
+		# Ignition
+		
+		me.ignitionRelais.A2.plug(mainBoard.GND);
+		me.ignitionRelais.P11.plug(mainBoard.GND);
+		me.ignitionRelais.P14.plug(me.dimTestRelais.P242);
+		
+		
 		
 	},
 };

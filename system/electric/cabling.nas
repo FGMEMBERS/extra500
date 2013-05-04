@@ -300,10 +300,11 @@ var plugMasterPanel = func(){
 		masterPanel.EngineMotoring.L11.plug(	mainBoard.JB3E20.con() );
 		masterPanel.EngineMotoring.L13.plug(	mainBoard.JB4E20.con() );
 		
-		masterPanel.EngineMotoring.Com2.plug(	mainBoard.JB2G20.Minus );
+		masterPanel.EngineMotoring.Com2.plug(	mainBoard.JB2G20.con() );
 		masterPanel.EngineMotoring.L23.plug(	engine.IgnitionPlus );		#ignition
+
 		masterPanel.EngineMotoring.Com3.plug(	mainBoard.JB2G20.con() );
-		#masterPanel.EngineMotoring.L33.plug(	engine.IgnitionPlus );		#Anunciator
+		masterPanel.EngineMotoring.L33.plug(	annunciatorPanel.ignitionRelais.A1 );		#Anunciator
 		
 		
 		masterPanel.EngineStart.Com1.plug(	circuitBreakerPanel.Ignition.Out );

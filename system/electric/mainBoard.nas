@@ -127,7 +127,7 @@ var MainBoard = {
 		
 		m.JB3E20 = Part.ElectricBus.new("#JB3E20");
 		m.JB4E20 = Part.ElectricBus.new("#JB4E20");
-		m.JB2G20 = Part.ElectricBusDiode.new("#JB2G20");
+		m.JB2G20 = Part.ElectricBus.new("#JB2G20");
 		
 	
 	# main Buses

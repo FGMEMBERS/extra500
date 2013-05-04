@@ -637,6 +637,7 @@ var ElectricGenerator = {
 		m.InterPole = ElectricConnector.new("InterPole");# umbau auf drehzahl N1
 		
 		m.nEngineRunning = props.globals.getNode("engines/engine[0]/running",1);
+		m.nN1			= props.globals.getNode("/engines/engine[0]/n1");
 		m.nControlStarter = props.globals.getNode("controls/engines/engine[0]/starter",1);
 		m.nControlGenerator = props.globals.getNode("controls/electric/engine/generator",1);
 		
@@ -692,7 +693,7 @@ var ElectricGenerator = {
 		
 		me.capacitorStarter(-1);
 		
-		if (me.nEngineRunning.getValue()){
+		if (me.nN1.getValue() > 58.0){
 			#etd.echo("Battery.update() ...");
 			#me.nControlStarter.setValue(0);
 			#me.nControlGenerator.setValue(0);
@@ -841,6 +842,7 @@ var ElectricAlternator = {
 		m.Field = ElectricConnector.new("Field"); # Field to generate output
 
 		m.nEngineRunning = props.globals.getNode("engines/engine[0]/running",1);
+		m.nN1			= props.globals.getNode("/engines/engine[0]/n1");
 		
 		m.Plus.solder(m);
 		m.Minus.solder(m);
@@ -882,7 +884,7 @@ var ElectricAlternator = {
 		
 		me.capacitorField.load(-1);
 		
-		if (me.nEngineRunning.getValue()){
+		if (me.nN1.getValue() > 58.0){
 			if (me.capacitorField.value > 0){
 				
 				etd.print("-------------------------------------");
@@ -916,8 +918,8 @@ var StandbyAlternatorRegulator = {
 			ElectricAble.new(nRoot,name)
 		]};
 		
-		m.capacitor = Capacitor.new(3);
-		
+		m.capacitorSense = Capacitor.new(3);
+		m.capacitorPower = Capacitor.new(3);
 		m.Sense = ElectricConnector.new("Sense"); # measuring input
 		m.PowerVoltage = ElectricConnector.new("PowerVoltage"); # operating voltage 
 		m.Field = ElectricConnector.new("Field"); # Field output for altinator
@@ -935,7 +937,9 @@ var StandbyAlternatorRegulator = {
 		return m;
 	},
 	simReset : func(){
-		me.capacitor.load(-1);
+		me.capacitorSense.load(-1);
+		me.capacitorPower.load(-1);
+		
 	},
 	simUpdate : func(){
 
@@ -946,7 +950,8 @@ var StandbyAlternatorRegulator = {
 		if(electron != nil){
 			if (name == "PowerVoltage"){
 				electron.resistor = 4700.0;
-				if (me.capacitor.value > 0){
+				me.capacitorPower.load(10);
+				if (me.capacitorSense.value > 0){
 					GND = me.Field.applyVoltage(electron);
 				}else{
 					GND = me.GND.applyVoltage(electron);
@@ -954,11 +959,11 @@ var StandbyAlternatorRegulator = {
 			}elsif(name == "Sense"){
 				electron.resistor = 4700.0;
 				if (electron.volt < 26.5){
-					me.capacitor.load(10);;
+					me.capacitorSense.load(10);;
 				}
 				GND = me.GND.applyVoltage(electron);
 			}elsif(name == "AnnuciatorLight"){
-				if (me.capacitor.value > 0){
+				if (me.capacitorSense.value > 0 and me.capacitorPower.value > 0){
 					GND = me.GND.applyVoltage(electron);
 				}
 			}
