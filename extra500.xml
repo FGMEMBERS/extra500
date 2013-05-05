@@ -600,10 +600,27 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			</kinematic>
 			
 		</channel>
-			
-	</flight_control>
+
+</flight_control>
 	
-	<aerodynamics>
+<aerodynamics>
+
+    <function name="sim-dt-sec">
+	<sum>
+		<property>sim-time-sec</property>
+		<property>sim-time-sec-old</property>
+	</sum>
+    </function>
+
+    <function name="atmosphere/T-degC">
+	<sum>
+		<product>
+      		<property>atmosphere/T-R</property>
+			<value>0.5555</value>
+		</product>
+	<value>-273.15</value>
+	</sum>
+    </function>
 
 <!-- ENGINE -->
 
@@ -635,6 +652,25 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		0.0025224	550	570	590	600	605	610	640	710	795
             </tableData>
       </table>
+    </function>
+
+    <function name="aircraft/engine/Delta-OT-degC">
+       <description>Oil temp change</description>
+	 <sum>
+	 <product>
+		<table>
+            	<independentVar lookup="row">propulsion/engine/power-hp</independentVar>
+            	<independentVar lookup="column">aircraft/engine/OT-degC</independentVar> 	<!-- to simulate the thermostat in the oil cooler-->
+            	<tableData>
+				-54		50		60		70	75	80
+			0	-0.01		-0.01		-0.015	-0.02	-0.02	-0.02
+			35	1.242		1.242		0.9		0.2	0.05	0
+			380	1.8417	1.8417	0.6		0.3	0.07	0
+			458	2.0707	2.0707	1.0		0.5	0.08	0
+            	</tableData>
+      	</table>
+	</product>
+	</sum>
     </function>
 
     <function name="aircraft/engine/OPr-psi">
@@ -1148,13 +1184,6 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             <property>aircraft/hstab/elevator/H-trim-lbsft</property>
             <property>aircraft/hstab/elevator/H-de-lbsft</property>
       </sum>
-    </function>
-
-    <function name="sim-dt-sec">
-	<sum>
-		<property>sim-time-sec</property>
-		<property>sim-time-sec-old</property>
-	</sum>
     </function>
 
     <function name="aircraft/hstab/elevator/de_ddot">
