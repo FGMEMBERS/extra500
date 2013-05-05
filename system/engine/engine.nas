@@ -17,7 +17,7 @@
 #      Date: April 29 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             30.04.13
+#      Date:             05.05.13
 #
 
 
@@ -147,3 +147,34 @@ var Engine = {
 
 var engine = Engine.new(props.globals.initNode("/extra500/Engine"),"RR 250-B17F2");
 engine.setPower(24.0,5.0);
+
+
+# ENGINE TEMPERATURES
+
+var calc_OT = func() {
+	var OAT = getprop("/environment/temperature-degc");
+	var OT = getprop("/fdm/jsbsim/aircraft/engine/OT-degC");
+	var OTnew = OT + getprop("/fdm/jsbsim/aircraft/engine/Delta-OT-degC");
+	if (OTnew<OAT) {
+		OTnew = OAT;
+	}
+	setprop("/fdm/jsbsim/aircraft/engine/OT-degC",OTnew);
+	settimer(calc_OT,1);
+}
+
+var init_Temps = func{
+      if (getprop("/fdm/jsbsim/simulation/sim-time-sec")>1) {		# to make sure we get an "initialised" temperature
+		setprop("/fdm/jsbsim/aircraft/engine/temp_init",1);
+		var OAT = getprop("/environment/temperature-degc");
+		setprop("/fdm/jsbsim/aircraft/engine/OT-degC",OAT); 		
+		setprop("/fdm/jsbsim/aircraft/engine/FT-degC",OAT); 
+		setprop("/fdm/jsbsim/aircraft/engine/TOTnr-degC",OAT);
+		calc_OT();
+	} else {
+		settimer(init_Temps, 1);						# timer gets destroyed when sim-time-sec >1
+	}
+}
+
+setlistener("/sim/signals/fdm-initialized", func {
+    init_Temps();
+});
