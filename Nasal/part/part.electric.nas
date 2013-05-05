@@ -1737,6 +1737,7 @@ var ElectricLight = {
 			}
 			
 			me.setAmpere(electron.ampere);
+			
 		}
 		etd.out("Light",me.name,name,electron);
 		return GND;

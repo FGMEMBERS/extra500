@@ -393,6 +393,7 @@ var plugFlap =func(){
 	flapSystem.flapPowerBus.plug(circuitBreakerPanel.Flap.Out);
 	flapSystem.powerInBus.plug(circuitBreakerPanel.FlapControl.Out);
 	flapSystem.plugElectric();
+	flapSystem.flapUnbRelais.P12.plug(annunciatorPanel.dimTestRelais.P502);
 	
 	
 	
@@ -435,6 +436,7 @@ var plugEngine = func(){
 	
 	engine.GND.plug(mainBoard.GND);
 	engine.LowOilPress.plug(annunciatorPanel.dimTestRelais.P392);
+	engine.LowPitch.plug(annunciatorPanel.dimTestRelais.P232);
 	
 }
 
@@ -448,6 +450,13 @@ var plugAlternator = func(){
 	alternator.Minus.plug(mainBoard.GND);
 	alternator.Field.plug(standbyAlternatorRegulator.Field);
 	alternator.Plus.plug(mainBoard.alternatorRelais.P11);
+}
+
+var plugPcBoard = func(){
+	pcBoard.plugElectric();
+	pcBoard.GND.plug(mainBoard.GND);
+	pcBoard.LowVoltSense.plug(circuitBreakerPanel.LowVolt.Out);
+	pcBoard.LowVoltOut.plug(annunciatorPanel.dimTestRelais.P222);
 }
 
 var plugElectric = func(){
@@ -464,5 +473,6 @@ var plugElectric = func(){
 	plugFuel();
 	plugEngine();
 	plugAlternator();
+	plugPcBoard();
 	
 };

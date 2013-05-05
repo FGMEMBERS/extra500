@@ -42,11 +42,13 @@ var Engine = {
 		m._ignitionState 	= 0;
 		m.IgnitionPlus 		= Part.ElectricConnector.new("IgnitionPlus");
 		m.LowOilPress		= Part.ElectricConnector.new("LowOilPress");
+		m.LowPitch		= Part.ElectricConnector.new("LowPitch");
 		m.GND 			= Part.ElectricConnector.new("GND");
 		
 		m.IgnitionPlus.solder(m);
 		m.GND.solder(m);
 		m.LowOilPress.solder(m);
+		m.LowPitch.solder(m);
 		
 		append(Part.aListSimStateAble,m);
 		return m;
@@ -79,6 +81,11 @@ var Engine = {
 			}elsif(name == "LowOilPress"){
 				
 				if (me.nOilPress.getValue() < 35.0){
+					GND = me.GND.applyVoltage(electron);
+				}
+			}elsif(name == "LowPitch"){
+				
+				if (me.nReverser.getValue() == 1 and me.nThrottle.getValue() > 0.1){
 					GND = me.GND.applyVoltage(electron);
 				}
 			}

@@ -29,6 +29,10 @@
 
 
 #1 jet pump: 1.55 kg/min = 0.503 USG/min
+
+#Low Fuel Left und Right when das entsprechende Collector compartment 
+#unter ~5/8 (muss genaue wert noch nachschauen) voll ist
+
 var FuelSystem = {
 	new : func{
 		var m = {parents:[FuelSystem]};

@@ -50,6 +50,7 @@ var FlapSystem = {
 		m.motor.setPower(24.0,35.0);
 		m.motor.connectGear(m);
 		
+		
 	# relais
 		
 		m.upRelais = Part.ElectricRelaisXPDT.new(m.nRoot.initNode("RelaisUp"),"Flap Relais Up");
@@ -67,6 +68,9 @@ var FlapSystem = {
 		m.transitionRelais = Part.ElectricRelaisXPST.new(m.nRoot.initNode("RelaisTransition"),"Flap Relais Transition");
 		m.transitionRelais.setPoles(1);
 		m.transitionRelais.resistor = 0.0;
+		
+		m.flapUnbRelais = Part.ElectricRelaisXPDT.new(m.nRoot.initNode("FlapUnbRelais"),"Flap UNB Relais");
+		m.flapUnbRelais.setPoles(1);
 		
 	# switches
 		m.limitUp = Part.ElectricSwitchDT.new(m.nRoot.initNode("SwitchLimitUp"),"Flap Switch Limit Up");
@@ -163,6 +167,7 @@ var FlapSystem = {
 	plugElectric : func(){
 		
 		
+		
 		me.flapPowerBus.plug(me.downRelais.P11);
 		me.flapPowerBus.plug(me.upRelais.P11);
 		
@@ -176,6 +181,12 @@ var FlapSystem = {
 		me.pos14Relais.P34.plug(me.pos15Relais.P31);
 		
 		me.pos15Relais.P32.plug(me.GNDBus.con());
+		
+		me.flapUnbRelais.A1.plug(me.inhibitBus.con());
+		me.flapUnbRelais.A2.plug(me.GNDBus.con());
+		me.flapUnbRelais.P11.plug(me.GNDBus.con());
+		
+		
 	#main switch	
 		me.switch.Com1.plug(me.GNDBus.con());
 		me.switch.L11.plug(me.iSwitch0Bus.con());

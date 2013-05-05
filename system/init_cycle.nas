@@ -80,3 +80,8 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 	
 	
 });
+
+# var debug_listener = setlistener("/extra500/AnnunciatorPanel/LowVoltage/state", func(n) {
+# 	print("/extra500/AnnunciatorPanel/LowVoltage/state = " ~n.getValue());
+# 
+# },0,0);

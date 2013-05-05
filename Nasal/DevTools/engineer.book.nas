@@ -167,7 +167,7 @@ engineerScreen.add(electricLightPage);
 		
 	electricLightPage.add(display);
 
-	display = Display.new(-10,-50);
+	display = Display.new(-600,-10);
 		display.title = "Lights Relais";
 		display.font = "FIXED_9x15";
 		display.fg = [1.0, 1.0, 1.0, 1.0];
@@ -183,13 +183,13 @@ engineerScreen.add(electricLightPage);
 	electricLightPage.add(display);	
 		
 
-	display = Display.new(-10,-200);
+	display = Display.new(-10,-10);
 		display.title = "Lights Annuciator";
 		display.font = "FIXED_9x15";
 		display.fg = [1.0, 1.0, 1.0, 1.0];
 		display.bg = [0.5, 0.5, 0.5, 0.85];
 		display.width = 270;
-		display.height = 840;
+		display.height = 880;
 		
 		
 		display.addNamed("Generator Fail        %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/GeneratorFail/state") );
@@ -217,6 +217,7 @@ engineerScreen.add(electricLightPage);
 		display.addNamed("Recogn Light          %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/RecognLight/state") );
 		display.addNamed("Fuel Filter ByPass    %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/FuelFilterByPass/state") );
 		display.addNamed("Pneumatic Low         %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/PneumaticLow/state") );
+		display.addNamed("Low Voltage           %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/LowVoltage/state") );
 		display.addNamed("Deice Boots           %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/DeiceBoots/state") );
 		display.addNamed("Landing Light         %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/LandingLight/state") );
 		display.addNamed("Fuel Low Left         %.2f %%", props.globals.getNode("/extra500/AnnunciatorPanel/FuelLowLeft/state") );
@@ -228,7 +229,7 @@ engineerScreen.add(electricLightPage);
 		
 	electricLightPage.add(display);
 
-	display = Display.new(-320,-50);
+	display = Display.new(-320,-10);
 		display.title = "Lights Indication";
 		display.font = "FIXED_9x15";
 		display.fg = [1.0, 1.0, 1.0, 1.0];

@@ -546,6 +546,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/system/electric/light.nas</file>
 		<file>Aircraft/extra500/system/electric/system.flap.nas</file>
 		<file>Aircraft/extra500/system/electric/system.gear.nas</file>
+		<file>Aircraft/extra500/system/electric/pcBoard.nas</file>
 		
 		<file>Aircraft/extra500/system/engine/engine.nas</file>
 		
