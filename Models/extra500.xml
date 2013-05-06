@@ -89,7 +89,7 @@
 </model>
 <model>
   <name>EngineInstruments</name>
-  <path>Aircraft/extra500/Models/extra500_EngineInstruments.ac</path>
+  <path>Aircraft/extra500/Models/extra500_EngineInstruments.xml</path>
 	<offsets>
 		<x-m>-0.6845 </x-m>
 		<y-m>-.517</y-m>	
