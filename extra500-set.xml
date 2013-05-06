@@ -689,6 +689,7 @@ JSBSim Extra Aircraft - Extra 500.
 				<dt-indication type="double">0.5</dt-indication>
 				<OP-maxsetting-psi>125</OP-maxsetting-psi>
 				<OT-degC>0</OT-degC>					<!--dummy value -->
+				<FT-degC>0</FT-degC>					<!--dummy value -->
 			</engine>
             </aircraft>
       </jsbsim>

@@ -681,7 +681,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             		<independentVar lookup="row">propulsion/engine/n1</independentVar>
 				<independentVar lookup="column">aircraft/engine/OT-degC</independentVar>	<!-- oil pressure dependence on oil temperature-->
             		<tableData>
-						0	15	82
+						0	25	82
 					0	0	0	0
 					12	0	0	0
 					21	30	20	15
