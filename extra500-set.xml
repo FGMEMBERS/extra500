@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             05.05.13
+      Date:             06.05.13
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -686,6 +686,7 @@ JSBSim Extra Aircraft - Extra 500.
 				<cd0>0.015</cd0>				
 			</vstab>
 			<engine>
+				<dt-indication type="double">0.5</dt-indication>
 				<OP-maxsetting-psi>125</OP-maxsetting-psi>
 				<OT-degC>0</OT-degC>					<!--dummy value -->
 			</engine>

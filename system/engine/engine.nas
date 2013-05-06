@@ -17,7 +17,7 @@
 #      Date: April 29 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             05.05.13
+#      Date:             06.05.13
 #
 
 
@@ -151,27 +151,38 @@ engine.setPower(24.0,5.0);
 
 # ENGINE TEMPERATURES
 
-var calc_OT = func() {
+var calc_Temps = func() {
+# getting common values
+	var dt = getprop("/fdm/jsbsim/aircraft/engine/dt-indication");
 	var OAT = getprop("/environment/temperature-degc");
+	var FuelMass = getprop("/fdm/jsbsim/propulsion/total-fuel-lbs");
+# getting old values
 	var OT = getprop("/fdm/jsbsim/aircraft/engine/OT-degC");
+	var FT = getprop("/fdm/jsbsim/aircraft/engine/FT-degC");
+	var TOT = getprop("/fdm/jsbsim/aircraft/engine/TOTnr-degC");
+# calculating new oil temperature
 	var OTnew = OT + getprop("/fdm/jsbsim/aircraft/engine/Delta-OT-degC");
 	if (OTnew<OAT) {
 		OTnew = OAT;
 	}
 	setprop("/fdm/jsbsim/aircraft/engine/OT-degC",OTnew);
-	settimer(calc_OT,1);
+# calculating new fuel temperature
+	var FTnew = FT + 0.1*(OAT-FT)/FuelMass;					# factor 0.1 to be verified
+	setprop("/fdm/jsbsim/aircraft/engine/FT-degC",FTnew);
+# loooping
+	settimer(calc_Temps,dt);
 }
 
 var init_Temps = func{
-      if (getprop("/fdm/jsbsim/simulation/sim-time-sec")>1) {		# to make sure we get an "initialised" temperature
+      if (getprop("/fdm/jsbsim/simulation/sim-time-sec") > 10) {		# to make sure we get an "initialised" temperature
 		setprop("/fdm/jsbsim/aircraft/engine/temp_init",1);
 		var OAT = getprop("/environment/temperature-degc");
 		setprop("/fdm/jsbsim/aircraft/engine/OT-degC",OAT); 		
 		setprop("/fdm/jsbsim/aircraft/engine/FT-degC",OAT); 
 		setprop("/fdm/jsbsim/aircraft/engine/TOTnr-degC",OAT);
-		calc_OT();
+		calc_Temps();
 	} else {
-		settimer(init_Temps, 1);						# timer gets destroyed when sim-time-sec >1
+		settimer(init_Temps, 1);						# timer gets destroyed when sim-time-sec >10sec
 	}
 }
 
