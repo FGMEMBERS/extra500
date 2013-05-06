@@ -31,14 +31,14 @@
 <animation>
   <type>rotate</type>
   <object-name>Needle.TRQ</object-name>
-  <property>surface-positions/rudder-pos-norm</property>
+  <property>/fdm/jsbsim/aircraft/engine/TRQ-perc</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
                 <dep>-124</dep>
             </entry>
             <entry>
-                <ind>1</ind>
+                <ind>125</ind>
                 <dep>124</dep>
             </entry>
         </interpolation>
