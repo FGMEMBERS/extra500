@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             04.05.13
+      Date:             06.05.13
 
 -->
 
@@ -84,6 +84,16 @@
 		<x-m>-0.741</x-m>
 		<y-m>.2905</y-m>	
 		<z-m>-0.054</z-m>
+	<pitch-deg>-13</pitch-deg>
+	</offsets>
+</model>
+<model>
+  <name>EngineInstruments</name>
+  <path>Aircraft/extra500/Models/extra500_EngineInstruments.ac</path>
+	<offsets>
+		<x-m>-0.6845 </x-m>
+		<y-m>-.517</y-m>	
+		<z-m>-0.264</z-m>
 	<pitch-deg>-13</pitch-deg>
 	</offsets>
 </model>
