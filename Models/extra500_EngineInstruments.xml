@@ -102,6 +102,142 @@
 	</axis>
 </animation>
 
+<!--TOT Needle-->
+<animation>
+  <type>rotate</type>
+  <object-name>EngineInstruments.TOT.Needle</object-name>
+  <property>/fdm/jsbsim/aircraft/engine/TOTr-degC</property>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>-124</dep>
+            </entry>
+            <entry>
+                <ind>1000</ind>
+                <dep>124</dep>
+            </entry>
+        </interpolation>
+  <axis>
+  <x1-m>1</x1-m>
+  <y1-m>0.02319</y1-m>
+  <z1-m>0.07739</z1-m>
+  <x2-m>-1</x2-m>
+  <y2-m>0.02319</y2-m>
+  <z2-m>0.07739</z2-m>
+  </axis>
+</animation>
+<!--TOT Digits-->
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.TOT.001</object-name>
+  <property>/fdm/jsbsim/aircraft/engine/TOTr-degC</property>
+	<factor>-.1</factor>
+	<step>1</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.TOT.010</object-name>
+  <property>/fdm/jsbsim/aircraft/engine/TOTr-degC</property>
+	<factor>-.01</factor>
+	<step>10</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.TOT.100</object-name>
+  <property>/fdm/jsbsim/aircraft/engine/TOTr-degC</property>
+	<factor>-.001</factor>
+	<step>100</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
+
+<!--N1 Needle-->
+<animation>
+  <type>rotate</type>
+  <object-name>EngineInstruments.N1.Needle</object-name>
+  <property>/fdm/jsbsim/propulsion/engine/n1</property>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>-124</dep>
+            </entry>
+            <entry>
+                <ind>110</ind>
+                <dep>124</dep>
+            </entry>
+        </interpolation>
+  <axis>
+  <x1-m>1</x1-m>
+  <y1-m>-0.02391</y1-m>
+  <z1-m>0.02637</z1-m>
+  <x2-m>-1</x2-m>
+  <y2-m>-0.02391</y2-m>
+  <z2-m>0.02637</z2-m>
+  </axis>
+</animation>
+<!--N1 Digits-->
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.N1.000.1</object-name>
+  <property>/fdm/jsbsim/propulsion/engine/n1</property>
+	<factor>-1</factor>
+	<step>.1</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.N1.001.0</object-name>
+  <property>/fdm/jsbsim/propulsion/engine/n1</property>
+	<factor>-.1</factor>
+	<step>1</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.N1.010.0</object-name>
+  <property>/fdm/jsbsim/propulsion/engine/n1</property>
+	<factor>-.01</factor>
+	<step>10</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.N1.100.0</object-name>
+  <property>/fdm/jsbsim/aircraft/engine/TRQ-perc</property>
+	<factor>-.001</factor>
+	<step>100</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
+
 <!--N2 Needle-->
 <animation>
   <type>rotate</type>
@@ -127,7 +263,7 @@
   </axis>
 </animation>
 <!--N2 Digits-->
-<animation>
+<!--<animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.N2.0001</object-name>
   <property>/engines/engine/thruster/rpm</property>
@@ -138,7 +274,7 @@
 		<y>0</y>
 		<z>0</z>
 	</axis>
-</animation>
+</animation>-->
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.N2.0010</object-name>
@@ -176,7 +312,129 @@
 	</axis>
 </animation>
 
+<!--OP Needle-->
+<animation>
+  <type>rotate</type>
+  <object-name>EngineInstruments.OP.Needle</object-name>
+  <property>/fdm/jsbsim/aircraft/engine/OP-psi</property>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>-124</dep>
+            </entry>
+            <entry>
+                <ind>150</ind>
+                <dep>124</dep>
+            </entry>
+        </interpolation>
+  <axis>
+  <x1-m>1</x1-m>
+  <y1-m>-0.02391</y1-m>
+  <z1-m>-0.02464</z1-m>
+  <x2-m>-1</x2-m>
+  <y2-m>-0.02391</y2-m>
+  <z2-m>-0.02464</z2-m>
+  </axis>
+</animation>
+<!--OP Digits-->
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.OP.001</object-name>
+  <property>/fdm/jsbsim/aircraft/engine/OP-psi</property>
+	<factor>-.1</factor>
+	<step>1</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.OP.010</object-name>
+  <property>/fdm/jsbsim/aircraft/engine/OP-psi</property>
+	<factor>-.01</factor>
+	<step>10</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.OP.100</object-name>
+  <property>/fdm/jsbsim/aircraft/engine/OP-psi</property>
+	<factor>-.001</factor>
+	<step>100</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
 
+<!--OT Needle-->
+<animation>
+  <type>rotate</type>
+  <object-name>EngineInstruments.OT.Needle</object-name>
+  <property>/fdm/jsbsim/aircraft/engine/OT-degC</property>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>-124</dep>
+            </entry>
+            <entry>
+                <ind>120</ind>
+                <dep>124</dep>
+            </entry>
+        </interpolation>
+  <axis>
+  <x1-m>1</x1-m>
+  <y1-m>0.02319</y1-m>
+  <z1-m>-0.02464</z1-m>
+  <x2-m>-1</x2-m>
+  <y2-m>0.02319</y2-m>
+  <z2-m>-0.02464</z2-m>
+  </axis>
+</animation>
+<!--OP Digits-->
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.OT.001</object-name>
+  <property>/fdm/jsbsim/aircraft/engine/OT-degC</property>
+	<factor>-.1</factor>
+	<step>1</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.OT.010</object-name>
+  <property>/fdm/jsbsim/aircraft/engine/OT-degC</property>
+	<factor>-.01</factor>
+	<step>10</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.OT.100</object-name>
+  <property>/fdm/jsbsim/aircraft/engine/OT-degC</property>
+	<factor>-.001</factor>
+	<step>100</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
 
 
 

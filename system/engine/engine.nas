@@ -17,7 +17,7 @@
 #      Date: April 29 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             06.05.13
+#      Date:             07.05.13
 #
 
 
@@ -155,7 +155,7 @@ var calc_Temps = func() {
 # getting common values
 	var dt = getprop("/fdm/jsbsim/aircraft/engine/dt-indication");
 	var OAT = getprop("/environment/temperature-degc");
-	var FuelMass = getprop("/fdm/jsbsim/propulsion/total-fuel-lbs");
+	var FuelMass = getprop("/fdm/jsbsim/propulsion/total-fuel-lbs")*0.5144;		# fuel mass in tank in kg
 # getting old values
 	var OT = getprop("/fdm/jsbsim/aircraft/engine/OT-degC");
 	var FT = getprop("/fdm/jsbsim/aircraft/engine/FT-degC");
@@ -167,7 +167,9 @@ var calc_Temps = func() {
 	}
 	setprop("/fdm/jsbsim/aircraft/engine/OT-degC",OTnew);
 # calculating new fuel temperature
-	var FTnew = FT + 0.1*(OAT-FT)/FuelMass;					# factor 0.1 to be verified
+	var H = 0.00481 * FT + 1.7833;							# Jet-A1 fuel specific energy kJ/kg-K
+	var dE = 0.028 * (OAT - FT);							# energy loss kW
+	var FTnew = FT + dE * dt / (FuelMass * H);					# new temp due to energy loss to outside air
 	setprop("/fdm/jsbsim/aircraft/engine/FT-degC",FTnew);
 # loooping
 	settimer(calc_Temps,dt);

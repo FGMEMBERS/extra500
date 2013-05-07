@@ -24,7 +24,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             06.05.13
+      Date:             07.05.13
 -->
 
 	<fileheader>
@@ -652,6 +652,11 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		0.0025224	550	570	590	600	605	610	640	710	795
             </tableData>
       </table>
+    </function>
+
+    <function name="aircraft/engine/TOT-degC">
+       <description>Indicated TOT </description>
+	<property>aircraft/engine/TOTr-degC</property>
     </function>
 
     <function name="aircraft/engine/Delta-OT-degC">
