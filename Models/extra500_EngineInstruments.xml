@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             06.05.13
+      Date:             07.05.13
 
 -->
 
@@ -28,9 +28,10 @@
 
 <path>extra500_EngineInstruments.ac</path>
 
+<!--TRQ Needle-->
 <animation>
   <type>rotate</type>
-  <object-name>Needle.TRQ</object-name>
+  <object-name>EngineInstruments.TRQ.Needle</object-name>
   <property>/fdm/jsbsim/aircraft/engine/TRQ-perc</property>
   <interpolation>
             <entry>
@@ -44,14 +45,62 @@
         </interpolation>
   <axis>
   <x1-m>1</x1-m>
-  <y1-m>-0.02383</y1-m>
-  <z1-m>0.07613</z1-m>
+  <y1-m>-0.02391</y1-m>
+  <z1-m>0.07739</z1-m>
   <x2-m>-1</x2-m>
-  <y2-m>-0.02383</y2-m>
-  <z2-m>0.07613</z2-m>
+  <y2-m>-0.02391</y2-m>
+  <z2-m>0.07739</z2-m>
   </axis>
 </animation>
 
-
+<!--TRQ Digits-->
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.TRQ.000.1</object-name>
+  <property>/fdm/jsbsim/aircraft/engine/TRQ-perc</property>
+	<factor>-1</factor>
+	<step>.1</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.TRQ.001.0</object-name>
+  <property>/fdm/jsbsim/aircraft/engine/TRQ-perc</property>
+	<factor>-.1</factor>
+	<step>1</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.TRQ.010.0</object-name>
+  <property>/fdm/jsbsim/aircraft/engine/TRQ-perc</property>
+	<factor>-.01</factor>
+	<step>10</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.TRQ.100.0</object-name>
+  <property>/fdm/jsbsim/aircraft/engine/TRQ-perc</property>
+	<factor>-.001</factor>
+	<step>100</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
 </PropertyList>
 
