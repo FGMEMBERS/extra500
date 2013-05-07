@@ -52,7 +52,6 @@
   <z2-m>0.07739</z2-m>
   </axis>
 </animation>
-
 <!--TRQ Digits-->
 <animation>
 	<type>textranslate</type>
@@ -102,5 +101,85 @@
 		<z>0</z>
 	</axis>
 </animation>
+
+<!--N2 Needle-->
+<animation>
+  <type>rotate</type>
+  <object-name>EngineInstruments.N2.Needle</object-name>
+  <property>/engines/engine/thruster/rpm</property>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>-124</dep>
+            </entry>
+            <entry>
+                <ind>2500</ind>
+                <dep>124</dep>
+            </entry>
+        </interpolation>
+  <axis>
+  <x1-m>1</x1-m>
+  <y1-m>0.02319</y1-m>
+  <z1-m>0.02637</z1-m>
+  <x2-m>-1</x2-m>
+  <y2-m>0.02319</y2-m>
+  <z2-m>0.02637</z2-m>
+  </axis>
+</animation>
+<!--N2 Digits-->
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.N2.0001</object-name>
+  <property>/engines/engine/thruster/rpm</property>
+	<factor>-.1</factor>
+	<step>1</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.N2.0010</object-name>
+  <property>/engines/engine/thruster/rpm</property>
+	<factor>-.01</factor>
+	<step>10</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.N2.0100</object-name>
+  <property>/engines/engine/thruster/rpm</property>
+	<factor>-.001</factor>
+	<step>100</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.N2.1000</object-name>
+  <property>/engines/engine/thruster/rpm</property>
+	<factor>-.0001</factor>
+	<step>1000</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
+
+
+
+
+
+
 </PropertyList>
 
