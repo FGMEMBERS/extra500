@@ -840,6 +840,7 @@ var ElectricAlternator = {
 		m.Plus = ElectricConnector.new("+");
 		m.Minus = ElectricConnector.new("-");
 		m.Field = ElectricConnector.new("Field"); # Field to generate output
+		m.Battery = ElectricConnector.new("Battery");
 
 		m.nEngineRunning = props.globals.getNode("engines/engine[0]/running",1);
 		m.nN1			= props.globals.getNode("/engines/engine[0]/n1");
@@ -878,13 +879,36 @@ var ElectricAlternator = {
 		me.setAmpere(ampere);
 		
 	},
+	setAmpereUsage : func(ampere){
+		#global.fnAnnounce("debug",""~me.name~"\t\t ElectricBattery.setAmpereOutput("~ampere~"A) ... ");
+		
+		var simNow = systime();
+		
+		#ampere += me.ampere;
+		me.setAmpere(ampere);
+		
+		
+		var simElapsed = simNow - me.simTime;
+		me.simTime = simNow;
+		
+		var usedAs = ampere * simElapsed;
+		
+		me.usedAs += usedAs;
+				
+		me.loadLevel = (me.capacityAs + me.usedAs) / me.capacityAs;
+		
+		me.nUsedAs.setValue(me.usedAs);
+		me.nLoadLevel.setValue(me.loadLevel);
+		
+	},
 	update : func(timestamp){
 		
 		etd.print("--- Alternator.update() ...        ---");
 		
 		me.capacitorField.load(-1);
-		
-		if (me.nN1.getValue() > 58.0){
+		var N1 = me.nN1.getValue();
+		var ampere = 0;
+		if (N1 > 58.0){
 			if (me.capacitorField.value > 0){
 				
 				etd.print("-------------------------------------");
@@ -896,7 +920,23 @@ var ElectricAlternator = {
 				var GND = 0;
 				GND = me.Plus.applyVoltage(me.electron);
 				if (GND > 0){
-					me.setAmpereOutput(me.electron.ampere);
+					
+					# N1%      alt output A
+					# 67.4       4
+					# 94.3       20
+
+					if(N1 < 67.4){ 
+						ampere = 4.0;
+					}elsif(N1 > 94.3){
+						ampere = 20.0;
+					}else{
+						ampere = N1 * 0.594795539 - 36.0892193309;
+					}
+					me.setAmpere(me.electron.ampere);
+					
+					if (me.electron.ampere - ampere > 0){
+						
+					}
 				}
 			}else{
 				etd.print("--- No Field                      ---");
