@@ -17,7 +17,7 @@
 #      Date: April 29 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             07.05.13
+#      Date:             08.05.13
 #
 
 
@@ -36,10 +36,15 @@ var Engine = {
 		m.nThrottle		= props.globals.getNode("/controls/engines/engine[0]/throttle");
 		m.nIgnition		= props.globals.getNode("/controls/engines/engine[0]/ignition");
 		m.nOilPress		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/OP-psi");
+		m.nStarter		= props.globals.getNode("/controls/engines/engine[0]/starter");
+		m.nMotoring		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/motoring");
+		m.nSpoolup		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/spooling-up");
+		m.nSpooldown		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/spooling-down");
 		
 		
 		m._cutoffState		= m.nCutOff.getValue();
 		m._ignitionState 	= 0;
+		m._starterState 	= m.nStarter.getValue();
 		m.IgnitionPlus 		= Part.ElectricConnector.new("IgnitionPlus");
 		m.LowOilPress		= Part.ElectricConnector.new("LowOilPress");
 		m.LowPitch		= Part.ElectricConnector.new("LowPitch");
@@ -57,7 +62,11 @@ var Engine = {
 	simReset : func(){
 		me.nIgnition.setValue(me._ignitionState);
 		me._checkIgnitionCutoff();
-		me._ignitionState = 0;	
+		me._ignitionState = 0;
+		me._starterState = 0;
+		me.nMotoring.setValue(0);		
+		me.nSpoolup.setValue(0);		
+		me.nSpooldown.setValue(0);	
 	},
 	simUpdate : func(){
 		me.nIgnition.setValue(me._ignitionState);
@@ -124,6 +133,13 @@ var Engine = {
 			}
 		}
 	},
+	motoring : func(value = nil){
+		if ( (me._starterState == 1) and (me._cutoffState == 1) ) {
+			me.nMotoring.setValue(1);
+		}else{
+			me.nMotoring.setValue(0);
+		}
+	},
 	update : func(){
 		if(me.nN1.getValue() > 55.0){
 			me.nPropellerFeather.setValue(0);
@@ -142,6 +158,9 @@ var Engine = {
 		UI.register("Engine reverser on",	func{extra500.engine.reverser(1); } 	);
 		UI.register("Engine reverser off",	func{extra500.engine.reverser(0); } 	);
 
+		UI.register("Engine motoring2", 	func{extra500.engine.motoring(); } 	);
+		UI.register("Engine motoring2 on",	func{extra500.engine.motoring(1); } 	);
+		UI.register("Engine motoring2 off",	func{extra500.engine.motoring(0); } 	);
 	}
 };
 
