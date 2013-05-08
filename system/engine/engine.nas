@@ -16,7 +16,7 @@
 #      Authors: Dirk Dittmann
 #      Date: April 29 2013
 #
-#      Last change:      Eric van den Berg
+#      Last change:      Dirk Dittmann
 #      Date:             08.05.13
 #
 
@@ -59,6 +59,10 @@ var Engine = {
 		return m;
 		
 	},
+	#################################################
+	# called at the end from main simulation cycle 
+	# to reset the values back to default
+	#################################################
 	simReset : func(){
 		me.nIgnition.setValue(me._ignitionState);
 		me._checkIgnitionCutoff();
@@ -68,9 +72,17 @@ var Engine = {
 		me.nSpoolup.setValue(0);		
 		me.nSpooldown.setValue(0);	
 	},
+	#################################################
+	# called at the end from main simulation cycle 
+	# to update the property tree with the final value 
+	# to avoid jummping values while cycle running
+	#################################################
 	simUpdate : func(){
 		me.nIgnition.setValue(me._ignitionState);
 	},
+	#################################################
+	# the electric Power comes here
+	#################################################
 	applyVoltage : func(electron,name=""){ 
 		Part.etd.in("Engine",me.name,name,electron);
 		var GND = 0;
@@ -104,14 +116,6 @@ var Engine = {
 		Part.etd.out("Engine",me.name,name,electron);
 		return GND;
 	},
-	cutoff : func(value = nil){
-		if (value == nil){
-			me._cutoffState = me._cutoffState == 0 ? 1 : 0 ;
-		}else{
-			me._cutoffState = value == 0 ? 0 : 1 ;
-		}
-		me._checkIgnitionCutoff();
-	},
 	_checkIgnitionCutoff : func(){
 		if (me.nIsRunning.getValue()){
 			me.nCutOff.setValue(me._cutoffState);
@@ -124,7 +128,15 @@ var Engine = {
 		}
 
 	},
-	reverser : func(value = nil){
+	onCutoffClick : func(value = nil){
+		if (value == nil){
+			me._cutoffState = me._cutoffState == 0 ? 1 : 0 ;
+		}else{
+			me._cutoffState = value == 0 ? 0 : 1 ;
+		}
+		me._checkIgnitionCutoff();
+	},
+	onReverserClick : func(value = nil){
 		if (me.nThrottle.getValue() < 0.01) {
 			if (value == nil){
 				me.nReverser.setValue(!me.nReverser.getValue());
@@ -140,6 +152,10 @@ var Engine = {
 			me.nMotoring.setValue(0);
 		}
 	},
+	#################################################
+	# called from main simulation cycle in ~ 10Hz	
+	# all work that the engine has to do starts here
+	#################################################
 	update : func(){
 		if(me.nN1.getValue() > 55.0){
 			me.nPropellerFeather.setValue(0);
@@ -149,14 +165,19 @@ var Engine = {
 		
 		
 	},
+	#################################################
+	# register User events 	
+	# so all click able surfaces dialogs keyboard joystick bindings can execute 
+	# UI.click("registered string");
+	#################################################
 	initUI : func(){
-		UI.register("Engine cutoff", 		func{extra500.engine.cutoff(); } 	);
-		UI.register("Engine cutoff on",		func{extra500.engine.cutoff(1); } 	);
-		UI.register("Engine cutoff off",	func{extra500.engine.cutoff(0); } 	);
+		UI.register("Engine cutoff", 		func{extra500.engine.onCutoffClick(); } 	);
+		UI.register("Engine cutoff on",		func{extra500.engine.onCutoffClick(1); } 	);
+		UI.register("Engine cutoff off",	func{extra500.engine.onCutoffClick(0); } 	);
 		
-		UI.register("Engine reverser", 		func{extra500.engine.reverser(); } 	);
-		UI.register("Engine reverser on",	func{extra500.engine.reverser(1); } 	);
-		UI.register("Engine reverser off",	func{extra500.engine.reverser(0); } 	);
+		UI.register("Engine reverser", 		func{extra500.engine.onReverserClick(); } 	);
+		UI.register("Engine reverser on",	func{extra500.engine.onReverserClick(1); } 	);
+		UI.register("Engine reverser off",	func{extra500.engine.onReverserClick(0); } 	);
 
 		UI.register("Engine motoring2", 	func{extra500.engine.motoring(); } 	);
 		UI.register("Engine motoring2 on",	func{extra500.engine.motoring(1); } 	);
