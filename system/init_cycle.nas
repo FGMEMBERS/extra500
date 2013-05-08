@@ -17,7 +17,7 @@
 #      Date: April 07 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             29.04.13
+#      Date:             08.05.13
 #
 
 var nCycleTimeUsed = props.globals.getNode("extra500/CycleTimeUsed",1);
@@ -35,6 +35,7 @@ var simulation_cycle = func(){
 	extra500.generator.update(start);
 	extra500.alternator.update(start);
 	extra500.battery.update(start);
+	extra500.adjustAdditionalElectricLoads();
 	
 	extra500.oFuelSystem.update();
 	extra500.flapSystem.update();

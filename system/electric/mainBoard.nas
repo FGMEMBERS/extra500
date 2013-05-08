@@ -17,7 +17,7 @@
 #      Date: April 07 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             26.04.13
+#      Date:             08.05.13
 #
  
 
@@ -260,7 +260,15 @@ var generator = Part.ElectricGenerator.new(props.globals.getNode("extra500/Gener
 generator.setPower(24.0,24000.0);
 
 var alternator = Part.ElectricAlternator.new(props.globals.getNode("extra500/Alternator",1),"Alternator");
+alternator.electricConfig(24.0,26.0);
 
 var battery = Part.ElectricBattery.new(props.globals.getNode("extra500/Battery",1),"Battery");
+battery.electricConfig(15.3,24.3);
 
-
+var adjustAdditionalElectricLoads = func(){
+	if (alternator.surplusAmpere < 0){
+		battery.setAmpereUsage(alternator.surplusAmpere);
+		mainBoard.batteryShunt.indicatedAmpere += alternator.surplusAmpere;
+		mainBoard.alternatorShunt.indicatedAmpere -= alternator.surplusAmpere;
+	}
+}

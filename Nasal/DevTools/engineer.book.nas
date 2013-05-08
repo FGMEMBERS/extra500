@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: April 16 2013
 #
-#      Last change:      Eric van den Berg
-#      Date:             06.05.13
+#      Last change:      Dirk Dittmann
+#      Date:             08.05.13
 #
  
 var node = props.globals.getNode("/extra500/EngineerScreen",1);
@@ -63,20 +63,35 @@ engineerScreen.add(electricPage);
 	# 	
 	# electricPage.add(display);
 
-	display = Display.new(10,-200);
+	display = Display.new(10,-50);
 		display.title = "Battery";
 		display.font = "FIXED_9x15";
 		display.fg = [1.0, 1.0, 1.0, 1.0];
 		display.bg = [0.5, 0.5, 0.5, 0.85];
 		display.width = 270;
-		display.height = 90;
+		display.height = 150;
 		
 		display.addNamed("used    %.2f As", props.globals.getNode("/extra500/Battery/usedAs") );
 		display.addNamed("level   %.2f %%", (props.globals.getNode("/extra500/Battery/loadLevel")) );
+		display.addNamed("Volt    %.2f V", (props.globals.getNode("/extra500/Battery/electric/volt")) );
+		
+	electricPage.add(display);
+	
+	display = Display.new(10,-250);
+		display.title = "Alternator";
+		display.font = "FIXED_9x15";
+		display.fg = [1.0, 1.0, 1.0, 1.0];
+		display.bg = [0.5, 0.5, 0.5, 0.85];
+		display.width = 270;
+		display.height = 150;
+		
+		display.addNasal("out       %.2f V", func{extra500.alternator.electron.volt;} );
+		display.addNasal("load      %.2f A", func{extra500.alternator.electron.ampere;} );
+		display.addNasal("surplus   %.2f A", func{extra500.alternator.surplusAmpere;} );
 		
 	electricPage.add(display);
 
-	display = Display.new(10,400);
+	display = Display.new(10,350);
 
 		display.title = "Main Relais";
 		display.font = "FIXED_9x15";

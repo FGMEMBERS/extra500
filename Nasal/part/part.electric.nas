@@ -17,7 +17,7 @@
 #      Date: April 07 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             30.04.13
+#      Date:             08.05.13
 #
 
 var ElectricTreeDebugger = {
@@ -269,12 +269,12 @@ var ElectricShunt = {
 		]};
 		
 		#m.ampereUsed = 0.0;
-		m.ampereIndicated = 0.0;
-		m.voltIndicated = 0.0;
+		m.indicatedAmpere = 0.0;
+		m.indicatedVolt = 0.0;
 		
 		#m.nAmpereUsed = m.nFuse.initNode("ampereUsed",m.ampereUsed,"DOUBLE");
-		m.nAmpereIndicated = nRoot.initNode("ampereIndicated",0.0,"DOUBLE");
-		m.nVoltIndicated = nRoot.initNode("voltIndicated",0.0,"DOUBLE");
+		m.nIndicatedAmpere = nRoot.initNode("indicatedAmpere",0.0,"DOUBLE");
+		m.nIndicatedVolt = nRoot.initNode("indicatedVolt",0.0,"DOUBLE");
 		
 		
 		m.Plus = ElectricConnector.new("+");
@@ -292,18 +292,18 @@ var ElectricShunt = {
 		etd.in("Shunt",me.name,name,electron);
 		var GND = 0;
 		me.setVolt(electron.volt);
-		me.voltIndicated = electron.volt;
+		me.indicatedVolt = electron.volt;
 		
 		if ( electron != nil){
 			if (name == "+"){
 				GND = me.Minus.applyVoltage(electron);
-				me.ampereIndicated = electron.ampere;
-				me.voltIndicated = electron.volt;
+				me.indicatedAmpere = electron.ampere;
+				me.indicatedVolt = electron.volt;
 				
 			}else if(name == "-"){
 				GND = me.Plus.applyVoltage(electron);
-				me.ampereIndicated = -electron.ampere;
-				me.voltIndicated = electron.volt;
+				me.indicatedAmpere = -electron.ampere;
+				me.indicatedVolt = electron.volt;
 			}
 		}
 		me.setAmpere(electron.ampere);
@@ -313,17 +313,17 @@ var ElectricShunt = {
 	},
 	simUpdate : func(){
 		me.nState.setValue(me.state);
-		me.nAmpereIndicated.setValue(me.ampereIndicated);
-		me.nVoltIndicated.setValue(me.voltIndicated);
+		me.nIndicatedAmpere.setValue(me.indicatedAmpere);
+		me.nIndicatedVolt.setValue(me.indicatedVolt);
 	},
 	simReset : func(){
-		me.nAmpereIndicated.setValue(me.ampereIndicated);
-		me.nVoltIndicated.setValue(me.voltIndicated);
+		me.nIndicatedAmpere.setValue(me.indicatedAmpere);
+		me.nIndicatedVolt.setValue(me.indicatedVolt);
 		me.nState.setValue(me.state);
 		
 		me.state = me.default;
-		me.voltIndicated = 0.0;
-		me.ampereIndicated = 0.0;
+		me.indicatedVolt = 0.0;
+		me.indicatedAmpere = 0.0;
 	},
 	
 	
@@ -474,6 +474,7 @@ var ElectricBattery = {
 		m.nUsedAs = nRoot.initNode("usedAs",m.usedAs,"DOUBLE");
 		m.nLoadLevel = nRoot.initNode("loadLevel",m.loadLevel,"DOUBLE");
 		m.simTime = systime();
+		m.simTimeDelta = 0.0;
 		
 		m.electron = Electron.new();
 		
@@ -490,10 +491,12 @@ var ElectricBattery = {
 		var GND = 0;
 		
 		if (electron != nil){
-			
+			me._setSimTimeDelta(electron.timestamp);
 			if (name == "+"){
 				etd.print("Battery loading ...");
-				electron.ampere = 48.0 * (1-me.loadLevel); # ### TODO : real loading
+				# ### TODO : real loading
+				#electron.ampere = 48.0 * (1-me.loadLevel); 
+				electron.ampere = 48.0 * (1 - ((me.volt - me.voltMin) / (electron.volt - me.voltMin)) ); 
 				me.setAmpereUsage(electron.ampere);
 				GND = 1;
 			}
@@ -503,19 +506,20 @@ var ElectricBattery = {
 		etd.out("Battery",me.name,name,electron);
 		return GND;
 	},
+	_setSimTimeDelta : func(timestamp){
+		if (me.electron.timestamp != timestamp){
+			var simNow = systime();
+			me.simTimeDelta = simNow - me.simTime;
+			me.simTime = simNow;
+		}
+	},
 	setAmpereUsage : func(ampere){
 		#global.fnAnnounce("debug",""~me.name~"\t\t ElectricBattery.setAmpereOutput("~ampere~"A) ... ");
-		
-		var simNow = systime();
-		
+				
 		#ampere += me.ampere;
 		me.setAmpere(ampere);
-		
-		
-		var simElapsed = simNow - me.simTime;
-		me.simTime = simNow;
-		
-		var usedAs = ampere * simElapsed;
+			
+		var usedAs = ampere * me.simTimeDelta;
 		
 		me.usedAs += usedAs;
 				
@@ -531,14 +535,20 @@ var ElectricBattery = {
 		etd.print("-------------------------------------");
 		#etd.echo("Battery.update() ...");
 		
-		me.electron.volt = 24.0; # ### TODO real voltage based on capacity
+		#me.electron.volt = 24.0; # ### TODO real voltage based on capacity
+		me.volt = -(1/me.loadLevel) + 25.3;
+		me.setVolt(me.volt);
+		
+		me.electron.volt = me.volt;
 		me.electron.resistor = 0.0;
 		me.electron.ampere = 0.0;
 		me.electron.timestamp = timestamp;
 		
+		
 		var GND = 0;
 		GND = me.Plus.applyVoltage(me.electron);
 		if (GND > 0){
+			me._setSimTimeDelta(timestamp);
 			me.setAmpereUsage(-me.electron.ampere);
 		}
 		etd.print("-------------------------------------");
@@ -831,10 +841,15 @@ var ElectricAlternator = {
 			ElectricAble.new(nRoot,name)
 		]};
 		
-		m.simTime = systime();
 		#m.capacitor = Capacitor.new(3);
 		
 		m.electron = Electron.new();
+		m.electron.volt = 26.0;
+		m.availableAmpere = 0.0;
+		m.surplusAmpere = 0.0;
+		
+		m.battery = nil;
+				
 		m.capacitorField = Capacitor.new(3);
 		
 		m.Plus = ElectricConnector.new("+");
@@ -854,69 +869,39 @@ var ElectricAlternator = {
 
 	},
 	applyVoltage : func(electron,name=""){ 
-		etd.in("Generator",me.name,name,electron);
+		etd.in("Alternator",me.name,name,electron);
 		var GND = 0;
 		
 		if (electron != nil){
 			me.setVolt(electron.volt);
-			electron.resistor += me.resistor;# * me.qos
+			electron.resistor += 4700.0;#me.resistor;# * me.qos
 			
 			if (name == "Field"){
-				GND = me.Minus.applyVoltage(me.electron);
+				GND = me.Minus.applyVoltage(electron);
 				me.capacitorField.load(10);
 			}
 			
 			me.setAmpere(electron.ampere);
 		}
-		etd.out("Generator",me.name,name,electron);
+		etd.out("Alternator",me.name,name,electron);
 		return GND;
-	},
-	setAmpereOutput : func(ampere){
-		#global.fnAnnounce("debug",""~me.name~"\t\t ElectricBattery.setAmpereOutput("~ampere~"A) ... ");
-		
-		#var simNow = systime();
-
-		me.setAmpere(ampere);
-		
-	},
-	setAmpereUsage : func(ampere){
-		#global.fnAnnounce("debug",""~me.name~"\t\t ElectricBattery.setAmpereOutput("~ampere~"A) ... ");
-		
-		var simNow = systime();
-		
-		#ampere += me.ampere;
-		me.setAmpere(ampere);
-		
-		
-		var simElapsed = simNow - me.simTime;
-		me.simTime = simNow;
-		
-		var usedAs = ampere * simElapsed;
-		
-		me.usedAs += usedAs;
-				
-		me.loadLevel = (me.capacityAs + me.usedAs) / me.capacityAs;
-		
-		me.nUsedAs.setValue(me.usedAs);
-		me.nLoadLevel.setValue(me.loadLevel);
-		
 	},
 	update : func(timestamp){
 		
 		etd.print("--- Alternator.update() ...        ---");
 		
 		me.capacitorField.load(-1);
+		me.surplusAmpere = 0.0;
 		var N1 = me.nN1.getValue();
 		var ampere = 0;
 		if (N1 > 58.0){
 			if (me.capacitorField.value > 0){
 				
 				etd.print("-------------------------------------");
-				me.electron.volt = 26.0;
+				
+				me.electron.timestamp = timestamp;
 				me.electron.resistor = 0.0;
 				me.electron.ampere = 0.0;
-				me.electron.timestamp = timestamp;
-				
 				var GND = 0;
 				GND = me.Plus.applyVoltage(me.electron);
 				if (GND > 0){
@@ -926,20 +911,29 @@ var ElectricAlternator = {
 					# 94.3       20
 
 					if(N1 < 67.4){ 
-						ampere = 4.0;
+						me.availableAmpere = 4.0;
 					}elsif(N1 > 94.3){
-						ampere = 20.0;
+						me.availableAmpere = 20.0;
 					}else{
-						ampere = N1 * 0.594795539 - 36.0892193309;
+						me.availableAmpere = N1 * 0.594795539 - 36.0892193309;
 					}
-					me.setAmpere(me.electron.ampere);
 					
-					if (me.electron.ampere - ampere > 0){
-						
+					me.surplusAmpere = me.availableAmpere - me.electron.ampere;
+										
+					me.electron.volt += me.surplusAmpere * 0.1;
+					
+					if (me.electron.volt < me.voltMin){
+						me.electron.volt = me.voltMin;
+					}elsif (me.electron.volt > me.voltMax){
+						me.electron.volt = me.voltMax;
 					}
+					
+					
+					me.setAmpere(me.electron.ampere);
 				}
 			}else{
 				etd.print("--- No Field                      ---");
+				
 			}
 		}else{
 			etd.print("--- Engine not running            ---");
