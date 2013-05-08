@@ -228,7 +228,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.N1.100.0</object-name>
-  <property>/fdm/jsbsim/aircraft/engine/TRQ-perc</property>
+  <property>/fdm/jsbsim/propulsion/engine/n1</property>
 	<factor>-.001</factor>
 	<step>100</step>
 	<axis>
