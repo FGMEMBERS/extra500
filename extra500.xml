@@ -24,7 +24,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             07.05.13
+      Date:             08.05.13
 -->
 
 	<fileheader>
@@ -682,10 +682,10 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	 	<sum>	
 			<property>aircraft/engine/OP-maxsetting-psi</property>
 			<value>-125</value>
-       		<table>
-            		<independentVar lookup="row">propulsion/engine/n1</independentVar>
+       			<table>
+            			<independentVar lookup="row">propulsion/engine/n1</independentVar>
 				<independentVar lookup="column">aircraft/engine/OT-degC</independentVar>	<!-- oil pressure dependence on oil temperature-->
-            		<tableData>
+            			<tableData>
 						0	25	82
 					0	0	0	0
 					12	0	0	0
@@ -700,9 +700,35 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 					90	154	153	124
 					100	155	154	125
 					110	156	155	125
-            		</tableData>
-      		</table>
+            			</tableData>
+      			</table>
 		</sum>
+    </function>
+
+    <function name="aircraft/engine/FP-psi">
+       <description>Indicated Fuel Pressure</description>
+	 	<product>
+			<max>	
+				<property>aircraft/fuel/fuel-pump1</property>
+				<property>aircraft/fuel/fuel-pump2</property>
+			</max>
+			<table>
+            			<independentVar lookup="row">atmosphere/pressure-altitude</independentVar>
+				<independentVar lookup="column">aircraft/engine/FT-degC</independentVar>	
+            			<tableData>
+						-18	0	38	
+					-1000	22	21.5	21
+					9000	21	21	20.5
+					17500	21	20.5	20
+					20100	20.5	20	19.5
+					22000	20.5	19.5	19
+					22500	20.5	19	18.5
+					23100	20	18.5	18
+					23500	19	18	17.5
+					25000	18	16	15.5
+            			</tableData>
+      			</table>
+		</product>
     </function>
 
 
@@ -713,7 +739,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       <table>
 	      <independentVar lookup="row">velocities/mach</independentVar>
 		<tableData>
-		      0   11.01
+		      	0   11.01
 			0.4  11.032
 		</tableData>
 	</table>

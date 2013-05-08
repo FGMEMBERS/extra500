@@ -694,6 +694,10 @@ JSBSim Extra Aircraft - Extra 500.
 				<spooling-up>0</spooling-up>
 				<spooling-down>0</spooling-down>
 			</engine>
+			<fuel>
+				<fuel-pump1>0</fuel-pump1>				<!--dummy value -->
+				<fuel-pump2>0</fuel-pump2>				<!--dummy value -->
+			</fuel>
             </aircraft>
       </jsbsim>
  </fdm>
