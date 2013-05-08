@@ -91,14 +91,14 @@ engineerScreen.add(electricPage);
 		
 	electricPage.add(display);
 
-	display = Display.new(10,350);
+	display = Display.new(10,50);
 
 		display.title = "Main Relais";
 		display.font = "FIXED_9x15";
 		display.fg = [1.0, 1.0, 1.0, 1.0];
 		display.bg = [0.5, 0.5, 0.5, 0.85];
 		display.width = 270;
-		display.height = 300;
+		display.height = 400;
 		
 		display.add_Node("Battery      ", props.globals.getNode("/extra500/mainBoard/Relais/BatteryRelais/state") );
 		display.add_Node("DayNight     ", props.globals.getNode("/extra500/mainBoard/Relais/DayNightRelais/state") );
