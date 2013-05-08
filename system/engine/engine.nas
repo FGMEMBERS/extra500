@@ -211,6 +211,10 @@ var calc_Temps = func() {
 	var dE = 0.028 * (OAT - FT);							# energy loss kW
 	var FTnew = FT + dE * dt / (FuelMass * H);					# new temp due to energy loss to outside air
 	setprop("/fdm/jsbsim/aircraft/engine/FT-degC",FTnew);
+#
+# setting aliases for fuel pumps
+	setprop("/fdm/jsbsim/aircraft/fuel/fuel-pump1",getprop("extra500/Fuel/FuelPump1/state") or 0);
+	setprop("/fdm/jsbsim/aircraft/fuel/fuel-pump2",getprop("extra500/Fuel/FuelPump2/state") or 0);
 # loooping
 	settimer(calc_Temps,dt);
 }
