@@ -1742,6 +1742,13 @@ var ElectricVoltSensor = {
 			ElectricAble.new(nRoot,name)
 		]};
 		me.resistor = 18800;
+		
+		m.Plus = ElectricConnector.new("+");
+		m.Minus = ElectricConnector.new("-");
+						
+		m.Plus.solder(m);
+		m.Minus.solder(m);
+				
 		append(aListSimStateAble,m);
 		return m;
 

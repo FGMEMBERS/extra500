@@ -20,3 +20,23 @@
 #      Date:             09.05.13
 #
 
+var DigitalInstrumentPackage = {
+	new : func(){
+				
+		var m = {parents:[
+			DigitalInstrumentPackage,
+		]};
+		
+		m.nPanel = props.globals.getNode("extra500/Instrument/DIP",1);
+		
+		m.VoltMonitor = Part.ElectricVoltSensor.new(m.nPanel.initNode("VoltMonitor"),"Volt Monitor");
+
+		
+		return m;
+
+	},
+
+	
+};
+
+var digitalInstrumentPackage = DigitalInstrumentPackage.new();
