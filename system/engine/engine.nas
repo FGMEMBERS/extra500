@@ -42,6 +42,10 @@ var Engine = {
 		m.nSpoolup		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/spooling-up");
 		m.nSpooldown		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/spooling-down");
 		
+		m.n1old = 0.0;
+		m.n1 = 0.0;
+		m.Starter = 0.0;
+		m.isRunning = 0.0;
 		
 		m._cutoffState		= m.nCutOff.getValue();
 		m._ignitionState 	= 0;
@@ -148,40 +152,40 @@ var Engine = {
 	# all work that the engine has to do starts here
 	#################################################
 	update : func(){
-		var n1old = me.nN1old.getValue();
-		var n1 = me.nN1.getValue();
-		var Starter = me.nStarter.getValue();
-		var isRunning = me.nIsRunning.getValue();
+		me.n1old = me.nN1old.getValue();
+		me.n1 = me.nN1.getValue();
+		me.Starter = me.nStarter.getValue();
+		me.isRunning = me.nIsRunning.getValue();
 
 # setting propeller feathering property, if n1 < 55%, feathered
-		if(n1 > 55.0){
+		if(me.n1 > 55.0){
 			me.nPropellerFeather.setValue(0);
 		}else{
 			me.nPropellerFeather.setValue(1);
 		}
 
 # setting motoring property: starter on, but cutoff also on (no fuel,no ignition)	
-		if ( (Starter == 1) and (me._cutoffState == 1) ) {
+		if ( (me.Starter == 1) and (me._cutoffState == 1) ) {
 			me.nMotoring.setValue(1);
 		}else{
 			me.nMotoring.setValue(0);
 		}
 
 # setting spoolup property: starter on, no cutoff, but engine not running (yet) 	
-		if ( (Starter == 1) and (me._cutoffState == 0) and (isRunning == 0)  ) {
+		if ( (me.Starter == 1) and (me._cutoffState == 0) and (me.isRunning == 0)  ) {
 			me.nSpoolup.setValue(1);
 		}else{
 			me.nSpoolup.setValue(0);
 		}
 
 # setting spooldown property: starter off, not running, and n1 > 0.1 	
-		if ( (Starter == 0) and (isRunning == 0) and (n1 > 0.1) and (n1 < n1old ) ) {
+		if ( (me.Starter == 0) and (me.isRunning == 0) and (me.n1 > 0.1) and (me.n1 < me.n1old ) ) {
 			me.nSpooldown.setValue(1);
 		}else{
 			me.nSpooldown.setValue(0);
 		}
 
-		me.nN1old.setValue(n1);
+		me.nN1old.setValue(me.n1);
 	},
 	#################################################
 	# register User events 	
@@ -209,13 +213,24 @@ engine.setPower(24.0,5.0);
 var calcTemps = {
 	new : func{
 		var m = {parents:[calcTemps]};
-		m.ndt		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/dt-indication",1);
+		m.ndt		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/dt-indication");
 		m.nOAT		= props.globals.getNode("/environment/temperature-degc");
 		m.nFuelMass	= props.globals.getNode("/fdm/jsbsim/propulsion/total-fuel-lbs");
 		m.nOT		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/OT-degC");
 		m.nFT		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/FT-degC");
 		m.nTOT		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/TOT-degC");
 		m.nDeltaOT	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/Delta-OT-degC");
+
+		m.dt = 0.0;
+		m.OAT = 0.0;
+		m.Fuelmass = 0.0;
+		m.OT = 0.0;
+		m.FT = 0.0;
+		m.TOT = 0.0;
+		m.OTnew = 0.0;
+		m.H = 0.0;
+		m.dE = 0.0;
+		m.FTnew = 0.0;
 
 		return m;
 		
@@ -224,33 +239,32 @@ var calcTemps = {
 
 	update : func(){
 			# getting common values
-		var dt = me.ndt.getValue();
-print(dt);
-		var OAT = me.nOAT.getValue();
-		var FuelMass = me.nFuelMass.getValue() * 0.5144;				# fuel mass in tank in kg
+		me.dt = me.ndt.getValue();
+		me.OAT = me.nOAT.getValue();
+		me.FuelMass = me.nFuelMass.getValue() * global.CONST.LBM2KG;				# fuel mass in tank in kg
+
 			# getting old values
-		var OT = me.nOT.getValue();
-		var FT = me.nFT.getValue();
-		var TOT = me.nTOT.getValue();
+		me.OT = me.nOT.getValue();
+		me.FT = me.nFT.getValue();
+		me.TOT = me.nTOT.getValue();
+
 			# calculating new oil temperature
-		var OTnew = OT + me.nDeltaOT.getValue();
-		if (OTnew<OAT) {
-			OTnew = OAT;
+		me.OTnew = me.OT + me.nDeltaOT.getValue();
+		if (me.OTnew < me.OAT) {
+			me.OTnew = me.OAT;
 		}
-		me.nOT.setValue( OTnew );
-#		setprop("/fdm/jsbsim/aircraft/engine/OT-degC",OTnew);
+		me.nOT.setValue( me.OTnew );
+
 			# calculating new fuel temperature
-		var H = 0.00481 * FT + 1.7833;							# Jet-A1 fuel specific energy kJ/kg-K
-		var dE = 0.028 * (OAT - FT);							# energy loss kW
-		var FTnew = FT + dE * dt / (FuelMass * H);					# new temp due to energy loss to outside air
-		me.nFT.setValue( FTnew );
-#		setprop("/fdm/jsbsim/aircraft/engine/FT-degC",FTnew);
+		me.H = 0.00481 * me.FT + 1.7833;							# Jet-A1 fuel specific energy kJ/kg-K
+		me.dE = 0.028 * (me.OAT - me.FT);							# energy loss kW
+		me.FTnew = me.FT + me.dE * me.dt / (me.FuelMass * me.H);				# new temp due to energy loss to outside air
+		me.nFT.setValue( me.FTnew );
 #
 # setting aliases for fuel pumps
 		setprop("/fdm/jsbsim/aircraft/fuel/fuel-pump1",getprop("extra500/Fuel/FuelPump1/state") or 0);
 		setprop("/fdm/jsbsim/aircraft/fuel/fuel-pump2",getprop("extra500/Fuel/FuelPump2/state") or 0);
-			# loooping
-		settimer(oCalcTemps.update(),dt);
+
 	}
 };
 
@@ -263,11 +277,17 @@ var init_Temps = func{
 		setprop("/fdm/jsbsim/aircraft/engine/OT-degC",OAT); 		
 		setprop("/fdm/jsbsim/aircraft/engine/FT-degC",OAT); 
 		setprop("/fdm/jsbsim/aircraft/engine/TOTnr-degC",OAT);
+		loop();
 		
-		oCalcTemps.update();
 	} else {
 		settimer(init_Temps, 1);						# timer gets destroyed when sim-time-sec >1sec
 	}
+}
+
+var loop =func{
+	var dt = getprop("/fdm/jsbsim/aircraft/engine/dt-indication");
+	oCalcTemps.update();
+	settimer(loop,dt);
 }
 
 setlistener("/sim/signals/fdm-initialized", func {

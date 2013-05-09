@@ -18,7 +18,7 @@
       Authors: Thomas Grossberger and Dirk Dittmann
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
+      Last change:      Eric van den Berg
       Date:             09.05.13
 
 ************************************************************************
@@ -636,6 +636,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<RAD2DEG type="double">57.2957795131</RAD2DEG>
 		<RANKINE2KELVIN type="double">0.555555555</RANKINE2KELVIN>
 		<KELVIN2RANKINE type="double">1.8</KELVIN2RANKINE>
+		<LBM2KG type="double">0.5144</LBM2KG>
 	</const>
  </extra500>
 

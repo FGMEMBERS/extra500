@@ -24,7 +24,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             08.05.13
+      Date:             09.05.13
 -->
 
 	<fileheader>
@@ -634,7 +634,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<pow>
 				<max>
 					<property>propulsion/engine/propeller-rpm</property>
-					<value>100</value>
+					<value>10</value>
 				</max>
 				<value>-1</value>
 			</pow>
