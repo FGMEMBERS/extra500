@@ -382,7 +382,7 @@
   <z2-m>-0.02464</z2-m>
   </axis>
 </animation>
-<!--OP Digits-->
+<!--OT Digits-->
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.OT.001</object-name>
@@ -482,7 +482,17 @@
 			<y>0</y>
 			<z>0</z>
 		</axis>
-	</animation>
+</animation>
+	<animation>
+	<type>select</type>
+	<object-name>EngineInstruments.GEN.010</object-name>
+	<condition>
+	  <greater-than-equals>
+	    <property>extra500/mainBoard/GeneratorShunt/indicatedAmpere</property>
+	    <value>10</value>
+	  </greater-than-equals>
+	</condition>
+</animation>
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.GEN.010</object-name>
