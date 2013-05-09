@@ -641,6 +641,7 @@ var ElectricGenerator = {
 		
 		m.electron = Electron.new();
 		m.capStarter = 0;
+		m._N1 = 0.0;
 		
 		m.Plus = ElectricConnector.new("+");
 		m.Minus = ElectricConnector.new("-");
@@ -697,19 +698,42 @@ var ElectricGenerator = {
 		me.setAmpere(ampere);
 		
 	},
+	generateVolt : func(){
+		
+		# N1
+		# 40.0 	 24.0
+		# 42.0	 28.0
+		#me.electron.volt = 2.0 * me._N1 - 56.0 ; 	
+		# N1
+		# 30.0 	 24.0
+		# 35.0	 28.0
+		me.electron.volt = 0.8 * me._N1 ;
+				
+		if (me.electron.volt < 0.0){ 
+			me.electron.volt = 0.0;
+		}elsif(me.electron.volt > 28.0){
+			me.electron.volt = 28.0;
+		}
+	},
 	update : func(timestamp){
 		
 		etd.print("--- Generator.update() ...        ---");
 		
 		me.capacitorStarter(-1);
 		
-		if (me.nN1.getValue() > 58.0){
+		me._N1 = me.nN1.getValue();
+		
+		if (me._N1 > 30.0){
 			#etd.echo("Battery.update() ...");
 			#me.nControlStarter.setValue(0);
 			#me.nControlGenerator.setValue(0);
 			
 			etd.print("-------------------------------------");
-			me.electron.volt = 28.0;
+			
+			
+			
+			me.generateVolt();
+			#me.electron.volt = 28.0;
 			me.electron.resistor = 0.0;
 			me.electron.ampere = 0.0;
 			me.electron.timestamp = timestamp;
