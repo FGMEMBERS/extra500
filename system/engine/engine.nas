@@ -221,6 +221,11 @@ var calcTemps = {
 		m.nTOT		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/TOT-degC");
 		m.nDeltaOT	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/Delta-OT-degC");
 
+		m.nPump1	= props.globals.getNode("/extra500/Fuel/FuelPump1/state");
+		m.nPump2	= props.globals.getNode("/extra500/Fuel/FuelPump2/state");
+		m.nNewPump1	= props.globals.getNode("/fdm/jsbsim/aircraft/fuel/fuel-pump1");
+		m.nNewPump2	= props.globals.getNode("/fdm/jsbsim/aircraft/fuel/fuel-pump2");
+
 		m.dt = 0.0;
 		m.OAT = 0.0;
 		m.Fuelmass = 0.0;
@@ -262,8 +267,8 @@ var calcTemps = {
 		me.nFT.setValue( me.FTnew );
 #
 # setting aliases for fuel pumps
-		setprop("/fdm/jsbsim/aircraft/fuel/fuel-pump1",getprop("extra500/Fuel/FuelPump1/state") or 0);
-		setprop("/fdm/jsbsim/aircraft/fuel/fuel-pump2",getprop("extra500/Fuel/FuelPump2/state") or 0);
+		me.nNewPump1.setValue( me.nPump1.getValue() );
+		me.nNewPump2.setValue( me.nPump2.getValue() );
 
 	}
 };
