@@ -386,7 +386,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.OT.001</object-name>
-  <property>/fdm/jsbsim/aircraft/engine/OT-degC</property>
+	<property>/fdm/jsbsim/aircraft/engine/OT-degC</property>
 	<factor>-0.1</factor>
 	<step>1</step>
 	<axis>
@@ -398,7 +398,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.OT.010</object-name>
-  <property>/fdm/jsbsim/aircraft/engine/OT-degC</property>
+	<property>/fdm/jsbsim/aircraft/engine/OT-degC</property>
 	<factor>-0.01</factor>
 	<step>10</step>
 	<axis>
@@ -410,7 +410,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.OT.100</object-name>
-  <property>/fdm/jsbsim/aircraft/engine/OT-degC</property>
+	<property>/fdm/jsbsim/aircraft/engine/OT-degC</property>
 	<factor>-0.001</factor>
 	<step>100</step>
 	<axis>
@@ -421,130 +421,318 @@
 </animation>
 
 
-<!--VDC todo-->
-<!--property: /extra500/mainBoard/AlternatorShunt/indicatedVolt-->
-	<!-- object-names
-		EngineInstruments.VDC.00.1
-		EngineInstruments.VDC.01.0
-		EngineInstruments.VDC.10.0
-	-->
+<!--VDC -->
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.VDC.00.1</object-name>
+		<property>extra500/Instrument/DIP/VoltMonitor/state</property>
+		<factor>-0.1</factor>
+		<step>0.1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.VDC.01.0</object-name>
+		<property>extra500/Instrument/DIP/VoltMonitor/state</property>
+		<factor>-0.1</factor>
+		<step>1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.VDC.10.0</object-name>
+		<property>extra500/Instrument/DIP/VoltMonitor/state</property>
+		<factor>-0.1</factor>
+		<step>10</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
 	
-<!--AMPS GEN todo-->
-<!--property: /extra500/mainBoard/GeneratorShunt/indicatedAmpere-->
-	<!-- object-names
-	EngineInstruments.GEN.001
-	EngineInstruments.GEN.010
-	EngineInstruments.GEN.100
-	-->
+<!-- GEN AMPS -->
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.GEN.001</object-name>
+		<property>extra500/mainBoard/GeneratorShunt/indicatedAmpere</property>
+		<factor>-0.1</factor>
+		<step>1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.GEN.010</object-name>
+		<property>extra500/mainBoard/GeneratorShunt/indicatedAmpere</property>
+		<factor>-0.1</factor>
+		<step>10</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.GEN.100</object-name>
+		<property>extra500/mainBoard/GeneratorShunt/indicatedAmpere</property>
+		<factor>-0.1</factor>
+		<step>100</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
 
-<!--AMPS BAT todo-->
-<!--property:/extra500/mainBoard/BatteryShunt/indicatedAmpere-->
-	<!-- object-names
-	EngineInstruments.BAT.01
-	EngineInstruments.BAT.10
-	EngineInstruments.BAT.minus
-	-->
+<!-- BAT AMPS -->
+	<animation> <!-- Positive -->
+		<type>select</type>
+		<object-name>EngineInstruments.BAT.01</object-name>
+		<object-name>EngineInstruments.BAT.10</object-name>
+		<condition>
+		<greater-than-equals>
+			<property>extra500/mainBoard/BatteryShunt/indicatedAmpere</property>
+			<value>0</value>
+		</greater-than-equals>
+		</condition>
+	</animation>
+	<animation> <!-- Negative -->
+		<type>select</type>
+		<object-name>EngineInstruments.BAT.01neg</object-name>
+		<object-name>EngineInstruments.BAT.10neg</object-name>
+		<object-name>EngineInstruments.BAT.minus</object-name>
+		<condition>
+		<less-than>
+			<property>extra500/mainBoard/BatteryShunt/indicatedAmpere</property>
+			<value>0</value>
+		</less-than>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.BAT.01</object-name>
+		<property>extra500/mainBoard/BatteryShunt/indicatedAmpere</property>
+		<factor>-0.1</factor>
+		<step>1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.BAT.10</object-name>
+		<property>extra500/mainBoard/BatteryShunt/indicatedAmpere</property>
+		<factor>-0.1</factor>
+		<step>10</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.BAT.01neg</object-name>
+		<property>extra500/mainBoard/BatteryShunt/indicatedAmpere</property>
+		<factor>0.1</factor>
+		<step>1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.BAT.10neg</object-name>
+		<property>extra500/mainBoard/BatteryShunt/indicatedAmpere</property>
+		<factor>0.1</factor>
+		<step>10</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+<!-- IAT Temp -->
+	<animation>
+		<!-- POSITIV -->
+		<type>select</type>
+		<object-name>EngineInstruments.IAT.10</object-name>
+		<object-name>EngineInstruments.IAT.01</object-name>
+		<condition>
+			<greater-than-equals>
+				<property>extraTest/environment/temperature-degc</property>
+				<value>0</value>
+			</greater-than-equals>
+		</condition>
+	</animation>
+	<animation>
+		<!-- NEGATIV -->
+		<type>select</type>
+		<object-name>EngineInstruments.IAT.minus</object-name>
+		<object-name>EngineInstruments.IAT.10neg</object-name>
+		<object-name>EngineInstruments.IAT.01neg</object-name>
+		<condition>
+			<less-than>
+				<property>extraTest/environment/temperature-degc</property>
+				<value>0</value>
+			</less-than>
+		</condition>
+	</animation>
 
-
-
-<!--select POSITIV-->
-<animation>
-	<type>select</type>
-	<object-name>EngineInstruments.IAT.10</object-name>
-	<object-name>EngineInstruments.IAT.01</object-name>
-	<condition>
-	  <greater-than-equals>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.IAT.01</object-name>
 		<property>extraTest/environment/temperature-degc</property>
-	    <value>0</value>
-	  </greater-than-equals>
-	</condition>
-</animation>
-
-
-<!--select NEGATIV-->
-<animation>
-	<type>select</type>
-	<object-name>EngineInstruments.IAT.minus</object-name>
-	<object-name>EngineInstruments.IAT.10neg</object-name>
-	<object-name>EngineInstruments.IAT.01neg</object-name>
-	<condition>
-	  <less-than>
+		<factor>-0.1</factor>
+		<step>1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.IAT.01neg</object-name>
 		<property>extraTest/environment/temperature-degc</property>
-	    <value>0</value>
-	  </less-than>
-	</condition>
-</animation>
+		<factor>0.1</factor>
+		<step>1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
 
-<!-- textranslates -->
-<animation>
-	<type>textranslate</type>
-	<object-name>EngineInstruments.IAT.01</object-name>
-	<property>extraTest/environment/temperature-degc</property>
-	<factor>-0.1</factor>
-	<step>1</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
-</animation>
-<animation>
-	<type>textranslate</type>
-	<object-name>EngineInstruments.IAT.01neg</object-name>
-	<property>extraTest/environment/temperature-degc</property>
-	<factor>0.1</factor>
-	<step>1</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
-</animation>
-
-<animation>
-	<type>textranslate</type>
-	<object-name>EngineInstruments.IAT.10</object-name>
-  <property>extraTest/environment/temperature-degc</property>
-	<factor>-0.01</factor>
-	<step>10</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
-</animation>
-<animation>
-	<type>textranslate</type>
-	<object-name>EngineInstruments.IAT.10neg</object-name>
-  <property>extraTest/environment/temperature-degc</property>
-	<factor>0.01</factor>
-	<step>10</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
-</animation>
+       <animation>
+	       <type>textranslate</type>
+	       <object-name>EngineInstruments.IAT.10</object-name>
+	       <property>extraTest/environment/temperature-degc</property>
+	       <factor>-0.01</factor>
+	       <step>10</step>
+	       <axis>
+		       <x>1</x>
+		       <y>0</y>
+		       <z>0</z>
+	       </axis>
+       </animation>
+       <animation>
+	       <type>textranslate</type>
+	       <object-name>EngineInstruments.IAT.10neg</object-name>
+	       <property>extraTest/environment/temperature-degc</property>
+	       <factor>0.01</factor>
+	       <step>10</step>
+	       <axis>
+		       <x>1</x>
+		       <y>0</y>
+		       <z>0</z>
+	       </axis>
+       </animation>
 
 
 
 
+<!-- FUEL TEMP -->
+	<animation> <!-- Positive -->
+		<type>select</type>
+		<object-name>EngineInstruments.TEMP.01</object-name>
+		<object-name>EngineInstruments.TEMP.10</object-name>
+		<condition>
+		<greater-than-equals>
+			<property>/fdm/jsbsim/aircraft/engine/FT-degC</property>
+			<value>0</value>
+		</greater-than-equals>
+		</condition>
+	</animation>
+	<animation> <!-- Negative -->
+		<type>select</type>
+		<object-name>EngineInstruments.TEMP.01neg</object-name>
+		<object-name>EngineInstruments.TEMP.10neg</object-name>
+		<object-name>EngineInstruments.TEMP.minus</object-name>
+		<condition>
+		<less-than>
+			<property>/fdm/jsbsim/aircraft/engine/FT-degC</property>
+			<value>0</value>
+		</less-than>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.TEMP.01</object-name>
+		<property>/fdm/jsbsim/aircraft/engine/FT-degC</property>
+		<factor>-0.1</factor>
+		<step>1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.TEMP.10</object-name>
+		<property>/fdm/jsbsim/aircraft/engine/FT-degC</property>
+		<factor>-0.1</factor>
+		<step>10</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.TEMP.01neg</object-name>
+		<property>/fdm/jsbsim/aircraft/engine/FT-degC</property>
+		<factor>0.1</factor>
+		<step>1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.TEMP.10neg</object-name>
+		<property>/fdm/jsbsim/aircraft/engine/FT-degC</property>
+		<factor>0.1</factor>
+		<step>10</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
 
-
-
-
-<!--FUEL TEMP !!!!!!!!!!!!!TODO sobald problem mit negativen zahlen geloest ist!!!!!!!!-->
-	<!-- object-names
-	EngineInstruments.TEMP.01
-	EngineInstruments.TEMP.10
-	EngineInstruments.TEMP.minus
-	-->
 	
 <!--FUEL PRESS-->
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.PRESS.01</object-name>
-  <property>/fdm/jsbsim/aircraft/engine/FP-psi</property>
+	<property>/fdm/jsbsim/aircraft/engine/FP-psi</property>
 	<factor>-0.1</factor>
 	<step>1</step>
 	<axis>
@@ -556,7 +744,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.PRESS.10</object-name>
-  <property>/fdm/jsbsim/aircraft/engine/FP-psi</property>
+	<property>/fdm/jsbsim/aircraft/engine/FP-psi</property>
 	<factor>-0.01</factor>
 	<step>10</step>
 	<axis>
