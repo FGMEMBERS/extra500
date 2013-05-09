@@ -21,7 +21,7 @@
 #
 
 # Constans for Calculations
-
+# dynamic load from set.xml (PropertyTree)
 
 # call in Aircraft namespace global.CONST.DEG2RAD
 
@@ -42,13 +42,21 @@ var Constant = {
 			}
 		}
 		
+	},
+	echo : func(){
+		foreach(i; keys(me)) {
+			if (typeof(me[i]) == "scalar"){
+				print(sprintf("%s : %s",i,me[i]));
+			}
+		}
 	}
 	
 };
 
+
 var CONST = Constant.new();
 CONST.loadProp("/extra500/const");
-
+#CONST.echo();
 
 
 
