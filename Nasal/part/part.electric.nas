@@ -1731,6 +1731,46 @@ var ElectricDimmer = {
 		sound.click(4);
 	}
 };
+#	Plus ─⊗─ Minus
+var ElectricVoltSensor = {
+	new : func(nRoot,name){
+				
+		var m = {parents:[
+			ElectricVoltSensor,
+			Part.new(nRoot,name),
+			SimStateAble.new(nRoot,"DOUBLE",0.0),
+			ElectricAble.new(nRoot,name)
+		]};
+		me.resistor = 18800;
+		append(aListSimStateAble,m);
+		return m;
+
+	},
+	applyVoltage : func(electron,name=""){ 
+		etd.in("VoltSensor",me.name,name,electron);
+		var GND = 0;
+		
+		if (electron != nil){
+			me.setVolt(electron.volt);
+			electron.resistor += me.resistor;# * me.qos
+			
+			if (name == "+"){
+				GND = me.Minus.applyVoltage(electron);
+				if (GND){
+					
+					var watt = me.electricWork(electron);
+					me.state = electron.volt;
+				}
+			}
+			
+			me.setAmpere(electron.ampere);
+			
+		}
+		etd.out("VoltSensor",me.name,name,electron);
+		return GND;
+	},
+	
+};
 
 #	Plus ─⊗─ Minus
 var ElectricLight = {
