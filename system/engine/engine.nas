@@ -30,6 +30,7 @@ var Engine = {
 		]};
 		m.nIsRunning		= props.globals.getNode("/fdm/jsbsim/propulsion/engine/set-running");
 		m.nN1			= props.globals.getNode("/engines/engine[0]/n1");
+		m.nN1old		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/N1-old");
 		m.nPropellerFeather 	= props.globals.getNode("/controls/engines/engine[0]/propeller-feather");
 		m.nCutOff		= props.globals.getNode("/controls/engines/engine[0]/cutoff");
 		m.nReverser		= props.globals.getNode("/controls/engines/engine[0]/reverser");
@@ -44,7 +45,6 @@ var Engine = {
 		
 		m._cutoffState		= m.nCutOff.getValue();
 		m._ignitionState 	= 0;
-		m._starterState 	= m.nStarter.getValue();
 		m.IgnitionPlus 		= Part.ElectricConnector.new("IgnitionPlus");
 		m.LowOilPress		= Part.ElectricConnector.new("LowOilPress");
 		m.LowPitch		= Part.ElectricConnector.new("LowPitch");
@@ -68,9 +68,6 @@ var Engine = {
 		me._checkIgnitionCutoff();
 		me._ignitionState = 0;
 		me._starterState = 0;
-		me.nMotoring.setValue(0);		
-		me.nSpoolup.setValue(0);		
-		me.nSpooldown.setValue(0);	
 	},
 	#################################################
 	# called at the end from main simulation cycle 
@@ -145,25 +142,46 @@ var Engine = {
 			}
 		}
 	},
-	motoring : func(value = nil){
-		if ( (me._starterState == 1) and (me._cutoffState == 1) ) {
-			me.nMotoring.setValue(1);
-		}else{
-			me.nMotoring.setValue(0);
-		}
-	},
+
 	#################################################
 	# called from main simulation cycle in ~ 10Hz	
 	# all work that the engine has to do starts here
 	#################################################
 	update : func(){
-		if(me.nN1.getValue() > 55.0){
+		var n1old = me.nN1old.getValue();
+		var n1 = me.nN1.getValue();
+		var Starter = me.nStarter.getValue();
+		var isRunning = me.nIsRunning.getValue();
+
+# setting propeller feathering property, if n1 < 55%, feathered
+		if(n1 > 55.0){
 			me.nPropellerFeather.setValue(0);
 		}else{
 			me.nPropellerFeather.setValue(1);
 		}
-		
-		
+
+# setting motoring property: starter on, but cutoff also on (no fuel,no ignition)	
+		if ( (Starter == 1) and (me._cutoffState == 1) ) {
+			me.nMotoring.setValue(1);
+		}else{
+			me.nMotoring.setValue(0);
+		}
+
+# setting spoolup property: starter on, no cutoff, but engine not running (yet) 	
+		if ( (Starter == 1) and (me._cutoffState == 0) and (isRunning == 0)  ) {
+			me.nSpoolup.setValue(1);
+		}else{
+			me.nSpoolup.setValue(0);
+		}
+
+# setting spooldown property: starter off, not running, and n1 > 0.1 	
+		if ( (Starter == 0) and (isRunning == 0) and (n1 > 0.1) and (n1 < n1old ) ) {
+			me.nSpooldown.setValue(1);
+		}else{
+			me.nSpooldown.setValue(0);
+		}
+
+		me.nN1old.setValue(n1);
 	},
 	#################################################
 	# register User events 	
@@ -179,9 +197,6 @@ var Engine = {
 		UI.register("Engine reverser on",	func{extra500.engine.onReverserClick(1); } 	);
 		UI.register("Engine reverser off",	func{extra500.engine.onReverserClick(0); } 	);
 
-		UI.register("Engine motoring2", 	func{extra500.engine.motoring(); } 	);
-		UI.register("Engine motoring2 on",	func{extra500.engine.motoring(1); } 	);
-		UI.register("Engine motoring2 off",	func{extra500.engine.motoring(0); } 	);
 	}
 };
 
@@ -220,7 +235,7 @@ var calc_Temps = func() {
 }
 
 var init_Temps = func{
-      if (getprop("/fdm/jsbsim/simulation/sim-time-sec") > 1) {		# to make sure we get an "initialised" temperature
+      if (getprop("/fdm/jsbsim/simulation/sim-time-sec") > 1) {				# to make sure we get an "initialised" temperature
 		setprop("/fdm/jsbsim/aircraft/engine/temp_init",1);
 		var OAT = getprop("/environment/temperature-degc");
 		setprop("/fdm/jsbsim/aircraft/engine/OT-degC",OAT); 		

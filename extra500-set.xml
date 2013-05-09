@@ -630,6 +630,17 @@ JSBSim Extra Aircraft - Extra 500.
   </weight>
  </payload>
 
+ <extra500>
+	<const>
+		<METER2FEET type="double">3.2808399</METER2FEET>
+		<FEET2METER type="double">0.3048</FEET2METER>
+		<DEG2RAD type="double">0.0174532925</DEG2RAD>
+		<RAD2DEG type="double">57.2957795131</RAD2DEG>
+		<RANKINE2KELVIN type="double">0.555555555</RANKINE2KELVIN>
+		<KELVIN2RANKINE type="double">1.8</KELVIN2RANKINE>
+	</const>
+ </extra500>
+
  <fdm>
 	<jsbsim>
 		<sim-time-sec-old>0</sim-time-sec-old>
@@ -693,9 +704,10 @@ JSBSim Extra Aircraft - Extra 500.
 				<OP-maxsetting-psi>125</OP-maxsetting-psi>
 				<OT-degC>0</OT-degC>					<!--dummy value -->
 				<FT-degC>0</FT-degC>					<!--dummy value -->
-				<motoring>0</motoring>
-				<spooling-up>0</spooling-up>
-				<spooling-down>0</spooling-down>
+				<motoring type="double">0</motoring>
+				<spooling-up type="double">0</spooling-up>
+				<spooling-down type="double">0</spooling-down>
+				<N1-old type="double">0</N1-old>
 			</engine>
 			<fuel>
 				<fuel-pump1>0</fuel-pump1>				<!--dummy value -->
