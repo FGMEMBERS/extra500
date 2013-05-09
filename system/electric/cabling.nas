@@ -459,6 +459,11 @@ var plugPcBoard = func(){
 	pcBoard.LowVoltOut.plug(annunciatorPanel.dimTestRelais.P222);
 }
 
+var plugDIP =func(){
+	digitalInstrumentPackage.VoltMonitor.Plus.plug(circuitBreakerPanel.VoltMonitor.Out);
+	digitalInstrumentPackage.VoltMonitor.Minus.plug(mainBoard.GND);
+}
+
 var plugElectric = func(){
 	plugMainBoard();
 	plugGenerator();
@@ -474,5 +479,6 @@ var plugElectric = func(){
 	plugEngine();
 	plugAlternator();
 	plugPcBoard();
+	plugDIP();
 	
 };
