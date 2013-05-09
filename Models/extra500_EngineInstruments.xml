@@ -56,7 +56,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.TRQ.000.1</object-name>
-  <property>/fdm/jsbsim/aircraft/engine/TRQ-perc</property>
+	<property>/fdm/jsbsim/aircraft/engine/TRQ-perc</property>
 	<factor>-1</factor>
 	<step>0.1</step>
 	<axis>
@@ -422,11 +422,22 @@
 
 
 <!--VDC -->
+	<animation> <!-- Positive -->
+		<type>select</type>
+		<object-name>EngineInstruments.VDC.10.0</object-name>
+		<condition>
+		<greater-than-equals>
+			<property>extra500/Instrument/DIP/VoltMonitor/state</property>
+			<value>10</value>
+		</greater-than-equals>
+		</condition>
+	</animation>
+	
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.VDC.00.1</object-name>
 		<property>extra500/Instrument/DIP/VoltMonitor/state</property>
-		<factor>-0.1</factor>
+		<factor>-1.0</factor>
 		<step>0.1</step>
 		<axis>
 			<x>1</x>
@@ -450,7 +461,7 @@
 		<type>textranslate</type>
 		<object-name>EngineInstruments.VDC.10.0</object-name>
 		<property>extra500/Instrument/DIP/VoltMonitor/state</property>
-		<factor>-0.1</factor>
+		<factor>-0.01</factor>
 		<step>10</step>
 		<axis>
 			<x>1</x>
