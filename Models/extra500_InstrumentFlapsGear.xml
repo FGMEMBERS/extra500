@@ -18,8 +18,8 @@
       Authors: Thomas Grossberger and Dirk Dittmann
       Date: March 13 2013
 
-      Last change:      Eric van den Berg
-      Date:             30.04.13
+      Last change:      Thomas Grossberger
+      Date:             09.05.13
 -->
 
 <PropertyList>
@@ -75,8 +75,6 @@
 		<factor-prop>extra500/Light/GearRight/state</factor-prop>
 	</emission>
 </animation>
-
-
 
 <!--FlapsLampen-->
 <animation>
@@ -152,10 +150,36 @@
 	</emission>
 </animation>
 
-<!--GearHebel-->
+<!--GearLever-->
+<animation>
+      <type>pick</type>
+      <object-name>GearLever</object-name>
+      <visible>true</visible>
+      <action>
+        <button>0</button>
+        <repeatable>false</repeatable>
+        <binding>
+          <command>property-toggle</command>
+          <property>controls/gear/gear-down</property>
+        </binding>
+      </action>
+</animation>
+<animation>
+      <type>pick</type>
+      <object-name>GearLever</object-name>
+      <visible>true</visible>
+      <action>
+        <button>1</button>
+        <repeatable>false</repeatable>
+        <binding>
+          <command>property-toggle</command>
+          <property>controls/gear/gear-down</property>
+        </binding>
+      </action>
+</animation>
 <animation>
   <type>rotate</type>
-  <object-name>GearHebel</object-name>
+  <object-name>GearLever</object-name>
  <property>/fdm/jsbsim/gear/gear-cmd-norm</property> 
   <interpolation>
             <entry>
@@ -177,28 +201,61 @@
   </axis>
 </animation>
 
-<!--FlapsHebel-->
+<!--FlapControl-->
+<animation>
+      <type>pick</type>
+      <object-name>FlapControl</object-name>
+      <visible>true</visible>
+      <action>
+        <button>0</button>
+        <repeatable>false</repeatable>
+        <binding>
+          <command>nasal</command>
+          <script>controls.flapsDown(1)</script>
+         </binding>
+         <mod-up>
+          <binding>
+           <command>nasal</command>
+           <script>controls.flapsDown(0)</script>
+          </binding>
+         </mod-up>
+      </action>
+      <action>
+        <button>1</button>
+        <repeatable>false</repeatable>
+        <binding>
+          <command>nasal</command>
+          <script>controls.flapsDown(-1)</script>
+         </binding>
+         <mod-up>
+          <binding>
+           <command>nasal</command>
+           <script>controls.flapsDown(0)</script>
+          </binding>
+         </mod-up>
+      </action>
+    </animation>
 <animation>
   <type>rotate</type>
-  <object-name>FlapHebel</object-name>
+  <object-name>FlapControl</object-name>
  <property>/extra500/system/flap/Switch/state</property> 
   <interpolation>
             <entry>
                 <ind>-1</ind>
-                <dep>-25</dep>
+                <dep>-19</dep>
             </entry>
             <entry>
                 <ind>1</ind>
-                <dep>25</dep>
+                <dep>19</dep>
             </entry>
         </interpolation>
   <axis>
-  <x1-m>-0.02287</x1-m>
-  <y1-m>-0.19625</y1-m>
-  <z1-m>0.00297</z1-m>
-  <x2-m>-0.02287</x2-m>
-  <y2-m>-0.19829</y2-m>
-  <z2-m>0.00297</z2-m>
+  <x1-m>-0.0435</x1-m>
+  <y1-m>1</y1-m>
+  <z1-m>0.005</z1-m>
+  <x2-m>-0.0435</x2-m>
+  <y2-m>-1</y2-m>
+  <z2-m>0.005</z2-m>
   </axis>
 </animation>
 

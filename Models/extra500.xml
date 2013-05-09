@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             06.05.13
+      Date:             09.05.13
 
 -->
 
@@ -33,25 +33,26 @@
 
 
 <!-- Submodels -->
-
 <model>
-  <name>TCtest</name>
-  <path>/Aircraft/Instruments-3d/tc/tc.xml</path>
+  <name>TESTtc</name>
+  <path>Aircraft/Instruments-3d/tc/tc.xml</path>
 	<offsets>
-		<x-m>-0.700</x-m>
-		<y-m>0.329</y-m>	
-		<z-m>-.142</z-m>
+		<x-m>-0.7065</x-m>
+		<y-m>0.33</y-m>	
+		<z-m>-.1450</z-m>
 	<pitch-deg>-13</pitch-deg>
 	</offsets>
 </model>
-
-
-
-
-
-
-
-
+<model>
+  <name>TESTalt</name>
+  <path>Aircraft/Instruments-3d/alt/alt.xml</path>
+	<offsets>
+		<x-m>-0.73</x-m>
+		<y-m>-0.166</y-m>	
+		<z-m>-.0450</z-m>
+	<pitch-deg>-13</pitch-deg>
+	</offsets>
+</model>
 
 <model>
   <name>MasterPanel</name>
@@ -63,7 +64,7 @@
 	<pitch-deg>-13</pitch-deg>
 	</offsets>
 </model>
-<!--test-->
+
 <model>
   <path>Aircraft/extra500/Models/TEST.fahrwerk.komplett.xml</path>	
 </model>
@@ -71,12 +72,13 @@
   <name>InstrumentFlapsGear</name>
   <path>Aircraft/extra500/Models/extra500_InstrumentFlapsGear.xml</path>
 	<offsets>
-		<x-m>-0.61</x-m>
+		<x-m>-0.63</x-m>
 		<y-m>0</y-m>	
 		<z-m>-0.435</z-m>
-	<pitch-deg>-50</pitch-deg>
+	<pitch-deg>-38</pitch-deg>
 	</offsets>
 </model>
+
 <model>
   <name>LH_IFD</name>
   <path>Aircraft/extra500/Models/extra500_LH-IFD.xml</path>
@@ -87,6 +89,7 @@
 	<pitch-deg>-13</pitch-deg>
 	</offsets>
 </model>
+
 <model>
   <name>RH_IFD</name>
   <path>Aircraft/extra500/Models/extra500_RH-IFD.xml</path>
@@ -97,6 +100,7 @@
 	<pitch-deg>-13</pitch-deg>
 	</offsets>
 </model>
+
 <model>
   <name>AnnunciatorPanel</name>
   <path>Aircraft/extra500/Models/extra500_AnnunciatorPanel.xml</path>
@@ -107,6 +111,7 @@
 	<pitch-deg>-13</pitch-deg>
 	</offsets>
 </model>
+
 <model>
   <name>EngineInstruments</name>
   <path>Aircraft/extra500/Models/extra500_EngineInstruments.xml</path>
@@ -128,6 +133,7 @@
 	<pitch-deg>0</pitch-deg>
 	</offsets>
 </model>
+
 <model>
   <name>CircuitBreakerPanel</name>
   <path>Aircraft/extra500/Models/extra500_CircuitBreakerPanel.xml</path>
