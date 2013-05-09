@@ -18,8 +18,8 @@
       Authors: Thomas Grossberger and Dirk Dittmann
       Date: March 13 2013
 
-      Last change:      Eric van den Berg
-      Date:             08.05.13
+      Last change:      Thomas Grossberger
+      Date:             09.05.13
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -641,6 +641,15 @@ JSBSim Extra Aircraft - Extra 500.
 	</const>
  </extra500>
 
+<!-- to test the digits at extra500_EngineInstruments.xml -->
+ <extraTest>
+<environment>
+<temperature-degc type="double">0.0</temperature-degc>
+</environment> 
+</extraTest>
+<!-- to test the digits at extra500_EngineInstruments.xml -->
+ 
+ 
  <fdm>
 	<jsbsim>
 		<sim-time-sec-old>0</sim-time-sec-old>

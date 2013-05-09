@@ -5,7 +5,7 @@ MATERIAL "instr" rgb 1.0000 1.0000 1.0000  amb 1.0000 1.0000 1.0000  emis 0.5000
 MATERIAL "grau10" rgb 0.1000 0.1000 0.1000  amb 0.1000 0.1000 0.1000  emis 0.0000 0.0000 0.0000  spec 0.0500 0.0500 0.0500  shi 50 trans 0.0000
 OBJECT world
 name "Blender_export__extra500_EngineInstruments.ac"
-kids 59
+kids 61
 OBJECT poly
 name "Cylinder.000"
 loc -0.0019001 0.0257636 -0.0541951
@@ -2610,6 +2610,25 @@ refs 4
 3 1.000031 0.017224
 kids 0
 OBJECT poly
+name "EngineInstruments.IAT.01neg"
+loc 0.0055515 -0.1013391 0.0254104
+texture "extra500_EngineInstrumentsTextur.png"
+texrep 1 1
+numvert 4
+0.0000000 -0.0038602 0.0024427
+-0.0000000 0.0038602 0.0024427
+0.0000000 -0.0038602 -0.0024427
+-0.0000000 0.0038602 -0.0024427
+numsurf 1
+SURF 0X20
+mat 2
+refs 4
+1 1.000031 0.044421
+0 0.900032 0.044421
+2 0.900032 0.017224
+3 1.000031 0.017224
+kids 0
+OBJECT poly
 name "EngineInstruments.IAT.10"
 loc 0.0055515 -0.1013391 0.0312959
 texture "extra500_EngineInstrumentsTextur.png"
@@ -2627,6 +2646,25 @@ refs 4
 0 0.900032 0.044421
 2 0.900032 0.017224
 3 1.000031 0.017224
+kids 0
+OBJECT poly
+name "EngineInstruments.IAT.10neg"
+loc 0.0055515 -0.1013391 0.0312959
+texture "extra500_EngineInstrumentsTextur.png"
+texrep 1 1
+numvert 4
+0.0000000 -0.0038602 0.0024427
+-0.0000000 0.0038602 0.0024427
+0.0000000 -0.0038602 -0.0024427
+-0.0000000 0.0038602 -0.0024427
+numsurf 1
+SURF 0X20
+mat 2
+refs 4
+1 0.099641 0.044421
+0 -0.000359 0.044421
+2 -0.000359 0.017224
+3 0.099641 0.017224
 kids 0
 OBJECT poly
 name "EngineInstruments.IAT.minus"

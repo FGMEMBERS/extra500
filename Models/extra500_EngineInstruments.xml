@@ -445,18 +445,41 @@
 	EngineInstruments.BAT.minus
 	-->
 
-<!--IAT ?!?!?!? wrong if negative temperature ?!?!?!?!?-->
-<!--positive-->
+
+
+<!--select POSITIV-->
+<animation>
+	<type>select</type>
+	<object-name>EngineInstruments.IAT.10</object-name>
+	<object-name>EngineInstruments.IAT.01</object-name>
+	<condition>
+	  <greater-than-equals>
+		<property>extraTest/environment/temperature-degc</property>
+	    <value>0</value>
+	  </greater-than-equals>
+	</condition>
+</animation>
+
+
+<!--select NEGATIV-->
+<animation>
+	<type>select</type>
+	<object-name>EngineInstruments.IAT.minus</object-name>
+	<object-name>EngineInstruments.IAT.10neg</object-name>
+	<object-name>EngineInstruments.IAT.01neg</object-name>
+	<condition>
+	  <less-than>
+		<property>extraTest/environment/temperature-degc</property>
+	    <value>0</value>
+	  </less-than>
+	</condition>
+</animation>
+
+<!-- textranslates -->
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.IAT.01</object-name>
-  <property>environment/temperature-degc</property>
-  <condition>
-	  <greater-than>
-	    <property>environment/temperature-degc</property>
-	    <value>0</value>
-	  </greater-than>
-	</condition>
+	<property>extraTest/environment/temperature-degc</property>
 	<factor>-0.1</factor>
 	<step>1</step>
 	<axis>
@@ -467,33 +490,8 @@
 </animation>
 <animation>
 	<type>textranslate</type>
-	<object-name>EngineInstruments.IAT.10</object-name>
-  <property>environment/temperature-degc</property>
-    <condition>
-	  <greater-than>
-	    <property>environment/temperature-degc</property>
-	    <value>0</value>
-	  </greater-than>
-	</condition>
-	<factor>-0.01</factor>
-	<step>10</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
-</animation>
-<!--negative-->
-<animation>
-	<type>textranslate</type>
-	<object-name>EngineInstruments.IAT.01</object-name>
-  <property>environment/temperature-degc</property>
-  	<condition>
-	  <less-than>
-	    <property>environment/temperature-degc</property>
-	    <value>0</value>
-	  </less-than>
-	</condition>
+	<object-name>EngineInstruments.IAT.01neg</object-name>
+	<property>extraTest/environment/temperature-degc</property>
 	<factor>0.1</factor>
 	<step>1</step>
 	<axis>
@@ -502,17 +500,12 @@
 		<z>0</z>
 	</axis>
 </animation>
+
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.IAT.10</object-name>
-  <property>environment/temperature-degc</property>
-  <condition>
-	  <less-than>
-	    <property>environment/temperature-degc</property>
-	    <value>0</value>
-	  </less-than>
-	</condition>
-	<factor>0.01</factor>
+  <property>extraTest/environment/temperature-degc</property>
+	<factor>-0.01</factor>
 	<step>10</step>
 	<axis>
 		<x>1</x>
@@ -521,15 +514,24 @@
 	</axis>
 </animation>
 <animation>
-	<type>select</type>
-	<object-name>EngineInstruments.IAT.minus</object-name>
-	<condition>
-	  <less-than>
-	    <property>environment/temperature-degc</property>
-	    <value>0</value>
-	  </less-than>
-	</condition>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.IAT.10neg</object-name>
+  <property>extraTest/environment/temperature-degc</property>
+	<factor>0.01</factor>
+	<step>10</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
 </animation>
+
+
+
+
+
+
+
 
 <!--FUEL TEMP !!!!!!!!!!!!!TODO sobald problem mit negativen zahlen geloest ist!!!!!!!!-->
 	<!-- object-names
