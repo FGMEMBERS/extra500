@@ -23,11 +23,32 @@
 # Constans for Calculations
 
 
-# call CONST.DEG2RAD
+# call in Aircraft namespace global.CONST.DEG2RAD
 
-var FEET2METER	 	= 3.2808;
-var RAD2DEG 		= 180/math.pi;
-var DEG2RAD 		= math.pi/180;
+var Constant = {
+	new : func(){
+		var m = {parents:[
+			Constant,
+		]};
+		return m;
+		
+	},
+	loadProp : func(path){
+		var node = props.globals.getNode(path);
+		if (node != nil){
+			var nChildren = node.getChildren();
+			foreach(child; nChildren) { 
+				me[child.getName()] = child.getValue();
+			}
+		}
+		
+	}
+	
+};
+
+var CONST = Constant.new();
+CONST.loadProp("/extra500/const");
+
 
 
 
