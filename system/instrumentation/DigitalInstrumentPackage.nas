@@ -32,10 +32,37 @@ var DigitalInstrumentPackage = {
 		m.VoltMonitor = Part.ElectricVoltSensor.new(m.nPanel.initNode("VoltMonitor"),"Volt Monitor");
 
 		
+		m.nVDC = props.globals.getNode("extra500/Instrument/DIP/VoltMonitor/state");
+		m.nGenAmps = props.globals.getNode("extra500/mainBoard/GeneratorShunt/indicatedAmpere");
+		m.nBatAmps = props.globals.getNode("extra500/mainBoard/BatteryShunt/indicatedAmpere");
+		
+		m.nIAT = props.globals.getNode("/environment/temperature-degc");
+		m.nFuelTemp = props.globals.getNode("/fdm/jsbsim/aircraft/engine/FT-degC");
+		m.nFuelPress = props.globals.getNode("/fdm/jsbsim/aircraft/engine/FP-psi");
+		
+		m.nIndicatedVDC = props.globals.getNode("extra500/Instrument/DIP/indicatedVDC",1);
+		m.nIndicatedGEN = props.globals.getNode("extra500/Instrument/DIP/indicatedGEN",1);
+		m.nIndicatedBAT = props.globals.getNode("extra500/Instrument/DIP/indicatedBAT",1);
+		
+		m.nIndicatedIAT = props.globals.getNode("extra500/Instrument/DIP/indicatedIAT",1);
+		m.nIndicatedFuelTemp = props.globals.getNode("extra500/Instrument/DIP/indicatedFuelTemp",1);
+		m.nIndicatedFuelPress = props.globals.getNode("extra500/Instrument/DIP/indicatedFuelPress",1);
+		
+		
 		return m;
 
 	},
-
+	# Main Simulation loop  ~ 10Hz
+	update : func(){
+		
+		me.nIndicatedVDC.setValue( math.abs(me.nVDC.getValue()) + 0.0001 );
+		me.nIndicatedGEN.setValue( math.abs(me.nGenAmps.getValue()) + 0.0001 );
+		me.nIndicatedBAT.setValue( math.abs(me.nBatAmps.getValue()) + 0.0001 );
+		me.nIndicatedIAT.setValue( math.abs(me.nIAT.getValue()) + 0.0001 );
+		me.nIndicatedFuelTemp.setValue( math.abs(me.nFuelTemp.getValue()) + 0.0001 );
+		me.nIndicatedFuelPress.setValue( math.abs(me.nFuelPress.getValue()) + 0.0001 );
+		
+	}
 	
 };
 
