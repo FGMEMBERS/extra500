@@ -21,13 +21,42 @@
 #
 
 # Constans for Calculations
+# dynamic load from set.xml (PropertyTree)
+
+# call in Aircraft namespace global.CONST.DEG2RAD
+
+var Constant = {
+	new : func(){
+		var m = {parents:[
+			Constant,
+		]};
+		return m;
+		
+	},
+	loadProp : func(path){
+		var node = props.globals.getNode(path);
+		if (node != nil){
+			var nChildren = node.getChildren();
+			foreach(child; nChildren) { 
+				me[child.getName()] = child.getValue();
+			}
+		}
+		
+	},
+	echo : func(){
+		foreach(i; keys(me)) {
+			if (typeof(me[i]) == "scalar"){
+				print(sprintf("%s : %s",i,me[i]));
+			}
+		}
+	}
+	
+};
 
 
-# call CONST.DEG2RAD
-
-var FEET2METER	 	= 3.2808;
-var RAD2DEG 		= 180/math.pi;
-var DEG2RAD 		= math.pi/180;
+var CONST = Constant.new();
+CONST.loadProp("/extra500/const");
+#CONST.echo();
 
 
 
