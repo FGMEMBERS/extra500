@@ -708,9 +708,9 @@ JSBSim Extra Aircraft - Extra 500.
 			</vstab>
 			<engine>
 				<dt-indication type="double">0.5</dt-indication>
-				<OP-maxsetting-psi>125</OP-maxsetting-psi>
-				<OT-degC>0</OT-degC>					<!--dummy value -->
-				<FT-degC>0</FT-degC>					<!--dummy value -->
+				<OP-maxsetting-psi type="double">125</OP-maxsetting-psi>
+				<OT-degC type="double">0</OT-degC>					<!--dummy value -->
+				<FT-degC type="double">0</FT-degC>					<!--dummy value -->
 				<motoring type="double">0</motoring>
 				<spooling-up type="double">0</spooling-up>
 				<spooling-down type="double">0</spooling-down>

@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: April 29 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             08.05.13
+#      Last change:      Eric van den Berg
+#      Date:             09.05.13
 #
 
 
@@ -205,34 +205,56 @@ engine.setPower(24.0,5.0);
 
 
 # ENGINE TEMPERATURES
+#var calc_Temps = func() {
+var calcTemps = {
+	new : func{
+		var m = {parents:[calcTemps]};
+		m.ndt		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/dt-indication",1);
+		m.nOAT		= props.globals.getNode("/environment/temperature-degc");
+		m.nFuelMass	= props.globals.getNode("/fdm/jsbsim/propulsion/total-fuel-lbs");
+		m.nOT		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/OT-degC");
+		m.nFT		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/FT-degC");
+		m.nTOT		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/TOT-degC");
+		m.nDeltaOT	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/Delta-OT-degC");
 
-var calc_Temps = func() {
-# getting common values
-	var dt = getprop("/fdm/jsbsim/aircraft/engine/dt-indication");
-	var OAT = getprop("/environment/temperature-degc");
-	var FuelMass = getprop("/fdm/jsbsim/propulsion/total-fuel-lbs")*0.5144;		# fuel mass in tank in kg
-# getting old values
-	var OT = getprop("/fdm/jsbsim/aircraft/engine/OT-degC");
-	var FT = getprop("/fdm/jsbsim/aircraft/engine/FT-degC");
-	var TOT = getprop("/fdm/jsbsim/aircraft/engine/TOTnr-degC");
-# calculating new oil temperature
-	var OTnew = OT + getprop("/fdm/jsbsim/aircraft/engine/Delta-OT-degC");
-	if (OTnew<OAT) {
-		OTnew = OAT;
-	}
-	setprop("/fdm/jsbsim/aircraft/engine/OT-degC",OTnew);
-# calculating new fuel temperature
-	var H = 0.00481 * FT + 1.7833;							# Jet-A1 fuel specific energy kJ/kg-K
-	var dE = 0.028 * (OAT - FT);							# energy loss kW
-	var FTnew = FT + dE * dt / (FuelMass * H);					# new temp due to energy loss to outside air
-	setprop("/fdm/jsbsim/aircraft/engine/FT-degC",FTnew);
+		return m;
+		
+	},
+
+
+	update : func(){
+			# getting common values
+		var dt = me.ndt.getValue();
+print(dt);
+		var OAT = me.nOAT.getValue();
+		var FuelMass = me.nFuelMass.getValue() * 0.5144;				# fuel mass in tank in kg
+			# getting old values
+		var OT = me.nOT.getValue();
+		var FT = me.nFT.getValue();
+		var TOT = me.nTOT.getValue();
+			# calculating new oil temperature
+		var OTnew = OT + me.nDeltaOT.getValue();
+		if (OTnew<OAT) {
+			OTnew = OAT;
+		}
+		me.nOT.setValue( OTnew );
+#		setprop("/fdm/jsbsim/aircraft/engine/OT-degC",OTnew);
+			# calculating new fuel temperature
+		var H = 0.00481 * FT + 1.7833;							# Jet-A1 fuel specific energy kJ/kg-K
+		var dE = 0.028 * (OAT - FT);							# energy loss kW
+		var FTnew = FT + dE * dt / (FuelMass * H);					# new temp due to energy loss to outside air
+		me.nFT.setValue( FTnew );
+#		setprop("/fdm/jsbsim/aircraft/engine/FT-degC",FTnew);
 #
 # setting aliases for fuel pumps
-	setprop("/fdm/jsbsim/aircraft/fuel/fuel-pump1",getprop("extra500/Fuel/FuelPump1/state") or 0);
-	setprop("/fdm/jsbsim/aircraft/fuel/fuel-pump2",getprop("extra500/Fuel/FuelPump2/state") or 0);
-# loooping
-	settimer(calc_Temps,dt);
-}
+		setprop("/fdm/jsbsim/aircraft/fuel/fuel-pump1",getprop("extra500/Fuel/FuelPump1/state") or 0);
+		setprop("/fdm/jsbsim/aircraft/fuel/fuel-pump2",getprop("extra500/Fuel/FuelPump2/state") or 0);
+			# loooping
+		settimer(oCalcTemps.update(),dt);
+	}
+};
+
+var oCalcTemps = calcTemps.new();
 
 var init_Temps = func{
       if (getprop("/fdm/jsbsim/simulation/sim-time-sec") > 1) {				# to make sure we get an "initialised" temperature
@@ -241,7 +263,8 @@ var init_Temps = func{
 		setprop("/fdm/jsbsim/aircraft/engine/OT-degC",OAT); 		
 		setprop("/fdm/jsbsim/aircraft/engine/FT-degC",OAT); 
 		setprop("/fdm/jsbsim/aircraft/engine/TOTnr-degC",OAT);
-		calc_Temps();
+		
+		oCalcTemps.update();
 	} else {
 		settimer(init_Temps, 1);						# timer gets destroyed when sim-time-sec >1sec
 	}
