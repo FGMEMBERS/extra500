@@ -602,6 +602,17 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		</channel>
 
 </flight_control>
+
+<system name="indication">
+
+	<channel name="fuel pressure">
+		<lag_filter name ="aircraft/engine/FP-psi">
+ 			<input>aircraft/engine/FPtarget-psi</input>
+			<c1>1.0</c1>
+		</lag_filter>
+	</channel>
+
+</system>
 	
 <aerodynamics>
 
@@ -708,7 +719,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		</sum>
     </function>
 
-    <function name="aircraft/engine/FP-psi">
+    <function name="aircraft/engine/FPtarget-psi">
        <description>Indicated Fuel Pressure</description>
 	 	<product>
 			<max>	

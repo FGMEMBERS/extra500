@@ -638,6 +638,14 @@ JSBSim Extra Aircraft - Extra 500.
 		<KELVIN2RANKINE type="double">1.8</KELVIN2RANKINE>
 		<LBM2KG type="double">0.5144</LBM2KG>
 	</const>
+	<Fuel>
+		<FuelPump1>
+			<state>0</state>
+		</FuelPump1>
+		<FuelPump2>
+			<state>0</state>
+		</FuelPump2>
+	</Fuel>
  </extra500>
 
 <!-- to test the digits at extra500_EngineInstruments.xml -->
@@ -718,8 +726,8 @@ JSBSim Extra Aircraft - Extra 500.
 				<N1-old type="double">0</N1-old>
 			</engine>
 			<fuel>
-				<fuel-pump1>0</fuel-pump1>				<!--dummy value -->
-				<fuel-pump2>0</fuel-pump2>				<!--dummy value -->
+				<fuel-pump1 type="bool">0</fuel-pump1>				<!--dummy value -->
+				<fuel-pump2 type="bool">0</fuel-pump2>				<!--dummy value -->
 			</fuel>
             </aircraft>
       </jsbsim>
