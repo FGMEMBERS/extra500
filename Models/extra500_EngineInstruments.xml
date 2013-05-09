@@ -522,7 +522,6 @@
 	<animation> <!-- Positive -->
 		<type>select</type>
 		<object-name>EngineInstruments.BAT.01</object-name>
-		<object-name>EngineInstruments.BAT.10</object-name>
 		<condition>
 		<greater-than-equals>
 			<property>extra500/mainBoard/BatteryShunt/indicatedAmpere</property>
@@ -530,16 +529,35 @@
 		</greater-than-equals>
 		</condition>
 	</animation>
+	<animation> <!-- Positive -->
+		<type>select</type>
+		<object-name>EngineInstruments.BAT.10</object-name>
+		<condition>
+		<greater-than-equals>
+			<property>extra500/mainBoard/BatteryShunt/indicatedAmpere</property>
+			<value>10</value>
+		</greater-than-equals>
+		</condition>
+	</animation>
 	<animation> <!-- Negative -->
 		<type>select</type>
 		<object-name>EngineInstruments.BAT.01neg</object-name>
-		<object-name>EngineInstruments.BAT.10neg</object-name>
 		<object-name>EngineInstruments.BAT.minus</object-name>
 		<condition>
 		<less-than>
 			<property>extra500/mainBoard/BatteryShunt/indicatedAmpere</property>
 			<value>0</value>
 		</less-than>
+		</condition>
+	</animation>
+	<animation> <!-- Negative -->
+		<type>select</type>
+		<object-name>EngineInstruments.BAT.10neg</object-name>
+		<condition>
+		<less-than-equals>
+			<property>extra500/mainBoard/BatteryShunt/indicatedAmpere</property>
+			<value>-10</value>
+		</less-than-equals>
 		</condition>
 	</animation>
 	
@@ -559,7 +577,7 @@
 		<type>textranslate</type>
 		<object-name>EngineInstruments.BAT.10</object-name>
 		<property>extra500/mainBoard/BatteryShunt/indicatedAmpere</property>
-		<factor>-0.1</factor>
+		<factor>-0.01</factor>
 		<step>10</step>
 		<axis>
 			<x>1</x>
@@ -584,7 +602,7 @@
 		<type>textranslate</type>
 		<object-name>EngineInstruments.BAT.10neg</object-name>
 		<property>extra500/mainBoard/BatteryShunt/indicatedAmpere</property>
-		<factor>0.1</factor>
+		<factor>0.01</factor>
 		<step>10</step>
 		<axis>
 			<x>1</x>
@@ -677,7 +695,6 @@
 	<animation> <!-- Positive -->
 		<type>select</type>
 		<object-name>EngineInstruments.TEMP.01</object-name>
-		<object-name>EngineInstruments.TEMP.10</object-name>
 		<condition>
 		<greater-than-equals>
 			<property>/fdm/jsbsim/aircraft/engine/FT-degC</property>
@@ -685,16 +702,35 @@
 		</greater-than-equals>
 		</condition>
 	</animation>
+	<animation> <!-- Positive -->
+		<type>select</type>
+		<object-name>EngineInstruments.TEMP.10</object-name>
+		<condition>
+		<greater-than-equals>
+			<property>/fdm/jsbsim/aircraft/engine/FT-degC</property>
+			<value>10</value>
+		</greater-than-equals>
+		</condition>
+	</animation>
 	<animation> <!-- Negative -->
 		<type>select</type>
 		<object-name>EngineInstruments.TEMP.01neg</object-name>
-		<object-name>EngineInstruments.TEMP.10neg</object-name>
 		<object-name>EngineInstruments.TEMP.minus</object-name>
 		<condition>
 		<less-than>
 			<property>/fdm/jsbsim/aircraft/engine/FT-degC</property>
 			<value>0</value>
 		</less-than>
+		</condition>
+	</animation>
+	<animation> <!-- Negative -->
+		<type>select</type>
+		<object-name>EngineInstruments.TEMP.10neg</object-name>
+		<condition>
+		<less-than-equals>
+			<property>/fdm/jsbsim/aircraft/engine/FT-degC</property>
+			<value>-10</value>
+		</less-than-equals>
 		</condition>
 	</animation>
 	
@@ -714,7 +750,7 @@
 		<type>textranslate</type>
 		<object-name>EngineInstruments.TEMP.10</object-name>
 		<property>/fdm/jsbsim/aircraft/engine/FT-degC</property>
-		<factor>-0.1</factor>
+		<factor>-0.01</factor>
 		<step>10</step>
 		<axis>
 			<x>1</x>
@@ -739,7 +775,7 @@
 		<type>textranslate</type>
 		<object-name>EngineInstruments.TEMP.10neg</object-name>
 		<property>/fdm/jsbsim/aircraft/engine/FT-degC</property>
-		<factor>0.1</factor>
+		<factor>0.01</factor>
 		<step>10</step>
 		<axis>
 			<x>1</x>
@@ -750,30 +786,41 @@
 
 	
 <!--FUEL PRESS-->
-<animation>
-	<type>textranslate</type>
-	<object-name>EngineInstruments.PRESS.01</object-name>
-	<property>/fdm/jsbsim/aircraft/engine/FP-psi</property>
-	<factor>-0.1</factor>
-	<step>1</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
-</animation>
-<animation>
-	<type>textranslate</type>
-	<object-name>EngineInstruments.PRESS.10</object-name>
-	<property>/fdm/jsbsim/aircraft/engine/FP-psi</property>
-	<factor>-0.01</factor>
-	<step>10</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
-</animation>
+	<animation> <!-- Positive -->
+		<type>select</type>
+		<object-name>EngineInstruments.PRESS.10</object-name>
+		<condition>
+		<greater-than-equals>
+			<property>/fdm/jsbsim/aircraft/engine/FP-psi</property>
+			<value>10</value>
+		</greater-than-equals>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.PRESS.01</object-name>
+		<property>/fdm/jsbsim/aircraft/engine/FP-psi</property>
+		<factor>-0.1</factor>
+		<step>1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.PRESS.10</object-name>
+		<property>/fdm/jsbsim/aircraft/engine/FP-psi</property>
+		<factor>-0.01</factor>
+		<step>10</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
 
 </PropertyList>
 
