@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             08.05.13
+      Date:             09.05.13
 
 -->
 
@@ -90,16 +90,14 @@
 	</axis>
 </animation>
 <animation>
-	<type>textranslate</type>
+	<type>select</type>
 	<object-name>EngineInstruments.TRQ.100.0</object-name>
-  <property>/fdm/jsbsim/aircraft/engine/TRQ-perc</property>
-	<factor>-.001</factor>
-	<step>100</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
+	<condition>
+	  <greater-than-equals>
+	    <property>/fdm/jsbsim/aircraft/engine/TRQ-perc</property>
+	    <value>100</value>
+	  </greater-than-equals>
+	</condition>
 </animation>
 
 <!--TOT Needle-->
@@ -226,16 +224,14 @@
 	</axis>
 </animation>
 <animation>
-	<type>textranslate</type>
+	<type>select</type>
 	<object-name>EngineInstruments.N1.100.0</object-name>
-  <property>/fdm/jsbsim/propulsion/engine/n1</property>
-	<factor>-.001</factor>
-	<step>100</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
+	<condition>
+	  <greater-than-equals>
+	    <property>/fdm/jsbsim/propulsion/engine/n1</property>
+	    <value>100</value>
+	  </greater-than-equals>
+	</condition>
 </animation>
 
 <!--N2 Needle-->
@@ -263,18 +259,6 @@
   </axis>
 </animation>
 <!--N2 Digits-->
-<!--<animation>
-	<type>textranslate</type>
-	<object-name>EngineInstruments.N2.0001</object-name>
-  <property>/engines/engine/thruster/rpm</property>
-	<factor>-.1</factor>
-	<step>1</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
-</animation>-->
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.N2.0010</object-name>
@@ -438,6 +422,95 @@
 
 
 
+<!--VDC ????property?????-->
+	<!-- object-names
+		EngineInstruments.VDC.00.1
+		EngineInstruments.VDC.01.0
+		EngineInstruments.VDC.10.0
+	-->
+	
+<!--AMPS GEN ????property?????-->
+	<!-- object-names
+	EngineInstruments.GEN.001
+	EngineInstruments.GEN.010
+	EngineInstruments.GEN.100
+	-->
+
+<!--AMPS BAT ?????property????-->
+	<!-- object-names
+	EngineInstruments.BAT.01
+	EngineInstruments.BAT.10
+	EngineInstruments.BAT.minus
+	-->
+
+<!--IAT ?!?!?!? wrong if negative temperature ?!?!?!?!?-->
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.IAT.01</object-name>
+  <property>environment/temperature-degc</property>
+	<factor>-.1</factor>
+	<step>1</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.IAT.10</object-name>
+  <property>environment/temperature-degc</property>
+	<factor>-.01</factor>
+	<step>10</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>select</type>
+	<object-name>EngineInstruments.IAT.minus</object-name>
+	<condition>
+	  <less-than>
+	    <property>environment/temperature-degc</property>
+	    <value>0</value>
+	  </less-than>
+	</condition>
+</animation>
+
+<!--FUEL TEMP !!!!!!!!!!!!!TODO!!!!!!!!-->
+	<!-- object-names
+	EngineInstruments.TEMP.01
+	EngineInstruments.TEMP.10
+	EngineInstruments.TEMP.minus
+	-->
+	
+<!--FUEL PRESS-->
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.PRESS.01</object-name>
+  <property>/fdm/jsbsim/aircraft/engine/FP-psi</property>
+	<factor>-.1</factor>
+	<step>1</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>EngineInstruments.PRESS.10</object-name>
+  <property>/fdm/jsbsim/aircraft/engine/FP-psi</property>
+	<factor>-.01</factor>
+	<step>10</step>
+	<axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</axis>
+</animation>
 
 </PropertyList>
 
