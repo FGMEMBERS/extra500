@@ -272,9 +272,9 @@
 		</equals>
 	</condition>
         <emission>
-            <red>.4</red>
-            <green>.4</green>
-            <blue>.4</blue>
+            <red>0.4</red>
+            <green>0.4</green>
+            <blue>0.4</blue>
             <factor-prop>extra500/MasterPanel/Dimming/Instrument/state</factor-prop>
         </emission>
 </animation>

@@ -19,8 +19,8 @@
       Authors: Thomas Grossberger and Dirk Dittmann
       Date: March 13 2013
 
-      Last change:      Eric van den Berg
-      Date:             21.04.13
+      Last change:      Thomas Grossberger
+      Date:             09.05.13
 
 -->
 
@@ -72,7 +72,7 @@
 	<type>textranslate</type>
 	<object-name>IAS</object-name>
 	<property>/instrumentation/airspeed-IFD-LH/indicated-speed-kt</property>
-	<factor>.00289</factor>
+	<factor>0.00289</factor>
 	<axis>
 		<x>0</x>
 		<y>1</y>
@@ -83,7 +83,7 @@
 	<type>textranslate</type>
 	<object-name>IAS.001er</object-name>
 	<property>/instrumentation/airspeed-IFD-LH/indicated-speed-kt</property>
-	<factor>.1</factor>
+	<factor>0.1</factor>
 	<axis>
 		<x>0</x>
 		<y>1</y>
@@ -94,7 +94,7 @@
 	<type>textranslate</type>
 	<object-name>IAS.010er</object-name>
 	<property>/instrumentation/airspeed-IFD-LH/indicated-speed-kt</property>
-	<factor>.01</factor>
+	<factor>0.01</factor>
 	<step>10</step>
 	<scroll>1</scroll>
 	<axis>
@@ -107,7 +107,7 @@
 	<type>textranslate</type>
 	<object-name>IAS.100er</object-name>
 	<property>/instrumentation/airspeed-IFD-LH/indicated-speed-kt</property>
-	<factor>.001</factor>
+	<factor>0.001</factor>
 	<step>100</step>
 	<scroll>1</scroll>
 	<axis>
@@ -122,7 +122,7 @@
 	<type>textranslate</type>
 	<object-name>Groundspeed.001er</object-name>
 	<property>/velocities/groundspeed-kt</property>
-	<factor>.1</factor>
+	<factor>0.1</factor>
 	<step>1</step>
 	<axis>
 		<x>0</x>
@@ -134,7 +134,7 @@
 	<type>textranslate</type>
 	<object-name>Groundspeed.010er</object-name>
 	<property>/velocities/groundspeed-kt</property>
-	<factor>.01</factor>
+	<factor>0.01</factor>
 	<step>10</step>
 	<axis>
 		<x>0</x>
@@ -146,7 +146,7 @@
 	<type>textranslate</type>
 	<object-name>Groundspeed.100er</object-name>
 	<property>/velocities/groundspeed-kt</property>
-	<factor>.001</factor>
+	<factor>0.001</factor>
 	<step>100</step>
 
 	<axis>
@@ -182,7 +182,7 @@
 	<type>textranslate</type>
 	<object-name>Altitude.00011er</object-name>
 	<property>/instrumentation/altimeter-IFD-LH/indicated-altitude-ft</property>
-	<factor>.01</factor>
+	<factor>0.01</factor>
 	<axis>
 		<x>0</x>
 		<y>1</y>
@@ -193,7 +193,7 @@
 	<type>textranslate</type>
 	<object-name>Altitude.00100er</object-name>
 	<property>/instrumentation/altimeter-IFD-LH/indicated-altitude-ft</property>
-	<factor>.001</factor>
+	<factor>0.001</factor>
 	<step>100</step>
 	<scroll>10</scroll>
 	<axis>
@@ -206,7 +206,7 @@
 	<type>textranslate</type>
 	<object-name>Altitude.01000er</object-name>
 	<property>/instrumentation/altimeter-IFD-LH/indicated-altitude-ft</property>
-	<factor>.0001</factor>
+	<factor>0.0001</factor>
 	<step>1000</step>
 	<scroll>10</scroll>
 	<axis>
@@ -219,7 +219,7 @@
 	<type>textranslate</type>
 	<object-name>Altitude.10000er</object-name>
 	<property>/instrumentation/altimeter-IFD-LH/indicated-altitude-ft</property>
-	<factor>.00001</factor>
+	<factor>0.00001</factor>
 	<step>10000</step>
 	<scroll>10</scroll>
 	<axis>
@@ -234,7 +234,7 @@
 	<type>textranslate</type>
 	<object-name>Heading.001er</object-name>
 	<property>/orientation/heading-deg</property>
-	<factor>.1</factor>
+	<factor>0.1</factor>
 	<step>1</step>
 	<axis>
 		<x>0</x>
@@ -246,7 +246,7 @@
 	<type>textranslate</type>
 	<object-name>Heading.010er</object-name>
 	<property>/orientation/heading-deg</property>
-	<factor>.01</factor>
+	<factor>0.01</factor>
 	<step>10</step>
 	<axis>
 		<x>0</x>
@@ -258,7 +258,7 @@
 	<type>textranslate</type>
 	<object-name>Heading.100er</object-name>
 	<property>/orientation/heading-deg</property>
-	<factor>.001</factor>
+	<factor>0.001</factor>
 	<step>100</step>
 
 	<axis>
@@ -273,7 +273,7 @@
 	<type>textranslate</type>
 	<object-name>WindDegree.001er</object-name>
 	<property>/environment/wind-from-heading-deg</property>
-	<factor>.1</factor>
+	<factor>0.1</factor>
 	<step>1</step>
 	<axis>
 		<x>0</x>
@@ -285,7 +285,7 @@
 	<type>textranslate</type>
 	<object-name>WindDegree.010er</object-name>
 	<property>/environment/wind-from-heading-deg</property>
-	<factor>.01</factor>
+	<factor>0.01</factor>
 	<step>10</step>
 	<axis>
 		<x>0</x>
@@ -297,7 +297,7 @@
 	<type>textranslate</type>
 	<object-name>WindDegree.100er</object-name>
 	<property>/environment/wind-from-heading-deg</property>
-	<factor>.001</factor>
+	<factor>0.001</factor>
 	<step>100</step>
 
 	<axis>
@@ -312,7 +312,7 @@
 	<type>textranslate</type>
 	<object-name>WindSpeed.01er</object-name>
 	<property>/environment/wind-speed-kt</property>
-	<factor>.1</factor>
+	<factor>0.1</factor>
 	<step>1</step>
 	<axis>
 		<x>0</x>
@@ -324,7 +324,7 @@
 	<type>textranslate</type>
 	<object-name>WindSpeed.10er</object-name>
 	<property>/environment/wind-speed-kt</property>
-	<factor>.01</factor>
+	<factor>0.01</factor>
 	<step>10</step>
 	<axis>
 		<x>0</x>
@@ -338,7 +338,7 @@
 	<type>textranslate</type>
 	<object-name>Temperature.01er</object-name>
 	<property>/environment/temperature-degc</property>
-	<factor>.1</factor>
+	<factor>0.1</factor>
 	<step>1</step>
 	<axis>
 		<x>0</x>
@@ -350,7 +350,7 @@
 	<type>textranslate</type>
 	<object-name>Temperature.10er</object-name>
 	<property>/environment/temperature-degc</property>
-	<factor>.01</factor>
+	<factor>0.01</factor>
 	<step>10</step>
 	<axis>
 		<x>0</x>
@@ -417,9 +417,9 @@
 		</equals>
 	</condition>
         <emission>
-            <red>.7</red>
-            <green>.7</green>
-            <blue>.7</blue>
+            <red>0.7</red>
+            <green>0.7</green>
+            <blue>0.7</blue>
             <factor-prop>extra500/MasterPanel/Dimming/Instrument/state</factor-prop>
         </emission>
 </animation>

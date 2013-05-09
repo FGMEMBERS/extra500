@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             27.04.13
+      Date:             09.05.13
 
 -->
 
@@ -39,9 +39,9 @@
 		</equals>
 	</condition>
         <emission>
-            <red>.7</red>
-            <green>.7</green>
-            <blue>.7</blue>
+            <red>0.7</red>
+            <green>0.7</green>
+            <blue>0.7</blue>
             <factor-prop>extra500/MasterPanel/Dimming/Instrument/state</factor-prop>
         </emission>
 </animation>
