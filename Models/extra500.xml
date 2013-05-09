@@ -33,6 +33,26 @@
 
 
 <!-- Submodels -->
+
+<model>
+  <name>TCtest</name>
+  <path>/Aircraft/Instruments-3d/tc/tc.xml</path>
+	<offsets>
+		<x-m>-0.700</x-m>
+		<y-m>0.329</y-m>	
+		<z-m>-.142</z-m>
+	<pitch-deg>-13</pitch-deg>
+	</offsets>
+</model>
+
+
+
+
+
+
+
+
+
 <model>
   <name>MasterPanel</name>
   <path>Aircraft/extra500/Models/extra500_MasterPanel.xml</path>

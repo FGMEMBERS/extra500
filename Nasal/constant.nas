@@ -22,14 +22,13 @@
 
 # Constans for Calculations
 
-# ### FIXME :  Naming Convention ??? usage in Aircarft namspace "CONST.DEG_TO_RAD" my preffered version ??
 
-var FeetToMeter = 3.2808;
-var RAD2DEG = 180/math.pi;
-var DEG_TO_RAD = math.pi/180;
+# call CONST.DEG2RAD
+
+var FEET2METER	 	= 3.2808;
+var RAD2DEG 		= 180/math.pi;
+var DEG2RAD 		= math.pi/180;
 
 
-# Functions to convert Units
 
-var deg = func(rad){ return rad*RAD2DEG; }
-var rad = func(deg){ return deg*DEG_TO_RAD; }
+

@@ -5,7 +5,7 @@ MATERIAL "instr" rgb 1.0000 1.0000 1.0000  amb 1.0000 1.0000 1.0000  emis 0.5000
 MATERIAL "grau10" rgb 0.1000 0.1000 0.1000  amb 0.1000 0.1000 0.1000  emis 0.0000 0.0000 0.0000  spec 0.0500 0.0500 0.0500  shi 50 trans 0.0000
 OBJECT world
 name "Blender_export__extra500_EngineInstruments.ac"
-kids 60
+kids 59
 OBJECT poly
 name "Cylinder.000"
 loc -0.0019001 0.0257636 -0.0541951
@@ -2477,7 +2477,7 @@ refs 4
 1 0 0
 kids 0
 OBJECT poly
-name "EngineInstruments.BAT.001"
+name "EngineInstruments.BAT.01"
 loc 0.0055515 -0.0781677 -0.0366874
 texture "extra500_EngineInstrumentsTextur.png"
 texrep 1 1
@@ -2496,7 +2496,7 @@ refs 4
 3 1.000031 0.017224
 kids 0
 OBJECT poly
-name "EngineInstruments.BAT.010"
+name "EngineInstruments.BAT.10"
 loc 0.0055515 -0.0781677 -0.0308020
 texture "extra500_EngineInstrumentsTextur.png"
 texrep 1 1
@@ -2515,7 +2515,7 @@ refs 4
 3 1.000031 0.017224
 kids 0
 OBJECT poly
-name "EngineInstruments.BAT.100"
+name "EngineInstruments.BAT.minus"
 loc 0.0055515 -0.0781677 -0.0269165
 texture "extra500_EngineInstrumentsTextur.png"
 texrep 1 1
@@ -2591,7 +2591,7 @@ refs 4
 3 1.000031 0.017224
 kids 0
 OBJECT poly
-name "EngineInstruments.IAT.001"
+name "EngineInstruments.IAT.01"
 loc 0.0055515 -0.1013391 0.0254104
 texture "extra500_EngineInstrumentsTextur.png"
 texrep 1 1
@@ -2610,7 +2610,7 @@ refs 4
 3 1.000031 0.017224
 kids 0
 OBJECT poly
-name "EngineInstruments.IAT.010"
+name "EngineInstruments.IAT.10"
 loc 0.0055515 -0.1013391 0.0312959
 texture "extra500_EngineInstrumentsTextur.png"
 texrep 1 1
@@ -2629,7 +2629,7 @@ refs 4
 3 1.000031 0.017224
 kids 0
 OBJECT poly
-name "EngineInstruments.IAT.100"
+name "EngineInstruments.IAT.minus"
 loc 0.0055515 -0.1013391 0.0371813
 texture "extra500_EngineInstrumentsTextur.png"
 texrep 1 1
@@ -2642,10 +2642,10 @@ numsurf 1
 SURF 0X20
 mat 2
 refs 4
-1 1.000031 0.044421
-0 0.900032 0.044421
-2 0.900032 0.017224
-3 1.000031 0.017224
+1 0.100068 0.078778
+0 0.000068 0.078778
+2 0.000068 0.051581
+3 0.100068 0.051581
 kids 0
 OBJECT poly
 name "EngineInstruments.N1.000.1"
@@ -2718,10 +2718,10 @@ numsurf 1
 SURF 0X20
 mat 2
 refs 4
-1 1.000031 0.044421
-0 0.900032 0.044421
-2 0.900032 0.017224
-3 1.000031 0.017224
+1 0.900422 0.044421
+0 0.800422 0.044421
+2 0.800422 0.017224
+3 0.900422 0.017224
 kids 0
 OBJECT poly
 name "EngineInstruments.N1.Dot"
@@ -4457,7 +4457,7 @@ refs 3
 42 0.693497 0.618068
 kids 0
 OBJECT poly
-name "EngineInstruments.PRESS.001"
+name "EngineInstruments.PRESS.01"
 loc 0.0055515 -0.1013391 -0.0366874
 texture "extra500_EngineInstrumentsTextur.png"
 texrep 1 1
@@ -4476,7 +4476,7 @@ refs 4
 3 1.000031 0.017224
 kids 0
 OBJECT poly
-name "EngineInstruments.PRESS.010"
+name "EngineInstruments.PRESS.10"
 loc 0.0055515 -0.1013391 -0.0308020
 texture "extra500_EngineInstrumentsTextur.png"
 texrep 1 1
@@ -4495,26 +4495,7 @@ refs 4
 3 1.000031 0.017224
 kids 0
 OBJECT poly
-name "EngineInstruments.PRESS.100"
-loc 0.0055515 -0.1013391 -0.0249165
-texture "extra500_EngineInstrumentsTextur.png"
-texrep 1 1
-numvert 4
-0.0000000 -0.0038602 0.0024427
--0.0000000 0.0038602 0.0024427
-0.0000000 -0.0038602 -0.0024427
--0.0000000 0.0038602 -0.0024427
-numsurf 1
-SURF 0X20
-mat 2
-refs 4
-1 1.000031 0.044421
-0 0.900032 0.044421
-2 0.900032 0.017224
-3 1.000031 0.017224
-kids 0
-OBJECT poly
-name "EngineInstruments.TEMP.001"
+name "EngineInstruments.TEMP.01"
 loc 0.0055515 -0.1013391 -0.0056941
 texture "extra500_EngineInstrumentsTextur.png"
 texrep 1 1
@@ -4533,7 +4514,7 @@ refs 4
 3 1.000031 0.017224
 kids 0
 OBJECT poly
-name "EngineInstruments.TEMP.010"
+name "EngineInstruments.TEMP.10"
 loc 0.0055515 -0.1013391 0.0001914
 texture "extra500_EngineInstrumentsTextur.png"
 texrep 1 1
@@ -4552,7 +4533,7 @@ refs 4
 3 1.000031 0.017224
 kids 0
 OBJECT poly
-name "EngineInstruments.TEMP.100"
+name "EngineInstruments.TEMP.minus"
 loc 0.0055515 -0.1013391 0.0060768
 texture "extra500_EngineInstrumentsTextur.png"
 texrep 1 1
@@ -4565,10 +4546,10 @@ numsurf 1
 SURF 0X20
 mat 2
 refs 4
-1 1.000031 0.044421
-0 0.900032 0.044421
-2 0.900032 0.017224
-3 1.000031 0.017224
+1 0.100068 0.078778
+0 0.000068 0.078778
+2 0.000068 0.051581
+3 0.100068 0.051581
 kids 0
 OBJECT poly
 name "EngineInstruments.TOT.001"
@@ -5079,10 +5060,10 @@ numsurf 1
 SURF 0X20
 mat 2
 refs 4
-1 1.000031 0.044421
-0 0.900032 0.044421
-2 0.900032 0.017224
-3 1.000031 0.017224
+1 0.900422 0.044421
+0 0.800422 0.044421
+2 0.800422 0.017224
+3 0.900422 0.017224
 kids 0
 OBJECT poly
 name "EngineInstruments.TRQ.Dot"
