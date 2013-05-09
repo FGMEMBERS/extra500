@@ -427,7 +427,7 @@
 		<object-name>EngineInstruments.VDC.10.0</object-name>
 		<condition>
 		<greater-than-equals>
-			<property>extra500/Instrument/DIP/VoltMonitor/state</property>
+			<property>extra500/Instrument/DIP/indicatedVDC</property>
 			<value>10</value>
 		</greater-than-equals>
 		</condition>
@@ -436,7 +436,7 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.VDC.00.1</object-name>
-		<property>extra500/Instrument/DIP/VoltMonitor/state</property>
+		<property>extra500/Instrument/DIP/indicatedVDC</property>
 		<factor>-1.0</factor>
 		<step>0.1</step>
 		<axis>
@@ -448,7 +448,7 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.VDC.01.0</object-name>
-		<property>extra500/Instrument/DIP/VoltMonitor/state</property>
+		<property>extra500/Instrument/DIP/indicatedVDC</property>
 		<factor>-0.1</factor>
 		<step>1</step>
 		<axis>
@@ -460,7 +460,7 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.VDC.10.0</object-name>
-		<property>extra500/Instrument/DIP/VoltMonitor/state</property>
+		<property>extra500/Instrument/DIP/indicatedVDC</property>
 		<factor>-0.01</factor>
 		<step>10</step>
 		<axis>
@@ -472,9 +472,29 @@
 	
 <!-- GEN AMPS -->
 	<animation>
+		<type>select</type>
+		<object-name>EngineInstruments.GEN.010</object-name>
+		<condition>
+			<greater-than-equals>
+				<property>extra500/Instrument/DIP/indicatedGEN</property>
+				<value>10</value>
+			</greater-than-equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>EngineInstruments.GEN.100</object-name>
+		<condition>
+			<greater-than-equals>
+				<property>extra500/Instrument/DIP/indicatedGEN</property>
+				<value>100</value>
+			</greater-than-equals>
+		</condition>
+	</animation>
+	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.GEN.001</object-name>
-		<property>extra500/mainBoard/GeneratorShunt/indicatedAmpere</property>
+		<property>extra500/Instrument/DIP/indicatedGEN</property>
 		<factor>-0.1</factor>
 		<step>1</step>
 		<axis>
@@ -482,22 +502,12 @@
 			<y>0</y>
 			<z>0</z>
 		</axis>
-</animation>
-	<animation>
-	<type>select</type>
-	<object-name>EngineInstruments.GEN.010</object-name>
-	<condition>
-	  <greater-than-equals>
-	    <property>extra500/mainBoard/GeneratorShunt/indicatedAmpere</property>
-	    <value>10</value>
-	  </greater-than-equals>
-	</condition>
-</animation>
+	</animation>
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.GEN.010</object-name>
-		<property>extra500/mainBoard/GeneratorShunt/indicatedAmpere</property>
-		<factor>-0.1</factor>
+		<property>extra500/Instrument/DIP/indicatedGEN</property>
+		<factor>-0.01</factor>
 		<step>10</step>
 		<axis>
 			<x>1</x>
@@ -505,21 +515,11 @@
 			<z>0</z>
 		</axis>
 	</animation>
-<animation>
-	<type>select</type>
-	<object-name>EngineInstruments.GEN.100</object-name>
-	<condition>
-	  <greater-than-equals>
-	    <property>extra500/mainBoard/GeneratorShunt/indicatedAmpere</property>
-	    <value>100</value>
-	  </greater-than-equals>
-	</condition>
-</animation>
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.GEN.100</object-name>
-		<property>extra500/mainBoard/GeneratorShunt/indicatedAmpere</property>
-		<factor>-0.1</factor>
+		<property>extra500/Instrument/DIP/indicatedGEN</property>
+		<factor>-0.001</factor>
 		<step>100</step>
 		<axis>
 			<x>1</x>
@@ -531,27 +531,16 @@
 <!-- BAT AMPS -->
 	<animation> <!-- Positive -->
 		<type>select</type>
-		<object-name>EngineInstruments.BAT.01</object-name>
-		<condition>
-		<greater-than-equals>
-			<property>extra500/mainBoard/BatteryShunt/indicatedAmpere</property>
-			<value>0</value>
-		</greater-than-equals>
-		</condition>
-	</animation>
-	<animation> <!-- Positive -->
-		<type>select</type>
 		<object-name>EngineInstruments.BAT.10</object-name>
 		<condition>
 		<greater-than-equals>
-			<property>extra500/mainBoard/BatteryShunt/indicatedAmpere</property>
+			<property>extra500/Instrument/DIP/indicatedBAT</property>
 			<value>10</value>
 		</greater-than-equals>
 		</condition>
 	</animation>
 	<animation> <!-- Negative -->
 		<type>select</type>
-		<object-name>EngineInstruments.BAT.01neg</object-name>
 		<object-name>EngineInstruments.BAT.minus</object-name>
 		<condition>
 		<less-than>
@@ -560,21 +549,11 @@
 		</less-than>
 		</condition>
 	</animation>
-	<animation> <!-- Negative -->
-		<type>select</type>
-		<object-name>EngineInstruments.BAT.10neg</object-name>
-		<condition>
-		<less-than-equals>
-			<property>extra500/mainBoard/BatteryShunt/indicatedAmpere</property>
-			<value>-10</value>
-		</less-than-equals>
-		</condition>
-	</animation>
 	
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.BAT.01</object-name>
-		<property>extra500/mainBoard/BatteryShunt/indicatedAmpere</property>
+		<property>extra500/Instrument/DIP/indicatedBAT</property>
 		<factor>-0.1</factor>
 		<step>1</step>
 		<axis>
@@ -586,7 +565,7 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.BAT.10</object-name>
-		<property>extra500/mainBoard/BatteryShunt/indicatedAmpere</property>
+		<property>extra500/Instrument/DIP/indicatedBAT</property>
 		<factor>-0.01</factor>
 		<step>10</step>
 		<axis>
@@ -595,31 +574,7 @@
 			<z>0</z>
 		</axis>
 	</animation>
-	
-	<animation>
-		<type>textranslate</type>
-		<object-name>EngineInstruments.BAT.01neg</object-name>
-		<property>extra500/mainBoard/BatteryShunt/indicatedAmpere</property>
-		<factor>0.1</factor>
-		<step>1</step>
-		<axis>
-			<x>1</x>
-			<y>0</y>
-			<z>0</z>
-		</axis>
-	</animation>
-	<animation>
-		<type>textranslate</type>
-		<object-name>EngineInstruments.BAT.10neg</object-name>
-		<property>extra500/mainBoard/BatteryShunt/indicatedAmpere</property>
-		<factor>0.01</factor>
-		<step>10</step>
-		<axis>
-			<x>1</x>
-			<y>0</y>
-			<z>0</z>
-		</axis>
-	</animation>
+
 	
 <!-- IAT Temp -->
 	<animation>
@@ -801,7 +756,7 @@
 		<object-name>EngineInstruments.PRESS.10</object-name>
 		<condition>
 		<greater-than-equals>
-			<property>/fdm/jsbsim/aircraft/engine/FP-psi</property>
+			<property>extra500/Instrument/DIP/indicatedFuelPress</property>
 			<value>10</value>
 		</greater-than-equals>
 		</condition>
@@ -810,7 +765,7 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.PRESS.01</object-name>
-		<property>/fdm/jsbsim/aircraft/engine/FP-psi</property>
+		<property>extra500/Instrument/DIP/indicatedFuelPress</property>
 		<factor>-0.1</factor>
 		<step>1</step>
 		<axis>
@@ -822,7 +777,7 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.PRESS.10</object-name>
-		<property>/fdm/jsbsim/aircraft/engine/FP-psi</property>
+		<property>extra500/Instrument/DIP/indicatedFuelPress</property>
 		<factor>-0.01</factor>
 		<step>10</step>
 		<axis>
