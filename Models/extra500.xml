@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             09.05.13
+      Date:             10.05.13
 
 -->
 
@@ -108,6 +108,17 @@
 		<x-m>-0.741</x-m>
 		<y-m>.2905</y-m>	
 		<z-m>-0.054</z-m>
+	<pitch-deg>-13</pitch-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>FuelInstruments</name>
+  <path>Aircraft/extra500/Models/extra500_FuelInstruments.xml</path>
+	<offsets>
+		<x-m>-0.702</x-m>
+		<y-m>0.23</y-m>	
+		<z-m>-.171</z-m>
 	<pitch-deg>-13</pitch-deg>
 	</offsets>
 </model>
