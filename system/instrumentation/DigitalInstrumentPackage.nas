@@ -21,41 +21,88 @@
 #
 
 var DigitalInstrumentPackage = {
-	new : func(){
+	new : func(nRoot,name){
 				
 		var m = {parents:[
 			DigitalInstrumentPackage,
+			Part.Part.new(nRoot,name),
+			Part.SimStateAble.new(nRoot,"BOOL",0),
+			Part.ElectricAble.new(nRoot,name)
 		]};
 		
-		m.nPanel = props.globals.getNode("extra500/Instrument/DIP",1);
+				
+		#m.VoltMonitor = Part.ElectricVoltSensor.new(m.nPanel.initNode("VoltMonitor"),"Volt Monitor");
+		m.VDC = 0.0;
 		
-		m.VoltMonitor = Part.ElectricVoltSensor.new(m.nPanel.initNode("VoltMonitor"),"Volt Monitor");
-
+		m.nGenAmps = props.globals.initNode("extra500/mainBoard/GeneratorShunt/indicatedAmpere",0.0,"DOUBLE");
+		m.nBatAmps = props.globals.initNode("extra500/mainBoard/BatteryShunt/indicatedAmpere",0.0,"DOUBLE");
 		
-		m.nVDC = props.globals.getNode("extra500/Instrument/DIP/VoltMonitor/state");
-		m.nGenAmps = props.globals.getNode("extra500/mainBoard/GeneratorShunt/indicatedAmpere");
-		m.nBatAmps = props.globals.getNode("extra500/mainBoard/BatteryShunt/indicatedAmpere");
+		m.nIAT = props.globals.initNode("/environment/temperature-degc",0.0,"DOUBLE");
+		m.nFuelTemp = props.globals.initNode("/fdm/jsbsim/aircraft/engine/FT-degC",0.0,"DOUBLE");
+		m.nFuelPress = props.globals.initNode("/fdm/jsbsim/aircraft/engine/FP-psi",0.0,"DOUBLE");
 		
-		m.nIAT = props.globals.getNode("/environment/temperature-degc");
-		m.nFuelTemp = props.globals.getNode("/fdm/jsbsim/aircraft/engine/FT-degC");
-		m.nFuelPress = props.globals.getNode("/fdm/jsbsim/aircraft/engine/FP-psi");
+		m.nIndicatedVDC = props.globals.initNode("extra500/Instrument/DIP/indicatedVDC",0.0,"DOUBLE");
+		m.nIndicatedGEN = props.globals.initNode("extra500/Instrument/DIP/indicatedGEN",0.0,"DOUBLE");
+		m.nIndicatedBAT = props.globals.initNode("extra500/Instrument/DIP/indicatedBAT",0.0,"DOUBLE");
 		
-		m.nIndicatedVDC = props.globals.getNode("extra500/Instrument/DIP/indicatedVDC",1);
-		m.nIndicatedGEN = props.globals.getNode("extra500/Instrument/DIP/indicatedGEN",1);
-		m.nIndicatedBAT = props.globals.getNode("extra500/Instrument/DIP/indicatedBAT",1);
+		m.nIndicatedIAT = props.globals.initNode("extra500/Instrument/DIP/indicatedIAT",0.0,"DOUBLE");
+		m.nIndicatedFuelTemp = props.globals.initNode("extra500/Instrument/DIP/indicatedFuelTemp",0.0,"DOUBLE");
+		m.nIndicatedFuelPress = props.globals.initNode("extra500/Instrument/DIP/indicatedFuelPress",0.0,"DOUBLE");
 		
-		m.nIndicatedIAT = props.globals.getNode("extra500/Instrument/DIP/indicatedIAT",1);
-		m.nIndicatedFuelTemp = props.globals.getNode("extra500/Instrument/DIP/indicatedFuelTemp",1);
-		m.nIndicatedFuelPress = props.globals.getNode("extra500/Instrument/DIP/indicatedFuelPress",1);
+	# Electric Connectors
+		m.PowerInputA 		= Part.ElectricConnector.new("PowerInputA");
+		m.PowerInputB 		= Part.ElectricConnector.new("PowerInputB");
+		m.VoltMonitor		= Part.ElectricConnector.new("VoltMonitor");
+		m.GND 			= Part.ElectricConnector.new("GND");
 		
+		m.PowerInputA.solder(m);
+		m.PowerInputB.solder(m);
+		m.VoltMonitor.solder(m);
+		m.GND.solder(m);
 		
+		append(Part.aListSimStateAble,m);
 		return m;
 
 	},
+	applyVoltage : func(electron,name=""){ 
+		Part.etd.in("DIP",me.name,name,electron);
+		var GND = 0;
+		
+		if (electron != nil){
+			electron.resistor += 20000.0;
+			if (name == "PowerInputA"){
+				
+				GND = me.GND.applyVoltage(electron);
+				if (GND){
+					me.state = 1;
+					var watt = me.electricWork(electron);
+				}
+			}elsif(name == "PowerInputB"){
+				GND = me.GND.applyVoltage(electron);
+				if (GND){
+					me.state = 1;
+					var watt = me.electricWork(electron);
+				}
+			}elsif(name == "VoltMonitor"){
+				
+				GND = me.GND.applyVoltage(electron);
+				if (GND){
+					var watt = me.electricWork(electron);
+					me.VDC = electron.volt;
+				}
+			}
+		}
+		
+		Part.etd.out("DIP",me.name,name,electron);
+		return GND;
+	},
 	# Main Simulation loop  ~ 10Hz
 	update : func(){
+		if (me.state == 0){	# no power input
+			me.VDC = 0.0;
+		}
 		
-		me.nIndicatedVDC.setValue( math.abs(me.nVDC.getValue()) + 0.0001 );
+		me.nIndicatedVDC.setValue( math.abs(me.VDC) + 0.0001 );
 		me.nIndicatedGEN.setValue( math.abs(me.nGenAmps.getValue()) + 0.0001 );
 		me.nIndicatedBAT.setValue( math.abs(me.nBatAmps.getValue()) + 0.0001 );
 		me.nIndicatedIAT.setValue( math.abs(me.nIAT.getValue()) + 0.0001 );
@@ -66,4 +113,4 @@ var DigitalInstrumentPackage = {
 	
 };
 
-var digitalInstrumentPackage = DigitalInstrumentPackage.new();
+var digitalInstrumentPackage = DigitalInstrumentPackage.new(props.globals.initNode("extra500/Instrument/DIP"),"Digital Instrument Package");

@@ -460,8 +460,12 @@ var plugPcBoard = func(){
 }
 
 var plugDIP =func(){
-	digitalInstrumentPackage.VoltMonitor.Plus.plug(circuitBreakerPanel.VoltMonitor.Out);
-	digitalInstrumentPackage.VoltMonitor.Minus.plug(mainBoard.GND);
+	digitalInstrumentPackage.GND.plug(mainBoard.GND);
+	
+	digitalInstrumentPackage.PowerInputA.plug(circuitBreakerPanel.DIP1.Out);
+	digitalInstrumentPackage.PowerInputA.plug(circuitBreakerPanel.DIP2.Out);
+	digitalInstrumentPackage.VoltMonitor.plug(circuitBreakerPanel.VoltMonitor.Out);
+	
 }
 
 var plugElectric = func(){

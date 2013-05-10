@@ -419,9 +419,50 @@
 		<z>0</z>
 	</axis>
 </animation>
-
-
+<!-- Digital Instrument Package -->
+<!--Dimming -->
+<animation>
+	<type>material</type>
+	<object-name>EngineInstruments.VDC.00.1</object-name>
+		<object-name>EngineInstruments.VDC.01.0</object-name>
+		<object-name>EngineInstruments.VDC.10.0</object-name>
+		<object-name>EngineInstruments.VDC.Dot</object-name>
+		<object-name>EngineInstruments.GEN.001</object-name>
+		<object-name>EngineInstruments.GEN.010</object-name>
+		<object-name>EngineInstruments.GEN.100</object-name>
+		<object-name>EngineInstruments.BAT.01</object-name>
+		<object-name>EngineInstruments.BAT.10</object-name>
+		<object-name>EngineInstruments.BAT.minus</object-name>
+		<object-name>EngineInstruments.IAT.01</object-name>
+		<object-name>EngineInstruments.IAT.10</object-name>
+		<object-name>EngineInstruments.IAT.minus</object-name>
+		<object-name>EngineInstruments.TEMP.01</object-name>
+		<object-name>EngineInstruments.TEMP.10</object-name>
+		<object-name>EngineInstruments.TEMP.minus</object-name>
+		<object-name>EngineInstruments.PRESS.01</object-name>
+		<object-name>EngineInstruments.PRESS.10</object-name>
+		<emission>	
+		<red>1.0</red>	
+		<green>1.0</green>	
+		<blue>1.0</blue>
+		<factor-prop>/extra500/Light/Instrument/state</factor-prop>
+	</emission>
+</animation>
 <!--VDC -->
+	<animation>
+		<!-- Power on/off -->
+		<type>select</type>
+		<object-name>EngineInstruments.VDC.00.1</object-name>
+		<object-name>EngineInstruments.VDC.01.0</object-name>
+		<object-name>EngineInstruments.VDC.10.0</object-name>
+		<object-name>EngineInstruments.VDC.Dot</object-name>
+		<condition>
+			<greater-than>
+				<property>extra500/Instrument/DIP/state</property>
+				<value>0</value>
+			</greater-than>	
+		</condition>
+	</animation>
 	<animation> <!-- Positive -->
 		<type>select</type>
 		<object-name>EngineInstruments.VDC.10.0</object-name>
@@ -471,6 +512,19 @@
 	</animation>
 	
 <!-- GEN AMPS -->
+	<animation>
+		<!-- Power on/off -->
+		<type>select</type>
+		<object-name>EngineInstruments.GEN.001</object-name>
+		<object-name>EngineInstruments.GEN.010</object-name>
+		<object-name>EngineInstruments.GEN.100</object-name>
+		<condition>
+			<greater-than>
+				<property>extra500/Instrument/DIP/state</property>
+				<value>0</value>
+			</greater-than>	
+		</condition>
+	</animation>
 	<animation>
 		<type>select</type>
 		<object-name>EngineInstruments.GEN.010</object-name>
@@ -529,6 +583,21 @@
 	</animation>
 
 <!-- BAT AMPS -->
+	
+	<animation>
+		<!-- Power on/off -->
+		<type>select</type>
+		<object-name>EngineInstruments.BAT.01</object-name>
+		<object-name>EngineInstruments.BAT.10</object-name>
+		<object-name>EngineInstruments.BAT.minus</object-name>
+		<condition>
+			<greater-than>
+				<property>extra500/Instrument/DIP/state</property>
+				<value>0</value>
+			</greater-than>	
+		</condition>
+	</animation>
+
 	<animation> <!-- Positive -->
 		<type>select</type>
 		<object-name>EngineInstruments.BAT.10</object-name>
@@ -578,6 +647,19 @@
 	
 <!-- IAT Temp -->
 	<animation>
+		<!-- Power on/off -->
+		<type>select</type>
+		<object-name>EngineInstruments.IAT.01</object-name>
+		<object-name>EngineInstruments.IAT.10</object-name>
+		<object-name>EngineInstruments.IAT.minus</object-name>
+		<condition>
+			<greater-than>
+				<property>extra500/Instrument/DIP/state</property>
+				<value>0</value>
+			</greater-than>	
+		</condition>
+	</animation>
+	<animation>
 		<type>select</type>
 		<object-name>EngineInstruments.IAT.10</object-name>
 		<condition>
@@ -610,20 +692,33 @@
 			<z>0</z>
 		</axis>
 	</animation>
-    <animation>
-	       <type>textranslate</type>
-	       <object-name>EngineInstruments.IAT.10</object-name>
-	       <property>extra500/Instrument/DIP/indicatedIAT</property>
-	       <factor>-0.01</factor>
-	       <step>10</step>
-	       <axis>
-		       <x>1</x>
-		       <y>0</y>
-		       <z>0</z>
-	       </axis>
-       </animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.IAT.10</object-name>
+		<property>extra500/Instrument/DIP/indicatedIAT</property>
+		<factor>-0.01</factor>
+		<step>10</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
 
 <!-- FUEL TEMP -->
+	<animation>
+		<!-- Power on/off -->
+		<type>select</type>
+		<object-name>EngineInstruments.TEMP.01</object-name>
+		<object-name>EngineInstruments.TEMP.10</object-name>
+		<object-name>EngineInstruments.TEMP.minus</object-name>
+		<condition>
+			<greater-than>
+				<property>extra500/Instrument/DIP/state</property>
+				<value>0</value>
+			</greater-than>	
+		</condition>
+	</animation>
 	<animation>
 		<type>select</type>
 		<object-name>EngineInstruments.TEMP.10</object-name>
@@ -671,6 +766,18 @@
 	</animation>
 
 <!--FUEL PRESS-->
+	<animation>
+		<!-- Power on/off -->
+		<type>select</type>
+		<object-name>EngineInstruments.PRESS.01</object-name>
+		<object-name>EngineInstruments.PRESS.10</object-name>
+		<condition>
+			<greater-than>
+				<property>extra500/Instrument/DIP/state</property>
+				<value>0</value>
+			</greater-than>	
+		</condition>
+	</animation>
 	<animation> <!-- Positive -->
 		<type>select</type>
 		<object-name>EngineInstruments.PRESS.10</object-name>

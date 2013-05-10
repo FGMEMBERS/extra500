@@ -248,6 +248,7 @@ var CircuitBreakerPanel = {
 		
 		nCompNode = nParent.initNode("InstrumentLight");
 		m.InstrumentLight = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Instrument Light");
+		m.InstrumentLight.fuseConfig(15.0);
 		
 		nCompNode = nParent.initNode("StrobeLight");
 		m.StrobeLight = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Strobe Light");
