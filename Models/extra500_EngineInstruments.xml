@@ -692,21 +692,7 @@
 			<z>0</z>
 		</axis>
 	</animation>
-<<<<<<< HEAD
 	<animation>
-		<type>textranslate</type>
-		<object-name>EngineInstruments.IAT.10</object-name>
-		<property>extra500/Instrument/DIP/indicatedIAT</property>
-		<factor>-0.01</factor>
-		<step>10</step>
-		<axis>
-			<x>1</x>
-			<y>0</y>
-			<z>0</z>
-		</axis>
-	</animation>
-=======
-    <animation>
 	       <type>textranslate</type>
 	       <object-name>EngineInstruments.IAT.10</object-name>
 	       <property>extra500/Instrument/DIP/indicatedIAT</property>
@@ -718,7 +704,6 @@
 		       <z>0</z>
 	       </axis>
        </animation>
->>>>>>> f50436b5029aeccc548f0c3fc057c5684282c296
 
 <!-- FUEL TEMP -->
 	<animation>
