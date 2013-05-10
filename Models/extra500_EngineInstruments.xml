@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             09.05.13
+      Date:             10.05.13
 
 -->
 
@@ -57,7 +57,7 @@
 	<type>textranslate</type>
 	<object-name>EngineInstruments.TRQ.000.1</object-name>
 	<property>/fdm/jsbsim/aircraft/engine/TRQ-perc</property>
-	<factor>-1</factor>
+	<factor>1</factor>
 	<step>0.1</step>
 	<axis>
 		<x>1</x>
@@ -69,7 +69,7 @@
 	<type>textranslate</type>
 	<object-name>EngineInstruments.TRQ.001.0</object-name>
   <property>/fdm/jsbsim/aircraft/engine/TRQ-perc</property>
-	<factor>-0.1</factor>
+	<factor>0.1</factor>
 	<step>1</step>
 	<axis>
 		<x>1</x>
@@ -81,7 +81,7 @@
 	<type>textranslate</type>
 	<object-name>EngineInstruments.TRQ.010.0</object-name>
   <property>/fdm/jsbsim/aircraft/engine/TRQ-perc</property>
-	<factor>-0.01</factor>
+	<factor>0.01</factor>
 	<step>10</step>
 	<axis>
 		<x>1</x>
@@ -129,7 +129,7 @@
 	<type>textranslate</type>
 	<object-name>EngineInstruments.TOT.001</object-name>
   <property>/fdm/jsbsim/aircraft/engine/TOTr-degC</property>
-	<factor>-0.1</factor>
+	<factor>0.1</factor>
 	<step>1</step>
 	<axis>
 		<x>1</x>
@@ -141,7 +141,7 @@
 	<type>textranslate</type>
 	<object-name>EngineInstruments.TOT.010</object-name>
   <property>/fdm/jsbsim/aircraft/engine/TOTr-degC</property>
-	<factor>-0.01</factor>
+	<factor>0.01</factor>
 	<step>10</step>
 	<axis>
 		<x>1</x>
@@ -153,7 +153,7 @@
 	<type>textranslate</type>
 	<object-name>EngineInstruments.TOT.100</object-name>
   <property>/fdm/jsbsim/aircraft/engine/TOTr-degC</property>
-	<factor>-0.001</factor>
+	<factor>0.001</factor>
 	<step>100</step>
 	<axis>
 		<x>1</x>
@@ -191,7 +191,7 @@
 	<type>textranslate</type>
 	<object-name>EngineInstruments.N1.000.1</object-name>
   <property>/fdm/jsbsim/propulsion/engine/n1</property>
-	<factor>-1</factor>
+	<factor>1</factor>
 	<step>0.1</step>
 	<axis>
 		<x>1</x>
@@ -203,7 +203,7 @@
 	<type>textranslate</type>
 	<object-name>EngineInstruments.N1.001.0</object-name>
   <property>/fdm/jsbsim/propulsion/engine/n1</property>
-	<factor>-0.1</factor>
+	<factor>0.1</factor>
 	<step>1</step>
 	<axis>
 		<x>1</x>
@@ -215,7 +215,7 @@
 	<type>textranslate</type>
 	<object-name>EngineInstruments.N1.010.0</object-name>
   <property>/fdm/jsbsim/propulsion/engine/n1</property>
-	<factor>-0.01</factor>
+	<factor>0.01</factor>
 	<step>10</step>
 	<axis>
 		<x>1</x>
@@ -263,7 +263,7 @@
 	<type>textranslate</type>
 	<object-name>EngineInstruments.N2.0010</object-name>
   <property>/engines/engine/thruster/rpm</property>
-	<factor>-0.01</factor>
+	<factor>0.01</factor>
 	<step>10</step>
 	<axis>
 		<x>1</x>
@@ -275,7 +275,7 @@
 	<type>textranslate</type>
 	<object-name>EngineInstruments.N2.0100</object-name>
   <property>/engines/engine/thruster/rpm</property>
-	<factor>-0.001</factor>
+	<factor>0.001</factor>
 	<step>100</step>
 	<axis>
 		<x>1</x>
@@ -287,7 +287,7 @@
 	<type>textranslate</type>
 	<object-name>EngineInstruments.N2.1000</object-name>
   <property>/engines/engine/thruster/rpm</property>
-	<factor>-0.0001</factor>
+	<factor>0.0001</factor>
 	<step>1000</step>
 	<axis>
 		<x>1</x>
@@ -325,7 +325,7 @@
 	<type>textranslate</type>
 	<object-name>EngineInstruments.OP.001</object-name>
   <property>/fdm/jsbsim/aircraft/engine/OP-psi</property>
-	<factor>-0.1</factor>
+	<factor>0.1</factor>
 	<step>1</step>
 	<axis>
 		<x>1</x>
@@ -337,7 +337,7 @@
 	<type>textranslate</type>
 	<object-name>EngineInstruments.OP.010</object-name>
   <property>/fdm/jsbsim/aircraft/engine/OP-psi</property>
-	<factor>-0.01</factor>
+	<factor>0.01</factor>
 	<step>10</step>
 	<axis>
 		<x>1</x>
@@ -349,7 +349,7 @@
 	<type>textranslate</type>
 	<object-name>EngineInstruments.OP.100</object-name>
   <property>/fdm/jsbsim/aircraft/engine/OP-psi</property>
-	<factor>-0.001</factor>
+	<factor>0.001</factor>
 	<step>100</step>
 	<axis>
 		<x>1</x>
@@ -387,7 +387,7 @@
 	<type>textranslate</type>
 	<object-name>EngineInstruments.OT.001</object-name>
 	<property>/fdm/jsbsim/aircraft/engine/OT-degC</property>
-	<factor>-0.1</factor>
+	<factor>0.1</factor>
 	<step>1</step>
 	<axis>
 		<x>1</x>
@@ -399,7 +399,7 @@
 	<type>textranslate</type>
 	<object-name>EngineInstruments.OT.010</object-name>
 	<property>/fdm/jsbsim/aircraft/engine/OT-degC</property>
-	<factor>-0.01</factor>
+	<factor>0.01</factor>
 	<step>10</step>
 	<axis>
 		<x>1</x>
@@ -411,7 +411,7 @@
 	<type>textranslate</type>
 	<object-name>EngineInstruments.OT.100</object-name>
 	<property>/fdm/jsbsim/aircraft/engine/OT-degC</property>
-	<factor>-0.001</factor>
+	<factor>0.001</factor>
 	<step>100</step>
 	<axis>
 		<x>1</x>
@@ -437,7 +437,7 @@
 		<type>textranslate</type>
 		<object-name>EngineInstruments.VDC.00.1</object-name>
 		<property>extra500/Instrument/DIP/indicatedVDC</property>
-		<factor>-1.0</factor>
+		<factor>1.0</factor>
 		<step>0.1</step>
 		<axis>
 			<x>1</x>
@@ -449,7 +449,7 @@
 		<type>textranslate</type>
 		<object-name>EngineInstruments.VDC.01.0</object-name>
 		<property>extra500/Instrument/DIP/indicatedVDC</property>
-		<factor>-0.1</factor>
+		<factor>0.1</factor>
 		<step>1</step>
 		<axis>
 			<x>1</x>
@@ -461,7 +461,7 @@
 		<type>textranslate</type>
 		<object-name>EngineInstruments.VDC.10.0</object-name>
 		<property>extra500/Instrument/DIP/indicatedVDC</property>
-		<factor>-0.01</factor>
+		<factor>0.01</factor>
 		<step>10</step>
 		<axis>
 			<x>1</x>
@@ -495,7 +495,7 @@
 		<type>textranslate</type>
 		<object-name>EngineInstruments.GEN.001</object-name>
 		<property>extra500/Instrument/DIP/indicatedGEN</property>
-		<factor>-0.1</factor>
+		<factor>0.1</factor>
 		<step>1</step>
 		<axis>
 			<x>1</x>
@@ -507,7 +507,7 @@
 		<type>textranslate</type>
 		<object-name>EngineInstruments.GEN.010</object-name>
 		<property>extra500/Instrument/DIP/indicatedGEN</property>
-		<factor>-0.01</factor>
+		<factor>0.01</factor>
 		<step>10</step>
 		<axis>
 			<x>1</x>
@@ -519,7 +519,7 @@
 		<type>textranslate</type>
 		<object-name>EngineInstruments.GEN.100</object-name>
 		<property>extra500/Instrument/DIP/indicatedGEN</property>
-		<factor>-0.001</factor>
+		<factor>0.001</factor>
 		<step>100</step>
 		<axis>
 			<x>1</x>
@@ -554,7 +554,7 @@
 		<type>textranslate</type>
 		<object-name>EngineInstruments.BAT.01</object-name>
 		<property>extra500/Instrument/DIP/indicatedBAT</property>
-		<factor>-0.1</factor>
+		<factor>0.1</factor>
 		<step>1</step>
 		<axis>
 			<x>1</x>
@@ -566,7 +566,7 @@
 		<type>textranslate</type>
 		<object-name>EngineInstruments.BAT.10</object-name>
 		<property>extra500/Instrument/DIP/indicatedBAT</property>
-		<factor>-0.01</factor>
+		<factor>0.01</factor>
 		<step>10</step>
 		<axis>
 			<x>1</x>
@@ -602,7 +602,7 @@
 		<type>textranslate</type>
 		<object-name>EngineInstruments.IAT.01</object-name>
 		<property>extra500/Instrument/DIP/indicatedIAT</property>
-		<factor>-0.1</factor>
+		<factor>0.1</factor>
 		<step>1</step>
 		<axis>
 			<x>1</x>
@@ -614,7 +614,7 @@
 	       <type>textranslate</type>
 	       <object-name>EngineInstruments.IAT.10</object-name>
 	       <property>extra500/Instrument/DIP/indicatedIAT</property>
-	       <factor>-0.01</factor>
+	       <factor>0.01</factor>
 	       <step>10</step>
 	       <axis>
 		       <x>1</x>
@@ -649,7 +649,7 @@
 		<type>textranslate</type>
 		<object-name>EngineInstruments.TEMP.01</object-name>
 		<property>extra500/Instrument/DIP/indicatedFuelTemp</property>
-		<factor>-0.1</factor>
+		<factor>0.1</factor>
 		<step>1</step>
 		<axis>
 			<x>1</x>
@@ -661,7 +661,7 @@
 		<type>textranslate</type>
 		<object-name>EngineInstruments.TEMP.10</object-name>
 		<property>extra500/Instrument/DIP/indicatedFuelTemp</property>
-		<factor>-0.01</factor>
+		<factor>0.01</factor>
 		<step>10</step>
 		<axis>
 			<x>1</x>
@@ -686,7 +686,7 @@
 		<type>textranslate</type>
 		<object-name>EngineInstruments.PRESS.01</object-name>
 		<property>extra500/Instrument/DIP/indicatedFuelPress</property>
-		<factor>-0.1</factor>
+		<factor>0.1</factor>
 		<step>1</step>
 		<axis>
 			<x>1</x>
@@ -698,7 +698,7 @@
 		<type>textranslate</type>
 		<object-name>EngineInstruments.PRESS.10</object-name>
 		<property>extra500/Instrument/DIP/indicatedFuelPress</property>
-		<factor>-0.01</factor>
+		<factor>0.01</factor>
 		<step>10</step>
 		<axis>
 			<x>1</x>

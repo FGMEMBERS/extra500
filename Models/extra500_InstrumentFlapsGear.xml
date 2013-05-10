@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             09.05.13
+      Date:             10.05.13
 -->
 
 <PropertyList>
@@ -150,7 +150,7 @@
 	</emission>
 </animation>
 
-<!--GearLever-->
+<!--GearLever ##### NO UI-click found :( #############-->
 <animation>
       <type>pick</type>
       <object-name>GearLever</object-name>
@@ -169,7 +169,33 @@
       <object-name>GearLever</object-name>
       <visible>true</visible>
       <action>
+        <button>3</button>
+        <repeatable>false</repeatable>
+        <binding>
+          <command>property-toggle</command>
+          <property>controls/gear/gear-down</property>
+        </binding>
+      </action>
+</animation>
+<animation>
+      <type>pick</type>
+      <object-name>GearLever</object-name>
+      <visible>true</visible>
+      <action>
         <button>1</button>
+        <repeatable>false</repeatable>
+        <binding>
+          <command>property-toggle</command>
+          <property>controls/gear/gear-down</property>
+        </binding>
+      </action>
+</animation>
+<animation>
+      <type>pick</type>
+      <object-name>GearLever</object-name>
+      <visible>true</visible>
+      <action>
+        <button>4</button>
         <repeatable>false</repeatable>
         <binding>
           <command>property-toggle</command>
@@ -206,35 +232,47 @@
       <type>pick</type>
       <object-name>FlapControl</object-name>
       <visible>true</visible>
-      <action>
-        <button>0</button>
-        <repeatable>false</repeatable>
-        <binding>
-          <command>nasal</command>
-          <script>controls.flapsDown(1)</script>
-         </binding>
-         <mod-up>
-          <binding>
-           <command>nasal</command>
-           <script>controls.flapsDown(0)</script>
-          </binding>
-         </mod-up>
-      </action>
-      <action>
-        <button>1</button>
-        <repeatable>false</repeatable>
-        <binding>
-          <command>nasal</command>
-          <script>controls.flapsDown(-1)</script>
-         </binding>
-         <mod-up>
-          <binding>
-           <command>nasal</command>
-           <script>controls.flapsDown(0)</script>
-          </binding>
-         </mod-up>
-      </action>
-    </animation>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Flaps down");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>1</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Flaps up");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Flaps down");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Flaps up");
+	]]></script>
+    </binding>
+  </action>
+</animation>
 <animation>
   <type>rotate</type>
   <object-name>FlapControl</object-name>
