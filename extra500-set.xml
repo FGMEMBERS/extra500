@@ -696,7 +696,7 @@ JSBSim Extra Aircraft - Extra 500.
                               <min-defl-rad>-0.5759</min-defl-rad>
                               <elevator-pos-rad>0</elevator-pos-rad>    <!--dummy value -->
                               <elevator-pos-deg>0</elevator-pos-deg>    <!--dummy value -->
-					<d_e_free-rad>0</d_e_free-rad>		<!--dummy value -->
+				<d_e_free-rad>0</d_e_free-rad>		<!--dummy value -->
                               <trim>
                                     <S-ft2>1.114</S-ft2>
                                     <c_aero-ft>0.4019</c_aero-ft>

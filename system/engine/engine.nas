@@ -290,7 +290,7 @@ var calcTemps = {
 		me.nFT.setValue( me.FTnew );
 
 
-# calculating TOT-target (not filtered; done in /extra500.xml)
+# calculating TOT-target (not filtered; done in /extra500.xml) NOTE: DeltaTOTsd is calculated in /extra500.xml
 		if ( me.IsRunning == 1 ) {
 			me.nTOTTarget.setValue( me.nTOTr.getValue() );
 

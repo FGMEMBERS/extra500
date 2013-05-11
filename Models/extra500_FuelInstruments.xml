@@ -19,8 +19,8 @@
       Authors: Thomas Grossberger and Dirk Dittmann
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
-      Date:             10.05.13
+      Last change:      Eric van den Berg
+      Date:             11.05.13
 
 -->
 
@@ -32,14 +32,14 @@
 <animation>
   <type>rotate</type>
   <object-name>FuelInstruments.CollLeft.Needle</object-name>
-  <property>/consumables/fuel/tank[2]/level-lbs</property>
+  <property>/consumables/fuel/tank[2]/level-norm</property>
 		<interpolation>
             <entry>
                 <ind>0</ind>
-                <dep>-90</dep>
+                <dep>-199.5</dep>
             </entry>
             <entry>
-                <ind>67.02</ind>
+                <ind>1</ind>
                 <dep>90</dep>
             </entry>
         </interpolation>
@@ -56,14 +56,14 @@
 <animation>
   <type>rotate</type>
   <object-name>FuelInstruments.CollRight.Needle</object-name>
-  <property>/consumables/fuel/tank[4]/level-lbs</property>
+  <property>/consumables/fuel/tank[4]/level-norm</property>
 		<interpolation>
             <entry>
                 <ind>0</ind>
-                <dep>-90</dep>
+                <dep>-199.5</dep>
             </entry>
             <entry>
-                <ind>67.02</ind>
+                <ind>1</ind>
                 <dep>90</dep>
             </entry>
         </interpolation>
@@ -81,14 +81,14 @@
 <animation>
   <type>rotate</type>
   <object-name>FuelInstruments.MainLeft.Needle</object-name>
-  <property>/consumables/fuel/tank[1]/level-lbs</property>
+  <property>/consumables/fuel/tank[1]/level-norm</property>
 		<interpolation>
             <entry>
                 <ind>0</ind>
                 <dep>-90</dep>
             </entry>
             <entry>
-                <ind>352.70</ind>
+                <ind>1</ind>
                 <dep>90</dep>
             </entry>
         </interpolation>
@@ -105,14 +105,14 @@
 <animation>
   <type>rotate</type>
   <object-name>FuelInstruments.MainRight.Needle</object-name>
-  <property>/consumables/fuel/tank[5]/level-lbs</property>
+  <property>/consumables/fuel/tank[5]/level-norm</property>
 		<interpolation>
             <entry>
                 <ind>0</ind>
                 <dep>-90</dep>
             </entry>
             <entry>
-                <ind>352.70</ind>
+                <ind>1</ind>
                 <dep>90</dep>
             </entry>
         </interpolation>
@@ -130,14 +130,14 @@
 <animation>
   <type>rotate</type>
   <object-name>FuelInstruments.AuxLeft.Needle</object-name>
-  <property>/consumables/fuel/tank[0]/level-lbs</property>
+  <property>/consumables/fuel/tank[0]/level-norm</property>
 		<interpolation>
             <entry>
                 <ind>0</ind>
                 <dep>-90</dep>
             </entry>
             <entry>
-                <ind>190.30</ind>
+                <ind>1</ind>
                 <dep>90</dep>
             </entry>
         </interpolation>
@@ -154,14 +154,14 @@
 <animation>
   <type>rotate</type>
   <object-name>FuelInstruments.AuxRight.Needle</object-name>
-  <property>/consumables/fuel/tank[6]/level-lbs</property>
+  <property>/consumables/fuel/tank[6]/level-norm</property>
 		<interpolation>
             <entry>
                 <ind>0</ind>
                 <dep>-90</dep>
             </entry>
             <entry>
-                <ind>190.30</ind>
+                <ind>1</ind>
                 <dep>90</dep>
             </entry>
         </interpolation>
