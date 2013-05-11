@@ -14,17 +14,17 @@
 #    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
 #
 #      Authors: Dirk Dittmann
-#      Date: May 09 2013
+#      Date: May 11 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             09.05.13
+#      Date:             11.05.13
 #
 
-var DigitalInstrumentPackage = {
+var EngineInstrumentPackage = {
 	new : func(nRoot,name){
 				
 		var m = {parents:[
-			DigitalInstrumentPackage,
+			EngineInstrumentPackage,
 			Part.Part.new(nRoot,name),
 			Part.SimStateAble.new(nRoot,"BOOL",0),
 			Part.ElectricAble.new(nRoot,name)
@@ -32,38 +32,38 @@ var DigitalInstrumentPackage = {
 		
 				
 		#m.VoltMonitor = Part.ElectricVoltSensor.new(m.nPanel.initNode("VoltMonitor"),"Volt Monitor");
-		m.VDC = 0.0;
+		m.TRQ = 0.0;
+		m.TOT = 0.0;
+		m.N1 = 0.0;
+		m.N2 = 0.0;
+		m.OP = 0.0;
+		m.OT = 0.0;
 		
-		m.nGenAmps = props.globals.initNode("extra500/mainBoard/GeneratorShunt/indicatedAmpere",0.0,"DOUBLE");
-		m.nBatAmps = props.globals.initNode("extra500/mainBoard/BatteryShunt/indicatedAmpere",0.0,"DOUBLE");
+				
+	# nodes for indication must be abs(value)
+		m.nIndicatedTRQ = nRoot.initNode("indicatedTRQ",0.0,"DOUBLE");
+		m.nIndicatedTOT = nRoot.initNode("indicatedTOT",0.0,"DOUBLE");
 		
-		m.nIAT = props.globals.initNode("/environment/temperature-degc",0.0,"DOUBLE");
-		m.nFuelTemp = props.globals.initNode("/fdm/jsbsim/aircraft/engine/FT-degC",0.0,"DOUBLE");
-		m.nFuelPress = props.globals.initNode("/fdm/jsbsim/aircraft/engine/FP-psi",0.0,"DOUBLE");
+		m.nIndicatedN1 = nRoot.initNode("indicatedN1",0.0,"DOUBLE");
+		m.nIndicatedN2 = nRoot.initNode("indicatedN2",0.0,"DOUBLE");
 		
-		m.nIndicatedVDC = nRoot.initNode("indicatedVDC",0.0,"DOUBLE");
-		m.nIndicatedGEN = nRoot.initNode("indicatedGEN",0.0,"DOUBLE");
-		m.nIndicatedBAT = nRoot.initNode("indicatedBAT",0.0,"DOUBLE");
-		
-		m.nIndicatedIAT = nRoot.initNode("indicatedIAT",0.0,"DOUBLE");
-		m.nIndicatedFuelTemp = nRoot.initNode("indicatedFuelTemp",0.0,"DOUBLE");
-		m.nIndicatedFuelPress = nRoot.initNode("indicatedFuelPress",0.0,"DOUBLE");
+		m.nIndicatedOP = nRoot.initNode("indicatedOilPress",0.0,"DOUBLE");
+		m.nIndicatedOT = nRoot.initNode("indicatedOilTemp",0.0,"DOUBLE");
 		
 	# Electric Connectors
 		m.PowerInputA 		= Part.ElectricConnector.new("PowerInputA");
 		m.PowerInputB 		= Part.ElectricConnector.new("PowerInputB");
-		m.VoltMonitor		= Part.ElectricConnector.new("VoltMonitor");
 		m.GND 			= Part.ElectricConnector.new("GND");
 		
 		m.PowerInputA.solder(m);
 		m.PowerInputB.solder(m);
-		m.VoltMonitor.solder(m);
 		m.GND.solder(m);
-		
+	# list for main loop to reset the "state" variable to default
 		append(Part.aListSimStateAble,m);
 		return m;
 
 	},
+	# electric system calls applyVoltage to get electicity in
 	applyVoltage : func(electron,name=""){ 
 		Part.etd.in("DIP",me.name,name,electron);
 		var GND = 0;
@@ -83,13 +83,6 @@ var DigitalInstrumentPackage = {
 					me.state = 1;
 					var watt = me.electricWork(electron);
 				}
-			}elsif(name == "VoltMonitor"){
-				
-				GND = me.GND.applyVoltage(electron);
-				if (GND){
-					var watt = me.electricWork(electron);
-					me.VDC = electron.volt;
-				}
 			}
 		}
 		
@@ -99,18 +92,25 @@ var DigitalInstrumentPackage = {
 	# Main Simulation loop  ~ 10Hz
 	update : func(){
 		if (me.state == 0){	# no power input
-			me.VDC = 0.0;
+			me.TRQ = 0.0;
+			me.TOT = 0.0;
+			me.N1 = 0.0;
+			me.N2 = 0.0;
+			me.OP = 0.0;
+			me.OT = 0.0;
+		
 		}
 		
-		me.nIndicatedVDC.setValue( math.abs(me.VDC) + 0.0001 );
-		me.nIndicatedGEN.setValue( math.abs(me.nGenAmps.getValue()) + 0.0001 );
-		me.nIndicatedBAT.setValue( math.abs(me.nBatAmps.getValue()) + 0.0001 );
-		me.nIndicatedIAT.setValue( math.abs(me.nIAT.getValue()) + 0.0001 );
-		me.nIndicatedFuelTemp.setValue( math.abs(me.nFuelTemp.getValue()) + 0.0001 );
-		me.nIndicatedFuelPress.setValue( math.abs(me.nFuelPress.getValue()) + 0.0001 );
+		# set the indecated values to the tree + 0.0001 to avoid bad round
+		me.nIndicatedTRQ.setValue( math.abs(me.TRQ) + 0.0001 );
+		me.nIndicatedTOT.setValue( math.abs(me.TOT) + 0.0001 );
+		me.nIndicatedN1.setValue( math.abs(me.N1) + 0.0001 );
+		me.nIndicatedN2.setValue( math.abs(me.N2) + 0.0001 );
+		me.nIndicatedOP.setValue( math.abs(me.OP) + 0.0001 );
+		me.nIndicatedOT.setValue( math.abs(me.OT) + 0.0001 );
 		
 	}
 	
 };
 
-var digitalInstrumentPackage = DigitalInstrumentPackage.new(props.globals.initNode("extra500/Instrument/DIP"),"Digital Instrument Package");
+var engineInstrumentPackage = EngineInstrumentPackage.new(props.globals.initNode("extra500/Instrument/EIP"),"Engine Instrument Package");

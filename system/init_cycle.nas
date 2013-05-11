@@ -42,6 +42,7 @@ var simulation_cycle = func(){
 	extra500.engine.update();
 	
 	extra500.digitalInstrumentPackage.update();
+	extra500.engineInstrumentPackage.update();
 	IFD.demo.update();
 	IFD.RH.update();
 	
