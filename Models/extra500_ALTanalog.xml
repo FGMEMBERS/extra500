@@ -26,32 +26,60 @@
 
 <PropertyList>
 
-<path>extra500_IASanalog.ac</path>
+<path>extra500_ALTanalog.ac</path>
 
 <!--IASanalog Needle-->
+
 <animation>
   <type>rotate</type>
-  <object-name>IASanalog.Needle</object-name>
-  <property>/instrumentation/airspeed-backup/indicated-speed-kt</property>
-		<interpolation>
-            <entry>
-                <ind>30</ind>
-                <dep>0</dep>
-            </entry>
-            <entry>
-                <ind>260</ind>
-                <dep>345</dep>
-            </entry>
-        </interpolation>
+  <object-name>ALTanalog.Needle100</object-name>
+  <property>/instrumentation/altimeter-backup/indicated-altitude-ft</property>
+  <factor>0.36</factor>
   <axis>
-  <x1-m>1</x1-m>
-  <y1-m>0</y1-m>
-  <z1-m>0</z1-m>
-  <x2-m>-1</x2-m>
-  <y2-m>0</y2-m>
-  <z2-m>0</z2-m>
+   <x>-1</x>
+   <y>0</y>
+   <z>0</z>
   </axis>
-</animation>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>ALTanalog.Needle1000</object-name>
+  <property>/instrumentation/altimeter-backup/indicated-altitude-ft</property>
+  <factor>0.036</factor>
+  <axis>
+   <x>-1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>ALTanalog.Needle10000</object-name>
+  <property>/instrumentation/altimeter-backup/indicated-altitude-ft</property>
+  <factor>0.0036</factor>
+  <axis>
+   <x>-1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </PropertyList>
 
