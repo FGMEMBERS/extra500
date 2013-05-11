@@ -463,11 +463,17 @@ var plugDIP =func(){
 	digitalInstrumentPackage.GND.plug(mainBoard.GND);
 	
 	digitalInstrumentPackage.PowerInputA.plug(circuitBreakerPanel.DIP1.Out);
-	digitalInstrumentPackage.PowerInputA.plug(circuitBreakerPanel.DIP2.Out);
+	digitalInstrumentPackage.PowerInputB.plug(circuitBreakerPanel.DIP2.Out);
 	digitalInstrumentPackage.VoltMonitor.plug(circuitBreakerPanel.VoltMonitor.Out);
 	
 }
-
+var plugEIP =func(){
+	engineInstrumentPackage.GND.plug(mainBoard.GND);
+	
+	engineInstrumentPackage.PowerInputA.plug(circuitBreakerPanel.EngineInstrument1.Out);
+	engineInstrumentPackage.PowerInputB.plug(circuitBreakerPanel.EngineInstrument2.Out);
+	
+}
 var plugElectric = func(){
 	plugMainBoard();
 	plugGenerator();
@@ -484,5 +490,5 @@ var plugElectric = func(){
 	plugAlternator();
 	plugPcBoard();
 	plugDIP();
-	
+	plugEIP();
 };
