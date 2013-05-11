@@ -619,6 +619,13 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		</lag_filter>
 	</channel>
 
+	<channel name="OT">
+		<lag_filter name ="aircraft/engine/OT-degC">
+ 			<input>aircraft/engine/OT-target-degC</input>
+			<c1>1.0</c1>
+		</lag_filter>
+	</channel>
+
 </system>
 	
 <aerodynamics>
@@ -691,7 +698,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<property>aircraft/engine/TOT-target-degC</property>
 			<product>
 				<value>-1</value>
-				<property>aircraft/engine/OT-degC</property>
+				<property>aircraft/engine/OT-target-degC</property>
 			</product>
 		</sum>
 	</product>

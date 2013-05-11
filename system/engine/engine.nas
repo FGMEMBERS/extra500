@@ -182,7 +182,7 @@ var calcTemps = {
 		m.ndt		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/dt-indication");
 		m.nOAT		= props.globals.getNode("/environment/temperature-degc");
 		m.nFuelMass	= props.globals.getNode("/fdm/jsbsim/propulsion/total-fuel-lbs");
-		m.nOT		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/OT-degC");
+		m.nOTtarget	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/OT-target-degC");
 		m.nDeltaOT	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/Delta-OT-degC");
 		m.nFT		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/FT-degC");
 
@@ -210,9 +210,10 @@ var calcTemps = {
 		m.dt = 0.0;
 		m.OAT = 0.0;
 		m.Fuelmass = 0.0;
-		m.OT = 0.0;
+		m.OTtarget = 0.0;
 		m.FT = 0.0;
 		m.TOT = 0.0;
+		m.dTOT =0.0;
 		m.OTnew = 0.0;
 		m.H = 0.0;
 		m.dE = 0.0;
@@ -272,16 +273,16 @@ var calcTemps = {
 		me.FuelMass = me.nFuelMass.getValue() * global.CONST.LBM2KG;				# fuel mass in tank in kg
 
 # getting old values
-		me.OT = me.nOT.getValue();
+		me.OTtarget = me.nOTtarget.getValue();
 		me.FT = me.nFT.getValue();
 		me.TOT = me.nTOT.getValue();
 
 # calculating new oil temperature
-		me.OTnew = me.OT + me.nDeltaOT.getValue();						# DeltaOT is calculated in the /extra500.xml (jsbsim) file
+		me.OTnew = me.OTtarget + me.nDeltaOT.getValue();						# DeltaOT is calculated in the /extra500.xml (jsbsim) file
 		if (me.OTnew < me.OAT) {
 			me.OTnew = me.OAT;
 		}
-		me.nOT.setValue( me.OTnew );
+		me.nOTtarget.setValue( me.OTnew );
 
 # calculating new fuel temperature
 		me.H = 0.00481 * me.FT + 1.7833;							# Jet-A1 fuel specific energy kJ/kg-K
@@ -306,6 +307,16 @@ var calcTemps = {
 
 		} else if ( me.Motoring == 1 ) {							# motoring
 			me.nTOTTarget.setValue( me.nTOTTarget.getValue() - me.nDeltaTOTsd.getValue() );
+		
+		} else if ( me.Spoolup == 1 ) {
+			if ( me.N1 < 25.0) {
+				me.dTOT = 171.0 * me.dt;
+			} else if ( me.N1 < 35.0 ) {
+				me.dTOT = 65.2 * me.dt;
+			} else if ( me.N1 >= 35.0 ) {
+				me.dTOT = -1.0 *( me.nTOTTarget.getValue() - me.nTOTr.getValue() ) * me.dt;
+			}
+			me.nTOTTarget.setValue( me.nTOTTarget.getValue() + me.dTOT );
 		}
 
 # setting aliases for fuel pumps

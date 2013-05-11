@@ -711,21 +711,21 @@ JSBSim Extra Aircraft - Extra 500.
 				<cd0>0.015</cd0>				
 			</vstab>
 			<engine>
-				<dt-indication type="double">0.5</dt-indication>
+				<dt-indication type="double">0.5</dt-indication>			<!-- engine instrument indication update rate -->
 				<OP-maxsetting-psi type="double">125</OP-maxsetting-psi>
-				<OT-degC type="double">0</OT-degC>					<!--dummy value -->
+				<OT-target-degC type="double">0</OT-target-degC>			<!--dummy value -->
 				<FT-degC type="double">0</FT-degC>					<!--dummy value -->
 				<motoring type="double">0</motoring>
 				<spooling-up type="double">0</spooling-up>
 				<spooling-down type="double">0</spooling-down>
-				<N1-old type="double">0</N1-old>
-				<TOT-target-degC>0</TOT-target-degC>
-				<Delta-TOTsd-degC>0</Delta-TOTsd-degC>
-				<TOTnr-degC>0.0</TOTnr-degC>
+				<N1-old type="double">0</N1-old>					<!--dummy value -->
+				<TOT-target-degC>0</TOT-target-degC>					<!--dummy value -->
+				<Delta-TOTsd-degC>0</Delta-TOTsd-degC>					<!--dummy value -->
+				<TOTnr-degC>0.0</TOTnr-degC>						<!--dummy value -->
 			</engine>
 			<fuel>
-				<fuel-pump1 type="bool">0</fuel-pump1>				<!--dummy value -->
-				<fuel-pump2 type="bool">0</fuel-pump2>				<!--dummy value -->
+				<fuel-pump1 type="bool">0</fuel-pump1>					<!--dummy value -->
+				<fuel-pump2 type="bool">0</fuel-pump2>					<!--dummy value -->
 			</fuel>
             </aircraft>
       </jsbsim>
