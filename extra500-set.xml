@@ -18,8 +18,8 @@
       Authors: Thomas Grossberger and Dirk Dittmann
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
-      Date:             09.05.13
+      Last change:      Eric van den Berg
+      Date:             11.05.13
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -719,9 +719,9 @@ JSBSim Extra Aircraft - Extra 500.
 				<spooling-up type="double">0</spooling-up>
 				<spooling-down type="double">0</spooling-down>
 				<N1-old type="double">0</N1-old>
-				<TOT-degC>0</TOT-degC>
-				<TOTsd-degC>0</TOTsd-degC>
+				<TOT-target-degC>0</TOT-target-degC>
 				<Delta-TOTsd-degC>0</Delta-TOTsd-degC>
+				<TOTnr-degC>0.0</TOTnr-degC>
 			</engine>
 			<fuel>
 				<fuel-pump1 type="bool">0</fuel-pump1>				<!--dummy value -->

@@ -17,7 +17,7 @@
 #      Date: April 29 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             10.05.13
+#      Date:             11.05.13
 #
 
 
@@ -197,8 +197,10 @@ var calcTemps = {
 		m.nSpooldown	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/spooling-down");
 
 		m.nTOT		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/TOT-degC");
+		m.nTOTTarget	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/TOT-target-degC");
+		m.nTOTr		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/TOTr-degC");
 		m.nDeltaTOTsd	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/Delta-TOTsd-degC");
-		m.nTOTsd	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/TOTsd-degC");
+		m.nTOTnr	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/TOTnr-degC");
 
 		m.nPump1	= props.globals.getNode("/extra500/Fuel/FuelPump1/state");
 		m.nPump2	= props.globals.getNode("/extra500/Fuel/FuelPump2/state");
@@ -287,8 +289,24 @@ var calcTemps = {
 		me.FTnew = me.FT + me.dE * me.dt / (me.FuelMass * me.H);				# new temp due to energy loss to outside air
 		me.nFT.setValue( me.FTnew );
 
-# calculating TOT spooling down
-		me.nTOTsd.setValue( me.IsRunning * me.nTOT.getValue() + me.Spooldown * ( me.nTOTsd.getValue() - me.nDeltaTOTsd.getValue() ) );
+
+# calculating TOT-target (not filtered; done in /extra500.xml)
+		if ( me.IsRunning == 1 ) {
+			me.nTOTTarget.setValue( me.nTOTr.getValue() );
+
+		} else if ( me.Spooldown == 1 ) {
+			me.nTOTTarget.setValue( me.nTOTTarget.getValue() - me.nDeltaTOTsd.getValue() );	
+
+		} else if ( me.N1 <= 0.1 ) {								# engine standing still					
+			if ( me.nTOTTarget.getValue() == 0.0 ) {					# this is at FG startup
+				me.nTOTTarget.setValue( me.nTOTnr.getValue() );	
+			} else {
+				me.nTOTTarget.setValue( me.nTOTTarget.getValue() - me.nDeltaTOTsd.getValue() );		# engine TOT is slowly going to OAT
+			}
+
+		} else if ( me.Motoring == 1 ) {							# motoring
+			me.nTOTTarget.setValue( me.nTOTTarget.getValue() - me.nDeltaTOTsd.getValue() );
+		}
 
 # setting aliases for fuel pumps
 		me.nNewPump1.setValue( me.nPump1.getValue() );
@@ -320,5 +338,5 @@ var loop =func{
 }
 
 setlistener("/sim/signals/fdm-initialized", func {
-    init_Temps();
+    	init_Temps();
 });
