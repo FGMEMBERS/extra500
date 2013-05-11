@@ -19,7 +19,7 @@
       Authors: Thomas Grossberger and Dirk Dittmann
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
+      Last change:      Eric van den Berg
       Date:             10.05.13
 
 -->
@@ -104,7 +104,7 @@
 <animation>
   <type>rotate</type>
   <object-name>EngineInstruments.TOT.Needle</object-name>
-  <property>/fdm/jsbsim/aircraft/engine/TOTr-degC</property>
+  <property>/fdm/jsbsim/aircraft/engine/TOT-degC</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -128,7 +128,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.TOT.001</object-name>
-  <property>/fdm/jsbsim/aircraft/engine/TOTr-degC</property>
+  <property>/fdm/jsbsim/aircraft/engine/TOT-degC</property>
 	<factor>0.1</factor>
 	<step>1</step>
 	<axis>
@@ -140,7 +140,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.TOT.010</object-name>
-  <property>/fdm/jsbsim/aircraft/engine/TOTr-degC</property>
+  <property>/fdm/jsbsim/aircraft/engine/TOT-degC</property>
 	<factor>0.01</factor>
 	<step>10</step>
 	<axis>
@@ -152,7 +152,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.TOT.100</object-name>
-  <property>/fdm/jsbsim/aircraft/engine/TOTr-degC</property>
+  <property>/fdm/jsbsim/aircraft/engine/TOT-degC</property>
 	<factor>0.001</factor>
 	<step>100</step>
 	<axis>

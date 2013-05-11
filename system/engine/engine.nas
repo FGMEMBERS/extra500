@@ -17,7 +17,7 @@
 #      Date: April 29 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             09.05.13
+#      Date:             10.05.13
 #
 
 
@@ -30,7 +30,6 @@ var Engine = {
 		]};
 		m.nIsRunning		= props.globals.getNode("/fdm/jsbsim/propulsion/engine/set-running");
 		m.nN1			= props.globals.getNode("/engines/engine[0]/n1");
-		m.nN1old		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/N1-old");
 		m.nPropellerFeather 	= props.globals.getNode("/controls/engines/engine[0]/propeller-feather");
 		m.nCutOff		= props.globals.getNode("/controls/engines/engine[0]/cutoff");
 		m.nReverser		= props.globals.getNode("/controls/engines/engine[0]/reverser");
@@ -38,14 +37,6 @@ var Engine = {
 		m.nIgnition		= props.globals.getNode("/controls/engines/engine[0]/ignition");
 		m.nOilPress		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/OP-psi");
 		m.nStarter		= props.globals.getNode("/controls/engines/engine[0]/starter");
-		m.nMotoring		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/motoring");
-		m.nSpoolup		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/spooling-up");
-		m.nSpooldown		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/spooling-down");
-		
-		m.n1old = 0.0;
-		m.n1 = 0.0;
-		m.Starter = 0.0;
-		m.isRunning = 0.0;
 		
 		m._cutoffState		= m.nCutOff.getValue();
 		m._ignitionState 	= 0;
@@ -152,40 +143,15 @@ var Engine = {
 	# all work that the engine has to do starts here
 	#################################################
 	update : func(){
-		me.n1old = me.nN1old.getValue();
-		me.n1 = me.nN1.getValue();
-		me.Starter = me.nStarter.getValue();
-		me.isRunning = me.nIsRunning.getValue();
 
 # setting propeller feathering property, if n1 < 55%, feathered
-		if(me.n1 > 55.0){
+		if(me.nN1.getValue() > 55.0){
 			me.nPropellerFeather.setValue(0);
 		}else{
 			me.nPropellerFeather.setValue(1);
 		}
 
-# setting motoring property: starter on, but cutoff also on (no fuel,no ignition)	
-		if ( (me.Starter == 1) and (me._cutoffState == 1) ) {
-			me.nMotoring.setValue(1);
-		}else{
-			me.nMotoring.setValue(0);
-		}
-
-# setting spoolup property: starter on, no cutoff, but engine not running (yet) 	
-		if ( (me.Starter == 1) and (me._cutoffState == 0) and (me.isRunning == 0)  ) {
-			me.nSpoolup.setValue(1);
-		}else{
-			me.nSpoolup.setValue(0);
-		}
-
-# setting spooldown property: starter off, not running, and n1 > 0.1 	
-		if ( (me.Starter == 0) and (me.isRunning == 0) and (me.n1 > 0.1) and (me.n1 < me.n1old ) ) {
-			me.nSpooldown.setValue(1);
-		}else{
-			me.nSpooldown.setValue(0);
-		}
-
-		me.nN1old.setValue(me.n1);
+#
 	},
 	#################################################
 	# register User events 	
@@ -209,7 +175,7 @@ engine.setPower(24.0,5.0);
 
 
 # ENGINE TEMPERATURES
-#var calc_Temps = func() {
+
 var calcTemps = {
 	new : func{
 		var m = {parents:[calcTemps]};
@@ -217,9 +183,22 @@ var calcTemps = {
 		m.nOAT		= props.globals.getNode("/environment/temperature-degc");
 		m.nFuelMass	= props.globals.getNode("/fdm/jsbsim/propulsion/total-fuel-lbs");
 		m.nOT		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/OT-degC");
-		m.nFT		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/FT-degC");
-		m.nTOT		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/TOT-degC");
 		m.nDeltaOT	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/Delta-OT-degC");
+		m.nFT		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/FT-degC");
+
+		m.nN1		= props.globals.getNode("/engines/engine[0]/n1");
+		m.nN1old	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/N1-old");
+
+		m.nCutOff	= props.globals.getNode("/controls/engines/engine[0]/cutoff");
+		m.nStarter	= props.globals.getNode("/controls/engines/engine[0]/starter");
+		m.nIsRunning	= props.globals.getNode("/fdm/jsbsim/propulsion/engine/set-running");
+		m.nMotoring	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/motoring");
+		m.nSpoolup	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/spooling-up");
+		m.nSpooldown	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/spooling-down");
+
+		m.nTOT		= props.globals.getNode("/fdm/jsbsim/aircraft/engine/TOT-degC");
+		m.nDeltaTOTsd	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/Delta-TOTsd-degC");
+		m.nTOTsd	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/TOTsd-degC");
 
 		m.nPump1	= props.globals.getNode("/extra500/Fuel/FuelPump1/state");
 		m.nPump2	= props.globals.getNode("/extra500/Fuel/FuelPump2/state");
@@ -237,35 +216,80 @@ var calcTemps = {
 		m.dE = 0.0;
 		m.FTnew = 0.0;
 
+		m.Starter = 0;
+		m.CutOff = 1;		
+		m.IsRunning = 0;
+		m.Motoring = 0;		
+		m.Spoolup = 0;		
+		m.Spooldown = 0;		
+		m.N1 = 0.0;
+		m.N1old = 0.0;
+
 		return m;
 		
 	},
 
 
 	update : func(){
-			# getting common values
+
+		me.Starter = me.nStarter.getValue();
+		me.IsRunning = me.nIsRunning.getValue();
+		me.CutOff = me.nCutOff.getValue();
+		me.N1 = me.nN1.getValue();
+		me.N1old = me.nN1old.getValue();
+
+# setting motoring property: starter on, but cutoff also on (no fuel,no ignition)	
+		if ( (me.Starter == 1) and (me.CutOff == 1) ) {
+			me.Motoring = 1;
+		}else{
+			me.Motoring = 0;
+		}
+		me.nMotoring.setValue( me.Motoring );
+
+# setting spoolup property: starter on, no cutoff, but engine not running (yet) 	
+		if ( (me.Starter == 1) and (me.CutOff == 0) and (me.IsRunning == 0)  ) {
+			me.Spoolup = 1;
+		}else{
+			me.Spoolup = 0;
+		}
+		me.nSpoolup.setValue( me.Spoolup );
+
+# setting spooldown property: starter off, not running, and n1 > 0.1 	
+		if ( (me.Starter == 0) and (me.IsRunning == 0) and (me.N1 > 0.1) and (me.N1 < me.N1old ) ) {
+			me.Spooldown = 1;
+		}else{
+			me.Spooldown = 0;
+		}
+		me.nSpooldown.setValue( me.Spooldown );
+
+		me.nN1old.setValue(me.N1);
+
+# getting common values
 		me.dt = me.ndt.getValue();
 		me.OAT = me.nOAT.getValue();
 		me.FuelMass = me.nFuelMass.getValue() * global.CONST.LBM2KG;				# fuel mass in tank in kg
 
-			# getting old values
+# getting old values
 		me.OT = me.nOT.getValue();
 		me.FT = me.nFT.getValue();
 		me.TOT = me.nTOT.getValue();
 
-			# calculating new oil temperature
-		me.OTnew = me.OT + me.nDeltaOT.getValue();
+# calculating new oil temperature
+		me.OTnew = me.OT + me.nDeltaOT.getValue();						# DeltaOT is calculated in the /extra500.xml (jsbsim) file
 		if (me.OTnew < me.OAT) {
 			me.OTnew = me.OAT;
 		}
 		me.nOT.setValue( me.OTnew );
 
-			# calculating new fuel temperature
+# calculating new fuel temperature
 		me.H = 0.00481 * me.FT + 1.7833;							# Jet-A1 fuel specific energy kJ/kg-K
 		me.dE = 0.028 * (me.OAT - me.FT);							# energy loss kW
 		me.FTnew = me.FT + me.dE * me.dt / (me.FuelMass * me.H);				# new temp due to energy loss to outside air
 		me.nFT.setValue( me.FTnew );
-#
+
+# calculating TOT spooling down
+		me.nTOTsd.setValue( me.IsRunning * me.nTOT.getValue() + me.Spooldown * ( me.nTOTsd.getValue() - me.nDeltaTOTsd.getValue() ) );
+
 # setting aliases for fuel pumps
 		me.nNewPump1.setValue( me.nPump1.getValue() );
 		me.nNewPump2.setValue( me.nPump2.getValue() );
