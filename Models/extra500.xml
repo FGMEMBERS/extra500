@@ -53,6 +53,16 @@
 	<pitch-deg>-13</pitch-deg>
 	</offsets>
 </model>
+<model>
+  <name>IASanalog</name>
+  <path>Aircraft/extra500/Models/extra500_IASanalog.xml</path>
+	<offsets>
+		<x-m>-0.73</x-m>
+		<y-m>-0.312</y-m>	
+		<z-m>-0.050</z-m>
+	<pitch-deg>-13</pitch-deg>
+	</offsets>
+</model>
 
 <model>
   <name>MasterPanel</name>
