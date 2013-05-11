@@ -717,6 +717,9 @@ JSBSim Extra Aircraft - Extra 500.
 				<spooling-up type="double">0</spooling-up>
 				<spooling-down type="double">0</spooling-down>
 				<N1-old type="double">0</N1-old>
+				<TOT-degC>0</TOT-degC>
+				<TOTsd-degC>0</TOTsd-degC>
+				<Delta-TOTsd-degC>0</Delta-TOTsd-degC>
 			</engine>
 			<fuel>
 				<fuel-pump1 type="bool">0</fuel-pump1>				<!--dummy value -->
