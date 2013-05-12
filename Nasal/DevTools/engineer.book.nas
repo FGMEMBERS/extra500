@@ -17,7 +17,7 @@
 #      Date: April 16 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             11.05.13
+#      Date:             13.05.13
 #
  
 var node = props.globals.getNode("/extra500/EngineerScreen",1);
@@ -352,6 +352,7 @@ display = Display.new(10,100);
 	display.add_Node("TRQ %    ", props.globals.getNode("/fdm/jsbsim/aircraft/engine/TRQ-perc") );
 	display.add_Node("TOT degC ", props.globals.getNode("/fdm/jsbsim/aircraft/engine/TOT-target-degC") );
 	display.add_Node("N1  %    ", props.globals.getNode("/fdm/jsbsim/propulsion/engine/n1") );
+#	display.add_Node("N1-par % ", props.globals.getNode("/fdm/jsbsim/propulsion/engine/N1-par") );
 	display.add_Node("N2  RPM  ", props.globals.getNode("/fdm/jsbsim/propulsion/engine/propeller-rpm") );
 	display.add_Node("OP  psi  ", props.globals.getNode("/fdm/jsbsim/aircraft/engine/OP-psi") );
 	display.add_Node("OT  degC ", props.globals.getNode("/fdm/jsbsim/aircraft/engine/OT-degC") );

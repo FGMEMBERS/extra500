@@ -166,7 +166,8 @@
 <animation>
   <type>rotate</type>
   <object-name>EngineInstruments.N1.Needle</object-name>
-  <property>/fdm/jsbsim/propulsion/engine/n1</property>
+    <!--property>/fdm/jsbsim/propulsion/engine/n1</property-->
+<property>/fdm/jsbsim/aircraft/engine/N1-par</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -190,7 +191,8 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.N1.000.1</object-name>
-  <property>/fdm/jsbsim/propulsion/engine/n1</property>
+  <!--property>/fdm/jsbsim/propulsion/engine/n1</property-->
+<property>/fdm/jsbsim/aircraft/engine/N1-par</property>
 	<factor>1</factor>
 	<step>0.1</step>
 	<axis>
@@ -202,7 +204,8 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.N1.001.0</object-name>
-  <property>/fdm/jsbsim/propulsion/engine/n1</property>
+  <!--property>/fdm/jsbsim/propulsion/engine/n1</property-->
+<property>/fdm/jsbsim/aircraft/engine/N1-par</property>
 	<factor>0.1</factor>
 	<step>1</step>
 	<axis>
@@ -214,7 +217,8 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.N1.010.0</object-name>
-  <property>/fdm/jsbsim/propulsion/engine/n1</property>
+  <!--property>/fdm/jsbsim/propulsion/engine/n1</property-->
+<property>/fdm/jsbsim/aircraft/engine/N1-par</property>
 	<factor>0.01</factor>
 	<step>10</step>
 	<axis>
@@ -228,7 +232,8 @@
 	<object-name>EngineInstruments.N1.100.0</object-name>
 	<condition>
 	  <greater-than-equals>
-	    <property>/fdm/jsbsim/propulsion/engine/n1</property>
+	      <!--property>/fdm/jsbsim/propulsion/engine/n1</property-->
+<property>/fdm/jsbsim/aircraft/engine/N1-par</property>
 	    <value>100</value>
 	  </greater-than-equals>
 	</condition>

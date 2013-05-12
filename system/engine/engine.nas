@@ -17,7 +17,7 @@
 #      Date: April 29 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             11.05.13
+#      Date:             12.05.13
 #
 
 
@@ -188,6 +188,7 @@ var calcTemps = {
 
 		m.nN1		= props.globals.getNode("/engines/engine[0]/n1");
 		m.nN1old	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/N1-old");
+		m.nN1par	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/N1-par");
 
 		m.nCutOff	= props.globals.getNode("/controls/engines/engine[0]/cutoff");
 		m.nStarter	= props.globals.getNode("/controls/engines/engine[0]/starter");
@@ -202,6 +203,8 @@ var calcTemps = {
 		m.nDeltaTOTsd	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/Delta-TOTsd-degC");
 		m.nTOTnr	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/TOTnr-degC");
 
+		m.nStartVoltage	= props.globals.getNode("/extra500/Generator/electric/volt");
+
 		m.nPump1	= props.globals.getNode("/extra500/Fuel/FuelPump1/state");
 		m.nPump2	= props.globals.getNode("/extra500/Fuel/FuelPump2/state");
 		m.nNewPump1	= props.globals.getNode("/fdm/jsbsim/aircraft/fuel/fuel-pump1");
@@ -214,6 +217,8 @@ var calcTemps = {
 		m.FT = 0.0;
 		m.TOT = 0.0;
 		m.dTOT =0.0;
+		m.DeltaTOTsd = 0.0;
+		m.TOTTarget = 0.0;
 		m.OTnew = 0.0;
 		m.H = 0.0;
 		m.dE = 0.0;
@@ -227,6 +232,9 @@ var calcTemps = {
 		m.Spooldown = 0;		
 		m.N1 = 0.0;
 		m.N1old = 0.0;
+		m.N1par = 0.0;
+		m.dN1par = 0.0;
+		m.StartVoltage = 0.0;
 
 		return m;
 		
@@ -235,11 +243,17 @@ var calcTemps = {
 
 	update : func(){
 
-		me.Starter = me.nStarter.getValue();
-		me.IsRunning = me.nIsRunning.getValue();
-		me.CutOff = me.nCutOff.getValue();
-		me.N1 = me.nN1.getValue();
-		me.N1old = me.nN1old.getValue();
+		me.Starter 	= me.nStarter.getValue();
+		me.IsRunning 	= me.nIsRunning.getValue();
+		me.CutOff 	= me.nCutOff.getValue();
+		me.N1 		= me.nN1.getValue();
+		me.N1old 	= me.nN1old.getValue();
+
+		me.DeltaTOTsd 	= me.nDeltaTOTsd.getValue();
+		me.TOTTarget 	= me.nTOTTarget.getValue();
+		me.N1par 	= me.nN1par.getValue();
+
+		me.StartVoltage	= me.nStartVoltage.getValue();
 
 # setting motoring property: starter on, but cutoff also on (no fuel,no ignition)	
 		if ( (me.Starter == 1) and (me.CutOff == 1) ) {
@@ -290,33 +304,49 @@ var calcTemps = {
 		me.FTnew = me.FT + me.dE * me.dt / (me.FuelMass * me.H);				# new temp due to energy loss to outside air
 		me.nFT.setValue( me.FTnew );
 
+# parallel N1 calc for engine start only
+		if ( ( me.Spoolup == 1 ) or ( me.Motoring == 1 ) ) {
+			if ( ( me.Motoring == 1 ) and ( me.N1par >= 20.0 / 28.0 * me.StartVoltage ) ) {
+				me.N1par = 20.0 / 28.0 * me.StartVoltage;				# max motoring N1 dependent on "start" voltage (20%N1 @ 28VDC) 
+			} else {
+				me.dN1par = 3.433 * me.dt;
+				me.N1par = me.N1par + me.dN1par;					# the 3.433 should be dependent on Bus Voltage to simulate weak battery
+			}						
+		} else {
+			me.N1par = me.N1;  
+		}
+		me.nN1par.setValue( me.N1par );
 
 # calculating TOT-target (not filtered; done in /extra500.xml) NOTE: DeltaTOTsd is calculated in /extra500.xml
 		if ( me.IsRunning == 1 ) {
 			me.nTOTTarget.setValue( me.nTOTr.getValue() );
 
 		} else if ( me.Spooldown == 1 ) {
-			me.nTOTTarget.setValue( me.nTOTTarget.getValue() - me.nDeltaTOTsd.getValue() );	
+			me.nTOTTarget.setValue( me.TOTTarget - me.DeltaTOTsd );	
 
 		} else if ( me.N1 <= 0.1 ) {								# engine standing still					
 			if ( me.nTOTTarget.getValue() == 0.0 ) {					# this is at FG startup
 				me.nTOTTarget.setValue( me.nTOTnr.getValue() );	
 			} else {
-				me.nTOTTarget.setValue( me.nTOTTarget.getValue() - me.nDeltaTOTsd.getValue() );		# engine TOT is slowly going to OAT
+				me.nTOTTarget.setValue( me.TOTTarget - me.DeltaTOTsd );			# engine TOT is slowly going to OAT
 			}
 
 		} else if ( me.Motoring == 1 ) {							# motoring
-			me.nTOTTarget.setValue( me.nTOTTarget.getValue() - me.nDeltaTOTsd.getValue() );
+			me.nTOTTarget.setValue( me.TOTTarget - me.DeltaTOTsd );
 		
 		} else if ( me.Spoolup == 1 ) {
-			if ( me.N1 < 25.0) {
-				me.dTOT = 171.0 * me.dt;
-			} else if ( me.N1 < 35.0 ) {
-				me.dTOT = 65.2 * me.dt;
-			} else if ( me.N1 >= 35.0 ) {
-				me.dTOT = -1.0 *( me.nTOTTarget.getValue() - me.nTOTr.getValue() ) * me.dt;
+			if ( me.N1par <= 20.0) {
+				me.dTOT = 70.0 * me.dN1par;
+			} else if ( me.N1par < 25.0 ) {
+				me.dTOT = 36.0 * me.dN1par;
+			} else if ( me.N1par < 30.0 ) {
+				me.dTOT = 20.0 * me.dN1par;
+			} else if ( me.N1par < 35.0 ) {
+				me.dTOT = 6.0 * me.dN1par;
+			} else if ( me.N1par >= 35.0 ) {
+				me.dTOT = -4.0 * ( me.TOTTarget - me.nTOTr.getValue() ) * me.dt;
 			}
-			me.nTOTTarget.setValue( me.nTOTTarget.getValue() + me.dTOT );
+			me.nTOTTarget.setValue( me.TOTTarget + me.dTOT );
 		}
 
 # setting aliases for fuel pumps
