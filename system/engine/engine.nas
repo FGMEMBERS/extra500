@@ -188,7 +188,7 @@ var calcTemps = {
 
 		m.nN1		= props.globals.getNode("/engines/engine[0]/n1");
 		m.nN1old	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/N1-old");
-		m.nN1par	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/N1-par");
+		m.nN1par	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/N1-par-target");
 
 		m.nCutOff	= props.globals.getNode("/controls/engines/engine[0]/cutoff");
 		m.nStarter	= props.globals.getNode("/controls/engines/engine[0]/starter");
@@ -264,7 +264,8 @@ var calcTemps = {
 		me.nMotoring.setValue( me.Motoring );
 
 # setting spoolup property: starter on, no cutoff, but engine not running (yet) 	
-		if ( (me.Starter == 1) and (me.CutOff == 0) and (me.IsRunning == 0)  ) {
+#		if ( (me.Starter == 1) and (me.CutOff == 0) and (me.IsRunning == 0)  ) {
+		if ( (me.N1 > me.N1old ) and (me.CutOff == 0) and (me.IsRunning == 0)  ) {
 			me.Spoolup = 1;
 		}else{
 			me.Spoolup = 0;
@@ -334,7 +335,7 @@ var calcTemps = {
 		} else if ( me.Motoring == 1 ) {							# motoring
 			me.nTOTTarget.setValue( me.TOTTarget - me.DeltaTOTsd );
 		
-		} else if ( me.Spoolup == 1 ) {
+		} else if ( me.Spoolup == 1 ) {								# N1 dependent TOT rise (makes sense as fuel schedule is N1 dependent as well as cooling)
 			if ( me.N1par <= 20.0) {
 				me.dTOT = 70.0 * me.dN1par;
 			} else if ( me.N1par < 25.0 ) {
@@ -344,9 +345,10 @@ var calcTemps = {
 			} else if ( me.N1par < 35.0 ) {
 				me.dTOT = 6.0 * me.dN1par;
 			} else if ( me.N1par >= 35.0 ) {
-				me.dTOT = -4.0 * ( me.TOTTarget - me.nTOTr.getValue() ) * me.dt;
+				me.dTOT = -0.25 * ( me.TOTTarget - me.nTOTr.getValue() ) * me.dt;
 			}
 			me.nTOTTarget.setValue( me.TOTTarget + me.dTOT );
+
 		}
 
 # setting aliases for fuel pumps

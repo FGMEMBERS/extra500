@@ -24,7 +24,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             11.05.13
+      Date:             12.05.13
 -->
 
 	<fileheader>
@@ -622,6 +622,13 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	<channel name="OT">
 		<lag_filter name ="aircraft/engine/OT-degC">
  			<input>aircraft/engine/OT-target-degC</input>
+			<c1>1.0</c1>
+		</lag_filter>
+	</channel>
+
+	<channel name="N1">
+		<lag_filter name ="aircraft/engine/N1-par">
+ 			<input>aircraft/engine/N1-par-target</input>
 			<c1>1.0</c1>
 		</lag_filter>
 	</channel>
