@@ -378,9 +378,9 @@ var plugLight = func(){
 	lightBoard.testLightRelais.P32.plug(flapSystem.pos14Relais.P31);
 	lightBoard.testLightRelais.P42.plug(flapSystem.limitDown.L22);
 	
-	lightBoard.testLightRelais.P52.plug(gearSystem.GearNose);
-	lightBoard.testLightRelais.P62.plug(gearSystem.GearLeft);
-	lightBoard.testLightRelais.P72.plug(gearSystem.GearRight);
+	lightBoard.testLightRelais.P52.plug(gearSystem.NoseGearLed);
+	lightBoard.testLightRelais.P62.plug(gearSystem.LeftGearLed);
+	lightBoard.testLightRelais.P72.plug(gearSystem.RightGearLed);
 		
 	
 	

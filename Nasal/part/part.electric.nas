@@ -186,12 +186,18 @@ var ElectricConnector = {
 		return m;
 
 	},
+	getConnector : func(){
+		return me;
+	},
+	setConnector : func(connector){
+		me.connector = connector;
+	},
 	solder : func(electricAble){
 		me.electricAble = electricAble;
 	},
 	plug : func(connector){
-		me.connector = connector;
-		connector.connector = me;
+		me.connector = connector.getConnector();
+		connector.setConnector(me);
 	},
 	applyVoltage : func(electron,name=""){ 
 		etd.in("Connector",me.name,name,electron);
@@ -223,6 +229,36 @@ var ElectricConnector = {
 		etd.out("Connector",me.name,"input",electron);
 		return GND;
 	}
+};
+
+var ElectricPin = {
+	new : func(name){
+		var m = {parents:[
+			ElectricPin
+		]};
+		m.name = name;
+		m.connector		= nil;
+		return m;
+	},
+	getConnector : func(){
+		return me.connector;
+	},
+	setConnector : func(connector){
+		if (me.connector == nil){
+			me.connector = connector;
+		}else{
+			me.connector.plug(connector);
+			me.connector = nil;
+		}
+	},
+	plug : func(connector){
+		if (me.connector == nil){
+			me.connector = connector;
+		}else{
+			me.connector.plug(connector);
+			me.connector = nil;
+		}
+	},
 };
 
 var ElectricDiode = {
@@ -1428,8 +1464,8 @@ var ElectricSwitchTT = {
 
 # ElectricRelaisXPDT	Double Throw
 #	 A1  ─[]─ A2
-# 0	      ┌── L12
-# 1	 P11 ─┘ ─ L14
+# 0	      ┌── P12
+# 1	 P11 ─┘ ─ P14
 var ElectricRelaisXPDT = {
 
 	
@@ -1552,7 +1588,7 @@ var ElectricRelaisXPDT = {
 # ElectricRelaisXPST	Single Throw
 #	 A1  ─[]─ A2
 # 0	      ┌── 
-# 1	 P11 ─┘ ─ L14
+# 1	 P11 ─┘ ─ P14
 var ElectricRelaisXPST = {
 
 	new : func(nRoot,name,state=0){

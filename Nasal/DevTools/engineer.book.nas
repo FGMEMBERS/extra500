@@ -319,6 +319,58 @@ engineerScreen.add(electricLightPage);
 	flapsPage.add(display);
 	
 
+#---------------------------------
+
+### Flaps Screen ##############
+	var gearPage		= Page.new("Gear");
+	engineerScreen.add(gearPage);
+	
+	display = Display.new(10,-50);
+
+		display.title = "Limit switches";
+		display.font = "FIXED_9x15";
+		display.fg = [1.0, 1.0, 1.0, 1.0];
+		display.bg = [0.5, 0.5, 0.5, 0.85];
+		display.width = 270;
+		display.height = 60;
+		
+		display.add_Node("Main Switch ", props.globals.getNode("/extra500/system/gear/MainGearSwitch/state") );
+		
+	gearPage.add(display);
+	display = Display.new(10,100);
+
+		display.title = "Limit switches";
+		display.font = "FIXED_9x15";
+		display.fg = [1.0, 1.0, 1.0, 1.0];
+		display.bg = [0.5, 0.5, 0.5, 0.85];
+		display.width = 270;
+		display.height = 240;
+		
+		display.add_Node("Nose  Up    ", props.globals.getNode("/extra500/system/gear/NoseGearUp/state") );
+		display.add_Node("Right Up    ", props.globals.getNode("/extra500/system/gear/RightGearUp/state") );
+		display.add_Node("Left  Up    ", props.globals.getNode("/extra500/system/gear/LeftGearUp/state") );
+		display.add_Node("Nose  Squat ", props.globals.getNode("/extra500/system/gear/NoseGearSquat/state") );
+		display.add_Node("Nose  Down  ", props.globals.getNode("/extra500/system/gear/NoseGearDown/state") );
+		display.add_Node("Right Down  ", props.globals.getNode("/extra500/system/gear/RightGearDown/state") );
+		display.add_Node("Left  Down  ", props.globals.getNode("/extra500/system/gear/LeftGearDown/state") );
+		
+	gearPage.add(display);
+	
+	display = Display.new(10,500);
+
+		display.title = "Door switches";
+		display.font = "FIXED_9x15";
+		display.fg = [1.0, 1.0, 1.0, 1.0];
+		display.bg = [0.5, 0.5, 0.5, 0.85];
+		display.width = 270;
+		display.height = 160;
+		
+		display.add_Node("Right Upper ", props.globals.getNode("/extra500/system/gear/RightDoorUpper/state") );
+		display.add_Node("Left  Upper ", props.globals.getNode("/extra500/system/gear/LeftDoorUpper/state") );
+		display.add_Node("Lower       ", props.globals.getNode("/extra500/system/gear/LowerDoor/state") );
+
+	gearPage.add(display);
+	
 	
 
 #---------------------------------
