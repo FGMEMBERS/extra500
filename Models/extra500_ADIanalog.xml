@@ -45,7 +45,7 @@
 			<z>0</z>
 		</axis>
 	</animation>
-<!-- scheibe rutschte raus wenn pitch extrem groß wurde, deshalb anderer lösungsansatz gesucht
+<!-- scheibe rutschte raus wenn pitch extrem gross wurde, deshalb anderer loesungsansatz gewaehlt
 	<animation>
 		<type>translate</type>
 		<object-name>scheibe.innen</object-name>

@@ -39,7 +39,18 @@
 	<offsets>
 		<x-m>-0.7065</x-m>
 		<y-m>0.33</y-m>	
-		<z-m>-.1450</z-m>
+		<z-m>-0.1450</z-m>
+	<pitch-deg>-13</pitch-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>PropAmmeter</name>
+  <path>Aircraft/extra500/Models/extra500_PropAmmeter.xml</path>
+	<offsets>
+		<x-m>-0.710</x-m>
+		<y-m>-0.488</y-m>	
+		<z-m>-0.125</z-m>
 	<pitch-deg>-13</pitch-deg>
 	</offsets>
 </model>
@@ -48,7 +59,7 @@
   <name>IASanalog</name>
   <path>Aircraft/extra500/Models/extra500_IASanalog.xml</path>
 	<offsets>
-		<x-m>-0.73</x-m>
+		<x-m>-0.728</x-m>
 		<y-m>-0.312</y-m>	
 		<z-m>-0.050</z-m>
 	<pitch-deg>-13</pitch-deg>
@@ -59,7 +70,7 @@
   <name>ADIanalog</name>
   <path>Aircraft/extra500/Models/extra500_ADIanalog.xml</path>
 	<offsets>
-		<x-m>-0.72</x-m>
+		<x-m>-0.728</x-m>
 		<y-m>-0.24</y-m>	
 		<z-m>-0.048</z-m>
 	<pitch-deg>-13</pitch-deg>
@@ -70,7 +81,7 @@
   <name>ALTanalog</name>
   <path>Aircraft/extra500/Models/extra500_ALTanalog.xml</path>
 	<offsets>
-		<x-m>-0.72</x-m>
+		<x-m>-0.728</x-m>
 		<y-m>-0.1675</y-m>	
 		<z-m>-0.048</z-m>
 	<pitch-deg>-13</pitch-deg>
@@ -91,6 +102,7 @@
 <model>
   <path>Aircraft/extra500/Models/TEST.fahrwerk.komplett.xml</path>	
 </model>
+
 <model>
   <name>InstrumentFlapsGear</name>
   <path>Aircraft/extra500/Models/extra500_InstrumentFlapsGear.xml</path>
@@ -151,7 +163,7 @@
   <path>Aircraft/extra500/Models/extra500_EngineInstruments.xml</path>
 	<offsets>
 		<x-m>-0.6845 </x-m>
-		<y-m>-.517</y-m>	
+		<y-m>-0.517</y-m>	
 		<z-m>-0.264</z-m>
 	<pitch-deg>-13</pitch-deg>
 	</offsets>
@@ -161,8 +173,8 @@
   <name>SidePanel</name>
   <path>Aircraft/extra500/Models/extra500_SidePanel.xml</path>
 	<offsets>
-		<x-m>-.35</x-m>
-		<y-m>-.65</y-m>	
+		<x-m>-0.35</x-m>
+		<y-m>-0.65</y-m>	
 		<z-m>-0.45</z-m>
 	<pitch-deg>0</pitch-deg>
 	</offsets>
@@ -172,8 +184,8 @@
   <name>CircuitBreakerPanel</name>
   <path>Aircraft/extra500/Models/extra500_CircuitBreakerPanel.xml</path>
 	<offsets>
-		<x-m>-.395</x-m>
-		<y-m>-.622</y-m>	
+		<x-m>-0.395</x-m>
+		<y-m>-0.622</y-m>	
 		<z-m>-0.545</z-m>
 	<roll-deg>-40</roll-deg>
 	</offsets>
