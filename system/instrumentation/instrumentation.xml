@@ -19,8 +19,8 @@
       Author: Eric van den Berg
       Date: 21.04.13
 
-      Last change:      -
-      Date:             -
+      Last change:      Eric van den Berg
+      Date:             13.05.13
 -->
 
 <PropertyList>
@@ -149,6 +149,11 @@
     <name>turn-indicator</name>
     <number>0</number>
   </turn-indicator>
+
+    <slip-skid-ball>
+        <name>slip-skid-ball</name>
+        <number>0</number>
+    </slip-skid-ball>
 
   <vertical-speed-indicator>                                                 
     <name>cabin-rate-climb</name>

@@ -411,6 +411,11 @@ JSBSim Extra Aircraft - Extra 500.
             <serviceable>1</serviceable>
             <sideslip-error-factor>0.1</sideslip-error-factor>
       </staticAP>
+      <electrical>	<!-- FIXME: a hack to get the turn coordinator working -->
+		<outputs>
+			<turn-coordinator>12</turn-coordinator>
+		</outputs>
+      </electrical>
  </systems>
 
  <instrumentation>
@@ -719,7 +724,7 @@ JSBSim Extra Aircraft - Extra 500.
 				<spooling-up type="double">0</spooling-up>
 				<spooling-down type="double">0</spooling-down>
 				<N1-old type="double">0.0</N1-old>					<!--dummy value -->
-				<N1-par-target type="double">0.0</N1-par-target>			<!--dummy value -->
+				<N1-par type="double">0.0</N1-par>					<!--dummy value -->
 				<TOT-target-degC>0.0</TOT-target-degC>					<!--dummy value -->
 				<Delta-TOTsd-degC>0.0</Delta-TOTsd-degC>				<!--dummy value -->
 				<TOTnr-degC>0.0</TOTnr-degC>						<!--dummy value -->

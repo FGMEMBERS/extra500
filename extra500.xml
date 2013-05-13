@@ -24,7 +24,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             12.05.13
+      Date:             13.05.13
 -->
 
 	<fileheader>
@@ -76,7 +76,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		<ixx unit="SLUG*FT2">      2891 </ixx>
 		<iyy unit="SLUG*FT2">      3919 </iyy>
 		<izz unit="SLUG*FT2">      6136 </izz>
-		<emptywt unit="KG" >      1385 </emptywt>
+		<emptywt unit="KG" >      1385 </emptywt>  		<!-- subtracted main gear, find below as pointmasses -->
 		<location name="CG" unit="M">
 			<x> 3.4995 </x>
 			<y> 0.00 </y>
@@ -622,13 +622,6 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	<channel name="OT">
 		<lag_filter name ="aircraft/engine/OT-degC">
  			<input>aircraft/engine/OT-target-degC</input>
-			<c1>1.0</c1>
-		</lag_filter>
-	</channel>
-
-	<channel name="N1">
-		<lag_filter name ="aircraft/engine/N1-par">
- 			<input>aircraft/engine/N1-par-target</input>
 			<c1>1.0</c1>
 		</lag_filter>
 	</channel>
@@ -1490,21 +1483,31 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             <atan2>
                   <sum>
                         <property>velocities/v-aero-fps</property>    
-                        <product>
+                        <product>							<!-- induced speed due to rotation around the top axis -->
                               <value>-1</value>
                               <property>velocities/r-aero-rad_sec</property> 
                               <sum>
                               	<property>aircraft/vstab/x_ac-ft</property>
                                     <value>-11.581</value>
                               </sum>      
+                        </product> 
+                        <product>							<!-- induced speed due to propeller rotation -->
+                              <value>-0.03</value>
+                              <property>propulsion/engine/power-hp</property>    
                         </product>  
                   </sum>
                   <pow>
                         <sum>
-                              <product>
-                                    <property>velocities/u-aero-fps</property>
-                                    <property>velocities/u-aero-fps</property>
-                              </product>
+                              <pow>
+				    <sum>
+                                    	<property>velocities/u-aero-fps</property>
+					<product>					<!-- induced speed due to propeller thrust -->
+						<value>0.4</value>
+						<property>propulsion/engine/prop-induced-velocity_fps</property>
+					</product>
+				    </sum>
+                                    <value>2</value>
+                              </pow>
                               <product>
                                     <property>velocities/w-aero-fps</property>
                                     <property>velocities/w-aero-fps</property>

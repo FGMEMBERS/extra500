@@ -17,7 +17,7 @@
 #      Date: April 29 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             12.05.13
+#      Date:             13.05.13
 #
 
 
@@ -188,7 +188,7 @@ var calcTemps = {
 
 		m.nN1		= props.globals.getNode("/engines/engine[0]/n1");
 		m.nN1old	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/N1-old");
-		m.nN1par	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/N1-par-target");
+		m.nN1par	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/N1-par");
 
 		m.nCutOff	= props.globals.getNode("/controls/engines/engine[0]/cutoff");
 		m.nStarter	= props.globals.getNode("/controls/engines/engine[0]/starter");
