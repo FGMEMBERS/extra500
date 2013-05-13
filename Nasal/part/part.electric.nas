@@ -1558,7 +1558,7 @@ var ElectricRelaisXPDT = {
 	simReset : func(){
 		me.capacitor.load(-1);
 		me.nState.setValue(me.state);
-		me.state = me.capacitor.value > 0 ? 1 : 0;
+		me.state = me.capacitor.value > 0 ? 1 : 0; # ### TODO optimise capacitor to minimum
 	},
 	_setValue : func(value){
 		me.state = value;
