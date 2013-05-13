@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             12.05.13
+      Date:             13.05.13
 
 -->
 
@@ -28,8 +28,7 @@
 
 <path>extra500_ALTanalog.ac</path>
 
-<!--IASanalog Needle-->
-
+<!--ALTanalog Needle-->
 <animation>
   <type>rotate</type>
   <object-name>ALTanalog.Needle100</object-name>
@@ -41,8 +40,7 @@
    <z>0</z>
   </axis>
  </animation>
-
- <animation>
+<animation>
   <type>rotate</type>
   <object-name>ALTanalog.Needle1000</object-name>
   <property>/instrumentation/altimeter-backup/indicated-altitude-ft</property>
@@ -53,8 +51,7 @@
    <z>0</z>
   </axis>
  </animation>
-
- <animation>
+<animation>
   <type>rotate</type>
   <object-name>ALTanalog.Needle10000</object-name>
   <property>/instrumentation/altimeter-backup/indicated-altitude-ft</property>
@@ -66,19 +63,85 @@
   </axis>
  </animation>
 
+<!--ALTanalog Knob-->
+    <animation>
+        <type>pick</type>
+        <object-name>ALTknob</object-name>
+        <action>
+            <button>0</button>
+            <repeatable>true</repeatable>
+            <interval-sec>0.15</interval-sec>
+            <binding>
+                <command>property-adjust</command>
+                <property>/instrumentation/altimeter-backup/setting-hpa</property>
+                <step>1</step>
+                <min>955</min>
+                <max>1070</max>
+            </binding>
+        </action>
+    </animation>
 
+    <animation>
+        <type>pick</type>
+        <object-name>ALTknob</object-name>
+        <action>
+            <button>1</button>
+            <repeatable>true</repeatable>
+            <interval-sec>0.15</interval-sec>
+            <binding>
+                <command>property-adjust</command>
+                <property>/instrumentation/altimeter-backup/setting-hpa</property>
+                <step>-1</step>
+                <min>955</min>
+                <max>1070</max>
+            </binding>
+        </action>
+    </animation>
 
+    <animation>
+        <type>pick</type>
+        <object-name>ALTknob</object-name>
+        <action>
+            <button>3</button>
+            <binding>
+                <command>property-adjust</command>
+                <property>/instrumentation/altimeter-backup/setting-hpa</property>
+                <step>0.5</step>
+                <min>955</min>
+                <max>1070</max>
+            </binding>
+        </action>
+    </animation>
 
+    <animation>
+        <type>pick</type>
+        <object-name>ALTknob</object-name>
+        <action>
+            <button>4</button>
+            <binding>
+                <command>property-adjust</command>
+                <property>/instrumentation/altimeter-backup/setting-hpa</property>
+                <step>-0.5</step>
+                <min>955</min>
+                <max>1070</max>
+            </binding>
+        </action>
+    </animation>
 
-
-
-
-
-
-
-
-
-
+<animation>
+        <type>rotate</type>
+        <object-name>ALThpa</object-name>
+        <property>/instrumentation/altimeter-backup/setting-hpa</property>
+        <interpolation>
+            <entry><ind>1070</ind><dep>0.0</dep></entry>
+            <entry><ind>955</ind><dep>345</dep></entry>
+        </interpolation>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
 
 
 </PropertyList>

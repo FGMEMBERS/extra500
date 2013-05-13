@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             12.05.13
+      Date:             13.05.13
 
 -->
 
@@ -44,12 +44,12 @@
 	</offsets>
 </model>
 <model>
-  <name>IASanalog</name>
+  <name>ALTanalog</name>
   <path>Aircraft/extra500/Models/extra500_ALTanalog.xml</path>
 	<offsets>
-		<x-m>-0.73</x-m>
+		<x-m>-0.72</x-m>
 		<y-m>-0.1675</y-m>	
-		<z-m>-0.050</z-m>
+		<z-m>-0.048</z-m>
 	<pitch-deg>-13</pitch-deg>
 	</offsets>
 </model>
