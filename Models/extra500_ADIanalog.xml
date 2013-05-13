@@ -45,12 +45,41 @@
 			<z>0</z>
 		</axis>
 	</animation>
-
+<!-- scheibe rutschte raus wenn pitch extrem groß wurde, deshalb anderer lösungsansatz gesucht
 	<animation>
 		<type>translate</type>
 		<object-name>scheibe.innen</object-name>
 		<property>/orientation/pitch-deg</property>
 		<factor>0.0005</factor>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+	</animation>-->
+	
+	<animation>
+		<type>translate</type>
+		<object-name>scheibe.innen</object-name>
+		<property>/orientation/pitch-deg</property>
+		<interpolation>
+        <entry>
+           <ind>-30</ind>
+           <dep>.015</dep>
+        </entry>
+            <entry>
+                <ind>-20</ind>
+                <dep>.01</dep>
+            </entry>
+            <entry>
+                <ind>20</ind>
+                <dep>-.01</dep>
+            </entry>
+		<entry>
+            <ind>30</ind>
+            <dep>-.015</dep>
+        </entry>
+        </interpolation>
 		<axis>
 			<x>0</x>
 			<y>0</y>
