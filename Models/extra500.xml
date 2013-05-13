@@ -43,16 +43,7 @@
 	<pitch-deg>-13</pitch-deg>
 	</offsets>
 </model>
-<model>
-  <name>ALTanalog</name>
-  <path>Aircraft/extra500/Models/extra500_ALTanalog.xml</path>
-	<offsets>
-		<x-m>-0.72</x-m>
-		<y-m>-0.1675</y-m>	
-		<z-m>-0.048</z-m>
-	<pitch-deg>-13</pitch-deg>
-	</offsets>
-</model>
+
 <model>
   <name>IASanalog</name>
   <path>Aircraft/extra500/Models/extra500_IASanalog.xml</path>
@@ -60,6 +51,28 @@
 		<x-m>-0.73</x-m>
 		<y-m>-0.312</y-m>	
 		<z-m>-0.050</z-m>
+	<pitch-deg>-13</pitch-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>ADIanalog</name>
+  <path>Aircraft/extra500/Models/extra500_ADIanalog.xml</path>
+	<offsets>
+		<x-m>-0.72</x-m>
+		<y-m>-0.24</y-m>	
+		<z-m>-0.048</z-m>
+	<pitch-deg>-13</pitch-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>ALTanalog</name>
+  <path>Aircraft/extra500/Models/extra500_ALTanalog.xml</path>
+	<offsets>
+		<x-m>-0.72</x-m>
+		<y-m>-0.1675</y-m>	
+		<z-m>-0.048</z-m>
 	<pitch-deg>-13</pitch-deg>
 	</offsets>
 </model>
