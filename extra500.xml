@@ -24,7 +24,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             13.05.13
+      Date:             14.05.13
 -->
 
 	<fileheader>
@@ -1476,38 +1476,47 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 
 <!-- VERTICAL STABILIZER -->
 
+    <function name="aircraft/vstab/v-local-fps">
+     	<sum>
+     		<property>velocities/v-aero-fps</property>    
+     		<product>							<!-- induced speed due to rotation around the top axis -->
+     			<value>-1</value>
+			<property>velocities/r-aero-rad_sec</property> 
+			<sum>
+				<property>aircraft/vstab/x_ac-ft</property>
+                                <value>-11.581</value>
+                        </sum>      
+		</product> 
+                <product>							<!-- induced speed due to propeller rotation -->
+                        <value>-0.03</value>
+                        <property>propulsion/engine/power-hp</property>    
+                </product>  
+	</sum>
+    </function>
+
+    <function name="aircraft/vstab/u-local-fps">
+     	<sum>
+             	<property>velocities/u-aero-fps</property>
+		<product>					<!-- induced speed due to propeller thrust -->
+			<value>0.4</value>
+			<property>propulsion/engine/prop-induced-velocity_fps</property>
+		</product>
+	</sum>
+    </function>
+
+
     <function name="aircraft/vstab/beta-stab-deg">
       <description>sideslip angle at stabilizer</description>
       <product>
-      <property>/extra500/const/RAD2DEG</property>
-            <atan2>
-                  <sum>
-                        <property>velocities/v-aero-fps</property>    
-                        <product>							<!-- induced speed due to rotation around the top axis -->
-                              <value>-1</value>
-                              <property>velocities/r-aero-rad_sec</property> 
-                              <sum>
-                              	<property>aircraft/vstab/x_ac-ft</property>
-                                    <value>-11.581</value>
-                              </sum>      
-                        </product> 
-                        <product>							<!-- induced speed due to propeller rotation -->
-                              <value>-0.03</value>
-                              <property>propulsion/engine/power-hp</property>    
-                        </product>  
-                  </sum>
+      	<property>/extra500/const/RAD2DEG</property>
+	<atan2>
+		<property>aircraft/vstab/v-local-fps</property>        
                   <pow>
                         <sum>
-                              <pow>
-				    <sum>
-                                    	<property>velocities/u-aero-fps</property>
-					<product>					<!-- induced speed due to propeller thrust -->
-						<value>0.4</value>
-						<property>propulsion/engine/prop-induced-velocity_fps</property>
-					</product>
-				    </sum>
-                                    <value>2</value>
-                              </pow>
+                              <product>
+				    <property>aircraft/vstab/u-local-fps</property>
+                                    <property>aircraft/vstab/u-local-fps</property>
+                              </product>
                               <product>
                                     <property>velocities/w-aero-fps</property>
                                     <property>velocities/w-aero-fps</property>
@@ -1530,23 +1539,13 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       <description>airspeed at vert stabilizer uv</description>
       <pow>
             <sum>
-                  <pow>
-                        <sum>
-                              <property>velocities/v-aero-fps</property>    
-                              <product>
-                                    <value>-1</value>
-                                    <property>velocities/r-aero-rad_sec</property> 
-                              	<sum>
-                              		<property>aircraft/vstab/x_ac-ft</property>
-                                    	<value>-11.581</value>
-                              	</sum> 
-                              </product>  
-                        </sum>
-                        <value>2</value>
-                  </pow>
                   <product>
-                        <property>velocities/u-aero-fps</property>
-                        <property>velocities/u-aero-fps</property>
+                        <property>aircraft/vstab/v-local-fps</property>
+                        <property>aircraft/vstab/v-local-fps</property>
+                  </product>
+                  <product>
+		    <property>aircraft/vstab/u-local-fps</property>
+                    <property>aircraft/vstab/u-local-fps</property>
                   </product>
             </sum>
             <value>0.5</value>
@@ -1569,14 +1568,14 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   <independentVar lookup="row">aircraft/vstab/beta-stab-deg</independentVar>
                   <independentVar lookup="column">aircraft/vstab/rudder-pos-deg</independentVar>
                   <tableData>
-					-25	0	25
-				-30	-0.87793833 -1.14538741	-1.42209208		
-				-15	-0.33292782	-0.60425246	-0.88036811
-				-5	0.06869595	-0.20453504	-0.47937939	
-				0	0.27407178	0		-0.27407178
-				5	0.47937939	0.20453504	-0.06869595
-				15	0.88036811	0.60425246	0.33292782
-				30	1.42209208	1.14538741	0.87793833
+					-25		0		25
+				-30	-0.89918226 	-1.19190836	-1.49568522		
+				-15	-0.30532351	-0.60069066	-0.90177768
+				-5	0.13003875	-0.16740817	-0.46678135	
+				0	0.35264051	0.05394389	-0.24475273
+				5	0.57541531	0.27532318	-0.02284279
+				15	1.01202464	0.70880210	0.41129982
+				30	1.60831273	1.30041099	1.00355935
                   </tableData>
             </table>
       </sum>
@@ -1590,14 +1589,14 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   <independentVar lookup="row">aircraft/vstab/beta-stab-deg</independentVar>
                   <independentVar lookup="column">aircraft/vstab/rudder-pos-deg</independentVar>
                   <tableData>
-					-25	0	25
-				-30	-0.39031905 -0.47522721	-0.54410434		
-				-15	-0.07386956	-0.12020416	-0.14865842
-				-5	0.00817531	-0.01340143	-0.0165374	
-				0	0.00925556	0		0.00925556
-				5	-0.0165374	-0.01340143	0.00817531
-				15	-0.14865842	-0.12020416	-0.07386956
-				30	-0.54410434	-0.47522721	-0.39031905
+					-25		0		25
+				-30	-0.39789847 	-0.48827490	-0.55951166		
+				-15	-0.06797001	-0.11972034	-0.15012299
+				-5	0.01582428	-0.01150106	-0.01680982	
+				0	0.01560545	0.00042988	0.00735503
+				5	-0.01299003	-0.01590033	0.00320600
+				15	-0.15552187	-0.13308850	-0.08930749
+				30	-0.58021069	-0.51611918	-0.43288782
                   </tableData>
             </table>
       </sum>
