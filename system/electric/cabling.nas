@@ -399,7 +399,9 @@ var plugFlap =func(){
 	
 };
 var plugGear =func(){
+	gearSystem.plugElectric();
 	gearSystem.GND.plug(mainBoard.GND);
+	gearSystem.Aux2.plug(circuitBreakerPanel.Aux2);
 };
 
 var plugAnnuciator = func(){

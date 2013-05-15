@@ -164,13 +164,13 @@ var GearSystem = {
 		me.Relais34GA.plug(me.NoseGearSquat.L21);		#  2
 		me.SwitchOn.plug(me.Modul3.con());			#  3
 		me.SwitchOff.plug(me.RightGearDown.Com2);		#  4
-		me.RightGearLed.plug(me.RightGearDown.L12);		#  5 xxx
-		me.NoseGearLed.plug(me.NoseGearDown.L21);		#  6
+		me.RightGearLed.plug(me.RightGearDown.L12);		#  5
+		me.NoseGearLed.plug(me.NoseGearDown.L22);		#  6
 		me.LeftGearLed.plug(me.LeftGearDown.L22);		#  7
-		me.Warning.plug(me.NoseGearUp.L11);			#  8
+		me.Warning.plug(me.NoseGearUp.L12);			#  8
 		me.Aux2.plug(me.NoseGearDown.Com1);			#  9
-		me.Aux1.plug(me.NoseGearDown.L12);			# 10
-		me.Relais35GA.plug(me.NoseGearSquat.L42);		# 11
+		me.Aux1.plug(me.NoseGearDown.L11);			# 10
+		me.Relais35GA.plug(me.NoseGearSquat.L41);		# 11
 		me.Annunciator.plug(me.HydraulicMotorRelais.P24);	# 12
 		me.TAS.plug(me.TASBus.Minus);				# 13
 		
