@@ -161,12 +161,12 @@ var GearSystem = {
 				
 		me.GND.plug(me.GNDBus.Minus);
 		me.CTRL.plug(me.HydraulicMotorRelais.A1);		#  1
-		me.Relais34GA.plug(me.NoseGearSquat.L22);		#  2
+		me.Relais34GA.plug(me.NoseGearSquat.L21);		#  2
 		me.SwitchOn.plug(me.Modul3.con());			#  3
 		me.SwitchOff.plug(me.RightGearDown.Com2);		#  4
-		me.RightGearLed.plug(me.RightGearDown.L12);		#  5
+		me.RightGearLed.plug(me.RightGearDown.L12);		#  5 xxx
 		me.NoseGearLed.plug(me.NoseGearDown.L21);		#  6
-		me.LeftGearLed.plug(me.LeftGearDown.L21);		#  7
+		me.LeftGearLed.plug(me.LeftGearDown.L22);		#  7
 		me.Warning.plug(me.NoseGearUp.L11);			#  8
 		me.Aux2.plug(me.NoseGearDown.Com1);			#  9
 		me.Aux1.plug(me.NoseGearDown.L12);			# 10
@@ -179,22 +179,22 @@ var GearSystem = {
 		me.NoseGearUp.Com1.plug(me.RightDoorUpperOpen.L12);
 		
 		me.NoseGearSquat.Com1.plug(me.RightDoorUpperClose.L12);
-		me.NoseGearSquat.L11.plug(me.Modul3.con());
+		me.NoseGearSquat.L12.plug(me.Modul3.con());
 		me.NoseGearSquat.Com2.plug(me.GNDBus.con());
 		me.NoseGearSquat.Com4.plug(me.GNDBus.con());
 		
 				
 		me.RightGearup.Com1.plug(me.Modul3.con());
-		me.RightGearup.L11.plug(me.LeftGearUp.L11);
+		me.RightGearup.L12.plug(me.LeftGearUp.L12);
 		me.RightGearup.Com2.plug(me.GNDBus.con());
-		me.RightGearup.L12.plug(me.TASBus.con());
+		me.RightGearup.L21.plug(me.TASBus.con());
 		
 		me.RightGearDown.Com1.plug(me.GNDBus.con());
-		me.RightGearDown.L12.plug(me.LeftGearDown.Com1);
+		me.RightGearDown.L22.plug(me.LeftGearDown.Com1);
 		
 		me.LeftGearUp.Com1.plug(me.Modul3.con());
 		me.LeftGearUp.Com2.plug(me.GNDBus.con());
-		me.LeftGearUp.L22.plug(me.TASBus.con());
+		me.LeftGearUp.L21.plug(me.TASBus.con());
 		
 		me.LeftGearDown.Com2.plug(me.GNDBus.con());
 		me.LeftGearDown.L12.plug(me.Modul4hjk.con());
