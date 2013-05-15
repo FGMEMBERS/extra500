@@ -24,7 +24,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             14.05.13
+      Date:             15.05.13
 -->
 
 	<fileheader>
@@ -453,9 +453,27 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 
 		
 		<channel name="Roll">
+
+			<aerosurface_scale name="rudder aileron control"> 	<!-- this is to simulate the rudder-aileron interconnect, a spring in RL -->
+				<input>fcs/rudder-cmd-norm</input>
+				<range>
+					<min> 0.15 </min>
+					<max>-0.15 </max>
+				</range>
+				<output>fcs/rudder-cmd-aileron</output>
+			</aerosurface_scale>
+
+			 <summer name="aileron-cmd-tot">
+                		<input>fcs/rudder-cmd-aileron</input>
+                		<input>fcs/aileron-cmd-norm</input>
+                		<clipto>
+                    			<min>-1</min>
+                    			<max>1</max>
+               			 </clipto>
+            		</summer>
 				
 			<aerosurface_scale name="Left Aileron Control">
-				<input>fcs/aileron-cmd-norm</input>
+				<input>fcs/aileron-cmd-tot</input>
 				<range>
 					<min> -0.4712 </min>
 					<max>  0.3316 </max>
@@ -464,7 +482,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			</aerosurface_scale>
 			
 			<aerosurface_scale name="Right Aileron Control">
-				<input>fcs/aileron-cmd-norm</input>
+				<input>fcs/aileron-cmd-tot</input>
 				<range>
 					<min> -0.3316 </min>
 					<max>  0.4712 </max>
@@ -502,9 +520,27 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		
 		<property value="1">fcs/yaw-damper-enable</property>
 		<channel name="Yaw">
-				
+
+			<aerosurface_scale name="aileron rudder control">	<!-- this is to simulate the rudder-aileron interconnect, a spring in RL -->
+				<input>fcs/aileron-cmd-norm</input>
+				<range>
+					<min> 0.1 </min>
+					<max>-0.1 </max>
+				</range>
+				<output>fcs/aileron-cmd-rudder</output>
+			</aerosurface_scale>
+
+			 <summer name="rudder-cmd-tot">
+                		<input>fcs/aileron-cmd-rudder</input>
+                		<input>fcs/rudder-cmd-norm</input>
+                		<clipto>
+                    			<min>-1</min>
+                    			<max>1</max>
+               			 </clipto>
+            		</summer>
+	
 			<aerosurface_scale name="Rudder Control">
-				<input>fcs/rudder-cmd-norm</input>
+				<input>fcs/rudder-cmd-tot</input>
 				<range>
 					<min> -0.4363 </min>
 					<max>  0.4363 </max>
