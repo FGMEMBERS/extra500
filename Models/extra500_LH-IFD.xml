@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             09.05.13
+      Date:             15.05.13
 
 -->
 
@@ -333,23 +333,36 @@
 	</axis>
 </animation>
 
-<!-- Wind-From-Heading ?????????? wie koennte das funktionieren ???
 <animation>
   <type>rotate</type>
-		<object-name>Wind.Pfeil</object-name>
-		<property>environment/wind-from-heading-deg</property>
-<factor>1</factor>
-  <axis>
-  <x1-m>1</x1-m>
-  <y1-m>-0.09759</y1-m>
-  <z1-m>-0.0384</z1-m>
-  <x2-m>-1</x2-m>
-  <y2-m>-0.09759</y2-m>
-  <z2-m>-0.0384</z2-m>
-  </axis>
+	<object-name>Wind.Pfeil</object-name>
+	<property>orientation/heading-deg</property>
+	<offset-deg>180</offset-deg>
+	<factor>-1</factor>
+	<axis>
+		<x1-m>1</x1-m>
+		<y1-m>-0.09759</y1-m>
+		<z1-m>-0.0384</z1-m>
+		<x2-m>-1</x2-m>
+		<y2-m>-0.09759</y2-m>
+		<z2-m>-0.0384</z2-m>
+	</axis>
+</animation>
+<animation>
+  <type>rotate</type>
+	<object-name>Wind.Pfeil</object-name>
+	<property>environment/wind-from-heading-deg</property>
+	<factor>1</factor>
+	<axis>
+		<x1-m>1</x1-m>
+		<y1-m>-0.09759</y1-m>
+		<z1-m>-0.0384</z1-m>
+		<x2-m>-1</x2-m>
+		<y2-m>-0.09759</y2-m>
+		<z2-m>-0.0384</z2-m>
+	</axis>
 </animation>
 
--->
 
 
 <!-- Temperature -->
@@ -382,7 +395,8 @@
 <animation>
 	<type>texrotate</type>
 	<object-name>Kompass</object-name>
-	<property>/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg</property>
+<!--mal zum testen auskommentiert	<property>/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg</property>-->
+<property>/orientation/heading-deg</property>
 	<factor>1</factor>
 	<axis>
 		<x>0</x>
