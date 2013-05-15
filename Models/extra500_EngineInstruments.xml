@@ -19,8 +19,8 @@
       Authors: Thomas Grossberger and Dirk Dittmann
       Date: March 13 2013
 
-      Last change:      Eric van den Berg
-      Date:             10.05.13
+      Last change:      Thomas Grossberger
+      Date:             15.05.13
 
 -->
 
@@ -428,7 +428,9 @@
 <!--Dimming -->
 <animation>
 	<type>material</type>
-	<object-name>EngineInstruments.VDC.00.1</object-name>
+		<object-name>RahmenOben</object-name>
+		<object-name>RahmenUnten</object-name>
+		<object-name>EngineInstruments.VDC.00.1</object-name>
 		<object-name>EngineInstruments.VDC.01.0</object-name>
 		<object-name>EngineInstruments.VDC.10.0</object-name>
 		<object-name>EngineInstruments.VDC.Dot</object-name>
@@ -446,6 +448,38 @@
 		<object-name>EngineInstruments.TEMP.minus</object-name>
 		<object-name>EngineInstruments.PRESS.01</object-name>
 		<object-name>EngineInstruments.PRESS.10</object-name>
+		<object-name>EngineInstruments.TRQ.100.0</object-name>
+		<object-name>EngineInstruments.TRQ.010.0</object-name>
+		<object-name>EngineInstruments.TRQ.001.0</object-name>
+		<object-name>EngineInstruments.TRQ.Dot</object-name>
+		<object-name>EngineInstruments.TRQ.000.1</object-name>
+		<object-name>EngineInstruments.TOT.001</object-name>
+		<object-name>EngineInstruments.TOT.010</object-name>
+		<object-name>EngineInstruments.TOT.100</object-name>
+		<object-name>EngineInstruments.N1.100.0</object-name>
+		<object-name>EngineInstruments.N1.010.0</object-name>
+		<object-name>EngineInstruments.N1.001.0</object-name>
+		<object-name>EngineInstruments.N1.Dot</object-name>
+		<object-name>EngineInstruments.N1.000.1</object-name>
+		<object-name>EngineInstruments.N2.0001</object-name>
+		<object-name>EngineInstruments.N2.0010</object-name>
+		<object-name>EngineInstruments.N2.0100</object-name>
+		<object-name>EngineInstruments.N2.1000</object-name>
+		<object-name>EngineInstruments.OP.001</object-name>
+		<object-name>EngineInstruments.OP.010</object-name>
+		<object-name>EngineInstruments.OP.100</object-name>
+		<object-name>EngineInstruments.OT.001</object-name>
+		<object-name>EngineInstruments.OT.010</object-name>
+		<object-name>EngineInstruments.OT.100</object-name>
+		
+		
+		<object-name>EngineInstruments.TRQ.Needle</object-name>
+		<object-name>EngineInstruments.TOT.Needle</object-name>
+		<object-name>EngineInstruments.N1.Needle</object-name>
+		<object-name>EngineInstruments.N2.Needle</object-name>
+		<object-name>EngineInstruments.OP.Needle</object-name>
+		<object-name>EngineInstruments.OT.Needle</object-name>
+		
 		<emission>	
 		<red>1.0</red>	
 		<green>1.0</green>	
