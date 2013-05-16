@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             13.05.13
+      Date:             16.05.13
 
 -->
 
@@ -34,6 +34,17 @@
 
 <!-- Submodels -->
 <!-- instruments -->
+<model>
+  <name>MagneticCompass</name>
+  <path>Aircraft/extra500/Models/instruments/MagneticCompass.xml</path>
+	<offsets>
+		<x-m>-0.710</x-m>
+		<y-m>0</y-m>	
+		<z-m>0.1</z-m>
+	<pitch-deg>0</pitch-deg>
+	</offsets>
+</model>
+
 <model>
   <name>PropAmmeter</name>
   <path>Aircraft/extra500/Models/instruments/PropAmmeter.xml</path>
