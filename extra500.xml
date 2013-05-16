@@ -436,18 +436,18 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	      <output>fcs/pitch-trim-pos-deg</output>
       </aerosurface_scale>
 
-    <summer name="aircraft/hstab/elevator/de_dot-help">
+    <!--summer name="aircraft/hstab/elevator/de_dot-help">
       <description>stick-free elevator deflection rad</description>
       <input>aircraft/hstab/elevator/de_dot</input>
       <clipto>
             <min>
-                  <value>-1</value>
+                  <value>-10</value>
             </min>
             <max>
-                  <value>1</value>            
+                  <value>10</value>            
             </max>
       </clipto>
-    </summer> 
+    </summer--> 
 
   </channel> 
 
@@ -826,6 +826,34 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	</table>
     </function>
 
+    <function name="aircraft/vstab/u-local-fps">
+     	<sum>
+             	<property>velocities/u-aero-fps</property>
+		<product>					<!-- induced speed due to propeller thrust -->
+			<value>0.4</value>
+			<property>propulsion/engine/prop-induced-velocity_fps</property>
+		</product>
+	</sum>
+    </function>
+
+    <function name="aircraft/vstab/v-local-fps">
+     	<sum>
+     		<property>velocities/v-aero-fps</property>    
+     		<product>							<!-- induced speed due to rotation around the top axis -->
+     			<value>-1</value>
+			<property>velocities/r-aero-rad_sec</property> 
+			<sum>
+				<property>aircraft/vstab/x_ac-ft</property>
+                                <value>-11.581</value>
+                        </sum>      
+		</product> 
+                <product>							<!-- induced speed due to propeller rotation -->
+                        <value>-0.03</value>
+                        <property>propulsion/engine/power-hp</property>    
+                </product>  
+	</sum>
+    </function>
+
 <!--wing and fuselage coefficients-->
 
     <function name="aero/coefficients/cl_ac-h">
@@ -1155,15 +1183,15 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 
     <function name="aircraft/hstab/elevator/ch_de-prad">
       <description>moment coeff around elevator hinge line due to its deflection</description>
-            <sum>            
-                  <property>aircraft/hstab/elevator/Ch_de</property>
-                  <product>
-                        <property>aircraft/hstab/elevator/Ch_de2</property>
-                        <abs>
-                              <property>aircraft/hstab/elevator/elevator-pos-rad</property>
-                        </abs>
-                  </product>
-            </sum>
+            	<sum>            
+                  	<property>aircraft/hstab/elevator/Ch_de</property>
+		  	<product>
+                        	<property>aircraft/hstab/elevator/Ch_de2</property>
+                        	<abs>
+                              		<property>aircraft/hstab/elevator/elevator-pos-rad</property>
+                        	</abs>
+                  	</product>
+            	</sum>
     </function>
 
     <function name="aircraft/hstab/elevator/ch_alpha-prad">
@@ -1226,7 +1254,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       </product>
     </function>
 
-    <function name="aircraft/hstab/elevator/H-de-lbsft">
+    <!--function name="aircraft/hstab/elevator/H-de-lbsft">
       <product>
             <value>0.5</value>
             <property>atmosphere/rho-slugs_ft3</property>
@@ -1237,7 +1265,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             <property>aircraft/hstab/elevator/ch_de-prad</property>
             <property>aircraft/hstab/elevator/elevator-pos-rad</property>
       </product>
-    </function>
+    </function-->
 
     <function name="aircraft/hstab/elevator/H-trim-lbsft">
       <product>
@@ -1252,60 +1280,30 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       </product>
     </function>
 
-    <function name="aircraft/hstab/elevator/H-total-lbsft">
-      <sum>
-            <property>aircraft/hstab/elevator/H-nz-lbsft</property>
-            <property>aircraft/hstab/elevator/H-ds-lbsft</property>
-            <property>aircraft/hstab/elevator/H-bw-lbsft</property>
-            <property>aircraft/hstab/elevator/H-alpha-lbsft</property>
-            <property>aircraft/hstab/elevator/H-trim-lbsft</property>
-            <property>aircraft/hstab/elevator/H-de-lbsft</property>
-      </sum>
-    </function>
-
-    <function name="aircraft/hstab/elevator/de_ddot">
-	<product>
-            <abs>
-            	<sum>
-            		<property>state/controls-fixed</property>
-            		<value>-1</value> 
-            	</sum>
-            </abs>
-		<property>aircraft/hstab/elevator/H-total-lbsft</property>
-		<pow>
-			<property>aircraft/hstab/elevator/Ip-lbsft2</property>
-			<value>-1</value>
-		</pow>
-	</product>
-    </function>
-
-    <function name="aircraft/hstab/elevator/de_dot">
-      <description>stick-free elevator deflection rate rad per sec</description>
-	<sum>
-		<property>aircraft/hstab/elevator/de_dot-help</property>
-		<product>
-			<property>aircraft/hstab/elevator/de_ddot</property>
-			<property>sim-dt-sec</property>
-		</product>
-	</sum>
-    </function>
-
     <function name="aircraft/hstab/elevator/d_e_free-rad">
       <description>stick-free elevator deflection rad</description>
-	<sum>
-		<property>aircraft/hstab/elevator/elevator-pos-rad</property>
-		<product>
-			<property>aircraft/hstab/elevator/de_dot</property>
-			<property>sim-dt-sec</property>
-		</product>
-	</sum>
-    </function>
-
-    <function name="sim-time-sec-old">
-	<product>
-		<value>-1</value>
-		<property>sim-time-sec</property>
-	</product>
+      <product>
+            <value>-1</value>
+            <pow>
+                  <product>
+                        <value>0.5</value>
+                        <property>atmosphere/rho-slugs_ft3</property>
+                        <property>velocities/hstab/v-fps</property>
+                        <property>velocities/hstab/v-fps</property>
+                        <property>aircraft/hstab/elevator/S-ft2</property>
+                        <property>aircraft/hstab/elevator/c_aero-ft</property>
+                        <property>aircraft/hstab/elevator/ch_de-prad</property>
+                  </product>
+                  <value>-1</value>   
+            </pow>
+            <sum>
+                  <property>aircraft/hstab/elevator/H-nz-lbsft</property>
+                  <property>aircraft/hstab/elevator/H-ds-lbsft</property>
+                  <property>aircraft/hstab/elevator/H-bw-lbsft</property>
+                  <property>aircraft/hstab/elevator/H-alpha-lbsft</property>
+                  <property>aircraft/hstab/elevator/H-trim-lbsft</property>                 
+            </sum>
+      </product>
     </function>
 
     <function name="aircraft/hstab/elevator/elevator-pos-rad">
@@ -1333,6 +1331,38 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       </product>
     </function>
 
+    <function name="aircraft/hstab/elevator/H-de-lbsft">
+      <product>
+            <value>0.5</value>
+            <property>atmosphere/rho-slugs_ft3</property>
+            <property>velocities/hstab/v-fps</property>
+            <property>velocities/hstab/v-fps</property>
+            <property>aircraft/hstab/elevator/S-ft2</property>
+            <property>aircraft/hstab/elevator/c_aero-ft</property>
+            <property>aircraft/hstab/elevator/ch_de-prad</property>
+            <property>aircraft/hstab/elevator/elevator-pos-rad</property>
+      </product>
+    </function>
+
+    <function name="aircraft/hstab/elevator/H-total-lbsft">
+      <sum>
+            <property>aircraft/hstab/elevator/H-nz-lbsft</property>
+            <property>aircraft/hstab/elevator/H-ds-lbsft</property>
+            <property>aircraft/hstab/elevator/H-bw-lbsft</property>
+            <property>aircraft/hstab/elevator/H-alpha-lbsft</property>
+            <property>aircraft/hstab/elevator/H-trim-lbsft</property>
+            <property>aircraft/hstab/elevator/H-de-lbsft</property>
+      </sum>
+    </function>
+
+    <function name="sim-time-sec-old">
+	<product>
+		<value>-1</value>
+		<property>sim-time-sec</property>
+	</product>
+    </function>
+
+
 <!--end of trim part-->
 
     <function name="aero/coefficients/cl_hstab">
@@ -1343,7 +1373,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   <independentVar lookup="row">aircraft/hstab/alpha-deg</independentVar>
                   <independentVar lookup="column">aircraft/hstab/elevator/elevator-pos-deg</independentVar>
                   <tableData>
-        -33    -20         -10         0           10          20
+        -33    		-20         -10         0           10          20
   -20   -1.1      -1.1            -1.1        -1.43354511 -0.96981937 -0.75369388
   -19   -1.1      -1.1            -1.1        -1.36186779 -0.89814192 -0.68201661
   -18   -1.1      -1.1            -1.75391638 -1.29019070 -0.82646489 -0.61033946
@@ -1381,7 +1411,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   <independentVar lookup="row">aircraft/hstab/alpha-deg</independentVar>
                   <independentVar lookup="column">aircraft/hstab/elevator/elevator-pos-deg</independentVar>
                   <tableData>
-                          -33    -20   -10   0     10    20
+       -33    		-20   	-10   	0     		10    20
  -20   0.31966200 0.27770889 0.22381367 0.12777638 0.05848028 0.03531977
  -19   0.29977092 0.25919092 0.20722206 0.11531816 0.05015542 0.02892133
  -18   0.28051928 0.24131195 0.19126952 0.10349887 0.04246944 0.02316171
@@ -1511,35 +1541,6 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 
 
 <!-- VERTICAL STABILIZER -->
-
-    <function name="aircraft/vstab/v-local-fps">
-     	<sum>
-     		<property>velocities/v-aero-fps</property>    
-     		<product>							<!-- induced speed due to rotation around the top axis -->
-     			<value>-1</value>
-			<property>velocities/r-aero-rad_sec</property> 
-			<sum>
-				<property>aircraft/vstab/x_ac-ft</property>
-                                <value>-11.581</value>
-                        </sum>      
-		</product> 
-                <product>							<!-- induced speed due to propeller rotation -->
-                        <value>-0.03</value>
-                        <property>propulsion/engine/power-hp</property>    
-                </product>  
-	</sum>
-    </function>
-
-    <function name="aircraft/vstab/u-local-fps">
-     	<sum>
-             	<property>velocities/u-aero-fps</property>
-		<product>					<!-- induced speed due to propeller thrust -->
-			<value>0.4</value>
-			<property>propulsion/engine/prop-induced-velocity_fps</property>
-		</product>
-	</sum>
-    </function>
-
 
     <function name="aircraft/vstab/beta-stab-deg">
       <description>sideslip angle at stabilizer</description>
@@ -1741,7 +1742,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		</product>
 	</function>
 			
-			<function name="aero/moment/Roll_yaw">
+<!-- the part of the vertical tail is accounted for, wing-fus part is missing -->
+			<!--function name="aero/moment/Roll_yaw">
 				<description>Roll moment due to yaw rate</description>
 				<product>
 					<property>aero/qbar-psf</property>
@@ -1751,7 +1753,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 					<property>velocities/r-aero-rad_sec</property>
 					<value>0.15</value>
 				</product>
-			</function>
+			</function-->
 			
 	<function name="aero/moment/Roll_aileron">
 	<description>Roll moment due to aileron</description>

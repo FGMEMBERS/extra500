@@ -16,8 +16,8 @@
       Author: Eric van den Berg
       Date: 2013-05-12
 
-      Last change:      -
-      Date:             -
+      Last change:      2013-05-15
+      Date:             Eric van den Berg
 
 ========================================================================
 
@@ -50,6 +50,10 @@ NOTE: For strong sidewind, turn the ailerons against the wind
 CAUTION: Flaps need to be retracted before reaching 120KIAS, gear 140KIAS
 - Power lever:		TRQ 92%
 CAUTION: For continuous operation the TRQ limit is 92%, TOT 752degC, watch the TOT while climbing!
+
+
+Climb:
+Climb with MCP (maximum continuous Power, 92%TRQ or 752degC) at 110 KIAS.
 
 
 Descent: 
