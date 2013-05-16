@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             12.05.13
+      Date:             16.05.13
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -80,16 +80,16 @@ JSBSim Extra Aircraft - Extra 500.
 	<help>
 		<title>The Extra500 very special keys</title>
      	      <key>
-			<name>Ctrl-f</name>
+			<name>Ctrl-F</name>
 			<desc>Pitch control by pitch trim only</desc>
 		</key>
      	      <key>
-			<name>r</name>
+			<name>R</name>
 			<desc>Put propeller in beta range (for reverse)</desc>
 		</key>
      	      <key>
-			<name>Ctrl-c</name>
-			<desc>Toggle engine cutoff</desc>
+			<name>Ctrl-C</name>
+			<desc>Toggle engine fuel cutoff</desc>
 		</key>
 	</help>
 	
@@ -107,7 +107,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<y-offset-m archive="y" type="double">0.1</y-offset-m>
 			<z-offset-m archive="y" type="double">-0.05</z-offset-m>
 			<pitch-offset-deg type="double">-15</pitch-offset-deg>
-			<default-field-of-view-deg type="double">90.0</default-field-of-view-deg>  <!--this somehow does not work, why??? does not work on other aircraft either: flightgear bug?-->
+			<default-field-of-view-deg type="double">90.0</default-field-of-view-deg>  <!--this somehow does not work, why??? does not work on other aircraft either: flightgear bug? yes bugs 1110 and 1111-->
 		</config>
 	</view>
 	<view n="101">
@@ -684,8 +684,8 @@ JSBSim Extra Aircraft - Extra 500.
                         <elevator>
                               	<H-static-lbsft>2.0</H-static-lbsft>
                               	<Ch_de>-0.35</Ch_de>
-                              	<Ch_de2>-20.0</Ch_de2>                     		<!--non linear part of Ch_de -->
-                              	<Ch_alpha>-0.1</Ch_alpha>
+                              	<Ch_de2>-1500.0</Ch_de2>                     		<!--non linear part of Ch_de -->
+                              	<Ch_alpha>-0.05</Ch_alpha>
 				<Ch_alpha2>0.0</Ch_alpha2>				<!--non linear part of Ch_alpha -->
                               	<downspring0-lbsft>16.5</downspring0-lbsft>
                               	<downspring-lbsftprad>0.5</downspring-lbsftprad>
