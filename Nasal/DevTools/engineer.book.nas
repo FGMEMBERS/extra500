@@ -338,7 +338,7 @@ engineerScreen.add(electricLightPage);
 		
 	gearPage.add(display);
 	
-	display = Display.new(10,100);
+	display = Display.new(10,20);
 
 		display.title = "Limit switches";
 		display.font = "FIXED_9x15";
@@ -357,7 +357,7 @@ engineerScreen.add(electricLightPage);
 		
 	gearPage.add(display);
 	
-	display = Display.new(10,500);
+	display = Display.new(10,280);
 
 		display.title = "Door switches";
 		display.font = "FIXED_9x15";
@@ -374,7 +374,7 @@ engineerScreen.add(electricLightPage);
 
 	gearPage.add(display);
 	
-	display = Display.new(10,750);
+	display = Display.new(10,500);
 
 		display.title = "Relais";
 		display.font = "FIXED_9x15";
@@ -387,9 +387,25 @@ engineerScreen.add(electricLightPage);
 		display.add_Node("Caution    ", props.globals.getNode("/extra500/system/gear/HydraulicCautionRelais/state") );
 		display.add_Node("34GA       ", props.globals.getNode("/extra500/system/gear/Gear34GARelais/state") );
 		display.add_Node("35GA       ", props.globals.getNode("/extra500/system/gear/Gear35GARelais/state") );
+		display.add_Node("14GA       ", props.globals.getNode("/extra500/system/gear/Gear14GARelais/state") );
 
 	gearPage.add(display);
 	
+	display = Display.new(10,680);
+
+		display.title = "Valve";
+		display.font = "FIXED_9x15";
+		display.fg = [1.0, 1.0, 1.0, 1.0];
+		display.bg = [0.5, 0.5, 0.5, 0.85];
+		display.width = 270;
+		display.height = 160;
+		
+		display.add_Node("Main       ", props.globals.getNode("/extra500/system/gear/MainValve/state") );
+		display.add_Node("Upper Door ", props.globals.getNode("/extra500/system/gear/UpperDoorValve/state") );
+		display.add_Node("Lower Door ", props.globals.getNode("/extra500/system/gear/LowerDoorValve/state") );
+		
+
+	gearPage.add(display);
 	
 
 #---------------------------------
