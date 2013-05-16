@@ -210,8 +210,10 @@ var plugCircuitBreaker = func(){
 		flapSystem.powerInBus.plug(circuitBreakerPanel.FlapUNB.In);
 		flapSystem.inhibitBus.plug(circuitBreakerPanel.FlapUNB.Out);
 		
-		#mainBoard.hotBus.plug(circuitBreakerPanel.GearControl.In);
-		#mainBoard.hotBus.plug(circuitBreakerPanel.GearAux1.In);
+		gearSystem.Aux1Bus.plug(circuitBreakerPanel.GearControl.In);
+		gearSystem.Aux2Bus.plug(circuitBreakerPanel.GearAux1.In);
+		gearSystem.Aux1Bus.plug(circuitBreakerPanel.GearAux1.Out);
+		
 		circuitBreakerPanel.RCCB.Out.plug(mainBoard.GND);
 		circuitBreakerPanel.RCCB.In.plug(mainBoard.k8Relais.P21);
 		
@@ -401,7 +403,19 @@ var plugFlap =func(){
 var plugGear =func(){
 	gearSystem.plugElectric();
 	gearSystem.GND.plug(mainBoard.GND);
-	gearSystem.Aux2.plug(circuitBreakerPanel.Aux2);
+	gearSystem.Aux2.plug(fusePanel.GearAux2.Out);
+	gearSystem.Aux1.plug(gearSystem.Aux2Bus.con());
+	gearSystem.Aux1Diode.Plus.plug(mainBoard.batteryBus.con());
+	gearSystem.Aux1Diode.Minus.plug(gearSystem.Aux2Bus.con());
+	gearSystem.CtrlBus.plug(circuitBreakerPanel.GearControl.Out);
+	gearSystem.CTRL.plug(gearSystem.CtrlBus.con());
+	gearSystem.MainGearSwitch.Com1.plug(gearSystem.CtrlBus.con());
+	gearSystem.HydrBus.plug(circuitBreakerPanel.Hydraulic.Out);
+	gearSystem.HydraulicCautionRelais.A1.plug(gearSystem.HydrBus.con());
+	gearSystem.HydraulicCautionRelais.A2.plug(mainBoard.GND);
+	gearSystem.HydraulicCautionRelais.P14.plug(gearSystem.Annunciator);
+	gearSystem.HydraulicMotorRelais.P11.plug(gearSystem.HydrBus.con());
+	
 };
 
 var plugAnnuciator = func(){
@@ -433,6 +447,7 @@ var plugFuel = func(){
 var plugFusePanel = func(){
 	
 	fusePanel.plugElectric();
+	fusePanel.GearAux2.In.plug(mainBoard.hotBus.con());
 }
 var plugEngine = func(){
 	

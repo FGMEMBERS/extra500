@@ -70,30 +70,41 @@ var GearSystem = {
 		
 	# door switches
 		
-		m.RightDoorUpperClose = Part.ElectricSwitchDT.new(m.nRoot.initNode("RightDoorUpper"),"Right Door Upper",0);
+		m.RightDoorUpperClose = Part.ElectricSwitchDT.new(m.nRoot.initNode("RightDoorUpperClose"),"Right Door Upper",0);
 		m.RightDoorUpperClose.setPoles(2);
 		
-		m.RightDoorUpperOpen = Part.ElectricSwitchDT.new(m.nRoot.initNode("RightDoorUpper"),"Right Door Upper",0);
+		m.RightDoorUpperOpen = Part.ElectricSwitchDT.new(m.nRoot.initNode("RightDoorUpperOpen"),"Right Door Upper",0);
 		m.RightDoorUpperOpen.setPoles(2);
 		
-		m.LeftDoorUpperClose = Part.ElectricSwitchDT.new(m.nRoot.initNode("LeftDoorUpper"),"Left Door Upper",0);
+		m.LeftDoorUpperClose = Part.ElectricSwitchDT.new(m.nRoot.initNode("LeftDoorUpperClose"),"Left Door Upper",0);
 		m.LeftDoorUpperClose.setPoles(2);
 		
-		m.LeftDoorUpperOpen = Part.ElectricSwitchDT.new(m.nRoot.initNode("LeftDoorUpper"),"Left Door Upper",0);
+		m.LeftDoorUpperOpen = Part.ElectricSwitchDT.new(m.nRoot.initNode("LeftDoorUpperOpen"),"Left Door Upper",0);
 		m.LeftDoorUpperOpen.setPoles(2);
 		
 		m.LowerDoor = Part.ElectricSwitchDT.new(m.nRoot.initNode("LowerDoor"),"Lower Door",0);
 		m.LowerDoor.setPoles(2);
 		
 	# relais
-		m.HydraulicMotorRelais = Part.ElectricRelaisXPST.new(m.nRoot.initNode("LowerDoor"),"Lower Door");
+		m.HydraulicMotorRelais = Part.ElectricRelaisXPST.new(m.nRoot.initNode("HydraulicMotorRelais"),"Hydraulic Motor");
 		m.HydraulicMotorRelais.setPoles(2);
+		
+		m.HydraulicCautionRelais = Part.ElectricRelaisXPST.new(m.nRoot.initNode("HydraulicCautionRelais"),"Hydraulic Caution Relais");
+		m.HydraulicCautionRelais.setPoles(1);
+		
+		m.Gear34GARelais = Part.ElectricRelaisXPDT.new(m.nRoot.initNode("Gear34GARelais"),"Gear 34GA Relais");
+		m.Gear34GARelais.setPoles(4);
+		
+		m.Gear35GARelais = Part.ElectricRelaisXPDT.new(m.nRoot.initNode("Gear35GARelais"),"Gear 35GA Relais");
+		m.Gear35GARelais.setPoles(4);
+		
+		
 	
 	# Electic Connector
 		
 		m.GND 		= Part.ElectricPin.new("GND");
 		m.CTRL		= Part.ElectricPin.new("GearCTRL");		#  1 	GA3F-22
-		m.Relais34GA	= Part.ElectricPin.new("Relais34GA");		#  2 	GA3C-22
+		#m.Relais34GA	= Part.ElectricPin.new("Relais34GA");		#  2 	GA3C-22
 		m.SwitchOn	= Part.ElectricPin.new("GearSwitchOn");		#  3 	GA08F-22
 		m.SwitchOff	= Part.ElectricPin.new("GearSwitchOff");	#  4 	GA09F-22
 		m.RightGearLed	= Part.ElectricPin.new("RightGearLed");		#  5	GA24F-22
@@ -103,7 +114,7 @@ var GearSystem = {
 		m.Warning	= Part.ElectricPin.new("GearWarning");		#  8 	GA37G-22
 		m.Aux2		= Part.ElectricPin.new("GearAux2");		#  9	GA34G-22
 		m.Aux1		= Part.ElectricPin.new("GearAux1");		# 10 	GA37G-22
-		m.Relais35GA	= Part.ElectricPin.new("Relais35GA");		# 11 	GA43-22
+		#m.Relais35GA	= Part.ElectricPin.new("Relais35GA");		# 11 	GA43-22
 		m.Annunciator	= Part.ElectricPin.new("Annunciator");		# 12 	GA53F-22
 		m.TAS		= Part.ElectricPin.new("TAS");			# 13 	SD14F-22
 		
@@ -114,6 +125,14 @@ var GearSystem = {
 		
 		m.Modul4cde = Part.ElectricBus.new("Modul4cde");
 		m.Modul4hjk = Part.ElectricBusDiode.new("Modul4hjk");
+		
+		m.Aux2Diode = Part.ElectricDiode.new("Aux2Diode");
+		m.Aux1Diode = Part.ElectricDiode.new("Aux1Diode");
+		m.Aux2Bus = Part.ElectricBus.new("Aux2Bus");
+		m.Aux1Bus = Part.ElectricBus.new("Aux1Bus");
+		m.CtrlBus = Part.ElectricBus.new("CtrlBus");
+		m.HydrBus = Part.ElectricBus.new("HydrBus");
+		
 		
 	# hydraulic 
 		
@@ -144,12 +163,7 @@ var GearSystem = {
 	plugElectric : func(){
 		#--- plug outside
 		
-		me.MainValve.A1.plug(me.Modul4cde.con());
-		me.MainValve.A2.plug(me.GNDBus.con());
-		me.UpperDoorValve.A1.plug(me.Modul4hjk.Minus);
-		me.UpperDoorValve.A2.plug(me.GNDBus.con());
-		me.NoseDoorValve.A1.plug(me.LeftDoorUpperClose.L22);
-		me.NoseDoorValve.A2.plug(me.GNDBus.con());
+		
 		
 		
 		me.Modul3.plug(me.Modul4hjk.con());
@@ -161,7 +175,7 @@ var GearSystem = {
 				
 		me.GND.plug(me.GNDBus.Minus);
 		me.CTRL.plug(me.HydraulicMotorRelais.A1);		#  1
-		me.Relais34GA.plug(me.NoseGearSquat.L21);		#  2
+		#me.Relais34GA.plug(me.NoseGearSquat.L21);		#  2
 		me.SwitchOn.plug(me.Modul3.con());			#  3
 		me.SwitchOff.plug(me.RightGearDown.Com2);		#  4
 		me.RightGearLed.plug(me.RightGearDown.L12);		#  5
@@ -169,13 +183,33 @@ var GearSystem = {
 		me.LeftGearLed.plug(me.LeftGearDown.L22);		#  7
 		me.Warning.plug(me.NoseGearUp.L12);			#  8
 		me.Aux2.plug(me.NoseGearDown.Com1);			#  9
-		me.Aux1.plug(me.NoseGearDown.L11);			# 10
-		me.Relais35GA.plug(me.NoseGearSquat.L41);		# 11
+		me.Aux1.plug(me.Aux2Diode.Minus);			# 10
+		#me.Relais35GA.plug(me.NoseGearSquat.L41);		# 11
 		me.Annunciator.plug(me.HydraulicMotorRelais.P24);	# 12
 		me.TAS.plug(me.TASBus.Minus);				# 13
 		
-		me.NoseGearDown.Com2.plug(me.GNDBus.con());
 		
+		me.MainValve.A1.plug(me.Modul4cde.con());
+		me.MainValve.A2.plug(me.GNDBus.con());
+		me.UpperDoorValve.A1.plug(me.Modul4hjk.Minus);
+		me.UpperDoorValve.A2.plug(me.GNDBus.con());
+		me.NoseDoorValve.A1.plug(me.LeftDoorUpperClose.L22);
+		me.NoseDoorValve.A2.plug(me.GNDBus.con());
+		
+		# TODO: me.HydraulicMotorRelais.P21.plug(me.HydraulicMotor.Plus);
+		# TODO:	me.HydraulicMotor.Plus.plug(me.GNDBus.con());
+		me.HydraulicMotorRelais.P21.plug(me.GNDBus.con());
+		
+		me.Gear34GARelais.A1.plug(me.Aux2Bus.con());
+		me.Gear34GARelais.A2.plug(me.NoseGearSquat.L21);
+		
+		me.Gear35GARelais.A1.plug(me.Aux2Bus.con());
+		me.Gear35GARelais.A2.plug(me.NoseGearSquat.L41);
+		
+				
+		
+		me.NoseGearDown.Com2.plug(me.GNDBus.con());
+		me.NoseGearDown.L11.plug(me.Aux2Diode.Plus);
 		me.NoseGearUp.Com1.plug(me.RightDoorUpperOpen.L12);
 		
 		me.NoseGearSquat.Com1.plug(me.RightDoorUpperClose.L12);
@@ -184,10 +218,10 @@ var GearSystem = {
 		me.NoseGearSquat.Com4.plug(me.GNDBus.con());
 		
 				
-		me.RightGearup.Com1.plug(me.Modul3.con());
-		me.RightGearup.L12.plug(me.LeftGearUp.L12);
-		me.RightGearup.Com2.plug(me.GNDBus.con());
-		me.RightGearup.L21.plug(me.TASBus.con());
+		me.RightGearUp.Com1.plug(me.Modul3.con());
+		me.RightGearUp.L12.plug(me.LeftGearUp.L12);
+		me.RightGearUp.Com2.plug(me.GNDBus.con());
+		me.RightGearUp.L21.plug(me.TASBus.con());
 		
 		me.RightGearDown.Com1.plug(me.GNDBus.con());
 		me.RightGearDown.L22.plug(me.LeftGearDown.Com1);

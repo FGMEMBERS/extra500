@@ -294,6 +294,7 @@ var CircuitBreakerPanel = {
 		
 		nCompNode = nParent.initNode("Hydraulic");
 		m.Hydraulic = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Hydraulic");
+		m.Hydraulic.fuseConfig(50.0);
 		
 		nCompNode = nParent.initNode("GearControl");
 		m.GearControl = Part.ElectricCircuitBraker.new(nCompNode,"Circuit Breaker Gear Control");

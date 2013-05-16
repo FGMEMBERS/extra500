@@ -69,11 +69,11 @@ var HydraulicValve = {
 					#GND += me.electricWork(electron);
 					
 					me.capacitor.load(10);
-					me._setValue(1);
+					me.state = 1;
 				}else{
 					
 					me.capacitor.load(-10);
-					me._setValue(0);
+					me.state = 0;
 				}
 			}
 		

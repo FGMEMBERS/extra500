@@ -327,16 +327,17 @@ engineerScreen.add(electricLightPage);
 	
 	display = Display.new(10,-50);
 
-		display.title = "Limit switches";
+		display.title = "Main";
 		display.font = "FIXED_9x15";
 		display.fg = [1.0, 1.0, 1.0, 1.0];
 		display.bg = [0.5, 0.5, 0.5, 0.85];
 		display.width = 270;
 		display.height = 60;
 		
-		display.add_Node("Main Switch ", props.globals.getNode("/extra500/system/gear/MainGearSwitch/state") );
+		display.add_Node("Hebel     ", props.globals.getNode("/extra500/system/gear/MainGearSwitch/state") );
 		
 	gearPage.add(display);
+	
 	display = Display.new(10,100);
 
 		display.title = "Limit switches";
@@ -363,11 +364,29 @@ engineerScreen.add(electricLightPage);
 		display.fg = [1.0, 1.0, 1.0, 1.0];
 		display.bg = [0.5, 0.5, 0.5, 0.85];
 		display.width = 270;
+		display.height = 200;
+		
+		display.add_Node("R Upper close ", props.globals.getNode("/extra500/system/gear/RightDoorUpperClose/state") );
+		display.add_Node("R Upper open  ", props.globals.getNode("/extra500/system/gear/RightDoorUpperOpen/state") );
+		display.add_Node("L Upper close ", props.globals.getNode("/extra500/system/gear/LeftDoorUpperClose/state") );
+		display.add_Node("L Upper open  ", props.globals.getNode("/extra500/system/gear/LeftDoorUpperOpen/state") );
+		display.add_Node("Lower         ", props.globals.getNode("/extra500/system/gear/LowerDoor/state") );
+
+	gearPage.add(display);
+	
+	display = Display.new(10,750);
+
+		display.title = "Relais";
+		display.font = "FIXED_9x15";
+		display.fg = [1.0, 1.0, 1.0, 1.0];
+		display.bg = [0.5, 0.5, 0.5, 0.85];
+		display.width = 270;
 		display.height = 160;
 		
-		display.add_Node("Right Upper ", props.globals.getNode("/extra500/system/gear/RightDoorUpper/state") );
-		display.add_Node("Left  Upper ", props.globals.getNode("/extra500/system/gear/LeftDoorUpper/state") );
-		display.add_Node("Lower       ", props.globals.getNode("/extra500/system/gear/LowerDoor/state") );
+		display.add_Node("Motor      ", props.globals.getNode("/extra500/system/gear/HydraulicMotorRelais/state") );
+		display.add_Node("Caution    ", props.globals.getNode("/extra500/system/gear/HydraulicCautionRelais/state") );
+		display.add_Node("34GA       ", props.globals.getNode("/extra500/system/gear/Gear34GARelais/state") );
+		display.add_Node("35GA       ", props.globals.getNode("/extra500/system/gear/Gear35GARelais/state") );
 
 	gearPage.add(display);
 	

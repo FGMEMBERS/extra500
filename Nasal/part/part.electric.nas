@@ -262,7 +262,7 @@ var ElectricPin = {
 };
 
 var ElectricDiode = {
-	new : func(nRoot,name){
+	new : func(name){
 				
 		var m = {parents:[
 			ElectricDiode,
@@ -272,6 +272,7 @@ var ElectricDiode = {
 								
 		m.Plus = ElectricConnector.new("+");
 		m.Minus = ElectricConnector.new("-");
+		m.name 		= name;	
 						
 		m.Plus.solder(m);
 		m.Minus.solder(m);
@@ -281,7 +282,7 @@ var ElectricDiode = {
 	applyVoltage : func(electron,name=""){ 
 		etd.in("Diode",me.name,name,electron);
 		var GND = 0;
-		if ( electron > 0){
+		if ( electron != nil){
 			if (name == "+"){
 				GND = me.Minus.applyVoltage(electron);
 			}
