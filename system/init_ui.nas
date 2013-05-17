@@ -35,6 +35,7 @@ extra500.masterPanel.initUI();
 extra500.oFuelSystem.initUI();
 extra500.flapSystem.initUI();
 extra500.engine.initUI();
+extra500.gearSystem.initUI();
 
 initUI();
 

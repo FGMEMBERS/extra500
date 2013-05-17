@@ -210,8 +210,10 @@ var plugCircuitBreaker = func(){
 		flapSystem.powerInBus.plug(circuitBreakerPanel.FlapUNB.In);
 		flapSystem.inhibitBus.plug(circuitBreakerPanel.FlapUNB.Out);
 		
-		#mainBoard.hotBus.plug(circuitBreakerPanel.GearControl.In);
-		#mainBoard.hotBus.plug(circuitBreakerPanel.GearAux1.In);
+		gearSystem.Aux1Bus.plug(circuitBreakerPanel.GearControl.In);
+		gearSystem.Aux2Bus.plug(circuitBreakerPanel.GearAux1.In);
+		gearSystem.Aux1Bus.plug(circuitBreakerPanel.GearAux1.Out);
+		
 		circuitBreakerPanel.RCCB.Out.plug(mainBoard.GND);
 		circuitBreakerPanel.RCCB.In.plug(mainBoard.k8Relais.P21);
 		
@@ -378,9 +380,9 @@ var plugLight = func(){
 	lightBoard.testLightRelais.P32.plug(flapSystem.pos14Relais.P31);
 	lightBoard.testLightRelais.P42.plug(flapSystem.limitDown.L22);
 	
-	lightBoard.testLightRelais.P52.plug(gearSystem.GearNose);
-	lightBoard.testLightRelais.P62.plug(gearSystem.GearLeft);
-	lightBoard.testLightRelais.P72.plug(gearSystem.GearRight);
+	lightBoard.testLightRelais.P52.plug(gearSystem.NoseGearLed);
+	lightBoard.testLightRelais.P62.plug(gearSystem.LeftGearLed);
+	lightBoard.testLightRelais.P72.plug(gearSystem.RightGearLed);
 		
 	
 	
@@ -399,7 +401,17 @@ var plugFlap =func(){
 	
 };
 var plugGear =func(){
+	gearSystem.plugElectric();
 	gearSystem.GND.plug(mainBoard.GND);
+	gearSystem.Aux2.plug(fusePanel.GearAux2.Out);
+	gearSystem.Aux1.plug(gearSystem.Aux2Bus.con());
+	gearSystem.Aux1Diode.Plus.plug(mainBoard.batteryBus.con());
+	gearSystem.Aux1Diode.Minus.plug(gearSystem.Aux2Bus.con());
+	gearSystem.CtrlBus.plug(circuitBreakerPanel.GearControl.Out);
+	gearSystem.CTRL.plug(gearSystem.CtrlBus.con());
+	gearSystem.MainGearSwitch.Com1.plug(gearSystem.CtrlBus.con());
+	gearSystem.HydrBus.plug(circuitBreakerPanel.Hydraulic.Out);
+	gearSystem.Annunciator.plug(annunciatorPanel.dimTestRelais.P332);
 };
 
 var plugAnnuciator = func(){
@@ -410,6 +422,8 @@ var plugAnnuciator = func(){
 	
 	mainBoard.iBus03.plug(annunciatorPanel.dimTestRelais.P482); # Gernator 1 Fail
 	annunciatorPanel.externalPowerBus.plug(fusePanel.externalPowerBus.con());
+	
+	
 }
 
 var plugFuel = func(){
@@ -431,6 +445,7 @@ var plugFuel = func(){
 var plugFusePanel = func(){
 	
 	fusePanel.plugElectric();
+	fusePanel.GearAux2.In.plug(mainBoard.hotBus.con());
 }
 var plugEngine = func(){
 	

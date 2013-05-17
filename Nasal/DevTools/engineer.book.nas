@@ -319,6 +319,94 @@ engineerScreen.add(electricLightPage);
 	flapsPage.add(display);
 	
 
+#---------------------------------
+
+### Flaps Screen ##############
+	var gearPage		= Page.new("Gear");
+	engineerScreen.add(gearPage);
+	
+	display = Display.new(10,-50);
+
+		display.title = "Main";
+		display.font = "FIXED_9x15";
+		display.fg = [1.0, 1.0, 1.0, 1.0];
+		display.bg = [0.5, 0.5, 0.5, 0.85];
+		display.width = 270;
+		display.height = 60;
+		
+		display.add_Node("Hebel     ", props.globals.getNode("/extra500/system/gear/MainGearSwitch/state") );
+		
+	gearPage.add(display);
+	
+	display = Display.new(10,20);
+
+		display.title = "Limit switches";
+		display.font = "FIXED_9x15";
+		display.fg = [1.0, 1.0, 1.0, 1.0];
+		display.bg = [0.5, 0.5, 0.5, 0.85];
+		display.width = 270;
+		display.height = 240;
+		
+		display.add_Node("Nose  Up    ", props.globals.getNode("/extra500/system/gear/NoseGearUp/state") );
+		display.add_Node("Right Up    ", props.globals.getNode("/extra500/system/gear/RightGearUp/state") );
+		display.add_Node("Left  Up    ", props.globals.getNode("/extra500/system/gear/LeftGearUp/state") );
+		display.add_Node("Nose  Squat ", props.globals.getNode("/extra500/system/gear/NoseGearSquat/state") );
+		display.add_Node("Nose  Down  ", props.globals.getNode("/extra500/system/gear/NoseGearDown/state") );
+		display.add_Node("Right Down  ", props.globals.getNode("/extra500/system/gear/RightGearDown/state") );
+		display.add_Node("Left  Down  ", props.globals.getNode("/extra500/system/gear/LeftGearDown/state") );
+		
+	gearPage.add(display);
+	
+	display = Display.new(10,280);
+
+		display.title = "Door switches";
+		display.font = "FIXED_9x15";
+		display.fg = [1.0, 1.0, 1.0, 1.0];
+		display.bg = [0.5, 0.5, 0.5, 0.85];
+		display.width = 270;
+		display.height = 200;
+		
+		display.add_Node("R Upper close ", props.globals.getNode("/extra500/system/gear/RightDoorUpperClose/state") );
+		display.add_Node("R Upper open  ", props.globals.getNode("/extra500/system/gear/RightDoorUpperOpen/state") );
+		display.add_Node("L Upper close ", props.globals.getNode("/extra500/system/gear/LeftDoorUpperClose/state") );
+		display.add_Node("L Upper open  ", props.globals.getNode("/extra500/system/gear/LeftDoorUpperOpen/state") );
+		display.add_Node("Lower         ", props.globals.getNode("/extra500/system/gear/LowerDoor/state") );
+
+	gearPage.add(display);
+	
+	display = Display.new(10,500);
+
+		display.title = "Relais";
+		display.font = "FIXED_9x15";
+		display.fg = [1.0, 1.0, 1.0, 1.0];
+		display.bg = [0.5, 0.5, 0.5, 0.85];
+		display.width = 270;
+		display.height = 160;
+		
+		display.add_Node("Motor      ", props.globals.getNode("/extra500/system/gear/HydraulicMotorRelais/state") );
+		display.add_Node("Caution    ", props.globals.getNode("/extra500/system/gear/HydraulicCautionRelais/state") );
+		display.add_Node("34GA       ", props.globals.getNode("/extra500/system/gear/Gear34GARelais/state") );
+		display.add_Node("35GA       ", props.globals.getNode("/extra500/system/gear/Gear35GARelais/state") );
+		display.add_Node("14GA       ", props.globals.getNode("/extra500/system/gear/Gear14GARelais/state") );
+
+	gearPage.add(display);
+	
+	display = Display.new(10,680);
+
+		display.title = "Hydraulic";
+		display.font = "FIXED_9x15";
+		display.fg = [1.0, 1.0, 1.0, 1.0];
+		display.bg = [0.5, 0.5, 0.5, 0.85];
+		display.width = 270;
+		display.height = 160;
+		
+		display.add_Node("Valve Main       ", props.globals.getNode("/extra500/system/gear/MainValve/state") );
+		display.add_Node("Valve Upper Door ", props.globals.getNode("/extra500/system/gear/UpperDoorValve/state") );
+		display.add_Node("Valve Lower Door ", props.globals.getNode("/extra500/system/gear/LowerDoorValve/state") );
+		display.add_Node("Motor            ", props.globals.getNode("/extra500/system/gear/HydraulicMotor/state") );
+		
+
+	gearPage.add(display);
 	
 
 #---------------------------------

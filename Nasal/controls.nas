@@ -33,14 +33,29 @@ var flapsDown = func(step) {
 }
 
 
-# GEAR ##
 
+##
+# Gear handling.
+#
+var gearDown = func(v) {
+    if (v < 0) {
+      UI.click("Gear up");
+      #setprop("/controls/gear/gear-down", 0);
+    } elsif (v > 0) {
+      UI.click("Gear down");
+      #setprop("/controls/gear/gear-down", 1);
+    }
+}
+var gearToggle = func { UI.click("Gear"); }
+
+
+# GEAR ##
 # prevent retraction of the landing gear when any of the wheels are compressed
-setlistener("controls/gear/gear-down", func
- {
- var down = props.globals.getNode("controls/gear/gear-down").getBoolValue();
- if (!down and (getprop("gear/gear[0]/wow") or getprop("gear/gear[1]/wow") or getprop("gear/gear[2]/wow")))
-  {
-  props.globals.getNode("controls/gear/gear-down").setBoolValue(1);
-  }
- });
+# setlistener("controls/gear/gear-down", func
+#  {
+#  var down = props.globals.getNode("controls/gear/gear-down").getBoolValue();
+#  if (!down and (getprop("gear/gear[0]/wow") or getprop("gear/gear[1]/wow") or getprop("gear/gear[2]/wow")))
+#   {
+#   props.globals.getNode("controls/gear/gear-down").setBoolValue(1);
+#   }
+#  });
