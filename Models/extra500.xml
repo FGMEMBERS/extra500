@@ -18,7 +18,7 @@
       Authors: Thomas Grossberger and Dirk Dittmann
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
+      Last change:      Eric van den Berg
       Date:             17.05.13
 
 -->
@@ -352,12 +352,12 @@
 <animation>
   <type>rotate</type>
   <object-name>HRlinks</object-name>
-  <property>surface-positions/elevator-pos-norm</property>
-  <interpolation>
+  <property>fdm/jsbsim/aircraft/hstab/elevator/elevator-pos-deg</property>
+  <!--interpolation>
    <entry><ind>-1</ind><dep>-33</dep></entry>
    <entry><ind> 0</ind><dep>  0</dep></entry>
    <entry><ind> 1</ind><dep> 18</dep></entry>
-  </interpolation>    
+  </interpolation-->    
   <axis>
     <x1-m>6.28506</x1-m>
     <y1-m>-1.64490</y1-m>
@@ -371,12 +371,12 @@
   <type>rotate</type>
   <object-name>HRrechts</object-name>
   <object-name>HRtrim</object-name>
-  <property>surface-positions/elevator-pos-norm</property>
-  <interpolation>
+  <property>fdm/jsbsim/aircraft/hstab/elevator/elevator-pos-deg</property>
+  <!--interpolation>
    <entry><ind>-1</ind><dep>-33</dep></entry>
    <entry><ind> 0</ind><dep>  0</dep></entry>
    <entry><ind> 1</ind><dep> 18</dep></entry>
-  </interpolation>
+  </interpolation-->
     <axis>
     <x1-m>6.17177</x1-m>
     <y1-m>0.12085</y1-m>

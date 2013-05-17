@@ -24,7 +24,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             16.05.13
+      Date:             17.05.13
 -->
 
 	<fileheader>
@@ -160,9 +160,9 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		
 		<contact type="BOGEY" name="NOSE">
 			<location unit="M">
-				<x>  1.416 </x>
+				<x>  1.415 </x>
 				<y>  0.00 </y>
-				<z>  0.05 </z>				
+				<z>  0.146 </z>				
 			</location>
 			<static_friction>  0.60 </static_friction>
 			<dynamic_friction> 0.40 </dynamic_friction>
@@ -176,9 +176,9 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			
 		<contact type="BOGEY" name="LEFT_MAIN">
 			<location unit="M">
-				<x> 4.07 </x>
+				<x> 4.233 </x>
 				<y> -1.06 </y>
-				<z> 0.150 </z>
+				<z> 0.21 </z>
 			</location>
 			<static_friction>  0.60 </static_friction>
 			<dynamic_friction> 0.40 </dynamic_friction>
@@ -192,9 +192,9 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			
 		<contact type="BOGEY" name="RIGHT_MAIN">
 			<location unit="M">
-				<x> 4.07 </x>
+				<x> 4.233 </x>
 				<y>  1.06 </y>
-				<z> 0.150 </z>
+				<z> 0.210 </z>
 			</location>
 			<static_friction>  0.60 </static_friction>
 			<dynamic_friction> 0.40 </dynamic_friction>
@@ -288,7 +288,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 					<z>   59.00 </z>
 				</location>
 				<orient unit="DEG">
-					<pitch> -3.00 </pitch>
+					<pitch> -3.0 </pitch>
 					<roll>  0.00 </roll>
 					<yaw>   0.00 </yaw>
 				</orient>
@@ -581,11 +581,11 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 					</setting>
 					<setting>
 						<position>15</position>
-						<time>8</time>
+						<time>6</time>
 					</setting>
 					<setting>
 						<position>30</position>
-						<time>12</time>
+						<time>9</time>
 					</setting>
 				</traverse>
 				<output>fcs/flap-aero-pos-deg</output>
@@ -712,7 +712,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		<value>0.00015</value>
 		<pow>
 			<max>
-				<value>0.01</value>
+				<value>0.1</value>
 				<property>propulsion/engine/n1</property>
 			</max>
 			<value>2</value>
@@ -813,6 +813,22 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	</table>
     </function>
 
+    <function name="aircraft/wing/alpha-deg">
+      <description>wing angle of attack</description>
+	<sum>
+		<property>aero/alpha-deg</property>
+		<property>aircraft/wing/incidence-deg</property>
+	</sum>
+    </function>
+
+    <function name="aircraft/wing/alpha-rad">
+      <description>wing angle of attack</description>
+	<product>
+		<property>aircraft/wing/alpha-deg</property>
+		<property>/extra500/const/DEG2RAD</property>
+	</product>
+    </function>
+
     <function name="aircraft/vstab/u-local-fps">
      	<sum>
              	<property>velocities/u-aero-fps</property>
@@ -831,7 +847,11 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<property>velocities/r-aero-rad_sec</property> 
 			<sum>
 				<property>aircraft/vstab/x_ac-ft</property>
-                                <value>-11.581</value>
+		  		<product>
+					<value>-1</value>
+                  			<property>inertia/cg-x-in</property> 
+					<property>/extra500/const/INCH2FEET</property>
+		  		</product>
                         </sum>      
 		</product> 
                 <product>							<!-- induced speed due to propeller rotation -->
@@ -846,7 +866,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     <function name="aero/coefficients/cl_ac-h">
        <description>CL of aircraft less tail</description>
        <table>
-            <independentVar lookup="row">aero/alpha-deg</independentVar>
+            <independentVar lookup="row">aircraft/wing/alpha-deg</independentVar>
             <independentVar lookup="column">fcs/flap-aero-pos-deg</independentVar>
             <independentVar lookup="table">velocities/mach</independentVar>
             <tableData breakPoint="0">
@@ -956,7 +976,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             <product>
                   <property>aero/coefficients/cl_ac-h</property>
                   <cos>
-                        <property>aero/alpha-rad</property>
+                        <property>aircraft/wing/alpha-rad</property>
                   </cos>
             </product>    
             <product>
@@ -965,7 +985,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                         <property>aero/coefficients/cd_gear</property>
                   </sum>
                   <sin>
-                        <property>aero/alpha-rad</property>
+                        <property>aircraft/wing/alpha-rad</property>
                   </sin>
             </product> 
       </sum>     
@@ -978,7 +998,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   <value>-1</value>
                   <property>aero/coefficients/cl_ac-h</property>
                   <sin>
-                        <property>aero/alpha-rad</property>
+                        <property>aircraft/wing/alpha-rad</property>
                   </sin>
             </product>    
             <product>
@@ -987,7 +1007,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                         <property>aero/coefficients/cd_gear</property>
                   </sum>
                   <cos>
-                        <property>aero/alpha-rad</property>
+                        <property>aircraft/wing/alpha-rad</property>
                   </cos>
             </product> 
        </sum>
@@ -1018,7 +1038,10 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        <product>
             <property>aero/coefficients/cn_wing</property>
             <sum>
-                  <value>11.581</value>  <!--cg empty -->
+		  <product>
+                  	<property>metrics/aero-rp-x-in</property> 
+			<property>/extra500/const/INCH2FEET</property>
+		  </product>
                   <product>
                         <value>-1</value>
                         <property>aircraft/wing/x_ac-ft</property>
@@ -1036,7 +1059,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        <product>  
             <value>-0.4</value>
             <property>aero/coefficients/cl_ac-h</property>
-            <property>aero/alpha-rad</property>      
+            <property>aircraft/wing/alpha-rad</property>      
        </product>
     </function>
 
@@ -1128,7 +1151,11 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                                     <property>velocities/q-aero-rad_sec</property> 
                                     <sum>
                                           <property>aircraft/hstab/x_ac-ft</property>
-                                          <value>-11.581</value>
+		  			  <product>
+						<value>-1</value>
+                  				<property>inertia/cg-x-in</property> 
+						<property>/extra500/const/INCH2FEET</property>
+		  			  </product>
                                     </sum>
                               </product>  
                         </sum>
@@ -1153,7 +1180,11 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                                     <property>velocities/q-aero-rad_sec</property> 
                                     <sum>
                                           <property>aircraft/hstab/x_ac-ft</property>
-                                          <value>-11.581</value>
+		  			  <product>
+						<value>-1</value>
+                  				<property>inertia/cg-x-in</property> 
+						<property>/extra500/const/INCH2FEET</property>
+		  			  </product>
                                     </sum>
                               </product>
                         </sum>
@@ -1493,7 +1524,10 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             <product>
                   <property>aero/force/normal_hstab</property>
                   <sum>
-                        <value>11.581</value>  <!--xcg empty -->
+		  	<product>
+        			<property>metrics/aero-rp-x-in</property> 
+				<property>/extra500/const/INCH2FEET</property>
+		  	</product>
                         <product>
                               <value>-1</value>
                               <property>aircraft/hstab/x_ac-ft</property>
@@ -1504,10 +1538,11 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   <property>aero/force/tangent_hstab</property>
                   <sum>
                         <property>aircraft/hstab/z_ac-ft</property>
-                        <product>
-                              <value>-1</value>
-                              <value>5.298</value>                               
-                        </product>
+		  	<product>
+				<value>-1</value>
+                  		<property>metrics/aero-rp-z-in</property> 
+				<property>/extra500/const/INCH2FEET</property>
+		  	</product>
                   </sum>
             </product>
        </sum>
@@ -1699,7 +1734,11 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<property>aero/force/Side_vstab</property>
 			<sum>
 				<property>aircraft/vstab/z_ac-ft</property>
-				<value>-5.413</value>
+		  		<product>
+					<value>-1</value>
+                  			<property>metrics/aero-rp-z-in</property> 
+					<property>/extra500/const/INCH2FEET</property>
+		  		</product>
 			</sum>
 		</product>
 	</function>
@@ -1756,7 +1795,11 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<property>aero/force/tangent_vstab</property>
 			<sum>
 				<property>aircraft/vstab/z_ac-ft</property>
-				<value>-5.413</value>
+		  		<product>
+					<value>-1</value>
+                  			<property>metrics/aero-rp-z-in</property> 
+					<property>/extra500/const/INCH2FEET</property>
+		  		</product>
 			</sum>
 		</product>
 	</function>
@@ -1793,7 +1836,11 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<property>aero/force/normal_vstab</property>
 			<sum>
 				<property>aircraft/vstab/x_ac-ft</property>
-				<value>-11.581</value>
+		  		<product>
+					<value>-1</value>
+                  			<property>metrics/aero-rp-x-in</property> 
+					<property>/extra500/const/INCH2FEET</property>
+		  		</product>
 			</sum>
 		</product>
 	</function>			
