@@ -19,14 +19,14 @@
       Authors: Thomas Grossberger and Dirk Dittmann
       Date: March 13 2013
 
-      Last change:      Eric van den Berg
-      Date:             10.05.13
+      Last change:      Thomas Grossberger
+      Date:             16.05.13
 
 -->
 
 <PropertyList>
 
-<path>extra500_EngineInstruments.ac</path>
+<path>EngineInstruments.ac</path>
 
 <!--TRQ Needle-->
 <animation>
@@ -53,6 +53,21 @@
   </axis>
 </animation>
 <!--TRQ Digits-->
+	<animation>
+		<!-- Power on/off -->
+		<type>select</type>
+		<object-name>EngineInstruments.TRQ.000.1</object-name>
+		<object-name>EngineInstruments.TRQ.Dot</object-name>
+		<object-name>EngineInstruments.TRQ.001.0</object-name>
+		<object-name>EngineInstruments.TRQ.010.0</object-name>
+		<object-name>EngineInstruments.TRQ.100.0</object-name>
+		<condition>
+			<greater-than>
+				<property>extra500/Instrument/DIP/state</property>
+				<value>0</value>
+			</greater-than>	
+		</condition>
+	</animation>
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.TRQ.000.1</object-name>
@@ -125,6 +140,19 @@
   </axis>
 </animation>
 <!--TOT Digits-->
+	<animation>
+		<!-- Power on/off -->
+		<type>select</type>
+		<object-name>EngineInstruments.TOT.001</object-name>
+		<object-name>EngineInstruments.TOT.010</object-name>
+		<object-name>EngineInstruments.TOT.100</object-name>
+		<condition>
+			<greater-than>
+				<property>extra500/Instrument/DIP/state</property>
+				<value>0</value>
+			</greater-than>	
+		</condition>
+	</animation>
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.TOT.001</object-name>
@@ -166,7 +194,8 @@
 <animation>
   <type>rotate</type>
   <object-name>EngineInstruments.N1.Needle</object-name>
-  <property>/fdm/jsbsim/propulsion/engine/n1</property>
+    <!--property>/fdm/jsbsim/propulsion/engine/n1</property-->
+<property>/fdm/jsbsim/aircraft/engine/N1-par</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -187,10 +216,26 @@
   </axis>
 </animation>
 <!--N1 Digits-->
+	<animation>
+		<!-- Power on/off -->
+		<type>select</type>
+		<object-name>EngineInstruments.N1.000.1</object-name>
+		<object-name>EngineInstruments.N1.Dot</object-name>
+		<object-name>EngineInstruments.N1.001.0</object-name>
+		<object-name>EngineInstruments.N1.010.0</object-name>
+		<object-name>EngineInstruments.N1.100.0</object-name>
+		<condition>
+			<greater-than>
+				<property>extra500/Instrument/DIP/state</property>
+				<value>0</value>
+			</greater-than>	
+		</condition>
+	</animation>
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.N1.000.1</object-name>
-  <property>/fdm/jsbsim/propulsion/engine/n1</property>
+  <!--property>/fdm/jsbsim/propulsion/engine/n1</property-->
+<property>/fdm/jsbsim/aircraft/engine/N1-par</property>
 	<factor>1</factor>
 	<step>0.1</step>
 	<axis>
@@ -202,7 +247,8 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.N1.001.0</object-name>
-  <property>/fdm/jsbsim/propulsion/engine/n1</property>
+  <!--property>/fdm/jsbsim/propulsion/engine/n1</property-->
+<property>/fdm/jsbsim/aircraft/engine/N1-par</property>
 	<factor>0.1</factor>
 	<step>1</step>
 	<axis>
@@ -214,7 +260,8 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.N1.010.0</object-name>
-  <property>/fdm/jsbsim/propulsion/engine/n1</property>
+  <!--property>/fdm/jsbsim/propulsion/engine/n1</property-->
+<property>/fdm/jsbsim/aircraft/engine/N1-par</property>
 	<factor>0.01</factor>
 	<step>10</step>
 	<axis>
@@ -228,7 +275,8 @@
 	<object-name>EngineInstruments.N1.100.0</object-name>
 	<condition>
 	  <greater-than-equals>
-	    <property>/fdm/jsbsim/propulsion/engine/n1</property>
+	      <!--property>/fdm/jsbsim/propulsion/engine/n1</property-->
+<property>/fdm/jsbsim/aircraft/engine/N1-par</property>
 	    <value>100</value>
 	  </greater-than-equals>
 	</condition>
@@ -259,6 +307,20 @@
   </axis>
 </animation>
 <!--N2 Digits-->
+	<animation>
+		<!-- Power on/off -->
+		<type>select</type>
+		<object-name>EngineInstruments.N2.0001</object-name>
+		<object-name>EngineInstruments.N2.0010</object-name>
+		<object-name>EngineInstruments.N2.0100</object-name>
+		<object-name>EngineInstruments.N2.1000</object-name>
+		<condition>
+			<greater-than>
+				<property>extra500/Instrument/DIP/state</property>
+				<value>0</value>
+			</greater-than>	
+		</condition>
+	</animation>
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.N2.0010</object-name>
@@ -321,6 +383,19 @@
   </axis>
 </animation>
 <!--OP Digits-->
+	<animation>
+		<!-- Power on/off -->
+		<type>select</type>
+		<object-name>EngineInstruments.OP.001</object-name>
+		<object-name>EngineInstruments.OP.010</object-name>
+		<object-name>EngineInstruments.OP.100</object-name>
+		<condition>
+			<greater-than>
+				<property>extra500/Instrument/DIP/state</property>
+				<value>0</value>
+			</greater-than>	
+		</condition>
+	</animation>
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.OP.001</object-name>
@@ -383,6 +458,19 @@
   </axis>
 </animation>
 <!--OT Digits-->
+	<animation>
+		<!-- Power on/off -->
+		<type>select</type>
+		<object-name>EngineInstruments.OT.001</object-name>
+		<object-name>EngineInstruments.OT.010</object-name>
+		<object-name>EngineInstruments.OT.100</object-name>
+		<condition>
+			<greater-than>
+				<property>extra500/Instrument/DIP/state</property>
+				<value>0</value>
+			</greater-than>	
+		</condition>
+	</animation>
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.OT.001</object-name>
@@ -423,7 +511,9 @@
 <!--Dimming -->
 <animation>
 	<type>material</type>
-	<object-name>EngineInstruments.VDC.00.1</object-name>
+		<object-name>RahmenOben</object-name>
+		<object-name>RahmenUnten</object-name>
+		<object-name>EngineInstruments.VDC.00.1</object-name>
 		<object-name>EngineInstruments.VDC.01.0</object-name>
 		<object-name>EngineInstruments.VDC.10.0</object-name>
 		<object-name>EngineInstruments.VDC.Dot</object-name>
@@ -441,6 +531,38 @@
 		<object-name>EngineInstruments.TEMP.minus</object-name>
 		<object-name>EngineInstruments.PRESS.01</object-name>
 		<object-name>EngineInstruments.PRESS.10</object-name>
+		<object-name>EngineInstruments.TRQ.100.0</object-name>
+		<object-name>EngineInstruments.TRQ.010.0</object-name>
+		<object-name>EngineInstruments.TRQ.001.0</object-name>
+		<object-name>EngineInstruments.TRQ.Dot</object-name>
+		<object-name>EngineInstruments.TRQ.000.1</object-name>
+		<object-name>EngineInstruments.TOT.001</object-name>
+		<object-name>EngineInstruments.TOT.010</object-name>
+		<object-name>EngineInstruments.TOT.100</object-name>
+		<object-name>EngineInstruments.N1.100.0</object-name>
+		<object-name>EngineInstruments.N1.010.0</object-name>
+		<object-name>EngineInstruments.N1.001.0</object-name>
+		<object-name>EngineInstruments.N1.Dot</object-name>
+		<object-name>EngineInstruments.N1.000.1</object-name>
+		<object-name>EngineInstruments.N2.0001</object-name>
+		<object-name>EngineInstruments.N2.0010</object-name>
+		<object-name>EngineInstruments.N2.0100</object-name>
+		<object-name>EngineInstruments.N2.1000</object-name>
+		<object-name>EngineInstruments.OP.001</object-name>
+		<object-name>EngineInstruments.OP.010</object-name>
+		<object-name>EngineInstruments.OP.100</object-name>
+		<object-name>EngineInstruments.OT.001</object-name>
+		<object-name>EngineInstruments.OT.010</object-name>
+		<object-name>EngineInstruments.OT.100</object-name>
+		
+		
+		<object-name>EngineInstruments.TRQ.Needle</object-name>
+		<object-name>EngineInstruments.TOT.Needle</object-name>
+		<object-name>EngineInstruments.N1.Needle</object-name>
+		<object-name>EngineInstruments.N2.Needle</object-name>
+		<object-name>EngineInstruments.OP.Needle</object-name>
+		<object-name>EngineInstruments.OT.Needle</object-name>
+		
 		<emission>	
 		<red>1.0</red>	
 		<green>1.0</green>	

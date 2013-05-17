@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+
+<!--
+    This file is part of extra500
+
+    extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Thomas Grossberger and Dirk Dittmann
+      Date: March 13 2013
+
+      Last change:      Thomas Grossberger
+      Date:             16.05.13
+
+-->
+
+<PropertyList>
+
+<path>ADIanalog.ac</path>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>scheibe.vorne</object-name>
+		<object-name>scheibe.hinten</object-name>
+		<object-name>scheibe.innen</object-name>
+		<property>/orientation/roll-deg</property>
+		<center>
+			<x-m>1</x-m>
+			<y-m>0.0</y-m>
+			<z-m>0.0</z-m>
+		</center>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+<!-- scheibe rutschte raus wenn pitch extrem gross wurde, deshalb anderer loesungsansatz gewaehlt
+	<animation>
+		<type>translate</type>
+		<object-name>scheibe.innen</object-name>
+		<property>/orientation/pitch-deg</property>
+		<factor>0.0005</factor>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+	</animation>-->
+	
+	<animation>
+		<type>translate</type>
+		<object-name>scheibe.innen</object-name>
+		<property>/orientation/pitch-deg</property>
+		<interpolation>
+        <entry>
+           <ind>-30</ind>
+           <dep>.015</dep>
+        </entry>
+            <entry>
+                <ind>-20</ind>
+                <dep>.01</dep>
+            </entry>
+            <entry>
+                <ind>20</ind>
+                <dep>-.01</dep>
+            </entry>
+		<entry>
+            <ind>30</ind>
+            <dep>-.015</dep>
+        </entry>
+        </interpolation>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+	</animation>
+</PropertyList>
+

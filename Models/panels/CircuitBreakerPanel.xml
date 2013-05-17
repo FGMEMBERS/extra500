@@ -19,11 +19,11 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             09.05.13
+      Date:             16.05.13
 -->
 
 <PropertyList>
-<path>extra500_CircuitBreakerPanel.ac</path>
+<path>CircuitBreakerPanel.ac</path>
 
 <!--
 	# Bank A slot 0 AIR-CON

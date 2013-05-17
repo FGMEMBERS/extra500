@@ -5,12 +5,12 @@ MATERIAL "grau10" rgb 0.1000 0.1000 0.1000  amb 0.1000 0.1000 0.1000  emis 0.000
 MATERIAL "grau20" rgb 0.2000 0.2000 0.2000  amb 0.2000 0.2000 0.2000  emis 0.0000 0.0000 0.0000  spec 1.0000 1.0000 1.0000  shi 50 trans 0.0000
 MATERIAL "weiss" rgb 1.0000 1.0000 1.0000  amb 1.0000 1.0000 1.0000  emis 1.0000 1.0000 1.0000  spec 1.0000 1.0000 1.0000  shi 50 trans 0.0000
 OBJECT world
-name "Blender_export__extra500_SidePanel.ac"
+name "Blender_export__SidePanel.ac"
 kids 59
 OBJECT poly
 name "SidePanel"
 loc 0.0000000 -0.0200000 0.0000000
-texture "extra500_SidePanelTextur.png"
+texture "SidePanelTextur.png"
 texrep 1 1
 numvert 8
 0.2091940 -0.0200000 -0.0500000

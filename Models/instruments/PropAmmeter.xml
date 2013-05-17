@@ -20,27 +20,30 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             12.05.13
+      Date:             16.05.13
 
 -->
 
 <PropertyList>
 
-<path>extra500_IASanalog.ac</path>
+<path>PropAmmeter.ac</path>
 
-<!--IASanalog Needle-->
+<!--Needle-->
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+<!-- I don't know which property to use. for testing I use rudder-pos-norm -->
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <animation>
   <type>rotate</type>
-  <object-name>IASanalog.Needle</object-name>
-  <property>/instrumentation/airspeed-backup/indicated-speed-kt</property>
+  <object-name>PropAmmeter.Needle</object-name>
+  <property>/surface-positions/rudder-pos-norm</property>
 		<interpolation>
             <entry>
-                <ind>30</ind>
-                <dep>0</dep>
+                <ind>-1</ind>
+                <dep>-135</dep>
             </entry>
             <entry>
-                <ind>260</ind>
-                <dep>345</dep>
+                <ind>1</ind>
+                <dep>135</dep>
             </entry>
         </interpolation>
   <axis>
@@ -54,4 +57,5 @@
 </animation>
 
 </PropertyList>
+
 

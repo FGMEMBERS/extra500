@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+
+<!--
+    This file is part of extra500
+
+    extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Thomas Grossberger and Dirk Dittmann
+      Date: March 13 2013
+
+      Last change:      Thomas Grossberger
+      Date:             16.05.13
+
+-->
+
+<PropertyList>
+
+<path>ALTanalog.ac</path>
+
+<!--ALTanalog Needle-->
+<animation>
+  <type>rotate</type>
+  <object-name>ALTanalog.Needle100</object-name>
+  <property>/instrumentation/altimeter-backup/indicated-altitude-ft</property>
+  <factor>0.36</factor>
+  <axis>
+   <x>-1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+<animation>
+  <type>rotate</type>
+  <object-name>ALTanalog.Needle1000</object-name>
+  <property>/instrumentation/altimeter-backup/indicated-altitude-ft</property>
+  <factor>0.036</factor>
+  <axis>
+   <x>-1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+<animation>
+  <type>rotate</type>
+  <object-name>ALTanalog.Needle10000</object-name>
+  <property>/instrumentation/altimeter-backup/indicated-altitude-ft</property>
+  <factor>0.0036</factor>
+  <axis>
+   <x>-1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+<!--ALTanalog Knob-->
+    <animation>
+        <type>pick</type>
+        <object-name>ALTknob</object-name>
+        <action>
+            <button>0</button>
+            <repeatable>true</repeatable>
+            <interval-sec>0.15</interval-sec>
+            <binding>
+                <command>property-adjust</command>
+                <property>/instrumentation/altimeter-backup/setting-hpa</property>
+                <step>1</step>
+                <min>955</min>
+                <max>1070</max>
+            </binding>
+        </action>
+    </animation>
+
+    <animation>
+        <type>pick</type>
+        <object-name>ALTknob</object-name>
+        <action>
+            <button>1</button>
+            <repeatable>true</repeatable>
+            <interval-sec>0.15</interval-sec>
+            <binding>
+                <command>property-adjust</command>
+                <property>/instrumentation/altimeter-backup/setting-hpa</property>
+                <step>-1</step>
+                <min>955</min>
+                <max>1070</max>
+            </binding>
+        </action>
+    </animation>
+
+    <animation>
+        <type>pick</type>
+        <object-name>ALTknob</object-name>
+        <action>
+            <button>3</button>
+            <binding>
+                <command>property-adjust</command>
+                <property>/instrumentation/altimeter-backup/setting-hpa</property>
+                <step>0.5</step>
+                <min>955</min>
+                <max>1070</max>
+            </binding>
+        </action>
+    </animation>
+
+    <animation>
+        <type>pick</type>
+        <object-name>ALTknob</object-name>
+        <action>
+            <button>4</button>
+            <binding>
+                <command>property-adjust</command>
+                <property>/instrumentation/altimeter-backup/setting-hpa</property>
+                <step>-0.5</step>
+                <min>955</min>
+                <max>1070</max>
+            </binding>
+        </action>
+    </animation>
+
+<animation>
+        <type>rotate</type>
+        <object-name>ALThpa</object-name>
+        <property>/instrumentation/altimeter-backup/setting-hpa</property>
+        <interpolation>
+            <entry><ind>1070</ind><dep>0.0</dep></entry>
+            <entry><ind>955</ind><dep>345</dep></entry>
+        </interpolation>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+
+
+</PropertyList>
+

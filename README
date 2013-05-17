@@ -1,0 +1,74 @@
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Eric van den Berg
+      Date: 2013-05-12
+
+      Last change:      2013-05-15
+      Date:             Eric van den Berg
+
+========================================================================
+
+See the Extra500 POH for full procedures! Below are just quickstart.
+
+
+Engine starting:
+
+- Parking Brake:	Set (Shift-B)
+- Battery:		Switch ON
+- Fuel Pump 1 or 2:	Switch ON
+- Engine Start:		START
+- at 12-15% N1:		Press Ctrl-C (Condition lever forward)
+CAUTION: TOT limit for starting is max. 10sec above 810degC and below 927degC 
+- Standby alternator:	Switch ON
+- Generator:		Switch ON
+- Engine start:		IGN OFF
+
+
+Take-off:
+
+- Flaps:		15 degrees ( ] )
+- Power lever:		TRQ 111%
+CAUTION: for Take-off (5 minutes) maximum TRQ limit is 111%, TOT 810degC
+- Parking Brake:	Release (Shift-B)
+NOTE: For strong sidewind, turn the ailerons against the wind
+- At 71KIAS:		Rotate
+- Gear:			Retract ( G )
+- Flaps:		0 degrees ( [ )
+CAUTION: Flaps need to be retracted before reaching 120KIAS, gear 140KIAS
+- Power lever:		TRQ 92%
+CAUTION: For continuous operation the TRQ limit is 92%, TOT 752degC, watch the TOT while climbing!
+
+
+Climb:
+Climb with MCP (maximum continuous Power, 92%TRQ or 752degC) at 110 KIAS.
+
+
+Descent: 
+Descent with 50% TRQ and 2000ft/min. Max airspeed is 207 KIAS.
+
+
+Landing:
+Do not come in too high, too fast.
+At 140 KIAS, gear:	Extend (Shift-G)
+At 120 KIAS, flaps:	15 degrees ( ] )
+At 109 KIAS, flaps:	30 degrees ( ] )
+Power for a 3deg descent, 80KIAS and landing configuration is ~30% TRQ
+Dont forget to brake. For reverse press R, will only switch when power lever is in aft position!
+
+
+Engine shut-off: Press Ctrl-C (to cut the fuel)
+
+		 

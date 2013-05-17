@@ -19,14 +19,14 @@
       Authors: Thomas Grossberger and Dirk Dittmann
       Date: March 13 2013
 
-      Last change:      Eric van den Berg
-      Date:             11.05.13
+      Last change:      Thomas Grossberger
+      Date:             16.05.13
 
 -->
 
 <PropertyList>
 
-<path>extra500_FuelInstruments.ac</path>
+<path>FuelInstruments.ac</path>
 
 <!--Left Collector Needle-->
 <animation>

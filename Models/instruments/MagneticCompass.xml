@@ -20,66 +20,30 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             12.05.13
+      Date:             16.05.13
 
 -->
 
 <PropertyList>
 
-<path>extra500_ALTanalog.ac</path>
-
-<!--IASanalog Needle-->
+<path>MagneticCompass.ac</path>
 
 <animation>
   <type>rotate</type>
-  <object-name>ALTanalog.Needle100</object-name>
-  <property>/instrumentation/altimeter-backup/indicated-altitude-ft</property>
-  <factor>0.36</factor>
-  <axis>
-   <x>-1</x>
-   <y>0</y>
-   <z>0</z>
-  </axis>
- </animation>
-
- <animation>
-  <type>rotate</type>
-  <object-name>ALTanalog.Needle1000</object-name>
-  <property>/instrumentation/altimeter-backup/indicated-altitude-ft</property>
-  <factor>0.036</factor>
-  <axis>
-   <x>-1</x>
-   <y>0</y>
-   <z>0</z>
-  </axis>
- </animation>
-
- <animation>
-  <type>rotate</type>
-  <object-name>ALTanalog.Needle10000</object-name>
-  <property>/instrumentation/altimeter-backup/indicated-altitude-ft</property>
-  <factor>0.0036</factor>
-  <axis>
-   <x>-1</x>
-   <y>0</y>
-   <z>0</z>
-  </axis>
- </animation>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	<object-name>Compassrose</object-name>
+<property>/orientation/heading-magnetic-deg</property>
+	<offset-deg>90</offset-deg>
+	<factor>-1</factor>
+	<axis>
+		<x1-m>0</x1-m>
+		<y1-m>0</y1-m>
+		<z1-m>1</z1-m>
+		<x2-m>0</x2-m>
+		<y2-m>0</y2-m>
+		<z2-m>-1</z2-m>
+	</axis>
+</animation>
 
 </PropertyList>
+
 

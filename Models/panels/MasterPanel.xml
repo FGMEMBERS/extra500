@@ -19,11 +19,11 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             09.05.13
+      Date:             16.05.13
 -->
 <PropertyList>
 
-<path>extra500_MasterPanel.ac</path>
+<path>MasterPanel.ac</path>
 
 <!-- MasterPanel.Autopilot.Master -->
 <animation>
@@ -85,36 +85,7 @@
     </binding>
   </action>
 </animation>
-<animation>
-	<type>material</type>
-	<object-name>MasterPanel.Autopilot.Master.Ring</object-name>
-	<condition>
-		<equals>
-		<property>extra500/MasterPanel/Autopilot/Master/state</property>
-		<value>1</value>
-		</equals>
-	</condition>
-	<emission>	
-		<red>0.7</red>	
-		<green>0.5</green>	
-		<blue>0.0</blue>
-	</emission>
-</animation>
-<animation>
-	<type>material</type>
-	<object-name>MasterPanel.Autopilot.Master.Ring</object-name>
-	<condition>
-		<equals>
-		<property>extra500/MasterPanel/Autopilot/Master/state</property>
-		<value>-1</value>
-		</equals>
-	</condition>
-	<emission>	
-		<red>0.0</red>	
-		<green>0.5</green>	
-		<blue>0.0</blue>
-	</emission>
-</animation>
+
 <!-- MasterPanel.Autopilot.PitchTrim -->
 <animation>
   <type>rotate</type>
@@ -184,21 +155,7 @@
     </binding>
   </action>
 </animation>
-<animation>
-	<type>material</type>
-  <object-name>MasterPanel.Autopilot.PitchTrim.Ring</object-name>
-	<condition>
-		<equals>
-		<property>extra500/MasterPanel/Autopilot/PitchTrim/state</property>
-		<value>1</value>
-		</equals>
-	</condition>
-	<emission>	
-		<red>0.7</red>	
-		<green>0.5</green>	
-		<blue>0.0</blue>
-	</emission>
-</animation>
+
 <!-- MasterPanel.Autopilot.YawDamper -->
 <animation>
   <type>rotate</type>
@@ -268,21 +225,7 @@
     </binding>
   </action>
 </animation>
-<animation>
-	<type>material</type>
-  <object-name>MasterPanel.Autopilot.YawDamper.Ring</object-name>
-	<condition>
-		<equals>
-		<property>extra500/MasterPanel/Autopilot/YawDamper/state</property>
-		<value>1</value>
-		</equals>
-	</condition>
-	<emission>	
-		<red>0.7</red>	
-		<green>0.5</green>	
-		<blue>0.0</blue>
-	</emission>
-</animation>
+
 <!-- MasterPanel.Autopilot.YawTrim -->
 <animation>
   <type>rotate</type>
@@ -412,21 +355,7 @@
     </binding>
   </action>
 </animation>
-<animation>
-	<type>material</type>
-  <object-name>MasterPanel.Fuel.TransferLeft.Ring</object-name>
-	<condition>
-		<equals>
-		<property>extra500/MasterPanel/Fuel/TransferLeft/state</property>
-		<value>1</value>
-		</equals>
-	</condition>
-	<emission>	
-		<red>0.7</red>	
-		<green>0.5</green>	
-		<blue>0.0</blue>
-	</emission>
-</animation>
+
 <!-- MasterPanel.Fuel.TransferRight -->
 <animation>
   <type>rotate</type>
@@ -496,21 +425,7 @@
     </binding>
   </action>
 </animation>
-<animation>
-	<type>material</type>
-  <object-name>MasterPanel.Fuel.TransferRight.Ring</object-name>
-	<condition>
-		<equals>
-		<property>extra500/MasterPanel/Fuel/TransferRight/state</property>
-		<value>1</value>
-		</equals>
-	</condition>
-	<emission>	
-		<red>0.7</red>	
-		<green>0.5</green>	
-		<blue>0.0</blue>
-	</emission>
-</animation>
+
 <!-- MasterPanel.Fuel.Pump1 -->
 <animation>
   <type>rotate</type>
@@ -580,21 +495,7 @@
     </binding>
   </action>
 </animation>
-<animation>
-	<type>material</type>
-  <object-name>MasterPanel.Fuel.Pump1.Ring</object-name>
-	<condition>
-		<equals>
-		<property>extra500/MasterPanel/Fuel/Pump1/state</property>
-		<value>1</value>
-		</equals>
-	</condition>
-	<emission>	
-		<red>0.7</red>	
-		<green>0.5</green>	
-		<blue>0.0</blue>
-	</emission>
-</animation>
+
 <!-- MasterPanel.Fuel.Pump2 -->
 <animation>
   <type>rotate</type>
@@ -664,21 +565,7 @@
     </binding>
   </action>
 </animation>
-<animation>
-	<type>material</type>
-  <object-name>MasterPanel.Fuel.Pump2.Ring</object-name>
-	<condition>
-		<equals>
-		<property>extra500/MasterPanel/Fuel/Pump2/state</property>
-		<value>1</value>
-		</equals>
-	</condition>
-	<emission>	
-		<red>0.7</red>	
-		<green>0.5</green>	
-		<blue>0.0</blue>
-	</emission>
-</animation>
+
 <!-- MasterPanel.Engine.OverSpeed -->
 <animation>
   <type>translate</type>
@@ -714,21 +601,7 @@
 	</mod-up>
   </action>
 </animation>
-<animation>
-	<type>material</type>
-  <object-name>MasterPanel.Engine.OverSpeed.Ring</object-name>
-	<condition>
-		<equals>
-		<property>extra500/MasterPanel/Engine/OverSpeed/state</property>
-		<value>1</value>
-		</equals>
-	</condition>
-	<emission>	
-		<red>0.7</red>	
-		<green>0.0</green>	
-		<blue>0.0</blue>
-	</emission>
-</animation>
+
 <!-- MasterPanel.Engine.Motoring -->
 <animation>
   <type>rotate</type>
@@ -789,36 +662,7 @@
     </binding>
   </action>
 </animation>
-<animation>
-	<type>material</type>
-	<object-name>MasterPanel.Engine.Motoring.Ring</object-name>
-	<condition>
-		<equals>
-		<property>extra500/MasterPanel/Engine/Motoring/state</property>
-		<value>1</value>
-		</equals>
-	</condition>
-	<emission>	
-		<red>0.7</red>	
-		<green>0.5</green>	
-		<blue>0.0</blue>
-	</emission>
-</animation>
-<animation>
-	<type>material</type>
-	<object-name>MasterPanel.Engine.Motoring.Ring</object-name>
-	<condition>
-		<equals>
-		<property>extra500/MasterPanel/Engine/Motoring/state</property>
-		<value>-1</value>
-		</equals>
-	</condition>
-	<emission>	
-		<red>0.0</red>	
-		<green>0.5</green>	
-		<blue>0.0</blue>
-	</emission>
-</animation>
+
 <!-- MasterPanel.Engine.Start -->
 <animation>
   <type>rotate</type>
@@ -879,36 +723,7 @@
     </binding>
   </action>
 </animation>
-<animation>
-	<type>material</type>
-	<object-name>MasterPanel.Engine.Start.Ring</object-name>
-	<condition>
-		<equals>
-		<property>extra500/MasterPanel/Engine/Start/state</property>
-		<value>1</value>
-		</equals>
-	</condition>
-	<emission>	
-		<red>0.7</red>	
-		<green>0.5</green>	
-		<blue>0.0</blue>
-	</emission>
-</animation>
-<animation>
-	<type>material</type>
-	<object-name>MasterPanel.Engine.Start.Ring</object-name>
-	<condition>
-		<equals>
-		<property>extra500/MasterPanel/Engine/Start/state</property>
-		<value>-1</value>
-		</equals>
-	</condition>
-	<emission>	
-		<red>0.0</red>	
-		<green>0.5</green>	
-		<blue>0.0</blue>
-	</emission>
-</animation>
+
 <!-- MasterPanel.Dimming.Keypad -->
 <animation>
   <type>rotate</type>
