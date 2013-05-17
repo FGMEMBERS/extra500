@@ -1133,8 +1133,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     <function name="aircraft/wing/etha-deg">
       <description>downwash angle due to wing lift</description>
       <product>
-            <value>3.85</value> 
-            <property>aero/coefficients/cl_ac-h</property> 
+            <value>0.00574</value> 
+            <property>aircraft/wing/alpha-deg</property> 
       </product>
       </function>
 
