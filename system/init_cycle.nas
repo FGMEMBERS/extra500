@@ -39,6 +39,8 @@ var simulation_cycle = func(){
 	
 	extra500.oFuelSystem.update();
 	extra500.flapSystem.update();
+	extra500.gearSystem.update();
+	
 	extra500.engine.update();
 	
 	extra500.digitalInstrumentPackage.update();

@@ -186,12 +186,21 @@ var ElectricConnector = {
 		return m;
 
 	},
+	getConnector : func(){
+		return me;
+	},
+	setConnector : func(connector){
+		if (connector == nil){
+			print("ElectricConnector.setConnector(nil) ... ERROR");
+		}
+		me.connector = connector;
+	},
 	solder : func(electricAble){
 		me.electricAble = electricAble;
 	},
 	plug : func(connector){
-		me.connector = connector;
-		connector.connector = me;
+		me.connector = connector.getConnector();
+		connector.setConnector(me);
 	},
 	applyVoltage : func(electron,name=""){ 
 		etd.in("Connector",me.name,name,electron);
@@ -225,8 +234,38 @@ var ElectricConnector = {
 	}
 };
 
+var ElectricPin = {
+	new : func(name){
+		var m = {parents:[
+			ElectricPin
+		]};
+		m.name = name;
+		m.connector		= nil;
+		return m;
+	},
+	getConnector : func(){
+		return me.connector;
+	},
+	setConnector : func(connector){
+		if (me.connector == nil){
+			me.connector = connector;
+		}else{
+			me.connector.plug(connector);
+			me.connector = nil;
+		}
+	},
+	plug : func(connector){
+		if (me.connector == nil){
+			me.connector = connector;
+		}else{
+			me.connector.plug(connector);
+			me.connector = nil;
+		}
+	},
+};
+
 var ElectricDiode = {
-	new : func(nRoot,name){
+	new : func(name){
 				
 		var m = {parents:[
 			ElectricDiode,
@@ -236,6 +275,7 @@ var ElectricDiode = {
 								
 		m.Plus = ElectricConnector.new("+");
 		m.Minus = ElectricConnector.new("-");
+		m.name 		= name;	
 						
 		m.Plus.solder(m);
 		m.Minus.solder(m);
@@ -245,7 +285,7 @@ var ElectricDiode = {
 	applyVoltage : func(electron,name=""){ 
 		etd.in("Diode",me.name,name,electron);
 		var GND = 0;
-		if ( electron > 0){
+		if ( electron != nil){
 			if (name == "+"){
 				GND = me.Minus.applyVoltage(electron);
 			}
@@ -1428,8 +1468,8 @@ var ElectricSwitchTT = {
 
 # ElectricRelaisXPDT	Double Throw
 #	 A1  ─[]─ A2
-# 0	      ┌── L12
-# 1	 P11 ─┘ ─ L14
+# 0	      ┌── P12
+# 1	 P11 ─┘ ─ P14
 var ElectricRelaisXPDT = {
 
 	
@@ -1522,7 +1562,7 @@ var ElectricRelaisXPDT = {
 	simReset : func(){
 		me.capacitor.load(-1);
 		me.nState.setValue(me.state);
-		me.state = me.capacitor.value > 0 ? 1 : 0;
+		me.state = me.capacitor.value > 0 ? 1 : 0; # ### TODO optimise capacitor to minimum
 	},
 	_setValue : func(value){
 		me.state = value;
@@ -1552,7 +1592,7 @@ var ElectricRelaisXPDT = {
 # ElectricRelaisXPST	Single Throw
 #	 A1  ─[]─ A2
 # 0	      ┌── 
-# 1	 P11 ─┘ ─ L14
+# 1	 P11 ─┘ ─ P14
 var ElectricRelaisXPST = {
 
 	new : func(nRoot,name,state=0){
@@ -1936,4 +1976,6 @@ var ElectricMotor = {
 		me._setValue(norm);
 	},
 	
-}
+};
+
+

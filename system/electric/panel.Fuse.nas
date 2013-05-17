@@ -50,12 +50,15 @@ var FusePanel = {
 		# ### TODO : aninciator same Bus ! put in Once  
 		m.externalPowerBus = Part.ElectricBus.new("fusedExternalPowerBus");
 		
+		m.GearAux2 = Part.ElectricCircuitBraker.new(m.nRoot.initNode("GearAux2"),"Gear Aux2",1);
+		m.GearAux2.fuseConfig(5.0);
 		
 		return m;
 		
 	},
 	plugElectric : func(){
 		me.externalPowerBus.plug(me.externalPower.Out);
+		
 	},
 };
 
