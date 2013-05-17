@@ -40,10 +40,10 @@ var flapsDown = func(step) {
 var gearDown = func(v) {
     if (v < 0) {
       UI.click("Gear up");
-      setprop("/controls/gear/gear-down", 0);
+      #setprop("/controls/gear/gear-down", 0);
     } elsif (v > 0) {
       UI.click("Gear down");
-      setprop("/controls/gear/gear-down", 1);
+      #setprop("/controls/gear/gear-down", 1);
     }
 }
 var gearToggle = func { UI.click("Gear"); }

@@ -411,11 +411,7 @@ var plugGear =func(){
 	gearSystem.CTRL.plug(gearSystem.CtrlBus.con());
 	gearSystem.MainGearSwitch.Com1.plug(gearSystem.CtrlBus.con());
 	gearSystem.HydrBus.plug(circuitBreakerPanel.Hydraulic.Out);
-	gearSystem.HydraulicCautionRelais.A1.plug(gearSystem.HydrBus.con());
-	gearSystem.HydraulicCautionRelais.A2.plug(mainBoard.GND);
-	gearSystem.HydraulicCautionRelais.P14.plug(gearSystem.Annunciator);
-	gearSystem.HydraulicMotorRelais.P11.plug(gearSystem.HydrBus.con());
-	
+	gearSystem.Annunciator.plug(annunciatorPanel.dimTestRelais.P332);
 };
 
 var plugAnnuciator = func(){
@@ -426,6 +422,8 @@ var plugAnnuciator = func(){
 	
 	mainBoard.iBus03.plug(annunciatorPanel.dimTestRelais.P482); # Gernator 1 Fail
 	annunciatorPanel.externalPowerBus.plug(fusePanel.externalPowerBus.con());
+	
+	
 }
 
 var plugFuel = func(){

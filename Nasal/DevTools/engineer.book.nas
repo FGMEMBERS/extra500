@@ -393,16 +393,17 @@ engineerScreen.add(electricLightPage);
 	
 	display = Display.new(10,680);
 
-		display.title = "Valve";
+		display.title = "Hydraulic";
 		display.font = "FIXED_9x15";
 		display.fg = [1.0, 1.0, 1.0, 1.0];
 		display.bg = [0.5, 0.5, 0.5, 0.85];
 		display.width = 270;
 		display.height = 160;
 		
-		display.add_Node("Main       ", props.globals.getNode("/extra500/system/gear/MainValve/state") );
-		display.add_Node("Upper Door ", props.globals.getNode("/extra500/system/gear/UpperDoorValve/state") );
-		display.add_Node("Lower Door ", props.globals.getNode("/extra500/system/gear/LowerDoorValve/state") );
+		display.add_Node("Valve Main       ", props.globals.getNode("/extra500/system/gear/MainValve/state") );
+		display.add_Node("Valve Upper Door ", props.globals.getNode("/extra500/system/gear/UpperDoorValve/state") );
+		display.add_Node("Valve Lower Door ", props.globals.getNode("/extra500/system/gear/LowerDoorValve/state") );
+		display.add_Node("Motor            ", props.globals.getNode("/extra500/system/gear/HydraulicMotor/state") );
 		
 
 	gearPage.add(display);

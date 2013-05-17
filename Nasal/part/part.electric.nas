@@ -190,6 +190,9 @@ var ElectricConnector = {
 		return me;
 	},
 	setConnector : func(connector){
+		if (connector == nil){
+			print("ElectricConnector.setConnector(nil) ... ERROR");
+		}
 		me.connector = connector;
 	},
 	solder : func(electricAble){
@@ -1973,4 +1976,6 @@ var ElectricMotor = {
 		me._setValue(norm);
 	},
 	
-}
+};
+
+

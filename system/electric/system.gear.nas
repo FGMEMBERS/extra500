@@ -105,8 +105,12 @@ var GearSystem = {
 		
 		
 	
-	# Electic Connector
+	# Fake until we can drive 
 		
+		m.FakeSwitchOn	= Part.ElectricConnector.new("FakeSwitchOn");
+		m.FakeSwitchOff	= Part.ElectricConnector.new("FakeSwitchOff");
+		
+	# Electic Connector	
 		m.GND 		= Part.ElectricPin.new("GND");
 		m.CTRL		= Part.ElectricPin.new("GearCTRL");		#  1 	GA3F-22
 		#m.Relais34GA	= Part.ElectricPin.new("Relais34GA");		#  2 	GA3C-22
@@ -123,6 +127,7 @@ var GearSystem = {
 		m.Annunciator	= Part.ElectricPin.new("Annunciator");		# 12 	GA53F-22
 		m.TAS		= Part.ElectricPin.new("TAS");			# 13 	SD14F-22
 		
+				
 		
 		m.GNDBus = Part.ElectricBusDiode.new("GNDBus");
 		
@@ -148,6 +153,10 @@ var GearSystem = {
 		m.UpperDoorValve = Part.HydraulicValve.new(m.nRoot.initNode("UpperDoorValve"),"Hydraulic Upper Door Valve");
 		m.LowerDoorValve = Part.HydraulicValve.new(m.nRoot.initNode("LowerDoorValve"),"Hydraulic Lower & Nose Door Valve");
 		
+		m.HydraulicMotor = Part.HydraulicMotor.new(m.nRoot.initNode("HydraulicMotor"),"Hydraulic Motor");
+		m.HydraulicMotor.electricConfig(12.0,28.0);
+		m.HydraulicMotor.setPower(24.0,450.0);
+		
 # 		m.GND.solder(m);
 # 		m.NoseGearLed.solder(m);
 # 		m.LeftGearLed.solder(m);
@@ -157,18 +166,57 @@ var GearSystem = {
 		
 	},
 	applyVoltage : func(electron,name=""){
+		
+	},
+	# FIXME :Fake unitl we can drive real hydraulic system  replace with original !!!
+	plugElectric : func(){
+		
+		me.fakeHydrRelaisBus = Part.ElectricBusDiode.new("fakeHydrRelaisBus");
+		
+		me.CtrlBus.plug(me.MainGearSwitch.Com1);			
+		me.MainGearSwitch.L11.plug(me.SwitchOff);
+		me.MainGearSwitch.L12.plug(me.SwitchOn);
+		
+		me.GND.plug(me.GNDBus.Minus);
+		me.RightGearLed.plug(me.RightGearDown.L12);		#  5
+		me.NoseGearLed.plug(me.NoseGearDown.L22);		#  6
+		me.LeftGearLed.plug(me.LeftGearDown.L22);		#  7
+		me.Annunciator.plug(me.HydraulicCautionRelais.P11);	# 12
+		me.Warning.plug(me.NoseGearUp.L22);			# 12
+		
+		me.SwitchOn.plug(me.NoseGearDown.Com1);
+		me.NoseGearDown.L11.plug(me.fakeHydrRelaisBus.con());
+		
+		
+		me.SwitchOff.plug(me.NoseGearUp.Com1);
+		me.NoseGearUp.L11.plug(me.NoseGearSquat.Com1);
+		me.NoseGearSquat.L11.plug(me.fakeHydrRelaisBus.con());
+		me.NoseGearUp.Com2.plug(me.GNDBus.con());
+		
+		
+		me.RightGearDown.Com1.plug(me.GNDBus.con());
+		me.NoseGearDown.Com2.plug(me.GNDBus.con());
+		me.LeftGearDown.Com2.plug(me.GNDBus.con());
 				
-		if (name == "NoseGearLed" and me.nNoseGearPosition.getValue() == 1.0){
-			me.GND.applyVoltage(electron);
-		}elsif (name == "LeftGearLed" and me.nLeftGearPosition.getValue() == 1.0){
-			me.GND.applyVoltage(electron);
-		}elsif (name == "RightGearLed" and me.nRightGearPosition.getValue() == 1.0){
-			me.GND.applyVoltage(electron);
-		}
+		me.HydraulicMotorRelais.A1.plug(me.fakeHydrRelaisBus.Minus);
+		me.HydraulicMotorRelais.A2.plug(me.GNDBus.con());
+		me.HydraulicMotorRelais.P11.plug(me.HydrBus.con());
+		me.HydraulicMotorRelais.P14.plug(me.HydraulicMotor.Plus);
+		me.HydraulicMotorRelais.P21.plug(me.GNDBus.con());
+		me.HydraulicMotorRelais.P24.plug(me.HydraulicCautionRelais.P14);
+		#me.HydraulicCautionRelais.P14.plug(me.HydraulicMotorRelais.P24);
+		
+		me.HydraulicMotor.Minus.plug(me.GNDBus.con());
+		
+		
+		me.HydraulicCautionRelais.A1.plug(me.HydrBus.con());
+		me.HydraulicCautionRelais.A2.plug(me.GNDBus.con());
+		
 		
 		
 	},
-	plugElectric : func(){
+	# FIXME :Fake unitl we can drive real hydraulic system  replace with original !!!
+	plugElectric_original : func(){
 		#--- plug outside
 		
 		
@@ -176,7 +224,7 @@ var GearSystem = {
 		
 		me.Modul3abcde.plug(me.Modul4hjk.con());
 		
-		me.CTRL.plug(me.MainGearSwitch.Com1);			
+		me.CtrlBus.plug(me.MainGearSwitch.Com1);			
 		me.MainGearSwitch.L11.plug(me.SwitchOff);
 		me.MainGearSwitch.L12.plug(me.SwitchOn);
 		#---
@@ -193,7 +241,7 @@ var GearSystem = {
 		me.Aux2.plug(me.NoseGearDown.Com1);			#  9
 		me.Aux1.plug(me.Aux2Diode.Minus);			# 10
 		#me.Relais35GA.plug(me.NoseGearSquat.L41);		# 11
-		me.Annunciator.plug(me.HydraulicMotorRelais.P24);	# 12
+		me.Annunciator.plug(me.HydraulicCautionRelais.P11);	# 12
 		me.TAS.plug(me.TASBus.Minus);				# 13
 		
 		
@@ -204,9 +252,16 @@ var GearSystem = {
 		me.LowerDoorValve.A1.plug(me.LeftDoorUpperClose.L22);
 		me.LowerDoorValve.A2.plug(me.GNDBus.con());
 		
-		# TODO: me.HydraulicMotorRelais.P21.plug(me.HydraulicMotor.Plus);
-		# TODO:	me.HydraulicMotor.Plus.plug(me.GNDBus.con());
+		me.HydraulicCautionRelais.A1.plug(me.HydrBus.con());
+		me.HydraulicCautionRelais.A2.plug(me.GNDBus.con());
+				
+		me.HydraulicMotor.Minus.plug(me.GNDBus.con());
+		me.HydraulicMotorRelais.P11.plug(me.HydraulicMotor.Plus);
 		me.HydraulicMotorRelais.P21.plug(me.GNDBus.con());
+		me.HydraulicMotorRelais.P21.plug(me.GNDBus.con());
+		me.HydraulicMotorRelais.P24.plug(me.HydraulicCautionRelais.P14);
+		
+		
 		
 		me.Gear34GARelais.A1.plug(me.Aux2Bus.con());
 		me.Gear34GARelais.A2.plug(me.NoseGearSquat.L21);
@@ -272,84 +327,93 @@ var GearSystem = {
 	# Limit swicht
 		#Nose gear
 		if (me.NoseGearPosition == 1.0){
-			me.NoseGearUp.off();
-			me.NoseGearDown.on();
+			me.NoseGearUp._setValue(0);
+			me.NoseGearDown._setValue(1);
 		}elsif(me.NoseGearPosition == 0.0){
-			me.NoseGearUp.on();
-			me.NoseGearDown.off();
+			me.NoseGearUp._setValue(1);
+			me.NoseGearDown._setValue(0);
 		}else{
-			me.NoseGearDown.off();
-			me.NoseGearUp.off();
+			me.NoseGearDown._setValue(0);
+			me.NoseGearUp._setValue(0);
 		}
 		
 		if (me.RightGearPosition == 1.0){
-			me.RightGearUp.off();
-			me.RightGearDown.on();
+			me.RightGearUp._setValue(0);
+			me.RightGearDown._setValue(1);
 		}elsif(me.RightGearPosition == 0.0){
-			me.RightGearUp.on();
-			me.RightGearDown.off();
+			me.RightGearUp._setValue(1);
+			me.RightGearDown._setValue(0);
 		}else{
-			me.RightGearDown.off();
-			me.RightGearUp.off();
+			me.RightGearDown._setValue(0);
+			me.RightGearUp._setValue(0);
 		}
 		
 		if (me.LeftGearPosition == 1.0){
-			me.LeftGearUp.off();
-			me.LeftGearDown.on();
+			me.LeftGearUp._setValue(0);
+			me.LeftGearDown._setValue(1);
 		}elsif(me.LeftGearPosition == 0.0){
-			me.LeftGearUp.on();
-			me.LeftGearDown.off();
+			me.LeftGearUp._setValue(1);
+			me.LeftGearDown._setValue(0);
 		}else{
-			me.LeftGearDown.off();
-			me.LeftGearUp.off();
+			me.LeftGearDown._setValue(0);
+			me.LeftGearUp._setValue(0);
 			
 		}
 		
 	#squat switch
 		if (me.NoseGearWOW == 1){
-			me.NoseGearSquat.on();
+			me.NoseGearSquat._setValue(1); 
 		}else{
-			me.NoseGearSquat.off();
+			me.NoseGearSquat._setValue(0);
 		}
 		
 	# door switches
 	
 		if (me.RightGearPosition >= 0.9){
-			me.RightDoorUpperClose.on();
-			me.RightDoorUpperOpen.off();
+			me.RightDoorUpperClose._setValue(1);
+			me.RightDoorUpperOpen._setValue(0);
 		}elsif(me.RightGearPosition >= 0.85){
-			me.RightDoorUpperClose.off();
-			me.RightDoorUpperOpen.on();
+			me.RightDoorUpperClose._setValue(0);
+			me.RightDoorUpperOpen._setValue(1);
 		}elsif(me.RightGearPosition == 0.0){
-			me.RightDoorUpperClose.on();
-			me.RightDoorUpperOpen.off();
+			me.RightDoorUpperClose._setValue(1);
+			me.RightDoorUpperOpen._setValue(0);
 		}else{
-			me.RightDoorUpperClose.off();
-			me.RightDoorUpperOpen.off();
+			me.RightDoorUpperClose._setValue(0);
+			me.RightDoorUpperOpen._setValue(0);
 			
 		}
 		
 		if (me.LeftGearPosition >= 0.9){
-			me.LeftDoorUpperClose.on();
-			me.LeftDoorUpperOpen.off();
+			me.LeftDoorUpperClose._setValue(1);
+			me.LeftDoorUpperOpen._setValue(0);
 			
 		}elsif(me.LeftGearPosition >= 0.85){
-			me.LeftDoorUpperClose.off();
-			me.LeftDoorUpperOpen.on();
+			me.LeftDoorUpperClose._setValue(0);
+			me.LeftDoorUpperOpen._setValue(1);
 		}elsif(me.LeftGearPosition == 0.0){
-			me.LeftDoorUpperClose.on();
-			me.LeftDoorUpperOpen.off();
+			me.LeftDoorUpperClose._setValue(1);
+			me.LeftDoorUpperOpen._setValue(0);
 		}else{
-			me.LeftDoorUpperClose.off();
-			me.LeftDoorUpperOpen.off();
+			me.LeftDoorUpperClose._setValue(0);
+			me.LeftDoorUpperOpen._setValue(0);
 		}
 		
 		if(me.NoseGearPosition == 0.0){
-			me.LowerDoor.on();
+			me.LowerDoor._setValue(1);
 		}else{
-			me.LowerDoor.off();
+			me.LowerDoor._setValue(0);
+		}
+		# FIXME : Fake unitl Hydraulic system is the driver 
+		if (me.HydraulicMotor.state > 0.0){
+			me._movingTheMass();
+			me.nGearControl.setValue(me.MainGearSwitch.state);
 		}
 		
+		
+	},
+	# moving the right & left mass in jsbsim
+	_movingTheMass : func(){
 		
 	},
 	onGearClick : func(value=nil){
@@ -373,5 +437,6 @@ var GearSystem = {
 	}
 	
 };
+
 
 var gearSystem = GearSystem.new(props.globals.initNode("/extra500/system/gear"),"Landing Gear Control");

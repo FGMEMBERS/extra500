@@ -86,3 +86,67 @@ var HydraulicValve = {
 };
 
 
+#	Plus ─⊗─ Minus
+
+var HydraulicMotor = {
+	new : func(nRoot,name){
+				
+		var m = {parents:[
+			HydraulicMotor,
+			Part.new(nRoot,name),
+			SimStateAble.new(nRoot,"DOUBLE",0.0),
+			ElectricAble.new(nRoot,name)
+		]};
+		
+		m.gear = nil;
+		
+		m.Plus = ElectricConnector.new("Plus");
+		m.Minus = ElectricConnector.new("-");
+						
+		m.Plus.solder(m);
+		m.Minus.solder(m);
+		
+		append(aListSimStateAble,m);
+		
+		return m;
+
+	},
+	applyVoltage : func(electron,name=""){ 
+		etd.in("HydraulicMotor",me.name,name,electron);
+		var GND = 0;
+		
+		if (electron != nil){
+			me.setVolt(electron.volt);
+			electron.resistor += me.resistor;# * me.qos
+			
+			if (name == "Plus"){
+				GND = me.Minus.applyVoltage(electron);
+				if (GND){
+					var watt = me.electricWork(electron);
+					me._drive(me.qos);
+				}
+			}
+			
+			me.setAmpere(electron.ampere);
+		}
+		etd.out("HydraulicMotor",me.name,name,electron);
+		return GND;
+	},
+	_setValue : func(value){
+		
+		if (value > 1.0) { value = 1.0 };
+		if (value < -1.0) { value = -1.0 };
+		
+		me.state = value;
+		if (me.gear!=nil){
+			me.gear.driveShaft(me.state);
+		}
+	},
+	_drive : func(qos){
+		var norm =  ((me.volt-me.voltMin) / (me.voltDelta)) * qos ;
+		me._setValue(norm);
+	},
+	
+};
+
+
