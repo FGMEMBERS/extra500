@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: April 20 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             26.04.13
+#      Last change:      Eric van den Berg
+#      Date:             17.05.13
 #
 
 var GearSystem = {
@@ -428,10 +428,10 @@ var GearSystem = {
 	_movingTheMass : func(){
 		 
 		me.nLeftGearMassLocationX.setValue( me.LMassLocationX - ( (1.0-me.LeftGearPosition) * (0.5 * global.CONST.METER2INCH) ) );
-		me.nLeftGearMassLocationZ.setValue( me.LMassLocationZ - ( (1.0-me.LeftGearPosition) * (0.3 * global.CONST.METER2INCH) ) );
+		me.nLeftGearMassLocationZ.setValue( me.LMassLocationZ + ( (1.0-me.LeftGearPosition) * (0.3 * global.CONST.METER2INCH) ) );
 		
 		me.nRightGearMassLocationX.setValue( me.RMassLocationX - ( (1.0-me.RightGearPosition) * (0.5 * global.CONST.METER2INCH) ) );
-		me.nRightGearMassLocationZ.setValue( me.RMassLocationZ - ( (1.0-me.RightGearPosition) * (0.3 * global.CONST.METER2INCH) ) );
+		me.nRightGearMassLocationZ.setValue( me.RMassLocationZ + ( (1.0-me.RightGearPosition) * (0.3 * global.CONST.METER2INCH) ) );
 		
 	},
 	onGearClick : func(value=nil){
