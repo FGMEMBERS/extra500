@@ -34,12 +34,24 @@ var GearSystem = {
 		m.nNoseGearPosition = props.globals.getNode("/gear/gear[0]/position-norm",1);
 		m.nLeftGearPosition = props.globals.getNode("/gear/gear[1]/position-norm",1);
 		m.nRightGearPosition = props.globals.getNode("/gear/gear[2]/position-norm",1);
+		m.nLeftGearMassLocationX = props.globals.getNode("/fdm/jsbsim/inertia/pointmass-location-X-inches[7]",1);
+		m.nLeftGearMassLocationZ = props.globals.getNode("/fdm/jsbsim/inertia/pointmass-location-Z-inches[7]",1);
+		m.nRightGearMassLocationX = props.globals.getNode("/fdm/jsbsim/inertia/pointmass-location-X-inches[8]",1);
+		m.nRightGearMassLocationZ = props.globals.getNode("/fdm/jsbsim/inertia/pointmass-location-Z-inches[8]",1);
+
+
+
 		m.listener = nil;
 		
-		me.NoseGearWOW = 0;
-		me.NoseGearPosition = 0.0;
-		me.LeftGearPosition = 0.0;
-		me.RightGearPosition = 0.0;
+		m.NoseGearWOW = 0;
+		m.NoseGearPosition = 0.0;
+		m.LeftGearPosition = 0.0;
+		m.RightGearPosition = 0.0;
+		
+		m.LMassLocationX = m.nLeftGearMassLocationX.getValue();
+		m.LMassLocationZ = m.nLeftGearMassLocationZ.getValue();
+		m.RMassLocationX = m.nRightGearMassLocationX.getValue();
+		m.RMassLocationZ = m.nRightGearMassLocationZ.getValue();
 		
 	# gear switches
 		m.MainGearSwitch = Part.ElectricSwitchDT.new(m.nRoot.initNode("MainGearSwitch"),"Main Gear Switch",1);
@@ -404,7 +416,7 @@ var GearSystem = {
 		}else{
 			me.LowerDoor._setValue(0);
 		}
-		# FIXME : Fake unitl Hydraulic system is the driver 
+# FIXME : Fake until Hydraulic system is the driver 
 		if (me.HydraulicMotor.state > 0.0){
 			me._movingTheMass();
 			me.nGearControl.setValue(me.MainGearSwitch.state);
@@ -414,6 +426,12 @@ var GearSystem = {
 	},
 	# moving the right & left mass in jsbsim
 	_movingTheMass : func(){
+		 
+		me.nLeftGearMassLocationX.setValue( me.LMassLocationX - ( (1.0-me.LeftGearPosition) * (0.5 * global.CONST.METER2INCH) ) );
+		me.nLeftGearMassLocationZ.setValue( me.LMassLocationZ - ( (1.0-me.LeftGearPosition) * (0.3 * global.CONST.METER2INCH) ) );
+		
+		me.nRightGearMassLocationX.setValue( me.RMassLocationX - ( (1.0-me.RightGearPosition) * (0.5 * global.CONST.METER2INCH) ) );
+		me.nRightGearMassLocationZ.setValue( me.RMassLocationZ - ( (1.0-me.RightGearPosition) * (0.3 * global.CONST.METER2INCH) ) );
 		
 	},
 	onGearClick : func(value=nil){
