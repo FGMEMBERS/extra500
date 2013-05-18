@@ -19,8 +19,8 @@
       Authors: Thomas Grossberger and Dirk Dittmann
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
-      Date:             15.05.13
+      Last change:      Eric van den Berg
+      Date:             18.05.13
 
 -->
 
@@ -63,7 +63,7 @@
 		<object-name>IAS.100er</object-name>
 		<condition>
 		  <greater-than-equals>
-		    <property>/instrumentation/airspeed-IFD-LH/indicated-speed-kt</property>
+		    <property>/instrumentation/airspeed-IFD-LH/indicated-airspeed-kt</property>
 		    <value>100</value>
 		  </greater-than-equals>
 		</condition>
@@ -71,7 +71,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>IAS</object-name>
-	<property>/instrumentation/airspeed-IFD-LH/indicated-speed-kt</property>
+	<property>/instrumentation/airspeed-IFD-LH/indicated-airspeed-kt</property>
 	<factor>0.00289</factor>
 	<axis>
 		<x>0</x>
@@ -82,7 +82,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>IAS.001er</object-name>
-	<property>/instrumentation/airspeed-IFD-LH/indicated-speed-kt</property>
+	<property>/instrumentation/airspeed-IFD-LH/indicated-airspeed-kt</property>
 	<factor>0.1</factor>
 	<axis>
 		<x>0</x>
@@ -93,7 +93,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>IAS.010er</object-name>
-	<property>/instrumentation/airspeed-IFD-LH/indicated-speed-kt</property>
+	<property>/instrumentation/airspeed-IFD-LH/indicated-airspeed-kt</property>
 	<factor>0.01</factor>
 	<step>10</step>
 	<scroll>1</scroll>
@@ -106,7 +106,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>IAS.100er</object-name>
-	<property>/instrumentation/airspeed-IFD-LH/indicated-speed-kt</property>
+	<property>/instrumentation/airspeed-IFD-LH/indicated-airspeed-kt</property>
 	<factor>0.001</factor>
 	<step>100</step>
 	<scroll>1</scroll>
