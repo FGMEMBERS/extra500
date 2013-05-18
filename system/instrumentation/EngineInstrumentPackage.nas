@@ -197,12 +197,12 @@ var EngineInstrumentPackage = {
 			me.TargetOP 	= me.nOP.getValue();
 			me.TargetOT 	= me.nOT.getValue();
 			
-			me.TRQ 	= me._move(me.TRQ, me.TargetTRQ, 0.0,  125.0, 0.1);
-			me.TOT 	= me._move(me.TOT, me.TargetTOT, 0.0, 1000.0, 0.1);
-			me.N1 	= me._move(me.N1,  me.TargetN1,  0.0,  110.0, 0.1);
-			me.RPM 	= me._move(me.RPM, me.TargetRPM, 0.0, 2500.0, 0.1);
-			me.OP 	= me._move(me.OP,  me.TargetOP,  0.0,  150.0, 0.1);
-			me.OT 	= me._move(me.OT,  me.TargetOT,  0.0,  120.0, 0.1);
+			me.TRQ 	= me._move(me.TRQ, me.TargetTRQ, 0.0,  125.0, 0.2);
+			me.TOT 	= me._move(me.TOT, me.TargetTOT, 0.0, 1000.0, 0.2);
+			me.N1 	= me._move(me.N1,  me.TargetN1,  0.0,  110.0, 0.2);
+			me.RPM 	= me._move(me.RPM, me.TargetRPM, 0.0, 2500.0, 0.2);
+			me.OP 	= me._move(me.OP,  me.TargetOP,  0.0,  150.0, 0.2);
+			me.OT 	= me._move(me.OT,  me.TargetOT,  0.0,  120.0, 0.2);
 		
 		}
 		

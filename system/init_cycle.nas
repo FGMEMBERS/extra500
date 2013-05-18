@@ -20,7 +20,68 @@
 #      Date:             08.05.13
 #
 
-var nCycleTimeUsed = props.globals.getNode("extra500/CycleTimeUsed",1);
+
+var Stats = {
+	new : func(){
+		var m = {parents:[
+			Stats
+		]};
+		
+		m.nTime = props.globals.initNode("extra500/debug/mainLoop/time",0.0,"DOUBLE");
+		m.nMax = props.globals.initNode("extra500/debug/mainLoop/max",0.0,"DOUBLE");
+		m.nMin = props.globals.initNode("extra500/debug/mainLoop/min",0.0,"DOUBLE");
+		m.nAvg100 = props.globals.initNode("extra500/debug/mainLoop/avg100",0.0,"DOUBLE");
+		m.nAvg = props.globals.initNode("extra500/debug/mainLoop/avg",0.0,"DOUBLE");
+		m.nSum = props.globals.initNode("extra500/debug/mainLoop/sum",0.0,"DOUBLE");
+		m.nCount = props.globals.initNode("extra500/debug/mainLoop/count",0.0,"DOUBLE");
+		
+		m.time = 0.0;
+		m.max = 0.0;
+		m.min = 0.0;
+		m.avg100 = 0.0;
+		m.sum100 = 0.0;
+		m.count100 = 0.0;
+		m.avg = 0.0;
+		m.sum = 0.0;
+		m.count = 0.0;
+		
+		return m;
+	},
+	add : func(value){
+		
+		me.time = value;
+		if (me.max < value){ me.max = value; }
+		if (me.min > value or me.min == 0.0){ me.min = value; }
+				
+		me.sum += value;
+		me.count += 1;
+		me.avg = me.sum / me.count;
+		
+		if (me.count100 == 100){
+			me.avg100 = me.sum100 / me.count100;
+			me.sum100 = 0;
+			me.count100 = 0;
+			
+			me.max = 0.0;
+			me.min = 0.0;
+		}
+		me.sum100 += value;
+		me.count100 += 1;
+			
+			
+		me.nTime.setValue(me.time);
+		me.nMax.setValue(me.max);
+		me.nMin.setValue(me.min);
+		me.nAvg100.setValue(me.avg100);
+		me.nAvg.setValue(me.avg);
+		me.nSum.setValue(me.sum);
+		me.nCount.setValue(me.count);
+		
+	}
+	
+};
+
+
 var cycleTimeUsed = 0;
 
 
@@ -69,20 +130,29 @@ var simulation_cycle = func(){
 	foreach(var o;Part.aListSimStateAble){
 		o.simReset();
 	}
+	
+	
+	
 	cycleTimeUsed = systime() - start;
-	nCycleTimeUsed.setValue(cycleTimeUsed);
-	
-	
+		
 };
-
+var cycle_sec_full = 0.1;
 var cycle_sec = 0.1;
 var cycle_run = 1;
+
+var cycleStats = Stats.new();
+
 var cycle = func(){
-	#debug.benchmark("Simulation Cycle ... ",func simulation_cycle());
+	
 	if (cycle_run == 1){
 		simulation_cycle();
 	}
+	cycle_sec = cycle_sec_full - cycleTimeUsed;
+	if (cycle_sec < 0.04){cycle_sec = 0.04};
 	settimer(cycle, cycle_sec);
+	
+	cycleStats.add(cycleTimeUsed);
+	
 }
 
 

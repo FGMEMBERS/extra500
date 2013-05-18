@@ -74,7 +74,7 @@ var canvas_demo = {
        .setFont("LiberationFonts/LiberationMono-Bold.ttf")
        .setFontSize(40)
        .setAlignment("left-top")
-       .setTranslation(20, 200);
+       .setTranslation(20, 500);
     #m.tf = m.dynamic_text.createTransform();
     #m.tf.setTranslation(384, 200);
 
@@ -85,9 +85,16 @@ var canvas_demo = {
   {
 		
 		
-		var text = "";
-		var text = sprintf("Sim time : %.4f sec",run.cycleTimeUsed);
-	
+		var text = "Sim Main Loop\n";
+				
+		text ~= sprintf("time    : %.4f sec %.2f Hz\n",run.cycleStats.time,1/(run.cycleStats.time+run.cycle_sec));
+		text ~= sprintf("max     : %.4f sec\n",run.cycleStats.max);
+		text ~= sprintf("min     : %.4f sec\n",run.cycleStats.min);
+		text ~= sprintf("avg100  : %.4f sec\n",run.cycleStats.avg100);
+		text ~= sprintf("avg     : %.4f sec\n",run.cycleStats.avg);
+		text ~= sprintf("sum     : %.4f sec\n",run.cycleStats.sum);
+		text ~= sprintf("count   : %i\n",run.cycleStats.count);
+		
 		me.textSim.setText(text);
 # 		
 		text = "";
