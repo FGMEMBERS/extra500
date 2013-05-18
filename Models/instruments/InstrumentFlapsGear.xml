@@ -30,12 +30,6 @@
 <animation>
 	<type>material</type>
 	<object-name>LightGear0.Lampe</object-name>
-	  <!--<condition>
-    <equals>
-      <property>/gear/gear[0]/position-norm</property>
-      <value>1</value>
-    </equals>
-  </condition>-->
 	<emission>	
 		<red>0.0</red>	
 		<green>0.5</green>	
@@ -46,12 +40,6 @@
 <animation>
 	<type>material</type>
 	<object-name>LightGear1.Lampe</object-name>
-	  <!--<condition>
-    <equals>
-      <property>/gear/gear[1]/position-norm</property>
-      <value>1</value>
-    </equals>
-  </condition>-->
 	<emission>	
 		<red>0.0</red>	
 		<green>0.5</green>	
@@ -62,12 +50,6 @@
 <animation>
 	<type>material</type>
 	<object-name>LightGear2.Lampe</object-name>
-	  <!--<condition>
-    <equals>
-      <property>/gear/gear[2]/position-norm</property>
-      <value>1</value>
-    </equals>
-  </condition>-->
 	<emission>	
 		<red>0.0</red>	
 		<green>0.5</green>	
@@ -80,30 +62,6 @@
 <animation>
 	<type>material</type>
 	<object-name>LightFlapTrans.Lampe</object-name>
-	<!--<condition>  this is an ugly hack the trans lamp is solely dependent on the flap motor running 
-      <or>
-            <and>
-                  <greater-than>
-                        <property>/fdm/jsbsim/fcs/flap-pos-deg</property>
-                        <value>0.1</value>
-                  </greater-than>
-                  <less-than>
-                        <property>/fdm/jsbsim/fcs/flap-pos-deg</property>
-                        <value>14.9</value>
-                  </less-than>
-            </and>
-            <and>
-                  <greater-than>
-                        <property>/fdm/jsbsim/fcs/flap-pos-deg</property>
-                        <value>15.1</value>
-                  </greater-than>
-                  <less-than>
-                        <property>/fdm/jsbsim/fcs/flap-pos-deg</property>
-                        <value>29.9</value>
-                  </less-than>
-            </and>
-      </or>
-      </condition>-->
 	<emission>	
 		<red>0.9</red>	
 		<green>0.4</green>	
@@ -114,18 +72,6 @@
 <animation>
 	<type>material</type>
 	<object-name>LightFlap15.Lampe</object-name>
-	<!--<condition>
-      <and>
-            <greater-than>
-                  <property>/fdm/jsbsim/fcs/flap-pos-deg</property>
-                  <value>14</value>
-            </greater-than>
-            <less-than>
-                  <property>/fdm/jsbsim/fcs/flap-pos-deg</property>
-                  <value>16</value>
-            </less-than>
-      </and>
-      </condition>-->
 	<emission>	
 		<red>0.0</red>	
 		<green>0.5</green>	
@@ -136,12 +82,6 @@
 <animation>
 	<type>material</type>
 	<object-name>LightFlap30.Lampe</object-name>
-	<!--<condition>
-      <greater-than>
-            <property>/fdm/jsbsim/fcs/flap-pos-deg</property>
-            <value>29</value>
-      </greater-than>
-      </condition>-->
 	<emission>	
 		<red>0.0</red>	
 		<green>0.5</green>	
@@ -158,23 +98,14 @@
       <action>
         <button>0</button>
         <repeatable>false</repeatable>
-        <binding>
-          <command>property-toggle</command>
-          <property>controls/gear/gear-down</property>
-        </binding>
-      </action>
-</animation>
-<animation>
-      <type>pick</type>
-      <object-name>GearLever</object-name>
-      <visible>true</visible>
-      <action>
-        <button>3</button>
-        <repeatable>false</repeatable>
-        <binding>
-          <command>property-toggle</command>
-          <property>controls/gear/gear-down</property>
-        </binding>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("Gear");
+				]]>
+			</script>
+		</binding>
       </action>
 </animation>
 <animation>
@@ -184,10 +115,31 @@
       <action>
         <button>1</button>
         <repeatable>false</repeatable>
-        <binding>
-          <command>property-toggle</command>
-          <property>controls/gear/gear-down</property>
-        </binding>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("Gear");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+<animation>
+      <type>pick</type>
+      <object-name>GearLever</object-name>
+      <visible>true</visible>
+      <action>
+        <button>3</button>
+        <repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("Gear up");
+				]]>
+			</script>
+		</binding>
       </action>
 </animation>
 <animation>
@@ -197,104 +149,116 @@
       <action>
         <button>4</button>
         <repeatable>false</repeatable>
-        <binding>
-          <command>property-toggle</command>
-          <property>controls/gear/gear-down</property>
-        </binding>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("Gear down");
+				]]>
+			</script>
+		</binding>
       </action>
 </animation>
 <animation>
-  <type>rotate</type>
-  <object-name>GearLever</object-name>
- <property>/fdm/jsbsim/gear/gear-cmd-norm</property> 
-  <interpolation>
-            <entry>
-                <ind>0</ind>
-                <dep>-15</dep>
-            </entry>
-            <entry>
-                <ind>1</ind>
-                <dep>15</dep>
-            </entry>
-        </interpolation>
-  <axis>
-  <x1-m>-0.02287</x1-m>
-  <y1-m>-0.15691</y1-m>
-  <z1-m>0.005311</z1-m>
-  <x2-m>-0.02287</x2-m>
-  <y2-m>-0.15283</y2-m>
-  <z2-m>0.005311</z2-m>
-  </axis>
+	<type>rotate</type>
+	<object-name>GearLever</object-name>
+	<property>/extra500/system/gear/MainGearSwitch/state</property> 
+	<interpolation>
+		<entry>
+			<ind>0</ind>
+			<dep>-15</dep>
+		</entry>
+		<entry>
+			<ind>1</ind>
+			<dep>15</dep>
+		</entry>
+	</interpolation>
+	<axis>
+		<x1-m>-0.02287</x1-m>
+		<y1-m>-0.15691</y1-m>
+		<z1-m>0.005311</z1-m>
+		<x2-m>-0.02287</x2-m>
+		<y2-m>-0.15283</y2-m>
+		<z2-m>0.005311</z2-m>
+	</axis>
 </animation>
 
 <!--FlapControl-->
 <animation>
-      <type>pick</type>
-      <object-name>FlapControl</object-name>
-      <visible>true</visible>
-  <action>
-    <button>0</button>
-    <repeatable>false</repeatable>
-    <binding>
-      <command>nasal</command>
-      <script><![CDATA[
-		UI.click("Flaps down");
-	]]></script>
-    </binding>
-  </action>
-  <action>
-    <button>1</button>
-    <repeatable>false</repeatable>
-    <binding>
-      <command>nasal</command>
-      <script><![CDATA[
-		UI.click("Flaps up");
-	]]></script>
-    </binding>
-  </action>
-  <action>
-    <button>4</button>
-    <repeatable>false</repeatable>
-    <binding>
-      <command>nasal</command>
-      <script><![CDATA[
-		UI.click("Flaps down");
-	]]></script>
-    </binding>
-  </action>
-  <action>
-    <button>3</button>
-    <repeatable>false</repeatable>
-    <binding>
-      <command>nasal</command>
-      <script><![CDATA[
-		UI.click("Flaps up");
-	]]></script>
-    </binding>
-  </action>
+	<type>pick</type>
+	<object-name>FlapControl</object-name>
+	<visible>true</visible>
+	<action>
+	<button>0</button>
+	<repeatable>false</repeatable>
+	<binding>
+		<command>nasal</command>
+		<script>
+			<![CDATA[
+			UI.click("Flaps down");
+				]]>
+			</script>
+		</binding>
+	</action>
+	<action>
+		<button>1</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("Flaps up");
+				]]>
+		</script>
+		</binding>
+	</action>
+	<action>
+		<button>4</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("Flaps down");
+				]]>
+			</script>
+		</binding>
+	</action>
+	<action>
+		<button>3</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("Flaps up");
+				]]>
+			</script>
+		</binding>
+	</action>
 </animation>
 <animation>
-  <type>rotate</type>
-  <object-name>FlapControl</object-name>
- <property>/extra500/system/flap/Switch/state</property> 
-  <interpolation>
-            <entry>
-                <ind>-1</ind>
-                <dep>-19</dep>
-            </entry>
-            <entry>
-                <ind>1</ind>
-                <dep>19</dep>
-            </entry>
-        </interpolation>
-  <axis>
-  <x1-m>-0.0435</x1-m>
-  <y1-m>1</y1-m>
-  <z1-m>0.005</z1-m>
-  <x2-m>-0.0435</x2-m>
-  <y2-m>-1</y2-m>
-  <z2-m>0.005</z2-m>
-  </axis>
+	<type>rotate</type>
+	<object-name>FlapControl</object-name>
+	<property>/extra500/system/flap/Switch/state</property> 
+	<interpolation>
+		<entry>
+			<ind>-1</ind>
+			<dep>-19</dep>
+		</entry>
+		<entry>
+			<ind>1</ind>
+			<dep>19</dep>
+		</entry>
+	</interpolation>
+	<axis>
+		<x1-m>-0.0435</x1-m>
+		<y1-m>1</y1-m>
+		<z1-m>0.005</z1-m>
+		<x2-m>-0.0435</x2-m>
+		<y2-m>-1</y2-m>
+		<z2-m>0.005</z2-m>
+	</axis>
 </animation>
 
 <!--Dimming Test -->
