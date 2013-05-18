@@ -36,11 +36,11 @@
 		<interpolation>
             <entry>
                 <ind>0</ind>
-                <dep>-199.5</dep>
+                <dep>-90.0</dep>
             </entry>
             <entry>
                 <ind>1</ind>
-                <dep>90</dep>
+                <dep>90.0</dep>
             </entry>
         </interpolation>
   <axis>
@@ -60,11 +60,11 @@
 		<interpolation>
             <entry>
                 <ind>0</ind>
-                <dep>-199.5</dep>
+                <dep>-90.0</dep>
             </entry>
             <entry>
                 <ind>1</ind>
-                <dep>90</dep>
+                <dep>90.0</dep>
             </entry>
         </interpolation>
   <axis>

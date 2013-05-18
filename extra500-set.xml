@@ -559,8 +559,17 @@ JSBSim Extra Aircraft - Extra 500.
 		
 		<file>Aircraft/extra500/system/fuel/fuelSystem.nas</file>
 		<!-- instrumentation -->
+		<file>Aircraft/extra500/system/instrumentation/Audiopanel.nas</file>
+		<file>Aircraft/extra500/system/instrumentation/Autopilot.nas</file>
 		<file>Aircraft/extra500/system/instrumentation/DigitalInstrumentPackage.nas</file>
+		<file>Aircraft/extra500/system/instrumentation/DME.nas</file>
 		<file>Aircraft/extra500/system/instrumentation/EngineInstrumentPackage.nas</file>
+		<file>Aircraft/extra500/system/instrumentation/FuelFow.nas</file>
+		<file>Aircraft/extra500/system/instrumentation/Keypad.nas</file>
+		<file>Aircraft/extra500/system/instrumentation/StbyAirspeed.nas</file>
+		<file>Aircraft/extra500/system/instrumentation/StbyAltimeter.nas</file>
+		<file>Aircraft/extra500/system/instrumentation/StbyAttitude.nas</file>
+		<file>Aircraft/extra500/system/instrumentation/TurnCoordinator.nas</file>
 		<!-- cabling & defaults -->
 		<file>Aircraft/extra500/system/electric/cabling.nas</file>
 		<file>Aircraft/extra500/system/default.nas</file>

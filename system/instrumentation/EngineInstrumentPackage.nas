@@ -68,7 +68,7 @@ var EngineInstrumentPackage = {
 		
 	# Light
 		m.Backlight = Part.ElectricLED.new(m.nRoot.initNode("Backlight"),"EIP Backlight");
-		m.Backlight.electricConfig(14.0,26.0);
+		m.Backlight.electricConfig(8.0,28.0);
 		m.Backlight.setPower(24.0,3.0);
 	
 	# buses
@@ -166,7 +166,7 @@ var EngineInstrumentPackage = {
 		me.dimmingVolt = 0.0;
 	},
 	# Main Simulation loop  ~ 10Hz
-	update : func(){
+	update : func(timestamp){
 		
 		me._dimmBacklight();
 		

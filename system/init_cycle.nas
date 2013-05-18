@@ -37,16 +37,29 @@ var simulation_cycle = func(){
 	extra500.battery.update(start);
 	extra500.adjustAdditionalElectricLoads();
 	
-	extra500.oFuelSystem.update();
-	extra500.flapSystem.update();
-	extra500.gearSystem.update();
+	extra500.oFuelSystem.update(start);
+	extra500.flapSystem.update(start);
+	extra500.gearSystem.update(start);
 	
-	extra500.engine.update();
+	extra500.engine.update(start);
 	
-	extra500.digitalInstrumentPackage.update();
-	extra500.engineInstrumentPackage.update();
-	IFD.demo.update();
-	IFD.RH.update();
+	extra500.digitalInstrumentPackage.update(start);
+	extra500.engineInstrumentPackage.update(start);
+	extra500.audioPanel.update(start);
+	extra500.keypad.update(start);
+	extra500.autopilot.update(start);
+	extra500.dme.update(start);
+	extra500.fuelFlow.update(start);
+	extra500.turnCoordinator.update(start);
+	extra500.stbyAirspeed.update(start);
+	extra500.stbyAltimeter.update(start);
+	extra500.stbyAttitude.update(start);
+	
+	
+	
+	
+	IFD.demo.update(start);
+	IFD.RH.update(start);
 	
 	
 	foreach(var fuse;Part.aListElectricFuseAble){

@@ -329,7 +329,7 @@ var GearSystem = {
 		
 	},
 	# Main Simulation loop  ~ 10Hz
-	update : func(){
+	update : func(timestamp){
 	
 		me.NoseGearWOW = me.nNoseGearWOW.getValue();
 		me.NoseGearPosition = me.nNoseGearPosition.getValue();

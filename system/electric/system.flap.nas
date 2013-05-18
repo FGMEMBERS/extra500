@@ -110,7 +110,7 @@ var FlapSystem = {
 
 		return GND;
 	},
-	update : func(){
+	update : func(timestamp){
 		me.flapPosition = me.nFlapPosition.getValue();
 		
 		

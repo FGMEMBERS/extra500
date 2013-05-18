@@ -485,7 +485,7 @@ var plugDIP =func(){
 	digitalInstrumentPackage.Dimming.plug(lightBoard.instrumentDimBus.con());
 	
 }
-var plugEIP =func(){
+var plugEIP = func(){
 	engineInstrumentPackage.plugElectric();
 	engineInstrumentPackage.GND.plug(mainBoard.GND);
 	
@@ -495,6 +495,66 @@ var plugEIP =func(){
 	engineInstrumentPackage.Dimming.plug(lightBoard.instrumentDimBus.con());
 	
 }
+#---------------
+var plugAudioPanel = func(){
+	audioPanel.plugElectric();
+	audioPanel.GND.plug(mainBoard.GND);
+	audioPanel.PowerInput.plug(circuitBreakerPanel.AudioMarker.Out);
+	audioPanel.Dimming.plug(lightBoard.instrumentDimBus.con());
+}
+var plugKeypad = func(){
+	keypad.plugElectric();
+	keypad.GND.plug(mainBoard.GND);
+	keypad.PowerInput.plug(circuitBreakerPanel.Keypad.Out);
+	keypad.Dimming.plug(lightBoard.instrumentDimBus.con());
+}
+var plugAutopilot = func(){
+	autopilot.plugElectric();
+	autopilot.GND.plug(mainBoard.GND);
+	autopilot.PowerInput.plug(circuitBreakerPanel.AutopilotComputer.Out);
+	autopilot.Dimming.plug(lightBoard.instrumentDimBus.con());
+}
+var plugDme = func(){
+	dme.plugElectric();
+	dme.GND.plug(mainBoard.GND);
+	dme.PowerInput.plug(circuitBreakerPanel.DME.Out);
+	dme.Dimming.plug(lightBoard.instrumentDimBus.con());
+}
+var plugFuelFlow = func(){
+	fuelFlow.plugElectric();
+	fuelFlow.GND.plug(mainBoard.GND);
+	fuelFlow.PowerInput.plug(circuitBreakerPanel.FuelFlow.Out);
+	fuelFlow.Dimming.plug(lightBoard.instrumentDimBus.con());
+}
+var plugTurnCoordinator = func(){
+	turnCoordinator.plugElectric();
+	turnCoordinator.GND.plug(mainBoard.GND);
+	turnCoordinator.PowerInput.plug(circuitBreakerPanel.TurnCoordinator.Out);
+	turnCoordinator.Dimming.plug(lightBoard.instrumentDimBus.con());
+}
+var plugStbyAirspeed = func(){
+	stbyAirspeed.plugElectric();
+	stbyAirspeed.GND.plug(mainBoard.GND);
+	# TODO stbyAirspeed.PowerInput.plug(circuitBreakerPanel..Out);
+	stbyAirspeed.Dimming.plug(lightBoard.instrumentDimBus.con());
+}
+var plugStbyAltimeter = func(){
+	stbyAltimeter.plugElectric();
+	stbyAltimeter.GND.plug(mainBoard.GND);
+	# TODO stbyAltimeter.PowerInput.plug(circuitBreakerPanel..Out);
+	stbyAltimeter.Dimming.plug(lightBoard.instrumentDimBus.con());
+}
+var plugStbyAttitude = func(){
+	stbyAttitude.plugElectric();
+	stbyAttitude.GND.plug(mainBoard.GND);
+	stbyAttitude.PowerInput.plug(circuitBreakerPanel.StandbyGyroskop.Out);
+	stbyAttitude.Dimming.plug(lightBoard.instrumentDimBus.con());
+}
+
+
+
+
+
 var plugElectric = func(){
 	plugMainBoard();
 	plugGenerator();
@@ -512,4 +572,17 @@ var plugElectric = func(){
 	plugPcBoard();
 	plugDIP();
 	plugEIP();
+	
+	plugAudioPanel();
+	plugKeypad();
+	plugAutopilot();
+	plugDme();
+	plugFuelFlow();
+	plugTurnCoordinator();
+	plugStbyAirspeed();
+	plugStbyAltimeter();
+	plugStbyAttitude();
+	
+	
+	
 };
