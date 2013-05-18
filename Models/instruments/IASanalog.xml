@@ -19,8 +19,8 @@
       Authors: Thomas Grossberger and Dirk Dittmann
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
-      Date:             16.05.13
+      Last change:      Eric van den Berg
+      Date:             18.05.13
 
 -->
 
@@ -32,7 +32,7 @@
 <animation>
   <type>rotate</type>
   <object-name>IASanalog.Needle</object-name>
-  <property>/instrumentation/airspeed-backup/indicated-speed-kt</property>
+  <property>/instrumentation/airspeed-backup/indicated-airspeed-kt</property>
 		<interpolation>
             <entry>
                 <ind>30</ind>

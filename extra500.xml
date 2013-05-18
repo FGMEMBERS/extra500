@@ -24,7 +24,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             17.05.13
+      Date:             18.05.13
 -->
 
 	<fileheader>
@@ -650,8 +650,87 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	</channel>
 
 </system>
-	
+
 <aerodynamics>
+
+<!--AIRSPEED ANTI-CALIBRATION-->
+		<function name="/instrumentation/airspeed-IFD-LH/indicated-airspeed-kt">
+       		<description>Calibrated to indicated airspeed</description>
+       			<table>
+            			<independentVar lookup="row">/instrumentation/airspeed-IFD-LH/indicated-speed-kt</independentVar>
+            			<independentVar lookup="column">fcs/flap-aero-pos-deg</independentVar>
+            			<tableData>
+						0	15	30
+					0	0	0	0
+					55	58	54	51
+					60	62.2	59	57.5
+					70	72	69.5	68
+					80	80.5	79.7	69
+					90	90.1	89.8	89.5
+					100	100	100	99
+					110	109.5	110	108
+					120	119	120	120
+					130	128.5	130	130
+					140	138	140	140
+					210	208	210	210
+					222	220	222	222
+					260	258	260	260
+            			</tableData>
+      			</table>
+    		</function>
+
+		<function name="/instrumentation/airspeed-IFD-RH/indicated-airspeed-kt">
+       		<description>Calibrated to indicated airspeed</description>
+       			<table>
+            			<independentVar lookup="row">/instrumentation/airspeed-IFD-RH/indicated-speed-kt</independentVar>
+            			<independentVar lookup="column">fcs/flap-aero-pos-deg</independentVar>
+            			<tableData>
+						0	15	30
+					0	0	0	0
+					55	58	54	51
+					60	62.2	59	57.5
+					70	72	69.5	68
+					80	80.5	79.7	69
+					90	90.1	89.8	89.5
+					100	100	100	99
+					110	109.5	110	108
+					120	119	120	120
+					130	128.5	130	130
+					140	138	140	140
+					210	208	210	210
+					222	220	222	222
+					260	258	260	260
+            			</tableData>
+      			</table>
+    		</function>
+
+		<function name="/instrumentation/airspeed-backup/indicated-airspeed-kt">
+       		<description>Calibrated to indicated airspeed</description>
+       			<table>
+            			<independentVar lookup="row">/instrumentation/airspeed-backup/indicated-speed-kt</independentVar>
+            			<independentVar lookup="column">fcs/flap-aero-pos-deg</independentVar>
+            			<tableData>
+						0	15	30
+					0	0	0	0
+					55	58	54	51
+					60	62.2	59	57.5
+					70	72	69.5	68
+					80	80.5	79.7	69
+					90	90.1	89.8	89.5
+					100	100	100	99
+					110	109.5	110	108
+					120	119	120	120
+					130	128.5	130	130
+					140	138	140	140
+					210	208	210	210
+					222	220	222	222
+					260	258	260	260
+            			</tableData>
+      			</table>
+    		</function>
+
+
+<!--GENERAL STUFF -->
 
     <function name="sim-dt-sec">
 	<sum>
@@ -669,6 +748,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	<value>-273.15</value>
 	</sum>
     </function>
+
 
 <!-- ENGINE -->
 
@@ -871,31 +951,31 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             <independentVar lookup="table">velocities/mach</independentVar>
             <tableData breakPoint="0">
                         0 	15 	30
-                  -10   -0.543 -0.003 	0.717
-                  0     0.34 	0.88 	1.6
-                  10    1.223 	1.763 	2.483    
-                  11    1.311 	1.87  	2.571
-                  11.5  1.355 	1.7   	2.62
-                  12    1.4   	1.55  	2.2
-                  13    1.2   	1.3   	2
-                  14    1     	1.1   	1.6
-                  15    0.8   	1     	1.3
-                  16    0.7   	0.9   	1.1   
-                  17    0.7   	0.9   	1
+                  -10   -0.543 -0.003 	0.517
+                  0     0.34 	0.88 	1.4
+                  10    1.223 	1.763 	2.283    
+                  11    1.311 	1.87  	2.371
+                  11.5  1.355 	1.7   	2.42
+                  12    1.4   	1.55  	1.8
+                  13    1.2   	1.3   	1.6
+                  14    1     	1.1   	1.2
+                  15    0.8   	1     	0.9
+                  16    0.7   	0.9   	0.7   
+                  17    0.7   	0.9   	0.5
             </tableData>
             <tableData breakPoint="0.4">
                         0 15 30
-                  -10   -0.598 -0.058 0.662
-                  0     0.35 0.89 1.61
-                  9.5   1.251 1.791 2.511    
-                  10    1.298 1.838 2.558
-                  10.5  1.346 1.87  2.606
-                  11    1.393 1.55  2.62
-                  12    1.2  1.35  2.2
-                  13    1   1.15  1.7
-                  14    0.8   1     1.5
-                  15    0.7   0.9   1.3   
-                  16    0.7   0.9   1.1
+                  -10   -0.598 -0.058 0.462
+                  0     0.35 0.89 1.41
+                  9.5   1.251 1.791 2.311    
+                  10    1.298 1.838 2.358
+                  10.5  1.346 1.87  2.406
+                  11    1.393 1.55  2.42
+                  12    1.2  1.35  1.6
+                  13    1   1.15  1.3
+                  14    0.8   1     1.1
+                  15    0.7   0.9   0.9   
+                  16    0.7   0.9   0.7
               </tableData>
       </table>
     </function>
