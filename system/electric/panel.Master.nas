@@ -125,7 +125,7 @@ var MasterPanel = {
 		
 		nCompNode = nParent.initNode("Instrument");
 		m.DimmerInstrument = Part.ElectricDimmer.new(nCompNode,"Dimmer Instrument Light","DOUBLE",0,1.0,0.1);
-		m.DimmerInstrument.electricConfig(15.0,26.0);
+		m.DimmerInstrument.electricConfig(8.0,28.0);
 		#m.DimmerInstrument.setResistor(6);
 		
 		nCompNode = nParent.initNode("Switch");

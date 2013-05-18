@@ -1902,6 +1902,68 @@ var ElectricLight = {
 	
 };
 
+#	Plus ─⊗─ Minus
+var ElectricLED = {
+	new : func(nRoot,name){
+				
+		var m = {parents:[
+			ElectricLED,
+			Part.new(nRoot,name),
+			SimStateAble.new(nRoot,"DOUBLE",0.0),
+			ElectricAble.new(nRoot,name)
+		]};
+		m._brightness = 1.0;
+		m._resitor = 1500;
+		m.Plus = ElectricConnector.new("+");
+		m.Minus = ElectricConnector.new("-");
+						
+		m.Plus.solder(m);
+		m.Minus.solder(m);
+		
+		append(aListSimStateAble,m);
+		
+		return m;
+
+	},
+	applyVoltage : func(electron,name=""){ 
+		etd.in("LED",me.name,name,electron);
+		var GND = 0;
+		
+		if (electron != nil){
+			me.setVolt(electron.volt);
+			electron.resistor += me.resistor + (me._resitor *(1-me._brightness * me.qos));# 
+			
+			if (name == "+"){
+				GND = me.Minus.applyVoltage(electron);
+				if (GND){
+					var watt = me.electricWork(electron);
+					me._dimm();
+				}
+			}
+			
+			me.setAmpere(electron.ampere);
+			
+		}
+		etd.out("LED",me.name,name,electron);
+		return GND;
+	},
+	setBrightness : func(value){
+		if (value > 1.0) { value = 1.0 };
+		if (value < 0.0) { value = 0.0 };
+		me._brightness = value ;
+	},
+	_setValue : func(value){
+		
+		if (value > 1.0) { value = 1.0 };
+		if (value < 0.0) { value = 0.0 };
+		
+		me.state = value;
+	},
+	_dimm : func(){
+		me._setValue(me._brightness * me.qos);
+	},
+	
+};
 #	PlusRight ─┐
 #		   ⊗─ Minus
 #	PlusLeft  ─┘

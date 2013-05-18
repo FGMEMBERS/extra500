@@ -68,10 +68,10 @@ var LightBoard = {
 		m.Map.setPower(24.0,20.0);
 		
 		
-		nCompNode = m.nRoot.initNode("Instrument");
-		m.Instrument = Part.ElectricLight.new(nCompNode,"Instrument");
-		m.Instrument.electricConfig(14.0,26.0);
-		m.Instrument.setPower(24.0,150.0);
+# 		nCompNode = m.nRoot.initNode("Instrument");
+# 		m.Instrument = Part.ElectricLight.new(nCompNode,"Instrument");
+# 		m.Instrument.electricConfig(14.0,26.0);
+# 		m.Instrument.setPower(24.0,150.0);
 		
 		
 		nCompNode = m.nRoot.initNode("Glare");
@@ -168,6 +168,9 @@ var LightBoard = {
 		me.annuciatorDimBus.plug(me.GearRight.Plus);
 		me.annuciatorDimBus.plug(me.DMEHold.Plus);
 		
+		me.instrumentDimBus.plug(me.dayNightRelais.P31);
+		
+		
 		me.FlapTransition.Minus.plug(	me.testLightRelais.P21);
 		me.Flap15.Minus.plug(		me.testLightRelais.P31);
 		me.Flap30.Minus.plug(		me.testLightRelais.P41);
@@ -186,7 +189,7 @@ var LightBoard = {
 		
 		
 		me.GNDBus.plug(	me.Switches.Minus);
-		me.GNDBus.plug(	me.Instrument.Minus);
+#		me.GNDBus.plug(	me.Instrument.Minus);
 		me.GNDBus.plug(	me.Glare.Minus);
 		me.GNDBus.plug(	me.Keypad.Minus);
 		me.GNDBus.plug(	me.Ice.Minus);

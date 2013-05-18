@@ -30,6 +30,7 @@ var DigitalInstrumentPackage = {
 			Part.ElectricAble.new(nRoot,name)
 		]};
 		
+		m.dimmingVolt = 0.0;
 				
 		#m.VoltMonitor = Part.ElectricVoltSensor.new(m.nPanel.initNode("VoltMonitor"),"Volt Monitor");
 		m.VDC = 0.0;
@@ -49,16 +50,33 @@ var DigitalInstrumentPackage = {
 		m.nIndicatedFuelTemp = nRoot.initNode("indicatedFuelTemp",0.0,"DOUBLE");
 		m.nIndicatedFuelPress = nRoot.initNode("indicatedFuelPress",0.0,"DOUBLE");
 		
-	# Electric Connectors
-		m.PowerInputA 		= Part.ElectricConnector.new("PowerInputA");
-		m.PowerInputB 		= Part.ElectricConnector.new("PowerInputB");
-		m.VoltMonitor		= Part.ElectricConnector.new("VoltMonitor");
-		m.GND 			= Part.ElectricConnector.new("GND");
+	
+	# Light
+		m.Backlight = Part.ElectricLED.new(m.nRoot.initNode("Backlight"),"EIP Backlight");
+		m.Backlight.electricConfig(14.0,26.0);
+		m.Backlight.setPower(24.0,3.0);
+	
+	# buses
+		m.PowerInputBus = Part.ElectricBusDiode.new("PowerInputBus");
+		m.GNDBus = Part.ElectricBusDiode.new("GNDBus");
+		m.PowerBus = Part.ElectricBus.new("PowerBus");
 		
-		m.PowerInputA.solder(m);
-		m.PowerInputB.solder(m);
+		
+		
+	# Electric Connectors
+		m.PowerInputA 		= Part.ElectricPin.new("PowerInputA");
+		m.PowerInputB 		= Part.ElectricPin.new("PowerInputB");
+		m.VoltMonitor		= Part.ElectricConnector.new("VoltMonitor");
+		m.GND 			= Part.ElectricPin.new("GND");
+		m.Dimming		= Part.ElectricConnector.new("Dimming");
+		
+		m.__GND			= Part.ElectricConnector.new("__GND");
+		m.__Power		= Part.ElectricConnector.new("__Power");
+		
+		m.Dimming.solder(m);
 		m.VoltMonitor.solder(m);
-		m.GND.solder(m);
+		m.__Power.solder(m);
+		m.__GND.solder(m);
 		
 		append(Part.aListSimStateAble,m);
 		return m;
@@ -70,22 +88,25 @@ var DigitalInstrumentPackage = {
 		
 		if (electron != nil){
 			electron.resistor += 20000.0;
-			if (name == "PowerInputA"){
-				
-				GND = me.GND.applyVoltage(electron);
+			if (name == "__Power"){
+				GND = me.__GND.applyVoltage(electron);
 				if (GND){
 					me.state = 1;
 					var watt = me.electricWork(electron);
 				}
-			}elsif(name == "PowerInputB"){
-				GND = me.GND.applyVoltage(electron);
+			}elsif(name == "Dimming"){
+				
+				GND = me.__GND.applyVoltage(electron);
 				if (GND){
-					me.state = 1;
+					
+					me.dimmingVolt = electron.volt;					
 					var watt = me.electricWork(electron);
+					
+					
 				}
 			}elsif(name == "VoltMonitor"){
 				
-				GND = me.GND.applyVoltage(electron);
+				GND = me.__GND.applyVoltage(electron);
 				if (GND){
 					var watt = me.electricWork(electron);
 					me.VDC = electron.volt;
@@ -96,8 +117,33 @@ var DigitalInstrumentPackage = {
 		Part.etd.out("DIP",me.name,name,electron);
 		return GND;
 	},
+	plugElectric : func(){
+		
+		me.PowerInputA.plug(me.PowerInputBus.con());
+		me.PowerInputB.plug(me.PowerInputBus.con());
+		me.PowerInputBus.Minus.plug(me.PowerBus.con());
+		
+		me.Backlight.Plus.plug(me.PowerBus.con());
+		me.Backlight.Minus.plug(me.GNDBus.con());
+		
+		me.__Power.plug(me.PowerBus.con());
+		me.__GND.plug(me.GNDBus.con());
+		
+		me.GNDBus.Minus.plug(me.GND);
+	},
+	_dimmBacklight : func(){
+		if (me.dimmingVolt < 8.0){
+			me.Backlight.setBrightness(1.0);
+		}else{
+			me.Backlight.setBrightness( me.dimmingVolt / 28.0);
+		}
+		me.dimmingVolt = 0.0;
+	},
 	# Main Simulation loop  ~ 10Hz
 	update : func(){
+		
+		me._dimmBacklight();
+		
 		if (me.state == 0){	# no power input
 			me.VDC = 0.0;
 		}
@@ -113,4 +159,4 @@ var DigitalInstrumentPackage = {
 	
 };
 
-var digitalInstrumentPackage = DigitalInstrumentPackage.new(props.globals.initNode("extra500/Instrument/DIP"),"Digital Instrument Package");
+var digitalInstrumentPackage = DigitalInstrumentPackage.new(props.globals.initNode("extra500/instrumentation/DIP"),"Digital Instrument Package");

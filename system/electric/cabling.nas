@@ -370,7 +370,7 @@ var plugLight = func(){
 	
 	lightBoard.Glare.Plus.plug(lightBoard.dayNightRelais.P21);
 	
-	lightBoard.Instrument.Plus.plug(lightBoard.dayNightRelais.P31);
+	#lightBoard.Instrument.Plus.plug(lightBoard.dayNightRelais.P31);
 	
 	lightBoard.Switches.Plus.plug(lightBoard.dayNightRelais.P41);
 	
@@ -475,18 +475,24 @@ var plugPcBoard = func(){
 }
 
 var plugDIP =func(){
+	digitalInstrumentPackage.plugElectric();
 	digitalInstrumentPackage.GND.plug(mainBoard.GND);
 	
 	digitalInstrumentPackage.PowerInputA.plug(circuitBreakerPanel.DIP1.Out);
 	digitalInstrumentPackage.PowerInputB.plug(circuitBreakerPanel.DIP2.Out);
 	digitalInstrumentPackage.VoltMonitor.plug(circuitBreakerPanel.VoltMonitor.Out);
 	
+	digitalInstrumentPackage.Dimming.plug(lightBoard.instrumentDimBus.con());
+	
 }
 var plugEIP =func(){
+	engineInstrumentPackage.plugElectric();
 	engineInstrumentPackage.GND.plug(mainBoard.GND);
 	
 	engineInstrumentPackage.PowerInputA.plug(circuitBreakerPanel.EngineInstrument1.Out);
 	engineInstrumentPackage.PowerInputB.plug(circuitBreakerPanel.EngineInstrument2.Out);
+	
+	engineInstrumentPackage.Dimming.plug(lightBoard.instrumentDimBus.con());
 	
 }
 var plugElectric = func(){

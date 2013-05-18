@@ -19,38 +19,80 @@
       Authors: Thomas Grossberger and Dirk Dittmann
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
-      Date:             16.05.13
+      Last change:      Dirk Dittmann
+      Date:             18.05.13
 
 -->
 
 <PropertyList>
 
 <path>EngineInstruments.ac</path>
-
+<!--Dimming -->
+<animation>
+	<type>material</type>
+	
+	<object-name>RahmenOben</object-name>
+	<object-name>EngineInstruments.TRQ.100.0</object-name>
+	<object-name>EngineInstruments.TRQ.010.0</object-name>
+	<object-name>EngineInstruments.TRQ.001.0</object-name>
+	<object-name>EngineInstruments.TRQ.Dot</object-name>
+	<object-name>EngineInstruments.TRQ.000.1</object-name>
+	<object-name>EngineInstruments.TOT.001</object-name>
+	<object-name>EngineInstruments.TOT.010</object-name>
+	<object-name>EngineInstruments.TOT.100</object-name>
+	<object-name>EngineInstruments.N1.100.0</object-name>
+	<object-name>EngineInstruments.N1.010.0</object-name>
+	<object-name>EngineInstruments.N1.001.0</object-name>
+	<object-name>EngineInstruments.N1.Dot</object-name>
+	<object-name>EngineInstruments.N1.000.1</object-name>
+	<object-name>EngineInstruments.N2.0001</object-name>
+	<object-name>EngineInstruments.N2.0010</object-name>
+	<object-name>EngineInstruments.N2.0100</object-name>
+	<object-name>EngineInstruments.N2.1000</object-name>
+	<object-name>EngineInstruments.OP.001</object-name>
+	<object-name>EngineInstruments.OP.010</object-name>
+	<object-name>EngineInstruments.OP.100</object-name>
+	<object-name>EngineInstruments.OT.001</object-name>
+	<object-name>EngineInstruments.OT.010</object-name>
+	<object-name>EngineInstruments.OT.100</object-name>
+		
+	<object-name>EngineInstruments.TRQ.Needle</object-name>
+	<object-name>EngineInstruments.TOT.Needle</object-name>
+	<object-name>EngineInstruments.N1.Needle</object-name>
+	<object-name>EngineInstruments.N2.Needle</object-name>
+	<object-name>EngineInstruments.OP.Needle</object-name>
+	<object-name>EngineInstruments.OT.Needle</object-name>
+		
+	<emission>	
+		<red>1.0</red>	
+		<green>1.0</green>	
+		<blue>1.0</blue>
+		<factor-prop>/extra500/instrumentation/EIP/Backlight/state</factor-prop>
+	</emission>
+</animation>
 <!--TRQ Needle-->
 <animation>
-  <type>rotate</type>
-  <object-name>EngineInstruments.TRQ.Needle</object-name>
-  <property>/fdm/jsbsim/aircraft/engine/TRQ-perc</property>
-  <interpolation>
-            <entry>
-                <ind>0</ind>
-                <dep>-124</dep>
-            </entry>
-            <entry>
-                <ind>125</ind>
-                <dep>124</dep>
-            </entry>
-        </interpolation>
-  <axis>
-  <x1-m>1</x1-m>
-  <y1-m>-0.02391</y1-m>
-  <z1-m>0.07739</z1-m>
-  <x2-m>-1</x2-m>
-  <y2-m>-0.02391</y2-m>
-  <z2-m>0.07739</z2-m>
-  </axis>
+	<type>rotate</type>
+	<object-name>EngineInstruments.TRQ.Needle</object-name>
+	<property>/extra500/instrumentation/EIP/indicated-TRQ</property>
+	<interpolation>
+		<entry>
+			<ind>0</ind>
+			<dep>-124</dep>
+		</entry>
+		<entry>
+			<ind>125</ind>
+			<dep>124</dep>
+		</entry>
+	</interpolation>
+	<axis>
+		<x1-m>1</x1-m>
+		<y1-m>-0.02391</y1-m>
+		<z1-m>0.07739</z1-m>
+		<x2-m>-1</x2-m>
+		<y2-m>-0.02391</y2-m>
+		<z2-m>0.07739</z2-m>
+	</axis>
 </animation>
 <!--TRQ Digits-->
 	<animation>
@@ -63,7 +105,7 @@
 		<object-name>EngineInstruments.TRQ.100.0</object-name>
 		<condition>
 			<greater-than>
-				<property>extra500/Instrument/DIP/state</property>
+				<property>extra500/instrumentation/EIP/state</property>
 				<value>0</value>
 			</greater-than>	
 		</condition>
@@ -83,7 +125,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.TRQ.001.0</object-name>
-  <property>/fdm/jsbsim/aircraft/engine/TRQ-perc</property>
+	<property>/fdm/jsbsim/aircraft/engine/TRQ-perc</property>
 	<factor>0.1</factor>
 	<step>1</step>
 	<axis>
@@ -95,7 +137,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>EngineInstruments.TRQ.010.0</object-name>
-  <property>/fdm/jsbsim/aircraft/engine/TRQ-perc</property>
+	<property>/fdm/jsbsim/aircraft/engine/TRQ-perc</property>
 	<factor>0.01</factor>
 	<step>10</step>
 	<axis>
@@ -108,36 +150,36 @@
 	<type>select</type>
 	<object-name>EngineInstruments.TRQ.100.0</object-name>
 	<condition>
-	  <greater-than-equals>
-	    <property>/fdm/jsbsim/aircraft/engine/TRQ-perc</property>
-	    <value>100</value>
-	  </greater-than-equals>
+		<greater-than-equals>
+			<property>/fdm/jsbsim/aircraft/engine/TRQ-perc</property>
+			<value>100</value>
+		</greater-than-equals>
 	</condition>
 </animation>
 
 <!--TOT Needle-->
 <animation>
-  <type>rotate</type>
-  <object-name>EngineInstruments.TOT.Needle</object-name>
-  <property>/fdm/jsbsim/aircraft/engine/TOT-degC</property>
-  <interpolation>
-            <entry>
-                <ind>0</ind>
-                <dep>-124</dep>
-            </entry>
-            <entry>
-                <ind>1000</ind>
-                <dep>124</dep>
-            </entry>
-        </interpolation>
-  <axis>
-  <x1-m>1</x1-m>
-  <y1-m>0.02319</y1-m>
-  <z1-m>0.07739</z1-m>
-  <x2-m>-1</x2-m>
-  <y2-m>0.02319</y2-m>
-  <z2-m>0.07739</z2-m>
-  </axis>
+	<type>rotate</type>
+	<object-name>EngineInstruments.TOT.Needle</object-name>
+	<property>/extra500/instrumentation/EIP/indicated-TOT</property>
+	<interpolation>
+		<entry>
+			<ind>0</ind>
+			<dep>-124</dep>
+		</entry>
+		<entry>
+			<ind>1000</ind>
+			<dep>124</dep>
+		</entry>
+	</interpolation>
+	<axis>
+		<x1-m>1</x1-m>
+		<y1-m>0.02319</y1-m>
+		<z1-m>0.07739</z1-m>
+		<x2-m>-1</x2-m>
+		<y2-m>0.02319</y2-m>
+		<z2-m>0.07739</z2-m>
+	</axis>
 </animation>
 <!--TOT Digits-->
 	<animation>
@@ -148,72 +190,72 @@
 		<object-name>EngineInstruments.TOT.100</object-name>
 		<condition>
 			<greater-than>
-				<property>extra500/Instrument/DIP/state</property>
+				<property>extra500/instrumentation/EIP/state</property>
 				<value>0</value>
 			</greater-than>	
 		</condition>
 	</animation>
-<animation>
-	<type>textranslate</type>
-	<object-name>EngineInstruments.TOT.001</object-name>
-  <property>/fdm/jsbsim/aircraft/engine/TOT-degC</property>
-	<factor>0.1</factor>
-	<step>1</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
-</animation>
-<animation>
-	<type>textranslate</type>
-	<object-name>EngineInstruments.TOT.010</object-name>
-  <property>/fdm/jsbsim/aircraft/engine/TOT-degC</property>
-	<factor>0.01</factor>
-	<step>10</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
-</animation>
-<animation>
-	<type>textranslate</type>
-	<object-name>EngineInstruments.TOT.100</object-name>
-  <property>/fdm/jsbsim/aircraft/engine/TOT-degC</property>
-	<factor>0.001</factor>
-	<step>100</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
-</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.TOT.001</object-name>
+		<property>/fdm/jsbsim/aircraft/engine/TOT-degC</property>
+		<factor>0.1</factor>
+		<step>1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.TOT.010</object-name>
+		<property>/fdm/jsbsim/aircraft/engine/TOT-degC</property>
+		<factor>0.01</factor>
+		<step>10</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.TOT.100</object-name>
+		<property>/fdm/jsbsim/aircraft/engine/TOT-degC</property>
+		<factor>0.001</factor>
+		<step>100</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
 
 <!--N1 Needle-->
 <animation>
-  <type>rotate</type>
-  <object-name>EngineInstruments.N1.Needle</object-name>
-    <!--property>/fdm/jsbsim/propulsion/engine/n1</property-->
-<property>/fdm/jsbsim/aircraft/engine/N1-par</property>
-  <interpolation>
-            <entry>
-                <ind>0</ind>
-                <dep>-124</dep>
-            </entry>
-            <entry>
-                <ind>110</ind>
-                <dep>124</dep>
-            </entry>
-        </interpolation>
-  <axis>
-  <x1-m>1</x1-m>
-  <y1-m>-0.02391</y1-m>
-  <z1-m>0.02637</z1-m>
-  <x2-m>-1</x2-m>
-  <y2-m>-0.02391</y2-m>
-  <z2-m>0.02637</z2-m>
-  </axis>
+	<type>rotate</type>
+	<object-name>EngineInstruments.N1.Needle</object-name>
+	<!--property>/fdm/jsbsim/propulsion/engine/n1</property-->
+	<property>/extra500/instrumentation/EIP/indicated-N1</property>
+	<interpolation>
+		<entry>
+			<ind>0</ind>
+			<dep>-124</dep>
+		</entry>
+		<entry>
+			<ind>110</ind>
+			<dep>124</dep>
+		</entry>
+	</interpolation>
+	<axis>
+		<x1-m>1</x1-m>
+		<y1-m>-0.02391</y1-m>
+		<z1-m>0.02637</z1-m>
+		<x2-m>-1</x2-m>
+		<y2-m>-0.02391</y2-m>
+		<z2-m>0.02637</z2-m>
+	</axis>
 </animation>
 <!--N1 Digits-->
 	<animation>
@@ -226,85 +268,85 @@
 		<object-name>EngineInstruments.N1.100.0</object-name>
 		<condition>
 			<greater-than>
-				<property>extra500/Instrument/DIP/state</property>
+				<property>extra500/instrumentation/EIP/state</property>
 				<value>0</value>
 			</greater-than>	
 		</condition>
 	</animation>
-<animation>
-	<type>textranslate</type>
-	<object-name>EngineInstruments.N1.000.1</object-name>
-  <!--property>/fdm/jsbsim/propulsion/engine/n1</property-->
-<property>/fdm/jsbsim/aircraft/engine/N1-par</property>
-	<factor>1</factor>
-	<step>0.1</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
-</animation>
-<animation>
-	<type>textranslate</type>
-	<object-name>EngineInstruments.N1.001.0</object-name>
-  <!--property>/fdm/jsbsim/propulsion/engine/n1</property-->
-<property>/fdm/jsbsim/aircraft/engine/N1-par</property>
-	<factor>0.1</factor>
-	<step>1</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
-</animation>
-<animation>
-	<type>textranslate</type>
-	<object-name>EngineInstruments.N1.010.0</object-name>
-  <!--property>/fdm/jsbsim/propulsion/engine/n1</property-->
-<property>/fdm/jsbsim/aircraft/engine/N1-par</property>
-	<factor>0.01</factor>
-	<step>10</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
-</animation>
-<animation>
-	<type>select</type>
-	<object-name>EngineInstruments.N1.100.0</object-name>
-	<condition>
-	  <greater-than-equals>
-	      <!--property>/fdm/jsbsim/propulsion/engine/n1</property-->
-<property>/fdm/jsbsim/aircraft/engine/N1-par</property>
-	    <value>100</value>
-	  </greater-than-equals>
-	</condition>
-</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.N1.000.1</object-name>
+		<!--property>/fdm/jsbsim/propulsion/engine/n1</property-->
+		<property>/fdm/jsbsim/aircraft/engine/N1-par</property>
+		<factor>1</factor>
+		<step>0.1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.N1.001.0</object-name>
+		<!--property>/fdm/jsbsim/propulsion/engine/n1</property-->
+		<property>/fdm/jsbsim/aircraft/engine/N1-par</property>
+		<factor>0.1</factor>
+		<step>1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.N1.010.0</object-name>
+		<!--property>/fdm/jsbsim/propulsion/engine/n1</property-->
+		<property>/fdm/jsbsim/aircraft/engine/N1-par</property>
+		<factor>0.01</factor>
+		<step>10</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>EngineInstruments.N1.100.0</object-name>
+		<condition>
+			<greater-than-equals>
+				<!--property>/fdm/jsbsim/propulsion/engine/n1</property-->
+				<property>/fdm/jsbsim/aircraft/engine/N1-par</property>
+				<value>100</value>
+			</greater-than-equals>
+		</condition>
+	</animation>
 
 <!--N2 Needle-->
 <animation>
-  <type>rotate</type>
-  <object-name>EngineInstruments.N2.Needle</object-name>
-  <property>/engines/engine/thruster/rpm</property>
-  <interpolation>
-            <entry>
-                <ind>0</ind>
-                <dep>-124</dep>
-            </entry>
-            <entry>
-                <ind>2500</ind>
-                <dep>124</dep>
-            </entry>
-        </interpolation>
-  <axis>
-  <x1-m>1</x1-m>
-  <y1-m>0.02319</y1-m>
-  <z1-m>0.02637</z1-m>
-  <x2-m>-1</x2-m>
-  <y2-m>0.02319</y2-m>
-  <z2-m>0.02637</z2-m>
-  </axis>
+	<type>rotate</type>
+	<object-name>EngineInstruments.N2.Needle</object-name>
+	<property>/extra500/instrumentation/EIP/indicated-RPM</property>
+	<interpolation>
+		<entry>
+			<ind>0</ind>
+			<dep>-124</dep>
+		</entry>
+		<entry>
+			<ind>2500</ind>
+			<dep>124</dep>
+		</entry>
+	</interpolation>
+	<axis>
+		<x1-m>1</x1-m>
+		<y1-m>0.02319</y1-m>
+		<z1-m>0.02637</z1-m>
+		<x2-m>-1</x2-m>
+		<y2-m>0.02319</y2-m>
+		<z2-m>0.02637</z2-m>
+	</axis>
 </animation>
 <!--N2 Digits-->
 	<animation>
@@ -316,71 +358,71 @@
 		<object-name>EngineInstruments.N2.1000</object-name>
 		<condition>
 			<greater-than>
-				<property>extra500/Instrument/DIP/state</property>
+				<property>extra500/instrumentation/EIP/state</property>
 				<value>0</value>
 			</greater-than>	
 		</condition>
 	</animation>
-<animation>
-	<type>textranslate</type>
-	<object-name>EngineInstruments.N2.0010</object-name>
-  <property>/engines/engine/thruster/rpm</property>
-	<factor>0.01</factor>
-	<step>10</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
-</animation>
-<animation>
-	<type>textranslate</type>
-	<object-name>EngineInstruments.N2.0100</object-name>
-  <property>/engines/engine/thruster/rpm</property>
-	<factor>0.001</factor>
-	<step>100</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
-</animation>
-<animation>
-	<type>textranslate</type>
-	<object-name>EngineInstruments.N2.1000</object-name>
-  <property>/engines/engine/thruster/rpm</property>
-	<factor>0.0001</factor>
-	<step>1000</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
-</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.N2.0010</object-name>
+		<property>/engines/engine/thruster/rpm</property>
+		<factor>0.01</factor>
+		<step>10</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.N2.0100</object-name>
+		<property>/engines/engine/thruster/rpm</property>
+		<factor>0.001</factor>
+		<step>100</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.N2.1000</object-name>
+		<property>/engines/engine/thruster/rpm</property>
+		<factor>0.0001</factor>
+		<step>1000</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
 
 <!--OP Needle-->
 <animation>
-  <type>rotate</type>
-  <object-name>EngineInstruments.OP.Needle</object-name>
-  <property>/fdm/jsbsim/aircraft/engine/OP-psi</property>
-  <interpolation>
-            <entry>
-                <ind>0</ind>
-                <dep>-124</dep>
-            </entry>
-            <entry>
-                <ind>150</ind>
-                <dep>124</dep>
-            </entry>
-        </interpolation>
-  <axis>
-  <x1-m>1</x1-m>
-  <y1-m>-0.02391</y1-m>
-  <z1-m>-0.02464</z1-m>
-  <x2-m>-1</x2-m>
-  <y2-m>-0.02391</y2-m>
-  <z2-m>-0.02464</z2-m>
-  </axis>
+	<type>rotate</type>
+	<object-name>EngineInstruments.OP.Needle</object-name>
+	<property>/extra500/instrumentation/EIP/indicated-OP</property>
+	<interpolation>
+		<entry>
+			<ind>0</ind>
+			<dep>-124</dep>
+		</entry>
+		<entry>
+			<ind>150</ind>
+			<dep>124</dep>
+		</entry>
+	</interpolation>
+	<axis>
+		<x1-m>1</x1-m>
+		<y1-m>-0.02391</y1-m>
+		<z1-m>-0.02464</z1-m>
+		<x2-m>-1</x2-m>
+		<y2-m>-0.02391</y2-m>
+		<z2-m>-0.02464</z2-m>
+	</axis>
 </animation>
 <!--OP Digits-->
 	<animation>
@@ -391,71 +433,71 @@
 		<object-name>EngineInstruments.OP.100</object-name>
 		<condition>
 			<greater-than>
-				<property>extra500/Instrument/DIP/state</property>
+				<property>extra500/instrumentation/EIP/state</property>
 				<value>0</value>
 			</greater-than>	
 		</condition>
 	</animation>
-<animation>
-	<type>textranslate</type>
-	<object-name>EngineInstruments.OP.001</object-name>
-  <property>/fdm/jsbsim/aircraft/engine/OP-psi</property>
-	<factor>0.1</factor>
-	<step>1</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
-</animation>
-<animation>
-	<type>textranslate</type>
-	<object-name>EngineInstruments.OP.010</object-name>
-  <property>/fdm/jsbsim/aircraft/engine/OP-psi</property>
-	<factor>0.01</factor>
-	<step>10</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
-</animation>
-<animation>
-	<type>textranslate</type>
-	<object-name>EngineInstruments.OP.100</object-name>
-  <property>/fdm/jsbsim/aircraft/engine/OP-psi</property>
-	<factor>0.001</factor>
-	<step>100</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
-</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.OP.001</object-name>
+		<property>/fdm/jsbsim/aircraft/engine/OP-psi</property>
+		<factor>0.1</factor>
+		<step>1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.OP.010</object-name>
+		<property>/fdm/jsbsim/aircraft/engine/OP-psi</property>
+		<factor>0.01</factor>
+		<step>10</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.OP.100</object-name>
+		<property>/fdm/jsbsim/aircraft/engine/OP-psi</property>
+		<factor>0.001</factor>
+		<step>100</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
 
 <!--OT Needle-->
 <animation>
-  <type>rotate</type>
-  <object-name>EngineInstruments.OT.Needle</object-name>
-  <property>/fdm/jsbsim/aircraft/engine/OT-degC</property>
-  <interpolation>
-            <entry>
-                <ind>0</ind>
-                <dep>-124</dep>
-            </entry>
-            <entry>
-                <ind>120</ind>
-                <dep>124</dep>
-            </entry>
-        </interpolation>
-  <axis>
-  <x1-m>1</x1-m>
-  <y1-m>0.02319</y1-m>
-  <z1-m>-0.02464</z1-m>
-  <x2-m>-1</x2-m>
-  <y2-m>0.02319</y2-m>
-  <z2-m>-0.02464</z2-m>
-  </axis>
+	<type>rotate</type>
+	<object-name>EngineInstruments.OT.Needle</object-name>
+	<property>/extra500/instrumentation/EIP/indicated-OT</property>
+	<interpolation>
+		<entry>
+			<ind>0</ind>
+			<dep>-124</dep>
+		</entry>
+		<entry>
+			<ind>120</ind>
+			<dep>124</dep>
+		</entry>
+	</interpolation>
+	<axis>
+		<x1-m>1</x1-m>
+		<y1-m>0.02319</y1-m>
+		<z1-m>-0.02464</z1-m>
+		<x2-m>-1</x2-m>
+		<y2-m>0.02319</y2-m>
+		<z2-m>-0.02464</z2-m>
+	</axis>
 </animation>
 <!--OT Digits-->
 	<animation>
@@ -466,52 +508,56 @@
 		<object-name>EngineInstruments.OT.100</object-name>
 		<condition>
 			<greater-than>
-				<property>extra500/Instrument/DIP/state</property>
+				<property>extra500/instrumentation/EIP/state</property>
 				<value>0</value>
 			</greater-than>	
 		</condition>
 	</animation>
-<animation>
-	<type>textranslate</type>
-	<object-name>EngineInstruments.OT.001</object-name>
-	<property>/fdm/jsbsim/aircraft/engine/OT-degC</property>
-	<factor>0.1</factor>
-	<step>1</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
-</animation>
-<animation>
-	<type>textranslate</type>
-	<object-name>EngineInstruments.OT.010</object-name>
-	<property>/fdm/jsbsim/aircraft/engine/OT-degC</property>
-	<factor>0.01</factor>
-	<step>10</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
-</animation>
-<animation>
-	<type>textranslate</type>
-	<object-name>EngineInstruments.OT.100</object-name>
-	<property>/fdm/jsbsim/aircraft/engine/OT-degC</property>
-	<factor>0.001</factor>
-	<step>100</step>
-	<axis>
-		<x>1</x>
-		<y>0</y>
-		<z>0</z>
-	</axis>
-</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.OT.001</object-name>
+		<property>/fdm/jsbsim/aircraft/engine/OT-degC</property>
+		<factor>0.1</factor>
+		<step>1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.OT.010</object-name>
+		<property>/fdm/jsbsim/aircraft/engine/OT-degC</property>
+		<factor>0.01</factor>
+		<step>10</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>EngineInstruments.OT.100</object-name>
+		<property>/fdm/jsbsim/aircraft/engine/OT-degC</property>
+		<factor>0.001</factor>
+		<step>100</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+
+
+
+
+
 <!-- Digital Instrument Package -->
 <!--Dimming -->
 <animation>
 	<type>material</type>
-		<object-name>RahmenOben</object-name>
 		<object-name>RahmenUnten</object-name>
 		<object-name>EngineInstruments.VDC.00.1</object-name>
 		<object-name>EngineInstruments.VDC.01.0</object-name>
@@ -531,43 +577,11 @@
 		<object-name>EngineInstruments.TEMP.minus</object-name>
 		<object-name>EngineInstruments.PRESS.01</object-name>
 		<object-name>EngineInstruments.PRESS.10</object-name>
-		<object-name>EngineInstruments.TRQ.100.0</object-name>
-		<object-name>EngineInstruments.TRQ.010.0</object-name>
-		<object-name>EngineInstruments.TRQ.001.0</object-name>
-		<object-name>EngineInstruments.TRQ.Dot</object-name>
-		<object-name>EngineInstruments.TRQ.000.1</object-name>
-		<object-name>EngineInstruments.TOT.001</object-name>
-		<object-name>EngineInstruments.TOT.010</object-name>
-		<object-name>EngineInstruments.TOT.100</object-name>
-		<object-name>EngineInstruments.N1.100.0</object-name>
-		<object-name>EngineInstruments.N1.010.0</object-name>
-		<object-name>EngineInstruments.N1.001.0</object-name>
-		<object-name>EngineInstruments.N1.Dot</object-name>
-		<object-name>EngineInstruments.N1.000.1</object-name>
-		<object-name>EngineInstruments.N2.0001</object-name>
-		<object-name>EngineInstruments.N2.0010</object-name>
-		<object-name>EngineInstruments.N2.0100</object-name>
-		<object-name>EngineInstruments.N2.1000</object-name>
-		<object-name>EngineInstruments.OP.001</object-name>
-		<object-name>EngineInstruments.OP.010</object-name>
-		<object-name>EngineInstruments.OP.100</object-name>
-		<object-name>EngineInstruments.OT.001</object-name>
-		<object-name>EngineInstruments.OT.010</object-name>
-		<object-name>EngineInstruments.OT.100</object-name>
-		
-		
-		<object-name>EngineInstruments.TRQ.Needle</object-name>
-		<object-name>EngineInstruments.TOT.Needle</object-name>
-		<object-name>EngineInstruments.N1.Needle</object-name>
-		<object-name>EngineInstruments.N2.Needle</object-name>
-		<object-name>EngineInstruments.OP.Needle</object-name>
-		<object-name>EngineInstruments.OT.Needle</object-name>
-		
 		<emission>	
 		<red>1.0</red>	
 		<green>1.0</green>	
 		<blue>1.0</blue>
-		<factor-prop>/extra500/Light/Instrument/state</factor-prop>
+		<factor-prop>/extra500/instrumentation/DIP/Backlight/state</factor-prop>
 	</emission>
 </animation>
 <!--VDC -->
@@ -580,7 +594,7 @@
 		<object-name>EngineInstruments.VDC.Dot</object-name>
 		<condition>
 			<greater-than>
-				<property>extra500/Instrument/DIP/state</property>
+				<property>extra500/instrumentation/DIP/state</property>
 				<value>0</value>
 			</greater-than>	
 		</condition>
@@ -590,7 +604,7 @@
 		<object-name>EngineInstruments.VDC.10.0</object-name>
 		<condition>
 		<greater-than-equals>
-			<property>extra500/Instrument/DIP/indicatedVDC</property>
+			<property>extra500/instrumentation/DIP/indicatedVDC</property>
 			<value>10</value>
 		</greater-than-equals>
 		</condition>
@@ -599,7 +613,7 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.VDC.00.1</object-name>
-		<property>extra500/Instrument/DIP/indicatedVDC</property>
+		<property>extra500/instrumentation/DIP/indicatedVDC</property>
 		<factor>1.0</factor>
 		<step>0.1</step>
 		<axis>
@@ -611,7 +625,7 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.VDC.01.0</object-name>
-		<property>extra500/Instrument/DIP/indicatedVDC</property>
+		<property>extra500/instrumentation/DIP/indicatedVDC</property>
 		<factor>0.1</factor>
 		<step>1</step>
 		<axis>
@@ -623,7 +637,7 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.VDC.10.0</object-name>
-		<property>extra500/Instrument/DIP/indicatedVDC</property>
+		<property>extra500/instrumentation/DIP/indicatedVDC</property>
 		<factor>0.01</factor>
 		<step>10</step>
 		<axis>
@@ -642,7 +656,7 @@
 		<object-name>EngineInstruments.GEN.100</object-name>
 		<condition>
 			<greater-than>
-				<property>extra500/Instrument/DIP/state</property>
+				<property>extra500/instrumentation/DIP/state</property>
 				<value>0</value>
 			</greater-than>	
 		</condition>
@@ -652,7 +666,7 @@
 		<object-name>EngineInstruments.GEN.010</object-name>
 		<condition>
 			<greater-than-equals>
-				<property>extra500/Instrument/DIP/indicatedGEN</property>
+				<property>extra500/instrumentation/DIP/indicatedGEN</property>
 				<value>10</value>
 			</greater-than-equals>
 		</condition>
@@ -662,7 +676,7 @@
 		<object-name>EngineInstruments.GEN.100</object-name>
 		<condition>
 			<greater-than-equals>
-				<property>extra500/Instrument/DIP/indicatedGEN</property>
+				<property>extra500/instrumentation/DIP/indicatedGEN</property>
 				<value>100</value>
 			</greater-than-equals>
 		</condition>
@@ -670,7 +684,7 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.GEN.001</object-name>
-		<property>extra500/Instrument/DIP/indicatedGEN</property>
+		<property>extra500/instrumentation/DIP/indicatedGEN</property>
 		<factor>0.1</factor>
 		<step>1</step>
 		<axis>
@@ -682,7 +696,7 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.GEN.010</object-name>
-		<property>extra500/Instrument/DIP/indicatedGEN</property>
+		<property>extra500/instrumentation/DIP/indicatedGEN</property>
 		<factor>0.01</factor>
 		<step>10</step>
 		<axis>
@@ -694,7 +708,7 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.GEN.100</object-name>
-		<property>extra500/Instrument/DIP/indicatedGEN</property>
+		<property>extra500/instrumentation/DIP/indicatedGEN</property>
 		<factor>0.001</factor>
 		<step>100</step>
 		<axis>
@@ -714,7 +728,7 @@
 		<object-name>EngineInstruments.BAT.minus</object-name>
 		<condition>
 			<greater-than>
-				<property>extra500/Instrument/DIP/state</property>
+				<property>extra500/instrumentation/DIP/state</property>
 				<value>0</value>
 			</greater-than>	
 		</condition>
@@ -725,7 +739,7 @@
 		<object-name>EngineInstruments.BAT.10</object-name>
 		<condition>
 		<greater-than-equals>
-			<property>extra500/Instrument/DIP/indicatedBAT</property>
+			<property>extra500/instrumentation/DIP/indicatedBAT</property>
 			<value>10</value>
 		</greater-than-equals>
 		</condition>
@@ -744,7 +758,7 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.BAT.01</object-name>
-		<property>extra500/Instrument/DIP/indicatedBAT</property>
+		<property>extra500/instrumentation/DIP/indicatedBAT</property>
 		<factor>0.1</factor>
 		<step>1</step>
 		<axis>
@@ -756,7 +770,7 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.BAT.10</object-name>
-		<property>extra500/Instrument/DIP/indicatedBAT</property>
+		<property>extra500/instrumentation/DIP/indicatedBAT</property>
 		<factor>0.01</factor>
 		<step>10</step>
 		<axis>
@@ -776,7 +790,7 @@
 		<object-name>EngineInstruments.IAT.minus</object-name>
 		<condition>
 			<greater-than>
-				<property>extra500/Instrument/DIP/state</property>
+				<property>extra500/instrumentation/DIP/state</property>
 				<value>0</value>
 			</greater-than>	
 		</condition>
@@ -786,7 +800,7 @@
 		<object-name>EngineInstruments.IAT.10</object-name>
 		<condition>
 			<greater-than-equals>
-				<property>extra500/Instrument/DIP/indicatedIAT</property>
+				<property>extra500/instrumentation/DIP/indicatedIAT</property>
 				<value>10</value>
 			</greater-than-equals>
 		</condition>
@@ -805,7 +819,7 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.IAT.01</object-name>
-		<property>extra500/Instrument/DIP/indicatedIAT</property>
+		<property>extra500/instrumentation/DIP/indicatedIAT</property>
 		<factor>0.1</factor>
 		<step>1</step>
 		<axis>
@@ -817,7 +831,7 @@
 	<animation>
 	       <type>textranslate</type>
 	       <object-name>EngineInstruments.IAT.10</object-name>
-	       <property>extra500/Instrument/DIP/indicatedIAT</property>
+	       <property>extra500/instrumentation/DIP/indicatedIAT</property>
 	       <factor>0.01</factor>
 	       <step>10</step>
 	       <axis>
@@ -836,7 +850,7 @@
 		<object-name>EngineInstruments.TEMP.minus</object-name>
 		<condition>
 			<greater-than>
-				<property>extra500/Instrument/DIP/state</property>
+				<property>extra500/instrumentation/DIP/state</property>
 				<value>0</value>
 			</greater-than>	
 		</condition>
@@ -846,7 +860,7 @@
 		<object-name>EngineInstruments.TEMP.10</object-name>
 		<condition>
 		<greater-than-equals>
-			<property>extra500/Instrument/DIP/indicatedFuelTemp</property>
+			<property>extra500/instrumentation/DIP/indicatedFuelTemp</property>
 			<value>10</value>
 		</greater-than-equals>
 		</condition>
@@ -865,7 +879,7 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.TEMP.01</object-name>
-		<property>extra500/Instrument/DIP/indicatedFuelTemp</property>
+		<property>extra500/instrumentation/DIP/indicatedFuelTemp</property>
 		<factor>0.1</factor>
 		<step>1</step>
 		<axis>
@@ -877,7 +891,7 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.TEMP.10</object-name>
-		<property>extra500/Instrument/DIP/indicatedFuelTemp</property>
+		<property>extra500/instrumentation/DIP/indicatedFuelTemp</property>
 		<factor>0.01</factor>
 		<step>10</step>
 		<axis>
@@ -895,7 +909,7 @@
 		<object-name>EngineInstruments.PRESS.10</object-name>
 		<condition>
 			<greater-than>
-				<property>extra500/Instrument/DIP/state</property>
+				<property>extra500/instrumentation/DIP/state</property>
 				<value>0</value>
 			</greater-than>	
 		</condition>
@@ -905,7 +919,7 @@
 		<object-name>EngineInstruments.PRESS.10</object-name>
 		<condition>
 		<greater-than-equals>
-			<property>extra500/Instrument/DIP/indicatedFuelPress</property>
+			<property>extra500/instrumentation/DIP/indicatedFuelPress</property>
 			<value>10</value>
 		</greater-than-equals>
 		</condition>
@@ -914,7 +928,7 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.PRESS.01</object-name>
-		<property>extra500/Instrument/DIP/indicatedFuelPress</property>
+		<property>extra500/instrumentation/DIP/indicatedFuelPress</property>
 		<factor>0.1</factor>
 		<step>1</step>
 		<axis>
@@ -926,7 +940,7 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.PRESS.10</object-name>
-		<property>extra500/Instrument/DIP/indicatedFuelPress</property>
+		<property>extra500/instrumentation/DIP/indicatedFuelPress</property>
 		<factor>0.01</factor>
 		<step>10</step>
 		<axis>
