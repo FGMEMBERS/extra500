@@ -323,20 +323,20 @@ var calcTemps = {
 
 # calculating TOT-target (not filtered; done in /extra500.xml) NOTE: DeltaTOTsd is calculated in /extra500.xml
 		if ( me.IsRunning == 1 ) {
-			me.nTOTTarget.setValue( me.nTOTr.getValue() );
+			me.nTOTTarget.setValue( me.EIPstate * me.nTOTr.getValue() );
 
 		} else if ( me.Spooldown == 1 ) {
-			me.nTOTTarget.setValue( me.TOTTarget - me.DeltaTOTsd );	
+			me.nTOTTarget.setValue( (me.TOTTarget - me.DeltaTOTsd) * me.EIPstate );	
 
 		} else if ( me.N1 <= 0.1 ) {								# engine standing still					
 			if ( me.nTOTTarget.getValue() == 0.0 ) {					# this is at FG startup
-				me.nTOTTarget.setValue( me.nTOTnr.getValue() );	
+				me.nTOTTarget.setValue( me.EIPstate * me.nTOTnr.getValue() );	
 			} else {
-				me.nTOTTarget.setValue( me.TOTTarget - me.DeltaTOTsd );			# engine TOT is slowly going to OAT
+				me.nTOTTarget.setValue( (me.TOTTarget - me.DeltaTOTsd) * me.EIPstate );	# engine TOT is slowly going to OAT
 			}
 
 		} else if ( me.Motoring == 1 ) {							# motoring
-			me.nTOTTarget.setValue( me.TOTTarget - me.DeltaTOTsd );
+			me.nTOTTarget.setValue( (me.TOTTarget - me.DeltaTOTsd) * me.EIPstate );
 		
 		} else if ( me.Spoolup == 1 ) {								# N1 dependent TOT rise (makes sense as fuel schedule is N1 dependent as well as cooling)
 			if ( me.N1par <= 20.0) {

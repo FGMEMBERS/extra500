@@ -19,7 +19,7 @@
       Authors: Thomas Grossberger and Dirk Dittmann
       Date: March 13 2013
 
-      Last change:      Dirk Dittmann
+      Last change:      Eric van den Berg
       Date:             18.05.13
 
 -->
@@ -328,7 +328,7 @@
 <animation>
 	<type>rotate</type>
 	<object-name>EngineInstruments.N2.Needle</object-name>
-	<property>/engines/engine/thruster/rpm</property>
+	<property>/fdm/jsbsim/aircraft/engine/n2</property>
 	<interpolation>
 		<entry>
 			<ind>0</ind>
@@ -366,7 +366,7 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.N2.0010</object-name>
-		<property>/engines/engine/thruster/rpm</property>
+		<property>/fdm/jsbsim/aircraft/engine/n2</property>
 		<factor>0.01</factor>
 		<step>10</step>
 		<axis>
@@ -378,7 +378,7 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.N2.0100</object-name>
-		<property>/engines/engine/thruster/rpm</property>
+		<property>/fdm/jsbsim/aircraft/engine/n2</property>
 		<factor>0.001</factor>
 		<step>100</step>
 		<axis>
@@ -390,7 +390,7 @@
 	<animation>
 		<type>textranslate</type>
 		<object-name>EngineInstruments.N2.1000</object-name>
-		<property>/engines/engine/thruster/rpm</property>
+		<property>/fdm/jsbsim/aircraft/engine/n2</property>
 		<factor>0.0001</factor>
 		<step>1000</step>
 		<axis>
