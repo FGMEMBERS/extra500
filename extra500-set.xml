@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             18.05.13
+      Date:             19.05.13
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -296,9 +296,6 @@ JSBSim Extra Aircraft - Extra 500.
 	</view>
 	<systems>
             <path>Aircraft/extra500/system/instrumentation/systems.xml</path>
-		<autopilot>
-			<path>Aircraft/extra500/system/autopilot/generic-autopilot.xml</path>
-		</autopilot>
 	</systems>
 
       <instrumentation>
@@ -385,11 +382,19 @@ JSBSim Extra Aircraft - Extra 500.
  </controls>
 
  <autopilot>
-  <KAP140>
-   <settings>
-    <auto-pitch-trim type="bool">true</auto-pitch-trim>
-   </settings>
-  </KAP140>
+	<settings>
+		<heading-bug-deg type="double">30</heading-bug-deg>
+		<target-altitude-ft type="double">5000</target-altitude-ft>
+		<vertical-speed-fpm type="double">1000</vertical-speed-fpm>
+	</settings>
+	<mode>
+		<heading type="bool">true</heading>
+		<nav type="bool">false</nav>
+		<nav-gpss type="bool">false</nav-gpss>
+		<alt type="bool">false</alt>
+		<vs type="bool">false</vs>
+		<gs type="bool">false</gs>
+	</mode>
  </autopilot>
 
  <systems>
@@ -468,6 +473,9 @@ JSBSim Extra Aircraft - Extra 500.
     <tcas>
         <serviceable type="bool">true</serviceable>
     </tcas>
+    <turn-indicator>
+	<indicated-turn-rate>0</indicated-turn-rate>
+    </turn-indicator>
 
     <nav-IFD-LH>
       <volume type="double">0.7</volume>
@@ -671,6 +679,11 @@ JSBSim Extra Aircraft - Extra 500.
 			<state>0</state>
 		</FuelPump2>
 	</Fuel>
+	<instrumentation>
+		<EIP>
+			<state type="bool">false</state>
+		</EIP>
+	</instrumentation>
  </extra500>
 
  <fdm>

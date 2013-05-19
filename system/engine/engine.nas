@@ -17,7 +17,7 @@
 #      Date: April 29 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             13.05.13
+#      Date:             18.05.13
 #
 
 
@@ -204,6 +204,7 @@ var calcTemps = {
 		m.nTOTnr	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/TOTnr-degC");
 
 		m.nStartVoltage	= props.globals.getNode("/extra500/Generator/electric/volt");
+		m.nEIPstate	= props.globals.getNode("/extra500/instrumentation/EIP/state");
 
 		m.nPump1	= props.globals.getNode("/extra500/Fuel/FuelPump1/state");
 		m.nPump2	= props.globals.getNode("/extra500/Fuel/FuelPump2/state");
@@ -235,6 +236,7 @@ var calcTemps = {
 		m.N1par = 0.0;
 		m.dN1par = 0.0;
 		m.StartVoltage = 0.0;
+		m.EIPstate = 0;
 
 		return m;
 		
@@ -254,6 +256,7 @@ var calcTemps = {
 		me.N1par 	= me.nN1par.getValue();
 
 		me.StartVoltage	= me.nStartVoltage.getValue();
+		me.EIPstate	= me.nEIPstate.getValue();
 
 # setting motoring property: starter on, but cutoff also on (no fuel,no ignition)	
 		if ( (me.Starter == 1) and (me.CutOff == 1) ) {
@@ -297,7 +300,7 @@ var calcTemps = {
 		if (me.OTnew < me.OAT) {
 			me.OTnew = me.OAT;
 		}
-		me.nOTtarget.setValue( me.OTnew );
+		me.nOTtarget.setValue( me.OTnew*me.EIPstate );
 
 # calculating new fuel temperature
 		me.H = 0.00481 * me.FT + 1.7833;							# Jet-A1 fuel specific energy kJ/kg-K
@@ -316,7 +319,7 @@ var calcTemps = {
 		} else {
 			me.N1par = me.N1;  
 		}
-		me.nN1par.setValue( me.N1par );
+		me.nN1par.setValue( me.N1par * me.EIPstate );
 
 # calculating TOT-target (not filtered; done in /extra500.xml) NOTE: DeltaTOTsd is calculated in /extra500.xml
 		if ( me.IsRunning == 1 ) {
@@ -347,7 +350,7 @@ var calcTemps = {
 			} else if ( me.N1par >= 35.0 ) {
 				me.dTOT = -0.25 * ( me.TOTTarget - me.nTOTr.getValue() ) * me.dt;
 			}
-			me.nTOTTarget.setValue( me.TOTTarget + me.dTOT );
+			me.nTOTTarget.setValue( (me.TOTTarget + me.dTOT) * me.EIPstate );
 
 		}
 
