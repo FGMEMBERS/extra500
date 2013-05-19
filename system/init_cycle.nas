@@ -82,14 +82,15 @@ var Stats = {
 };
 
 
-var cycleTimeUsed = 0;
+
+
 
 
 extra500.plugElectric();
 
 
-var simulation_cycle = func(){
-	var start = systime();
+var simulation = func(){
+	
 	Part.etd.cls();
 	#extra500.mainBoard.update(start);
 	extra500.externalPower.update(start);
@@ -133,26 +134,76 @@ var simulation_cycle = func(){
 	
 	
 	
-	cycleTimeUsed = systime() - start;
+	
 		
 };
-var cycle_sec_full = 0.1;
-var cycle_sec = 0.1;
-var cycle_run = 1;
 
-var cycleStats = Stats.new();
 
-var cycle = func(){
+var animation = func(){
 	
-	if (cycle_run == 1){
-		simulation_cycle();
+	
+	
+	
+	
+}
+
+
+
+
+#################################
+#				#
+# Loop for simulation		#
+#	target 10Hz		#
+#				#
+#################################
+
+
+var simulation_TargetHzSec = 0.1;
+var simulation_sec = 0.1;
+var simulation_run = 1;
+var simulationStats = Stats.new();
+var simulationTimeStart = 0;
+var simulationTimeUsed = 0;
+var simulation = func(){
+	
+	if (simulation_run == 1){
+		simulationTimeStart = systime();
+		simulation();
+		simulationTimeUsed = systime() - start;
 	}
-	cycle_sec = cycle_sec_full - cycleTimeUsed;
-	if (cycle_sec < 0.04){cycle_sec = 0.04};
-	settimer(cycle, cycle_sec);
+	simulation_sec = simulation_TargetHzSec - simulationTimeUsed;
+	if (simulation_sec < 0.04){simulation_sec = 0.04};
+	settimer(simulation, simulation_sec);
 	
-	cycleStats.add(cycleTimeUsed);
+	simulationStats.add(simulationTimeUsed);
 	
+}
+
+#################################
+#				#
+# Loop for fast Animations	#
+#	target 20Hz		#
+#				#
+#################################
+
+
+var animationTargetHzSec = 0.05;
+var animationSec = 0.05;
+var animationRun = 1;
+var animationStats = Stats.new();
+var animationTimeStart = 0;
+var animationTimeUsed = 0;
+var animationLoop = func(){
+	if (animationRun == 1){
+		animationTimeStart = systime();
+		animation();
+		animationTimeUsed = systime() - start;
+	}
+	animationSec = animationTargetHzSec - animationTimeUsed;
+	if (animationSec < 0.1){animationSec = 0.1};
+	settimer(animationLoop, animationSec);
+	
+	animationStats.add(animationTimeUsed);
 }
 
 
@@ -163,8 +214,8 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 	removelistener(init_listener);
 	init_listener = nil;
 	
-	settimer(cycle,2);
-	print("Simulation Cycle ... check");
+	settimer(simulation,2);
+	print("simulation Cycle ... check");
 	
 	
 });
