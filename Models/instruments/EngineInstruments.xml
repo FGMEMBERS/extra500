@@ -74,7 +74,7 @@
 <animation>
 	<type>rotate</type>
 	<object-name>EngineInstruments.TRQ.Needle</object-name>
-	<property>/extra500/instrumentation/EIP/indicated-TRQ</property>
+	<property>/fdm/jsbsim/aircraft/engine/TRQ-perc</property>
 	<interpolation>
 		<entry>
 			<ind>0</ind>
@@ -161,7 +161,7 @@
 <animation>
 	<type>rotate</type>
 	<object-name>EngineInstruments.TOT.Needle</object-name>
-	<property>/extra500/instrumentation/EIP/indicated-TOT</property>
+	<property>/fdm/jsbsim/aircraft/engine/TOT-degC</property>
 	<interpolation>
 		<entry>
 			<ind>0</ind>
@@ -237,7 +237,7 @@
 	<type>rotate</type>
 	<object-name>EngineInstruments.N1.Needle</object-name>
 	<!--property>/fdm/jsbsim/propulsion/engine/n1</property-->
-	<property>/extra500/instrumentation/EIP/indicated-N1</property>
+	<property>/fdm/jsbsim/aircraft/engine/N1-par</property>
 	<interpolation>
 		<entry>
 			<ind>0</ind>
@@ -328,7 +328,7 @@
 <animation>
 	<type>rotate</type>
 	<object-name>EngineInstruments.N2.Needle</object-name>
-	<property>/extra500/instrumentation/EIP/indicated-RPM</property>
+	<property>/engines/engine/thruster/rpm</property>
 	<interpolation>
 		<entry>
 			<ind>0</ind>
@@ -404,7 +404,7 @@
 <animation>
 	<type>rotate</type>
 	<object-name>EngineInstruments.OP.Needle</object-name>
-	<property>/extra500/instrumentation/EIP/indicated-OP</property>
+	<property>/fdm/jsbsim/aircraft/engine/OP-psi</property>
 	<interpolation>
 		<entry>
 			<ind>0</ind>
@@ -479,7 +479,7 @@
 <animation>
 	<type>rotate</type>
 	<object-name>EngineInstruments.OT.Needle</object-name>
-	<property>/extra500/instrumentation/EIP/indicated-OT</property>
+	<property>/fdm/jsbsim/aircraft/engine/OT-degC</property>
 	<interpolation>
 		<entry>
 			<ind>0</ind>
