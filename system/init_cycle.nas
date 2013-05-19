@@ -82,45 +82,46 @@ var Stats = {
 };
 
 
-var cycleTimeUsed = 0;
+
+
 
 
 extra500.plugElectric();
 
 
-var simulation_cycle = func(){
-	var start = systime();
+var simulationCall = func(timestamp){
+	
 	Part.etd.cls();
-	#extra500.mainBoard.update(start);
-	extra500.externalPower.update(start);
-	extra500.generator.update(start);
-	extra500.alternator.update(start);
-	extra500.battery.update(start);
+	#extra500.mainBoard.update(timestamp);
+	extra500.externalPower.update(timestamp);
+	extra500.generator.update(timestamp);
+	extra500.alternator.update(timestamp);
+	extra500.battery.update(timestamp);
 	extra500.adjustAdditionalElectricLoads();
 	
-	extra500.oFuelSystem.update(start);
-	extra500.flapSystem.update(start);
-	extra500.gearSystem.update(start);
+	extra500.oFuelSystem.update(timestamp);
+	extra500.flapSystem.update(timestamp);
+	extra500.gearSystem.update(timestamp);
 	
-	extra500.engine.update(start);
+	extra500.engine.update(timestamp);
 	
-	extra500.digitalInstrumentPackage.update(start);
-	extra500.engineInstrumentPackage.update(start);
-	extra500.audioPanel.update(start);
-	extra500.keypad.update(start);
-	extra500.autopilot.update(start);
-	extra500.dme.update(start);
-	extra500.fuelFlow.update(start);
-	extra500.turnCoordinator.update(start);
-	extra500.stbyAirspeed.update(start);
-	extra500.stbyAltimeter.update(start);
-	extra500.stbyAttitude.update(start);
-	
-	
+	extra500.digitalInstrumentPackage.update(timestamp);
+	extra500.engineInstrumentPackage.update(timestamp);
+	extra500.audioPanel.update(timestamp);
+	extra500.keypad.update(timestamp);
+	extra500.autopilot.update(timestamp);
+	extra500.dme.update(timestamp);
+	extra500.fuelFlow.update(timestamp);
+	extra500.turnCoordinator.update(timestamp);
+	extra500.stbyAirspeed.update(timestamp);
+	extra500.stbyAltimeter.update(timestamp);
+	extra500.stbyAttitude.update(timestamp);
 	
 	
-	IFD.demo.update(start);
-	IFD.RH.update(start);
+	
+	
+	IFD.demo.update(timestamp);
+	IFD.RH.update(timestamp);
 	
 	
 	foreach(var fuse;Part.aListElectricFuseAble){
@@ -133,26 +134,76 @@ var simulation_cycle = func(){
 	
 	
 	
-	cycleTimeUsed = systime() - start;
+	
 		
 };
-var cycle_sec_full = 0.1;
-var cycle_sec = 0.1;
-var cycle_run = 1;
 
-var cycleStats = Stats.new();
 
-var cycle = func(){
+var animationCall = func(timestamp){
 	
-	if (cycle_run == 1){
-		simulation_cycle();
+	
+	extra500.engineInstrumentPackage.animationUpdate(timestamp);
+	
+	
+}
+
+
+
+
+#################################
+#				#
+# Loop for simulation		#
+#	target 10Hz		#
+#				#
+#################################
+
+
+var simulationTargetHzSec = 0.1;
+var simulationSec = 0.1;
+var simulationRun = 1;
+var simulationStats = Stats.new();
+var simulationTimeStart = 0;
+var simulationTimeUsed = 0;
+var simulationLoop = func(){
+	
+	if (simulationRun == 1){
+		simulationTimeStart = systime();
+		simulationCall(simulationTimeStart);
+		simulationTimeUsed = systime() - simulationTimeStart;
 	}
-	cycle_sec = cycle_sec_full - cycleTimeUsed;
-	if (cycle_sec < 0.04){cycle_sec = 0.04};
-	settimer(cycle, cycle_sec);
+	simulationSec = simulationTargetHzSec - simulationTimeUsed;
+	if (simulationSec < 0.04){simulationSec = 0.04};
+	settimer(simulationLoop, simulationSec);
 	
-	cycleStats.add(cycleTimeUsed);
+	simulationStats.add(simulationTimeUsed);
 	
+}
+
+#################################
+#				#
+# Loop for fast Animations	#
+#	target 20Hz		#
+#				#
+#################################
+
+
+var animationTargetHzSec = 0.05;
+var animationSec = 0.05;
+var animationRun = 1;
+var animationStats = Stats.new();
+var animationTimeStart = 0;
+var animationTimeUsed = 0;
+var animationLoop = func(){
+	if (animationRun == 1){
+		animationTimeStart = systime();
+		animationCall(animationTimeStart);
+		animationTimeUsed = systime() - animationTimeStart;
+	}
+	animationSec = animationTargetHzSec - animationTimeUsed;
+	if (animationSec < 0.1){animationSec = 0.1};
+	settimer(animationLoop, animationSec);
+	
+	animationStats.add(animationTimeUsed);
 }
 
 
@@ -163,8 +214,10 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 	removelistener(init_listener);
 	init_listener = nil;
 	
-	settimer(cycle,2);
-	print("Simulation Cycle ... check");
+	settimer(simulationLoop,2);
+	#settimer(animationLoop,2);
+	
+	print("simulation Cycle ... check");
 	
 	
 });

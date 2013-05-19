@@ -74,7 +74,7 @@ var canvas_demo = {
        .setFont("LiberationFonts/LiberationMono-Bold.ttf")
        .setFontSize(40)
        .setAlignment("left-top")
-       .setTranslation(20, 500);
+       .setTranslation(20, -300);
     #m.tf = m.dynamic_text.createTransform();
     #m.tf.setTranslation(384, 200);
 
@@ -87,20 +87,20 @@ var canvas_demo = {
 		
 		var text = "Sim Main Loop\n";
 				
-		text ~= sprintf("time    : %.4f sec %.2f Hz\n",run.cycleStats.time,1/(run.cycleStats.time+run.cycle_sec));
-		text ~= sprintf("max     : %.4f sec\n",run.cycleStats.max);
-		text ~= sprintf("min     : %.4f sec\n",run.cycleStats.min);
-		text ~= sprintf("avg100  : %.4f sec\n",run.cycleStats.avg100);
-		text ~= sprintf("avg     : %.4f sec\n",run.cycleStats.avg);
-		text ~= sprintf("sum     : %.4f sec\n",run.cycleStats.sum);
-		text ~= sprintf("count   : %i\n",run.cycleStats.count);
+		text ~= sprintf("time    : %.4f sec %.2f Hz\n",run.simulationStats.time,1/(run.simulationStats.time+run.simulationSec));
+		text ~= sprintf("max     : %.4f sec\n",run.simulationStats.max);
+		text ~= sprintf("min     : %.4f sec\n",run.simulationStats.min);
+		text ~= sprintf("avg100  : %.4f sec\n",run.simulationStats.avg100);
+		text ~= sprintf("avg     : %.4f sec\n",run.simulationStats.avg);
+		text ~= sprintf("sum     : %.4f sec\n",run.simulationStats.sum);
+		text ~= sprintf("count   : %i\n",run.simulationStats.count);
 		
 		me.textSim.setText(text);
 # 		
 		text = "";
-		text ~= sprintf("Generator  %0.2f V   %0.2f A\n",extra500.mainBoard.generatorShunt.indicatedVolt,extra500.mainBoard.generatorShunt.indicatedAmpere);
-		text ~= sprintf("Battery    %0.2f V   %0.2f A\n",extra500.mainBoard.batteryShunt.indicatedVolt,extra500.mainBoard.batteryShunt.indicatedAmpere);
-		text ~= sprintf("Altenator  %0.2f V   %0.2f A\n",extra500.mainBoard.alternatorShunt.indicatedVolt,extra500.mainBoard.alternatorShunt.indicatedAmpere);
+		#text ~= sprintf("Generator  %0.2f V   %0.2f A\n",extra500.mainBoard.generatorShunt.indicatedVolt,extra500.mainBoard.generatorShunt.indicatedAmpere);
+		#text ~= sprintf("Battery    %0.2f V   %0.2f A\n",extra500.mainBoard.batteryShunt.indicatedVolt,extra500.mainBoard.batteryShunt.indicatedAmpere);
+		#text ~= sprintf("Altenator  %0.2f V   %0.2f A\n",extra500.mainBoard.alternatorShunt.indicatedVolt,extra500.mainBoard.alternatorShunt.indicatedAmpere);
 		text ~="\nEngine\n";
 		text ~= sprintf("Fuel cutoff      %s\n",extra500.engine._cutoffState==0?"off":"on");
 		text ~= sprintf("Reverser         %s\n",extra500.engine.nReverser.getValue()==0?"off":"on");

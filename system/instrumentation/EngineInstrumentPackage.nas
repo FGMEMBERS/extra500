@@ -31,7 +31,8 @@ var EngineInstrumentPackage = {
 		]};
 		
 		m.dimmingVolt = 0.0;
-				
+		m.powered = 0;
+		
 		m.TRQ = 0.0;
 		m.TOT = 0.0;
 		m.N1 = 0.0;
@@ -167,10 +168,13 @@ var EngineInstrumentPackage = {
 	},
 	# Main Simulation loop  ~ 10Hz
 	update : func(timestamp){
-		
+		me.powered = me.state;
 		me._dimmBacklight();
 		
-		if (me.state == 0){	# no power input
+	},
+	animationUpdate : func (timestamp){
+		
+		if (me.powered == 0){	# no power input
 			
 			me.TargetTRQ 	= 0.0;
 			me.TargetTOT 	= 0.0;
@@ -190,6 +194,16 @@ var EngineInstrumentPackage = {
 
 		
 		}else{
+			
+# 			me.TRQ 	= me.nTRQ.getValue();
+# 			me.TOT 	= me.nTOT.getValue();
+# 			me.N1	= me.nN1.getValue();
+# 			me.RPM 	= me.nN2.getValue();
+# 			me.OP 	= me.nOP.getValue();
+# 			me.OT 	= me.nOT.getValue();
+			
+			
+		
 			me.TargetTRQ 	= me.nTRQ.getValue();
 			me.TargetTOT 	= me.nTOT.getValue();
 			me.TargetN1	= me.nN1.getValue();
