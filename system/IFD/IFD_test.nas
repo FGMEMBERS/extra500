@@ -74,7 +74,7 @@ var canvas_demo = {
        .setFont("LiberationFonts/LiberationMono-Bold.ttf")
        .setFontSize(40)
        .setAlignment("left-top")
-       .setTranslation(20, -300);
+       .setTranslation(20, 700);
     #m.tf = m.dynamic_text.createTransform();
     #m.tf.setTranslation(384, 200);
 

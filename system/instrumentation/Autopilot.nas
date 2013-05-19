@@ -118,8 +118,71 @@ var Autopilot = {
 		}else{
 			
 		}
+		
+		# masterPanel.AutopilotMaster.state -1/0/1 
+		if (masterPanel.AutopilotMaster.state == 0){ 
+			
+		}elsif (masterPanel.AutopilotMaster.state == 1){
+			
+		}else{
+			
+		}
+		
+		# masterPanel.AutopilotPitchTrim.state 1/0
+		if (masterPanel.AutopilotPitchTrim.state > 0 ){
+			
+		}else{
+			
+		}
+		
+		# masterPanel.AutopilotYawDamper.state 1/0
+		if (masterPanel.AutopilotYawDamper.state > 0 ){
+			
+		}else{
+			
+		}
+		
+		# masterPanel.AutopilotYawTrim.state -1.0/1.0
+		if (masterPanel.AutopilotYawDamper.state > 0 ){
+			
+		}elsif (masterPanel.AutopilotYawDamper.state < 0){
+			
+		}else{
+			
+		}
+		
+		
+		
+		
 	},
+# Events from the UI
+	onClickHDG : func(){
+		
+	},
+	onClickNAV : func(){
+		
+	},
+	onClickAPR : func(){
+		
+	},
+	onClickALT : func(){
+		
+	},
+	onClickVS : func(){
+		
+	},
+	onAdjustVS : func(amount){
+		
+	},
+	
 	initUI : func(){
+		UI.register("Autopilot HDG", 	func{extra500.autopilot.onClickHDG(); } 	);
+		UI.register("Autopilot NAV", 	func{extra500.autopilot.onClickNAV(); } 	);
+		UI.register("Autopilot APR", 	func{extra500.autopilot.onClickAPR(); } 	);
+		UI.register("Autopilot ALT", 	func{extra500.autopilot.onClickALT(); } 	);
+		UI.register("Autopilot VS", 	func{extra500.autopilot.onClickVS(); } 		);
+		UI.register("Autopilot VS +100",func{extra500.autopilot.onAdjustVS(100); } 	);
+		UI.register("Autopilot VS -100",func{extra500.autopilot.onAdjustVS(-100); } 	);
 		
 	}
 	
