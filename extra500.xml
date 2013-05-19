@@ -24,7 +24,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             18.05.13
+      Date:             19.05.13
 -->
 
 	<fileheader>
@@ -383,8 +383,65 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<contents unit="KG"> 0.0 </contents>
 		</tank>
 	</propulsion>
+
+<autopilot name="STEC55X">
+	<channel name="heading">
+		<pure_gain name="hdg error limiter">
+			<input>/autopilot/internal/heading-bug-error-deg</input>
+			<gain>1.0</gain>
+			<clipto>
+				<min>-25</min>
+				<max>25</max>
+			</clipto>
+			<output>/autopilot/hdg-channel/lmd-hdg-error</output>
+		</pure_gain>
+
+		<accelerometer name="gravitation limit sensor">
+			<location unit="M">
+				<x>2.364</x>
+				<y>0.0</y>
+				<z>2.274</z>
+			</location>
+  			<orientation unit="DEG">
+    				<pitch>0.0</pitch>
+    				<roll>0.0</roll>
+    				<yaw>0.0</yaw>
+  			</orientation>
+			<axis>Z</axis>
+			<gain>0.1019716213</gain>	<!--1/9.80665 -->
+			<output>/autopilot/hdg-channel/ap-z-accel</output>
+		</accelerometer>
+
+		<pid name="target turn rate">
+			<input>/autopilot/hdg-channel/lmd-hdg-error</input>
+			<kp>10.8</kp>			<!--270deg/min devided by 25deg -->
+			<ki>0.0</ki>
+			<kd>-10.0</kd>
+			<output>/autopilot/hdg-channel/target-turn-rate</output> 	<!--deg/min-->
+		</pid>
+		
+		<fcs_function name="turn rate error">
+			<function>
+				<sum>
+					<property>/autopilot/hdg-channel/target-turn-rate</property>	
+					<product>
+						<value>-180</value>
+						<property>/instrumentation/turn-indicator/indicated-turn-rate</property>
+					</product>
+				</sum>
+			</function>
+			<output>/autopilot/hdg-channel/turn-rate-error</output>
+		</fcs_function>
+
+
+
+	</channel>
+
+
+</autopilot>
+
 							
-	<flight_control name="FCS: extra500">
+<flight_control name="FCS: extra500">
 		
       <channel name="Pitch">
 
@@ -754,20 +811,23 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 
     <function name="aircraft/engine/TRQ-perc">
       <description>Indicated TRQ in percent</description>
-	<max>
-		<value>0</value>			<!-- preventing TRQ below 0 -->
-		<product>
-			<property>propulsion/engine/power-hp</property>
-			<value>493.797</value>
-			<pow>
-				<max>			<!-- preventing devision by 0 -->
-					<property>propulsion/engine/propeller-rpm</property>
-					<value>10</value>
-				</max>
-				<value>-1</value>
-			</pow>
-		</product>
-	</max>
+	<product>
+		<property>/extra500/instrumentation/EIP/state</property>   <!--to make sure pointer is at 0 when unit is off -->
+		<max>
+			<value>0</value>			<!-- preventing TRQ below 0 -->
+			<product>
+				<property>propulsion/engine/power-hp</property>
+				<value>493.797</value>
+				<pow>
+					<max>			<!-- preventing devision by 0 -->
+						<property>propulsion/engine/propeller-rpm</property>
+						<value>10</value>
+					</max>
+					<value>-1</value>
+				</pow>
+			</product>
+		</max>
+	</product>
     </function>
 
     <function name="aircraft/engine/TOTr-degC">
@@ -827,6 +887,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 
     <function name="aircraft/engine/OP-psi">
        <description>Indicated Oil Pressure</description>
+	<product>
+		<property>/extra500/instrumentation/EIP/state</property>   <!--to make sure pointer is at 0 when unit is off -->
 	 	<sum>	
 			<property>aircraft/engine/OP-maxsetting-psi</property>
 			<value>-125</value>
@@ -851,6 +913,15 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             			</tableData>
       			</table>
 		</sum>
+	</product>
+    </function>
+
+    <function name="aircraft/engine/n2">
+       <description>Indicated Oil Pressure</description>
+	<product>
+		<property>/extra500/instrumentation/EIP/state</property>   <!--to make sure pointer is at 0 when unit is off -->
+		<property>propulsion/engine/propeller-rpm</property>
+	</product>
     </function>
 
     <function name="aircraft/engine/FPtarget-psi">
