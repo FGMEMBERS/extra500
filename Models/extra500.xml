@@ -18,8 +18,8 @@
       Authors: Thomas Grossberger and Dirk Dittmann
       Date: March 13 2013
 
-      Last change:      Eric van den Berg
-      Date:             17.05.13
+      Last change:      Thomas Grossberger
+      Date:             20.05.13
 
 -->
 
@@ -34,6 +34,18 @@
 
 <!-- Submodels -->
 <!-- instruments -->
+
+<model>
+  <name>MagneticCompass</name>
+  <path>Aircraft/extra500/Models/instruments/Autopilot.ac</path>
+	<offsets>
+		<x-m>-0.745</x-m>
+		<y-m>.005</y-m>	
+		<z-m>0.008</z-m>
+	<pitch-deg>-13</pitch-deg>
+	</offsets>
+</model>
+
 <model>
   <name>MagneticCompass</name>
   <path>Aircraft/extra500/Models/instruments/MagneticCompass.xml</path>
