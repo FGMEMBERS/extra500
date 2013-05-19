@@ -19,8 +19,8 @@
       Authors: Thomas Grossberger and Dirk Dittmann
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
-      Date:             16.05.13
+      Last change:      Eric van den Berg
+      Date:             11.05.13
 
 -->
 
@@ -36,11 +36,11 @@
 		<interpolation>
             <entry>
                 <ind>0</ind>
-                <dep>-90.0</dep>
+                <dep>-199.5</dep>
             </entry>
             <entry>
                 <ind>1</ind>
-                <dep>90.0</dep>
+                <dep>90</dep>
             </entry>
         </interpolation>
   <axis>
@@ -60,11 +60,11 @@
 		<interpolation>
             <entry>
                 <ind>0</ind>
-                <dep>-90.0</dep>
+                <dep>-199.5</dep>
             </entry>
             <entry>
                 <ind>1</ind>
-                <dep>90.0</dep>
+                <dep>90</dep>
             </entry>
         </interpolation>
   <axis>
