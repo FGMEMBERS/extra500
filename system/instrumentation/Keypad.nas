@@ -291,32 +291,32 @@ var Keypad = {
 		UI.register("Keypad Com2", 	func{extra500.keypad.onCom2(); } 	);
 		UI.register("Keypad FreqList", 	func{extra500.keypad.onFreqList(); } 	);
 		UI.register("Keypad Aux", 	func{extra500.keypad.onAux(); } 	);
-		UI.register("Keypad onNav1", 	func{extra500.keypad.onNav1(); } 	);
-		UI.register("Keypad onNav2", 	func{extra500.keypad.onNav2(); } 	);
-		UI.register("Keypad onXPDR", 	func{extra500.keypad.onXPDR(); } 	);
-		UI.register("Keypad onVFR", 	func{extra500.keypad.onVFR(); } 	);
-		UI.register("Keypad onMode", 	func{extra500.keypad.onMode(); } 	);
-		UI.register("Keypad onIdent", 	func{extra500.keypad.onIdent(); } 	);
-		UI.register("Keypad onPhone", 	func{extra500.keypad.onPhone(); } 	);
-		UI.register("Keypad onMusik", 	func{extra500.keypad.onMusik(); } 	);
-		UI.register("Keypad onProc", 	func{extra500.keypad.onProc(); } 	);
-		UI.register("Keypad onD", 	func{extra500.keypad.onD(); } 	);
-		UI.register("Keypad onV", 	func{extra500.keypad.onV(); } 	);
-		UI.register("Keypad onNRST", 	func{extra500.keypad.onNRST(); } 	);
-		UI.register("Keypad onMap", 	func{extra500.keypad.onMap(); } 	);
-		UI.register("Keypad onCLR", 	func{extra500.keypad.onCLR(); } 	);
-		UI.register("Keypad onCNCL", 	func{extra500.keypad.onCNCL(); } 	);
-		UI.register("Keypad onSYB", 	func{extra500.keypad.onSYB(); } 	);
-		UI.register("Keypad onAt", 	func{extra500.keypad.onAt(); } 	);
-		UI.register("Keypad onSpace", 	func{extra500.keypad.onSpace(); } 	);
-		UI.register("Keypad onEnter", 	func{extra500.keypad.onEnter(); } 	);
+		UI.register("Keypad Nav1", 	func{extra500.keypad.onNav1(); } 	);
+		UI.register("Keypad Nav2", 	func{extra500.keypad.onNav2(); } 	);
+		UI.register("Keypad XPDR", 	func{extra500.keypad.onXPDR(); } 	);
+		UI.register("Keypad VFR", 	func{extra500.keypad.onVFR(); } 	);
+		UI.register("Keypad Mode", 	func{extra500.keypad.onMode(); } 	);
+		UI.register("Keypad Ident", 	func{extra500.keypad.onIdent(); } 	);
+		UI.register("Keypad Phone", 	func{extra500.keypad.onPhone(); } 	);
+		UI.register("Keypad Musik", 	func{extra500.keypad.onMusik(); } 	);
+		UI.register("Keypad Proc", 	func{extra500.keypad.onProc(); } 	);
+		UI.register("Keypad D", 	func{extra500.keypad.onD(); } 	);
+		UI.register("Keypad V", 	func{extra500.keypad.onV(); } 	);
+		UI.register("Keypad NRST", 	func{extra500.keypad.onNRST(); } 	);
+		UI.register("Keypad Map", 	func{extra500.keypad.onMap(); } 	);
+		UI.register("Keypad CLR", 	func{extra500.keypad.onCLR(); } 	);
+		UI.register("Keypad CNCL", 	func{extra500.keypad.onCNCL(); } 	);
+		UI.register("Keypad SYB", 	func{extra500.keypad.onSYB(); } 	);
+		UI.register("Keypad At", 	func{extra500.keypad.onAt(); } 	);
+		UI.register("Keypad Space", 	func{extra500.keypad.onSpace(); } 	);
+		UI.register("Keypad Enter", 	func{extra500.keypad.onEnter(); } 	);
 		
-		UI.register("Keypad onCom1Volume", 	func{extra500.keypad.onCom1Volume(); } 	);
-		UI.register("Keypad onCom2Volume", 	func{extra500.keypad.onCom2Volume(); } 	);
-		UI.register("Keypad onCom1SQ", 	func{extra500.keypad.onCom1SQ(); } 	);
-		UI.register("Keypad onCom2SQ", 	func{extra500.keypad.onCom2SQ(); } 	);
-		UI.register("Keypad onCom1Page", 	func{extra500.keypad.onCom1Page(); } 	);
-		UI.register("Keypad onCom2Page", 	func{extra500.keypad.onCom2Page(); } 	);
+		UI.register("Keypad Com1Volume >", 	func{extra500.keypad.onCom1Volume(1); } 	);
+		UI.register("Keypad Com2Volume <", 	func{extra500.keypad.onCom2Volume(-1); } 	);
+		UI.register("Keypad Com1SQ", 	func{extra500.keypad.onCom1SQ(); } 	);
+		UI.register("Keypad Com2SQ", 	func{extra500.keypad.onCom2SQ(); } 	);
+		UI.register("Keypad Com1Page >", 	func{extra500.keypad.onCom1Page(1); } 	);
+		UI.register("Keypad Com2Page <", 	func{extra500.keypad.onCom2Page(-1); } 	);
 
 		
 	}
