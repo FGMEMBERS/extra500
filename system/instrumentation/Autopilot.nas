@@ -196,4 +196,5 @@ var Autopilot = {
 	
 };
 
+
 var autopilot = Autopilot.new(props.globals.initNode("extra500/instrumentation/Autopilot"),"Autopilot");

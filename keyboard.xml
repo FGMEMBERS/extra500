@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             27.04.13
+      Date:             20.05.13
 -->
 <PropertyList>
 
@@ -84,6 +84,16 @@
             
 		 
 		 <!-- keys only for development -->
+
+		 <key n="2">
+			 <!-- toggle engine cutoff-->
+			 <name>Ctrl-b</name>
+			 <desc>Toggle AP on/off</desc>
+			 <binding n="0">
+				 <command>nasal</command>
+				 <script>e1.bitswap("autopilot/mode/state")</script>
+			 </binding>
+		 </key>
 		 <key n="32">
 			 <name>space</name>
 			 <desc>reload-model</desc>
