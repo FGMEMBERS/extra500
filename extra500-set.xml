@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             19.05.13
+      Date:             20.05.13
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -388,13 +388,23 @@ JSBSim Extra Aircraft - Extra 500.
 		<vertical-speed-fpm type="double">1000</vertical-speed-fpm>
 	</settings>
 	<mode>
-		<heading type="bool">true</heading>
-		<nav type="bool">false</nav>
-		<nav-gpss type="bool">false</nav-gpss>
-		<alt type="bool">false</alt>
-		<vs type="bool">false</vs>
-		<gs type="bool">false</gs>
+		<state type="int">0</state>
+		<heading type="int">1</heading>
+		<nav type="int">0</nav>
+		<nav-gpss type="int">0</nav-gpss>
+		<alt type="int">0</alt>
+		<vs type="int">0</vs>
+		<gs type="int">0</gs>
 	</mode>
+	<hdg-channel>	
+		<turn-rate-error-kp type="double">0.0003</turn-rate-error-kp>
+		<turn-rate-error-ki type="double">0.00</turn-rate-error-ki>
+		<turn-rate-error-kd type="double">0.001</turn-rate-error-kd>
+		<lmd-hdg-error-kp type="double">9.0</lmd-hdg-error-kp>			<!--180deg/min devided by 20deg -->
+		<lmd-hdg-error-ki type="double">0.0</lmd-hdg-error-ki>
+		<lmd-hdg-error-kd type="double">0.05</lmd-hdg-error-kd>
+		<cmd-ap-ail-pos-norm-raw type="double">0.0</cmd-ap-ail-pos-norm-raw>
+	</hdg-channel>
  </autopilot>
 
  <systems>
@@ -689,9 +699,13 @@ JSBSim Extra Aircraft - Extra 500.
  <fdm>
 	<jsbsim>
 		<sim-time-sec-old>0</sim-time-sec-old>
+		<sim-dt-sec>0.008333</sim-dt-sec>
 		<atmosphere>
 			<T-degC>1</T-degC>						<!--dummy value -->
 		</atmosphere>
+		<fcs>
+			<aileron-cmd-tot type="double">0.0</aileron-cmd-tot>
+		</fcs>
             	<state>
                   	<controls-fixed type="int">1</controls-fixed>
             	</state>

@@ -24,7 +24,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             19.05.13
+      Date:             20.05.13
 -->
 
 	<fileheader>
@@ -386,17 +386,16 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 
 <autopilot name="STEC55X">
 	<channel name="heading">
-		<pure_gain name="hdg error limiter">
+		<pure_gain name="/autopilot/hdg-channel/lmd-hdg-error">
 			<input>/autopilot/internal/heading-bug-error-deg</input>
 			<gain>1.0</gain>
 			<clipto>
-				<min>-25</min>
-				<max>25</max>
+				<min>-20</min>
+				<max>20</max>
 			</clipto>
-			<output>/autopilot/hdg-channel/lmd-hdg-error</output>
 		</pure_gain>
 
-		<accelerometer name="gravitation limit sensor">
+		<accelerometer name="/autopilot/hdg-channel/ap-z-accel">
 			<location unit="M">
 				<x>2.364</x>
 				<y>0.0</y>
@@ -409,30 +408,100 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   			</orientation>
 			<axis>Z</axis>
 			<gain>0.1019716213</gain>	<!--1/9.80665 -->
-			<output>/autopilot/hdg-channel/ap-z-accel</output>
 		</accelerometer>
 
-		<pid name="target turn rate">
+		<deadband name="/autopilot/hdg-channel/ap-z-accel-cp">
+			<input>/autopilot/hdg-channel/ap-z-accel</input>
+			<width>0.7</width>
+			<clipto>
+				<min>-5.0</min>
+				<max>0</max>
+			</clipto>
+		</deadband>
+
+		<pid name="/autopilot/hdg-channel/target-turn-rate">
 			<input>/autopilot/hdg-channel/lmd-hdg-error</input>
-			<kp>10.8</kp>			<!--270deg/min devided by 25deg -->
-			<ki>0.0</ki>
-			<kd>-10.0</kd>
-			<output>/autopilot/hdg-channel/target-turn-rate</output> 	<!--deg/min-->
+			<kp>/autopilot/hdg-channel/lmd-hdg-error-kp</kp>							<!--180deg/min devided by 25deg -->
+			<ki>/autopilot/hdg-channel/lmd-hdg-error-ki</ki>
+			<kd>/autopilot/hdg-channel/lmd-hdg-error-kd</kd>
 		</pid>
 		
-		<fcs_function name="turn rate error">
+		<fcs_function name="/autopilot/hdg-channel/turn-rate-inv">
+			<function>
+				<product>
+					<value>-60.0</value>
+					<property>/extra500/const/RAD2DEG</property>
+					<property>velocities/psidot-rad_sec</property>  <!--pos right-->
+				</product>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/autopilot/hdg-channel/turn-rate-error">
 			<function>
 				<sum>
 					<property>/autopilot/hdg-channel/target-turn-rate</property>	
+					<property>/autopilot/hdg-channel/turn-rate-inv</property>
+				</sum>
+			</function>
+		</fcs_function>
+
+		<pid name="/autopilot/hdg-channel/cmd-ail-change-raw">
+			<input>/autopilot/hdg-channel/turn-rate-error</input>
+			<kp>/autopilot/hdg-channel/turn-rate-error-kp</kp>							
+			<ki>/autopilot/hdg-channel/turn-rate-error-ki</ki>
+			<kd>/autopilot/hdg-channel/turn-rate-error-kd</kd>
+		</pid>
+
+		<pure_gain name="/autopilot/hdg-channel/cmd-ail-change-acc">
+			<input>/autopilot/hdg-channel/ap-z-accel-cp</input>
+			<gain>-/autopilot/hdg-channel/turn-rate-inv</gain>
+		</pure_gain>
+
+		<summer name="/autopilot/hdg-channel/cmd-ail-change">
+			<input>/autopilot/hdg-channel/cmd-ail-change-raw</input>
+			<!--input>/autopilot/hdg-channel/cmd-ail-change-acc</input-->
+		</summer>
+
+		<pure_gain name="/autopilot/hdg-channel/cmd-ail-change-cp">
+			<input>/autopilot/hdg-channel/cmd-ail-change</input>
+			<gain>1.0</gain>
+			<clipto>
+				<min>-0.1</min>
+				<max>0.1</max>
+			</clipto>
+		</pure_gain>
+
+
+		<!--summer name="/autopilot/hdg-channel/cmd-ap-ail-pos-norm-raw">
+			<input>fcs/aileron-cmd-tot</input>
+			<input>/autopilot/hdg-channel/cmd-ail-change</input>
+		</summer-->
+
+		<fcs_function name="/autopilot/hdg-channel/cmd-ap-ail-pos-norm-raw">
+			<function>
+				<sum>
+					<property>fcs/aileron-cmd-tot</property>	
 					<product>
-						<value>-180</value>
-						<property>/instrumentation/turn-indicator/indicated-turn-rate</property>
+		                  		<property>/autopilot/mode/state</property>
+                                  		<property>/autopilot/mode/heading</property>
+						<value>1.0</value>
+						<property>/autopilot/hdg-channel/cmd-ail-change</property>
+						<property>sim-dt-sec</property>
 					</product>
 				</sum>
 			</function>
-			<output>/autopilot/hdg-channel/turn-rate-error</output>
+			<output>/autopilot/hdg-channel/cmd-ap-ail-pos-norm-raw</output>
 		</fcs_function>
-
+	
+		<actuator name="/autopilot/hdg-channel/ail-servo">
+			<input>/autopilot/hdg-channel/cmd-ap-ail-pos-norm-raw</input>
+			<rate_limit>0.2</rate_limit>
+			<clipto>
+				<min>-1</min>
+				<max>1</max>
+			</clipto>
+			<output>/autopilot/hdg-channel/cmd-ap-ail-pos-norm</output>
+		</actuator>
 
 
 	</channel>
@@ -507,9 +576,32 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				<output>fcs/rudder-cmd-aileron</output>
 			</aerosurface_scale>
 
+			<fcs_function name="aileron-cmd-tot-nc">
+				<function>
+				<sum>
+					<product>
+						<abs>
+                               				<sum>
+                                  				<property>/autopilot/mode/state</property>
+                                  				<value>-1</value> 
+                              				</sum>
+                         			</abs>
+						<sum>
+							<property>fcs/rudder-cmd-aileron</property>	
+							<property>fcs/aileron-cmd-norm</property>
+						</sum>
+					</product>
+					<product>
+		                  		<property>/autopilot/mode/state</property>
+                                  		<property>/autopilot/mode/heading</property>
+                              			<property>/autopilot/hdg-channel/cmd-ap-ail-pos-norm</property>	
+					</product>
+				</sum>
+				</function>
+			</fcs_function>
+
 			 <summer name="aileron-cmd-tot">
-                		<input>fcs/rudder-cmd-aileron</input>
-                		<input>fcs/aileron-cmd-norm</input>
+                		<input>fcs/aileron-cmd-tot-nc</input>
                 		<clipto>
                     			<min>-1</min>
                     			<max>1</max>
