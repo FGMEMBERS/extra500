@@ -73,7 +73,15 @@
 				]]></script>
 			 </binding>
 		 </key>
-		 
+		 <key n="267">
+			 <name>F11</name>
+			 <desc>Pop up autopilot dialog</desc>
+			 <binding>
+				 <command>nasal</command>
+				 <script>Dialogs.autopilot.open()</script>
+			 </binding>
+		 </key>
+            
 		 
 		 <!-- keys only for development -->
 		 <key n="32">

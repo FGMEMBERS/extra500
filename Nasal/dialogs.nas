@@ -25,3 +25,10 @@ var debug_electric = gui.Dialog.new(
 			"sim/gui/dialogs/ground_services/dialog",
 			"Aircraft/extra500/Dialogs/debug_electric.xml"
 		);
+
+var autopilot = gui.Dialog.new("/sim/gui/dialogs/autopilot/dialog",
+        "Aircraft/extra500/Dialogs/autopilot.xml");
+
+
+
+#gui.menuBind("autopilot-settings", "Dialogs.autopilot.open()");
