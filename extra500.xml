@@ -387,7 +387,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 <autopilot name="STEC55X">
 	<channel name="heading">
 		<pure_gain name="/autopilot/hdg-channel/lmd-hdg-error">
-			<input>/autopilot/internal/heading-bug-error-deg</input>
+			<input>/instrumentation/heading-indicator-IFD-LH/heading-bug-error-deg</input>
 			<gain>1.0</gain>
 			<clipto>
 				<min>-20</min>
@@ -429,9 +429,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		<fcs_function name="/autopilot/hdg-channel/turn-rate-inv">
 			<function>
 				<product>
-					<value>-60.0</value>
-					<property>/extra500/const/RAD2DEG</property>
-					<property>velocities/psidot-rad_sec</property>  <!--pos right-->
+					<value>-180.0</value>
+					<property>/instrumentation/turn-indicator/indicated-turn-rate</property>  <!--pos right-->
 				</product>
 			</function>
 		</fcs_function>

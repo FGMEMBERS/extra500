@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             18.05.13
+      Date:             20.05.13
 
 -->
 
@@ -233,7 +233,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>Heading.001er</object-name>
-	<property>/orientation/heading-deg</property>
+	<property>/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg</property>
 	<factor>0.1</factor>
 	<step>1</step>
 	<axis>
@@ -245,7 +245,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>Heading.010er</object-name>
-	<property>/orientation/heading-deg</property>
+	<property>/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg</property>
 	<factor>0.01</factor>
 	<step>10</step>
 	<axis>
@@ -257,7 +257,7 @@
 <animation>
 	<type>textranslate</type>
 	<object-name>Heading.100er</object-name>
-	<property>/orientation/heading-deg</property>
+	<property>/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg</property>
 	<factor>0.001</factor>
 	<step>100</step>
 
@@ -396,7 +396,7 @@
 	<type>texrotate</type>
 	<object-name>Kompass</object-name>
 <!--mal zum testen auskommentiert	<property>/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg</property>-->
-<property>/orientation/heading-deg</property>
+<property>/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg</property>
 	<factor>1</factor>
 	<axis>
 		<x>0</x>

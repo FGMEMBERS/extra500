@@ -19,8 +19,8 @@
       Authors: Thomas Grossberger and Dirk Dittmann
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
-      Date:             16.05.13
+      Last change:      Eric van den Berg
+      Date:             20.05.13
 
 -->
 
@@ -31,7 +31,7 @@
 <animation>
   <type>rotate</type>
 	<object-name>Compassrose</object-name>
-<property>/orientation/heading-magnetic-deg</property>
+	<property>/instrumentation/magnetic-compass/indicated-heading-deg</property>
 	<offset-deg>90</offset-deg>
 	<factor>-1</factor>
 	<axis>

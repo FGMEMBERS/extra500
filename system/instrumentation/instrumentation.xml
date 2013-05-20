@@ -20,7 +20,7 @@
       Date: 21.04.13
 
       Last change:      Eric van den Berg
-      Date:             13.05.13
+      Date:             20.05.13
 -->
 
 <PropertyList>
@@ -92,15 +92,15 @@
     <number>1</number>
   </gps>
 
-  <heading-indicator-dg>
+  <heading-indicator-fg>
     <name>heading-indicator-IFD-LH</name>
     <number>0</number>
-  </heading-indicator-dg>
+  </heading-indicator-fg>
 
-  <heading-indicator-dg>
+  <heading-indicator-fg>
     <name>heading-indicator-IFD-RH</name>
     <number>0</number>
-  </heading-indicator-dg>
+  </heading-indicator-fg>
 
   <inst-vertical-speed-indicator>                                           
     <name>ivsi-IFD-LH</name>

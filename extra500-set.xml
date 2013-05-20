@@ -426,9 +426,10 @@ JSBSim Extra Aircraft - Extra 500.
             <serviceable>1</serviceable>
             <sideslip-error-factor>0.1</sideslip-error-factor>
       </staticAP>
-      <electrical>	<!-- FIXME: a hack to get the turn coordinator working -->
+      <electrical>	<!-- FIXME: a hack to get the turn coordinator and heading ind working -->
 		<outputs>
 			<turn-coordinator>12</turn-coordinator>
+			<DG>12</DG>
 		</outputs>
       </electrical>
  </systems>
