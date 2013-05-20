@@ -36,8 +36,8 @@
 <!-- instruments -->
 
 <model>
-  <name>MagneticCompass</name>
-  <path>Aircraft/extra500/Models/instruments/Autopilot.ac</path>
+  <name>Autopilot</name>
+  <path>Aircraft/extra500/Models/instruments/Autopilot.xml</path>
 	<offsets>
 		<x-m>-0.745</x-m>
 		<y-m>.005</y-m>	

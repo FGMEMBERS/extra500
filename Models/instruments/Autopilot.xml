@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!--
+    This file is part of extra500
+
+    extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Thomas Grossberger and Dirk Dittmann
+      Date: March 13 2013
+
+      Last change:      Thomas Grossberger
+      Date:             20.05.13
+-->
+
+<PropertyList>
+
+<path>Autopilot.ac</path>
+
+<!--TEST selects-->
+	<animation>
+		<type>select</type>
+		<object-name>Autopilot.Display.HDG</object-name>
+		<object-name>Autopilot.Display.RDY</object-name>
+		<object-name>Autopilot.Display.NAV</object-name>
+		<object-name>Autopilot.Display.CWS</object-name>
+		<object-name>Autopilot.Display.APR</object-name>
+		<object-name>Autopilot.Display.FAIL</object-name>
+		<object-name>Autopilot.Display.GPSS</object-name>
+		<object-name>Autopilot.Display.REV</object-name>
+		<object-name>Autopilot.Display.TRIM</object-name>
+		<object-name>Autopilot.Display.ArrowUP</object-name>
+		<object-name>Autopilot.Display.ArrowDOWN</object-name>
+		<object-name>Autopilot.Display.ALT</object-name>
+		<object-name>Autopilot.Display.GS</object-name>
+		<object-name>Autopilot.Display.VS</object-name>
+		<object-name>Autopilot.Display.VSnumbers</object-name>
+		<condition>
+			<less-than>
+				<property>controls/gear/brake-parking</property>
+				<value>1</value>
+			</less-than>	
+		</condition>
+	</animation>
+
+<!--TEST picks-->
+
+<!--TEST dimming-->
+<animation>
+        <type>material</type>
+        <object-name>Autopilot.Display</object-name>
+        <object-name>Autopilot.Frame</object-name>
+		<object-name>Autopilot.Display.HDG</object-name>
+		<object-name>Autopilot.Display.RDY</object-name>
+		<object-name>Autopilot.Display.NAV</object-name>
+		<object-name>Autopilot.Display.CWS</object-name>
+		<object-name>Autopilot.Display.APR</object-name>
+		<object-name>Autopilot.Display.FAIL</object-name>
+		<object-name>Autopilot.Display.GPSS</object-name>
+		<object-name>Autopilot.Display.REV</object-name>
+		<object-name>Autopilot.Display.TRIM</object-name>
+		<object-name>Autopilot.Display.ArrowUP</object-name>
+		<object-name>Autopilot.Display.ArrowDOWN</object-name>
+		<object-name>Autopilot.Display.ALT</object-name>
+		<object-name>Autopilot.Display.GS</object-name>
+		<object-name>Autopilot.Display.VS</object-name>
+		<object-name>Autopilot.Display.VSnumbers</object-name>
+		<object-name>Autopilot.Button.HDG</object-name>
+		<object-name>Autopilot.Button.NAV</object-name>
+		<object-name>Autopilot.Button.APR</object-name>
+		<object-name>Autopilot.Button.REV</object-name>
+		<object-name>Autopilot.Button.ALT</object-name>
+		<object-name>Autopilot.Button.VS</object-name>
+	<condition>
+		<equals>
+		<property>extra500/SidePanel/Light/Instrument/state</property>
+		<value>1</value>
+		</equals>
+	</condition>
+        <emission>
+            <red>1</red>
+            <green>1</green>
+            <blue>1</blue>
+            <factor-prop>extra500/MasterPanel/Dimming/Instrument/state</factor-prop>
+        </emission>
+</animation>
+
+</PropertyList>
