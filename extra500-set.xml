@@ -395,11 +395,19 @@ JSBSim Extra Aircraft - Extra 500.
 		<alt type="int">0</alt>
 		<vs type="int">0</vs>
 		<gs type="int">0</gs>
+		<rev type="int">0</rev>
+		<apr type="int">0</apr>
+		<rdy type="int">0</rdy>
+		<cws type="int">0</cws>
+		<fail type="int">0</fail>
+		<trim type="int">0</trim>
+		<trim-up type="int">0</trim-up>
+		<trim-down type="int">0</trim-down>
 	</mode>
 	<hdg-channel>	
 		<turn-rate-error-kp type="double">0.0003</turn-rate-error-kp>
 		<turn-rate-error-ki type="double">0.00</turn-rate-error-ki>
-		<turn-rate-error-kd type="double">0.001</turn-rate-error-kd>
+		<turn-rate-error-kd type="double">0.0015</turn-rate-error-kd>
 		<lmd-hdg-error-kp type="double">9.0</lmd-hdg-error-kp>			<!--180deg/min devided by 20deg -->
 		<lmd-hdg-error-ki type="double">0.0</lmd-hdg-error-ki>
 		<lmd-hdg-error-kd type="double">0.05</lmd-hdg-error-kd>
