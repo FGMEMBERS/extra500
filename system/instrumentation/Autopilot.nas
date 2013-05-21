@@ -251,9 +251,8 @@ var Autopilot = {
 			} else {
 				me.nModeFail.setValue(1);
 			} 
-		} else if ( me.nModeNav.getValue() == 1 ) {
+		} else if ( ( me.nModeNav.getValue() == 1) and ( me.nModeNavGpss.getValue() == 0) ) {
 # a check if GPSS is possible fails here!
-			me.nModeNav.setValue(2);
 			me.nModeNavGpss.setValue(1);
 		} else { 
 			me.nModeRdy.setValue(1);

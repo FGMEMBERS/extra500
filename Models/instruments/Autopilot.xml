@@ -197,10 +197,10 @@
 		<type>select</type>
 		<object-name>Autopilot.Display.NAV</object-name>
 		<condition>
-			<greater-than>
+			<equals>
 				<property>/autopilot/mode/nav</property>
-				<value>0</value>
-			</greater-than>	
+				<value>1</value>
+			</equals>	
 		</condition>
 	</animation>
 
