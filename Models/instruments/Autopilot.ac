@@ -7,7 +7,7 @@ name "Blender_export__Autopilot.ac"
 kids 26
 OBJECT poly
 name "Autopilot.Button.ALT"
-loc 0.0010663 -0.0136967 -0.0239248
+loc -0.0004337 -0.0136967 -0.0239248
 texture "AutopilotTextur.png"
 texrep 1 1
 numvert 8
@@ -58,7 +58,7 @@ refs 4
 kids 0
 OBJECT poly
 name "Autopilot.Button.APR"
-loc 0.0010663 -0.0136967 0.0232501
+loc -0.0004337 -0.0136967 0.0232501
 texture "AutopilotTextur.png"
 texrep 1 1
 numvert 8
@@ -109,7 +109,7 @@ refs 4
 kids 0
 OBJECT poly
 name "Autopilot.Button.HDG"
-loc 0.0010663 -0.0136967 0.0705736
+loc -0.0004337 -0.0136967 0.0705736
 texture "AutopilotTextur.png"
 texrep 1 1
 numvert 8
@@ -160,7 +160,7 @@ refs 4
 kids 0
 OBJECT poly
 name "Autopilot.Button.NAV"
-loc 0.0010663 -0.0136967 0.0469580
+loc -0.0004337 -0.0136967 0.0469580
 texture "AutopilotTextur.png"
 texrep 1 1
 numvert 8
@@ -211,7 +211,7 @@ refs 4
 kids 0
 OBJECT poly
 name "Autopilot.Button.REV"
-loc 0.0010663 -0.0136967 -0.0003129
+loc -0.0004337 -0.0136967 -0.0003129
 texture "AutopilotTextur.png"
 texrep 1 1
 numvert 8
@@ -262,7 +262,7 @@ refs 4
 kids 0
 OBJECT poly
 name "Autopilot.Button.VS"
-loc 0.0010663 -0.0136967 -0.0475481
+loc -0.0004337 -0.0136967 -0.0475481
 texture "AutopilotTextur.png"
 texrep 1 1
 numvert 8
@@ -851,7 +851,7 @@ refs 4
 kids 0
 OBJECT poly
 name "Autopilot.Knob"
-loc 0.0084881 -0.0143574 -0.0703453
+loc 0.0069881 -0.0143574 -0.0703453
 texture "AutopilotTextur.png"
 texrep 1 1
 numvert 64
