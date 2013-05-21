@@ -62,5 +62,5 @@ var FusePanel = {
 	},
 };
 
-var fusePanel = FusePanel.new(props.globals.initNode("extra500/FusePanel"),"Fuse Panel");
+var fusePanel = FusePanel.new(props.globals.initNode("extra500/panel/Fuse"),"Fuse Panel");
 		

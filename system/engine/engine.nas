@@ -203,7 +203,7 @@ var calcTemps = {
 		m.nDeltaTOTsd	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/Delta-TOTsd-degC");
 		m.nTOTnr	= props.globals.getNode("/fdm/jsbsim/aircraft/engine/TOTnr-degC");
 
-		m.nStartVoltage	= props.globals.getNode("/extra500/Generator/electric/volt");
+		m.nStartVoltage	= props.globals.getNode("/extra500/electric/Generator/electric/volt");
 		m.nEIPstate	= props.globals.getNode("/extra500/instrumentation/EIP/state");
 
 		m.nPump1	= props.globals.getNode("/extra500/Fuel/FuelPump1/state");

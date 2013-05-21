@@ -92,7 +92,7 @@ extra500.plugElectric();
 var simulationCall = func(timestamp){
 	
 	Part.etd.cls();
-	#extra500.mainBoard.update(timestamp);
+	#extra500.eBox.update(timestamp);
 	extra500.externalPower.update(timestamp);
 	extra500.generator.update(timestamp);
 	extra500.alternator.update(timestamp);
@@ -222,7 +222,7 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 	
 });
 
-# var debug_listener = setlistener("/extra500/AnnunciatorPanel/LowVoltage/state", func(n) {
-# 	print("/extra500/AnnunciatorPanel/LowVoltage/state = " ~n.getValue());
+# var debug_listener = setlistener("/extra500/panel/Annunciator/LowVoltage/state", func(n) {
+# 	print("/extra500/panel/Annunciator/LowVoltage/state = " ~n.getValue());
 # 
 # },0,0);

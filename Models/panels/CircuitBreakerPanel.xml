@@ -32,7 +32,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankA.AirCondition</object-name>
-	<property>extra500/CircuitBreakerPanel/BankA/AirCondition/state</property>
+	<property>extra500/panel/CircuitBreaker/BankA/AirCondition/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -73,7 +73,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankA.CigaretteLighter</object-name>
-	<property>extra500/CircuitBreakerPanel/BankA/CigaretteLighter/state</property>
+	<property>extra500/panel/CircuitBreaker/BankA/CigaretteLighter/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -104,7 +104,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankA.VDC12</object-name>
-	<property>extra500/CircuitBreakerPanel/BankA/VDC12/state</property>
+	<property>extra500/panel/CircuitBreaker/BankA/VDC12/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -135,7 +135,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankA.AudioMarker</object-name>
-	<property>extra500/CircuitBreakerPanel/BankA/AudioMarker/state</property>
+	<property>extra500/panel/CircuitBreaker/BankA/AudioMarker/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -166,7 +166,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankA.DME</object-name>
-	<property>extra500/CircuitBreakerPanel/BankA/DME/state</property>
+	<property>extra500/panel/CircuitBreaker/BankA/DME/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -197,7 +197,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankA.WeatherDetection</object-name>
-	<property>extra500/CircuitBreakerPanel/BankA/WeatherDetection/state</property>
+	<property>extra500/panel/CircuitBreaker/BankA/WeatherDetection/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -228,7 +228,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankA.Sirius</object-name>
-	<property>extra500/CircuitBreakerPanel/BankA/Sirius/state</property>
+	<property>extra500/panel/CircuitBreaker/BankA/Sirius/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -259,7 +259,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankA.Iridium</object-name>
-	<property>extra500/CircuitBreakerPanel/BankA/Iridium/state</property>
+	<property>extra500/panel/CircuitBreaker/BankA/Iridium/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -290,7 +290,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankA.IFD-RH-A</object-name>
-	<property>extra500/CircuitBreakerPanel/BankA/IFD-RH-A/state</property>
+	<property>extra500/panel/CircuitBreaker/BankA/IFD-RH-A/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -321,7 +321,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankA.PanelVent</object-name>
-	<property>extra500/CircuitBreakerPanel/BankA/PanelVent/state</property>
+	<property>extra500/panel/CircuitBreaker/BankA/PanelVent/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -352,7 +352,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankA.Vent</object-name>
-	<property>extra500/CircuitBreakerPanel/BankA/Vent/state</property>
+	<property>extra500/panel/CircuitBreaker/BankA/Vent/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -383,7 +383,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankA.AirControl</object-name>
-	<property>extra500/CircuitBreakerPanel/BankA/AirControl/state</property>
+	<property>extra500/panel/CircuitBreaker/BankA/AirControl/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -414,7 +414,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankB.BusTie</object-name>
-	<property>extra500/CircuitBreakerPanel/BankB/BusTie/state</property>
+	<property>extra500/panel/CircuitBreaker/BankB/BusTie/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -445,7 +445,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankB.Emergency2</object-name>
-	<property>extra500/CircuitBreakerPanel/BankB/Emergency2/state</property>
+	<property>extra500/panel/CircuitBreaker/BankB/Emergency2/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -478,7 +478,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankB.CabinLight</object-name>
-	<property>extra500/CircuitBreakerPanel/BankB/CabinLight/state</property>
+	<property>extra500/panel/CircuitBreaker/BankB/CabinLight/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -509,7 +509,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankB.RecognitionLight</object-name>
-	<property>extra500/CircuitBreakerPanel/BankB/RecognitionLight/state</property>
+	<property>extra500/panel/CircuitBreaker/BankB/RecognitionLight/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -540,7 +540,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankB.NavLight</object-name>
-	<property>extra500/CircuitBreakerPanel/BankB/NavLight/state</property>
+	<property>extra500/panel/CircuitBreaker/BankB/NavLight/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -571,7 +571,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankB.OverSpeed</object-name>
-	<property>extra500/CircuitBreakerPanel/BankB/OverSpeed/state</property>
+	<property>extra500/panel/CircuitBreaker/BankB/OverSpeed/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -602,7 +602,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankB.FuelTransferL</object-name>
-	<property>extra500/CircuitBreakerPanel/BankB/FuelTransferL/state</property>
+	<property>extra500/panel/CircuitBreaker/BankB/FuelTransferL/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -633,7 +633,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankB.FuelTransferR</object-name>
-	<property>extra500/CircuitBreakerPanel/BankB/FuelTransferR/state</property>
+	<property>extra500/panel/CircuitBreaker/BankB/FuelTransferR/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -664,7 +664,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankB.PitotR</object-name>
-	<property>extra500/CircuitBreakerPanel/BankB/PitotR/state</property>
+	<property>extra500/panel/CircuitBreaker/BankB/PitotR/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -697,7 +697,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankB.EngineInstrument2</object-name>
-	<property>extra500/CircuitBreakerPanel/BankB/EngineInstrument2/state</property>
+	<property>extra500/panel/CircuitBreaker/BankB/EngineInstrument2/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -728,7 +728,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankB.DIP2</object-name>
-	<property>extra500/CircuitBreakerPanel/BankB/DIP2/state</property>
+	<property>extra500/panel/CircuitBreaker/BankB/DIP2/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -761,7 +761,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankB.IFD-RH-B</object-name>
-	<property>extra500/CircuitBreakerPanel/BankB/IFD-RH-B/state</property>
+	<property>extra500/panel/CircuitBreaker/BankB/IFD-RH-B/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -792,7 +792,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankB.TAS</object-name>
-	<property>extra500/CircuitBreakerPanel/BankB/TAS/state</property>
+	<property>extra500/panel/CircuitBreaker/BankB/TAS/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -827,7 +827,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankB.AutopilotComputer</object-name>
-	<property>extra500/CircuitBreakerPanel/BankB/AutopilotComputer/state</property>
+	<property>extra500/panel/CircuitBreaker/BankB/AutopilotComputer/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -858,7 +858,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankB.TurnCoordinator</object-name>
-	<property>extra500/CircuitBreakerPanel/BankB/TurnCoordinator/state</property>
+	<property>extra500/panel/CircuitBreaker/BankB/TurnCoordinator/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -891,7 +891,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankB.RCCB</object-name>
-	<property>extra500/CircuitBreakerPanel/BankB/RCCB/state</property>
+	<property>extra500/panel/CircuitBreaker/BankB/RCCB/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -922,7 +922,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankC.FlapUNB</object-name>
-	<property>extra500/CircuitBreakerPanel/BankC/FlapUNB/state</property>
+	<property>extra500/panel/CircuitBreaker/BankC/FlapUNB/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -953,7 +953,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankC.FlapControl</object-name>
-	<property>extra500/CircuitBreakerPanel/BankC/FlapControl/state</property>
+	<property>extra500/panel/CircuitBreaker/BankC/FlapControl/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -984,7 +984,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankC.Flap</object-name>
-	<property>extra500/CircuitBreakerPanel/BankC/Flap/state</property>
+	<property>extra500/panel/CircuitBreaker/BankC/Flap/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1015,7 +1015,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankC.Emergency1</object-name>
-	<property>extra500/CircuitBreakerPanel/BankC/Emergency1/state</property>
+	<property>extra500/panel/CircuitBreaker/BankC/Emergency1/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1046,7 +1046,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankC.AvBus</object-name>
-	<property>extra500/CircuitBreakerPanel/BankC/AvBus/state</property>
+	<property>extra500/panel/CircuitBreaker/BankC/AvBus/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1077,7 +1077,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankC.InstrumentLight</object-name>
-	<property>extra500/CircuitBreakerPanel/BankC/InstrumentLight/state</property>
+	<property>extra500/panel/CircuitBreaker/BankC/InstrumentLight/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1108,7 +1108,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankC.StrobeLight</object-name>
-	<property>extra500/CircuitBreakerPanel/BankC/StrobeLight/state</property>
+	<property>extra500/panel/CircuitBreaker/BankC/StrobeLight/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1139,7 +1139,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankC.IceLight</object-name>
-	<property>extra500/CircuitBreakerPanel/BankC/IceLight/state</property>
+	<property>extra500/panel/CircuitBreaker/BankC/IceLight/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1170,7 +1170,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankC.VneWarn</object-name>
-	<property>extra500/CircuitBreakerPanel/BankC/VneWarn/state</property>
+	<property>extra500/panel/CircuitBreaker/BankC/VneWarn/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1201,7 +1201,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankC.FuelFlow</object-name>
-	<property>extra500/CircuitBreakerPanel/BankC/FuelFlow/state</property>
+	<property>extra500/panel/CircuitBreaker/BankC/FuelFlow/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1232,7 +1232,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankC.FuelPump2</object-name>
-	<property>extra500/CircuitBreakerPanel/BankC/FuelPump2/state</property>
+	<property>extra500/panel/CircuitBreaker/BankC/FuelPump2/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1263,7 +1263,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankC.WindShieldControl</object-name>
-	<property>extra500/CircuitBreakerPanel/BankC/WindShieldControl/state</property>
+	<property>extra500/panel/CircuitBreaker/BankC/WindShieldControl/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1294,7 +1294,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankC.WindShieldHeat</object-name>
-	<property>extra500/CircuitBreakerPanel/BankC/WindShieldHeat/state</property>
+	<property>extra500/panel/CircuitBreaker/BankC/WindShieldHeat/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1325,7 +1325,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankC.Boots</object-name>
-	<property>extra500/CircuitBreakerPanel/BankC/Boots/state</property>
+	<property>extra500/panel/CircuitBreaker/BankC/Boots/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1356,7 +1356,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankC.PropellerHeat</object-name>
-	<property>extra500/CircuitBreakerPanel/BankC/PropellerHeat/state</property>
+	<property>extra500/panel/CircuitBreaker/BankC/PropellerHeat/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1387,7 +1387,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankC.IFD-LH-B</object-name>
-	<property>extra500/CircuitBreakerPanel/BankC/IFD-LH-B/state</property>
+	<property>extra500/panel/CircuitBreaker/BankC/IFD-LH-B/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1418,7 +1418,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankC.Ignition</object-name>
-	<property>extra500/CircuitBreakerPanel/BankC/Ignition/state</property>
+	<property>extra500/panel/CircuitBreaker/BankC/Ignition/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1449,7 +1449,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankC.Start</object-name>
-	<property>extra500/CircuitBreakerPanel/BankC/Start/state</property>
+	<property>extra500/panel/CircuitBreaker/BankC/Start/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1482,7 +1482,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankC.AutopilotServo</object-name>
-	<property>extra500/CircuitBreakerPanel/BankC/AutopilotServo/state</property>
+	<property>extra500/panel/CircuitBreaker/BankC/AutopilotServo/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1513,7 +1513,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankC.EnvironmentalBleed</object-name>
-	<property>extra500/CircuitBreakerPanel/BankC/EnvironmentalBleed/state</property>
+	<property>extra500/panel/CircuitBreaker/BankC/EnvironmentalBleed/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1544,7 +1544,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankC.Hydraulic</object-name>
-	<property>extra500/CircuitBreakerPanel/BankC/Hydraulic/state</property>
+	<property>extra500/panel/CircuitBreaker/BankC/Hydraulic/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1575,7 +1575,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankC.GearControl</object-name>
-	<property>extra500/CircuitBreakerPanel/BankC/GearControl/state</property>
+	<property>extra500/panel/CircuitBreaker/BankC/GearControl/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1608,7 +1608,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankD.LowVolt</object-name>
-	<property>extra500/CircuitBreakerPanel/BankD/LowVolt/state</property>
+	<property>extra500/panel/CircuitBreaker/BankD/LowVolt/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1639,7 +1639,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankD.VoltMonitor</object-name>
-	<property>extra500/CircuitBreakerPanel/BankD/VoltMonitor/state</property>
+	<property>extra500/panel/CircuitBreaker/BankD/VoltMonitor/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1670,7 +1670,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankD.Alt</object-name>
-	<property>extra500/CircuitBreakerPanel/BankD/Alt/state</property>
+	<property>extra500/panel/CircuitBreaker/BankD/Alt/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1701,7 +1701,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankD.GeneratorReset</object-name>
-	<property>extra500/CircuitBreakerPanel/BankD/GeneratorReset/state</property>
+	<property>extra500/panel/CircuitBreaker/BankD/GeneratorReset/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1732,7 +1732,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankD.GlareLight</object-name>
-	<property>extra500/CircuitBreakerPanel/BankD/GlareLight/state</property>
+	<property>extra500/panel/CircuitBreaker/BankD/GlareLight/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1763,7 +1763,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankD.WarnLight</object-name>
-	<property>extra500/CircuitBreakerPanel/BankD/WarnLight/state</property>
+	<property>extra500/panel/CircuitBreaker/BankD/WarnLight/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1794,7 +1794,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankD.LandingLight</object-name>
-	<property>extra500/CircuitBreakerPanel/BankD/LandingLight/state</property>
+	<property>extra500/panel/CircuitBreaker/BankD/LandingLight/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1825,7 +1825,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankD.StallWarning</object-name>
-	<property>extra500/CircuitBreakerPanel/BankD/StallWarning/state</property>
+	<property>extra500/panel/CircuitBreaker/BankD/StallWarning/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1856,7 +1856,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankD.FuelQuantity</object-name>
-	<property>extra500/CircuitBreakerPanel/BankD/FuelQuantity/state</property>
+	<property>extra500/panel/CircuitBreaker/BankD/FuelQuantity/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1887,7 +1887,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankD.FuelPump1</object-name>
-	<property>extra500/CircuitBreakerPanel/BankD/FuelPump1/state</property>
+	<property>extra500/panel/CircuitBreaker/BankD/FuelPump1/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1918,7 +1918,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankD.PitotL</object-name>
-	<property>extra500/CircuitBreakerPanel/BankD/PitotL/state</property>
+	<property>extra500/panel/CircuitBreaker/BankD/PitotL/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1949,7 +1949,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankD.IntakeAI</object-name>
-	<property>extra500/CircuitBreakerPanel/BankD/IntakeAI/state</property>
+	<property>extra500/panel/CircuitBreaker/BankD/IntakeAI/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -1980,7 +1980,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankD.EngineInstrument1</object-name>
-	<property>extra500/CircuitBreakerPanel/BankD/EngineInstrument1/state</property>
+	<property>extra500/panel/CircuitBreaker/BankD/EngineInstrument1/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -2011,7 +2011,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankD.DIP1</object-name>
-	<property>extra500/CircuitBreakerPanel/BankD/DIP1/state</property>
+	<property>extra500/panel/CircuitBreaker/BankD/DIP1/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -2042,7 +2042,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankD.IFD-LH-A</object-name>
-	<property>extra500/CircuitBreakerPanel/BankD/IFD-LH-A/state</property>
+	<property>extra500/panel/CircuitBreaker/BankD/IFD-LH-A/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -2073,7 +2073,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankD.Keypad</object-name>
-	<property>extra500/CircuitBreakerPanel/BankD/Keypad/state</property>
+	<property>extra500/panel/CircuitBreaker/BankD/Keypad/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -2104,7 +2104,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankD.ATC</object-name>
-	<property>extra500/CircuitBreakerPanel/BankD/ATC/state</property>
+	<property>extra500/panel/CircuitBreaker/BankD/ATC/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -2135,7 +2135,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankD.StandbyGyroskop</object-name>
-	<property>extra500/CircuitBreakerPanel/BankD/StandbyGyroskop/state</property>
+	<property>extra500/panel/CircuitBreaker/BankD/StandbyGyroskop/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -2166,7 +2166,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankD.Dump</object-name>
-	<property>extra500/CircuitBreakerPanel/BankD/Dump/state</property>
+	<property>extra500/panel/CircuitBreaker/BankD/Dump/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -2197,7 +2197,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankD.CabinPressure</object-name>
-	<property>extra500/CircuitBreakerPanel/BankD/CabinPressure/state</property>
+	<property>extra500/panel/CircuitBreaker/BankD/CabinPressure/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -2228,7 +2228,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankD.GearWarn</object-name>
-	<property>extra500/CircuitBreakerPanel/BankD/GearWarn/state</property>
+	<property>extra500/panel/CircuitBreaker/BankD/GearWarn/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -2259,7 +2259,7 @@
 <animation>
 	<type>translate</type>
 	<object-name>CircuitBreakerPanel.BankD.GearAux1</object-name>
-	<property>extra500/CircuitBreakerPanel/BankD/GearAux1/state</property>
+	<property>extra500/panel/CircuitBreaker/BankD/GearAux1/state</property>
 	<factor>-0.0025</factor>
 	<axis>
 		<x>0</x>
@@ -2293,7 +2293,7 @@
 
 		<condition>
 		<equals>
-		<property>extra500/SidePanel/Light/Instrument/state</property>
+		<property>extra500/panel/Side/Light/Instrument/state</property>
 		<value>1</value>
 		</equals>
 	</condition>
@@ -2301,7 +2301,7 @@
             <red>.4</red>
             <green>.4</green>
             <blue>.4</blue>
-            <factor-prop>extra500/MasterPanel/Dimming/Instrument/state</factor-prop>
+            <factor-prop>extra500/panel/Master/Dimming/Instrument/state</factor-prop>
         </emission>
 </animation>
 

@@ -98,9 +98,9 @@ var canvas_demo = {
 		me.textSim.setText(text);
 # 		
 		text = "";
-		#text ~= sprintf("Generator  %0.2f V   %0.2f A\n",extra500.mainBoard.generatorShunt.indicatedVolt,extra500.mainBoard.generatorShunt.indicatedAmpere);
-		#text ~= sprintf("Battery    %0.2f V   %0.2f A\n",extra500.mainBoard.batteryShunt.indicatedVolt,extra500.mainBoard.batteryShunt.indicatedAmpere);
-		#text ~= sprintf("Altenator  %0.2f V   %0.2f A\n",extra500.mainBoard.alternatorShunt.indicatedVolt,extra500.mainBoard.alternatorShunt.indicatedAmpere);
+		#text ~= sprintf("Generator  %0.2f V   %0.2f A\n",extra500.eBox.generatorShunt.indicatedVolt,extra500.eBox.generatorShunt.indicatedAmpere);
+		#text ~= sprintf("Battery    %0.2f V   %0.2f A\n",extra500.eBox.batteryShunt.indicatedVolt,extra500.eBox.batteryShunt.indicatedAmpere);
+		#text ~= sprintf("Altenator  %0.2f V   %0.2f A\n",extra500.eBox.alternatorShunt.indicatedVolt,extra500.eBox.alternatorShunt.indicatedAmpere);
 		text ~="\nEngine\n";
 		text ~= sprintf("Fuel cutoff      %s\n",extra500.engine._cutoffState==0?"off":"on");
 		text ~= sprintf("Reverser         %s\n",extra500.engine.nReverser.getValue()==0?"off":"on");

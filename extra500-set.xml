@@ -574,7 +574,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/part/part.hydraulic.nas</file>
 	</Part>
 	<extra500>
-		<file>Aircraft/extra500/system/electric/mainBoard.nas</file>
+		<file>Aircraft/extra500/system/electric/eBox.nas</file>
 		<file>Aircraft/extra500/system/electric/panel.Fuse.nas</file>
 		<file>Aircraft/extra500/system/electric/panel.CircuitBreaker.nas</file>
 		<file>Aircraft/extra500/system/electric/panel.Master.nas</file>

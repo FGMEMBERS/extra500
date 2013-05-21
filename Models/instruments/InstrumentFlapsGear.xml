@@ -269,7 +269,7 @@
 
 		<condition>
 		<equals>
-		<property>extra500/SidePanel/Light/Instrument/state</property>
+		<property>extra500/panel/Side/Light/Instrument/state</property>
 		<value>1</value>
 		</equals>
 	</condition>
@@ -277,7 +277,7 @@
             <red>0.4</red>
             <green>0.4</green>
             <blue>0.4</blue>
-            <factor-prop>extra500/MasterPanel/Dimming/Instrument/state</factor-prop>
+            <factor-prop>extra500/panel/Master/Dimming/Instrument/state</factor-prop>
         </emission>
 </animation>
 

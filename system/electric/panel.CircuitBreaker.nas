@@ -26,100 +26,100 @@
 
 #Group	Nr	Lable		BUS		default		property
 # Bank A
-#	0	AIR-CON		LoadBus		1	extra500/CircuitBreakerPanel/BankA/AirCondition
+#	0	AIR-CON		LoadBus		1	extra500/panel/CircuitBreaker/BankA/AirCondition
 #	1
 #	2
 #	3
 #	4
 #	5
-#	6	CIGA-LTR	LoadBus		1	extra500/CircuitBreakerPanel/BankA/CigaretteLighter
-#	7	12-VDC		LoadBus		1	extra500/CircuitBreakerPanel/BankA/VDC12
-#	8	AUDIO-MRK	LoadBus		1	extra500/CircuitBreakerPanel/BankA/AudioMarker
-#	9	DME		LoadBus		1	extra500/CircuitBreakerPanel/BankA/DME
-#	10	WTHR-DET	LoadBus		1	extra500/CircuitBreakerPanel/BankA/WeatherDetection
-#	11	SIRIUS		LoadBus		1	extra500/CircuitBreakerPanel/BankA/Sirius
-#	12	IRIDIUM		LoadBus		1	extra500/CircuitBreakerPanel/BankA/Iridium
-#	13	IFD-RH-A	LoadBus		1	extra500/CircuitBreakerPanel/BankA/IFD-RH-A
-#	14	P-VENT		LoadBus		1	extra500/CircuitBreakerPanel/BankA/PanelVent
-#	15	VENT		LoadBus		1	extra500/CircuitBreakerPanel/BankA/Vent
-#	16	AIR-CTRL	HotBus		1	extra500/CircuitBreakerPanel/BankA/AirControl
+#	6	CIGA-LTR	LoadBus		1	extra500/panel/CircuitBreaker/BankA/CigaretteLighter
+#	7	12-VDC		LoadBus		1	extra500/panel/CircuitBreaker/BankA/VDC12
+#	8	AUDIO-MRK	LoadBus		1	extra500/panel/CircuitBreaker/BankA/AudioMarker
+#	9	DME		LoadBus		1	extra500/panel/CircuitBreaker/BankA/DME
+#	10	WTHR-DET	LoadBus		1	extra500/panel/CircuitBreaker/BankA/WeatherDetection
+#	11	SIRIUS		LoadBus		1	extra500/panel/CircuitBreaker/BankA/Sirius
+#	12	IRIDIUM		LoadBus		1	extra500/panel/CircuitBreaker/BankA/Iridium
+#	13	IFD-RH-A	LoadBus		1	extra500/panel/CircuitBreaker/BankA/IFD-RH-A
+#	14	P-VENT		LoadBus		1	extra500/panel/CircuitBreaker/BankA/PanelVent
+#	15	VENT		LoadBus		1	extra500/panel/CircuitBreaker/BankA/Vent
+#	16	AIR-CTRL	HotBus		1	extra500/panel/CircuitBreaker/BankA/AirControl
 
 # Bank B
 
-#	17	BUS-TIE				1	extra500/CircuitBreakerPanel/BankB/BusTie
-#	18	EMGC-2		LoadBus		1	extra500/CircuitBreakerPanel/BankB/Emergency2
+#	17	BUS-TIE				1	extra500/panel/CircuitBreaker/BankB/BusTie
+#	18	EMGC-2		LoadBus		1	extra500/panel/CircuitBreaker/BankB/Emergency2
 #	19	
-#	20	CABIN-LT	LoadBus		1	extra500/CircuitBreakerPanel/BankB/CabinLight
-#	21	RECO-LT		LoadBus		1	extra500/CircuitBreakerPanel/BankB/RecognitionLight
-#	22	NAV-LT		LoadBus		1	extra500/CircuitBreakerPanel/BankB/NavLight
-#	23	O-SP-Test	LoadBus		1	extra500/CircuitBreakerPanel/BankB/OverSpeed
-#	24	FUEL-TR-L	LoadBus		1	extra500/CircuitBreakerPanel/BankB/FuelTransferL
-#	25	FUEL-TR-R	LoadBus		1	extra500/CircuitBreakerPanel/BankB/FuelTransferR
-#	26	PITOT-R		LoadBus		1	extra500/CircuitBreakerPanel/BankB/PitotR
+#	20	CABIN-LT	LoadBus		1	extra500/panel/CircuitBreaker/BankB/CabinLight
+#	21	RECO-LT		LoadBus		1	extra500/panel/CircuitBreaker/BankB/RecognitionLight
+#	22	NAV-LT		LoadBus		1	extra500/panel/CircuitBreaker/BankB/NavLight
+#	23	O-SP-Test	LoadBus		1	extra500/panel/CircuitBreaker/BankB/OverSpeed
+#	24	FUEL-TR-L	LoadBus		1	extra500/panel/CircuitBreaker/BankB/FuelTransferL
+#	25	FUEL-TR-R	LoadBus		1	extra500/panel/CircuitBreaker/BankB/FuelTransferR
+#	26	PITOT-R		LoadBus		1	extra500/panel/CircuitBreaker/BankB/PitotR
 #	27
-#	28	ENG-INS-2	LoadBus		1	extra500/CircuitBreakerPanel/BankB/EngineInstrument2
-#	29	DIP-2		LoadBus		1	extra500/CircuitBreakerPanel/BankB/DIP2
+#	28	ENG-INS-2	LoadBus		1	extra500/panel/CircuitBreaker/BankB/EngineInstrument2
+#	29	DIP-2		LoadBus		1	extra500/panel/CircuitBreaker/BankB/DIP2
 
-#	30	IFD-RH-B	avionicBus		1	extra500/CircuitBreakerPanel/BankB/IFD-RH-B
-#	31	TAS		avionicBus		1	extra500/CircuitBreakerPanel/BankB/TAS
+#	30	IFD-RH-B	avionicBus		1	extra500/panel/CircuitBreaker/BankB/IFD-RH-B
+#	31	TAS		avionicBus		1	extra500/panel/CircuitBreaker/BankB/TAS
 #	32
 #	33
-#	34	AP-CMPTR	avionicBus		1	extra500/CircuitBreakerPanel/BankB/AutopilotComputer
-#	35	Turn-Coord	avionicBus		1	extra500/CircuitBreakerPanel/BankB/TurnCoordinator
+#	34	AP-CMPTR	avionicBus		1	extra500/panel/CircuitBreaker/BankB/AutopilotComputer
+#	35	Turn-Coord	avionicBus		1	extra500/panel/CircuitBreaker/BankB/TurnCoordinator
 #	36
-#	37	RCCB		HotBus		0	extra500/CircuitBreakerPanel/BankB/RCCB
+#	37	RCCB		HotBus		0	extra500/panel/CircuitBreaker/BankB/RCCB
 
 # Bank C
 
-#	38	FLAP-UNB	HotBus		1	extra500/CircuitBreakerPanel/BankC/FlapUNB
-#	39	FLAP-CTRL	BatteryBus	1	extra500/CircuitBreakerPanel/BankC/FlapControl
-#	40	FLAP		BatteryBus	1	extra500/CircuitBreakerPanel/BankC/Flap
-#	41	EMGC1		BatteryBus	1	extra500/CircuitBreakerPanel/BankC/Emergency1
-#	42	AV-BUS		BatteryBus	1	extra500/CircuitBreakerPanel/BankC/avionicBus
-#	43	INST-LT		BatteryBus	1	extra500/CircuitBreakerPanel/BankC/InstrumentLight
-#	44	STROBE-LT	BatteryBus	1	extra500/CircuitBreakerPanel/BankC/StrobeLight
-#	45	ICE-LT		BatteryBus	1	extra500/CircuitBreakerPanel/BankC/IceLight
-#	46	VNE-WARN	BatteryBus	1	extra500/CircuitBreakerPanel/BankC/VneWarn
-#	47	FUEL FLOW	BatteryBus	1	extra500/CircuitBreakerPanel/BankC/FuelFlow
-#	48	FUEL-P-2	BatteryBus	1	extra500/CircuitBreakerPanel/BankC/FuelPump2
-#	49	WSH-CTRL	BatteryBus	1	extra500/CircuitBreakerPanel/BankC/WindShieldControl
-#	50	WSH-HT		BatteryBus	1	extra500/CircuitBreakerPanel/BankC/WindShieldHeat
-#	51	BOOTS		BatteryBus	1	extra500/CircuitBreakerPanel/BankC/Boots
-#	52	PROP-HT		BatteryBus	1	extra500/CircuitBreakerPanel/BankC/PropellerHeat
-#	53	IFD-LH-B	BatteryBus	1	extra500/CircuitBreakerPanel/BankC/IFD-LH-B
-#	54	IGN		BatteryBus	1	extra500/CircuitBreakerPanel/BankC/Ignition
-#	55	START		BatteryBus	1	extra500/CircuitBreakerPanel/BankC/Start
+#	38	FLAP-UNB	HotBus		1	extra500/panel/CircuitBreaker/BankC/FlapUNB
+#	39	FLAP-CTRL	BatteryBus	1	extra500/panel/CircuitBreaker/BankC/FlapControl
+#	40	FLAP		BatteryBus	1	extra500/panel/CircuitBreaker/BankC/Flap
+#	41	EMGC1		BatteryBus	1	extra500/panel/CircuitBreaker/BankC/Emergency1
+#	42	AV-BUS		BatteryBus	1	extra500/panel/CircuitBreaker/BankC/avionicBus
+#	43	INST-LT		BatteryBus	1	extra500/panel/CircuitBreaker/BankC/InstrumentLight
+#	44	STROBE-LT	BatteryBus	1	extra500/panel/CircuitBreaker/BankC/StrobeLight
+#	45	ICE-LT		BatteryBus	1	extra500/panel/CircuitBreaker/BankC/IceLight
+#	46	VNE-WARN	BatteryBus	1	extra500/panel/CircuitBreaker/BankC/VneWarn
+#	47	FUEL FLOW	BatteryBus	1	extra500/panel/CircuitBreaker/BankC/FuelFlow
+#	48	FUEL-P-2	BatteryBus	1	extra500/panel/CircuitBreaker/BankC/FuelPump2
+#	49	WSH-CTRL	BatteryBus	1	extra500/panel/CircuitBreaker/BankC/WindShieldControl
+#	50	WSH-HT		BatteryBus	1	extra500/panel/CircuitBreaker/BankC/WindShieldHeat
+#	51	BOOTS		BatteryBus	1	extra500/panel/CircuitBreaker/BankC/Boots
+#	52	PROP-HT		BatteryBus	1	extra500/panel/CircuitBreaker/BankC/PropellerHeat
+#	53	IFD-LH-B	BatteryBus	1	extra500/panel/CircuitBreaker/BankC/IFD-LH-B
+#	54	IGN		BatteryBus	1	extra500/panel/CircuitBreaker/BankC/Ignition
+#	55	START		BatteryBus	1	extra500/panel/CircuitBreaker/BankC/Start
 #	56
-#	57	AP SERVO	BatteryBus	1	extra500/CircuitBreakerPanel/BankC/AutopilotServo
-#	58	ENV BLEED	BatteryBus	1	extra500/CircuitBreakerPanel/BankC/EnvironmentalBleed
-#	59	HYDR		BatteryBus	1	extra500/CircuitBreakerPanel/BankC/Hydraulic
-#	60	GEAR-CTRL	HotBus		0	extra500/CircuitBreakerPanel/BankC/GearControl
+#	57	AP SERVO	BatteryBus	1	extra500/panel/CircuitBreaker/BankC/AutopilotServo
+#	58	ENV BLEED	BatteryBus	1	extra500/panel/CircuitBreaker/BankC/EnvironmentalBleed
+#	59	HYDR		BatteryBus	1	extra500/panel/CircuitBreaker/BankC/Hydraulic
+#	60	GEAR-CTRL	HotBus		0	extra500/panel/CircuitBreaker/BankC/GearControl
 
 # Bank D
 
 #	61
-#	62	LOW-VOLT	EmergencyBus	1	extra500/CircuitBreakerPanel/BankD/LowVolt
-#	63	VOLT-MON	EmergencyBus	1	extra500/CircuitBreakerPanel/BankD/VoltMonitor
-#	64	ALT		EmergencyBus	1	extra500/CircuitBreakerPanel/BankD/Alt
-#	65	GEN-RESET	EmergencyBus	1	extra500/CircuitBreakerPanel/BankD/GeneratorReset
-#	66	GLARE-LT	EmergencyBus	1	extra500/CircuitBreakerPanel/BankD/GlareLight
-#	67	WARN-LT		EmergencyBus	1	extra500/CircuitBreakerPanel/BankD/WarnLight
-#	68	LDG-LT		EmergencyBus	1	extra500/CircuitBreakerPanel/BankD/LandingLight
-#	69	STALL-WARN	EmergencyBus	1	extra500/CircuitBreakerPanel/BankD/StallWarning
-#	70	FUEL-QTY	EmergencyBus	1	extra500/CircuitBreakerPanel/BankD/FuelQuantity
-#	71	FUEL-P-1	EmergencyBus	1	extra500/CircuitBreakerPanel/BankD/FuelPump1
-#	72	PITOT-L		EmergencyBus	1	extra500/CircuitBreakerPanel/BankD/PitotL
-#	73	INTAKE-AI	EmergencyBus	1	extra500/CircuitBreakerPanel/BankD/IntakeAI
-#	74	ENG-INS-1	EmergencyBus	1	extra500/CircuitBreakerPanel/BankD/EngineInstrument1
-#	75	DIP-1		EmergencyBus	1	extra500/CircuitBreakerPanel/BankD/DIP1
-#	76	IFD-LH-A	EmergencyBus	1	extra500/CircuitBreakerPanel/BankD/IFD-LH-A
-#	77	KEYPAD		EmergencyBus	1	extra500/CircuitBreakerPanel/BankD/Keypad
-#	78	ATC		EmergencyBus	1	extra500/CircuitBreakerPanel/BankD/ATC
-#	79	STBY-GYRO	EmergencyBus	1	extra500/CircuitBreakerPanel/BankD/StandbyGyroskop
-#	80	DUMP		EmergencyBus	1	extra500/CircuitBreakerPanel/BankD/Dump
-#	81	C-PRESS		EmergencyBus	1	extra500/CircuitBreakerPanel/BankD/CabinPressure
-#	82	GEAR-WARN	EmergencyBus	1	extra500/CircuitBreakerPanel/BankD/GearWarn
-#	83	GEAR-AUX-1	HotBus		1	extra500/CircuitBreakerPanel/BankD/GearAux1
+#	62	LOW-VOLT	EmergencyBus	1	extra500/panel/CircuitBreaker/BankD/LowVolt
+#	63	VOLT-MON	EmergencyBus	1	extra500/panel/CircuitBreaker/BankD/VoltMonitor
+#	64	ALT		EmergencyBus	1	extra500/panel/CircuitBreaker/BankD/Alt
+#	65	GEN-RESET	EmergencyBus	1	extra500/panel/CircuitBreaker/BankD/GeneratorReset
+#	66	GLARE-LT	EmergencyBus	1	extra500/panel/CircuitBreaker/BankD/GlareLight
+#	67	WARN-LT		EmergencyBus	1	extra500/panel/CircuitBreaker/BankD/WarnLight
+#	68	LDG-LT		EmergencyBus	1	extra500/panel/CircuitBreaker/BankD/LandingLight
+#	69	STALL-WARN	EmergencyBus	1	extra500/panel/CircuitBreaker/BankD/StallWarning
+#	70	FUEL-QTY	EmergencyBus	1	extra500/panel/CircuitBreaker/BankD/FuelQuantity
+#	71	FUEL-P-1	EmergencyBus	1	extra500/panel/CircuitBreaker/BankD/FuelPump1
+#	72	PITOT-L		EmergencyBus	1	extra500/panel/CircuitBreaker/BankD/PitotL
+#	73	INTAKE-AI	EmergencyBus	1	extra500/panel/CircuitBreaker/BankD/IntakeAI
+#	74	ENG-INS-1	EmergencyBus	1	extra500/panel/CircuitBreaker/BankD/EngineInstrument1
+#	75	DIP-1		EmergencyBus	1	extra500/panel/CircuitBreaker/BankD/DIP1
+#	76	IFD-LH-A	EmergencyBus	1	extra500/panel/CircuitBreaker/BankD/IFD-LH-A
+#	77	KEYPAD		EmergencyBus	1	extra500/panel/CircuitBreaker/BankD/Keypad
+#	78	ATC		EmergencyBus	1	extra500/panel/CircuitBreaker/BankD/ATC
+#	79	STBY-GYRO	EmergencyBus	1	extra500/panel/CircuitBreaker/BankD/StandbyGyroskop
+#	80	DUMP		EmergencyBus	1	extra500/panel/CircuitBreaker/BankD/Dump
+#	81	C-PRESS		EmergencyBus	1	extra500/panel/CircuitBreaker/BankD/CabinPressure
+#	82	GEAR-WARN	EmergencyBus	1	extra500/panel/CircuitBreaker/BankD/GearWarn
+#	83	GEAR-AUX-1	HotBus		1	extra500/panel/CircuitBreaker/BankD/GearAux1
 
 
 
@@ -673,5 +673,5 @@ var CircuitBreakerPanel = {
 	},
 };
 
-var circuitBreakerPanel = CircuitBreakerPanel.new(props.globals.initNode("extra500/CircuitBreakerPanel"),"Circuit Breaker Panel");
+var circuitBreakerPanel = CircuitBreakerPanel.new(props.globals.initNode("extra500/panel/CircuitBreaker"),"Circuit Breaker Panel");
 

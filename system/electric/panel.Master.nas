@@ -23,28 +23,28 @@
 
 #Group	Nr	Lable		Values		state		property
 # AUTOPILOT
-#	0	MASTER		on/fd/off	1/0/-1		extra500/MasterPanel/Autopilot/Master
-#	1	PITCH TRIM	on/off		1/0		extra500/MasterPanel/Autopilot/PitchTrim
-#	2	YAW DAMPER	on/off		1/0		extra500/MasterPanel/Autopilot/YawDamper
-#	3	YAW TRIM	min/max		-1.0/1.0	extra500/MasterPanel/Autopilot/YawTrim
+#	0	MASTER		on/fd/off	1/0/-1		extra500/panel/Master/Autopilot/Master
+#	1	PITCH TRIM	on/off		1/0		extra500/panel/Master/Autopilot/PitchTrim
+#	2	YAW DAMPER	on/off		1/0		extra500/panel/Master/Autopilot/YawDamper
+#	3	YAW TRIM	min/max		-1.0/1.0	extra500/panel/Master/Autopilot/YawTrim
 
 # FUEL
-#	4	TRANSFER LEFT	on/off		1/0		extra500/MasterPanel/Fuel/TransferLeft
-#	5	TRANSFER RIGHT	on/off		1/0		extra500/MasterPanel/Fuel/TransferRight
-#	6	PUMP 1		on/off		1/0		extra500/MasterPanel/Fuel/Pump1
-#	7	PUMP 2		on/off		1/0		extra500/MasterPanel/Fuel/Pump2
+#	4	TRANSFER LEFT	on/off		1/0		extra500/panel/Master/Fuel/TransferLeft
+#	5	TRANSFER RIGHT	on/off		1/0		extra500/panel/Master/Fuel/TransferRight
+#	6	PUMP 1		on/off		1/0		extra500/panel/Master/Fuel/Pump1
+#	7	PUMP 2		on/off		1/0		extra500/panel/Master/Fuel/Pump2
 
 # ENGINE
-#	8	OVSPD TEST 	push		1/0		extra500/MasterPanel/Engine/OverSpeed
-#	9	MOTORING	on/abort/normal	1/0/-1		extra500/MasterPanel/Engine/Motoring
-#	10	START		on/ign/off	1/0/-1		extra500/MasterPanel/Engine/Start
+#	8	OVSPD TEST 	push		1/0		extra500/panel/Master/Engine/OverSpeed
+#	9	MOTORING	on/abort/normal	1/0/-1		extra500/panel/Master/Engine/Motoring
+#	10	START		on/ign/off	1/0/-1		extra500/panel/Master/Engine/Start
 
 # DIMMING
-#	11	KEYPAD		min/max		0/1.0		extra500/MasterPanel/Dimming/Keypad
-#	12	GLARE		min/max		0/1.0		extra500/MasterPanel/Dimming/Glare
-#	13	INSTR		min/max		0/1.0		extra500/MasterPanel/Dimming/Instrument
-#	14	SWITCHES	min/max		0/1.0		extra500/MasterPanel/Dimming/Switch
-#	15	ANNUNCIATOR	min/max		0/1.0		extra500/MasterPanel/Dimming/Annunciator
+#	11	KEYPAD		min/max		0/1.0		extra500/panel/Master/Dimming/Keypad
+#	12	GLARE		min/max		0/1.0		extra500/panel/Master/Dimming/Glare
+#	13	INSTR		min/max		0/1.0		extra500/panel/Master/Dimming/Instrument
+#	14	SWITCHES	min/max		0/1.0		extra500/panel/Master/Dimming/Switch
+#	15	ANNUNCIATOR	min/max		0/1.0		extra500/panel/Master/Dimming/Annunciator
 
 
 
@@ -245,4 +245,4 @@ var MasterPanel = {
 	}
 };
 
-var masterPanel = MasterPanel.new(props.globals.initNode("extra500/MasterPanel"),"Master Panel");
+var masterPanel = MasterPanel.new(props.globals.initNode("extra500/panel/Master"),"Master Panel");

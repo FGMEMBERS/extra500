@@ -34,13 +34,13 @@
 #unter ~5/8 (muss genaue wert noch nachschauen) voll ist
 
 var FuelSystem = {
-	new : func{
+	new : func(nRoot,name){
 		var m = {parents:[FuelSystem]};
 		
 		m.fuelFlowByGravity = 0.4;
 		m.fuelFlowByPump = 0.4;
 		
-		m.nFuel = props.globals.getNode("extra500/Fuel",1);
+		m.nFuel = nRoot;
 		
 		var node = nil; 
 		
@@ -296,5 +296,5 @@ var FuelSystem = {
 	
 };
 
-var oFuelSystem = FuelSystem.new();
+var oFuelSystem = FuelSystem.new(props.globals.initNode("extra500/Fuel"),"Fuel System");
 
