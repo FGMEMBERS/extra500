@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: May 18 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             18.05.13
+#      Last change:      Eric van den Berg
+#      Date:             21.05.13
 #
 
 var Autopilot = {
@@ -32,11 +32,11 @@ var Autopilot = {
 		
 		m.dimmingVolt = 0.0;
 				
-		
-		m.nModeState = props.globals.initNode("/autopilot/mode/state",0,"INT");
+#		m.nModeState = props.globals.initNode("/autopilot/mode/state",0,"INT");
+		m.nModeDiseng = props.globals.initNode("/autopilot/mode/diseng",0,"INT");
 		m.nModeHeading = props.globals.initNode("/autopilot/mode/heading",0,"INT");
 		m.nModeNav = props.globals.initNode("/autopilot/mode/nav",0,"INT");
-		m.nModeNavGpss = props.globals.initNode("/autopilot/mode/nav-gpss",0,"INT");
+		m.nModeNavGpss = props.globals.initNode("/autopilot/mode/gpss",0,"INT");
 		m.nModeAlt = props.globals.initNode("/autopilot/mode/alt",0,"INT");
 		m.nModeVs = props.globals.initNode("/autopilot/mode/vs",0,"INT");
 		m.nModeGs = props.globals.initNode("/autopilot/mode/gs",0,"INT");
@@ -55,7 +55,9 @@ var Autopilot = {
 		m.nSetYawTrim = props.globals.initNode("/autopilot/settings/yawTrim",0,"DOUBLE");
 		m.nSetPitchTrim = props.globals.initNode("/autopilot/settings/pitchTrim",0,"DOUBLE");
 		
-	
+		m.nAPState = props.globals.getNode("/extra500/instrumentation/Autopilot/state");		
+		m.nTCSpin = props.globals.getNode("/instrumentation/turn-indicator/spin");			
+
 	# Light
 		m.Backlight = Part.ElectricLED.new(m.nRoot.initNode("Backlight"),"EIP Backlight");
 		m.Backlight.electricConfig(8.0,28.0);
@@ -138,11 +140,11 @@ var Autopilot = {
 		
 		me._dimmBacklight();
 		
-		if (me.state == 0){	# no power input
-			me.nModeState.setValue(0);
-		}else{
-			me.nModeState.setValue(1);
-		}
+#		if (me.state == 0){	# no power input
+#			me.nModeState.setValue(0);
+#		}else{
+#			me.nModeState.setValue(1);
+#		}
 		
 		# masterPanel.AutopilotMaster.state -1/0/1 
 		if (masterPanel.AutopilotMaster.state == 0){ 
@@ -175,20 +177,91 @@ var Autopilot = {
 		}else{
 			
 		}
-		
-		
+		# continues checking if the AP may still me working
+		me._CheckRollModeAble();
 		
 		
 	},
+# disengages the autopilot
+	_APDisengage : func(){
+		me.nModeHeading.setValue(0);
+		me.nModeNav.setValue(0);
+		me.nModeNavGpss.setValue(0);
+		me.nModeApr.setValue(0);
+		me.nModeRev.setValue(0);
+		me.nModeAlt.setValue(0);
+		me.nModeVs.setValue(0);
+		me.nModeDiseng.setValue(1);
+	},
+# checks is a roll mode (HDG or NAV) is active. Must be active to engage any alt mode or yaw damper
+	_CheckRollModeActive : func(){
+		if ( (me.nModeHeading.getValue() == 1) or (me.nModeNav.getValue() == 1) ){
+			return 1
+		}else{
+			return 0
+		}
+	},
+# checks if the AP is able to engage, called from update loop!: 
+# 1 no internal fault, 
+# 2 turn coordinator ok, 
+# 3 no stall warning, (TBD)
+# 4 no pitch trim going on (TBD)
+# 5 g-forces not to high (TBD)
+	_CheckRollModeAble : func(){
+		if ( (me.nAPState.getValue() == 1) and (me.nTCSpin.getValue() > 0.9) ){
+			if ( ( me.nModeFail.getValue() == 1 ) or ( me.nModeDiseng.getValue() == 1 ) ) {
+				me.nModeFail.setValue(0);
+				me.nModeRdy.setValue(1);
+				me.nModeDiseng.setValue(0);
+			}
+		}else{
+			me._APDisengage();
+			me.nModeFail.setValue(1);
+			me.nModeRdy.setValue(0);
+		}
+	},
 # Events from the UI
 	onClickHDG : func(){
-		me.nModeHeading.setValue(!me.nModeHeading.getValue());
+		if ( me.nModeHeading.getValue() == 0 ){
+			if ( ( me.nModeRdy.getValue() == 1 ) or (me.nModeNav.getValue() > 0) ){
+				me.nModeRdy.setValue(0);
+				me.nModeHeading.setValue(1);
+				me.nModeNav.setValue(0);
+				me.nModeNavGpss.setValue(0);
+			} else {
+				me.nModeFail.setValue(1);
+			}
+		} else {
+			me.nModeRdy.setValue(1);
+			me.nModeHeading.setValue(0);
+			me.nModeAlt.setValue(0);
+			me.nModeVs.setValue(0);
+		}
 	},
 	onClickHDGNAV : func(){
 		print ("Autopilot.onClickHDGNAV() ... ");
 	},
+#
 	onClickNAV : func(){
-		me.nModeNav.setValue(!me.nModeNav.getValue());
+		if ( me.nModeNav.getValue() == 0 ){
+			if ( ( me.nModeRdy.getValue() == 1 ) or (me.nModeHeading.getValue() == 1) ){
+				me.nModeRdy.setValue(0);
+				me.nModeNav.setValue(1);
+				me.nModeHeading.setValue(0);
+			} else {
+				me.nModeFail.setValue(1);
+			} 
+		} else if ( me.nModeNav.getValue() == 1 ) {
+# a check if GPSS is possible fails here!
+			me.nModeNav.setValue(2);
+			me.nModeNavGpss.setValue(1);
+		} else { 
+			me.nModeRdy.setValue(1);
+			me.nModeNav.setValue(0);
+			me.nModeNavGpss.setValue(0);
+			me.nModeAlt.setValue(0);
+			me.nModeVs.setValue(0);
+		}
 	},
 	onClickAPR : func(){
 		me.nModeApr.setValue(!me.nModeApr.getValue());
@@ -197,20 +270,50 @@ var Autopilot = {
 		me.nModeRev.setValue(!me.nModeRev.getValue());
 	},
 	onClickALT : func(){
-		me.nModeAlt.setValue(!me.nModeAlt.getValue());
+		if ( me.nModeAlt.getValue() == 0 ){
+			if ( me._CheckRollModeActive() == 1 ) {
+				me.nModeAlt.setValue(1);
+				me.nModeVs.setValue(0);
+			} 
+		} else {
+			me.nModeAlt.setValue(0);
+		}
 	},
 	onClickALTVS : func(){
-		print ("Autopilot.onClickALTVS() ... ");
+		if ( ( me.nModeAlt.getValue() == 0 ) and (me.nModeVs.getValue() == 0) ){
+			if ( me._CheckRollModeActive() == 1 ) {
+				me.nModeAlt.setValue(1);
+				me.nModeVs.setValue(1);
+			} 
+		} else if ( ( me.nModeAlt.getValue() == 1 ) and (me.nModeVs.getValue() == 0) ) {
+			if ( me._CheckRollModeActive() == 1 ) {
+				me.nModeVs.setValue(1);
+			} 
+		} else if ( ( me.nModeAlt.getValue() == 0 ) and (me.nModeVs.getValue() == 1) ) {
+			if ( me._CheckRollModeActive() == 1 ) {
+				me.nModeAlt.setValue(1);
+			} 
+		} else {
+				me.nModeAlt.setValue(0);
+				me.nModeVs.setValue(0);
+		}
 	},
 	onClickVS : func(){
-		me.nModeVs.setValue(!me.nModeVs.getValue());
+		if ( me.nModeVs.getValue() == 0 ){
+			if ( me._CheckRollModeActive() == 1 ) {
+				me.nModeVs.setValue(1);
+				me.nModeAlt.setValue(0);
+			} 
+		} else {
+			me.nModeVs.setValue(0);
+		}
 	},
 	onAdjustVS : func(amount=nil){
 		if (amount!=nil){
 			var value = me.nSetVerticalSpeedFpm.getValue();
 			value += amount;
-			if (value > 1700){value = 1700;}
-			if (value < -1700){value = -1700;}
+			if (value > 1600){value = 1600;}
+			if (value < -1600){value = -1600;}
 			me.nSetVerticalSpeedFpm.setValue(value);
 		}else{
 			me.nSetVerticalSpeedFpm.setValue(0);
@@ -218,20 +321,15 @@ var Autopilot = {
 	},
 	onSetVS : func(value=nil){
 		if (value!=nil){
-			if (value > 1700){value = 1700;}
-			if (value < -1700){value = -1700;}
+			if (value > 1600){value = 1600;}
+			if (value < -1600){value = -1600;}
 			me.nSetVerticalSpeedFpm.setValue(value);
 		}else{
 			me.nSetVerticalSpeedFpm.setValue(0);
 		}
 	},
 	onClickDisengage : func(){
-		me.nModeHeading.setValue(0);
-		me.nModeNav.setValue(0);
-		me.nModeApr.setValue(0);
-		me.nModeRev.setValue(0);
-		me.nModeAlt.setValue(0);
-		me.nModeVs.setValue(0);
+		me._APDisengage();
 				
 	},
 	onClickCWS : func(){
@@ -241,8 +339,8 @@ var Autopilot = {
 		if (amount!=nil){
 			var value = me.nSetPitchTrim.getValue();
 			value += amount;
-			if (value > 1700){value = 1700;}
-			if (value < -1700){value = -1700;}
+			if (value > 1.0){value = 1.0;}
+			if (value < -1.0){value = -1.0;}
 			me.nSetPitchTrim.setValue(value);
 		}else{
 			me.nSetPitchTrim.setValue(0);
