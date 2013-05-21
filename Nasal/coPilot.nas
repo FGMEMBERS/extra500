@@ -24,6 +24,7 @@ var checklist = "";
 var aChecklist = {};
 
 
+
 var say = func(msg){
 	setprop("/sim/messages/copilot", msg);
 };

@@ -8,28 +8,26 @@
 		var nYawTrim = props.globals.initNode("/sim/gui/dialogs/autopilot/YawTrim",0.0,"DOUBLE");
 		var nAltitude = props.globals.initNode("/sim/gui/dialogs/autopilot/Altitude",0.0,"DOUBLE");
 		var nHeading = props.globals.initNode("/sim/gui/dialogs/autopilot/Heading",0.0,"DOUBLE");
-		
+		var nVs = props.globals.initNode("/sim/gui/dialogs/autopilot/VS",0.0,"DOUBLE");
+		var nPitchTrim = props.globals.initNode("/sim/gui/dialogs/autopilot/PitchTrim",0.0,"DOUBLE");
 
-		var adjustValue = func(node,min,max,amount){
-			var value = node.getValue();
-			value += amount;
-			if (value > max){value = max}
-			if (value < min) {value = min}
-			node.setValue(value);
-		}
-		var adjustHeading = func(amount){
-			var value = nHeading.getValue();
-			value += amount;
-			value = math.mod(value,360);
-			nHeading.setValue(value);
-		}
+		var lYawTrim = setlistener(extra500.autopilot.nSetYawTrim,func(n){ nYawTrim.setValue(n.getValue());},1);
+		var lAltitude = setlistener(extra500.autopilot.nSetHeadingBugDeg,func(n){ nHeading.setValue(n.getValue());},1);
+		var lHeading = setlistener(extra500.autopilot.nSetTargetAltitudeFt,func(n){ nAltitude.setValue(n.getValue());},1);
+		var lVs = setlistener(extra500.autopilot.nSetVerticalSpeedFpm,func(n){ nVs.setValue(n.getValue());},1);
+		var lPitchTrim = setlistener(extra500.autopilot.nSetPitchTrim,func(n){ nPitchTrim.setValue(n.getValue());},1);
 		
 		]]>
 	</open>
 	
 	<close>
 		<![CDATA[
-		
+		removelistener(lYawTrim);
+		removelistener(lAltitude);
+		removelistener(lHeading);
+		removelistener(lVs);
+		removelistener(lPitchTrim);
+
 		]]>
 	</close>
 </nasal>
@@ -149,6 +147,19 @@
 				<button>
 					<row>0</row>
 					<col>5</col>
+					<legend>ALT</legend>
+					<keynum>r</keynum>
+					<border>2</border>
+					<binding>
+						<command>nasal</command>
+						<script>
+							<![CDATA[ UI.click("Autopilot ALT"); ]]>
+						</script>
+					</binding>
+				</button>
+				<button>
+					<row>0</row>
+					<col>6</col>
 					<legend>VS</legend>
 					<keynum>v</keynum>
 					<border>2</border>
@@ -159,32 +170,54 @@
 						</script>
 					</binding>
 				</button>
-				<button>
-					<row>0</row>
-					<col>6</col>
-					<legend>VS +100</legend>
-					<keynum>+</keynum>
-					<border>2</border>
-					<binding>
-						<command>nasal</command>
-						<script>
-							<![CDATA[ UI.click("Autopilot VS +100"); ]]>
-						</script>
-					</binding>
-				</button>
-				<button>
+				<group>
 					<row>0</row>
 					<col>7</col>
-					<legend>VS -100</legend>
-					<keynum>-</keynum>
-					<border>2</border>
-					<binding>
-						<command>nasal</command>
-						<script>
-							<![CDATA[ UI.click("Autopilot VS -100"); ]]>
-						</script>
-					</binding>
-				</button>
+					<layout>hbox</layout>
+					<button>
+						
+						<legend>&lt;</legend>
+						<keynum>-</keynum>
+						<border>2</border>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ UI.click("Autopilot VS <"); ]]>
+							</script>
+						</binding>
+					</button>
+					<input>
+						<name>VS</name>
+						<halign>center</halign>
+						<stretch>false</stretch>
+						<pref-width>70</pref-width>
+						<live>true</live>
+						<property>/sim/gui/dialogs/autopilot/VS</property>
+						<binding>
+							<command>dialog-apply</command>
+						</binding>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ 
+								UI.click("Autopilot VS =",nVs.getValue()); 
+								]]>
+							</script>
+						</binding>
+					</input>
+						
+					<button>
+						<legend>&gt;</legend>
+						<keynum>+</keynum>
+						<border>2</border>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ UI.click("Autopilot VS >"); ]]>
+							</script>
+						</binding>
+					</button>
+				</group>
 			</group>
 		</group>
 		<group><!-- MasterPanel Autopilot -->
@@ -371,7 +404,6 @@
 							<binding>
 								<command>nasal</command>
 								<script><![CDATA[ 
-									adjustValue(nYawTrim,-1.0,1.0,-0.1);
 									UI.click("Autopilot Yaw Trim +=",-0.1); ]]>
 									</script>
 								</binding>
@@ -384,7 +416,6 @@
 								<command>nasal</command>
 								<script>
 									<![CDATA[ 
-									adjustValue(nYawTrim,-1.0,1.0,0.1);
 									UI.click("Autopilot Yaw Trim +=",0.1); ]]>
 									</script>
 								</binding>
@@ -399,7 +430,6 @@
 							<command>nasal</command>
 							<script>
 								<![CDATA[ 
-								nYawTrim.setValue(0);
 								UI.click("Autopilot Yaw Trim =",0); 
 								]]>
 							</script>
@@ -453,7 +483,6 @@
 							<binding>
 								<command>nasal</command>
 								<script><![CDATA[ 
-									adjustValue(nAltitude,0,50000,-1000);
 									UI.click("Keypad Altitude +=",-1000); 
 									]]></script>
 							</binding>
@@ -465,7 +494,6 @@
 							<binding>
 								<command>nasal</command>
 								<script><![CDATA[ 
-									adjustValue(nAltitude,0,50000,-100);
 									UI.click("Keypad Altitude +=",-100); 
 									]]></script>
 							</binding>
@@ -484,7 +512,6 @@
 								<command>nasal</command>
 								<script>
 									<![CDATA[ 
-									adjustValue(nAltitude,0,50000,0);
 									UI.click("Keypad Altitude =",nAltitude.getValue()); 
 									]]>
 								</script>
@@ -498,7 +525,6 @@
 								<command>nasal</command>
 								<script>
 									<![CDATA[ 
-									adjustValue(nAltitude,0,50000,100);
 									UI.click("Keypad Altitude +=",100); 
 									]]></script>
 							</binding>
@@ -511,7 +537,6 @@
 								<command>nasal</command>
 								<script>
 									<![CDATA[ 
-									adjustValue(nAltitude,0,50000,1000);
 									UI.click("Keypad Altitude +=",1000); 
 									]]></script>
 							</binding>
@@ -558,7 +583,6 @@
 							<binding>
 								<command>nasal</command>
 								<script><![CDATA[ 
-									adjustHeading(-10);
 									UI.click("Keypad Heading +=",-10); 
 									]]></script>
 							</binding>
@@ -570,7 +594,6 @@
 							<binding>
 								<command>nasal</command>
 								<script><![CDATA[ 
-									adjustHeading(-1);
 									UI.click("Keypad Heading +=",-1); 
 									]]></script>
 							</binding>
@@ -589,8 +612,7 @@
 								<command>nasal</command>
 								<script>
 									<![CDATA[ 
-									adjustHeading(0);
-									UI.click("Keypad Altitude =",nHeading.getValue()); 
+									UI.click("Keypad Heading =",nHeading.getValue()); 
 									]]>
 								</script>
 							</binding>
@@ -603,7 +625,6 @@
 								<command>nasal</command>
 								<script>
 									<![CDATA[ 
-									adjustHeading(1);
 									UI.click("Keypad Heading +=",1); 
 									]]></script>
 							</binding>
@@ -616,7 +637,6 @@
 								<command>nasal</command>
 								<script>
 									<![CDATA[ 
-									adjustHeading(10);
 									UI.click("Keypad Heading +=",10); 
 									]]></script>
 							</binding>
@@ -683,7 +703,76 @@
 						</script>
 					</binding>
 				</button>
+				<button>
+					<legend>CWS</legend>
+					<halign>center</halign>
+					<binding>
+						<command>nasal</command>
+						<script>
+							<![CDATA[ 
+							UI.click("Autopilot CWS"); 
+							]]>
+						</script>
+					</binding>
+				</button>
+				<empty>
+					<stretch>true</stretch>
+				</empty>
+				<group>
+					<layout>hbox</layout>
+					<text>
+						<label>Pitch Trim</label>
+						<halign>left</halign>
+					</text>
+				
+					<button>
+						
+						<legend>&lt;</legend>
+						<keynum>-</keynum>
+						<border>2</border>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ UI.click("Autopilot Pitch Trim <"); ]]>
+							</script>
+						</binding>
+					</button>
+					<input>
+						<name>PitchTrim</name>
+						<halign>center</halign>
+						<stretch>false</stretch>
+						<pref-width>70</pref-width>
+						<live>true</live>
+						<property>/sim/gui/dialogs/autopilot/PitchTrim</property>
+						<binding>
+							<command>dialog-apply</command>
+						</binding>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ 
+								UI.click("Autopilot Pitch Trim =",nPitchTrim.getValue()); 
+								]]>
+							</script>
+						</binding>
+					</input>
+						
+					<button>
+						<legend>&gt;</legend>
+						<keynum>+</keynum>
+						<border>2</border>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ 
+								UI.click("Autopilot Pitch Trim >"); 
+								]]>
+							</script>
+						</binding>
+					</button>
+				</group>
 			</group>
+			
 			
 		</group>
 	</group>

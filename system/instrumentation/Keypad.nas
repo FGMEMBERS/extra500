@@ -33,7 +33,10 @@ var Keypad = {
 		]};
 		
 		m.dimmingVolt = 0.0;
-				
+		
+		m.nHeading = props.globals.initNode("/orientation/heading-deg",0,"DOUBLE");
+		m.nAltitude = props.globals.initNode("/instrumentation/altimeter-backup/indicated-altitude-ft",0,"DOUBLE");
+		
 	
 	# Light
 		m.Backlight = Part.ElectricLED.new(m.nRoot.initNode("Backlight"),"EIP Backlight");
@@ -122,22 +125,46 @@ var Keypad = {
 		}
 	},
 	onSetHeading : func(hdg){
-		
+		hdg = math.mod(hdg,360);
+		autopilot.nSetHeadingBugDeg.setValue(hdg);
 	},
-	onAdjustHeading : func(amount){
-		
+	onAdjustHeading : func(amount=nil){
+		if (amount!=nil){
+			var value = autopilot.nSetHeadingBugDeg.getValue();
+			value += amount;
+			value = math.mod(value,360);
+			autopilot.nSetHeadingBugDeg.setValue(value);
+		}else{
+			me.onHeadingSync();
+		}
 	},
 	onHeadingSync : func(){
-		
+		var value = me.nHeading.getValue();
+		value = math.mod(value,360);
+		autopilot.nSetHeadingBugDeg.setValue(value);
 	},
 	onSetAltitude : func(alt){
-		
+		if (alt > 50000){alt = 50000;}
+		if (alt < 0){alt = 0;}
+			
+		autopilot.nSetTargetAltitudeFt.setValue(alt);
 	},
-	onAdjustAltitude : func(amount){
-		
+	onAdjustAltitude : func(amount=nil){
+		if (amount!=nil){
+			var value = autopilot.nSetTargetAltitudeFt.getValue();
+			value += amount;
+			if (value > 50000){value = 50000;}
+			if (value < 0){value = 0;}
+			autopilot.nSetTargetAltitudeFt.setValue(value);
+		}else{
+			me.onAltitudeSync();
+		}
 	},
 	onAltitudeSync : func(){
-		
+		var value = me.nAltitude.getValue();
+		if (value > 50000){value = 50000;}
+		if (value < 0){value = 0;}	
+		autopilot.nSetTargetAltitudeFt.setValue(value);
 	},
 	onFMS : func(amount=nil){
 		

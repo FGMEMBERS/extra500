@@ -293,6 +293,10 @@ var plugSidePanel = func(){
 
 var plugMasterPanel = func(){
 	
+		masterPanel.AutopilotMaster.Com1.plug(circuitBreakerPanel.AutopilotComputer.Out);
+		
+	
+	
 	# fuel
 		masterPanel.FuelTransferLeft.Com1.plug(circuitBreakerPanel.FuelTransferL.Out);
 		masterPanel.FuelTransferRight.Com1.plug(circuitBreakerPanel.FuelTransferR.Out);
@@ -511,7 +515,8 @@ var plugKeypad = func(){
 var plugAutopilot = func(){
 	autopilot.plugElectric();
 	autopilot.GND.plug(mainBoard.GND);
-	autopilot.PowerInput.plug(circuitBreakerPanel.AutopilotComputer.Out);
+	autopilot.PowerInputA.plug(masterPanel.AutopilotMaster.L11);
+	autopilot.PowerInputB.plug(masterPanel.AutopilotMaster.L12);
 	autopilot.Dimming.plug(lightBoard.instrumentDimBus.con());
 }
 var plugDme = func(){

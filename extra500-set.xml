@@ -608,9 +608,6 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/system/IFD/IFD_test.nas</file>
 		<file>Aircraft/extra500/system/IFD/AvidyneIFD.nas</file>
 	</IFD>
-	<CoPilot>
-		<file>Aircraft/extra500/Nasal/coPilot.nas</file>
-	</CoPilot>
 	<Dialogs>
             <file>Aircraft/extra500/Nasal/dialogs.nas</file>
         </Dialogs>
@@ -618,6 +615,9 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/system/init_ui.nas</file>
 		<file>Aircraft/extra500/system/init_cycle.nas</file>
 	</run>
+	<CoPilot>
+		<file>Aircraft/extra500/Nasal/coPilot.nas</file>
+	</CoPilot>
 	<e1>
 		<file>Nasal/e1.nas</file>
 	</e1>

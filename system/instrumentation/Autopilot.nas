@@ -32,6 +32,29 @@ var Autopilot = {
 		
 		m.dimmingVolt = 0.0;
 				
+		
+		m.nModeState = props.globals.initNode("/autopilot/mode/state",0,"INT");
+		m.nModeHeading = props.globals.initNode("/autopilot/mode/heading",0,"INT");
+		m.nModeNav = props.globals.initNode("/autopilot/mode/nav",0,"INT");
+		m.nModeNavGpss = props.globals.initNode("/autopilot/mode/nav-gpss",0,"INT");
+		m.nModeAlt = props.globals.initNode("/autopilot/mode/alt",0,"INT");
+		m.nModeVs = props.globals.initNode("/autopilot/mode/vs",0,"INT");
+		m.nModeGs = props.globals.initNode("/autopilot/mode/gs",0,"INT");
+		m.nModeRev = props.globals.initNode("/autopilot/mode/rev",0,"INT");
+		m.nModeApr = props.globals.initNode("/autopilot/mode/apr",0,"INT");
+		m.nModeRdy = props.globals.initNode("/autopilot/mode/rdy",0,"INT");
+		m.nModeCws = props.globals.initNode("/autopilot/mode/cws",0,"INT");
+		m.nModeFail = props.globals.initNode("/autopilot/mode/fail",0,"INT");
+		m.nModeTrim = props.globals.initNode("/autopilot/mode/trim",0,"INT");
+		m.nModeTrimUp = props.globals.initNode("/autopilot/mode/trim-up",0,"INT");
+		m.nModeTrimDown = props.globals.initNode("/autopilot/mode/trim-down",0,"INT");
+		
+		m.nSetHeadingBugDeg = props.globals.initNode("/autopilot/settings/heading-bug-deg",0,"DOUBLE");
+		m.nSetTargetAltitudeFt = props.globals.initNode("/autopilot/settings/target-altitude-ft",0,"DOUBLE");
+		m.nSetVerticalSpeedFpm = props.globals.initNode("/autopilot/settings/vertical-speed-fpm",0,"DOUBLE");
+		m.nSetYawTrim = props.globals.initNode("/autopilot/settings/yawTrim",0,"DOUBLE");
+		m.nSetPitchTrim = props.globals.initNode("/autopilot/settings/pitchTrim",0,"DOUBLE");
+		
 	
 	# Light
 		m.Backlight = Part.ElectricLED.new(m.nRoot.initNode("Backlight"),"EIP Backlight");
@@ -45,7 +68,8 @@ var Autopilot = {
 				
 		
 	# Electric Connectors
-		m.PowerInput		= Part.ElectricPin.new("PowerInput");
+		m.PowerInputA		= Part.ElectricPin.new("PowerInputA");
+		m.PowerInputB		= Part.ElectricPin.new("PowerInputB");
 		m.GND 			= Part.ElectricPin.new("GND");
 		m.Dimming		= Part.ElectricConnector.new("Dimming");
 		
@@ -90,7 +114,8 @@ var Autopilot = {
 	},
 	plugElectric : func(){
 		
-		me.PowerInput.plug(me.PowerBus.con());
+		me.PowerInputA.plug(me.PowerBus.con());
+		me.PowerInputB.plug(me.PowerBus.con());
 		
 		me.Backlight.Plus.plug(me.PowerBus.con());
 		me.Backlight.Minus.plug(me.GNDBus.con());
@@ -114,16 +139,16 @@ var Autopilot = {
 		me._dimmBacklight();
 		
 		if (me.state == 0){	# no power input
-			
+			me.nModeState.setValue(0);
 		}else{
-			
+			me.nModeState.setValue(1);
 		}
 		
 		# masterPanel.AutopilotMaster.state -1/0/1 
 		if (masterPanel.AutopilotMaster.state == 0){ 
 			
 		}elsif (masterPanel.AutopilotMaster.state == 1){
-			
+
 		}else{
 			
 		}
@@ -141,11 +166,11 @@ var Autopilot = {
 		}else{
 			
 		}
-		
+		me.nSetYawTrim.setValue(masterPanel.AutopilotYawTrim.state);
 		# masterPanel.AutopilotYawTrim.state -1.0/1.0
-		if (masterPanel.AutopilotYawDamper.state > 0 ){
+		if (masterPanel.AutopilotYawTrim.state > 0 ){
 			
-		}elsif (masterPanel.AutopilotYawDamper.state < 0){
+		}elsif (masterPanel.AutopilotYawTrim.state < 0){
 			
 		}else{
 			
@@ -157,41 +182,105 @@ var Autopilot = {
 	},
 # Events from the UI
 	onClickHDG : func(){
-		print ("Autopilot.onClickHDG() ... ");
+		me.nModeHeading.setValue(!me.nModeHeading.getValue());
+	},
+	onClickHDGNAV : func(){
+		print ("Autopilot.onClickHDGNAV() ... ");
 	},
 	onClickNAV : func(){
-		print ("Autopilot.onClickNAV() ... ");
+		me.nModeNav.setValue(!me.nModeNav.getValue());
 	},
 	onClickAPR : func(){
-		print ("Autopilot.onClickAPR() ... ");
+		me.nModeApr.setValue(!me.nModeApr.getValue());
 	},
 	onClickREV : func(){
-		print ("Autopilot.onClickREV() ... ");
+		me.nModeRev.setValue(!me.nModeRev.getValue());
 	},
 	onClickALT : func(){
-		print ("Autopilot.onClickALT() ... ");
+		me.nModeAlt.setValue(!me.nModeAlt.getValue());
+	},
+	onClickALTVS : func(){
+		print ("Autopilot.onClickALTVS() ... ");
 	},
 	onClickVS : func(){
-		print ("Autopilot.onClickVS() ... ");
+		me.nModeVs.setValue(!me.nModeVs.getValue());
 	},
-	onAdjustVS : func(amount){
-		print ("Autopilot.onAdjustVS("~amount~") ... ");
+	onAdjustVS : func(amount=nil){
+		if (amount!=nil){
+			var value = me.nSetVerticalSpeedFpm.getValue();
+			value += amount;
+			if (value > 1700){value = 1700;}
+			if (value < -1700){value = -1700;}
+			me.nSetVerticalSpeedFpm.setValue(value);
+		}else{
+			me.nSetVerticalSpeedFpm.setValue(0);
+		}
+	},
+	onSetVS : func(value=nil){
+		if (value!=nil){
+			if (value > 1700){value = 1700;}
+			if (value < -1700){value = -1700;}
+			me.nSetVerticalSpeedFpm.setValue(value);
+		}else{
+			me.nSetVerticalSpeedFpm.setValue(0);
+		}
 	},
 	onClickDisengage : func(){
-		print ("Autopilot.onClickDisengage() ... ");
+		me.nModeHeading.setValue(0);
+		me.nModeNav.setValue(0);
+		me.nModeApr.setValue(0);
+		me.nModeRev.setValue(0);
+		me.nModeAlt.setValue(0);
+		me.nModeVs.setValue(0);
+				
+	},
+	onClickCWS : func(){
+		me.nModeCws.setValue(!me.nModeCws.getValue());
+	},
+	onAdjustPitchTrim : func(amount=nil){
+		if (amount!=nil){
+			var value = me.nSetPitchTrim.getValue();
+			value += amount;
+			if (value > 1700){value = 1700;}
+			if (value < -1700){value = -1700;}
+			me.nSetPitchTrim.setValue(value);
+		}else{
+			me.nSetPitchTrim.setValue(0);
+		}
+	},
+	onSetPitchTrim : func(value=nil){
+		if (value!=nil){
+			if (value > 1.0){value = 1.0;}
+			if (value < -1.0){value = -1.0;}
+			me.nSetPitchTrim.setValue(value);
+		}else{
+			me.nSetPitchTrim.setValue(0);
+		}
 	},
 	
 	initUI : func(){
-		UI.register("Autopilot HDG", 	func{extra500.autopilot.onClickHDG(); } 	);
-		UI.register("Autopilot NAV", 	func{extra500.autopilot.onClickNAV(); } 	);
-		UI.register("Autopilot APR", 	func{extra500.autopilot.onClickAPR(); } 	);
-		UI.register("Autopilot REV", 	func{extra500.autopilot.onClickREV(); } 	);
-		UI.register("Autopilot ALT", 	func{extra500.autopilot.onClickALT(); } 	);
-		UI.register("Autopilot VS", 	func{extra500.autopilot.onClickVS(); } 		);
-		UI.register("Autopilot VS +100",func{extra500.autopilot.onAdjustVS(100); } 	);
-		UI.register("Autopilot VS -100",func{extra500.autopilot.onAdjustVS(-100); } 	);
-		UI.register("Autopilot disengage",func{extra500.autopilot.onClickDisengage(); } 	);
+		UI.register("Autopilot HDG", 		func{extra500.autopilot.onClickHDG(); } 	);
+		UI.register("Autopilot HDG&NAV", 	func{extra500.autopilot.onClickHDGNAV(); } 	);
+		UI.register("Autopilot NAV", 		func{extra500.autopilot.onClickNAV(); } 	);
+		UI.register("Autopilot APR", 		func{extra500.autopilot.onClickAPR(); } 	);
+		UI.register("Autopilot REV", 		func{extra500.autopilot.onClickREV(); } 	);
+		UI.register("Autopilot ALT", 		func{extra500.autopilot.onClickALT(); } 	);
+		UI.register("Autopilot ALT&VS", 	func{extra500.autopilot.onClickALTVS(); } 	);
+		UI.register("Autopilot VS", 		func{extra500.autopilot.onClickVS(); } 		);
 		
+		UI.register("Autopilot VS >",		func{extra500.autopilot.onAdjustVS(100); } 	);
+		UI.register("Autopilot VS <",		func{extra500.autopilot.onAdjustVS(-100); } 	);
+		UI.register("Autopilot VS +=",		func(v){extra500.autopilot.onAdjustVS(v); } 	);
+		UI.register("Autopilot VS =",		func(v){extra500.autopilot.onSetVS(v); } 	);
+		
+		UI.register("Autopilot disengage",	func{extra500.autopilot.onClickDisengage(); } 	);
+		UI.register("Autopilot CWS",		func{extra500.autopilot.onClickCWS(); } 	);
+		
+		UI.register("Autopilot Pitch Trim <", 	func{extra500.autopilot.onAdjustPitchTrim(-0.1); } 		);
+		UI.register("Autopilot Pitch Trim >", 	func{extra500.autopilot.onAdjustPitchTrim(0.1); } 		);
+		UI.register("Autopilot Pitch Trim =", 	func(v=0){extra500.autopilot.onSetPitchTrim(v);} 	);
+		UI.register("Autopilot Pitch Trim +=", 	func(v=0){extra500.autopilot.onAdjustPitchTrim(v);} 	);
+	
 	}
 	
 };
