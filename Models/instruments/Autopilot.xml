@@ -26,7 +26,7 @@
 
 <path>Autopilot.ac</path>
 
-<!--diese display-elemente muessen noch eingearbeitet werden-->
+<!--diese display-elemente muessen noch eingearbeitet werden
 	<animation>
 		<type>select</type>
 		<object-name>Autopilot.Display.RDY</object-name>
@@ -43,56 +43,139 @@
 				<value>0</value>
 			</greater-than>
 		</condition>
+	</animation>-->
+
+
+       <animation>
+	       <type>select</type>
+	       <object-name>Autopilot.Display.RDY</object-name>
+	       <condition>
+		       <equals>
+			       <property>/autopilot/mode/rdy</property>
+			       <value>1</value>
+		       </equals>	
+	       </condition>
+       </animation>
+       <animation>
+	       <type>select</type>
+	       <object-name>Autopilot.Display.CWS</object-name>
+	       <condition>
+		       <equals>
+			       <property>/autopilot/mode/cws</property>
+			       <value>1</value>
+		       </equals>	
+	       </condition>
+       </animation>
+       <animation>
+	       <type>select</type>
+	       <object-name>Autopilot.Display.FAIL</object-name>
+	       <condition>
+		       <equals>
+			       <property>/autopilot/mode/fail</property>
+			       <value>1</value>
+		       </equals>	
+	       </condition>
+       </animation>
+       <animation>
+	       <type>select</type>
+	       <object-name>Autopilot.Display.GPSS</object-name>
+	       <condition>
+		       <equals>
+			       <property>/autopilot/mode/gpss</property>
+			       <value>1</value>
+		       </equals>	
+	       </condition>
+       </animation>
+       <animation>
+	       <type>select</type>
+	       <object-name>Autopilot.Display.TRIM</object-name>
+	       <condition>
+		       <equals>
+			       <property>/autopilot/mode/trim</property>
+			       <value>1</value>
+		       </equals>	
+	       </condition>
+       </animation>
+       <animation>
+	       <type>select</type>
+	       <object-name>Autopilot.Display.ArrowUP</object-name>
+	       <condition>
+		       <equals>
+			       <property>/autopilot/mode/trim-up</property>
+			       <value>1</value>
+		       </equals>	
+	       </condition>
+       </animation>
+       <animation>
+	       <type>select</type>
+	       <object-name>Autopilot.Display.ArrowDOWN</object-name>
+	       <condition>
+		       <equals>
+			       <property>/autopilot/mode/trim-down</property>
+			       <value>1</value>
+		       </equals>	
+	       </condition>
+       </animation>
+       <animation>
+	       <type>select</type>
+	       <object-name>Autopilot.Display.GS</object-name>
+	       <condition>
+		       <equals>
+			       <property>/autopilot/mode/gs</property>
+			       <value>1</value>
+		       </equals>	
+	       </condition>
+       </animation>
+
+
+
+
+
+
+       <animation>
+	       <type>pick</type>
+	       <object-name>Autopilot.Button.HDG</object-name>
+	       <action>
+		       <button>0</button>
+		       <repeatable>false</repeatable>
+		       <binding>
+			       <command>nasal</command>
+			       <script>
+				       <![CDATA[
+				       UI.click("Autopilot HDG");
+				       ]]>
+			       </script>
+		       </binding>
+		</action>
 	</animation>
-
-
-
-
-
-
-
-
-<!--HDG Button !!!!!UI.clicks and properties only for test, must be replaced!!!!!-->
+	
 <animation>
-  <type>pick</type>
-  <object-name>Autopilot.Button.HDG</object-name>
-  <action>
-		<button>0</button>
-		<repeatable>false</repeatable>
-		<binding>
-			<command>nasal</command>
-			<script><![CDATA[
-				UI.click("Circuit Breaker Air Condition");
-			]]></script>
-		</binding>
-	</action>
+	<type>select</type>
+	<object-name>Autopilot.Display.HDG</object-name>
+	<condition>
+		<equals>
+			<property>/autopilot/mode/heading</property>
+			<value>1</value>
+		</equals>	
+	</condition>
 </animation>
-<animation>
-		<type>select</type>
-		<object-name>Autopilot.Display.HDG</object-name>
-		<condition>
-			<less-than>
-				<property>extra500/CircuitBreakerPanel/BankA/AirCondition/state</property>
-				<value>1</value>
-			</less-than>	
-		</condition>
+
+       <animation>
+	       <type>pick</type>
+	       <object-name>Autopilot.Hotspot.HDG+NAV</object-name>
+	       <action>
+		       <button>0</button>
+		       <repeatable>false</repeatable>
+		       <binding>
+			       <command>nasal</command>
+			       <script>
+				       <![CDATA[
+				       UI.click("Autopilot HDG+NAV");
+					       ]]>
+				</script>
+			</binding>
+		</action>
 	</animation>
-
-<!--"HDG+NAV" Field !!!!!UI.click only for test, must be replaced!!!!!-->
-<animation>
-  <type>pick</type>
-  <object-name>Autopilot.Hotspot.HDG+NAV</object-name>
-  <action>
-		<button>0</button>
-		<repeatable>false</repeatable>
-		<binding>
-			<command>nasal</command>
-			<script><![CDATA[
-				UI.click("Circuit Breaker PropellerHeat");
-			]]></script>
-		</binding>
-	</action>
-</animation>
 
 <!--NAV Button !!!!!UI.clicks and properties only for test, must be replaced!!!!!-->
 <animation>
@@ -104,7 +187,7 @@
 		<binding>
 			<command>nasal</command>
 			<script><![CDATA[
-				UI.click("Circuit Breaker Cigarette Lighter");
+				UI.click("Autopilot NAV");
 			]]></script>
 		</binding>
 	</action>
@@ -113,14 +196,13 @@
 		<type>select</type>
 		<object-name>Autopilot.Display.NAV</object-name>
 		<condition>
-			<less-than>
-				<property>extra500/CircuitBreakerPanel/BankA/CigaretteLighter/state</property>
+			<equals>
+				<property>/autopilot/mode/nav</property>
 				<value>1</value>
-			</less-than>	
+			</equals>	
 		</condition>
 	</animation>
 
-<!--APR Button !!!!!UI.clicks and properties only for test, must be replaced!!!!!-->
 <animation>
   <type>pick</type>
 <object-name>Autopilot.Button.APR</object-name>
@@ -130,7 +212,7 @@
 		<binding>
 			<command>nasal</command>
 			<script><![CDATA[
-				UI.click("Circuit Breaker Audio Marker");
+				UI.click("Autopilot APR");
 			]]></script>
 		</binding>
 	</action>
@@ -139,14 +221,13 @@
 		<type>select</type>
 		<object-name>Autopilot.Display.APR</object-name>
 		<condition>
-			<less-than>
-				<property>extra500/CircuitBreakerPanel/BankA/AudioMarker/state</property>
+			<equals>
+				<property>/autopilot/mode/apr</property>
 				<value>1</value>
-			</less-than>	
+			</equals>	
 		</condition>
 	</animation>
 
-<!--REV Button !!!!!UI.clicks and properties only for test, must be replaced!!!!!-->
 <animation>
   <type>pick</type>
   <object-name>Autopilot.Button.REV</object-name>
@@ -156,7 +237,7 @@
 		<binding>
 			<command>nasal</command>
 			<script><![CDATA[
-				UI.click("Circuit Breaker DME");
+				UI.click("Autopilot REV");
 			]]></script>
 		</binding>
 	</action>
@@ -165,14 +246,13 @@
 		<type>select</type>
 		<object-name>Autopilot.Display.REV</object-name>
 		<condition>
-			<less-than>
-				<property>extra500/CircuitBreakerPanel/BankA/DME/state</property>
+			<equals>
+				<property>/autopilot/mode/rev</property>
 				<value>1</value>
-			</less-than>	
+			</equals>	
 		</condition>
 	</animation>
 
-<!--ALT Button !!!!!UI.clicks and properties only for test, must be replaced!!!!!-->
 <animation>
   <type>pick</type>
   <object-name>Autopilot.Button.ALT</object-name>
@@ -182,7 +262,7 @@
 		<binding>
 			<command>nasal</command>
 			<script><![CDATA[
-				UI.click("Circuit Breaker Weather Detection");
+				UI.click("Autopilot ALT");
 			]]></script>
 		</binding>
 	</action>
@@ -191,14 +271,13 @@
 		<type>select</type>
 		<object-name>Autopilot.Display.ALT</object-name>
 		<condition>
-			<less-than>
-				<property>extra500/CircuitBreakerPanel/BankA/WeatherDetection/state</property>
+			<equals>
+				<property>/autopilot/mode/alt</property>
 				<value>1</value>
-			</less-than>	
+			</equals>	
 		</condition>
 	</animation>
 
-<!--"ALT+VS" Field !!!!!UI.click only for test, must be replaced!!!!!-->
 <animation>
   <type>pick</type>
   <object-name>Autopilot.Hotspot.ALT+VS</object-name>
@@ -208,13 +287,12 @@
 		<binding>
 			<command>nasal</command>
 			<script><![CDATA[
-				UI.click("Circuit Breaker PropellerHeat");
+				UI.click("Autopilot ALT+VS");
 			]]></script>
 		</binding>
 	</action>
 </animation>
 
-<!--VS Button + Knob !!!!!UI.clicks and properties only for test, must be replaced!!!!!-->
 <animation>
   <type>pick</type>
   <object-name>Autopilot.Button.VS</object-name>
@@ -224,7 +302,7 @@
 		<binding>
 			<command>nasal</command>
 			<script><![CDATA[
-				UI.click("Circuit Breaker VDC12");
+				UI.click("Autopilot VS");
 			]]></script>
 		</binding>
 	</action>
@@ -234,10 +312,10 @@
 		<object-name>Autopilot.Display.VS</object-name>
 		<object-name>Autopilot.Display.VSnumbers</object-name>
 		<condition>
-			<less-than>
-				<property>extra500/CircuitBreakerPanel/BankA/VDC12/state</property>
+			<equals>
+				<property>/autopilot/mode/vs</property>
 				<value>1</value>
-			</less-than>	
+			</equals>	
 		</condition>
 	</animation>
 <animation>
@@ -249,7 +327,7 @@
     <binding>
       <command>nasal</command>
       <script><![CDATA[
-		UI.click("Dimmer Instrument >");
+		UI.click("Autopilot VS >");
 	]]></script>
     </binding>
   </action>
@@ -259,7 +337,7 @@
     <binding>
       <command>nasal</command>
       <script><![CDATA[
-		UI.click("Dimmer Instrument <");
+		UI.click("Autopilot VS <");
 	]]></script>
     </binding>
   </action>
@@ -269,7 +347,7 @@
     <binding>
       <command>nasal</command>
       <script><![CDATA[
-		UI.click("Dimmer Instrument >");
+		UI.click("Autopilot VS >");
 	]]></script>
     </binding>
   </action>
@@ -279,7 +357,7 @@
     <binding>
       <command>nasal</command>
       <script><![CDATA[
-		UI.click("Dimmer Instrument <");
+		UI.click("Autopilot VS <");
 	]]></script>
     </binding>
   </action>
@@ -296,6 +374,39 @@
 			<y>0</y>
 			<z>0</z>
 		</axis>
+</animation>
+
+<!-- Power on/off -->
+<animation>
+        <type>select</type>
+        <object-name>Autopilot.Display</object-name>
+        	<object-name>Autopilot.Display.HDG</object-name>
+		<object-name>Autopilot.Display.RDY</object-name>
+		<object-name>Autopilot.Display.NAV</object-name>
+		<object-name>Autopilot.Display.CWS</object-name>
+		<object-name>Autopilot.Display.APR</object-name>
+		<object-name>Autopilot.Display.FAIL</object-name>
+		<object-name>Autopilot.Display.GPSS</object-name>
+		<object-name>Autopilot.Display.REV</object-name>
+		<object-name>Autopilot.Display.TRIM</object-name>
+		<object-name>Autopilot.Display.ArrowUP</object-name>
+		<object-name>Autopilot.Display.ArrowDOWN</object-name>
+		<object-name>Autopilot.Display.ALT</object-name>
+		<object-name>Autopilot.Display.GS</object-name>
+		<object-name>Autopilot.Display.VS</object-name>
+		<object-name>Autopilot.Display.VSnumbers</object-name>
+		<object-name>Autopilot.Button.HDG</object-name>
+		<object-name>Autopilot.Button.NAV</object-name>
+		<object-name>Autopilot.Button.APR</object-name>
+		<object-name>Autopilot.Button.REV</object-name>
+		<object-name>Autopilot.Button.ALT</object-name>
+		<object-name>Autopilot.Button.VS</object-name>
+	<condition>
+		<equals>
+			<property>extra500/instrumentation/Autopilot/state</property>
+			<value>1</value>
+		</equals>
+	</condition>
 </animation>
 
 <!--TEST dimming-->
@@ -326,15 +437,15 @@
 		<object-name>Autopilot.Button.VS</object-name>
 	<condition>
 		<equals>
-		<property>extra500/SidePanel/Light/Instrument/state</property>
-		<value>1</value>
+			<property>extra500/instrumentation/Autopilot/state</property>
+			<value>1</value>
 		</equals>
 	</condition>
         <emission>
             <red>1</red>
             <green>1</green>
             <blue>1</blue>
-            <factor-prop>extra500/MasterPanel/Dimming/Instrument/state</factor-prop>
+	    <factor-prop>extra500/instrumentation/Autopilot/Backlight/state</factor-prop>
         </emission>
 </animation>
 

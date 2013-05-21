@@ -260,12 +260,12 @@ var Autopilot = {
 	
 	initUI : func(){
 		UI.register("Autopilot HDG", 		func{extra500.autopilot.onClickHDG(); } 	);
-		UI.register("Autopilot HDG&NAV", 	func{extra500.autopilot.onClickHDGNAV(); } 	);
+		UI.register("Autopilot HDG+NAV", 	func{extra500.autopilot.onClickHDGNAV(); } 	);
 		UI.register("Autopilot NAV", 		func{extra500.autopilot.onClickNAV(); } 	);
 		UI.register("Autopilot APR", 		func{extra500.autopilot.onClickAPR(); } 	);
 		UI.register("Autopilot REV", 		func{extra500.autopilot.onClickREV(); } 	);
 		UI.register("Autopilot ALT", 		func{extra500.autopilot.onClickALT(); } 	);
-		UI.register("Autopilot ALT&VS", 	func{extra500.autopilot.onClickALTVS(); } 	);
+		UI.register("Autopilot ALT+VS", 	func{extra500.autopilot.onClickALTVS(); } 	);
 		UI.register("Autopilot VS", 		func{extra500.autopilot.onClickVS(); } 		);
 		
 		UI.register("Autopilot VS >",		func{extra500.autopilot.onAdjustVS(100); } 	);
