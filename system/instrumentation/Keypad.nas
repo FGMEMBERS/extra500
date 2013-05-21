@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: May 18 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             18.05.13
+#      Last change:      Eric van den Berg
+#      Date:             21.05.13
 #
 
 
@@ -34,8 +34,8 @@ var Keypad = {
 		
 		m.dimmingVolt = 0.0;
 		
-		m.nHeading = props.globals.initNode("/orientation/heading-deg",0,"DOUBLE");
-		m.nAltitude = props.globals.initNode("/instrumentation/altimeter-backup/indicated-altitude-ft",0,"DOUBLE");
+		m.nHeading = props.globals.initNode("/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg",0,"DOUBLE");
+		m.nAltitude = props.globals.initNode("/instrumentation/altimeter-IFD-LH/indicated-altitude-ft",0,"DOUBLE");
 		
 	
 	# Light
