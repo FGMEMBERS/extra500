@@ -19,40 +19,284 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             20.05.13
+      Date:             21.05.13
 -->
 
 <PropertyList>
 
 <path>Autopilot.ac</path>
 
-<!--TEST selects-->
+<!--diese display-elemente muessen noch eingearbeitet werden-->
 	<animation>
 		<type>select</type>
-		<object-name>Autopilot.Display.HDG</object-name>
 		<object-name>Autopilot.Display.RDY</object-name>
-		<object-name>Autopilot.Display.NAV</object-name>
 		<object-name>Autopilot.Display.CWS</object-name>
-		<object-name>Autopilot.Display.APR</object-name>
 		<object-name>Autopilot.Display.FAIL</object-name>
 		<object-name>Autopilot.Display.GPSS</object-name>
-		<object-name>Autopilot.Display.REV</object-name>
 		<object-name>Autopilot.Display.TRIM</object-name>
 		<object-name>Autopilot.Display.ArrowUP</object-name>
 		<object-name>Autopilot.Display.ArrowDOWN</object-name>
-		<object-name>Autopilot.Display.ALT</object-name>
 		<object-name>Autopilot.Display.GS</object-name>
-		<object-name>Autopilot.Display.VS</object-name>
-		<object-name>Autopilot.Display.VSnumbers</object-name>
+		<condition>
+			<greater-than>
+				<property>controls/gear/brake-left</property>
+				<value>0</value>
+			</greater-than>
+		</condition>
+	</animation>
+
+
+
+
+
+
+
+
+<!--HDG Button !!!!!UI.clicks and properties only for test, must be replaced!!!!!-->
+<animation>
+  <type>pick</type>
+  <object-name>Autopilot.Button.HDG</object-name>
+  <action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Air Condition");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+<animation>
+		<type>select</type>
+		<object-name>Autopilot.Display.HDG</object-name>
 		<condition>
 			<less-than>
-				<property>controls/gear/brake-parking</property>
+				<property>extra500/CircuitBreakerPanel/BankA/AirCondition/state</property>
 				<value>1</value>
 			</less-than>	
 		</condition>
 	</animation>
 
-<!--TEST picks-->
+<!--"HDG+NAV" Field !!!!!UI.click only for test, must be replaced!!!!!-->
+<animation>
+  <type>pick</type>
+  <object-name>Autopilot.Hotspot.HDG+NAV</object-name>
+  <action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker PropellerHeat");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--NAV Button !!!!!UI.clicks and properties only for test, must be replaced!!!!!-->
+<animation>
+  <type>pick</type>
+  <object-name>Autopilot.Button.NAV</object-name>
+  <action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Cigarette Lighter");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+<animation>
+		<type>select</type>
+		<object-name>Autopilot.Display.NAV</object-name>
+		<condition>
+			<less-than>
+				<property>extra500/CircuitBreakerPanel/BankA/CigaretteLighter/state</property>
+				<value>1</value>
+			</less-than>	
+		</condition>
+	</animation>
+
+<!--APR Button !!!!!UI.clicks and properties only for test, must be replaced!!!!!-->
+<animation>
+  <type>pick</type>
+<object-name>Autopilot.Button.APR</object-name>
+  <action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Audio Marker");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+<animation>
+		<type>select</type>
+		<object-name>Autopilot.Display.APR</object-name>
+		<condition>
+			<less-than>
+				<property>extra500/CircuitBreakerPanel/BankA/AudioMarker/state</property>
+				<value>1</value>
+			</less-than>	
+		</condition>
+	</animation>
+
+<!--REV Button !!!!!UI.clicks and properties only for test, must be replaced!!!!!-->
+<animation>
+  <type>pick</type>
+  <object-name>Autopilot.Button.REV</object-name>
+  <action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker DME");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+<animation>
+		<type>select</type>
+		<object-name>Autopilot.Display.REV</object-name>
+		<condition>
+			<less-than>
+				<property>extra500/CircuitBreakerPanel/BankA/DME/state</property>
+				<value>1</value>
+			</less-than>	
+		</condition>
+	</animation>
+
+<!--ALT Button !!!!!UI.clicks and properties only for test, must be replaced!!!!!-->
+<animation>
+  <type>pick</type>
+  <object-name>Autopilot.Button.ALT</object-name>
+  <action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker Weather Detection");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+<animation>
+		<type>select</type>
+		<object-name>Autopilot.Display.ALT</object-name>
+		<condition>
+			<less-than>
+				<property>extra500/CircuitBreakerPanel/BankA/WeatherDetection/state</property>
+				<value>1</value>
+			</less-than>	
+		</condition>
+	</animation>
+
+<!--"ALT+VS" Field !!!!!UI.click only for test, must be replaced!!!!!-->
+<animation>
+  <type>pick</type>
+  <object-name>Autopilot.Hotspot.ALT+VS</object-name>
+  <action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker PropellerHeat");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<!--VS Button + Knob !!!!!UI.clicks and properties only for test, must be replaced!!!!!-->
+<animation>
+  <type>pick</type>
+  <object-name>Autopilot.Button.VS</object-name>
+  <action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Circuit Breaker VDC12");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+<animation>
+		<type>select</type>
+		<object-name>Autopilot.Display.VS</object-name>
+		<object-name>Autopilot.Display.VSnumbers</object-name>
+		<condition>
+			<less-than>
+				<property>extra500/CircuitBreakerPanel/BankA/VDC12/state</property>
+				<value>1</value>
+			</less-than>	
+		</condition>
+	</animation>
+<animation>
+  <type>pick</type>
+  <object-name>Autopilot.Knob</object-name>
+  <action>
+    <button>0</button>
+    <repeatable>true</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Dimmer Instrument >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>1</button>
+    <repeatable>true</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Dimmer Instrument <");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Dimmer Instrument >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Dimmer Instrument <");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+<!--diese werte stimmen schon! -->
+<animation>
+		<type>textranslate</type>
+		<object-name>Autopilot.Display.VSnumbers</object-name>
+		<property>autopilot/settings/vertical-speed-fpm</property>
+		<factor>0.00028</factor>
+		<step>100</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+</animation>
 
 <!--TEST dimming-->
 <animation>

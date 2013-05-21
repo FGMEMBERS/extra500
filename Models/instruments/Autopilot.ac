@@ -1,9 +1,10 @@
 AC3Db
 MATERIAL "DefaultWhite" rgb 1.0000 1.0000 1.0000  amb 0.2000 0.2000 0.2000  emis 0.0000 0.0000 0.0000  spec 0.5000 0.5000 0.5000  shi 10 trans 0.0000
 MATERIAL "autopilottextur" rgb 1.0000 1.0000 1.0000  amb 1.0000 1.0000 1.0000  emis 0.2000 0.2000 0.2000  spec 0.0000 0.0000 0.0000  shi 50 trans 0.0000
+MATERIAL "transparent" rgb 1.0000 0.0000 1.0000  amb 1.0000 1.0000 1.0000  emis 0.0000 0.0000 0.0000  spec 0.5000 0.5000 0.5000  shi 50 trans 1.0000
 OBJECT world
 name "Blender_export__Autopilot.ac"
-kids 24
+kids 26
 OBJECT poly
 name "Autopilot.Button.ALT"
 loc 0.0010663 -0.0136967 -0.0239248
@@ -813,6 +814,40 @@ refs 4
 13 0.079427 0.961805
 26 0.079427 0.877371
 24 0.931061 0.877371
+kids 0
+OBJECT poly
+name "Autopilot.Hotspot.ALT+VS"
+loc 0.0011718 -0.0137085 -0.0357707
+numvert 4
+0.0000000 -0.0090567 0.0051384
+-0.0000000 0.0090567 0.0051384
+0.0000000 -0.0090567 -0.0051384
+-0.0000000 0.0090567 -0.0051384
+numsurf 1
+SURF 0X20
+mat 2
+refs 4
+1 0 0
+0 0 0
+2 0 0
+3 0 0
+kids 0
+OBJECT poly
+name "Autopilot.Hotspot.HDG+NAV"
+loc 0.0011718 -0.0137085 0.0587646
+numvert 4
+0.0000000 -0.0090567 0.0051384
+-0.0000000 0.0090567 0.0051384
+0.0000000 -0.0090567 -0.0051384
+-0.0000000 0.0090567 -0.0051384
+numsurf 1
+SURF 0X20
+mat 2
+refs 4
+1 0 0
+0 0 0
+2 0 0
+3 0 0
 kids 0
 OBJECT poly
 name "Autopilot.Knob"
