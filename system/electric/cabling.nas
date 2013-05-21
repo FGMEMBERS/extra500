@@ -19,100 +19,100 @@
 #      Last change:      Dirk Dittmann
 #      Date:             29.04.13
 #
- var plugMainBoard = func(){
+ var plugEBox = func(){
 	
 		
 	# Sources
-		battery.Minus.plug(mainBoard.GND);
-		externalPower.Minus.plug(mainBoard.GND);
+		battery.Minus.plug(eBox.GND);
+		externalPower.Minus.plug(eBox.GND);
 	# Bus	
 	
-		mainBoard.hotBus.plug(battery.Plus);
-		mainBoard.iBus40.plug(fusePanel.externalPower.In);
-		mainBoard.iBus40.plug(externalPower.Plus);
+		eBox.hotBus.plug(battery.Plus);
+		eBox.iBus40.plug(fusePanel.externalPower.In);
+		eBox.iBus40.plug(externalPower.Plus);
 		
-		mainBoard.iBus30.plug(generator.Plus);
- 		mainBoard.iBus30.plug(generatorControlUnit.POR);
-		mainBoard.iBus30.plug(mainBoard.startRelais.P14);
-		
-		
-		mainBoard.plugElectric();
+		eBox.iBus30.plug(generator.Plus);
+ 		eBox.iBus30.plug(generatorControlUnit.POR);
+		eBox.iBus30.plug(eBox.startRelais.P14);
 		
 		
-# 		mainBoard.hotBus.plug(mainBoard.batteryRelais.A1);
-		mainBoard.hotBus.plug(fusePanel.emergency3.In);
-# 		mainBoard.hotBus.plug(mainBoard.batteryRelais.P21);
-# 		mainBoard.hotBus.plug(mainBoard.batteryRelais.P11);
+		eBox.plugElectric();
 		
-# 		mainBoard.iBus20.plug(mainBoard.batteryRelais.P14);
-# 		mainBoard.iBus20.plug(mainBoard.startRelais.P11);
-# 		mainBoard.iBus20.plug(mainBoard.batteryShunt.Minus);
 		
-# 		mainBoard.iBus10.plug(mainBoard.batteryShunt.Plus);
-		mainBoard.iBus10.plug(generatorControlUnit.LoadBus);
+# 		eBox.hotBus.plug(eBox.batteryRelais.A1);
+		eBox.hotBus.plug(fusePanel.emergency3.In);
+# 		eBox.hotBus.plug(eBox.batteryRelais.P21);
+# 		eBox.hotBus.plug(eBox.batteryRelais.P11);
 		
-		mainBoard.iBus10.plug(fusePanel.emergencyBus.In);
-		mainBoard.iBus10.plug(fusePanel.batteryBus.In);
-		mainBoard.iBus10.plug(mainBoard.rccbRelais.P14);
+# 		eBox.iBus20.plug(eBox.batteryRelais.P14);
+# 		eBox.iBus20.plug(eBox.startRelais.P11);
+# 		eBox.iBus20.plug(eBox.batteryShunt.Minus);
 		
-# 		mainBoard.iBus11.plug(mainBoard.generatorShunt.Minus);
-# 		mainBoard.iBus11.plug(mainBoard.rccbRelais.P11);
-		mainBoard.iBus11.plug(fusePanel.loadBus.In);
+# 		eBox.iBus10.plug(eBox.batteryShunt.Plus);
+		eBox.iBus10.plug(generatorControlUnit.LoadBus);
 		
-# 		mainBoard.iBus01.plug(mainBoard.batteryRelais.P24);
-# 		mainBoard.iBus01.plug(mainBoard.generatorRelais.P24);
-# 		mainBoard.iBus01.Minus.plug(mainBoard.rccbRelais.A1);
+		eBox.iBus10.plug(fusePanel.emergencyBus.In);
+		eBox.iBus10.plug(fusePanel.batteryBus.In);
+		eBox.iBus10.plug(eBox.rccbRelais.P14);
+		
+# 		eBox.iBus11.plug(eBox.generatorShunt.Minus);
+# 		eBox.iBus11.plug(eBox.rccbRelais.P11);
+		eBox.iBus11.plug(fusePanel.loadBus.In);
+		
+# 		eBox.iBus01.plug(eBox.batteryRelais.P24);
+# 		eBox.iBus01.plug(eBox.generatorRelais.P24);
+# 		eBox.iBus01.Minus.plug(eBox.rccbRelais.A1);
 # 		
-		mainBoard.iBus12.plug(fusePanel.emergency3.Out);
-# 		mainBoard.iBus12.plug(mainBoard.emergencyRelais.A1);
-# 		mainBoard.iBus12.plug(mainBoard.emergencyRelais.P14);
+		eBox.iBus12.plug(fusePanel.emergency3.Out);
+# 		eBox.iBus12.plug(eBox.emergencyRelais.A1);
+# 		eBox.iBus12.plug(eBox.emergencyRelais.P14);
 		
 		
-		mainBoard.batteryBus.plug(fusePanel.batteryBus.Out);
+		eBox.batteryBus.plug(fusePanel.batteryBus.Out);
 		
 		
-		mainBoard.iBus13.plug(circuitBreakerPanel.avionicBus.Out);
-# 		mainBoard.iBus13.plug(mainBoard.avionicsRelais.A1);
-# 		mainBoard.iBus13.plug(mainBoard.avionicsRelais.P11);
+		eBox.iBus13.plug(circuitBreakerPanel.avionicBus.Out);
+# 		eBox.iBus13.plug(eBox.avionicsRelais.A1);
+# 		eBox.iBus13.plug(eBox.avionicsRelais.P11);
 		
-# 		mainBoard.avionicBus.plug(mainBoard.avionicsRelais.P14);
+# 		eBox.avionicBus.plug(eBox.avionicsRelais.P14);
 				
-		mainBoard.loadBus.plug(fusePanel.loadBus.Out);
+		eBox.loadBus.plug(fusePanel.loadBus.Out);
 		
-# 		mainBoard.emergencyBus.plug(mainBoard.emergencyRelais.P11);
+# 		eBox.emergencyBus.plug(eBox.emergencyRelais.P11);
 		
 		
-# 		mainBoard.iBus30.plug(mainBoard.generatorRelais.P21);
-# 		mainBoard.iBus30.plug(mainBoard.generatorRelais.P11);
+# 		eBox.iBus30.plug(eBox.generatorRelais.P21);
+# 		eBox.iBus30.plug(eBox.generatorRelais.P11);
 	
-# 		mainBoard.JB3E20.plug(mainBoard.startRelais.P34);
-		mainBoard.JB3E20.plug(generatorControlUnit.StartPower);
-# 		mainBoard.JB4E20.plug(mainBoard.startRelais.P31);
+# 		eBox.JB3E20.plug(eBox.startRelais.P34);
+		eBox.JB3E20.plug(generatorControlUnit.StartPower);
+# 		eBox.JB4E20.plug(eBox.startRelais.P31);
 		
 		
 		
 	# relais	
-		mainBoard.emergencyRelais.P12.plug(fusePanel.emergencyBus.Out);
+		eBox.emergencyRelais.P12.plug(fusePanel.emergencyBus.Out);
 		
-# 		mainBoard.generatorRelais.A2.plug(mainBoard.GND);
+# 		eBox.generatorRelais.A2.plug(eBox.GND);
 # 		
-# 		mainBoard.generatorRelais.P14.plug(mainBoard.generatorShunt.Plus);
+# 		eBox.generatorRelais.P14.plug(eBox.generatorShunt.Plus);
 		
 		#start
-		mainBoard.startRelais.A1.plug(generatorControlUnit.StartContactor);
-		#mainBoard.startRelais.A2.plug(mainBoard.GND);
+		eBox.startRelais.A1.plug(generatorControlUnit.StartContactor);
+		#eBox.startRelais.A2.plug(eBox.GND);
 		
-		#mainBoard.startRelais.P21.plug(mainBoard.rccbRelais.A2);
+		#eBox.startRelais.P21.plug(eBox.rccbRelais.A2);
 		
 
 };
 
 var plugGenerator = func(){
-	generator.Minus.plug(mainBoard.GND);
+	generator.Minus.plug(eBox.GND);
 	
-	generatorControlUnit.GND.plug(mainBoard.GND);
+	generatorControlUnit.GND.plug(eBox.GND);
 	generatorControlUnit.generatorOutputBus.plug(generatorControlUnit.GeneratorOutput);
-	generatorControlUnit.LineContactorCoil.plug(mainBoard.generatorRelais.A1);
+	generatorControlUnit.LineContactorCoil.plug(eBox.generatorRelais.A1);
 	
 	
 	#Gen Test
@@ -135,77 +135,77 @@ var plugGenerator = func(){
 
 var plugCircuitBreaker = func(){
 		
-		mainBoard.loadBus.plug(circuitBreakerPanel.AirCondition.In);
-		mainBoard.loadBus.plug(circuitBreakerPanel.CigaretteLighter.In);
-		mainBoard.loadBus.plug(circuitBreakerPanel.VDC12.In);
-		mainBoard.loadBus.plug(circuitBreakerPanel.AudioMarker.In);
-		mainBoard.loadBus.plug(circuitBreakerPanel.DME.In);
-		mainBoard.loadBus.plug(circuitBreakerPanel.WeatherDetection.In);
-		mainBoard.loadBus.plug(circuitBreakerPanel.Sirius.In);
-		mainBoard.loadBus.plug(circuitBreakerPanel.Iridium.In);
-		mainBoard.loadBus.plug(circuitBreakerPanel.IFD_RH_A.In);
-		mainBoard.loadBus.plug(circuitBreakerPanel.PanelVent.In);
-		mainBoard.loadBus.plug(circuitBreakerPanel.AirControl.In);
-		mainBoard.loadBus.plug(circuitBreakerPanel.BusTie.In);
-		mainBoard.loadBus.plug(circuitBreakerPanel.Emergency2.In);
-		mainBoard.loadBus.plug(circuitBreakerPanel.CabinLight.In);
-		mainBoard.loadBus.plug(circuitBreakerPanel.RecognitionLight.In);
-		mainBoard.loadBus.plug(circuitBreakerPanel.NavLight.In);
-		mainBoard.loadBus.plug(circuitBreakerPanel.OverSpeed.In);
-		mainBoard.loadBus.plug(circuitBreakerPanel.FuelTransferL.In);
-		mainBoard.loadBus.plug(circuitBreakerPanel.FuelTransferR.In);
-		mainBoard.loadBus.plug(circuitBreakerPanel.PitotR.In);
-		mainBoard.loadBus.plug(circuitBreakerPanel.EngineInstrument2.In);
-		mainBoard.loadBus.plug(circuitBreakerPanel.DIP2.In);
+		eBox.loadBus.plug(circuitBreakerPanel.AirCondition.In);
+		eBox.loadBus.plug(circuitBreakerPanel.CigaretteLighter.In);
+		eBox.loadBus.plug(circuitBreakerPanel.VDC12.In);
+		eBox.loadBus.plug(circuitBreakerPanel.AudioMarker.In);
+		eBox.loadBus.plug(circuitBreakerPanel.DME.In);
+		eBox.loadBus.plug(circuitBreakerPanel.WeatherDetection.In);
+		eBox.loadBus.plug(circuitBreakerPanel.Sirius.In);
+		eBox.loadBus.plug(circuitBreakerPanel.Iridium.In);
+		eBox.loadBus.plug(circuitBreakerPanel.IFD_RH_A.In);
+		eBox.loadBus.plug(circuitBreakerPanel.PanelVent.In);
+		eBox.loadBus.plug(circuitBreakerPanel.AirControl.In);
+		eBox.loadBus.plug(circuitBreakerPanel.BusTie.In);
+		eBox.loadBus.plug(circuitBreakerPanel.Emergency2.In);
+		eBox.loadBus.plug(circuitBreakerPanel.CabinLight.In);
+		eBox.loadBus.plug(circuitBreakerPanel.RecognitionLight.In);
+		eBox.loadBus.plug(circuitBreakerPanel.NavLight.In);
+		eBox.loadBus.plug(circuitBreakerPanel.OverSpeed.In);
+		eBox.loadBus.plug(circuitBreakerPanel.FuelTransferL.In);
+		eBox.loadBus.plug(circuitBreakerPanel.FuelTransferR.In);
+		eBox.loadBus.plug(circuitBreakerPanel.PitotR.In);
+		eBox.loadBus.plug(circuitBreakerPanel.EngineInstrument2.In);
+		eBox.loadBus.plug(circuitBreakerPanel.DIP2.In);
 		
-		mainBoard.avionicBus.plug(circuitBreakerPanel.IFD_RH_B.In);
-		mainBoard.avionicBus.plug(circuitBreakerPanel.TAS.In);
-		mainBoard.avionicBus.plug(circuitBreakerPanel.AutopilotComputer.In);
-		mainBoard.avionicBus.plug(circuitBreakerPanel.TurnCoordinator.In);
+		eBox.avionicBus.plug(circuitBreakerPanel.IFD_RH_B.In);
+		eBox.avionicBus.plug(circuitBreakerPanel.TAS.In);
+		eBox.avionicBus.plug(circuitBreakerPanel.AutopilotComputer.In);
+		eBox.avionicBus.plug(circuitBreakerPanel.TurnCoordinator.In);
 		
-		mainBoard.batteryBus.plug(circuitBreakerPanel.BusTie.Out);
-		mainBoard.batteryBus.plug(circuitBreakerPanel.FlapControl.In);
-		mainBoard.batteryBus.plug(circuitBreakerPanel.Flap.In);
-		mainBoard.batteryBus.plug(circuitBreakerPanel.Emergency1.In);
-		mainBoard.batteryBus.plug(circuitBreakerPanel.avionicBus.In);
-		mainBoard.batteryBus.plug(circuitBreakerPanel.InstrumentLight.In);
-		mainBoard.batteryBus.plug(circuitBreakerPanel.StrobeLight.In);
-		mainBoard.batteryBus.plug(circuitBreakerPanel.IceLight.In);
-		mainBoard.batteryBus.plug(circuitBreakerPanel.VneWarn.In);
-		mainBoard.batteryBus.plug(circuitBreakerPanel.FuelFlow.In);
-		mainBoard.batteryBus.plug(circuitBreakerPanel.FuelPump2.In);
-		mainBoard.batteryBus.plug(circuitBreakerPanel.WindShieldControl.In);
-		mainBoard.batteryBus.plug(circuitBreakerPanel.WindShieldHeat.In);
-		mainBoard.batteryBus.plug(circuitBreakerPanel.Boots.In);
-		mainBoard.batteryBus.plug(circuitBreakerPanel.PropellerHeat.In);
-		mainBoard.batteryBus.plug(circuitBreakerPanel.IFD_LH_B.In);
-		mainBoard.batteryBus.plug(circuitBreakerPanel.Ignition.In);
-		mainBoard.batteryBus.plug(circuitBreakerPanel.Start.In);
-		mainBoard.batteryBus.plug(circuitBreakerPanel.AutopilotServo.In);
-		mainBoard.batteryBus.plug(circuitBreakerPanel.EnvironmentalBleed.In);
-		mainBoard.batteryBus.plug(circuitBreakerPanel.Hydraulic.In);
+		eBox.batteryBus.plug(circuitBreakerPanel.BusTie.Out);
+		eBox.batteryBus.plug(circuitBreakerPanel.FlapControl.In);
+		eBox.batteryBus.plug(circuitBreakerPanel.Flap.In);
+		eBox.batteryBus.plug(circuitBreakerPanel.Emergency1.In);
+		eBox.batteryBus.plug(circuitBreakerPanel.avionicBus.In);
+		eBox.batteryBus.plug(circuitBreakerPanel.InstrumentLight.In);
+		eBox.batteryBus.plug(circuitBreakerPanel.StrobeLight.In);
+		eBox.batteryBus.plug(circuitBreakerPanel.IceLight.In);
+		eBox.batteryBus.plug(circuitBreakerPanel.VneWarn.In);
+		eBox.batteryBus.plug(circuitBreakerPanel.FuelFlow.In);
+		eBox.batteryBus.plug(circuitBreakerPanel.FuelPump2.In);
+		eBox.batteryBus.plug(circuitBreakerPanel.WindShieldControl.In);
+		eBox.batteryBus.plug(circuitBreakerPanel.WindShieldHeat.In);
+		eBox.batteryBus.plug(circuitBreakerPanel.Boots.In);
+		eBox.batteryBus.plug(circuitBreakerPanel.PropellerHeat.In);
+		eBox.batteryBus.plug(circuitBreakerPanel.IFD_LH_B.In);
+		eBox.batteryBus.plug(circuitBreakerPanel.Ignition.In);
+		eBox.batteryBus.plug(circuitBreakerPanel.Start.In);
+		eBox.batteryBus.plug(circuitBreakerPanel.AutopilotServo.In);
+		eBox.batteryBus.plug(circuitBreakerPanel.EnvironmentalBleed.In);
+		eBox.batteryBus.plug(circuitBreakerPanel.Hydraulic.In);
 		
-		mainBoard.emergencyBus.plug(circuitBreakerPanel.LowVolt.In);
-		mainBoard.emergencyBus.plug(circuitBreakerPanel.VoltMonitor.In);
-		mainBoard.emergencyBus.plug(circuitBreakerPanel.Alt.In);
-		mainBoard.emergencyBus.plug(circuitBreakerPanel.GeneratorReset.In);
-		mainBoard.emergencyBus.plug(circuitBreakerPanel.GlareLight.In);
-		mainBoard.emergencyBus.plug(circuitBreakerPanel.WarnLight.In);
-		mainBoard.emergencyBus.plug(circuitBreakerPanel.LandingLight.In);
-		mainBoard.emergencyBus.plug(circuitBreakerPanel.StallWarning.In);
-		mainBoard.emergencyBus.plug(circuitBreakerPanel.FuelQuantity.In);
-		mainBoard.emergencyBus.plug(circuitBreakerPanel.FuelPump1.In);
-		mainBoard.emergencyBus.plug(circuitBreakerPanel.PitotL.In);
-		mainBoard.emergencyBus.plug(circuitBreakerPanel.IntakeAI.In);
-		mainBoard.emergencyBus.plug(circuitBreakerPanel.EngineInstrument1.In);
-		mainBoard.emergencyBus.plug(circuitBreakerPanel.DIP1.In);
-		mainBoard.emergencyBus.plug(circuitBreakerPanel.IFD_LH_A.In);
-		mainBoard.emergencyBus.plug(circuitBreakerPanel.Keypad.In);
-		mainBoard.emergencyBus.plug(circuitBreakerPanel.ATC.In);
-		mainBoard.emergencyBus.plug(circuitBreakerPanel.StandbyGyroskop.In);
-		mainBoard.emergencyBus.plug(circuitBreakerPanel.Dump.In);
-		mainBoard.emergencyBus.plug(circuitBreakerPanel.CabinPressure.In);
-		mainBoard.emergencyBus.plug(circuitBreakerPanel.GearWarn.In);
+		eBox.emergencyBus.plug(circuitBreakerPanel.LowVolt.In);
+		eBox.emergencyBus.plug(circuitBreakerPanel.VoltMonitor.In);
+		eBox.emergencyBus.plug(circuitBreakerPanel.Alt.In);
+		eBox.emergencyBus.plug(circuitBreakerPanel.GeneratorReset.In);
+		eBox.emergencyBus.plug(circuitBreakerPanel.GlareLight.In);
+		eBox.emergencyBus.plug(circuitBreakerPanel.WarnLight.In);
+		eBox.emergencyBus.plug(circuitBreakerPanel.LandingLight.In);
+		eBox.emergencyBus.plug(circuitBreakerPanel.StallWarning.In);
+		eBox.emergencyBus.plug(circuitBreakerPanel.FuelQuantity.In);
+		eBox.emergencyBus.plug(circuitBreakerPanel.FuelPump1.In);
+		eBox.emergencyBus.plug(circuitBreakerPanel.PitotL.In);
+		eBox.emergencyBus.plug(circuitBreakerPanel.IntakeAI.In);
+		eBox.emergencyBus.plug(circuitBreakerPanel.EngineInstrument1.In);
+		eBox.emergencyBus.plug(circuitBreakerPanel.DIP1.In);
+		eBox.emergencyBus.plug(circuitBreakerPanel.IFD_LH_A.In);
+		eBox.emergencyBus.plug(circuitBreakerPanel.Keypad.In);
+		eBox.emergencyBus.plug(circuitBreakerPanel.ATC.In);
+		eBox.emergencyBus.plug(circuitBreakerPanel.StandbyGyroskop.In);
+		eBox.emergencyBus.plug(circuitBreakerPanel.Dump.In);
+		eBox.emergencyBus.plug(circuitBreakerPanel.CabinPressure.In);
+		eBox.emergencyBus.plug(circuitBreakerPanel.GearWarn.In);
 
 		flapSystem.powerInBus.plug(circuitBreakerPanel.FlapUNB.In);
 		flapSystem.inhibitBus.plug(circuitBreakerPanel.FlapUNB.Out);
@@ -214,8 +214,8 @@ var plugCircuitBreaker = func(){
 		gearSystem.Aux2Bus.plug(circuitBreakerPanel.GearAux1.In);
 		gearSystem.Aux1Bus.plug(circuitBreakerPanel.GearAux1.Out);
 		
-		circuitBreakerPanel.RCCB.Out.plug(mainBoard.GND);
-		circuitBreakerPanel.RCCB.In.plug(mainBoard.k8Relais.P21);
+		circuitBreakerPanel.RCCB.Out.plug(eBox.GND);
+		circuitBreakerPanel.RCCB.In.plug(eBox.k8Relais.P21);
 		
 		circuitBreakerPanel.instrumentLightBus.plug(circuitBreakerPanel.InstrumentLight.Out);
 		
@@ -230,24 +230,24 @@ var plugSidePanel = func(){
 		
 		
 	
-		sidePanel.Emergency.Com1.plug(mainBoard.GND);
+		sidePanel.Emergency.Com1.plug(eBox.GND);
 		sidePanel.Emergency.L11.plug(sidePanel.MainBattery.Com1);
-		sidePanel.Emergency.L12.plug(mainBoard.emergencyRelais.A2);
+		sidePanel.Emergency.L12.plug(eBox.emergencyRelais.A2);
 		
-		sidePanel.MainBattery.L12.plug(mainBoard.batteryRelais.A2);
+		sidePanel.MainBattery.L12.plug(eBox.batteryRelais.A2);
 		sidePanel.MainBattery.L22.plug(sidePanel.standbyAlternatorPowerBus.con());
 		
-		sidePanel.MainAvionics.Com1.plug(mainBoard.GND);
-		sidePanel.MainAvionics.L12.plug(mainBoard.avionicsRelais.A2);
+		sidePanel.MainAvionics.Com1.plug(eBox.GND);
+		sidePanel.MainAvionics.L12.plug(eBox.avionicsRelais.A2);
 		
 		sidePanel.MainExternalPower.L12.plug(fusePanel.externalPowerBus.con());
-		sidePanel.MainExternalPower.Com1.plug(mainBoard.externalPowerRelais.A1);
+		sidePanel.MainExternalPower.Com1.plug(eBox.externalPowerRelais.A1);
 		
 		sidePanel.MainStandbyAlt.Com1.plug(sidePanel.MainBattery.Com2);
-		sidePanel.MainStandbyAlt.L12.plug(mainBoard.hotBus.con());
+		sidePanel.MainStandbyAlt.L12.plug(eBox.hotBus.con());
 		
 		sidePanel.MainStandbyAlt.Com2.plug(circuitBreakerPanel.Alt.Out);
-		sidePanel.MainStandbyAlt.L21.plug(mainBoard.alternatorRelais.A1);
+		sidePanel.MainStandbyAlt.L21.plug(eBox.alternatorRelais.A1);
 		sidePanel.MainStandbyAlt.L22.plug(sidePanel.standbyAlternatorPowerBus.con());
 		
 		
@@ -279,8 +279,8 @@ var plugSidePanel = func(){
 	# Dimmer cabling
 		
 		
-		sidePanel.LightNight.Com1.plug(mainBoard.GND);
- 		sidePanel.LightNight.Com2.plug(mainBoard.GND);
+		sidePanel.LightNight.Com1.plug(eBox.GND);
+ 		sidePanel.LightNight.Com2.plug(eBox.GND);
  		sidePanel.LightNight.L11.plug(lightBoard.dayNightRelais.A2);
  		sidePanel.LightNight.L12.plug(lightBoard.testLightRelais.A2);
  		sidePanel.LightNight.L22.plug(annunciatorPanel.dimTestRelais.A2);
@@ -305,22 +305,22 @@ var plugMasterPanel = func(){
 		
 	# engine
 		masterPanel.EngineMotoring.Com1.plug(circuitBreakerPanel.Start.Out);
-		masterPanel.EngineMotoring.L11.plug(	mainBoard.JB3E20.con() );
-		masterPanel.EngineMotoring.L13.plug(	mainBoard.JB4E20.con() );
+		masterPanel.EngineMotoring.L11.plug(	eBox.JB3E20.con() );
+		masterPanel.EngineMotoring.L13.plug(	eBox.JB4E20.con() );
 		
-		masterPanel.EngineMotoring.Com2.plug(	mainBoard.JB2G20.con() );
+		masterPanel.EngineMotoring.Com2.plug(	eBox.JB2G20.con() );
 		masterPanel.EngineMotoring.L23.plug(	engine.IgnitionPlus );		#ignition
 
-		masterPanel.EngineMotoring.Com3.plug(	mainBoard.JB2G20.con() );
+		masterPanel.EngineMotoring.Com3.plug(	eBox.JB2G20.con() );
 		masterPanel.EngineMotoring.L33.plug(	annunciatorPanel.ignitionRelais.A1 );		#Anunciator
 		
 		
 		masterPanel.EngineStart.Com1.plug(	circuitBreakerPanel.Ignition.Out );
-		masterPanel.EngineStart.L11.plug(	mainBoard.JB2G20.con() );
-		masterPanel.EngineStart.L12.plug(	mainBoard.JB2G20.con() );
+		masterPanel.EngineStart.L11.plug(	eBox.JB2G20.con() );
+		masterPanel.EngineStart.L12.plug(	eBox.JB2G20.con() );
 		
-		masterPanel.EngineStart.Com2.plug(	mainBoard.JB4E20.con() );
-		masterPanel.EngineStart.L21.plug(	mainBoard.JB3E20.con() );
+		masterPanel.EngineStart.Com2.plug(	eBox.JB4E20.con() );
+		masterPanel.EngineStart.L21.plug(	eBox.JB3E20.con() );
 		
 		
 		
@@ -352,7 +352,7 @@ var plugMasterPanel = func(){
 
 var plugLight = func(){
 	
-	lightBoard.GNDBus.Minus.plug(mainBoard.GND);
+	lightBoard.GNDBus.Minus.plug(eBox.GND);
 	
 	lightBoard.plugElectric();
 	
@@ -395,7 +395,7 @@ var plugLight = func(){
 };
 
 var plugFlap =func(){
-	flapSystem.GNDBus.Minus.plug(mainBoard.GND);
+	flapSystem.GNDBus.Minus.plug(eBox.GND);
 	flapSystem.flapPowerBus.plug(circuitBreakerPanel.Flap.Out);
 	flapSystem.powerInBus.plug(circuitBreakerPanel.FlapControl.Out);
 	flapSystem.plugElectric();
@@ -406,10 +406,10 @@ var plugFlap =func(){
 };
 var plugGear =func(){
 	gearSystem.plugElectric();
-	gearSystem.GND.plug(mainBoard.GND);
+	gearSystem.GND.plug(eBox.GND);
 	gearSystem.Aux2.plug(fusePanel.GearAux2.Out);
 	gearSystem.Aux1.plug(gearSystem.Aux2Bus.con());
-	gearSystem.Aux1Diode.Plus.plug(mainBoard.batteryBus.con());
+	gearSystem.Aux1Diode.Plus.plug(eBox.batteryBus.con());
 	gearSystem.Aux1Diode.Minus.plug(gearSystem.Aux2Bus.con());
 	gearSystem.CtrlBus.plug(circuitBreakerPanel.GearControl.Out);
 	gearSystem.CTRL.plug(gearSystem.CtrlBus.con());
@@ -419,12 +419,12 @@ var plugGear =func(){
 };
 
 var plugAnnuciator = func(){
-	annunciatorPanel.GNDBus.Minus.plug(mainBoard.GND);
+	annunciatorPanel.GNDBus.Minus.plug(eBox.GND);
 	annunciatorPanel.plugElectric();
 	lightBoard.annuciatorDimBus.plug(annunciatorPanel.dimTestRelais.P12);# +14-28V Dim Voltage
 	lightBoard.testLightRelais.P11.plug(annunciatorPanel.dimTestRelais.P14);# +28V Light-Test
 	
-	mainBoard.iBus03.plug(annunciatorPanel.dimTestRelais.P482); # Gernator 1 Fail
+	eBox.iBus03.plug(annunciatorPanel.dimTestRelais.P482); # Gernator 1 Fail
 	annunciatorPanel.externalPowerBus.plug(fusePanel.externalPowerBus.con());
 	
 	
@@ -432,28 +432,28 @@ var plugAnnuciator = func(){
 
 var plugFuel = func(){
 	
-	oFuelSystem.oPump1.Plus.plug(masterPanel.FuelPump1.L12);
-	oFuelSystem.oPump1.Minus.plug(mainBoard.GND);
+	fuelSystem.oPump1.Plus.plug(masterPanel.FuelPump1.L12);
+	fuelSystem.oPump1.Minus.plug(eBox.GND);
 	
-	oFuelSystem.oPump2.Plus.plug(masterPanel.FuelPump2.L12);
-	oFuelSystem.oPump2.Minus.plug(mainBoard.GND);
+	fuelSystem.oPump2.Plus.plug(masterPanel.FuelPump2.L12);
+	fuelSystem.oPump2.Minus.plug(eBox.GND);
 	
-	oFuelSystem.oPumpLeft.Plus.plug(masterPanel.FuelTransferLeft.L12);
-	oFuelSystem.oPumpLeft.Minus.plug(mainBoard.GND);
+	fuelSystem.oPumpLeft.Plus.plug(masterPanel.FuelTransferLeft.L12);
+	fuelSystem.oPumpLeft.Minus.plug(eBox.GND);
 	
-	oFuelSystem.oPumpRight.Plus.plug(masterPanel.FuelTransferRight.L12);
-	oFuelSystem.oPumpRight.Minus.plug(mainBoard.GND);
+	fuelSystem.oPumpRight.Plus.plug(masterPanel.FuelTransferRight.L12);
+	fuelSystem.oPumpRight.Minus.plug(eBox.GND);
 	
 }
 
 var plugFusePanel = func(){
 	
 	fusePanel.plugElectric();
-	fusePanel.GearAux2.In.plug(mainBoard.hotBus.con());
+	fusePanel.GearAux2.In.plug(eBox.hotBus.con());
 }
 var plugEngine = func(){
 	
-	engine.GND.plug(mainBoard.GND);
+	engine.GND.plug(eBox.GND);
 	engine.LowOilPress.plug(annunciatorPanel.dimTestRelais.P392);
 	engine.LowPitch.plug(annunciatorPanel.dimTestRelais.P232);
 	
@@ -461,26 +461,26 @@ var plugEngine = func(){
 
 var plugAlternator = func(){
 	
-	standbyAlternatorRegulator.GND.plug(mainBoard.GND);
-	standbyAlternatorRegulator.Sense.plug(mainBoard.emergencyBus.con());
+	standbyAlternatorRegulator.GND.plug(eBox.GND);
+	standbyAlternatorRegulator.Sense.plug(eBox.emergencyBus.con());
 	standbyAlternatorRegulator.PowerVoltage.plug(sidePanel.standbyAlternatorPowerBus.Minus);
 	standbyAlternatorRegulator.AnnuciatorLight.plug(annunciatorPanel.dimTestRelais.P212);
 		
-	alternator.Minus.plug(mainBoard.GND);
+	alternator.Minus.plug(eBox.GND);
 	alternator.Field.plug(standbyAlternatorRegulator.Field);
-	alternator.Plus.plug(mainBoard.alternatorRelais.P11);
+	alternator.Plus.plug(eBox.alternatorRelais.P11);
 }
 
 var plugPcBoard = func(){
 	pcBoard.plugElectric();
-	pcBoard.GND.plug(mainBoard.GND);
+	pcBoard.GND.plug(eBox.GND);
 	pcBoard.LowVoltSense.plug(circuitBreakerPanel.LowVolt.Out);
 	pcBoard.LowVoltOut.plug(annunciatorPanel.dimTestRelais.P222);
 }
 
 var plugDIP =func(){
 	digitalInstrumentPackage.plugElectric();
-	digitalInstrumentPackage.GND.plug(mainBoard.GND);
+	digitalInstrumentPackage.GND.plug(eBox.GND);
 	
 	digitalInstrumentPackage.PowerInputA.plug(circuitBreakerPanel.DIP1.Out);
 	digitalInstrumentPackage.PowerInputB.plug(circuitBreakerPanel.DIP2.Out);
@@ -491,7 +491,7 @@ var plugDIP =func(){
 }
 var plugEIP = func(){
 	engineInstrumentPackage.plugElectric();
-	engineInstrumentPackage.GND.plug(mainBoard.GND);
+	engineInstrumentPackage.GND.plug(eBox.GND);
 	
 	engineInstrumentPackage.PowerInputA.plug(circuitBreakerPanel.EngineInstrument1.Out);
 	engineInstrumentPackage.PowerInputB.plug(circuitBreakerPanel.EngineInstrument2.Out);
@@ -502,56 +502,56 @@ var plugEIP = func(){
 #---------------
 var plugAudioPanel = func(){
 	audioPanel.plugElectric();
-	audioPanel.GND.plug(mainBoard.GND);
+	audioPanel.GND.plug(eBox.GND);
 	audioPanel.PowerInput.plug(circuitBreakerPanel.AudioMarker.Out);
 	audioPanel.Dimming.plug(lightBoard.instrumentDimBus.con());
 }
 var plugKeypad = func(){
 	keypad.plugElectric();
-	keypad.GND.plug(mainBoard.GND);
+	keypad.GND.plug(eBox.GND);
 	keypad.PowerInput.plug(circuitBreakerPanel.Keypad.Out);
 	keypad.Dimming.plug(lightBoard.instrumentDimBus.con());
 }
 var plugAutopilot = func(){
 	autopilot.plugElectric();
-	autopilot.GND.plug(mainBoard.GND);
+	autopilot.GND.plug(eBox.GND);
 	autopilot.PowerInputA.plug(masterPanel.AutopilotMaster.L11);
 	autopilot.PowerInputB.plug(masterPanel.AutopilotMaster.L12);
 	autopilot.Dimming.plug(lightBoard.instrumentDimBus.con());
 }
 var plugDme = func(){
 	dme.plugElectric();
-	dme.GND.plug(mainBoard.GND);
+	dme.GND.plug(eBox.GND);
 	dme.PowerInput.plug(circuitBreakerPanel.DME.Out);
 	dme.Dimming.plug(lightBoard.instrumentDimBus.con());
 }
 var plugFuelFlow = func(){
 	fuelFlow.plugElectric();
-	fuelFlow.GND.plug(mainBoard.GND);
+	fuelFlow.GND.plug(eBox.GND);
 	fuelFlow.PowerInput.plug(circuitBreakerPanel.FuelFlow.Out);
 	fuelFlow.Dimming.plug(lightBoard.instrumentDimBus.con());
 }
 var plugTurnCoordinator = func(){
 	turnCoordinator.plugElectric();
-	turnCoordinator.GND.plug(mainBoard.GND);
+	turnCoordinator.GND.plug(eBox.GND);
 	turnCoordinator.PowerInput.plug(circuitBreakerPanel.TurnCoordinator.Out);
 	turnCoordinator.Dimming.plug(lightBoard.instrumentDimBus.con());
 }
 var plugStbyAirspeed = func(){
 	stbyAirspeed.plugElectric();
-	stbyAirspeed.GND.plug(mainBoard.GND);
+	stbyAirspeed.GND.plug(eBox.GND);
 	# TODO stbyAirspeed.PowerInput.plug(circuitBreakerPanel..Out);
 	stbyAirspeed.Dimming.plug(lightBoard.instrumentDimBus.con());
 }
 var plugStbyAltimeter = func(){
 	stbyAltimeter.plugElectric();
-	stbyAltimeter.GND.plug(mainBoard.GND);
+	stbyAltimeter.GND.plug(eBox.GND);
 	# TODO stbyAltimeter.PowerInput.plug(circuitBreakerPanel..Out);
 	stbyAltimeter.Dimming.plug(lightBoard.instrumentDimBus.con());
 }
 var plugStbyAttitude = func(){
 	stbyAttitude.plugElectric();
-	stbyAttitude.GND.plug(mainBoard.GND);
+	stbyAttitude.GND.plug(eBox.GND);
 	stbyAttitude.PowerInput.plug(circuitBreakerPanel.StandbyGyroskop.Out);
 	stbyAttitude.Dimming.plug(lightBoard.instrumentDimBus.con());
 }
@@ -561,7 +561,7 @@ var plugStbyAttitude = func(){
 
 
 var plugElectric = func(){
-	plugMainBoard();
+	plugEBox();
 	plugGenerator();
 	plugCircuitBreaker();
 	plugSidePanel();

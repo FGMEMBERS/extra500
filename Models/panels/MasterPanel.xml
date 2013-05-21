@@ -30,7 +30,7 @@
 <animation>
   <type>rotate</type>
   <object-name>MasterPanel.Autopilot.Master</object-name>
-  <property>extra500/MasterPanel/Autopilot/Master/state</property>
+  <property>extra500/panel/Master/Autopilot/Master/state</property>
   <factor>-25</factor>
   <axis>
     <x1-m>0.01</x1-m>
@@ -91,7 +91,7 @@
 <animation>
   <type>rotate</type>
   <object-name>MasterPanel.Autopilot.PitchTrim</object-name>
-  <property>extra500/MasterPanel/Autopilot/PitchTrim/state</property>
+  <property>extra500/panel/Master/Autopilot/PitchTrim/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -161,7 +161,7 @@
 <animation>
   <type>rotate</type>
   <object-name>MasterPanel.Autopilot.YawDamper</object-name>
-  <property>extra500/MasterPanel/Autopilot/YawDamper/state</property>
+  <property>extra500/panel/Master/Autopilot/YawDamper/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -231,7 +231,7 @@
 <animation>
   <type>rotate</type>
   <object-name>MasterPanel.Autopilot.YawTrim</object-name>
-  <property>extra500/MasterPanel/Autopilot/YawTrim/state</property>
+  <property>extra500/panel/Master/Autopilot/YawTrim/state</property>
   <factor>-120</factor>
   <axis>
     <x1-m>0</x1-m>
@@ -291,7 +291,7 @@
 <animation>
   <type>rotate</type>
   <object-name>MasterPanel.Fuel.TransferLeft</object-name>
-  <property>extra500/MasterPanel/Fuel/TransferLeft/state</property>
+  <property>extra500/panel/Master/Fuel/TransferLeft/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -361,7 +361,7 @@
 <animation>
   <type>rotate</type>
   <object-name>MasterPanel.Fuel.TransferRight</object-name>
-  <property>extra500/MasterPanel/Fuel/TransferRight/state</property>
+  <property>extra500/panel/Master/Fuel/TransferRight/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -431,7 +431,7 @@
 <animation>
   <type>rotate</type>
   <object-name>MasterPanel.Fuel.Pump1</object-name>
-  <property>extra500/MasterPanel/Fuel/Pump1/state</property>
+  <property>extra500/panel/Master/Fuel/Pump1/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -501,7 +501,7 @@
 <animation>
   <type>rotate</type>
   <object-name>MasterPanel.Fuel.Pump2</object-name>
-  <property>extra500/MasterPanel/Fuel/Pump2/state</property>
+  <property>extra500/panel/Master/Fuel/Pump2/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -571,7 +571,7 @@
 <animation>
   <type>translate</type>
   <object-name>MasterPanel.Engine.OverSpeed</object-name>
-  <property>extra500/MasterPanel/Engine/OverSpeed/state</property>
+  <property>extra500/panel/Master/Engine/OverSpeed/state</property>
   <factor>-0.007</factor>
   <axis>
    <x>1</x>
@@ -607,7 +607,7 @@
 <animation>
   <type>rotate</type>
   <object-name>MasterPanel.Engine.Motoring</object-name>
-  <property>extra500/MasterPanel/Engine/Motoring/state</property>
+  <property>extra500/panel/Master/Engine/Motoring/state</property>
   <factor>-25</factor>
   <axis>
     <x1-m>0.01</x1-m>
@@ -668,7 +668,7 @@
 <animation>
   <type>rotate</type>
   <object-name>MasterPanel.Engine.Start</object-name>
-  <property>extra500/MasterPanel/Engine/Start/state</property>
+  <property>extra500/panel/Master/Engine/Start/state</property>
   <factor>-25</factor>
   <axis>
     <x1-m>0.01</x1-m>
@@ -729,7 +729,7 @@
 <animation>
   <type>rotate</type>
   <object-name>MasterPanel.Dimming.Keypad</object-name>
-  <property>extra500/MasterPanel/Dimming/Keypad/state</property>
+  <property>extra500/panel/Master/Dimming/Keypad/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -798,7 +798,7 @@
 <animation>
   <type>rotate</type>
   <object-name>MasterPanel.Dimming.Glare</object-name>
-  <property>extra500/MasterPanel/Dimming/Glare/state</property>
+  <property>extra500/panel/Master/Dimming/Glare/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -867,7 +867,7 @@
 <animation>
   <type>rotate</type>
   <object-name>MasterPanel.Dimming.Instrument</object-name>
-  <property>extra500/MasterPanel/Dimming/Instrument/state</property>
+  <property>extra500/panel/Master/Dimming/Instrument/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -936,7 +936,7 @@
 <animation>
   <type>rotate</type>
   <object-name>MasterPanel.Dimming.Switch</object-name>
-  <property>extra500/MasterPanel/Dimming/Switch/state</property>
+  <property>extra500/panel/Master/Dimming/Switch/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -1005,7 +1005,7 @@
 <animation>
   <type>rotate</type>
   <object-name>MasterPanel.Dimming.Annunciator</object-name>
-  <property>extra500/MasterPanel/Dimming/Annunciator/state</property>
+  <property>extra500/panel/Master/Dimming/Annunciator/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -1077,7 +1077,7 @@
 
 		<condition>
 		<equals>
-		<property>extra500/SidePanel/Light/Instrument/state</property>
+		<property>extra500/panel/Side/Light/Instrument/state</property>
 		<value>1</value>
 		</equals>
 	</condition>
@@ -1085,7 +1085,7 @@
             <red>.4</red>
             <green>.4</green>
             <blue>.4</blue>
-            <factor-prop>extra500/MasterPanel/Dimming/Instrument/state</factor-prop>
+            <factor-prop>extra500/panel/Master/Dimming/Instrument/state</factor-prop>
         </emission>
 </animation>
 

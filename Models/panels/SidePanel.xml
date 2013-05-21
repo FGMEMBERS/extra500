@@ -32,7 +32,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Main.Battery</object-name>
-  <property>extra500/SidePanel/Main/Battery/state</property>
+  <property>extra500/panel/Side/Main/Battery/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -102,7 +102,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Main.StandbyAlt</object-name>
-  <property>extra500/SidePanel/Main/StandbyAlt/state</property>
+  <property>extra500/panel/Side/Main/StandbyAlt/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -172,7 +172,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Main.Generator</object-name>
-  <property>extra500/SidePanel/Main/Generator/state</property>
+  <property>extra500/panel/Side/Main/Generator/state</property>
   <factor>-25</factor>
   <axis>
     <x1-m>-0.18818</x1-m>
@@ -235,7 +235,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Main.ExternalPower</object-name>
-  <property>extra500/SidePanel/Main/ExternalPower/state</property>
+  <property>extra500/panel/Side/Main/ExternalPower/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -305,7 +305,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Main.GeneratorTest</object-name>
-  <property>extra500/SidePanel/Main/GeneratorTest/state</property>
+  <property>extra500/panel/Side/Main/GeneratorTest/state</property>
   <factor>-25</factor>
   <axis>
     <x1-m>-0.145</x1-m>
@@ -366,7 +366,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Main.Avionics</object-name>
-  <property>extra500/SidePanel/Main/Avionics/state</property>
+  <property>extra500/panel/Side/Main/Avionics/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -437,7 +437,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Light.Strobe</object-name>
-  <property>extra500/SidePanel/Light/Strobe/state</property>
+  <property>extra500/panel/Side/Light/Strobe/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -507,7 +507,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Light.Navigation</object-name>
-  <property>extra500/SidePanel/Light/Navigation/state</property>
+  <property>extra500/panel/Side/Light/Navigation/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -577,7 +577,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Light.Landing</object-name>
-  <property>extra500/SidePanel/Light/Landing/state</property>
+  <property>extra500/panel/Side/Light/Landing/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -647,7 +647,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Light.Recognition</object-name>
-  <property>extra500/SidePanel/Light/Recognition/state</property>
+  <property>extra500/panel/Side/Light/Recognition/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -719,7 +719,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Light.Cabin</object-name>
-  <property>extra500/SidePanel/Light/Cabin/state</property>
+  <property>extra500/panel/Side/Light/Cabin/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -789,7 +789,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Light.Map</object-name>
-  <property>extra500/SidePanel/Light/Map/state</property>
+  <property>extra500/panel/Side/Light/Map/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -859,7 +859,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Light.Instrument</object-name>
-  <property>extra500/SidePanel/Light/Instrument/state</property>
+  <property>extra500/panel/Side/Light/Instrument/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -929,7 +929,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Light.Glare</object-name>
-  <property>extra500/SidePanel/Light/Glare/state</property>
+  <property>extra500/panel/Side/Light/Glare/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -1001,7 +1001,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Light.Night</object-name>
-  <property>extra500/SidePanel/Light/Night/state</property>
+  <property>extra500/panel/Side/Light/Night/state</property>
   <factor>-25</factor>
   <axis>
     <x1-m>-0.02105</x1-m>
@@ -1062,7 +1062,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Light.Ice</object-name>
-  <property>extra500/SidePanel/Light/Ice/state</property>
+  <property>extra500/panel/Side/Light/Ice/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -1132,7 +1132,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Deicing.Propeller</object-name>
-  <property>extra500/SidePanel/Deicing/Propeller/state</property>
+  <property>extra500/panel/Side/Deicing/Propeller/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -1204,7 +1204,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Deicing.PitotL</object-name>
-  <property>extra500/SidePanel/Deicing/PitotL/state</property>
+  <property>extra500/panel/Side/Deicing/PitotL/state</property>
   <factor>-25</factor>
   <axis>
     <x1-m>0.02221</x1-m>
@@ -1265,7 +1265,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Deicing.PitotR</object-name>
-  <property>extra500/SidePanel/Deicing/PitotR/state</property>
+  <property>extra500/panel/Side/Deicing/PitotR/state</property>
   <factor>-25</factor>
   <axis>
     <x1-m>0.02221</x1-m>
@@ -1326,7 +1326,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Deicing.Windshield</object-name>
-  <property>extra500/SidePanel/Deicing/Windshield/state</property>
+  <property>extra500/panel/Side/Deicing/Windshield/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -1396,7 +1396,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Deicing.Boots</object-name>
-  <property>extra500/SidePanel/Deicing/Boots/state</property>
+  <property>extra500/panel/Side/Deicing/Boots/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -1468,7 +1468,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Cabin.Pressure</object-name>
-  <property>extra500/SidePanel/Cabin/Pressure/state</property>
+  <property>extra500/panel/Side/Cabin/Pressure/state</property>
   <factor>-25</factor>
   <axis>
     <x1-m>0.06538</x1-m>
@@ -1529,7 +1529,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Cabin.AirCondition</object-name>
-  <property>extra500/SidePanel/Cabin/AirCondition/state</property>
+  <property>extra500/panel/Side/Cabin/AirCondition/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -1599,7 +1599,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Cabin.Vent</object-name>
-  <property>extra500/SidePanel/Cabin/Vent/state</property>
+  <property>extra500/panel/Side/Cabin/Vent/state</property>
   <factor>-25</factor>
   <axis>
     <x1-m>0.06538</x1-m>
@@ -1662,7 +1662,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Cabin.EnvironmentalAir</object-name>
-  <property>extra500/SidePanel/Cabin/EnvironmentalAir/state</property>
+  <property>extra500/panel/Side/Cabin/EnvironmentalAir/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -1732,7 +1732,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Cabin.TempMode</object-name>
-  <property>extra500/SidePanel/Cabin/TempMode/state</property>
+  <property>extra500/panel/Side/Cabin/TempMode/state</property>
   <factor>-25</factor>
   <axis>
     <x1-m>0.10573</x1-m>
@@ -1793,7 +1793,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Cabin.TempCtrl</object-name>
-  <property>extra500/SidePanel/Cabin/TempCtrl/state</property>
+  <property>extra500/panel/Side/Cabin/TempCtrl/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -1863,7 +1863,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Cabin.Temperature</object-name>
-  <property>extra500/SidePanel/Cabin/Temperature/state</property>
+  <property>extra500/panel/Side/Cabin/Temperature/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -1933,7 +1933,7 @@
 <animation>
   <type>rotate</type>
   <object-name>SidePanel.Cabin.Emergency</object-name>
-  <property>extra500/SidePanel/Emergency/state</property>
+  <property>extra500/panel/Side/Emergency/state</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -2007,7 +2007,7 @@
 
 		<condition>
 		<equals>
-		<property>extra500/SidePanel/Light/Instrument/state</property>
+		<property>extra500/panel/Side/Light/Instrument/state</property>
 		<value>1</value>
 		</equals>
 	</condition>
@@ -2015,7 +2015,7 @@
             <red>.4</red>
             <green>.4</green>
             <blue>.4</blue>
-            <factor-prop>extra500/MasterPanel/Dimming/Instrument/state</factor-prop>
+            <factor-prop>extra500/panel/Master/Dimming/Instrument/state</factor-prop>
         </emission>
 </animation>
 

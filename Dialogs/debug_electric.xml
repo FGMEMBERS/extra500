@@ -62,7 +62,7 @@
 	       <wrap>true</wrap>
 	       <editable>false</editable>
 	       <top-line>-1</top-line>
-	       <property>/extra500/DebugOutput</property>
+	       <property>extra500/debug/ElectricTreeDebugger/Output</property>
        </textbox>
 
        <!---->
@@ -78,7 +78,7 @@
 		       <halign>fill</halign>
 		       <stretch>true</stretch>
 		       <length>50</length>
-		       <property>/extra500/debug/electric/name</property>
+		       <property>/extra500/debug/ElectricTreeDebugger/name</property>
 	       </input>
 	       <text>
 		       <label>excludeType</label>
@@ -89,7 +89,7 @@
 		       <halign>fill</halign>
 		       <stretch>true</stretch>
 		       <length>50</length>
-		       <property>/extra500/debug/electric/excludeType</property>
+		       <property>/extra500/debug/ElectricTreeDebugger/excludeType</property>
 	       </input>
 	       
 	       <button>
@@ -106,8 +106,8 @@
 		       <binding>
 			       <command>nasal</command>
 			       <script>
-				       Part.etd.debugName = getprop("/extra500/debug/electric/name");
-				       Part.etd.excludeType = getprop("/extra500/debug/electric/excludeType");
+				       Part.etd.debugName = getprop("/extra500/debug/ElectricTreeDebugger/name");
+				       Part.etd.excludeType = getprop("/extra500/debug/ElectricTreeDebugger/excludeType");
 				       
 			       </script>
 		       </binding>

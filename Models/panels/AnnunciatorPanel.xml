@@ -35,7 +35,7 @@
 		<red>1</red>	
 		<green>0.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/GeneratorFail/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/GeneratorFail/state</factor-prop>
 	</emission>
 </animation>
 <!-- AFTDoor -->
@@ -46,7 +46,7 @@
 		<red>1</red>	
 		<green>0.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/AFTDoor/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/AFTDoor/state</factor-prop>
 	</emission>
 </animation>
 <!-- StallHeat -->
@@ -57,7 +57,7 @@
 		<red>1</red>	
 		<green>0.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/StallHeat/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/StallHeat/state</factor-prop>
 	</emission>
 </animation>
 <!-- OilPress -->
@@ -68,7 +68,7 @@
 		<red>1</red>	
 		<green>0.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/OilPress/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/OilPress/state</factor-prop>
 	</emission>
 </animation>
 <!-- ChipDetection -->
@@ -79,7 +79,7 @@
 		<red>1</red>	
 		<green>1.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/ChipDetection/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/ChipDetection/state</factor-prop>
 	</emission>
 </animation>
 <!-- HydraulicPump -->
@@ -90,7 +90,7 @@
 		<red>1</red>	
 		<green>1.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/HydraulicPump/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/HydraulicPump/state</factor-prop>
 	</emission>
 </animation>
 <!-- Raw 2 -->
@@ -102,7 +102,7 @@
 		<red>1</red>	
 		<green>0.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/GearWarn/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/GearWarn/state</factor-prop>
 	</emission>
 </animation>
 <!-- StallWarn -->
@@ -113,7 +113,7 @@
 		<red>1</red>	
 		<green>0.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/StallWarn/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/StallWarn/state</factor-prop>
 	</emission>
 </animation>
 <!-- WindshieldHeatFail -->
@@ -124,7 +124,7 @@
 		<red>1</red>	
 		<green>0.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/WindshieldHeatFail/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/WindshieldHeatFail/state</factor-prop>
 	</emission>
 </animation>
 <!-- FuelPress -->
@@ -135,7 +135,7 @@
 		<red>1</red>	
 		<green>0.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/FuelPress/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/FuelPress/state</factor-prop>
 	</emission>
 </animation>
 <!-- PitotHeatLeft -->
@@ -146,7 +146,7 @@
 		<red>1</red>	
 		<green>1.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/PitotHeatLeft/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/PitotHeatLeft/state</factor-prop>
 	</emission>
 </animation>
 <!-- PitotHeatRight -->
@@ -157,7 +157,7 @@
 		<red>1</red>	
 		<green>1.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/PitotHeatRight/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/PitotHeatRight/state</factor-prop>
 	</emission>
 </animation>
 <!-- Raw 3 -->
@@ -169,7 +169,7 @@
 		<red>1</red>	
 		<green>0.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/Flaps/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/Flaps/state</factor-prop>
 	</emission>
 </animation>
 <!-- CabinPressure -->
@@ -180,7 +180,7 @@
 		<red>1</red>	
 		<green>0.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/CabinPressure/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/CabinPressure/state</factor-prop>
 	</emission>
 </animation>
 <!-- BleedOvertemp -->
@@ -191,7 +191,7 @@
 		<red>1</red>	
 		<green>0.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/BleedOvertemp/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/BleedOvertemp/state</factor-prop>
 	</emission>
 </animation>
 <!-- StaticHeatLeft -->
@@ -202,7 +202,7 @@
 		<red>1</red>	
 		<green>1.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/StaticHeatLeft/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/StaticHeatLeft/state</factor-prop>
 	</emission>
 </animation>
 <!-- StaticHeatRight -->
@@ -213,7 +213,7 @@
 		<red>1</red>	
 		<green>1.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/StaticHeatRight/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/StaticHeatRight/state</factor-prop>
 	</emission>
 </animation>
 <!-- Raw 4 -->
@@ -225,7 +225,7 @@
 		<red>1</red>	
 		<green>1.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/FuelTransLeft/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/FuelTransLeft/state</factor-prop>
 	</emission>
 </animation>
 <!-- FuelTransRight -->
@@ -236,7 +236,7 @@
 		<red>1</red>	
 		<green>1.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/FuelTransRight/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/FuelTransRight/state</factor-prop>
 	</emission>
 </animation>
 <!-- StandByAlternOn -->
@@ -247,7 +247,7 @@
 		<red>1</red>	
 		<green>1.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/StandByAlternOn/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/StandByAlternOn/state</factor-prop>
 	</emission>
 </animation>
 <!-- IgnitionActive -->
@@ -258,7 +258,7 @@
 		<red>0</red>	
 		<green>1.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/IgnitionActive/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/IgnitionActive/state</factor-prop>
 	</emission>
 </animation>
 <!-- IntakeHeat -->
@@ -269,7 +269,7 @@
 		<red>0</red>	
 		<green>1.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/IntakeHeat/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/IntakeHeat/state</factor-prop>
 	</emission>
 </animation>
 <!-- RecognLight -->
@@ -280,7 +280,7 @@
 		<red>0</red>	
 		<green>1.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/RecognLight/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/RecognLight/state</factor-prop>
 	</emission>
 </animation>
 <!-- Raw 5 -->
@@ -292,7 +292,7 @@
 		<red>1</red>	
 		<green>1.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/FuelFilterByPass/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/FuelFilterByPass/state</factor-prop>
 	</emission>
 </animation>
 <!-- PneumaticLow -->
@@ -303,7 +303,7 @@
 		<red>1</red>	
 		<green>1.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/PneumaticLow/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/PneumaticLow/state</factor-prop>
 	</emission>
 </animation>
 <!-- LowVoltage -->
@@ -314,7 +314,7 @@
 		<red>1</red>	
 		<green>1.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/LowVoltage/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/LowVoltage/state</factor-prop>
 	</emission>
 </animation>
 <!-- DeiceBoots -->
@@ -325,7 +325,7 @@
 		<red>0</red>	
 		<green>1.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/DeiceBoots/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/DeiceBoots/state</factor-prop>
 	</emission>
 </animation>
 <!-- LandingLight -->
@@ -336,7 +336,7 @@
 		<red>0</red>	
 		<green>1.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/LandingLight/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/LandingLight/state</factor-prop>
 	</emission>
 </animation>
 <!-- Raw 6 -->
@@ -348,7 +348,7 @@
 		<red>1</red>	
 		<green>1.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/FuelLowLeft/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/FuelLowLeft/state</factor-prop>
 	</emission>
 </animation>
 <!-- FuelLowRight -->
@@ -359,7 +359,7 @@
 		<red>1</red>	
 		<green>1.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/FuelLowRight/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/FuelLowRight/state</factor-prop>
 	</emission>
 </animation>
 <!-- PropellerLowPitch -->
@@ -370,7 +370,7 @@
 		<red>1</red>	
 		<green>1.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/PropellerLowPitch/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/PropellerLowPitch/state</factor-prop>
 	</emission>
 </animation>
 <!-- ExternalPower -->
@@ -381,7 +381,7 @@
 		<red>0</red>	
 		<green>1.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/ExternalPower/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/ExternalPower/state</factor-prop>
 	</emission>
 </animation>
 <!-- WindshieldHeatOn -->
@@ -392,7 +392,7 @@
 		<red>0</red>	
 		<green>1.0</green>	
 		<blue>0.0</blue>
-		<factor-prop>extra500/AnnunciatorPanel/WindshieldHeatOn/state</factor-prop>
+		<factor-prop>extra500/panel/Annunciator/WindshieldHeatOn/state</factor-prop>
 	</emission>
 </animation>
 

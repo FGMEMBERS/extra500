@@ -21,12 +21,12 @@
 #
 
 var FlapSystem = {
-	new : func{
+	new : func(nRoot,name){
 		var m = {parents:[
 			FlapSystem,
 			Part.GearAble.new(0.016)
 		]};
-		m.nRoot = props.globals.getNode("extra500/system/flap",1);
+		m.nRoot = nRoot;
 		
 		m.nFlaps 	= props.globals.getNode("/controls/flight/flaps");
 		m.nFlapPosition      = props.globals.initNode("/fdm/jsbsim/fcs/flap-pos-norm",0.0,"DOUBLE");
@@ -239,4 +239,4 @@ var FlapSystem = {
 	
 };
 
-var flapSystem = FlapSystem.new();
+var flapSystem = FlapSystem.new(props.globals.initNode("extra500/system/flap"),"Flap Control");

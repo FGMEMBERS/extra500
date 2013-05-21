@@ -102,8 +102,8 @@ var FuelSystem = {
 	# can only used when Module extra500 is completly loaded.
 	# All callback functions must called from a global namespace
 	initUI : func(){
-		UI.register("Fuel Select Valve <", 	func{extra500.oFuelSystem.oSelectorValve.left();} 			);
-		UI.register("Fuel Select Valve >", 	func{extra500.oFuelSystem.oSelectorValve.right();} 		);
+		UI.register("Fuel Select Valve <", 	func{extra500.fuelSystem.oSelectorValve.left();} 			);
+		UI.register("Fuel Select Valve >", 	func{extra500.fuelSystem.oSelectorValve.right();} 		);
 	},
 	_levelByGravity : func(){
 		var frac1 = me.levelLeftMain / me.capLeftMain;
@@ -266,5 +266,5 @@ var FuelSystem = {
 	
 };
 
-var oFuelSystem = FuelSystem.new();
+var fuelSystem = FuelSystem.new();
 

@@ -34,13 +34,13 @@
 #unter ~5/8 (muss genaue wert noch nachschauen) voll ist
 
 var FuelSystem = {
-	new : func{
+	new : func(nRoot,name){
 		var m = {parents:[FuelSystem]};
 		
 		m.fuelFlowByGravity = 0.4;
 		m.fuelFlowByPump = 0.4;
 		
-		m.nFuel = props.globals.getNode("extra500/Fuel",1);
+		m.nFuel = nRoot;
 		
 		var node = nil; 
 		
@@ -132,8 +132,8 @@ var FuelSystem = {
 	# can only used when Module extra500 is completly loaded.
 	# All callback functions must called from a global namespace
 	initUI : func(){
-		UI.register("Fuel Select Valve <", 	func{extra500.oFuelSystem.oSelectorValve.left();} 			);
-		UI.register("Fuel Select Valve >", 	func{extra500.oFuelSystem.oSelectorValve.right();} 		);
+		UI.register("Fuel Select Valve <", 	func{extra500.fuelSystem.oSelectorValve.left();} 			);
+		UI.register("Fuel Select Valve >", 	func{extra500.fuelSystem.oSelectorValve.right();} 		);
 	},
 	_levelByGravity : func(){
 		var frac1 = me.levelLeftMain / me.capLeftMain;
@@ -296,5 +296,5 @@ var FuelSystem = {
 	
 };
 
-var oFuelSystem = FuelSystem.new();
+var fuelSystem = FuelSystem.new(props.globals.initNode("extra500/system/fuel"),"Fuel System");
 

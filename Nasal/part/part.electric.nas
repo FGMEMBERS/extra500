@@ -33,7 +33,7 @@ var ElectricTreeDebugger = {
 		m.highLightType = "";
 		m.excludeType 	= "";
 		m.debugName 	= "";
-		m.nDebugOutput = props.globals.initNode("extra500/DebugOutput","","STRING");
+		m.nDebugOutput = props.globals.initNode("extra500/debug/ElectricTreeDebugger/Output","","STRING");
 		return m;
 
 	},

@@ -65,4 +65,4 @@ var GenaratorControlUnit = {
 	},
 };
 
-var mainBoard = ElectricSystem.new();
+var eBox = ElectricSystem.new();

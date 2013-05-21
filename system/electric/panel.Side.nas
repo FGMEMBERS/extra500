@@ -22,52 +22,52 @@
 
 #Group	Nr	Lable		Values		state		property
 #Main 
-#	0	BATT		on/off		1/0		extra500/SidePanel/Main/Battery
-#	1	STANDBY ALT	on/off		1/0		extra500/SidePanel/Main/StandbyAlt
-#	2	GEN		on/off/reset	1/0/-1		extra500/SidePanel/Main/Generator
-#	3	EXT PWR		on/off		1/0		extra500/SidePanel/Main/ExternalPower
-#	4	GEN TEST	on/off/trip	1/0/-1		extra500/SidePanel/Main/GeneratorTest
-#	5	AVIONICS	on/off		1/0		extra500/SidePanel/Main/Avionics
+#	0	BATT		on/off		1/0		extra500/panel/Side/Main/Battery
+#	1	STANDBY ALT	on/off		1/0		extra500/panel/Side/Main/StandbyAlt
+#	2	GEN		on/off/reset	1/0/-1		extra500/panel/Side/Main/Generator
+#	3	EXT PWR		on/off		1/0		extra500/panel/Side/Main/ExternalPower
+#	4	GEN TEST	on/off/trip	1/0/-1		extra500/panel/Side/Main/GeneratorTest
+#	5	AVIONICS	on/off		1/0		extra500/panel/Side/Main/Avionics
 
 #Lights
-#	6	STROBE		on/off		1/0		extra500/SidePanel/Light/Strobe
-#	7	NAV		on/off		1/0		extra500/SidePanel/Light/Navigation
-#	8	LDG		on/off		1/0		extra500/SidePanel/Light/Landing
-#	9	RECO		on/off		1/0		extra500/SidePanel/Light/Recognition
-#	10	CABIN		on/off		1/0		extra500/SidePanel/Light/Cabin
-#	11	MAP		on/off		1/0		extra500/SidePanel/Light/Map
-#	12	INSTR		on/off		1/0		extra500/SidePanel/Light/Instrument
-#	13	GLARE		on/off		1/0		extra500/SidePanel/Light/Glare
-#	14	NIGHT		night/day/test	1/0/-1		extra500/SidePanel/Light/Night
-#	15	ICE		on/off		1/0		extra500/SidePanel/Light/Ice
+#	6	STROBE		on/off		1/0		extra500/panel/Side/Light/Strobe
+#	7	NAV		on/off		1/0		extra500/panel/Side/Light/Navigation
+#	8	LDG		on/off		1/0		extra500/panel/Side/Light/Landing
+#	9	RECO		on/off		1/0		extra500/panel/Side/Light/Recognition
+#	10	CABIN		on/off		1/0		extra500/panel/Side/Light/Cabin
+#	11	MAP		on/off		1/0		extra500/panel/Side/Light/Map
+#	12	INSTR		on/off		1/0		extra500/panel/Side/Light/Instrument
+#	13	GLARE		on/off		1/0		extra500/panel/Side/Light/Glare
+#	14	NIGHT		night/day/test	1/0/-1		extra500/panel/Side/Light/Night
+#	15	ICE		on/off		1/0		extra500/panel/Side/Light/Ice
 
 # Deicing
-#	16	PROP		on/off		1/0		extra500/SidePanel/Deicing/Propeller
-#	17	PITOT L		on/off/test	1/0/-1		extra500/SidePanel/Deicing/PitotL
-#	18	PITOT R		on/off/test	1/0/-1		extra500/SidePanel/Deicing/PitotR
-#	19	WINDSH		on/off		1/0		extra500/SidePanel/Deicing/Windshield
-#	20	BOOTS		on/off		1/0		extra500/SidePanel/Deicing/Boots
+#	16	PROP		on/off		1/0		extra500/panel/Side/Deicing/Propeller
+#	17	PITOT L		on/off/test	1/0/-1		extra500/panel/Side/Deicing/PitotL
+#	18	PITOT R		on/off/test	1/0/-1		extra500/panel/Side/Deicing/PitotR
+#	19	WINDSH		on/off		1/0		extra500/panel/Side/Deicing/Windshield
+#	20	BOOTS		on/off		1/0		extra500/panel/Side/Deicing/Boots
 
 #Cabin
-#	21	PRESS		on/off/dump	1/0/-1		extra500/SidePanel/Cabin/Pressure
-#	22	AIR CON		on/off		1/0		extra500/SidePanel/Cabin/AirCondition
-#	23	VENT		hi/low/off	1/0/-1		extra500/SidePanel/Cabin/Vent
-#	24	ENV AIR		on/off		1/0		extra500/SidePanel/Cabin/EnvironmentalAir
-#	25	TEMP CTRL 1	warm/cool	1/0/-1		extra500/SidePanel/Cabin/TempMode
-#	26	TEMP CTRL 2	auto/manual	1/0		extra500/SidePanel/Cabin/TempCtrl
-#	27	TEMP CTRL 3	13.0/30.0	-1.0/1.0	extra500/SidePanel/Cabin/Temperature
+#	21	PRESS		on/off/dump	1/0/-1		extra500/panel/Side/Cabin/Pressure
+#	22	AIR CON		on/off		1/0		extra500/panel/Side/Cabin/AirCondition
+#	23	VENT		hi/low/off	1/0/-1		extra500/panel/Side/Cabin/Vent
+#	24	ENV AIR		on/off		1/0		extra500/panel/Side/Cabin/EnvironmentalAir
+#	25	TEMP CTRL 1	warm/cool	1/0/-1		extra500/panel/Side/Cabin/TempMode
+#	26	TEMP CTRL 2	auto/manual	1/0		extra500/panel/Side/Cabin/TempCtrl
+#	27	TEMP CTRL 3	13.0/30.0	-1.0/1.0	extra500/panel/Side/Cabin/Temperature
 
-#	28	EMERGENCY	on/off		1/0		extra500/SidePanel/Emergency
+#	28	EMERGENCY	on/off		1/0		extra500/panel/Side/Emergency
 
  
  
 var SidePanel = {
-	new : func{
+	new : func(nRoot,name){
 		var m = {parents:[
 			SidePanel
 		]};
 		
-		m.nPanel = props.globals.getNode("extra500/SidePanel",1);
+		m.nPanel = nRoot ;
 		
 		var nCompNode = nil;
 # Main		
@@ -371,5 +371,5 @@ var SidePanel = {
 	}
 };
 
-var sidePanel = SidePanel.new();
+var sidePanel = SidePanel.new(props.globals.initNode("extra500/panel/Side"),"Side Panel");
 

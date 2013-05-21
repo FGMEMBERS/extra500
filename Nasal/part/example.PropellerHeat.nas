@@ -26,11 +26,11 @@
 
 # 1. Creating the boards which carry the Parts
 
-	# the MainBoard provide GND batteryBus
-	var MainBoard = {
+	# the EBox provide GND batteryBus
+	var EBox = {
 		new : func{
 			var m = {parents:[
-				MainBoard
+				EBox
 			]};
 			
 			m.batteryBus = Part.ElectricBus.new("BatteryBus");
@@ -41,11 +41,11 @@
 		},
 		applyVoltage : func(electron,name=""){ 
 			if (name == "GND"){
-				#etd.echo("MainBoard.applyVoltage("~volt~","~name~") ... touch GND");
+				#etd.echo("EBox.applyVoltage("~volt~","~name~") ... touch GND");
 				if (electron.resistor > 0){
 					electron.ampere = electron.volt / electron.resistor;
 				}else{
-					Part.etd.echo("MainBoard.applyVoltage("~name~") ... touch GND short circuit !!!!!");
+					Part.etd.echo("EBox.applyVoltage("~name~") ... touch GND short circuit !!!!!");
 					electron.ampere = electron.volt / 0.0024;
 				}
 				return 1;
@@ -110,7 +110,7 @@
 
 	var battery = Part.ElectricBattery.new(props.globals.getNode("extra500/example/Battery",1),"Battery");
 
-	var mainBoard = MainBoard.new();
+	var eBox = EBox.new();
 
 	var propHeatBoard = PropHeatBoard.new();
 
@@ -123,12 +123,12 @@
 		propHeatBoard.plugInternal();
 
 	# battery
-		battery.Minus.plug(mainBoard.GND);
+		battery.Minus.plug(eBox.GND);
 	# batterybus
-		mainBoard.batteryBus.plug(battery.Plus);
-		mainBoard.batteryBus.plug(propHeatBoard.CircuitBraker.In);
+		eBox.batteryBus.plug(battery.Plus);
+		eBox.batteryBus.plug(propHeatBoard.CircuitBraker.In);
 		
-		propHeatBoard.Minus.plug(mainBoard.GND);
+		propHeatBoard.Minus.plug(eBox.GND);
 		
 		
 

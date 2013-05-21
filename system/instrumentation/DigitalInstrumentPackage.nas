@@ -35,8 +35,8 @@ var DigitalInstrumentPackage = {
 		#m.VoltMonitor = Part.ElectricVoltSensor.new(m.nPanel.initNode("VoltMonitor"),"Volt Monitor");
 		m.VDC = 0.0;
 		
-		m.nGenAmps = props.globals.initNode("extra500/mainBoard/GeneratorShunt/indicatedAmpere",0.0,"DOUBLE");
-		m.nBatAmps = props.globals.initNode("extra500/mainBoard/BatteryShunt/indicatedAmpere",0.0,"DOUBLE");
+		m.nGenAmps = props.globals.initNode("extra500/electric/eBox/GeneratorShunt/indicatedAmpere",0.0,"DOUBLE");
+		m.nBatAmps = props.globals.initNode("extra500/electric/eBox/BatteryShunt/indicatedAmpere",0.0,"DOUBLE");
 		
 		m.nIAT = props.globals.initNode("/environment/temperature-degc",0.0,"DOUBLE");
 		m.nFuelTemp = props.globals.initNode("/fdm/jsbsim/aircraft/engine/FT-degC",0.0,"DOUBLE");

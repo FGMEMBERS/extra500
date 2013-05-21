@@ -74,12 +74,12 @@
 # 50	GND	Flap System
 
 var AnnunciatorPanel = {
-	new : func{
+	new : func(nRoot,name){
 		var m = {parents:[
 			AnnunciatorPanel
 		]};
 		
-		m.nPanel = props.globals.getNode("extra500/AnnunciatorPanel",1);
+		m.nPanel = nRoot;
 	# row 1
 		nCompNode = m.nPanel.initNode("GeneratorFail");
 		m.GeneratorFail = Part.ElectricLight.new(nCompNode,"Generator Fail");
@@ -345,10 +345,10 @@ var AnnunciatorPanel = {
 		me.externalPowerRelais.P14.plug(me.externalPowerBus.con());
 		
 		me.externalPowerRelais.P22.plug(me.dimTestRelais.P261);
-		me.externalPowerRelais.P24.plug(mainBoard.GND);
+		me.externalPowerRelais.P24.plug(eBox.GND);
 		
 		me.externalPowerRelais.A1.plug(me.externalPowerBus.con());
-		me.externalPowerRelais.A2.plug(mainBoard.GND);
+		me.externalPowerRelais.A2.plug(eBox.GND);
 		
 		
 		
@@ -392,7 +392,7 @@ var AnnunciatorPanel = {
 		
 		
 		# Test GND Dioden Bus
-		me.GNDBus.Minus.plug(mainBoard.GND);
+		me.GNDBus.Minus.plug(eBox.GND);
 		
 		me.GNDBus.plug(	me.dimTestRelais.P154); #	Fuel Transfare Left
 		me.GNDBus.plug(	me.dimTestRelais.P164); #	Fuel Filter
@@ -433,20 +433,20 @@ var AnnunciatorPanel = {
 		
 		# Ignition
 		
-		me.ignitionRelais.A2.plug(mainBoard.GND);
-		me.ignitionRelais.P11.plug(mainBoard.GND);
+		me.ignitionRelais.A2.plug(eBox.GND);
+		me.ignitionRelais.P11.plug(eBox.GND);
 		me.ignitionRelais.P14.plug(me.dimTestRelais.P242);
 		
 		# Landing Light
 		
-		me.landingRelais.A2.plug(mainBoard.GND);
-		me.landingRelais.P11.plug(mainBoard.GND);
+		me.landingRelais.A2.plug(eBox.GND);
+		me.landingRelais.P11.plug(eBox.GND);
 		me.landingRelais.P14.plug(me.dimTestRelais.P312);
 		
 		# Recognition Light
 		
-		me.recognitionRelais.A2.plug(mainBoard.GND);
-		me.recognitionRelais.P11.plug(mainBoard.GND);
+		me.recognitionRelais.A2.plug(eBox.GND);
+		me.recognitionRelais.P11.plug(eBox.GND);
 		me.recognitionRelais.P14.plug(me.dimTestRelais.P302);
 		
 		
@@ -454,4 +454,4 @@ var AnnunciatorPanel = {
 	},
 };
 
-var annunciatorPanel = AnnunciatorPanel.new();
+var annunciatorPanel = AnnunciatorPanel.new(props.globals.initNode("extra500/panel/Annunciator"),"Annuciator Panel");

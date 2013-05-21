@@ -21,11 +21,11 @@
 #
 
 var FusePanel = {
-	new : func{
+	new : func(nRoot,name){
 		var m = {parents:[
 			FusePanel
 		]};
-		m.nRoot = props.globals.getNode("extra500/FusePanel",1);
+		m.nRoot = nRoot ;
 		
 		var node = m.nRoot.initNode("BatteryBus");
 		m.batteryBus = Part.ElectricCircuitBraker.new(node,"BatteryBus Fuse",1);
@@ -62,5 +62,5 @@ var FusePanel = {
 	},
 };
 
-var fusePanel = FusePanel.new();
+var fusePanel = FusePanel.new(props.globals.initNode("extra500/panel/Fuse"),"Fuse Panel");
 		

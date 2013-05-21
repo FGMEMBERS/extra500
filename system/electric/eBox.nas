@@ -21,12 +21,13 @@
 #
  
 
-var MainBoard = {
-	new : func{
+var EBox = {
+	new : func(nRoot,name){
 		var m = {parents:[
-			MainBoard
+			EBox
 		]};
-		m.nRoot = props.globals.getNode("extra500/mainBoard",1);
+		m.nRoot = nRoot;
+		
 		var nParent = nil;
 	# Ground Connector
 		m.GND = Part.ElectricConnector.new("GND");
@@ -156,47 +157,47 @@ var MainBoard = {
 	},
 	plugElectric : func(){
 		
-		mainBoard.hotBus.plug(mainBoard.batteryRelais.A1);
-# 		mainBoard.hotBus.plug(fusePanel.emergency3.In);
-		mainBoard.hotBus.plug(mainBoard.batteryRelais.P21);
-		mainBoard.hotBus.plug(mainBoard.batteryRelais.P11);
+		eBox.hotBus.plug(eBox.batteryRelais.A1);
+# 		eBox.hotBus.plug(fusePanel.emergency3.In);
+		eBox.hotBus.plug(eBox.batteryRelais.P21);
+		eBox.hotBus.plug(eBox.batteryRelais.P11);
 		
-		mainBoard.iBus20.plug(mainBoard.batteryRelais.P14);
-		mainBoard.iBus20.plug(mainBoard.startRelais.P11);
-		mainBoard.iBus20.plug(mainBoard.iBus01.con());
-		mainBoard.iBus20.plug(mainBoard.iBus02.con());
-		mainBoard.iBus20.plug(mainBoard.batteryShunt.Minus);
+		eBox.iBus20.plug(eBox.batteryRelais.P14);
+		eBox.iBus20.plug(eBox.startRelais.P11);
+		eBox.iBus20.plug(eBox.iBus01.con());
+		eBox.iBus20.plug(eBox.iBus02.con());
+		eBox.iBus20.plug(eBox.batteryShunt.Minus);
 		
-		mainBoard.iBus10.plug(mainBoard.batteryShunt.Plus);
+		eBox.iBus10.plug(eBox.batteryShunt.Plus);
 		
-		mainBoard.iBus11.plug(mainBoard.generatorShunt.Minus);
-		mainBoard.iBus11.plug(mainBoard.iBus01.con());
-		mainBoard.iBus20.plug(mainBoard.iBus02.con());
-		mainBoard.iBus11.plug(mainBoard.rccbRelais.P11);
+		eBox.iBus11.plug(eBox.generatorShunt.Minus);
+		eBox.iBus11.plug(eBox.iBus01.con());
+		eBox.iBus20.plug(eBox.iBus02.con());
+		eBox.iBus11.plug(eBox.rccbRelais.P11);
 # 		
-		mainBoard.iBus01.Minus.plug(mainBoard.k8Relais.A1);
-		mainBoard.iBus02.Minus.plug(mainBoard.rccbRelais.A1);
+		eBox.iBus01.Minus.plug(eBox.k8Relais.A1);
+		eBox.iBus02.Minus.plug(eBox.rccbRelais.A1);
 		
 		
 		
-		mainBoard.iBus12.plug(mainBoard.emergencyRelais.A1);
-		mainBoard.iBus12.plug(mainBoard.emergencyRelais.P14);
+		eBox.iBus12.plug(eBox.emergencyRelais.A1);
+		eBox.iBus12.plug(eBox.emergencyRelais.P14);
 # 		
-		mainBoard.iBus13.plug(mainBoard.avionicsRelais.A1);
-		mainBoard.iBus13.plug(mainBoard.avionicsRelais.P11);
+		eBox.iBus13.plug(eBox.avionicsRelais.A1);
+		eBox.iBus13.plug(eBox.avionicsRelais.P11);
 		
-		mainBoard.avionicBus.plug(mainBoard.avionicsRelais.P14);
-		mainBoard.emergencyBus.plug(mainBoard.emergencyRelais.P11);
-		mainBoard.emergencyBus.plug(mainBoard.alternatorShunt.Plus);
+		eBox.avionicBus.plug(eBox.avionicsRelais.P14);
+		eBox.emergencyBus.plug(eBox.emergencyRelais.P11);
+		eBox.emergencyBus.plug(eBox.alternatorShunt.Plus);
 		
-		mainBoard.iBus30.plug(mainBoard.startRelais.P14);
-		mainBoard.iBus30.plug(mainBoard.generatorRelais.P21);
-		mainBoard.iBus30.plug(mainBoard.generatorRelais.P11);
+		eBox.iBus30.plug(eBox.startRelais.P14);
+		eBox.iBus30.plug(eBox.generatorRelais.P21);
+		eBox.iBus30.plug(eBox.generatorRelais.P11);
 # 	
 		
-		mainBoard.JB3E20.plug(mainBoard.startRelais.P34);
+		eBox.JB3E20.plug(eBox.startRelais.P34);
 		
-		mainBoard.JB4E20.plug(mainBoard.startRelais.P31);
+		eBox.JB4E20.plug(eBox.startRelais.P31);
 		
 		
 		
@@ -207,18 +208,18 @@ var MainBoard = {
 		me.externalPowerRelais.P21.plug(me.iBus03.con());
 		
 		
-		mainBoard.generatorRelais.A2.plug(mainBoard.GND);
-		mainBoard.generatorRelais.P14.plug(mainBoard.generatorShunt.Plus);
-		mainBoard.generatorRelais.P31.plug(me.GND);
-		mainBoard.generatorRelais.P32.plug(me.iBus03.Minus);
+		eBox.generatorRelais.A2.plug(eBox.GND);
+		eBox.generatorRelais.P14.plug(eBox.generatorShunt.Plus);
+		eBox.generatorRelais.P31.plug(me.GND);
+		eBox.generatorRelais.P32.plug(me.iBus03.Minus);
 		
 		
-		mainBoard.startRelais.A2.plug(mainBoard.GND);
-		mainBoard.startRelais.P21.plug(mainBoard.rccbRelais.A2);
-		mainBoard.startRelais.P22.plug(mainBoard.k8Relais.P22);
+		eBox.startRelais.A2.plug(eBox.GND);
+		eBox.startRelais.P21.plug(eBox.rccbRelais.A2);
+		eBox.startRelais.P22.plug(eBox.k8Relais.P22);
 		
 		
-		mainBoard.k8Relais.A2.plug(mainBoard.externalPowerRelais.P22);
+		eBox.k8Relais.A2.plug(eBox.externalPowerRelais.P22);
 		
 		me.alternatorRelais.P12.plug(me.alternatorShunt.Minus);
 		me.alternatorRelais.A2.plug(me.GND);
@@ -232,11 +233,11 @@ var MainBoard = {
 	},
 	applyVoltage : func(electron,name=""){ 
 		if (name == "GND"){
-			#etd.echo("MainBoard.applyVoltage("~volt~","~name~") ... touch GND");
+			#etd.echo("EBox.applyVoltage("~volt~","~name~") ... touch GND");
 			if (electron.resistor > 0){
 				electron.ampere = electron.volt / electron.resistor;
 			}else{
-				Part.etd.echo("MainBoard.applyVoltage("~name~") ... touch GND short cut !!!!!");
+				Part.etd.echo("EBox.applyVoltage("~name~") ... touch GND short cut !!!!!");
 				electron.ampere = electron.volt / 0.0024;
 			}
 			return 1;
@@ -248,27 +249,27 @@ var MainBoard = {
 
 	
 
-var mainBoard = MainBoard.new();
+var eBox = EBox.new(props.globals.initNode("extra500/electric/eBox"),"eBox");
 
-var generatorControlUnit = Part.GeneratorControlUnit.new(props.globals.getNode("extra500/GeneratorControlUnit",1),"Generator Control Unit");
-var standbyAlternatorRegulator = Part.StandbyAlternatorRegulator.new(props.globals.getNode("extra500/StandbyAlternatorRegulator",1),"Standby Alternator Regulator");
+var generatorControlUnit = Part.GeneratorControlUnit.new(props.globals.initNode("extra500/electric/GeneratorControlUnit"),"Generator Control Unit");
+var standbyAlternatorRegulator = Part.StandbyAlternatorRegulator.new(props.globals.initNode("extra500/electric/StandbyAlternatorRegulator"),"Standby Alternator Regulator");
 
 
-var externalPower = Part.ElectricExternalPower.new(props.globals.getNode("extra500/Ground/ExternalPower",1),"External Power");
+var externalPower = Part.ElectricExternalPower.new(props.globals.initNode("extra500/ground/ExternalPower"),"External Power Box");
 
-var generator = Part.ElectricGenerator.new(props.globals.getNode("extra500/Generator",1),"Generator");
+var generator = Part.ElectricGenerator.new(props.globals.initNode("extra500/electric/Generator"),"Generator");
 generator.setPower(24.0,24000.0);
 
-var alternator = Part.ElectricAlternator.new(props.globals.getNode("extra500/Alternator",1),"Alternator");
+var alternator = Part.ElectricAlternator.new(props.globals.initNode("extra500/electric/Alternator"),"Alternator");
 alternator.electricConfig(24.0,26.0);
 
-var battery = Part.ElectricBattery.new(props.globals.getNode("extra500/Battery",1),"Battery");
+var battery = Part.ElectricBattery.new(props.globals.initNode("extra500/electric/Battery"),"Battery");
 battery.electricConfig(15.3,24.3);
 
 var adjustAdditionalElectricLoads = func(){
 	if (alternator.surplusAmpere < 0){
 		battery.setAmpereUsage(alternator.surplusAmpere);
-		mainBoard.batteryShunt.indicatedAmpere += alternator.surplusAmpere;
-		mainBoard.alternatorShunt.indicatedAmpere -= alternator.surplusAmpere;
+		eBox.batteryShunt.indicatedAmpere += alternator.surplusAmpere;
+		eBox.alternatorShunt.indicatedAmpere -= alternator.surplusAmpere;
 	}
 }
