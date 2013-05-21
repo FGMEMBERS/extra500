@@ -62,12 +62,12 @@
  
  
 var SidePanel = {
-	new : func{
+	new : func(nRoot,name){
 		var m = {parents:[
 			SidePanel
 		]};
 		
-		m.nPanel = props.globals.getNode("extra500/SidePanel",1);
+		m.nPanel = nRoot ;
 		
 		var nCompNode = nil;
 # Main		
@@ -371,5 +371,5 @@ var SidePanel = {
 	}
 };
 
-var sidePanel = SidePanel.new();
+var sidePanel = SidePanel.new(props.globals.initNode("extra500/SidePanel"),"Side Panel");
 

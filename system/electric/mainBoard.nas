@@ -22,11 +22,12 @@
  
 
 var MainBoard = {
-	new : func{
+	new : func(nRoot,name){
 		var m = {parents:[
 			MainBoard
 		]};
-		m.nRoot = props.globals.getNode("extra500/mainBoard",1);
+		m.nRoot = nRoot;
+		
 		var nParent = nil;
 	# Ground Connector
 		m.GND = Part.ElectricConnector.new("GND");
@@ -248,21 +249,21 @@ var MainBoard = {
 
 	
 
-var mainBoard = MainBoard.new();
+var mainBoard = MainBoard.new(props.globals.initNode("extra500/mainBoard"),"eBox");
 
-var generatorControlUnit = Part.GeneratorControlUnit.new(props.globals.getNode("extra500/GeneratorControlUnit",1),"Generator Control Unit");
-var standbyAlternatorRegulator = Part.StandbyAlternatorRegulator.new(props.globals.getNode("extra500/StandbyAlternatorRegulator",1),"Standby Alternator Regulator");
+var generatorControlUnit = Part.GeneratorControlUnit.new(props.globals.initNode("extra500/GeneratorControlUnit"),"Generator Control Unit");
+var standbyAlternatorRegulator = Part.StandbyAlternatorRegulator.new(props.globals.initNode("extra500/StandbyAlternatorRegulator"),"Standby Alternator Regulator");
 
 
-var externalPower = Part.ElectricExternalPower.new(props.globals.getNode("extra500/Ground/ExternalPower",1),"External Power");
+var externalPower = Part.ElectricExternalPower.new(props.globals.initNode("extra500/Ground/ExternalPower"),"External Power");
 
-var generator = Part.ElectricGenerator.new(props.globals.getNode("extra500/Generator",1),"Generator");
+var generator = Part.ElectricGenerator.new(props.globals.initNode("extra500/Generator"),"Generator");
 generator.setPower(24.0,24000.0);
 
-var alternator = Part.ElectricAlternator.new(props.globals.getNode("extra500/Alternator",1),"Alternator");
+var alternator = Part.ElectricAlternator.new(props.globals.initNode("extra500/Alternator"),"Alternator");
 alternator.electricConfig(24.0,26.0);
 
-var battery = Part.ElectricBattery.new(props.globals.getNode("extra500/Battery",1),"Battery");
+var battery = Part.ElectricBattery.new(props.globals.initNode("extra500/Battery"),"Battery");
 battery.electricConfig(15.3,24.3);
 
 var adjustAdditionalElectricLoads = func(){

@@ -50,12 +50,12 @@
 
  
 var MasterPanel = {
-	new : func{
+	new : func(nRoot,name){
 		var m = {parents:[
 			MasterPanel
 		]};
 		
-		m.nPanel = props.globals.getNode("extra500/MasterPanel",1);
+		m.nPanel = nRoot;
 		var nCompNode = nil;
 # Autopilot
 			
@@ -245,4 +245,4 @@ var MasterPanel = {
 	}
 };
 
-var masterPanel = MasterPanel.new();
+var masterPanel = MasterPanel.new(props.globals.initNode("extra500/MasterPanel"),"Master Panel");

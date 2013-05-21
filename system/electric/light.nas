@@ -21,35 +21,30 @@
 #
 
 var LightBoard = {
-	new : func{
+	new : func(nRoot,name){
 		var m = {parents:[
 			LightBoard
 		]};
 		
-		m.nRoot = props.globals.getNode("extra500/Light",1);
+		
 	#outside
-		nCompNode = m.nRoot.initNode("Strobe");
-		m.Strobe = Part.ElectricLight.new(nCompNode,"Strobe Light");
+		m.Strobe = Part.ElectricLight.new(nRoot.initNode("Strobe"),"Strobe Light");
 		m.Strobe.electricConfig(10.0,24.0);
 		m.Strobe.setPower(24.0,30.0);
 		
-		nCompNode = m.nRoot.initNode("Navigation");
-		m.Navigation = Part.ElectricLight.new(nCompNode,"Navigation Light");
+		m.Navigation = Part.ElectricLight.new(nRoot.initNode("Navigation"),"Navigation Light");
 		m.Navigation.electricConfig(10.0,24.0);
 		m.Navigation.setPower(24.0,90.0);
 		
-		nCompNode = m.nRoot.initNode("Landing");
-		m.Landing = Part.ElectricLight.new(nCompNode,"Landing Light");
+		m.Landing = Part.ElectricLight.new(nRoot.initNode("Landing"),"Landing Light");
 		m.Landing.electricConfig(10.0,24.0);
 		m.Landing.setPower(24.0,100.0);
 		
-		nCompNode = m.nRoot.initNode("Recognition");
-		m.Recognition = Part.ElectricLight.new(nCompNode,"Recognition Light");
+		m.Recognition = Part.ElectricLight.new(nRoot.initNode("Recognition"),"Recognition Light");
 		m.Recognition.electricConfig(10.0,24.0);
 		m.Recognition.setPower(24.0,60.0);
 		
-		nCompNode = m.nRoot.initNode("Ice");
-		m.Ice = Part.ElectricLight.new(nCompNode,"Ice");
+		m.Ice = Part.ElectricLight.new(nRoot.initNode("Ice"),"Ice");
 		m.Ice.electricConfig(10.0,24.0);
 		m.Ice.setPower(24.0,100.0);
 		
@@ -57,79 +52,67 @@ var LightBoard = {
 		
 		
 	#cockpit
-		nCompNode = m.nRoot.initNode("Cabin");
-		m.Cabin = Part.ElectricLight.new(nCompNode,"Cabin Light");
+		m.Cabin = Part.ElectricLight.new(nRoot.initNode("Cabin"),"Cabin Light");
 		m.Cabin.electricConfig(10.0,24.0);
 		m.Cabin.setPower(24.0,45.0);
 		
-		nCompNode = m.nRoot.initNode("Map");
-		m.Map = Part.ElectricLight.new(nCompNode,"Map Light");
+		m.Map = Part.ElectricLight.new(nRoot.initNode("Map"),"Map Light");
 		m.Map.electricConfig(10.0,24.0);
 		m.Map.setPower(24.0,20.0);
 		
 		
-# 		nCompNode = m.nRoot.initNode("Instrument");
+# 		nCompNode = nRoot.initNode("Instrument");
 # 		m.Instrument = Part.ElectricLight.new(nCompNode,"Instrument");
 # 		m.Instrument.electricConfig(14.0,26.0);
 # 		m.Instrument.setPower(24.0,150.0);
 		
 		
-		nCompNode = m.nRoot.initNode("Glare");
-		m.Glare = Part.ElectricLight.new(nCompNode,"Glare");
+		m.Glare = Part.ElectricLight.new(nRoot.initNode("Glare"),"Glare");
 		m.Glare.electricConfig(14.0,26.0);
 		m.Glare.setPower(24.0,15.0);
 		
 		 		
-		nCompNode = m.nRoot.initNode("Keypad");
-		m.Keypad = Part.ElectricLight.new(nCompNode,"Keypad");
+		m.Keypad = Part.ElectricLight.new(nRoot.initNode("Keypad"),"Keypad");
 		m.Keypad.electricConfig(14.0,26.0);
 		m.Keypad.setPower(24.0,24.0);
 				
-		nCompNode = m.nRoot.initNode("Switches");
-		m.Switches = Part.ElectricLight.new(nCompNode,"Switches");
+		m.Switches = Part.ElectricLight.new(nRoot.initNode("Switches"),"Switches");
 		m.Switches.electricConfig(14.0,26.0);
 		m.Switches.setPower(24.0,60.0);
 		
 	#indication Lights
 		
-		nCompNode = m.nRoot.initNode("FlapTransition");
-		m.FlapTransition = Part.ElectricLight.new(nCompNode,"FlapTransition");
+		m.FlapTransition = Part.ElectricLight.new(nRoot.initNode("FlapTransition"),"FlapTransition");
 		m.FlapTransition.electricConfig(12.0,26.0);
 		m.FlapTransition.setPower(24.0,0.5);
 		
-		nCompNode = m.nRoot.initNode("Flap15");
-		m.Flap15 = Part.ElectricLight.new(nCompNode,"Flap15");
+		m.Flap15 = Part.ElectricLight.new(nRoot.initNode("Flap15"),"Flap15");
 		m.Flap15.electricConfig(12.0,26.0);
 		m.Flap15.setPower(24.0,0.5);
 		
-		nCompNode = m.nRoot.initNode("Flap30");
-		m.Flap30 = Part.ElectricLight.new(nCompNode,"Flap30");
+		m.Flap30 = Part.ElectricLight.new(nRoot.initNode("Flap30"),"Flap30");
 		m.Flap30.electricConfig(12.0,26.0);
 		m.Flap30.setPower(24.0,0.5);
 		
-		nCompNode = m.nRoot.initNode("GearNose");
-		m.GearNose = Part.ElectricLight.new(nCompNode,"GearNose");
+		m.GearNose = Part.ElectricLight.new(nRoot.initNode("GearNose"),"GearNose");
 		m.GearNose.electricConfig(12.0,26.0);
 		m.GearNose.setPower(24.0,0.5);
 		
-		nCompNode = m.nRoot.initNode("GearLeft");
-		m.GearLeft = Part.ElectricLight.new(nCompNode,"GearLeft");
+		m.GearLeft = Part.ElectricLight.new(nRoot.initNode("GearLeft"),"GearLeft");
 		m.GearLeft.electricConfig(12.0,26.0);
 		m.GearLeft.setPower(24.0,0.5);
 		
-		nCompNode = m.nRoot.initNode("GearRight");
-		m.GearRight = Part.ElectricLight.new(nCompNode,"GearRight");
+		m.GearRight = Part.ElectricLight.new(nRoot.initNode("GearRight"),"GearRight");
 		m.GearRight.electricConfig(12.0,26.0);
 		m.GearRight.setPower(24.0,0.5);
 				
-		nCompNode = m.nRoot.initNode("DMEHold");
-		m.DMEHold = Part.ElectricLight.new(nCompNode,"DME-Hold");
+		m.DMEHold = Part.ElectricLight.new(nRoot.initNode("DMEHold"),"DME-Hold");
 		m.DMEHold.electricConfig(12.0,26.0);
 		m.DMEHold.setPower(24.0,0.5);
 		
 		
 	#Relais
-		nCompNode = m.nRoot.initNode("DayNightRelais");
+		nCompNode = nRoot.initNode("DayNightRelais");
 		m.dayNightRelais = Part.ElectricRelaisXPDT.new(nCompNode,"Day/Night Relais");
 		m.dayNightRelais.setPoles(5);
 		# 1 KEYPAD
@@ -138,7 +121,7 @@ var LightBoard = {
 		# 4 SWITCHES
 		# 5 ANNUNCIATOR
 		
-		nCompNode = m.nRoot.initNode("TestLightRelais");
+		nCompNode = nRoot.initNode("TestLightRelais");
 		m.testLightRelais = Part.ElectricRelaisXPDT.new(nCompNode,"Test Light Relais");
 		m.testLightRelais.setPoles(9);
 		# 1 ANNUNCIATOR
@@ -203,4 +186,4 @@ var LightBoard = {
 	},
 };
 
-var lightBoard = LightBoard.new();
+var lightBoard = LightBoard.new(props.globals.initNode("extra500/Light"),"Lights");

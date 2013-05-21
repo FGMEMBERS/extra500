@@ -124,12 +124,12 @@
 
 
 var CircuitBreakerPanel = {
-	new : func{
+	new : func(nRoot,name){
 		var m = {parents:[
 			CircuitBreakerPanel
 		]};
 
-		m.nPanel = props.globals.getNode("extra500/CircuitBreakerPanel",1);
+		m.nPanel = nRoot ;
 		
 		
 # 		nCompNode = nParent.initNode("");
@@ -673,5 +673,5 @@ var CircuitBreakerPanel = {
 	},
 };
 
-var circuitBreakerPanel = CircuitBreakerPanel.new();
+var circuitBreakerPanel = CircuitBreakerPanel.new(props.globals.initNode("extra500/CircuitBreakerPanel"),"Circuit Breaker Panel");
 

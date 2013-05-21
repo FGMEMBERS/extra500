@@ -74,12 +74,12 @@
 # 50	GND	Flap System
 
 var AnnunciatorPanel = {
-	new : func{
+	new : func(nRoot,name){
 		var m = {parents:[
 			AnnunciatorPanel
 		]};
 		
-		m.nPanel = props.globals.getNode("extra500/AnnunciatorPanel",1);
+		m.nPanel = nRoot;
 	# row 1
 		nCompNode = m.nPanel.initNode("GeneratorFail");
 		m.GeneratorFail = Part.ElectricLight.new(nCompNode,"Generator Fail");
@@ -454,4 +454,4 @@ var AnnunciatorPanel = {
 	},
 };
 
-var annunciatorPanel = AnnunciatorPanel.new();
+var annunciatorPanel = AnnunciatorPanel.new(props.globals.initNode("extra500/AnnunciatorPanel"),"Annuciator Panel");
