@@ -27,26 +27,6 @@
 
 <path>Autopilot.ac</path>
 
-<!--diese display-elemente muessen noch eingearbeitet werden
-	<animation>
-		<type>select</type>
-		<object-name>Autopilot.Display.RDY</object-name>
-		<object-name>Autopilot.Display.CWS</object-name>
-		<object-name>Autopilot.Display.FAIL</object-name>
-		<object-name>Autopilot.Display.GPSS</object-name>
-		<object-name>Autopilot.Display.TRIM</object-name>
-		<object-name>Autopilot.Display.ArrowUP</object-name>
-		<object-name>Autopilot.Display.ArrowDOWN</object-name>
-		<object-name>Autopilot.Display.GS</object-name>
-		<condition>
-			<greater-than>
-				<property>controls/gear/brake-left</property>
-				<value>0</value>
-			</greater-than>
-		</condition>
-	</animation>-->
-
-
        <animation>
 	       <type>select</type>
 	       <object-name>Autopilot.Display.RDY</object-name>
