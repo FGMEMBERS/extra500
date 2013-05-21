@@ -15,11 +15,11 @@
     You should have received a copy of the GNU General Public License
     along with extra500.  If not, see <http://www.gnu.org/licenses/>.
 
-      Authors: Thomas Grossberger and Dirk Dittmann
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             20.05.13
+      Date:             21.05.13
 
 -->
 
@@ -521,6 +521,17 @@
     <y1-m>2.56010</y1-m>
     <z1-m>0.33370</z1-m>
   </axis>
+</animation>
+
+<!-- little emission until cockpit-development is finished -->
+<animation>
+	<type>material</type>
+	<object-name>MainPanel</object-name>
+	<emission>	
+		<red>0.2</red>	
+		<green>0.2</green>	
+		<blue>0.2</blue>
+	</emission>
 </animation>
 
 </PropertyList>
