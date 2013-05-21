@@ -19,7 +19,7 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
+      Last change:      Eric van den Berg
       Date:             21.05.13
 -->
 
@@ -197,10 +197,10 @@
 		<type>select</type>
 		<object-name>Autopilot.Display.NAV</object-name>
 		<condition>
-			<equals>
+			<greater-than>
 				<property>/autopilot/mode/nav</property>
-				<value>1</value>
-			</equals>	
+				<value>0</value>
+			</greater-than>	
 		</condition>
 	</animation>
 

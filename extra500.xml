@@ -24,7 +24,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             20.05.13
+      Date:             21.05.13
 -->
 
 	<fileheader>
@@ -481,7 +481,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				<sum>
 					<property>fcs/aileron-cmd-tot</property>	
 					<product>
-		                  		<property>/autopilot/mode/state</property>
+		                  		<!--property>/autopilot/mode/state</property-->
                                   		<property>/autopilot/mode/heading</property>
 						<value>1.0</value>
 						<property>/autopilot/hdg-channel/cmd-ail-change</property>
@@ -581,7 +581,17 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 					<product>
 						<abs>
                                				<sum>
-                                  				<property>/autopilot/mode/state</property>
+								<product>
+                                  					<property>/autopilot/mode/heading</property>
+								</product>
+                                  				<value>-1</value> 
+                              				</sum>
+                         			</abs>
+						<abs>
+                               				<sum>
+								<product>
+                                  					<property>/autopilot/mode/nav</property>
+								</product>
                                   				<value>-1</value> 
                               				</sum>
                          			</abs>
@@ -591,7 +601,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						</sum>
 					</product>
 					<product>
-		                  		<property>/autopilot/mode/state</property>
+		                  		<!--property>/autopilot/mode/state</property-->
                                   		<property>/autopilot/mode/heading</property>
                               			<property>/autopilot/hdg-channel/cmd-ap-ail-pos-norm</property>	
 					</product>

@@ -19,7 +19,7 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
+      Last change:      Eric van den Berg
       Date:             21.05.13
 
 ************************************************************************
@@ -389,10 +389,12 @@ JSBSim Extra Aircraft - Extra 500.
 		<vertical-speed-fpm type="double">1000</vertical-speed-fpm>
 	</settings>
 	<mode>
-		<state type="int">0</state>
-		<heading type="int">1</heading>
+		<!--state type="int">0</state-->
+		<diseng type="int">0</diseng>
+		<fd type="int">0</fd>
+		<heading type="int">0</heading>
 		<nav type="int">0</nav>
-		<nav-gpss type="int">0</nav-gpss>
+		<gpss type="int">0</gpss>
 		<alt type="int">0</alt>
 		<vs type="int">0</vs>
 		<gs type="int">0</gs>
