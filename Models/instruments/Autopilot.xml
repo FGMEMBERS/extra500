@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <!--
     This file is part of extra500
@@ -396,12 +396,6 @@
 		<object-name>Autopilot.Display.GS</object-name>
 		<object-name>Autopilot.Display.VS</object-name>
 		<object-name>Autopilot.Display.VSnumbers</object-name>
-		<object-name>Autopilot.Button.HDG</object-name>
-		<object-name>Autopilot.Button.NAV</object-name>
-		<object-name>Autopilot.Button.APR</object-name>
-		<object-name>Autopilot.Button.REV</object-name>
-		<object-name>Autopilot.Button.ALT</object-name>
-		<object-name>Autopilot.Button.VS</object-name>
 	<condition>
 		<equals>
 			<property>extra500/instrumentation/Autopilot/state</property>
