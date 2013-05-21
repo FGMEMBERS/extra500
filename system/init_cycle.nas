@@ -99,7 +99,7 @@ var simulationCall = func(timestamp){
 	extra500.battery.update(timestamp);
 	extra500.adjustAdditionalElectricLoads();
 	
-	extra500.oFuelSystem.update(timestamp);
+	extra500.fuelSystem.update(timestamp);
 	extra500.flapSystem.update(timestamp);
 	extra500.gearSystem.update(timestamp);
 	

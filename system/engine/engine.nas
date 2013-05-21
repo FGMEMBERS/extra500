@@ -170,7 +170,7 @@ var Engine = {
 	}
 };
 
-var engine = Engine.new(props.globals.initNode("/extra500/Engine"),"RR 250-B17F2");
+var engine = Engine.new(props.globals.initNode("/extra500/engine"),"RR 250-B17F2");
 engine.setPower(24.0,5.0);
 
 
@@ -206,8 +206,8 @@ var calcTemps = {
 		m.nStartVoltage	= props.globals.getNode("/extra500/electric/Generator/electric/volt");
 		m.nEIPstate	= props.globals.getNode("/extra500/instrumentation/EIP/state");
 
-		m.nPump1	= props.globals.getNode("/extra500/Fuel/FuelPump1/state");
-		m.nPump2	= props.globals.getNode("/extra500/Fuel/FuelPump2/state");
+		m.nPump1	= props.globals.initNode("/extra500/system/fuel/FuelPump1/state",0,"BOOL");
+		m.nPump2	= props.globals.initNode("/extra500/system/fuel/FuelPump2/state",0,"BOOL");
 		m.nNewPump1	= props.globals.getNode("/fdm/jsbsim/aircraft/fuel/fuel-pump1");
 		m.nNewPump2	= props.globals.getNode("/fdm/jsbsim/aircraft/fuel/fuel-pump2");
 

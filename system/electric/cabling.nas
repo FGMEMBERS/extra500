@@ -432,17 +432,17 @@ var plugAnnuciator = func(){
 
 var plugFuel = func(){
 	
-	oFuelSystem.oPump1.Plus.plug(masterPanel.FuelPump1.L12);
-	oFuelSystem.oPump1.Minus.plug(eBox.GND);
+	fuelSystem.oPump1.Plus.plug(masterPanel.FuelPump1.L12);
+	fuelSystem.oPump1.Minus.plug(eBox.GND);
 	
-	oFuelSystem.oPump2.Plus.plug(masterPanel.FuelPump2.L12);
-	oFuelSystem.oPump2.Minus.plug(eBox.GND);
+	fuelSystem.oPump2.Plus.plug(masterPanel.FuelPump2.L12);
+	fuelSystem.oPump2.Minus.plug(eBox.GND);
 	
-	oFuelSystem.oPumpLeft.Plus.plug(masterPanel.FuelTransferLeft.L12);
-	oFuelSystem.oPumpLeft.Minus.plug(eBox.GND);
+	fuelSystem.oPumpLeft.Plus.plug(masterPanel.FuelTransferLeft.L12);
+	fuelSystem.oPumpLeft.Minus.plug(eBox.GND);
 	
-	oFuelSystem.oPumpRight.Plus.plug(masterPanel.FuelTransferRight.L12);
-	oFuelSystem.oPumpRight.Minus.plug(eBox.GND);
+	fuelSystem.oPumpRight.Plus.plug(masterPanel.FuelTransferRight.L12);
+	fuelSystem.oPumpRight.Minus.plug(eBox.GND);
 	
 }
 

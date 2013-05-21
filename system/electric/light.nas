@@ -186,4 +186,4 @@ var LightBoard = {
 	},
 };
 
-var lightBoard = LightBoard.new(props.globals.initNode("extra500/Light"),"Lights");
+var lightBoard = LightBoard.new(props.globals.initNode("extra500/light"),"Lights");

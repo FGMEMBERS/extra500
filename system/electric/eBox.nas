@@ -255,7 +255,7 @@ var generatorControlUnit = Part.GeneratorControlUnit.new(props.globals.initNode(
 var standbyAlternatorRegulator = Part.StandbyAlternatorRegulator.new(props.globals.initNode("extra500/electric/StandbyAlternatorRegulator"),"Standby Alternator Regulator");
 
 
-var externalPower = Part.ElectricExternalPower.new(props.globals.initNode("extra500/ground/ExternalPower"),"External Power");
+var externalPower = Part.ElectricExternalPower.new(props.globals.initNode("extra500/ground/ExternalPower"),"External Power Box");
 
 var generator = Part.ElectricGenerator.new(props.globals.initNode("extra500/electric/Generator"),"Generator");
 generator.setPower(24.0,24000.0);

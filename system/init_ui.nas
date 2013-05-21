@@ -32,7 +32,7 @@ var initUI = func(){
 extra500.circuitBreakerPanel.initUI();
 extra500.sidePanel.initUI();
 extra500.masterPanel.initUI();
-extra500.oFuelSystem.initUI();
+extra500.fuelSystem.initUI();
 extra500.flapSystem.initUI();
 extra500.engine.initUI();
 extra500.gearSystem.initUI();
