@@ -17,7 +17,7 @@
 #      Date: May 18 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             21.05.13
+#      Date:             22.05.13
 #
 
 var Autopilot = {
@@ -56,7 +56,8 @@ var Autopilot = {
 		m.nSetPitchTrim = props.globals.initNode("/autopilot/settings/pitchTrim",0,"DOUBLE");
 		
 		m.nAPState = props.globals.getNode("/extra500/instrumentation/Autopilot/state");		
-		m.nTCSpin = props.globals.getNode("/instrumentation/turn-indicator/spin");			
+		m.nTCSpin = props.globals.getNode("/instrumentation/turn-indicator/spin");
+		m.nAPacc = props.globals.getNode("/autopilot/accsens-channel/ap-z-accel");						
 
 	# Light
 		m.Backlight = Part.ElectricLED.new(m.nRoot.initNode("Backlight"),"EIP Backlight");
@@ -206,9 +207,9 @@ var Autopilot = {
 # 2 turn coordinator ok, 
 # 3 no stall warning, (TBD)
 # 4 no pitch trim going on (TBD)
-# 5 g-forces not to high (TBD)
+# 5 g-forces not to high (above 0.6, disregarding 1g of earth)
 	_CheckRollModeAble : func(){
-		if ( (me.nAPState.getValue() == 1) and (me.nTCSpin.getValue() > 0.9) ){
+		if ( (me.nAPState.getValue() == 1) and (me.nTCSpin.getValue() > 0.9) and ( math.abs(me.nAPacc.getValue()) < 0.6 ) ){
 			if ( ( me.nModeFail.getValue() == 1 ) or ( me.nModeDiseng.getValue() == 1 ) ) {
 				me.nModeFail.setValue(0);
 				me.nModeRdy.setValue(1);
