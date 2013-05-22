@@ -224,6 +224,8 @@ var plugCircuitBreaker = func(){
 		circuitBreakerPanel.instrumentLightBus.plug(lightBoard.testLightRelais.A1);
 		circuitBreakerPanel.instrumentLightBus.plug(annunciatorPanel.dimTestRelais.A1);
 		
+		circuitBreakerPanel.AutopilotComputerBus.plug(circuitBreakerPanel.AutopilotComputer.Out);
+		
 };
 
 var plugSidePanel = func(){
@@ -293,7 +295,7 @@ var plugSidePanel = func(){
 
 var plugMasterPanel = func(){
 	
-		masterPanel.AutopilotMaster.Com1.plug(circuitBreakerPanel.AutopilotComputer.Out);
+		
 		
 	
 	
@@ -515,8 +517,18 @@ var plugKeypad = func(){
 var plugAutopilot = func(){
 	autopilot.plugElectric();
 	autopilot.GND.plug(eBox.GND);
-	autopilot.PowerInputA.plug(masterPanel.AutopilotMaster.L11);
-	autopilot.PowerInputB.plug(masterPanel.AutopilotMaster.L12);
+	
+	autopilot.StallWaringRelais.A1.plug(circuitBreakerPanel.AutopilotComputerBus.con());
+	autopilot.StallWaringRelais.A2.plug(pitotSystem.Warn);
+	
+	masterPanel.AutopilotMaster.Com1.plug(autopilot.ApMasterBus.con());
+	masterPanel.AutopilotMaster.L11.plug(circuitBreakerPanel.AutopilotComputerBus.con());
+	masterPanel.AutopilotMaster.L12.plug(circuitBreakerPanel.AutopilotComputerBus.con());
+	masterPanel.AutopilotMaster.Com2.plug(autopilot.FdEnable);
+	masterPanel.AutopilotMaster.L22.plug(eBox.GND);
+	masterPanel.AutopilotMaster.L23.plug(eBox.GND);
+	
+	
 	autopilot.Dimming.plug(lightBoard.instrumentDimBus.con());
 }
 var plugDme = func(){
@@ -556,7 +568,10 @@ var plugStbyAttitude = func(){
 	stbyAttitude.Dimming.plug(lightBoard.instrumentDimBus.con());
 }
 
-
+var plugPitotSystem = func(){
+	pitotSystem.GND.plug(eBox.GND);
+	pitotSystem.plugElectric();
+}
 
 
 
@@ -587,6 +602,8 @@ var plugElectric = func(){
 	plugStbyAirspeed();
 	plugStbyAltimeter();
 	plugStbyAttitude();
+	
+	plugPitotSystem();
 	
 	
 	

@@ -63,7 +63,7 @@ var MasterPanel = {
 		
 		nCompNode = nParent.initNode("Master");
 		m.AutopilotMaster = Part.ElectricSwitchTT.new(nCompNode,"Autopilot Master");
-		m.AutopilotMaster.setPoles(1);
+		m.AutopilotMaster.setPoles(2);
 		
 		nCompNode = nParent.initNode("PitchTrim");
 		m.AutopilotPitchTrim = Part.ElectricSwitchDT.new(nCompNode,"Autopilot Pitch Trim");

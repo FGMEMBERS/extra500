@@ -117,6 +117,7 @@ var simulationCall = func(timestamp){
 	extra500.stbyAltimeter.update(timestamp);
 	extra500.stbyAttitude.update(timestamp);
 	
+	extra500.pitotSystem.update(timestamp);
 	
 	
 	
