@@ -371,6 +371,7 @@ var CircuitBreakerPanel = {
 #Buses
 		m.instrumentLightBus = Part.ElectricBus.new("InstrumentLightBus");
 		m.AutopilotComputerBus = Part.ElectricBus.new("AutopilotComputerBus");
+		m.AutopilotServoBus = Part.ElectricBus.new("AutopilotServoBus");
 		
 		
 		return m;

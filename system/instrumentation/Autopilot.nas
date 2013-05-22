@@ -33,8 +33,11 @@ var Autopilot = {
 		m.dimmingVolt = 0.0;
 				
 #		m.nModeState = props.globals.initNode("/autopilot/mode/state",0,"INT");
-		m.nModeFD 	= props.globals.initNode("/autopilot/mode/fd",0,"INT");
-		m.nModeAP 	= props.globals.initNode("/autopilot/mode/ap",0,"INT");
+		m.nModeFD 	= props.globals.initNode("/autopilot/mode/fd",0,"INT");	# HACK
+		m.nModeAP 	= props.globals.initNode("/autopilot/mode/ap",0,"INT"); # HACK
+		m.nModeYawDamper 	= props.globals.initNode("/autopilot/mode/yawDamper",0,"INT"); # HACK
+		
+		
 		m.nModeDiseng	= props.globals.initNode("/autopilot/mode/diseng",0,"INT");
 		m.nModeHeading 	= props.globals.initNode("/autopilot/mode/heading",0,"INT");
 		m.nModeNav 	= props.globals.initNode("/autopilot/mode/nav",0,"INT");
@@ -71,11 +74,9 @@ var Autopilot = {
 		m.CWS = Part.ElectricSwitchDT.new(nRoot.initNode("CWS"),"Autopilot CWS");
 		m.CWS.setPoles(1);
 		
-		m.TrimUp = Part.ElectricSwitchDT.new(nRoot.initNode("TrimUp"),"Trim Up");
-		m.TrimUp.setPoles(1);
+		m.TrimCommannd = Part.ElectricSwitchTT.new(nRoot.initNode("TrimCommannd"),"Trim Commannd");
+		m.TrimCommannd.setPoles(2);
 		
-		m.TrimDown = Part.ElectricSwitchDT.new(nRoot.initNode("TrimDown"),"Trim Down");
-		m.TrimDown.setPoles(1);
 		
 	
 	#Relais
@@ -106,10 +107,16 @@ var Autopilot = {
 		m.ApDisconnect		= Part.ElectricConnector.new("ApDisconnect");
 		m.ManualTrimUp		= Part.ElectricConnector.new("ManualTrimUp");
 		m.ManualTrimDown	= Part.ElectricConnector.new("ManualTrimDown");
+		m.PitchTrim28V		= Part.ElectricConnector.new("PitchTrim28V");
+		m.TrimInterrupt		= Part.ElectricConnector.new("TrimInterrupt");
+		m.YawDamper		= Part.ElectricConnector.new("YawDamper");
 		
 		m.Dimming.solder(m);
 		m.ManualTrimUp.solder(m);
 		m.ManualTrimDown.solder(m);
+		m.PitchTrim28V.solder(m);
+		m.TrimInterrupt.solder(m);
+		m.YawDamper.solder(m);
 		m.ApPlus.solder(m);
 		m.ApDisconnect.solder(m);
 		m.__FdEnable.solder(m);
@@ -117,9 +124,14 @@ var Autopilot = {
 		m.__GND.solder(m);
 		
 		
-		m.__ModeFD = 0;
-		m.__ModeAP = 0;
-		m.__ModeDisengage = 1;
+		me.__ModeFD = 0;
+		me.__ModeAP = 0;
+		me.__ModeDisengage = 1;
+		me.__ModeTrimInterrupt = 1;
+		me.__ModePitchTrim28V = 0;
+		me.__ModeManualTrimUp = 0;
+		me.__ModeManualTrimDown = 0;
+		me.__ModeYawDamper = 0;
 		
 		append(Part.aListSimStateAble,m);
 		return m;
@@ -132,6 +144,12 @@ var Autopilot = {
 		me.__ModeFD = 0;
 		me.__ModeAP = 0;
 		me.__ModeDisengage = 1;
+		me.__ModeTrimInterrupt = 1;
+		me.__ModePitchTrim28V = 0;
+		me.__ModeManualTrimUp = 0;
+		me.__ModeManualTrimDown = 0;
+		me.__ModeYawDamper = 0;
+		
 		
 	},
 	simUpdate : func(){
@@ -172,6 +190,36 @@ var Autopilot = {
 				if (GND){
 					me.__ModeDisengage = 0;
 				}
+			}elsif(name == "TrimInterrupt"){
+				
+				GND = me.__GND.applyVoltage(electron);
+				if (GND){
+					me.__ModeTrimInterrupt = 0;
+				}
+			}elsif(name == "PitchTrim28V"){
+				
+				GND = me.__GND.applyVoltage(electron);
+				if (GND){
+					me.__ModePitchTrim28V = 1;
+				}
+			}elsif(name == "ManualTrimUp"){
+				
+				GND = me.__GND.applyVoltage(electron);
+				if (GND){
+					me.__ModeManualTrimUp = 1;
+				}
+			}elsif(name == "ManualTrimDown"){
+				
+				GND = me.__GND.applyVoltage(electron);
+				if (GND){
+					me.__ModeManualTrimDown = 1;
+				}
+			}elsif(name == "YawDamper"){
+				
+				GND = me.__GND.applyVoltage(electron);
+				if (GND){
+					me.__ModeYawDamper = 1;
+				}
 			}
 		}
 		
@@ -184,11 +232,18 @@ var Autopilot = {
 		
 		me.Disengage.Com1.plug(me.ApMasterBus.con());
 		me.Disengage.L11.plug(me.StallWaringRelais.P12);
+		me.Disengage.Com2.plug(circuitBreakerPanel.AutopilotServoBus.con());
+		me.Disengage.L21.plug(me.StallWaringRelais.P22);
 		
 		me.StallWaringRelais.P11.plug(me.ApDisconnect);
+		me.StallWaringRelais.P21.plug(me.TrimInterrupt);
 				
+		me.TrimCommannd.Com1.plug(me.ManualTrimUp);
+		me.TrimCommannd.Com2.plug(me.ManualTrimDown);
 		
-		
+		me.TrimCommannd.L11.plug(me.GNDBus.con());
+		me.TrimCommannd.L23.plug(me.GNDBus.con());
+				
 		me.Backlight.Plus.plug(me.ApMasterBus.con());
 		me.Backlight.Minus.plug(me.GNDBus.con());
 		
@@ -215,43 +270,48 @@ var Autopilot = {
 #			me.nModeState.setValue(1);
 #		}
 		
-		
-# Setting Mode AP in Property Tree
-		if (me.__ModeAP != me.nModeAP.getValue() ){
-			me.nModeAP.setValue(me.__ModeAP);
-		}
-# Setting Mode FD in Property Tree
-		if (me.__ModeFD != me.nModeFD.getValue() ){
-			me.nModeFD.setValue(me.__ModeFD);
-		}
-# Setting Mode Disconnect in Property Tree
+# Setting Mode Disconnect(Yoke) in Property Tree
 		if (me.__ModeDisengage != me.nModeDiseng.getValue() ){
 			me.nModeDiseng.setValue(me.__ModeDisengage);
 		}
 		
-		
-		# masterPanel.AutopilotMaster.state -1/0/1 
-# 		if (masterPanel.AutopilotMaster.state == 0){ 
-# 			
-# 		}elsif (masterPanel.AutopilotMaster.state == 1){
-# 
-# 		}else{
-# 			
-# 		}
-		
-		# masterPanel.AutopilotPitchTrim.state 1/0
-		if (masterPanel.AutopilotPitchTrim.state > 0 ){
-			
-		}else{
-			
+# Setting Mode TrimUp(Yoke) in Property Tree
+		if (me.__ModeManualTrimUp != me.nModeTrimUp.getValue() ){
+			me.nModeTrimUp.setValue(me.__ModeManualTrimUp);
 		}
 		
-		# masterPanel.AutopilotYawDamper.state 1/0
-		if (masterPanel.AutopilotYawDamper.state > 0 ){
-			
-		}else{
-			
+# Setting Mode TrimDown(Yoke) in Property Tree
+		if (me.__ModeManualTrimDown != me.nModeTrimDown.getValue() ){
+			me.nModeTrimDown.setValue(me.__ModeManualTrimDown);
 		}
+
+		
+		
+		
+# Setting Mode AP(switch Master Panel) in Property Tree
+		if (me.__ModeAP != me.nModeAP.getValue() ){
+			me.nModeAP.setValue(me.__ModeAP);
+		}
+		
+# Setting Mode FD(switch Master Panel) in Property Tree
+		if (me.__ModeFD != me.nModeFD.getValue() ){
+			me.nModeFD.setValue(me.__ModeFD);
+		}
+		
+# Setting Mode Pitch(switch Master Panel) in Property Tree
+		if (me.__ModePitchTrim28V != me.nModeTrim.getValue()){
+			me.nModeTrim.setValue(me.__ModePitchTrim28V);
+		}
+
+# Setting Mode YawDamper(switch Master Panel) in Property Tree
+		if (me.__ModeYawDamper != me.nModeYawDamper.getValue()){
+			me.nModeYawDamper.setValue(me.__ModeYawDamper);
+		}
+		
+		
+		
+
+
 		me.nSetYawTrim.setValue(masterPanel.AutopilotYawTrim.state);
 		# masterPanel.AutopilotYawTrim.state -1.0/1.0
 		if (masterPanel.AutopilotYawTrim.state > 0 ){
@@ -296,7 +356,8 @@ var Autopilot = {
 			if ( ( me.nModeFail.getValue() == 1 ) or ( me.nModeDiseng.getValue() == 1 ) ) {
 				me.nModeFail.setValue(0);
 				me.nModeRdy.setValue(1);
-				# FIXME : me.nModeDiseng.setValue(0);
+				# HACK FIXME: it always set to 0 so the Yoke button cant disengage
+				#me.nModeDiseng.setValue(0);
 			}
 		}else{
 			me._APDisengage();
@@ -454,6 +515,13 @@ var Autopilot = {
 		UI.register("Autopilot VS +=",		func(v){extra500.autopilot.onAdjustVS(v); } 	);
 		UI.register("Autopilot VS =",		func(v){extra500.autopilot.onSetVS(v); } 	);
 		
+		
+		UI.register("Autopilot Pitch Trim <", 	func{extra500.autopilot.onAdjustPitchTrim(-0.1); } 		);
+		UI.register("Autopilot Pitch Trim >", 	func{extra500.autopilot.onAdjustPitchTrim(0.1); } 		);
+		UI.register("Autopilot Pitch Trim =", 	func(v=0){extra500.autopilot.onSetPitchTrim(v);} 	);
+		UI.register("Autopilot Pitch Trim +=", 	func(v=0){extra500.autopilot.onAdjustPitchTrim(v);} 	);
+	
+			
 		UI.register("Autopilot disengage",	func{extra500.autopilot.Disengage.toggle(); } 	);
 		UI.register("Autopilot disengage on",	func{extra500.autopilot.Disengage.on(); } 	);
 		UI.register("Autopilot disengage off",	func{extra500.autopilot.Disengage.off(); } 	);
@@ -462,11 +530,12 @@ var Autopilot = {
 		UI.register("Autopilot CWS on",		func{extra500.autopilot.CWS.on(); } 	);
 		UI.register("Autopilot CWS off",	func{extra500.autopilot.CWS.off(); } 	);
 		
-		UI.register("Autopilot Pitch Trim <", 	func{extra500.autopilot.onAdjustPitchTrim(-0.1); } 		);
-		UI.register("Autopilot Pitch Trim >", 	func{extra500.autopilot.onAdjustPitchTrim(0.1); } 		);
-		UI.register("Autopilot Pitch Trim =", 	func(v=0){extra500.autopilot.onSetPitchTrim(v);} 	);
-		UI.register("Autopilot Pitch Trim +=", 	func(v=0){extra500.autopilot.onAdjustPitchTrim(v);} 	);
-	
+		#UI.register("Autopilot Pitch Command",	func{extra500.autopilot.CWS.toggle(); } 	);
+		UI.register("Autopilot Pitch Command up",	func{extra500.autopilot.TrimCommannd.setValue(1); } 	);
+		UI.register("Autopilot Pitch Command center",	func{extra500.autopilot.TrimCommannd.setValue(0); } 	);
+		UI.register("Autopilot Pitch Command down",	func{extra500.autopilot.TrimCommannd.setValue(-1); } 	);
+				
+		
 	}
 	
 };

@@ -225,7 +225,7 @@ var plugCircuitBreaker = func(){
 		circuitBreakerPanel.instrumentLightBus.plug(annunciatorPanel.dimTestRelais.A1);
 		
 		circuitBreakerPanel.AutopilotComputerBus.plug(circuitBreakerPanel.AutopilotComputer.Out);
-		
+		circuitBreakerPanel.AutopilotServoBus.plug(circuitBreakerPanel.AutopilotServo.Out);
 };
 
 var plugSidePanel = func(){
@@ -524,10 +524,21 @@ var plugAutopilot = func(){
 	masterPanel.AutopilotMaster.Com1.plug(autopilot.ApMasterBus.con());
 	masterPanel.AutopilotMaster.L11.plug(circuitBreakerPanel.AutopilotComputerBus.con());
 	masterPanel.AutopilotMaster.L12.plug(circuitBreakerPanel.AutopilotComputerBus.con());
+	
 	masterPanel.AutopilotMaster.Com2.plug(autopilot.FdEnable);
 	masterPanel.AutopilotMaster.L22.plug(eBox.GND);
 	masterPanel.AutopilotMaster.L23.plug(eBox.GND);
 	
+	masterPanel.AutopilotPitchTrim.Com1.plug(circuitBreakerPanel.AutopilotServoBus.con());
+	masterPanel.AutopilotPitchTrim.L12.plug(autopilot.PitchTrim28V);
+	
+	masterPanel.AutopilotYawDamper.Com1.plug(circuitBreakerPanel.AutopilotServoBus.con());
+	masterPanel.AutopilotYawDamper.L12.plug(autopilot.YawDamper);
+	
+	autopilot.Disengage.L21.plug(circuitBreakerPanel.AutopilotServoBus.con());
+		
+	autopilot.TrimCommannd.L13.plug(circuitBreakerPanel.AutopilotServoBus.con());
+	autopilot.TrimCommannd.L21.plug(circuitBreakerPanel.AutopilotServoBus.con());
 	
 	autopilot.Dimming.plug(lightBoard.instrumentDimBus.con());
 }
