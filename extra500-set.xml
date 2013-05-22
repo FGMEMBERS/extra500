@@ -440,7 +440,7 @@ JSBSim Extra Aircraft - Extra 500.
       <electrical>	<!-- FIXME: a hack to get the turn coordinator and heading ind working -->
 		<outputs>
 			<turn-coordinator>12</turn-coordinator>
-			<DG>12</DG>
+			<DG>1.0</DG> <!-- the gyro eats norm Power -->
 		</outputs>
       </electrical>
  </systems>
