@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             21.05.13
+      Date:             22.05.13
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -416,6 +416,13 @@ JSBSim Extra Aircraft - Extra 500.
 		<lmd-hdg-error-kd type="double">0.05</lmd-hdg-error-kd>
 		<cmd-ap-ail-pos-norm-raw type="double">0.0</cmd-ap-ail-pos-norm-raw>
 	</hdg-channel>
+	<vs-channel>
+		<vs-error-kp type="double">1.0</vs-error-kp>			
+		<vs-error-ki type="double">0.0</vs-error-ki>
+		<vs-error-kd type="double">0.2</vs-error-kd>
+		<accel-rate-gain type="double">60000.0</accel-rate-gain>
+		<pitch-error-gain type="double">-0.00005</pitch-error-gain>
+	</vs-channel>
  </autopilot>
 
  <systems>
@@ -476,9 +483,11 @@ JSBSim Extra Aircraft - Extra 500.
     </cabin-altitude>
 
     <ivsi-IFD-LH>
+	<indicated-speed-fpm>0.0</indicated-speed-fpm>
         <serviceable type="bool">true</serviceable>
     </ivsi-IFD-LH>
     <ivsi-IFD-RH>
+	<indicated-speed-fpm>0.0</indicated-speed-fpm>
         <serviceable type="bool">true</serviceable>
     </ivsi-IFD-RH>
     <cabin-rate-climb>
@@ -715,23 +724,25 @@ JSBSim Extra Aircraft - Extra 500.
 		<sim-time-sec-old>0</sim-time-sec-old>
 		<sim-dt-sec>0.008333</sim-dt-sec>
 		<atmosphere>
-			<T-degC>1</T-degC>						<!--dummy value -->
+			<T-degC>1</T-degC>					<!--dummy value -->
 		</atmosphere>
 		<fcs>
 			<aileron-cmd-tot type="double">0.0</aileron-cmd-tot>
+			<flap-aero-pos-deg type="double">0</flap-aero-pos-deg>
 		</fcs>
             	<state>
                   	<controls-fixed type="int">1</controls-fixed>
             	</state>
             	<aircraft>
                   <wing>
-                        <x_ac-ft>11.01</x_ac-ft>      <!--dummy value -->
+                        <x_ac-ft>11.01</x_ac-ft>      				<!--dummy value -->
                         <y_ac-ft>8.018</y_ac-ft>
 			<incidence-deg>1.45</incidence-deg>
                         <S-ft2>150.96</S-ft2>
                         <c_aero-ft>4.337</c_aero-ft>
 			<b-ft>36.089</b-ft>
 			<cd0>0.024</cd0>
+			<alpha-deg>0.0</alpha-deg>				<!--dummy value -->
                   </wing>
                   <hstab>
                         <S-ft2>30.268</S-ft2>

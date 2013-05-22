@@ -24,7 +24,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             21.05.13
+      Date:             22.05.13
 -->
 
 	<fileheader>
@@ -385,6 +385,34 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	</propulsion>
 
 <autopilot name="STEC55X">
+
+	<channel name="accelsensor">
+		<accelerometer name="/autopilot/accsens-channel/ap-z-accelsensor">
+			<location unit="M">
+				<x>1.1</x>
+				<y>0.0</y>
+				<z>0.0</z>
+			</location>
+  			<orientation unit="DEG">
+    				<pitch>0.0</pitch>
+    				<roll>0.0</roll>
+    				<yaw>0.0</yaw>
+  			</orientation>
+			<axis>Z</axis>
+			<gain>0.0310809970784</gain>	<!--1/32.174 -->
+			<output>/autopilot/accsens-channel/ap-z-accel</output>
+		</accelerometer>
+
+		<pid name="/autopilot/accsens-channel/accel-rate">
+			<input>/autopilot/accsens-channel/ap-z-accel</input>
+			<kp>0.0</kp>							
+			<ki>0.0</ki>
+			<kd>1.0</kd>
+		</pid>
+
+	</channel>
+
+
 	<channel name="heading">
 		<pure_gain name="/autopilot/hdg-channel/lmd-hdg-error">
 			<input>/instrumentation/heading-indicator-IFD-LH/heading-bug-error-deg</input>
@@ -394,30 +422,6 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				<max>20</max>
 			</clipto>
 		</pure_gain>
-
-		<accelerometer name="/autopilot/hdg-channel/ap-z-accel">
-			<location unit="M">
-				<x>2.364</x>
-				<y>0.0</y>
-				<z>2.274</z>
-			</location>
-  			<orientation unit="DEG">
-    				<pitch>0.0</pitch>
-    				<roll>0.0</roll>
-    				<yaw>0.0</yaw>
-  			</orientation>
-			<axis>Z</axis>
-			<gain>0.1019716213</gain>	<!--1/9.80665 -->
-		</accelerometer>
-
-		<deadband name="/autopilot/hdg-channel/ap-z-accel-cp">
-			<input>/autopilot/hdg-channel/ap-z-accel</input>
-			<width>0.7</width>
-			<clipto>
-				<min>-5.0</min>
-				<max>0</max>
-			</clipto>
-		</deadband>
 
 		<pid name="/autopilot/hdg-channel/target-turn-rate">
 			<input>/autopilot/hdg-channel/lmd-hdg-error</input>
@@ -444,44 +448,18 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			</function>
 		</fcs_function>
 
-		<pid name="/autopilot/hdg-channel/cmd-ail-change-raw">
+		<pid name="/autopilot/hdg-channel/cmd-ail-change">
 			<input>/autopilot/hdg-channel/turn-rate-error</input>
 			<kp>/autopilot/hdg-channel/turn-rate-error-kp</kp>							
 			<ki>/autopilot/hdg-channel/turn-rate-error-ki</ki>
 			<kd>/autopilot/hdg-channel/turn-rate-error-kd</kd>
 		</pid>
 
-		<pure_gain name="/autopilot/hdg-channel/cmd-ail-change-acc">
-			<input>/autopilot/hdg-channel/ap-z-accel-cp</input>
-			<gain>-/autopilot/hdg-channel/turn-rate-inv</gain>
-		</pure_gain>
-
-		<summer name="/autopilot/hdg-channel/cmd-ail-change">
-			<input>/autopilot/hdg-channel/cmd-ail-change-raw</input>
-			<!--input>/autopilot/hdg-channel/cmd-ail-change-acc</input-->
-		</summer>
-
-		<pure_gain name="/autopilot/hdg-channel/cmd-ail-change-cp">
-			<input>/autopilot/hdg-channel/cmd-ail-change</input>
-			<gain>1.0</gain>
-			<clipto>
-				<min>-0.1</min>
-				<max>0.1</max>
-			</clipto>
-		</pure_gain>
-
-
-		<!--summer name="/autopilot/hdg-channel/cmd-ap-ail-pos-norm-raw">
-			<input>fcs/aileron-cmd-tot</input>
-			<input>/autopilot/hdg-channel/cmd-ail-change</input>
-		</summer-->
-
 		<fcs_function name="/autopilot/hdg-channel/cmd-ap-ail-pos-norm-raw">
 			<function>
 				<sum>
 					<property>fcs/aileron-cmd-tot</property>	
 					<product>
-		                  		<!--property>/autopilot/mode/state</property-->
                                   		<property>/autopilot/mode/heading</property>
 						<value>1.0</value>
 						<property>/autopilot/hdg-channel/cmd-ail-change</property>
@@ -505,16 +483,113 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 
 	</channel>
 
+	<channel name="verticalspeed">
+
+		<fcs_function name="/autopilot/vs-channel/vs-error-fpm">
+			<function>
+				<sum>
+					<property>/autopilot/settings/vertical-speed-fpm</property>
+					<product>	
+						<value>-1.0</value>
+						<property>/instrumentation/ivsi-IFD-LH/indicated-speed-fpm</property>
+					</product>	
+				</sum>
+			</function>
+		</fcs_function>
+
+		<pid name="/autopilot/vs-channel/target-pitch-error">
+			<input>/autopilot/vs-channel/vs-error-fpm</input>
+			<kp>/autopilot/vs-channel/vs-error-kp</kp>							
+			<ki>/autopilot/vs-channel/vs-error-ki</ki>
+			<kd>/autopilot/vs-channel/vs-error-kd</kd>
+		</pid>
+
+
+		<fcs_function name="/autopilot/vs-channel/pitch-error">
+			<function>
+				<product>
+					<property>/autopilot/vs-channel/pitch-error-gain</property>
+					<sum>
+						<property>/autopilot/vs-channel/target-pitch-error</property>
+						<product>	
+							<property>/autopilot/vs-channel/accel-rate-gain</property>
+							<property>/autopilot/accsens-channel/accel-rate</property>
+						</product>	
+					</sum>
+				</product>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/autopilot/vs-channel/cmd-ap-elev-pos-norm-raw">
+			<function>
+				<sum>
+					<property>fcs/elevator-cmd-tot</property>	
+					<product>
+                                  		<property>/autopilot/mode/vs</property>
+						<value>1.0</value>
+						<property>/autopilot/vs-channel/pitch-error</property>
+						<property>sim-dt-sec</property>
+					</product>
+				</sum>
+			</function>
+			<output>/autopilot/vs-channel/cmd-ap-elev-pos-norm-raw</output>
+		</fcs_function>
+
+		<actuator name="/autopilot/vs-channel/pitch-servo">
+			<input>/autopilot/vs-channel/cmd-ap-elev-pos-norm-raw</input>
+			<rate_limit>0.2</rate_limit>
+			<clipto>
+				<min>-1</min>
+				<max>1</max>
+			</clipto>
+			<output>/autopilot/vs-channel/cmd-ap-elev-pos-norm</output>
+		</actuator>
+
+	</channel>
+
 
 </autopilot>
 
-							
+	
+     				
 <flight_control name="FCS: extra500">
-		
-      <channel name="Pitch">
+	 <channel name="Pitch">		
+
+			<fcs_function name="elevator-cmd-tot-nc">
+				<function>
+				<sum>
+					<product>
+						<abs>
+                               				<sum>
+								<product>
+                                  					<property>/autopilot/mode/vs</property>
+								</product>
+                                  				<value>-1</value> 
+                              				</sum>
+                         			</abs>
+						<sum>
+							<property>fcs/elevator-cmd-norm</property>
+						</sum>
+					</product>
+					<product>
+                                  		<property>/autopilot/mode/vs</property>
+                              			<property>/autopilot/vs-channel/cmd-ap-elev-pos-norm</property>	
+					</product>
+				</sum>
+				</function>
+			</fcs_function>
+
+			 <summer name="elevator-cmd-tot">
+                		<input>fcs/elevator-cmd-tot-nc</input>
+                		<clipto>
+                    			<min>-1</min>
+                    			<max>1</max>
+               			 </clipto>
+            		</summer>	
+
 
       <aerosurface_scale name="Elevator Control">
-	      <input>fcs/elevator-cmd-norm</input>
+	      <input>fcs/elevator-cmd-tot</input>
 	      <range>
                   <min>-0.5759 </min>
                   <max> 0.3141 </max>
@@ -601,7 +676,6 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 						</sum>
 					</product>
 					<product>
-		                  		<!--property>/autopilot/mode/state</property-->
                                   		<property>/autopilot/mode/heading</property>
                               			<property>/autopilot/hdg-channel/cmd-ap-ail-pos-norm</property>	
 					</product>
@@ -807,85 +881,120 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		</lag_filter>
 	</channel>
 
+<!--AIRSPEED ANTI-CALIBRATION-->
+	<channel name="airspeed">
+		<fcs_function name="/instrumentation/airspeed-IFD-LH/indicated-airspeed-kt">
+			<function>
+       			<description>Calibrated to indicated airspeed</description>
+       				<table>
+            				<independentVar lookup="row">/instrumentation/airspeed-IFD-LH/indicated-speed-kt</independentVar>
+            				<independentVar lookup="column">fcs/flap-aero-pos-deg</independentVar>
+            				<tableData>
+						0	15	30
+					0	0	0	0
+					55	58	54	51
+					60	62.2	59	57.5
+					70	72	69.5	68
+					80	80.5	79.7	69
+					90	90.1	89.8	89.5
+					100	100	100	99
+					110	109.5	110	108
+					120	119	120	120
+					130	128.5	130	130
+					140	138	140	140
+					210	208	210	210
+					222	220	222	222
+					260	258	260	260
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="/instrumentation/airspeed-IFD-RH/indicated-airspeed-kt">
+			<function>
+       			<description>Calibrated to indicated airspeed</description>
+       				<table>
+            				<independentVar lookup="row">/instrumentation/airspeed-IFD-RH/indicated-speed-kt</independentVar>
+            				<independentVar lookup="column">fcs/flap-aero-pos-deg</independentVar>
+            				<tableData>
+						0	15	30
+					0	0	0	0
+					55	58	54	51
+					60	62.2	59	57.5
+					70	72	69.5	68
+					80	80.5	79.7	69
+					90	90.1	89.8	89.5
+					100	100	100	99
+					110	109.5	110	108
+					120	119	120	120
+					130	128.5	130	130
+					140	138	140	140
+					210	208	210	210
+					222	220	222	222
+					260	258	260	260
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="/instrumentation/airspeed-backup/indicated-airspeed-kt">
+			<function>
+       			<description>Calibrated to indicated airspeed</description>
+       				<table>
+            				<independentVar lookup="row">/instrumentation/airspeed-backup/indicated-speed-kt</independentVar>
+            				<independentVar lookup="column">fcs/flap-aero-pos-deg</independentVar>
+            				<tableData>
+						0	15	30
+					0	0	0	0
+					55	58	54	51
+					60	62.2	59	57.5
+					70	72	69.5	68
+					80	80.5	79.7	69
+					90	90.1	89.8	89.5
+					100	100	100	99
+					110	109.5	110	108
+					120	119	120	120
+					130	128.5	130	130
+					140	138	140	140
+					210	208	210	210
+					222	220	222	222
+					260	258	260	260
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+	</channel>
+</system>
+
+<system name="stall-warning">
+	<channel name="stall warner">
+		<fcs_function name="aircraft/stallwarner/alpha-stall-warn">
+			<function>
+ 				<table>
+            				<independentVar lookup="row">fcs/flap-aero-pos-deg</independentVar>
+            				<tableData>
+					0	11.5
+					15	10.0	
+					30	11.0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+
+		<switch name="stallwarning">
+			<default value="0"/>
+			<test value="1">
+				aircraft/wing/alpha-deg ge aircraft/stallwarner/alpha-stall-warn
+			</test>
+			<output>aircraft/stallwarner/state</output>
+		</switch>
+
+	</channel>
 </system>
 
 <aerodynamics>
 
-<!--AIRSPEED ANTI-CALIBRATION-->
-		<function name="/instrumentation/airspeed-IFD-LH/indicated-airspeed-kt">
-       		<description>Calibrated to indicated airspeed</description>
-       			<table>
-            			<independentVar lookup="row">/instrumentation/airspeed-IFD-LH/indicated-speed-kt</independentVar>
-            			<independentVar lookup="column">fcs/flap-aero-pos-deg</independentVar>
-            			<tableData>
-						0	15	30
-					0	0	0	0
-					55	58	54	51
-					60	62.2	59	57.5
-					70	72	69.5	68
-					80	80.5	79.7	69
-					90	90.1	89.8	89.5
-					100	100	100	99
-					110	109.5	110	108
-					120	119	120	120
-					130	128.5	130	130
-					140	138	140	140
-					210	208	210	210
-					222	220	222	222
-					260	258	260	260
-            			</tableData>
-      			</table>
-    		</function>
 
-		<function name="/instrumentation/airspeed-IFD-RH/indicated-airspeed-kt">
-       		<description>Calibrated to indicated airspeed</description>
-       			<table>
-            			<independentVar lookup="row">/instrumentation/airspeed-IFD-RH/indicated-speed-kt</independentVar>
-            			<independentVar lookup="column">fcs/flap-aero-pos-deg</independentVar>
-            			<tableData>
-						0	15	30
-					0	0	0	0
-					55	58	54	51
-					60	62.2	59	57.5
-					70	72	69.5	68
-					80	80.5	79.7	69
-					90	90.1	89.8	89.5
-					100	100	100	99
-					110	109.5	110	108
-					120	119	120	120
-					130	128.5	130	130
-					140	138	140	140
-					210	208	210	210
-					222	220	222	222
-					260	258	260	260
-            			</tableData>
-      			</table>
-    		</function>
-
-		<function name="/instrumentation/airspeed-backup/indicated-airspeed-kt">
-       		<description>Calibrated to indicated airspeed</description>
-       			<table>
-            			<independentVar lookup="row">/instrumentation/airspeed-backup/indicated-speed-kt</independentVar>
-            			<independentVar lookup="column">fcs/flap-aero-pos-deg</independentVar>
-            			<tableData>
-						0	15	30
-					0	0	0	0
-					55	58	54	51
-					60	62.2	59	57.5
-					70	72	69.5	68
-					80	80.5	79.7	69
-					90	90.1	89.8	89.5
-					100	100	100	99
-					110	109.5	110	108
-					120	119	120	120
-					130	128.5	130	130
-					140	138	140	140
-					210	208	210	210
-					222	220	222	222
-					260	258	260	260
-            			</tableData>
-      			</table>
-    		</function>
 
 
 <!--GENERAL STUFF -->
