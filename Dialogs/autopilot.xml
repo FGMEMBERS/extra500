@@ -33,13 +33,11 @@
 		var nAltitude = props.globals.initNode("/sim/gui/dialogs/autopilot/Altitude",0.0,"DOUBLE");
 		var nHeading = props.globals.initNode("/sim/gui/dialogs/autopilot/Heading",0.0,"DOUBLE");
 		var nVs = props.globals.initNode("/sim/gui/dialogs/autopilot/VS",0.0,"DOUBLE");
-		var nPitchTrim = props.globals.initNode("/sim/gui/dialogs/autopilot/PitchTrim",0.0,"DOUBLE");
-
+		
 		var lYawTrim = setlistener(extra500.autopilot.nSetYawTrim,func(n){ nYawTrim.setValue(n.getValue());},1);
 		var lAltitude = setlistener(extra500.autopilot.nSetHeadingBugDeg,func(n){ nHeading.setValue(n.getValue());},1);
 		var lHeading = setlistener(extra500.autopilot.nSetTargetAltitudeFt,func(n){ nAltitude.setValue(n.getValue());},1);
 		var lVs = setlistener(extra500.autopilot.nSetVerticalSpeedFpm,func(n){ nVs.setValue(n.getValue());},1);
-		var lPitchTrim = setlistener(extra500.autopilot.nSetPitchTrim,func(n){ nPitchTrim.setValue(n.getValue());},1);
 		
 		]]>
 	</open>
@@ -50,8 +48,7 @@
 		removelistener(lAltitude);
 		removelistener(lHeading);
 		removelistener(lVs);
-		removelistener(lPitchTrim);
-
+		
 		]]>
 	</close>
 </nasal>
@@ -274,7 +271,7 @@
 					
 					<button>
 						<pref-width>64</pref-width>
-						<legend>AP / FD</legend>
+						<legend>AP</legend>
 						<halign>center</halign>
 						<binding>
 							<command>nasal</command>
@@ -715,9 +712,12 @@
 			</group>
 			<group>
 				<layout>hbox</layout>
-				<button>
-					<legend>Disengage</legend>
+				<checkbox>
+					<label>Disengage</label>
 					<halign>center</halign>
+					<property>/extra500/instrumentation/autopilot/Disengage/state</property>
+					
+                    
 					<binding>
 						<command>nasal</command>
 						<script>
@@ -726,10 +726,12 @@
 							]]>
 						</script>
 					</binding>
-				</button>
-				<button>
-					<legend>CWS</legend>
+				</checkbox>
+				<checkbox>
+					<label>CWS</label>
 					<halign>center</halign>
+					<property>/extra500/instrumentation/autopilot/CWS/state</property>
+					
 					<binding>
 						<command>nasal</command>
 						<script>
@@ -738,58 +740,48 @@
 							]]>
 						</script>
 					</binding>
-				</button>
+				</checkbox>
 				<empty>
 					<stretch>true</stretch>
 				</empty>
 				<group>
 					<layout>hbox</layout>
 					<text>
-						<label>Pitch Trim</label>
+						<label>Manual Electric Pitch Trim</label>
 						<halign>left</halign>
 					</text>
 				
 					<button>
 						
-						<legend>&lt;</legend>
-						<keynum>-</keynum>
-						<border>2</border>
-						<binding>
-							<command>nasal</command>
-							<script>
-								<![CDATA[ UI.click("Autopilot Pitch Trim <"); ]]>
-							</script>
-						</binding>
-					</button>
-					<input>
-						<name>PitchTrim</name>
-						<halign>center</halign>
-						<stretch>false</stretch>
-						<pref-width>70</pref-width>
-						<live>true</live>
-						<property>/sim/gui/dialogs/autopilot/PitchTrim</property>
-						<binding>
-							<command>dialog-apply</command>
-						</binding>
+						<legend>up</legend>
 						<binding>
 							<command>nasal</command>
 							<script>
 								<![CDATA[ 
-								UI.click("Autopilot Pitch Trim =",nPitchTrim.getValue()); 
+								UI.click("Autopilot Pitch Command up"); 
 								]]>
 							</script>
 						</binding>
-					</input>
-						
+					</button>
 					<button>
-						<legend>&gt;</legend>
-						<keynum>+</keynum>
-						<border>2</border>
+						
+						<legend>off</legend>
 						<binding>
 							<command>nasal</command>
 							<script>
 								<![CDATA[ 
-								UI.click("Autopilot Pitch Trim >"); 
+								UI.click("Autopilot Pitch Command off"); 
+								]]>
+							</script>
+						</binding>
+					</button>
+					<button>
+						<legend>down</legend>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ 
+								UI.click("Autopilot Pitch Command down"); 
 								]]>
 							</script>
 						</binding>
