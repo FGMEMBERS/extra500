@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8" ?>
+	
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Eric van den Berg
+      Date: 2013-05-23
+
+      Last change:      -
+      Date:             -
+-->
+
+<autopilot name="STEC55X">
+
+	<channel name="accelsensor">
+		<accelerometer name="/autopilot/accsens-channel/ap-z-accelsensor">
+			<location unit="M">
+				<x>1.1</x>
+				<y>0.0</y>
+				<z>0.0</z>
+			</location>
+  			<orientation unit="DEG">
+    				<pitch>0.0</pitch>
+    				<roll>0.0</roll>
+    				<yaw>0.0</yaw>
+  			</orientation>
+			<axis>Z</axis>
+			<gain>0.0310809970784</gain>	<!--1/32.174 -->
+			<output>/autopilot/accsens-channel/ap-z-accel</output>
+		</accelerometer>
+
+		<pid name="/autopilot/accsens-channel/accel-rate">
+			<input>/autopilot/accsens-channel/ap-z-accel</input>
+			<kp>0.0</kp>							
+			<ki>0.0</ki>
+			<kd>1.0</kd>
+		</pid>
+
+	</channel>
+
+
+	<channel name="heading">
+		<pure_gain name="/autopilot/hdg-channel/lmd-hdg-error">
+			<input>/instrumentation/heading-indicator-IFD-LH/heading-bug-error-deg</input>
+			<gain>1.0</gain>
+			<clipto>
+				<min>-20</min>
+				<max>20</max>
+			</clipto>
+		</pure_gain>
+
+		<pid name="/autopilot/hdg-channel/target-turn-rate">
+			<input>/autopilot/hdg-channel/lmd-hdg-error</input>
+			<kp>/autopilot/hdg-channel/lmd-hdg-error-kp</kp>							<!--180deg/min devided by 25deg -->
+			<ki>/autopilot/hdg-channel/lmd-hdg-error-ki</ki>
+			<kd>/autopilot/hdg-channel/lmd-hdg-error-kd</kd>
+		</pid>
+		
+		<fcs_function name="/autopilot/hdg-channel/turn-rate-inv">
+			<function>
+				<product>
+					<value>-180.0</value>
+					<property>/instrumentation/turn-indicator/indicated-turn-rate</property>  <!--pos right-->
+				</product>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/autopilot/hdg-channel/turn-rate-error">
+			<function>
+				<sum>
+					<property>/autopilot/hdg-channel/target-turn-rate</property>	
+					<property>/autopilot/hdg-channel/turn-rate-inv</property>
+				</sum>
+			</function>
+		</fcs_function>
+
+		<pid name="/autopilot/hdg-channel/cmd-ail-change">
+			<input>/autopilot/hdg-channel/turn-rate-error</input>
+			<kp>/autopilot/hdg-channel/turn-rate-error-kp</kp>							
+			<ki>/autopilot/hdg-channel/turn-rate-error-ki</ki>
+			<kd>/autopilot/hdg-channel/turn-rate-error-kd</kd>
+		</pid>
+
+		<fcs_function name="/autopilot/hdg-channel/cmd-ap-ail-pos-norm-raw">
+			<function>
+				<sum>
+					<property>fcs/aileron-cmd-tot</property>	
+					<product>
+                                  		<property>/autopilot/mode/heading</property>
+						<value>1.0</value>
+						<property>/autopilot/hdg-channel/cmd-ail-change</property>
+						<property>sim-dt-sec</property>
+					</product>
+				</sum>
+			</function>
+			<output>/autopilot/hdg-channel/cmd-ap-ail-pos-norm-raw</output>
+		</fcs_function>
+	
+		<actuator name="/autopilot/hdg-channel/ail-servo">
+			<input>/autopilot/hdg-channel/cmd-ap-ail-pos-norm-raw</input>
+			<rate_limit>0.2</rate_limit>
+			<clipto>
+				<min>-1</min>
+				<max>1</max>
+			</clipto>
+			<output>/autopilot/hdg-channel/cmd-ap-ail-pos-norm</output>
+		</actuator>
+
+
+	</channel>
+
+	<channel name="verticalspeed">
+
+		<fcs_function name="/autopilot/vs-channel/vs-error-fpm">
+			<function>
+				<sum>
+					<property>/autopilot/settings/vertical-speed-fpm</property>
+					<product>	
+						<value>-1.0</value>
+						<property>/instrumentation/ivsi-IFD-LH/indicated-speed-fpm</property>
+					</product>	
+				</sum>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/autopilot/vs-channel/pitch-error-target">
+			<function>
+				<product>
+					<property>/autopilot/vs-channel/pitch-error-gain</property>
+					<sum>
+						<property>/autopilot/vs-channel/vs-error-fpm</property>
+						<product>	
+							<property>/autopilot/vs-channel/accel-rate-gain</property>
+							<property>/autopilot/accsens-channel/accel-rate</property>
+						</product>	
+					</sum>
+				</product>
+			</function>
+		</fcs_function>
+
+		<pid name="/autopilot/vs-channel/pitch-error">
+			<input>/autopilot/vs-channel/pitch-error-target</input>
+			<kp>/autopilot/vs-channel/vs-error-kp</kp>							
+			<ki>/autopilot/vs-channel/vs-error-ki</ki>
+			<kd>/autopilot/vs-channel/vs-error-kd</kd>
+		</pid>
+
+		<fcs_function name="/autopilot/vs-channel/cmd-ap-elev-pos-norm-raw">
+			<function>
+				<sum>
+					<property>fcs/elevator-cmd-tot</property>	
+					<product>
+                                  		<property>/autopilot/mode/vs</property>
+						<value>1.0</value>
+						<property>/autopilot/vs-channel/pitch-error</property>
+						<property>sim-dt-sec</property>
+					</product>
+				</sum>
+			</function>
+			<output>/autopilot/vs-channel/cmd-ap-elev-pos-norm-raw</output>
+		</fcs_function>
+
+		<actuator name="/autopilot/vs-channel/pitch-servo">
+			<input>/autopilot/vs-channel/cmd-ap-elev-pos-norm-raw</input>
+			<rate_limit>0.2</rate_limit>
+			<clipto>
+				<min>-1</min>
+				<max>1</max>
+			</clipto>
+			<output>/autopilot/vs-channel/cmd-ap-elev-pos-norm</output>
+		</actuator>
+
+	</channel>
+
+
+</autopilot>
+

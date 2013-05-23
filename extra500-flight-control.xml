@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8" ?>
+	
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Eric van den Berg
+      Date: 2013-05-23
+
+      Last change:      -
+      Date:             -
+-->
+
+<flight_control name="FCS: extra500">
+
+	 <channel name="Pitch">		
+
+			<fcs_function name="elevator-cmd-tot-nc">
+				<function>
+				<sum>
+					<product>
+						<abs>
+                               				<sum>
+								<product>
+                                  					<property>/autopilot/mode/vs</property>
+								</product>
+                                  				<value>-1</value> 
+                              				</sum>
+                         			</abs>
+						<sum>
+							<property>fcs/elevator-cmd-norm</property>
+						</sum>
+					</product>
+					<product>
+                                  		<property>/autopilot/mode/vs</property>
+                              			<property>/autopilot/vs-channel/cmd-ap-elev-pos-norm</property>	
+					</product>
+				</sum>
+				</function>
+			</fcs_function>
+
+			 <summer name="elevator-cmd-tot">
+                		<input>fcs/elevator-cmd-tot-nc</input>
+                		<clipto>
+                    			<min>-1</min>
+                    			<max>1</max>
+               			 </clipto>
+            		</summer>	
+
+
+     	 	<aerosurface_scale name="Elevator Control">
+	      		<input>fcs/elevator-cmd-tot</input>
+	      		<range>
+                  		<min>-0.5759 </min>
+                  		<max> 0.3141 </max>
+	      		</range>
+	      		<output>fcs/elevator-pos-rad</output>
+      		</aerosurface_scale>
+
+   		<aerosurface_scale name="elevator normalization">
+      			<input>fcs/elevator-pos-rad</input>
+      			<domain>
+        			<min> -0.5759 </min>
+        			<max>  0.3141 </max>
+      			</domain>
+      			<range>
+        			<min> -1 </min>
+        			<max>  1 </max>
+      			</range>
+      			<output>fcs/elevator-pos-norm</output>
+   		</aerosurface_scale>
+
+    		<summer name="aircraft/hstab/elevator/d_e_free-clipped-rad">
+      		<description>stick-free elevator deflection rad</description>
+      			<input>aircraft/hstab/elevator/d_e_free-rad</input>
+      			<clipto>
+            			<min>
+                  			<property>aircraft/hstab/elevator/min-defl-rad</property>
+            			</min>
+            			<max>
+                  			<property>aircraft/hstab/elevator/max-defl-rad</property>            
+            			</max>
+      			</clipto>
+    		</summer>  
+
+  	</channel>
+
+  	<channel name="Pitch trim">
+
+      		<aerosurface_scale name="Pitch trim Control">
+	      		<input>fcs/pitch-trim-cmd-norm</input>
+	      		<range>
+                  		<min> -30 </min>
+                  		<max>  20 </max>
+	      		</range>
+	      		<output>fcs/pitch-trim-pos-deg</output>
+      		</aerosurface_scale>
+
+  	</channel> 
+
+		
+		<channel name="Roll">
+
+			<aerosurface_scale name="rudder aileron control"> 	<!-- this is to simulate the rudder-aileron interconnect, a spring in RL -->
+				<input>fcs/rudder-cmd-norm</input>
+				<range>
+					<min> 0.15 </min>
+					<max>-0.15 </max>
+				</range>
+				<output>fcs/rudder-cmd-aileron</output>
+			</aerosurface_scale>
+
+			<fcs_function name="aileron-cmd-tot-nc">
+				<function>
+				<sum>
+					<product>
+						<abs>
+                               				<sum>
+								<product>
+                                  					<property>/autopilot/mode/heading</property>
+								</product>
+                                  				<value>-1</value> 
+                              				</sum>
+                         			</abs>
+						<abs>
+                               				<sum>
+								<product>
+                                  					<property>/autopilot/mode/nav</property>
+								</product>
+                                  				<value>-1</value> 
+                              				</sum>
+                         			</abs>
+						<sum>
+							<property>fcs/rudder-cmd-aileron</property>	
+							<property>fcs/aileron-cmd-norm</property>
+						</sum>
+					</product>
+					<product>
+                                  		<property>/autopilot/mode/heading</property>
+                              			<property>/autopilot/hdg-channel/cmd-ap-ail-pos-norm</property>	
+					</product>
+				</sum>
+				</function>
+			</fcs_function>
+
+			 <summer name="aileron-cmd-tot">
+                		<input>fcs/aileron-cmd-tot-nc</input>
+                		<clipto>
+                    			<min>-1</min>
+                    			<max>1</max>
+               			 </clipto>
+            		</summer>
+				
+			<aerosurface_scale name="Left Aileron Control">
+				<input>fcs/aileron-cmd-tot</input>
+				<range>
+					<min> -0.4712 </min>
+					<max>  0.3316 </max>
+				</range>
+				<output>fcs/left-aileron-pos-rad</output>
+			</aerosurface_scale>
+			
+			<aerosurface_scale name="Right Aileron Control">
+				<input>fcs/aileron-cmd-tot</input>
+				<range>
+					<min> -0.3316 </min>
+					<max>  0.4712 </max>
+				</range>
+				<output>fcs/right-aileron-pos-rad</output>
+			</aerosurface_scale>
+			
+			<aerosurface_scale name="left aileron normalization">
+				<input>fcs/left-aileron-pos-rad</input>
+				<domain>
+					<min> -0.4712 </min>
+					<max>  0.3316 </max>
+				</domain>
+				<range>
+					<min> -1 </min>
+					<max>  1 </max>
+				</range>
+				<output>fcs/left-aileron-pos-norm</output>
+			</aerosurface_scale>
+			
+			<aerosurface_scale name="right aileron normalization">
+				<input>fcs/right-aileron-pos-rad</input>
+				<domain>
+					<min> -0.3316 </min>
+					<max>  0.4712 </max>
+				</domain>
+				<range>
+					<min> -1 </min>
+					<max>  1 </max>
+				</range>
+				<output>fcs/right-aileron-pos-norm</output>
+			</aerosurface_scale>
+			
+		</channel>
+		
+		<property value="1">fcs/yaw-damper-enable</property>
+		<channel name="Yaw">
+
+			<aerosurface_scale name="aileron rudder control">	<!-- this is to simulate the rudder-aileron interconnect, a spring in RL -->
+				<input>fcs/aileron-cmd-norm</input>
+				<range>
+					<min> 0.1 </min>
+					<max>-0.1 </max>
+				</range>
+				<output>fcs/aileron-cmd-rudder</output>
+			</aerosurface_scale>
+
+			 <summer name="rudder-cmd-tot">
+                		<input>fcs/aileron-cmd-rudder</input>
+                		<input>fcs/rudder-cmd-norm</input>
+                		<clipto>
+                    			<min>-1</min>
+                    			<max>1</max>
+               			 </clipto>
+            		</summer>
+	
+			<aerosurface_scale name="Rudder Control">
+				<input>fcs/rudder-cmd-tot</input>
+				<range>
+					<min> -0.4363 </min>
+					<max>  0.4363 </max>
+				</range>
+				<output>fcs/rudder-pos-rad</output>
+			</aerosurface_scale>
+			
+			<aerosurface_scale name="rudder normalization">
+				<input>fcs/rudder-pos-rad</input>
+				<domain>
+					<min> -0.4363 </min>
+					<max>  0.4363 </max>
+				</domain>
+				<range>
+					<min> -1 </min>
+					<max>  1 </max>
+				</range>
+				<output>fcs/rudder-pos-norm</output>
+			</aerosurface_scale>
+			
+		</channel>
+		
+		<channel name="Flaps">
+
+			<kinematic name="Flaps Control">
+				<input>fcs/flap-wp-cmd-norm</input>
+				<traverse>
+					<setting>
+						<position>0</position>
+						<time>0</time>
+					</setting>
+					<setting>
+						<position>15</position>
+						<time>4</time>
+					</setting>
+					<setting>
+						<position>30</position>
+						<time>6</time>
+					</setting>
+				</traverse>
+				<output>fcs/flap-pos-deg</output>
+			</kinematic>
+
+			<kinematic name="Flaps Control aero">
+                  <!--this is for the aerodynamic part of the flap deflection. Much slower to prevent dynamic effects-->
+				<input>fcs/flap-wp-cmd-norm</input>
+				<traverse>
+					<setting>
+						<position>0</position>
+						<time>0</time>
+					</setting>
+					<setting>
+						<position>15</position>
+						<time>6</time>
+					</setting>
+					<setting>
+						<position>30</position>
+						<time>9</time>
+					</setting>
+				</traverse>
+				<output>fcs/flap-aero-pos-deg</output>
+			</kinematic>
+
+			<aerosurface_scale name="Flap Normalization">
+				<input>fcs/flap-pos-deg</input>
+				<domain>
+					<min>0</min>
+					<max>30</max>
+				</domain>
+				<range>
+					<min>0</min>
+					<max>1</max>
+				</range>
+				<output>fcs/flap-pos-norm</output>
+			</aerosurface_scale>
+
+		</channel>
+		
+		<channel name="Landing Gear">
+			<kinematic name="Gear Control">
+				<input>gear/gear-cmd-norm</input>
+				<traverse>
+					<setting>
+						<position> 0 </position>
+						<time>     0 </time>
+					</setting>
+					<setting>
+						<position> 1 </position>
+						<time>     13 </time>
+					</setting>
+				</traverse>
+				<output>gear/gear-pos-norm</output>
+			</kinematic>
+			
+		</channel>
+
+</flight_control>
