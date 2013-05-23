@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" ?>
+	
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Eric van den Berg
+      Date: 2013-05-23
+
+      Last change:      -
+      Date:             -
+-->
+
+<system name="indication">
+
+	<channel name="fuel pressure">
+		<lag_filter name ="aircraft/engine/FP-psi">
+ 			<input>aircraft/engine/FPtarget-psi</input>
+			<c1>1.0</c1>
+		</lag_filter>
+	</channel>
+
+	<channel name="TOT">
+		<lag_filter name ="aircraft/engine/TOT-degC">
+ 			<input>aircraft/engine/TOT-target-degC</input>
+			<c1>1.0</c1>
+		</lag_filter>
+	</channel>
+
+	<channel name="OT">
+		<lag_filter name ="aircraft/engine/OT-degC">
+ 			<input>aircraft/engine/OT-target-degC</input>
+			<c1>1.0</c1>
+		</lag_filter>
+	</channel>
+
+<!--AIRSPEED ANTI-CALIBRATION-->
+	<channel name="airspeed">
+		<fcs_function name="/instrumentation/airspeed-IFD-LH/indicated-airspeed-kt">
+			<function>
+       			<description>Calibrated to indicated airspeed</description>
+       				<table>
+            				<independentVar lookup="row">/instrumentation/airspeed-IFD-LH/indicated-speed-kt</independentVar>
+            				<independentVar lookup="column">fcs/flap-aero-pos-deg</independentVar>
+            				<tableData>
+						0	15	30
+					0	0	0	0
+					55	58	54	51
+					60	62.2	59	57.5
+					70	72	69.5	68
+					80	80.5	79.7	69
+					90	90.1	89.8	89.5
+					100	100	100	99
+					110	109.5	110	108
+					120	119	120	120
+					130	128.5	130	130
+					140	138	140	140
+					210	208	210	210
+					222	220	222	222
+					260	258	260	260
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="/instrumentation/airspeed-IFD-RH/indicated-airspeed-kt">
+			<function>
+       			<description>Calibrated to indicated airspeed</description>
+       				<table>
+            				<independentVar lookup="row">/instrumentation/airspeed-IFD-RH/indicated-speed-kt</independentVar>
+            				<independentVar lookup="column">fcs/flap-aero-pos-deg</independentVar>
+            				<tableData>
+						0	15	30
+					0	0	0	0
+					55	58	54	51
+					60	62.2	59	57.5
+					70	72	69.5	68
+					80	80.5	79.7	69
+					90	90.1	89.8	89.5
+					100	100	100	99
+					110	109.5	110	108
+					120	119	120	120
+					130	128.5	130	130
+					140	138	140	140
+					210	208	210	210
+					222	220	222	222
+					260	258	260	260
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="/instrumentation/airspeed-backup/indicated-airspeed-kt">
+			<function>
+       			<description>Calibrated to indicated airspeed</description>
+       				<table>
+            				<independentVar lookup="row">/instrumentation/airspeed-backup/indicated-speed-kt</independentVar>
+            				<independentVar lookup="column">fcs/flap-aero-pos-deg</independentVar>
+            				<tableData>
+						0	15	30
+					0	0	0	0
+					55	58	54	51
+					60	62.2	59	57.5
+					70	72	69.5	68
+					80	80.5	79.7	69
+					90	90.1	89.8	89.5
+					100	100	100	99
+					110	109.5	110	108
+					120	119	120	120
+					130	128.5	130	130
+					140	138	140	140
+					210	208	210	210
+					222	220	222	222
+					260	258	260	260
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+	</channel>
+</system>
+
+
+
