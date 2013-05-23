@@ -28,9 +28,9 @@ var PitotSystem = {
 			Part.ElectricAble.new(nRoot,name)
 		]};
 		
-		m.nStallSpeed 		= nRoot.initNode("StallSpeed-kts",70.0,"DOUBLE");
-		m.nIndicatedSpeed 	= props.globals.initNode("Indicated-Speed-kts",80.0,"DOUBLE");
-		
+		#m.nStallSpeed 		= nRoot.initNode("StallSpeed-kts",70.0,"DOUBLE");
+		#m.nIndicatedSpeed 	= props.globals.initNode("Indicated-Speed-kts",80.0,"DOUBLE");
+		m.nStallWarner	 	=props.globals.initNode("fdm/jsbsim/aircraft/stallwarner/state",0,"BOOL");
 	# Switches
 				
 		m.StallWarn = Part.ElectricSwitchDT.new(nRoot.initNode("StallWarn"),"Stall Warning Switch");
@@ -49,7 +49,6 @@ var PitotSystem = {
 	applyVoltage : func(electron,name=""){
 		
 	},
-	# FIXME :Fake unitl we can drive real hydraulic system  replace with original !!!
 	plugElectric : func(){
 		me.GNDBus.Minus.plug(me.GND);
 		me.StallWarn.Com1.plug(me.Warn);
@@ -58,11 +57,7 @@ var PitotSystem = {
 
 	# Main Simulation loop  ~ 10Hz
 	update : func(timestamp){
-		if (me.nIndicatedSpeed.getValue() <= me.nStallSpeed.getValue()){
-			me.StallWarn._setValue(1);
-		}else{
-			me.StallWarn._setValue(0);
-		}
+		me.StallWarn._setValue(me.nStallWarner.getValue());
 	}
 
 	

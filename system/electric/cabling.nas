@@ -535,10 +535,10 @@ var plugAutopilot = func(){
 	masterPanel.AutopilotYawDamper.Com1.plug(circuitBreakerPanel.AutopilotServoBus.con());
 	masterPanel.AutopilotYawDamper.L12.plug(autopilot.YawDamper);
 	
-	autopilot.Disengage.L21.plug(circuitBreakerPanel.AutopilotServoBus.con());
+	autopilot.swtDisengage.L21.plug(circuitBreakerPanel.AutopilotServoBus.con());
 		
-	autopilot.TrimCommannd.L13.plug(circuitBreakerPanel.AutopilotServoBus.con());
-	autopilot.TrimCommannd.L21.plug(circuitBreakerPanel.AutopilotServoBus.con());
+	autopilot.swtTrimCommannd.L13.plug(circuitBreakerPanel.AutopilotServoBus.con());
+	autopilot.swtTrimCommannd.L21.plug(circuitBreakerPanel.AutopilotServoBus.con());
 	
 	autopilot.Dimming.plug(lightBoard.instrumentDimBus.con());
 }
