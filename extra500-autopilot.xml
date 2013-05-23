@@ -128,9 +128,12 @@
 			<function>
 				<sum>
 					<property>/autopilot/settings/vertical-speed-fpm</property>
+					<property>velocities/v-down-fps</property>
 					<product>	
-						<value>-1.0</value>
-						<property>/instrumentation/ivsi-IFD-LH/indicated-speed-fpm</property>
+						<!--value>-1.0</value-->
+						<value>60.0</value>
+						<property>velocities/v-down-fps</property>
+						<!--property>/instrumentation/ivsi-IFD-LH/indicated-speed-fpm</property-->
 					</product>	
 				</sum>
 			</function>
@@ -139,6 +142,7 @@
 		<fcs_function name="/autopilot/vs-channel/pitch-error-target">
 			<function>
 				<product>
+					<property>/autopilot/mode/vs</property>
 					<property>/autopilot/vs-channel/pitch-error-gain</property>
 					<sum>
 						<property>/autopilot/vs-channel/vs-error-fpm</property>
