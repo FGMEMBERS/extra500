@@ -26,6 +26,32 @@
 <PropertyList>
 
 <path>extra500_frame.ac</path>
+
+<!-- TEST: wechseln des rumpfes per menu -->
+<animation>
+  <type>select</type>
+  <object-name>FrameSolid</object-name>
+  <condition>
+    <equals>
+<property>extra500/debug/framechange</property>
+      <value>1</value>
+    </equals>
+  </condition>
+</animation>
+
+<animation>
+  <type>select</type>
+  <object-name>FrameTrans</object-name>
+  <condition>
+    <less-than>
+<property>extra500/debug/framechange</property>
+      <value>1</value>
+    </less-than>
+  </condition>
+</animation>
+
+
+
 <!-- Canvas Test -->
  <model>
   <path>canvas-test.xml</path>

@@ -79,7 +79,17 @@
 				       ]]></script>
 			       </binding>
 			</item>
-			
+
+<!-- nur bis der rumpf fertig modelliert ist -->
+		<item>
+			<name>frametest</name>
+			<label>Toggle Frame</label>
+			<binding>
+			<command>property-toggle</command>
+			<property>extra500/debug/framechange</property>
+			</binding>
+		</item>
+		
 		</menu>
   </default>
 
