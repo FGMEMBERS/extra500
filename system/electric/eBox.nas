@@ -226,9 +226,7 @@ var EBox = {
 		
 		
 	},
-	update : func(timestamp){
-		#Part.etd.print("\n\n\n---------------- update -----------\n");
-		#battery.update(timestamp);
+	update : func(dt){
 		
 	},
 	applyVoltage : func(electron,name=""){ 

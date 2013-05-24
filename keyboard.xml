@@ -111,8 +111,7 @@
 			 <binding>
 				 <command>nasal</command>
 				 <script><![CDATA[
-					run.cycle_run = 0;
-					run.simulation_cycle();
+					run.simulationLoop.step();
 				]]></script>
 			 </binding>
 		 </key>
@@ -123,7 +122,7 @@
 			 <binding>
 				 <command>nasal</command>
 				 <script><![CDATA[
-					run.cycle_run = 1;
+					run.simulationLoop.start();
 				]]></script>
 			 </binding>
 		 </key>

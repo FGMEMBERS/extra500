@@ -81,19 +81,19 @@ var canvas_demo = {
     
     return m;
   },
-  update: func(timestamp)
+  update : func(timestamp)
   {
 		
 		
 		var text = "Sim Main Loop\n";
 				
-		text ~= sprintf("time    : %.4f sec %.2f Hz\n",run.simulationStats.time,1/(run.simulationStats.time+run.simulationSec));
-		text ~= sprintf("max     : %.4f sec\n",run.simulationStats.max);
-		text ~= sprintf("min     : %.4f sec\n",run.simulationStats.min);
-		text ~= sprintf("avg100  : %.4f sec\n",run.simulationStats.avg100);
-		text ~= sprintf("avg     : %.4f sec\n",run.simulationStats.avg);
-		text ~= sprintf("sum     : %.4f sec\n",run.simulationStats.sum);
-		text ~= sprintf("count   : %i\n",run.simulationStats.count);
+		text ~= sprintf("time    : %.4f sec %5.2f Hz\n",run.simulationLoop.timeUsed,run.simulationLoop.realHz);
+		text ~= sprintf("max     : %.4f sec\n",run.simulationLoop.max);
+		text ~= sprintf("min     : %.4f sec\n",run.simulationLoop.min);
+		text ~= sprintf("avg100  : %.4f sec\n",run.simulationLoop.avg100);
+		text ~= sprintf("avg     : %.4f sec\n",run.simulationLoop.avg);
+		text ~= sprintf("sum     : %.4f sec\n",run.simulationLoop.sum);
+		text ~= sprintf("count   : %i\n",run.simulationLoop.count);
 		
 		me.textSim.setText(text);
 # 		
@@ -146,7 +146,7 @@ var canvas_svg = {
    # debug.dump(m.bar);
      return m;
   },
-  update: func(timestamp)
+  update : func(timestamp)
   {
 	me.needle.setTranslation(run.cycleTimeUsed*4000,0);
 	me.bar.setScale(run.cycleTimeUsed*10,1);

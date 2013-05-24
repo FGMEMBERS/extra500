@@ -21,39 +21,89 @@
 #
 
 
-var Stats = {
-	new : func(){
+var MainLoop = {
+	new : func(nRoot,callback=nil,hz=10){
 		var m = {parents:[
-			Stats
+			MainLoop
 		]};
 		
-		m.nTime = props.globals.initNode("extra500/debug/mainLoop/time",0.0,"DOUBLE");
-		m.nMax = props.globals.initNode("extra500/debug/mainLoop/max",0.0,"DOUBLE");
-		m.nMin = props.globals.initNode("extra500/debug/mainLoop/min",0.0,"DOUBLE");
-		m.nAvg100 = props.globals.initNode("extra500/debug/mainLoop/avg100",0.0,"DOUBLE");
-		m.nAvg = props.globals.initNode("extra500/debug/mainLoop/avg",0.0,"DOUBLE");
-		m.nSum = props.globals.initNode("extra500/debug/mainLoop/sum",0.0,"DOUBLE");
-		m.nCount = props.globals.initNode("extra500/debug/mainLoop/count",0.0,"DOUBLE");
+		m.run 		= 1;
+		m.targetHzSec 	= 1/hz;
+		m.maxHzSec	= 0.04;
+		m.nextSleepSec	= m.targetHzSec;
+		m.timeStart	= systime();
+		m.timeLast	= m.timeStart-0.1;
+		m.timeUsed	= 0.0;
+		m.timeDT	= 0.1;
 		
-		m.time = 0.0;
-		m.max = 0.0;
-		m.min = 0.0;
-		m.avg100 = 0.0;
-		m.sum100 = 0.0;
-		m.count100 = 0.0;
-		m.avg = 0.0;
-		m.sum = 0.0;
-		m.count = 0.0;
+		m._callback = callback;
+		
+		#members for statistic
+		#m.time 		= 0.0;
+		m.max 		= 0.0;
+		m.min 		= 0.0;
+		m.avg100 	= 0.0;
+		m.sum100 	= 0.0;
+		m.count100 	= 0.0;
+		m.avg 		= 0.0;
+		m.sum 		= 0.0;
+		m.count 	= 0.0;
+		m.realHz 	= 0.0;
+		
+		m.nTime 	= nRoot.initNode("time",0.0,"DOUBLE");
+		m.nMax 		= nRoot.initNode("max",0.0,"DOUBLE");
+		m.nMin 		= nRoot.initNode("min",0.0,"DOUBLE");
+		m.nAvg100 	= nRoot.initNode("avg100",0.0,"DOUBLE");
+		m.nAvg 		= nRoot.initNode("avg",0.0,"DOUBLE");
+		m.nSum 		= nRoot.initNode("sum",0.0,"DOUBLE");
+		m.nCount 	= nRoot.initNode("count",0.0,"DOUBLE");
+		m.nRealHz	= nRoot.initNode("realHz",0.0,"DOUBLE");
 		
 		return m;
 	},
-	add : func(value){
+	_loop : func(){
+	
 		
-		me.time = value;
-		if (me.max < value){ me.max = value; }
-		if (me.min > value or me.min == 0.0){ me.min = value; }
+			me.timeStart = systime();
+			me.timeDelta = me.timeStart - me.timeLast;
+			
+			me._callback(me.timeStart);
+			
+			me.timeUsed = systime() - me.timeStart;
+		
+			me.nextSleepSec = me.targetHzSec - me.timeUsed;
+			if (me.nextSleepSec < me.maxHzSec){me.nextSleepSec = me.maxHzSec};
+			
+		if (me.run == 1){	
+			settimer(func{me._loop();}, me.nextSleepSec);
+		}	
+		
+			me.timeLast = me.timeStart;
+			me._calcStats();
+		
+	},
+	start : func(){
+		#print ("MainLoop.start() ... ");
+		me.run = 1;
+		me._loop();
+	},
+	stop : func() {
+		#print ("MainLoop.stop() ... ");
+		me.run = 0;
+	},
+	step : func() {
+		#print ("MainLoop.step() ... ");
+		me.run = 0;
+		me._loop();
+	},
+	_calcStats : func(){
 				
-		me.sum += value;
+		me.realHz = 1 / (me.timeDelta) ; 
+		
+		if (me.max < me.timeUsed){ me.max = me.timeUsed; }
+		if (me.min > me.timeUsed or me.min == 0.0){ me.min = me.timeUsed; }
+				
+		me.sum += me.timeUsed;
 		me.count += 1;
 		me.avg = me.sum / me.count;
 		
@@ -65,17 +115,18 @@ var Stats = {
 			me.max = 0.0;
 			me.min = 0.0;
 		}
-		me.sum100 += value;
+		me.sum100 += me.timeUsed;
 		me.count100 += 1;
 			
 			
-		me.nTime.setValue(me.time);
+		me.nTime.setValue(me.timeUsed);
 		me.nMax.setValue(me.max);
 		me.nMin.setValue(me.min);
 		me.nAvg100.setValue(me.avg100);
 		me.nAvg.setValue(me.avg);
 		me.nSum.setValue(me.sum);
 		me.nCount.setValue(me.count);
+		me.nRealHz.setValue(me.realHz);
 		
 	}
 	
@@ -89,40 +140,40 @@ var Stats = {
 extra500.plugElectric();
 
 
-var simulationCall = func(timestamp){
+var simulationCall = func(dt){
 	
 	Part.etd.cls();
-	#extra500.eBox.update(timestamp);
-	extra500.externalPower.update(timestamp);
-	extra500.generator.update(timestamp);
-	extra500.alternator.update(timestamp);
-	extra500.battery.update(timestamp);
+	#extra500.eBox.update(dt);
+	extra500.externalPower.update(dt);
+	extra500.generator.update(dt);
+	extra500.alternator.update(dt);
+	extra500.battery.update(dt);
 	extra500.adjustAdditionalElectricLoads();
 	
-	extra500.fuelSystem.update(timestamp);
-	extra500.flapSystem.update(timestamp);
-	extra500.gearSystem.update(timestamp);
+	extra500.fuelSystem.update(dt);
+	extra500.flapSystem.update(dt);
+	extra500.gearSystem.update(dt);
 	
-	extra500.engine.update(timestamp);
+	extra500.engine.update(dt);
 	
-	extra500.digitalInstrumentPackage.update(timestamp);
-	extra500.engineInstrumentPackage.update(timestamp);
-	extra500.audioPanel.update(timestamp);
-	extra500.keypad.update(timestamp);
-	extra500.autopilot.update(timestamp);
-	extra500.dme.update(timestamp);
-	extra500.fuelFlow.update(timestamp);
-	extra500.turnCoordinator.update(timestamp);
-	extra500.stbyAirspeed.update(timestamp);
-	extra500.stbyAltimeter.update(timestamp);
-	extra500.stbyAttitude.update(timestamp);
+	extra500.digitalInstrumentPackage.update(dt);
+	extra500.engineInstrumentPackage.update(dt);
+	extra500.audioPanel.update(dt);
+	extra500.keypad.update(dt);
+	extra500.autopilot.update(dt);
+	extra500.dme.update(dt);
+	extra500.fuelFlow.update(dt);
+	extra500.turnCoordinator.update(dt);
+	extra500.stbyAirspeed.update(dt);
+	extra500.stbyAltimeter.update(dt);
+	extra500.stbyAttitude.update(dt);
 	
-	extra500.pitotSystem.update(timestamp);
+	extra500.pitotSystem.update(dt);
 	
 	
 	
-	IFD.demo.update(timestamp);
-	IFD.RH.update(timestamp);
+	IFD.demo.update(dt);
+	IFD.RH.update(dt);
 	
 	
 	foreach(var fuse;Part.aListElectricFuseAble){
@@ -140,15 +191,13 @@ var simulationCall = func(timestamp){
 };
 
 
-var animationCall = func(timestamp){
+var animationCall = func(dt){
 	
 	
-	extra500.engineInstrumentPackage.animationUpdate(timestamp);
+	extra500.engineInstrumentPackage.animationUpdate(dt);
 	
 	
 }
-
-
 
 
 #################################
@@ -159,26 +208,7 @@ var animationCall = func(timestamp){
 #################################
 
 
-var simulationTargetHzSec = 0.1;
-var simulationSec = 0.1;
-var simulationRun = 1;
-var simulationStats = Stats.new();
-var simulationTimeStart = 0;
-var simulationTimeUsed = 0;
-var simulationLoop = func(){
-	
-	if (simulationRun == 1){
-		simulationTimeStart = systime();
-		simulationCall(simulationTimeStart);
-		simulationTimeUsed = systime() - simulationTimeStart;
-	}
-	simulationSec = simulationTargetHzSec - simulationTimeUsed;
-	if (simulationSec < 0.04){simulationSec = 0.04};
-	settimer(simulationLoop, simulationSec);
-	
-	simulationStats.add(simulationTimeUsed);
-	
-}
+var simulationLoop = MainLoop.new(props.globals.initNode("extra500/debug/Loop/simulation"),simulationCall,10);
 
 #################################
 #				#
@@ -187,36 +217,15 @@ var simulationLoop = func(){
 #				#
 #################################
 
-
-var animationTargetHzSec = 0.05;
-var animationSec = 0.05;
-var animationRun = 1;
-var animationStats = Stats.new();
-var animationTimeStart = 0;
-var animationTimeUsed = 0;
-var animationLoop = func(){
-	if (animationRun == 1){
-		animationTimeStart = systime();
-		animationCall(animationTimeStart);
-		animationTimeUsed = systime() - animationTimeStart;
-	}
-	animationSec = animationTargetHzSec - animationTimeUsed;
-	if (animationSec < 0.1){animationSec = 0.1};
-	settimer(animationLoop, animationSec);
-	
-	animationStats.add(animationTimeUsed);
-}
-
-
-
+#var animationLoop = MainLoop.new(props.globals.initNode("extra500/debug/Loop/animation"),animationCall,20);
 
 var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 	
 	removelistener(init_listener);
 	init_listener = nil;
 	
-	settimer(simulationLoop,2);
-	#settimer(animationLoop,2);
+	settimer(func{ simulationLoop.start(); },2);
+	#settimer(func{ animationLoop.start(); },2);
 	
 	print("simulation Cycle ... check");
 	

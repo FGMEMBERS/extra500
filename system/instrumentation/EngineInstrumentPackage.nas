@@ -172,7 +172,7 @@ var EngineInstrumentPackage = {
 		me._dimmBacklight();
 		
 	},
-	animationUpdate : func (timestamp){
+	animationUpdate : func(timestamp){
 		
 		if (me.powered == 0){	# no power input
 			
