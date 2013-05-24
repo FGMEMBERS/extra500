@@ -81,7 +81,7 @@ var canvas_demo = {
     
     return m;
   },
-  update : func(timestamp)
+  simulationUpdate : func(now,dt)
   {
 		
 		
@@ -146,7 +146,7 @@ var canvas_svg = {
    # debug.dump(m.bar);
      return m;
   },
-  update : func(timestamp)
+  simulationUpdate : func(now,dt)
   {
 	me.needle.setTranslation(run.cycleTimeUsed*4000,0);
 	me.bar.setScale(run.cycleTimeUsed*10,1);

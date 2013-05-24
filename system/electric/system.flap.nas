@@ -110,7 +110,7 @@ var FlapSystem = {
 
 		return GND;
 	},
-	update : func(timestamp){
+	simulationUpdate : func(now,dt){
 		me.flapPosition = me.nFlapPosition.getValue();
 		
 		

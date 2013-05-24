@@ -63,7 +63,7 @@ var AvidyneIFD = {
 		#debug.dump(m.CompassRose.getBoundingBox());
 		return m;
 	},
-	update : func(){
+	simulationUpdate : func(now,dt){
 		me.speed += 1;
 		if (me.speed > 200){
 			me.speed = 0;

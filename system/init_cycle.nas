@@ -67,7 +67,7 @@ var MainLoop = {
 			me.timeStart = systime();
 			me.timeDelta = me.timeStart - me.timeLast;
 			
-			me._callback(me.timeStart);
+			me._callback(me.timeStart,me.timeDelta);
 			
 			me.timeUsed = systime() - me.timeStart;
 		
@@ -81,6 +81,9 @@ var MainLoop = {
 			me.timeLast = me.timeStart;
 			me._calcStats();
 		
+	},
+	setHz : func(hz){
+		me.targetHzSec 	= 1/hz;
 	},
 	start : func(){
 		#print ("MainLoop.start() ... ");
@@ -140,40 +143,40 @@ var MainLoop = {
 extra500.plugElectric();
 
 
-var simulationCall = func(dt){
+var simulationCall = func(now,dt){
 	
 	Part.etd.cls();
-	#extra500.eBox.update(dt);
-	extra500.externalPower.update(dt);
-	extra500.generator.update(dt);
-	extra500.alternator.update(dt);
-	extra500.battery.update(dt);
-	extra500.adjustAdditionalElectricLoads();
+	#extra500.eBox.simulationUpdate(now,dt);
+	extra500.externalPower.simulationUpdate(now,dt);
+	extra500.generator.simulationUpdate(now,dt);
+	extra500.alternator.simulationUpdate(now,dt);
+	extra500.battery.simulationUpdate(now,dt);
+	extra500.adjustAdditionalElectricLoads(now,dt);
 	
-	extra500.fuelSystem.update(dt);
-	extra500.flapSystem.update(dt);
-	extra500.gearSystem.update(dt);
+	extra500.fuelSystem.simulationUpdate(now,dt);
+	extra500.flapSystem.simulationUpdate(now,dt);
+	extra500.gearSystem.simulationUpdate(now,dt);
 	
-	extra500.engine.update(dt);
+	extra500.engine.simulationUpdate(now,dt);
 	
-	extra500.digitalInstrumentPackage.update(dt);
-	extra500.engineInstrumentPackage.update(dt);
-	extra500.audioPanel.update(dt);
-	extra500.keypad.update(dt);
-	extra500.autopilot.update(dt);
-	extra500.dme.update(dt);
-	extra500.fuelFlow.update(dt);
-	extra500.turnCoordinator.update(dt);
-	extra500.stbyAirspeed.update(dt);
-	extra500.stbyAltimeter.update(dt);
-	extra500.stbyAttitude.update(dt);
+	extra500.digitalInstrumentPackage.simulationUpdate(now,dt);
+	extra500.engineInstrumentPackage.simulationUpdate(now,dt);
+	extra500.audioPanel.simulationUpdate(now,dt);
+	extra500.keypad.simulationUpdate(now,dt);
+	extra500.autopilot.simulationUpdate(now,dt);
+	extra500.dme.simulationUpdate(now,dt);
+	extra500.fuelFlow.simulationUpdate(now,dt);
+	extra500.turnCoordinator.simulationUpdate(now,dt);
+	extra500.stbyAirspeed.simulationUpdate(now,dt);
+	extra500.stbyAltimeter.simulationUpdate(now,dt);
+	extra500.stbyAttitude.simulationUpdate(now,dt);
 	
-	extra500.pitotSystem.update(dt);
+	extra500.pitotSystem.simulationUpdate(now,dt);
 	
 	
 	
-	IFD.demo.update(dt);
-	IFD.RH.update(dt);
+	IFD.demo.simulationUpdate(now,dt);
+	IFD.RH.simulationUpdate(now,dt);
 	
 	
 	foreach(var fuse;Part.aListElectricFuseAble){
@@ -191,10 +194,10 @@ var simulationCall = func(dt){
 };
 
 
-var animationCall = func(dt){
+var animationCall = func(now,dt){
 	
 	
-	extra500.engineInstrumentPackage.animationUpdate(dt);
+	extra500.engineInstrumentPackage.animationUpdate(now,dt);
 	
 	
 }

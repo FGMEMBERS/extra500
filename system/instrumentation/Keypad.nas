@@ -114,7 +114,7 @@ var Keypad = {
 		me.dimmingVolt = 0.0;
 	},
 	# Main Simulation loop  ~ 10Hz
-	update : func(timestamp){
+	simulationUpdate : func(now,dt){
 		
 		me._dimmBacklight();
 		

@@ -117,6 +117,7 @@ var Electron ={
 		m.resistor	= 0.0;
 		m.ampere	= 0.0;
 		m.timestamp	= 0.0;
+		m.dt		= 0.0;
 		return m;
 	},
 	copyConstructor : func (){
@@ -125,6 +126,7 @@ var Electron ={
 		electron.resistor	= me.resistor;
 		electron.ampere		= me.ampere;
 		electron.timestamp	= me.timestamp;
+		electron.dt		= me.dt;
 		return electron;
 	},
 	copy : func(electron){
@@ -132,6 +134,7 @@ var Electron ={
 		me.resistor	= electron.resistor;
 		me.ampere	= electron.ampere;
 		me.timestamp	= electron.timestamp;
+		me.dt		= electron.dt;
 		
 	},
 	paste : func(electron){
@@ -139,20 +142,24 @@ var Electron ={
 		electron.resistor	= me.resistor;
 		electron.ampere		= me.ampere;
 		electron.timestamp	= me.timestamp;
+		electron.dt		= me.dt;
+		
 	},
 	zero : func(){
 		me.volt		= 0.0;
 		me.resistor	= 0.0;
-		me.ampere	= 0.0
+		me.ampere	= 0.0;
 	},
-	set : func(volt,resistor,ampere,timestamp){
+	set : func(volt,resistor,ampere,timestamp,dt){
 		me.volt		= volt;
 		me.resistor	= resistor;
 		me.ampere	= ampere;
 		me.timestamp	= timestamp;
+		me.dt		= dt;
+		
 	},
 	getText : func(){
-		return sprintf("%0.4fV %0.4fR %0.4fA %f",me.volt,me.resistor,me.ampere,me.timestamp);
+		return sprintf("%0.4fV %0.4fR %0.4fA %f %f",me.volt,me.resistor,me.ampere,me.timestamp,me.dt);
 	}
 };
 
@@ -411,7 +418,7 @@ var ElectricBus = {
 				me.electron.copy(electron);
 								
 				foreach(var i;me.index) {
-					me.electronTmp.set(me.electron.volt,me.electron.resistor,0.0,me.electron.timestamp);
+					me.electronTmp.set(me.electron.volt,me.electron.resistor,0.0,me.electron.timestamp,me.electron.dt);
 					if (i != name){
 						if ( me.connectors[i].applyVoltage(me.electronTmp) ){
 							GND = 1;
@@ -513,7 +520,7 @@ var ElectricBattery = {
 		m.nCapacityAs = nRoot.initNode("capacityAs",m.capacityAs,"DOUBLE");
 		m.nUsedAs = nRoot.initNode("usedAs",m.usedAs,"DOUBLE");
 		m.nLoadLevel = nRoot.initNode("loadLevel",m.loadLevel,"DOUBLE");
-		m.simTime = systime();
+		
 		m.simTimeDelta = 0.0;
 		
 		m.electron = Electron.new();
@@ -531,13 +538,12 @@ var ElectricBattery = {
 		var GND = 0;
 		
 		if (electron != nil){
-			me._setSimTimeDelta(electron.timestamp);
 			if (name == "+"){
 				etd.print("Battery loading ...");
 				# ### TODO : real loading
 				#electron.ampere = 48.0 * (1-me.loadLevel); 
 				electron.ampere = 48.0 * (1 - ((me.volt - me.voltMin) / (electron.volt - me.voltMin)) ); 
-				me.setAmpereUsage(electron.ampere);
+				me.setAmpereUsage(electron.ampere,electron.dt);
 				GND = 1;
 			}
 			
@@ -546,20 +552,13 @@ var ElectricBattery = {
 		etd.out("Battery",me.name,name,electron);
 		return GND;
 	},
-	_setSimTimeDelta : func(timestamp){
-		if (me.electron.timestamp != timestamp){
-			var simNow = systime();
-			me.simTimeDelta = simNow - me.simTime;
-			me.simTime = simNow;
-		}
-	},
-	setAmpereUsage : func(ampere){
+	setAmpereUsage : func(ampere,dt){
 		#global.fnAnnounce("debug",""~me.name~"\t\t ElectricBattery.setAmpereOutput("~ampere~"A) ... ");
 				
 		#ampere += me.ampere;
 		me.setAmpere(ampere);
 			
-		var usedAs = ampere * me.simTimeDelta;
+		var usedAs = ampere * dt;
 		
 		me.usedAs += usedAs;
 				
@@ -569,27 +568,29 @@ var ElectricBattery = {
 		me.nLoadLevel.setValue(me.loadLevel);
 		
 	},
-	update : func(timestamp){
+	simulationUpdate : func(now,dt){
 		
 		etd.print("--- Battery.update() ...          ---");
 		etd.print("-------------------------------------");
 		#etd.echo("Battery.update() ...");
 		
-		#me.electron.volt = 24.0; # ### TODO real voltage based on capacity
+		#me.electron.volt = 24.0; 
+		# ### TODO real voltage based on capacity
 		me.volt = -(1/me.loadLevel) + 25.3;
 		me.setVolt(me.volt);
 		
 		me.electron.volt = me.volt;
 		me.electron.resistor = 0.0;
 		me.electron.ampere = 0.0;
-		me.electron.timestamp = timestamp;
+		me.electron.timestamp = now;
+		me.electron.dt = dt;
+		
 		
 		
 		var GND = 0;
 		GND = me.Plus.applyVoltage(me.electron);
 		if (GND > 0){
-			me._setSimTimeDelta(timestamp);
-			me.setAmpereUsage(-me.electron.ampere);
+			me.setAmpereUsage(-me.electron.ampere,dt);
 		}
 		etd.print("-------------------------------------");
 	},
@@ -637,12 +638,12 @@ var ElectricExternalPower = {
 	setAmpereOutput : func(ampere){
 		#global.fnAnnounce("debug",""~me.name~"\t\t ElectricBattery.setAmpereOutput("~ampere~"A) ... ");
 		
-		var simNow = systime();
+		# TODO : calc the load to reduce voltage
 
 		me.setAmpere(ampere);
 		
 	},
-	update : func(timestamp){
+	simulationUpdate : func(now,dt){
 		
 		etd.print("--- ExternalPower.update() ...    ---");
 		etd.print("-------------------------------------");
@@ -655,7 +656,8 @@ var ElectricExternalPower = {
 			me.electron.volt = 28.5;
 			me.electron.resistor = 0.0;
 			me.electron.ampere = 0.0;
-			me.electron.timestamp = timestamp;
+			me.electron.timestamp = now;
+			me.electron.dt = dt;
 			
 			var GND = 0;
 			GND = me.Plus.applyVoltage(me.electron);
@@ -755,7 +757,7 @@ var ElectricGenerator = {
 			me.electron.volt = 28.0;
 		}
 	},
-	update : func(timestamp){
+	simulationUpdate : func(now,dt){
 		
 		etd.print("--- Generator.update() ...        ---");
 		
@@ -776,7 +778,8 @@ var ElectricGenerator = {
 			#me.electron.volt = 28.0;
 			me.electron.resistor = 0.0;
 			me.electron.ampere = 0.0;
-			me.electron.timestamp = timestamp;
+			me.electron.timestamp = now;
+			me.electron.dt = dt;
 			
 			var GND = 0;
 			GND = me.InterPole.applyVoltage(me.electron);
@@ -790,7 +793,7 @@ var ElectricGenerator = {
 			me.electron.volt = 0.1;
 			me.electron.resistor = 0.0;
 			me.electron.ampere = 0.0;
-			me.electron.timestamp = timestamp;
+			me.electron.dt = dt;
 			GND = me.InterPole.applyVoltage(me.electron);
 			etd.print("--- Engine not running            ---");
 		}
@@ -950,7 +953,7 @@ var ElectricAlternator = {
 		etd.out("Alternator",me.name,name,electron);
 		return GND;
 	},
-	update : func(timestamp){
+	simulationUpdate : func(now,dt){
 		
 		etd.print("--- Alternator.update() ...        ---");
 		
@@ -963,7 +966,8 @@ var ElectricAlternator = {
 				
 				etd.print("-------------------------------------");
 				
-				me.electron.timestamp = timestamp;
+				me.electron.timestamp = now;
+				me.electron.dt = dt;
 				me.electron.resistor = 0.0;
 				me.electron.ampere = 0.0;
 				var GND = 0;

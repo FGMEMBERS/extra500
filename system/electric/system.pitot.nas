@@ -56,7 +56,7 @@ var PitotSystem = {
 	},
 
 	# Main Simulation loop  ~ 10Hz
-	update : func(timestamp){
+	simulationUpdate : func(now,dt){
 		me.StallWarn._setValue(me.nStallWarner.getValue());
 	}
 

@@ -142,7 +142,7 @@ var Engine = {
 	# called from main simulation cycle in ~ 10Hz	
 	# all work that the engine has to do starts here
 	#################################################
-	update : func(timestamp){
+	simulationUpdate : func(now,dt){
 
 # setting propeller feathering property, if n1 < 55%, feathered
 		if(me.nN1.getValue() > 55.0){

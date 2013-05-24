@@ -167,12 +167,12 @@ var EngineInstrumentPackage = {
 		me.dimmingVolt = 0.0;
 	},
 	# Main Simulation loop  ~ 10Hz
-	update : func(timestamp){
+	simulationUpdate : func(now,dt){
 		me.powered = me.state;
 		me._dimmBacklight();
 		
 	},
-	animationUpdate : func(timestamp){
+	animationUpdate : func(now,dt){
 		
 		if (me.powered == 0){	# no power input
 			

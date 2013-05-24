@@ -270,7 +270,7 @@ var FuelSystem = {
 		
 		me.levelEngine += flow;
 	},
-	update : func(timestamp){
+	simulationUpdate : func(now,dt){
 		me.levelLeftAuxiliary = me.nLevelLeftAuxiliary.getValue();
 		me.levelLeftMain = me.nLevelLeftMain.getValue();
 		me.levelLeftCollector = me.nLevelLeftCollector.getValue();

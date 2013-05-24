@@ -264,9 +264,9 @@ alternator.electricConfig(24.0,26.0);
 var battery = Part.ElectricBattery.new(props.globals.initNode("extra500/electric/Battery"),"Battery");
 battery.electricConfig(15.3,24.3);
 
-var adjustAdditionalElectricLoads = func(){
+var adjustAdditionalElectricLoads = func(now,dt){
 	if (alternator.surplusAmpere < 0){
-		battery.setAmpereUsage(alternator.surplusAmpere);
+		battery.setAmpereUsage(alternator.surplusAmpere,dt);
 		eBox.batteryShunt.indicatedAmpere += alternator.surplusAmpere;
 		eBox.alternatorShunt.indicatedAmpere -= alternator.surplusAmpere;
 	}
