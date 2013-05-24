@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             21.05.13
+      Date:             24.05.13
 
 -->
 
@@ -332,7 +332,6 @@
 		<z>0</z>
 	</axis>
 </animation>
-
 <animation>
   <type>rotate</type>
 	<object-name>Wind.Pfeil</object-name>
@@ -362,8 +361,6 @@
 		<z2-m>-0.0384</z2-m>
 	</axis>
 </animation>
-
-
 
 <!-- Temperature -->
 <animation>
@@ -456,6 +453,58 @@
             <factor-prop>extra500/panel/Master/Dimming/Instrument/state</factor-prop>
         </emission>
 </animation>
+
+<!--BaroKnob-->
+    <animation>
+        <type>pick</type>
+        <object-name>BaroKnob</object-name>
+        <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
+            <binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("KLICKEN");
+				]]>
+			</script>
+		</binding>
+        </action>
+    </animation>
+
+    <animation>
+        <type>pick</type>
+        <object-name>BaroKnob</object-name>
+        <action>
+            <button>3</button>
+            <repeatable>true</repeatable>
+            <interval-sec>0.15</interval-sec>
+            <binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("RechtsDREH");
+				]]>
+			</script>
+		</binding>
+        </action>
+    </animation>
+
+    <animation>
+        <type>pick</type>
+        <object-name>BaroKnob</object-name>
+        <action>
+            <button>4</button>
+            <binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("LinksDREH");
+				]]>
+			</script>
+		</binding>
+        </action>
+    </animation>
 
 </PropertyList>
 
