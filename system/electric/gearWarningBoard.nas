@@ -34,8 +34,8 @@ var GearWarningBoard = {
 		m.capacitorLowVolt = Part.Capacitor.new(3);
 		
 		m.GND = Part.ElectricConnector.new("GND");
-		m.DoorClosed = Part.ElectricConnector.new("DoorClosed");
-		m.LowVoltOut = Part.ElectricConnector.new("LowVoltOut");
+		m.DoorClosed = Part.ElectricConnector.new("DoorClosed"); #GND
+		m.LowVoltOut = Part.ElectricConnector.new("LowVoltOut"); 
 		
 		m.GND.solder(m);
 		m.DoorClosed.solder(m);
