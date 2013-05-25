@@ -208,8 +208,8 @@ var MasterPanel = {
 		UI.register("Engine Motoring normal", 	func{extra500.masterPanel.EngineMotoring.setValue(-1); } 	);
 		
 		UI.register("Engine Start <", 		func{extra500.masterPanel.EngineStart.left(); } 		);
-		UI.register("Engine Start >", 		func{extra500.masterPanel.EngineStart.right(); } 		);
-		UI.register("Engine Start on", 		func{extra500.masterPanel.EngineStart.setValue(1); } 		);
+		UI.register("Engine Start >", 		func{extra500.masterPanel.EngineStart.right(); if (extra500.masterPanel.EngineStart.state == 1){settimer(func{UI.click("Engine Start ign")}, run.simulationLoop.targetHzSec*2);}} 		);
+		UI.register("Engine Start on", 		func{extra500.masterPanel.EngineStart.setValue(1);settimer(func{UI.click("Engine Start ign")}, run.simulationLoop.targetHzSec*2); } 		);
 		UI.register("Engine Start ign", 	func{extra500.masterPanel.EngineStart.setValue(0); } 		);
 		UI.register("Engine Start off", 	func{extra500.masterPanel.EngineStart.setValue(-1); } 		);
 		
