@@ -712,12 +712,9 @@
 			</group>
 			<group>
 				<layout>hbox</layout>
-				<checkbox>
-					<label>Disengage</label>
+				<button>
+					<legend>Disengage</legend>
 					<halign>center</halign>
-					<property>/extra500/instrumentation/autopilot/Disengage/state</property>
-					
-                    
 					<binding>
 						<command>nasal</command>
 						<script>
@@ -726,7 +723,7 @@
 							]]>
 						</script>
 					</binding>
-				</checkbox>
+				</button>
 				<checkbox>
 					<label>CWS</label>
 					<halign>center</halign>

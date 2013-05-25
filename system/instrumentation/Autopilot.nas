@@ -281,10 +281,12 @@ var Autopilot = {
 		
 		if (me.__Disengage == 1){
 			me._APDisengage();
+			me.swtDisengage._setValue(0);
 		}
 		
 		if (me.__TrimInterrupt == 1){
 			me._APDisengage();
+			
 		}
 		
 # Setting Modes from elcetric switches
