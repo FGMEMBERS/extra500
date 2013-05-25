@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-05-24
+      Date:             2013-05-25
 -->
 
 <aerodynamics>
@@ -597,16 +597,13 @@
 	</product>
     </function>
 
-
-<!--end of trim part-->
-
     <function name="aero/coefficients/cl_hstab">
        <description>Stabilizer liftcoeff</description>
        <sum>
             <value>0.0</value>            
             <table>
                   <independentVar lookup="row">aircraft/hstab/alpha-deg</independentVar>
-                  <independentVar lookup="column">aircraft/hstab/elevator/elevator-pos-deg</independentVar>
+                  <independentVar lookup="column">fcs/elevator-pos-deg</independentVar>
                   <tableData>
         -33    		-20         -10         0           10          20
   -20   -1.1      -1.1            -1.1        -1.43354511 -0.96981937 -0.75369388
@@ -645,7 +642,7 @@
             <property>aircraft/hstab/cd0</property>           
             <table>
                   <independentVar lookup="row">aircraft/hstab/alpha-deg</independentVar>
-                  <independentVar lookup="column">aircraft/hstab/elevator/elevator-pos-deg</independentVar>
+                  <independentVar lookup="column">fcs/elevator-pos-deg</independentVar>
                   <tableData>
        -33    		-20   	-10   	0     		10    20
  -20   0.31966200 0.27770889 0.22381367 0.12777638 0.05848028 0.03531977

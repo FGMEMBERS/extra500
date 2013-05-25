@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-05-24
+      Date:             2013-05-25
 -->
 
 <autopilot name="STEC55X">
@@ -195,6 +195,15 @@
 			</clipto>
 			<output>/autopilot/vs-channel/cmd-ap-elev-pos-norm</output>
 		</actuator>
+
+<!--this makes the elevator pilot input to move along, so when the vs mode is disconnected, the elevator is in the correct position-->
+		<switch name="vson">
+			<default value="/controls/flight/elevator"/>
+			<test value="/autopilot/vs-channel/cmd-ap-elev-pos-norm">
+				/autopilot/mode/vs eq 1
+			</test>
+			<output>/controls/flight/elevator</output>
+		</switch>
 
 	</channel>
 

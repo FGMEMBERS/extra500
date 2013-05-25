@@ -20,80 +20,12 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-05-24
+      Date:             2013-05-25
 -->
 
 <flight_control name="FCS: extra500">
 
-	 <channel name="Pitch">		
-
-			<fcs_function name="elevator-cmd-tot-nc">
-				<function>
-				<sum>
-					<product>
-						<abs>
-                               				<sum>
-								<product>
-                                  					<property>/autopilot/mode/vs</property>
-								</product>
-                                  				<value>-1</value> 
-                              				</sum>
-                         			</abs>
-						<sum>
-							<property>fcs/elevator-cmd-norm</property>
-						</sum>
-					</product>
-					<product>
-                                  		<property>/autopilot/mode/vs</property>
-                              			<property>/autopilot/vs-channel/cmd-ap-elev-pos-norm</property>	
-					</product>
-				</sum>
-				</function>
-			</fcs_function>
-
-			 <summer name="elevator-cmd-tot">
-                		<input>fcs/elevator-cmd-tot-nc</input>
-                		<clipto>
-                    			<min>-1</min>
-                    			<max>1</max>
-               			 </clipto>
-            		</summer>	
-
-
-     	 	<aerosurface_scale name="Elevator Control">
-	      		<input>fcs/elevator-cmd-tot</input>
-	      		<range>
-                  		<min>-0.5759 </min>
-                  		<max> 0.3141 </max>
-	      		</range>
-	      		<output>fcs/elevator-pos-rad</output>
-      		</aerosurface_scale>
-
-   		<aerosurface_scale name="elevator normalization">
-      			<input>fcs/elevator-pos-rad</input>
-      			<domain>
-        			<min> -0.5759 </min>
-        			<max>  0.3141 </max>
-      			</domain>
-      			<range>
-        			<min> -1 </min>
-        			<max>  1 </max>
-      			</range>
-      			<output>fcs/elevator-pos-norm</output>
-   		</aerosurface_scale>
-
-  	</channel>
-
-  	<channel name="Pitch trim">
-
-      		<aerosurface_scale name="Pitch trim Control">
-	      		<input>fcs/pitch-trim-cmd-norm</input>
-	      		<range>
-                  		<min> -30 </min>
-                  		<max>  20 </max>
-	      		</range>
-	      		<output>fcs/pitch-trim-pos-deg</output>
-      		</aerosurface_scale>
+	 <channel name="Pitch">	
 
 	<fcs_function name="aircraft/hstab/elevator/ch_de-prad">
     	<function >
@@ -235,34 +167,123 @@
       			</clipto>
     		</summer> 
 
-	<fcs_function name="aircraft/hstab/elevator/elevator-pos-rad">
-    	<function>
-            <sum>
-                   <product>                              
-                           <property>state/controls-fixed</property> 
-                           <property>fcs/elevator-pos-rad</property>
-                  </product>
-                  <product>
-                         <abs>
-                               <sum>
-                                  <property>state/controls-fixed</property>
-                                  <value>-1</value> 
-                              </sum>
-                         </abs>
-                         <property>aircraft/hstab/elevator/d_e_free-clipped-rad</property>
-                  </product>
-            </sum>
-    	</function>
-	</fcs_function>
+   		<aerosurface_scale name="d_e_free-clipped normalization">
+      			<input>aircraft/hstab/elevator/d_e_free-clipped-rad</input>
+      			<domain>
+        			<min> -0.5759 </min>
+        			<max>  0.3141 </max>
+      			</domain>
+      			<range>
+        			<min> -1 </min>
+        			<max>  1 </max>
+      			</range>
+      			<output>aircraft/hstab/elevator/d_e_free-norm</output>
+   		</aerosurface_scale>	
 
-	<fcs_function name="aircraft/hstab/elevator/elevator-pos-deg">
-    	<function>
-      		<product>
-            		<property>aircraft/hstab/elevator/elevator-pos-rad</property>      
-            		<property>/extra500/const/RAD2DEG</property>
-      		</product>
-    	</function>
-	</fcs_function>
+<!--this makes the elevator pilot input to move along, so when the pitch trim controls the elevator position, the elevator is in the correct position-->
+		<switch name="fixedoff">
+			<default value="/controls/flight/elevator"/>
+			<test logic="AND" value="aircraft/hstab/elevator/d_e_free-norm">
+				state/controls-fixed eq 0
+				/autopilot/mode/alt eq 0
+				/autopilot/mode/vs eq 0
+			</test>
+			<output>/controls/flight/elevator</output>
+		</switch>
+
+			<fcs_function name="elevator-cmd-tot-nc">
+				<function>
+				<sum>
+					<product>  					<!--controls fixed (direct pilot control)-->
+	                          		<abs>
+                               				<sum>
+                                				<property>/autopilot/mode/alt</property>
+	                          				<value>-1</value> 
+                              				</sum>
+						</abs>
+	                          		<abs>
+                               				<sum>
+                                				<property>/autopilot/mode/vs</property>
+	                          				<value>-1</value> 
+                              				</sum>
+						</abs>					
+	                          		<property>state/controls-fixed</property>
+	                       			<sum>
+							<property>fcs/elevator-cmd-norm</property>
+						</sum>
+					</product>
+					<product>  					<!--controls NOT fixed (trim controls aileron position)-->
+	                          		<abs>
+                               				<sum>
+                                				<property>/autopilot/mode/alt</property>
+	                          				<value>-1</value> 
+                              				</sum>
+						</abs>
+	                          		<abs>
+                               				<sum>
+                                				<property>/autopilot/mode/vs</property>
+	                          				<value>-1</value> 
+                              				</sum>
+						</abs>	
+	                          		<abs>
+                               				<sum>
+                                				<property>state/controls-fixed</property>
+	                          				<value>-1</value> 
+                              				</sum>
+						</abs>
+                              			<sum>
+							<property>aircraft/hstab/elevator/d_e_free-norm</property>
+						</sum>
+					</product>
+					<product>					<!--autopilot VS mode in control -->
+                                  		<property>/autopilot/mode/vs</property>
+                              			<property>/autopilot/vs-channel/cmd-ap-elev-pos-norm</property>	
+					</product>
+					<product>					<!--autopilot ALT mode in control NOTE: VS goes over ALT; VS is shut off in altitude mode when reaching target altitude -->
+                                  		<property>/autopilot/mode/alt</property>
+	                          		<abs>
+                               				<sum>
+                                				<property>/autopilot/mode/vs</property>
+	                          				<value>-1</value> 
+                              				</sum>
+						</abs>
+                              			<property>/autopilot/vs-channel/cmd-ap-elev-pos-norm</property>	
+					</product>
+				</sum>
+				</function>
+			</fcs_function>
+
+
+			 <summer name="elevator-cmd-tot">
+                		<input>fcs/elevator-cmd-tot-nc</input>
+                		<clipto>
+                    			<min>-1</min>
+                    			<max>1</max>
+               			 </clipto>
+            		</summer>	
+
+
+     	 	<aerosurface_scale name="Elevator Control">
+	      		<input>fcs/elevator-cmd-tot</input>
+	      		<range>
+                  		<min>-0.5759 </min>
+                  		<max> 0.3141 </max>
+	      		</range>
+	      		<output>fcs/elevator-pos-rad</output>
+      		</aerosurface_scale>
+
+   		<aerosurface_scale name="elevator normalization">
+      			<input>fcs/elevator-pos-rad</input>
+      			<domain>
+        			<min> -0.5759 </min>
+        			<max>  0.3141 </max>
+      			</domain>
+      			<range>
+        			<min> -1 </min>
+        			<max>  1 </max>
+      			</range>
+      			<output>fcs/elevator-pos-norm</output>
+   		</aerosurface_scale>
 
 	<fcs_function name="aircraft/hstab/elevator/H-de-lbsft">
     	<function>
@@ -274,7 +295,7 @@
             		<property>aircraft/hstab/elevator/S-ft2</property>
             		<property>aircraft/hstab/elevator/c_aero-ft</property>
             		<property>aircraft/hstab/elevator/ch_de-prad</property>
-            		<property>aircraft/hstab/elevator/elevator-pos-rad</property>
+            		<property>fcs/elevator-pos-rad</property>
       		</product>
     	</function>
 	</fcs_function>
@@ -291,6 +312,19 @@
       		</sum>
     	</function>
 	</fcs_function>
+
+  	</channel>
+
+  	<channel name="Pitch trim">
+
+      		<aerosurface_scale name="Pitch trim Control">
+	      		<input>fcs/pitch-trim-cmd-norm</input>
+	      		<range>
+                  		<min> -30 </min>
+                  		<max>  20 </max>
+	      		</range>
+	      		<output>fcs/pitch-trim-pos-deg</output>
+      		</aerosurface_scale>
 
   	</channel> 
 
