@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
-      Date:             21.05.13
+      Last change:      Eric van den Berg
+      Date:             24.05.13
 -->
 <PropertyList>
 
@@ -37,9 +37,6 @@
 		 </key>
 
 		 <key n="114">
-			 <!-- toggle prop beta range WOULD LIKE TO USE r HERE, but is taken below!!!
-				there it is :-)
-			 -->
 			 <name>r</name>
 			 <desc>Toggle prop beta range</desc>
 			 <binding n="0">
@@ -86,15 +83,6 @@
 		 
 		 <!-- keys only for development -->
 
-		 <key n="2">
-			 <!-- toggle engine cutoff-->
-			 <name>Ctrl-b</name>
-			 <desc>Toggle AP on/off</desc>
-			 <binding n="0">
-				 <command>nasal</command>
-				 <script>e1.bitswap("autopilot/mode/state")</script>
-			 </binding>
-		 </key>
 		 <key n="32">
 			 <name>space</name>
 			 <desc>reload-model</desc>

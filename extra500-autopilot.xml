@@ -19,8 +19,8 @@
       Author: Eric van den Berg
       Date: 2013-05-23
 
-      Last change:      -
-      Date:             -
+      Last change:      Eric van den Berg
+      Date:             2013-05-24
 -->
 
 <autopilot name="STEC55X">
@@ -118,6 +118,15 @@
 			</clipto>
 			<output>/autopilot/hdg-channel/cmd-ap-ail-pos-norm</output>
 		</actuator>
+
+<!--this makes the aileron pilot input to move along, so when the hdg mode is disconnected, the ailerons are in the correct position-->
+		<switch name="headingon">
+			<default value="/controls/flight/aileron"/>
+			<test value="/autopilot/hdg-channel/cmd-ap-ail-pos-norm">
+				/autopilot/mode/heading eq 1
+			</test>
+			<output>/controls/flight/aileron</output>
+		</switch>
 
 
 	</channel>

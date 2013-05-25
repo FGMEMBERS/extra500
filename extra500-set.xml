@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             23.05.13
+      Date:             24.05.13
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -389,7 +389,6 @@ JSBSim Extra Aircraft - Extra 500.
 		<vertical-speed-fpm type="double">1000</vertical-speed-fpm>
 	</settings>
 	<mode>
-		<!--state type="int">0</state-->
 		<diseng type="int">0</diseng>
 		<fd type="int">0</fd>
 		<heading type="int">0</heading>
@@ -767,6 +766,7 @@ JSBSim Extra Aircraft - Extra 500.
                               	<c_aero-ft>2.5796</c_aero-ft>
                               	<max-defl-rad>0.3141</max-defl-rad>
                               	<min-defl-rad>-0.5759</min-defl-rad>
+				<d_e_free-clipped-rad>0.0</d_e_free-clipped-rad>	<!--dummy value -->
                               	<elevator-pos-rad>0</elevator-pos-rad>    		<!--dummy value -->
                               	<elevator-pos-deg>0</elevator-pos-deg>    		<!--dummy value -->
 				<d_e_free-rad>0</d_e_free-rad>				<!--dummy value -->
@@ -776,6 +776,7 @@ JSBSim Extra Aircraft - Extra 500.
                                     	<coeff-norm>4.5</coeff-norm>        <!--this is multiplied with normalized trim position to get hinge moment of elevator -->
                               	</trim>
                         </elevator>
+			<alpha-deg>0.0</alpha-deg>					<!--dummy value -->	
                   </hstab>
 		  <vstab>
                         <S-ft2>30.236</S-ft2>
@@ -802,6 +803,11 @@ JSBSim Extra Aircraft - Extra 500.
 			<fuel-pump2 type="bool">0</fuel-pump2>					<!--dummy value -->
 		</fuel>
             	</aircraft>
+		<velocities>
+			<hstab>
+				<v-fps>0.0</v-fps>						<!--dummy value -->
+			</hstab>
+		</velocities>
       </jsbsim>
  </fdm>
 

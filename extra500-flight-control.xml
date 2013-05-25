@@ -19,8 +19,8 @@
       Author: Eric van den Berg
       Date: 2013-05-23
 
-      Last change:      -
-      Date:             -
+      Last change:      Eric van den Berg
+      Date:             2013-05-24
 -->
 
 <flight_control name="FCS: extra500">
@@ -82,19 +82,6 @@
       			<output>fcs/elevator-pos-norm</output>
    		</aerosurface_scale>
 
-    		<summer name="aircraft/hstab/elevator/d_e_free-clipped-rad">
-      		<description>stick-free elevator deflection rad</description>
-      			<input>aircraft/hstab/elevator/d_e_free-rad</input>
-      			<clipto>
-            			<min>
-                  			<property>aircraft/hstab/elevator/min-defl-rad</property>
-            			</min>
-            			<max>
-                  			<property>aircraft/hstab/elevator/max-defl-rad</property>            
-            			</max>
-      			</clipto>
-    		</summer>  
-
   	</channel>
 
   	<channel name="Pitch trim">
@@ -107,6 +94,203 @@
 	      		</range>
 	      		<output>fcs/pitch-trim-pos-deg</output>
       		</aerosurface_scale>
+
+	<fcs_function name="aircraft/hstab/elevator/ch_de-prad">
+    	<function >
+      	<description>moment coeff around elevator hinge line due to its deflection</description>
+            	<sum>            
+                  	<property>aircraft/hstab/elevator/Ch_de</property>
+		  	<product>
+                        	<property>aircraft/hstab/elevator/Ch_de2</property>
+				<property>aircraft/hstab/elevator/elevator-pos-rad</property>
+				<property>aircraft/hstab/elevator/elevator-pos-rad</property>
+                  	</product>
+            	</sum>
+    	</function>
+	</fcs_function>
+
+	<fcs_function name="aircraft/hstab/elevator/ch_alpha-prad">
+    	<function>
+      	<description>moment coeff around elevator hinge line due to local angle of attack</description>
+            <sum>            
+                  <property>aircraft/hstab/elevator/Ch_alpha</property>
+                  <product>
+                        <property>aircraft/hstab/elevator/Ch_alpha2</property>
+                        <abs>
+				<product>
+                              		<property>/extra500/const/DEG2RAD</property>
+                  			<property>aircraft/hstab/alpha-deg</property>
+				</product>
+                        </abs>
+                  </product>
+            </sum>
+    	</function>
+	</fcs_function>
+
+	<fcs_function name="aircraft/hstab/elevator/H-nz-lbsft">
+    	<function>
+      	<description>static moment coeff around elevator hinge line times nz</description>
+            <product>
+                       <property>aircraft/hstab/elevator/H-static-lbsft</property>
+                       <property>accelerations/Nz</property>  <!-- ensuring stick force per g-->
+            </product>
+    	</function>
+	</fcs_function>
+    
+	<fcs_function name="aircraft/hstab/elevator/H-ds-lbsft">
+    	<function>
+      	<description>moment coeff around elevator hinge line due to down spring</description>
+      		<sum>
+            	<property>aircraft/hstab/elevator/downspring0-lbsft</property>
+            	<product>
+                       	<value>-1</value>
+                       	<property>aircraft/hstab/elevator/downspring-lbsftprad</property>
+                       	<property>aircraft/hstab/elevator/elevator-pos-rad</property>  
+            	</product>
+      		</sum>
+    	</function>
+	</fcs_function>
+
+	<fcs_function name="aircraft/hstab/elevator/H-bw-lbsft">
+    	<function>
+      	<description>moment coeff around elevator hinge line due to bobweight</description>
+      		<product>
+            		<property>aircraft/hstab/elevator/bobweight-lbsft</property>
+            		<property>accelerations/Nz</property>
+      		</product>
+    	</function>
+	</fcs_function>
+
+	<fcs_function name="aircraft/hstab/elevator/H-alpha-lbsft">
+    	<function>
+      		<product>
+            		<value>0.5</value>
+            		<property>atmosphere/rho-slugs_ft3</property>
+            		<property>velocities/hstab/v-fps</property>
+            		<property>velocities/hstab/v-fps</property>
+            		<property>aircraft/hstab/elevator/S-ft2</property>
+            		<property>aircraft/hstab/elevator/c_aero-ft</property>
+            		<property>aircraft/hstab/elevator/ch_alpha-prad</property>
+            		<product>
+                  		<property>/extra500/const/DEG2RAD</property>
+                  		<property>aircraft/hstab/alpha-deg</property>
+            		</product>
+      		</product>
+    	</function>
+	</fcs_function>
+
+	<fcs_function name="aircraft/hstab/elevator/H-trim-lbsft">
+    	<function>
+      		<product>
+            		<property>aircraft/hstab/elevator/trim/coeff-norm</property>
+            		<property>fcs/pitch-trim-cmd-norm</property>
+            		<value>0.5</value>
+            		<property>atmosphere/rho-slugs_ft3</property>
+            		<property>velocities/hstab/v-fps</property>
+            		<property>velocities/hstab/v-fps</property>
+            		<property>aircraft/hstab/elevator/trim/S-ft2</property>
+            		<property>aircraft/hstab/elevator/trim/c_aero-ft</property>
+      		</product>
+    	</function>
+	</fcs_function>
+
+	<fcs_function name="aircraft/hstab/elevator/d_e_free-rad">
+    	<function>
+      	<description>stick-free elevator deflection rad</description>
+      		<product>
+            		<value>-1</value>
+            		<pow>
+                  		<product>
+                        		<value>0.5</value>
+                        		<property>atmosphere/rho-slugs_ft3</property>
+                        		<property>velocities/hstab/v-fps</property>
+                        		<property>velocities/hstab/v-fps</property>
+                        		<property>aircraft/hstab/elevator/S-ft2</property>
+                        		<property>aircraft/hstab/elevator/c_aero-ft</property>
+                        		<property>aircraft/hstab/elevator/ch_de-prad</property>
+                  		</product>
+                  	<value>-1</value>   
+            		</pow>
+            		<sum>
+                  		<property>aircraft/hstab/elevator/H-nz-lbsft</property>
+                  		<property>aircraft/hstab/elevator/H-ds-lbsft</property>
+                  		<property>aircraft/hstab/elevator/H-bw-lbsft</property>
+                  		<property>aircraft/hstab/elevator/H-alpha-lbsft</property>
+                  		<property>aircraft/hstab/elevator/H-trim-lbsft</property>                 
+            		</sum>
+      		</product>
+    	</function>
+	</fcs_function>
+
+    		<summer name="aircraft/hstab/elevator/d_e_free-clipped-rad">
+      		<description>stick-free elevator deflection rad</description>
+      			<input>aircraft/hstab/elevator/d_e_free-rad</input>
+      			<clipto>
+            			<min>
+                  			<property>aircraft/hstab/elevator/min-defl-rad</property>
+            			</min>
+            			<max>
+                  			<property>aircraft/hstab/elevator/max-defl-rad</property>            
+            			</max>
+      			</clipto>
+    		</summer> 
+
+	<fcs_function name="aircraft/hstab/elevator/elevator-pos-rad">
+    	<function>
+            <sum>
+                   <product>                              
+                           <property>state/controls-fixed</property> 
+                           <property>fcs/elevator-pos-rad</property>
+                  </product>
+                  <product>
+                         <abs>
+                               <sum>
+                                  <property>state/controls-fixed</property>
+                                  <value>-1</value> 
+                              </sum>
+                         </abs>
+                         <property>aircraft/hstab/elevator/d_e_free-clipped-rad</property>
+                  </product>
+            </sum>
+    	</function>
+	</fcs_function>
+
+	<fcs_function name="aircraft/hstab/elevator/elevator-pos-deg">
+    	<function>
+      		<product>
+            		<property>aircraft/hstab/elevator/elevator-pos-rad</property>      
+            		<property>/extra500/const/RAD2DEG</property>
+      		</product>
+    	</function>
+	</fcs_function>
+
+	<fcs_function name="aircraft/hstab/elevator/H-de-lbsft">
+    	<function>
+      		<product>
+            		<value>0.5</value>
+            		<property>atmosphere/rho-slugs_ft3</property>
+            		<property>velocities/hstab/v-fps</property>
+            		<property>velocities/hstab/v-fps</property>
+            		<property>aircraft/hstab/elevator/S-ft2</property>
+            		<property>aircraft/hstab/elevator/c_aero-ft</property>
+            		<property>aircraft/hstab/elevator/ch_de-prad</property>
+            		<property>aircraft/hstab/elevator/elevator-pos-rad</property>
+      		</product>
+    	</function>
+	</fcs_function>
+
+	<fcs_function name="aircraft/hstab/elevator/H-total-lbsft">
+    	<function>
+      		<sum>
+            		<property>aircraft/hstab/elevator/H-nz-lbsft</property>
+            		<property>aircraft/hstab/elevator/H-ds-lbsft</property>
+            		<property>aircraft/hstab/elevator/H-bw-lbsft</property>
+            		<property>aircraft/hstab/elevator/H-alpha-lbsft</property>
+            		<property>aircraft/hstab/elevator/H-trim-lbsft</property>
+            		<property>aircraft/hstab/elevator/H-de-lbsft</property>
+      		</sum>
+    	</function>
+	</fcs_function>
 
   	</channel> 
 
