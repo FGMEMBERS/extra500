@@ -418,6 +418,7 @@ var plugGear =func(){
 	gearSystem.MainGearSwitch.Com1.plug(gearSystem.CtrlBus.con());
 	gearSystem.HydrBus.plug(circuitBreakerPanel.Hydraulic.Out);
 	gearSystem.Annunciator.plug(annunciatorPanel.dimTestRelais.P332);
+	gearSystem.Warning.plug(annunciatorPanel.dimTestRelais.P492);
 };
 
 var plugAnnuciator = func(){
@@ -473,11 +474,11 @@ var plugAlternator = func(){
 	alternator.Plus.plug(eBox.alternatorRelais.P11);
 }
 
-var plugPcBoard = func(){
-	pcBoard.plugElectric();
-	pcBoard.GND.plug(eBox.GND);
-	pcBoard.LowVoltSense.plug(circuitBreakerPanel.LowVolt.Out);
-	pcBoard.LowVoltOut.plug(annunciatorPanel.dimTestRelais.P222);
+var plugLowVoltageMonitor = func(){
+	lowVoltageMonitor.plugElectric();
+	lowVoltageMonitor.GND.plug(eBox.GND);
+	lowVoltageMonitor.LowVoltSense.plug(circuitBreakerPanel.LowVolt.Out);
+	lowVoltageMonitor.LowVoltOut.plug(annunciatorPanel.dimTestRelais.P222);
 }
 
 var plugDIP =func(){
@@ -600,7 +601,7 @@ var plugElectric = func(){
 	plugFuel();
 	plugEngine();
 	plugAlternator();
-	plugPcBoard();
+	plugLowVoltageMonitor();
 	plugDIP();
 	plugEIP();
 	

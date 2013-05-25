@@ -20,10 +20,12 @@
 #      Date:             05.05.13
 #
 
-var PcBoard = {
+# MM Page 597
+
+var GearWarningBoard = {
 	new : func(nRoot,name){
 		var m = {parents:[
-			PcBoard,
+			GearWarningBoard,
 			Part.Part.new(nRoot,name),
 			
 		]};
@@ -32,11 +34,11 @@ var PcBoard = {
 		m.capacitorLowVolt = Part.Capacitor.new(3);
 		
 		m.GND = Part.ElectricConnector.new("GND");
-		m.LowVoltSense = Part.ElectricConnector.new("LowVoltSense");
+		m.DoorClosed = Part.ElectricConnector.new("DoorClosed");
 		m.LowVoltOut = Part.ElectricConnector.new("LowVoltOut");
 		
 		m.GND.solder(m);
-		m.LowVoltSense.solder(m);
+		m.DoorClosed.solder(m);
 		m.LowVoltOut.solder(m);
 		
 		
@@ -53,7 +55,7 @@ var PcBoard = {
 		
 	},
 	applyVoltage : func(electron,name=""){ 
-		Part.etd.in("PcBoard",me.name,name,electron);
+		Part.etd.in("GearWarningBoard",me.name,name,electron);
 		var GND = 0;
 		if(electron != nil){
 			if (name == "LowVoltSense"){
@@ -68,10 +70,10 @@ var PcBoard = {
 				}
 			}
 		}
-		Part.etd.out("PcBoard",me.name,name,electron);
+		Part.etd.out("GearWarningBoard",me.name,name,electron);
 		return GND;
 	},
 	
 };
 
-var pcBoard = PcBoard.new(props.globals.initNode("/extra500/electric/PcBoard"),"PC Board");
+var gearWarningBoard = GearWarningBoard.new(props.globals.initNode("/extra500/electric/GearWarningBoard"),"PC Board 2");
