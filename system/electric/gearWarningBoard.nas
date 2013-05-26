@@ -40,7 +40,7 @@ var GearWarningBoard = {
 		m._isGearRight 		= 0;
 		m._isPowerIdle 		= 0;
 		m._isFlap15 		= 0;
-		
+		m._isWarning = 0;
 		
 		m.GND = Part.ElectricConnector.new("GND");
 		m.VDC28 = Part.ElectricConnector.new("VDC28"); 				# +28V
@@ -51,6 +51,10 @@ var GearWarningBoard = {
 		m.GearWaringLight = Part.ElectricConnector.new("GearWaringLight"); 	#GND
 		m.PowerIdle = Part.ElectricConnector.new("PowerIdle"); 			#GND
 		m.Flap15 = Part.ElectricConnector.new("Flap15"); 			#GND
+		
+		
+		m.ClearHorn = Part.ElectricSwitchDT.new(m.nRoot.initNode("ClearHorn"),"Clear Horn",0);
+		m.ClearHorn.setPoles(2);
 		
 		
 		
@@ -82,7 +86,7 @@ var GearWarningBoard = {
 		Part.etd.in("GearWarningBoard",me.name,name,electron);
 		var GND = 0;
 		if(electron != nil){
-			if (name == "LowVoltSense"){
+			if (name == "VDC28"){
 				
 				me.electron.copy(electron);
 				me.electron.resistor += 20000.0;
@@ -100,15 +104,31 @@ var GearWarningBoard = {
 				me._isFlap15 		= me.Flap15.applyVoltage(me.electron);
 						
 				if (me._isDoorClosed == 1 and (me._isPowerIdle == 1 or me._isFlap15 ==1) ){
-					me.GearWaringLight.applyVoltage(electron);
+					me._isWarning = 1;
+				}else{
+					me._isWarning = 0;
 				}
 				
+				if (me._isWarning == 1 and me.ClearHorn.state == 0){
+					me.nGearHorn.setValue(1);
+				}else{
+					me.nGearHorn.setValue(0);
+				}
+				
+			}elsif (name == "GearWaringLight"){
+				if (me._isWarning == 1){
+					GND = me.GND.applyVoltage(electron);
+				}
 			}
 		}
 		Part.etd.out("GearWarningBoard",me.name,name,electron);
 		return GND;
 	},
-	
+	initUI : func(){
+		UI.register("Gear Clear Horn", 		func{extra500.gearWarningBoard.ClearHorn.toggle(); } 	);
+		UI.register("Gear Clear Horn off", 	func{extra500.gearWarningBoard.ClearHorn.off(); } 	);
+		UI.register("Gear Clear Horn on",	func{extra500.gearWarningBoard.ClearHorn.on(); } 	);
+	},
 };
 
-var gearWarningBoard = GearWarningBoard.new(props.globals.initNode("/extra500/electric/GearWarningBoard"),"PC Board 2");
+var gearWarningBoard = GearWarningBoard.new(props.globals.initNode("/extra500/electric/GearWarningBoard"),"Gear Warning Board");

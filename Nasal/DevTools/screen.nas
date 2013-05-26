@@ -176,12 +176,16 @@ var Display = {
 					target: me.base.getChild("entry", size(me.entries), 1) });
 	},
 	addNamed : func(format,n){
+			if (n!=nil){
 			append(me.entries, {mode:2, node: n, parent: n, format:format,
 					target: me.base.getChild("entry", size(me.entries), 1) });
+			}
 	},
 	add_Node: func(lable,n){
+			if (n!=nil){
 			append(me.entries, {mode:3, node: n, parent: n, lable:lable,
 					target: me.base.getChild("entry", size(me.entries), 1) });
+			}
 	},
 	update : func {
 		foreach (var e; me.entries) {

@@ -418,7 +418,6 @@ var plugGear =func(){
 	gearSystem.MainGearSwitch.Com1.plug(gearSystem.CtrlBus.con());
 	gearSystem.HydrBus.plug(circuitBreakerPanel.Hydraulic.Out);
 	gearSystem.Annunciator.plug(annunciatorPanel.dimTestRelais.P332);
-	gearSystem.Warning.plug(annunciatorPanel.dimTestRelais.P492);
 	
 	gearSystem.NoseGearLed.plug(gearSystem.NoseGearLedBus.Minus);
 	gearSystem.LeftGearLed.plug(gearSystem.LeftGearLedBus.Minus);
@@ -432,6 +431,9 @@ var plugGearWarningBoard = func(){
 	gearWarningBoard.GND.plug(eBox.GND);
 	
 	gearWarningBoard.GearWaringLight.plug(annunciatorPanel.dimTestRelais.P492);
+	
+	gearWarningBoard.DoorClosed.plug(gearSystem.Warning);
+	
 	gearWarningBoard.GearLeft.plug(gearSystem.LeftGearLedBus.con());
 	gearWarningBoard.GearNose.plug(gearSystem.NoseGearLedBus.con());
 	gearWarningBoard.GearRight.plug(gearSystem.RightGearLedBus.con());

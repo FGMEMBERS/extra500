@@ -159,8 +159,8 @@ var Engine = {
 		}else{
 			me.nPropellerFeather.setValue(1);
 		}
-# setting propeller feathering property, if n1 < 55%, feathered
-		if(me.nTRQ.getValue() < 0.2){
+# setting Low Torque Pressure Switch < 15.0
+		if(me.nTRQ.getValue() < 15.0){
 			me.LowTorquePress._setValue(1);
 		}else{
 			me.LowTorquePress._setValue(0);
