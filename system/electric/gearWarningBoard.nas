@@ -66,14 +66,14 @@ var GearWarningBoard = {
 		
 		
 		
-		append(Part.aListSimStateAble,m);
+		#append(Part.aListSimStateAble,m);
 		return m;
 	},
 	plugElectric : func(){
 	
 	},
 	simReset : func(){
-		me.capacitorLowVolt.load(-1);
+		
 	},
 	simUpdate : func(){
 		
