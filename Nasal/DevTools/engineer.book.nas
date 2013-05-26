@@ -405,6 +405,22 @@ engineerScreen.add(electricLightPage);
 		display.add_Node("Valve Lower Door ", props.globals.getNode("/extra500/system/gear/LowerDoorValve/state") );
 		display.add_Node("Motor            ", props.globals.getNode("/extra500/system/gear/HydraulicMotor/state") );
 		
+	display = Display.new(-10,680);
+
+		display.title = "Warning";
+		display.font = "FIXED_9x15";
+		display.fg = [1.0, 1.0, 1.0, 1.0];
+		display.bg = [0.5, 0.5, 0.5, 0.85];
+		display.width = 270;
+		display.height = 160;
+		
+		display.addNasal("_isDoorClosed  %i", func{extra500.gearWarningBoard._isDoorClosed;} );
+		display.addNasal("_isGearLeft    %i", func{extra500.gearWarningBoard._isGearLeft;} );
+		display.addNasal("_isGearNose    %i", func{extra500.gearWarningBoard._isGearNose;} );
+		display.addNasal("_isGearNose    %i", func{extra500.gearWarningBoard._isGearRight;} );
+		display.addNasal("_isPowerIdle   %i", func{extra500.gearWarningBoard._isPowerIdle;} );
+		display.addNasal("_isFlap15      %i", func{extra500.gearWarningBoard._isFlap15;} );
+		display.addNasal("_isWarning      %i", func{extra500.gearWarningBoard._isWarning;} );
 
 	gearPage.add(display);
 	

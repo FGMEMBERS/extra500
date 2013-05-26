@@ -158,6 +158,11 @@ var GearSystem = {
 		m.CtrlBus = Part.ElectricBus.new("CtrlBus");
 		m.HydrBus = Part.ElectricBus.new("HydrBus");
 		
+		m.NoseGearLedBus = Part.ElectricBusDiode.new("NoseGearLedBus");
+		m.LeftGearLedBus = Part.ElectricBusDiode.new("LeftGearLedBus");
+		m.RightGearLedBus = Part.ElectricBusDiode.new("RightGearLedBus");
+		
+		
 		
 	# hydraulic 
 		

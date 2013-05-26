@@ -20,10 +20,12 @@
 #      Date:             05.05.13
 #
 
-var PcBoard = {
+# MM Page 592
+
+var LowVoltageMonitor = {
 	new : func(nRoot,name){
 		var m = {parents:[
-			PcBoard,
+			LowVoltageMonitor,
 			Part.Part.new(nRoot,name),
 			
 		]};
@@ -53,7 +55,7 @@ var PcBoard = {
 		
 	},
 	applyVoltage : func(electron,name=""){ 
-		Part.etd.in("PcBoard",me.name,name,electron);
+		Part.etd.in("LowVoltageMonitor",me.name,name,electron);
 		var GND = 0;
 		if(electron != nil){
 			if (name == "LowVoltSense"){
@@ -68,10 +70,10 @@ var PcBoard = {
 				}
 			}
 		}
-		Part.etd.out("PcBoard",me.name,name,electron);
+		Part.etd.out("LowVoltageMonitor",me.name,name,electron);
 		return GND;
 	},
 	
 };
 
-var pcBoard = PcBoard.new(props.globals.initNode("/extra500/electric/PcBoard"),"PC Board");
+var lowVoltageMonitor = LowVoltageMonitor.new(props.globals.initNode("/extra500/electric/LowVoltageMonitor"),"lowVoltageMonitor");
