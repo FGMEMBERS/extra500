@@ -425,6 +425,9 @@ JSBSim Extra Aircraft - Extra 500.
 	<pitchtrim-channel>
 		<servo-gain type="double">-0.05</servo-gain>			
 	</pitchtrim-channel>
+	<altsensor>
+		<alt-old>0.0</alt-old>
+	</altsensor>
  </autopilot>
 
  <systems>
@@ -479,6 +482,7 @@ JSBSim Extra Aircraft - Extra 500.
     </altimeter-backup>
     <altimeter-AP>
 	  <serviceable type="bool" archive="y">true</serviceable>
+	  <indicated-altitude-ft>0.0</indicated-altitude-ft>
     </altimeter-AP>
     <cabin-altitude>
 	  <serviceable type="bool" archive="y">true</serviceable>
