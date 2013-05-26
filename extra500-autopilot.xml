@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-05-25
+      Date:             2013-05-26
 -->
 
 <autopilot name="STEC55X">
@@ -203,6 +203,127 @@
 				/autopilot/mode/vs eq 1
 			</test>
 			<output>/controls/flight/elevator</output>
+		</switch>
+
+	</channel>
+
+
+	<channel name="autotrim">
+
+		<!--deadband name="/autopilot/pitchtrim-channel/trimmoment">
+			<input>aircraft/hstab/elevator/H-total-lbsft</input>
+			<width>5.0</width>
+		</deadband-->
+
+		<fcs_function name="/autopilot/pitchtrim-channel/trimmoment-abs">
+			<function>
+				<abs>
+					<property>aircraft/hstab/elevator/H-total-lbsft</property>	
+				</abs>
+			</function>
+		</fcs_function>
+
+		<switch name="autopitchtrimon">
+			<default value="/autopilot/mode/trim"/>
+			<test logic="AND" value="1">
+				<test value ="1">
+					/autopilot/mode/trim eq 0
+				</test>
+				<test value ="1">
+					/autopilot/pitchtrim-channel/trimmoment-abs gt 2.5
+				</test>
+				<test logic="OR" value="1">
+					/autopilot/mode/vs eq 1
+					/autopilot/mode/alt eq 1
+				</test>
+			</test>
+			<output>/autopilot/mode/trim</output>
+		</switch>
+
+		<switch name="autopitchtrimoff">
+			<default value="/autopilot/mode/trim"/>
+			<test logic="AND" value="0">
+				<test value ="1">
+					/autopilot/mode/trim eq 1
+				</test>
+				<test logic="OR" value="1">
+					<test value ="0">
+						/autopilot/pitchtrim-channel/trimmoment-abs le 0.5
+					</test>
+					<test logic="AND" value="1">
+						/autopilot/mode/vs eq 0
+						/autopilot/mode/alt eq 0
+					</test>
+				</test>
+			</test>
+			<output>/autopilot/mode/trim</output>
+		</switch>
+
+		<switch name="autopitchtrimup">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test value ="1">
+					/autopilot/mode/trim eq 1
+				</test>
+				<test value="1">
+					aircraft/hstab/elevator/H-total-lbsft gt 0
+				</test>
+			</test>
+			<output>/autopilot/mode/trim-up</output>
+		</switch>
+
+		<switch name="autopitchtrimdown">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test value ="1">
+					/autopilot/mode/trim eq 1
+				</test>
+				<test value="1">
+					aircraft/hstab/elevator/H-total-lbsft lt 0
+				</test>
+			</test>
+			<output>/autopilot/mode/trim-down</output>
+		</switch>
+
+		<fcs_function name="/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm-raw">
+			<function>
+				<sum>
+					<property>fcs/pitch-trim-cmd-tot-norm</property>	
+					<product>
+						<property>/autopilot/mode/trim</property>
+						<property>/autopilot/pitchtrim-channel/servo-gain</property>
+						<property>aircraft/hstab/elevator/H-total-lbsft</property>
+						<pow>
+							<max>
+								<property>/autopilot/pitchtrim-channel/trimmoment-abs</property>
+								<value>0.1</value>
+							</max>
+							<value>-1</value>
+						</pow>
+						<property>sim-dt-sec</property>
+					</product>
+				</sum>
+			</function>
+			<output>/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm-raw</output>
+		</fcs_function>
+
+		<actuator name="/autopilot/pitchtrim-channel/pitchtrim-servo">
+			<input>/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm-raw</input>
+			<rate_limit>0.2</rate_limit>
+			<clipto>
+				<min>-1</min>
+				<max>1</max>
+			</clipto>
+			<output>/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm</output>
+		</actuator>
+
+<!--this makes the pitch trim pilot input to move along, so when the vs/alt mode is disconnected, the elevator trim is in the correct position-->
+		<switch name="vsalton">
+			<default value="/controls/flight/elevator-trim"/>
+			<test value="/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm">
+				/autopilot/mode/trim eq 1
+			</test>
+			<output>/controls/flight/elevator-trim</output>
 		</switch>
 
 	</channel>
