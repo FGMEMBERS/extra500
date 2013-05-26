@@ -51,6 +51,38 @@
 
 	</channel>
 
+	<channel name="altitudesensor">
+
+		<fcs_function name="/autopilot/altsensor/vs-fpm">
+			<function>
+				<product>
+					<value>60.0</value>		
+					<sum>
+						<property>/instrumentation/altimeter-AP/indicated-altitude-ft</property>
+						<property>/autopilot/altsensor/alt-old</property>
+					</sum>
+					<pow>
+						<max>
+							<value>0.0001</value>	
+							<property>sim-dt-sec</property>
+						</max>
+						<value>-1.0</value>	
+					</pow>
+				</product>
+			</function>
+		</fcs_function>
+
+
+		<fcs_function name="/autopilot/altsensor/alt-old">
+			<function>
+				<product>
+					<value>-1.0</value>				
+					<property>/instrumentation/altimeter-AP/indicated-altitude-ft</property>
+				</product>	
+			</function>
+		</fcs_function>
+	</channel>
+
 
 	<channel name="heading">
 		<pure_gain name="/autopilot/hdg-channel/lmd-hdg-error">
@@ -137,12 +169,12 @@
 			<function>
 				<sum>
 					<property>/autopilot/settings/vertical-speed-fpm</property>
-					<property>velocities/v-down-fps</property>
+					<!--property>velocities/v-down-fps</property-->
 					<product>	
-						<!--value>-1.0</value-->
-						<value>60.0</value>
-						<property>velocities/v-down-fps</property>
-						<!--property>/instrumentation/ivsi-IFD-LH/indicated-speed-fpm</property-->
+						<value>-1.0</value>
+						<!--value>60.0</value>
+						<property>velocities/v-down-fps</property-->
+						<property>/autopilot/altsensor/vs-fpm</property>
 					</product>	
 				</sum>
 			</function>
@@ -210,11 +242,6 @@
 
 	<channel name="autotrim">
 
-		<!--deadband name="/autopilot/pitchtrim-channel/trimmoment">
-			<input>aircraft/hstab/elevator/H-total-lbsft</input>
-			<width>5.0</width>
-		</deadband-->
-
 		<fcs_function name="/autopilot/pitchtrim-channel/trimmoment-abs">
 			<function>
 				<abs>
@@ -230,7 +257,7 @@
 					/autopilot/mode/trim eq 0
 				</test>
 				<test value ="1">
-					/autopilot/pitchtrim-channel/trimmoment-abs gt 2.5
+					/autopilot/pitchtrim-channel/trimmoment-abs gt 3.5
 				</test>
 				<test logic="OR" value="1">
 					/autopilot/mode/vs eq 1
@@ -248,7 +275,7 @@
 				</test>
 				<test logic="OR" value="1">
 					<test value ="0">
-						/autopilot/pitchtrim-channel/trimmoment-abs le 0.5
+						/autopilot/pitchtrim-channel/trimmoment-abs le 0.25
 					</test>
 					<test logic="AND" value="1">
 						/autopilot/mode/vs eq 0
