@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-05-25
+      Date:             2013-05-26
 -->
 
 <flight_control name="FCS: extra500">
@@ -317,8 +317,46 @@
 
   	<channel name="Pitch trim">
 
+			<fcs_function name="pitch-trim-cmd-tot-norm">
+				<function>
+				<sum>
+					<product>  					<!--no autotrim, AP not coupled in a pitch mode-->
+	                          		<abs>
+                               				<sum>
+                                				<property>/autopilot/mode/alt</property>
+	                          				<value>-1</value> 
+                              				</sum>
+						</abs>
+	                          		<abs>
+                               				<sum>
+                                				<property>/autopilot/mode/vs</property>
+	                          				<value>-1</value> 
+                              				</sum>
+						</abs>					
+	                       			<sum>
+							<property>fcs/pitch-trim-cmd-norm</property>
+						</sum>
+					</product>
+					<product>					<!--autopilot VS mode in control -->
+                                  		<property>/autopilot/mode/vs</property>
+                              			<property>/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm</property>	
+					</product>
+					<product>					<!--autopilot ALT mode in control NOTE: VS goes over ALT; VS is shut off in altitude mode when reaching target altitude -->
+                                  		<property>/autopilot/mode/alt</property>
+	                          		<abs>
+                               				<sum>
+                                				<property>/autopilot/mode/vs</property>
+	                          				<value>-1</value> 
+                              				</sum>
+						</abs>
+                              			<property>/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm</property>	
+					</product>
+				</sum>
+				</function>
+			</fcs_function>
+
       		<aerosurface_scale name="Pitch trim Control">
-	      		<input>fcs/pitch-trim-cmd-norm</input>
+	      		<input>fcs/pitch-trim-cmd-tot-norm</input>
 	      		<range>
                   		<min> -30 </min>
                   		<max>  20 </max>
