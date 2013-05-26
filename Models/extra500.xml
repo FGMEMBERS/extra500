@@ -18,8 +18,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Eric van den Berg
-      Date:             25.05.13
+      Last change:      Thomas Grossberger
+      Date:             26.05.13
 
 -->
 
@@ -452,10 +452,10 @@
    <entry><ind> 1</ind><dep> 19</dep></entry>
   </interpolation>   
   <axis>
-    <x1-m>1.16760</x1-m>
+    <x1-m>1.0999</x1-m>
     <y1-m>-5.56752</y1-m>
     <z1-m>0.33370</z1-m>
-    <x2-m>1.16760</x2-m>
+    <x2-m>1.0999</x2-m>
     <y2-m>-4.46124</y2-m>
     <z2-m>0.33370</z2-m>
   </axis>
@@ -470,10 +470,10 @@
    <entry><ind> 1</ind><dep>-27</dep></entry>
   </interpolation>   
   <axis>
-    <x1-m>1.16760</x1-m>
+    <x1-m>1.0999</x1-m>
     <y1-m>4.46124</y1-m>
     <z1-m>0.33370</z1-m>
-    <x2-m>1.16760</x2-m>
+    <x2-m>1.0999</x2-m>
     <y2-m>5.56752</y2-m>
     <z2-m>0.33370</z2-m>
   </axis>
@@ -489,10 +489,10 @@
    <entry><ind>1</ind><dep>30</dep></entry>
   </interpolation>   
   <axis>
-    <x2-m> 1.19543</x2-m>
+    <x2-m> 1.12773</x2-m>
     <y2-m>-0.58371</y2-m>
     <z2-m> 0.33370</z2-m>
-    <x1-m> 1.23491</x1-m>
+    <x1-m> 1.16721</x1-m>
     <y1-m>-2.54332</y1-m>
     <z1-m> 0.33370</z1-m>
   </axis>
@@ -506,10 +506,10 @@
    <entry><ind>1</ind><dep>30</dep></entry>
   </interpolation>   
   <axis>
-    <x1-m> 1.19543</x1-m>
+    <x1-m> 1.12773</x1-m>
     <y1-m> 0.58371</y1-m>
     <z1-m> 0.33370</z1-m>
-    <x2-m> 1.23491</x2-m>
+    <x2-m> 1.16721</x2-m>
     <y2-m> 2.54332</y2-m>
     <z2-m> 0.33370</z2-m>
   </axis>
@@ -523,10 +523,10 @@
    <entry><ind>1</ind><dep> 30</dep></entry>
   </interpolation>   
   <axis>
-    <x1-m>1.28327</x1-m>
+    <x1-m>1.21557</x1-m>
     <y1-m>-4.42776</y1-m>
     <z1-m>0.33370</z1-m>
-    <x2-m>1.24379</x2-m>
+    <x2-m>1.17609</x2-m>
     <y2-m>-2.56010</y2-m>
     <z2-m>0.33370</z2-m>
   </axis>
@@ -540,10 +540,10 @@
    <entry><ind>1</ind><dep>30</dep></entry>
   </interpolation>   
   <axis>
-    <x2-m>1.28327</x2-m>
+    <x2-m>1.21557</x2-m>
     <y2-m>4.42776</y2-m>
     <z2-m>0.33370</z2-m>
-    <x1-m>1.24379</x1-m>
+    <x1-m>1.17609</x1-m>
     <y1-m>2.56010</y1-m>
     <z1-m>0.33370</z1-m>
   </axis>
