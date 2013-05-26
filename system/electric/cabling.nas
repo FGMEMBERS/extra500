@@ -386,9 +386,9 @@ var plugLight = func(){
 	lightBoard.testLightRelais.P32.plug(flapSystem.pos14Relais.P31);
 	lightBoard.testLightRelais.P42.plug(flapSystem.limitDown.L22);
 	
-	lightBoard.testLightRelais.P52.plug(gearSystem.NoseGearLed);
-	lightBoard.testLightRelais.P62.plug(gearSystem.LeftGearLed);
-	lightBoard.testLightRelais.P72.plug(gearSystem.RightGearLed);
+	lightBoard.testLightRelais.P52.plug(gearSystem.NoseGearLedBus.con());
+	lightBoard.testLightRelais.P62.plug(gearSystem.LeftGearLedBus.con());
+	lightBoard.testLightRelais.P72.plug(gearSystem.RightGearLedBus.con());
 		
 	
 	
@@ -419,7 +419,27 @@ var plugGear =func(){
 	gearSystem.HydrBus.plug(circuitBreakerPanel.Hydraulic.Out);
 	gearSystem.Annunciator.plug(annunciatorPanel.dimTestRelais.P332);
 	gearSystem.Warning.plug(annunciatorPanel.dimTestRelais.P492);
+	
+	gearSystem.NoseGearLed.plug(gearSystem.NoseGearLedBus.Minus);
+	gearSystem.LeftGearLed.plug(gearSystem.LeftGearLedBus.Minus);
+	gearSystem.RightGearLed.plug(gearSystem.RightGearLedBus.Minus);
+	
+	
 };
+
+var plugGearWarningBoard = func(){
+	gearWarningBoard.VDC28.plug(circuitBreakerPanel.GearWarn.Out);
+	gearWarningBoard.GND.plug(eBox.GND);
+	
+	gearWarningBoard.GearWaringLight.plug(annunciatorPanel.dimTestRelais.P492);
+	gearWarningBoard.GearLeft.plug(gearSystem.LeftGearLedBus.con());
+	gearWarningBoard.GearNose.plug(gearSystem.NoseGearLedBus.con());
+	gearWarningBoard.GearRight.plug(gearSystem.RightGearLedBus.con());
+	
+	gearWarningBoard.Flap15.plug(flapSystem.limit15.L12);
+	gearWarningBoard.PowerIdle.plug(engine.LowTorquePress.L12);
+	
+}
 
 var plugAnnuciator = func(){
 	annunciatorPanel.GNDBus.Minus.plug(eBox.GND);
@@ -457,8 +477,10 @@ var plugFusePanel = func(){
 var plugEngine = func(){
 	
 	engine.GND.plug(eBox.GND);
+	engine.LowTorquePress.Com1.plug(eBox.GND);
 	engine.LowOilPress.plug(annunciatorPanel.dimTestRelais.P392);
 	engine.LowPitch.plug(annunciatorPanel.dimTestRelais.P232);
+	
 	
 }
 
@@ -598,6 +620,7 @@ var plugElectric = func(){
 	plugAnnuciator();
 	plugFlap();
 	plugGear();
+	plugGearWarningBoard();
 	plugFuel();
 	plugEngine();
 	plugAlternator();

@@ -20,6 +20,8 @@
 #      Date:             29.04.13
 #
 
+#MM Page 580
+
 var FlapSystem = {
 	new : func(nRoot,name){
 		var m = {parents:[
@@ -79,9 +81,11 @@ var FlapSystem = {
 		m.limitDown = Part.ElectricSwitchDT.new(m.nRoot.initNode("SwitchLimitDown"),"Flap Switch Limit Down");
 		m.limitDown.setPoles(2);
 		
+		# 13CG
 		m.limit14 = Part.ElectricSwitchDT.new(m.nRoot.initNode("SwitchLimit14"),"Flap Switch Limit 14");
 		m.limit14.setPoles(1);
 		
+		# 14CG
 		m.limit15 = Part.ElectricSwitchDT.new(m.nRoot.initNode("SwitchLimit15"),"Flap Switch Limit 15");
 		m.limit15.setPoles(2);
 		

@@ -29,6 +29,7 @@ var Engine = {
 			Part.ElectricAble.new(nRoot,name)
 		]};
 		m.nIsRunning		= props.globals.getNode("/fdm/jsbsim/propulsion/engine/set-running");
+		m.nTRQ			= props.globals.getNode("/fdm/jsbsim/aircraft/engine/TRQ-perc");
 		m.nN1			= props.globals.getNode("/engines/engine[0]/n1");
 		m.nPropellerFeather 	= props.globals.getNode("/controls/engines/engine[0]/propeller-feather");
 		m.nCutOff		= props.globals.getNode("/controls/engines/engine[0]/cutoff");
@@ -44,6 +45,11 @@ var Engine = {
 		m.LowOilPress		= Part.ElectricConnector.new("LowOilPress");
 		m.LowPitch		= Part.ElectricConnector.new("LowPitch");
 		m.GND 			= Part.ElectricConnector.new("GND");
+		
+		m.LowTorquePress = Part.ElectricSwitchDT.new(m.nRoot.initNode("LowTorquePress"),"Low Torque Pressure");
+		m.LowTorquePress.setPoles(1);
+		
+		
 		
 		m.IgnitionPlus.solder(m);
 		m.GND.solder(m);
@@ -108,6 +114,9 @@ var Engine = {
 		Part.etd.out("Engine",me.name,name,electron);
 		return GND;
 	},
+	plugElectric : func(){
+		
+	},
 	_checkIgnitionCutoff : func(){
 		if (me.nIsRunning.getValue()){
 			me.nCutOff.setValue(me._cutoffState);
@@ -149,6 +158,12 @@ var Engine = {
 			me.nPropellerFeather.setValue(0);
 		}else{
 			me.nPropellerFeather.setValue(1);
+		}
+# setting propeller feathering property, if n1 < 55%, feathered
+		if(me.nTRQ.getValue() < 0.2){
+			me.LowTorquePress._setValue(1);
+		}else{
+			me.LowTorquePress._setValue(0);
 		}
 
 #

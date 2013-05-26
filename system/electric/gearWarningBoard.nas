@@ -29,17 +29,41 @@ var GearWarningBoard = {
 			Part.Part.new(nRoot,name),
 			
 		]};
+		m.electron = Part.Electron.new();
+		m.nGearHorn		= props.globals.initNode("/extra500/sound/gearWarning",0,"BOOL");
 		
 		
-		m.capacitorLowVolt = Part.Capacitor.new(3);
+		
+		m._isDoorClosed 	= 0;
+		m._isGearLeft 		= 0;
+		m._isGearNose 		= 0;
+		m._isGearRight 		= 0;
+		m._isPowerIdle 		= 0;
+		m._isFlap15 		= 0;
+		
 		
 		m.GND = Part.ElectricConnector.new("GND");
-		m.DoorClosed = Part.ElectricConnector.new("DoorClosed"); #GND
-		m.LowVoltOut = Part.ElectricConnector.new("LowVoltOut"); 
+		m.VDC28 = Part.ElectricConnector.new("VDC28"); 				# +28V
+		m.DoorClosed = Part.ElectricConnector.new("DoorClosed"); 		#GND
+		m.GearLeft = Part.ElectricConnector.new("GearLeft"); 			#GND
+		m.GearNose = Part.ElectricConnector.new("GearNose"); 			#GND
+		m.GearRight = Part.ElectricConnector.new("GearRight"); 			#GND
+		m.GearWaringLight = Part.ElectricConnector.new("GearWaringLight"); 	#GND
+		m.PowerIdle = Part.ElectricConnector.new("PowerIdle"); 			#GND
+		m.Flap15 = Part.ElectricConnector.new("Flap15"); 			#GND
+		
+		
 		
 		m.GND.solder(m);
+		m.VDC28.solder(m);
 		m.DoorClosed.solder(m);
-		m.LowVoltOut.solder(m);
+		m.GearLeft.solder(m);
+		m.GearNose.solder(m);
+		m.GearRight.solder(m);
+		m.GearWaringLight.solder(m);
+		m.PowerIdle.solder(m);
+		m.Flap15.solder(m);
+		
 		
 		
 		append(Part.aListSimStateAble,m);
@@ -59,15 +83,26 @@ var GearWarningBoard = {
 		var GND = 0;
 		if(electron != nil){
 			if (name == "LowVoltSense"){
-				electron.resistor += 4700.0;
-				if (electron.volt < 25.5){
-					me.capacitorLowVolt.load(10);
+				
+				me.electron.copy(electron);
+				me.electron.resistor += 20000.0;
+								
+				GND = me.GND.applyVoltage(me.electron);
+				if (GND){
+					
 				}
-				GND = me.GND.applyVoltage(electron);
-			}elsif(name == "LowVoltOut"){
-				if (me.capacitorLowVolt.value > 0){
-					GND = me.GND.applyVoltage(electron);
+				
+				me._isDoorClosed	= me.DoorClosed.applyVoltage(me.electron);
+				me._isGearLeft 		= me.GearLeft.applyVoltage(me.electron);
+				me._isGearNose 		= me.GearNose.applyVoltage(me.electron);
+				me._isGearRight 	= me.GearRight.applyVoltage(me.electron);
+				me._isPowerIdle 	= me.PowerIdle.applyVoltage(me.electron);
+				me._isFlap15 		= me.Flap15.applyVoltage(me.electron);
+						
+				if (me._isDoorClosed == 1 and (me._isPowerIdle == 1 or me._isFlap15 ==1) ){
+					me.GearWaringLight.applyVoltage(electron);
 				}
+				
 			}
 		}
 		Part.etd.out("GearWarningBoard",me.name,name,electron);
