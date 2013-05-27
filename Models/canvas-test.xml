@@ -38,11 +38,11 @@
  </offsets>
  -->
  <offsets>
-   <heading-deg>90</heading-deg>
-   <roll-deg>40</roll-deg>
-   <pitch-deg>0</pitch-deg>
-   <x-m> -0.575 </x-m>
-   <y-m> 0 </y-m>
-   <z-m>-0.49 </z-m>
+   <heading-deg>60</heading-deg>
+   <roll-deg>85</roll-deg>
+   <pitch-deg>00</pitch-deg>
+   <x-m> -0.895 </x-m>
+   <y-m> .38 </y-m>
+   <z-m>-0.29 </z-m>
  </offsets>
 </PropertyList>

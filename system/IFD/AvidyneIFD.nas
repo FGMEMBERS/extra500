@@ -42,7 +42,7 @@ var AvidyneIFD = {
 		
 		
 		m.primaryFlightDisplay = m.canvas.createGroup();
-		canvas.parsesvg(m.primaryFlightDisplay, "Models/extra500_RH-IFD_CanvasTest.svg");
+		canvas.parsesvg(m.primaryFlightDisplay, "Models/instruments/IFDs/RH-IFD_CanvasTest.svg");
 		
 		
 		m.hdg = 0;

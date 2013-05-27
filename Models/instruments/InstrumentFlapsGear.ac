@@ -10,7 +10,7 @@ name "Blender_export__InstrumentFlapsGear.ac"
 kids 20
 OBJECT poly
 name "Cube"
-loc 0.0044414 0.0064561 0.2754573
+loc 0.0044414 0.0064561 0.2757573
 numvert 12
 -0.0027383 -0.0091275 0.0045638
 -0.0027383 -0.0091275 -0.0045638
@@ -98,7 +98,7 @@ refs 4
 kids 0
 OBJECT poly
 name "FlapControl"
-loc -0.0434902 0.0050600 -0.1976101
+loc -0.0434902 0.0050600 -0.1973101
 numvert 26
 0.0567546 0.0004870 0.0160123
 0.0567546 0.0004870 -0.0159879
@@ -289,7 +289,7 @@ refs 4
 kids 0
 OBJECT poly
 name "FlapPanel"
-loc -0.0000000 -0.0000012 -0.1642289
+loc -0.0000000 -0.0000012 -0.1639289
 texture "InstrumentFlapsGearTextur.png"
 texrep 1 1
 numvert 8
@@ -340,7 +340,7 @@ refs 4
 kids 0
 OBJECT poly
 name "FlapPanel.001"
-loc -0.0000000 -0.0000012 0.2814599
+loc -0.0000000 -0.0000012 0.2817599
 texture "InstrumentFlapsGearTextur.png"
 texrep 1 1
 numvert 8
@@ -391,7 +391,7 @@ refs 4
 kids 0
 OBJECT poly
 name "FlapPanel.002"
-loc -0.0000000 -0.0000012 0.4876311
+loc -0.0000000 -0.0000012 0.4879312
 texture "InstrumentFlapsGearTextur.png"
 texrep 1 1
 numvert 8
@@ -442,7 +442,7 @@ refs 4
 kids 0
 OBJECT poly
 name "FlapPanel.003"
-loc -0.0000000 0.0010743 0.5311905
+loc -0.0000000 0.0010743 0.5314905
 texture "InstrumentFlapsGearTextur.png"
 texrep 1 1
 numvert 8
@@ -493,7 +493,7 @@ refs 4
 kids 0
 OBJECT poly
 name "GearLever"
-loc -0.0028729 0.0053112 0.1548694
+loc -0.0028729 0.0053112 0.1551694
 numvert 110
 -0.0200000 0.0000000 0.0020373
 -0.0200000 0.0000000 -0.0020373
@@ -1431,7 +1431,7 @@ refs 4
 kids 0
 OBJECT poly
 name "GearPanel"
-loc -0.0000000 -0.0000012 0.1928297
+loc -0.0000000 -0.0000012 0.1931297
 texture "InstrumentFlapsGearTextur.png"
 texrep 1 1
 numvert 8
@@ -1482,7 +1482,7 @@ refs 4
 kids 0
 OBJECT poly
 name "LightFlap15.Lampe"
-loc 0.0053827 -0.0038487 -0.1684736
+loc 0.0053827 -0.0038487 -0.1681736
 numvert 17
 0.0025403 0.0000000 0.0000000
 0.0010000 -0.0024331 -0.0058741
@@ -1601,7 +1601,7 @@ refs 3
 kids 0
 OBJECT poly
 name "LightFlap15.Ring"
-loc 0.0053827 -0.0038487 -0.1684736
+loc 0.0053827 -0.0038487 -0.1681736
 numvert 64
 -0.0010000 -0.0000000 -0.0082170
 0.0010000 0.0000000 -0.0082170
@@ -2007,7 +2007,7 @@ refs 4
 kids 0
 OBJECT poly
 name "LightFlap30.Lampe"
-loc 0.0053827 -0.0228487 -0.1684736
+loc 0.0053827 -0.0228487 -0.1681736
 numvert 17
 0.0025403 0.0000000 0.0000000
 0.0010000 -0.0024331 -0.0058741
@@ -2126,7 +2126,7 @@ refs 3
 kids 0
 OBJECT poly
 name "LightFlap30.Ring"
-loc 0.0053827 -0.0228487 -0.1684736
+loc 0.0053827 -0.0228487 -0.1681736
 numvert 64
 -0.0010000 -0.0000000 -0.0082170
 0.0010000 0.0000000 -0.0082170
@@ -2532,7 +2532,7 @@ refs 4
 kids 0
 OBJECT poly
 name "LightFlapTrans.Lampe"
-loc 0.0053827 0.0151513 -0.1684736
+loc 0.0053827 0.0151513 -0.1681736
 numvert 17
 0.0025403 0.0000000 0.0000000
 0.0010000 -0.0024331 -0.0058741
@@ -2651,7 +2651,7 @@ refs 3
 kids 0
 OBJECT poly
 name "LightFlapTrans.Ring"
-loc 0.0053827 0.0151513 -0.1684736
+loc 0.0053827 0.0151513 -0.1681736
 numvert 64
 -0.0010000 -0.0000000 -0.0082170
 0.0010000 0.0000000 -0.0082170
@@ -3057,7 +3057,7 @@ refs 4
 kids 0
 OBJECT poly
 name "LightGear0.Lampe"
-loc 0.0053827 0.0124414 0.2138718
+loc 0.0053827 0.0124414 0.2141718
 numvert 17
 0.0025403 0.0000000 0.0000000
 0.0010000 -0.0024331 -0.0058741
@@ -3176,7 +3176,7 @@ refs 3
 kids 0
 OBJECT poly
 name "LightGear0.Ring"
-loc 0.0053827 0.0124414 0.2138718
+loc 0.0053827 0.0124414 0.2141718
 numvert 64
 -0.0010000 -0.0000000 -0.0082170
 0.0010000 0.0000000 -0.0082170
@@ -3582,7 +3582,7 @@ refs 4
 kids 0
 OBJECT poly
 name "LightGear1.Lampe"
-loc 0.0053827 -0.0068711 0.2308718
+loc 0.0053827 -0.0068711 0.2311718
 numvert 17
 0.0025403 0.0000000 0.0000000
 0.0010000 -0.0024331 -0.0058741
@@ -3701,7 +3701,7 @@ refs 3
 kids 0
 OBJECT poly
 name "LightGear1.Ring"
-loc 0.0053827 -0.0068711 0.2308718
+loc 0.0053827 -0.0068711 0.2311718
 numvert 64
 -0.0010000 -0.0000000 -0.0082170
 0.0010000 0.0000000 -0.0082170
@@ -4107,7 +4107,7 @@ refs 4
 kids 0
 OBJECT poly
 name "LightGear2.Lampe"
-loc 0.0053827 -0.0068711 0.1968718
+loc 0.0053827 -0.0068711 0.1971718
 numvert 17
 0.0025403 0.0000000 0.0000000
 0.0010000 -0.0024331 -0.0058741
@@ -4226,7 +4226,7 @@ refs 3
 kids 0
 OBJECT poly
 name "LightGear2.Ring"
-loc 0.0053827 -0.0068711 0.1968718
+loc 0.0053827 -0.0068711 0.1971718
 numvert 64
 -0.0010000 -0.0000000 -0.0082170
 0.0010000 0.0000000 -0.0082170
