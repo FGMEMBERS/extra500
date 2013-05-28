@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-05-26
+      Date:             2013-05-28
 -->
 
 <flight_control name="FCS: extra500">
@@ -320,28 +320,41 @@
 			<fcs_function name="pitch-trim-cmd-tot-norm">
 				<function>
 				<sum>
-					<product>  					<!--no autotrim, AP not coupled in a pitch mode-->
-	                          		<abs>
-                               				<sum>
-                                				<property>/autopilot/mode/alt</property>
-	                          				<value>-1</value> 
-                              				</sum>
-						</abs>
-	                          		<abs>
-                               				<sum>
-                                				<property>/autopilot/mode/vs</property>
-	                          				<value>-1</value> 
-                              				</sum>
-						</abs>					
+					 <product>
+						<sum> 					<!--no autotrim, AP not coupled in a pitch mode OR pitch trim off-->
+		                          		<abs>
+	                               				<sum>
+	                                				<property>/autopilot/settings/trim</property>
+		                          				<value>-1</value> 
+	                              				</sum>
+							</abs>
+							<product>
+								<property>/autopilot/settings/trim</property>	
+		                          			<abs>
+	                               					<sum>
+	                                					<property>/autopilot/mode/alt</property>
+		                          					<value>-1</value> 
+	                              					</sum>
+								</abs>
+		                          			<abs>
+	                               					<sum>
+	                                					<property>/autopilot/mode/vs</property>
+		                          					<value>-1</value> 
+	                              					</sum>
+								</abs>	
+							</product>
+						</sum>				
 	                       			<sum>
 							<property>fcs/pitch-trim-cmd-norm</property>
 						</sum>
 					</product>
-					<product>					<!--autopilot VS mode in control -->
+					<product>					<!--autopilot VS mode in control and electrical trim operational -->
+						<property>/autopilot/settings/trim</property>
                                   		<property>/autopilot/mode/vs</property>
                               			<property>/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm</property>	
 					</product>
 					<product>					<!--autopilot ALT mode in control NOTE: VS goes over ALT; VS is shut off in altitude mode when reaching target altitude -->
+						<property>/autopilot/settings/trim</property>
                                   		<property>/autopilot/mode/alt</property>
 	                          		<abs>
                                				<sum>

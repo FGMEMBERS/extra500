@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             26.05.13
+      Date:             28.05.13
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -387,6 +387,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<heading-bug-deg type="double">30</heading-bug-deg>
 		<target-altitude-ft type="double">5000</target-altitude-ft>
 		<vertical-speed-fpm type="double">0</vertical-speed-fpm>
+		<trim type="bool">false</trim>
 	</settings>
 	<mode>
 		<diseng type="int">0</diseng>
@@ -416,16 +417,17 @@ JSBSim Extra Aircraft - Extra 500.
 		<cmd-ap-ail-pos-norm-raw type="double">0.0</cmd-ap-ail-pos-norm-raw>
 	</hdg-channel>
 	<vs-channel>
-		<vs-error-kp type="double">1.0</vs-error-kp>			
-		<vs-error-ki type="double">0.001</vs-error-ki>
-		<vs-error-kd type="double">2.0</vs-error-kd>
-		<accel-rate-gain type="double">-50.0</accel-rate-gain>
-		<pitch-error-gain type="double">-0.00001</pitch-error-gain>
+		<accel-rate-gain type="double">8000.0</accel-rate-gain>
+		<pitch-error-gain type="double">-0.000015</pitch-error-gain>
 	</vs-channel>
 	<pitchtrim-channel>
 		<servo-gain type="double">-0.05</servo-gain>			
 	</pitchtrim-channel>
 	<altsensor>
+		<c1>0.0</c1>
+		<c2>1.0</c2>
+		<c3>0.075</c3>
+		<c4>1.0</c4>
 		<alt-old>0.0</alt-old>
 	</altsensor>
  </autopilot>

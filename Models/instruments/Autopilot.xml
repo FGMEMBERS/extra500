@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             21.05.13
+      Date:             26.05.13
 -->
 
 <PropertyList>
@@ -308,7 +308,7 @@
     <binding>
       <command>nasal</command>
       <script><![CDATA[
-		UI.click("Autopilot VS >");
+		UI.click("Autopilot VS <");
 	]]></script>
     </binding>
   </action>
@@ -318,7 +318,7 @@
     <binding>
       <command>nasal</command>
       <script><![CDATA[
-		UI.click("Autopilot VS <");
+		UI.click("Autopilot VS >");
 	]]></script>
     </binding>
   </action>
@@ -328,7 +328,7 @@
     <binding>
       <command>nasal</command>
       <script><![CDATA[
-		UI.click("Autopilot VS >");
+		UI.click("Autopilot VS <");
 	]]></script>
     </binding>
   </action>
@@ -338,7 +338,7 @@
     <binding>
       <command>nasal</command>
       <script><![CDATA[
-		UI.click("Autopilot VS <");
+		UI.click("Autopilot VS >");
 	]]></script>
     </binding>
   </action>

@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-05-26
+      Date:             2013-05-28
 -->
 
 <autopilot name="STEC55X">
@@ -42,18 +42,18 @@
 			<output>/autopilot/accsens-channel/ap-z-accel</output>
 		</accelerometer>
 
-		<pid name="/autopilot/accsens-channel/accel-rate">
+		<!--pid name="/autopilot/accsens-channel/accel-rate">
 			<input>/autopilot/accsens-channel/ap-z-accel</input>
 			<kp>0.0</kp>							
 			<ki>0.0</ki>
 			<kd>1.0</kd>
-		</pid>
+		</pid-->
 
 	</channel>
 
 	<channel name="altitudesensor">
 
-		<fcs_function name="/autopilot/altsensor/vs-fpm">
+		<fcs_function name="/autopilot/altsensor/vs-fpm-unfiltered">
 			<function>
 				<product>
 					<value>60.0</value>		
@@ -72,6 +72,13 @@
 			</function>
 		</fcs_function>
 
+		<lead_lag_filter name="/autopilot/altsensor/vs-fpm">
+			<input>/autopilot/altsensor/vs-fpm-unfiltered</input>
+			<c1>/autopilot/altsensor/c1</c1>
+			<c2>/autopilot/altsensor/c2</c2>
+			<c3>/autopilot/altsensor/c3</c3>
+			<c4>/autopilot/altsensor/c4</c4>
+		</lead_lag_filter>
 
 		<fcs_function name="/autopilot/altsensor/alt-old">
 			<function>
@@ -169,18 +176,15 @@
 			<function>
 				<sum>
 					<property>/autopilot/settings/vertical-speed-fpm</property>
-					<!--property>velocities/v-down-fps</property-->
 					<product>	
 						<value>-1.0</value>
-						<!--value>60.0</value>
-						<property>velocities/v-down-fps</property-->
 						<property>/autopilot/altsensor/vs-fpm</property>
 					</product>	
 				</sum>
 			</function>
 		</fcs_function>
 
-		<fcs_function name="/autopilot/vs-channel/pitch-error-target">
+		<fcs_function name="/autopilot/vs-channel/pitch-error">
 			<function>
 				<product>
 					<property>/autopilot/mode/vs</property>
@@ -189,19 +193,12 @@
 						<property>/autopilot/vs-channel/vs-error-fpm</property>
 						<product>	
 							<property>/autopilot/vs-channel/accel-rate-gain</property>
-							<property>/autopilot/accsens-channel/accel-rate</property>
+							<property>/autopilot/accsens-channel/ap-z-accel</property>
 						</product>	
 					</sum>
 				</product>
 			</function>
 		</fcs_function>
-
-		<pid name="/autopilot/vs-channel/pitch-error">
-			<input>/autopilot/vs-channel/pitch-error-target</input>
-			<kp>/autopilot/vs-channel/vs-error-kp</kp>							
-			<ki>/autopilot/vs-channel/vs-error-ki</ki>
-			<kd>/autopilot/vs-channel/vs-error-kd</kd>
-		</pid>
 
 		<fcs_function name="/autopilot/vs-channel/cmd-ap-elev-pos-norm-raw">
 			<function>
@@ -275,7 +272,7 @@
 				</test>
 				<test logic="OR" value="1">
 					<test value ="0">
-						/autopilot/pitchtrim-channel/trimmoment-abs le 0.25
+						/autopilot/pitchtrim-channel/trimmoment-abs le 0.5
 					</test>
 					<test logic="AND" value="1">
 						/autopilot/mode/vs eq 0
@@ -317,6 +314,7 @@
 				<sum>
 					<property>fcs/pitch-trim-cmd-tot-norm</property>	
 					<product>
+						<property>/autopilot/settings/trim</property>
 						<property>/autopilot/mode/trim</property>
 						<property>/autopilot/pitchtrim-channel/servo-gain</property>
 						<property>aircraft/hstab/elevator/H-total-lbsft</property>
@@ -347,8 +345,9 @@
 <!--this makes the pitch trim pilot input to move along, so when the vs/alt mode is disconnected, the elevator trim is in the correct position-->
 		<switch name="vsalton">
 			<default value="/controls/flight/elevator-trim"/>
-			<test value="/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm">
+			<test logic="AND" value="/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm">
 				/autopilot/mode/trim eq 1
+				/autopilot/settings/trim eq 1
 			</test>
 			<output>/controls/flight/elevator-trim</output>
 		</switch>
