@@ -34,15 +34,15 @@
    <pitch-deg>0</pitch-deg>
    <x-m> -0.45 </x-m>
    <y-m> -0.35 </y-m>
-   <z-m>-0.35 </z-m>
+   <z-m>-0.35 </z-m>-0.29
  </offsets>
  -->
  <offsets>
    <heading-deg>60</heading-deg>
-   <roll-deg>85</roll-deg>
-   <pitch-deg>00</pitch-deg>
+   <roll-deg>65</roll-deg>
+   <pitch-deg>0</pitch-deg>
    <x-m> -0.895 </x-m>
-   <y-m> .38 </y-m>
-   <z-m>-0.29 </z-m>
+   <y-m> 0.31</y-m>
+   <z-m> -0.45 </z-m>
  </offsets>
 </PropertyList>
