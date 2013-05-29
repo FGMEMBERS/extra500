@@ -407,20 +407,22 @@ engineerScreen.add(electricLightPage);
 		
 	display = Display.new(-10,680);
 
-		display.title = "Warning";
+		display.title = "Warning Relais";
 		display.font = "FIXED_9x15";
 		display.fg = [1.0, 1.0, 1.0, 1.0];
 		display.bg = [0.5, 0.5, 0.5, 0.85];
 		display.width = 270;
-		display.height = 160;
+		display.height = 250;
 		
-		display.addNasal("_isDoorClosed  %i", func{extra500.gearWarningBoard._isDoorClosed;} );
-		display.addNasal("_isGearLeft    %i", func{extra500.gearWarningBoard._isGearLeft;} );
-		display.addNasal("_isGearNose    %i", func{extra500.gearWarningBoard._isGearNose;} );
-		display.addNasal("_isGearNose    %i", func{extra500.gearWarningBoard._isGearRight;} );
-		display.addNasal("_isPowerIdle   %i", func{extra500.gearWarningBoard._isPowerIdle;} );
-		display.addNasal("_isFlap15      %i", func{extra500.gearWarningBoard._isFlap15;} );
-		display.addNasal("_isWarning      %i", func{extra500.gearWarningBoard._isWarning;} );
+		display.add_Node("K1 Gear Right   ", props.globals.getNode("/extra500/electric/GearWarningBoard/K11/state") );
+		display.add_Node("K2 Gear Nose    ", props.globals.getNode("/extra500/electric/GearWarningBoard/K21/state") );
+		display.add_Node("K3 Gear Left    ", props.globals.getNode("/extra500/electric/GearWarningBoard/K31/state") );
+		display.add_Node("K4 Door Closed  ", props.globals.getNode("/extra500/electric/GearWarningBoard/K41/state") );
+		display.add_Node("K5 Clear Horn   ", props.globals.getNode("/extra500/electric/GearWarningBoard/K51/state") );
+		display.add_Node("K6 Power Idle   ", props.globals.getNode("/extra500/electric/GearWarningBoard/K61/state") );
+		display.add_Node("K7 Flap 15      ", props.globals.getNode("/extra500/electric/GearWarningBoard/K71/state") );
+		display.add_Node("Horn            ", props.globals.getNode("/extra500/sound/gearWarning") );
+		
 
 	gearPage.add(display);
 	

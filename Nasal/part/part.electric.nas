@@ -459,6 +459,8 @@ var ElectricBusDiode = {
 		
 		m.Minus = ElectricConnector.new("-");
 		m.Minus.solder(m);
+		m.Plus = ElectricConnector.new("+");
+		m.Plus.solder(m);
 		
 		return m;
 	},

@@ -43,8 +43,6 @@ var GearWarningBoard = {
 # 		m._isFlap15 		= 0;
 # 		m._isWarning = 0;
 # 		
-		m._GearHorn 		= Part.ElectricConnector.new("_GearHorn");	# Pin 1-14 	internal Horn
-		m._GND 			= Part.ElectricConnector.new("GND");		# internal 	GND
 		m.GND 			= Part.ElectricPin.new("GND");			# Pin 1-15
 		m.VDC28 		= Part.ElectricPin.new("VDC28"); 		# Pin 1-8 	+28V
 		m.DoorClosed 		= Part.ElectricPin.new("DoorClosed"); 		# Pin 1-5
@@ -55,9 +53,11 @@ var GearWarningBoard = {
 		m.PowerIdle 		= Part.ElectricPin.new("PowerIdle"); 		# Pin 1-1
 		m.Flap15 		= Part.ElectricPin.new("Flap15"); 		# Pin 1-4
 		m.TCAD	 		= Part.ElectricPin.new("TCAD"); 		# Pin 1-7
+		m._GearHorn 		= Part.ElectricConnector.new("_GearHorn");	# Pin 1-14 	internal Horn
+		m._VDC28 		= Part.ElectricConnector.new("_VDC28");		# 	 	internal VDC
 		
 		
-		m.ClearHorn = Part.ElectricSwitchDT.new(m.nRoot.initNode("ClearHorn"),"Clear Horn",0);
+		m.ClearHorn = Part.ElectricSwitchDT.new(m.nRoot.initNode("ClearHorn"),"Clear Horn",1);
 		m.ClearHorn.setPoles(1);
 		
 		
@@ -99,7 +99,7 @@ var GearWarningBoard = {
 		
  		m._GearHorn.solder(m);
 # 		m.GND.solder(m);
-# 		m.VDC28.solder(m);
+ 		m._VDC28.solder(m);
 # 		m.DoorClosed.solder(m);
 # 		m.GearLeft.solder(m);
 # 		m.GearNose.solder(m);
@@ -110,15 +110,16 @@ var GearWarningBoard = {
 		
 		
 		
-		#append(Part.aListSimStateAble,m);
+		append(Part.aListSimStateAble,m);
 		return m;
 	},
 	plugElectric : func(){
 		me.GNDBus.Minus.plug(me.GND);
-		me.GNDBus.plug(me._GND);
-		me._GearHorn.plug(me.HornBus.con());
 		me.VDC28.plug(me.VDC28Bus.con());
-		me.ClearHorn.Com1.plug(me.ClearHornBus.con());
+		
+		me.ClearHorn.Com1.plug(me.GNDBus.con());
+		me.ClearHorn.L12.plug(me.ClearHornBus.con());
+		
 		me.GearWaringLight.plug(me.LightBus.con());
 		me.GearRight.plug(me.K11.A2);
 		me.GearNose.plug(me.K21.A2);
@@ -126,6 +127,8 @@ var GearWarningBoard = {
 		me.DoorClosed.plug(me.K41.A2);
 		me.PowerIdle.plug(me.K61.A2);
 		me.Flap15.plug(me.K71.A2);
+		me._GearHorn.plug(me.HornBus.con());
+		me._VDC28.plug(me.VDC28Bus.con());
 		
 		
 		me.K11.A1.plug(me.VDC28Bus.con());
@@ -193,8 +196,8 @@ var GearWarningBoard = {
 		Part.etd.in("GearWarningBoard",me.name,name,electron);
 		var GND = 0;
 		if(electron != nil){
-			if (name == "VDC28"){
-				
+			if (name == "_VDC28"){
+				#print("GearWarningBoard._VDC28 ... "~electron.timestamp);
 # 				me.electron.copy(electron);
 # 				me.electron.resistor += 20000.0;
 # 								
@@ -222,16 +225,19 @@ var GearWarningBoard = {
 # 					me.nGearHorn.setValue(0);
 # 				}
 				
+				electron.resistor += 20000.0;
+				GND = me._GearHorn.applyVoltage(electron);
+				if (GND){
+					me.capacitorHorn.load(10);
+				}
+				
 			}elsif (name == "GearWaringLight"){
 # 				if (me._isWarning == 1){
 # 					GND = me.GND.applyVoltage(electron);
 # 				}
 			}elsif (name == "_GearHorn"){
-				electron.resistor += 20000.0;
-				GND = me._GND.applyVoltage(electron);
-				if (GND){
-					me.capacitorLowVolt.load(10);
-				}
+				print("GearWarningBoard._GearHorn ... "~electron.timestamp);
+				
 			}
 		}
 		Part.etd.out("GearWarningBoard",me.name,name,electron);
