@@ -427,6 +427,7 @@ var plugGear =func(){
 };
 
 var plugGearWarningBoard = func(){
+	gearWarningBoard.plugElectric();
 	gearWarningBoard.VDC28.plug(circuitBreakerPanel.GearWarn.Out);
 	gearWarningBoard.GND.plug(eBox.GND);
 	
