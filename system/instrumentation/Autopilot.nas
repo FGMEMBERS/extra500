@@ -17,7 +17,7 @@
 #      Date: May 18 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             22.05.13
+#      Date:             29.05.13
 #
 
 var Autopilot = {
@@ -63,7 +63,8 @@ var Autopilot = {
 		
 		m.nAPState 	= props.globals.getNode("/extra500/instrumentation/Autopilot/state");		
 		m.nTCSpin 	= props.globals.getNode("/instrumentation/turn-indicator/spin");			
-		m.nAPacc = props.globals.getNode("/autopilot/accsens-channel/ap-z-accel");						
+		m.nAPacc 	= props.globals.getNode("/autopilot/accsens-channel/ap-z-accel");
+		m.nCurrentAlt 	= props.globals.getNode("/instrumentation/altimeter-IFD-LH/indicated-altitude-ft");								
 
 		
 		
@@ -289,7 +290,7 @@ var Autopilot = {
 			
 		}
 		
-# Setting Modes from elcetric switches
+# Setting Modes from electric switches
 		me.nSetAP.setValue(me.__AP);
 		me.nSetFD.setValue(me.__FD);
 		me.nSetPitchTrimUp.setValue(me.__ManualTrimUp);
@@ -300,7 +301,7 @@ var Autopilot = {
 		me.nSetTrim.setValue(me.__PitchTrim28V);
 		
 		
-		# continues checking if the AP may still me working
+		# continuous checking if the AP may still me working
 		me._CheckRollModeAble();
 		
 		
@@ -316,7 +317,7 @@ var Autopilot = {
 		me.nModeVs.setValue(0);
 		me.nModeDiseng.setValue(1);
 	},
-# checks is a roll mode (HDG or NAV) is active. Must be active to engage any alt mode or yaw damper
+# checks is a roll mode (HDG or NAV) is active. Must be active to engage any pitch mode or yaw damper
 	_CheckRollModeActive : func(){
 		if ( (me.nModeHeading.getValue() == 1) or (me.nModeNav.getValue() == 1) ){
 			return 1
@@ -327,9 +328,7 @@ var Autopilot = {
 # checks if the AP is able to engage, called from update loop!: 
 # 1 no internal fault, 
 # 2 turn coordinator ok, 
-# 3 no stall warning, (TBD)
-# 4 no pitch trim going on (TBD)
-# 5 g-forces not to high (above 0.6, disregarding 1g of earth)
+# 3 g-forces not to high (above 0.6, disregarding 1g of earth)
 	_CheckRollModeAble : func(){
 		if ( (me.nAPState.getValue() == 1) and (me.nTCSpin.getValue() > 0.9) and ( math.abs(me.nAPacc.getValue()) < 0.6 ) ){
 			if ( ( me.nModeFail.getValue() == 1 ) or ( me.nModeDiseng.getValue() == 1 ) ) {
@@ -394,6 +393,7 @@ var Autopilot = {
 	onClickALT : func(){
 		if ( me.nModeAlt.getValue() == 0 ){
 			if ( me._CheckRollModeActive() == 1 ) {
+				me.nSetTargetAltitudeFt.setValue( 100 * int( me.nCurrentAlt.getValue()/100 ) );			# if ALT knob is pressed on its own, current altitude rounded to 100ft becomes the target altitude
 				me.nModeAlt.setValue(1);
 				me.nModeVs.setValue(0);
 			} 
