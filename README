@@ -16,7 +16,7 @@
       Author: Eric van den Berg
       Date: 2013-05-12
 
-      Last change:      2013-05-15
+      Last change:      2013-05-28
       Date:             Eric van den Berg
 
 ========================================================================
@@ -66,9 +66,23 @@ At 140 KIAS, gear:	Extend (Shift-G)
 At 120 KIAS, flaps:	15 degrees ( ] )
 At 109 KIAS, flaps:	30 degrees ( ] )
 Power for a 3deg descent, 80KIAS and landing configuration is ~30% TRQ
-Dont forget to brake. For reverse press R, will only switch when power lever is in aft position!
+Dont forget to brake. For reverse press R, will only toggle when power lever is in aft position!
 
 
 Engine shut-off: Press Ctrl-C (to cut the fuel)
 
-		 
+--------------------------------------------------------------------------------------------------------
+		
+Principle Autopilot functionality:
+- HDG 	Follows the heading bug
+- VS	Follows the VS bug (limited to +/-1600fpm)
+
+A roll mode (HDG, NAV/GPSS, APR/REV) must be engaged for a pitch mode (ALT, VS, GS) can engage.
+A roll mode (HDG, NAV/GPSS, APR/REV) must be engaged for the yaw trim to work
+If pitch trim is switched off, autotrim is not available, but the AP will indicate where to (manually) trim to.
+
+The AP will disengage when:
+- the disconnect switch is pressed
+- the stall warner is on
+- absolute g-force (disregarding 1-g gravity) exceeds 0.6g
+- manual electric pitch trim is used.  

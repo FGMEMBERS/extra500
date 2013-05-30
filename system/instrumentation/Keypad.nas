@@ -17,7 +17,7 @@
 #      Date: May 18 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             21.05.13
+#      Date:             29.05.13
 #
 
 
@@ -147,7 +147,7 @@ var Keypad = {
 		if (alt > 50000){alt = 50000;}
 		if (alt < 0){alt = 0;}
 			
-		autopilot.nSetTargetAltitudeFt.setValue(alt);
+		autopilot.nSetTargetAltitudeFt.setValue(100*int( alt/100) );
 	},
 	onAdjustAltitude : func(amount=nil){
 		if (amount!=nil){
@@ -161,10 +161,10 @@ var Keypad = {
 		}
 	},
 	onAltitudeSync : func(){
-		var value = me.nAltitude.getValue();
-		if (value > 50000){value = 50000;}
-		if (value < 0){value = 0;}	
-		autopilot.nSetTargetAltitudeFt.setValue(value);
+		var alt = me.nAltitude.getValue();
+		if (alt > 50000){alt = 50000;}
+		if (alt < 0){alt = 0;}	
+		autopilot.nSetTargetAltitudeFt.setValue( 100*int( alt/100 ) );
 	},
 	onFMS : func(amount=nil){
 		

@@ -19,11 +19,171 @@
       Author: Eric van den Berg
       Date: 2013-05-23
 
-      Last change:      -
-      Date:             -
+      Last change:      Eric van den Berg
+      Date:             2013-05-30
 -->
 
 <system name="indication">
+
+	<channel name="engineparameters">
+<!-- ENGINE -->
+
+		<fcs_function name="aircraft/engine/TRQ-perc">
+    			<function>
+      			<description>Indicated TRQ in percent</description>
+			<product>
+				<property>/extra500/instrumentation/EIP/state</property>   <!--to make sure pointer is at 0 when unit is off -->
+				<max>
+					<value>0</value>			<!-- preventing TRQ below 0 -->
+					<product>
+						<property>propulsion/engine/power-hp</property>
+						<value>493.797</value>
+						<pow>
+							<max>			<!-- preventing devision by 0 -->
+								<property>propulsion/engine/propeller-rpm</property>
+								<value>10</value>
+							</max>
+							<value>-1</value>
+						</pow>
+					</product>
+				</max>
+			</product>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/TOTr-degC">
+    			<function>
+       			<description>Indicated TOT when eng running</description>
+       				<table>
+            				<independentVar lookup="row">atmosphere/rho-slugs_ft3</independentVar>
+            				<independentVar lookup="column">aircraft/engine/TRQ-perc</independentVar>
+            				<tableData>
+				0	20	40	60	80	90	100	120	140
+		0.00097016	590	650	710	800	915	985	1020	1140	1250
+		0.0014552	580	605	620	680	775	810	880	980	1080
+		0.0019403	576	595	605	630	655	700	745	835	925
+		0.0025224	550	570	590	600	605	610	640	710	795
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/Delta-TOTsd-degC">
+    			<function>
+       			<description>TOT change when spooling down</description>
+				<product>
+					<property>aircraft/engine/dt-indication</property>
+					<value>0.00015</value>
+					<pow>
+						<max>
+							<value>0.1</value>
+							<property>propulsion/engine/n1</property>
+						</max>
+						<value>2</value>
+					</pow>
+					<sum>
+						<property>aircraft/engine/TOT-target-degC</property>
+						<product>
+							<value>-1</value>
+							<property>aircraft/engine/OT-target-degC</property>
+						</product>
+					</sum>
+				</product>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/Delta-OT-degC">
+    			<function>
+       			<description>Oil temp change</description>
+	 			<product>
+					<property>aircraft/engine/dt-indication</property>
+					<table>
+            					<independentVar lookup="row">propulsion/engine/power-hp</independentVar>
+            					<independentVar lookup="column">aircraft/engine/OT-degC</independentVar> 	<!-- to simulate the thermostat in the oil cooler-->
+            					<tableData>
+				-54		50		60		70	76	82
+			0	-0.01		-0.01		-0.015		-0.02	-0.02	-0.02
+			35	1.242		1.242		0.9		0.2	0.05	0
+			380	1.8417		1.8417		0.6		0.3	0.07	0
+			458	2.0707		2.0707		1.0		0.5	0.08	0
+            					</tableData>
+      					</table>
+				</product>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/OP-psi">
+    			<function>
+       			<description>Indicated Oil Pressure</description>
+				<product>
+					<property>/extra500/instrumentation/EIP/state</property>   <!--to make sure pointer is at 0 when unit is off -->
+	 				<sum>	
+						<property>aircraft/engine/OP-maxsetting-psi</property>
+						<value>-125</value>
+       						<table>
+            						<independentVar lookup="row">propulsion/engine/n1</independentVar>
+							<independentVar lookup="column">aircraft/engine/OT-degC</independentVar>	<!-- oil pressure dependence on oil temperature-->
+            						<tableData>
+						0	25	82
+					0	0	0	0
+					12	0	0	0
+					21	30	20	15
+					26	63	46	40	
+					42	135	123	48
+					60	139	135	60
+					70	143	140	100
+					72.5	147	145	116
+					75	149	147	119
+					80	151	150	122
+					90	154	153	124
+					100	155	154	125
+					110	156	155	125
+            						</tableData>
+      						</table>
+					</sum>
+				</product>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/n2">
+   			 <function>
+     			  <description>Indicated Oil Pressure</description>
+				<product>
+					<property>/extra500/instrumentation/EIP/state</property>   <!--to make sure pointer is at 0 when unit is off -->
+					<property>propulsion/engine/propeller-rpm</property>
+				</product>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/FPtarget-psi">
+   			 <function>
+      			 <description>Indicated Fuel Pressure</description>
+	 				<product>
+						<max>	
+							<property>aircraft/fuel/fuel-pump1</property>
+							<property>aircraft/fuel/fuel-pump2</property>
+						</max>
+						<table>
+            						<independentVar lookup="row">atmosphere/pressure-altitude</independentVar>
+							<independentVar lookup="column">aircraft/engine/FT-degC</independentVar>	
+            						<tableData>
+						-18	0	38	
+					-1000	22	21.5	21
+					9000	21	21	20.5
+					17500	21	20.5	20
+					20100	20.5	20	19.5
+					22000	20.5	19.5	19
+					22500	20.5	19	18.5
+					23100	20	18.5	18
+					23500	19	18	17.5
+					25000	18	16	15.5
+            						</tableData>
+      						</table>
+					</product>
+   			 </function>
+		</fcs_function>
+
+	</channel>
 
 	<channel name="fuel pressure">
 		<lag_filter name ="aircraft/engine/FP-psi">

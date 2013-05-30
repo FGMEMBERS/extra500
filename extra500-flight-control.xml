@@ -247,7 +247,7 @@
 	                          				<value>-1</value> 
                               				</sum>
 						</abs>
-                              			<property>/autopilot/vs-channel/cmd-ap-elev-pos-norm</property>	
+                              			<property>/autopilot/alt-channel/cmd-ap-elev-pos-norm</property>	
 					</product>
 				</sum>
 				</function>
