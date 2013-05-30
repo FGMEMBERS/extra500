@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             27.05.13
+      Date:             30.05.13
 -->
 <PropertyList>
 
@@ -131,6 +131,17 @@
 		<z-m>0.15108</z-m>
 	</offsets>
 </model>
+
+<model>
+  <name>TESTtc</name>
+  <path>Aircraft/Instruments-3d/tc/tc.xml</path>
+	<offsets>
+		<x-m>0.01</x-m>
+		<y-m>0.32591</y-m>
+		<z-m>0.062</z-m>
+	</offsets>
+</model>
+
 
 <!-- IFDs -->
 <model>
