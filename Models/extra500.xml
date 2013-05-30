@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             27.05.13
+      Date:             30.05.13
 
 -->
 
@@ -70,19 +70,6 @@
 	<pitch-deg>0</pitch-deg>
 	</offsets>
 </model>
-
-<!--
-<model>
-  <name>TESTtc</name>
-  <path>Aircraft/Instruments-3d/tc/tc.xml</path>
-	<offsets>
-		<x-m>-0.7065</x-m>
-		<y-m>0.33</y-m>	
-		<z-m>-0.1450</z-m>
-	<pitch-deg>-13</pitch-deg>
-	</offsets>
-</model>
--->
 
 <!-- panels -->
 <model>
