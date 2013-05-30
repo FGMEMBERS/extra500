@@ -105,14 +105,46 @@ var UserInterface = {
 	},
 };
 
-var oCockpit = UserInterface.new();
+var cockpit = UserInterface.new();
 
 var click = func(name,args=nil){
-	oCockpit.click(name,args);
+	cockpit.click(name,args);
 }
+
 var register = func(name,callback,args=nil){
-	oCockpit.register(name,callback,args);
+	cockpit.register(name,callback,args);
 }
+
 var echo = func(search=nil){
-	oCockpit.echo(search);
+	cockpit.echo(search);
 }
+
+
+
+var MessageSystem = {
+	new : func{
+		var m = {parents:[
+			MessageSystem
+		]};
+		m.color={};
+		m.color["Failure"]	= [0.8,0.0,0.0,1.0];
+		m.color["Warning"]	= [1.0,0.4,0.0,1.0];
+		m.color["Info"]		= [0.0,0.0,0.8,1.0];
+		
+		return m;
+	},
+	failure : func(msg){
+		screen.log.write(msg,me.color["Failure"][0],me.color["Failure"][1],me.color["Failure"][2],me.color["Failure"][3]);
+	},
+	warning : func(msg){
+		screen.log.write(msg,me.color["Warning"][0],me.color["Warning"][1],me.color["Warning"][2],me.color["Warning"][3]);
+	},
+	info : func(msg){
+		screen.log.write(msg,me.color["Info"][0],me.color["Info"][1],me.color["Info"][2],me.color["Info"][3]);
+	},
+	
+};
+
+var msg = MessageSystem.new();
+
+

@@ -135,6 +135,17 @@ var Engine = {
 		}else{
 			me._cutoffState = value == 0 ? 0 : 1 ;
 		}
+		
+		if (me._cutoffState == 0 and me.nIsRunning.getValue() == 0){
+			var n1 = me.nN1.getValue();
+			if (n1 > 12.0){
+				UI.msg.warning("Flame-Out : Turbine wird beschädigt wenn Treibstoff erst bei N1 > 12.0 % eingespritzt wird. Inspektion erforderlich.");
+			}
+			if (n1 < 8.0){
+				UI.msg.warning("Hot-Start : Turbine wird beschädigt wenn Treibstoff schon bei N1 < 8.0 % eingespritzt wird. Inspektion erforderlich.");
+			}
+		}
+		
 		me._checkIgnitionCutoff();
 	},
 	onReverserClick : func(value = nil){
