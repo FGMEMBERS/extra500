@@ -64,9 +64,9 @@
   <name>MagneticCompass</name>
   <path>Aircraft/extra500/Models/instruments/MagneticCompass.xml</path>
 	<offsets>
-		<x-m>-0.680</x-m>
+		<x-m>-0.56165</x-m>
 		<y-m>0</y-m>	
-		<z-m>0.09</z-m>
+		<z-m>0.12677</z-m>
 	<pitch-deg>0</pitch-deg>
 	</offsets>
 </model>
