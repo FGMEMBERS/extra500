@@ -41,8 +41,8 @@
    <heading-deg>60</heading-deg>
    <roll-deg>65</roll-deg>
    <pitch-deg>0</pitch-deg>
-   <x-m> -0.895 </x-m>
+   <x-m> -0.70 </x-m>
    <y-m> 0.31</y-m>
-   <z-m> -0.45 </z-m>
+   <z-m> -0.35 </z-m>
  </offsets>
 </PropertyList>
