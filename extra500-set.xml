@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2013-05-30
+      Date:             2013-05-31
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -421,12 +421,10 @@ JSBSim Extra Aircraft - Extra 500.
 		<pitch-error-gain type="double">-0.000015</pitch-error-gain>
 	</vs-channel>
 	<alt-channel>	
-		<gain>-1.0</gain>
-		<min-alt-error>-50</min-alt-error>
-		<max-alt-error>50</max-alt-error>
-		<alt-error-kp type="double">0.000002</alt-error-kp>
-		<alt-error-ki type="double">0.0</alt-error-ki>
-		<alt-error-kd type="double">0.00001</alt-error-kd>
+		<target-alt-ft>0.0</target-alt-ft>
+		<vs-target-gain>5.0</vs-target-gain>
+		<accel-rate-gain type="double">8000.0</accel-rate-gain>
+		<pitch-error-gain type="double">-0.000015</pitch-error-gain>
 	</alt-channel>
 	<pitchtrim-channel>
 		<servo-gain type="double">-0.05</servo-gain>			

@@ -17,7 +17,7 @@
 #      Date: May 18 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             29.05.13
+#      Date:             2013-05-31
 #
 
 var Autopilot = {
@@ -64,7 +64,8 @@ var Autopilot = {
 		m.nAPState 	= props.globals.getNode("/extra500/instrumentation/Autopilot/state");		
 		m.nTCSpin 	= props.globals.getNode("/instrumentation/turn-indicator/spin");			
 		m.nAPacc 	= props.globals.getNode("/autopilot/accsens-channel/ap-z-accel");
-		m.nCurrentAlt 	= props.globals.getNode("/instrumentation/altimeter-IFD-LH/indicated-altitude-ft");								
+		m.nCurrentAlt 	= props.globals.getNode("/instrumentation/altimeter-IFD-LH/indicated-altitude-ft");	
+		m.nAlterror 	= props.globals.getNode("/autopilot/alt-channel/alt-error-ft");															
 
 		
 		
@@ -406,14 +407,23 @@ var Autopilot = {
 			if ( me._CheckRollModeActive() == 1 ) {
 				me.nModeAlt.setValue(1);
 				me.nModeVs.setValue(1);
+				if ( math.abs( me.nSetVerticalSpeedFpm.getValue() ) < 100 ) {
+					me.nSetVerticalSpeedFpm.setValue( math.sgn( me.nAlterror.getValue() ) * -700 );
+				}
 			} 
 		} else if ( ( me.nModeAlt.getValue() == 1 ) and (me.nModeVs.getValue() == 0) ) {
 			if ( me._CheckRollModeActive() == 1 ) {
 				me.nModeVs.setValue(1);
+				if ( math.abs( me.nSetVerticalSpeedFpm.getValue() ) < 100 ) {
+					me.nSetVerticalSpeedFpm.setValue( math.sgn( me.nAlterror.getValue() ) * -700 );
+				}
 			} 
 		} else if ( ( me.nModeAlt.getValue() == 0 ) and (me.nModeVs.getValue() == 1) ) {
 			if ( me._CheckRollModeActive() == 1 ) {
 				me.nModeAlt.setValue(1);
+				if ( math.abs( me.nSetVerticalSpeedFpm.getValue() ) < 100 ) {
+					me.nSetVerticalSpeedFpm.setValue( math.sgn( me.nAlterror.getValue() ) * -700 );
+				}
 			} 
 		} else {
 				me.nModeAlt.setValue(0);
