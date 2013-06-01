@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-05-28
+      Date:             2013-05-31
 -->
 
 <flight_control name="FCS: extra500">
@@ -56,6 +56,21 @@
                         </abs>
                   </product>
             </sum>
+    	</function>
+	</fcs_function>
+
+	<fcs_function name="aircraft/hstab/elevator/H0-lbsft">
+    	<function>
+      	<description>coeff around elevator hinge line due to unsymmetrical elevator</description>
+            <product>
+                       	<property>aircraft/hstab/elevator/Ch0</property>
+            		<value>0.5</value>
+            		<property>atmosphere/rho-slugs_ft3</property>
+            		<property>velocities/hstab/v-fps</property>
+            		<property>velocities/hstab/v-fps</property>
+            		<property>aircraft/hstab/elevator/S-ft2</property>
+            		<property>aircraft/hstab/elevator/c_aero-ft</property>
+            </product>
     	</function>
 	</fcs_function>
 
@@ -144,6 +159,7 @@
                   	<value>-1</value>   
             		</pow>
             		<sum>
+				<property>aircraft/hstab/elevator/H0-lbsft</property>
                   		<property>aircraft/hstab/elevator/H-nz-lbsft</property>
                   		<property>aircraft/hstab/elevator/H-ds-lbsft</property>
                   		<property>aircraft/hstab/elevator/H-bw-lbsft</property>
@@ -303,6 +319,7 @@
 	<fcs_function name="aircraft/hstab/elevator/H-total-lbsft">
     	<function>
       		<sum>
+			<property>aircraft/hstab/elevator/H0-lbsft</property>
             		<property>aircraft/hstab/elevator/H-nz-lbsft</property>
             		<property>aircraft/hstab/elevator/H-ds-lbsft</property>
             		<property>aircraft/hstab/elevator/H-bw-lbsft</property>
