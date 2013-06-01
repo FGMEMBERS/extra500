@@ -47,9 +47,19 @@ var AvidyneIFD = {
 		
 		m.hdg = 0;
 		m.speed = 0 ;
+		m.pitch = 0;
+		m.roll = 0;
+		
+		m.nImage = m.primaryFlightDisplay.createChild("image");
+		m.nImage.set("file", "Models/instruments/IFDs/IFDtest.png");
+		m.nImage.setSize(2410,905);
+		m.nImage.updateCenter();
 		
 		m.nIndicatedHeading = props.globals.initNode("/instrumentation/heading-indicator-IFD-RH/indicated-heading-deg",0.0,"DOUBLE");
 		m.nIndicatedAirspeed = props.globals.initNode("/instrumentation/airspeed-indicator-IFD-RH/indicated-speed-kts",0.0,"DOUBLE");
+		m.nPitchDeg = props.globals.initNode("/orientation/pitch-deg",0.0,"DOUBLE");
+		m.nRollDeg = props.globals.initNode("/orientation/roll-deg",0.0,"DOUBLE");
+		
 		m.TestText = m.primaryFlightDisplay.getElementById("TestText");
 		m.TestText.updateCenter();
 		
@@ -69,10 +79,18 @@ var AvidyneIFD = {
 			me.speed = 0;
 		}
 		me.hdg = me.nIndicatedHeading.getValue();
+		me.pitch = me.nPitchDeg.getValue();
+		me.roll = me.nRollDeg.getValue();
+		
+		
 		me.CompassRose.setRotation(-me.hdg * TORAD);
 		
 		#me.TestText.setTranslation(0,me.nIndicatedAirspeed.getValue());
 		me.TestText.setTranslation(0,me.speed);
+		
+		me.nImage.setTranslation(0,me.pitch);
+		me.nImage.setRotation(-me.roll * TORAD);
+		
 	},	
 	
 };
