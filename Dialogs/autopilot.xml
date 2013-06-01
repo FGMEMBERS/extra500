@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
-      Date:             21.05.13
+      Last change:      Eric van den Berg
+      Date:             2013-06-01
 -->
 
 <PropertyList>
@@ -36,7 +36,7 @@
 		
 		var lYawTrim = setlistener(extra500.autopilot.nSetYawTrim,func(n){ nYawTrim.setValue(n.getValue());},1);
 		var lAltitude = setlistener(extra500.autopilot.nSetHeadingBugDeg,func(n){ nHeading.setValue(n.getValue());},1);
-		var lHeading = setlistener(extra500.autopilot.nSetTargetAltitudeFt,func(n){ nAltitude.setValue(n.getValue());},1);
+		var lHeading = setlistener(extra500.autopilot.nSetAltitudeBugFt,func(n){ nAltitude.setValue(n.getValue());},1);
 		var lVs = setlistener(extra500.autopilot.nSetVerticalSpeedFpm,func(n){ nVs.setValue(n.getValue());},1);
 		
 		]]>

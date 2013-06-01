@@ -17,7 +17,7 @@
 #      Date: May 18 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             2013-05-31
+#      Date:             2013-06-01
 #
 
 var Autopilot = {
@@ -57,7 +57,8 @@ var Autopilot = {
 		m.nSetPitchTrimDown 	= props.globals.initNode("/autopilot/settings/pitchTrim-down",0,"BOOL");	# Yoke Pitch Trim down
 		m.nSetCws 		= props.globals.initNode("/autopilot/settings/cws",0,"BOOL");			# Yoke CWS
 		m.nSetHeadingBugDeg 	= props.globals.initNode("/autopilot/settings/heading-bug-deg",0,"DOUBLE");	# Keypad 
-		m.nSetTargetAltitudeFt 	= props.globals.initNode("/autopilot/settings/target-altitude-ft",0,"DOUBLE");	# Keypad
+		m.nSetAltitudeBugFt 	= props.globals.initNode("/autopilot/settings/target-altitude-ft",0,"DOUBLE");	# Keypad
+		m.nSetTargetAltitudeFt 	= props.globals.initNode("/autopilot/alt-channel/target-alt-ft",0,"DOUBLE");
 		m.nSetVerticalSpeedFpm 	= props.globals.initNode("/autopilot/settings/vertical-speed-fpm",0,"DOUBLE");  # Autopilot Panel
 		#m.nSetPitchTrim = props.globals.initNode("/autopilot/settings/pitchTrim",0,"DOUBLE"); depredicated
 		
@@ -395,6 +396,7 @@ var Autopilot = {
 		if ( me.nModeAlt.getValue() == 0 ){
 			if ( me._CheckRollModeActive() == 1 ) {
 				me.nSetTargetAltitudeFt.setValue( 100 * int( me.nCurrentAlt.getValue()/100 ) );			# if ALT knob is pressed on its own, current altitude rounded to 100ft becomes the target altitude
+				me.nSetAltitudeBugFt.setValue( 100 * int( me.nCurrentAlt.getValue()/100 ) );			# setting bug (indicated on IFD)
 				me.nModeAlt.setValue(1);
 				me.nModeVs.setValue(0);
 			} 
@@ -436,6 +438,10 @@ var Autopilot = {
 				me.nModeVs.setValue(1);
 				me.nModeAlt.setValue(0);
 			} 
+		} else if ( ( me.nModeVs.getValue() == 1 ) and (me.nModeAlt.getValue() == 1 ) ) {
+			me.nSetTargetAltitudeFt.setValue( 100 * int( me.nCurrentAlt.getValue()/100 ) );			# if VS+ALT mode, just alt mode set current altitude as target 
+			me.nSetAltitudeBugFt.setValue( 100 * int( me.nCurrentAlt.getValue()/100 ) );			# setting bug (indicated on IFD)
+			me.nModeVs.setValue(0);
 		} else {
 			me.nModeVs.setValue(0);
 		}

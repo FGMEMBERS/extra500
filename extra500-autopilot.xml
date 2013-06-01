@@ -295,9 +295,29 @@
 			</function>
 		</fcs_function>
 
+		<fcs_function name="/autopilot/alt-channel/turnrate-gain2">
+			<function>
+				<product>
+					<property>/autopilot/alt-channel/turnrate-gain</property>
+					<sum>
+						<value>1.0</value>
+						<pow>
+							<property>/autopilot/alt-channel/turnrate-gain</property>
+							<value>-1.0</value>
+						</pow>
+						<abs>
+							<property>/instrumentation/turn-indicator/indicated-turn-rate</property>
+						</abs>
+					</sum>
+				</product>
+			</function>
+			<output>/autopilot/alt-channel/turnrate-gain2</output>
+		</fcs_function>
+
 		<fcs_function name="/autopilot/alt-channel/pitch-error">
 			<function>
 				<product>
+					<property>/autopilot/alt-channel/turnrate-gain2</property>						
 					<property>/autopilot/alt-channel/pitch-error-gain</property>
 					<sum>
 						<property>/autopilot/alt-channel/vs-error-fpm</property>
@@ -319,12 +339,13 @@
 			<output>/autopilot/alt-channel/pitch-error</output>
 		</switch>
 
+
+
 		<fcs_function name="/autopilot/alt-channel/cmd-ap-elev-pos-norm-raw">
 			<function>
 				<sum>
 					<property>fcs/elevator-cmd-tot</property>	
 					<product>
-						<value>1.0</value>
 						<property>/autopilot/alt-channel/pitch-error</property>
 						<property>sim-dt-sec</property>
 					</product>
