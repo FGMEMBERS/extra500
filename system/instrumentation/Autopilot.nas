@@ -446,7 +446,7 @@ var Autopilot = {
 			value += amount;
 			if (value > 1600){value = 1600;}
 			if (value < -1600){value = -1600;}
-			me.nSetVerticalSpeedFpm.setValue(value);
+			me.nSetVerticalSpeedFpm.setValue(100*int(value/100 ));
 		}else{
 			me.nSetVerticalSpeedFpm.setValue(0);
 		}
