@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             30.05.13
+      Date:             31.05.13
 -->
 <PropertyList>
 
@@ -104,10 +104,10 @@
   <name>InstrumentFlapsGear</name>
   <path>Aircraft/extra500/Models/instruments/InstrumentFlapsGear.xml</path>
 	<offsets>
-		<x-m>0.01329</x-m>
+		<x-m>0.01977</x-m>
 		<y-m>0</y-m>	
-		<z-m>-0.25968</z-m>
-	<pitch-deg>-20</pitch-deg>
+		<z-m>-0.25474</z-m>
+	<pitch-deg>-32</pitch-deg>
 	</offsets>
 </model>
 
