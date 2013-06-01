@@ -39,35 +39,57 @@ var AvidyneIFD = {
 		# ... and place it on the object called PFD-Screen
 		m.canvas.addPlacement({"node": "RH-IFD.Screen"});
 		m.canvas.setColorBackground(1,1,1);
-		
-		
-		m.primaryFlightDisplay = m.canvas.createGroup();
-		canvas.parsesvg(m.primaryFlightDisplay, "Models/instruments/IFDs/RH-IFD_CanvasTest.svg");
-		
-		
 		m.hdg = 0;
 		m.speed = 0 ;
 		m.pitch = 0;
 		m.roll = 0;
-		
-		m.nImage = m.primaryFlightDisplay.createChild("image");
-		m.nImage.set("file", "Models/instruments/IFDs/IFDtest.png");
-		m.nImage.setSize(2410,905);
-		m.nImage.updateCenter();
+		m.hdgBug = 0;
 		
 		m.nIndicatedHeading = props.globals.initNode("/instrumentation/heading-indicator-IFD-RH/indicated-heading-deg",0.0,"DOUBLE");
 		m.nIndicatedAirspeed = props.globals.initNode("/instrumentation/airspeed-indicator-IFD-RH/indicated-speed-kts",0.0,"DOUBLE");
 		m.nPitchDeg = props.globals.initNode("/orientation/pitch-deg",0.0,"DOUBLE");
 		m.nRollDeg = props.globals.initNode("/orientation/roll-deg",0.0,"DOUBLE");
+		#m.nHeadingBug = props.globals.initNode("/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg",0.0,"DOUBLE");
 		
-		m.TestText = m.primaryFlightDisplay.getElementById("TestText");
-		m.TestText.updateCenter();
+	# creating Displays 
+		m.primaryFlightDisplay = m.canvas.createGroup();
+		
+		m.nHorizon = m.primaryFlightDisplay.createChild("image");
+		m.nHorizon.set("file", "Models/instruments/IFDs/IFDtest.png");
+		m.nHorizon.setSize(2410,1810);
+		m.nHorizon.setScale(2.0);
+		
+		m.nHorizonTF = m.nHorizon.createTransform();
+		m.nHorizonTF.setTranslation(-2410*1/2,-1810*3/4);
+		
+		m.nHorizon.updateCenter();
+		
+	#loading svg
+		canvas.parsesvg(m.primaryFlightDisplay, "Models/instruments/IFDs/RH-IFD_CanvasTest.svg");
+		
+		
+		
+		
+		
+		#m.nHorizon.setTranslation(1205,450);
 		
 		m.CompassRose = m.primaryFlightDisplay.getElementById("CompassRose");
+		m.CompassRose.updateCenter();
+		
+		
+		m.HeadingBug = m.primaryFlightDisplay.getElementById("HeadingBug");
+		m.HeadingBug.updateCenter();
+		
+		m.Heading = m.primaryFlightDisplay.getElementById("Heading");
+		m.HeadingSelected = m.primaryFlightDisplay.getElementById("HeadingSelected");
+		#m.Heading.updateCenter();
+		
+		
+		
 		#m.CompassRose.updateCenter();
 		#m.CompassRose.setTranslation(100, -100);
 		#m.CompassRose.setCenter(356,-356);
-		m.CompassRose.updateCenter();
+		
 		#m.tfCompassRose = m.CompassRose.createTransform();
 		debug.dump("AvidyneIFD.new() ... IFD created.");
 		#debug.dump(m.CompassRose.getBoundingBox());
@@ -78,21 +100,33 @@ var AvidyneIFD = {
 		if (me.speed > 200){
 			me.speed = 0;
 		}
+		
+		
+		
+		
+		me.HeadingSelected.setText(sprintf("%03i",me.hdgBug));
+		
+		
+		#me.TestText.setTranslation(0,me.nIndicatedAirspeed.getValue());
+		#me.HeadingBug.setTranslation(0,me.speed);
+		
+	
+	},	
+	animationUpdate : func(now,dt){
 		me.hdg = me.nIndicatedHeading.getValue();
+		me.hdgBug = extra500.autopilot.nSetHeadingBugDeg.getValue();
+		
 		me.pitch = me.nPitchDeg.getValue();
 		me.roll = me.nRollDeg.getValue();
 		
+		me.Heading.setText(sprintf("%03i",me.hdg));
 		
 		me.CompassRose.setRotation(-me.hdg * TORAD);
+		me.HeadingBug.setRotation((me.hdgBug-me.hdg) * TORAD);
 		
-		#me.TestText.setTranslation(0,me.nIndicatedAirspeed.getValue());
-		me.TestText.setTranslation(0,me.speed);
-		
-		me.nImage.setTranslation(0,me.pitch);
-		me.nImage.setRotation(-me.roll * TORAD);
-		
-	},	
-	
+		me.nHorizon.setTranslation(0,me.pitch*10);
+		me.nHorizon.setRotation(-me.roll * TORAD);
+	},
 };
 
 

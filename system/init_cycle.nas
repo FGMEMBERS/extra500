@@ -197,7 +197,9 @@ var simulationCall = func(now,dt){
 var animationCall = func(now,dt){
 	
 	
-	extra500.engineInstrumentPackage.animationUpdate(now,dt);
+	#extra500.engineInstrumentPackage.animationUpdate(now,dt);
+	IFD.RH.animationUpdate(now,dt);
+	
 	
 	
 }
@@ -220,7 +222,7 @@ var simulationLoop = MainLoop.new(props.globals.initNode("extra500/debug/Loop/si
 #				#
 #################################
 
-#var animationLoop = MainLoop.new(props.globals.initNode("extra500/debug/Loop/animation"),animationCall,20);
+var animationLoop = MainLoop.new(props.globals.initNode("extra500/debug/Loop/animation"),animationCall,20);
 
 var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 	
@@ -228,7 +230,7 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 	init_listener = nil;
 	
 	settimer(func{ simulationLoop.start(); },2);
-	#settimer(func{ animationLoop.start(); },2);
+	settimer(func{ animationLoop.start(); },2);
 	
 	print("simulation Cycle ... check");
 	
