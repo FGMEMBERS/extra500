@@ -16,7 +16,7 @@
       Author: Eric van den Berg
       Date: 2013-05-12
 
-      Last change:      2013-05-28
+      Last change:      2013-05-31
       Date:             Eric van den Berg
 
 ========================================================================
@@ -73,10 +73,13 @@ Engine shut-off: Press Ctrl-C (to cut the fuel)
 
 --------------------------------------------------------------------------------------------------------
 		
-Principle Autopilot functionality:
-- HDG 	Follows the heading bug
-- VS	Follows the VS bug (limited to +/-1600fpm)
+Principle Autopilot functionality (currently in place):
+- HDG 		Follows the heading bug
+- VS		Follows the VS bug (limited to +/-1600fpm)
+- ALT 		Holds the current altitude (rounded to 100ft)
+- ALT+VS	Brings and holds the aircraft to the selected altitude with the selected vertical speed.
 
+General remarks to autopilot operation:
 A roll mode (HDG, NAV/GPSS, APR/REV) must be engaged for a pitch mode (ALT, VS, GS) can engage.
 A roll mode (HDG, NAV/GPSS, APR/REV) must be engaged for the yaw trim to work
 If pitch trim is switched off, autotrim is not available, but the AP will indicate where to (manually) trim to.
