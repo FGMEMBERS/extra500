@@ -60,6 +60,9 @@ var AvidyneIFD = {
 		m.nVerticalSpeedBug = props.globals.initNode("/autopilot/settings/vertical-speed-fpm",0.0,"DOUBLE");
 		m.nAltitudeBug = props.globals.initNode("/autopilot/settings/target-altitude-ft",0.0,"DOUBLE");
 		m.nOAT = props.globals.initNode("/environment/temperature-degc",0.0,"DOUBLE");
+		m.nTAS = props.globals.initNode("/instrumentation/airspeed-IFD-RH/true-speed-kt",0.0,"DOUBLE");
+		m.nhPa = props.globals.initNode("/instrumentation/altimeter-IFD-RH/setting-hpa",0.0,"DOUBLE");
+		
 		#m.nHeadingBug = props.globals.initNode("/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg",0.0,"DOUBLE");
 		
 	# creating Displays 
@@ -109,6 +112,10 @@ var AvidyneIFD = {
 		
 		m.AltBugIndicated = m.primaryFlightDisplay.getElementById("AltBugIndicated");
 		
+		m.cOAT = m.primaryFlightDisplay.getElementById("OAT");
+		m.cTAS = m.primaryFlightDisplay.getElementById("TAS");
+		m.cHPA = m.primaryFlightDisplay.getElementById("hPa");
+		
 		
 		#m.CompassRose.updateCenter();
 		#m.CompassRose.setTranslation(100, -100);
@@ -128,9 +135,9 @@ var AvidyneIFD = {
 		me.vsNeedle = me.nVerticalSpeedNeedle.getValue();
 		me.vsBug = me.nVerticalSpeedBug.getValue();
 		me.altBug = me.nAltitudeBug.getValue();
-		me.OAT = 0;
-		me.TAS = 0;
-		me.hPa = 0;
+		me.OAT = me.nOAT.getValue();
+		me.TAS = me.nTAS.getValue();
+		me.hPa = me.nhPa.getValue();
 		
 		me.HeadingSelected.setText(sprintf("%03i",me.hdgBug));
 		
@@ -138,7 +145,9 @@ var AvidyneIFD = {
 		me.VerticalSpeedNeedle.setRotation((me.vsNeedle/100*1.8) * TORAD);
 		me.VerticalSpeedBug.setRotation((me.vsBug/100*1.8) * TORAD);
 		me.AltBugIndicated.setText(sprintf("%4i",me.altBug));
-		
+		me.cOAT.setText(sprintf("%2i",me.OAT));
+		me.cTAS.setText(sprintf("%3i",me.TAS));
+		me.cHPA.setText(sprintf("%4i",me.hPa));
 		
 		#me.TestText.setTranslation(0,me.nIndicatedAirspeed.getValue());
 		#me.HeadingBug.setTranslation(0,me.speed);
