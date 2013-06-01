@@ -772,6 +772,7 @@ JSBSim Extra Aircraft - Extra 500.
                         <elevator>
                               	<H-static-lbsft>2.0</H-static-lbsft>
 				<H-total-lbsft>0.0</H-total-lbsft>			<!--dummy value -->
+				<Ch0>-0.05</Ch0>
                               	<Ch_de>-0.35</Ch_de>
                               	<Ch_de2>0.0</Ch_de2>                     		<!--non linear part of Ch_de -->
                               	<Ch_alpha>-0.05</Ch_alpha>
