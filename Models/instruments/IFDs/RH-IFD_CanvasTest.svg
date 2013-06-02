@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.50980392"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="816.6467"
-     inkscape:cy="970.18513"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="927.62825"
+     inkscape:cy="1119.0992"
      inkscape:document-units="px"
      inkscape:current-layer="svg2"
      showgrid="false"
@@ -1474,8 +1474,8 @@
   </g>
   <path
      sodipodi:type="arc"
-     style="fill:none;stroke:#ffffff;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-     id="path11910"
+     style="fill:none;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+     id="AttitudeCircle"
      sodipodi:cx="1182.2201"
      sodipodi:cy="449.28571"
      sodipodi:rx="336.35129"
@@ -1760,6 +1760,14 @@
        d="m 1518.5714,449.28571 a 336.35129,365 0 1 1 -672.7026,0 336.35129,365 0 1 1 672.7026,0 z"
        transform="matrix(1.103474,1.5188015,-1.4106056,1.024865,2110.7748,-1784.1637)" />
   </g>
+  <rect
+     ry="37.889297"
+     y="85.802666"
+     x="2088.6599"
+     height="75.778595"
+     width="273.36465"
+     id="rect14282"
+     style="fill:#cccccc;stroke:#ffffff;stroke-width:3.03393507000000007;stroke-miterlimit:4;stroke-dasharray:none;opacity:0.25" />
   <text
      xml:space="preserve"
      style="font-size:65.7323761px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ff0eeb;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
@@ -1794,6 +1802,14 @@
        transform="matrix(0.75349504,0.75349504,-0.69981776,0.69981776,627.9069,-759.69181)" />
   </g>
   <rect
+     style="fill:#cccccc;stroke:#ffffff;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;opacity:0.25"
+     id="rect14284"
+     width="420.70526"
+     height="77.404961"
+     x="1646.23"
+     y="786.22992"
+     ry="38.70248" />
+  <rect
      ry="37.341824"
      y="88.921661"
      x="1647.4932"
@@ -1801,6 +1817,14 @@
      width="418.17896"
      id="rect14247"
      style="fill:none;stroke:#ffffff;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none" />
+  <rect
+     ry="36.575958"
+     y="87.642166"
+     x="1646.2136"
+     height="73.151917"
+     width="420.73795"
+     id="rect14286"
+     style="fill:#cccccc;stroke:#ffffff;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;opacity:0.25" />
   <text
      xml:space="preserve"
      style="font-size:65.7323761px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ff0eeb;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
@@ -1844,39 +1868,15 @@
        x="228.10909"
        sodipodi:role="line">71%</tspan></text>
   <rect
-     ry="37.889297"
-     y="85.802666"
-     x="2088.6599"
-     height="75.778595"
-     width="273.36465"
-     id="rect14282"
-     style="fill:none;stroke:#ffffff;stroke-width:3.03393507;stroke-miterlimit:4;stroke-dasharray:none" />
-  <rect
-     style="fill:none;stroke:#ffffff;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none"
-     id="rect14284"
-     width="420.70526"
-     height="77.404961"
-     x="1646.23"
-     y="786.22992"
-     ry="38.70248" />
-  <rect
-     ry="36.575958"
-     y="87.642166"
-     x="1646.2136"
-     height="73.151917"
-     width="420.73795"
-     id="rect14286"
-     style="fill:none;stroke:#ffffff;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none" />
-  <rect
      ry="38.70248"
      y="781.03131"
      x="359.25504"
      height="77.404961"
      width="420.70526"
      id="rect14299"
-     style="fill:none;stroke:#ffffff;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none" />
+     style="fill:#cccccc;stroke:#ffffff;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;opacity:0.25" />
   <rect
-     style="fill:none;stroke:#ffffff;stroke-width:3.03393507;stroke-miterlimit:4;stroke-dasharray:none"
+     style="fill:#cccccc;stroke:#ffffff;stroke-width:3.03393507000000007;stroke-miterlimit:4;stroke-dasharray:none;opacity:0.25"
      id="rect14301"
      width="273.36465"
      height="75.778595"
