@@ -20,10 +20,12 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-06-01
+      Date:             2013-06-02
 -->
 
 <autopilot name="STEC55X">
+
+<!--**************************************AP COMPUTER ACCELERATION SENSOR********************************************************-->
 
 <!--this the acceleration sensor in the AP computer (in the glareshield). It is used to dampen the pitch motion-->
 	<channel name="accelsensor">
@@ -45,7 +47,7 @@
 
 	</channel>
 
-<!--*********************************************************************************************************************-->
+<!--*****************************************ALTITUDE SENSOR*****************************************************************-->
 
 	<channel name="altitudesensor">
 <!-- this is the dedicated AP altitude sensor (with its own static system) ,located in the tail cone. It is used to mnge vertical speed and altitude hold-->
@@ -86,10 +88,10 @@
 		</fcs_function>
 	</channel>
 
-<!--*********************************************************************************************************************-->
+<!--***************************************HEADING**********************************************************************-->
 
 	<channel name="heading">
-<!-- this is the heading channel. when the hdg mode is active, the hdg bug of the LH FID is followed-->
+<!-- this is the heading channel. when the hdg mode is active, the hdg bug of the LH IFD is followed-->
 
 <!--the heading error is clipped to -20 to 20 deg -->
 		<pure_gain name="/autopilot/hdg-channel/lmd-hdg-error">
@@ -176,7 +178,7 @@
 
 	</channel>
 
-<!--*********************************************************************************************************************-->
+<!--********************************VERTICAL SPEED****************************************************************-->
 
 	<channel name="verticalspeed">
 
@@ -250,7 +252,7 @@
 
 	</channel>
 
-<!--*********************************************************************************************************************-->
+<!--********************************ALTITUDE HOLD*************************************************************************-->
 
 	<channel name="althold">
 
@@ -274,6 +276,33 @@
 			</function>
 		</fcs_function>
 
+		<fcs_function name="/autopilot/alt-channel/turnrate-gain2">
+			<function>
+				<sum>
+					<value>1.0</value>
+					<product>
+						<property>/autopilot/alt-channel/turnrate-gain</property>
+						<abs>
+							<property>/instrumentation/turn-indicator/indicated-turn-rate</property>
+						</abs>
+					</product>		
+				</sum>
+			</function>
+			<output>/autopilot/alt-channel/turnrate-gain2</output>
+		</fcs_function>
+
+		<fcs_function name="/autopilot/alt-channel/acc-offset">
+			<function>
+					<product>
+						<property>/autopilot/alt-channel/acc-offset-gain</property>
+						<abs>
+							<property>/instrumentation/turn-indicator/indicated-turn-rate</property>
+						</abs>
+					</product>		
+			</function>
+			<output>/autopilot/alt-channel/acc-offset</output>
+		</fcs_function>									
+
 		<fcs_function name="/autopilot/alt-channel/vs-target-fpm">
 			<function>
 				<product>
@@ -295,35 +324,22 @@
 			</function>
 		</fcs_function>
 
-		<fcs_function name="/autopilot/alt-channel/turnrate-gain2">
-			<function>
-				<product>
-					<property>/autopilot/alt-channel/turnrate-gain</property>
-					<sum>
-						<value>1.0</value>
-						<pow>
-							<property>/autopilot/alt-channel/turnrate-gain</property>
-							<value>-1.0</value>
-						</pow>
-						<abs>
-							<property>/instrumentation/turn-indicator/indicated-turn-rate</property>
-						</abs>
-					</sum>
-				</product>
-			</function>
-			<output>/autopilot/alt-channel/turnrate-gain2</output>
-		</fcs_function>
 
 		<fcs_function name="/autopilot/alt-channel/pitch-error">
 			<function>
 				<product>
-					<property>/autopilot/alt-channel/turnrate-gain2</property>						
 					<property>/autopilot/alt-channel/pitch-error-gain</property>
 					<sum>
-						<property>/autopilot/alt-channel/vs-error-fpm</property>
+						<product>
+							<property>/autopilot/alt-channel/turnrate-gain2</property>						
+							<property>/autopilot/alt-channel/vs-error-fpm</property>
+						</product>
 						<product>	
 							<property>/autopilot/alt-channel/accel-rate-gain</property>
-							<property>/autopilot/accsens-channel/ap-z-accel</property>
+							<sum>
+								<property>/autopilot/accsens-channel/ap-z-accel</property>
+								<property>/autopilot/alt-channel/acc-offset</property>
+							</sum>
 						</product>	
 					</sum>
 				</product>
@@ -453,7 +469,7 @@
 
 	</channel>
 
-<!--*********************************************************************************************************************-->
+<!--****************************AUTO TRIM*****************************************************************************-->
 
 	<channel name="autotrim">
 <!-- autotrim active when a pitch mode is active and the pitch trim switch is on-->
