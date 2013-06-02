@@ -20,11 +20,12 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-05-31
+      Date:             2013-06-01
 -->
 
 <autopilot name="STEC55X">
 
+<!--this the acceleration sensor in the AP computer (in the glareshield). It is used to dampen the pitch motion-->
 	<channel name="accelsensor">
 		<accelerometer name="/autopilot/accsens-channel/ap-z-accelsensor">
 			<location unit="M">
@@ -44,8 +45,10 @@
 
 	</channel>
 
-	<channel name="altitudesensor">
+<!--*********************************************************************************************************************-->
 
+	<channel name="altitudesensor">
+<!-- this is the dedicated AP altitude sensor (with its own static system) ,located in the tail cone. It is used to mnge vertical speed and altitude hold-->
 		<fcs_function name="/autopilot/altsensor/vs-fpm-unfiltered">
 			<function>
 				<product>
@@ -83,8 +86,12 @@
 		</fcs_function>
 	</channel>
 
+<!--*********************************************************************************************************************-->
 
 	<channel name="heading">
+<!-- this is the heading channel. when the hdg mode is active, the hdg bug of the LH FID is followed-->
+
+<!--the heading error is clipped to -20 to 20 deg -->
 		<pure_gain name="/autopilot/hdg-channel/lmd-hdg-error">
 			<input>/instrumentation/heading-indicator-IFD-LH/heading-bug-error-deg</input>
 			<gain>1.0</gain>
@@ -94,6 +101,7 @@
 			</clipto>
 		</pure_gain>
 
+<!--determining the target turn rate using the hdg error. Note that kp and the clipped hdg error determines the maximum turnrate-->
 		<pid name="/autopilot/hdg-channel/target-turn-rate">
 			<input>/autopilot/hdg-channel/lmd-hdg-error</input>
 			<kp>/autopilot/hdg-channel/lmd-hdg-error-kp</kp>							<!--180deg/min devided by 25deg -->
@@ -101,6 +109,7 @@
 			<kd>/autopilot/hdg-channel/lmd-hdg-error-kd</kd>
 		</pid>
 		
+<!-- the turn rate (inverted) as measured by the turn coordinator in deg/s (RH panel) -->
 		<fcs_function name="/autopilot/hdg-channel/turn-rate-inv">
 			<function>
 				<product>
@@ -110,6 +119,7 @@
 			</function>
 		</fcs_function>
 
+<!-- the turn rate error -->
 		<fcs_function name="/autopilot/hdg-channel/turn-rate-error">
 			<function>
 				<sum>
@@ -119,6 +129,7 @@
 			</function>
 		</fcs_function>
 
+<!-- the commanded aileron position change using the turn rate error -->
 		<pid name="/autopilot/hdg-channel/cmd-ail-change">
 			<input>/autopilot/hdg-channel/turn-rate-error</input>
 			<kp>/autopilot/hdg-channel/turn-rate-error-kp</kp>							
@@ -126,6 +137,7 @@
 			<kd>/autopilot/hdg-channel/turn-rate-error-kd</kd>
 		</pid>
 
+<!-- calculating the new aileron position-->
 		<fcs_function name="/autopilot/hdg-channel/cmd-ap-ail-pos-norm-raw">
 			<function>
 				<sum>
@@ -140,7 +152,8 @@
 			</function>
 			<output>/autopilot/hdg-channel/cmd-ap-ail-pos-norm-raw</output>
 		</fcs_function>
-	
+
+<!-- making sure the aileron servo is not going to fast-->	
 		<actuator name="/autopilot/hdg-channel/ail-servo">
 			<input>/autopilot/hdg-channel/cmd-ap-ail-pos-norm-raw</input>
 			<rate_limit>0.2</rate_limit>
@@ -163,8 +176,13 @@
 
 	</channel>
 
+<!--*********************************************************************************************************************-->
+
 	<channel name="verticalspeed">
 
+<!-- active when vs mode is on-->
+
+<!-- the vertical speed error using the VSbug and altitude sensor-->
 		<fcs_function name="/autopilot/vs-channel/vs-error-fpm">
 			<function>
 				<sum>
@@ -177,6 +195,7 @@
 			</function>
 		</fcs_function>
 
+<!-- pitch error (NOT in deg) using the vs error, dampened by the accel sensor inthe AP computer-->
 		<fcs_function name="/autopilot/vs-channel/pitch-error">
 			<function>
 				<product>
@@ -193,6 +212,7 @@
 			</function>
 		</fcs_function>
 
+<!-- moving the elevator -->
 		<fcs_function name="/autopilot/vs-channel/cmd-ap-elev-pos-norm-raw">
 			<function>
 				<sum>
@@ -208,6 +228,7 @@
 			<output>/autopilot/vs-channel/cmd-ap-elev-pos-norm-raw</output>
 		</fcs_function>
 
+<!-- limiting the elevator movement speed -->
 		<actuator name="/autopilot/vs-channel/pitch-servo">
 			<input>/autopilot/vs-channel/cmd-ap-elev-pos-norm-raw</input>
 			<rate_limit>0.2</rate_limit>
@@ -228,6 +249,8 @@
 		</switch>
 
 	</channel>
+
+<!--*********************************************************************************************************************-->
 
 	<channel name="althold">
 
@@ -272,9 +295,29 @@
 			</function>
 		</fcs_function>
 
+		<fcs_function name="/autopilot/alt-channel/turnrate-gain2">
+			<function>
+				<product>
+					<property>/autopilot/alt-channel/turnrate-gain</property>
+					<sum>
+						<value>1.0</value>
+						<pow>
+							<property>/autopilot/alt-channel/turnrate-gain</property>
+							<value>-1.0</value>
+						</pow>
+						<abs>
+							<property>/instrumentation/turn-indicator/indicated-turn-rate</property>
+						</abs>
+					</sum>
+				</product>
+			</function>
+			<output>/autopilot/alt-channel/turnrate-gain2</output>
+		</fcs_function>
+
 		<fcs_function name="/autopilot/alt-channel/pitch-error">
 			<function>
 				<product>
+					<property>/autopilot/alt-channel/turnrate-gain2</property>						
 					<property>/autopilot/alt-channel/pitch-error-gain</property>
 					<sum>
 						<property>/autopilot/alt-channel/vs-error-fpm</property>
@@ -296,12 +339,13 @@
 			<output>/autopilot/alt-channel/pitch-error</output>
 		</switch>
 
+
+
 		<fcs_function name="/autopilot/alt-channel/cmd-ap-elev-pos-norm-raw">
 			<function>
 				<sum>
 					<property>fcs/elevator-cmd-tot</property>	
 					<product>
-						<value>1.0</value>
 						<property>/autopilot/alt-channel/pitch-error</property>
 						<property>sim-dt-sec</property>
 					</product>
@@ -409,9 +453,10 @@
 
 	</channel>
 
+<!--*********************************************************************************************************************-->
 
 	<channel name="autotrim">
-
+<!-- autotrim active when a pitch mode is active and the pitch trim switch is on-->
 		<fcs_function name="/autopilot/pitchtrim-channel/trimmoment-abs">
 			<function>
 				<abs>
@@ -420,6 +465,7 @@
 			</function>
 		</fcs_function>
 
+<!-- the next two switches determine if trim is needed or not (same as TRIM ind on AP). Any |Ch| gt 3.5 will be trimmed until lt 0.5 -->
 		<switch name="autopitchtrimon">
 			<default value="/autopilot/mode/trim"/>
 			<test logic="AND" value="1">
@@ -456,6 +502,7 @@
 			<output>/autopilot/mode/trim</output>
 		</switch>
 
+<!-- the next two switches set the indication on the AP, trim up or down (the arrows) -->
 		<switch name="autopitchtrimup">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -482,6 +529,7 @@
 			<output>/autopilot/mode/trim-down</output>
 		</switch>
 
+<!-- this moves the trim tab if needed and possible--> 
 		<fcs_function name="/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm-raw">
 			<function>
 				<sum>
@@ -505,6 +553,7 @@
 			<output>/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm-raw</output>
 		</fcs_function>
 
+<!-- limits the trim rate and clips the range -->
 		<actuator name="/autopilot/pitchtrim-channel/pitchtrim-servo">
 			<input>/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm-raw</input>
 			<rate_limit>0.2</rate_limit>
