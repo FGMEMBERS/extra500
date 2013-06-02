@@ -41,6 +41,7 @@ var AvidyneIFD = {
 		m.canvas.setColorBackground(1,1,1);
 		m.hdg = 0;
 		m.speed = 0 ;
+		m.speedIndicated = 0 ;
 		m.pitch = 0;
 		m.roll = 0;
 		m.hdgBug = 0;
@@ -52,7 +53,7 @@ var AvidyneIFD = {
 		m.hPa = 0;
 		
 		m.nIndicatedHeading = props.globals.initNode("/instrumentation/heading-indicator-IFD-RH/indicated-heading-deg",0.0,"DOUBLE");
-		m.nIndicatedAirspeed = props.globals.initNode("/instrumentation/airspeed-indicator-IFD-RH/indicated-speed-kts",0.0,"DOUBLE");
+		m.nIndicatedAirspeed = props.globals.initNode("/instrumentation/airspeed-IFD-RH/indicated-speed-kt",0.0,"DOUBLE");
 		m.nPitchDeg = props.globals.initNode("/orientation/pitch-deg",0.0,"DOUBLE");
 		m.nRollDeg = props.globals.initNode("/orientation/roll-deg",0.0,"DOUBLE");
 		
@@ -67,6 +68,7 @@ var AvidyneIFD = {
 		
 	# creating Displays 
 		m.primaryFlightDisplay = m.canvas.createGroup();
+		m.PitchLadderDisplay = m.canvas.createGroup();
 		
 		m.nHorizon = m.primaryFlightDisplay.createChild("image");
 		m.nHorizon.set("file", "Models/instruments/IFDs/Horizon.png");
@@ -78,14 +80,17 @@ var AvidyneIFD = {
 		
 		m.nHorizon.updateCenter();
 		
+		
+# 		m.nOatBorder = m.primaryFlightDisplay.createChild("image")
+# 			.set("file", "Models/instruments/IFDs/SliceBorder.png")
+# 			.set("slice", "32")
+# 			.setSize(254,768)
+# 			.setTranslation(32,96);
+			
+		
 	#loading svg
 		canvas.parsesvg(m.primaryFlightDisplay, "Models/instruments/IFDs/RH-IFD_CanvasTest.svg");
-		
-		
-		
-		
-		
-		#m.nHorizon.setTranslation(1205,450);
+
 		
 		m.CompassRose = m.primaryFlightDisplay.getElementById("CompassRose");
 		m.CompassRose.updateCenter();
@@ -96,7 +101,7 @@ var AvidyneIFD = {
 		
 		m.PitchLadder = m.primaryFlightDisplay.getElementById("PitchLadder");
 		m.PitchLadder.updateCenter();
-		
+		m.PitchLadder.set("clip","rect(168px, 1562px, 785px, 845px)");
 		
 		m.Heading = m.primaryFlightDisplay.getElementById("Heading");
 		m.HeadingSelected = m.primaryFlightDisplay.getElementById("HeadingSelected");
@@ -113,7 +118,17 @@ var AvidyneIFD = {
 		m.AltBugIndicated = m.primaryFlightDisplay.getElementById("AltBugIndicated");
 		
 		m.cOAT = m.primaryFlightDisplay.getElementById("OAT");
-		m.cTAS = m.primaryFlightDisplay.getElementById("TAS");
+		
+	#AirSpeed
+		m.cAirSpeedBar = m.primaryFlightDisplay.getElementById("AirSpeedBar");
+		m.cAirSpeedBar.set("clip","rect(126px, 648px, 784px, 413px)");
+		m.cAirSpeedIndicatedOne = m.primaryFlightDisplay.getElementById("AirSpeedIndicatedOne"); # 79.25
+		m.cAirSpeedIndicatedOne.set("clip","rect(383px, 581px, 599px, 505px)");
+		m.cAirSpeedIndicated = m.primaryFlightDisplay.getElementById("AirSpeedIndicated");
+		m.cAirSpeedTAS = m.primaryFlightDisplay.getElementById("AirSpeedTAS");
+		
+		
+		
 		m.cHPA = m.primaryFlightDisplay.getElementById("hPa");
 		
 		
@@ -138,6 +153,7 @@ var AvidyneIFD = {
 		me.OAT = me.nOAT.getValue();
 		me.TAS = me.nTAS.getValue();
 		me.hPa = me.nhPa.getValue();
+		me.speedIndicated = me.nIndicatedAirspeed.getValue();
 		
 		me.HeadingSelected.setText(sprintf("%03i",me.hdgBug));
 		
@@ -146,7 +162,13 @@ var AvidyneIFD = {
 		me.VerticalSpeedBug.setRotation((me.vsBug/100*1.8) * TORAD);
 		me.AltBugIndicated.setText(sprintf("%4i",me.altBug));
 		me.cOAT.setText(sprintf("%2i",me.OAT));
-		me.cTAS.setText(sprintf("%3i",me.TAS));
+		
+		me.cAirSpeedTAS.setText(sprintf("%3i",me.TAS));
+		me.cAirSpeedBar.setTranslation(0,(me.speedIndicated-20)*10);
+		me.cAirSpeedIndicatedOne.setTranslation(0,(math.mod(me.speedIndicated,10)*80));
+		me.cAirSpeedIndicated.setText(sprintf("%2i",me.speedIndicated/10));
+		
+		
 		me.cHPA.setText(sprintf("%4i",me.hPa));
 		
 		#me.TestText.setTranslation(0,me.nIndicatedAirspeed.getValue());
