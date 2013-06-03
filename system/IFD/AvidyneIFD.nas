@@ -52,6 +52,12 @@ var AvidyneIFD = {
 		m.TAS = 0;
 		m.hPa = 0;
 		
+		
+		m.nApModeVS = props.globals.initNode("/autopilot/mode/vs",0.0,"INT");
+		m.nApModeHDG = props.globals.initNode("/autopilot/mode/heading",0.0,"INT");
+		m.nApModeNAV = props.globals.initNode("/autopilot/mode/nav",0.0,"INT");
+		m.nApModeALT = props.globals.initNode("/autopilot/mode/alt",0.0,"INT");
+		
 		m.nIndicatedHeading = props.globals.initNode("/instrumentation/heading-indicator-IFD-RH/indicated-heading-deg",0.0,"DOUBLE");
 		m.nIndicatedAirspeed = props.globals.initNode("/instrumentation/airspeed-IFD-RH/indicated-airspeed-kt",0.0,"DOUBLE");
 		m.nPitchDeg = props.globals.initNode("/orientation/pitch-deg",0.0,"DOUBLE");
@@ -98,6 +104,9 @@ var AvidyneIFD = {
 		
 		m.HeadingBug = m.primaryFlightDisplay.getElementById("HeadingBug");
 		m.HeadingBug.updateCenter();
+		m.HeadingBugCoupled = m.primaryFlightDisplay.getElementById("HeadingBugCoupled");
+		m.HeadingBugCoupled.updateCenter();
+		m.HeadingBugCoupled.hide();
 		
 		m.PitchLadder = m.primaryFlightDisplay.getElementById("PitchLadder");
 		m.PitchLadder.updateCenter();
@@ -110,6 +119,9 @@ var AvidyneIFD = {
 		m.VerticalSpeedNeedle.updateCenter();
 		m.VerticalSpeedBug = m.primaryFlightDisplay.getElementById("VerticalSpeedBug");
 		m.VerticalSpeedBug.updateCenter();
+		m.VerticalSpeedBugCoupled = m.primaryFlightDisplay.getElementById("VerticalSpeedBugCoupled");
+		m.VerticalSpeedBugCoupled.updateCenter();
+		m.VerticalSpeedBugCoupled.hide();
 		m.VerticalSpeedIndicated = m.primaryFlightDisplay.getElementById("VerticalSpeedIndicated");
 		
 		m.BankAngleIndicator = m.primaryFlightDisplay.getElementById("BankAngleIndicator");
@@ -147,6 +159,24 @@ var AvidyneIFD = {
 			me.speed = 0;
 		}
 		
+		if (me.nApModeHDG.getValue() == 1){
+			me.HeadingBugCoupled.show();
+			me.HeadingBug.hide();
+		}else{
+			me.HeadingBug.show();
+			me.HeadingBugCoupled.hide();
+		}
+		
+		if (me.nApModeVS.getValue() == 1){
+			me.VerticalSpeedBugCoupled.show();
+			me.VerticalSpeedBug.hide();
+		}else{
+			me.VerticalSpeedBug.show();
+			me.VerticalSpeedBugCoupled.hide();
+		}
+		
+		
+		
 		me.vsNeedle = me.nVerticalSpeedNeedle.getValue();
 		me.vsBug = me.nVerticalSpeedBug.getValue();
 		me.altBug = me.nAltitudeBug.getValue();
@@ -160,7 +190,10 @@ var AvidyneIFD = {
 		me.VerticalSpeedIndicated.setText(sprintf("%4i",me.vsBug));
 		me.VerticalSpeedNeedle.setRotation((me.vsNeedle/100*1.8) * TORAD);
 		me.VerticalSpeedBug.setRotation((me.vsBug/100*1.8) * TORAD);
+		me.VerticalSpeedBugCoupled.setRotation((me.vsBug/100*1.8) * TORAD);
+		
 		me.AltBugIndicated.setText(sprintf("%4i",me.altBug));
+		
 		me.cOAT.setText(sprintf("%2i",me.OAT));
 		
 		me.cAirSpeedTAS.setText(sprintf("%3i",me.TAS));
@@ -187,6 +220,7 @@ var AvidyneIFD = {
 		
 		me.CompassRose.setRotation(-me.hdg * TORAD);
 		me.HeadingBug.setRotation((me.hdgBug-me.hdg) * TORAD);
+		me.HeadingBugCoupled.setRotation((me.hdgBug-me.hdg) * TORAD);
 		
 		me.PitchLadder.setRotation(-me.roll * TORAD);
 		me.PitchLadder.setTranslation(0,me.pitch*10);
