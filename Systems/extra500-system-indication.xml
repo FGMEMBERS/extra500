@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-05-30
+      Date:             2013-06-03
 -->
 
 <system name="indication">
@@ -289,6 +289,87 @@
     			</function>
 		</fcs_function>
 	</channel>
+
+<!--*****************************************Vertical speed LH IFD*****************************************************************-->
+	<channel name="verticalspeedLHIFD">
+
+		<fcs_function name="/instrumentation/ivsi-IFD-LH/vs-unfiltered">
+			<function>
+				<product>
+					<value>60.0</value>		
+					<sum>
+						<property>/instrumentation/altimeter-IFD-LH/pressure-alt-ft</property>
+						<property>/instrumentation/ivsi-IFD-LH/alt-old</property>
+					</sum>
+					<pow>
+						<max>
+							<value>0.0001</value>	
+							<property>sim-dt-sec</property>
+						</max>
+						<value>-1.0</value>	
+					</pow>
+				</product>
+			</function>
+		</fcs_function>
+
+		<lead_lag_filter name="/instrumentation/ivsi-IFD-LH/indicated-speed-fpm">
+			<input>/instrumentation/ivsi-IFD-LH/vs-unfiltered</input>
+			<c1>/autopilot/altsensor/c1</c1>
+			<c2>/autopilot/altsensor/c2</c2>
+			<c3>/autopilot/altsensor/c3</c3>
+			<c4>/autopilot/altsensor/c4</c4>
+		</lead_lag_filter>
+
+		<fcs_function name="/instrumentation/ivsi-IFD-LH/alt-old">
+			<function>
+				<product>
+					<value>-1.0</value>				
+					<property>/instrumentation/altimeter-IFD-LH/pressure-alt-ft</property>
+				</product>	
+			</function>
+		</fcs_function>
+	</channel>
+
+<!--*****************************************Vertical speed RH IFD*****************************************************************-->
+	<channel name="verticalspeedLHIFD">
+
+		<fcs_function name="/instrumentation/ivsi-IFD-RH/vs-unfiltered">
+			<function>
+				<product>
+					<value>60.0</value>		
+					<sum>
+						<property>/instrumentation/altimeter-IFD-RH/pressure-alt-ft</property>
+						<property>/instrumentation/ivsi-IFD-RH/alt-old</property>
+					</sum>
+					<pow>
+						<max>
+							<value>0.0001</value>	
+							<property>sim-dt-sec</property>
+						</max>
+						<value>-1.0</value>	
+					</pow>
+				</product>
+			</function>
+		</fcs_function>
+
+		<lead_lag_filter name="/instrumentation/ivsi-IFD-RH/indicated-speed-fpm">
+			<input>/instrumentation/ivsi-IFD-RH/vs-unfiltered</input>
+			<c1>/autopilot/altsensor/c1</c1>
+			<c2>/autopilot/altsensor/c2</c2>
+			<c3>/autopilot/altsensor/c3</c3>
+			<c4>/autopilot/altsensor/c4</c4>
+		</lead_lag_filter>
+
+		<fcs_function name="/instrumentation/ivsi-IFD-RH/alt-old">
+			<function>
+				<product>
+					<value>-1.0</value>				
+					<property>/instrumentation/altimeter-IFD-RH/pressure-alt-ft</property>
+				</product>	
+			</function>
+		</fcs_function>
+	</channel>
+
 </system>
 
 

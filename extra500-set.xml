@@ -492,9 +492,11 @@ JSBSim Extra Aircraft - Extra 500.
     <altimeter-IFD-LH>
 	  <serviceable type="bool" archive="y">true</serviceable>
 	  <indicated-altitude-ft>0.0</indicated-altitude-ft>
+	  <pressure-alt-ft>0.0</pressure-alt-ft>
     </altimeter-IFD-LH>
     <altimeter-IFD-RH>
 	  <serviceable type="bool" archive="y">true</serviceable>
+	  <pressure-alt-ft>0.0</pressure-alt-ft>
     </altimeter-IFD-RH>
     <altimeter-backup>
 	  <serviceable type="bool" archive="y">true</serviceable>
@@ -509,10 +511,12 @@ JSBSim Extra Aircraft - Extra 500.
 
     <ivsi-IFD-LH>
 	<indicated-speed-fpm>0.0</indicated-speed-fpm>
+	<alt-old>0.0</alt-old>
         <serviceable type="bool">true</serviceable>
     </ivsi-IFD-LH>
     <ivsi-IFD-RH>
 	<indicated-speed-fpm>0.0</indicated-speed-fpm>
+	<alt-old>0.0</alt-old>
         <serviceable type="bool">true</serviceable>
     </ivsi-IFD-RH>
     <cabin-rate-climb>
