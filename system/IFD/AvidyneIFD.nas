@@ -53,11 +53,11 @@ var AvidyneIFD = {
 		m.hPa = 0;
 		
 		m.nIndicatedHeading = props.globals.initNode("/instrumentation/heading-indicator-IFD-RH/indicated-heading-deg",0.0,"DOUBLE");
-		m.nIndicatedAirspeed = props.globals.initNode("/instrumentation/airspeed-IFD-RH/indicated-speed-kt",0.0,"DOUBLE");
+		m.nIndicatedAirspeed = props.globals.initNode("/instrumentation/airspeed-IFD-RH/indicated-airspeed-kt",0.0,"DOUBLE");
 		m.nPitchDeg = props.globals.initNode("/orientation/pitch-deg",0.0,"DOUBLE");
 		m.nRollDeg = props.globals.initNode("/orientation/roll-deg",0.0,"DOUBLE");
 		
-		m.nVerticalSpeedNeedle = props.globals.initNode("/autopilot/altsensor/vs-fpm",0.0,"DOUBLE");
+		m.nVerticalSpeedNeedle = props.globals.initNode("/instrumentation/ivsi-IFD-RH/indicated-speed-fpm",0.0,"DOUBLE");
 		m.nVerticalSpeedBug = props.globals.initNode("/autopilot/settings/vertical-speed-fpm",0.0,"DOUBLE");
 		m.nAltitudeBug = props.globals.initNode("/autopilot/settings/target-altitude-ft",0.0,"DOUBLE");
 		m.nOAT = props.globals.initNode("/environment/temperature-degc",0.0,"DOUBLE");
@@ -76,7 +76,7 @@ var AvidyneIFD = {
 		m.nHorizon.setScale(2.0);
 		
 		m.nHorizonTF = m.nHorizon.createTransform();
-		m.nHorizonTF.setTranslation(-2410*1/2,-1810*3/4);
+		m.nHorizonTF.setTranslation(-2410*1/2,-1810*3/4 +80);
 		
 		m.nHorizon.updateCenter();
 		
