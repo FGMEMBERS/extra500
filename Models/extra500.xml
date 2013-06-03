@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             31.05.13
+      Date:             03.06.13
 
 -->
 
@@ -34,7 +34,7 @@
   <condition>
     <equals>
 <property>extra500/debug/framechange</property>
-      <value>1</value>
+      <value>0</value>
     </equals>
   </condition>
 </animation>
@@ -43,10 +43,10 @@
   <type>select</type>
   <object-name>FrameSolid</object-name>
   <condition>
-    <less-than>
+    <equals>
 <property>extra500/debug/framechange</property>
       <value>1</value>
-    </less-than>
+    </equals>
   </condition>
 </animation>
 
@@ -59,6 +59,16 @@
 
 
 <!-- Submodels -->
+<model>
+  <name>Propellix</name>
+  <path>Aircraft/extra500/Models/propeller.xml</path>
+	<offsets>
+		<x-m>-3.31</x-m>
+		<y-m>0</y-m>	
+		<z-m>-0.5</z-m>
+	<pitch-deg>-3.2</pitch-deg>
+	</offsets>
+</model>
 
 <model>
   <name>MagneticCompass</name>
@@ -154,67 +164,6 @@
 
 <sound><path>Aircraft/extra500/Sounds/mp-sound.xml</path></sound>
 -->
-
-
-<!--Propeller-->
-<animation>
-  <type>select</type>
-  <object-name>Propeller</object-name>
-  <condition>
-    <less-than>
-      <property>engines/engine[0]/thruster/rpm</property>
-      <value>1000</value>
-    </less-than>
-  </condition>
-</animation>
-<animation>
-  <type>select</type>
-  <object-name>PropSlow</object-name>
-  <condition>
-    <and>
-      <greater-than-equals>
-        <property>engines/engine[0]/thruster/rpm</property>
-        <value>1000</value>
-      </greater-than-equals>
-      <less-than>
-        <property>engines/engine[0]/thruster/rpm</property>
-        <value>2000</value>
-      </less-than>
-    </and>
-  </condition>
-</animation>
-<animation>
-  <type>select</type>
-  <object-name>PropFast</object-name>
-  <condition>
-    <greater-than-equals>
-      <property>engines/engine[0]/thruster/rpm</property>
-      <value>2000</value>
-    </greater-than-equals>
-  </condition>
-</animation>
-<animation>
-  <type>spin</type>
-  <object-name>Spinner</object-name>
-  <object-name>Propeller</object-name>
-  <object-name>PropSlow</object-name>
-  <object-name>PropFast</object-name>
-  <property>engines/engine[0]/thruster/rpm</property>
-  <factor>-1</factor>
-  <axis>
-   <x1-m>-3.31</x1-m>
-   <y1-m> 0.00</y1-m>
-   <z1-m>-0.50</z1-m>
-   <x2-m>-2.82780</x2-m>
-   <y2-m> 0.00</y2-m>
-   <z2-m>-0.47304</z2-m>
-  </axis>
-  <center>
-   <x-m>-3.06890</x-m>
-   <y-m>0</y-m>
-   <z-m>-0.48652</z-m>
-  </center>
- </animation>
 
 <!-- Seitenruder -->  
  <animation>
