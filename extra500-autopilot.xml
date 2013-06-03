@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-06-02
+      Date:             2013-06-03
 -->
 
 <autopilot name="STEC55X">
@@ -197,6 +197,34 @@
 			</function>
 		</fcs_function>
 
+<!-- the next two functions calculate a gain and an offset for turning, dependent on turn-coordinator data -->
+		<fcs_function name="/autopilot/vs-channel/turnrate-gain2">
+			<function>
+				<sum>
+					<value>1.0</value>
+					<product>
+						<property>/autopilot/vs-channel/turnrate-gain</property>
+						<abs>
+							<property>/instrumentation/turn-indicator/indicated-turn-rate</property>
+						</abs>
+					</product>		
+				</sum>
+			</function>
+			<output>/autopilot/vs-channel/turnrate-gain2</output>
+		</fcs_function>
+
+		<fcs_function name="/autopilot/vs-channel/acc-offset">
+			<function>
+					<product>
+						<property>/autopilot/vs-channel/acc-offset-gain</property>
+						<abs>
+							<property>/instrumentation/turn-indicator/indicated-turn-rate</property>
+						</abs>
+					</product>		
+			</function>
+			<output>/autopilot/vs-channel/acc-offset</output>
+		</fcs_function>	
+	
 <!-- pitch error (NOT in deg) using the vs error, dampened by the accel sensor inthe AP computer-->
 		<fcs_function name="/autopilot/vs-channel/pitch-error">
 			<function>
@@ -204,10 +232,16 @@
 					<property>/autopilot/mode/vs</property>
 					<property>/autopilot/vs-channel/pitch-error-gain</property>
 					<sum>
-						<property>/autopilot/vs-channel/vs-error-fpm</property>
+						<product>
+							<property>/autopilot/vs-channel/turnrate-gain2</property>	
+							<property>/autopilot/vs-channel/vs-error-fpm</property>
+						</product>
 						<product>	
 							<property>/autopilot/vs-channel/accel-rate-gain</property>
-							<property>/autopilot/accsens-channel/ap-z-accel</property>
+							<sum>
+								<property>/autopilot/accsens-channel/ap-z-accel</property>
+								<property>/autopilot/vs-channel/acc-offset</property>
+							</sum>
 						</product>	
 					</sum>
 				</product>
@@ -323,7 +357,6 @@
 				</sum>
 			</function>
 		</fcs_function>
-
 
 		<fcs_function name="/autopilot/alt-channel/pitch-error">
 			<function>
@@ -592,6 +625,106 @@
 
 	</channel>
 
+<!--****************************YAW TRIM*****************************************************************************-->
+
+	<channel name="yawtrim">
+
+<!--checking if yaw trim CAN be on -->
+		<switch name="yawtrimon">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test value="1">
+					/autopilot/settings/yawdamper eq 1
+				</test>
+				<test logic="OR" value="1">
+					/autopilot/mode/heading eq 1
+					/autopilot/mode/nav eq 1
+				</test>
+			</test>
+			<output>/autopilot/mode/yawtrim</output>
+		</switch>
+
+<!--lateral acceleronmeter in the tailcone-->
+		<accelerometer name="/autopilot/yawtrim-channel/ap-y-accelsensor">
+			<location unit="M">
+				<x>-3.31</x>
+				<y>0.0</y>
+				<z>0.0</z>
+			</location>
+  			<orientation unit="DEG">
+    				<pitch>0.0</pitch>
+    				<roll>0.0</roll>
+    				<yaw>0.0</yaw>
+  			</orientation>
+			<axis>Y</axis>
+			<gain>0.0310809970784</gain>	<!--1/32.174 -->
+			<output>/autopilot/yawtrim-channel/ap-y-accel</output>
+		</accelerometer>
+
+		<deadband name="/autopilot/yawtrim-channel/ap-y-accel-clipped">
+			<input>/autopilot/yawtrim-channel/ap-y-accel</input>
+			<width>0.002</width>
+			<clipto>
+		     		<min>/autopilot/yawtrim-channel/accel-min</min>
+                    		<max>/autopilot/yawtrim-channel/accel-max</max>
+               		 </clipto>
+		</deadband>
+
+<!-- this moves the rudder if needed and possible--> 
+		<fcs_function name="/autopilot/yawtrim-channel/cmd-ap-rudder-pos-norm-raw">
+			<function>
+				<sum>
+					<property>fcs/rudder-cmd-tot</property>	
+					<product>
+						<property>/autopilot/mode/yawtrim</property>
+						<property>/autopilot/yawtrim-channel/servo-gain</property>
+						<property>/autopilot/yawtrim-channel/ap-y-accel-clipped</property>
+						<property>sim-dt-sec</property>
+					</product>
+				</sum>
+			</function>
+			<output>/autopilot/yawtrim-channel/cmd-ap-rudder-pos-norm-raw</output>
+		</fcs_function>
+
+		<actuator name="/autopilot/yawtrim-channel/yawtrim-servo">
+			<input>/autopilot/yawtrim-channel/cmd-ap-rudder-pos-norm-raw</input>
+			<rate_limit>0.1</rate_limit>
+			<clipto>
+				<min>-1</min>
+				<max>1</max>
+			</clipto>
+			<output>/autopilot/yawtrim-channel/cmd-ap-rudder-pos-norm</output>
+		</actuator>
+
+		<!--switch name="yawtrimon3">
+			<default value="fcs/rudder-cmd-tot"/>
+			<test value="/autopilot/yawtrim-channel/cmd-ap-rudder-pos-norm">
+				/autopilot/mode/yawtrim eq 1
+			</test>
+			<output>/autopilot/yawtrim-channel/cmd-ap-rudder-pos-norm</output>
+		</switch-->
+
+<!--because of some reason /controls/flight/rudder and /fdm/jsbsim/fcs/rudder-x are reversed in sign, so that is ONLY why the lower function exists-->
+		<fcs_function name="/autopilot/yawtrim-channel/cmd-ap-rudder-pos-norm-neg">
+			<function>
+				<product>
+					<property>/autopilot/yawtrim-channel/cmd-ap-rudder-pos-norm</property>
+					<value>-1.0</value>
+				</product>
+			</function>
+			<output>/autopilot/yawtrim-channel/cmd-ap-rudder-pos-norm-neg</output>
+		</fcs_function>
+
+<!--this makes the rudder pilot input to move along, so when the AP is disconnected, the rudder is in the correct position-->
+		<switch name="yawtrimon2">
+			<default value="/controls/flight/rudder"/>
+			<test value="/autopilot/yawtrim-channel/cmd-ap-rudder-pos-norm-neg">
+				/autopilot/mode/yawtrim eq 1
+			</test>
+			<output>/controls/flight/rudder</output>
+		</switch>
+
+	</channel>
 
 </autopilot>
 

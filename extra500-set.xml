@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2013-06-02
+      Date:             2013-06-03
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -388,6 +388,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<target-altitude-ft type="double">5000</target-altitude-ft>
 		<vertical-speed-fpm type="double">0</vertical-speed-fpm>
 		<trim type="bool">false</trim>
+		<yawdamper type="int">0</yawdamper>
 	</settings>
 	<mode>
 		<diseng type="int">0</diseng>
@@ -417,20 +418,27 @@ JSBSim Extra Aircraft - Extra 500.
 		<cmd-ap-ail-pos-norm-raw type="double">0.0</cmd-ap-ail-pos-norm-raw>
 	</hdg-channel>
 	<vs-channel>
+		<turnrate-gain type="double">2</turnrate-gain>
+		<acc-offset-gain type="double">0.2</acc-offset-gain>
 		<accel-rate-gain type="double">8000.0</accel-rate-gain>
 		<pitch-error-gain type="double">-0.000015</pitch-error-gain>
 	</vs-channel>
 	<alt-channel>	
-		<turnrate-gain>2</turnrate-gain>
-		<acc-offset-gain>0.2</acc-offset-gain>
-		<target-alt-ft>0.0</target-alt-ft>
-		<vs-target-gain>5.0</vs-target-gain>
+		<turnrate-gain type="double">2.0</turnrate-gain>
+		<acc-offset-gain type="double">0.2</acc-offset-gain>
+		<target-alt-ft type="double">0.0</target-alt-ft>
+		<vs-target-gain type="double">5.0</vs-target-gain>
 		<accel-rate-gain type="double">8000.0</accel-rate-gain>
 		<pitch-error-gain type="double">-0.000015</pitch-error-gain>
 	</alt-channel>
 	<pitchtrim-channel>
 		<servo-gain type="double">-0.05</servo-gain>			
 	</pitchtrim-channel>
+	<yawtrim-channel>
+		<servo-gain type="double">-1.0</servo-gain>
+		<accel-min type="double">-0.001</accel-min>
+		<accel-max type="double">0.001</accel-max>
+	</yawtrim-channel>
 	<altsensor>
 		<c1>0.0</c1>
 		<c2>1.0</c2>
@@ -750,6 +758,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<flap-aero-pos-deg type="double">0</flap-aero-pos-deg>
 			<elevator-cmd-tot type="double">0.0</elevator-cmd-tot>
 			<pitch-trim-cmd-tot-norm type="double">0.0</pitch-trim-cmd-tot-norm>
+			<rudder-cmd-tot type="double">0.0</rudder-cmd-tot>
 		</fcs>
             	<state>
                   	<controls-fixed type="int">1</controls-fixed>

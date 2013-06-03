@@ -17,7 +17,7 @@
 #      Date: May 18 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             2013-06-01
+#      Date:             2013-06-02
 #
 
 
@@ -125,14 +125,14 @@ var Keypad = {
 		}
 	},
 	onSetHeading : func(hdg){
-		hdg = math.mod(hdg,360);
+		hdg = int( math.mod(hdg,360) );
 		autopilot.nSetHeadingBugDeg.setValue(hdg);
 	},
 	onAdjustHeading : func(amount=nil){
 		if (amount!=nil){
 			var value = autopilot.nSetHeadingBugDeg.getValue();
 			value += amount;
-			value = math.mod(value,360);
+			value = int( math.mod(value,360) );
 			autopilot.nSetHeadingBugDeg.setValue(value);
 		}else{
 			me.onHeadingSync();
@@ -140,7 +140,7 @@ var Keypad = {
 	},
 	onHeadingSync : func(){
 		var value = me.nHeading.getValue();
-		value = math.mod(value,360);
+		value = int( math.mod(value,360) );
 		autopilot.nSetHeadingBugDeg.setValue(value);
 	},
 	onSetAltitude : func(alt){
