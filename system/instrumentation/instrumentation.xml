@@ -20,7 +20,7 @@
       Date: 21.04.13
 
       Last change:      Eric van den Berg
-      Date:             20.05.13
+      Date:             2013.06.03
 -->
 
 <PropertyList>
@@ -101,18 +101,6 @@
     <name>heading-indicator-IFD-RH</name>
     <number>0</number>
   </heading-indicator-fg>
-
-  <inst-vertical-speed-indicator>                                           
-    <name>ivsi-IFD-LH</name>
-    <number>0</number>
-    <static-pressure>/systems/staticL/pressure-inhg</static-pressure>
-  </inst-vertical-speed-indicator>
-
-  <inst-vertical-speed-indicator>                                           
-    <name>ivsi-IFD-RH</name>
-    <number>0</number>
-    <static-pressure>/systems/staticR/pressure-inhg</static-pressure>
-  </inst-vertical-speed-indicator>
 
   <magnetic-compass>
     <name>magnetic-compass</name>

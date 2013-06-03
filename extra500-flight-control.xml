@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-05-31
+      Date:             2013-06-03
 -->
 
 <flight_control name="FCS: extra500">
@@ -495,7 +495,6 @@
 			
 		</channel>
 		
-		<property value="1">fcs/yaw-damper-enable</property>
 		<channel name="Yaw">
 
 			<aerosurface_scale name="aileron rudder control">	<!-- this is to simulate the rudder-aileron interconnect, a spring in RL -->
@@ -507,9 +506,33 @@
 				<output>fcs/aileron-cmd-rudder</output>
 			</aerosurface_scale>
 
+			<fcs_function name="rudder-cmd-tot-nc">
+				<function>
+				<sum>
+					<product>
+						<abs>
+                               				<sum>
+								<product>
+                                  					<property>/autopilot/mode/yawtrim</property>
+								</product>
+                                  				<value>-1</value> 
+                              				</sum>
+                         			</abs>
+						<sum>
+							<property>fcs/aileron-cmd-rudder</property>	
+							<property>fcs/rudder-cmd-norm</property>
+						</sum>
+					</product>
+					<product>
+                                  		<property>/autopilot/mode/yawtrim</property>
+                              			<property>/autopilot/yawtrim-channel/cmd-ap-rudder-pos-norm</property>	
+					</product>
+				</sum>
+				</function>
+			</fcs_function>
+
 			 <summer name="rudder-cmd-tot">
-                		<input>fcs/aileron-cmd-rudder</input>
-                		<input>fcs/rudder-cmd-norm</input>
+                		<input>fcs/rudder-cmd-tot-nc</input>
                 		<clipto>
                     			<min>-1</min>
                     			<max>1</max>

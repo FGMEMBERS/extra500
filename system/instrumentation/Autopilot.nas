@@ -51,7 +51,7 @@ var Autopilot = {
 		m.nSetAP 		= props.globals.initNode("/autopilot/settings/ap",0,"BOOL");			# Master Panel AP
 		m.nSetFD 		= props.globals.initNode("/autopilot/settings/fd",0,"BOOL");			# Master Panel FD
 		m.nSetTrim 		= props.globals.initNode("/autopilot/settings/trim",0,"BOOL");			# Master Panel Pitch Trim
-		m.nSetYawDamper 	= props.globals.initNode("/autopilot/settings/yawDamper",0,"BOOL");		# Master Panel Yaw Damper
+		m.nSetYawDamper 	= props.globals.initNode("/autopilot/settings/yawdamper",0,"INT");		# Master Panel Yaw Damper
 		m.nSetYawTrim 		= props.globals.initNode("/autopilot/settings/yawTrim",0,"DOUBLE");		# Master Panel Yaw Trim
 		m.nSetPitchTrimUp 	= props.globals.initNode("/autopilot/settings/pitchTrim-up",0,"BOOL");		# Yoke Pitch Trim up 
 		m.nSetPitchTrimDown 	= props.globals.initNode("/autopilot/settings/pitchTrim-down",0,"BOOL");	# Yoke Pitch Trim down
@@ -452,7 +452,7 @@ var Autopilot = {
 			value += amount;
 			if (value > 1600){value = 1600;}
 			if (value < -1600){value = -1600;}
-			me.nSetVerticalSpeedFpm.setValue(100*int(value/100 ));
+			me.nSetVerticalSpeedFpm.setValue( 100*int(value/100 ));
 		}else{
 			me.nSetVerticalSpeedFpm.setValue(0);
 		}
