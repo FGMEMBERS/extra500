@@ -193,12 +193,10 @@ var simulationCall = func(now,dt){
 
 
 var animationCall = func(now,dt){
-	
-	
+		
 	#extra500.engineInstrumentPackage.animationUpdate(now,dt);
+	IFD.LH.animationUpdate(now,dt);
 	IFD.RH.animationUpdate(now,dt);
-	
-	
 	
 }
 

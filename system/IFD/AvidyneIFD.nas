@@ -33,7 +33,7 @@ COLOR["Magenta"] = "rgb(255,14,235)";
 
 
 var AvidyneIFD = {
-	new: func(){
+	new: func(prefix,acPlace){
 		var m = { parents: [AvidyneIFD] };
 		
 		 m.canvas = canvas.new({
@@ -44,7 +44,7 @@ var AvidyneIFD = {
 		});
     
 		# ... and place it on the object called PFD-Screen
-		m.canvas.addPlacement({"node": "RH-IFD.Screen"});
+		m.canvas.addPlacement({"node": acPlace});
 		m.canvas.setColorBackground(1,1,1);
 		m.hdg = 0;
 		m.speed = 0 ;
@@ -65,17 +65,17 @@ var AvidyneIFD = {
 		m.nApModeNAV = props.globals.initNode("/autopilot/mode/nav",0.0,"INT");
 		m.nApModeALT = props.globals.initNode("/autopilot/mode/alt",0.0,"INT");
 		
-		m.nIndicatedHeading = props.globals.initNode("/instrumentation/heading-indicator-IFD-RH/indicated-heading-deg",0.0,"DOUBLE");
-		m.nIndicatedAirspeed = props.globals.initNode("/instrumentation/airspeed-IFD-RH/indicated-airspeed-kt",0.0,"DOUBLE");
+		m.nIndicatedHeading = props.globals.initNode("/instrumentation/heading-indicator-IFD-"~prefix~"/indicated-heading-deg",0.0,"DOUBLE");
+		m.nIndicatedAirspeed = props.globals.initNode("/instrumentation/airspeed-IFD-"~prefix~"/indicated-airspeed-kt",0.0,"DOUBLE");
 		m.nPitchDeg = props.globals.initNode("/orientation/pitch-deg",0.0,"DOUBLE");
 		m.nRollDeg = props.globals.initNode("/orientation/roll-deg",0.0,"DOUBLE");
 		
-		m.nVerticalSpeedNeedle = props.globals.initNode("/instrumentation/ivsi-IFD-RH/indicated-speed-fpm",0.0,"DOUBLE");
+		m.nVerticalSpeedNeedle = props.globals.initNode("/instrumentation/ivsi-IFD-"~prefix~"/indicated-speed-fpm",0.0,"DOUBLE");
 		m.nVerticalSpeedBug = props.globals.initNode("/autopilot/settings/vertical-speed-fpm",0.0,"DOUBLE");
 		m.nAltitudeBug = props.globals.initNode("/autopilot/settings/target-altitude-ft",0.0,"DOUBLE");
 		m.nOAT = props.globals.initNode("/environment/temperature-degc",0.0,"DOUBLE");
-		m.nTAS = props.globals.initNode("/instrumentation/airspeed-IFD-RH/true-speed-kt",0.0,"DOUBLE");
-		m.nhPa = props.globals.initNode("/instrumentation/altimeter-IFD-RH/setting-hpa",0.0,"DOUBLE");
+		m.nTAS = props.globals.initNode("/instrumentation/airspeed-IFD-"~prefix~"/true-speed-kt",0.0,"DOUBLE");
+		m.nhPa = props.globals.initNode("/instrumentation/altimeter-IFD-"~prefix~"/setting-hpa",0.0,"DOUBLE");
 		
 		#m.nHeadingBug = props.globals.initNode("/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg",0.0,"DOUBLE");
 		
@@ -176,32 +176,27 @@ var AvidyneIFD = {
 	},
 	simulationUpdate : func(now,dt){
 						
-		
-		me.vsNeedle = me.nVerticalSpeedNeedle.getValue();
+		me.hdgBug = extra500.autopilot.nSetHeadingBugDeg.getValue();
 		me.vsBug = me.nVerticalSpeedBug.getValue();
 		me.altBug = me.nAltitudeBug.getValue();
+		
 		me.OAT = me.nOAT.getValue();
 		me.TAS = me.nTAS.getValue();
 		me.hPa = me.nhPa.getValue();
-		me.speedIndicated = me.nIndicatedAirspeed.getValue();
 		
 		me.HeadingSelected.setText(sprintf("%03i",me.hdgBug));
 		
 		me.VerticalSpeedIndicated.setText(sprintf("%4i",me.vsBug));
-		me.VerticalSpeedNeedle.setRotation((me.vsNeedle/100*1.8) * TORAD);
-		me.VerticalSpeedBug.setRotation((me.vsBug/100*1.8) * TORAD);
-		me.VerticalSpeedBugCoupled.setRotation((me.vsBug/100*1.8) * TORAD);
 		
 		me.AltIndicated.setText(sprintf("%4i",me.altBug));
+		
+		me.VerticalSpeedBug.setRotation((me.vsBug/100*1.8) * TORAD);
+		me.VerticalSpeedBugCoupled.setRotation((me.vsBug/100*1.8) * TORAD);
 		
 		me.cOAT.setText(sprintf("%2i",me.OAT));
 		
 		me.cAirSpeedTAS.setText(sprintf("%3i",me.TAS));
-		me.cAirSpeedBar.setTranslation(0,(me.speedIndicated-20)*10);
-		me.cAirSpeedIndicatedOne.setTranslation(0,(math.mod(me.speedIndicated,10)*80));
-		me.cAirSpeedIndicated.setText(sprintf("%2i",me.speedIndicated/10));
-		
-		
+				
 		me.cHPA.setText(sprintf("%4i",me.hPa));
 		
 		#me.TestText.setTranslation(0,me.nIndicatedAirspeed.getValue());
@@ -211,12 +206,20 @@ var AvidyneIFD = {
 	},	
 	animationUpdate : func(now,dt){
 		me.hdg = me.nIndicatedHeading.getValue();
-		me.hdgBug = extra500.autopilot.nSetHeadingBugDeg.getValue();
+		me.speedIndicated = me.nIndicatedAirspeed.getValue();
+		me.vsNeedle = me.nVerticalSpeedNeedle.getValue();
 		
 		me.pitch = me.nPitchDeg.getValue();
 		me.roll = me.nRollDeg.getValue();
 		
+	# IAS
+		me.cAirSpeedBar.setTranslation(0,(me.speedIndicated-20)*10);
+		me.cAirSpeedIndicatedOne.setTranslation(0,(math.mod(me.speedIndicated,10)*80));
+		me.cAirSpeedIndicated.setText(sprintf("%2i",me.speedIndicated/10));
 		
+	# Vertical Speed
+		me.VerticalSpeedNeedle.setRotation((me.vsNeedle/100*1.8) * TORAD);
+				
 	#CompassRose
 		me.Heading.setText(sprintf("%03i",me.hdg));
 		me.CompassRose.setRotation(-me.hdg * TORAD);
@@ -318,8 +321,8 @@ var initListeners = func(){
 
 
 
-var RH = AvidyneIFD.new();
-
+var LH = AvidyneIFD.new("LH","Oben");
+var RH = AvidyneIFD.new("RH","RH-IFD.Screen");
 
 
 
