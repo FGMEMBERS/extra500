@@ -25,6 +25,13 @@ var deg = func(rad){ return rad*TODEG; }
 var rad = func(deg){ return deg*TORAD; }
 var course = func(deg){ return math.mod(deg,360.0);}
 
+
+var COLOR = {};
+COLOR["Red"] = "rgb(244,28,33)";
+COLOR["Green"] = "rgb(64,178,80)";
+COLOR["Magenta"] = "rgb(255,14,235)";
+
+
 var AvidyneIFD = {
 	new: func(){
 		var m = { parents: [AvidyneIFD] };
@@ -73,10 +80,10 @@ var AvidyneIFD = {
 		#m.nHeadingBug = props.globals.initNode("/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg",0.0,"DOUBLE");
 		
 	# creating Displays 
-		m.primaryFlightDisplay = m.canvas.createGroup();
+		m.PFD = m.canvas.createGroup();
 		m.PitchLadderDisplay = m.canvas.createGroup();
 		
-		m.nHorizon = m.primaryFlightDisplay.createChild("image");
+		m.nHorizon = m.PFD.createChild("image");
 		m.nHorizon.set("file", "Models/instruments/IFDs/Horizon.png");
 		m.nHorizon.setSize(2410,1810);
 		m.nHorizon.setScale(2.0);
@@ -87,7 +94,7 @@ var AvidyneIFD = {
 		m.nHorizon.updateCenter();
 		
 		
-# 		m.nOatBorder = m.primaryFlightDisplay.createChild("image")
+# 		m.nOatBorder = m.PFD.createChild("image")
 # 			.set("file", "Models/instruments/IFDs/SliceBorder.png")
 # 			.set("slice", "32")
 # 			.setSize(254,768)
@@ -95,55 +102,69 @@ var AvidyneIFD = {
 			
 		
 	#loading svg
-		canvas.parsesvg(m.primaryFlightDisplay, "Models/instruments/IFDs/RH-IFD_CanvasTest.svg");
+		canvas.parsesvg(m.PFD, "Models/instruments/IFDs/RH-IFD_CanvasTest.svg");
 
 		
-		m.CompassRose = m.primaryFlightDisplay.getElementById("CompassRose");
+		m.CompassRose = m.PFD.getElementById("CompassRose");
 		m.CompassRose.updateCenter();
 		
 		
-		m.HeadingBug = m.primaryFlightDisplay.getElementById("HeadingBug");
+		m.HeadingBug = m.PFD.getElementById("HeadingBug");
 		m.HeadingBug.updateCenter();
-		m.HeadingBugCoupled = m.primaryFlightDisplay.getElementById("HeadingBugCoupled");
+		m.HeadingBugCoupled = m.PFD.getElementById("HeadingBugCoupled");
 		m.HeadingBugCoupled.updateCenter();
 		m.HeadingBugCoupled.hide();
 		
-		m.PitchLadder = m.primaryFlightDisplay.getElementById("PitchLadder");
+	#HSI
+		m.BankAngleIndicator = m.PFD.getElementById("BankAngleIndicator");
+		m.BankAngleIndicator.updateCenter();
+		
+		
+		m.PitchLadder = m.PFD.getElementById("PitchLadder");
 		m.PitchLadder.updateCenter();
 		m.PitchLadder.set("clip","rect(168px, 1562px, 785px, 845px)");
 		
-		m.Heading = m.primaryFlightDisplay.getElementById("Heading");
-		m.HeadingSelected = m.primaryFlightDisplay.getElementById("HeadingSelected");
-		
-		m.VerticalSpeedNeedle = m.primaryFlightDisplay.getElementById("VerticalSpeedNeedle");
+		m.Heading = m.PFD.getElementById("Heading");
+		m.HeadingSelected = m.PFD.getElementById("HeadingSelected");
+	#vertical speed
+		m.VerticalSpeedNeedle = m.PFD.getElementById("VerticalSpeedNeedle");
 		m.VerticalSpeedNeedle.updateCenter();
-		m.VerticalSpeedBug = m.primaryFlightDisplay.getElementById("VerticalSpeedBug");
+		m.VerticalSpeedBug = m.PFD.getElementById("VerticalSpeedBug");
 		m.VerticalSpeedBug.updateCenter();
-		m.VerticalSpeedBugCoupled = m.primaryFlightDisplay.getElementById("VerticalSpeedBugCoupled");
+		m.VerticalSpeedBugCoupled = m.PFD.getElementById("VerticalSpeedBugCoupled");
 		m.VerticalSpeedBugCoupled.updateCenter();
 		m.VerticalSpeedBugCoupled.hide();
-		m.VerticalSpeedIndicated = m.primaryFlightDisplay.getElementById("VerticalSpeedIndicated");
+		m.VerticalSpeedIndicated = m.PFD.getElementById("VerticalSpeedIndicated");
 		
-		m.BankAngleIndicator = m.primaryFlightDisplay.getElementById("BankAngleIndicator");
-		m.BankAngleIndicator.updateCenter();
 		
-		m.AltBugIndicated = m.primaryFlightDisplay.getElementById("AltBugIndicated");
-		
-		m.cOAT = m.primaryFlightDisplay.getElementById("OAT");
 		
 	#AirSpeed
-		m.cAirSpeedBar = m.primaryFlightDisplay.getElementById("AirSpeedBar");
+		m.cAirSpeedBar = m.PFD.getElementById("AirSpeedBar");
 		m.cAirSpeedBar.set("clip","rect(126px, 648px, 784px, 413px)");
-		m.cAirSpeedIndicatedOne = m.primaryFlightDisplay.getElementById("AirSpeedIndicatedOne"); # 79.25
+		m.cAirSpeedIndicatedOne = m.PFD.getElementById("AirSpeedIndicatedOne"); # 79.25
 		m.cAirSpeedIndicatedOne.set("clip","rect(383px, 581px, 599px, 505px)");
-		m.cAirSpeedIndicated = m.primaryFlightDisplay.getElementById("AirSpeedIndicated");
-		m.cAirSpeedTAS = m.primaryFlightDisplay.getElementById("AirSpeedTAS");
+		m.cAirSpeedIndicated = m.PFD.getElementById("AirSpeedIndicated");
+		m.cAirSpeedTAS = m.PFD.getElementById("AirSpeedTAS");
 		
+	#autopilot
+		m.cAuopilot	= m.PFD.getElementById("Autopilot");
+		m.cApModeState 	= m.PFD.getElementById("AP_State");
+		m.cApModeHdg 	= m.PFD.getElementById("AP_HDG");
+		m.cApModeHdg.hide(); 
+		m.cApModeNav 	= m.PFD.getElementById("AP_NAV");
+		m.cApModeNav.hide();
+		m.cApModeAlt 	= m.PFD.getElementById("AP_ALT");
+		m.cApModeAlt.hide();
+		m.cApModeVs 	= m.PFD.getElementById("AP_VS");
+		m.cApModeVs.hide();
+		m.cApModeFd 	= m.PFD.getElementById("AP_FD");
+		m.cApModeFd.hide();
 		
+	#alt
+		m.AltIndicated = m.PFD.getElementById("AltIndicated");
+		m.cHPA = m.PFD.getElementById("hPa");
 		
-		m.cHPA = m.primaryFlightDisplay.getElementById("hPa");
-		
-		
+		m.cOAT = m.PFD.getElementById("OAT");
 		#m.CompassRose.updateCenter();
 		#m.CompassRose.setTranslation(100, -100);
 		#m.CompassRose.setCenter(356,-356);
@@ -154,28 +175,7 @@ var AvidyneIFD = {
 		return m;
 	},
 	simulationUpdate : func(now,dt){
-		me.speed += 1;
-		if (me.speed > 200){
-			me.speed = 0;
-		}
-		
-		if (me.nApModeHDG.getValue() == 1){
-			me.HeadingBugCoupled.show();
-			me.HeadingBug.hide();
-		}else{
-			me.HeadingBug.show();
-			me.HeadingBugCoupled.hide();
-		}
-		
-		if (me.nApModeVS.getValue() == 1){
-			me.VerticalSpeedBugCoupled.show();
-			me.VerticalSpeedBug.hide();
-		}else{
-			me.VerticalSpeedBug.show();
-			me.VerticalSpeedBugCoupled.hide();
-		}
-		
-		
+						
 		
 		me.vsNeedle = me.nVerticalSpeedNeedle.getValue();
 		me.vsBug = me.nVerticalSpeedBug.getValue();
@@ -192,7 +192,7 @@ var AvidyneIFD = {
 		me.VerticalSpeedBug.setRotation((me.vsBug/100*1.8) * TORAD);
 		me.VerticalSpeedBugCoupled.setRotation((me.vsBug/100*1.8) * TORAD);
 		
-		me.AltBugIndicated.setText(sprintf("%4i",me.altBug));
+		me.AltIndicated.setText(sprintf("%4i",me.altBug));
 		
 		me.cOAT.setText(sprintf("%2i",me.OAT));
 		
@@ -216,12 +216,13 @@ var AvidyneIFD = {
 		me.pitch = me.nPitchDeg.getValue();
 		me.roll = me.nRollDeg.getValue();
 		
-		me.Heading.setText(sprintf("%03i",me.hdg));
 		
+	#CompassRose
+		me.Heading.setText(sprintf("%03i",me.hdg));
 		me.CompassRose.setRotation(-me.hdg * TORAD);
 		me.HeadingBug.setRotation((me.hdgBug-me.hdg) * TORAD);
 		me.HeadingBugCoupled.setRotation((me.hdgBug-me.hdg) * TORAD);
-		
+	#HSI
 		me.PitchLadder.setRotation(-me.roll * TORAD);
 		me.PitchLadder.setTranslation(0,me.pitch*10);
 		me.BankAngleIndicator.setRotation(-me.roll * TORAD);
@@ -229,9 +230,98 @@ var AvidyneIFD = {
 		me.nHorizon.setTranslation(0,me.pitch*10);
 		me.nHorizon.setRotation(-me.roll * TORAD);
 	},
+	# listeners events
+	onApModeFail : func(value){
+		#print ("AvidyneIFD.onApModeFail");
+		if (value == 1){
+			me.cApModeState.setText("AP FAIL");
+			me.cApModeState.setColor(COLOR["Red"]);
+			me.cApModeFd.hide();
+		}else{
+			me.cApModeState.setText("AP RDY");
+			me.cApModeState.setColor(COLOR["Green"]);
+			me.cApModeFd.show();
+		}
+	},
+	onApModeAlt : func(value){
+		#print ("AvidyneIFD.onApModeAlt");
+		if (value == 1){
+			me.cApModeAlt.show();
+		}else{
+			me.cApModeAlt.hide();
+		}
+	},
+	onApModeNav : func(value){
+		#print ("AvidyneIFD.onApModeNav");
+		if (value == 1){
+			me.cApModeNav.show();
+		}else{
+			me.cApModeNav.hide();
+		}
+	},
+	onApModeVs : func(value){
+		#print ("AvidyneIFD.onApModeVs");
+		
+		if (value == 1){
+			me.cApModeVs.show();
+			me.VerticalSpeedBugCoupled.show();
+			me.VerticalSpeedBug.hide();
+			
+		}else{
+			me.cApModeVs.hide();
+			me.VerticalSpeedBug.show();
+			me.VerticalSpeedBugCoupled.hide();
+			
+		}
+	},
+	onApModeHdg : func(value){
+		#print ("AvidyneIFD.onApModeHdg");
+		if (value == 1){
+			me.cApModeHdg.show();
+			me.HeadingBugCoupled.show();
+			me.HeadingBug.hide();
+		}else{
+			me.cApModeHdg.hide();
+			me.HeadingBug.show();
+			me.HeadingBugCoupled.hide();
+		}
+		
+	},
+	onApModeAp : func(value){
+		#print ("AvidyneIFD.onApModeAp");
+		if (value == 1){
+			me.cAuopilot.show();
+		}else{
+			me.cAuopilot.hide();
+		}
+	},
+	onApModeFd : func(value){
+		#print ("AvidyneIFD.onApModeFd");
+		if (value == 1){
+			me.cApModeFd.setText("FD");
+		}else{
+			me.cApModeFd.setText("AP");
+		}
+	},
+
 };
+
+var initListeners = func(){
+	setlistener("/autopilot/mode/fail", func(n){ IFD.RH.onApModeFail(n.getValue());},0,0);
+	setlistener("/autopilot/mode/alt", func(n){ IFD.RH.onApModeAlt(n.getValue());},0,0);
+	setlistener("/autopilot/mode/vs", func(n){ IFD.RH.onApModeVs(n.getValue());},0,0);
+	setlistener("/autopilot/mode/nav", func(n){ IFD.RH.onApModeNav(n.getValue());},0,0);
+	setlistener("/autopilot/mode/heading", func(n){IFD.RH.onApModeHdg(n.getValue());},0,0);
+	setlistener("/autopilot/settings/ap", func(n){ IFD.RH.onApModeAp(n.getValue());},0,0);
+	setlistener("/autopilot/settings/fd", func(n){ IFD.RH.onApModeFd(n.getValue());},0,0);
+}
+
 
 
 var RH = AvidyneIFD.new();
+
+
+
+
 
 

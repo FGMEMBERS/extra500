@@ -140,8 +140,6 @@ var MainLoop = {
 
 
 
-extra500.plugElectric();
-
 
 var simulationCall = func(now,dt){
 	
@@ -224,19 +222,28 @@ var simulationLoop = MainLoop.new(props.globals.initNode("extra500/debug/Loop/si
 
 var animationLoop = MainLoop.new(props.globals.initNode("extra500/debug/Loop/animation"),animationCall,20);
 
+
+
+var init = func(){
+	
+	IFD.initListeners();
+	extra500.plugElectric();
+	simulationLoop.start();
+	animationLoop.start();
+	
+	print("simulation ... started");
+}
+
+
 var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 	
 	removelistener(init_listener);
 	init_listener = nil;
 	
-	settimer(func{ simulationLoop.start(); },2);
-	settimer(func{ animationLoop.start(); },2);
-	
-	print("simulation Cycle ... check");
-	
-	
+	settimer(init,2);
+		
 });
-
+print("simulation ... check");
 # var debug_listener = setlistener("/extra500/panel/Annunciator/LowVoltage/state", func(n) {
 # 	print("/extra500/panel/Annunciator/LowVoltage/state = " ~n.getValue());
 # 
