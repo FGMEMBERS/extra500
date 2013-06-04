@@ -102,9 +102,16 @@ JSBSim Extra Aircraft - Extra 500.
 			<y-offset-m archive="y" type="double">0.235</y-offset-m>
 			<z-offset-m archive="y" type="double">0.36</z-offset-m>
 			<pitch-offset-deg type="double">-12</pitch-offset-deg>
-		</config-->
+		</config
 		<config>
 			<x-offset-m archive="y" type="double">-0.32</x-offset-m>
+			<y-offset-m archive="y" type="double">0.1</y-offset-m>
+			<z-offset-m archive="y" type="double">-0.05</z-offset-m>
+			<pitch-offset-deg type="double">-15</pitch-offset-deg>
+			<default-field-of-view-deg type="double">90.0</default-field-of-view-deg>  
+		</config>-->
+		<config>
+			<x-offset-m archive="y" type="double">-0.37</x-offset-m>
 			<y-offset-m archive="y" type="double">0.1</y-offset-m>
 			<z-offset-m archive="y" type="double">-0.05</z-offset-m>
 			<pitch-offset-deg type="double">-15</pitch-offset-deg>
