@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             03.06.13
+      Date:             04.06.13
 
 -->
 
@@ -121,36 +121,39 @@
 
 <!--test-->
 
-<!--habe piloten waehrend cockpitentwicklung deaktiviert
 <model>
       <path>Aircraft/Generic/Pilot/Airliner/pilot.xml</path>
       <offsets>
 		<x-m>-0.30</x-m>
-		<y-m>-0.27</y-m>	
-		<z-m>-0.30</z-m>
+		<y-m>-0.32</y-m>	
+		<z-m>-0.50</z-m>
          <pitch-deg>0</pitch-deg>
       </offsets>
+<!--
       <condition>
          <not>
             <property>/sim/current-view/internal</property>
          </not>
       </condition>
+-->
 </model>
 <model>
       <path>Aircraft/Generic/Pilot/General/pilot.xml</path>
       <offsets>
 		<x-m>-0.4</x-m>
-		<y-m>0.27</y-m>	
-		<z-m>-0.35</z-m>
+		<y-m>0.32</y-m>	
+		<z-m>-0.55</z-m>
          <pitch-deg>0</pitch-deg>
       </offsets>
+<!--
       <condition>
          <not>
             <property>/sim/current-view/internal</property>
          </not>
       </condition>
-</model>
 -->
+</model>
+
 
 <!-- Start livery machine 
 <nasal>
