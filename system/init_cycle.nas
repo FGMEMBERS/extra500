@@ -174,6 +174,7 @@ var simulationCall = func(now,dt){
 	
 	
 	IFD.demo.simulationUpdate(now,dt);
+	IFD.LH.simulationUpdate(now,dt);
 	IFD.RH.simulationUpdate(now,dt);
 	
 	
