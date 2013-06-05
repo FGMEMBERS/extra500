@@ -442,7 +442,8 @@ JSBSim Extra Aircraft - Extra 500.
 		<servo-gain type="double">-0.05</servo-gain>			
 	</pitchtrim-channel>
 	<yawtrim-channel>
-		<servo-gain type="double">-1.0</servo-gain>
+		<poti-gain>0.01</poti-gain>
+		<servo-gain type="double">-2.5</servo-gain>
 		<accel-min type="double">-0.001</accel-min>
 		<accel-max type="double">0.001</accel-max>
 	</yawtrim-channel>

@@ -657,12 +657,42 @@
     				<yaw>0.0</yaw>
   			</orientation>
 			<axis>Y</axis>
-			<gain>0.0310809970784</gain>	<!--1/32.174 -->
+			<gain>-0.0310809970784</gain>	<!--1/32.174 -->
 			<output>/autopilot/yawtrim-channel/ap-y-accel</output>
 		</accelerometer>
 
+		<fcs_function name="/autopilot/yawtrim-channel/ap-y-accelsensor-incl-gforce">
+			<function>
+				<sum>
+					<property>/autopilot/yawtrim-channel/ap-y-accelsensor</property>	
+					<product>
+						<cos>
+							<property>attitude/pitch-rad</property>
+						</cos>
+						<sin>
+							<property>attitude/phi-rad</property>
+						</sin>
+					</product>
+				</sum>
+			</function>
+			<output>/autopilot/yawtrim-channel/ap-y-accelsensor-incl-gforce</output>
+		</fcs_function>
+
+		<fcs_function name="/autopilot/yawtrim-channel/ap-y-accel-incl-input">
+			<function>
+				<sum>
+					<property>/autopilot/yawtrim-channel/ap-y-accelsensor-incl-gforce</property>
+					<product>
+						<property>/autopilot/yawtrim-channel/poti-gain</property>	
+						<property>/extra500/panel/Master/Autopilot/YawTrim/state</property>
+					</product>	
+				</sum>
+			</function>
+			<output>/autopilot/yawtrim-channel/ap-y-accel-incl-input</output>
+		</fcs_function>
+
 		<deadband name="/autopilot/yawtrim-channel/ap-y-accel-clipped">
-			<input>/autopilot/yawtrim-channel/ap-y-accel</input>
+			<input>/autopilot/yawtrim-channel/ap-y-accel-incl-input</input>
 			<width>0.002</width>
 			<clipto>
 		     		<min>/autopilot/yawtrim-channel/accel-min</min>
