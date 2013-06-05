@@ -331,7 +331,7 @@
 	</channel>
 
 <!--*****************************************Vertical speed RH IFD*****************************************************************-->
-	<channel name="verticalspeedLHIFD">
+	<channel name="verticalspeedRHIFD">
 
 		<fcs_function name="/instrumentation/ivsi-IFD-RH/vs-unfiltered">
 			<function>
