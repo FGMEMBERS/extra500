@@ -58,8 +58,11 @@ var AvidyneIFD = {
 		m.OAT = 0;
 		m.TAS = 0;
 		m.hPa = 0;
-		
-		
+		m.WindDirection = 0;
+		m.WindSpeed = 0;
+
+		m.nWindDirection = props.globals.initNode("/environment/wind-from-heading-deg",0.0,"INT");
+		m.nWindSpeed = props.globals.initNode("/environment/wind-speed-kt",0.0,"INT");
 		m.nApModeVS = props.globals.initNode("/autopilot/mode/vs",0.0,"INT");
 		m.nApModeHDG = props.globals.initNode("/autopilot/mode/heading",0.0,"INT");
 		m.nApModeNAV = props.globals.initNode("/autopilot/mode/nav",0.0,"INT");
@@ -104,10 +107,12 @@ var AvidyneIFD = {
 	#loading svg
 		canvas.parsesvg(m.PFD, "Models/instruments/IFDs/RH-IFD_CanvasTest.svg");
 
-		
 		m.CompassRose = m.PFD.getElementById("CompassRose");
 		m.CompassRose.updateCenter();
-		
+		m.cWindSpeed = m.PFD.getElementById("WindSpeed");
+		m.cWindDirection = m.PFD.getElementById("WindDirection");
+		m.cWindArrow = m.PFD.getElementById("WindArrow");
+		m.cWindArrow.updateCenter();
 		
 		m.HeadingBug = m.PFD.getElementById("HeadingBug");
 		m.HeadingBug.updateCenter();
@@ -183,6 +188,12 @@ var AvidyneIFD = {
 		me.OAT = me.nOAT.getValue();
 		me.TAS = me.nTAS.getValue();
 		me.hPa = me.nhPa.getValue();
+		
+		me.WindSpeed = me.nWindSpeed.getValue();
+		me.WindDirection = me.nWindDirection.getValue();
+		me.cWindSpeed.setText(sprintf("%3i",me.WindSpeed));
+		me.cWindDirection.setText(sprintf("%03i",me.WindDirection));
+		me.cWindArrow.setRotation((180 + me.WindDirection - me.hdg) * TORAD);
 		
 		me.HeadingSelected.setText(sprintf("%03i",me.hdgBug));
 		
