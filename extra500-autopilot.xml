@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-06-03
+      Date:             2013-06-06
 -->
 
 <autopilot name="STEC55X">
@@ -489,6 +489,17 @@
 			<output>/autopilot/mode/vs</output>
 		</switch>
 
+<!-- when vs is automatically switched off, set the vs bug to 0 fpm -->
+		<!--switch name="vsoff2">
+			<default value="/autopilot/settings/vertical-speed-fpm"/>
+			<test logic="AND" value="0">
+				/autopilot/mode/vs eq 1
+				/autopilot/mode/alt eq 1
+				/autopilot/alt-channel/alt-error-ft-abs lt 100.0
+			</test>
+			<output>/autopilot/settings/vertical-speed-fpm</output>
+		</switch-->
+
 
 <!--this makes the elevator pilot input to move along, so when the alt mode is disconnected, the elevator is in the correct position-->
 		<switch name="alton">
@@ -725,14 +736,6 @@
 			</clipto>
 			<output>/autopilot/yawtrim-channel/cmd-ap-rudder-pos-norm</output>
 		</actuator>
-
-		<!--switch name="yawtrimon3">
-			<default value="fcs/rudder-cmd-tot"/>
-			<test value="/autopilot/yawtrim-channel/cmd-ap-rudder-pos-norm">
-				/autopilot/mode/yawtrim eq 1
-			</test>
-			<output>/autopilot/yawtrim-channel/cmd-ap-rudder-pos-norm</output>
-		</switch-->
 
 <!--because of some reason /controls/flight/rudder and /fdm/jsbsim/fcs/rudder-x are reversed in sign, so that is ONLY why the lower function exists-->
 		<fcs_function name="/autopilot/yawtrim-channel/cmd-ap-rudder-pos-norm-neg">
