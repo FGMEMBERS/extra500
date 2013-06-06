@@ -79,13 +79,15 @@ Principle Autopilot functionality (currently in place):
 - ALT 		Holds the current altitude (rounded to 100ft)
 - ALT+VS	Brings and holds the aircraft to the selected altitude with the selected vertical speed.
 
+To disconnect press: d
+
 General remarks to autopilot operation:
 A roll mode (HDG, NAV/GPSS, APR/REV) must be engaged for a pitch mode (ALT, VS, GS) can engage.
 A roll mode (HDG, NAV/GPSS, APR/REV) must be engaged for the yaw trim to work
 If pitch trim is switched off, autotrim is not available, but the AP will indicate where to (manually) trim to.
 
 The AP will disengage when:
-- the disconnect switch is pressed
+- the disconnect switch is pressed (d)
 - the stall warner is on
 - absolute g-force (disregarding 1-g gravity) exceeds 0.6g
 - manual electric pitch trim is used.  

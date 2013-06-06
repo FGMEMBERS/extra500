@@ -17,7 +17,7 @@
 #      Date: May 18 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             2013-06-01
+#      Date:             2013-06-06
 #
 
 var Autopilot = {
@@ -60,7 +60,6 @@ var Autopilot = {
 		m.nSetAltitudeBugFt 	= props.globals.initNode("/autopilot/settings/target-altitude-ft",0,"DOUBLE");	# Keypad
 		m.nSetTargetAltitudeFt 	= props.globals.initNode("/autopilot/alt-channel/target-alt-ft",0,"DOUBLE");
 		m.nSetVerticalSpeedFpm 	= props.globals.initNode("/autopilot/settings/vertical-speed-fpm",0,"DOUBLE");  # Autopilot Panel
-		#m.nSetPitchTrim = props.globals.initNode("/autopilot/settings/pitchTrim",0,"DOUBLE"); depredicated
 		
 		m.nAPState 	= props.globals.getNode("/extra500/instrumentation/Autopilot/state");		
 		m.nTCSpin 	= props.globals.getNode("/instrumentation/turn-indicator/spin");			
@@ -356,10 +355,6 @@ var Autopilot = {
 				me.nModeFail.setValue(1);
 			}
 		} else {
-			me.nModeRdy.setValue(1);
-			me.nModeHeading.setValue(0);
-			me.nModeAlt.setValue(0);
-			me.nModeVs.setValue(0);
 		}
 	},
 	onClickHDGNAV : func(){
@@ -379,11 +374,6 @@ var Autopilot = {
 # a check if GPSS is possible fails here!
 			me.nModeNavGpss.setValue(1);
 		} else { 
-			me.nModeRdy.setValue(1);
-			me.nModeNav.setValue(0);
-			me.nModeNavGpss.setValue(0);
-			me.nModeAlt.setValue(0);
-			me.nModeVs.setValue(0);
 		}
 	},
 	onClickAPR : func(){
@@ -393,7 +383,7 @@ var Autopilot = {
 		me.nModeRev.setValue(!me.nModeRev.getValue());
 	},
 	onClickALT : func(){
-		if ( me.nModeAlt.getValue() == 0 ){
+		if ( ( me.nModeAlt.getValue() == 0 ) or ( ( me.nModeAlt.getValue() == 1 ) and ( me.nModeVs.getValue() == 1 ) ) ){
 			if ( me._CheckRollModeActive() == 1 ) {
 				me.nSetTargetAltitudeFt.setValue( 100 * int( me.nCurrentAlt.getValue()/100 ) );			# if ALT knob is pressed on its own, current altitude rounded to 100ft becomes the target altitude
 				me.nSetAltitudeBugFt.setValue( 100 * int( me.nCurrentAlt.getValue()/100 ) );			# setting bug (indicated on IFD)
@@ -401,7 +391,6 @@ var Autopilot = {
 				me.nModeVs.setValue(0);
 			} 
 		} else {
-			me.nModeAlt.setValue(0);
 		}
 	},
 	onClickALTVS : func(){
@@ -428,8 +417,6 @@ var Autopilot = {
 				}
 			} 
 		} else {
-				me.nModeAlt.setValue(0);
-				me.nModeVs.setValue(0);
 		}
 	},
 	onClickVS : func(){
@@ -439,11 +426,10 @@ var Autopilot = {
 				me.nModeAlt.setValue(0);
 			} 
 		} else if ( ( me.nModeVs.getValue() == 1 ) and (me.nModeAlt.getValue() == 1 ) ) {
-			me.nSetTargetAltitudeFt.setValue( 100 * int( me.nCurrentAlt.getValue()/100 ) );			# if VS+ALT mode, just alt mode set current altitude as target 
+			me.nModeAlt.setValue(0);
+			me.nModeVs.setValue(1);
 			me.nSetAltitudeBugFt.setValue( 100 * int( me.nCurrentAlt.getValue()/100 ) );			# setting bug (indicated on IFD)
-			me.nModeVs.setValue(0);
 		} else {
-			me.nModeVs.setValue(0);
 		}
 	},
 	onAdjustVS : func(amount=nil){

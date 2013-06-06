@@ -674,6 +674,7 @@ JSBSim Extra Aircraft - Extra 500.
 	</e1>
 	<Dev>
 		<file>Aircraft/extra500/Nasal/DevTools/engineer.book.nas</file>
+		<file>Aircraft/extra500/test/benchmark.nas</file>
 	</Dev>
 	<!---->
 	<controls>

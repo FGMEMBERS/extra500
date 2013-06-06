@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             24.05.13
+      Date:             2013.06.06
 -->
 <PropertyList>
 
@@ -36,12 +36,22 @@
 			 </binding>
 		 </key>
 
+		 <key n="100">
+			 <name>d</name>
+			 <desc>disconnect AP</desc>
+			 <binding n="0">
+				 <command>nasal</command>
+				 <script><![CDATA[
+					UI.click("Autopilot disengage");
+				]]></script> 
+			 </binding>
+		 </key>
+
 		 <key n="114">
 			 <name>r</name>
 			 <desc>Toggle prop beta range</desc>
 			 <binding n="0">
 				 <command>nasal</command>
-				 <!--<script>e1.bitswap("controls/engines/engine[0]/reverser")</script>-->
 				 <script><![CDATA[
 					UI.click("Engine reverser");
 				]]></script> 
@@ -54,7 +64,6 @@
 			 <desc>Toggle engine cutoff</desc>
 			 <binding n="0">
 				 <command>nasal</command>
-				 <!--<script>e1.cutoff()</script> -->
 				 <script><![CDATA[
 					UI.click("Engine cutoff");
 				]]></script>
