@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             26.05.13
+      Date:             2013.06.06
 -->
 
 <PropertyList>
@@ -348,6 +348,7 @@
 		<type>textranslate</type>
 		<object-name>Autopilot.Display.VSnumbers</object-name>
 		<property>autopilot/settings/vertical-speed-fpm</property>
+		<bias>0.01</bias>
 		<factor>0.00028</factor>
 		<step>100</step>
 		<axis>

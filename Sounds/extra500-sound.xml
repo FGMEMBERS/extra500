@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
-      Date:             21.05.13
+      Last change:      Eric van den Berg
+      Date:             2013-06-07
 -->
  
 <PropertyList>
@@ -28,6 +28,27 @@
     <fx>
 
 <!-- Engine 1 -->
+
+       <ignition>
+	       <name>ignition</name>
+	       <reference-dist>1.0</reference-dist>
+	       <max-dist>1.0</max-dist>
+	       <mode>looped</mode>
+	       <path>Aircraft/extra500/Sounds/ignition.wav</path>
+	       <condition>
+		       <or>
+			       <property>/engines/engine[0]/ignition</property>
+		       </or>
+	       </condition>
+	       <volume>
+		       <offset>1.0</offset>
+	       </volume>
+	       <position>
+		       <x>0</x>
+		       <y>0</y>
+		       <z>0</z>
+	       </position>
+       </ignition>
 
        <crank>
 	       <name>engine_start</name>
@@ -264,6 +285,72 @@
 		</volume>
 	</switch>
 
+<!--AP disconnect-->
+       <apdis>
+	       <name>ap disconnect</name>
+	       <reference-dist>0.5</reference-dist>
+	       <max-dist>1.0</max-dist>
+	       <mode>once</mode>
+	       <path>Aircraft/extra500/Sounds/APdisconnect.wav</path>
+	       <condition>
+		       <or>
+			       <property>/autopilot/mode/disengsound</property>
+	<!-- the property for day/night/test must be here -->
+		       </or>
+	       </condition>
+	       <volume>
+		       <offset>0.9</offset>
+	       </volume>
+	       <position>
+		       <x>0.2</x>
+		       <y>0</y>
+		       <z>0</z>
+	       </position>
+       </apdis>
+
+<!--gear warn-->
+       <gearwarn>
+	       <name>gear warning</name>
+	       <reference-dist>0.5</reference-dist>
+	       <max-dist>1.0</max-dist>
+	       <mode>looped</mode>
+	       <path>Aircraft/extra500/Sounds/gearwarn.wav</path>
+	       <condition>
+		       <or>
+			       <property>/extra500/sound/gearWarning</property>
+		       </or>
+	       </condition>
+	       <volume>
+		       <offset>0.9</offset>
+	       </volume>
+	       <position>
+		       <x>0</x>
+		       <y>0</y>
+		       <z>0</z>
+	       </position>
+       </gearwarn>
+
+<!--stall warn-->
+       <stallwarn>
+	       <name>stall warning</name>
+	       <reference-dist>0.5</reference-dist>
+	       <max-dist>1.0</max-dist>
+	       <mode>looped</mode>
+	       <path>Aircraft/extra500/Sounds/stallwarning.wav</path>
+	       <condition>
+		       <or>
+			       <property>/extra500/system/pitot/StallWarn/state</property>
+		       </or>
+	       </condition>
+	       <volume>
+		       <offset>0.9</offset>
+	       </volume>
+	       <position>
+		       <x>0</x>
+		       <y>0</y>
+		       <z>0</z>
+	       </position>
+       </stallwarn>
         
 	</fx>
 </PropertyList>

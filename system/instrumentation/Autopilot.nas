@@ -17,7 +17,7 @@
 #      Date: May 18 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             2013-06-06
+#      Date:             2013-06-07
 #
 
 var Autopilot = {
@@ -33,6 +33,7 @@ var Autopilot = {
 		m.dimmingVolt = 0.0;
 				
 		
+		m.ndisengSound  = props.globals.initNode("/autopilot/mode/disengsound",0,"INT");
 		m.nModeDiseng	= props.globals.initNode("/autopilot/mode/diseng",0,"INT");
 		m.nModeHeading 	= props.globals.initNode("/autopilot/mode/heading",0,"INT");
 		m.nModeNav 	= props.globals.initNode("/autopilot/mode/nav",0,"INT");
@@ -309,6 +310,9 @@ var Autopilot = {
 	},
 # disengages the autopilot
 	_APDisengage : func(){
+		if ( me._CheckRollModeActive() == 1)  {
+			me.ndisengSound.setValue(1);
+		}
 		me.nModeHeading.setValue(0);
 		me.nModeNav.setValue(0);
 		me.nModeNavGpss.setValue(0);
@@ -335,7 +339,7 @@ var Autopilot = {
 			if ( ( me.nModeFail.getValue() == 1 ) or ( me.nModeDiseng.getValue() == 1 ) ) {
 				me.nModeFail.setValue(0);
 				me.nModeRdy.setValue(1);
-				me.nModeDiseng.setValue(0);
+				me.nModeDiseng.setValue(0);			
 			}
 		}else{
 			me._APDisengage();
@@ -351,6 +355,7 @@ var Autopilot = {
 				me.nModeHeading.setValue(1);
 				me.nModeNav.setValue(0);
 				me.nModeNavGpss.setValue(0);
+				me.ndisengSound.setValue(0);
 			} else {
 				me.nModeFail.setValue(1);
 			}
@@ -367,6 +372,7 @@ var Autopilot = {
 				me.nModeRdy.setValue(0);
 				me.nModeNav.setValue(1);
 				me.nModeHeading.setValue(0);
+				me.ndisengSound.setValue(0);
 			} else {
 				me.nModeFail.setValue(1);
 			} 
@@ -453,8 +459,7 @@ var Autopilot = {
 		}
 	},
 	onClickDisengage : func(){
-		me._APDisengage();
-				
+		me._APDisengage();			
 	},
 
 # 	onAdjustPitchTrim : func(amount=nil){

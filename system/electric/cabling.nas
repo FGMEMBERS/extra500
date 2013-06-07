@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: April 12 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             29.04.13
+#      Last change:      Eric van den Berg
+#      Date:             2013-06-07
 #
  var plugEBox = func(){
 	
@@ -439,7 +439,7 @@ var plugGearWarningBoard = func(){
 	gearWarningBoard.GearNose.plug(gearSystem.NoseGearLedBus.con());
 	gearWarningBoard.GearRight.plug(gearSystem.RightGearLedBus.con());
 	
-	gearWarningBoard.Flap15.plug(flapSystem.limit15.L12);
+	gearWarningBoard.Flap15.plug(flapSystem.limit14.L12);
 	gearWarningBoard.PowerIdle.plug(engine.LowTorquePress.L12);
 	
 }

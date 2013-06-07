@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2013-06-03
+      Date:             2013-06-07
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -91,6 +91,10 @@ JSBSim Extra Aircraft - Extra 500.
      	      <key>
 			<name>Ctrl-C</name>
 			<desc>Toggle engine fuel cutoff</desc>
+		</key>
+     	      <key>
+			<name>D</name>
+			<desc>Disconnect Autopilot</desc>
 		</key>
 	</help>
 	
@@ -398,6 +402,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<yawdamper type="int">0</yawdamper>
 	</settings>
 	<mode>
+		<disengsound type="int">0</disengsound>
 		<diseng type="int">0</diseng>
 		<fd type="int">0</fd>
 		<heading type="int">0</heading>
