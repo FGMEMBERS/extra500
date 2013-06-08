@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2013-06-07
+      Date:             2013-06-08
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -430,13 +430,13 @@ JSBSim Extra Aircraft - Extra 500.
 		<cmd-ap-ail-pos-norm-raw type="double">0.0</cmd-ap-ail-pos-norm-raw>
 	</hdg-channel>
 	<vs-channel>
-		<turnrate-gain type="double">2</turnrate-gain>
+		<turnrate-gain type="double">2.0</turnrate-gain>
 		<acc-offset-gain type="double">0.2</acc-offset-gain>
 		<accel-rate-gain type="double">8000.0</accel-rate-gain>
 		<pitch-error-gain type="double">-0.000015</pitch-error-gain>
 	</vs-channel>
 	<alt-channel>	
-		<turnrate-gain type="double">2.0</turnrate-gain>
+		<turnrate-gain type="double">1.5</turnrate-gain>
 		<acc-offset-gain type="double">0.2</acc-offset-gain>
 		<target-alt-ft type="double">0.0</target-alt-ft>
 		<vs-target-gain type="double">5.0</vs-target-gain>
@@ -480,10 +480,13 @@ JSBSim Extra Aircraft - Extra 500.
             <serviceable>1</serviceable>
             <sideslip-error-factor>0.1</sideslip-error-factor>
       </staticAP>
-      <electrical>	<!-- FIXME: a hack to get the turn coordinator and heading ind working -->
+      <electrical>	
 		<outputs>
 			<turn-coordinator>12</turn-coordinator>
 			<DG>1.0</DG> <!-- the gyro eats norm Power -->
+			<nav-IFD-LH>1.1</nav-IFD-LH>	<!-- FIXME: a hack to get the nav working expects >1 -->
+			<nav-IFD-RH>1.1</nav-IFD-RH>
+			<dme>1</dme> 			<!--expects a bool 0 or 1 -->
 		</outputs>
       </electrical>
  </systems>
@@ -538,9 +541,10 @@ JSBSim Extra Aircraft - Extra 500.
 
     <dme>                                                             
       <frequencies>
-            <source>/instrumentation/nav-IFD-LH/frequencies/selected-mhz</source>
+            <source>/instrumentation/nav-IFD-LH/frequencies/selected-mhz</source>	<!--may be set to nav-RH-IFD on keyboard with aux button-->        
       </frequencies>
-      <selector type="int">0</selector>                                     
+      <selector type="int">0</selector>  
+      <volume type="double">0.0</volume>    	<!--may be set to larger value by audiopanel (mon2 button)-->                                   
     </dme>
 
     <tcas>
@@ -551,10 +555,12 @@ JSBSim Extra Aircraft - Extra 500.
     </turn-indicator>
 
     <nav-IFD-LH>
-      <volume type="double">0.7</volume>
+      	<volume type="double">0.0</volume>    	<!--may be set to larger value by audiopanel (nav1 button)-->
+	<serviceable type="bool">true</serviceable>
     </nav-IFD-LH>
     <nav-IFD-RH>
-      <volume type="double">0.7</volume>
+      	<volume type="double">0.0</volume>	<!--may be set to larger value by audiopanel (nav2 button)-->
+	<serviceable type="bool">true</serviceable>
     </nav-IFD-RH>
 
  </instrumentation>
