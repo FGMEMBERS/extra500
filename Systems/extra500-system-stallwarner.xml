@@ -17,7 +17,7 @@
     along with extra500.  If not, see <http://www.gnu.org/licenses/>.
 
       Author: Eric van den Berg
-      Date: 2013-05-23
+      Date: 2013-06-08
 
       Last change:      -
       Date:             -
@@ -40,8 +40,9 @@
 
 		<switch name="stallwarning">
 			<default value="0"/>
-			<test value="1">
+			<test logic="AND" value="1">
 				aircraft/wing/alpha-deg ge aircraft/stallwarner/alpha-stall-warn
+				velocities/vtrue-kts gt 30
 			</test>
 			<output>aircraft/stallwarner/state</output>
 		</switch>
