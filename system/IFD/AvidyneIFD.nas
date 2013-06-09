@@ -41,7 +41,8 @@ var AvidyneIFD = {
 		"name": "IFD",
 		"size": [2410, 1810],
 		"view": [2410, 1810],
-		"mipmapping": 1
+		"mipmapping": 1,
+		"font-mapper": func{return "LiberationFonts/LiberationMono-Regular.ttf";}
 		});
     
 		# ... and place it on the object called PFD-Screen
