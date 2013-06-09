@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-06-08
+      Date:             2013-06-09
 -->
 
 <autopilot name="STEC55X">
@@ -481,6 +481,17 @@
 			</function>
 		</fcs_function>
 
+<!-- when vs is automatically switched off, set the vs bug to 0 fpm -->
+		<switch name="vsoff2">
+			<default value="/autopilot/settings/vertical-speed-fpm"/>
+			<test logic="AND" value="0">
+				/autopilot/mode/vs eq 1
+				/autopilot/mode/alt eq 1
+				/autopilot/alt-channel/alt-error-ft-abs lt 100.0
+			</test>
+			<output>/autopilot/settings/vertical-speed-fpm</output>
+		</switch>
+
 		<switch name="vsoff">
 			<default value="/autopilot/mode/vs"/>
 			<test logic="AND" value="0">
@@ -490,18 +501,6 @@
 			</test>
 			<output>/autopilot/mode/vs</output>
 		</switch>
-
-<!-- when vs is automatically switched off, set the vs bug to 0 fpm -->
-		<!--switch name="vsoff2">
-			<default value="/autopilot/settings/vertical-speed-fpm"/>
-			<test logic="AND" value="0">
-				/autopilot/mode/vs eq 1
-				/autopilot/mode/alt eq 1
-				/autopilot/alt-channel/alt-error-ft-abs lt 100.0
-			</test>
-			<output>/autopilot/settings/vertical-speed-fpm</output>
-		</switch-->
-
 
 <!--this makes the elevator pilot input to move along, so when the alt mode is disconnected, the elevator is in the correct position-->
 		<switch name="alton">
