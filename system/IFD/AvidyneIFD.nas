@@ -150,6 +150,8 @@ var AvidyneIFD = {
 		m.cAirSpeedIndicatedOne.set("clip","rect(383px, 581px, 599px, 505px)");
 		m.cAirSpeedIndicated = m.PFD.getElementById("AirSpeedIndicated");
 		m.cAirSpeedTAS = m.PFD.getElementById("AirSpeedTAS");
+		m.cAirSpeedBlackPlade = m.PFD.getElementById("AirSpeedBlackPlade");
+		m.cAirSpeedBlackPlade.set("clip","rect(0px, 0px, 2410px, 1810px)");
 		
 	#autopilot
 		m.cAuopilot	= m.PFD.getElementById("Autopilot");
