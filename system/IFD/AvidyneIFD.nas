@@ -42,7 +42,6 @@ var AvidyneIFD = {
 		"size": [2410, 1810],
 		"view": [2410, 1810],
 		"mipmapping": 1,
-		"font-mapper": func{return "LiberationFonts/LiberationMono-Regular.ttf";}
 		});
     
 		# ... and place it on the object called PFD-Screen
@@ -108,7 +107,17 @@ var AvidyneIFD = {
 			
 		
 	#loading svg
-		canvas.parsesvg(m.PFD, "Models/instruments/IFDs/RH-IFD_CanvasTest.svg");
+		canvas.parsesvg(m.PFD, "Models/instruments/IFDs/RH-IFD_CanvasTest.svg",{
+			"font-mapper": func(family, weight){
+						#print(sprintf("Canvas font-mapper %s %s",family,weight));
+						if (weight == "bold"){
+							return "LiberationFonts/LiberationSans-Bold.ttf";
+						}elsif(weight == "normal"){
+							return "LiberationFonts/LiberationSans-Regular.ttf";
+						}
+				},
+			}
+		);
 
 		m.CompassRose = m.PFD.getElementById("CompassRose");
 		m.CompassRose.updateCenter();
@@ -183,7 +192,7 @@ var AvidyneIFD = {
 		#m.CompassRose.setCenter(356,-356);
 		
 		#m.tfCompassRose = m.CompassRose.createTransform();
-		debug.dump("AvidyneIFD.new() ... IFD created.");
+		debug.dump("AvidyneIFD.new() ... "~prefix~" IFD created.");
 		#debug.dump(m.CompassRose.getBoundingBox());
 		return m;
 	},
