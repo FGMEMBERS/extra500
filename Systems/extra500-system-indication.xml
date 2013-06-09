@@ -20,13 +20,188 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-06-03
+      Date:             2013-06-09
 -->
 
 <system name="indication">
 
 	<channel name="engineparameters">
 <!-- ENGINE -->
+
+		<fcs_function name="aircraft/engine/fuelflow-3rd">
+    			<function>
+       			<description>engine fuel flow 3rd order coeff</description>
+       				<table>
+            				<independentVar lookup="row">atmosphere/pressure-altitude</independentVar>
+            				<tableData>
+						0	-0.000000020936
+						1000	-0.000000020531
+						2000	-0.00000001985
+						3000	-0.00000001881
+						4000	-0.000000017304
+						5000	-0.000000015193
+						6000	-0.000000015796
+						7000	-0.000000016411
+						8000	-0.00000001703
+						9000	-0.000000017642
+						10000	-0.000000018234
+						11000	-0.000000019072
+						12000	-0.00000001996
+						13000	-0.0000000209
+						14000	-0.000000021895
+						15000	-0.000000022951
+						16000	-0.000000023698
+						17000	-0.000000024371
+						18000	-0.000000024921
+						19000	-0.000000025278
+						20000	-0.000000025339
+						21000	-0.000000033397
+						22000	-0.000000043542
+						23000	-0.000000056406
+						24000	-0.000000072851
+						25000	-0.00000009407
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/fuelflow-2rd">
+    			<function>
+       			<description>engine fuel flow 2rd order coeff</description>
+       				<table>
+            				<independentVar lookup="row">atmosphere/pressure-altitude</independentVar>
+            				<tableData>
+						0	0.000022627
+						1000	0.000022051
+						2000	0.000021249
+						3000	0.000020164
+						4000	0.000018722
+						5000	0.000016826
+						6000	0.000017211
+						7000	0.000017597
+						8000	0.00001798
+						9000	0.000018353
+						10000	0.000018709
+						11000	0.000019171
+						12000	0.000019649
+						13000	0.000020144
+						14000	0.000020655
+						15000	0.000021184
+						16000	0.000021608
+						17000	0.000021995
+						18000	0.000022327
+						19000	0.000022576
+						20000	0.000022701
+						21000	0.000026872
+						22000	0.000031912
+						23000	0.000038051
+						24000	0.0000456
+						25000	0.000054978
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/fuelflow-1rd">
+    			<function>
+       			<description>engine fuel flow 1rd order coeff</description>
+       				<table>
+            				<independentVar lookup="row">atmosphere/pressure-altitude</independentVar>
+            				<tableData>
+						0	-0.0085847
+						1000	-0.0083227
+						2000	-0.0080015
+						3000	-0.0076079
+						4000	-0.0071253
+						5000	-0.0065325
+						6000	-0.0065536
+						7000	-0.0065716
+						8000	-0.0065855
+						9000	-0.006594
+						10000	-0.0065955
+						11000	-0.0066122
+						12000	-0.0066278
+						13000	-0.006642
+						14000	-0.0066545
+						15000	-0.0066651
+						16000	-0.00667
+						17000	-0.006666
+						18000	-0.0066503
+						19000	-0.0066188
+						20000	-0.0065663
+						21000	-0.0071751
+						22000	-0.0078919
+						23000	-0.0087432
+						24000	-0.0097637
+						25000	-0.0109996
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/fuelflow-0rd">
+    			<function>
+       			<description>engine fuel flow 0rd order coeff</description>
+       				<table>
+            				<independentVar lookup="row">atmosphere/pressure-altitude</independentVar>
+            				<tableData>
+						0	1.7807
+						1000	1.7364
+						2000	1.6872
+						3000	1.6322
+						4000	1.5701
+						5000	1.4995
+						6000	1.4821
+						7000	1.4644
+						8000	1.4462
+						9000	1.4276
+						10000	1.4083
+						11000	1.3913
+						12000	1.374
+						13000	1.3566
+						14000	1.3389
+						15000	1.321
+						16000	1.3052
+						17000	1.2889
+						18000	1.272
+						19000	1.2542
+						20000	1.2353
+						21000	1.2526
+						22000	1.274
+						23000	1.3005
+						24000	1.3334
+						25000	1.37423
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/FF-lbs_h">
+    			<function>
+      			<description>fuel flow in pounds per hour</description>
+			<product>
+				<property>propulsion/engine/power-hp</property>   
+				<sum>
+					<product>
+						<property>aircraft/engine/fuelflow-3rd</property>
+						<property>propulsion/engine/power-hp</property>   
+						<property>propulsion/engine/power-hp</property>   
+						<property>propulsion/engine/power-hp</property>   
+					</product>
+					<product>
+						<property>aircraft/engine/fuelflow-2rd</property>
+						<property>propulsion/engine/power-hp</property>   
+						<property>propulsion/engine/power-hp</property>   
+					</product>
+					<product>
+						<property>aircraft/engine/fuelflow-1rd</property>
+						<property>propulsion/engine/power-hp</property>   
+					</product>
+					<property>aircraft/engine/fuelflow-0rd</property>
+				</sum>
+			</product>
+    			</function>
+		</fcs_function>
 
 		<fcs_function name="aircraft/engine/TRQ-perc">
     			<function>
