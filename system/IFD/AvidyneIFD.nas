@@ -30,6 +30,7 @@ var COLOR = {};
 COLOR["Red"] = "rgb(244,28,33)";
 COLOR["Green"] = "rgb(64,178,80)";
 COLOR["Magenta"] = "rgb(255,14,235)";
+COLOR["Yellow"] = "rgb(241,205,57)";
 
 
 var AvidyneIFD = {
@@ -44,6 +45,7 @@ var AvidyneIFD = {
 		});
     
 		# ... and place it on the object called PFD-Screen
+		m.powered = 0;
 		m.canvas.addPlacement({"node": acPlace});
 		m.canvas.setColorBackground(1,1,1);
 		m.hdg = 0;
@@ -129,6 +131,9 @@ var AvidyneIFD = {
 		m.PitchLadder.updateCenter();
 		m.PitchLadder.set("clip","rect(168px, 1562px, 785px, 845px)");
 		
+		m.cARS = m.PFD.getElementById("ARS");
+		m.cARS.set("clip","rect(168px, 1562px, 785px, 845px)");
+		
 		m.Heading = m.PFD.getElementById("Heading");
 		m.HeadingSelected = m.PFD.getElementById("HeadingSelected");
 	#vertical speed
@@ -151,10 +156,10 @@ var AvidyneIFD = {
 		m.cAirSpeedIndicated = m.PFD.getElementById("AirSpeedIndicated");
 		m.cAirSpeedTAS = m.PFD.getElementById("AirSpeedTAS");
 		m.cAirSpeedBlackPlade = m.PFD.getElementById("AirSpeedBlackPlade");
-		m.cAirSpeedBlackPlade.set("clip","rect(0px, 0px, 2410px, 1810px)");
+		m.cAirSpeedBlackPlade.set("clip","rect(126px, 648px, 784px, 380px)");
 		
 	#autopilot
-		m.cAuopilot	= m.PFD.getElementById("Autopilot");
+		m.cAutopilot	= m.PFD.getElementById("Autopilot");
 		m.cApModeState 	= m.PFD.getElementById("AP_State");
 		m.cApModeHdg 	= m.PFD.getElementById("AP_HDG");
 		m.cApModeHdg.hide(); 
@@ -249,55 +254,104 @@ var AvidyneIFD = {
 	# listeners events
 	onApModeFail : func(value){
 		#print ("AvidyneIFD.onApModeFail");
-		if (value == 1){
-			me.cApModeState.setText("AP FAIL");
-			me.cApModeState.setColor(COLOR["Red"]);
-			me.cApModeFd.hide();
+		if (me.powered == 1){
+			if (value == 1){
+				me.cApModeState.setText("AP FAIL");
+				me.cApModeState.setColor(COLOR["Red"]);
+				me.cApModeFd.hide();
+			}else{
+				me.cApModeState.setText("AP RDY");
+				me.cApModeState.setColor(COLOR["Green"]);
+				me.cApModeFd.show();
+			}
 		}else{
-			me.cApModeState.setText("AP RDY");
-			me.cApModeState.setColor(COLOR["Green"]);
-			me.cApModeFd.show();
+			me.cApModeState.setColor(COLOR["Yellow"]);
+			me.cApModeState.setText("---");
+			
 		}
+		
+		
 	},
 	onApModeAlt : func(value){
 		#print ("AvidyneIFD.onApModeAlt");
-		if (value == 1){
-			me.cApModeAlt.show();
+		if (me.powered == 1){
+			me.cApModeAlt.setColor(COLOR["Green"]);
+			me.cApModeAlt.setText("ALT");
+		
+			if (value == 1){
+				me.cApModeAlt.show();
+			}else{
+				me.cApModeAlt.hide();
+			}
 		}else{
-			me.cApModeAlt.hide();
+			me.cApModeAlt.setColor(COLOR["Yellow"]);
+			me.cApModeAlt.setText("---");
+			#me.cAltBug.show();
+			#me.cAltBugCoupled.hide();
 		}
 	},
 	onApModeNav : func(value){
 		#print ("AvidyneIFD.onApModeNav");
-		if (value == 1){
-			me.cApModeNav.show();
+		if (me.powered == 1){
+			me.cApModeNav.setColor(COLOR["Green"]);
+			me.cApModeNav.setText("NAV");
+		
+			if (value == 1){
+				me.cApModeNav.show();
+			}else{
+				me.cApModeNav.hide();
+			}
 		}else{
-			me.cApModeNav.hide();
+			me.cApModeNav.setColor(COLOR["Yellow"]);
+			me.cApModeNav.setText("---");
+			me.cApModeNav.show();
+			#me.cNavBug.show();
+			#me.cNavBugCoupled.hide();
 		}
 	},
 	onApModeVs : func(value){
 		#print ("AvidyneIFD.onApModeVs");
 		
-		if (value == 1){
-			me.cApModeVs.show();
-			me.VerticalSpeedBugCoupled.show();
-			me.VerticalSpeedBug.hide();
+		if (me.powered == 1){
+			me.cApModeVs.setColor(COLOR["Green"]);
+			me.cApModeVs.setText("VS");
+			if (value == 1){
+				me.cApModeVs.show();
+				me.VerticalSpeedBugCoupled.show();
+				me.VerticalSpeedBug.hide();
+				
+			}else{
+				me.cApModeVs.hide();
+				me.VerticalSpeedBug.show();
+				me.VerticalSpeedBugCoupled.hide();
+			}
 			
 		}else{
-			me.cApModeVs.hide();
+			me.cApModeVs.setColor(COLOR["Yellow"]);
+			me.cApModeVs.setText("---");
+			me.cApModeVs.show();
 			me.VerticalSpeedBug.show();
 			me.VerticalSpeedBugCoupled.hide();
-			
 		}
 	},
 	onApModeHdg : func(value){
 		#print ("AvidyneIFD.onApModeHdg");
-		if (value == 1){
-			me.cApModeHdg.show();
-			me.HeadingBugCoupled.show();
-			me.HeadingBug.hide();
+		if (me.powered == 1){
+			me.cApModeHdg.setColor(COLOR["Green"]);
+			if (value == 1){
+				me.cApModeHdg.setText("HDG");
+				me.cApModeHdg.show();
+				me.HeadingBugCoupled.show();
+				me.HeadingBug.hide();
+			}else{
+				me.cApModeHdg.hide();
+				me.HeadingBug.show();
+				me.HeadingBugCoupled.hide();
+			}
 		}else{
-			me.cApModeHdg.hide();
+			me.cApModeHdg.setColor(COLOR["Yellow"]);
+			me.cApModeHdg.setText("---");
+			me.cApModeHdg.show();
 			me.HeadingBug.show();
 			me.HeadingBugCoupled.hide();
 		}
@@ -306,23 +360,46 @@ var AvidyneIFD = {
 	onApModeAp : func(value){
 		#print ("AvidyneIFD.onApModeAp");
 		if (value == 1){
-			me.cAuopilot.show();
+			#me.cAutopilot.show();
 		}else{
-			me.cAuopilot.hide();
+			#me.cAutopilot.hide();
 		}
 	},
 	onApModeFd : func(value){
 		#print ("AvidyneIFD.onApModeFd");
-		if (value == 1){
-			me.cApModeFd.setText("FD");
+		if (me.powered == 1){
+			me.cApModeFd.setColor(COLOR["Green"]);
+			if (value == 1){
+				me.cApModeFd.setText("FD");
+			}else{
+				me.cApModeFd.setText("AP");
+			}
 		}else{
-			me.cApModeFd.setText("AP");
+			me.cApModeFd.setColor(COLOR["Yellow"]);
+			me.cApModeFd.setText("---");
+			me.cApModeFd.show();
 		}
 	},
+	onApPower : func(value){
+		#print ("AvidyneIFD.onApModeFd");
+		me.powered = value;
+		
+		me.onApModeAp(0);
+		me.onApModeFd(0);
+		me.onApModeHdg(0);
+		me.onApModeVs(0);	
+		me.onApModeNav(0);
+		me.onApModeAlt(0);
+		me.onApModeFail(0);
+		
+	},
+	
+	
 
 };
 
 var initListeners = func(){
+		
 	setlistener("/autopilot/mode/fail", func(n){ IFD.RH.onApModeFail(n.getValue());},0,0);
 	setlistener("/autopilot/mode/alt", func(n){ IFD.RH.onApModeAlt(n.getValue());},0,0);
 	setlistener("/autopilot/mode/vs", func(n){ IFD.RH.onApModeVs(n.getValue());},0,0);
@@ -330,11 +407,12 @@ var initListeners = func(){
 	setlistener("/autopilot/mode/heading", func(n){IFD.RH.onApModeHdg(n.getValue());},0,0);
 	setlistener("/autopilot/settings/ap", func(n){ IFD.RH.onApModeAp(n.getValue());},0,0);
 	setlistener("/autopilot/settings/fd", func(n){ IFD.RH.onApModeFd(n.getValue());},0,0);
+	setlistener("/extra500/instrumentation/Autopilot/state", func(n){ IFD.RH.onApPower(n.getValue());},1,0);
 }
 
 
 
-var LH = AvidyneIFD.new("LH","Oben");
+var LH = AvidyneIFD.new("LH","LH-IFD.Screen");
 var RH = AvidyneIFD.new("RH","RH-IFD.Screen");
 
 
