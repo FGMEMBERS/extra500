@@ -56,6 +56,7 @@ var AvidyneIFD = {
 		m.hdgBug = 0;
 		m.vsNeedle = 0;
 		m.vsBug = 0;
+		m.alt = 0;
 		m.altBug = 0;
 		m.OAT = 0;
 		m.TAS = 0;
@@ -78,6 +79,7 @@ var AvidyneIFD = {
 		m.nVerticalSpeedNeedle = props.globals.initNode("/instrumentation/ivsi-IFD-"~prefix~"/indicated-speed-fpm",0.0,"DOUBLE");
 		m.nVerticalSpeedBug = props.globals.initNode("/autopilot/settings/vertical-speed-fpm",0.0,"DOUBLE");
 		m.nAltitudeBug = props.globals.initNode("/autopilot/settings/target-altitude-ft",0.0,"DOUBLE");
+		m.nAltitudeIndicated = props.globals.initNode("/instrumentation/altimeter-IFD-"~prefix~"/indicated-altitude-ft",0.0,"DOUBLE");
 		m.nOAT = props.globals.initNode("/environment/temperature-degc",0.0,"DOUBLE");
 		m.nTAS = props.globals.initNode("/instrumentation/airspeed-IFD-"~prefix~"/true-speed-kt",0.0,"DOUBLE");
 		m.nhPa = props.globals.initNode("/instrumentation/altimeter-IFD-"~prefix~"/setting-hpa",0.0,"DOUBLE");
@@ -185,7 +187,25 @@ var AvidyneIFD = {
 	#alt
 		m.AltIndicated = m.PFD.getElementById("AltIndicated");
 		m.cHPA = m.PFD.getElementById("hPa");
+		m.cAltBar10 = m.PFD.getElementById("AltBar10")
+					.updateCenter()
+					.set("clip","rect(377px, 2060px, 605px,1680px)");
+		m.cAltBar100 = m.PFD.getElementById("AltBar100")
+					.updateCenter()
+					.set("clip","rect(451px, 2060px, 527px, 1680px)");
+		m.cAltBar1000 = m.PFD.getElementById("AltBar1000")
+					.updateCenter()
+					.set("clip","rect(451px, 2060px, 527px, 1680px)");
+		m.cAltBar10000 = m.PFD.getElementById("AltBar10000")
+					.updateCenter()
+					.set("clip","rect(451px, 2060px, 527px, 1680px)");
+		m.cAltBarBack = m.PFD.getElementById("AltBarBack")
+					.updateCenter()
+					.set("clip","rect(170px, 2060px, 785px, 1680px)");
+		m.cAltBlackPlade = m.PFD.getElementById("AltBlackPlade");
+		m.cAltBlackPlade.set("clip","rect(170px, 2060px, 785px, 1680px)");
 		
+	#OAT
 		m.cOAT = m.PFD.getElementById("OAT");
 		#m.CompassRose.updateCenter();
 		#m.CompassRose.setTranslation(100, -100);
@@ -233,12 +253,12 @@ var AvidyneIFD = {
 	
 	},	
 	animationUpdate : func(now,dt){
-		me.hdg = me.nIndicatedHeading.getValue();
-		me.speedIndicated = me.nIndicatedAirspeed.getValue();
-		me.vsNeedle = me.nVerticalSpeedNeedle.getValue();
-		
-		me.pitch = me.nPitchDeg.getValue();
-		me.roll = me.nRollDeg.getValue();
+		me.hdg 			= me.nIndicatedHeading.getValue();
+		me.speedIndicated 	= me.nIndicatedAirspeed.getValue();
+		me.vsNeedle 		= me.nVerticalSpeedNeedle.getValue();
+		me.alt 			= me.nAltitudeIndicated.getValue();
+		me.pitch 		= me.nPitchDeg.getValue();
+		me.roll 		= me.nRollDeg.getValue();
 		
 	# IAS
 		me.cAirSpeedBar.setTranslation(0,(me.speedIndicated-20)*10);
@@ -260,6 +280,14 @@ var AvidyneIFD = {
 		
 		me.nHorizon.setTranslation(0,me.pitch*10);
 		me.nHorizon.setRotation(-me.roll * TORAD);
+		
+	#ALT
+		me.cAltBar10.setTranslation(0,math.mod(me.alt,100)*(75.169/20));
+		me.cAltBar100.setTranslation(0,math.floor((math.mod(me.alt,1000)/100))*75.169);
+		me.cAltBar1000.setTranslation(0,math.floor((math.mod(me.alt,10000)/1000))*75.169);
+		me.cAltBar10000.setTranslation(0,math.floor((math.mod(me.alt,100000)/10000))*75.169);
+		#me.cAltBar10000.setTranslation(0,math.floor(((me.alt)/1000))*7.5169);
+		
 	},
 	# listeners events
 	onApModeFail : func(value){
