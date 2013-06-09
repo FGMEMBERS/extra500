@@ -400,14 +400,46 @@ var AvidyneIFD = {
 
 var initListeners = func(){
 		
-	setlistener("/autopilot/mode/fail", func(n){ IFD.RH.onApModeFail(n.getValue());},0,0);
-	setlistener("/autopilot/mode/alt", func(n){ IFD.RH.onApModeAlt(n.getValue());},0,0);
-	setlistener("/autopilot/mode/vs", func(n){ IFD.RH.onApModeVs(n.getValue());},0,0);
-	setlistener("/autopilot/mode/nav", func(n){ IFD.RH.onApModeNav(n.getValue());},0,0);
-	setlistener("/autopilot/mode/heading", func(n){IFD.RH.onApModeHdg(n.getValue());},0,0);
-	setlistener("/autopilot/settings/ap", func(n){ IFD.RH.onApModeAp(n.getValue());},0,0);
-	setlistener("/autopilot/settings/fd", func(n){ IFD.RH.onApModeFd(n.getValue());},0,0);
-	setlistener("/extra500/instrumentation/Autopilot/state", func(n){ IFD.RH.onApPower(n.getValue());},1,0);
+	setlistener("/autopilot/mode/fail", func(n){ 
+			var value = n.getValue();
+			IFD.LH.onApModeFail(value);
+			IFD.RH.onApModeFail(value);
+	},0,0);
+	setlistener("/autopilot/mode/alt", func(n){ 
+			var value = n.getValue();
+			IFD.LH.onApModeAlt(value);
+			IFD.RH.onApModeAlt(value);
+	},0,0);
+	setlistener("/autopilot/mode/vs", func(n){ 
+			var value = n.getValue();
+			IFD.LH.onApModeVs(value);
+			IFD.RH.onApModeVs(value);
+	},0,0);
+	setlistener("/autopilot/mode/nav", func(n){ 
+			var value = n.getValue();
+			IFD.LH.onApModeNav(value);
+			IFD.RH.onApModeNav(value);
+	},0,0);
+	setlistener("/autopilot/mode/heading", func(n){ 
+			var value = n.getValue();
+			IFD.LH.onApModeHdg(value);
+			IFD.RH.onApModeHdg(value);
+	},0,0);
+	setlistener("/autopilot/settings/ap", func(n){ 
+			var value = n.getValue();
+			IFD.LH.onApModeAp(value);
+			IFD.RH.onApModeAp(value);
+	},0,0);
+	setlistener("/autopilot/settings/fd", func(n){ 
+			var value = n.getValue();
+			IFD.LH.onApModeFd(value);
+			IFD.RH.onApModeFd(value);
+	},0,0);
+	setlistener("/extra500/instrumentation/Autopilot/state", func(n){ 
+			var value = n.getValue();
+			IFD.LH.onApPower(value);
+			IFD.RH.onApPower(value);
+	},1,0);
 }
 
 
