@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             24.05.13
+      Date:             09.06.13
 
 -->
 
@@ -28,7 +28,28 @@
 
 <path>LH-IFD.ac</path>
 
+<!--Dimming Test -->
+<animation>
+        <type>material</type>
+        <object-name>LH-IFD.Screen</object-name>
+		<condition>
+		<equals>
+		<property>extra500/panel/Side/Light/Instrument/state</property>
+		<value>1</value>
+		</equals>
+	</condition>
+        <emission>
+            <red>0.7</red>
+            <green>0.7</green>
+            <blue>0.7</blue>
+            <factor-prop>extra500/panel/Master/Dimming/Instrument/state</factor-prop>
+        </emission>
+</animation>
+
+
+<!-- alte NON-Canvas-Technologie -->
 <!-- kuenstlicher horizont -->
+<!--
 <animation>
   <type>texmultiple</type>
   <object-name>Oben</object-name>
@@ -56,8 +77,10 @@
    </axis>
   </transform>
  </animation>
+-->
 
 <!-- IAS -->
+<!--
 	<animation>
 		<type>select</type>
 		<object-name>IAS.100er</object-name>
@@ -116,8 +139,10 @@
 		<z>0</z>
 	</axis>
 </animation>
+-->
 
 <!-- Groundspeed -->
+<!--
 <animation>
 	<type>textranslate</type>
 	<object-name>Groundspeed.001er</object-name>
@@ -155,9 +180,10 @@
 		<z>0</z>
 	</axis>
 </animation>
-
+-->
 
 <!-- Altitude -->
+<!--
 	<animation>
 		<type>select</type>
 	<object-name>Altitude.10000er</object-name>
@@ -228,8 +254,10 @@
 		<z>0</z>
 	</axis>
 </animation>
+-->
 
 <!-- Heading -->
+<!--
 <animation>
 	<type>textranslate</type>
 	<object-name>Heading.001er</object-name>
@@ -267,8 +295,10 @@
 		<z>0</z>
 	</axis>
 </animation>
+-->
 
 <!-- WindDirection -->
+<!--
 <animation>
 	<type>textranslate</type>
 	<object-name>WindDegree.001er</object-name>
@@ -306,8 +336,10 @@
 		<z>0</z>
 	</axis>
 </animation>
+-->
 
 <!-- WindSpeed -->
+<!--
 <animation>
 	<type>textranslate</type>
 	<object-name>WindSpeed.01er</object-name>
@@ -361,8 +393,10 @@
 		<z2-m>-0.0384</z2-m>
 	</axis>
 </animation>
+-->
 
 <!-- Temperature -->
+<!--
 <animation>
 	<type>textranslate</type>
 	<object-name>Temperature.01er</object-name>
@@ -387,12 +421,13 @@
 		<z>0</z>
 	</axis>
 </animation>
+-->
 
 <!-- Kompass -->
+<!--
 <animation>
 	<type>texrotate</type>
 	<object-name>Kompass</object-name>
-<!--mal zum testen auskommentiert	<property>/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg</property>-->
 <property>/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg</property>
 	<factor>1</factor>
 	<axis>
@@ -405,8 +440,10 @@
 		<y>0.5</y>
 	</center>
 </animation>
+-->
 
 <!--Dimming Test -->
+<!--
 <animation>
         <type>material</type>
         <object-name>Oben</object-name>
@@ -453,9 +490,11 @@
             <factor-prop>extra500/panel/Master/Dimming/Instrument/state</factor-prop>
         </emission>
 </animation>
+-->
 
 <!--BaroKnob-->
-    <animation>
+<!--    
+	<animation>
         <type>pick</type>
         <object-name>BaroKnob</object-name>
         <action>
@@ -505,6 +544,9 @@
 		</binding>
         </action>
     </animation>
+-->
+
+
 
 </PropertyList>
 
