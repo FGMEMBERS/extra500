@@ -852,6 +852,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<dt-indication type="double">0.1</dt-indication>			<!-- engine instrument indication update rate -->
 			<OP-maxsetting-psi type="double">125</OP-maxsetting-psi>
 			<OT-degC type="double">0</OT-degC>					<!--dummy value -->
+			<OT-true-degC type="double">0</OT-true-degC>				<!--dummy value -->
 			<OT-target-degC type="double">0</OT-target-degC>			<!--dummy value -->
 			<FT-degC type="double">0</FT-degC>					<!--dummy value -->
 			<motoring type="double">0</motoring>

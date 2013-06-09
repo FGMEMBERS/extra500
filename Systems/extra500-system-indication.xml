@@ -28,6 +28,44 @@
 	<channel name="engineparameters">
 <!-- ENGINE -->
 
+<!-- setting motoring property: starter on, but cutoff also on (no fuel,no ignition)	-->
+		<switch name="motoring">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/engines/engine[0]/cutoff eq 1
+				/controls/engines/engine[0]/starter eq 1
+			</test>
+			<output>aircraft/engine/motoring</output>
+		</switch>
+
+		<switch name="spoolup">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/engines/engine[0]/n1 gt aircraft/engine/N1-old
+				/controls/engines/engine[0]/cutoff eq 0
+				propulsion/engine/set-running eq 0
+			</test>
+			<output>aircraft/engine/spooling-up</output>
+		</switch>
+
+		<switch name="spooldown">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/engines/engine[0]/starter eq 0
+				propulsion/engine/set-running eq 0
+				/engines/engine[0]/n1 gt 0.1
+				/engines/engine[0]/n1 lt aircraft/engine/N1-old
+			</test>
+			<output>aircraft/engine/spooling-down</output>
+		</switch>
+
+		<fcs_function name="aircraft/engine/N1-old">
+    			<function>
+       			<description>old N1 for next cycle</description>
+       				<property>/engines/engine[0]/n1</property>
+    			</function>
+		</fcs_function>
+
 		<fcs_function name="aircraft/engine/fuelflow-3rd">
     			<function>
        			<description>engine fuel flow 3rd order coeff</description>
@@ -260,21 +298,23 @@
 						<property>aircraft/engine/TOT-target-degC</property>
 						<product>
 							<value>-1</value>
-							<property>aircraft/engine/OT-target-degC</property>
+							<property>aircraft/engine/OT-true-degC</property>
 						</product>
 					</sum>
 				</product>
     			</function>
 		</fcs_function>
 
+<!--OIL TEMP -->
 		<fcs_function name="aircraft/engine/Delta-OT-degC">
     			<function>
        			<description>Oil temp change</description>
 	 			<product>
-					<property>aircraft/engine/dt-indication</property>
+					<!--property>aircraft/engine/dt-indication</property-->
+					<property>sim-dt-sec</property>
 					<table>
             					<independentVar lookup="row">propulsion/engine/power-hp</independentVar>
-            					<independentVar lookup="column">aircraft/engine/OT-degC</independentVar> 	<!-- to simulate the thermostat in the oil cooler-->
+            					<independentVar lookup="column">aircraft/engine/OT-true-degC</independentVar> 	<!-- to simulate the thermostat in the oil cooler-->
             					<tableData>
 				-54		50		60		70	76	82
 			0	-0.01		-0.01		-0.015		-0.02	-0.02	-0.02
@@ -283,6 +323,37 @@
 			458	2.0707		2.0707		1.0		0.5	0.08	0
             					</tableData>
       					</table>
+				</product>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/OT-true1-degC">
+    			<function>
+       			<description>Oil temperature before filter</description>
+				<max>
+					<property>atmosphere/T-degC</property>
+					<sum>
+						<property>aircraft/engine/OT-true-degC</property>
+						<property>aircraft/engine/Delta-OT-degC</property>
+					</sum>
+				</max>
+    			</function>
+		</fcs_function>
+
+		<switch name="OTinit">
+			<default value="0"/>
+			<test value="aircraft/engine/OT-true1-degC">
+				simulation/sim-time-sec gt 1
+			</test>
+			<output>aircraft/engine/OT-true-degC</output>
+		</switch>
+
+		<fcs_function name="aircraft/engine/OT-target-degC">
+    			<function>
+       			<description>Oil temperature before filter</description>
+	 			<product>
+					<property>/extra500/instrumentation/EIP/state</property>		<!--to make sure pointer is at 0 when unit is off -->
+					<property>aircraft/engine/OT-true-degC</property>
 				</product>
     			</function>
 		</fcs_function>
