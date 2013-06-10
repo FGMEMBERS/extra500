@@ -222,11 +222,10 @@ var simulationLoop = MainLoop.new(props.globals.initNode("extra500/debug/Loop/si
 var animationLoop = MainLoop.new(props.globals.initNode("extra500/debug/Loop/animation"),animationCall,20);
 
 
-
+extra500.plugElectric();
 var init = func(){
 	
-	IFD.initListeners();
-	extra500.plugElectric();
+	
 	simulationLoop.start();
 	animationLoop.start();
 	

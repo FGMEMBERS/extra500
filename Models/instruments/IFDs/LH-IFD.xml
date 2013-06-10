@@ -47,6 +47,128 @@
 </animation>
 
 
+<animation>
+	<type>pick</type>
+	<object-name>BaroKnob</object-name>
+	<action>
+		<button>1</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("IFD LH BARO STD");
+				]]>
+			</script>
+		</binding>
+	</action>
+	<action>
+		<button>3</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("IFD LH BARO <");
+				]]>
+			</script>
+		</binding>
+	</action>
+	<action>
+		<button>4</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("IFD LH BARO >");
+				]]>
+			</script>
+		</binding>
+	</action>
+</animation>
+
+<animation>
+	<type>pick</type>
+	<object-name>PFD.R</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("IFD LH PFD >");
+				]]>
+			</script>
+		</binding>
+	</action>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>FMS.R</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("IFD LH FMS >");
+				]]>
+			</script>
+		</binding>
+	</action>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>MAP.R</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("IFD LH MAP >");
+				]]>
+			</script>
+		</binding>
+	</action>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>SYS.R</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("IFD LH SYS >");
+				]]>
+			</script>
+		</binding>
+	</action>
+</animation>
+<animation>
+	<type>pick</type>
+	<object-name>CHKL.R</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("IFD LH CHKL >");
+				]]>
+			</script>
+		</binding>
+	</action>
+</animation>
+
 <!-- alte NON-Canvas-Technologie -->
 <!-- kuenstlicher horizont -->
 <!--
