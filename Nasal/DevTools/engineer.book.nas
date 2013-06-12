@@ -19,7 +19,9 @@
 #      Last change:      Eric van den Berg
 #      Date:             13.05.13
 #
- 
+if (getprop("/extra500/debug/EngineerScreen/enabled") == 1){
+	
+
 var node = props.globals.getNode("/extra500/debug/EngineerScreen",1);
 var engineerScreen 	= Book.new(node,"Engineer Screen");
 
@@ -488,3 +490,4 @@ display = Display.new(10,400);
 aerodynamicPage.add(display);
 
 #---------------------------------
+}

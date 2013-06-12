@@ -154,7 +154,9 @@
 			 <binding>
 				 <command>nasal</command>
 				 <script><![CDATA[
-					Dev.engineerScreen.open();
+					if (getprop("/extra500/debug/EngineerScreen/enabled") == 1){
+						Dev.engineerScreen.open();
+					}
 				]]></script>
 			 </binding>
 		 </key>
@@ -165,7 +167,9 @@
 			 <binding>
 				 <command>nasal</command>
 				 <script><![CDATA[
-					Dev.engineerScreen.close();
+					if (getprop("/extra500/debug/EngineerScreen/enabled") == 1){
+						Dev.engineerScreen.close();
+					}
 				]]></script>
 			 </binding>
 		 </key>
@@ -176,7 +180,9 @@
 			 <binding>
 				 <command>nasal</command>
 				 <script><![CDATA[
-					Dev.engineerScreen.browse(1);
+					if (getprop("/extra500/debug/EngineerScreen/enabled") == 1){
+						Dev.engineerScreen.browse(1);
+					}
 				]]></script>
 			 </binding>
 		 </key>
@@ -187,7 +193,10 @@
 			 <binding>
 				 <command>nasal</command>
 				 <script><![CDATA[
-					Dev.engineerScreen.browse(-1);
+					if (getprop("/extra500/debug/EngineerScreen/enabled") == 1){
+						Dev.engineerScreen.browse(-1);
+					}
+					
 				]]></script>
 			 </binding>
 		 </key>

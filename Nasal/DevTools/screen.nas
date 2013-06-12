@@ -19,7 +19,9 @@
 #      Last change:      Dirk Dittmann
 #      Date:             26.04.13
 #
- 
+if (getprop("/extra500/debug/EngineerScreen/enabled") == 1){
+	
+
 var Display = {
 	id : 0,
 	new : func(x, y, show_tags = 1) {
@@ -295,4 +297,4 @@ var Book = {
 	},
 };
 
-
+}
