@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2013-06-10
+      Date:             2013-06-12
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -430,13 +430,13 @@ JSBSim Extra Aircraft - Extra 500.
 		<cmd-ap-ail-pos-norm-raw type="double">0.0</cmd-ap-ail-pos-norm-raw>
 	</hdg-channel>
 	<vs-channel>
-		<turnrate-gain type="double">2.0</turnrate-gain>
+		<turnrate-gain type="double">10.0</turnrate-gain>
 		<acc-offset-gain type="double">0.24</acc-offset-gain>
 		<accel-rate-gain type="double">8000.0</accel-rate-gain>
 		<pitch-error-gain type="double">-0.000015</pitch-error-gain>
 	</vs-channel>
 	<alt-channel>	
-		<turnrate-gain type="double">2.0</turnrate-gain>
+		<turnrate-gain type="double">10.0</turnrate-gain>
 		<acc-offset-gain type="double">0.24</acc-offset-gain>
 		<target-alt-ft type="double">0.0</target-alt-ft>
 		<vs-target-gain type="double">6.0</vs-target-gain>
