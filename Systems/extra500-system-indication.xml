@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-06-10
+      Date:             2013-06-15
 -->
 
 <system name="indication">
@@ -277,6 +277,27 @@
     			</function>
 		</fcs_function>
 
+		<switch name="TRQ111limitevent">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/events/show-events eq 1
+				aircraft/engine/TRQ-perc gt 111
+			</test>
+			<output>aircraft/events/TRQ111</output>
+		</switch>
+
+		<switch name="TRQ92limitevent">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/events/show-events eq 1
+				/controls/flight/flaps eq 0
+				/gear/gear/position-norm eq 0
+				aircraft/engine/TRQ-perc gt 92
+				aircraft/engine/TRQ-perc le 111
+			</test>
+			<output>aircraft/events/TRQ92</output>
+		</switch>
+
 <!-- FUEL TEMP -->
 		<fcs_function name="aircraft/engine/FT-1-degC">
     			<function>
@@ -406,6 +427,15 @@
 				</product>
     			</function>
 		</fcs_function>
+
+		<switch name="OP130limitevent">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/events/show-events eq 1
+				aircraft/engine/OP-psi gt 130
+			</test>
+			<output>aircraft/events/OP130</output>
+		</switch>
 
 <!-- N1 (compressor speed) -->
 		<fcs_function name="aircraft/engine/N1-par2">
@@ -679,6 +709,38 @@
 				/extra500/instrumentation/EIP/state eq 0
 			</test>
 			<output>aircraft/engine/TOT-target1-degC</output>
+		</switch>
+
+		<switch name="TOT927limitevent">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/events/show-events eq 1
+				aircraft/engine/TOT-target-degC gt 927
+			</test>
+			<output>aircraft/events/TOT927</output>
+		</switch>
+
+		<switch name="TOT810limitevent">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/events/show-events eq 1
+				propulsion/engine/set-running eq 1
+				aircraft/engine/TOT-target-degC gt 810
+			</test>
+			<output>aircraft/events/TOT810</output>
+		</switch>
+
+		<switch name="TOT752limitevent">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/events/show-events eq 1
+				propulsion/engine/set-running eq 1
+				/controls/flight/flaps eq 0
+				/gear/gear/position-norm eq 0
+				aircraft/engine/TOT-target-degC gt 752
+				aircraft/engine/TOT-target-degC le 810
+			</test>
+			<output>aircraft/events/TOT752</output>
 		</switch>
 
 <!--FUEL PRESS -->

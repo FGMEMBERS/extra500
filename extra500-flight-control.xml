@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-06-03
+      Date:             2013-06-13
 -->
 
 <flight_control name="FCS: extra500">
@@ -594,11 +594,11 @@
 					</setting>
 					<setting>
 						<position>15</position>
-						<time>6</time>
+						<time>8</time>
 					</setting>
 					<setting>
 						<position>30</position>
-						<time>9</time>
+						<time>12</time>
 					</setting>
 				</traverse>
 				<output>fcs/flap-aero-pos-deg</output>
