@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2013-06-15
+      Date:             2013-06-16
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -691,8 +691,9 @@ JSBSim Extra Aircraft - Extra 500.
 	<controls>
 		<file>Aircraft/extra500/Nasal/controls.nas</file>
 	</controls>
-	
-
+	<events>
+		<file>Nasal/eventmessages.nas</file>
+	</events>
 </nasal>
  
  <payload>
@@ -868,6 +869,9 @@ JSBSim Extra Aircraft - Extra 500.
 				<TOT927>0</TOT927>
 				<TOT810>0</TOT810>
 				<TOT752>0</TOT752>
+				<GEAR140>0</GEAR140>
+				<FLAPS30>0</FLAPS30>
+				<FLAPS15>0</FLAPS15>
 			</events>
             	</aircraft>
 		<velocities>

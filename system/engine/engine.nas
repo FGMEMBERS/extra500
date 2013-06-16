@@ -17,7 +17,7 @@
 #      Date: April 29 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             2013-06-15
+#      Date:             2013-06-16
 #
 
 
@@ -181,42 +181,3 @@ var Engine = {
 
 var engine = Engine.new(props.globals.initNode("/extra500/engine"),"RR 250-B17F2");
 engine.setPower(24.0,5.0);
-
-
-# ENGINE Messages: the .../event/whatever is set in the extra500-system-indication.xml where engine parameters are calculated
-
-setlistener("/fdm/jsbsim/aircraft/events/OP130", func {
-	if ( getprop("/fdm/jsbsim/aircraft/events/OP130") == 1 ) {
-		UI.msg.warning("Oil pressure is above 130psi. Wait until pressure drops below before increasing power or engine damage will occur.");
-	}
- }, 1, 0);
-
-setlistener("/fdm/jsbsim/aircraft/events/TRQ111", func {
-	if ( getprop("/fdm/jsbsim/aircraft/events/TRQ111") == 1 ) {
-		UI.msg.warning("TRQ limit is 111%. Engine and propeller damage may occur.");
-	}
- }, 1, 0);
-
-setlistener("/fdm/jsbsim/aircraft/events/TRQ92", func {
-	if ( getprop("/fdm/jsbsim/aircraft/events/TRQ92") == 1 ) {
-		UI.msg.warning("Maximum continuous TRQ limit is 92%. Up to 111% is permissible for 5 minutes at take-off");
-	}
- }, 1, 0);
-
-setlistener("/fdm/jsbsim/aircraft/events/TOT927", func {
-	if ( getprop("/fdm/jsbsim/aircraft/events/TOT927") == 1 ) {
-		UI.msg.warning("Congratulations on your (~$300.000) overheated engine. Make sure TOT<100degC and add fuel N1 > 12%");
-	}
- }, 1, 0);
-
-setlistener("/fdm/jsbsim/aircraft/events/TOT810", func {
-	if ( getprop("/fdm/jsbsim/aircraft/events/TOT810") == 1 ) {
-		UI.msg.warning("TOT limit is 810degC. Engine damage will occur");
-	}
- }, 1, 0);
-
-setlistener("/fdm/jsbsim/aircraft/events/TOT752", func {
-	if ( getprop("/fdm/jsbsim/aircraft/events/TOT752") == 1 ) {
-		UI.msg.warning("Maximum continuous TOT limit is 752degC. Up to 810degC is permissible for 5 minutes at take-off");
-	}
- }, 1, 0);

@@ -17,7 +17,7 @@
 #      Date: May 18 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             2013-06-07
+#      Date:             2013-06-16
 #
 
 var Autopilot = {
@@ -395,7 +395,11 @@ var Autopilot = {
 				me.nSetAltitudeBugFt.setValue( 100 * int( me.nCurrentAlt.getValue()/100 ) );			# setting bug (indicated on IFD)
 				me.nModeAlt.setValue(1);
 				me.nModeVs.setValue(0);
-			} 
+			} else {
+				if ( getprop("fdm/jsbsim/aircraft/events/show-events") == 1 ) {
+					UI.msg.warning("A roll mode must be active before a pitch mode can be engaged");
+				}
+			}
 		} else {
 		}
 	},
@@ -407,21 +411,33 @@ var Autopilot = {
 				if ( math.abs( me.nSetVerticalSpeedFpm.getValue() ) < 100 ) {
 					me.nSetVerticalSpeedFpm.setValue( math.sgn( me.nAlterror.getValue() ) * -700 );
 				}
-			} 
+			} else {
+				if ( getprop("fdm/jsbsim/aircraft/events/show-events") == 1 ) {
+					UI.msg.warning("A roll mode must be active before a pitch mode can be engaged");
+				}
+			}
 		} else if ( ( me.nModeAlt.getValue() == 1 ) and (me.nModeVs.getValue() == 0) ) {
 			if ( me._CheckRollModeActive() == 1 ) {
 				me.nModeVs.setValue(1);
 				if ( math.abs( me.nSetVerticalSpeedFpm.getValue() ) < 100 ) {
 					me.nSetVerticalSpeedFpm.setValue( math.sgn( me.nAlterror.getValue() ) * -700 );
 				}
-			} 
+			} else {
+				if ( getprop("fdm/jsbsim/aircraft/events/show-events") == 1 ) {
+					UI.msg.warning("A roll mode must be active before a pitch mode can be engaged");
+				}
+			}
 		} else if ( ( me.nModeAlt.getValue() == 0 ) and (me.nModeVs.getValue() == 1) ) {
 			if ( me._CheckRollModeActive() == 1 ) {
 				me.nModeAlt.setValue(1);
 				if ( math.abs( me.nSetVerticalSpeedFpm.getValue() ) < 100 ) {
 					me.nSetVerticalSpeedFpm.setValue( math.sgn( me.nAlterror.getValue() ) * -700 );
 				}
-			} 
+			} else {
+				if ( getprop("fdm/jsbsim/aircraft/events/show-events") == 1 ) {
+					UI.msg.warning("A roll mode must be active before a pitch mode can be engaged");
+				}
+			}
 		} else {
 		}
 	},
@@ -430,7 +446,11 @@ var Autopilot = {
 			if ( me._CheckRollModeActive() == 1 ) {
 				me.nModeVs.setValue(1);
 				me.nModeAlt.setValue(0);
-			} 
+			} else {
+				if ( getprop("fdm/jsbsim/aircraft/events/show-events") == 1 ) {
+					UI.msg.warning("A roll mode must be active before a pitch mode can be engaged");
+				}
+			}
 		} else if ( ( me.nModeVs.getValue() == 1 ) and (me.nModeAlt.getValue() == 1 ) ) {
 			me.nModeAlt.setValue(0);
 			me.nModeVs.setValue(1);

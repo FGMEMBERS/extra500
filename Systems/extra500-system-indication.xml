@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-06-15
+      Date:             2013-06-16
 -->
 
 <system name="indication">
@@ -823,6 +823,38 @@
       				</table>
     			</function>
 		</fcs_function>
+
+		<switch name="GEAR140limitevent">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/events/show-events eq 1
+				/gear/gear/position-norm ne 0
+				/gear/gear[1]/position-norm ne 0
+				/gear/gear[2]/position-norm ne 0
+				/instrumentation/airspeed-IFD-LH/indicated-airspeed-kt gt 140
+			</test>
+			<output>aircraft/events/GEAR140</output>
+		</switch>
+
+		<switch name="FLAPS30limitevent">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/events/show-events eq 1
+				/fdm/jsbsim/fcs/flap-pos-deg gt 16
+				/instrumentation/airspeed-IFD-LH/indicated-airspeed-kt gt 109
+			</test>
+			<output>aircraft/events/FLAPS30</output>
+		</switch>
+
+		<switch name="FLAPS15limitevent">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/events/show-events eq 1
+				/fdm/jsbsim/fcs/flap-pos-deg ne 0
+				/instrumentation/airspeed-IFD-LH/indicated-airspeed-kt gt 120
+			</test>
+			<output>aircraft/events/FLAPS15</output>
+		</switch>
 
 		<fcs_function name="/instrumentation/airspeed-IFD-RH/indicated-airspeed-kt">
 			<function>
