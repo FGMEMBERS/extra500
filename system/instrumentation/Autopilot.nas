@@ -397,7 +397,7 @@ var Autopilot = {
 				me.nModeVs.setValue(0);
 			} else {
 				if ( getprop("fdm/jsbsim/aircraft/events/show-events") == 1 ) {
-					UI.msg.warning("A roll mode must be active before a pitch mode can be engaged");
+					UI.msg.info("A roll mode must be active before a pitch mode can be engaged");
 				}
 			}
 		} else {
@@ -413,7 +413,7 @@ var Autopilot = {
 				}
 			} else {
 				if ( getprop("fdm/jsbsim/aircraft/events/show-events") == 1 ) {
-					UI.msg.warning("A roll mode must be active before a pitch mode can be engaged");
+					UI.msg.info("A roll mode must be active before a pitch mode can be engaged");
 				}
 			}
 		} else if ( ( me.nModeAlt.getValue() == 1 ) and (me.nModeVs.getValue() == 0) ) {
@@ -424,7 +424,7 @@ var Autopilot = {
 				}
 			} else {
 				if ( getprop("fdm/jsbsim/aircraft/events/show-events") == 1 ) {
-					UI.msg.warning("A roll mode must be active before a pitch mode can be engaged");
+					UI.msg.info("A roll mode must be active before a pitch mode can be engaged");
 				}
 			}
 		} else if ( ( me.nModeAlt.getValue() == 0 ) and (me.nModeVs.getValue() == 1) ) {
@@ -435,7 +435,7 @@ var Autopilot = {
 				}
 			} else {
 				if ( getprop("fdm/jsbsim/aircraft/events/show-events") == 1 ) {
-					UI.msg.warning("A roll mode must be active before a pitch mode can be engaged");
+					UI.msg.info("A roll mode must be active before a pitch mode can be engaged");
 				}
 			}
 		} else {
@@ -448,7 +448,7 @@ var Autopilot = {
 				me.nModeAlt.setValue(0);
 			} else {
 				if ( getprop("fdm/jsbsim/aircraft/events/show-events") == 1 ) {
-					UI.msg.warning("A roll mode must be active before a pitch mode can be engaged");
+					UI.msg.info("A roll mode must be active before a pitch mode can be engaged");
 				}
 			}
 		} else if ( ( me.nModeVs.getValue() == 1 ) and (me.nModeAlt.getValue() == 1 ) ) {

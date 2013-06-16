@@ -38,7 +38,7 @@ setlistener("/fdm/jsbsim/aircraft/events/TRQ111", func {
 
 setlistener("/fdm/jsbsim/aircraft/events/TRQ92", func {
 	if ( getprop("/fdm/jsbsim/aircraft/events/TRQ92") == 1 ) {
-		UI.msg.warning("Maximum continuous TRQ limit is 92%. Up to 111% is permissible for 5 minutes at take-off");
+		UI.msg.caution("Maximum continuous TRQ limit is 92%. Up to 111% is permissible for 5 minutes at take-off");
 	}
  }, 1, 0);
 
@@ -56,7 +56,7 @@ setlistener("/fdm/jsbsim/aircraft/events/TOT810", func {
 
 setlistener("/fdm/jsbsim/aircraft/events/TOT752", func {
 	if ( getprop("/fdm/jsbsim/aircraft/events/TOT752") == 1 ) {
-		UI.msg.warning("Maximum continuous TOT limit is 752degC. Up to 810degC is permissible for 5 minutes at take-off");
+		UI.msg.caution("Maximum continuous TOT limit is 752degC. Up to 810degC is permissible for 5 minutes at take-off");
 	}
  }, 1, 0);
 
