@@ -62,6 +62,7 @@ var UserInterface = {
 		#var action = Action.new(name,callback,args);
 		
 		var action = {"name":name,"callback":callback,"args":args};
+		#debug.dump(action);
 		#append(me.aFuncHash,name,action);
 		me.aFuncHash[name] = action;
 	},

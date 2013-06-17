@@ -201,6 +201,10 @@ var animationCall = func(now,dt){
 	
 }
 
+var electricCall = func(now,dt){
+	eSystem.gernerator.update(now,dt);
+}
+
 
 #################################
 #				#
@@ -221,6 +225,14 @@ var simulationLoop = MainLoop.new(props.globals.initNode("extra500/debug/Loop/si
 
 var animationLoop = MainLoop.new(props.globals.initNode("extra500/debug/Loop/animation"),animationCall,20);
 
+#################################
+#				#
+# low Electric loop		#
+#	target 2Hz		#
+#				#
+#################################
+
+var eSystemLoop = MainLoop.new(props.globals.initNode("extra500/debug/Loop/electric"),eSystem.update,10);
 
 extra500.plugElectric();
 var init = func(){
@@ -228,6 +240,7 @@ var init = func(){
 	
 	simulationLoop.start();
 	animationLoop.start();
+	eSystemLoop.start();
 	
 	print("simulation ... started");
 }

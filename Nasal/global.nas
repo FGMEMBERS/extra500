@@ -42,5 +42,11 @@ var fnAnnounce = func(type,msg){
 	}
 }
 
+var clamp = func(value,min=0.0,max=0.0){
+	if(value < min) {value = min;}
+	if(value > max) {value = max;}
+	return value;
+}
+
 
 

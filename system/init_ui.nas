@@ -50,9 +50,10 @@ extra500.stbyAttitude.initUI();
 IFD.LH.initUI();
 IFD.RH.initUI();
 
+
 	
 initUI();
 
-
+eSystem.init();
 
 #UI.echo();
