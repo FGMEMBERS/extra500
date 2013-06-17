@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
-      Date:             21.05.13
+      Last change:      Eric van den Berg
+      Date:             2013-06-17
 
 -->
 
@@ -69,7 +69,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-					UI.click("IFD RH BARO <");
+					UI.click("IFD RH BARO >");
 				]]>
 			</script>
 		</binding>
@@ -81,7 +81,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-					UI.click("IFD RH BARO >");
+					UI.click("IFD RH BARO <");
 				]]>
 			</script>
 		</binding>

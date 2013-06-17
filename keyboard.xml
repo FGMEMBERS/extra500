@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2013.06.06
+      Date:             2013.06.13
 -->
 <PropertyList>
 
@@ -58,9 +58,9 @@
 			 </binding>
 		 </key>
 
-		 <key n="3">
+		 <key n="115"> 
 			 <!-- toggle engine cutoff-->
-			 <name>Ctrl-c</name>
+			 <name>s</name>
 			 <desc>Toggle engine cutoff</desc>
 			 <binding n="0">
 				 <command>nasal</command>

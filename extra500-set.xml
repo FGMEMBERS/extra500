@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2013-06-12
+      Date:             2013-06-16
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -89,7 +89,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<desc>Put propeller in beta range (for reverse)</desc>
 		</key>
      	      <key>
-			<name>Ctrl-C</name>
+			<name>S</name>
 			<desc>Toggle engine fuel cutoff</desc>
 		</key>
      	      <key>
@@ -691,8 +691,9 @@ JSBSim Extra Aircraft - Extra 500.
 	<controls>
 		<file>Aircraft/extra500/Nasal/controls.nas</file>
 	</controls>
-	
-
+	<events>
+		<file>Nasal/eventmessages.nas</file>
+	</events>
 </nasal>
  
  <payload>
@@ -797,69 +798,81 @@ JSBSim Extra Aircraft - Extra 500.
                   	<controls-fixed type="int">1</controls-fixed>
             	</state>
             	<aircraft>
-                  <wing>
-                        <x_ac-ft>11.01</x_ac-ft>      				<!--dummy value -->
-                        <y_ac-ft>8.018</y_ac-ft>
-			<incidence-deg>1.45</incidence-deg>
-                        <S-ft2>150.96</S-ft2>
-                        <c_aero-ft>4.337</c_aero-ft>
-			<b-ft>36.089</b-ft>
-			<cd0>0.024</cd0>
-			<alpha-deg>0.0</alpha-deg>				<!--dummy value -->
-                  </wing>
-                  <hstab>
-                        <S-ft2>30.268</S-ft2>
-                        <x_ac-ft>29.834</x_ac-ft>
-                        <z_ac-ft>10.285</z_ac-ft>
-                        <incidence-deg>0.0</incidence-deg>
-			<cd0>0.021</cd0>
-                        <elevator>
-                              	<H-static-lbsft>2.0</H-static-lbsft>
-				<H-total-lbsft>0.0</H-total-lbsft>			<!--dummy value -->
-				<Ch0>-0.05</Ch0>
-                              	<Ch_de>-0.35</Ch_de>
-                              	<Ch_de2>0.0</Ch_de2>                     		<!--non linear part of Ch_de -->
-                              	<Ch_alpha>-0.05</Ch_alpha>
-				<Ch_alpha2>0.0</Ch_alpha2>				<!--non linear part of Ch_alpha -->
-                              	<downspring0-lbsft>16.5</downspring0-lbsft>
-                              	<downspring-lbsftprad>0.5</downspring-lbsftprad>
-                              	<bobweight-lbsft>0</bobweight-lbsft>
-				<Ip-lbsft2>1</Ip-lbsft2>		
-                              	<chord-frac>0.24</chord-frac>
-                              	<S-ft2>7.264</S-ft2>
-                              	<c_aero-ft>2.5796</c_aero-ft>
-                              	<max-defl-rad>0.3141</max-defl-rad>
-                              	<min-defl-rad>-0.5759</min-defl-rad>
-				<d_e_free-clipped-rad>0.0</d_e_free-clipped-rad>	<!--dummy value -->
-                              	<elevator-pos-rad>0</elevator-pos-rad>    		<!--dummy value -->
-                              	<elevator-pos-deg>0</elevator-pos-deg>    		<!--dummy value -->
-				<d_e_free-rad>0</d_e_free-rad>				<!--dummy value -->
-                              	<trim>
-                                    	<S-ft2>1.114</S-ft2>
-                                    	<c_aero-ft>0.4019</c_aero-ft>
-                                    	<coeff-norm>5.0</coeff-norm>        <!--this is multiplied with normalized trim position to get hinge moment of elevator -->
-                              	</trim>
-                        </elevator>
-			<alpha-deg>0.0</alpha-deg>					<!--dummy value -->	
-                  </hstab>
-		  <vstab>
-                        <S-ft2>30.236</S-ft2>
-                        <x_ac-ft>27.128</x_ac-ft>
-                        <z_ac-ft>8.294</z_ac-ft>
-			<cd0>0.021</cd0>				
-		  </vstab>
-		  <engine>
-			<OP-maxsetting-psi type="double">125</OP-maxsetting-psi>
-			<OT-degC type="double">0</OT-degC>					<!--dummy value -->
-			<OT-true-degC type="double">0</OT-true-degC>				<!--dummy value -->
-			<FT-degC type="double">0</FT-degC>					<!--dummy value -->
-			<motoring type="double">0</motoring>
-			<spooling-up type="double">0</spooling-up>
-			<spooling-down type="double">0</spooling-down>
-			<N1-old type="double">0.0</N1-old>					<!--dummy value -->
-			<N1-par type="double">0.0</N1-par>					<!--dummy value -->
-			<TOT-target-degC>0.0</TOT-target-degC>					<!--dummy value -->
-		 </engine>
+                  	<wing>
+                        	<x_ac-ft>11.01</x_ac-ft>      				<!--dummy value -->
+                        	<y_ac-ft>8.018</y_ac-ft>
+				<incidence-deg>1.45</incidence-deg>
+                        	<S-ft2>150.96</S-ft2>
+                        	<c_aero-ft>4.337</c_aero-ft>
+				<b-ft>36.089</b-ft>
+				<cd0>0.024</cd0>
+				<alpha-deg>0.0</alpha-deg>				<!--dummy value -->
+                  	</wing>
+                  	<hstab>
+                        	<S-ft2>30.268</S-ft2>
+                        	<x_ac-ft>29.834</x_ac-ft>
+                        	<z_ac-ft>10.285</z_ac-ft>
+                        	<incidence-deg>0.0</incidence-deg>
+				<cd0>0.021</cd0>
+                        	<elevator>
+                              		<H-static-lbsft>2.0</H-static-lbsft>
+					<H-total-lbsft>0.0</H-total-lbsft>			<!--dummy value -->
+					<Ch0>-0.05</Ch0>
+                              		<Ch_de>-0.35</Ch_de>
+                              		<Ch_de2>0.0</Ch_de2>                     		<!--non linear part of Ch_de -->
+                              		<Ch_alpha>-0.05</Ch_alpha>
+					<Ch_alpha2>0.0</Ch_alpha2>				<!--non linear part of Ch_alpha -->
+                              		<downspring0-lbsft>16.5</downspring0-lbsft>
+                              		<downspring-lbsftprad>0.5</downspring-lbsftprad>
+                              		<bobweight-lbsft>0</bobweight-lbsft>
+					<Ip-lbsft2>1</Ip-lbsft2>		
+                              		<chord-frac>0.24</chord-frac>
+                              		<S-ft2>7.264</S-ft2>
+                              		<c_aero-ft>2.5796</c_aero-ft>
+                              		<max-defl-rad>0.3141</max-defl-rad>
+                              		<min-defl-rad>-0.5759</min-defl-rad>
+					<d_e_free-clipped-rad>0.0</d_e_free-clipped-rad>	<!--dummy value -->
+                              		<elevator-pos-rad>0</elevator-pos-rad>    		<!--dummy value -->
+                              		<elevator-pos-deg>0</elevator-pos-deg>    		<!--dummy value -->
+					<d_e_free-rad>0</d_e_free-rad>				<!--dummy value -->
+                              		<trim>
+                                    		<S-ft2>1.114</S-ft2>
+                                    		<c_aero-ft>0.4019</c_aero-ft>
+                                    		<coeff-norm>5.0</coeff-norm>        <!--this is multiplied with normalized trim position to get hinge moment of elevator -->
+                              		</trim>
+                        	</elevator>
+				<alpha-deg>0.0</alpha-deg>					<!--dummy value -->	
+                  	</hstab>
+		 	 <vstab>
+                        	<S-ft2>30.236</S-ft2>
+                        	<x_ac-ft>27.128</x_ac-ft>
+                        	<z_ac-ft>8.294</z_ac-ft>
+				<cd0>0.021</cd0>				
+		  		</vstab>
+		  	<engine>
+				<OP-maxsetting-psi type="double">125</OP-maxsetting-psi>
+				<OT-degC type="double">0</OT-degC>					<!--dummy value -->
+				<OT-true-degC type="double">0</OT-true-degC>				<!--dummy value -->
+				<FT-degC type="double">0</FT-degC>					<!--dummy value -->
+				<motoring type="double">0</motoring>
+				<spooling-up type="double">0</spooling-up>
+				<spooling-down type="double">0</spooling-down>
+				<N1-old type="double">0.0</N1-old>					<!--dummy value -->
+				<N1-par type="double">0.0</N1-par>					<!--dummy value -->
+				<TOT-target-degC>0.0</TOT-target-degC>					<!--dummy value -->
+		 	</engine>
+			<events>
+				<show-events type="bool">1</show-events>
+				<TRQ111>0</TRQ111>
+				<TRQ92>0</TRQ92>
+				<OP130>0</OP130>
+				<TOT927>0</TOT927>
+				<TOT810>0</TOT810>
+				<TOT752>0</TOT752>
+				<GEAR140>0</GEAR140>
+				<FLAPS30>0</FLAPS30>
+				<FLAPS15>0</FLAPS15>
+			</events>
             	</aircraft>
 		<velocities>
 			<hstab>
