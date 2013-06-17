@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             04.06.13
+      Date:             17.06.13
 
 -->
 
@@ -86,10 +86,20 @@
   <name>MainPanel</name>
   <path>Aircraft/extra500/Models/panels/MainPanel.xml</path>
 	<offsets>
-		<x-m>-0.84099</x-m>
+		<x-m>-0.81047</x-m>
 		<y-m>0</y-m>	
-		<z-m>-0.18559</z-m>
+		<z-m>-0.39889</z-m>
 	<pitch-deg>-8</pitch-deg>
+	</offsets>
+</model>
+<model>
+  <name>MainPanel</name>
+  <path>Aircraft/extra500/Models/instruments/InstrumentFlapsGear.xml</path>
+	<offsets>
+		<x-m>-0.81047</x-m>
+		<y-m>0</y-m>	
+		<z-m>-0.39889</z-m>
+	<pitch-deg>-32</pitch-deg>
 	</offsets>
 </model>
 
@@ -97,10 +107,11 @@
   <name>SidePanel</name>
   <path>Aircraft/extra500/Models/panels/SidePanel.xml</path>
 	<offsets>
-		<x-m>-0.55</x-m>
-		<y-m>-0.65</y-m>	
-		<z-m>-0.45</z-m>
-	<pitch-deg>0</pitch-deg>
+		<x-m>-0.54</x-m>
+		<y-m>-0.611</y-m>	
+		<z-m>-0.418</z-m>
+	<pitch-deg>2.65</pitch-deg>
+	<heading-deg>-2.65</heading-deg>
 	</offsets>
 </model>
 
@@ -108,10 +119,13 @@
   <name>CircuitBreakerPanel</name>
   <path>Aircraft/extra500/Models/panels/CircuitBreakerPanel.xml</path>
 	<offsets>
-		<x-m>-0.595</x-m>
-		<y-m>-0.622</y-m>	
-		<z-m>-0.545</z-m>
-	<roll-deg>-40</roll-deg>
+		<x-m>-0.59</x-m>
+		<y-m>-0.551</y-m>	
+		<z-m>-0.46267</z-m>
+		<roll-deg>-40</roll-deg>
+		<pitch-deg>2.65</pitch-deg>
+		<heading-deg>-1</heading-deg> <!--kapier ich nicht ganz warum -1 statt -2.65-->
+
 	</offsets>
 </model>
 

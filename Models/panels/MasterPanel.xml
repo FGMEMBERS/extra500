@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             27.05.13
+      Date:             17.06.13
 -->
 <PropertyList>
 
@@ -33,13 +33,13 @@
   <property>extra500/panel/Master/Autopilot/Master/state</property>
   <factor>-25</factor>
   <axis>
-    <x1-m>0.005</x1-m>
+    <x1-m>0.005084</x1-m>
     <y1-m>-1</y1-m>
-    <z1-m>-0.002246</z1-m>
-    <x2-m>0.005</x2-m>
+    <z1-m>-0.002002</z1-m>
+    <x2-m>0.005084</x2-m>
     <y2-m>1</y2-m>
-    <z2-m>-0.002246</z2-m>
-  </axis>		
+    <z2-m>-0.002002</z2-m>
+  </axis>
 </animation>
 <animation>
   <type>pick</type>
@@ -103,13 +103,13 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>0.005</x1-m>
+    <x1-m>0.005084</x1-m>
     <y1-m>-1</y1-m>
-    <z1-m>-0.002246</z1-m>
-    <x2-m>0.005</x2-m>
+    <z1-m>-0.002002</z1-m>
+    <x2-m>0.005084</x2-m>
     <y2-m>1</y2-m>
-    <z2-m>-0.002246</z2-m>
-  </axis>		
+    <z2-m>-0.002002</z2-m>
+  </axis>
 </animation>
 <animation>
   <type>pick</type>
@@ -173,13 +173,13 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>0.005</x1-m>
+    <x1-m>0.005084</x1-m>
     <y1-m>-1</y1-m>
-    <z1-m>-0.002246</z1-m>
-    <x2-m>0.005</x2-m>
+    <z1-m>-0.002002</z1-m>
+    <x2-m>0.005084</x2-m>
     <y2-m>1</y2-m>
-    <z2-m>-0.002246</z2-m>
-  </axis>		
+    <z2-m>-0.002002</z2-m>
+  </axis>
 </animation>
 <animation>
   <type>pick</type>
@@ -235,11 +235,11 @@
   <factor>-120</factor>
   <axis>
     <x1-m>0</x1-m>
-    <y1-m>-0.13311</y1-m>
-    <z1-m>-0.002246</z1-m>
+    <y1-m>-0.12248</y1-m>
+    <z1-m>-0.002002</z1-m>
     <x2-m>0.02</x2-m>
-    <y2-m>-0.13311</y2-m>
-    <z2-m>-0.002246</z2-m>
+    <y2-m>-0.12248</y2-m>
+    <z2-m>-0.002002</z2-m>
   </axis>
 </animation>
 <animation>
@@ -303,13 +303,13 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>0.005</x1-m>
+    <x1-m>0.005084</x1-m>
     <y1-m>-1</y1-m>
-    <z1-m>-0.002246</z1-m>
-    <x2-m>0.005</x2-m>
+    <z1-m>-0.002002</z1-m>
+    <x2-m>0.005084</x2-m>
     <y2-m>1</y2-m>
-    <z2-m>-0.002246</z2-m>
-  </axis>		
+    <z2-m>-0.002002</z2-m>
+  </axis>
 </animation>
 <animation>
   <type>pick</type>
@@ -373,13 +373,13 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>0.005</x1-m>
+    <x1-m>0.005084</x1-m>
     <y1-m>-1</y1-m>
-    <z1-m>-0.002246</z1-m>
-    <x2-m>0.005</x2-m>
+    <z1-m>-0.002002</z1-m>
+    <x2-m>0.005084</x2-m>
     <y2-m>1</y2-m>
-    <z2-m>-0.002246</z2-m>
-  </axis>		
+    <z2-m>-0.002002</z2-m>
+  </axis>
 </animation>
 <animation>
   <type>pick</type>
@@ -443,13 +443,13 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>0.005</x1-m>
+    <x1-m>0.005084</x1-m>
     <y1-m>-1</y1-m>
-    <z1-m>-0.002246</z1-m>
-    <x2-m>0.005</x2-m>
+    <z1-m>-0.002002</z1-m>
+    <x2-m>0.005084</x2-m>
     <y2-m>1</y2-m>
-    <z2-m>-0.002246</z2-m>
-  </axis>		
+    <z2-m>-0.002002</z2-m>
+  </axis>
 </animation>
 <animation>
   <type>pick</type>
@@ -513,13 +513,13 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>0.005</x1-m>
+    <x1-m>0.005084</x1-m>
     <y1-m>-1</y1-m>
-    <z1-m>-0.002246</z1-m>
-    <x2-m>0.005</x2-m>
+    <z1-m>-0.002002</z1-m>
+    <x2-m>0.005084</x2-m>
     <y2-m>1</y2-m>
-    <z2-m>-0.002246</z2-m>
-  </axis>		
+    <z2-m>-0.002002</z2-m>
+  </axis>
 </animation>
 <animation>
   <type>pick</type>
@@ -610,13 +610,13 @@
   <property>extra500/panel/Master/Engine/Motoring/state</property>
   <factor>-25</factor>
   <axis>
-    <x1-m>0.005</x1-m>
+    <x1-m>0.005084</x1-m>
     <y1-m>-1</y1-m>
-    <z1-m>-0.002246</z1-m>
-    <x2-m>0.005</x2-m>
+    <z1-m>-0.002002</z1-m>
+    <x2-m>0.005084</x2-m>
     <y2-m>1</y2-m>
-    <z2-m>-0.002246</z2-m>
-  </axis>		
+    <z2-m>-0.002002</z2-m>
+  </axis>
 </animation>
 <animation>
   <type>pick</type>
@@ -671,13 +671,13 @@
   <property>extra500/panel/Master/Engine/Start/state</property>
   <factor>-25</factor>
   <axis>
-    <x1-m>0.005</x1-m>
+    <x1-m>0.005084</x1-m>
     <y1-m>-1</y1-m>
-    <z1-m>-0.002246</z1-m>
-    <x2-m>0.005</x2-m>
+    <z1-m>-0.002002</z1-m>
+    <x2-m>0.005084</x2-m>
     <y2-m>1</y2-m>
-    <z2-m>-0.002246</z2-m>
-  </axis>		
+    <z2-m>-0.002002</z2-m>
+  </axis>
 </animation>
 <animation>
   <type>pick</type>
@@ -742,11 +742,11 @@
         </interpolation>
   <axis>
     <x1-m>0</x1-m>
-    <y1-m>0.10583</y1-m>
-    <z1-m>-0.002246</z1-m>
+    <y1-m>0.09751</y1-m>
+    <z1-m>-0.002002</z1-m>
     <x2-m>0.02</x2-m>
-    <y2-m>0.10583</y2-m>
-    <z2-m>-0.002246</z2-m>
+    <y2-m>0.09751</y2-m>
+    <z2-m>-0.002002</z2-m>
   </axis>
 </animation>
 <animation>
@@ -811,11 +811,11 @@
         </interpolation>
   <axis>
     <x1-m>0</x1-m>
-    <y1-m>0.13295</y1-m>
-    <z1-m>-0.002246</z1-m>
+    <y1-m>0.12250</y1-m>
+    <z1-m>-0.002002</z1-m>
     <x2-m>0.02</x2-m>
-    <y2-m>0.13295</y2-m>
-    <z2-m>-0.002246</z2-m>
+    <y2-m>0.12250</y2-m>
+    <z2-m>-0.002002</z2-m>
   </axis>
 </animation>
 <animation>
@@ -880,11 +880,11 @@
         </interpolation>
   <axis>
     <x1-m>0</x1-m>
-    <y1-m>0.16007</y1-m>
-    <z1-m>-0.002246</z1-m>
+    <y1-m>0.14747</y1-m>
+    <z1-m>-0.002002</z1-m>
     <x2-m>0.02</x2-m>
-    <y2-m>0.16007</y2-m>
-    <z2-m>-0.002246</z2-m>
+    <y2-m>0.14747</y2-m>
+    <z2-m>-0.002002</z2-m>
   </axis>
 </animation>
 <animation>
@@ -949,11 +949,11 @@
         </interpolation>
   <axis>
     <x1-m>0</x1-m>
-    <y1-m>0.18726</y1-m>
-    <z1-m>-0.002246</z1-m>
+    <y1-m>0.17246</y1-m>
+    <z1-m>-0.002002</z1-m>
     <x2-m>0.02</x2-m>
-    <y2-m>0.18726</y2-m>
-    <z2-m>-0.002246</z2-m>
+    <y2-m>0.17246</y2-m>
+    <z2-m>-0.002002</z2-m>
   </axis>
 </animation>
 <animation>
@@ -1018,11 +1018,11 @@
         </interpolation>
   <axis>
     <x1-m>0</x1-m>
-    <y1-m>0.21446</y1-m>
-    <z1-m>-0.002246</z1-m>
+    <y1-m>0.19749</y1-m>
+    <z1-m>-0.002002</z1-m>
     <x2-m>0.02</x2-m>
-    <y2-m>0.21446</y2-m>
-    <z2-m>-0.002246</z2-m>
+    <y2-m>0.19749</y2-m>
+    <z2-m>-0.002002</z2-m>
   </axis>
 </animation>
 <animation>
