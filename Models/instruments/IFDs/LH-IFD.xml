@@ -46,6 +46,91 @@
         </emission>
 </animation>
 
+<!-- ################### TODO: UI.clicks ####################-->
+<animation>
+<type>pick</type>
+<object-name>L1.left</object-name>
+<action>
+     <button>0</button>
+<binding>
+<command>property-toggle</command>
+<property>extra500/debug/propertemp</property>
+</binding>
+</action>
+</animation>
+
+<animation>
+<type>pick</type>
+<object-name>L1.right</object-name>
+<action>
+     <button>0</button>
+<binding>
+<command>property-toggle</command>
+<property>extra500/debug/propertemp</property>
+</binding>
+</action>
+</animation>
+
+<animation>
+<type>pick</type>
+<object-name>L2.left</object-name>
+<action>
+     <button>0</button>
+<binding>
+<command>property-toggle</command>
+<property>extra500/debug/propertemp</property>
+</binding>
+</action>
+</animation>
+
+<animation>
+<type>pick</type>
+<object-name>L2.right</object-name>
+<action>
+     <button>0</button>
+<binding>
+<command>property-toggle</command>
+<property>extra500/debug/propertemp</property>
+</binding>
+</action>
+</animation>
+			
+			
+<!-- and many other animations to do ;)
+
+<object-name>L3.left</object-name>
+<object-name>L3.right</object-name>
+<object-name>L4.left</object-name>
+<object-name>L4.right</object-name>
+<object-name>L5.left</object-name>
+<object-name>L5.right</object-name>
+<object-name>L6.left</object-name>
+<object-name>L6.right</object-name>
+
+<object-name>R1.left</object-name>
+<object-name>R1.right</object-name>
+<object-name>R2.left</object-name>
+<object-name>R2.right</object-name>
+<object-name>R3.left</object-name>
+<object-name>R3.right</object-name>
+<object-name>R4.left</object-name>
+<object-name>R4.right</object-name>
+<object-name>R5.left</object-name>
+<object-name>R5.right</object-name>
+<object-name>R6.left</object-name>
+<object-name>R6.right</object-name>
+
+<object-name>PFD.left</object-name>
+<object-name>PFD.right</object-name>
+<object-name>FMS.left</object-name>
+<object-name>FMS.right</object-name>
+<object-name>MAP.left</object-name>
+<object-name>MAP.right</object-name>
+<object-name>SYS.left</object-name>
+<object-name>SYS.right</object-name>
+<object-name>CHKL.left</object-name>
+<object-name>CHKL.right</object-name>
+-->
 
 <animation>
 	<type>pick</type>
