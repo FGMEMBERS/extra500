@@ -17,7 +17,7 @@
 #      Date: April 29 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             2013-06-10
+#      Date:             2013-06-16
 #
 
 
@@ -30,7 +30,7 @@ var Engine = {
 		]};
 		m.nIsRunning		= props.globals.getNode("/fdm/jsbsim/propulsion/engine/set-running");
 		m.nTRQ			= props.globals.getNode("/fdm/jsbsim/aircraft/engine/TRQ-perc");
-		m.nN1			= props.globals.getNode("/engines/engine[0]/n1");
+		m.nN1			= props.globals.getNode("/fdm/jsbsim/aircraft/engine/N1-par");
 		m.nCutOff		= props.globals.getNode("/controls/engines/engine[0]/cutoff");
 		m.nReverser		= props.globals.getNode("/controls/engines/engine[0]/reverser");
 		m.nThrottle		= props.globals.getNode("/controls/engines/engine[0]/throttle");
@@ -133,16 +133,6 @@ var Engine = {
 			me._cutoffState = me._cutoffState == 0 ? 1 : 0 ;
 		}else{
 			me._cutoffState = value == 0 ? 0 : 1 ;
-		}
-		
-		if (me._cutoffState == 0 and me.nIsRunning.getValue() == 0){
-			var n1 = me.nN1.getValue();
-			if (n1 > 12.0){
-				UI.msg.warning("Flame-Out : Turbine wird beschädigt wenn Treibstoff erst bei N1 > 12.0 % eingespritzt wird. Inspektion erforderlich.");
-			}
-			if (n1 < 8.0){
-				UI.msg.warning("Hot-Start : Turbine wird beschädigt wenn Treibstoff schon bei N1 < 8.0 % eingespritzt wird. Inspektion erforderlich.");
-			}
 		}
 		
 		me._checkIgnitionCutoff();

@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: April 27 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             27.04.13
+#      Last change:      Eric van den Berg
+#      Date:             2013-06-17
 #
 var TODEG = 180/math.pi;
 var TORAD = math.pi/180;
@@ -49,6 +49,7 @@ var AvidyneData = {
 		m.link = nil; #link to the other IFD DATA
 	#autopilot
 		m.apPowered 	= 0;
+		m.apModeRdy	= 0;
 		m.apModeFail 	= 0;
 		m.apModeALT 	= 0;
 		m.apModeNAV 	= 0;
@@ -58,6 +59,7 @@ var AvidyneData = {
 		m.apModeFD 	= 0;
 		
 		m.nApPower 	= props.globals.initNode("/extra500/instrumentation/Autopilot/state",0.0,"INT");
+		m.nApModeRdy 	= props.globals.initNode("/autopilot/mode/rdy",0.0,"INT");
 		m.nApModeFail 	= props.globals.initNode("/autopilot/mode/fail",0.0,"INT");
 		m.nApModeALT 	= props.globals.initNode("/autopilot/mode/alt",0.0,"INT");
 		m.nApModeNAV 	= props.globals.initNode("/autopilot/mode/nav",0.0,"INT");
@@ -131,6 +133,7 @@ var AvidyneData = {
 	load : func(){
 	#autopilot
 		me.apPowered 	= me.nApPower.getValue();
+		me.apModeRdy 	= me.nApModeRdy.getValue();
 		me.apModeFail 	= me.nApModeFail.getValue();
 		me.apModeALT 	= me.nApModeALT.getValue();
 		me.apModeNAV 	= me.nApModeNAV.getValue();
@@ -363,11 +366,15 @@ var AvidynePagePFD = {
 			if (me.data.apModeFail == 1){
 				me.cApModeState.setText("AP FAIL");
 				me.cApModeState.setColor(COLOR["Red"]);
+				me.cApModeState.show();
 				me.cApModeFd.hide();
-			}else{
+			}else if (me.data.apModeRdy == 1 ){
 				me.cApModeState.setText("AP RDY");
 				me.cApModeState.setColor(COLOR["Green"]);
+				me.cApModeState.show();
 				me.cApModeFd.show();
+			}else{
+				me.cApModeState.hide();
 			}
 			
 			if (me.data.apModeALT == 1){
@@ -427,13 +434,13 @@ var AvidynePagePFD = {
 		me.cAirSpeedTAS.setText(sprintf("%3i",me.data.TAS));
 		
 	# Vertical Speed
-		me.VerticalSpeedIndicated.setText(sprintf("%4i",me.data.VSBug));
+		me.VerticalSpeedIndicated.setText(sprintf("%4i",math.floor( me.data.VSBug + 0.5 )));
 		me.VerticalSpeedNeedle.setRotation((me.data.VS/100*1.8) * TORAD);
 		me.VerticalSpeedBug.setRotation((me.data.VSBug/100*1.8) * TORAD);
 				
 	#CompassRose
 		me.HeadingSelected.setText(sprintf("%03i",me.data.HDGBug));
-		me.Heading.setText(sprintf("%03i",me.data.HDG));
+		me.Heading.setText(sprintf("%03i",math.floor( me.data.HDG + 0.5)));
 		me.CompassRose.setRotation(-me.data.HDG * TORAD);
 		me.HeadingBug.setRotation((me.data.HDGBug-me.data.HDG) * TORAD);
 		

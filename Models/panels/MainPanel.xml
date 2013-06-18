@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             31.05.13
+      Date:             17.06.13
 -->
 <PropertyList>
 
@@ -34,9 +34,10 @@
   <name>Autopilot</name>
   <path>Aircraft/extra500/Models/instruments/Autopilot.xml</path>
 	<offsets>
-		<x-m>0.07679</x-m>
+		<x-m>0.1302</x-m>
 		<y-m>0</y-m>	
-		<z-m>0.20699</z-m>
+		<z-m>0.38944</z-m>
+		<pitch-deg>-5</pitch-deg>
 	</offsets>
 </model>
 
@@ -45,8 +46,8 @@
   <path>Aircraft/extra500/Models/instruments/PropAmmeter.xml</path>
 	<offsets>
 		<x-m>0</x-m>
-		<y-m>-0.49129</y-m>	
-		<z-m>0.07450</z-m>
+		<y-m>-0.45198</y-m>	
+		<z-m>0.26684</z-m>
 	</offsets>
 </model>
 
@@ -55,8 +56,8 @@
   <path>Aircraft/extra500/Models/instruments/IASanalog.xml</path>
 	<offsets>
 		<x-m>0</x-m>
-		<y-m>-0.31727</y-m>	
-		<z-m>0.15224</z-m>
+		<y-m>-0.29183</y-m>	
+		<z-m>0.33875</z-m>
 	</offsets>
 </model>
 
@@ -65,8 +66,8 @@
   <path>Aircraft/extra500/Models/instruments/ADIanalog.xml</path>
 	<offsets>
 		<x-m>0</x-m>
-		<y-m>-0.24467</y-m>	
-		<z-m>0.15224</z-m>
+		<y-m>-0.22518</y-m>	
+		<z-m>0.33875</z-m>
 	</offsets>
 </model>
 
@@ -75,8 +76,8 @@
   <path>Aircraft/extra500/Models/instruments/ALTanalog.xml</path>
 	<offsets>
 		<x-m>0</x-m>
-		<y-m>-0.17207</y-m>	
-		<z-m>0.15224</z-m>
+		<y-m>-0.15838</y-m>	
+		<z-m>0.33875</z-m>
 	</offsets>
 </model>
 
@@ -85,21 +86,23 @@
   <path>Aircraft/extra500/Models/instruments/FuelInstruments.xml</path>
 	<offsets>
 		<x-m>0</x-m>
-		<y-m>0.22636</y-m>	
-		<z-m>0.02680</z-m>
+		<y-m>0.20847</y-m>	
+		<z-m>0.21489</z-m>
 	</offsets>
 </model>
+
 
 <model>
   <name>EngineInstruments</name>
   <path>Aircraft/extra500/Models/instruments/EngineInstruments.xml</path>
 	<offsets>
 		<x-m>0</x-m>
-		<y-m>-0.52202</y-m>	
-		<z-m>-0.06745</z-m>
+		<y-m>-0.47982</y-m>
+		<z-m>0.13804</z-m>
 	</offsets>
 </model>
 
+<!--
 <model>
   <name>InstrumentFlapsGear</name>
   <path>Aircraft/extra500/Models/instruments/InstrumentFlapsGear.xml</path>
@@ -110,15 +113,17 @@
 	<pitch-deg>-32</pitch-deg>
 	</offsets>
 </model>
+-->
 
 <!-- panels -->
+
 <model>
   <name>MasterPanel</name>
   <path>Aircraft/extra500/Models/panels/MasterPanel.xml</path>
 	<offsets>
 		<x-m>0</x-m>
 		<y-m>0</y-m>	
-		<z-m>-0.15689</z-m>
+		<z-m>0.05389</z-m>
 	</offsets>
 </model>
 
@@ -127,21 +132,21 @@
   <path>Aircraft/extra500/Models/panels/AnnunciatorPanel.xml</path>
 	<offsets>
 		<x-m>0</x-m>
-		<y-m>0.28553</y-m>	
-		<z-m>0.15108</z-m>
+		<y-m>0.26308</y-m>
+		<z-m>0.33773</z-m>
 	</offsets>
 </model>
+
 
 <model>
   <name>TESTtc</name>
   <path>Aircraft/Instruments-3d/tc/tc.xml</path>
 	<offsets>
-		<x-m>0.01</x-m>
-		<y-m>0.32591</y-m>
-		<z-m>0.062</z-m>
+		<x-m>0.005</x-m>
+		<y-m>0.30010</y-m>
+		<z-m>0.24937</z-m>
 	</offsets>
 </model>
-
 
 <!-- IFDs -->
 <model>
@@ -149,8 +154,8 @@
   <path>Aircraft/extra500/Models/instruments/IFDs/LH-IFD.xml</path>
 	<offsets>
 		<x-m>0</x-m>
-		<y-m>-0.30890</y-m>	
-		<z-m>0</z-m>
+		<y-m>-0.284</y-m>	
+		<z-m>0.19839</z-m>
 	</offsets>
 </model>
 
@@ -160,7 +165,7 @@
 	<offsets>
 		<x-m>0</x-m>
 		<y-m>0</y-m>	
-		<z-m>0</z-m>
+		<z-m>0.19839</z-m>
 	</offsets>
 </model>
 

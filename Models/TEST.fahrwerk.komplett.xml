@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             21.05.13
+      Date:             17.06.13
 
 -->
 <PropertyList>
@@ -51,6 +51,32 @@
 </animation> 
 
 <!-- BUGFAHRWERK --> 
+
+<!-- Bugradeinzug  -->
+<animation>
+  <type>rotate</type>
+  <object-name>BugFahrwerkKomplett</object-name>
+<property>gear/gear[0]/position-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0.0</ind>
+                <dep>105</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>0</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>-1.60481</x1-m>
+    <y1-m>1.0</y1-m>
+    <z1-m>-0.98046</z1-m>
+	<x2-m>-1.60481</x2-m>
+    <y2-m>-1.0</y2-m>
+    <z2-m>-0.98046</z2-m>
+  </axis>
+  </animation> 
+  
 <!-- lenkung Bugfahrwerk-->  
 <animation>
   <type>rotate</type>
@@ -76,30 +102,7 @@
     <z2-m>-1.43637</z2-m>
   </axis>
 </animation>
-<!-- Bugradeinzug  -->
-<animation>
-  <type>rotate</type>
-  <object-name>BugFahrwerkKomplett</object-name>
-<property>gear/gear[0]/position-norm</property>
-  <interpolation>
-            <entry>
-                <ind>0.0</ind>
-                <dep>105</dep>
-            </entry>
-            <entry>
-                <ind>1</ind>
-                <dep>0</dep>
-            </entry>
-        </interpolation>
-  <axis>
-    <x1-m>-1.60481</x1-m>
-    <y1-m>1.0</y1-m>
-    <z1-m>-0.98046</z1-m>
-	<x2-m>-1.60481</x2-m>
-    <y2-m>-1.0</y2-m>
-    <z2-m>-0.98046</z2-m>
-  </axis>
-  </animation> 
+  
 <!-- Bugfahrwerksdaempfung -->
 <animation>
   <type>translate</type>

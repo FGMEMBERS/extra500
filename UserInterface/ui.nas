@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: April 07 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             26.04.13
+#      Last change:      Eric van den Berg
+#      Date:             2013-06-16
 #
 
 
@@ -129,7 +129,8 @@ var MessageSystem = {
 		]};
 		m.color={};
 		m.color["Failure"]	= [0.8,0.0,0.0,1.0];
-		m.color["Warning"]	= [1.0,0.4,0.0,1.0];
+		m.color["Warning"]	= [1.0,0.1,0.0,1.0];
+		m.color["Caution"]	= [0.8,0.8,0.0,1.0];
 		m.color["Info"]		= [0.0,0.0,0.8,1.0];
 		
 		return m;
@@ -139,6 +140,9 @@ var MessageSystem = {
 	},
 	warning : func(msg){
 		screen.log.write(msg,me.color["Warning"][0],me.color["Warning"][1],me.color["Warning"][2],me.color["Warning"][3]);
+	},
+	caution : func(msg){
+		screen.log.write(msg,me.color["Caution"][0],me.color["Caution"][1],me.color["Caution"][2],me.color["Caution"][3]);
 	},
 	info : func(msg){
 		screen.log.write(msg,me.color["Info"][0],me.color["Info"][1],me.color["Info"][2],me.color["Info"][3]);

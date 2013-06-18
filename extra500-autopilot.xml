@@ -237,7 +237,7 @@
 							<property>/autopilot/vs-channel/vs-error-fpm</property>
 						</product>
 						<product>	
-							<property>/autopilot/vs-channel/turnrate-gain2</property>	
+							<!--property>/autopilot/vs-channel/turnrate-gain2</property-->	
 							<property>/autopilot/vs-channel/accel-rate-gain</property>
 							<sum>
 								<property>/autopilot/accsens-channel/ap-z-accel</property>

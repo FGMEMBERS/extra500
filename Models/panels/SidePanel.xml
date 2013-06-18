@@ -20,14 +20,14 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             21.05.13
+      Date:             17.06.13
 
 -->
 <PropertyList>
 
 <path>SidePanel.ac</path>
 
-<!-- ##### REIHE1 ##### -0.18818 -->
+<!-- ##### REIHE1 ##### -0.17003 -->
 <!-- SidePanel.Main.Battery -->
 <animation>
   <type>rotate</type>
@@ -44,10 +44,10 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>-0.18818</x1-m>
+    <x1-m>-0.17003</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>-0.18818</x2-m>
+    <x2-m>-0.17003</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -114,10 +114,10 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>-0.18818</x1-m>
+    <x1-m>-0.17003</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>-0.18818</x2-m>
+    <x2-m>-0.17003</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -175,10 +175,10 @@
   <property>extra500/panel/Side/Main/Generator/state</property>
   <factor>-25</factor>
   <axis>
-    <x1-m>-0.18818</x1-m>
+    <x1-m>-0.17003</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>-0.18818</x2-m>
+    <x2-m>-0.17003</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -230,7 +230,7 @@
 </animation>
 
 
-<!-- ##### REIHE2 ##### -0.145 -->
+<!-- ##### REIHE2 ##### -0.13095 -->
 <!-- SidePanel.Main.ExternalPower -->
 <animation>
   <type>rotate</type>
@@ -247,10 +247,10 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>-0.145</x1-m>
+    <x1-m>-0.13095</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>-0.145</x2-m>
+    <x2-m>-0.13095</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -308,10 +308,10 @@
   <property>extra500/panel/Side/Main/GeneratorTest/state</property>
   <factor>-25</factor>
   <axis>
-    <x1-m>-0.145</x1-m>
+    <x1-m>-0.13095</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>-0.145</x2-m>
+    <x2-m>-0.13095</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -378,10 +378,10 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>-0.145</x1-m>
+    <x1-m>-0.13095</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>-0.145</x2-m>
+    <x2-m>-0.13095</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -432,7 +432,7 @@
   </action>
 </animation>
 
-<!-- ##### REIHE3 ##### -0.10181 -->
+<!-- ##### REIHE3 ##### -0.09185 -->
 <!-- SidePanel.Light.Strobe -->
 <animation>
   <type>rotate</type>
@@ -449,10 +449,10 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>-0.10181</x1-m>
+    <x1-m>-0.09185</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>-0.10181</x2-m>
+    <x2-m>-0.09185</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -519,10 +519,10 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>-0.10181</x1-m>
+    <x1-m>-0.09185</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>-0.10181</x2-m>
+    <x2-m>-0.09185</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -589,10 +589,10 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>-0.10181</x1-m>
+    <x1-m>-0.09185</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>-0.10181</x2-m>
+    <x2-m>-0.09185</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -659,10 +659,10 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>-0.10181</x1-m>
+    <x1-m>-0.09185</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>-0.10181</x2-m>
+    <x2-m>-0.09185</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -714,7 +714,7 @@
 </animation>
 
 
-<!-- ##### REIHE4 ##### -0.06143 -->
+<!-- ##### REIHE4 ##### -0.05531 -->
 <!-- SidePanel.Light.Cabin -->
 <animation>
   <type>rotate</type>
@@ -731,10 +731,10 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>-0.06143</x1-m>
+    <x1-m>-0.05531</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>-0.06143</x2-m>
+    <x2-m>-0.05531</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -801,10 +801,10 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>-0.06143</x1-m>
+    <x1-m>-0.05531</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>-0.06143</x2-m>
+    <x2-m>-0.05531</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -871,10 +871,10 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>-0.06143</x1-m>
+    <x1-m>-0.05531</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>-0.06143</x2-m>
+    <x2-m>-0.05531</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -941,10 +941,10 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>-0.06143</x1-m>
+    <x1-m>-0.05531</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>-0.06143</x2-m>
+    <x2-m>-0.05531</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -996,7 +996,7 @@
 </animation>
 
 
-<!-- ##### REIHE5 ##### -0.02105 -->
+<!-- ##### REIHE5 ##### -0.01877 -->
 <!-- SidePanel.Light.Night #3# -->
 <animation>
   <type>rotate</type>
@@ -1004,10 +1004,10 @@
   <property>extra500/panel/Side/Light/Night/state</property>
   <factor>-25</factor>
   <axis>
-    <x1-m>-0.02105</x1-m>
+    <x1-m>-0.01877</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>-0.02105</x2-m>
+    <x2-m>-0.01877</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -1074,10 +1074,10 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>-0.02105</x1-m>
+    <x1-m>-0.01877</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>-0.02105</x2-m>
+    <x2-m>-0.01877</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -1144,10 +1144,10 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>-0.02105</x1-m>
+    <x1-m>-0.01877</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>-0.02105</x2-m>
+    <x2-m>-0.01877</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -1199,7 +1199,7 @@
 </animation>
 
 
-<!-- ##### REIHE6 ##### 0.02221 -->
+<!-- ##### REIHE6 ##### 0.02038 -->
 <!-- SidePanel.Deicing.PitotL #3# -->
 <animation>
   <type>rotate</type>
@@ -1207,10 +1207,10 @@
   <property>extra500/panel/Side/Deicing/PitotL/state</property>
   <factor>-25</factor>
   <axis>
-    <x1-m>0.02221</x1-m>
+    <x1-m>0.02038</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>0.02221</x2-m>
+    <x2-m>0.02038</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -1268,10 +1268,10 @@
   <property>extra500/panel/Side/Deicing/PitotR/state</property>
   <factor>-25</factor>
   <axis>
-    <x1-m>0.02221</x1-m>
+    <x1-m>0.02038</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>0.02221</x2-m>
+    <x2-m>0.02038</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -1338,10 +1338,10 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>0.02221</x1-m>
+    <x1-m>0.02038</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>0.02221</x2-m>
+    <x2-m>0.02038</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -1408,10 +1408,10 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>0.02221</x1-m>
+    <x1-m>0.02038</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>0.02221</x2-m>
+    <x2-m>0.02038</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -1463,7 +1463,7 @@
 </animation>
 
 
-<!-- ##### REIHE7 ##### 0.06538 -->
+<!-- ##### REIHE7 ##### 0.05945 -->
 <!-- SidePanel.Cabin.Pressure #3# -->
 <animation>
   <type>rotate</type>
@@ -1471,10 +1471,10 @@
   <property>extra500/panel/Side/Cabin/Pressure/state</property>
   <factor>-25</factor>
   <axis>
-    <x1-m>0.06538</x1-m>
+    <x1-m>0.05945</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>0.06538</x2-m>
+    <x2-m>0.05945</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -1541,10 +1541,10 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>0.06538</x1-m>
+    <x1-m>0.05945</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>0.06538</x2-m>
+    <x2-m>0.05945</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -1602,10 +1602,10 @@
   <property>extra500/panel/Side/Cabin/Vent/state</property>
   <factor>-25</factor>
   <axis>
-    <x1-m>0.06538</x1-m>
+    <x1-m>0.05945</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>0.06538</x2-m>
+    <x2-m>0.05945</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -1657,7 +1657,7 @@
 </animation>
 
 
-<!-- ##### REIHE8 ##### 0.10573 -->
+<!-- ##### REIHE8 ##### 0.09597 -->
 <!-- SidePanel.Cabin.EnvironmentalAir -->
 <animation>
   <type>rotate</type>
@@ -1674,10 +1674,10 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>0.10573</x1-m>
+    <x1-m>0.09597</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>0.10573</x2-m>
+    <x2-m>0.09597</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -1735,10 +1735,10 @@
   <property>extra500/panel/Side/Cabin/TempMode/state</property>
   <factor>-25</factor>
   <axis>
-    <x1-m>0.10573</x1-m>
+    <x1-m>0.09597</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>0.10573</x2-m>
+    <x2-m>0.09597</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -1805,10 +1805,10 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>0.10573</x1-m>
+    <x1-m>0.09597</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>0.10573</x2-m>
+    <x2-m>0.09597</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
@@ -1875,10 +1875,10 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>0.10573</x1-m>
+    <x1-m>0.09597</x1-m>
     <y1-m>0.03452</y1-m>
     <z1-m>-0.006747</z1-m>
-    <x2-m>0.10573</x2-m>
+    <x2-m>0.09597</x2-m>
     <y2-m>0.03452</y2-m>
     <z2-m>0.01051</z2-m>
   </axis>
@@ -1928,7 +1928,7 @@
   </action>
 </animation>
 
-<!-- ##### REIHE9 ##### 0.18713 -->
+<!-- ##### REIHE9 ##### 0.16963 -->
 <!-- SidePanel.Cabin.Emergency -->
 <animation>
   <type>rotate</type>
@@ -1945,10 +1945,10 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>0.18713</x1-m>
+    <x1-m>0.16963</x1-m>
     <y1-m>-1</y1-m>
     <z1-m>0</z1-m>
-    <x2-m>0.18713</x2-m>
+    <x2-m>0.16963</x2-m>
     <y2-m>1</y2-m>
     <z2-m>0</z2-m>
   </axis>		
