@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2013-06-16
+      Date:             2013-06-17
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -487,6 +487,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<nav-IFD-LH>1.1</nav-IFD-LH>	<!-- FIXME: a hack to get the nav working expects >1 -->
 			<nav-IFD-RH>1.1</nav-IFD-RH>
 			<dme>1</dme> 			<!--expects a bool 0 or 1 -->
+			<transponder>24</transponder>
 		</outputs>
       </electrical>
  </systems>
@@ -550,6 +551,13 @@ JSBSim Extra Aircraft - Extra 500.
     <tcas>
         <serviceable type="bool">true</serviceable>
     </tcas>
+    <transponder>
+	<id-code type="int">7000</id-code>
+	<inputs>
+		<knob-mode>3</knob-mode>
+		<auto-select>1</auto-select>
+	</inputs>
+    </transponder>
     <turn-indicator>
 	<indicated-turn-rate>0</indicated-turn-rate>
     </turn-indicator>
