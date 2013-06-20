@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-06-13
+      Date:             2013-06-20
 -->
 
 <flight_control name="FCS: extra500">
@@ -436,6 +436,10 @@
 					<product>
                                   		<property>/autopilot/mode/heading</property>
                               			<property>/autopilot/hdg-channel/cmd-ap-ail-pos-norm</property>	
+					</product>
+					<product>
+                                  		<property>/autopilot/mode/nav</property>
+                              			<property>/autopilot/radionav-channel/cmd-ap-ail-pos-norm</property>	
 					</product>
 				</sum>
 				</function>
