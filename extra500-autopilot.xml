@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-06-20
+      Date:             2013-06-22
 -->
 
 <autopilot name="STEC55X">
@@ -201,12 +201,30 @@
 		</switch>
 
 <!--calculating the target heading to intercept the radial-->
-		<pid name="/autopilot/radionav-channel/relative-heading-target-deg">
+		<pid name="/autopilot/radionav-channel/relative-d-heading-target-deg">
 			<input>/autopilot/radionav-channel/heading-needle-deflection-norm</input>
 			<kp>/autopilot/radionav-channel/tgt-hdg-kp</kp>							
 			<ki>/autopilot/radionav-channel/tgt-hdg-ki</ki>
 			<kd>/autopilot/radionav-channel/tgt-hdg-kd</kd>
 		</pid>
+
+		<pure_gain name="/autopilot/radionav-channel/relative-p-heading-target-deg">
+			<input>/autopilot/radionav-channel/heading-needle-deflection-norm</input>
+			<gain>450.0</gain>
+			<clipto>
+				<min>-45</min>
+				<max>45</max>
+			</clipto>
+		</pure_gain>
+
+		<fcs_function name="/autopilot/radionav-channel/relative-heading-target-deg">
+			<function>
+				<sum>
+					<property>/autopilot/radionav-channel/relative-p-heading-target-deg</property> 
+					<property>/autopilot/radionav-channel/relative-d-heading-target-deg</property> 
+				</sum>
+			</function>
+		</fcs_function>
 
 		<switch name="navselect2">
 			<default value="/instrumentation/nav-IFD-LH/radials/selected-deg"/>
@@ -225,7 +243,7 @@
 			</function>
 		</fcs_function>
 
-		<switch name="hdgselect">
+		<switch name="hdgselect2">
 			<default value="/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg"/>
 			<test value="/instrumentation/heading-indicator-IFD-RH/indicated-heading-deg">
 				/instrumentation/hdg-source eq 1
@@ -233,7 +251,7 @@
 			<output>/autopilot/radionav-channel/heading-deg</output>
 		</switch>
 
-		<fcs_function name="/autopilot/radionav-channel/heading-error-deg">
+		<fcs_function name="/autopilot/radionav-channel/heading-1-error-deg">
 			<function>
 				<difference>
 					<property>/autopilot/radionav-channel/heading-target-deg</property> 
@@ -241,6 +259,41 @@
 				</difference>
 			</function>
 		</fcs_function>
+
+		<fcs_function name="/autopilot/radionav-channel/heading-2-error-deg">
+			<function>
+				<sum>
+					<property>/autopilot/radionav-channel/heading-1-error-deg</property> 
+					<value>360</value> 
+				</sum>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/autopilot/radionav-channel/heading-3-error-deg">
+			<function>
+				<difference>
+					<property>/autopilot/radionav-channel/heading-1-error-deg</property> 
+					<value>360</value> 
+				</difference>
+			</function>
+		</fcs_function>
+
+		<switch name="hdgdirection">
+			<default value="/autopilot/radionav-channel/heading-1-error-deg"/>
+			<test value="/autopilot/radionav-channel/heading-2-error-deg">
+				/autopilot/radionav-channel/heading-1-error-deg lt -180
+			</test>
+			<output>/autopilot/radionav-channel/heading-4-error-deg</output>
+		</switch>
+
+		<switch name="hdgdirection2">
+			<default value="/autopilot/radionav-channel/heading-4-error-deg"/>
+			<test value="/autopilot/radionav-channel/heading-3-error-deg">
+				/autopilot/radionav-channel/heading-1-error-deg gt 180
+			</test>
+			<output>/autopilot/radionav-channel/heading-error-deg</output>
+		</switch>
+
 
 <!--the heading error is clipped to -20 to 20 deg -->
 		<pure_gain name="/autopilot/radionav-channel/lmd-hdg-error">

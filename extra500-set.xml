@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2013-06-20
+      Date:             2013-06-22
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -430,8 +430,8 @@ JSBSim Extra Aircraft - Extra 500.
 		<cmd-ap-ail-pos-norm-raw type="double">0.0</cmd-ap-ail-pos-norm-raw>
 	</hdg-channel>
 	<radionav-channel>
-		<tgt-hdg-kp>45</tgt-hdg-kp>
-		<tgt-hdg-kd>0</tgt-hdg-kd>	
+		<tgt-hdg-kp>0</tgt-hdg-kp>
+		<tgt-hdg-kd>750</tgt-hdg-kd>	
 		<tgt-hdg-ki>0</tgt-hdg-ki>		
 		<turn-rate-error-kp type="double">0.0003</turn-rate-error-kp>
 		<turn-rate-error-ki type="double">0.00</turn-rate-error-ki>
@@ -507,6 +507,7 @@ JSBSim Extra Aircraft - Extra 500.
  <instrumentation>
     <hdg-source>0</hdg-source>		<!-- 0= IFD-LH, 1= IFD-RH-->
     <nav-source>0</nav-source>		<!-- 0= IFD-LH, 1= IFD-RH-->
+
     <airspeed-IFD-LH>
 	  <serviceable type="bool" archive="y">true</serviceable>
 	  <indicated-speed-kt>0</indicated-speed-kt>
@@ -562,9 +563,19 @@ JSBSim Extra Aircraft - Extra 500.
       <volume type="double">0.0</volume>    	<!--may be set to larger value by audiopanel (mon2 button)-->                                   
     </dme>
 
+    <heading-indicator-IFD-LH>
+	<heading-bug-error-deg>0</heading-bug-error-deg>
+	<indicated-heading-deg>0</indicated-heading-deg>
+    </heading-indicator-IFD-LH>
+    <heading-indicator-IFD-RH>
+	<heading-bug-error-deg>0</heading-bug-error-deg>
+	<indicated-heading-deg>0</indicated-heading-deg>
+    </heading-indicator-IFD-RH>
+
     <tcas>
         <serviceable type="bool">true</serviceable>
     </tcas>
+
     <transponder>
 	<id-code type="int">7000</id-code>
 	<inputs>
@@ -572,6 +583,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<auto-select>1</auto-select>
 	</inputs>
     </transponder>
+
     <turn-indicator>
 	<indicated-turn-rate>0</indicated-turn-rate>
     </turn-indicator>
@@ -579,10 +591,18 @@ JSBSim Extra Aircraft - Extra 500.
     <nav-IFD-LH>
       	<volume type="double">0.0</volume>    	<!--may be set to larger value by audiopanel (nav1 button)-->
 	<serviceable type="bool">true</serviceable>
+	<heading-needle-deflection-norm>0</heading-needle-deflection-norm>
+	<radials>
+		<selected-deg>0</selected-deg>
+	</radials>
     </nav-IFD-LH>
     <nav-IFD-RH>
       	<volume type="double">0.0</volume>	<!--may be set to larger value by audiopanel (nav2 button)-->
 	<serviceable type="bool">true</serviceable>
+	<heading-needle-deflection-norm>0</heading-needle-deflection-norm>
+	<radials>
+		<selected-deg>0</selected-deg>
+	</radials>
     </nav-IFD-RH>
 
  </instrumentation>
