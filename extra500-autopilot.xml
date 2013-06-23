@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-06-22
+      Date:             2013-06-23
 -->
 
 <autopilot name="STEC55X">
@@ -200,31 +200,57 @@
 			<output>/autopilot/radionav-channel/heading-needle-deflection-norm</output>
 		</switch>
 
+		<switch name="inrange">
+			<default value="/instrumentation/nav-IFD-LH/in-range"/>
+			<test value="/instrumentation/nav-IFD-RH/in-range">
+				/instrumentation/nav-source eq 1
+			</test>
+			<output>/autopilot/radionav-channel/in-range</output>
+		</switch>
+
 <!--calculating the target heading to intercept the radial-->
-		<pid name="/autopilot/radionav-channel/relative-d-heading-target-deg">
+		<pid name="/autopilot/radionav-channel/relative-diff-heading-target-deg">
 			<input>/autopilot/radionav-channel/heading-needle-deflection-norm</input>
 			<kp>/autopilot/radionav-channel/tgt-hdg-kp</kp>							
 			<ki>/autopilot/radionav-channel/tgt-hdg-ki</ki>
 			<kd>/autopilot/radionav-channel/tgt-hdg-kd</kd>
+			<output>/autopilot/radionav-channel/relative-d-heading-target-deg</output>
 		</pid>
 
-		<pure_gain name="/autopilot/radionav-channel/relative-p-heading-target-deg">
+		<fcs_function name="/autopilot/radionav-channel/p-gain">
+			<function>
+				<product>
+					<property>/autopilot/radionav-channel/gain</property>
+					<pow> 
+						<max>
+							<abs>
+								<property>/autopilot/radionav-channel/relative-d-heading-target-deg</property> 
+							</abs>
+							<value>0.000001</value>
+						</max>
+						<value>-1</value>
+					</pow>
+				</product>
+			</function>
+		</fcs_function>
+
+		<pure_gain name="/autopilot/radionav-channel/p-gain-lmd">
+			<input>/autopilot/radionav-channel/p-gain</input>
+			<gain>1</gain>
+			<clipto>
+				<min>0</min>
+				<max>225</max>		<!-- making sure it starts to turns at min needle defl of |0.2| --> 
+			</clipto>
+		</pure_gain>
+
+		<pure_gain name="/autopilot/radionav-channel/relative-heading-target-deg">
 			<input>/autopilot/radionav-channel/heading-needle-deflection-norm</input>
-			<gain>450.0</gain>
+			<gain>/autopilot/radionav-channel/p-gain-lmd</gain>
 			<clipto>
 				<min>-45</min>
 				<max>45</max>
 			</clipto>
 		</pure_gain>
-
-		<fcs_function name="/autopilot/radionav-channel/relative-heading-target-deg">
-			<function>
-				<sum>
-					<property>/autopilot/radionav-channel/relative-p-heading-target-deg</property> 
-					<property>/autopilot/radionav-channel/relative-d-heading-target-deg</property> 
-				</sum>
-			</function>
-		</fcs_function>
 
 		<switch name="navselect2">
 			<default value="/instrumentation/nav-IFD-LH/radials/selected-deg"/>
@@ -294,6 +320,15 @@
 			<output>/autopilot/radionav-channel/heading-error-deg</output>
 		</switch>
 
+		<switch name="validdata">
+			<default value="/autopilot/radionav-channel/heading-error-deg"/>
+			<test value="0">
+				/autopilot/radionav-channel/in-range eq 0
+			</test>
+			<output>/autopilot/radionav-channel/heading-error-deg</output>
+		</switch>
+
+
 
 <!--the heading error is clipped to -20 to 20 deg -->
 		<pure_gain name="/autopilot/radionav-channel/lmd-hdg-error">
@@ -360,7 +395,7 @@
 <!-- making sure the aileron servo is not going to fast-->	
 		<actuator name="/autopilot/radionav-channel/ail-servo">
 			<input>/autopilot/radionav-channel/cmd-ap-ail-pos-norm-raw</input>
-			<rate_limit>0.2</rate_limit>
+			<rate_limit>0.05</rate_limit>
 			<clipto>
 				<min>-1</min>
 				<max>1</max>

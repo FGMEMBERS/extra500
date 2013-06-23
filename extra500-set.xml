@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2013-06-22
+      Date:             2013-06-23
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -430,8 +430,9 @@ JSBSim Extra Aircraft - Extra 500.
 		<cmd-ap-ail-pos-norm-raw type="double">0.0</cmd-ap-ail-pos-norm-raw>
 	</hdg-channel>
 	<radionav-channel>
+		<gain>1</gain>
 		<tgt-hdg-kp>0</tgt-hdg-kp>
-		<tgt-hdg-kd>750</tgt-hdg-kd>	
+		<tgt-hdg-kd>0.5</tgt-hdg-kd>	
 		<tgt-hdg-ki>0</tgt-hdg-ki>		
 		<turn-rate-error-kp type="double">0.0003</turn-rate-error-kp>
 		<turn-rate-error-ki type="double">0.00</turn-rate-error-ki>
@@ -592,6 +593,7 @@ JSBSim Extra Aircraft - Extra 500.
       	<volume type="double">0.0</volume>    	<!--may be set to larger value by audiopanel (nav1 button)-->
 	<serviceable type="bool">true</serviceable>
 	<heading-needle-deflection-norm>0</heading-needle-deflection-norm>
+	<in-range type="bool">false</in-range>
 	<radials>
 		<selected-deg>0</selected-deg>
 	</radials>
@@ -600,6 +602,7 @@ JSBSim Extra Aircraft - Extra 500.
       	<volume type="double">0.0</volume>	<!--may be set to larger value by audiopanel (nav2 button)-->
 	<serviceable type="bool">true</serviceable>
 	<heading-needle-deflection-norm>0</heading-needle-deflection-norm>
+	<in-range type="bool">false</in-range>
 	<radials>
 		<selected-deg>0</selected-deg>
 	</radials>
