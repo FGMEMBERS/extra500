@@ -70,6 +70,7 @@ var AvidyneData = {
 		
 		
 		
+		
 	#heading 
 		m.HDG 		= 0;
 		m.HDGBug 	= 0;
@@ -118,7 +119,16 @@ var AvidyneData = {
 		
 		m.nOAT = props.globals.initNode("/environment/temperature-degc",0.0,"DOUBLE");
 		
-
+	#DI
+		m.HDI = 0;
+		m.VDI = 0;
+		m.GSable = 0;
+		m.GSinRange = 0;
+		m.NAVinRange = 0;
+		m.NAVLOC = 0;
+		m.nActiveNav = props.globals.initNode("/instrumentation/nav[0]");
+		m.nHDI = props.globals.initNode("/instrumentation/nav[0]/heading-needle-deflection-norm",0.0,"DOUBLE");
+		m.nVDI = props.globals.initNode("/instrumentation/nav[0]/gs-needle-deflection-norm",0.0,"DOUBLE");
 		
 		
 		
@@ -165,6 +175,14 @@ var AvidyneData = {
 
 	#enviroment
 		me.OAT = me.nOAT.getValue();
+	#DI 
+		me.HDI 		= me.nActiveNav.getChild("heading-needle-deflection-norm").getValue();
+		me.VDI 		= me.nActiveNav.getChild("gs-needle-deflection-norm").getValue();
+		me.GSable 	= me.nActiveNav.getChild("has-gs").getValue();
+		me.GSinRange 	= me.nActiveNav.getChild("gs-in-range").getValue();
+		me.NAVinRange 	= me.nActiveNav.getChild("in-range").getValue();
+		me.NAVLOC	= me.nActiveNav.getChild("nav-loc").getValue();
+		
 	
 	},
 	adjustBaro : func(value=nil){
@@ -280,6 +298,14 @@ var AvidynePagePFD = {
 		
 		m.cARS = m.page.getElementById("ARS");
 		m.cARS.set("clip","rect(168px, 1562px, 785px, 845px)");
+		
+	#DI	
+		m.cDI 			= m.page.getElementById("DI");
+		m.cDI_Source_Text 	= m.page.getElementById("DI_Source_Text");
+		m.cHDI		 	= m.page.getElementById("HDI");
+		m.cHDI_Needle 		= m.page.getElementById("HDI_Needle");
+		m.cVDI	 		= m.page.getElementById("VDI");
+		m.cVDI_Needle 		= m.page.getElementById("VDI_Needle");
 		
 		
 	#vertical speed
@@ -452,6 +478,35 @@ var AvidynePagePFD = {
 		me.nHorizon.setTranslation(0,me.data.pitch*10);
 		me.nHorizon.setRotation(-me.data.roll * TORAD);
 		
+	#DI
+		
+		
+		if(me.data.NAVinRange){
+			me.cHDI_Needle.show();
+			me.cHDI_Needle.setTranslation(me.data.HDI * 240,0);
+		}else{
+			me.cHDI_Needle.hide();
+		}
+		
+		if(me.data.NAVLOC == 1){
+			me.cDI_Source_Text.setText("LOC");
+		}else{
+			me.cDI_Source_Text.setText("VOR");
+		}
+		
+		if(me.data.GSable == 1){
+			me.cVDI.show();
+			me.cDI_Source_Text.setText("ILS");
+			if (me.data.GSinRange == 1){
+				me.cVDI_Needle.setTranslation(0, me.data.VDI * 240);
+				me.cVDI_Needle.show();
+			}else{
+				me.cVDI_Needle.hide();
+				
+			}
+		}else{
+			me.cVDI.hide();
+		}
 	#ALT
 		me.cHPA.setText(sprintf("%4i",me.data.HPA));
 		me.AltIndicated.setText(sprintf("%4i",me.data.ALTBug));
