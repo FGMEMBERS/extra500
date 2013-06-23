@@ -24,6 +24,62 @@
 
 
 ### Base Classes
+var ElectronClass ={
+	new : func(){
+		var m = {parents:[
+			ElectronClass
+		]};
+		m.volt		= 0.0;
+		m.ampere	= 0.0;
+		m.timestamp	= 0.0;
+		return m;
+	},
+	copyConstructor : func (){
+		var electron = Electron.new();
+		electron.volt		= me.volt;
+		electron.ampere		= me.ampere;
+		electron.timestamp	= me.timestamp;
+		return electron;
+	},
+	copy : func(electron){
+		me.volt		= electron.volt;
+		me.ampere	= electron.ampere;
+		me.timestamp	= electron.timestamp;
+		
+	},
+	paste : func(electron){
+		electron.volt		= me.volt;
+		electron.ampere		= me.ampere;
+		electron.timestamp	= me.timestamp;
+		
+	},
+	zero : func(){
+		me.volt		= 0.0;
+		me.ampere	= 0.0;
+	},
+	set : func(volt,ampere,timestamp){
+		me.volt		= volt;
+		me.ampere	= ampere;
+		me.timestamp	= timestamp;
+		
+	},
+	getText : func(){
+		return sprintf("%0.4fV %0.4fA %f",me.volt,me.ampere,me.timestamp);
+	},
+	setMaxVolt : func(volt){
+		if (volt > me.volt){
+			me.volt		= volt;
+		}
+	},
+	needUpdate : func(now){
+		if(me.timestamp != now){
+			return 1;
+		}else{
+			return 0;
+		}
+	},
+	
+};
 
 var ServiceClass = {
 	new : func(root,name){
@@ -40,30 +96,71 @@ var ServiceClass = {
 	
 };
 
-
-var ElectricClass = {
-	new : func(root,name){
+var InputVoltListenerClass = {
+	new : func(){
 		var m = { 
 			parents 	: [
-				ElectricClass, 
-				ServiceClass.new(root,name)
+				InputVoltListenerClass, 
 			]
 		};
-		m._nVolt		= m._nRoot.initNode("volt",0.0,"DOUBLE");
-		m._nAmpere		= m._nRoot.initNode("ampere",0.0,"DOUBLE");
-		m._ampere		= 0.0;
-		m._volt			= 0.0;
+		m._inputVoltListener		= nil;
+		m._nInputVolt			= nil;
+		m._inputVoltTime		= 0.0;
 		return m;
 	},
-	getAmpere	 : func(){ return me._nAmpere.getValue();},
-	getVolt		 : func(){ 
-		#print("ElectricClass.getVolt() ... "~me._name);
-		return me._nVolt.getValue();
+	_onInputVoltChange : func (n){
+		print ("InputVoltListenerClass._onInputVoltChange() ... "~me._name);
+		me._inputVoltTime = n.getValue();
+		me._nVolt.setValue(me._nInputVolt.getValue());
+	},
+	setInputVoltListener : func(){
+		me._nInputVolt		= me._nRoot.initNode("voltInput",0.0,"DOUBLE");
+		me._inputVoltListener 	= setlistener(me._nInputVolt,func(n){me._onInputVoltChange(n);},0,1);
+	},
+	removeInputVoltListener : func(){
+		if(me._inputVoltListener) {
+			removelistener(me._inputVoltListener);
+			me._inputVoltListener 	= nil;
+		}
+	},
+	setInputVolt : func(volt){ 
+		print("InputVoltListenerClass.setInputVolt("~volt~") ... "~me._name);
+		me._inputVoltTime = systime();
+		me._nInputVolt.setValue(volt);
+	},
+};
+var VoltListenerClass = {
+	new : func(){
+		var m = { 
+			parents 	: [
+				VoltListenerClass, 
+			]
+		};
+		m._voltListener		= nil;
+		m._nVolt		= nil;
+		return m;
+	},
+	_onVoltChange : func (n){
+		print ("VoltListenerClass._onVoltChange() ... do some work."~me._name);
 		
 	},
-	setVolt		 : func(volt){ me._nVolt.setValue(volt);},
-	
+	setVoltListener : func(){
+		me._nVolt		= me._nRoot.initNode("volt",0.0,"DOUBLE");
+		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},0,0);
+	},
+	removeVoltListener : func(){
+		if(me._voltListener) {
+			removelistener(me._voltListener);
+			me._voltListener 	= nil;
+		}
+	},
+	setVolt : func(volt){ 
+		print("VoltListenerClass.setInputVolt("~volt~") ... "~me._name);
+		me._nVolt.setValue(volt);
+	},
 };
+
+
 
 var StateListenerClass = {
 	new : func(){
@@ -79,7 +176,8 @@ var StateListenerClass = {
 		
 	},
 	setStateListener : func(){
-		me._stateListener = setlistener(me._nState,func(n){me.onStateChange(n);},0,0);
+		#me._nState		= me._nRoot.initNode("state",0.0,"DOUBLE");
+		me._stateListener = setlistener(me._nState,func(n){me.onStateChange(n);},1,0);
 	},
 	removeStateListener : func(){
 		if(me._stateListener) {
@@ -89,13 +187,193 @@ var StateListenerClass = {
 	},
 };
 
+var UpdateListenerClass = {
+	new : func(){
+		var m = { 
+			parents 	: [
+				UpdateListenerClass, 
+			]
+		};
+		m._updateListener	= nil;
+		m._nUpdateTime		= nil;
+		m._updateLast 		= 0.0;
+		return m;
+	},
+	_onUpdate : func (n){
+		var now = n.getValue();
+		var dt = now - me._updateLast;
+		me._updateLast = now;
+		me.update(now,dt);
+	},
+	fireUpdate : func(){
+		if (me._nUpdateTime != nil){
+			var time = systime();
+			print("UpdateListenerClass.fireUpdate() ..."~me._name ~" "~time);
+			me._nUpdateTime.setValue(time);
+		}
+	},
+	setUpdateListener : func(){
+		me._nUpdateTime		= me._nRoot.initNode("updateTime",0.0,"DOUBLE");
+		me._updateListener 	= setlistener(me._nUpdateTime,func(n){me._onUpdate(n);},0,0);
+	},
+	removeUpdateListener : func(){
+		if(me._updateListener) {
+			removelistener(me._updateListener);
+			me._updateListener 	= nil;
+			me._nUpdateTime		= nil;
+		}
+	},
+	update : func(now,dt){
+		
+	},
+	
+};
+
+var ElectricClass = {
+	new : func(root,name){
+		var m = { 
+			parents 	: [
+				ElectricClass, 
+				ServiceClass.new(root,name),
+				InputVoltListenerClass.new(),
+				VoltListenerClass.new(),
+			]
+		};
+		m._nVolt		= m._nRoot.initNode("volt",0.0,"DOUBLE");
+		m._nAmpere		= m._nRoot.initNode("ampere",0.0,"DOUBLE");
+		m._ampere		= 0.0;
+		m._volt			= 0.0;
+		return m;
+	},
+	getAmpere	 : func(){ 
+		 
+		return me._ampere = me._nAmpere.getValue();
+	},
+	getVolt		 : func(){ 
+		#print("ElectricClass.getVolt() ... "~me._name);
+		return me._volt = me._nVolt.getValue();
+		
+	},
+	checkVolt : func(electron=nil){
+		electron.setMaxVolt(me._nVolt.getValue());
+	},
+	checkAmpere : func(electron=nil){
+		electron.ampere += me.getAmpere();
+	}
+	
+};
+
+var ElectricConnectAble = {
+	new : func(root,name){
+		var m = { 
+			parents 	: [
+				ElectricConnectAble, 
+				ElectricClass.new(root,name)
+			]
+		};
+		m._inputs		= {};
+		m._inputIndex		= [];
+		m._outputs		= {};
+		m._outputIndex		= [];
+		return m;
+	},
+	
+	_addInput : func(obj){
+		me._inputs[obj.getName()] = obj;
+		me._inputIndex = keys(me._inputs);
+	},
+	_remInput : func(obj){
+		delete(me._inputs, obj.getName());
+		me._inputIndex = keys(me._inputs);
+	},
+	_addOutput : func(obj){
+		me._outputs[obj.getName()] = obj;
+		me._outputIndex = keys(me._outputs);
+		},
+	_remOutput : func(obj){
+		delete(me._outputs, obj.getName());
+		me._outputIndex = keys(me._outputs);
+	},
+	
+	addInput : func(obj){
+		me._addInput(obj);
+		me.setInputVolt(obj.getVolt());
+	},
+	removeInput : func(obj){
+		me._remInput(obj);
+		me.setInputVolt(0);
+	},
+	addOutput : func(obj){
+		me._addOutput(obj);
+		obj.setInputVolt(me._nVolt.getValue());
+	},
+	removeOutput : func(obj){
+		me._remOutput(obj);
+		obj.setInputVolt(0);
+	},
+	
+	connectInput : func(obj){
+		me._addInput(obj);
+		obj._addOutput(me);
+		me.setInputVolt(obj.getVolt());
+	},
+	disconnectInput : func(obj){
+		me._remInput(obj);
+		obj._remOutput(me);
+		me.setInputVolt(0);
+	},
+	connectOutput : func(obj){
+		me._addOutput(obj);
+		obj._addInput(me);
+		obj.setInputVolt(me.getVolt());
+	},
+	disconnectOutput : func(obj){
+		me._remOutput(obj);
+		obj._remInput(me);
+		obj.setInputVolt(0);
+	},
+	
+	connectOutputInput : func (obj){
+		me._addOutput(obj);
+		obj._addInput(me);
+		obj._addOutput(me);
+		me._addInput(obj);
+		obj.setInputVolt(me.getVolt());
+	},
+	disconnectOutputInput : func (obj){
+		me._remInput(obj);
+		obj._remOutput(me);
+		obj._remInput(me);
+		me._remOutput(obj);
+		obj.setInputVolt(0);
+	},
+	connectInputOutput : func (obj){
+		me._addInput(obj);
+		obj._addOutput(me);
+		obj._addInput(me);
+		me._addOutput(obj);
+		me.setInputVolt(obj.getVolt());
+	},
+	disconnectInputOutput : func (obj){
+		me._remOutput(obj);
+		obj._remInput(me);
+		obj._remOutput(me);
+		me._remInput(obj);
+		me.setInputVolt(0);
+	},
+	
+	
+	
+};
+
+
 ### 
 var GeneratorClass = {
 	new : func(root,name){
 		var m = { 
 			parents : [
 				GeneratorClass,
-				ElectricClass.new(root,name)
+				ElectricConnectAble.new(root,name)
 			]
 		};
 		m._nAmpereAvailable	= m._nRoot.initNode("ampere_available",0.0,"DOUBLE");
@@ -116,11 +394,13 @@ var GeneratorClass = {
 			me._ampereAvailable = 2.85 * me._N1;
 			me._volt = global.clamp(me._volt,0.0,me._voltMax);
 			me._ampereAvailable = global.clamp(me._ampereAvailable,0.0,me._ampereMax);
-			interpolate(me._nVolt,me._volt,dt);
-			interpolate(me._nAmpereAvailable,me._ampereAvailable,dt);
+			#interpolate(me._nVolt,me._volt,dt);
+			#interpolate(me._nAmpereAvailable,me._ampereAvailable,dt);
+			me._nInputVolt.setValue(me._volt);
+			me._nAmpereAvailable.setValue(me._ampereAvailable);
 			
 		}else{
-			me._nVolt.setValue(0);
+			me._nInputVolt.setValue(0);
 			me._nAmpereAvailable.setValue(0);
 		}
 	},
@@ -133,27 +413,14 @@ var GeneratorClass = {
 		}else{
 			me._gernerateVolt(now,dt);
 		}
-	}
-};
-
-var ExternalGeneratorClass = {
-	new : func(root,name){
-		var m = { 
-			parents : [
-				ExternalGeneratorClass,
-				ElectricClass.new(root,name)
-			]
-		};
-		m._nAmpereAvailable	= m._nRoot.initNode("ampere_available",0.0,"DOUBLE");
-		m._voltMax		= 28.5;
-		m._ampereMax		= 1200.0;
-						
-		return m;
 	},
-	update : func(now,dt){
-		me._nVolt.setValue(me._voltMax);
-		me._nAmpereAvailable.setValue(me._ampereMax);
-	}
+	_onVoltChange : func (n){
+		me._volt = n.getValue();
+		foreach( i;  me._outputIndex ){
+			me._outputs[i].setInputVolt(me._volt);
+		}		
+	},
+	
 };
 
 var AlternatorClass = {
@@ -161,7 +428,7 @@ var AlternatorClass = {
 		var m = { 
 			parents : [
 				AlternatorClass,
-				ElectricClass.new(root,name)
+				ElectricConnectAble.new(root,name)
 			]
 		};
 		m._nAmpereAvailable	= m._nRoot.initNode("ampere_available",0.0,"DOUBLE");
@@ -181,11 +448,13 @@ var AlternatorClass = {
 			me._ampereAvailable = me._N1 * 0.594795539 - 36.0892193309;
 			me._volt = global.clamp(me._volt,0.0,me._voltMax);
 			me._ampereAvailable = global.clamp(me._ampereAvailable,0.0,me._ampereMax);
-			interpolate(me._nVolt,me._volt,dt);
-			interpolate(me._nAmpereAvailable,me._ampereAvailable,dt);
+			#interpolate(me._nVolt,me._volt,dt);
+			#interpolate(me._nAmpereAvailable,me._ampereAvailable,dt);
+			me._nInputVolt.setValue(me._volt);
+			me._nAmpereAvailable.setValue(me._ampereAvailable);
 			
 		}else{
-			me._nVolt.setValue(0);
+			me._nInputVolt.setValue(0);
 			me._nAmpereAvailable.setValue(0);
 		}
 	},
@@ -193,15 +462,50 @@ var AlternatorClass = {
 		if (me._nBusVolt.getValue() < me._voltMax){
 			me._gernerateVolt(now,dt);
 		}
-	}
+	},
+	_onVoltChange : func (n){
+		me._volt = n.getValue();
+		foreach( i;  me._outputIndex ){
+			me._outputs[i].setInputVolt(me._volt);
+		}		
+	},
+
 };
+var ExternalGeneratorClass = {
+	new : func(root,name){
+		var m = { 
+			parents : [
+				ExternalGeneratorClass,
+				ElectricConnectAble.new(root,name)
+			]
+		};
+		m._nAmpereAvailable	= m._nRoot.initNode("ampere_available",0.0,"DOUBLE");
+		m._voltMax		= 28.5;
+		m._ampereMax		= 1200.0;
+						
+		return m;
+	},
+	update : func(now,dt){
+		me._nInputVolt.setValue(me._voltMax);
+		me._nAmpereAvailable.setValue(me._ampereMax);
+	},
+	_onVoltChange : func (n){
+		me._volt = n.getValue();
+		foreach( i;  me._outputIndex ){
+			me._outputs[i].setInputVolt(me._volt);
+		}		
+	},
+	
+};
+
+
 
 var BatteryClass = {
 	new : func(root,name){
 		var m = { 
 			parents : [
 				BatteryClass,
-				ElectricClass.new(root,name)
+				ElectricConnectAble.new(root,name)
 			]
 		};
 		m._nAmpereAvailable	= m._nRoot.initNode("ampere_available",0.0,"DOUBLE");
@@ -211,9 +515,16 @@ var BatteryClass = {
 		return m;
 	},
 	update : func(now,dt){
-		me._nVolt.setValue(me._voltMax);
+		me._nInputVolt.setValue(me._voltMax);
 		me._nAmpereAvailable.setValue(me._ampereMax);
-	}
+	},
+	_onVoltChange : func (n){
+		me._volt = n.getValue();
+		foreach( i;  me._outputIndex ){
+			me._outputs[i].setInputVolt(me._volt);
+		}		
+	},
+	
 };
 
 var DCBusClass = {
@@ -221,54 +532,97 @@ var DCBusClass = {
 		var m = { 
 			parents : [
 				DCBusClass, 
-				ElectricClass.new(root,name)
+				ElectricConnectAble.new(root,name),
+				UpdateListenerClass.new()
 			]
 		};
-		m._inputs		= {};
-		m._inputIndex		= [];
-		m._outputs		= {};
-		m._outputIndex		= [];
-		
+		m._electron = ElectronClass.new();
+		m._voltIndex = [];
 		return m;
 	},
-	addInput : func(obj){
-		me._inputs[obj.getName()] = obj;
-		me._inputIndex = keys(me._inputs);
-	},
-	removeInput : func(obj){
-		delete(me._inputs, obj.getName());
-		me._inputIndex = keys(me._inputs);
-	},
-	addOutput : func(obj){
-		me._outputs[obj.getName()] = obj;
-		me._outputIndex = keys(me._outputs);
-	},
-	removeOutput : func(obj){
-		delete(me._outputs, obj.getName());
-		me._outputIndex = keys(me._outputs);
-	},
-	_collectVolt : func(){
-		var volt = 0;
-		me._volt = 0;
-		foreach( index;  me._inputIndex ){
-			volt = me._inputs[index].getVolt();
-			if (volt > me._volt){
-				me._volt = volt;
+# 	_collectVolt : func(electron){
+# 		var volt = 0;
+# 		foreach( i;  me._inputIndex ){
+# 			volt = me._inputs[i].getVolt(electron.timestamp);
+# 			if (volt > electron.volt){
+# 				electron.volt = volt;
+# 			}
+# 		}
+# 		me._volt = electron.volt;
+# 		me._nVolt.setValue(electron.volt);
+# 	},
+# 	getVolt : func(){
+# 		me._electron.volt = 0 ; 
+# 		me._electron.timestamp = systime();
+# 		me._inputVoltTime = me._electron.timestamp;
+# 		me.checkVolt(me._electron);
+# 		return me._nVolt.getValue();
+# 	},
+	checkAmpere : func(electron=nil){
+		if(electron != nil){
+			if (electron.needUpdate(me._inputVoltTime) == 1){
+				me._inputVoltTime = electron.timestamp;
+				foreach( i;  me._outputIndex ){
+					me._outputs[i].checkAmpere(electron);
+				}
+				me._ampere = electron.ampere;
+				me._nAmpere.setValue(electron.ampere);
+				
+				foreach( i;  me._voltIndex ){
+					me._outputs[i].checkAmpere(electron);
+					if (electron.ampere <= 0){
+						break;
+					}
+				}
+				
 			}
 		}
-		me._nVolt.setValue(me._volt);
 	},
-	_dirstributeVolt :func(){
-		me._ampere = 0;
-		foreach( index;  me._outputIndex ){
-			me._outputs[index].setVolt(me._volt);
-			me._ampere += me._outputs[index].getAmpere();
-		}
-		me._nAmpere.setValue(me._ampere);
+	checkVolt : func(electron=nil){
+		if(electron != nil){
+			
+			if (electron.needUpdate(me._inputVoltTime) == 1){
+				me._inputVoltTime = electron.timestamp;
+				print ("DCBusClass.checkVolt() ... "~me._name ~"\t"~me._electron.volt);
+						
+				foreach( i;  me._inputIndex ){
+					me._inputs[i].checkVolt(electron);
+				}
+				me._volt = electron.volt;
+				me._nVolt.setValue(me._volt);
+				
+				me._voltIndex = sort(me._inputIndex,func (a,b){ return me._inputs[a]._volt > me._inputs[b]._volt ? 1 : 0 ;});
+				debug.dump(me._voltIndex);
+			}
+		}	
+	},
+	_onVoltChange : func (n){
+		me._volt = n.getValue();
+		foreach( i;  me._outputIndex ){
+			me._outputs[i].setInputVolt(me._volt);
+		}		
+	},
+	_onOutputAmpereChange : func(n){
+		me._electron.timestamp = n.getValue(); 
+		me._electron.volt = me._volt;
+		me._electron.ampere = 0.0;
+		me.checkAmpere(me._electron);
+		
+	},
+	_onInputVoltChange : func (n){
+		#me._volt = n.getValue();
+		me._electron.timestamp = me._inputVoltTime; 
+		me._electron.volt = n.getValue();
+		me._electron.ampere = 0.0;
+		
+		me._inputVoltTime = 0;
+		
+		me.checkVolt(me._electron);
+# 		print ("DCBusClass._onInputVoltChange() ... "~me._name ~"\t"~me._volt);
+
 	},
 	update : func(now,dt){
-		me._collectVolt();
-		me._dirstributeVolt();
+		#me._distributeVolt();
 	}
 	
 };
@@ -278,7 +632,8 @@ var CircuitBrakerClass = {
 		var m = { 
 			parents 		: [
 				DCBusClass,
-				ElectricClass.new(root,name)
+				ElectricClass.new(root,name),
+				UpdateListenerClass.new()
 			]
 		};
 			m._outputs		= {};
@@ -295,12 +650,13 @@ var CircuitBrakerClass = {
 		delete(me._outputs, obj.getName());
 		me._outputIndex = keys(me._outputs);
 	},
-	setVolt		 : func(volt){ 
+	setInputVolt		 : func(volt,now = 0){ 
 		if (me._nState.getValue() == 1){
 			me._nVolt.setValue(volt);
 		}else{
 			me._nVolt.setValue(0);
 		}
+		me.fireUpdate();
 	},
 	getAmpere	 : func(){ 
 		me._ampere = 0;
@@ -344,7 +700,7 @@ var ConsumerClass = {
 			m._nWatt		= m._nRoot.initNode("watt",watt,"DOUBLE");
 		return m;
 	},
-	setVolt		 : func(volt){ 
+	setInputVolt : func(volt,now = 0){ 
 		me._volt	= volt;
 		me._watt	= me._nWatt.getValue();
 		if (me._volt > 0 ){
@@ -383,6 +739,30 @@ var RelaisClass = {
 };
 ### User interface classes
 
+var SwitchFactory = {
+	new : func(root,name,cfg=nil){
+		var m = nil;
+		if(cfg!=nil){
+			return SwitchClass.new(root,name,cfg);
+		}else{
+			return SwitchBoolClass.new(root,name);
+		}
+		return m;
+	},
+	config : func(type="INT",min=-1,max=1,step=1,default=0,labels=nil){
+		var m = {
+			_type		: type,
+			_min		: min,
+			_max		: max,
+			_step		: step,
+			_default	: default,
+			_labels		: nil, #{-1:"low",0:"off",1:"high"}
+		};
+		return m;
+	},
+};
+
+
 var SwitchBoolClass = {
 	new : func(root,name){
 		var m = {parents : [
@@ -390,7 +770,7 @@ var SwitchBoolClass = {
 				ElectricClass.new(root,name),
 				StateListenerClass.new()
 		]};
-		m._nState			= m._nRoot.initNode("state",0,"BOOL");
+		m._nState	= m._nRoot.initNode("state",0,"BOOL");
 		return m;
 	},
 	onSet : func(value=nil){
@@ -408,21 +788,21 @@ var SwitchBoolClass = {
 	}
 };
 
-var SwitchIntClass = {
-	new : func(root,name,min=0,max=1,step=1,labels=nil,default=0){ # {0:"off",1:"on"}
+var SwitchClass = {
+	new : func(root,name,cfg){ 
 		var m = { 
 			parents : [
-				DCBusClass,
+				SwitchClass,
 				ServiceClass.new(root,name),
 				StateListenerClass.new()
 			]			
 		};
-		m._nState		= m._nRoot.initNode("state",default,"INT");
-		m._min			= min;
-		m._max			= max;
-		m._step			= step;
-		m._labels		= labels;
-		m._default		= default;
+		m._nState		= m._nRoot.initNode("state",cfg._default,cfg._type);
+		m._min			= cfg._min;
+		m._max			= cfg._max;
+		m._step			= cfg._step;
+		m._labels		= cfg._labels;
+		m._default		= cfg._default;
 		return m;
 	},
 	onAdjust : func(value=0){
@@ -455,99 +835,164 @@ var SwitchIntClass = {
 };
 
 
-
-var generator 		= GeneratorClass.new("/extra500/electric2/Generator","Generator");
-var externalGenerator 	= ExternalGeneratorClass.new("/extra500/electric2/ExternalGenerator","ExternalGenerator");
-var alternator 		= AlternatorClass.new("/extra500/electric2/Alternator","Alternator");
-var battery 		= BatteryClass.new("/extra500/electric2/Battery","Battery");
-
-var hotBus 		= DCBusClass.new("/extra500/electric2/Bus/HotBus","HotBus");
-var batteryBus 		= DCBusClass.new("/extra500/electric2/Bus/BatteryBus","BatteryBus");
-var loadBus 		= DCBusClass.new("/extra500/electric2/Bus/LoadBus","LoadBus");
-var emergencyBus 	= DCBusClass.new("/extra500/electric2/Bus/EmergencyBus","EmergencyBus");
-var avionicsBus 	= DCBusClass.new("/extra500/electric2/Bus/AvionicsBus","AvionicsBus");
-
-
-
-var mainBattery = SwitchBoolClass.new("extra500/panel/Side/Main/Battery","Main Battery");
-mainBattery.onStateChange = func(n){
-	print("Es wurde der Battery Master geschaltet.");
-	
-	if (n.getValue()){
-		batteryBus.addInput(hotBus);
-		batteryBus.addOutput(hotBus);
-	}else{
-		batteryBus.removeInput(hotBus);
-		batteryBus.removeOutput(hotBus);
-	}
+var src = {
+	generator 		: GeneratorClass.new("/extra500/electric2/Generator","Generator"),
+	externalGenerator 	: ExternalGeneratorClass.new("/extra500/electric2/ExternalGenerator","ExternalGenerator"),
+	alternator 		: AlternatorClass.new("/extra500/electric2/Alternator","Alternator"),
+	battery 		: BatteryClass.new("/extra500/electric2/Battery","Battery"),
+};
+var bus = {
+	hot 			: DCBusClass.new("/extra500/electric2/Bus/HotBus","HotBus"),
+	battery 		: DCBusClass.new("/extra500/electric2/Bus/BatteryBus","BatteryBus"),
+	load 			: DCBusClass.new("/extra500/electric2/Bus/LoadBus","LoadBus"),
+	emergency 		: DCBusClass.new("/extra500/electric2/Bus/EmergencyBus","EmergencyBus"),
+	avionics 		: DCBusClass.new("/extra500/electric2/Bus/AvionicsBus","AvionicsBus"),
+};
+var swt = {
+	battery 		: SwitchFactory.new("extra500/panel/Side/Main/Battery","Main Battery"),
+	alternator 		: SwitchFactory.new("extra500/panel/Side/Main/StandbyAlt","Main Standby Alternator"),
+	generator 		: SwitchFactory.new("extra500/panel/Side/Main/Generator","Main Generator",SwitchFactory.config("INT",-1,1,1,0,{"-1":"reset","0":"off","1":"on"})),
+	external 		: SwitchFactory.new("extra500/panel/Side/Main/ExternalPower","Main External"),
+	generatorTest 		: SwitchFactory.new("extra500/panel/Side/Main/GeneratorTest","Main Generator Test",SwitchFactory.config("INT",-1,1,1,0,{"-1":"trip","0":"off","1":"on"})),
+	avionics 		: SwitchFactory.new("extra500/panel/Side/Main/Avionics","Main Avionics"),
 	
 };
-# switches
-var mainAlternator = SwitchBoolClass.new("extra500/panel/Side/Main/StandbyAlt","Main Standby Alternator");
-mainAlternator.onStateChange = func(n){
+
+
+# switches 
+
+swt.battery.onStateChange = func(n){
+	print("\nSwitch.onStateChange() ... "~me._name~"\n");
+	
 	if (n.getValue()){
-		emergencyBus.addInput(alternator);
+		bus.hot.connectOutputInput(bus.battery);
 	}else{
-		emergencyBus.removeInput(alternator);
+		bus.hot.disconnectOutputInput(bus.battery);
+	}
+	
+};
+
+swt.alternator.onStateChange = func(n){
+	var position = n.getValue();
+	if (position){
+		src.alternator.connectOutputInput(bus.emergency);
+	}elsif(position == -1){
+
+	}else{
+		src.alternator.disconnectOutputInput(bus.emergency);
 	}
 };
 
-var mainGenerator = SwitchBoolClass.new("extra500/panel/Side/Main/Generator","Main Generator");
-mainGenerator.onStateChange = func(n){
-	if (n.getValue()){
-		loadBus.addInput(generator);
+swt.generator.onStateChange = func(n){
+	var position = n.getValue();
+	if (position == 1){
+		src.generator.connectOutputInput(bus.load);
 	}else{
-		loadBus.removeInput(generator);
+		src.generator.disconnectOutputInput(bus.load);
 	}
 };
 
-var mainExternal = SwitchBoolClass.new("extra500/panel/Side/Main/ExternalPower","Main External");
-mainExternal.onStateChange = func(n){
+swt.external.onStateChange = func(n){
 	if (n.getValue()){
-		batteryBus.addInput(externalGenerator);
+		src.externalGenerator.connectOutputInput(bus.battery);
 	}else{
-		batteryBus.removeInput(externalGenerator);
+		src.externalGenerator.disconnectOutputInput(bus.battery);
+
 	}
 };
 
+swt.generatorTest.onStateChange = func(n){
+	var position = n.getValue();
+	if(position == 1){
+		
+	}elsif(position == -1){
+		
+	}else{
+		
+	}
+	
+};
 
+swt.avionics.onStateChange = func(n){
+	if (n.getValue()){
+		bus.battery.connectOutput(bus.avionics);
+	}else{
+		bus.battery.disconnectOutput(bus.avionics);
+
+	}
+};
 
 var connectStatik = func(){
 	
-	hotBus.addInput(battery);
-	hotBus.addOutput(battery);
+	src.battery.connectOutputInput(bus.hot);
 	
 	
-}
+	bus.battery.connectOutputInput(bus.emergency);
+	bus.battery.connectOutputInput(bus.load);
+	bus.battery.connectOutputInput(bus.emergency);
+	
+# 	bus.battery.addInput(bus.emergency);
+	
+# 	bus.emergency.addInput(bus.battery);
+# 	bus.emergency.addOutput(bus.battery);
+# 	
+# 
+# 	bus.load.addInput(bus.battery);
+# 	bus.load.addOutput(bus.battery);
+# 	bus.battery.addInput(bus.load);
+# 	
+# 	bus.battery.addOutput(bus.avionics);
+# 	bus.avionics.addInput(bus.battery);
+	
+	
+};
 
 var init = func(){
 
 #switch listeners
-	mainBattery.registerUI();
-	mainBattery.setStateListener();
-	mainAlternator.registerUI();
-	mainAlternator.setStateListener();
-	mainGenerator.registerUI();
-	mainGenerator.setStateListener();
-	mainExternal.registerUI();
-	mainExternal.setStateListener();
+	#debug.dump(swt);
+	var index = nil;
 	
-}
+	index =  keys(src);
+	foreach (i;index){
+		src[i].setInputVoltListener();
+		src[i].setVoltListener();
+	}
+	
+	index =  keys(bus);
+	foreach (i;index){
+		#bus[i].setUpdateListener();
+		bus[i].setInputVoltListener();
+		bus[i].setVoltListener();
+	}
+	
+	index =  keys(swt);
+	foreach (i;index){
+		swt[i].registerUI();
+		swt[i].setStateListener();
+	}
+	
+	connectStatik();
+};
+
+var updateBuses = func(){
+	
+};
 
 var update = func(now,dt){
-	#print("eSystem.update("~now~","~dt~") ...");
-	externalGenerator.update(now,dt);
-	generator.update(now,dt);
-	alternator.update(now,dt);
-	battery.update(now,dt);
+	print("\neSystem.update("~now~","~dt~") ...\n");
+	src.externalGenerator.update(now,dt);
+	src.generator.update(now,dt);
+	src.alternator.update(now,dt);
+	src.battery.update(now,dt);
 	
-	avionicsBus.update(now,dt);
-	emergencyBus.update(now,dt);
-	loadBus.update(now,dt);
-	batteryBus.update(now,dt);
-	hotBus.update(now,dt);
+	#bus.avionics.update(now,dt);
+	#bus.emergency.update(now,dt);
+	#bus.load.update(now,dt);
+	#bus.battery.update(now,dt);
+	#bus.hot.update(now,dt);
 	
-}
+};
 
-connectStatik();
+
 
