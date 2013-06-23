@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: April 23 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             26.04.13
+#      Last change:      Eric van den Berg
+#      Date:             23.06.13
 #
 
 
@@ -29,6 +29,7 @@ var debug_electric = gui.Dialog.new(
 var autopilot = gui.Dialog.new("/sim/gui/dialogs/autopilot/dialog",
         "Aircraft/extra500/Dialogs/autopilot.xml");
 
-
+var radios = gui.Dialog.new("/sim/gui/dialogs/radios/dialog",
+        "Aircraft/extra500/Dialogs/radios.xml");
 
 #gui.menuBind("autopilot-settings", "Dialogs.autopilot.open()");

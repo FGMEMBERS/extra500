@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2013.06.13
+      Date:             2013.06.23
 -->
 <PropertyList>
 
@@ -86,6 +86,14 @@
 			 <binding>
 				 <command>nasal</command>
 				 <script>Dialogs.autopilot.open()</script>
+			 </binding>
+		 </key>
+		 <key n="268">
+			 <name>F12</name>
+			 <desc>Pop up radios dialog</desc>
+			 <binding>
+				 <command>nasal</command>
+				 <script>Dialogs.radios.open()</script>
 			 </binding>
 		 </key>
             

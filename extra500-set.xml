@@ -597,6 +597,10 @@ JSBSim Extra Aircraft - Extra 500.
 	<radials>
 		<selected-deg>0</selected-deg>
 	</radials>
+	<frequencies>
+		<selected-mhz>114.4</selected-mhz>
+		<standby-mhz>112.25</standby-mhz>
+	</frequencies>
     </nav-IFD-LH>
     <nav-IFD-RH>
       	<volume type="double">0.0</volume>	<!--may be set to larger value by audiopanel (nav2 button)-->
@@ -606,6 +610,10 @@ JSBSim Extra Aircraft - Extra 500.
 	<radials>
 		<selected-deg>0</selected-deg>
 	</radials>
+	<frequencies>
+		<selected-mhz>110.7</selected-mhz>
+		<standby-mhz>115.3</standby-mhz>
+	</frequencies>
     </nav-IFD-RH>
 
  </instrumentation>
