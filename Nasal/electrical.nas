@@ -124,7 +124,7 @@ var InputVoltListenerClass = {
 		}
 	},
 	setInputVolt : func(volt){ 
-		print("InputVoltListenerClass.setInputVolt("~volt~") ... "~me._name);
+		#print("InputVoltListenerClass.setInputVolt("~volt~") ... "~me._name);
 		me._inputVoltTime = systime();
 		me._nInputVolt.setValue(volt);
 	},
@@ -607,7 +607,6 @@ var DCBusClass = {
 		me._electron.volt = me._volt;
 		me._electron.ampere = 0.0;
 		me.checkAmpere(me._electron);
-		
 	},
 	_onInputVoltChange : func (n){
 		#me._volt = n.getValue();
