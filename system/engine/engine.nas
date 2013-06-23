@@ -17,7 +17,7 @@
 #      Date: April 29 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             2013-06-16
+#      Date:             2013-06-17
 #
 
 
@@ -30,7 +30,6 @@ var Engine = {
 		]};
 		m.nIsRunning		= props.globals.getNode("/fdm/jsbsim/propulsion/engine/set-running");
 		m.nTRQ			= props.globals.getNode("/fdm/jsbsim/aircraft/engine/TRQ-perc");
-		m.nN1			= props.globals.getNode("/fdm/jsbsim/aircraft/engine/N1-par");
 		m.nCutOff		= props.globals.getNode("/controls/engines/engine[0]/cutoff");
 		m.nReverser		= props.globals.getNode("/controls/engines/engine[0]/reverser");
 		m.nThrottle		= props.globals.getNode("/controls/engines/engine[0]/throttle");

@@ -37,6 +37,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	<flight_control file="extra500-flight-control"/>
 	<system file="extra500-system-indication.xml"/>
 	<system file="extra500-system-stallwarner.xml"/>
+	<system file="extra500-system-transponder.xml"/>
 	<aerodynamics file="extra500-aerodynamics.xml"/>
 
 	<metrics>

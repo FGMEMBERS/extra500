@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-06-09
+      Date:             2013-06-23
 -->
 
 <autopilot name="STEC55X">
@@ -93,9 +93,18 @@
 	<channel name="heading">
 <!-- this is the heading channel. when the hdg mode is active, the hdg bug of the LH IFD is followed-->
 
+<!-- heading source is selected -->
+		<switch name="hdgselect">
+			<default value="/instrumentation/heading-indicator-IFD-LH/heading-bug-error-deg"/>
+			<test value="/instrumentation/heading-indicator-IFD-RH/heading-bug-error-deg">
+				/instrumentation/hdg-source eq 1
+			</test>
+			<output>/autopilot/hdg-channel/heading-bug-error-deg</output>
+		</switch>
+
 <!--the heading error is clipped to -20 to 20 deg -->
 		<pure_gain name="/autopilot/hdg-channel/lmd-hdg-error">
-			<input>/instrumentation/heading-indicator-IFD-LH/heading-bug-error-deg</input>
+			<input>/autopilot/hdg-channel/heading-bug-error-deg</input>
 			<gain>1.0</gain>
 			<clipto>
 				<min>-20</min>
@@ -106,7 +115,7 @@
 <!--determining the target turn rate using the hdg error. Note that kp and the clipped hdg error determines the maximum turnrate-->
 		<pid name="/autopilot/hdg-channel/target-turn-rate">
 			<input>/autopilot/hdg-channel/lmd-hdg-error</input>
-			<kp>/autopilot/hdg-channel/lmd-hdg-error-kp</kp>							<!--180deg/min devided by 25deg -->
+			<kp>/autopilot/hdg-channel/lmd-hdg-error-kp</kp>							<!--180deg/min devided by 20deg -->
 			<ki>/autopilot/hdg-channel/lmd-hdg-error-ki</ki>
 			<kd>/autopilot/hdg-channel/lmd-hdg-error-kd</kd>
 		</pid>
@@ -171,6 +180,234 @@
 			<default value="/controls/flight/aileron"/>
 			<test value="/autopilot/hdg-channel/cmd-ap-ail-pos-norm">
 				/autopilot/mode/heading eq 1
+			</test>
+			<output>/controls/flight/aileron</output>
+		</switch>
+
+
+	</channel>
+
+<!--***************************************RADIO NAVIGATION**********************************************************************-->
+
+	<channel name="radionav">
+<!-- this is the radionav channel. when the nav mode is active, the ap will intercept the selected radial of a VOR or the selected LOC-->
+
+		<switch name="navselect">
+			<default value="/instrumentation/nav-IFD-LH/heading-needle-deflection-norm"/>
+			<test value="/instrumentation/nav-IFD-RH/heading-needle-deflection-norm">
+				/instrumentation/nav-source eq 1
+			</test>
+			<output>/autopilot/radionav-channel/heading-needle-deflection-norm</output>
+		</switch>
+
+		<switch name="inrange">
+			<default value="/instrumentation/nav-IFD-LH/in-range"/>
+			<test value="/instrumentation/nav-IFD-RH/in-range">
+				/instrumentation/nav-source eq 1
+			</test>
+			<output>/autopilot/radionav-channel/in-range</output>
+		</switch>
+
+<!--calculating the target heading to intercept the radial-->
+		<pid name="/autopilot/radionav-channel/relative-diff-heading-target-deg">
+			<input>/autopilot/radionav-channel/heading-needle-deflection-norm</input>
+			<kp>/autopilot/radionav-channel/tgt-hdg-kp</kp>							
+			<ki>/autopilot/radionav-channel/tgt-hdg-ki</ki>
+			<kd>/autopilot/radionav-channel/tgt-hdg-kd</kd>
+			<output>/autopilot/radionav-channel/relative-d-heading-target-deg</output>
+		</pid>
+
+		<fcs_function name="/autopilot/radionav-channel/p-gain">
+			<function>
+				<product>
+					<property>/autopilot/radionav-channel/gain</property>
+					<pow> 
+						<max>
+							<abs>
+								<property>/autopilot/radionav-channel/relative-d-heading-target-deg</property> 
+							</abs>
+							<value>0.000001</value>
+						</max>
+						<value>-1</value>
+					</pow>
+				</product>
+			</function>
+		</fcs_function>
+
+		<pure_gain name="/autopilot/radionav-channel/p-gain-lmd">
+			<input>/autopilot/radionav-channel/p-gain</input>
+			<gain>1</gain>
+			<clipto>
+				<min>0</min>
+				<max>225</max>		<!-- making sure it starts to turns at min needle defl of |0.2| --> 
+			</clipto>
+		</pure_gain>
+
+		<pure_gain name="/autopilot/radionav-channel/relative-heading-target-deg">
+			<input>/autopilot/radionav-channel/heading-needle-deflection-norm</input>
+			<gain>/autopilot/radionav-channel/p-gain-lmd</gain>
+			<clipto>
+				<min>-45</min>
+				<max>45</max>
+			</clipto>
+		</pure_gain>
+
+		<switch name="navselect2">
+			<default value="/instrumentation/nav-IFD-LH/radials/selected-deg"/>
+			<test value="/instrumentation/nav-IFD-RH/radials/selected-deg">
+				/instrumentation/nav-source eq 1
+			</test>
+			<output>/autopilot/radionav-channel/radial-deg</output>
+		</switch>
+
+		<fcs_function name="/autopilot/radionav-channel/heading-target-deg">
+			<function>
+				<sum>
+					<property>/autopilot/radionav-channel/radial-deg</property> 
+					<property>/autopilot/radionav-channel/relative-heading-target-deg</property> 
+				</sum>
+			</function>
+		</fcs_function>
+
+		<switch name="hdgselect2">
+			<default value="/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg"/>
+			<test value="/instrumentation/heading-indicator-IFD-RH/indicated-heading-deg">
+				/instrumentation/hdg-source eq 1
+			</test>
+			<output>/autopilot/radionav-channel/heading-deg</output>
+		</switch>
+
+		<fcs_function name="/autopilot/radionav-channel/heading-1-error-deg">
+			<function>
+				<difference>
+					<property>/autopilot/radionav-channel/heading-target-deg</property> 
+					<property>/autopilot/radionav-channel/heading-deg</property> 
+				</difference>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/autopilot/radionav-channel/heading-2-error-deg">
+			<function>
+				<sum>
+					<property>/autopilot/radionav-channel/heading-1-error-deg</property> 
+					<value>360</value> 
+				</sum>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/autopilot/radionav-channel/heading-3-error-deg">
+			<function>
+				<difference>
+					<property>/autopilot/radionav-channel/heading-1-error-deg</property> 
+					<value>360</value> 
+				</difference>
+			</function>
+		</fcs_function>
+
+		<switch name="hdgdirection">
+			<default value="/autopilot/radionav-channel/heading-1-error-deg"/>
+			<test value="/autopilot/radionav-channel/heading-2-error-deg">
+				/autopilot/radionav-channel/heading-1-error-deg lt -180
+			</test>
+			<output>/autopilot/radionav-channel/heading-4-error-deg</output>
+		</switch>
+
+		<switch name="hdgdirection2">
+			<default value="/autopilot/radionav-channel/heading-4-error-deg"/>
+			<test value="/autopilot/radionav-channel/heading-3-error-deg">
+				/autopilot/radionav-channel/heading-1-error-deg gt 180
+			</test>
+			<output>/autopilot/radionav-channel/heading-error-deg</output>
+		</switch>
+
+		<switch name="validdata">
+			<default value="/autopilot/radionav-channel/heading-error-deg"/>
+			<test value="0">
+				/autopilot/radionav-channel/in-range eq 0
+			</test>
+			<output>/autopilot/radionav-channel/heading-error-deg</output>
+		</switch>
+
+
+
+<!--the heading error is clipped to -20 to 20 deg -->
+		<pure_gain name="/autopilot/radionav-channel/lmd-hdg-error">
+			<input>/autopilot/radionav-channel/heading-error-deg</input>
+			<gain>1.0</gain>
+			<clipto>
+				<min>-20</min>
+				<max>20</max>
+			</clipto>
+		</pure_gain>
+
+<!--determining the target turn rate using the hdg error. Note that kp and the clipped hdg error determines the maximum turnrate-->
+		<pid name="/autopilot/radionav-channel/target-turn-rate">
+			<input>/autopilot/radionav-channel/lmd-hdg-error</input>
+			<kp>/autopilot/radionav-channel/lmd-hdg-error-kp</kp>							<!--180deg/min devided by 20deg -->
+			<ki>/autopilot/radionav-channel/lmd-hdg-error-ki</ki>
+			<kd>/autopilot/radionav-channel/lmd-hdg-error-kd</kd>
+		</pid>
+		
+<!-- the turn rate (inverted) as measured by the turn coordinator in deg/s (RH panel) -->
+		<fcs_function name="/autopilot/radionav-channel/turn-rate-inv">
+			<function>
+				<product>
+					<value>-180.0</value>
+					<property>/instrumentation/turn-indicator/indicated-turn-rate</property>  <!--pos right-->
+				</product>
+			</function>
+		</fcs_function>
+
+<!-- the turn rate error -->
+		<fcs_function name="/autopilot/radionav-channel/turn-rate-error">
+			<function>
+				<sum>
+					<property>/autopilot/radionav-channel/target-turn-rate</property>	
+					<property>/autopilot/radionav-channel/turn-rate-inv</property>
+				</sum>
+			</function>
+		</fcs_function>
+
+<!-- the commanded aileron position change using the turn rate error -->
+		<pid name="/autopilot/radionav-channel/cmd-ail-change">
+			<input>/autopilot/radionav-channel/turn-rate-error</input>
+			<kp>/autopilot/radionav-channel/turn-rate-error-kp</kp>							
+			<ki>/autopilot/radionav-channel/turn-rate-error-ki</ki>
+			<kd>/autopilot/radionav-channel/turn-rate-error-kd</kd>
+		</pid>
+
+<!-- calculating the new aileron position-->
+		<fcs_function name="/autopilot/radionav-channel/cmd-ap-ail-pos-norm-raw">
+			<function>
+				<sum>
+					<property>fcs/aileron-cmd-tot</property>	
+					<product>
+                                  		<property>/autopilot/mode/nav</property>
+						<value>1.0</value>
+						<property>/autopilot/radionav-channel/cmd-ail-change</property>
+						<property>sim-dt-sec</property>
+					</product>
+				</sum>
+			</function>
+			<output>/autopilot/radionav-channel/cmd-ap-ail-pos-norm-raw</output>
+		</fcs_function>
+
+<!-- making sure the aileron servo is not going to fast-->	
+		<actuator name="/autopilot/radionav-channel/ail-servo">
+			<input>/autopilot/radionav-channel/cmd-ap-ail-pos-norm-raw</input>
+			<rate_limit>0.05</rate_limit>
+			<clipto>
+				<min>-1</min>
+				<max>1</max>
+			</clipto>
+			<output>/autopilot/radionav-channel/cmd-ap-ail-pos-norm</output>
+		</actuator>
+
+<!--this makes the aileron pilot input to move along, so when the hdg mode is disconnected, the ailerons are in the correct position-->
+		<switch name="radionavon">
+			<default value="/controls/flight/aileron"/>
+			<test value="/autopilot/radionav-channel/cmd-ap-ail-pos-norm">
+				/autopilot/mode/nav eq 1
 			</test>
 			<output>/controls/flight/aileron</output>
 		</switch>
