@@ -177,7 +177,7 @@ var AvidyneData = {
 		me.OAT = me.nOAT.getValue();
 	#DI 
 		me.HDI 		= me.nActiveNav.getChild("heading-needle-deflection-norm").getValue();
-		me.VDI 		= me.nActiveNav.getChild("gs-needle-deflection-norm").getValue();
+		me.VDI 		= -me.nActiveNav.getChild("gs-needle-deflection-norm").getValue();
 		me.GSable 	= me.nActiveNav.getChild("has-gs").getValue();
 		me.GSinRange 	= me.nActiveNav.getChild("gs-in-range").getValue();
 		me.NAVinRange 	= me.nActiveNav.getChild("in-range").getValue();
