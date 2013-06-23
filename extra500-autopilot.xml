@@ -193,16 +193,16 @@
 <!-- this is the radionav channel. when the nav mode is active, the ap will intercept the selected radial of a VOR or the selected LOC-->
 
 		<switch name="navselect">
-			<default value="/instrumentation/nav-IFD-LH/heading-needle-deflection-norm"/>
-			<test value="/instrumentation/nav-IFD-RH/heading-needle-deflection-norm">
+			<default value="/instrumentation/nav[0]/heading-needle-deflection-norm"/>
+			<test value="/instrumentation/nav[1]/heading-needle-deflection-norm">
 				/instrumentation/nav-source eq 1
 			</test>
 			<output>/autopilot/radionav-channel/heading-needle-deflection-norm</output>
 		</switch>
 
 		<switch name="inrange">
-			<default value="/instrumentation/nav-IFD-LH/in-range"/>
-			<test value="/instrumentation/nav-IFD-RH/in-range">
+			<default value="/instrumentation/nav[0]/in-range"/>
+			<test value="/instrumentation/nav[1]/in-range">
 				/instrumentation/nav-source eq 1
 			</test>
 			<output>/autopilot/radionav-channel/in-range</output>
@@ -253,8 +253,8 @@
 		</pure_gain>
 
 		<switch name="navselect2">
-			<default value="/instrumentation/nav-IFD-LH/radials/selected-deg"/>
-			<test value="/instrumentation/nav-IFD-RH/radials/selected-deg">
+			<default value="/instrumentation/nav[0]/radials/selected-deg"/>
+			<test value="/instrumentation/nav[1]/radials/selected-deg">
 				/instrumentation/nav-source eq 1
 			</test>
 			<output>/autopilot/radionav-channel/radial-deg</output>

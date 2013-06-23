@@ -260,7 +260,7 @@ Modified standard FG file
       <height>25</height>
       <label>MHz</label>
       <live>true</live>
-      <property>/instrumentation/nav-IFD-LH/frequencies/selected-mhz</property>
+      <property>/instrumentation/nav[0]/frequencies/selected-mhz</property>
       <binding>
         <command>dialog-apply</command>
         <object-name>nav1-selected</object-name>
@@ -284,8 +284,8 @@ Modified standard FG file
       </binding>
       <binding>
         <command>property-swap</command>
-        <property>/instrumentation/nav-IFD-LH/frequencies/selected-mhz</property>
-        <property>/instrumentation/nav-IFD-LH/frequencies/standby-mhz</property>
+        <property>/instrumentation/nav[0]/frequencies/selected-mhz</property>
+        <property>/instrumentation/nav[0]/frequencies/standby-mhz</property>
       </binding>
       <binding>
         <command>dialog-update</command>
@@ -305,7 +305,7 @@ Modified standard FG file
       <height>25</height>
       <label>MHz</label>
       <live>true</live>
-      <property>/instrumentation/nav-IFD-LH/frequencies/standby-mhz</property>
+      <property>/instrumentation/nav[0]/frequencies/standby-mhz</property>
       <binding>
         <command>dialog-apply</command>
         <object-name>nav1-standby</object-name>
@@ -320,7 +320,7 @@ Modified standard FG file
       <height>25</height>
       <label>deg</label>
       <live>true</live>
-      <property>/instrumentation/nav-IFD-LH/radials/selected-deg</property>
+      <property>/instrumentation/nav[0]/radials/selected-deg</property>
       <binding>
         <command>dialog-apply</command>
         <object-name>nav1-radial</object-name>
@@ -342,7 +342,7 @@ Modified standard FG file
       <height>25</height>
       <label>MHz</label>
       <live>true</live>
-      <property>/instrumentation/nav-IFD-RH/frequencies/selected-mhz</property>
+      <property>/instrumentation/nav[1]/frequencies/selected-mhz</property>
       <binding>
         <command>dialog-apply</command>
         <object-name>nav2-selected</object-name>
@@ -366,8 +366,8 @@ Modified standard FG file
       </binding>
       <binding>
         <command>property-swap</command>
-        <property>/instrumentation/nav-IFD-RH/frequencies/selected-mhz</property>
-        <property>/instrumentation/nav-IFD-RH/frequencies/standby-mhz</property>
+        <property>/instrumentation/nav[1]/frequencies/selected-mhz</property>
+        <property>/instrumentation/nav[1]/frequencies/standby-mhz</property>
       </binding>
       <binding>
         <command>dialog-update</command>
@@ -387,7 +387,7 @@ Modified standard FG file
       <height>25</height>
       <label>MHz</label>
       <live>true</live>
-      <property>/instrumentation/nav-IFD-RH/frequencies/standby-mhz</property>
+      <property>/instrumentation/nav[1]/frequencies/standby-mhz</property>
       <binding>
         <command>dialog-apply</command>
         <object-name>nav2-standby</object-name>
@@ -402,7 +402,7 @@ Modified standard FG file
       <height>25</height>
       <label>deg</label>
       <live>true</live>
-      <property>/instrumentation/nav-IFD-RH/radials/selected-deg</property>
+      <property>/instrumentation/nav[1]/radials/selected-deg</property>
       <binding>
         <command>dialog-apply</command>
         <object-name>nav2-radial</object-name>

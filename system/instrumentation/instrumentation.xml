@@ -20,10 +20,15 @@
       Date: 21.04.13
 
       Last change:      Eric van den Berg
-      Date:             2013.06.17
+      Date:             2013-06-23
 -->
 
 <PropertyList>
+
+    <clock>
+        <name>clock</name>
+        <number>0</number>
+    </clock>
 
   <airspeed-indicator>                                                       
     <name>airspeed-IFD-LH</name>
@@ -123,13 +128,13 @@
   </marker-beacon>
 
   <nav-radio>                                                               
-    <name>nav-IFD-LH</name>
+    <name>nav</name>
     <number>0</number>
   </nav-radio>
 
   <nav-radio>                                                                
-    <name>nav-IFD-RH</name>
-    <number>0</number>
+    <name>nav</name>
+    <number>1</number>
   </nav-radio>
 
   <tcas>
