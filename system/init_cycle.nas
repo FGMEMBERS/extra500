@@ -234,11 +234,11 @@ var animationLoop = MainLoop.new(props.globals.initNode("extra500/debug/Loop/ani
 
 var eSystemLoop = MainLoop.new(props.globals.initNode("extra500/debug/Loop/electric"),eSystem.update,1);
 
-extra500.plugElectric();
+#extra500.plugElectric();
 var init = func(){
 	
 	
-	simulationLoop.start();
+	#simulationLoop.start();
 	animationLoop.start();
 	eSystemLoop.start();
 	

@@ -85,6 +85,7 @@ var ServiceClass = {
 	new : func(root,name){
 		var m = { 
 			parents 	: [ServiceClass] ,
+			_path		: root,
 			_nRoot		: props.globals.initNode(root),
 			_name		: name,
 		};
@@ -92,140 +93,10 @@ var ServiceClass = {
 	},
 	getName : func(){
 		return me._name;
+	},
+	getPath : func(){
+		return me._path;
 	}
-	
-};
-
-var InputVoltListenerClass = {
-	new : func(){
-		var m = { 
-			parents 	: [
-				InputVoltListenerClass, 
-			]
-		};
-		m._inputVoltListener		= nil;
-		m._nInputVolt			= nil;
-		m._inputVoltTime		= 0.0;
-		return m;
-	},
-	_onInputVoltChange : func (n){
-		print ("InputVoltListenerClass._onInputVoltChange() ... "~me._name);
-		me._inputVoltTime = n.getValue();
-		me._nVolt.setValue(me._nInputVolt.getValue());
-	},
-	setInputVoltListener : func(){
-		me._nInputVolt		= me._nRoot.initNode("voltInput",0.0,"DOUBLE");
-		me._inputVoltListener 	= setlistener(me._nInputVolt,func(n){me._onInputVoltChange(n);},0,1);
-	},
-	removeInputVoltListener : func(){
-		if(me._inputVoltListener) {
-			removelistener(me._inputVoltListener);
-			me._inputVoltListener 	= nil;
-		}
-	},
-	setInputVolt : func(volt){ 
-		#print("InputVoltListenerClass.setInputVolt("~volt~") ... "~me._name);
-		me._inputVoltTime = systime();
-		me._nInputVolt.setValue(volt);
-	},
-};
-var VoltListenerClass = {
-	new : func(){
-		var m = { 
-			parents 	: [
-				VoltListenerClass, 
-			]
-		};
-		m._voltListener		= nil;
-		m._nVolt		= nil;
-		return m;
-	},
-	_onVoltChange : func (n){
-		print ("VoltListenerClass._onVoltChange() ... do some work."~me._name);
-		
-	},
-	setVoltListener : func(){
-		me._nVolt		= me._nRoot.initNode("volt",0.0,"DOUBLE");
-		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},0,0);
-	},
-	removeVoltListener : func(){
-		if(me._voltListener) {
-			removelistener(me._voltListener);
-			me._voltListener 	= nil;
-		}
-	},
-	setVolt : func(volt){ 
-		print("VoltListenerClass.setInputVolt("~volt~") ... "~me._name);
-		me._nVolt.setValue(volt);
-	},
-};
-
-
-
-var StateListenerClass = {
-	new : func(){
-		var m = { 
-			parents 	: [
-				StateListenerClass, 
-			]
-		};
-		m._stateListener		= nil;
-		return m;
-	},
-	onStateChange : func (n){
-		
-	},
-	setStateListener : func(){
-		#me._nState		= me._nRoot.initNode("state",0.0,"DOUBLE");
-		me._stateListener = setlistener(me._nState,func(n){me.onStateChange(n);},1,0);
-	},
-	removeStateListener : func(){
-		if(me._stateListener) {
-			removelistener(me._stateListener);
-			me._stateListener = nil;
-		}
-	},
-};
-
-var UpdateListenerClass = {
-	new : func(){
-		var m = { 
-			parents 	: [
-				UpdateListenerClass, 
-			]
-		};
-		m._updateListener	= nil;
-		m._nUpdateTime		= nil;
-		m._updateLast 		= 0.0;
-		return m;
-	},
-	_onUpdate : func (n){
-		var now = n.getValue();
-		var dt = now - me._updateLast;
-		me._updateLast = now;
-		me.update(now,dt);
-	},
-	fireUpdate : func(){
-		if (me._nUpdateTime != nil){
-			var time = systime();
-			print("UpdateListenerClass.fireUpdate() ..."~me._name ~" "~time);
-			me._nUpdateTime.setValue(time);
-		}
-	},
-	setUpdateListener : func(){
-		me._nUpdateTime		= me._nRoot.initNode("updateTime",0.0,"DOUBLE");
-		me._updateListener 	= setlistener(me._nUpdateTime,func(n){me._onUpdate(n);},0,0);
-	},
-	removeUpdateListener : func(){
-		if(me._updateListener) {
-			removelistener(me._updateListener);
-			me._updateListener 	= nil;
-			me._nUpdateTime		= nil;
-		}
-	},
-	update : func(now,dt){
-		
-	},
 	
 };
 
@@ -234,9 +105,7 @@ var ElectricClass = {
 		var m = { 
 			parents 	: [
 				ElectricClass, 
-				ServiceClass.new(root,name),
-				InputVoltListenerClass.new(),
-				VoltListenerClass.new(),
+				ServiceClass.new(root,name)
 			]
 		};
 		m._nVolt		= m._nRoot.initNode("volt",0.0,"DOUBLE");
@@ -245,14 +114,16 @@ var ElectricClass = {
 		m._volt			= 0.0;
 		return m;
 	},
+	setVolt : func(volt){ 
+		#print("ElectricClass.setVolt("~volt~") ... "~me._name);
+		me._nVolt.setValue(volt);
+	},
 	getAmpere	 : func(){ 
-		 
 		return me._ampere = me._nAmpere.getValue();
 	},
 	getVolt		 : func(){ 
 		#print("ElectricClass.getVolt() ... "~me._name);
 		return me._volt = me._nVolt.getValue();
-		
 	},
 	checkVolt : func(electron=nil){
 		electron.setMaxVolt(me._nVolt.getValue());
@@ -263,117 +134,39 @@ var ElectricClass = {
 	
 };
 
-var ElectricConnectAble = {
-	new : func(root,name){
-		var m = { 
-			parents 	: [
-				ElectricConnectAble, 
-				ElectricClass.new(root,name)
-			]
-		};
-		m._inputs		= {};
-		m._inputIndex		= [];
-		m._outputs		= {};
-		m._outputIndex		= [];
+var SwitchFactory = {
+	new : func(root,name,cfg=nil){
+		var m = nil;
+		if(cfg!=nil){
+			return SwitchClass.new(root,name,cfg);
+		}else{
+			return SwitchBoolClass.new(root,name);
+		}
 		return m;
 	},
-	
-	_addInput : func(obj){
-		me._inputs[obj.getName()] = obj;
-		me._inputIndex = keys(me._inputs);
+	config : func(type="INT",min=-1,max=1,step=1,default=0,labels=nil){
+		var m = {
+			_type		: type,
+			_min		: min,
+			_max		: max,
+			_step		: step,
+			_default	: default,
+			_labels		: nil, #{-1:"low",0:"off",1:"high"}
+		};
+		return m;
 	},
-	_remInput : func(obj){
-		delete(me._inputs, obj.getName());
-		me._inputIndex = keys(me._inputs);
-	},
-	_addOutput : func(obj){
-		me._outputs[obj.getName()] = obj;
-		me._outputIndex = keys(me._outputs);
-		},
-	_remOutput : func(obj){
-		delete(me._outputs, obj.getName());
-		me._outputIndex = keys(me._outputs);
-	},
-	
-	addInput : func(obj){
-		me._addInput(obj);
-		me.setInputVolt(obj.getVolt());
-	},
-	removeInput : func(obj){
-		me._remInput(obj);
-		me.setInputVolt(0);
-	},
-	addOutput : func(obj){
-		me._addOutput(obj);
-		obj.setInputVolt(me._nVolt.getValue());
-	},
-	removeOutput : func(obj){
-		me._remOutput(obj);
-		obj.setInputVolt(0);
-	},
-	
-	connectInput : func(obj){
-		me._addInput(obj);
-		obj._addOutput(me);
-		me.setInputVolt(obj.getVolt());
-	},
-	disconnectInput : func(obj){
-		me._remInput(obj);
-		obj._remOutput(me);
-		me.setInputVolt(0);
-	},
-	connectOutput : func(obj){
-		me._addOutput(obj);
-		obj._addInput(me);
-		obj.setInputVolt(me.getVolt());
-	},
-	disconnectOutput : func(obj){
-		me._remOutput(obj);
-		obj._remInput(me);
-		obj.setInputVolt(0);
-	},
-	
-	connectOutputInput : func (obj){
-		me._addOutput(obj);
-		obj._addInput(me);
-		obj._addOutput(me);
-		me._addInput(obj);
-		obj.setInputVolt(me.getVolt());
-	},
-	disconnectOutputInput : func (obj){
-		me._remInput(obj);
-		obj._remOutput(me);
-		obj._remInput(me);
-		me._remOutput(obj);
-		obj.setInputVolt(0);
-	},
-	connectInputOutput : func (obj){
-		me._addInput(obj);
-		obj._addOutput(me);
-		obj._addInput(me);
-		me._addOutput(obj);
-		me.setInputVolt(obj.getVolt());
-	},
-	disconnectInputOutput : func (obj){
-		me._remOutput(obj);
-		obj._remInput(me);
-		obj._remOutput(me);
-		me._remInput(obj);
-		me.setInputVolt(0);
-	},
-	
-	
-	
 };
 
 
-### 
+
+### object class
+
 var GeneratorClass = {
 	new : func(root,name){
 		var m = { 
 			parents : [
 				GeneratorClass,
-				ElectricConnectAble.new(root,name)
+				ElectricClass.new(root,name)
 			]
 		};
 		m._nAmpereAvailable	= m._nRoot.initNode("ampere_available",0.0,"DOUBLE");
@@ -381,7 +174,7 @@ var GeneratorClass = {
 		m._nCtrlStarter		= props.globals.initNode("/controls/engines/engine[0]/starter",0,"BOOL");
 		m._nCtrlGenerator	= props.globals.initNode("/controls/electric/engine[0]/generator",0,"BOOL");
 		m._N1			= 0.0;
-		m._voltMax		= 28.0;
+		m._voltMax		= 28.5;
 		m._ampereMax		= 200.0;
 		m._ampereAvailable	= 0.0;
 			
@@ -396,23 +189,38 @@ var GeneratorClass = {
 			me._ampereAvailable = global.clamp(me._ampereAvailable,0.0,me._ampereMax);
 			#interpolate(me._nVolt,me._volt,dt);
 			#interpolate(me._nAmpereAvailable,me._ampereAvailable,dt);
-			me._nInputVolt.setValue(me._volt);
+			me._nVolt.setValue(me._volt);
 			me._nAmpereAvailable.setValue(me._ampereAvailable);
 			
 		}else{
-			me._nInputVolt.setValue(0);
+			me._nVolt.setValue(0);
 			me._nAmpereAvailable.setValue(0);
 		}
+	},
+	_genSinusTest : func(now,dt){
+		var sin = math.sin(now);
+		
+		me._volt = 26 + 2.5 * sin;
+		me._ampereAvailable = 100 + 100 * sin;
+			
+		me._volt = global.clamp(me._volt,0.0,me._voltMax);
+		me._ampereAvailable = global.clamp(me._ampereAvailable,0.0,me._ampereMax);
+			
+		me._nVolt.setValue(me._volt);
+		me._nAmpereAvailable.setValue(me._ampereAvailable);
+		
 	},
 	_spoolEngine : func(now,dt) {
 		
 	},
 	update : func(now,dt){
-		if ( me._nCtrlGenerator.getValue() ){
-			me._spoolEngine(now,dt);
-		}else{
-			me._gernerateVolt(now,dt);
-		}
+		
+		me._genSinusTest(now,dt);
+# 		if ( me._nCtrlGenerator.getValue() ){
+# 			me._spoolEngine(now,dt);
+# 		}else{
+# 			me._gernerateVolt(now,dt);
+# 		}
 	},
 	_onVoltChange : func (n){
 		me._volt = n.getValue();
@@ -420,7 +228,12 @@ var GeneratorClass = {
 			me._outputs[i].setInputVolt(me._volt);
 		}		
 	},
-	
+	applyAmpere : func(electron=nil){
+		me._ampereAvailable = me._nAmpereAvailable.getValue();
+		if (electron.ampere > 0){
+			electron.ampere -= me._ampereAvailable;
+		}
+	},
 };
 
 var AlternatorClass = {
@@ -428,7 +241,7 @@ var AlternatorClass = {
 		var m = { 
 			parents : [
 				AlternatorClass,
-				ElectricConnectAble.new(root,name)
+				ElectricClass.new(root,name)
 			]
 		};
 		m._nAmpereAvailable	= m._nRoot.initNode("ampere_available",0.0,"DOUBLE");
@@ -469,24 +282,31 @@ var AlternatorClass = {
 			me._outputs[i].setInputVolt(me._volt);
 		}		
 	},
-
+	applyAmpere : func(electron=nil){
+		me._ampereAvailable = me._nAmpereAvailable.getValue();
+		if (electron.ampere > 0){
+			electron.ampere -= me._ampereAvailable;
+		}
+	},
 };
+
 var ExternalGeneratorClass = {
 	new : func(root,name){
 		var m = { 
 			parents : [
 				ExternalGeneratorClass,
-				ElectricConnectAble.new(root,name)
+				ElectricClass.new(root,name)
 			]
 		};
 		m._nAmpereAvailable	= m._nRoot.initNode("ampere_available",0.0,"DOUBLE");
 		m._voltMax		= 28.5;
 		m._ampereMax		= 1200.0;
-						
+		m._ampereAvailable	= 0.0;			
 		return m;
 	},
 	update : func(now,dt){
-		me._nInputVolt.setValue(me._voltMax);
+		me._volt = me._voltMax;
+		me._nVolt.setValue(me._volt);
 		me._nAmpereAvailable.setValue(me._ampereMax);
 	},
 	_onVoltChange : func (n){
@@ -495,27 +315,36 @@ var ExternalGeneratorClass = {
 			me._outputs[i].setInputVolt(me._volt);
 		}		
 	},
-	
+	applyAmpere : func(electron=nil){
+		me._ampereAvailable = me._nAmpereAvailable.getValue();
+		if (electron.ampere > 0){
+			electron.ampere -= me._ampereAvailable;
+		}
+	},
 };
-
-
 
 var BatteryClass = {
 	new : func(root,name){
 		var m = { 
 			parents : [
 				BatteryClass,
-				ElectricConnectAble.new(root,name)
+				ElectricClass.new(root,name)
 			]
 		};
 		m._nAmpereAvailable	= m._nRoot.initNode("ampere_available",0.0,"DOUBLE");
+		m._nUsedAs		= m._nRoot.initNode("ampere_sec_used",0.0,"DOUBLE");
+		m._nLoadLevel		= m._nRoot.initNode("loadLevel",0.0,"DOUBLE");
+		m._capacityAs		= 28.0*3600;
+		m._loadLevel = 0.8;
+		m._usedAs = -(m._capacityAs * (1.0-m._loadLevel));
 		m._voltMax		= 24.0;
 		m._ampereMax		= 1000.0;
-		m._capacityAh		= 28.0;
+		m._lastTime		= systime();
 		return m;
 	},
 	update : func(now,dt){
-		me._nInputVolt.setValue(me._voltMax);
+		me._volt = me._voltMax;
+		me._nVolt.setValue(me._volt);
 		me._nAmpereAvailable.setValue(me._ampereMax);
 	},
 	_onVoltChange : func (n){
@@ -524,164 +353,103 @@ var BatteryClass = {
 			me._outputs[i].setInputVolt(me._volt);
 		}		
 	},
-	
-};
-
-var DCBusClass = {
-	new : func(root,name){
-		var m = { 
-			parents : [
-				DCBusClass, 
-				ElectricConnectAble.new(root,name),
-				UpdateListenerClass.new()
-			]
-		};
-		m._electron = ElectronClass.new();
-		m._voltIndex = [];
-		return m;
-	},
-# 	_collectVolt : func(electron){
-# 		var volt = 0;
-# 		foreach( i;  me._inputIndex ){
-# 			volt = me._inputs[i].getVolt(electron.timestamp);
-# 			if (volt > electron.volt){
-# 				electron.volt = volt;
-# 			}
-# 		}
-# 		me._volt = electron.volt;
-# 		me._nVolt.setValue(electron.volt);
-# 	},
-# 	getVolt : func(){
-# 		me._electron.volt = 0 ; 
-# 		me._electron.timestamp = systime();
-# 		me._inputVoltTime = me._electron.timestamp;
-# 		me.checkVolt(me._electron);
-# 		return me._nVolt.getValue();
-# 	},
-	checkAmpere : func(electron=nil){
-		if(electron != nil){
-			if (electron.needUpdate(me._inputVoltTime) == 1){
-				me._inputVoltTime = electron.timestamp;
-				foreach( i;  me._outputIndex ){
-					me._outputs[i].checkAmpere(electron);
-				}
-				me._ampere = electron.ampere;
-				me._nAmpere.setValue(electron.ampere);
-				
-				foreach( i;  me._voltIndex ){
-					me._outputs[i].checkAmpere(electron);
-					if (electron.ampere <= 0){
-						break;
-					}
-				}
-				
-			}
+	applyAmpere : func(electron=nil){
+		if (electron.ampere > 0){
+			var now = systime();
+			var dt 	= now - me._lastTime;
+			me._lastTime = now;
+			
+			me._usedAs += electron.ampere * dt;
+					
+			me._loadLevel = (me._capacityAs + me._usedAs) / me._capacityAs;
+			
+			me._nUsedAs.setValue(me._usedAs);
+			me._nLoadLevel.setValue(me._loadLevel);
 		}
 	},
-	checkVolt : func(electron=nil){
-		if(electron != nil){
-			
-			if (electron.needUpdate(me._inputVoltTime) == 1){
-				me._inputVoltTime = electron.timestamp;
-				print ("DCBusClass.checkVolt() ... "~me._name ~"\t"~me._electron.volt);
-						
-				foreach( i;  me._inputIndex ){
-					me._inputs[i].checkVolt(electron);
-				}
-				me._volt = electron.volt;
-				me._nVolt.setValue(me._volt);
-				
-				me._voltIndex = sort(me._inputIndex,func (a,b){ return me._inputs[a]._volt > me._inputs[b]._volt ? 1 : 0 ;});
-				debug.dump(me._voltIndex);
-			}
-		}	
-	},
-	_onVoltChange : func (n){
-		me._volt = n.getValue();
-		foreach( i;  me._outputIndex ){
-			me._outputs[i].setInputVolt(me._volt);
-		}		
-	},
-	_onOutputAmpereChange : func(n){
-		me._electron.timestamp = n.getValue(); 
-		me._electron.volt = me._volt;
-		me._electron.ampere = 0.0;
-		me.checkAmpere(me._electron);
-	},
-	_onInputVoltChange : func (n){
-		#me._volt = n.getValue();
-		me._electron.timestamp = me._inputVoltTime; 
-		me._electron.volt = n.getValue();
-		me._electron.ampere = 0.0;
-		
-		me._inputVoltTime = 0;
-		
-		me.checkVolt(me._electron);
-# 		print ("DCBusClass._onInputVoltChange() ... "~me._name ~"\t"~me._volt);
-
-	},
-	update : func(now,dt){
-		#me._distributeVolt();
-	}
-	
 };
 
 var CircuitBrakerClass = {
-	new : func(root,name,ampereMax=1.0){
+	new : func(root,name,ampereMax=1.0,default=1){
 		var m = { 
 			parents 		: [
-				DCBusClass,
-				ElectricClass.new(root,name),
-				UpdateListenerClass.new()
+				CircuitBrakerClass,
+				ElectricClass.new(root,name)
 			]
 		};
-			m._outputs		= {};
-			m._outputIndex		= [];
-			m._ampereMax		= ampereMax;
-			m._nState		= m._nRoot.initNode("state",1,"BOOL");
+		m._outputs		= {};
+		m._outputIndex		= [];
+		m._voltListener 	= nil;
+		m._ampereListener 	= nil;
+		m._stateListener	= nil;
+		m._input 		= nil;
+		m._lastAmpere		= 0.0;
+		m._ampereMax		= ampereMax;
+		m._nState		= m._nRoot.initNode("state",default,"BOOL");
 		return m;
+	},
+	setListerners : func() {
+		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},0,0);
+		me._ampereListener 	= setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},0,0);
+		me._stateListener 	= setlistener(me._nState,func(n){me._onStateChange(n);},1,0);
+	},
+	setInput : func(obj){
+		me._input = obj;
+	},
+	_onStateChange : func(n){
+		me._state = n.getValue();
+		if (me._state == 0){
+			me._volt = 0;
+		}
+		foreach( i;  me._outputIndex ){
+			me._outputs[i].setVolt(me._volt);
+		}
+	},
+	_onVoltChange : func(n){
+		me._volt = n.getValue();
+		if (me._state == 0){
+			me._volt = 0;
+		}
+		foreach( i;  me._outputIndex ){
+			me._outputs[i].setVolt(me._volt);
+		}
+	},
+	_onAmpereChange : func(n){
+		me._ampere = n.getValue();
+		if (me._ampere < me._ampereMax){
+			var dif = me._ampere - me._lastAmpere;
+			me._lastAmpere = me._ampere;
+			me._input.addAmpere(dif);
+		}else{
+			me._nState.setValue(0);
+		}
+	},
+	onClick : func(value = nil){
+		if (value == nil){
+			me._nState.setValue(!me._nState.getValue());
+		}else{
+			me._nState.setValue(value);
+		}
+	},
+	addAmpere : func(ampere){
+		me._ampere = me._nAmpere.getValue();
+		me._nAmpere.setValue(me._ampere + ampere);
 	},
 	addOutput : func(obj){
 		me._outputs[obj.getName()] = obj;
 		me._outputIndex = keys(me._outputs);
+		obj.setInput(me);
+		obj.setVolt(me._volt);
 	},
 	removeOutput : func(obj){
 		delete(me._outputs, obj.getName());
 		me._outputIndex = keys(me._outputs);
-	},
-	setInputVolt		 : func(volt,now = 0){ 
-		if (me._nState.getValue() == 1){
-			me._nVolt.setValue(volt);
-		}else{
-			me._nVolt.setValue(0);
-		}
-		me.fireUpdate();
-	},
-	getAmpere	 : func(){ 
-		me._ampere = 0;
-		if(me._nState.getValue() == 1 ){
-			foreach( index;  me._outputIndex ){
-				me._ampere +=me._outputs[index].getAmpere();
-			}
-			if (me._ampere > me._ampereMax){
-				me._nState.setValue(0);
-				me._ampere = 0;
-			}
-		}
-		me._nAmpere.setValue(me._ampere);
-		return me._ampere;
-	},
-	onClick : func(value = nil){
-		if (value == nil){
-			me._nState.SetValue(!me._nState.getValue());
-		}else{
-			me._nState.SetValue(value);
-		}
+		obj.setVolt(0);
 	},
 	registerUI : func(){
-		UI.register("Circuit Breaker "~me.name~"", 		func{me.onClick(); } 	);
-		UI.register("Circuit Breaker "~me.name~" open", 	func{me.onClick(0); }	);
-		UI.register("Circuit Breaker "~me.name~" close", 	func{me.onClick(1); }	);
+		UI.register("Circuit Breaker "~me._name~"", 		func{me.onClick(); } 	);
+		UI.register("Circuit Breaker "~me._name~" open", 	func{me.onClick(0); }	);
+		UI.register("Circuit Breaker "~me._name~" close", 	func{me.onClick(1); }	);
 		
 	}
 	
@@ -695,84 +463,63 @@ var ConsumerClass = {
 				ElectricClass.new(root,name)
 			]
 		};
-			m._watt			= watt;
-			m._nWatt		= m._nRoot.initNode("watt",watt,"DOUBLE");
+		m._voltListener 	= nil;
+		m._ampereListener 	= nil;
+		m._input 		= nil;
+		m._lastAmpere		= 0.0;
+		m._watt			= watt;
+		m._nWatt		= m._nRoot.initNode("watt",watt,"DOUBLE");
 		return m;
 	},
-	setInputVolt : func(volt,now = 0){ 
-		me._volt	= volt;
-		me._watt	= me._nWatt.getValue();
-		if (me._volt > 0 ){
+	setInput : func(obj){
+		me._input = obj;
+	},
+	setListerners : func() {
+		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},0,0);
+		me._ampereListener 	= setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},0,0);
+	},
+	_onVoltChange : func(n){
+		me._volt = n.getValue();
+		if(me._volt > 0){
 			me._ampere = me._watt / me._volt;
 		}else{
-			me._volt = 0;
 			me._ampere = 0;
 		}
-		me._nVolt.setValue(me._volt);
-		me._nAmpere.setValue(me._ampere);		
+		me._nAmpere.setValue(me._ampere);
 	},
+	_onAmpereChange : func(n){
+		me._ampere = n.getValue();
+		var dif = me._ampere - me._lastAmpere;
+		me._lastAmpere = me._ampere;
+		me._input.addAmpere(dif);
+	},
+	registerUI : func(){
+		
+	}
+	
 	
 };
 
-var RelaisClass = {
-	new : func(root,name){
-		var m = { 
-			parents : [
-				RelaisClass,
-				ElectricClass.new(root,name),
-				StateListenerClass.new()
-			]
-		};
-		m._nState			= m._nRoot.initNode("state",0,"BOOL");
-		return m;
-	},
-	open : func(){
-		me._nState.setValue(0);
-	},
-	close : func(){
-		me._nState.setValue(1);
-	},
-	isClosed : func(){
-		return me._nState.getValue();
-	}
-};
+
 ### User interface classes
-
-var SwitchFactory = {
-	new : func(root,name,cfg=nil){
-		var m = nil;
-		if(cfg!=nil){
-			return SwitchClass.new(root,name,cfg);
-		}else{
-			return SwitchBoolClass.new(root,name);
-		}
-		return m;
-	},
-	config : func(type="INT",min=-1,max=1,step=1,default=0,labels=nil){
-		var m = {
-			_type		: type,
-			_min		: min,
-			_max		: max,
-			_step		: step,
-			_default	: default,
-			_labels		: nil, #{-1:"low",0:"off",1:"high"}
-		};
-		return m;
-	},
-};
-
 
 var SwitchBoolClass = {
 	new : func(root,name){
 		var m = {parents : [
 				SwitchBoolClass,
-				ElectricClass.new(root,name),
-				StateListenerClass.new()
+				ServiceClass.new(root,name)
 		]};
 		m._nState	= m._nRoot.initNode("state",0,"BOOL");
+		m._state	= 0;
 		return m;
 	},
-	onSet : func(value=nil){
+	setListerners : func() {
+		me._stateListener = setlistener(me._nState,func(n){me.onStateChange(n);},1,0);
+	},
+	onStateChange : func (n){
+		me._state	= n.getValue();
+	},
+	onClick : func(value=nil){
 		if (value == nil){
 			me._nState.setValue(!me._nState.getValue());
 		}else{
@@ -780,11 +527,12 @@ var SwitchBoolClass = {
 		}
 	},
 	registerUI : func(){
-		UI.register(me._name~"", 	func{me.onSet(); } 	);
-		UI.register(me._name~" off", 	func{me.onSet(0); }	);
-		UI.register(me._name~" on", 	func{me.onSet(1); }	);
+		UI.register(me._name~"", 	func{me.onClick(); } 	);
+		UI.register(me._name~" off", 	func{me.onClick(0); }	);
+		UI.register(me._name~" on", 	func{me.onClick(1); }	);
 		
-	}
+	},
+	
 };
 
 var SwitchClass = {
@@ -792,17 +540,23 @@ var SwitchClass = {
 		var m = { 
 			parents : [
 				SwitchClass,
-				ServiceClass.new(root,name),
-				StateListenerClass.new()
+				ServiceClass.new(root,name)
 			]			
 		};
 		m._nState		= m._nRoot.initNode("state",cfg._default,cfg._type);
+		m._state		= 0;
 		m._min			= cfg._min;
 		m._max			= cfg._max;
 		m._step			= cfg._step;
 		m._labels		= cfg._labels;
 		m._default		= cfg._default;
 		return m;
+	},
+	setListerners : func() {
+		me._stateListener = setlistener(me._nState,func(n){me.onStateChange(n);},1,0);
+	},
+	onStateChange : func (n){
+		me._state	= n.getValue();
 	},
 	onAdjust : func(value=0){
 		value = me._nState.getValue() + value;
@@ -830,24 +584,151 @@ var SwitchClass = {
 				}
 			}
 		}
-	}
+	},
+	
+};
+
+var ESystem = {
+	new : func(root,name){ 
+		var m = { 
+			parents : [
+				ESystem,
+				ServiceClass.new(root,name),
+				
+			]			
+		};
+		m._nVolt		= m._nRoot.initNode("volt",0.0,"DOUBLE");
+		m._nAmpere		= m._nRoot.initNode("ampere",0.0,"DOUBLE");
+		m._voltListener 	= nil;
+		m._ampereListener 	= nil;
+		m.source	 	= nil;
+		m.switch	 	= nil;
+		m.circuitBreaker 	= nil;
+		m._outputs		= {};
+		m._outputIndex		= [];
+		
+		m._volt = 0;
+		m._ampere = 0;
+		
+		m._lastTime = systime();
+		
+		m._electron = ElectronClass.new();
+		return m;
+	},
+	setListerners : func() {
+		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},0,0);
+		me._ampereListener 	= setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},0,0);
+	},
+	connectOutput : func(obj){
+		me._outputs[obj.getName()] = obj;
+		me._outputIndex = keys(me._outputs);
+		obj.setVolt(me._volt);
+	},
+	_onVoltChange : func(n){
+		me._volt = n.getValue();
+		
+		foreach( i;  me._outputIndex ){
+			me._outputs[i].setVolt(me._volt);
+		}
+	},
+	_onAmpereChange : func(n){
+		me._ampere = n.getValue();
+		me.applyAmpere(me._ampere);
+	},
+	_setMaxVolt : func(volt){
+		if(volt > me._volt){
+			me._volt = volt;
+		}
+	},
+	checkSource : func(){
+		var now = systime();
+		var dt = now - me._lastTime;
+		me._lastTime = now;
+		
+		me._volt = 0;
+		
+# 		print ("\n EBox.checkSource() ... "~now ~" "~dt~"\n");
+		if(me.switch.external._state == 1){
+			me.source.externalGenerator.update(now,dt);
+			me._setMaxVolt(me.source.externalGenerator._volt);
+# 			print ("External Generator " ~ me.source.externalGenerator._volt);
+		}
+		
+		if(me.switch.generator._state == 1){
+			me.source.generator.update(now,dt);
+			me._setMaxVolt(me.source.generator._volt);
+# 			print ("Generator " ~ me.source.generator._volt);
+		}
+				
+		if(me.switch.alternator._state == 1){
+			me.source.alternator.update(now,dt);
+			me._setMaxVolt(me.source.alternator._volt);
+# 			print ("Alternator " ~ me.source.alternator._volt);
+		}
+		
+		if(me.switch.battery._state == 1){
+			me.source.battery.update(now,dt);
+			me._setMaxVolt(me.source.battery._volt);
+# 			print ("Battery " ~ me.source.battery._volt);
+		}
+		#print("Bus Volt " ~ me._volt);
+		me._nVolt.setValue(me._volt);
+	},
+	applyAmpere : func(ampere){
+		var now = systime();
+		var dt = now - me._lastTime;
+		me._lastTime = now;
+		
+		me._electron.ampere = ampere;
+		
+		if(me.switch.external._state == 1){
+			me.source.externalGenerator.applyAmpere(me._electron,dt);
+			me._setMaxVolt(me.source.externalGenerator._volt);
+		}
+		
+		if(me.switch.generator._state == 1){
+			me.source.generator.applyAmpere(me._electron,dt);
+			me._setMaxVolt(me.source.generator._volt);
+		}
+				
+		if(me.switch.alternator._state == 1){
+			me.source.alternator.applyAmpere(me._electron,dt);
+			me._setMaxVolt(me.source.alternator._volt);
+		}
+		
+		if(me.switch.battery._state == 1){
+			me.source.battery.applyAmpere(me._electron,dt);
+			me._setMaxVolt(me.source.battery._volt);
+		}
+		
+		me._nVolt.setValue(me._volt);
+	},
+	addAmpere : func(ampere){
+		me._ampere = me._nAmpere.getValue();
+		me._nAmpere.setValue(me._ampere + ampere);
+	},
+	addOutput : func(obj){
+		me._outputs[obj.getName()] = obj;
+		me._outputIndex = keys(me._outputs);
+		obj.setInput(me);
+		obj.setVolt(me._volt);
+	},
+	
 };
 
 
-var src = {
+
+
+
+var eSystem = ESystem.new("/extra500/electric2/eSystem","EBox");
+
+eSystem.source = {
 	generator 		: GeneratorClass.new("/extra500/electric2/Generator","Generator"),
 	externalGenerator 	: ExternalGeneratorClass.new("/extra500/electric2/ExternalGenerator","ExternalGenerator"),
 	alternator 		: AlternatorClass.new("/extra500/electric2/Alternator","Alternator"),
 	battery 		: BatteryClass.new("/extra500/electric2/Battery","Battery"),
 };
-var bus = {
-	hot 			: DCBusClass.new("/extra500/electric2/Bus/HotBus","HotBus"),
-	battery 		: DCBusClass.new("/extra500/electric2/Bus/BatteryBus","BatteryBus"),
-	load 			: DCBusClass.new("/extra500/electric2/Bus/LoadBus","LoadBus"),
-	emergency 		: DCBusClass.new("/extra500/electric2/Bus/EmergencyBus","EmergencyBus"),
-	avionics 		: DCBusClass.new("/extra500/electric2/Bus/AvionicsBus","AvionicsBus"),
-};
-var swt = {
+eSystem.switch = {
 	battery 		: SwitchFactory.new("extra500/panel/Side/Main/Battery","Main Battery"),
 	alternator 		: SwitchFactory.new("extra500/panel/Side/Main/StandbyAlt","Main Standby Alternator"),
 	generator 		: SwitchFactory.new("extra500/panel/Side/Main/Generator","Main Generator",SwitchFactory.config("INT",-1,1,1,0,{"-1":"reset","0":"off","1":"on"})),
@@ -856,140 +737,171 @@ var swt = {
 	avionics 		: SwitchFactory.new("extra500/panel/Side/Main/Avionics","Main Avionics"),
 	
 };
+eSystem.circuitBreaker = {
+#load bus
+	AIR_CON			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/AirCondition","Air Condition",125),
+	VENT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/Vent","Vent",30),
+	AIR_CTRL		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/AirControl","Air Control",2),
+	PITOT_R			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/PitotR","Pitot Right",15),
+	CIGA_LTR		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/CigaretteLighter","Cigarette Lighter",10),
+	DIP_2			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/DIP2","DIP 2",1),
+	ENG_INS_2		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/EngineInstrument2","Engine Instrument 2",2),
+	FUEL_TR_L		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/FuelTransferL","Fuel Transfer L",5),
+	FUEL_TR_R		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/FuelTransferR","Fuel Transfer R",5),
+	P_VENT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/PanelVent","Pilot Vent",2),
+	CABIN_LT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/CabinLight","Cabin Light",5),
+	NAV_LT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/NavLight","Navigation Light",5),
+	RECO_LT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/RecognitionLight","Recognition Light",5),
+	O_SP_TEST		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/OverSpeed","Over Speed",2),
+	IFD_RH_A		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/IFD-RH-A","IFD-RH-A",10),
+	WTHR_DET		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/WeatherDetection","Weather Detection",10),
+	DME			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/DME","DME",2),
+	AUDIO_MRK		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/AudioMarker","Audio Marker",5),
+	VDC12			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/VDC12","VDC 12",10),
+	IRIDUM			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/Iridium","Iridium",10),
+	SIRIUS			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/Sirius","Sirius",10),
+	EMGC_2			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/Emergency2","Emergency 2",10),
+#battery bus
+	GEAR_AUX_1		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/GearAux1","GearAux 1",5),
+	GEAR_CTRL		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/GearControl","Gear Control",5),
+	HYDR			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Hydraulic","Hydraulic",50),
+	WSH_HT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/WindShieldHeat","Wind Shield Heat",20),
+	WSH_CTRL		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/WindShieldControl","Wind Shield Control",2),
+	PROP_HT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/PropellerHeat","Propeller Heat",20),
+	FUEL_P_2		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/FuelPump2","Fuel Pump 2",7.5),
+	START			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Start","Start",5),
+	IGN			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Ignition","Ignition",5),
+	ENV_BLEED		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/EnvironmentalBleed","Environmental Bleed",5),
+	FLAP_CTRL		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/FlapControl","Flap Control",5),
+	FLAP			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Flap","Flap",7.5),
+	FUEL_FLOW		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/FuelFlow","Fuel Flow",1),
+	ICE_LT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/IceLight","Ice Light",7.5),
+	STROBE_LT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/StrobeLight","Strobe Light",7.5),
+	INST_LT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/InstrumentLight","Instrument Light",7.5),
+	BOOTS			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Boots","Boots",2),
+	AP_SERVO		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/AutopilotServo","Autopilot Servo",5),
+	IFD_LH_B		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/IFD-LH-B","IFD-LH-B",10),
+	VNE_WARN		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/VneWarn","Vne Warn",1),
+	AV_BUS			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/avionicBus","AvionicBus",30),
+	EMGC_1			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Emergency1","Emergency 1",30),
+
+
+#emergency bus
+	GEAR_WARN		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/GearWarn","Gear Warning",2),
+	FUEL_P_1		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/FuelPump1","Fuel Pump 1",7.5),
+	PITOT_L			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/PitotL","Pitot L",10),
+	DIP_1			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/DIP1","DIP 1",1),
+	ENG_INST_1		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/EngineInstrument1","Engine Instrument 1",2),
+	C_PRESS			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/CabinPressure","Cabin Pressure",3),
+	DUMP			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/Dump","Dump",2),
+	FUEL_QTY		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/FuelQuantity","Fuel Quantity",2),
+	LOW_VOLT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/LowVolt","Low Volt",1),
+	STALL_WARN		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/StallWarning","Stall Warning",1),
+	VOLT_MON		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/VoltMonitor","Volt Monitor",1),
+	LDG_LT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/LandingLight","Landing Light",10),
+	WARN_LT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/WarnLight","Warning Light",7.5),
+	GLARE_LT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/GlareLight","Glare Light",1),
+	INTAKE_AI		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/IntakeAI","Intake AI",2),
+	STBY_GYRO		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/StandbyGyroskop","Standby Gyroskop",2),
+	IFD_LH_A		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/IFD-LH-A","IFD-LH-A",10),
+	KEYPAD			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/Keypad","Keypad",1),
+	ATC			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/ATC","ATC",3),
+	GEN_RESET		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/GeneratorReset","Generator Reset",5),
+	ALT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/Alternator","Alternator Field",2),
+#hot bus
+
+	GEAR_AUX_2		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/GearAux2","Gear Aux 2",5),
+	EXT_LADER		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/EXT_LADER","EXT LADER",5),
+	ALT_FIELD		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/ALT_FIELD","ALT FIELD",2),
+	COURTESY_LT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/COURTESY_LT","Courtesy Light",5),
+	ELT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/ELT","ELT",1),
+
+#avionic bus
+	
+	IFD_RH_B		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/IFD-RH-B","IFD-RH-B",10),
+	TAS			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/TAS","TAS",3),
+	AP_CMPTR		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/AutopilotComputer","Autopilot Computer",5),
+	TB			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/TurnCoordinator","Turn Coordinator",5),
+};
 
 
 # switches 
 
-swt.battery.onStateChange = func(n){
-	print("\nSwitch.onStateChange() ... "~me._name~"\n");
-	
-	if (n.getValue()){
-		bus.hot.connectOutputInput(bus.battery);
-	}else{
-		bus.hot.disconnectOutputInput(bus.battery);
-	}
+eSystem.switch.battery.onStateChange = func(n){
+	me._state = n.getValue();
+	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
+	eSystem.checkSource();
+};
+
+eSystem.switch.alternator.onStateChange = func(n){
+	me._state = n.getValue();
+	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
+	eSystem.checkSource();
+};
+
+eSystem.switch.generator.onStateChange = func(n){
+	me._state = n.getValue();
+	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
+	eSystem.checkSource();
+};
+
+eSystem.switch.external.onStateChange = func(n){
+	me._state = n.getValue();
+	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
+	eSystem.checkSource();
+};
+
+eSystem.switch.generatorTest.onStateChange = func(n){
+	me._state = n.getValue();
+	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
+	eSystem.checkSource();
+};
+
+eSystem.switch.avionics.onStateChange = func(n){
+	me._state = n.getValue();
+	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
 	
 };
 
-swt.alternator.onStateChange = func(n){
-	var position = n.getValue();
-	if (position){
-		src.alternator.connectOutputInput(bus.emergency);
-	}elsif(position == -1){
 
-	}else{
-		src.alternator.disconnectOutputInput(bus.emergency);
-	}
-};
-
-swt.generator.onStateChange = func(n){
-	var position = n.getValue();
-	if (position == 1){
-		src.generator.connectOutputInput(bus.load);
-	}else{
-		src.generator.disconnectOutputInput(bus.load);
-	}
-};
-
-swt.external.onStateChange = func(n){
-	if (n.getValue()){
-		src.externalGenerator.connectOutputInput(bus.battery);
-	}else{
-		src.externalGenerator.disconnectOutputInput(bus.battery);
-
-	}
-};
-
-swt.generatorTest.onStateChange = func(n){
-	var position = n.getValue();
-	if(position == 1){
-		
-	}elsif(position == -1){
-		
-	}else{
-		
-	}
-	
-};
-
-swt.avionics.onStateChange = func(n){
-	if (n.getValue()){
-		bus.battery.connectOutput(bus.avionics);
-	}else{
-		bus.battery.disconnectOutput(bus.avionics);
-
-	}
-};
-
-var connectStatik = func(){
-	
-	src.battery.connectOutputInput(bus.hot);
-	
-	
-	bus.battery.connectOutputInput(bus.emergency);
-	bus.battery.connectOutputInput(bus.load);
-	bus.battery.connectOutputInput(bus.emergency);
-	
-# 	bus.battery.addInput(bus.emergency);
-	
-# 	bus.emergency.addInput(bus.battery);
-# 	bus.emergency.addOutput(bus.battery);
-# 	
-# 
-# 	bus.load.addInput(bus.battery);
-# 	bus.load.addOutput(bus.battery);
-# 	bus.battery.addInput(bus.load);
-# 	
-# 	bus.battery.addOutput(bus.avionics);
-# 	bus.avionics.addInput(bus.battery);
-	
-	
-};
+var ConsumerPerCircuitBreaker = 6;
 
 var init = func(){
-
-#switch listeners
-	#debug.dump(swt);
+	eSystem.setListerners();
 	var index = nil;
-	
-	index =  keys(src);
-	foreach (i;index){
-		src[i].setInputVoltListener();
-		src[i].setVoltListener();
-	}
-	
-	index =  keys(bus);
-	foreach (i;index){
-		#bus[i].setUpdateListener();
-		bus[i].setInputVoltListener();
-		bus[i].setVoltListener();
-	}
-	
-	index =  keys(swt);
-	foreach (i;index){
-		swt[i].registerUI();
-		swt[i].setStateListener();
-	}
-	
-	connectStatik();
-};
 
-var updateBuses = func(){
-	
+	index =  keys(eSystem.switch);
+	foreach (i;index){
+		eSystem.switch[i].registerUI();
+		eSystem.switch[i].setListerners();
+	}
+	index =  keys(eSystem.circuitBreaker);
+	var consumerCount = 0;
+	foreach (i;index){
+		eSystem.circuitBreaker[i].registerUI();
+		eSystem.circuitBreaker[i].setListerners();
+		eSystem.addOutput(eSystem.circuitBreaker[i]);
+		
+		for (var j=0;j<ConsumerPerCircuitBreaker;j=j+1){
+			consumerCount += 1;
+			var name = "consumer-"~consumerCount;
+			var path = "extra500/consumer/"~name;
+			var watt = (eSystem.circuitBreaker[i]._ampereMax / (ConsumerPerCircuitBreaker+1)) * 24.0;
+			
+			var consumer = ConsumerClass.new(path,name,watt);
+			consumer.registerUI();
+			consumer.setListerners();
+			
+			eSystem.circuitBreaker[i].addOutput(consumer);
+		}
+	}
+	print("Consumer count " ~ consumerCount);
+	#connectStatik();
 };
 
 var update = func(now,dt){
-	print("\neSystem.update("~now~","~dt~") ...\n");
-	src.externalGenerator.update(now,dt);
-	src.generator.update(now,dt);
-	src.alternator.update(now,dt);
-	src.battery.update(now,dt);
-	
-	#bus.avionics.update(now,dt);
-	#bus.emergency.update(now,dt);
-	#bus.load.update(now,dt);
-	#bus.battery.update(now,dt);
-	#bus.hot.update(now,dt);
+
+	eSystem.checkSource();
 	
 };
 
