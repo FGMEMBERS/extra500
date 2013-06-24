@@ -16,7 +16,7 @@
       Author: Eric van den Berg
       Date: 2013-05-12
 
-      Last change:      2013-06-13
+      Last change:      2013-06-24
       Date:             Eric van den Berg
 
 ========================================================================
@@ -75,6 +75,7 @@ Engine shut-off: Press s (to cut the fuel)
 		
 Principle Autopilot functionality (currently in place):
 - HDG 		Follows the heading bug
+- NAV		Intercepts and track VORs and LOCs
 - VS		Follows the VS bug (limited to +/-1600fpm)
 - ALT 		Holds the current altitude (rounded to 100ft)
 - ALT+VS	Brings and holds the aircraft to the selected altitude with the selected vertical speed.
@@ -91,3 +92,14 @@ The AP will disengage when:
 - the stall warner is on
 - absolute g-force (disregarding 1-g gravity) exceeds 0.6g
 - manual electric pitch trim is used.  
+
+---------------------------------------------------------------------------------------------------------
+
+Navigation
+
+Nav 1 or Nav 2 may be selected on the IFD (TBD) or in the NAV dialog (F12)
+The DME will source of either, independent on which NAV is selected (=indicated / used by autopilot in NAV mode)
+
+XPDR squawk can be set in the NAV dialog (F12). Default is 7000 (Europe VFR).
+XPDR modes are selected automatically (GND or ALT), but automatic selection may be switched off
+Manual mode selection is then possible.

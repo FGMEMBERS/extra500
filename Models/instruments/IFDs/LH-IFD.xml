@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Eric van den Berg
-      Date:             2013-06-17
+      Last change:      Thomas Grossberger
+      Date:             2013-06-24
 
 -->
 
@@ -46,92 +46,622 @@
         </emission>
 </animation>
 
-<!-- ################### TODO: UI.clicks ####################-->
+<!-- buttons L1-L6 -->
 <animation>
-<type>pick</type>
-<object-name>L1.left</object-name>
-<action>
-     <button>0</button>
-<binding>
-<command>property-toggle</command>
-<property>extra500/debug/propertemp</property>
-</binding>
-</action>
+      <type>pick</type>
+      <object-name>L1.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH L1 >");
+				]]>
+			</script>
+		</binding>
+      </action>
 </animation>
 
 <animation>
-<type>pick</type>
-<object-name>L1.right</object-name>
-<action>
-     <button>0</button>
-<binding>
-<command>property-toggle</command>
-<property>extra500/debug/propertemp</property>
-</binding>
-</action>
+      <type>pick</type>
+      <object-name>L1.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH L1 <");
+				]]>
+			</script>
+		</binding>
+      </action>
 </animation>
 
 <animation>
-<type>pick</type>
-<object-name>L2.left</object-name>
-<action>
-     <button>0</button>
-<binding>
-<command>property-toggle</command>
-<property>extra500/debug/propertemp</property>
-</binding>
-</action>
+      <type>pick</type>
+      <object-name>L2.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH L2 >");
+				]]>
+			</script>
+		</binding>
+      </action>
 </animation>
 
 <animation>
-<type>pick</type>
-<object-name>L2.right</object-name>
-<action>
-     <button>0</button>
-<binding>
-<command>property-toggle</command>
-<property>extra500/debug/propertemp</property>
-</binding>
-</action>
+      <type>pick</type>
+      <object-name>L2.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH L2 <");
+				]]>
+			</script>
+		</binding>
+      </action>
 </animation>
-			
-			
-<!-- and many other animations to do ;)
 
-<object-name>L3.left</object-name>
-<object-name>L3.right</object-name>
-<object-name>L4.left</object-name>
-<object-name>L4.right</object-name>
-<object-name>L5.left</object-name>
-<object-name>L5.right</object-name>
-<object-name>L6.left</object-name>
-<object-name>L6.right</object-name>
+<animation>
+      <type>pick</type>
+      <object-name>L3.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH L3 >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
 
-<object-name>R1.left</object-name>
-<object-name>R1.right</object-name>
-<object-name>R2.left</object-name>
-<object-name>R2.right</object-name>
-<object-name>R3.left</object-name>
-<object-name>R3.right</object-name>
-<object-name>R4.left</object-name>
-<object-name>R4.right</object-name>
-<object-name>R5.left</object-name>
-<object-name>R5.right</object-name>
-<object-name>R6.left</object-name>
-<object-name>R6.right</object-name>
+<animation>
+      <type>pick</type>
+      <object-name>L3.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH L3 <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
 
-<object-name>PFD.left</object-name>
-<object-name>PFD.right</object-name>
-<object-name>FMS.left</object-name>
-<object-name>FMS.right</object-name>
-<object-name>MAP.left</object-name>
-<object-name>MAP.right</object-name>
-<object-name>SYS.left</object-name>
-<object-name>SYS.right</object-name>
-<object-name>CHKL.left</object-name>
-<object-name>CHKL.right</object-name>
--->
+<animation>
+      <type>pick</type>
+      <object-name>L4.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH L4 >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
 
+<animation>
+      <type>pick</type>
+      <object-name>L4.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH L4 <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>L5.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH L5 >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>L5.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH L5 <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>L6.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH L6 >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>L6.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH L6 <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<!-- buttons R1-R6 -->
+<animation>
+      <type>pick</type>
+      <object-name>R1.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH R1 >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>R1.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH R1 <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>R2.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH R2 >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>R2.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH R2 <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>R3.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH R3 >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>R3.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH R3 <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>R4.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH R4 >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>R4.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH R4 <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>R5.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH R5 >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>R5.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH R5 <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>R6.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH R6 >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>R6.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH R6 <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<!-- buttons PFD, FMS, MAP, SYS, CHKL -->
+<animation>
+      <type>pick</type>
+      <object-name>PFD.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH PFD >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>PFD.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH PFD <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>FMS.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH FMS >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>FMS.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH FMS <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>MAP.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH MAP >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>MAP.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH MAP <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>SYS.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH SYS >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>SYS.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH SYS <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>CHKL.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH CHKL >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>CHKL.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>1</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH CHKL <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<!-- knobs -->
 <animation>
 	<type>pick</type>
 	<object-name>BaroKnob</object-name>

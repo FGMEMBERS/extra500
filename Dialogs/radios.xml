@@ -16,7 +16,7 @@
     along with extra500.  If not, see <http://www.gnu.org/licenses/>.
 
       Author: Eric van den Berg
-      Date: 2013-06-23
+      Date: 2013-06-24
 
       Last change:      -
       Date:             -
@@ -61,7 +61,7 @@ Modified standard FG file
     </empty>
 
     <text>
-      <label>RADIO, NAV and XPDR Frequencies</label>
+      <label>RADIO, NAV and DME Frequencies, XPDR modes and squawk</label>
     </text>
 
     <empty>
@@ -88,32 +88,60 @@ Modified standard FG file
     <!-- headers -->
     <text>
       <row>0</row>
-      <col>1</col>
+      <col>0</col>
+      <label>Active</label>
+    </text>
+
+    <text>
+      <row>0</row>
+      <col>2</col>
       <label>Selected</label>
     </text>
 
     <text>
       <row>0</row>
-      <col>4</col>
+      <col>5</col>
       <label>Standby</label>
     </text>
 
     <text>
       <row>0</row>
-      <col>6</col>
-      <label>Radial</label>
+      <col>7</col>
+      <label>DME</label>
     </text>
 
     <!-- Dummy label to stretch table, as layout manager doesn't handle labels well -->
     <text>
       <row>0</row>
-      <col>7</col>
+      <col>8</col>
       <label></label>
     </text>
 
-    <text>
+  <checkbox>
+      <name>com1</name>   
       <row>1</row>
       <col>0</col>
+      <width>12</width>
+      <height>12</height>
+      <live>true</live>
+      <property>/instrumentation/com1-selected</property>
+      <binding>
+            <command>nasal</command>
+		<script>
+                        if ( getprop("/instrumentation/com1-selected") == 0 ) {
+				setprop("/instrumentation/com2-selected",0);
+			} 
+                </script>  
+	</binding>
+      <binding>
+		<command>dialog-apply</command>
+		<object-name>com1</object-name>
+      </binding>
+  </checkbox>
+
+    <text>
+      <row>1</row>
+      <col>1</col>
       <halign>right</halign>
       <label>COM 1</label>
     </text>
@@ -121,7 +149,7 @@ Modified standard FG file
     <input>
       <name>com1-selected</name>
       <row>1</row>
-      <col>1</col>
+      <col>2</col>
       <width>75</width>
       <height>25</height>
       <label>MHz</label>
@@ -135,7 +163,7 @@ Modified standard FG file
 
     <button>
       <row>1</row>
-      <col>3</col>
+      <col>4</col>
       <width>35</width>
       <height>26</height>
       <border>1</border>
@@ -166,7 +194,7 @@ Modified standard FG file
     <input>
       <name>com1-standby</name>
       <row>1</row>
-      <col>4</col>
+      <col>5</col>
       <width>75</width>
       <height>25</height>
       <label>MHz</label>
@@ -178,9 +206,31 @@ Modified standard FG file
       </binding>
     </input>
 
-    <text>
+  <checkbox>
+      <name>com2</name>   
       <row>2</row>
       <col>0</col>
+      <width>12</width>
+      <height>12</height>
+      <live>true</live>
+      <property>/instrumentation/com2-selected</property>
+      <binding>
+            <command>nasal</command>
+		<script>
+                        if ( getprop("/instrumentation/com2-selected") == 0 ) {
+				setprop("/instrumentation/com1-selected",0);
+			} 
+                </script>  
+	</binding>
+      <binding>
+		<command>dialog-apply</command>
+		<object-name>com2</object-name>
+      </binding>
+  </checkbox>
+
+    <text>
+      <row>2</row>
+      <col>1</col>
       <halign>right</halign>
       <label>COM 2</label>
     </text>
@@ -188,7 +238,7 @@ Modified standard FG file
     <input>
       <name>com2-selected</name>
       <row>2</row>
-      <col>1</col>
+      <col>2</col>
       <width>75</width>
       <height>25</height>
       <label>MHz</label>
@@ -202,7 +252,7 @@ Modified standard FG file
 
     <button>
       <row>2</row>
-      <col>3</col>
+      <col>4</col>
       <width>35</width>
       <height>26</height>
       <border>1</border>
@@ -233,7 +283,7 @@ Modified standard FG file
     <input>
       <name>com2-standby</name>
       <row>2</row>
-      <col>4</col>
+      <col>5</col>
       <width>75</width>
       <height>25</height>
       <label>MHz</label>
@@ -245,9 +295,32 @@ Modified standard FG file
       </binding>
     </input>
 
-    <text>
+  <checkbox>
+      <name>nav1</name>   
       <row>3</row>
       <col>0</col>
+      <width>12</width>
+      <height>12</height>
+      <live>true</live>
+      <property>/instrumentation/nav1-selected</property>
+      <binding>
+            <command>nasal</command>
+		<script>
+                        if ( getprop("/instrumentation/nav-source") != 0 ) {
+				setprop("/instrumentation/nav-source",0);
+				setprop("/instrumentation/nav2-selected",0);
+			} 
+                </script>  
+	</binding>
+      <binding>
+		<command>dialog-apply</command>
+		<object-name>nav1</object-name>
+      </binding>
+  </checkbox>
+
+    <text>
+      <row>3</row>
+      <col>1</col>
       <halign>right</halign>
       <label>NAV 1</label>
     </text>
@@ -255,12 +328,12 @@ Modified standard FG file
     <input>
       <name>nav1-selected</name>
       <row>3</row>
-      <col>1</col>
+      <col>2</col>
       <width>75</width>
       <height>25</height>
       <label>MHz</label>
       <live>true</live>
-      <property>/instrumentation/nav-IFD-LH/frequencies/selected-mhz</property>
+      <property>/instrumentation/nav[0]/frequencies/selected-mhz</property>
       <binding>
         <command>dialog-apply</command>
         <object-name>nav1-selected</object-name>
@@ -269,7 +342,7 @@ Modified standard FG file
 
     <button>
       <row>3</row>
-      <col>3</col>
+      <col>4</col>
       <width>35</width>
       <height>26</height>
       <border>1</border>
@@ -284,8 +357,8 @@ Modified standard FG file
       </binding>
       <binding>
         <command>property-swap</command>
-        <property>/instrumentation/nav-IFD-LH/frequencies/selected-mhz</property>
-        <property>/instrumentation/nav-IFD-LH/frequencies/standby-mhz</property>
+        <property>/instrumentation/nav[0]/frequencies/selected-mhz</property>
+        <property>/instrumentation/nav[0]/frequencies/standby-mhz</property>
       </binding>
       <binding>
         <command>dialog-update</command>
@@ -300,36 +373,67 @@ Modified standard FG file
     <input>
       <name>nav1-standby</name>
       <row>3</row>
-      <col>4</col>
+      <col>5</col>
       <width>75</width>
       <height>25</height>
       <label>MHz</label>
       <live>true</live>
-      <property>/instrumentation/nav-IFD-LH/frequencies/standby-mhz</property>
+      <property>/instrumentation/nav[0]/frequencies/standby-mhz</property>
       <binding>
         <command>dialog-apply</command>
         <object-name>nav1-standby</object-name>
       </binding>
     </input>
 
-    <input>
-      <name>nav1-radial</name>
+  <checkbox>
+      <name>dme1</name>   
       <row>3</row>
-      <col>6</col>
-      <width>75</width>
-      <height>25</height>
-      <label>deg</label>
+      <col>7</col>
+      <width>12</width>
+      <height>12</height>
       <live>true</live>
-      <property>/instrumentation/nav-IFD-LH/radials/selected-deg</property>
+      <property>/instrumentation/dme/frequencies/nav1-selected</property>
       <binding>
-        <command>dialog-apply</command>
-        <object-name>nav1-radial</object-name>
+		<command>dialog-apply</command>
+		<object-name>dme1</object-name>
       </binding>
-    </input>
+      <binding>
+            <command>nasal</command>
+		<script>
+                        if ( getprop("/instrumentation/dme/frequencies/source") == "/instrumentation/nav[1]/frequencies/selected-mhz" ) {
+				setprop("/instrumentation/dme/frequencies/source","/instrumentation/nav[0]/frequencies/selected-mhz");
+				setprop("/instrumentation/dme/frequencies/nav2-selected",0);
+			} 
+                </script>  
+	</binding>
+  </checkbox>
+
+  <checkbox>
+      <name>nav2</name>   
+      <row>4</row>
+      <col>0</col>
+      <width>12</width>
+      <height>12</height>
+      <live>true</live>
+      <property>/instrumentation/nav2-selected</property>
+      <binding>
+            <command>nasal</command>
+		<script>
+                        if ( getprop("/instrumentation/nav-source") != 1 ) {
+				setprop("/instrumentation/nav-source",1);
+				setprop("/instrumentation/nav1-selected",0);
+			} 
+                </script>  
+	</binding>
+      <binding>
+		<command>dialog-apply</command>
+		<object-name>nav2</object-name>
+      </binding>
+  </checkbox>
 
     <text>
       <row>4</row>
-      <col>0</col>
+      <col>1</col>
       <halign>right</halign>
       <label>NAV 2</label>
     </text>
@@ -337,12 +441,12 @@ Modified standard FG file
     <input>
       <name>nav2-selected</name>
       <row>4</row>
-      <col>1</col>
+      <col>2</col>
       <width>75</width>
       <height>25</height>
       <label>MHz</label>
       <live>true</live>
-      <property>/instrumentation/nav-IFD-RH/frequencies/selected-mhz</property>
+      <property>/instrumentation/nav[1]/frequencies/selected-mhz</property>
       <binding>
         <command>dialog-apply</command>
         <object-name>nav2-selected</object-name>
@@ -351,7 +455,7 @@ Modified standard FG file
 
     <button>
       <row>4</row>
-      <col>3</col>
+      <col>4</col>
       <width>35</width>
       <height>26</height>
       <border>1</border>
@@ -366,8 +470,8 @@ Modified standard FG file
       </binding>
       <binding>
         <command>property-swap</command>
-        <property>/instrumentation/nav-IFD-RH/frequencies/selected-mhz</property>
-        <property>/instrumentation/nav-IFD-RH/frequencies/standby-mhz</property>
+        <property>/instrumentation/nav[1]/frequencies/selected-mhz</property>
+        <property>/instrumentation/nav[1]/frequencies/standby-mhz</property>
       </binding>
       <binding>
         <command>dialog-update</command>
@@ -382,31 +486,67 @@ Modified standard FG file
     <input>
       <name>nav2-standby</name>
       <row>4</row>
-      <col>4</col>
+      <col>5</col>
       <width>75</width>
       <height>25</height>
       <label>MHz</label>
       <live>true</live>
-      <property>/instrumentation/nav-IFD-RH/frequencies/standby-mhz</property>
+      <property>/instrumentation/nav[1]/frequencies/standby-mhz</property>
       <binding>
         <command>dialog-apply</command>
         <object-name>nav2-standby</object-name>
       </binding>
     </input>
 
-    <input>
-      <name>nav2-radial</name>
+  <checkbox>
+      <name>dme2</name>   
       <row>4</row>
-      <col>6</col>
+      <col>7</col>
+      <width>12</width>
+      <height>12</height>
+      <live>true</live>
+      <property>/instrumentation/dme/frequencies/nav2-selected</property>
+      <binding>
+		<command>dialog-apply</command>
+		<object-name>dme2</object-name>
+      </binding>
+      <binding>
+            <command>nasal</command>
+		<script>
+                        if ( getprop("/instrumentation/dme/frequencies/source") == "/instrumentation/nav[0]/frequencies/selected-mhz" ) {
+				setprop("/instrumentation/dme/frequencies/source","/instrumentation/nav[1]/frequencies/selected-mhz");
+				setprop("/instrumentation/dme/frequencies/nav1-selected",0);
+			} 
+                </script>  
+      </binding>
+  </checkbox>
+
+    <text>
+      <row>5</row>
+      <col>1</col>
+      <halign>right</halign>
+      <label>RADIAL</label>
+    </text>
+
+    <input>
+      <name>nav-radial</name>
+      <row>5</row>
+      <col>2</col>
       <width>75</width>
       <height>25</height>
       <label>deg</label>
       <live>true</live>
-      <property>/instrumentation/nav-IFD-RH/radials/selected-deg</property>
+      <property>/instrumentation/nav[0]/radials/selected-deg</property>
       <binding>
         <command>dialog-apply</command>
-        <object-name>nav2-radial</object-name>
+        <object-name>nav-radial</object-name>
       </binding>
+      <binding>
+            <command>nasal</command>
+		<script>
+			setprop("/instrumentation/nav[1]/radials/selected-deg",getprop("/instrumentation/nav[0]/radials/selected-deg"));
+                </script>  
+	</binding>
     </input>
 
   </group>
@@ -422,7 +562,7 @@ Modified standard FG file
 
     <combo>
       <name>Tponder-1</name>
-      <pref-width>45</pref-width>
+      <pref-width>43</pref-width>
       <pref-height>25</pref-height>
       <live>true</live>
       <property>/instrumentation/transponder/inputs/digit[3]</property>
@@ -442,7 +582,7 @@ Modified standard FG file
     <!-- -->
     <combo>
       <name>Tponder-2</name>
-      <pref-width>45</pref-width>
+      <pref-width>43</pref-width>
       <pref-height>25</pref-height>
       <live>true</live>
       <property>/instrumentation/transponder/inputs/digit[2]</property>
@@ -461,7 +601,7 @@ Modified standard FG file
     </combo>
     <combo>
       <name>Tponder-3</name>
-      <pref-width>45</pref-width>
+      <pref-width>43</pref-width>
       <pref-height>25</pref-height>
       <live>true</live>
       <property>/instrumentation/transponder/inputs/digit[1]</property>
@@ -480,7 +620,7 @@ Modified standard FG file
     </combo>
     <combo>
       <name>Tponder-4</name>
-      <pref-width>45</pref-width>
+      <pref-width>43</pref-width>
       <pref-height>25</pref-height>
       <live>true</live>
       <property>/instrumentation/transponder/inputs/digit[0]</property>
@@ -498,18 +638,25 @@ Modified standard FG file
       </binding>
     </combo>
 
-    <empty>
-      <stretch>true</stretch>
-    </empty>
-
-
     <text>
-      <label>Mode</label>
+      <label>Mode autoselect</label>
     </text>
+
+  <checkbox>
+      <name>autoselect</name>   
+      <width>12</width>
+      <height>12</height>
+      <live>true</live>
+      <property>/instrumentation/transponder/inputs/auto-select</property>
+      <binding>
+		<command>dialog-apply</command>
+		<object-name>autoselect</object-name>
+      </binding>
+  </checkbox>
 
     <combo>
       <name>Tponder-5</name>
-      <pref-width>120</pref-width>
+      <pref-width>95</pref-width>
       <pref-height>25</pref-height>
       <live>true</live>
       <property>/sim/gui/dialogs/radios/transponder-mode</property>

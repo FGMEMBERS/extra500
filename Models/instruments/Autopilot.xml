@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Eric van den Berg
-      Date:             2013.06.06
+      Last change:      Thomas Grossberger
+      Date:             2013.06.24
 -->
 
 <PropertyList>
@@ -109,10 +109,7 @@
        </animation>
 
 
-
-
-
-
+	   
        <animation>
 	       <type>pick</type>
 	       <object-name>Autopilot.Button.HDG</object-name>
@@ -144,6 +141,7 @@
        <animation>
 	       <type>pick</type>
 	       <object-name>Autopilot.Hotspot.HDG+NAV</object-name>
+		   <visible>false</visible>
 	       <action>
 		       <button>0</button>
 		       <repeatable>false</repeatable>
@@ -159,6 +157,7 @@
 	</animation>
 
 <!--NAV Button !!!!!UI.clicks and properties only for test, must be replaced!!!!!-->
+<!-- ????? is it ok now? if yes, we can delete this comment ?????-->
 <animation>
   <type>pick</type>
   <object-name>Autopilot.Button.NAV</object-name>
@@ -262,6 +261,7 @@
 <animation>
   <type>pick</type>
   <object-name>Autopilot.Hotspot.ALT+VS</object-name>
+  <visible>false</visible>
   <action>
 		<button>0</button>
 		<repeatable>false</repeatable>
