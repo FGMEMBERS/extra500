@@ -208,6 +208,65 @@
 			<output>/autopilot/radionav-channel/in-range</output>
 		</switch>
 
+<!--logic for cap and soft modes -->
+<!-- NOTE: gain-mode is changed to 0 or 1 all the time, do not use this property outside this channel!!! -->
+		<switch name="gainmode1">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/autopilot/radionav-channel/in-range eq 1
+				/autopilot/mode/nav eq 1
+				/autopilot/radionav-channel/heading-needle-deflection-norm lt 0.15
+				/autopilot/radionav-channel/heading-needle-deflection-norm gt -0.15
+			</test>
+			<output>/autopilot/radionav-channel/gain-mode</output>
+		</switch>
+
+		<fcs_function name="/autopilot/radionav-channel/cap-timer">
+			<function>
+				<product>
+					<property>/autopilot/radionav-channel/gain-mode</property>
+					<sum> 
+						<property>/autopilot/radionav-channel/cap-timer</property> 
+						<property>sim-dt-sec</property>
+					</sum>
+				</product>
+			</function>
+		</fcs_function>
+
+		<switch name="gainmode2">
+			<default value="/autopilot/radionav-channel/gain-mode"/>
+			<test logic="AND" value="2">
+				/autopilot/radionav-channel/cap-timer gt 15
+			</test>
+			<output>/autopilot/radionav-channel/gain-mode</output>
+		</switch>
+
+		<switch name="gainmode3">
+			<default value="/autopilot/radionav-channel/gain-mode"/>
+			<test logic="AND" value="3">
+				/autopilot/radionav-channel/cap-timer gt 75
+			</test>
+			<output>/autopilot/radionav-channel/gain-mode</output>
+		</switch>
+
+		<switch name="cap">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/autopilot/radionav-channel/gain-mode eq 1
+				/autopilot/radionav-channel/gain-mode eq 2
+			</test>
+			<output>/autopilot/mode/cap</output>
+		</switch>
+
+		<switch name="soft">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/autopilot/radionav-channel/gain-mode eq 2
+				/autopilot/radionav-channel/gain-mode eq 3
+			</test>
+			<output>/autopilot/mode/soft</output>
+		</switch>
+
 <!--calculating the target heading to intercept the radial-->
 		<pid name="/autopilot/radionav-channel/relative-diff-heading-target-deg">
 			<input>/autopilot/radionav-channel/heading-needle-deflection-norm</input>

@@ -419,6 +419,8 @@ JSBSim Extra Aircraft - Extra 500.
 		<trim type="int">0</trim>
 		<trim-up type="int">0</trim-up>
 		<trim-down type="int">0</trim-down>
+		<cap type="int">0</cap>
+		<soft type="int">0</soft>
 	</mode>
 	<hdg-channel>	
 		<turn-rate-error-kp type="double">0.0003</turn-rate-error-kp>
@@ -430,10 +432,12 @@ JSBSim Extra Aircraft - Extra 500.
 		<cmd-ap-ail-pos-norm-raw type="double">0.0</cmd-ap-ail-pos-norm-raw>
 	</hdg-channel>
 	<radionav-channel>
-		<gain>1</gain>
-		<tgt-hdg-kp>0</tgt-hdg-kp>
-		<tgt-hdg-kd>0.5</tgt-hdg-kd>	
-		<tgt-hdg-ki>0</tgt-hdg-ki>		
+		<cap-timer>0</cap-timer>
+		<gain-mode>0</gain-mode>
+		<gain type="double">1</gain>
+		<tgt-hdg-kp type="double">0</tgt-hdg-kp>
+		<tgt-hdg-kd type="double">0.5</tgt-hdg-kd>	
+		<tgt-hdg-ki type="double">0</tgt-hdg-ki>		
 		<turn-rate-error-kp type="double">0.0003</turn-rate-error-kp>
 		<turn-rate-error-ki type="double">0.00</turn-rate-error-ki>
 		<turn-rate-error-kd type="double">0.0025</turn-rate-error-kd>
@@ -814,7 +818,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<KELVIN2RANKINE type="double">1.8</KELVIN2RANKINE>		<!-- exact factor: to be used with priority -->
 		<LBM2KG type="double">0.5144</LBM2KG>				<!-- exact factor: to be used with priority -->
 	</const>
-	<system>
+	<!--system>
 		<fuel>
 			<FuelPump1>
 				<state type="bool">0</state>
@@ -823,7 +827,7 @@ JSBSim Extra Aircraft - Extra 500.
 				<state type="bool">0</state>
 			</FuelPump2>
 		</fuel>
-	</system>
+	</system-->
 	<instrumentation>
 		<EIP>
 			<state type="bool">false</state>
