@@ -715,6 +715,9 @@ var ESystem = {
 		obj.setInput(me);
 		obj.setVolt(me._volt);
 	},
+	loopStart : func(sec=1){
+		
+	}
 	
 };
 
