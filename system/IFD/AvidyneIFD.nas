@@ -565,19 +565,29 @@ var AvidyneIFD = {
 		m.page = {};
 		m.page["PFD"] = AvidynePagePFD.new(m,"PFD",m.data);
 		m.page["none"] = AvidynePageDummy.new(m,"none",m.data);
+		
+		m.dt = 0;
+		m.now = systime();
+		m._lastTime = 0;
+		m.timerLoop = maketimer(0.05,m,AvidyneIFD.animationUpdate);
 	
 		return m;
+	},
+	init : func(){
+		me.initUI();
 	},
 	connectDataBus : func(ifd){
 		me.data.link = ifd;
 	},
-	simulationUpdate : func(now,dt){
-				
-	
-	},	
-	animationUpdate : func(now,dt){
+	animationUpdate : func(){
+		
+		me.now = systime();
+		me.dt = me.now - me._lastTime;
+		me._lastTime = me.now;
+		
+		
 		me.data.load();
-		me.page[me.pageSelected].update(now,dt);		
+		me.page[me.pageSelected].update(me.now,me.dt);		
 	},
 	clearLeds : func(){
 		me.nL1.setValue(0);

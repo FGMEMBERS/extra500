@@ -151,7 +151,7 @@ var SwitchFactory = {
 			_max		: max,
 			_step		: step,
 			_default	: default,
-			_labels		: nil, #{-1:"low",0:"off",1:"high"}
+			_labels		: labels, #{-1:"low",0:"off",1:"high"}
 		};
 		return m;
 	},
@@ -480,6 +480,9 @@ var ConsumerClass = {
 	},
 	_onVoltChange : func(n){
 		me._volt = n.getValue();
+		me.electricWork();
+	},
+	electricWork : func(){
 		me._watt = me._nWatt.getValue();
 		if(me._volt > 0){
 			me._ampere = me._watt / me._volt;
@@ -565,24 +568,40 @@ var SwitchClass = {
 		me._nState.setValue(value);
 	},
 	onSet	: func(value=nil){
+		print("SwitchClass.onSet("~value~") ... "~me._name);
 		if (value == nil){
 			value = me._default;
 		}
 		value = global.clamp(value,me._min,me._max);
 		me._nState.setValue(value);
 	},
+	onLable : func(value){
+		if(contains(me._labels,value)){
+			me._nState.setValue(me._labels[value]);
+		}
+	},
 	registerUI : func(){
+		#print("SwitchClass.registerUI() ... "~me._name);
 		UI.register(me._name~"", 	func{me.onSet(); } 	);
 		UI.register(me._name~" >", 	func{me.onAdjust(me._step); } 	);
 		UI.register(me._name~" <", 	func{me.onAdjust(-me._step); } 	);
 		UI.register(me._name~" =", 	func(v=0){me.onSet(v); } 	);
 		UI.register(me._name~" +=", 	func(v=0){me.onAdjust(v); } 	);
-		
 		if (me._labels != nil){
-			for (var i=me._min; i <= me._max; i = i+1){
-				if(contains(me._labels,i)){
-					UI.register(me._name~" "~me._labels[i], 	func{me.onSet(i); }	);
-				}
+			#debug.dump(me._labels["0"]);
+			var labelIndex = keys(me._labels);
+			#debug.dump(labelIndex);
+# 			for (var i=me._min; i <= me._max; i = i+1){
+# 				
+# 				if(contains(me._labels,i)){
+# 					UI.register(me._name~" "~me._labels[i], 	func{me.onSet(i); }	);
+# 				}else{
+# 					print("no key at "~i);
+# 				}
+# 			}
+			
+			foreach(i ; labelIndex){
+				UI.register(me._name~" "~i, 	func{me.onLable(""~i); }	);
 			}
 		}
 	},
@@ -615,7 +634,13 @@ var ESystem = {
 		m._lastTime = systime();
 		
 		m._electron = ElectronClass.new();
+		
+		m.timerLoop = maketimer(1.0,m,ESystem.checkSource);
+		
 		return m;
+	},
+	init : func(){
+		
 	},
 	setListerners : func() {
 		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},0,0);
@@ -649,7 +674,7 @@ var ESystem = {
 		
 		me._volt = 0;
 		
-# 		print ("\n EBox.checkSource() ... "~now ~" "~dt~"\n");
+# 		print ("\n ESystem.checkSource() ... "~now ~" "~dt~"\n");
 		if(me.switch.External._state == 1){
 			me.source.ExternalGenerator.update(now,dt);
 			me._setMaxVolt(me.source.ExternalGenerator._volt);
@@ -715,9 +740,7 @@ var ESystem = {
 		obj.setInput(me);
 		obj.setVolt(me._volt);
 	},
-	loopStart : func(sec=1){
-		
-	}
+	
 	
 };
 
@@ -738,9 +761,9 @@ eSystem.switch = {
 #side panel
 	Battery 		: SwitchFactory.new("extra500/panel/Side/Main/Battery","Main Battery"),
 	Alternator 		: SwitchFactory.new("extra500/panel/Side/Main/StandbyAlt","Main Standby Alternator"),
-	Generator 		: SwitchFactory.new("extra500/panel/Side/Main/Generator","Main Generator",SwitchFactory.config("INT",-1,1,1,0,{"-1":"reset","0":"off","1":"on"})),
+	Generator 		: SwitchFactory.new("extra500/panel/Side/Main/Generator","Main Generator",SwitchFactory.config("INT",-1,1,1,0,{"reset":-1,"off":0,"on":1})), 
 	External 		: SwitchFactory.new("extra500/panel/Side/Main/ExternalPower","Main External Power"),
-	GeneratorTest 		: SwitchFactory.new("extra500/panel/Side/Main/GeneratorTest","Main Generator Test",SwitchFactory.config("INT",-1,1,1,0,{"-1":"trip","0":"off","1":"on"})),
+	GeneratorTest 		: SwitchFactory.new("extra500/panel/Side/Main/GeneratorTest","Main Generator Test",SwitchFactory.config("INT",-1,1,1,0,{"trip":-1,"off":0,"on":1})),
 	Avionics 		: SwitchFactory.new("extra500/panel/Side/Main/Avionics","Main Avionics"),
 	Strobe	 		: SwitchFactory.new("extra500/panel/Side/Light/Strobe","Light Strobe"),
 	Navigation 		: SwitchFactory.new("extra500/panel/Side/Light/Navigation","Light Navigation"),
@@ -750,23 +773,23 @@ eSystem.switch = {
 	Map 			: SwitchFactory.new("extra500/panel/Side/Light/Map","Light Map"),
 	Instrument 		: SwitchFactory.new("extra500/panel/Side/Light/Instrument","Light Instrument"),
 	Glare	 		: SwitchFactory.new("extra500/panel/Side/Light/Glare","Light Glare"),
-	Night	 		: SwitchFactory.new("extra500/panel/Side/Light/Night","Night",SwitchFactory.config("INT",-1,1,1,0,{"-1":"test","0":"day","1":"night"})),
+	Night	 		: SwitchFactory.new("extra500/panel/Side/Light/Night","Night",SwitchFactory.config("INT",-1,1,1,0,{"test":-1,"day":0,"night":1})),
 	Ice 			: SwitchFactory.new("extra500/panel/Side/Light/Ice","Light Ice"),
 	Propeller 		: SwitchFactory.new("extra500/panel/Side/Deicing/Propeller","Deicing Propeller"),
-	PitotL 			: SwitchFactory.new("extra500/panel/Side/Deicing/PitotL","Deicing Pitot Left",SwitchFactory.config("INT",-1,1,1,0,{"-1":"test","0":"off","1":"on"})),
-	PitotR 			: SwitchFactory.new("extra500/panel/Side/Deicing/PitotR","Deicing Pitot Right",SwitchFactory.config("INT",-1,1,1,0,{"-1":"test","0":"off","1":"on"})),
+	PitotL 			: SwitchFactory.new("extra500/panel/Side/Deicing/PitotL","Deicing Pitot Left",SwitchFactory.config("INT",-1,1,1,0,{"test":-1,"off":0,"on":1})),
+	PitotR 			: SwitchFactory.new("extra500/panel/Side/Deicing/PitotR","Deicing Pitot Right",SwitchFactory.config("INT",-1,1,1,0,{"test":-1,"off":0,"on":1})),
 	Windshield 		: SwitchFactory.new("extra500/panel/Side/Deicing/Windshield","Deicing Windshield"),
 	Boots 			: SwitchFactory.new("extra500/panel/Side/Deicing/Boots","Deicing Boots"),
-	Pressure 		: SwitchFactory.new("extra500/panel/Side/Cabin/Pressure","Cabin Pressure Controller",SwitchFactory.config("INT",-1,1,1,0,{"-1":"dump","0":"off","1":"on"})),
+	Pressure 		: SwitchFactory.new("extra500/panel/Side/Cabin/Pressure","Cabin Pressure Controller",SwitchFactory.config("INT",-1,1,1,0,{"dump":-1,"off":0,"on":1})),
 	AirCondition 		: SwitchFactory.new("extra500/panel/Side/Cabin/AirCondition","Cabin Air Condition"),
-	Vent 			: SwitchFactory.new("extra500/panel/Side/Cabin/Vent","Cabin Vent",SwitchFactory.config("INT",-1,1,1,-1,{"-1":"off","0":"low","1":"high"})),
+	Vent 			: SwitchFactory.new("extra500/panel/Side/Cabin/Vent","Cabin Vent",SwitchFactory.config("INT",-1,1,1,-1,{"off":-1,"low":0,"high":1})),
 	EnvironmentalAir 	: SwitchFactory.new("extra500/panel/Side/Cabin/EnvironmentalAir","Cabin Environmental Air"),
-	TempMode 		: SwitchFactory.new("extra500/panel/Side/Cabin/TempMode","Cabin Temperature Controller Mode",SwitchFactory.config("INT",-1,1,1,0,{"-1":"cool","0":"auto","1":"warm"})),
+	TempMode 		: SwitchFactory.new("extra500/panel/Side/Cabin/TempMode","Cabin Temperature Controller Mode",SwitchFactory.config("INT",-1,1,1,0,{"cool":-1,"auto":0,"warm":1})),
 	TempCtrl 		: SwitchFactory.new("extra500/panel/Side/Cabin/TempCtrl","Cabin Temperature Controller"),
 	Temperature 		: SwitchFactory.new("extra500/panel/Side/Cabin/Temperature","Cabin Temperature",SwitchFactory.config("DOUBLE",-1.0,1.0,0.1,0)),
 	Emergency 		: SwitchFactory.new("extra500/panel/Side/Emergency","Emergency"),
 #master panel
-	AutopilotMaster 	: SwitchFactory.new("extra500/panel/Master/Autopilot/Master","Autopilot Master",SwitchFactory.config("INT",-1,1,1,-1,{"-1":"off","0":"fd","1":"ap"})),
+	AutopilotMaster 	: SwitchFactory.new("extra500/panel/Master/Autopilot/Master","Autopilot Master",SwitchFactory.config("INT",-1,1,1,-1,{"off":-1,"fd":0,"ap":1})),
 	AutopilotPitchTrim 	: SwitchFactory.new("extra500/panel/Master/Autopilot/PitchTrim","Autopilot PitchTrim"),
 	AutopilotYawDamper 	: SwitchFactory.new("extra500/panel/Master/Autopilot/YawDamper","Autopilot YawDamper"),
 	AutopilotYawTrim 	: SwitchFactory.new("extra500/panel/Master/Autopilot/YawTrim","Autopilot Yaw Trim",SwitchFactory.config("DOUBLE",-1.0,1.0,0.1,0)),
@@ -775,8 +798,8 @@ eSystem.switch = {
 	FuelPump1 		: SwitchFactory.new("extra500/panel/Master/Fuel/Pump1","Fuel Pump 1"),
 	FuelPump2 		: SwitchFactory.new("extra500/panel/Master/Fuel/Pump2","Fuel Pump 2"),
 	EngineOverSpeed 	: SwitchFactory.new("extra500/panel/Master/Engine/OverSpeed","Engine OverSpeed"),
-	EngineMotoring 		: SwitchFactory.new("extra500/panel/Master/Engine/Motoring","Engine Motoring",SwitchFactory.config("INT",-1,1,1,-1,{"-1":"normal","0":"abort","1":"on"})),
-	EngineStart 		: SwitchFactory.new("extra500/panel/Master/Engine/Start","Engine Start",SwitchFactory.config("INT",-1,1,1,-1,{"-1":"off","0":"ign","1":"on"})),
+	EngineMotoring 		: SwitchFactory.new("extra500/panel/Master/Engine/Motoring","Engine Motoring",SwitchFactory.config("INT",-1,1,1,-1,{"normal":-1,"abort":0,"on":1})),
+	EngineStart 		: SwitchFactory.new("extra500/panel/Master/Engine/Start","Engine Start",SwitchFactory.config("INT",-1,1,1,-1,{"off":-1,"ign":0,"on":1})),
 	DimmingKeypad 		: SwitchFactory.new("extra500/panel/Master/Dimming/Keypad","Dimmer Keypad",SwitchFactory.config("DOUBLE",0.0,1.0,0.1,0.5)),
 	DimmingGlare 		: SwitchFactory.new("extra500/panel/Master/Dimming/Glare","Dimmer Glare",SwitchFactory.config("DOUBLE",0.0,1.0,0.1,0.5)),
 	DimmingInstrument 	: SwitchFactory.new("extra500/panel/Master/Dimming/Instrument","Dimmer Instrument",SwitchFactory.config("DOUBLE",0.0,1.0,0.1,0.5)),
@@ -914,32 +937,28 @@ eSystem.switch.Avionics.onStateChange = func(n){
 
 var ConsumerPerCircuitBreaker = 6;
 
-var init = func(){
-	eSystem.setListerners();
+eSystem.init = func(){
+	me.setListerners();
 	var index = nil;
 
-	index =  keys(eSystem.switch);
+	index =  keys(me.switch);
 	foreach (i;index){
-		eSystem.switch[i].registerUI();
-		eSystem.switch[i].setListerners();
+		me.switch[i].registerUI();
+		me.switch[i].setListerners();
 	}
-	index =  keys(eSystem.circuitBreaker);
+	index =  keys(me.circuitBreaker);
 	var consumerCount = 0;
 	foreach (i;index){
-		eSystem.circuitBreaker[i].registerUI();
-		eSystem.circuitBreaker[i].setListerners();
-		eSystem.addOutput(eSystem.circuitBreaker[i]);
+		me.circuitBreaker[i].registerUI();
+		me.circuitBreaker[i].setListerners();
+		me.addOutput(me.circuitBreaker[i]);
 		
 	}
 	print("Consumer count " ~ consumerCount);
 	#connectStatik();
 };
 
-var update = func(now,dt){
 
-	eSystem.checkSource();
-	
-};
 
 
 
