@@ -29,23 +29,23 @@ var initUI = func(){
 
 
 
-extra500.circuitBreakerPanel.initUI();
-extra500.sidePanel.initUI();
-extra500.masterPanel.initUI();
-extra500.fuelSystem.initUI();
-extra500.flapSystem.initUI();
-extra500.engine.initUI();
-extra500.gearSystem.initUI();
-
-extra500.audioPanel.initUI();
-extra500.keypad.initUI();
-extra500.autopilot.initUI();
-extra500.dme.initUI();
-extra500.fuelFlow.initUI();
-extra500.turnCoordinator.initUI();
-extra500.stbyAirspeed.initUI();
-extra500.stbyAltimeter.initUI();
-extra500.stbyAttitude.initUI();
+# extra500.circuitBreakerPanel.initUI();
+# extra500.sidePanel.initUI();
+# extra500.masterPanel.initUI();
+# extra500.fuelSystem.initUI();
+# extra500.flapSystem.initUI();
+# extra500.engine.initUI();
+# extra500.gearSystem.initUI();
+# 
+# extra500.audioPanel.initUI();
+# extra500.keypad.initUI();
+# extra500.autopilot.initUI();
+# extra500.dme.initUI();
+# extra500.fuelFlow.initUI();
+# extra500.turnCoordinator.initUI();
+# extra500.stbyAirspeed.initUI();
+# extra500.stbyAltimeter.initUI();
+# extra500.stbyAttitude.initUI();
 
 IFD.LH.initUI();
 IFD.RH.initUI();

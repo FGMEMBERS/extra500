@@ -480,6 +480,7 @@ var ConsumerClass = {
 	},
 	_onVoltChange : func(n){
 		me._volt = n.getValue();
+		me._watt = me._nWatt.getValue();
 		if(me._volt > 0){
 			me._ampere = me._watt / me._volt;
 		}else{
@@ -604,6 +605,7 @@ var ESystem = {
 		m.source	 	= nil;
 		m.switch	 	= nil;
 		m.circuitBreaker 	= nil;
+		m.consumer	 	= nil;
 		m._outputs		= {};
 		m._outputIndex		= [];
 		
@@ -648,27 +650,27 @@ var ESystem = {
 		me._volt = 0;
 		
 # 		print ("\n EBox.checkSource() ... "~now ~" "~dt~"\n");
-		if(me.switch.external._state == 1){
-			me.source.externalGenerator.update(now,dt);
-			me._setMaxVolt(me.source.externalGenerator._volt);
+		if(me.switch.External._state == 1){
+			me.source.ExternalGenerator.update(now,dt);
+			me._setMaxVolt(me.source.ExternalGenerator._volt);
 # 			print ("External Generator " ~ me.source.externalGenerator._volt);
 		}
 		
-		if(me.switch.generator._state == 1){
-			me.source.generator.update(now,dt);
-			me._setMaxVolt(me.source.generator._volt);
+		if(me.switch.Generator._state == 1){
+			me.source.Generator.update(now,dt);
+			me._setMaxVolt(me.source.Generator._volt);
 # 			print ("Generator " ~ me.source.generator._volt);
 		}
 				
-		if(me.switch.alternator._state == 1){
-			me.source.alternator.update(now,dt);
-			me._setMaxVolt(me.source.alternator._volt);
+		if(me.switch.Alternator._state == 1){
+			me.source.Alternator.update(now,dt);
+			me._setMaxVolt(me.source.Alternator._volt);
 # 			print ("Alternator " ~ me.source.alternator._volt);
 		}
 		
-		if(me.switch.battery._state == 1){
-			me.source.battery.update(now,dt);
-			me._setMaxVolt(me.source.battery._volt);
+		if(me.switch.Battery._state == 1){
+			me.source.Battery.update(now,dt);
+			me._setMaxVolt(me.source.Battery._volt);
 # 			print ("Battery " ~ me.source.battery._volt);
 		}
 		#print("Bus Volt " ~ me._volt);
@@ -681,24 +683,24 @@ var ESystem = {
 		
 		me._electron.ampere = ampere;
 		
-		if(me.switch.external._state == 1){
-			me.source.externalGenerator.applyAmpere(me._electron,dt);
-			me._setMaxVolt(me.source.externalGenerator._volt);
+		if(me.switch.External._state == 1){
+			me.source.ExternalGenerator.applyAmpere(me._electron,dt);
+			me._setMaxVolt(me.source.ExternalGenerator._volt);
 		}
 		
-		if(me.switch.generator._state == 1){
-			me.source.generator.applyAmpere(me._electron,dt);
-			me._setMaxVolt(me.source.generator._volt);
+		if(me.switch.Generator._state == 1){
+			me.source.Generator.applyAmpere(me._electron,dt);
+			me._setMaxVolt(me.source.Generator._volt);
 		}
 				
-		if(me.switch.alternator._state == 1){
-			me.source.alternator.applyAmpere(me._electron,dt);
-			me._setMaxVolt(me.source.alternator._volt);
+		if(me.switch.Alternator._state == 1){
+			me.source.Alternator.applyAmpere(me._electron,dt);
+			me._setMaxVolt(me.source.Alternator._volt);
 		}
 		
-		if(me.switch.battery._state == 1){
-			me.source.battery.applyAmpere(me._electron,dt);
-			me._setMaxVolt(me.source.battery._volt);
+		if(me.switch.Battery._state == 1){
+			me.source.Battery.applyAmpere(me._electron,dt);
+			me._setMaxVolt(me.source.Battery._volt);
 		}
 		
 		me._nVolt.setValue(me._volt);
@@ -723,51 +725,94 @@ var ESystem = {
 var eSystem = ESystem.new("/extra500/electric2/eSystem","EBox");
 
 eSystem.source = {
-	generator 		: GeneratorClass.new("/extra500/electric2/Generator","Generator"),
-	externalGenerator 	: ExternalGeneratorClass.new("/extra500/electric2/ExternalGenerator","ExternalGenerator"),
-	alternator 		: AlternatorClass.new("/extra500/electric2/Alternator","Alternator"),
-	battery 		: BatteryClass.new("/extra500/electric2/Battery","Battery"),
+	Generator 		: GeneratorClass.new("/extra500/electric2/Generator","Generator"),
+	ExternalGenerator 	: ExternalGeneratorClass.new("/extra500/electric2/ExternalGenerator","ExternalGenerator"),
+	Alternator 		: AlternatorClass.new("/extra500/electric2/Alternator","Alternator"),
+	Battery 		: BatteryClass.new("/extra500/electric2/Battery","Battery"),
 };
+
 eSystem.switch = {
-	battery 		: SwitchFactory.new("extra500/panel/Side/Main/Battery","Main Battery"),
-	alternator 		: SwitchFactory.new("extra500/panel/Side/Main/StandbyAlt","Main Standby Alternator"),
-	generator 		: SwitchFactory.new("extra500/panel/Side/Main/Generator","Main Generator",SwitchFactory.config("INT",-1,1,1,0,{"-1":"reset","0":"off","1":"on"})),
-	external 		: SwitchFactory.new("extra500/panel/Side/Main/ExternalPower","Main External"),
-	generatorTest 		: SwitchFactory.new("extra500/panel/Side/Main/GeneratorTest","Main Generator Test",SwitchFactory.config("INT",-1,1,1,0,{"-1":"trip","0":"off","1":"on"})),
-	avionics 		: SwitchFactory.new("extra500/panel/Side/Main/Avionics","Main Avionics"),
+#side panel
+	Battery 		: SwitchFactory.new("extra500/panel/Side/Main/Battery","Main Battery"),
+	Alternator 		: SwitchFactory.new("extra500/panel/Side/Main/StandbyAlt","Main Standby Alternator"),
+	Generator 		: SwitchFactory.new("extra500/panel/Side/Main/Generator","Main Generator",SwitchFactory.config("INT",-1,1,1,0,{"-1":"reset","0":"off","1":"on"})),
+	External 		: SwitchFactory.new("extra500/panel/Side/Main/ExternalPower","Main External Power"),
+	GeneratorTest 		: SwitchFactory.new("extra500/panel/Side/Main/GeneratorTest","Main Generator Test",SwitchFactory.config("INT",-1,1,1,0,{"-1":"trip","0":"off","1":"on"})),
+	Avionics 		: SwitchFactory.new("extra500/panel/Side/Main/Avionics","Main Avionics"),
+	Strobe	 		: SwitchFactory.new("extra500/panel/Side/Light/Strobe","Light Strobe"),
+	Navigation 		: SwitchFactory.new("extra500/panel/Side/Light/Navigation","Light Navigation"),
+	Landing 		: SwitchFactory.new("extra500/panel/Side/Light/Landing","Light Landing"),
+	Recognition 		: SwitchFactory.new("extra500/panel/Side/Light/Recognition","Light Recognition"),
+	Cabin	 		: SwitchFactory.new("extra500/panel/Side/Light/Cabin","Light Cabin"),
+	Map 			: SwitchFactory.new("extra500/panel/Side/Light/Map","Light Map"),
+	Instrument 		: SwitchFactory.new("extra500/panel/Side/Light/Instrument","Light Instrument"),
+	Glare	 		: SwitchFactory.new("extra500/panel/Side/Light/Glare","Light Glare"),
+	Night	 		: SwitchFactory.new("extra500/panel/Side/Light/Night","Night",SwitchFactory.config("INT",-1,1,1,0,{"-1":"test","0":"day","1":"night"})),
+	Ice 			: SwitchFactory.new("extra500/panel/Side/Light/Ice","Light Ice"),
+	Propeller 		: SwitchFactory.new("extra500/panel/Side/Deicing/Propeller","Deicing Propeller"),
+	PitotL 			: SwitchFactory.new("extra500/panel/Side/Deicing/PitotL","Deicing Pitot Left",SwitchFactory.config("INT",-1,1,1,0,{"-1":"test","0":"off","1":"on"})),
+	PitotR 			: SwitchFactory.new("extra500/panel/Side/Deicing/PitotR","Deicing Pitot Right",SwitchFactory.config("INT",-1,1,1,0,{"-1":"test","0":"off","1":"on"})),
+	Windshield 		: SwitchFactory.new("extra500/panel/Side/Deicing/Windshield","Deicing Windshield"),
+	Boots 			: SwitchFactory.new("extra500/panel/Side/Deicing/Boots","Deicing Boots"),
+	Pressure 		: SwitchFactory.new("extra500/panel/Side/Cabin/Pressure","Cabin Pressure Controller",SwitchFactory.config("INT",-1,1,1,0,{"-1":"dump","0":"off","1":"on"})),
+	AirCondition 		: SwitchFactory.new("extra500/panel/Side/Cabin/AirCondition","Cabin Air Condition"),
+	Vent 			: SwitchFactory.new("extra500/panel/Side/Cabin/Vent","Cabin Vent",SwitchFactory.config("INT",-1,1,1,-1,{"-1":"off","0":"low","1":"high"})),
+	EnvironmentalAir 	: SwitchFactory.new("extra500/panel/Side/Cabin/EnvironmentalAir","Cabin Environmental Air"),
+	TempMode 		: SwitchFactory.new("extra500/panel/Side/Cabin/TempMode","Cabin Temperature Controller Mode",SwitchFactory.config("INT",-1,1,1,0,{"-1":"cool","0":"auto","1":"warm"})),
+	TempCtrl 		: SwitchFactory.new("extra500/panel/Side/Cabin/TempCtrl","Cabin Temperature Controller"),
+	Temperature 		: SwitchFactory.new("extra500/panel/Side/Cabin/Temperature","Cabin Temperature",SwitchFactory.config("DOUBLE",-1.0,1.0,0.1,0)),
+	Emergency 		: SwitchFactory.new("extra500/panel/Side/Emergency","Emergency"),
+#master panel
+	AutopilotMaster 	: SwitchFactory.new("extra500/panel/Master/Autopilot/Master","Autopilot Master",SwitchFactory.config("INT",-1,1,1,-1,{"-1":"off","0":"fd","1":"ap"})),
+	AutopilotPitchTrim 	: SwitchFactory.new("extra500/panel/Master/Autopilot/PitchTrim","Autopilot PitchTrim"),
+	AutopilotYawDamper 	: SwitchFactory.new("extra500/panel/Master/Autopilot/YawDamper","Autopilot YawDamper"),
+	AutopilotYawTrim 	: SwitchFactory.new("extra500/panel/Master/Autopilot/YawTrim","Autopilot Yaw Trim",SwitchFactory.config("DOUBLE",-1.0,1.0,0.1,0)),
+	FuelTransferLeft 	: SwitchFactory.new("extra500/panel/Master/Fuel/TransferLeft","Fuel Transfer Left"),
+	FuelTransferRight 	: SwitchFactory.new("extra500/panel/Master/Fuel/TransferRight","Fuel Transfer Right"),
+	FuelPump1 		: SwitchFactory.new("extra500/panel/Master/Fuel/Pump1","Fuel Pump 1"),
+	FuelPump2 		: SwitchFactory.new("extra500/panel/Master/Fuel/Pump2","Fuel Pump 2"),
+	EngineOverSpeed 	: SwitchFactory.new("extra500/panel/Master/Engine/OverSpeed","Engine OverSpeed"),
+	EngineMotoring 		: SwitchFactory.new("extra500/panel/Master/Engine/Motoring","Engine Motoring",SwitchFactory.config("INT",-1,1,1,-1,{"-1":"normal","0":"abort","1":"on"})),
+	EngineStart 		: SwitchFactory.new("extra500/panel/Master/Engine/Start","Engine Start",SwitchFactory.config("INT",-1,1,1,-1,{"-1":"off","0":"ign","1":"on"})),
+	DimmingKeypad 		: SwitchFactory.new("extra500/panel/Master/Dimming/Keypad","Dimmer Keypad",SwitchFactory.config("DOUBLE",0.0,1.0,0.1,0.5)),
+	DimmingGlare 		: SwitchFactory.new("extra500/panel/Master/Dimming/Glare","Dimmer Glare",SwitchFactory.config("DOUBLE",0.0,1.0,0.1,0.5)),
+	DimmingInstrument 	: SwitchFactory.new("extra500/panel/Master/Dimming/Instrument","Dimmer Instrument",SwitchFactory.config("DOUBLE",0.0,1.0,0.1,0.5)),
+	DimmingSwitch 		: SwitchFactory.new("extra500/panel/Master/Dimming/Switch","Dimmer Switch",SwitchFactory.config("DOUBLE",0.0,1.0,0.1,0.5)),
+	DimmingAnnunciator 	: SwitchFactory.new("extra500/panel/Master/Dimming/Annunciator","Dimmer Annunciator",SwitchFactory.config("DOUBLE",0.0,1.0,0.1,0.5)),
 	
 };
+
 eSystem.circuitBreaker = {
 #load bus
 	AIR_CON			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/AirCondition","Air Condition",125),
 	VENT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/Vent","Vent",30),
 	AIR_CTRL		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/AirControl","Air Control",2),
-	PITOT_R			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/PitotR","Pitot Right",15),
+	PITOT_R			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/PitotR","Pitot R",15),
 	CIGA_LTR		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/CigaretteLighter","Cigarette Lighter",10),
-	DIP_2			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/DIP2","DIP 2",1),
+	DIP_2			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/DIP2","DIP-2",1),
 	ENG_INS_2		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/EngineInstrument2","Engine Instrument 2",2),
 	FUEL_TR_L		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/FuelTransferL","Fuel Transfer L",5),
 	FUEL_TR_R		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/FuelTransferR","Fuel Transfer R",5),
-	P_VENT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/PanelVent","Pilot Vent",2),
+	P_VENT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/PanelVent","Panel Vent",2),
 	CABIN_LT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/CabinLight","Cabin Light",5),
-	NAV_LT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/NavLight","Navigation Light",5),
+	NAV_LT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/NavLight","Nav Light",5),
 	RECO_LT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/RecognitionLight","Recognition Light",5),
-	O_SP_TEST		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/OverSpeed","Over Speed",2),
-	IFD_RH_A		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/IFD-RH-A","IFD-RH-A",10),
+	O_SP_TEST		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/OverSpeed","Over Speed Test",2),
+	IFD_RH_A		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/IFD-RH-A","IFD Right A",10),
 	WTHR_DET		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/WeatherDetection","Weather Detection",10),
 	DME			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/DME","DME",2),
 	AUDIO_MRK		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/AudioMarker","Audio Marker",5),
-	VDC12			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/VDC12","VDC 12",10),
+	VDC12			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/VDC12","VDC12",10),
 	IRIDUM			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/Iridium","Iridium",10),
 	SIRIUS			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/Sirius","Sirius",10),
 	EMGC_2			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/Emergency2","Emergency 2",10),
 #battery bus
-	GEAR_AUX_1		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/GearAux1","GearAux 1",5),
+	GEAR_AUX_1		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/GearAux1","Gear Aux 1",5),
 	GEAR_CTRL		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/GearControl","Gear Control",5),
 	HYDR			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Hydraulic","Hydraulic",50),
 	WSH_HT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/WindShieldHeat","Wind Shield Heat",20),
 	WSH_CTRL		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/WindShieldControl","Wind Shield Control",2),
-	PROP_HT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/PropellerHeat","Propeller Heat",20),
+	PROP_HT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/PropellerHeat","PropellerHeat",20),
 	FUEL_P_2		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/FuelPump2","Fuel Pump 2",7.5),
 	START			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Start","Start",5),
 	IGN			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Ignition","Ignition",5),
@@ -780,14 +825,12 @@ eSystem.circuitBreaker = {
 	INST_LT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/InstrumentLight","Instrument Light",7.5),
 	BOOTS			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Boots","Boots",2),
 	AP_SERVO		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/AutopilotServo","Autopilot Servo",5),
-	IFD_LH_B		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/IFD-LH-B","IFD-LH-B",10),
+	IFD_LH_B		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/IFD-LH-B","IFD Left B",10),
 	VNE_WARN		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/VneWarn","Vne Warn",1),
-	AV_BUS			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/avionicBus","AvionicBus",30),
+	AV_BUS			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/avionicBus","AV Bus",30),
 	EMGC_1			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Emergency1","Emergency 1",30),
-
-
 #emergency bus
-	GEAR_WARN		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/GearWarn","Gear Warning",2),
+	GEAR_WARN		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/GearWarn","Gear Warn",2),
 	FUEL_P_1		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/FuelPump1","Fuel Pump 1",7.5),
 	PITOT_L			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/PitotL","Pitot L",10),
 	DIP_1			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/DIP1","DIP 1",1),
@@ -799,65 +842,67 @@ eSystem.circuitBreaker = {
 	STALL_WARN		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/StallWarning","Stall Warning",1),
 	VOLT_MON		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/VoltMonitor","Volt Monitor",1),
 	LDG_LT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/LandingLight","Landing Light",10),
-	WARN_LT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/WarnLight","Warning Light",7.5),
+	WARN_LT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/WarnLight","Warn Light",7.5),
 	GLARE_LT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/GlareLight","Glare Light",1),
 	INTAKE_AI		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/IntakeAI","Intake AI",2),
 	STBY_GYRO		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/StandbyGyroskop","Standby Gyroskop",2),
-	IFD_LH_A		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/IFD-LH-A","IFD-LH-A",10),
+	IFD_LH_A		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/IFD-LH-A","IFD Left A",10),
 	KEYPAD			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/Keypad","Keypad",1),
 	ATC			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/ATC","ATC",3),
 	GEN_RESET		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/GeneratorReset","Generator Reset",5),
-	ALT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/Alternator","Alternator Field",2),
+	ALT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/Alternator","Alt",2),
 #hot bus
-
 	GEAR_AUX_2		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/GearAux2","Gear Aux 2",5),
 	EXT_LADER		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/EXT_LADER","EXT LADER",5),
 	ALT_FIELD		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/ALT_FIELD","ALT FIELD",2),
 	COURTESY_LT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/COURTESY_LT","Courtesy Light",5),
 	ELT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/ELT","ELT",1),
-
 #avionic bus
-	
-	IFD_RH_B		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/IFD-RH-B","IFD-RH-B",10),
+	IFD_RH_B		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/IFD-RH-B","IFD Right B",10),
 	TAS			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/TAS","TAS",3),
 	AP_CMPTR		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/AutopilotComputer","Autopilot Computer",5),
 	TB			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/TurnCoordinator","Turn Coordinator",5),
+#no Bus
+	FLAP_UNB		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/FlapUNB","Flap UNB",1),
+	RCCB			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/RCCB","RCCB",1),
+	BUS_TIE			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/BusTie","Bus Tie",1),
+	
 };
 
 
 # switches 
 
-eSystem.switch.battery.onStateChange = func(n){
+eSystem.switch.Battery.onStateChange = func(n){
 	me._state = n.getValue();
 	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
 	eSystem.checkSource();
 };
 
-eSystem.switch.alternator.onStateChange = func(n){
+eSystem.switch.Alternator.onStateChange = func(n){
 	me._state = n.getValue();
 	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
 	eSystem.checkSource();
 };
 
-eSystem.switch.generator.onStateChange = func(n){
+eSystem.switch.Generator.onStateChange = func(n){
 	me._state = n.getValue();
 	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
 	eSystem.checkSource();
 };
 
-eSystem.switch.external.onStateChange = func(n){
+eSystem.switch.External.onStateChange = func(n){
 	me._state = n.getValue();
 	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
 	eSystem.checkSource();
 };
 
-eSystem.switch.generatorTest.onStateChange = func(n){
+eSystem.switch.GeneratorTest.onStateChange = func(n){
 	me._state = n.getValue();
 	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
 	eSystem.checkSource();
 };
 
-eSystem.switch.avionics.onStateChange = func(n){
+eSystem.switch.Avionics.onStateChange = func(n){
 	me._state = n.getValue();
 	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
 	
@@ -882,18 +927,6 @@ var init = func(){
 		eSystem.circuitBreaker[i].setListerners();
 		eSystem.addOutput(eSystem.circuitBreaker[i]);
 		
-		for (var j=0;j<ConsumerPerCircuitBreaker;j=j+1){
-			consumerCount += 1;
-			var name = "consumer-"~consumerCount;
-			var path = "extra500/consumer/"~name;
-			var watt = (eSystem.circuitBreaker[i]._ampereMax / (ConsumerPerCircuitBreaker+1)) * 24.0;
-			
-			var consumer = ConsumerClass.new(path,name,watt);
-			consumer.registerUI();
-			consumer.setListerners();
-			
-			eSystem.circuitBreaker[i].addOutput(consumer);
-		}
 	}
 	print("Consumer count " ~ consumerCount);
 	#connectStatik();
