@@ -469,33 +469,42 @@ var ConsumerClass = {
 		m._lastAmpere		= 0.0;
 		m._watt			= watt;
 		m._nWatt		= m._nRoot.initNode("watt",watt,"DOUBLE");
+		m._nState		= m._nRoot.initNode("state",0,"BOOL");
+		m._state		= 0;
 		return m;
 	},
 	setInput : func(obj){
 		me._input = obj;
 	},
 	setListerners : func() {
-		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},0,0);
-		me._ampereListener 	= setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},0,0);
+		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0);
+		me._ampereListener 	= setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0);
 	},
 	_onVoltChange : func(n){
+		
 		me._volt = n.getValue();
+		#print ("ConsumerClass._onVoltChange() ... "~me._name~" "~me._volt~"V");
 		me.electricWork();
 	},
 	electricWork : func(){
 		me._watt = me._nWatt.getValue();
 		if(me._volt > 0){
 			me._ampere = me._watt / me._volt;
+			me._state  = 1;
 		}else{
 			me._ampere = 0;
+			me._state  = 0;
 		}
+		me._nState.setValue(me._state);
 		me._nAmpere.setValue(me._ampere);
 	},
 	_onAmpereChange : func(n){
 		me._ampere = n.getValue();
 		var dif = me._ampere - me._lastAmpere;
 		me._lastAmpere = me._ampere;
-		me._input.addAmpere(dif);
+		if (me._input != nil){
+			me._input.addAmpere(dif);
+		}
 	},
 	registerUI : func(){
 		
@@ -504,16 +513,69 @@ var ConsumerClass = {
 	
 };
 
+var LedClass = {
+	new : func(root,name,bright="extra500/system/dimming/fullBright",watt=0.3){
+		var m = { 
+			parents : [
+				LedClass,
+				ConsumerClass.new(root,name,watt)
+			]
+		};
+		m._nBrightness		= props.globals.initNode(bright,1.0,"DOUBLE");
+		m._brightness		= 0;
+		m._brightnessListener   = nil;
+		
+		m._on = 0;
+		m._light = 0;
+		return m;
+	},
+	setListerners : func() {
+		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0);
+		me._ampereListener 	= setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0);
+		me._brightnessListener	= setlistener(me._nBrightness,func(n){me._onBrightnessChange(n);},1,0);
+	},
+	_onBrightnessChange : func(n){
+		me._brightness = n.getValue();
+		me.electricWork();
+	},
+	electricWork : func(){
+		if (me._on == 1 and me._volt > 22.0){
+			me._watt = me._nWatt.getValue() * me._brightness;
+			me._ampere = me._watt / me._volt;
+			me._light = me._brightness;
+		}else{
+			me._ampere = 0;
+			me._light = 0;
+		}
+		
+		me._nAmpere.setValue(me._ampere);
+		me.shine(me._light);
+	},
+	# for override to get the light
+	shine : func(light){
+		
+	},
+	on : func(){
+		me._on = 1;
+		me.electricWork();
+	},
+	off : func(){
+		me._on = 0;
+		me.electricWork();
+	},
+	
+	
+};
 
 ### User interface classes
 
 var SwitchBoolClass = {
-	new : func(root,name){
+	new : func(root,name,default=0){
 		var m = {parents : [
 				SwitchBoolClass,
 				ServiceClass.new(root,name)
 		]};
-		m._nState	= m._nRoot.initNode("state",0,"BOOL");
+		m._nState	= m._nRoot.initNode("state",default,"BOOL");
 		m._state	= 0;
 		return m;
 	},
@@ -525,10 +587,11 @@ var SwitchBoolClass = {
 	},
 	onClick : func(value=nil){
 		if (value == nil){
-			me._nState.setValue(!me._nState.getValue());
+			me._state = value == 1 ? 0 : 1;
 		}else{
-			me._nState.setValue(value);
+			me._state = value;
 		}
+		me._nState.setValue(me._state);
 	},
 	registerUI : func(){
 		UI.register(me._name~"", 	func{me.onClick(); } 	);
@@ -853,7 +916,7 @@ eSystem.circuitBreaker = {
 	AP_SERVO		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/AutopilotServo","Autopilot Servo",5),
 	IFD_LH_B		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/IFD-LH-B","IFD Left B",10),
 	VNE_WARN		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/VneWarn","Vne Warn",1),
-	AV_BUS			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/avionicBus","AV Bus",30),
+	AV_BUS			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/AvBus","AV Bus",30),
 	EMGC_1			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Emergency1","Emergency 1",30),
 #emergency bus
 	GEAR_WARN		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/GearWarn","Gear Warn",2),
@@ -876,7 +939,7 @@ eSystem.circuitBreaker = {
 	KEYPAD			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/Keypad","Keypad",1),
 	ATC			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/ATC","ATC",3),
 	GEN_RESET		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/GeneratorReset","Generator Reset",5),
-	ALT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/Alternator","Alt",2),
+	ALT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/Alt","Alt",2),
 #hot bus
 	GEAR_AUX_2		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/GearAux2","Gear Aux 2",5),
 	EXT_LADER		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/EXT_LADER","EXT LADER",5),
@@ -952,7 +1015,6 @@ eSystem.init = func(){
 		me.circuitBreaker[i].registerUI();
 		me.circuitBreaker[i].setListerners();
 		me.addOutput(me.circuitBreaker[i]);
-		
 	}
 	print("Consumer count " ~ consumerCount);
 	#connectStatik();
