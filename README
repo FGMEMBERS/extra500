@@ -75,7 +75,7 @@ Engine shut-off: Press s (to cut the fuel)
 		
 Principle Autopilot functionality (currently in place):
 - HDG 		Follows the heading bug
-- NAV		Intercepts and track VORs and LOCs
+- NAV		Intercepts and tracks VORs and LOCs
 - VS		Follows the VS bug (limited to +/-1600fpm)
 - ALT 		Holds the current altitude (rounded to 100ft)
 - ALT+VS	Brings and holds the aircraft to the selected altitude with the selected vertical speed.

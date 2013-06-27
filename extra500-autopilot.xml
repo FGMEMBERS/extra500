@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-06-23
+      Date:             2013-06-26
 -->
 
 <autopilot name="STEC55X">
@@ -192,6 +192,8 @@
 	<channel name="radionav">
 <!-- this is the radionav channel. when the nav mode is active, the ap will intercept the selected radial of a VOR or the selected LOC-->
 
+
+<!-- selection of nav unit based on /instrumentation/nav-source property -->
 		<switch name="navselect">
 			<default value="/instrumentation/nav[0]/heading-needle-deflection-norm"/>
 			<test value="/instrumentation/nav[1]/heading-needle-deflection-norm">
@@ -200,12 +202,114 @@
 			<output>/autopilot/radionav-channel/heading-needle-deflection-norm</output>
 		</switch>
 
+<!-- getting the "in range" property from the selected nav unit -->
 		<switch name="inrange">
 			<default value="/instrumentation/nav[0]/in-range"/>
 			<test value="/instrumentation/nav[1]/in-range">
 				/instrumentation/nav-source eq 1
 			</test>
 			<output>/autopilot/radionav-channel/in-range</output>
+		</switch>
+
+<!--logic for cap and soft modes -->
+<!-- NOTE: gain-mode is changed to 0 or 1 all the time, do not use this property outside this channel!!! -->
+		<switch name="gainmode1">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/autopilot/radionav-channel/in-range eq 1
+				/autopilot/mode/nav eq 1
+				/autopilot/radionav-channel/heading-needle-deflection-norm lt 0.15
+				/autopilot/radionav-channel/heading-needle-deflection-norm gt -0.15
+			</test>
+			<output>/autopilot/radionav-channel/gain-mode</output>
+		</switch>
+
+		<fcs_function name="/autopilot/radionav-channel/cap-timer">
+			<function>
+				<product>
+					<property>/autopilot/radionav-channel/gain-mode</property>
+					<sum> 
+						<property>/autopilot/radionav-channel/cap-timer</property> 
+						<property>sim-dt-sec</property>
+					</sum>
+				</product>
+			</function>
+		</fcs_function>
+
+		<switch name="gainmode2">
+			<default value="/autopilot/radionav-channel/gain-mode"/>
+			<test logic="AND" value="2">
+				/autopilot/radionav-channel/cap-timer gt 15
+			</test>
+			<output>/autopilot/radionav-channel/gain-mode</output>
+		</switch>
+
+		<switch name="gainmode3">
+			<default value="/autopilot/radionav-channel/gain-mode"/>
+			<test logic="AND" value="3">
+				/autopilot/radionav-channel/cap-timer gt 75
+			</test>
+			<output>/autopilot/radionav-channel/gain-mode</output>
+		</switch>
+
+		<switch name="cap">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/autopilot/radionav-channel/gain-mode eq 1
+				/autopilot/radionav-channel/gain-mode eq 2
+			</test>
+			<output>/autopilot/mode/cap</output>
+		</switch>
+
+		<switch name="soft">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/autopilot/radionav-channel/gain-mode eq 2
+				/autopilot/radionav-channel/gain-mode eq 3
+			</test>
+			<output>/autopilot/mode/soft</output>
+		</switch>
+
+<!-- setting gains and max turnrates for CAP, CAP-SOFT and SOFT -->
+
+		<switch name="gain-c">
+			<default value="/autopilot/radionav-channel/gain-n"/>
+			<test value="/autopilot/radionav-channel/gain-c">
+				/autopilot/radionav-channel/gain-mode eq 1
+			</test>
+			<output>/autopilot/radionav-channel/gain</output>
+		</switch>
+
+		<switch name="gain-cs">
+			<default value="/autopilot/radionav-channel/gain"/>
+			<test value="/autopilot/radionav-channel/gain-cs">
+				/autopilot/radionav-channel/gain-mode eq 2
+			</test>
+			<output>/autopilot/radionav-channel/gain</output>
+		</switch>
+
+		<switch name="gain-s">
+			<default value="/autopilot/radionav-channel/gain"/>
+			<test value="/autopilot/radionav-channel/gain-s">
+				/autopilot/radionav-channel/gain-mode eq 3
+			</test>
+			<output>/autopilot/radionav-channel/gain</output>
+		</switch>
+
+		<switch name="turnrate-cs">
+			<default value="/autopilot/radionav-channel/lmd-hdg-error-kp-n"/>
+			<test value="/autopilot/radionav-channel/lmd-hdg-error-kp-cs">
+				/autopilot/radionav-channel/gain-mode eq 2
+			</test>
+			<output>/autopilot/radionav-channel/lmd-hdg-error-kp</output>
+		</switch>
+
+		<switch name="turnrate-s">
+			<default value="/autopilot/radionav-channel/lmd-hdg-error-kp"/>
+			<test value="/autopilot/radionav-channel/lmd-hdg-error-kp-s">
+				/autopilot/radionav-channel/gain-mode eq 3
+			</test>
+			<output>/autopilot/radionav-channel/lmd-hdg-error-kp</output>
 		</switch>
 
 <!--calculating the target heading to intercept the radial-->
