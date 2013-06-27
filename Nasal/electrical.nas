@@ -386,6 +386,7 @@ var CircuitBrakerClass = {
 		m._lastAmpere		= 0.0;
 		m._ampereMax		= ampereMax;
 		m._nState		= m._nRoot.initNode("state",default,"BOOL");
+		m._voltOut		= 0;
 		return m;
 	},
 	setListerners : func() {
@@ -396,23 +397,25 @@ var CircuitBrakerClass = {
 	setInput : func(obj){
 		me._input = obj;
 	},
+	_deliverVolt : func(){
+		if (me._state == 0){
+			me._voltOut = 0;
+		}else{
+			me._voltOut = me._volt;
+		}
+		
+		foreach( i;  me._outputIndex ){
+			me._outputs[i].setVolt(me._voltOut);
+		}
+	},
 	_onStateChange : func(n){
 		me._state = n.getValue();
-		if (me._state == 0){
-			me._volt = 0;
-		}
-		foreach( i;  me._outputIndex ){
-			me._outputs[i].setVolt(me._volt);
-		}
+		me._deliverVolt();
+				
 	},
 	_onVoltChange : func(n){
 		me._volt = n.getValue();
-		if (me._state == 0){
-			me._volt = 0;
-		}
-		foreach( i;  me._outputIndex ){
-			me._outputs[i].setVolt(me._volt);
-		}
+		me._deliverVolt();
 	},
 	_onAmpereChange : func(n){
 		me._ampere = n.getValue();
@@ -879,7 +882,7 @@ eSystem.circuitBreaker = {
 	PITOT_R			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/PitotR","Pitot R",15),
 	CIGA_LTR		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/CigaretteLighter","Cigarette Lighter",10),
 	DIP_2			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/DIP2","DIP-2",1),
-	ENG_INS_2		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/EngineInstrument2","Engine Instrument 2",2),
+	ENG_INST_2		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/EngineInstrument2","Engine Instrument 2",2),
 	FUEL_TR_L		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/FuelTransferL","Fuel Transfer L",5),
 	FUEL_TR_R		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/FuelTransferR","Fuel Transfer R",5),
 	P_VENT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/PanelVent","Panel Vent",2),

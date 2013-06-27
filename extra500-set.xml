@@ -746,6 +746,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/gear.nas</file>
 		<file>Aircraft/extra500/Nasal/fuel.nas</file>
 		<file>Aircraft/extra500/Nasal/autopilot.nas</file>
+		<file>Aircraft/extra500/Nasal/instrument.nas</file>
 		
 	</extra500>
 	<IFD>

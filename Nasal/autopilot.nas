@@ -25,7 +25,7 @@ var AutopilotClass = {
 	new : func(root,name){
 		var m = {parents:[
 			AutopilotClass,
-			ServiceClass.new(root,name)
+			ConsumerClass.new(root,name,60.0)
 		]};
 		
 		
@@ -76,11 +76,22 @@ var AutopilotClass = {
 		
 		return m;
 	},
+	electricWork : func(){
+		if (eSystem.switch.AutopilotMaster._state >= 0 and me._volt > 22.0){
+			me._watt = me._nWatt.getValue();
+			me._ampere = me._watt / me._volt;
+			me.nAPState.setValue(1);
+		}else{
+			me._ampere = 0;
+			me.nAPState.setValue(0);
+		}
+		me._nAmpere.setValue(me._ampere);
+	},
 	update : func(){
 		
 		me._CheckRollModeAble();
 	},
-	# disengages the autopilot
+# disengages the autopilot
 	_APDisengage : func(){
 		if ( me._CheckRollModeActive() == 1)  {
 			me.ndisengSound.setValue(1);
@@ -253,6 +264,8 @@ var AutopilotClass = {
 	onClickDisengage : func(){
 		me._APDisengage();			
 	},
+	
+########
 	onClickCWS : func(){
 					
 	},
@@ -265,31 +278,33 @@ var AutopilotClass = {
 			me._state = n.getValue();
 			print(me._name~"onStateChange("~me._state~") ...");
 			if (me._state == 1){
-				autopilot.nAPState.setValue(1);
 				autopilot.nSetAP.setValue(1);
 				autopilot.nSetFD.setValue(0);
 			}elsif(me._state == 0){
-				autopilot.nAPState.setValue(1);
 				autopilot.nSetAP.setValue(0);
 				autopilot.nSetFD.setValue(1);
 			}else{
 				#Power off
-				autopilot.nAPState.setValue(0);
 				autopilot.nSetAP.setValue(0);
 				autopilot.nSetFD.setValue(0);
 			}
+			autopilot.electricWork();
+			autopilot.update();
 		};
 		eSystem.switch.AutopilotPitchTrim.onStateChange = func(n){
 			me._state = n.getValue();
 			autopilot.nSetTrim.setValue(me._state);	
+			autopilot.update();
 		};
 		eSystem.switch.AutopilotYawDamper.onStateChange = func(n){
 			me._state = n.getValue();
 			autopilot.nSetYawDamper.setValue(me._state);
+			autopilot.update();
 		};
 		eSystem.switch.AutopilotYawTrim.onStateChange = func(n){
 			me._state = n.getValue();
 			autopilot.nSetYawTrim.setValue(me._state);
+			autopilot.update();
 		};
 		
 		
@@ -320,7 +335,9 @@ var AutopilotClass = {
 		UI.register("Autopilot Pitch Command down",	func{extra500.autopilot.onClickPitchCommand(1); } 	);
 		UI.register("Autopilot Pitch Command off",	func{extra500.autopilot.onClickPitchCommand(0); } 	);
 		UI.register("Autopilot Pitch Command up",	func{extra500.autopilot.onClickPitchCommand(-1); } 	);
-	
+		
+		eSystem.circuitBreaker.AP_CMPTR.addOutput(me);
+		me.setListerners();
 	},
 	
 };
