@@ -32,12 +32,14 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 	extra500.gearSystem.init();
 	extra500.flapSystem.init();
 	extra500.fuelSystem.init();
+	extra500.autopilot.init();
 	
 	IFD.LH.timerLoop.start();
 	IFD.RH.timerLoop.start();
 	extra500.eSystem.timerLoop.start();
 	extra500.engine.timerLoop.start();
 	extra500.fuelSystem.timerLoop.start();
+	extra500.autopilot.timerLoop.start();
 	#extra500.gearSystem.timerLoop.start();
 	#extra500.flapSystem.timerLoop.start();
 

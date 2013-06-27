@@ -260,6 +260,40 @@ var AutopilotClass = {
 					
 	},
 	init : func(){
+		print("AutopilotClass.init() ... ");
+		eSystem.switch.AutopilotMaster.onStateChange = func(n){
+			me._state = n.getValue();
+			print(me._name~"onStateChange("~me._state~") ...");
+			if (me._state == 1){
+				autopilot.nAPState.setValue(1);
+				autopilot.nSetAP.setValue(1);
+				autopilot.nSetFD.setValue(0);
+			}elsif(me._state == 0){
+				autopilot.nAPState.setValue(1);
+				autopilot.nSetAP.setValue(0);
+				autopilot.nSetFD.setValue(1);
+			}else{
+				#Power off
+				autopilot.nAPState.setValue(0);
+				autopilot.nSetAP.setValue(0);
+				autopilot.nSetFD.setValue(0);
+			}
+		};
+		eSystem.switch.AutopilotPitchTrim.onStateChange = func(n){
+			me._state = n.getValue();
+			autopilot.nSetTrim.setValue(me._state);	
+		};
+		eSystem.switch.AutopilotYawDamper.onStateChange = func(n){
+			me._state = n.getValue();
+			autopilot.nSetYawDamper.setValue(me._state);
+		};
+		eSystem.switch.AutopilotYawTrim.onStateChange = func(n){
+			me._state = n.getValue();
+			autopilot.nSetYawTrim.setValue(me._state);
+		};
+		
+		
+		
 		
 		UI.register("Autopilot HDG", 		func{extra500.autopilot.onClickHDG(); } 	);
 		UI.register("Autopilot HDG+NAV", 	func{extra500.autopilot.onClickHDGNAV(); } 	);

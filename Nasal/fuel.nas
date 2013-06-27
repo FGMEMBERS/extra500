@@ -28,6 +28,10 @@ var FuelSystemClass = {
 			ServiceClass.new(root,name)
 		]};
 		
+		m.nFuelPump1		= m._nRoot.initNode("FuelPump1/state",0,"BOOL");
+		m.nFuelPump2		= m._nRoot.initNode("FuelPump2/state",0,"BOOL");
+		
+		
 		m.nTankLeftAuxiliary 	= props.globals.getNode("/consumables/fuel/tank[0]",1);
 		m.nTankLeftMain 	= props.globals.getNode("/consumables/fuel/tank[1]",1);
 		m.nTankLeftCollector 	= props.globals.getNode("/consumables/fuel/tank[2]",1);
