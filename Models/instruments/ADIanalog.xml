@@ -86,5 +86,20 @@
 			<z>1</z>
 		</axis>
 	</animation>
+	
+<!-- Dimming Instruments -->
+<animation>
+	<type>material</type>
+	<object-name>scheibe.vorne</object-name>
+	<object-name>scheibe.hinten</object-name>
+	<object-name>scheibe.innen</object-name>
+	<emission>	
+		<red>1.0</red>	
+		<green>1.0</green>	
+		<blue>1.0</blue>
+		<factor-prop>/extra500/instrumentation/StbyHSI/Backlight/state</factor-prop>
+	</emission>
+</animation>
+
 </PropertyList>
 

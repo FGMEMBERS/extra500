@@ -81,6 +81,7 @@ var GearSystemClass = {
 		m._nRightGearMassLocationX = props.globals.getNode("/fdm/jsbsim/inertia/pointmass-location-X-inches[8]",1);
 		m._nRightGearMassLocationZ = props.globals.getNode("/fdm/jsbsim/inertia/pointmass-location-Z-inches[8]",1);
 
+		m._testListener = nil;
 		m._gearListener = nil;
 		m._gearPosition = 0;
 	
@@ -137,7 +138,15 @@ var GearSystemClass = {
 		UI.register("Gear down",	func{me._swtGear.onClick(1); } 	);
 		
 		me._gearListener = setlistener(me._nPositionNose,func(n){me._onGearChange(n);},1,0);
+		me._testListener = setlistener("/extra500/system/dimming/Test",func(n){me._onDimTestChange(n);},1,0);
 		
+	},
+	_onDimTestChange : func(n){
+		if (n.getValue() == 1){
+			me._leds.testOn();
+		}else{
+			me._leds.testOff();
+		}
 	},
 	_onGearChange : func(n){
 		me._gearPosition = n.getValue();

@@ -30,7 +30,7 @@ var AutopilotClass = {
 		
 		
 		m.dimmingVolt = 0.0;
-				
+		
 		
 		m.ndisengSound  = props.globals.initNode("/autopilot/mode/disengsound",0,"INT");
 		m.nModeDiseng	= props.globals.initNode("/autopilot/mode/diseng",0,"INT");
@@ -67,6 +67,10 @@ var AutopilotClass = {
 		m.nCurrentAlt 	= props.globals.getNode("/instrumentation/altimeter-IFD-LH/indicated-altitude-ft");	
 		m.nAlterror 	= props.globals.getNode("/autopilot/alt-channel/alt-error-ft");															
 
+		m._nBrightness		= props.globals.initNode("/extra500/system/dimming/Instrument",0.0,"DOUBLE");
+		m._brightness		= 0;
+		m._brightnessListener   = nil;
+		m._nBacklight 		= m._nRoot.initNode("Backlight/state",0.0,"DOUBLE");
 		
 		
 		m.dt = 0;
@@ -76,15 +80,26 @@ var AutopilotClass = {
 		
 		return m;
 	},
+	setListerners : func() {
+		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0);
+		me._ampereListener 	= setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0);
+		me._brightnessListener	= setlistener(me._nBrightness,func(n){me._onBrightnessChange(n);},1,0);
+	},
+	_onBrightnessChange : func(n){
+		me._brightness = n.getValue();
+		me.electricWork();
+	},
 	electricWork : func(){
 		if (eSystem.switch.AutopilotMaster._state >= 0 and me._volt > 22.0){
 			me._watt = me._nWatt.getValue();
 			me._ampere = me._watt / me._volt;
+			me._ampere += (0.3 * me._brightness) / me._volt;
 			me.nAPState.setValue(1);
 		}else{
 			me._ampere = 0;
 			me.nAPState.setValue(0);
 		}
+		me._nBacklight.setValue(me._brightness);
 		me._nAmpere.setValue(me._ampere);
 	},
 	update : func(){
@@ -273,7 +288,7 @@ var AutopilotClass = {
 					
 	},
 	init : func(){
-		print("AutopilotClass.init() ... ");
+		#print("AutopilotClass.init() ... ");
 		eSystem.switch.AutopilotMaster.onStateChange = func(n){
 			me._state = n.getValue();
 			print(me._name~"onStateChange("~me._state~") ...");
@@ -338,6 +353,7 @@ var AutopilotClass = {
 		
 		eSystem.circuitBreaker.AP_CMPTR.addOutput(me);
 		me.setListerners();
+		
 	},
 	
 };

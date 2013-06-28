@@ -35,7 +35,7 @@ var DimmingSystemClass = {
 		m.nSwitch 	= m._nRoot.initNode("Switch",0.0,"DOUBLE");
 		m.nAnnunciator 	= m._nRoot.initNode("Annunciator",0.0,"DOUBLE");
 		
-		m.nVmoToneTest	= props.globals.initNode("/extra500/sound/VmoToneTest",0,"BOOL");
+		m.nTest	= m._nRoot.initNode("Test",0,"BOOL");
 		
 		m.keypad 	= 0.0;
 		m.glare 	= 0.0;
@@ -48,6 +48,7 @@ var DimmingSystemClass = {
 		eSystem.switch.Instrument.onStateChange = func(n){
 			me._state = n.getValue();
 			m.checkDimming();
+			lumi.setState(me._state);
 		};
 		eSystem.switch.Night.onStateChange = func(n){
 			me._state = n.getValue();
@@ -82,38 +83,32 @@ var DimmingSystemClass = {
 		return m;
 	},
 	checkDimming : func(){
-		if (eSystem.switch.Instrument._state == 1){
-			
+				
 			me.keypad 	= 1.0;
 			me.glare 	= 1.0;
 			me.instrument 	= 1.0;
 			me.switch 	= 1.0;
 			me.annuciator 	= 1.0;
-			
-			if (eSystem.switch.Night._state == 1){
-				me.keypad 	= eSystem.switch.DimmingKeypad._state;
-				me.glare 	= eSystem.switch.DimmingGlare._state;
-				me.instrument 	= eSystem.switch.DimmingInstrument._state;
-				me.switch 	= eSystem.switch.DimmingSwitch._state;
-				me.annuciator 	= eSystem.switch.DimmingAnnunciator._state;
+		
+		
+		if (eSystem.switch.Night._state == 1){
+				if (eSystem.switch.Instrument._state == 1){
+					me.keypad 	= 0.2+eSystem.switch.DimmingKeypad._state*0.8;
+					me.glare 	= 0.2+eSystem.switch.DimmingGlare._state*0.8;
+					me.instrument 	= 0.2+eSystem.switch.DimmingInstrument._state*0.8;
+					me.switch 	= 0.2+eSystem.switch.DimmingSwitch._state*0.8;
+					me.annuciator 	= 0.2+eSystem.switch.DimmingAnnunciator._state*0.8;
+				}
+				me.nTest.setValue(0);
 				
-				me.nVmoToneTest.setValue(0);
-				
-			}elsif (eSystem.switch.Night._state == -1){
-								
-				me.nVmoToneTest.setValue(1);
-			}else{
-								
-				me.nVmoToneTest.setValue(0);
-			}
+		}elsif (eSystem.switch.Night._state == -1){
+							
+			me.nTest.setValue(1);
 		}else{
-			
-			me.keypad 	= 1.0;
-			me.glare 	= 1.0;
-			me.instrument 	= 1.0;
-			me.switch 	= 1.0;
-			me.annuciator 	= 1.0;
+							
+			me.nTest.setValue(0);
 		}
+			
 		
 		me.nKeypad.setValue(me.keypad);
 		me.nGlare.setValue(me.glare);

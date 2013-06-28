@@ -52,11 +52,11 @@
 
 
 
-<!-- Canvas Test -->
+<!-- Canvas Test 
  <model>
   <path>canvas-test.xml</path>
  </model>
-
+-->
 
 <!-- Submodels -->
 <model>

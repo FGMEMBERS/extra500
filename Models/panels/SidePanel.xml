@@ -2000,22 +2000,15 @@
 </animation>
 
 
-<!--Dimming Test -->
+<!--Dimming Lumi Folie -->
 <animation>
         <type>material</type>
         <object-name>SidePanel</object-name>
-
-		<condition>
-		<equals>
-		<property>extra500/panel/Side/Light/Instrument/state</property>
-		<value>1</value>
-		</equals>
-	</condition>
-        <emission>
-            <red>.4</red>
-            <green>.4</green>
-            <blue>.4</blue>
-            <factor-prop>extra500/panel/Master/Dimming/Instrument/state</factor-prop>
+	<emission>
+	    <red>0.14</red>
+            <green>0.72</green>
+	    <blue>0.90</blue>
+	    <factor-prop>/extra500/light/Lumi/Backlight/state</factor-prop>
         </emission>
 </animation>
 

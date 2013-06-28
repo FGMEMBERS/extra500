@@ -527,9 +527,11 @@ var LedClass = {
 		m._nBrightness		= props.globals.initNode(bright,1.0,"DOUBLE");
 		m._brightness		= 0;
 		m._brightnessListener   = nil;
+		m._nState		= m._nRoot.initNode("state",0.0,"DOUBLE",1);
 		
 		m._on = 0;
-		m._light = 0;
+		m._test = 0;
+		m._state = 0;
 		return m;
 	},
 	setListerners : func() {
@@ -542,21 +544,25 @@ var LedClass = {
 		me.electricWork();
 	},
 	electricWork : func(){
-		if (me._on == 1 and me._volt > 22.0){
+		if ((me._on == 1 or me._test ==1) and me._volt > 22.0){
 			me._watt = me._nWatt.getValue() * me._brightness;
 			me._ampere = me._watt / me._volt;
-			me._light = me._brightness;
+			me._state = me._brightness;
 		}else{
 			me._ampere = 0;
-			me._light = 0;
+			me._state = 0;
 		}
-		
 		me._nAmpere.setValue(me._ampere);
-		me.shine(me._light);
+		me._nState.setValue(me._state);
+		me.shine(me._state);
 	},
 	# for override to get the light
 	shine : func(light){
 		
+	},
+	setState : func(value){
+		me._on = value;
+		me.electricWork();
 	},
 	on : func(){
 		me._on = 1;
@@ -564,6 +570,14 @@ var LedClass = {
 	},
 	off : func(){
 		me._on = 0;
+		me.electricWork();
+	},
+	testOn : func(){
+		me._test = 1;
+		me.electricWork();
+	},
+	testOff : func(){
+		me._test = 0;
 		me.electricWork();
 	},
 	
@@ -966,37 +980,37 @@ eSystem.circuitBreaker = {
 
 eSystem.switch.Battery.onStateChange = func(n){
 	me._state = n.getValue();
-	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
+	#print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
 	eSystem.checkSource();
 };
 
 eSystem.switch.Alternator.onStateChange = func(n){
 	me._state = n.getValue();
-	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
+	#print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
 	eSystem.checkSource();
 };
 
 eSystem.switch.Generator.onStateChange = func(n){
 	me._state = n.getValue();
-	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
+	#print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
 	eSystem.checkSource();
 };
 
 eSystem.switch.External.onStateChange = func(n){
 	me._state = n.getValue();
-	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
+	#print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
 	eSystem.checkSource();
 };
 
 eSystem.switch.GeneratorTest.onStateChange = func(n){
 	me._state = n.getValue();
-	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
+	#print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
 	eSystem.checkSource();
 };
 
 eSystem.switch.Avionics.onStateChange = func(n){
 	me._state = n.getValue();
-	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
+	#print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
 	
 };
 
@@ -1019,7 +1033,7 @@ eSystem.init = func(){
 		me.circuitBreaker[i].setListerners();
 		me.addOutput(me.circuitBreaker[i]);
 	}
-	print("Consumer count " ~ consumerCount);
+	#print("Consumer count " ~ consumerCount);
 	#connectStatik();
 };
 

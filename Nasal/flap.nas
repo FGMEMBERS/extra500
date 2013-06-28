@@ -90,7 +90,9 @@ var FlapSystemClass = {
 		};
 		m._motor 	= FlapMotorClass.new("extra500/system/flap/motor","Flap Motor",90.0);
 		
-		m._leds = LedClass.new("/extra500/system/flap/leds","Flap Leds","extra500/system/dimming/Annunciator",0.3);
+		m._ledTrans = LedClass.new("/extra500/system/flap/leds","Flap Led Trans","extra500/system/dimming/Annunciator",0.1);
+		m._led15 = LedClass.new("/extra500/system/flap/leds","Flap Led 15","extra500/system/dimming/Annunciator",0.1);
+		m._led30 = LedClass.new("/extra500/system/flap/leds","Flap Led 30","extra500/system/dimming/Annunciator",0.1);
 		
 		m._nLEDTrans 		= props.globals.initNode("/extra500/light/FlapTransition/state",0.0,"DOUBLE");
 		m._nLED15 		= props.globals.initNode("/extra500/light/Flap15/state",0.0,"DOUBLE");
@@ -109,14 +111,28 @@ var FlapSystemClass = {
 		me._switch.setListerners();
 		me._motor.setListerners();
 		
-		me._leds.shine = func(light){
-			flapSystem.updateLeds(light);
+		me._ledTrans.shine = func(light){
+			flapSystem._nLEDTrans.setValue(light);
 		};
-		me._leds.setListerners();
+		me._ledTrans.setListerners();
+		
+		me._led15.shine = func(light){
+			flapSystem._nLED15.setValue(light);
+		};
+		me._led15.setListerners();
+		
+		me._led30.shine = func(light){
+			flapSystem._nLED30.setValue(light);
+		};
+		me._led30.setListerners();
+		
+		
 		
 		
 		eSystem.circuitBreaker.FLAP.addOutput(me._motor);
-		eSystem.circuitBreaker.WARN_LT.addOutput(me._leds);
+		eSystem.circuitBreaker.WARN_LT.addOutput(me._ledTrans);
+		eSystem.circuitBreaker.WARN_LT.addOutput(me._led15);
+		eSystem.circuitBreaker.WARN_LT.addOutput(me._led30);
 		
 		
 		UI.register("Flaps down", 	func{me._switch.onAdjust(-1); } 	);
@@ -127,29 +143,42 @@ var FlapSystemClass = {
 		
 		
 		me._flapListener = setlistener(me._nFlapPosition,func(n){me._onFlapChange(n);},1,0);
+		me._testListener = setlistener("/extra500/system/dimming/Test",func(n){me._onDimTestChange(n);},1,0);
+		
+	},
+	_onDimTestChange : func(n){
+		if (n.getValue() == 1){
+			me._ledTrans.testOn();
+			me._led15.testOn();
+			me._led30.testOn();
+		}else{
+			me._ledTrans.testOff();
+			me._led15.testOff();
+			me._led30.testOff();
+		}
 	},
 	_onFlapChange : func(n){
 		me._flapPosition = n.getValue();
 		me.update();
 	},
-	updateLeds : func(light){
+	updateLeds : func(){
 		#me._flapPosition = me._nFlapPosition.getValue();
 		if(me._flapPosition >= 1.0){
-			me._nLED30.setValue(light);
-			me._nLEDTrans.setValue(0);
+			me._led30.on();
+			me._ledTrans.off();
 		}elsif(me._flapPosition > 0.50){
-			me._nLEDTrans.setValue(light);
-			me._nLED30.setValue(0);
-			me._nLED15.setValue(0);
+			me._ledTrans.on();
+			me._led15.off();
+			me._led30.off();
 		}elsif(me._flapPosition >= 0.46666){
-			me._nLED15.setValue(light);
-			me._nLEDTrans.setValue(0);
+			me._ledTrans.off();
+			me._led15.on();
 		}elsif (me._flapPosition > 0){
-			me._nLEDTrans.setValue(light);
-			me._nLED30.setValue(0);
-			me._nLED15.setValue(0);
+			me._ledTrans.on();
+			me._led15.off();
+			me._led30.off();
 		}elsif (me._flapPosition <= 0){
-			me._nLEDTrans.setValue(0);
+			me._ledTrans.off();
 			
 		}
 	},
@@ -157,14 +186,8 @@ var FlapSystemClass = {
 		#me._flapPosition = me._nFlapPosition.getValue();
 				
 		me._motor.drive(me._flapPosition,me._switchFlapPosition[me._switch._state]);
-		
-		if (me._flapPosition > 0){
-			me._leds.on();
-		}else{
-			me._leds.off();
-		}
-		
-		me.updateLeds(me._leds._light);
+				
+		me.updateLeds();
 		
 	}
 };
