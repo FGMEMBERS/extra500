@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-06-26
+      Date:             2013-06-27
 -->
 
 <autopilot name="STEC55X">
@@ -199,6 +199,68 @@
 			<test value="/instrumentation/nav[1]/heading-needle-deflection-norm">
 				/instrumentation/nav-source eq 1
 			</test>
+			<output>/autopilot/radionav-channel/heading-needle-deflection-norm-nlmd</output>
+		</switch>
+
+		<pure_gain name="/autopilot/radionav-channel/heading-needle-deflection-norm-lmd">
+			<input>/autopilot/radionav-channel/heading-needle-deflection-norm-nlmd</input>
+			<gain>1</gain>
+			<clipto>
+				<min>-0.1</min>
+				<max>0.1</max>		
+			</clipto>
+		</pure_gain>
+
+<!-- in soft mode, neglect large needle deflections -->
+		<switch name="needle-deflect-gt-half">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/autopilot/radionav-channel/heading-needle-deflection-norm-nlmd gt 0.5
+				/autopilot/radionav-channel/heading-needle-deflection-norm-nlmd lt -0.5
+			</test>
+			<output>/autopilot/radionav-channel/needle-defl-gt-half</output>
+		</switch>
+
+		<fcs_function name="/autopilot/radionav-channel/timer-soft-lnd">
+			<function>
+				<product>
+					<property>/autopilot/radionav-channel/needle-defl-gt-half</property>
+					<sum> 
+						<property>/autopilot/radionav-channel/timer-soft-lnd</property> 
+						<property>sim-dt-sec</property>
+					</sum>
+				</product>
+			</function>
+		</fcs_function>
+
+		<switch name="needle-deflect-full">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/autopilot/radionav-channel/heading-needle-deflection-norm-nlmd gt 0.99
+				/autopilot/radionav-channel/heading-needle-deflection-norm-nlmd lt -0.99
+			</test>
+			<output>/autopilot/radionav-channel/needle-defl-full</output>
+		</switch>
+
+		<fcs_function name="/autopilot/radionav-channel/timer-full-defl">
+			<function>
+				<product>
+					<property>/autopilot/radionav-channel/needle-defl-full</property>
+					<sum> 
+						<property>/autopilot/radionav-channel/timer-full-defl</property> 
+						<property>sim-dt-sec</property>
+					</sum>
+				</product>
+			</function>
+		</fcs_function>
+
+		<switch name="needle-deflect-s">
+			<default value="/autopilot/radionav-channel/heading-needle-deflection-norm-nlmd"/>
+			<test logic="AND" value="/autopilot/radionav-channel/heading-needle-deflection-norm-lmd">
+				/autopilot/radionav-channel/gain-mode eq 3
+				/autopilot/radionav-channel/timer-soft-lnd lt 60
+				/autopilot/radionav-channel/timer-full-defl lt 3
+			</test>
 			<output>/autopilot/radionav-channel/heading-needle-deflection-norm</output>
 		</switch>
 
@@ -211,7 +273,16 @@
 			<output>/autopilot/radionav-channel/in-range</output>
 		</switch>
 
-<!--logic for cap and soft modes -->
+<!-- getting the "is-localizer-frequency" property from the selected nav unit -->
+		<switch name="locselect">
+			<default value="/instrumentation/nav[0]/frequencies/is-localizer-frequency"/>
+			<test value="/instrumentation/nav[1]/frequencies/is-localizer-frequency">
+				/instrumentation/nav-source eq 1
+			</test>
+			<output>/autopilot/radionav-channel/is-localizer-frequency</output>
+		</switch>
+
+<!--logic for cap and soft modes (VOR ONLY!!!)-->
 <!-- NOTE: gain-mode is changed to 0 or 1 all the time, do not use this property outside this channel!!! -->
 		<switch name="gainmode1">
 			<default value="0"/>
@@ -224,12 +295,12 @@
 			<output>/autopilot/radionav-channel/gain-mode</output>
 		</switch>
 
-		<fcs_function name="/autopilot/radionav-channel/cap-timer">
+		<fcs_function name="/autopilot/radionav-channel/timer-cap">
 			<function>
 				<product>
 					<property>/autopilot/radionav-channel/gain-mode</property>
 					<sum> 
-						<property>/autopilot/radionav-channel/cap-timer</property> 
+						<property>/autopilot/radionav-channel/timer-cap</property> 
 						<property>sim-dt-sec</property>
 					</sum>
 				</product>
@@ -239,7 +310,7 @@
 		<switch name="gainmode2">
 			<default value="/autopilot/radionav-channel/gain-mode"/>
 			<test logic="AND" value="2">
-				/autopilot/radionav-channel/cap-timer gt 15
+				/autopilot/radionav-channel/timer-cap gt 15
 			</test>
 			<output>/autopilot/radionav-channel/gain-mode</output>
 		</switch>
@@ -247,7 +318,7 @@
 		<switch name="gainmode3">
 			<default value="/autopilot/radionav-channel/gain-mode"/>
 			<test logic="AND" value="3">
-				/autopilot/radionav-channel/cap-timer gt 75
+				/autopilot/radionav-channel/timer-cap gt 75
 			</test>
 			<output>/autopilot/radionav-channel/gain-mode</output>
 		</switch>
@@ -272,26 +343,35 @@
 
 <!-- setting gains and max turnrates for CAP, CAP-SOFT and SOFT -->
 
-		<switch name="gain-c">
-			<default value="/autopilot/radionav-channel/gain-n"/>
-			<test value="/autopilot/radionav-channel/gain-c">
+		<switch name="gains/gain-c">
+			<default value="/autopilot/radionav-channel/gains/gain-n"/>
+			<test value="/autopilot/radionav-channel/gains/gain-c">
 				/autopilot/radionav-channel/gain-mode eq 1
 			</test>
 			<output>/autopilot/radionav-channel/gain</output>
 		</switch>
 
-		<switch name="gain-cs">
+		<switch name="gains/gain-cs">
 			<default value="/autopilot/radionav-channel/gain"/>
-			<test value="/autopilot/radionav-channel/gain-cs">
+			<test value="/autopilot/radionav-channel/gains/gain-cs">
 				/autopilot/radionav-channel/gain-mode eq 2
 			</test>
 			<output>/autopilot/radionav-channel/gain</output>
 		</switch>
 
-		<switch name="gain-s">
+		<switch name="gains/gain-s">
 			<default value="/autopilot/radionav-channel/gain"/>
-			<test value="/autopilot/radionav-channel/gain-s">
+			<test value="/autopilot/radionav-channel/gains/gain-s">
 				/autopilot/radionav-channel/gain-mode eq 3
+			</test>
+			<output>/autopilot/radionav-channel/gain</output>
+		</switch>
+
+<!-- gain for LOC -->
+		<switch name="gains/gain-loc">
+			<default value="/autopilot/radionav-channel/gain"/>
+			<test value="/autopilot/radionav-channel/gains/gain-loc">
+				/autopilot/radionav-channel/is-localizer-frequency eq 1
 			</test>
 			<output>/autopilot/radionav-channel/gain</output>
 		</switch>
@@ -310,6 +390,24 @@
 				/autopilot/radionav-channel/gain-mode eq 3
 			</test>
 			<output>/autopilot/radionav-channel/lmd-hdg-error-kp</output>
+		</switch>
+
+<!-- turnrate for LOC -->
+		<switch name="turnrate-loc">
+			<default value="/autopilot/radionav-channel/lmd-hdg-error-kp"/>
+			<test value="/autopilot/radionav-channel/lmd-hdg-error-kp-loc">
+				/autopilot/radionav-channel/is-localizer-frequency eq 1
+			</test>
+			<output>/autopilot/radionav-channel/lmd-hdg-error-kp</output>
+		</switch>
+
+<!-- closure rate for LOC -->
+		<switch name="closurerate-loc">
+			<default value="/autopilot/radionav-channel/tgt-hdg-kd-n"/>
+			<test value="/autopilot/radionav-channel/tgt-hdg-kd-loc">
+				/autopilot/radionav-channel/is-localizer-frequency eq 1
+			</test>
+			<output>/autopilot/radionav-channel/tgt-hdg-kd</output>
 		</switch>
 
 <!--calculating the target heading to intercept the radial-->
@@ -381,7 +479,7 @@
 			<output>/autopilot/radionav-channel/heading-deg</output>
 		</switch>
 
-		<fcs_function name="/autopilot/radionav-channel/heading-1-error-deg">
+		<fcs_function name="/autopilot/radionav-channel/hdg-error/heading-1-error-deg">
 			<function>
 				<difference>
 					<property>/autopilot/radionav-channel/heading-target-deg</property> 
@@ -390,36 +488,36 @@
 			</function>
 		</fcs_function>
 
-		<fcs_function name="/autopilot/radionav-channel/heading-2-error-deg">
+		<fcs_function name="/autopilot/radionav-channel/hdg-error/heading-2-error-deg">
 			<function>
 				<sum>
-					<property>/autopilot/radionav-channel/heading-1-error-deg</property> 
+					<property>/autopilot/radionav-channel/hdg-error/heading-1-error-deg</property> 
 					<value>360</value> 
 				</sum>
 			</function>
 		</fcs_function>
 
-		<fcs_function name="/autopilot/radionav-channel/heading-3-error-deg">
+		<fcs_function name="/autopilot/radionav-channel/hdg-error/heading-3-error-deg">
 			<function>
 				<difference>
-					<property>/autopilot/radionav-channel/heading-1-error-deg</property> 
+					<property>/autopilot/radionav-channel/hdg-error/heading-1-error-deg</property> 
 					<value>360</value> 
 				</difference>
 			</function>
 		</fcs_function>
 
 		<switch name="hdgdirection">
-			<default value="/autopilot/radionav-channel/heading-1-error-deg"/>
-			<test value="/autopilot/radionav-channel/heading-2-error-deg">
-				/autopilot/radionav-channel/heading-1-error-deg lt -180
+			<default value="/autopilot/radionav-channel/hdg-error/heading-1-error-deg"/>
+			<test value="/autopilot/radionav-channel/hdg-error/heading-2-error-deg">
+				/autopilot/radionav-channel/hdg-error/heading-1-error-deg lt -180
 			</test>
-			<output>/autopilot/radionav-channel/heading-4-error-deg</output>
+			<output>/autopilot/radionav-channel/hdg-error/heading-4-error-deg</output>
 		</switch>
 
 		<switch name="hdgdirection2">
-			<default value="/autopilot/radionav-channel/heading-4-error-deg"/>
-			<test value="/autopilot/radionav-channel/heading-3-error-deg">
-				/autopilot/radionav-channel/heading-1-error-deg gt 180
+			<default value="/autopilot/radionav-channel/hdg-error/heading-4-error-deg"/>
+			<test value="/autopilot/radionav-channel/hdg-error/heading-3-error-deg">
+				/autopilot/radionav-channel/hdg-error/heading-1-error-deg gt 180
 			</test>
 			<output>/autopilot/radionav-channel/heading-error-deg</output>
 		</switch>
