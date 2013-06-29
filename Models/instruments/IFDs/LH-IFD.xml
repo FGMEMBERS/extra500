@@ -661,7 +661,7 @@
       </action>
 </animation>
 
-<!-- knobs -->
+<!-- knobs 
 <animation>
 	<type>pick</type>
 	<object-name>BaroKnob</object-name>
@@ -703,6 +703,46 @@
 	</action>
 </animation>
 
+
+<animation>
+        <type>knob</type>
+        <object-name>LKO</object-name>
+        <object-name>LKI</object-name>
+ <!--       <value>0.0</value>
+        <center>...</center>
+        <axis>...</axis> 
+ 
+        <action>
+		<button>3</button>
+		<repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("IFD LH LK >");
+				]]>
+			</script>
+		</binding>
+		</action>
+ 
+        <shift-action>
+            <button>3</button>
+		<repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("IFD LH LK >>");
+				]]>
+			</script>
+		</binding>
+        </shift-action>
+ 
+    </animation>
+
+-->
+
+<!-------------------ALTER TEST-??????????-------------
 <animation>
 	<type>pick</type>
 	<object-name>PFD.R</object-name>
@@ -783,6 +823,9 @@
 		</binding>
 	</action>
 </animation>
+-->
+
+
 
 <!-- alte NON-Canvas-Technologie -->
 <!-- kuenstlicher horizont -->

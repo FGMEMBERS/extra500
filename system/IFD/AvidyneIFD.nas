@@ -654,17 +654,17 @@ var AvidyneIFD = {
 		UI.register("IFD "~me.name~" BARO <",func{me.onClick("BARO <"); } );
 		UI.register("IFD "~me.name~" BARO STD",func{me.onClick("BARO STD"); } );
 		
-		UI.register("IFD "~me.name~" RKI >",func{me.onClick("RK1 >"); } );
-		UI.register("IFD "~me.name~" RKI <",func{me.onClick("RK1 <"); } );
-		UI.register("IFD "~me.name~" RKI",func{me.onClick("RK"); } );
-		UI.register("IFD "~me.name~" RKO >",func{me.onClick("RK2 >"); } );
-		UI.register("IFD "~me.name~" RKO <",func{me.onClick("RK2 <"); } );
+#		UI.register("IFD "~me.name~" RK >>",func{me.onClick("RK >>"); } );
+#		UI.register("IFD "~me.name~" RK <<",func{me.onClick("RK <<"); } );
+#		UI.register("IFD "~me.name~" RK",func{me.onClick("RK"); } );
+#		UI.register("IFD "~me.name~" RK >",func{me.onClick("RK >"); } );
+#		UI.register("IFD "~me.name~" RK <",func{me.onClick("RK <"); } );
 		
-		UI.register("IFD "~me.name~" LKI >",func{me.onClick("LK1 >"); } );
-		UI.register("IFD "~me.name~" LKI <",func{me.onClick("LK1 <"); } );
-		UI.register("IFD "~me.name~" LKI",func{me.onClick("LK"); } );
-		UI.register("IFD "~me.name~" LKO >",func{me.onClick("LK2 >"); } );
-		UI.register("IFD "~me.name~" LKO <",func{me.onClick("LK2 <"); } );
+#		UI.register("IFD "~me.name~" LK >>",func{me.onClick("LK >>"); } );
+#		UI.register("IFD "~me.name~" LK <<",func{me.onClick("LK <<"); } );
+#		UI.register("IFD "~me.name~" LK",func{me.onClick("LK"); } );
+#		UI.register("IFD "~me.name~" LK >",func{me.onClick("LK >"); } );
+#		UI.register("IFD "~me.name~" LK <",func{me.onClick("LK <"); } );
 		
 		
 		UI.register("IFD "~me.name~" DIM >",func{me.onClick("DIM >"); } );
