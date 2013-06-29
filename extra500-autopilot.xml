@@ -287,10 +287,15 @@
 		<switch name="gainmode1">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/autopilot/radionav-channel/in-range eq 1
-				/autopilot/mode/nav eq 1
-				/autopilot/radionav-channel/heading-needle-deflection-norm lt 0.15
-				/autopilot/radionav-channel/heading-needle-deflection-norm gt -0.15
+				<test logic="AND" value="1">
+					/autopilot/radionav-channel/in-range eq 1
+					/autopilot/mode/nav eq 1
+					/autopilot/radionav-channel/heading-needle-deflection-norm lt 0.15
+					/autopilot/radionav-channel/heading-needle-deflection-norm gt -0.15
+				</test>
+				<test logic="AND" value="1">
+					/autopilot/radionav-channel/radials/diff lt 10
+				</test>
 			</test>
 			<output>/autopilot/radionav-channel/gain-mode</output>
 		</switch>
@@ -481,6 +486,23 @@
 			</test>
 			<output>/autopilot/radionav-channel/radial-deg</output>
 		</switch>
+
+		<fcs_function name="/autopilot/radionav-channel/radials/diff">
+			<function>
+				<abs>
+					<difference>
+						<property>/autopilot/radionav-channel/radial-deg</property> 
+						<property>/autopilot/radionav-channel/radials/old-radial</property>
+					</difference>
+				</abs>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/autopilot/radionav-channel/radials/old-radial">
+			<function>
+				<property>/autopilot/radionav-channel/radial-deg</property> 
+			</function>
+		</fcs_function>
 
 		<fcs_function name="/autopilot/radionav-channel/heading-target-deg">
 			<function>
