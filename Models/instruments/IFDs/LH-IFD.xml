@@ -661,7 +661,7 @@
       </action>
 </animation>
 
-<!-- knobs 
+<!-- knobs -->
 <animation>
 	<type>pick</type>
 	<object-name>BaroKnob</object-name>
@@ -704,13 +704,14 @@
 </animation>
 
 
+
 <animation>
         <type>knob</type>
         <object-name>LKO</object-name>
         <object-name>LKI</object-name>
  <!--       <value>0.0</value>
         <center>...</center>
-        <axis>...</axis> 
+        <axis>...</axis> -->
  
         <action>
 		<button>3</button>
@@ -740,9 +741,24 @@
  
     </animation>
 
--->
 
-<!-------------------ALTER TEST-??????????-------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- altes zeugs?
 <animation>
 	<type>pick</type>
 	<object-name>PFD.R</object-name>
@@ -824,8 +840,6 @@
 	</action>
 </animation>
 -->
-
-
 
 <!-- alte NON-Canvas-Technologie -->
 <!-- kuenstlicher horizont -->
