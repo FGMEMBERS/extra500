@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: April 27 2013
 #
-#      Last change:      Eric van den Berg
-#      Date:             2013-06-29
+#      Last change:      Thomas Grossberger
+#      Date:             2013-06-30
 #
 var TODEG = 180/math.pi;
 var TORAD = math.pi/180;
@@ -682,15 +682,18 @@ var AvidyneIFD = {
 		UI.register("IFD "~me.name~" BARO <",func{me.onClick("BARO <"); } );
 		UI.register("IFD "~me.name~" BARO STD",func{me.onClick("BARO STD"); } );
 		
-		UI.register("IFD "~me.name~" RK1 >",func{me.onClick("RK1 >"); } );
-		UI.register("IFD "~me.name~" RK1 <",func{me.onClick("RK1 <"); } );
-		UI.register("IFD "~me.name~" RK2 >",func{me.onClick("RK2 >"); } );
-		UI.register("IFD "~me.name~" RK2 <",func{me.onClick("RK2 <"); } );
+		UI.register("IFD "~me.name~" RK >>",func{me.onClick("RK >>"); } );
+		UI.register("IFD "~me.name~" RK <<",func{me.onClick("RK <<"); } );
+		UI.register("IFD "~me.name~" RK",func{me.onClick("RK"); } );
+		UI.register("IFD "~me.name~" RK >",func{me.onClick("RK >"); } );
+		UI.register("IFD "~me.name~" RK <",func{me.onClick("RK <"); } );
 		
-		UI.register("IFD "~me.name~" LK1 >",func{me.onClick("LK1 >"); } );
-		UI.register("IFD "~me.name~" LK1 <",func{me.onClick("LK1 <"); } );
-		UI.register("IFD "~me.name~" LK2 >",func{me.onClick("LK2 >"); } );
-		UI.register("IFD "~me.name~" LK2 <",func{me.onClick("LK2 <"); } );
+		UI.register("IFD "~me.name~" LK >>",func{me.onClick("LK >>"); } );
+		UI.register("IFD "~me.name~" LK <<",func{me.onClick("LK <<"); } );
+		UI.register("IFD "~me.name~" LK",func{me.onClick("LK"); } );
+		UI.register("IFD "~me.name~" LK >",func{me.onClick("LK >"); } );
+		UI.register("IFD "~me.name~" LK <",func{me.onClick("LK <"); } );
+		
 		
 		UI.register("IFD "~me.name~" DIM >",func{me.onClick("DIM >"); } );
 		UI.register("IFD "~me.name~" DIM <",func{me.onClick("DIM <"); } );
