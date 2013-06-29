@@ -63,19 +63,29 @@ var StarterClass = {
 		};
 		m._starter		= 0;
 		m.nGenerator     	= props.globals.initNode("/controls/electric/engine/generator",0,"BOOL");
-		m.nStarter		= props.globals.initNode("/controls/engines/engine[0]/starter",0,"BOOL");
+		m._nStarter		= props.globals.initNode("/controls/engines/engine[0]/starter",0,"BOOL");
+		m._starterListener	= nil;
 		return m;
+	},
+	setListerners : func() {
+		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0);
+		me._ampereListener 	= setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0);
+		me._starterListener 	= setlistener(me._nStarter,func(n){me._onStarterChange(n);},1,0);
+	},
+	_onStarterChange : func(n){
+		me._starter		= n.getValue();
+		me.electricWork();
 	},
 	electricWork : func(){
 		if (me._starter == 1 and me._volt > 22.0){
 			me._watt = me._nWatt.getValue();
 			me._ampere = me._watt / me._volt;
 			me.nGenerator.setValue(1);
-			me.nStarter.setValue(1);
+			me._nStarter.setValue(1);
 		}else{
 			me._ampere = 0;
 			me.nGenerator.setValue(0);
-			me.nStarter.setValue(0);
+			me._nStarter.setValue(0);
 		}
 		me._nAmpere.setValue(me._ampere);
 	},
@@ -100,6 +110,7 @@ var EngineClass = {
 		m.nIsRunning		= props.globals.initNode("/fdm/jsbsim/propulsion/engine/set-running",0,"BOOL");
 		m.nTRQ			= props.globals.initNode("/fdm/jsbsim/aircraft/engine/TRQ-perc",0.0,"DOUBLE");
 		m.nOilPress		= props.globals.initNode("/fdm/jsbsim/aircraft/engine/OP-psi",0.0,"DOUBLE");
+		m._nN1			= props.globals.initNode("/engines/engine[0]/n1");
 		
 		m.nCutOff		= props.globals.initNode("/controls/engines/engine[0]/cutoff",0,"BOOL");
 		m.nReverser		= props.globals.initNode("/controls/engines/engine[0]/reverser",0,"BOOL");
@@ -162,6 +173,8 @@ var EngineClass = {
 				}
 			}
 		}
+		
+		
 
 	},
 	onCutoffClick : func(value = nil){
@@ -219,6 +232,7 @@ var EngineClass = {
 		eSystem.addOutput(me.starter);
 	},
 	update : func(){
+		
 		if(me.nTRQ.getValue() < 35.0){
 			me.nLowTorquePress.setValue(1);
 		}else{
