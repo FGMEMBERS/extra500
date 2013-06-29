@@ -17,7 +17,7 @@
 #      Date: May 18 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             2013-06-16
+#      Date:             2013-06-28
 #
 
 var Autopilot = {
@@ -47,6 +47,7 @@ var Autopilot = {
 		m.nModeCws 	= props.globals.initNode("/autopilot/mode/cws",0,"INT");
 		m.nModeFail 	= props.globals.initNode("/autopilot/mode/fail",0,"INT");
 		m.nModeTrim 	= props.globals.initNode("/autopilot/mode/trim",0,"INT");
+		m.nModeGSDisable = props.globals.initNode("/autopilot/mode/gsdisable",0,"INT");
 		
 		
 		m.nSetAP 		= props.globals.initNode("/autopilot/settings/ap",0,"BOOL");			# Master Panel AP
@@ -61,6 +62,8 @@ var Autopilot = {
 		m.nSetAltitudeBugFt 	= props.globals.initNode("/autopilot/settings/target-altitude-ft",0,"DOUBLE");	# Keypad
 		m.nSetTargetAltitudeFt 	= props.globals.initNode("/autopilot/alt-channel/target-alt-ft",0,"DOUBLE");
 		m.nSetVerticalSpeedFpm 	= props.globals.initNode("/autopilot/settings/vertical-speed-fpm",0,"DOUBLE");  # Autopilot Panel
+		m.nIsLocalizer		= props.globals.initNode("/autopilot/radionav-channel/is-localizer-frequency",0,"BOOL");
+		m.nInRange		= props.globals.initNode("/autopilot/radionav-channel/in-range",0,"DOUBLE");	
 		
 		m.nAPState 	= props.globals.getNode("/extra500/instrumentation/Autopilot/state");		
 		m.nTCSpin 	= props.globals.getNode("/instrumentation/turn-indicator/spin");			
@@ -383,7 +386,19 @@ var Autopilot = {
 		}
 	},
 	onClickAPR : func(){
-		me.nModeApr.setValue(!me.nModeApr.getValue());
+# setting /mode/apr
+		if ( (me.nModeNav.getValue() == 1) and (me.nIsLocalizer.getValue() == 1) and (me.nInRange.getValue() == 1) ) {
+			me.nModeApr.setValue(1);
+		} else {
+			me.nModeApr.setValue(0);
+		}
+# the apr knob can disable and enable the GS (armed)
+		if (me.nModeGs.getValue() == 1 ) {
+			me.nModeGSDisable.setValue(1);
+			onClickALT();
+		} else {
+			me.nModeGSDisable.setValue(0);
+		}
 	},
 	onClickREV : func(){
 		me.nModeRev.setValue(!me.nModeRev.getValue());

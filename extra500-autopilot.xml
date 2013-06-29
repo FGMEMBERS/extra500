@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-06-27
+      Date:             2013-06-29
 -->
 
 <autopilot name="STEC55X">
@@ -282,7 +282,7 @@
 			<output>/autopilot/radionav-channel/is-localizer-frequency</output>
 		</switch>
 
-<!--logic for cap and soft modes (VOR ONLY!!!)-->
+<!--logic for cap and soft modes -->
 <!-- NOTE: gain-mode is changed to 0 or 1 all the time, do not use this property outside this channel!!! -->
 		<switch name="gainmode1">
 			<default value="0"/>
@@ -410,6 +410,26 @@
 			<output>/autopilot/radionav-channel/tgt-hdg-kd</output>
 		</switch>
 
+<!-- min relative hdg for LOC -->
+		<switch name="relative-hdg-loc1">
+			<default value="/autopilot/radionav-channel/relative-hdg-extr/rel-hdg-n-min"/>
+			<test logic="AND" value="/autopilot/radionav-channel/relative-hdg-extr/rel-hdg-loc-min">
+				/autopilot/radionav-channel/is-localizer-frequency eq 1
+				/autopilot/radionav-channel/gain-mode ge 1
+			</test>
+			<output>/autopilot/radionav-channel/rel-hdg-min</output>
+		</switch>
+
+<!-- max relative hdg for LOC -->
+		<switch name="relative-hdg-loc2">
+			<default value="/autopilot/radionav-channel/relative-hdg-extr/rel-hdg-n-max"/>
+			<test logic="AND" value="/autopilot/radionav-channel/relative-hdg-extr/rel-hdg-loc-max">
+				/autopilot/radionav-channel/is-localizer-frequency eq 1
+				/autopilot/radionav-channel/gain-mode ge 1
+			</test>
+			<output>/autopilot/radionav-channel/rel-hdg-max</output>
+		</switch>
+
 <!--calculating the target heading to intercept the radial-->
 		<pid name="/autopilot/radionav-channel/relative-diff-heading-target-deg">
 			<input>/autopilot/radionav-channel/heading-needle-deflection-norm</input>
@@ -449,8 +469,8 @@
 			<input>/autopilot/radionav-channel/heading-needle-deflection-norm</input>
 			<gain>/autopilot/radionav-channel/p-gain-lmd</gain>
 			<clipto>
-				<min>-45</min>
-				<max>45</max>
+				<min>/autopilot/radionav-channel/rel-hdg-min</min>
+				<max>/autopilot/radionav-channel/rel-hdg-max</max>
 			</clipto>
 		</pure_gain>
 
@@ -613,6 +633,49 @@
 			</test>
 			<output>/controls/flight/aileron</output>
 		</switch>
+
+<!-- GLIDESLOPE-->
+		
+	<!-- arming GS -->
+		<switch name="gsselect">
+			<default value="/instrumentation/nav[0]/gs-in-range"/>
+			<test value="/instrumentation/nav[1]/gs-in-range">
+				/instrumentation/nav-source eq 1
+			</test>
+			<output>/autopilot/radionav-channel/gs-in-range</output>
+		</switch>
+
+		<switch name="gsselect2">
+			<default value="/instrumentation/nav[0]/has-gs"/>
+			<test value="/instrumentation/nav[1]/has-gs">
+				/instrumentation/nav-source eq 1
+			</test>
+			<output>/autopilot/radionav-channel/has-gs</output>
+		</switch>
+
+		<switch name="gsselect3">
+			<default value="/instrumentation/nav[0]/gs-needle-deflection-norm"/>
+			<test value="/instrumentation/nav[1]/gs-needle-deflection-norm">
+				/instrumentation/nav-source eq 1
+			</test>
+			<output>/autopilot/radionav-channel/gs-needle-deflection-norm</output>
+		</switch>
+
+		<switch name="armgs">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/autopilot/mode/nav eq 1
+				/autopilot/mode/apr eq 1
+				/autopilot/mode/alt eq 1
+				/autopilot/radionav-channel/gs-in-range eq 1
+				/autopilot/radionav-channel/is-localizer-frequency eq 1
+				/autopilot/radionav-channel/needle-defl-gt-half eq 0
+				/autopilot/radionav-channel/gs-needle-deflection-norm lt 0.1
+				/autopilot/mode/gsdisable eq 0
+			</test>
+			<output>/autopilot/mode/gs</output>
+		</switch>
+
 
 
 	</channel>
@@ -1177,7 +1240,7 @@
 			<output>/autopilot/yawtrim-channel/cmd-ap-rudder-pos-norm</output>
 		</actuator>
 
-<!--because of some reason /controls/flight/rudder and /fdm/jsbsim/fcs/rudder-x are reversed in sign, so that is ONLY why the lower function exists-->
+<!--because of some reason /controls/flight/rudder and /fdm/jsbsim/fcs/rudder-x are reversed in sign and that is the ONLY reason why the lower function exists-->
 		<fcs_function name="/autopilot/yawtrim-channel/cmd-ap-rudder-pos-norm-neg">
 			<function>
 				<product>
