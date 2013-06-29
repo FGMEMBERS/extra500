@@ -17,7 +17,7 @@
 #      Date: April 27 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             2013-06-17
+#      Date:             2013-06-29
 #
 var TODEG = 180/math.pi;
 var TORAD = math.pi/180;
@@ -126,10 +126,12 @@ var AvidyneData = {
 		m.GSinRange = 0;
 		m.NAVinRange = 0;
 		m.NAVLOC = 0;
-		m.nActiveNav = props.globals.initNode("/instrumentation/nav[0]");
-		m.nHDI = props.globals.initNode("/instrumentation/nav[0]/heading-needle-deflection-norm",0.0,"DOUBLE");
-		m.nVDI = props.globals.initNode("/instrumentation/nav[0]/gs-needle-deflection-norm",0.0,"DOUBLE");
-		
+		m.nHDI = props.globals.initNode("/autopilot/radionav-channel/heading-needle-deflection-norm",0.0,"DOUBLE");
+		m.nVDI = props.globals.initNode("/autopilot/radionav-channel/gs-needle-deflection-norm",0.0,"DOUBLE");
+		m.nGSable = props.globals.initNode("/autopilot/radionav-channel/has-gs",0.0,"DOUBLE");
+		m.nGSinRange = props.globals.initNode("/autopilot/radionav-channel/gs-in-range",0.0,"DOUBLE");
+		m.nNAVinRange = props.globals.initNode("/autopilot/radionav-channel/in-range",0.0,"DOUBLE");
+		m.nNAVLOC = props.globals.initNode("/autopilot/radionav-channel/is-localizer-frequency",0.0,"DOUBLE");
 		
 		
 		
@@ -176,12 +178,12 @@ var AvidyneData = {
 	#enviroment
 		me.OAT = me.nOAT.getValue();
 	#DI 
-		me.HDI 		= me.nActiveNav.getChild("heading-needle-deflection-norm").getValue();
-		me.VDI 		= -me.nActiveNav.getChild("gs-needle-deflection-norm").getValue();
-		me.GSable 	= me.nActiveNav.getChild("has-gs").getValue();
-		me.GSinRange 	= me.nActiveNav.getChild("gs-in-range").getValue();
-		me.NAVinRange 	= me.nActiveNav.getChild("in-range").getValue();
-		me.NAVLOC	= me.nActiveNav.getChild("nav-loc").getValue();
+		me.HDI 		= me.nHDI.getValue();
+		me.VDI 		= -me.nVDI.getValue();
+		me.GSable 	= me.nGSable.getValue();
+		me.GSinRange 	= me.nGSinRange.getValue();
+		me.NAVinRange 	= me.nNAVinRange.getValue();
+		me.NAVLOC	= me.nNAVLOC.getValue();
 		
 	
 	},

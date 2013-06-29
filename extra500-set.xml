@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2013-06-28
+      Date:             2013-06-29
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -624,6 +624,7 @@ JSBSim Extra Aircraft - Extra 500.
 	<in-range type="bool">false</in-range>
 	<gs-needle-deflection-norm>0</gs-needle-deflection-norm>
 	<gs-in-range type="bool">false</gs-in-range>
+	<has-gs type="bool">false</has-gs>
 	<radials>
 		<selected-deg>0</selected-deg>
 	</radials>
@@ -640,6 +641,7 @@ JSBSim Extra Aircraft - Extra 500.
 	<in-range type="bool">false</in-range>
 	<gs-needle-deflection-norm>0</gs-needle-deflection-norm>
 	<gs-in-range type="bool">false</gs-in-range>
+	<has-gs type="bool">false</has-gs>
 	<radials>
 		<selected-deg>0</selected-deg>
 	</radials>

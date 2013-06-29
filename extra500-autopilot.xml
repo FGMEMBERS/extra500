@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-06-28
+      Date:             2013-06-29
 -->
 
 <autopilot name="STEC55X">
@@ -645,7 +645,15 @@
 			<output>/autopilot/radionav-channel/gs-in-range</output>
 		</switch>
 
-		<switch name="gsselect">
+		<switch name="gsselect2">
+			<default value="/instrumentation/nav[0]/has-gs"/>
+			<test value="/instrumentation/nav[1]/has-gs">
+				/instrumentation/nav-source eq 1
+			</test>
+			<output>/autopilot/radionav-channel/has-gs</output>
+		</switch>
+
+		<switch name="gsselect3">
 			<default value="/instrumentation/nav[0]/gs-needle-deflection-norm"/>
 			<test value="/instrumentation/nav[1]/gs-needle-deflection-norm">
 				/instrumentation/nav-source eq 1
