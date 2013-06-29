@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             2013-06-24
+      Date:             2013-06-30
 
 -->
 
@@ -58,7 +58,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH L1 >");
+				UI.click("IFD LH L1 <");
 				]]>
 			</script>
 		</binding>
@@ -76,7 +76,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH L1 <");
+				UI.click("IFD LH L1 >");
 				]]>
 			</script>
 		</binding>
@@ -94,7 +94,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH L2 >");
+				UI.click("IFD LH L2 <");
 				]]>
 			</script>
 		</binding>
@@ -112,7 +112,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH L2 <");
+				UI.click("IFD LH L2 >");
 				]]>
 			</script>
 		</binding>
@@ -130,7 +130,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH L3 >");
+				UI.click("IFD LH L3 <");
 				]]>
 			</script>
 		</binding>
@@ -148,7 +148,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH L3 <");
+				UI.click("IFD LH L3 >");
 				]]>
 			</script>
 		</binding>
@@ -166,7 +166,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH L4 >");
+				UI.click("IFD LH L4 <");
 				]]>
 			</script>
 		</binding>
@@ -184,7 +184,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH L4 <");
+				UI.click("IFD LH L4 >");
 				]]>
 			</script>
 		</binding>
@@ -202,7 +202,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH L5 >");
+				UI.click("IFD LH L5 <");
 				]]>
 			</script>
 		</binding>
@@ -220,7 +220,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH L5 <");
+				UI.click("IFD LH L5 >");
 				]]>
 			</script>
 		</binding>
@@ -238,7 +238,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH L6 >");
+				UI.click("IFD LH L6 <");
 				]]>
 			</script>
 		</binding>
@@ -256,7 +256,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH L6 <");
+				UI.click("IFD LH L6 >");
 				]]>
 			</script>
 		</binding>
@@ -275,7 +275,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH R1 >");
+				UI.click("IFD LH R1 <");
 				]]>
 			</script>
 		</binding>
@@ -293,7 +293,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH R1 <");
+				UI.click("IFD LH R1 >");
 				]]>
 			</script>
 		</binding>
@@ -311,7 +311,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH R2 >");
+				UI.click("IFD LH R2 <");
 				]]>
 			</script>
 		</binding>
@@ -329,7 +329,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH R2 <");
+				UI.click("IFD LH R2 >");
 				]]>
 			</script>
 		</binding>
@@ -347,7 +347,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH R3 >");
+				UI.click("IFD LH R3 <");
 				]]>
 			</script>
 		</binding>
@@ -365,7 +365,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH R3 <");
+				UI.click("IFD LH R3 >");
 				]]>
 			</script>
 		</binding>
@@ -383,7 +383,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH R4 >");
+				UI.click("IFD LH R4 <");
 				]]>
 			</script>
 		</binding>
@@ -401,7 +401,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH R4 <");
+				UI.click("IFD LH R4 >");
 				]]>
 			</script>
 		</binding>
@@ -419,7 +419,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH R5 >");
+				UI.click("IFD LH R5 <");
 				]]>
 			</script>
 		</binding>
@@ -437,7 +437,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH R5 <");
+				UI.click("IFD LH R5 >");
 				]]>
 			</script>
 		</binding>
@@ -455,7 +455,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH R6 >");
+				UI.click("IFD LH R6 <");
 				]]>
 			</script>
 		</binding>
@@ -473,7 +473,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH R6 <");
+				UI.click("IFD LH R6 >");
 				]]>
 			</script>
 		</binding>
@@ -492,7 +492,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH PFD >");
+				UI.click("IFD LH PFD <");
 				]]>
 			</script>
 		</binding>
@@ -510,7 +510,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH PFD <");
+				UI.click("IFD LH PFD >");
 				]]>
 			</script>
 		</binding>
@@ -528,7 +528,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH FMS >");
+				UI.click("IFD LH FMS <");
 				]]>
 			</script>
 		</binding>
@@ -546,7 +546,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH FMS <");
+				UI.click("IFD LH FMS >");
 				]]>
 			</script>
 		</binding>
@@ -564,7 +564,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH MAP >");
+				UI.click("IFD LH MAP <");
 				]]>
 			</script>
 		</binding>
@@ -582,7 +582,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH MAP <");
+				UI.click("IFD LH MAP >");
 				]]>
 			</script>
 		</binding>
@@ -600,7 +600,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH SYS >");
+				UI.click("IFD LH SYS <");
 				]]>
 			</script>
 		</binding>
@@ -618,7 +618,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH SYS <");
+				UI.click("IFD LH SYS >");
 				]]>
 			</script>
 		</binding>
@@ -636,7 +636,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH CHKL >");
+				UI.click("IFD LH CHKL <");
 				]]>
 			</script>
 		</binding>
@@ -654,7 +654,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-				UI.click("IFD LH CHKL <");
+				UI.click("IFD LH CHKL >");
 				]]>
 			</script>
 		</binding>
@@ -662,6 +662,7 @@
 </animation>
 
 <!-- knobs -->
+<!-- BaroKnob -->
 <animation>
 	<type>pick</type>
 	<object-name>BaroKnob</object-name>
@@ -703,16 +704,12 @@
 	</action>
 </animation>
 
-
-
+<!-- LeftKnob -->
 <animation>
-        <type>knob</type>
+        <type>pick</type>
         <object-name>LKO</object-name>
         <object-name>LKI</object-name>
- <!--       <value>0.0</value>
-        <center>...</center>
-        <axis>...</axis> -->
- 
+
         <action>
 		<button>3</button>
 		<repeatable>true</repeatable>
@@ -727,7 +724,7 @@
 		</action>
  
         <shift-action>
-            <button>3</button>
+        <button>3</button>
 		<repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -764,9 +761,92 @@
 			</script>
 		</binding>
         </shift-action>
+		
+		<action>
+		<button>1</button>
+		<repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("IFD LH LK");
+				]]>
+			</script>
+		</binding>
+		</action>
 </animation>
 
+<!-- RightKnob -->
+<animation>
+        <type>pick</type>
+        <object-name>RKO</object-name>
+        <object-name>RKI</object-name>
 
+        <action>
+		<button>3</button>
+		<repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("IFD LH RK >");
+				]]>
+			</script>
+		</binding>
+		</action>
+ 
+        <shift-action>
+        <button>3</button>
+		<repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("IFD LH RK >>");
+				]]>
+			</script>
+		</binding>
+        </shift-action>
+		
+		<action>
+		<button>4</button>
+		<repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("IFD LH RK <");
+				]]>
+			</script>
+		</binding>
+		</action>
+ 
+        <shift-action>
+            <button>4</button>
+		<repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("IFD LH RK <<");
+				]]>
+			</script>
+		</binding>
+        </shift-action>
+		
+		<action>
+		<button>1</button>
+		<repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("IFD LH RK");
+				]]>
+			</script>
+		</binding>
+		</action>
+</animation>
 
 <!-- alte NON-Canvas-Technologie -->
 <!-- kuenstlicher horizont -->

@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: April 27 2013
 #
-#      Last change:      Eric van den Berg
-#      Date:             2013-06-29
+#      Last change:      Thomas Grossberger
+#      Date:             2013-06-30
 #
 var TODEG = 180/math.pi;
 var TORAD = math.pi/180;

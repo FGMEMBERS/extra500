@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             17.06.13
+      Date:             30.06.13
 
 -->
 <PropertyList>
@@ -1876,10 +1876,10 @@
         </interpolation>
   <axis>
     <x1-m>0.09597</x1-m>
-    <y1-m>0.03452</y1-m>
+    <y1-m>0.03120</y1-m>
     <z1-m>-0.006747</z1-m>
     <x2-m>0.09597</x2-m>
-    <y2-m>0.03452</y2-m>
+    <y2-m>0.03120</y2-m>
     <z2-m>0.01051</z2-m>
   </axis>
 </animation>
