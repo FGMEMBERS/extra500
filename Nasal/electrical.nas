@@ -263,11 +263,11 @@ var AlternatorClass = {
 			me._ampereAvailable = global.clamp(me._ampereAvailable,0.0,me._ampereMax);
 			#interpolate(me._nVolt,me._volt,dt);
 			#interpolate(me._nAmpereAvailable,me._ampereAvailable,dt);
-			me._nInputVolt.setValue(me._volt);
+			me._nVolt.setValue(me._volt);
 			me._nAmpereAvailable.setValue(me._ampereAvailable);
 			
 		}else{
-			me._nInputVolt.setValue(0);
+			me._nVolt.setValue(0);
 			me._nAmpereAvailable.setValue(0);
 		}
 	},
