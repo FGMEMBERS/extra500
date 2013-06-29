@@ -52,7 +52,7 @@
       <object-name>L1.left</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -70,7 +70,7 @@
       <object-name>L1.right</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -88,7 +88,7 @@
       <object-name>L2.left</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -106,7 +106,7 @@
       <object-name>L2.right</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -124,7 +124,7 @@
       <object-name>L3.left</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -142,7 +142,7 @@
       <object-name>L3.right</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -160,7 +160,7 @@
       <object-name>L4.left</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -178,7 +178,7 @@
       <object-name>L4.right</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -196,7 +196,7 @@
       <object-name>L5.left</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -214,7 +214,7 @@
       <object-name>L5.right</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -232,7 +232,7 @@
       <object-name>L6.left</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -250,7 +250,7 @@
       <object-name>L6.right</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -269,7 +269,7 @@
       <object-name>R1.left</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -287,7 +287,7 @@
       <object-name>R1.right</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -305,7 +305,7 @@
       <object-name>R2.left</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -323,7 +323,7 @@
       <object-name>R2.right</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -341,7 +341,7 @@
       <object-name>R3.left</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -359,7 +359,7 @@
       <object-name>R3.right</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -377,7 +377,7 @@
       <object-name>R4.left</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -395,7 +395,7 @@
       <object-name>R4.right</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -413,7 +413,7 @@
       <object-name>R5.left</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -431,7 +431,7 @@
       <object-name>R5.right</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -449,7 +449,7 @@
       <object-name>R6.left</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -467,7 +467,7 @@
       <object-name>R6.right</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -486,7 +486,7 @@
       <object-name>PFD.left</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -504,7 +504,7 @@
       <object-name>PFD.right</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -522,7 +522,7 @@
       <object-name>FMS.left</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -540,7 +540,7 @@
       <object-name>FMS.right</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -558,7 +558,7 @@
       <object-name>MAP.left</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -576,7 +576,7 @@
       <object-name>MAP.right</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -594,7 +594,7 @@
       <object-name>SYS.left</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -612,7 +612,7 @@
       <object-name>SYS.right</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -630,7 +630,7 @@
       <object-name>CHKL.left</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -648,7 +648,7 @@
       <object-name>CHKL.right</object-name>
       <visible>false</visible>
       <action>
-        <button>1</button>
+        <button>0</button>
         <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
@@ -703,86 +703,70 @@
 	</action>
 </animation>
 
+
+
 <animation>
-	<type>pick</type>
-	<object-name>PFD.R</object-name>
-	<action>
-		<button>0</button>
-		<repeatable>false</repeatable>
+        <type>knob</type>
+        <object-name>LKO</object-name>
+        <object-name>LKI</object-name>
+ <!--       <value>0.0</value>
+        <center>...</center>
+        <axis>...</axis> -->
+ 
+        <action>
+		<button>3</button>
+		<repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-					UI.click("IFD LH PFD >");
+					UI.click("IFD LH LK >");
 				]]>
 			</script>
 		</binding>
-	</action>
-</animation>
-<animation>
-	<type>pick</type>
-	<object-name>FMS.R</object-name>
-	<action>
-		<button>0</button>
-		<repeatable>false</repeatable>
+		</action>
+ 
+        <shift-action>
+            <button>3</button>
+		<repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-					UI.click("IFD LH FMS >");
+					UI.click("IFD LH LK >>");
 				]]>
 			</script>
 		</binding>
-	</action>
-</animation>
-<animation>
-	<type>pick</type>
-	<object-name>MAP.R</object-name>
-	<action>
-		<button>0</button>
-		<repeatable>false</repeatable>
+        </shift-action>
+		
+		<action>
+		<button>4</button>
+		<repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-					UI.click("IFD LH MAP >");
+					UI.click("IFD LH LK <");
 				]]>
 			</script>
 		</binding>
-	</action>
-</animation>
-<animation>
-	<type>pick</type>
-	<object-name>SYS.R</object-name>
-	<action>
-		<button>0</button>
-		<repeatable>false</repeatable>
+		</action>
+ 
+        <shift-action>
+            <button>4</button>
+		<repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-					UI.click("IFD LH SYS >");
+					UI.click("IFD LH LK <<");
 				]]>
 			</script>
 		</binding>
-	</action>
+        </shift-action>
 </animation>
-<animation>
-	<type>pick</type>
-	<object-name>CHKL.R</object-name>
-	<action>
-		<button>0</button>
-		<repeatable>false</repeatable>
-		<binding>
-			<command>nasal</command>
-			<script>
-				<![CDATA[
-					UI.click("IFD LH CHKL >");
-				]]>
-			</script>
-		</binding>
-	</action>
-</animation>
+
+
 
 <!-- alte NON-Canvas-Technologie -->
 <!-- kuenstlicher horizont -->
