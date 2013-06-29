@@ -25,6 +25,8 @@ var deg = func(rad){ return rad*TODEG; }
 var rad = func(deg){ return deg*TORAD; }
 var course = func(deg){ return math.mod(deg,360.0);}
 
+var NAV_SOURCE_LIST = ["NAV 1","NAV 2","FMS"];
+
 
 var COLOR = {};
 COLOR["Red"] = "rgb(244,28,33)";
@@ -126,17 +128,18 @@ var AvidyneData = {
 		m.GSinRange = 0;
 		m.NAVinRange = 0;
 		m.NAVLOC = 0;
-		m.nHDI = props.globals.initNode("/autopilot/radionav-channel/heading-needle-deflection-norm",0.0,"DOUBLE");
-		m.nVDI = props.globals.initNode("/autopilot/radionav-channel/gs-needle-deflection-norm",0.0,"DOUBLE");
-		m.nGSable = props.globals.initNode("/autopilot/radionav-channel/has-gs",0.0,"DOUBLE");
-		m.nGSinRange = props.globals.initNode("/autopilot/radionav-channel/gs-in-range",0.0,"DOUBLE");
-		m.nNAVinRange = props.globals.initNode("/autopilot/radionav-channel/in-range",0.0,"DOUBLE");
-		m.nNAVLOC = props.globals.initNode("/autopilot/radionav-channel/is-localizer-frequency",0.0,"DOUBLE");
+		m.nHDI 		= props.globals.initNode("/autopilot/radionav-channel/heading-needle-deflection-norm",0.0,"DOUBLE");
+		m.nVDI 		= props.globals.initNode("/autopilot/radionav-channel/gs-needle-deflection-norm",0.0,"DOUBLE");
+		m.nGSable 	= props.globals.initNode("/autopilot/radionav-channel/has-gs",0.0,"DOUBLE");
+		m.nGSinRange 	= props.globals.initNode("/autopilot/radionav-channel/gs-in-range",0.0,"DOUBLE");
+		m.nNAVinRange 	= props.globals.initNode("/autopilot/radionav-channel/in-range",0.0,"DOUBLE");
+		m.nNAVLOC 	= props.globals.initNode("/autopilot/radionav-channel/is-localizer-frequency",0.0,"DOUBLE");
 		
 		
 		
-		
-		
+	#Box Primary Nav
+		m.navSource	= 0;
+		m.nNavSource	= props.globals.initNode("/instrumentation/nav-source",0,"INT");
 		
 		
 		return m;
@@ -184,6 +187,9 @@ var AvidyneData = {
 		me.GSinRange 	= me.nGSinRange.getValue();
 		me.NAVinRange 	= me.nNAVinRange.getValue();
 		me.NAVLOC	= me.nNAVLOC.getValue();
+	
+	#Box Primary Nav
+		me.navSource	= me.nNavSource.getValue();
 		
 	
 	},
@@ -229,9 +235,8 @@ var AvidynePage = {
 	registerKeys : func(){
 		
 	},
-	
-	
 };
+
 var AvidynePageDummy = {
 	new: func(myCanvas,name,data){
 		var m = { parents: [
@@ -376,6 +381,13 @@ var AvidynePagePFD = {
 		debug.dump("AvidynePagePFD.new() ... for "~m.name~" IFD created.");
 		#debug.dump(m.CompassRose.getBoundingBox());
 		
+	# Box Primary Nav 
+		m.cNavSource = m.page.getElementById("NAV_SourceName");
+		m.cNavAidName = m.page.getElementById("NAV_AidName");
+		m.cNavAidDeg = m.page.getElementById("NAV_AidDeg");
+		m.cNavAidDegUnit = m.page.getElementById("NAV_AidDegUnit");
+		m.cNavAidDistance = m.page.getElementById("NAV_AidDistance");
+		
 		
 		return m;
 	},
@@ -519,6 +531,9 @@ var AvidynePagePFD = {
 		me.cAltBar10000.setTranslation(0,math.floor((math.mod(me.data.ALT,100000)/10000))*75.169);
 		#me.cAltBar10000.setTranslation(0,math.floor(((me.alt)/1000))*7.5169);
 		
+	# Box Primary Nav
+		me.cNavSource.setText(NAV_SOURCE_LIST[me.data.navSource]);
+		
 		
 	},
 };
@@ -607,7 +622,7 @@ var AvidyneIFD = {
 		me.nR6.setValue(0);	
 	},
 	gotoPage : func(name){
-		print("IFD "~me.name ~" gotoPage("~name~") ... ");
+		#print("IFD "~me.name ~" gotoPage("~name~") ... ");
 		if (!contains(me.page,name)){
 			name = "none";	
 		}

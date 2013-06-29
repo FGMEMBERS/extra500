@@ -27,9 +27,9 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.5"
      inkscape:cx="1225.3052"
-     inkscape:cy="1306.3426"
+     inkscape:cy="746.3426"
      inkscape:document-units="px"
-     inkscape:current-layer="layer5"
+     inkscape:current-layer="layer3"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1025"
@@ -1286,7 +1286,7 @@
        style="font-size:50.89516068px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.64769554;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
        x="270.40704"
        y="943.52667"
-       id="HeadingSelected-2-8-1-7-5-8-4"
+       id="NAV_SourceName"
        sodipodi:linespacing="125%"
        transform="scale(0.91589761,1.0918251)"
        inkscape:label="#text5341-2"><tspan
@@ -1312,7 +1312,7 @@
        style="font-size:50.89516068px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#67e54a;fill-opacity:1;stroke:#67e54a;stroke-width:1.64769554;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
        x="81.155594"
        y="1009.0673"
-       id="HeadingSelected-2-8-1-7-5-8-4-3"
+       id="NAV_AidName"
        sodipodi:linespacing="125%"
        transform="scale(0.91589761,1.0918251)"
        inkscape:label="#text5341-2"><tspan
@@ -1326,7 +1326,7 @@
        style="font-size:50.89516068px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#67e54a;fill-opacity:1;stroke:#67e54a;stroke-width:1.64769554;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
        x="187.25356"
        y="1080.929"
-       id="HeadingSelected-2-8-1-7-5-8-4-3-1"
+       id="NAV_AidDeg"
        sodipodi:linespacing="125%"
        transform="scale(0.91589761,1.0918251)"
        inkscape:label="#text5341-2"><tspan
@@ -1340,7 +1340,7 @@
        style="font-size:50.89516068px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#67e54a;fill-opacity:1;stroke:#67e54a;stroke-width:1.64769554;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
        x="73.919815"
        y="1080.929"
-       id="HeadingSelected-2-8-1-7-5-8-4-3-1-7"
+       id="NAV_AidDegUnit"
        sodipodi:linespacing="125%"
        transform="scale(0.91589761,1.0918251)"
        inkscape:label="#text5341-2"><tspan
@@ -1354,7 +1354,7 @@
        style="font-size:50.89516068px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#67e54a;fill-opacity:1;stroke:#67e54a;stroke-width:1.64769554;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
        x="356.53073"
        y="1080.929"
-       id="HeadingSelected-2-8-1-7-5-8-4-3-1-2"
+       id="NAV_AidDistance"
        sodipodi:linespacing="125%"
        transform="scale(0.91589761,1.0918251)"
        inkscape:label="#text5341-2"><tspan
@@ -1443,7 +1443,7 @@
          sodipodi:cy="449.28571"
          sodipodi:rx="336.35129"
          sodipodi:ry="365"
-         d="m 1518.5714,449.28571 a 336.35129,365 0 1 1 -672.7026,0 336.35129,365 0 1 1 672.7026,0 z"
+         d="m 1518.5714,449.28571 c 0,201.58393 -150.5896,365 -336.3513,365 -185.76169,0 -336.3513,-163.41607 -336.3513,-365 0,-201.58394 150.58961,-365.000004 336.3513,-365.000004 185.7617,0 336.3513,163.416064 336.3513,365.000004 z"
          transform="matrix(0.75349504,0.75349504,-0.69981776,0.69981776,627.9069,-759.69181)" />
     </g>
     <g
