@@ -607,6 +607,7 @@ var AvidyneIFD = {
 		me.nR6.setValue(0);	
 	},
 	gotoPage : func(name){
+		print("IFD "~me.name ~" gotoPage("~name~") ... ");
 		if (!contains(me.page,name)){
 			name = "none";	
 		}
