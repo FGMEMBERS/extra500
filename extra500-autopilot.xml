@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-06-29
+      Date:             2013-06-30
 -->
 
 <autopilot name="STEC55X">
@@ -194,6 +194,31 @@
 
 
 <!-- selection of nav unit based on /instrumentation/nav-source property -->
+		<switch name="navdistanceselect">
+			<default value="/instrumentation/nav[0]/nav-distance"/>
+			<test value="/instrumentation/nav[1]/nav-distance">
+				/instrumentation/nav-source eq 1
+			</test>
+			<output>/autopilot/radionav-channel/nav-distance-m</output>
+		</switch>
+
+		<fcs_function name="/autopilot/radionav-channel/nav-distance-nm">
+			<function>
+				<product>
+					<property>/autopilot/radionav-channel/nav-distance-m</property>
+					<property>/extra500/const/METER2NM</property> 
+				</product>
+			</function>
+		</fcs_function>
+
+		<switch name="navradialselect">
+			<default value="/instrumentation/nav[0]/radials/reciprocal-radial-deg"/>
+			<test value="/instrumentation/nav[1]/radials/reciprocal-radial-deg">
+				/instrumentation/nav-source eq 1
+			</test>
+			<output>/autopilot/radionav-channel/radials/reciprocal-radial</output>
+		</switch>
+
 		<switch name="navselect">
 			<default value="/instrumentation/nav[0]/heading-needle-deflection-norm"/>
 			<test value="/instrumentation/nav[1]/heading-needle-deflection-norm">

@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2013-06-29
+      Date:             2013-06-30
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -629,7 +629,9 @@ JSBSim Extra Aircraft - Extra 500.
 	<gs-needle-deflection-norm>0</gs-needle-deflection-norm>
 	<gs-in-range type="bool">false</gs-in-range>
 	<has-gs type="bool">false</has-gs>
+	<nav-distance type="double">0</nav-distance>
 	<radials>
+		<reciprocal-radial-deg>0</reciprocal-radial-deg>
 		<selected-deg>0</selected-deg>
 	</radials>
 	<frequencies>
@@ -646,7 +648,9 @@ JSBSim Extra Aircraft - Extra 500.
 	<gs-needle-deflection-norm>0</gs-needle-deflection-norm>
 	<gs-in-range type="bool">false</gs-in-range>
 	<has-gs type="bool">false</has-gs>
+	<nav-distance type="double">0</nav-distance>
 	<radials>
+		<reciprocal-radial-deg>0</reciprocal-radial-deg>
 		<selected-deg>0</selected-deg>
 	</radials>
 	<frequencies>
@@ -854,6 +858,8 @@ JSBSim Extra Aircraft - Extra 500.
 		<METER2INCH type="double">39.3700787</METER2INCH>
 		<INCH2METER type="double">0.0254</INCH2METER>			<!-- exact factor: to be used with priority -->
 		<INCH2FEET type="double">0.0833333333333</INCH2FEET>
+		<METER2NM type="double">0.000539956803456</METER2NM>
+		<NM2METER type="double">1852</NM2METER>				<!-- exact factor: to be used with priority -->
 		<DEG2RAD type="double">0.0174532925</DEG2RAD>
 		<RAD2DEG type="double">57.2957795131</RAD2DEG>
 		<RANKINE2KELVIN type="double">0.555555555</RANKINE2KELVIN>
