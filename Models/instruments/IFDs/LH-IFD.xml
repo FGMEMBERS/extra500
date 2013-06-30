@@ -32,18 +32,49 @@
 <animation>
         <type>material</type>
         <object-name>LH-IFD.Screen</object-name>
-		<condition>
-		<equals>
-		<property>extra500/panel/Side/Light/Instrument/state</property>
-		<value>1</value>
-		</equals>
-	</condition>
         <emission>
             <red>0.7</red>
             <green>0.7</green>
             <blue>0.7</blue>
-            <factor-prop>extra500/panel/Master/Dimming/Instrument/state</factor-prop>
+            <factor-prop>extra500/instrumentation/IFD-LH/Backlight/state</factor-prop>
         </emission>
+</animation>
+
+<!-- dimming button -->
+<animation>
+      <type>pick</type>
+      <object-name>Dim.up</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH DIM >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>Dim.down</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD LH DIM <");
+				]]>
+			</script>
+		</binding>
+      </action>
 </animation>
 
 <!-- buttons L1-L6 -->
