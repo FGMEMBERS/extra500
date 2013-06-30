@@ -61,7 +61,7 @@ var StarterClass = {
 				ConsumerClass.new(root,name,watt)
 			]
 		};
-		m.nGenerator     	= props.globals.initNode("/controls/electric/engine/generator",0,"BOOL");
+		m._nGenerator     	= props.globals.initNode("/controls/electric/engine/generator",0,"BOOL");
 		
 		m._nStarter		= props.globals.initNode("/controls/engines/engine[0]/starter",0,"BOOL");
 		m._starterListener	= nil;
@@ -94,11 +94,12 @@ var StarterClass = {
 		if ((me._starter == 1) and (me._volt > 22.0)){
 			me._watt = me._nWatt.getValue();
 			me._ampere = me._watt / me._volt;
-			me.nGenerator.setValue(1);
+			me._nGenerator.setValue(1);
 			me._nStarter.setValue(1);
 		}else{
 			me._ampere = 0;
-			me.nGenerator.setValue(0);
+			me._starter = 0;
+			me._nGenerator.setValue(0);
 			me._nStarter.setValue(0);
 		}
 		me._nAmpere.setValue(me._ampere);
