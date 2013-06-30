@@ -665,7 +665,7 @@ var AvidynePagePFD = {
 			me.cVDI.hide();
 		}
 		
-		if ((me.data.HDI >= 1.0) or (me.data.HDI <= -1.0){
+		if ((me.data.HDI >= 1.0) or (me.data.HDI <= -1.0)){
 			me.cCDI.setColor(COLOR["Yellow"]);
 			me.cHDI_Needle.setColor(COLOR["Yellow"]);
 		}else{
@@ -762,8 +762,8 @@ var AvidyneIFD = {
 	init : func(){
 		me.initUI();
 		
-		me.keys["L1 >"] = func(){me._adjustBrightness(0.1);};
-		me.keys["L1 <"] = func(){me._adjustBrightness(-0.1);};
+		me.keys["DIM >"] = func(){me._adjustBrightness(0.1);};
+		me.keys["DIM <"] = func(){me._adjustBrightness(-0.1);};
 		
 		me.gotoPage(me._startPage);
 		
@@ -833,7 +833,7 @@ var AvidyneIFD = {
 	},
 	
 	onClick: func(key){
-		
+		print ("AvidyneIFD.onClick("~key~")");
 		if (contains(me.keys,key)){
 			me.keys[key]();
 			return 1;
