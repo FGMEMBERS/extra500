@@ -25,39 +25,43 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 	removelistener(init_listener);
 	init_listener = nil;
 	
-	extra500.eSystem.init();
-	extra500.engine.init();
-	extra500.gearSystem.init();
-	extra500.flapSystem.init();
-	extra500.fuelSystem.init();
-	extra500.autopilot.init();
-	IFD.LH.init();
-	IFD.RH.init();
-	extra500.keypad.init();
-	
-	extra500.engineInstrumentPackage.init();
-	extra500.digitalInstrumentPackage.init();
-	extra500.lumi.init();
-	extra500.stbyHSI.init();
-	extra500.stbyIAS.init();
-	extra500.stbyALT.init();
-	extra500.fuelQuantity.init();
-	extra500.propellerHeat.init();
-	extra500.turnCoordinator.init();
-	
-	
-	extra500.eSystem.timerLoop.start();
-	extra500.engine.timerLoop.start();
-	extra500.fuelSystem.timerLoop.start();
-	extra500.autopilot.timerLoop.start();
-	IFD.LH.timerLoop.start();
-	IFD.RH.timerLoop.start();
-	#extra500.keypad.start();
-	
-	extra500.digitalInstrumentPackage.timerLoop.start();
-	#extra500.gearSystem.timerLoop.start();
-	#extra500.flapSystem.timerLoop.start();
-
+	settimer(func(){
+		
+		print("Extra500 init");
+		extra500.eSystem.init();
+		extra500.engine.init();
+		extra500.gearSystem.init();
+		extra500.flapSystem.init();
+		extra500.fuelSystem.init();
+		extra500.autopilot.init();
+		IFD.LH.init();
+		IFD.RH.init();
+		extra500.keypad.init();
+		
+		extra500.engineInstrumentPackage.init();
+		extra500.digitalInstrumentPackage.init();
+		extra500.lumi.init();
+		extra500.stbyHSI.init();
+		extra500.stbyIAS.init();
+		extra500.stbyALT.init();
+		extra500.fuelQuantity.init();
+		extra500.propellerHeat.init();
+		extra500.turnCoordinator.init();
+		
+		print("Extra500 starting");
+		
+		extra500.eSystem.timerLoop.start();
+		extra500.engine.timerLoop.start();
+		extra500.fuelSystem.timerLoop.start();
+		extra500.autopilot.timerLoop.start();
+		#IFD.LH.timerLoop.start();
+		#IFD.RH.timerLoop.start();
+		#extra500.keypad.start();
+		
+		extra500.digitalInstrumentPackage.timerLoop.start();
+		#extra500.gearSystem.timerLoop.start();
+		#extra500.flapSystem.timerLoop.start();
+	},5);
 
 		
 });

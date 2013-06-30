@@ -465,7 +465,10 @@ JSBSim Extra Aircraft - Extra 500.
 		<radials>
 			<diff>0</diff>
 			<old-radial>0</old-radial>
+			<reciprocal-radial>0</reciprocal-radial>
+			
 		</radials>
+		<nav-distance-nm type="double">0</nav-distance-nm>
 	</radionav-channel>
 	<vs-channel>
 		<turnrate-gain type="double">2.0</turnrate-gain>

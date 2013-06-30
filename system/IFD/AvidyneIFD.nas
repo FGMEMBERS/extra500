@@ -83,9 +83,11 @@ var AvidyneData = {
 	#speed 	
 		m.IAS 		= 0;
 		m.TAS 		= 0;
+		m.GroundSpeed	= 0;
 		
-		m.nIAS = props.globals.initNode("/instrumentation/airspeed-IFD-"~m.name~"/indicated-airspeed-kt",0.0,"DOUBLE");
-		m.nTAS = props.globals.initNode("/instrumentation/airspeed-IFD-"~m.name~"/true-speed-kt",0.0,"DOUBLE");
+		m.nIAS 		= props.globals.initNode("/instrumentation/airspeed-IFD-"~m.name~"/indicated-airspeed-kt",0.0,"DOUBLE");
+		m.nTAS 		= props.globals.initNode("/instrumentation/airspeed-IFD-"~m.name~"/true-speed-kt",0.0,"DOUBLE");
+		m.nGroundSpeed 	= props.globals.initNode("/velocities/groundspeed-kt",0.0,"DOUBLE");
 		
 	#vertical speed
 		m.VS 		 = 0;
@@ -140,16 +142,18 @@ var AvidyneData = {
 		
 	#Box Primary Nav
 		m.nNAVSource 	= props.globals.initNode("/instrumentation/nav-source",0,"INT");
+		m.nNavDeg	= props.globals.initNode("/autopilot/radionav-channel/radials/reciprocal-radial",0,"DOUBLE");
+		m.nNavDistance	= props.globals.initNode("/autopilot/radionav-channel/nav-distance-nm",0.0,"DOUBLE");
 		
 		m.navSource		= 0;
 		m.navID		= "";
-		m.navAidDeg		= 0.0;
+		m.navDeg		= 0.0;
 		m.navAidUnit		= "";
-		m.navAidDistance	= 0.0;
+		m.navDistance	= 0.3;
 		return m;
 	},
 	#loading the data from PropertyTree
-	load : func(){
+	load20Hz : func(){
 	#autopilot
 		me.apPowered 	= me.nApPower.getValue();
 		me.apModeRdy 	= me.nApModeRdy.getValue();
@@ -192,8 +196,16 @@ var AvidyneData = {
 		me.NAVinRange 	= me.nNAVinRange.getValue();
 		#me.NAVLOC	= me.nNAVLOC.getValue();
 	
+	#Box Primary Nav
+		
 		
 	
+	},
+	load2Hz : func(){
+	#Box Primary Nav
+		me.navDeg	= me.nNavDeg.getValue();
+		me.navDistance	= me.nNavDistance.getValue();
+		me.GroundSpeed	= me.nGroundSpeed.getValue();
 	},
 	adjustBaro : func(value=nil){
 		if (value==nil){
@@ -244,9 +256,8 @@ var AvidynePage = {
 			me.keys[key]();
 		}
 	},
-	update : func(now,dt){
-		
-	},
+	update20Hz : func(now,dt){},
+	update2Hz  : func(now,dt){},
 	
 };
 
@@ -258,9 +269,6 @@ var AvidynePageDummy = {
 		] };
 		return m;
 	},
-	update : func(now,dt){
-		
-	}
 };
 
 var AvidynePagePFD = {
@@ -271,7 +279,7 @@ var AvidynePagePFD = {
 		] };
 		
 		
-		m._navActiveAidIdListener = nil; 
+		m._navListeners = []; 
 		
 		# creating the page 
 		
@@ -350,6 +358,8 @@ var AvidynePagePFD = {
 		m.cAirSpeedBlackPlade = m.page.getElementById("AirSpeedBlackPlade");
 		m.cAirSpeedBlackPlade.set("clip","rect(126px, 648px, 784px, 380px)");
 		
+		m.cGroundSpeed = m.page.getElementById("GroundSpeed");
+		
 	#autopilot
 		m.cAutopilot		= m.page.getElementById("Autopilot");
 		m.cAutopilotOff	= m.page.getElementById("AP_Off");
@@ -398,11 +408,11 @@ var AvidynePagePFD = {
 		#debug.dump(m.CompassRose.getBoundingBox());
 		
 	# Box Primary Nav 
-		m.cNavSource = m.page.getElementById("NAV_SourceName");
-		m.cNavAidName = m.page.getElementById("NAV_AidName");
-		m.cNavAidDeg = m.page.getElementById("NAV_AidDeg");
-		m.cNavAidDegUnit = m.page.getElementById("NAV_AidDegUnit");
-		m.cNavAidDistance = m.page.getElementById("NAV_AidDistance");
+		m.cNavSource 		= m.page.getElementById("NAV_SourceName");
+		m.cNavAidName 		= m.page.getElementById("NAV_AidName");
+		m.cNavAidDeg 		= m.page.getElementById("NAV_AidDeg");
+		m.cNavAidDegUnit 	= m.page.getElementById("NAV_AidDegUnit");
+		m.cNavDistance 		= m.page.getElementById("NAV_AidDistance");
 		
 		
 		return m;
@@ -414,44 +424,44 @@ var AvidynePagePFD = {
 		me.keys["BARO >"] = func(){me.data.adjustBaro(1);};
 		me.keys["BARO <"] = func(){me.data.adjustBaro(-1);};
 		me.keys["BARO STD"] = func(){me.data.adjustBaro();};
+		
+		me.keys["L1 >"] = func(){me._adjustNavSource(1);};
+		me.keys["L1 <"] = func(){me._adjustNavSource(-1);};
+		
 	},
 	setListeners : func (){
 		append(me._listeners,setlistener("/instrumentation/nav-source",func(n){me._onNavSourceChange(n);},1,0));
-		append(me._listeners,setlistener("/autopilot/radionav-channel/in-range",func(n){me._onNavAidDegChange(n);},1,0));
-		append(me._listeners,setlistener("/autopilot/radionav-channel/nav-distance-nm",func(n){me._onNavAidDistanceChange(n);},1,0));
+		#append(me._listeners,setlistener("/autopilot/radionav-channel/radials/reciprocal-radial",func(n){me._onNavAidDegChange(n);},1,0));
+		#append(me._listeners,setlistener("/autopilot/radionav-channel/nav-distance-nm",func(n){me._onNavDistanceChange(n);},1,0));
 		append(me._listeners,setlistener("/autopilot/radionav-channel/is-localizer-frequency",func(n){me._onNavLocChange(n);},1,0));
 		append(me._listeners,setlistener("/autopilot/radionav-channel/has-gs",func(n){me._onGSableChange(n);},1,0));
-			
-	},
-	_onNavSourceChange : func(n){
-		me.data.navSource = n.getValue();
-		me.cNavSource.setText(NAV_SOURCE_NAME[me.data.navSource]);
-		if (me._navActiveAidIdListener != nil){
-			removelistener(me._navActiveAidIdListener);
-		}
-		me._navActiveAidIdListener = setlistener(NAV_SOURCE_TREE[me.data.navSource]~"/nav-id",func(n){me._onNavIdChange(n);},1,0);
 	},
 	removeListeners : func(){
 		foreach(l;me._listeners){
 			removelistener(l);
 		}
 		me._listeners = [];
-		if (me._navActiveAidIdListener != nil){
-			removelistener(me._navActiveAidIdListener);
-			me._navActiveAidIdListener = nil;
+		foreach(l;me._navListeners){
+			removelistener(l);
 		}
+		me._navListeners = [];
 	},
 	_onNavSourceChange : func(n){
 		me.data.navSource = n.getValue();
 		me.cNavSource.setText(NAV_SOURCE_NAME[me.data.navSource]);
-		if (me._navActiveAidIdListener != nil){
-			removelistener(me._navActiveAidIdListener);
+		
+		foreach(l;me._navListeners){
+			removelistener(l);
 		}
-		me._navActiveAidIdListener = setlistener(NAV_SOURCE_TREE[me.data.navSource]~"/nav-id",func(n){me._onNavIdChange(n);},1,0);
+		me._navListeners = [];
+
+		append(me._navListeners, setlistener(NAV_SOURCE_TREE[me.data.navSource]~"/nav-id",func(n){me._onNavIdChange(n);},1,0));
+		#append(me._navListeners, setlistener(NAV_SOURCE_TREE[me.data.navSource]~"/nav-distance",func(n){me._onNavDistanceChange(n);},1,0));
+		
 	},
 	_onGSableChange : func(n){
 		me.data.GSable = n.getValue();
-		print(""~me.name~" AvidynePagePFD._onGSableChange()");
+		#print(""~me.name~" AvidynePagePFD._onGSableChange()");
 		me._checkPrimaryNavBox();
 	},
 	_onNavLocChange : func(n){
@@ -462,14 +472,16 @@ var AvidynePagePFD = {
 		me.data.navID = n.getValue();
 		me._checkPrimaryNavBox();
 	},
-	_onNavAidDegChange : func(n){
-		me.data.navAidDeg = n.getValue();
-		me.cNavAidDeg.setText(me.data.navAidDeg);
-	},
-	_onNavAidDistanceChange : func(n){
-		me.data.navAidDistance = n.getValue();
-		me.cNavAidDistance.setText(me.data.navAidDistance);
-	},
+# 	_onNavAidDegChange : func(n){
+# 		me.data.navDeg = n.getValue();
+# 		#print(""~me.name~" AvidynePagePFD._onNavAidDegChange()" ~ me.data.navDeg);
+# 		me.cNavAidDeg.setText(sprintf("%i",me.data.navDeg +0.5));
+# 
+# 	},
+# 	_onNavDistanceChange : func(n){
+# 		me.data.navDistance = n.getValue() * global.CONST.METER2NM;
+# 		me.cNavDistance.setText(sprintf("%.1f",me.data.navDistance));
+# 	},
 	_checkPrimaryNavBox : func(){
 		if (me.data.NAVLOC == 0){
 			me.cNavAidName.setText(sprintf("%s (%s)",me.data.navID,"VOR"));
@@ -480,9 +492,21 @@ var AvidynePagePFD = {
 				me.cNavAidName.setText(sprintf("%s (%s)",me.data.navID,"LOC"));
 			}
 		}
+		
+		me.data.navDeg		= me.data.nNavDeg.getValue();
+		me.data.navDistance	= me.data.nNavDistance.getValue();
+		
+		me.cNavDistance.setText(sprintf("%.1f",me.data.navDistance));
+		me.cNavAidDeg.setText(sprintf("%i",me.data.navDeg +0.5));
 	},
 	_adjustNavSource : func (amount){
 		me.data.navSource += amount;
+		if (me.data.navSource > 1){
+			me.data.navSource = 0;
+		}
+		if (me.data.navSource < 0){
+			me.data.navSource = 1;
+		}
 		me.data.nNAVSource.setValue(me.data.navSource);
 	},
 	_apUpdate : func(){
@@ -543,7 +567,12 @@ var AvidynePagePFD = {
 			me.cAutopilotOff.show();
 		}
 	},
-	update : func(now,dt){
+	update2Hz : func(now,dt){
+		me.cNavDistance.setText(sprintf("%.1f",me.data.navDistance));
+		me.cNavAidDeg.setText(sprintf("%i",me.data.navDeg +0.5));
+		me.cGroundSpeed.setText(sprintf("%i",me.data.GroundSpeed +0.5));
+	},
+	update20Hz : func(now,dt){
 		
 		me._apUpdate();
 		
@@ -625,7 +654,7 @@ var AvidynePagePFD = {
 
 
 var AvidyneIFD = {
-	new: func(nRoot,name,acPlace){
+	new: func(nRoot,name,acPlace,startPage="none"){
 		var m = { parents: [AvidyneIFD] };
 		m.name = name;
 		m.nRoot = nRoot;
@@ -664,32 +693,53 @@ var AvidyneIFD = {
 		m.nR5 = nRoot.initNode("R5",0,"BOOL");
 		m.nR6 = nRoot.initNode("R6",0,"BOOL");
 		
+		m._startPage = startPage;
+		
 		m.page = {};
 		m.page["PFD"] = AvidynePagePFD.new(m,"PFD",m.data);
 		m.page["none"] = AvidynePageDummy.new(m,"none",m.data);
 		
-		m.dt = 0;
-		m.now = systime();
-		m._lastTime = 0;
-		m.timerLoop = maketimer(0.05,m,AvidyneIFD.animationUpdate);
+		m._dt20Hz = 0;
+		m._now20Hz = systime();
+		m._last20Hz = systime();
+		
+		m._dt2Hz = 0;
+		m._now2Hz = systime();
+		m._last2Hz = systime();
+		
+		m._timerLoop20Hz = maketimer(0.05,m,AvidyneIFD.update20Hz);
+		m._timerLoop2Hz = maketimer(0.5,m,AvidyneIFD.update2Hz);
 	
 		return m;
 	},
 	init : func(){
 		me.initUI();
+		me.gotoPage(me._startPage);
+		
+		me._timerLoop20Hz.start();
+		me._timerLoop2Hz.start();
+		
 	},
 	connectDataBus : func(ifd){
 		me.data.link = ifd;
 	},
-	animationUpdate : func(){
+	update2Hz : func(){
 		
-		me.now = systime();
-		me.dt = me.now - me._lastTime;
-		me._lastTime = me.now;
+		me._now2Hz = systime();
+		me._dt2Hz = me._now2Hz - me._last2Hz;
+		me._last2Hz = me._now2Hz;
+				
+		me.data.load2Hz();
+		me.page[me.pageSelected].update2Hz(me._now2Hz,me._dt2Hz);		
+	},
+	update20Hz : func(){
 		
-		
-		me.data.load();
-		me.page[me.pageSelected].update(me.now,me.dt);		
+		me._now20Hz = systime();
+		me._dt20Hz = me._now20Hz - me._last20Hz;
+		me._last20Hz = me._now20Hz;
+				
+		me.data.load20Hz();
+		me.page[me.pageSelected].update20Hz(me._now20Hz,me._dt20Hz);		
 	},
 	clearLeds : func(){
 		me.nL1.setValue(0);
@@ -790,12 +840,12 @@ var AvidyneIFD = {
 };
 
 
-var LH = AvidyneIFD.new(props.globals.initNode("extra500/instrumentation/IFD-LH"),"LH","LH-IFD.Screen");
+var LH = AvidyneIFD.new(props.globals.initNode("extra500/instrumentation/IFD-LH"),"LH","LH-IFD.Screen","PFD");
 var RH = AvidyneIFD.new(props.globals.initNode("extra500/instrumentation/IFD-RH"),"RH","RH-IFD.Screen");
 
 LH.connectDataBus(RH.data);
 RH.connectDataBus(LH.data);
 
-LH.gotoPage("PFD");
+
 
 

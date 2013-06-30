@@ -25,11 +25,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.50980392"
      inkscape:pageshadow="2"
-     inkscape:zoom="2"
-     inkscape:cx="344.43395"
-     inkscape:cy="717.81454"
+     inkscape:zoom="0.35355339"
+     inkscape:cx="-65.47404"
+     inkscape:cy="1063.5613"
      inkscape:document-units="px"
-     inkscape:current-layer="layer3"
+     inkscape:current-layer="layer8"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1025"
@@ -1310,7 +1310,7 @@
     <text
        xml:space="preserve"
        style="font-size:50.89516068px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#67e54a;fill-opacity:1;stroke:#67e54a;stroke-width:1.64769554;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
-       x="35.29895"
+       x="32.430462"
        y="1009.0673"
        id="NAV_AidName"
        sodipodi:linespacing="125%"
@@ -1318,13 +1318,13 @@
        inkscape:label="#text5341-2"><tspan
          style="font-size:50.89516068px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#67e54a;fill-opacity:1;stroke:#67e54a;stroke-width:1.64769554;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
          sodipodi:role="line"
-         x="35.29895"
+         x="32.430462"
          y="1009.0673"
          id="tspan11053-1-1-4-6-2-6">-----</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:50.89516068px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#67e54a;fill-opacity:1;stroke:#67e54a;stroke-width:1.64769554;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
-       x="222.19203"
+       x="230.92665"
        y="1080.929"
        id="NAV_AidDeg"
        sodipodi:linespacing="125%"
@@ -1332,7 +1332,7 @@
        inkscape:label="#text5341-2"><tspan
          style="font-size:50.89516068px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr-tb;text-anchor:end;fill:#67e54a;fill-opacity:1;stroke:#67e54a;stroke-width:1.64769554;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
          sodipodi:role="line"
-         x="222.19203"
+         x="230.92665"
          y="1080.929"
          id="tspan11053-1-1-4-6-2-6-3">---</tspan></text>
     <text
@@ -4737,81 +4737,81 @@
          id="HeadingText-5">Hdg Sel</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:38.02690125px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#eeffaa;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
-       x="554.41071"
-       y="911.3869"
+       style="font-size:51.22786331px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#eeffaa;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
+       x="580.62128"
+       y="882.0376"
        id="Heading-6-3"
        sodipodi:linespacing="125%"
-       transform="scale(0.94187901,1.0617075)"
+       transform="scale(0.89863855,1.1127945)"
        inkscape:label="#text5341-2"><tspan
          sodipodi:role="line"
-         x="554.41071"
-         y="911.3869"
+         x="580.62128"
+         y="882.0376"
          id="HeadingText-5-2">GS</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:38.31572723px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#eeffaa;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
-       x="732.63611"
-       y="904.50873"
+       style="font-size:51.6169548px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#eeffaa;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
+       x="819.45459"
+       y="875.37781"
        id="Heading-6-3-1"
        sodipodi:linespacing="125%"
-       transform="scale(0.93477915,1.0697714)"
+       transform="scale(0.89186464,1.1212464)"
        inkscape:label="#text5341-2"><tspan
          sodipodi:role="line"
-         x="732.63611"
-         y="904.50873"
+         x="819.45459"
+         y="875.37781"
          id="tspan4550">Kts</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:44.83551407px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#e5f5a3;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
-       x="682.46423"
-       y="900.64178"
-       id="HeadingSelected-2"
+       style="font-size:60.40007401px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#e5f5a3;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
+       x="751.16406"
+       y="871.59955"
+       id="GroundSpeed"
        sodipodi:linespacing="125%"
-       transform="scale(0.93088053,1.0742517)"
+       transform="scale(0.88814501,1.1259423)"
        inkscape:label="#text5341-2"><tspan
          sodipodi:role="line"
-         x="682.46423"
-         y="900.64178"
+         x="751.16406"
+         y="871.59955"
          id="HeadingText-5-0-6">340</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:37.79572678px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#e5f5a3;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
-       x="654.61523"
-       y="922.03223"
+       style="font-size:50.91643906px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#e5f5a3;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
+       x="709.40314"
+       y="908.82483"
        id="WindDirection"
        sodipodi:linespacing="125%"
-       transform="scale(0.90797165,1.101356)"
+       transform="scale(0.86628783,1.1543507)"
        inkscape:label="#text5341-2"><tspan
          sodipodi:role="line"
-         x="654.61523"
-         y="922.03223"
+         x="709.40314"
+         y="908.82483"
          id="HeadingText-5-0-6-2">---</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:37.79572678px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#e5f5a3;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
-       x="706.02216"
-       y="922.03223"
+       style="font-size:50.91643906px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#e5f5a3;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
+       x="778.65582"
+       y="908.82483"
        id="HeadingSelected-2-0"
        sodipodi:linespacing="125%"
-       transform="scale(0.90797165,1.101356)"
+       transform="scale(0.86628783,1.1543507)"
        inkscape:label="#text5341-2"><tspan
          sodipodi:role="line"
-         x="706.02216"
-         y="922.03223"
+         x="778.65582"
+         y="908.82483"
          id="HeadingText-5-0-6-3">/</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:37.79572678px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#e5f5a3;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
-       x="754.76904"
-       y="922.03223"
+       style="font-size:50.91643906px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#e5f5a3;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
+       x="844.32513"
+       y="908.82483"
        id="WindSpeed"
        sodipodi:linespacing="125%"
-       transform="scale(0.90797165,1.101356)"
+       transform="scale(0.86628783,1.1543507)"
        inkscape:label="#text5341-2"><tspan
          sodipodi:role="line"
-         x="754.76904"
-         y="922.03223"
+         x="844.32513"
+         y="908.82483"
          id="HeadingText-5-0-6-4">---</tspan></text>
     <rect
        style="fill:#000000;fill-opacity:1;stroke:#3391e8;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100;display:inline"
@@ -5276,7 +5276,7 @@
     </g>
     <path
        style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Liberation Sans;-inkscape-font-specification:Sans"
-       d="m 635.59375,1049.0938 -13.78125,47.7812 11.28125,0 0,80.125 5,0 0,-80.125 11.28125,0 -13.78125,-47.7812 z"
+       d="m 672.3633,1083.0349 -13.78125,47.7812 11.28125,0 0,80.125 5,0 0,-80.125 11.28125,0 -13.78125,-47.7812 z"
        id="WindArrow"
        inkscape:connector-curvature="0" />
     <path
