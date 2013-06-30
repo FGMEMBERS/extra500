@@ -709,24 +709,14 @@
         <type>pick</type>
         <object-name>LKO</object-name>
         <object-name>LKI</object-name>
-
-        <action>
+	<action>
 		<button>3</button>
-		<repeatable>true</repeatable>
+		<repeatable>false</repeatable>
 		<binding>
-			<command>nasal</command>
-			<script>
-				<![CDATA[
-					UI.click("IFD LH LK >");
-				]]>
-			</script>
-		</binding>
-		</action>
- 
-        <shift-action>
-        <button>3</button>
-		<repeatable>true</repeatable>
-		<binding>
+			<condition>
+				<property>devices/status/keyboard/shift</property>
+			</condition>
+                
 			<command>nasal</command>
 			<script>
 				<![CDATA[
@@ -734,25 +724,29 @@
 				]]>
 			</script>
 		</binding>
-        </shift-action>
-		
-		<action>
-		<button>4</button>
-		<repeatable>true</repeatable>
 		<binding>
+			<condition>
+				<not>
+					<property>devices/status/keyboard/shift</property>
+				</not>
+			</condition>
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-					UI.click("IFD LH LK <");
+					UI.click("IFD LH LK >");
 				]]>
 			</script>
 		</binding>
-		</action>
+	</action>
  
-        <shift-action>
+        <action>
             <button>4</button>
-		<repeatable>true</repeatable>
+		<repeatable>false</repeatable>
 		<binding>
+			<condition>
+				<property>devices/status/keyboard/shift</property>
+			</condition>
+                
 			<command>nasal</command>
 			<script>
 				<![CDATA[
@@ -760,9 +754,21 @@
 				]]>
 			</script>
 		</binding>
-        </shift-action>
-		
-		<action>
+		<binding>
+			<condition>
+				<not>
+					<property>devices/status/keyboard/shift</property>
+				</not>
+			</condition>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("IFD LH LK <");
+				]]>
+			</script>
+		</binding>
+	</action>
+	<action>
 		<button>1</button>
 		<repeatable>true</repeatable>
 		<binding>
@@ -773,7 +779,7 @@
 				]]>
 			</script>
 		</binding>
-		</action>
+	</action>
 </animation>
 
 <!-- RightKnob -->
