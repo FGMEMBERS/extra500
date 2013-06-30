@@ -656,7 +656,7 @@ var SwitchClass = {
 		me._nState.setValue(value);
 	},
 	onLable : func(value){
-		print("SwitchClass.onLable("~value~") ...");
+		#print("SwitchClass.onLable("~value~") ...");
 		if(contains(me._labels,value)){
 			me._nState.setValue(me._labels[value]);
 		}
