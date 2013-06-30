@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2013-06-07
+      Date:             2013-06-30
 -->
  
 <PropertyList>
@@ -58,8 +58,8 @@
 	       <path>Aircraft/extra500/Sounds/extra500turbineUP.wav</path>
 	       <condition>
 		       <or>
-			       <property>/engines/engine[0]/starting</property>
-			       <property>/engines/engine[0]/cranking</property>
+			       <property>/fdm/jsbsim/aircraft/engine/spooling-up</property>
+			       <property>/fdm/jsbsim/aircraft/engine/motoring</property>
 		       </or>
 	       </condition>
 	       <volume>
@@ -84,7 +84,6 @@
 	       <!---->
 	       <condition>
 		       <or>
-			       <property>/engines/engine[0]/cranking</property>
 			       <property>/engines/engine[0]/running</property>
 			       
 		       </or>
@@ -116,10 +115,7 @@
             <mode>looped</mode>
             <path>Aircraft/extra500/Sounds/extra500turbineLOOP.wav</path>
 	    <condition>
-		       <or>
-			       <property>/engines/engine[0]/cranking</property>
-			       <property>/engines/engine[0]/running</property>
-		       </or>
+			<property>/fdm/jsbsim/propulsion/engine/set-running</property>
 	    </condition>
 	    <position>
                  <x>0</x>
@@ -142,21 +138,7 @@
             <mode>once</mode>
             <path>Aircraft/extra500/Sounds/extra500turbineDOWN.wav</path>
 	    <condition>
-		    <and>
-			    <!----><not>
-				    <property>/engines/engine[0]/cranking</property>
-			    </not>
-			    <not>
-				    <property>/engines/engine[0]/running</property>
-			    </not>
-			    <!----><not>
-				    <property>/engines/engine[0]/starting</property>
-			    </not>
-			    <greater-than>
-				    <property>/engines/engine[0]/n1</property>
-				    <value>5</value>
-			    </greater-than>
-		    </and>
+		   <property>/fdm/jsbsim/aircraft/engine/spooling-down</property>
 	    </condition>
 	    <volume>
 		    <offset>0.9</offset>
