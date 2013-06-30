@@ -18,8 +18,8 @@
       Authors: Thomas Grossberger 
       Date: June 03 2013
 
-      Last change:      Thomas Grossberger
-      Date:             03.06.13
+      Last change:      Eric van den Berg
+      Date:             30.06.13
 
 -->
 
@@ -33,7 +33,7 @@
   <object-name>Propeller</object-name>
   <condition>
     <less-than>
-      <property>engines/engine[0]/thruster/rpm</property>
+      <property>sim/multiplay/generic/float[0]</property>
       <value>700</value>
     </less-than>
   </condition>
@@ -44,11 +44,11 @@
   <condition>
     <and>
       <greater-than-equals>
-        <property>engines/engine[0]/thruster/rpm</property>
+        <property>sim/multiplay/generic/float[0]</property>
         <value>700</value>
       </greater-than-equals>
       <less-than>
-        <property>engines/engine[0]/thruster/rpm</property>
+        <property>sim/multiplay/generic/float[0]</property>
         <value>1500</value>
       </less-than>
     </and>
@@ -59,7 +59,7 @@
   <object-name>PropFast</object-name>
   <condition>
     <greater-than-equals>
-      <property>engines/engine[0]/thruster/rpm</property>
+      <property>sim/multiplay/generic/float[0]</property>
       <value>1500</value>
     </greater-than-equals>
   </condition>
@@ -70,7 +70,7 @@
   <object-name>Propeller</object-name>
   <object-name>PropSlow</object-name>
   <object-name>PropFast</object-name>
-  <property>engines/engine[0]/thruster/rpm</property>
+  <property>sim/multiplay/generic/float[0]</property>
   <factor>1</factor>
   <axis>
    <x1-m>1</x1-m>
