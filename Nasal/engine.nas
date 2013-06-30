@@ -61,23 +61,37 @@ var StarterClass = {
 				ConsumerClass.new(root,name,watt)
 			]
 		};
-		m._starter		= 0;
 		m.nGenerator     	= props.globals.initNode("/controls/electric/engine/generator",0,"BOOL");
+		
 		m._nStarter		= props.globals.initNode("/controls/engines/engine[0]/starter",0,"BOOL");
 		m._starterListener	= nil;
+		m._starter		= 0;
+		
+		m._nRunning		= props.globals.initNode("/engines/engine[0]/running",0,"BOOL");
+		m._runningListener	= nil;
+		m._running		= 0;
+		
 		return m;
 	},
 	setListerners : func() {
 		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0);
 		me._ampereListener 	= setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0);
-		me._starterListener 	= setlistener(me._nStarter,func(n){me._onStarterChange(n);},1,0);
+		#me._starterListener 	= setlistener(me._nStarter,func(n){me._onStarterChange(n);},1,0);
+		me._runningListener 	= setlistener(me._nRunning,func(n){me._onRunningChange(n);},1,0);
+	},
+	_onRunningChange : func(n){
+		me._running		= n.getValue();
+		if (me._running == 1){
+			me._starter 		= 0;
+		}
+		me.electricWork();
 	},
 	_onStarterChange : func(n){
 		me._starter		= n.getValue();
 		me.electricWork();
 	},
 	electricWork : func(){
-		if (me._starter == 1 and me._volt > 22.0){
+		if ((me._starter == 1) and (me._volt > 22.0)){
 			me._watt = me._nWatt.getValue();
 			me._ampere = me._watt / me._volt;
 			me.nGenerator.setValue(1);
