@@ -656,6 +656,7 @@ var SwitchClass = {
 		me._nState.setValue(value);
 	},
 	onLable : func(value){
+		print("SwitchClass.onLable("~value~") ...");
 		if(contains(me._labels,value)){
 			me._nState.setValue(me._labels[value]);
 		}
@@ -681,7 +682,7 @@ var SwitchClass = {
 # 			}
 			
 			foreach(i ; labelIndex){
-				UI.register(me._name~" "~i, 	func{me.onLable(""~i); }	);
+				UI.register(me._name~" "~i, 	func(i){me.onLable(""~i); },i	);
 			}
 		}
 	},
