@@ -25,7 +25,8 @@ var deg = func(rad){ return rad*TODEG; }
 var rad = func(deg){ return deg*TORAD; }
 var course = func(deg){ return math.mod(deg,360.0);}
 
-var NAV_SOURCE_LIST = ["NAV 1","NAV 2","FMS"];
+var NAV_SOURCE_NAME = ["NAV 1","NAV 2","FMS"];
+var NAV_SOURCE_TREE = ["/instrumentation/nav[0]","/instrumentation/nav[1]","/instrumentation/fms"];
 
 
 var COLOR = {};
@@ -130,16 +131,18 @@ var AvidyneData = {
 		m.NAVLOC = 0;
 		m.nHDI 		= props.globals.initNode("/autopilot/radionav-channel/heading-needle-deflection-norm",0.0,"DOUBLE");
 		m.nVDI 		= props.globals.initNode("/autopilot/radionav-channel/gs-needle-deflection-norm",0.0,"DOUBLE");
-		m.nGSable 	= props.globals.initNode("/autopilot/radionav-channel/has-gs",0.0,"DOUBLE");
+		#m.nGSable 	= props.globals.initNode("/autopilot/radionav-channel/has-gs",0.0,"DOUBLE");
 		m.nGSinRange 	= props.globals.initNode("/autopilot/radionav-channel/gs-in-range",0.0,"DOUBLE");
 		m.nNAVinRange 	= props.globals.initNode("/autopilot/radionav-channel/in-range",0.0,"DOUBLE");
-		m.nNAVLOC 	= props.globals.initNode("/autopilot/radionav-channel/is-localizer-frequency",0.0,"DOUBLE");
+		#m.nNAVLOC 	= props.globals.initNode("/autopilot/radionav-channel/is-localizer-frequency",0.0,"DOUBLE");
 		
 		
 		
 	#Box Primary Nav
+		m.nNAVSource 	= props.globals.initNode("/instrumentation/nav-source",0,"INT");
+		
 		m.navSource		= 0;
-		m.navAidName		= "";
+		m.navID		= "";
 		m.navAidDeg		= 0.0;
 		m.navAidUnit		= "";
 		m.navAidDistance	= 0.0;
@@ -184,10 +187,10 @@ var AvidyneData = {
 	#DI 
 		me.HDI 		= me.nHDI.getValue();
 		me.VDI 		= -me.nVDI.getValue();
-		me.GSable 	= me.nGSable.getValue();
+		#me.GSable 	= me.nGSable.getValue();
 		me.GSinRange 	= me.nGSinRange.getValue();
 		me.NAVinRange 	= me.nNAVinRange.getValue();
-		me.NAVLOC	= me.nNAVLOC.getValue();
+		#me.NAVLOC	= me.nNAVLOC.getValue();
 	
 		
 	
@@ -266,6 +269,9 @@ var AvidynePagePFD = {
 			AvidynePagePFD,
 			AvidynePage.new(ifd,name,data)
 		] };
+		
+		
+		m._navActiveAidIdListener = nil; 
 		
 		# creating the page 
 		
@@ -410,13 +416,75 @@ var AvidynePagePFD = {
 		me.keys["BARO STD"] = func(){me.data.adjustBaro();};
 	},
 	setListeners : func (){
-			append(me._listeners,setlistener("/instrumentation/nav-source",func(n){me._onNavSourceChange(n);},1,0));
+		append(me._listeners,setlistener("/instrumentation/nav-source",func(n){me._onNavSourceChange(n);},1,0));
+		append(me._listeners,setlistener("/autopilot/radionav-channel/in-range",func(n){me._onNavAidDegChange(n);},1,0));
+		append(me._listeners,setlistener("/autopilot/radionav-channel/nav-distance-nm",func(n){me._onNavAidDistanceChange(n);},1,0));
+		append(me._listeners,setlistener("/autopilot/radionav-channel/is-localizer-frequency",func(n){me._onNavLocChange(n);},1,0));
+		append(me._listeners,setlistener("/autopilot/radionav-channel/has-gs",func(n){me._onGSableChange(n);},1,0));
+			
 	},
 	_onNavSourceChange : func(n){
 		me.data.navSource = n.getValue();
-		me.cNavSource.setText(NAV_SOURCE_LIST[me.data.navSource]);
+		me.cNavSource.setText(NAV_SOURCE_NAME[me.data.navSource]);
+		if (me._navActiveAidIdListener != nil){
+			removelistener(me._navActiveAidIdListener);
+		}
+		me._navActiveAidIdListener = setlistener(NAV_SOURCE_TREE[me.data.navSource]~"/nav-id",func(n){me._onNavIdChange(n);},1,0);
 	},
-	
+	removeListeners : func(){
+		foreach(l;me._listeners){
+			removelistener(l);
+		}
+		me._listeners = [];
+		if (me._navActiveAidIdListener != nil){
+			removelistener(me._navActiveAidIdListener);
+			me._navActiveAidIdListener = nil;
+		}
+	},
+	_onNavSourceChange : func(n){
+		me.data.navSource = n.getValue();
+		me.cNavSource.setText(NAV_SOURCE_NAME[me.data.navSource]);
+		if (me._navActiveAidIdListener != nil){
+			removelistener(me._navActiveAidIdListener);
+		}
+		me._navActiveAidIdListener = setlistener(NAV_SOURCE_TREE[me.data.navSource]~"/nav-id",func(n){me._onNavIdChange(n);},1,0);
+	},
+	_onGSableChange : func(n){
+		me.data.GSable = n.getValue();
+		print(""~me.name~" AvidynePagePFD._onGSableChange()");
+		me._checkPrimaryNavBox();
+	},
+	_onNavLocChange : func(n){
+		me.data.NAVLOC = n.getValue();
+		me._checkPrimaryNavBox();
+	},
+	_onNavIdChange : func(n){
+		me.data.navID = n.getValue();
+		me._checkPrimaryNavBox();
+	},
+	_onNavAidDegChange : func(n){
+		me.data.navAidDeg = n.getValue();
+		me.cNavAidDeg.setText(me.data.navAidDeg);
+	},
+	_onNavAidDistanceChange : func(n){
+		me.data.navAidDistance = n.getValue();
+		me.cNavAidDistance.setText(me.data.navAidDistance);
+	},
+	_checkPrimaryNavBox : func(){
+		if (me.data.NAVLOC == 0){
+			me.cNavAidName.setText(sprintf("%s (%s)",me.data.navID,"VOR"));
+		}else{
+			if (me.data.GSable == 1){
+				me.cNavAidName.setText(sprintf("%s (%s)",me.data.navID,"ILS"));
+			}else{
+				me.cNavAidName.setText(sprintf("%s (%s)",me.data.navID,"LOC"));
+			}
+		}
+	},
+	_adjustNavSource : func (amount){
+		me.data.navSource += amount;
+		me.data.nNAVSource.setValue(me.data.navSource);
+	},
 	_apUpdate : func(){
 		if (me.data.apPowered){
 			me.cAutopilotOff.hide();
