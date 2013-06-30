@@ -34,6 +34,7 @@ COLOR["Red"] = "rgb(244,28,33)";
 COLOR["Green"] = "rgb(64,178,80)";
 COLOR["Magenta"] = "rgb(255,14,235)";
 COLOR["Yellow"] = "rgb(241,205,57)";
+COLOR["White"] = "rgb(255,255,255)";
 
 var AvidyneFontMapper = func(family, weight){
 	#print(sprintf("Canvas font-mapper %s %s",family,weight));
@@ -138,7 +139,7 @@ var AvidyneData = {
 		m.nNAVinRange 	= props.globals.initNode("/autopilot/radionav-channel/in-range",0.0,"DOUBLE");
 		#m.nNAVLOC 	= props.globals.initNode("/autopilot/radionav-channel/is-localizer-frequency",0.0,"DOUBLE");
 		
-		
+		m.FromFlag = 0;
 		
 	#Box Primary Nav
 		m.nNAVSource 	= props.globals.initNode("/instrumentation/nav-source",0,"INT");
@@ -330,6 +331,12 @@ var AvidynePagePFD = {
 		m.cARS = m.page.getElementById("ARS");
 		m.cARS.set("clip","rect(168px, 1562px, 785px, 845px)");
 		
+		m.cCoursePointer	= m.page.getElementById("CoursePointer");
+		m.cCoursePointer.updateCenter();
+		m.cCDI			= m.page.getElementById("CDI");
+		m.cFromFlag		= m.page.getElementById("FromFlag");
+		
+		
 	#DI	
 		m.cDI 			= m.page.getElementById("DI");
 		m.cDI_Source_Text 	= m.page.getElementById("DI_Source_Text");
@@ -428,11 +435,20 @@ var AvidynePagePFD = {
 		me.keys["L1 >"] = func(){me._adjustNavSource(1);};
 		me.keys["L1 <"] = func(){me._adjustNavSource(-1);};
 		
+		me.keys["LK <<"] = func(){me._adjustRadial(-10);};
+		me.keys["LK <"] = func(){me._adjustRadial(-1);};
+		me.keys["LK >"] = func(){me._adjustRadial(1);};
+		me.keys["LK >>"] = func(){me._adjustRadial(10);};
+		
+		
+		
 	},
 	setListeners : func (){
 		append(me._listeners,setlistener("/instrumentation/nav-source",func(n){me._onNavSourceChange(n);},1,0));
 		#append(me._listeners,setlistener("/autopilot/radionav-channel/radials/reciprocal-radial",func(n){me._onNavAidDegChange(n);},1,0));
 		#append(me._listeners,setlistener("/autopilot/radionav-channel/nav-distance-nm",func(n){me._onNavDistanceChange(n);},1,0));
+		append(me._listeners,setlistener("/autopilot/radionav-channel/from-flag",func(n){me._onFromFlagChange(n);},1,0));
+		append(me._listeners,setlistener("/autopilot/radionav-channel/radial-deg",func(n){me._onRadialChange(n);},1,0));
 		append(me._listeners,setlistener("/autopilot/radionav-channel/is-localizer-frequency",func(n){me._onNavLocChange(n);},1,0));
 		append(me._listeners,setlistener("/autopilot/radionav-channel/has-gs",func(n){me._onGSableChange(n);},1,0));
 	},
@@ -458,6 +474,12 @@ var AvidynePagePFD = {
 		append(me._navListeners, setlistener(NAV_SOURCE_TREE[me.data.navSource]~"/nav-id",func(n){me._onNavIdChange(n);},1,0));
 		#append(me._navListeners, setlistener(NAV_SOURCE_TREE[me.data.navSource]~"/nav-distance",func(n){me._onNavDistanceChange(n);},1,0));
 		
+	},
+	_onFromFlagChange : func(n){
+		me.data.FromFlag = n.getValue();
+	},
+	_onRadialChange : func(n){
+		me.data.CoursePointer = n.getValue();
 	},
 	_onGSableChange : func(n){
 		me.data.GSable = n.getValue();
@@ -508,6 +530,12 @@ var AvidynePagePFD = {
 			me.data.navSource = 1;
 		}
 		me.data.nNAVSource.setValue(me.data.navSource);
+	},
+	_adjustRadial : func(amount){
+		me.data.CoursePointer += amount;
+		me.data.CoursePointer = math.mod(me.data.CoursePointer,360.0);
+		setprop("/instrumentation/nav[0]/radials/selected-deg",me.data.CoursePointer);
+		setprop("/instrumentation/nav[1]/radials/selected-deg",me.data.CoursePointer);
 	},
 	_apUpdate : func(){
 		if (me.data.apPowered){
@@ -636,6 +664,22 @@ var AvidynePagePFD = {
 		}else{
 			me.cVDI.hide();
 		}
+		
+		if (me.data.HDI >= 1.0 or me.data.HDI <= -1.0){
+			me.cCDI.setColor(COLOR["Yellow"]);
+			me.cHDI_Needle.setColor(COLOR["Yellow"]);
+		}else{
+			me.cCDI.setColor(COLOR["Green"]);
+			me.cHDI_Needle.setColor(COLOR["White"]);
+			
+		}
+		if(me.data.FromFlag == 0){
+			me.cFromFlag.setRotation((180.0) * TORAD);
+		}
+		me.cCDI.setTranslation(me.data.HDI * 240,0);
+		me.cCoursePointer.setRotation((me.data.CoursePointer-me.data.HDG) * TORAD);
+		
+		
 	#ALT
 		me.cHPA.setText(sprintf("%4i",me.data.HPA));
 		me.AltIndicated.setText(sprintf("%4i",me.data.ALTBug));
@@ -657,6 +701,9 @@ var AvidyneIFD = {
 	new: func(nRoot,name,acPlace,startPage="none"){
 		var m = { parents: [AvidyneIFD] };
 		m.name = name;
+		m.keys = {};
+		m.nBacklight  	= nRoot.initNode("Backlight/state",1.0,"DOUBLE");
+		
 		m.nRoot = nRoot;
 		m.canvas = canvas.new({
 		"name": "IFD",
@@ -714,6 +761,10 @@ var AvidyneIFD = {
 	},
 	init : func(){
 		me.initUI();
+		
+		me.keys["L1 >"] = func(){me._adjustBrightness(0.1);};
+		me.keys["L1 <"] = func(){me._adjustBrightness(-0.1);};
+		
 		me.gotoPage(me._startPage);
 		
 		me._timerLoop20Hz.start();
@@ -774,10 +825,25 @@ var AvidyneIFD = {
 		}
 		
 	},
+	_adjustBrightness : func(amount){
+		var brightness = me.nBacklight.getValue();
+		brightness += amount;
+		brightness = global.clamp(brightness,0,1.0);
+		me.nBacklight.setValue(brightness);
+	},
+	
 	onClick: func(key){
+		
+		
+		
 		me.page[me.pageSelected].onClick(key);
 	},
 	initUI : func(){
+		
+		
+		
+		
+		
 		UI.register("IFD "~me.name~" L1 >",func{me.onClick("L1 >"); } );
 		UI.register("IFD "~me.name~" L1 <",func{me.onClick("L1 <"); } );
 		UI.register("IFD "~me.name~" L2 >",func{me.onClick("L2 >"); } );
@@ -834,6 +900,8 @@ var AvidyneIFD = {
 		
 		UI.register("IFD "~me.name~" DIM >",func{me.onClick("DIM >"); } );
 		UI.register("IFD "~me.name~" DIM <",func{me.onClick("DIM <"); } );
+		
+		
 
 				
 	}
