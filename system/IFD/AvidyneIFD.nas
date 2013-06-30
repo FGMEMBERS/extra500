@@ -665,7 +665,7 @@ var AvidynePagePFD = {
 			me.cVDI.hide();
 		}
 		
-		if (me.data.HDI >= 1.0 or me.data.HDI <= -1.0){
+		if ((me.data.HDI >= 1.0) or (me.data.HDI <= -1.0){
 			me.cCDI.setColor(COLOR["Yellow"]);
 			me.cHDI_Needle.setColor(COLOR["Yellow"]);
 		}else{
@@ -834,7 +834,10 @@ var AvidyneIFD = {
 	
 	onClick: func(key){
 		
-		
+		if (contains(me.keys,key)){
+			me.keys[key]();
+			return 1;
+		}
 		
 		me.page[me.pageSelected].onClick(key);
 	},
