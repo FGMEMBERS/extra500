@@ -833,7 +833,7 @@ var AvidyneIFD = {
 	},
 	
 	onClick: func(key){
-		print ("AvidyneIFD.onClick("~key~")");
+		#print ("AvidyneIFD.onClick("~key~")");
 		if (contains(me.keys,key)){
 			me.keys[key]();
 			return 1;
