@@ -138,10 +138,11 @@ var AvidyneData = {
 		
 		
 	#Box Primary Nav
-		m.navSource	= 0;
-		m.nNavSource	= props.globals.initNode("/instrumentation/nav-source",0,"INT");
-		
-		
+		m.navSource		= 0;
+		m.navAidName		= "";
+		m.navAidDeg		= 0.0;
+		m.navAidUnit		= "";
+		m.navAidDistance	= 0.0;
 		return m;
 	},
 	#loading the data from PropertyTree
@@ -188,8 +189,6 @@ var AvidyneData = {
 		me.NAVinRange 	= me.nNAVinRange.getValue();
 		me.NAVLOC	= me.nNAVLOC.getValue();
 	
-	#Box Primary Nav
-		me.navSource	= me.nNavSource.getValue();
 		
 	
 	},
@@ -216,7 +215,20 @@ var AvidynePage = {
 		m.name = name;
 		m.data = data;
 		m.keys = {};
+		m._listeners = [];
 		return m;
+	},
+	setListeners : func(){
+		
+	},
+	removeListeners : func(){
+		foreach(l;me._listeners){
+			removelistener(l);
+		}
+		me._listeners = [];
+	},
+	registerKeys : func(){
+		
 	},
 	hide : func(){
 		me.page.hide();
@@ -232,9 +244,7 @@ var AvidynePage = {
 	update : func(now,dt){
 		
 	},
-	registerKeys : func(){
-		
-	},
+	
 };
 
 var AvidynePageDummy = {
@@ -399,6 +409,14 @@ var AvidynePagePFD = {
 		me.keys["BARO <"] = func(){me.data.adjustBaro(-1);};
 		me.keys["BARO STD"] = func(){me.data.adjustBaro();};
 	},
+	setListeners : func (){
+			append(me._listeners,setlistener("/instrumentation/nav-source",func(n){me._onNavSourceChange(n);},1,0));
+	},
+	_onNavSourceChange : func(n){
+		me.data.navSource = n.getValue();
+		me.cNavSource.setText(NAV_SOURCE_LIST[me.data.navSource]);
+	},
+	
 	_apUpdate : func(){
 		if (me.data.apPowered){
 			me.cAutopilotOff.hide();
@@ -531,8 +549,7 @@ var AvidynePagePFD = {
 		me.cAltBar10000.setTranslation(0,math.floor((math.mod(me.data.ALT,100000)/10000))*75.169);
 		#me.cAltBar10000.setTranslation(0,math.floor(((me.alt)/1000))*7.5169);
 		
-	# Box Primary Nav
-		me.cNavSource.setText(NAV_SOURCE_LIST[me.data.navSource]);
+		
 		
 		
 	},
@@ -629,9 +646,11 @@ var AvidyneIFD = {
 		
 		if (me.pageSelected != name){
 			me.page[me.pageSelected].hide();
+			me.page[me.pageSelected].removeListeners();
 			me.pageSelected = name;
 			me.nPageSelected.setValue(me.pageSelected);
 			me.clearLeds();
+			me.page[me.pageSelected].setListeners();
 			me.page[me.pageSelected].registerKeys();
 			me.page[me.pageSelected].show();
 		}
