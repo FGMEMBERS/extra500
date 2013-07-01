@@ -25,8 +25,11 @@ var deg = func(rad){ return rad*TODEG; }
 var rad = func(deg){ return deg*TORAD; }
 var course = func(deg){ return math.mod(deg,360.0);}
 
-var NAV_SOURCE_NAME = ["NAV 1","NAV 2","FMS"];
-var NAV_SOURCE_TREE = ["/instrumentation/nav[0]","/instrumentation/nav[1]","/instrumentation/fms"];
+var NAV_SOURCE_NAME 	= ["NAV 1","NAV 2","FMS"];
+var NAV_SOURCE_TREE 	= ["/instrumentation/nav[0]","/instrumentation/nav[1]","/instrumentation/fms"];
+
+var BEARING_SOURCE_NAME = ["NAV 1","NAV 2","FMS"];
+var BEARING_SOURCE_TREE = ["/instrumentation/nav[0]","/instrumentation/nav[1]","/instrumentation/fms"];
 
 
 var COLOR = {};
@@ -148,13 +151,14 @@ var AvidyneData = {
 		m.nNAVSource	= props.globals.initNode("/instrumentation/nav-source",0.0,"DOUBLE");
 		m.navSource		= 0;
 		m.navID		= "";
+		m.navFrequency  = 0.0;
 		m.navDeg		= 0.0;
 		m.navAidUnit		= "";
 		m.navDistance	= 0.3;
 		m.navCoursePointer = 0;
 		
 	#Box Bearing Pointer
-		m.nBearingDeg	= props.globals.initNode("/autopilot/radionav-channel/radials/reciprocal-radial",0,"DOUBLE");
+		m.nBearingSource	= nil;
 		
 	#Timer
 		m.timerSec 	= 0;
@@ -246,7 +250,7 @@ var AvidyneData = {
 		}
 	},
 	timerGetTime : func(){
-		var text = "00 00";
+		var text = "00:00";
 		if(me.timerSec > 0){
 			var hour = math.mod(me.timerSec,86400.0) / 3600.0;
 			var min = math.mod(me.timerSec,3600.0) / 60.0;
@@ -461,6 +465,17 @@ var AvidynePagePFD = {
 		m.cNavCrs 		= m.page.getElementById("NAV_CRS");
 		m.cNavCrsUnit 		= m.page.getElementById("NAV_CRS_Unit");
 		m.cNavDistance 		= m.page.getElementById("NAV_Distance");
+	# Box Bearing Pointer
+		
+		m.cBearingOff 		= m.page.getElementById("BearingPtr_Off");
+		m.cBearingOn	 	= m.page.getElementById("BearingPtr_On").hide();
+		m.cBearingSource 	= m.page.getElementById("BearingPtr_Source");
+		m.cBearingID 		= m.page.getElementById("BearingPtr_ID");
+		m.cBearingBrg 		= m.page.getElementById("BearingPtr_BRG");
+		m.cBearingBrgUnit 	= m.page.getElementById("BearingPtr_Unit");
+		m.cBearingDistance 	= m.page.getElementById("BearingPtr_NM");
+		m.cBearingPointer 	= m.page.getElementById("BearingPtr_Pointer").hide();
+		
 	# Box Timer
 		m.cTimerOn 		= m.page.getElementById("Timer_On");
 		m.cTimerBtnCenter	= m.page.getElementById("Timer_btn_Center");
@@ -498,6 +513,7 @@ var AvidynePagePFD = {
 		append(me._listeners,setlistener("/autopilot/radionav-channel/radial-deg",func(n){me._onRadialChange(n);},1,0));
 		append(me._listeners,setlistener("/autopilot/radionav-channel/is-localizer-frequency",func(n){me._onNavLocChange(n);},1,0));
 		append(me._listeners,setlistener("/autopilot/radionav-channel/has-gs",func(n){me._onGSableChange(n);},1,0));
+		
 	},
 	removeListeners : func(){
 		foreach(l;me._listeners){
@@ -519,7 +535,7 @@ var AvidynePagePFD = {
 		me._navListeners = [];
 
 		append(me._navListeners, setlistener(NAV_SOURCE_TREE[me.data.navSource]~"/nav-id",func(n){me._onNavIdChange(n);},1,0));
-		#append(me._navListeners, setlistener(NAV_SOURCE_TREE[me.data.navSource]~"/nav-distance",func(n){me._onNavDistanceChange(n);},1,0));
+		append(me._navListeners, setlistener(NAV_SOURCE_TREE[me.data.navSource]~"/frequencies/selected-mhz-fmt",func(n){me._onNavFrequencyChange(n);},1,0));
 		
 	},
 	_onFromFlagChange : func(n){
@@ -545,14 +561,18 @@ var AvidynePagePFD = {
 		me.data.navID = n.getValue();
 		me._checkPrimaryNavBox();
 	},
+	_onNavFrequencyChange : func(n){
+		me.data.navFrequency = n.getValue();
+		me._checkPrimaryNavBox();
+	},
 	_checkPrimaryNavBox : func(){
 		if (me.data.NAVLOC == 0){
-			me.cNavID.setText(sprintf("%s (%s)",me.data.navID,"VOR"));
+			me.cNavID.setText(sprintf("%.2f (%s)",me.data.navFrequency,"VOR"));
 		}else{
 			if (me.data.GSable == 1){
-				me.cNavID.setText(sprintf("%s (%s)",me.data.navID,"ILS"));
+				me.cNavID.setText(sprintf("%.2f (%s)",me.data.navFrequency,"ILS"));
 			}else{
-				me.cNavID.setText(sprintf("%s (%s)",me.data.navID,"LOC"));
+				me.cNavID.setText(sprintf("%.2f (%s)",me.data.navFrequency,"LOC"));
 			}
 		}
 		
@@ -723,7 +743,7 @@ var AvidynePagePFD = {
 			me.cVDI_Needle.show();
 			me.cDI_Source_Text.setText("ILS");
 		}else{
-			me.cVDI.show();
+			me.cVDI.hide();
 			me.cVDI_Needle.hide();
 			
 		}

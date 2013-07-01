@@ -31,53 +31,73 @@ Modified standard FG file
   <modal>false</modal>
 
   <nasal>
-    <open>
-      <![CDATA[
-        var modes = ['OFF', 'STANDBY', 'TEST', 'GROUND', 'ON', 'ALTITUDE'];
-        var v = getprop('/instrumentation/transponder/inputs/knob-mode');
-        setprop("/sim/gui/dialogs/radios/transponder-mode", modes[v]);
+	<open>
+	<![CDATA[
+		var modes = ['OFF', 'STANDBY', 'TEST', 'GROUND', 'ON', 'ALTITUDE'];
+		var v = getprop('/instrumentation/transponder/inputs/knob-mode');
+		setprop("/sim/gui/dialogs/radios/transponder-mode", modes[v]);
 
-        var poweroften = [1, 10, 100, 1000];
-        var idcode = getprop('/instrumentation/transponder/id-code');
+		var poweroften = [1, 10, 100, 1000];
+		var idcode = getprop('/instrumentation/transponder/id-code');
 
-        if (idcode != nil)
-          {
-          for (var i = 0; i < 4 ; i = i+1)
-            {
-            setprop("/instrumentation/transponder/inputs/digit[" ~ i ~ "]", math.mod(idcode/poweroften[i], 10) );
-            }
-          }
+		if (idcode != nil)
+		{
+			for (var i = 0; i < 4 ; i = i+1)
+			{
+				setprop("/instrumentation/transponder/inputs/digit[" ~ i ~ "]", math.mod(idcode/poweroften[i], 10) );
+			}
+		}
+		
+		var lSource = setlistener("/instrumentation/nav-source",func(n){ 
+			var selected = n.getValue();
+			if (selected == 0){
+				setprop("/instrumentation/nav1-selected",1);
+				setprop("/instrumentation/nav2-selected",0);
+			}elsif (selected == 1){
+				setprop("/instrumentation/nav1-selected",0);
+				setprop("/instrumentation/nav2-selected",1);
+			}
+		},1);
 
-      ]]>
-    </open>
+	]]>
+	</open>
+	<close>
+		<![CDATA[
+		removelistener(lSource);
+		]]>
+	</close>
   </nasal>
 
   <layout>vbox</layout>
 
-  <group>
-    <layout>hbox</layout>
-    <empty>
-      <stretch>1</stretch>
-    </empty>
-
-    <text>
-      <label>RADIO, NAV and DME Frequencies, XPDR modes and squawk</label>
-    </text>
-
-    <empty>
-      <stretch>1</stretch>
-    </empty>
-
-    <button>
-      <pref-width>16</pref-width>
-      <pref-height>16</pref-height>
-      <legend></legend>
-      <keynum>27</keynum>
-      <border>2</border>
-      <binding>
-        <command>dialog-close</command>
-      </binding>
-    </button>
+       <group>
+	       <layout>hbox</layout>
+	       <empty>
+		       <stretch>1</stretch>
+	       </empty>
+	       
+	       <text>
+		       <label>RADIO, NAV and DME Frequencies, XPDR modes and squawk</label>
+	       </text>
+	       
+	       <empty>
+		       <stretch>1</stretch>
+	       </empty>
+	       
+	       <button>
+		       <pref-width>16</pref-width>
+		       <pref-height>16</pref-height>
+		       <legend>
+		       </legend>
+		       <keynum>268</keynum>
+		       <border>2</border>
+		       <binding>
+			       <command>dialog-apply</command>
+		       </binding>
+		       <binding>
+			       <command>dialog-close</command>
+		       </binding>
+	       </button>
   </group>
 
   <hrule/>
@@ -697,27 +717,28 @@ Modified standard FG file
   <!-- bottom button box -->
   <hrule/>
   <group>
-    <layout>hbox</layout>
-    <default-padding>6</default-padding>
-    <empty>
-      <stretch>true</stretch>
-    </empty>
-
-    <button>
-      <legend>Close</legend>
-      <default>true</default>
-      <equal>true</equal>
-      <binding>
-        <command>dialog-apply</command>
-      </binding>
-      <binding>
-        <command>dialog-close</command>
-      </binding>
-    </button>
-
-    <empty>
-      <stretch>true</stretch>
-    </empty>
+	  <layout>hbox</layout>
+	  <default-padding>6</default-padding>
+	  <empty>
+		  <stretch>true</stretch>
+	  </empty>
+	  
+	  <button>
+		  <legend>Close</legend>
+		  <default>true</default>
+		  <key>Esc</key>
+		  <equal>true</equal>
+		  <binding>
+			  <command>dialog-apply</command>
+		  </binding>
+		  <binding>
+			  <command>dialog-close</command>
+		  </binding>
+	  </button>
+	  
+	  <empty>
+		  <stretch>true</stretch>
+	  </empty>
   </group>
 
 </PropertyList>

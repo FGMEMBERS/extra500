@@ -88,11 +88,12 @@
 			<keynum>267</keynum>
 			<border>2</border>
 			<binding>
-				<command>dialog-close</command>
-			</binding>
-			<binding>
 				<command>dialog-apply</command>
 			</binding>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+			
 		</button>
 	</group>
 	<group>
@@ -113,35 +114,47 @@
 			<group>
 				<default-padding>8</default-padding>
 				<layout>table</layout>
-				<button>
+				<group>
 					<row>0</row>
 					<col>1</col>
-					<legend>HDG</legend>
-					<keynum>h</keynum>
-					<border>2</border>
-					<binding>
-						<command>nasal</command>
-						<script>
-							<![CDATA[ UI.click("Autopilot HDG"); ]]>
-						</script>
-					</binding>
-				</button>
+					<layout>hbox</layout>
+					<button>
+						<legend>HDG</legend>
+						<keynum>h</keynum>
+						<border>2</border>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ UI.click("Autopilot HDG"); ]]>
+							</script>
+						</binding>
+					</button>
+					<button>
+						<legend>+</legend>
+						<keynum>n</keynum>
+						<border>2</border>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ UI.click("Autopilot HDG+NAV"); ]]>
+							</script>
+						</binding>
+					</button>
+					<button>
+						<legend>NAV</legend>
+						<keynum>n</keynum>
+						<border>2</border>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ UI.click("Autopilot NAV"); ]]>
+							</script>
+						</binding>
+					</button>
+				</group>
 				<button>
 					<row>0</row>
 					<col>2</col>
-					<legend>NAV</legend>
-					<keynum>n</keynum>
-					<border>2</border>
-					<binding>
-						<command>nasal</command>
-						<script>
-							<![CDATA[ UI.click("Autopilot NAV"); ]]>
-						</script>
-					</binding>
-				</button>
-				<button>
-					<row>0</row>
-					<col>3</col>
 					<legend>APR</legend>
 					<keynum>a</keynum>
 					<border>2</border>
@@ -154,7 +167,7 @@
 				</button>
 				<button>
 					<row>0</row>
-					<col>4</col>
+					<col>3</col>
 					<legend>REV</legend>
 					<keynum>r</keynum>
 					<border>2</border>
@@ -165,35 +178,48 @@
 						</script>
 					</binding>
 				</button>
-				<button>
-					<row>0</row>
-					<col>5</col>
-					<legend>ALT</legend>
-					<keynum>r</keynum>
-					<border>2</border>
-					<binding>
-						<command>nasal</command>
-						<script>
-							<![CDATA[ UI.click("Autopilot ALT"); ]]>
-						</script>
-					</binding>
-				</button>
-				<button>
-					<row>0</row>
-					<col>6</col>
-					<legend>VS</legend>
-					<keynum>v</keynum>
-					<border>2</border>
-					<binding>
-						<command>nasal</command>
-						<script>
-							<![CDATA[ UI.click("Autopilot VS"); ]]>
-						</script>
-					</binding>
-				</button>
 				<group>
 					<row>0</row>
-					<col>7</col>
+					<col>4</col>
+					<layout>hbox</layout>
+				
+					<button>
+						<legend>ALT</legend>
+						<keynum>r</keynum>
+						<border>2</border>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ UI.click("Autopilot ALT"); ]]>
+							</script>
+						</binding>
+					</button>
+					<button>
+						<legend>+</legend>
+						<keynum>v</keynum>
+						<border>2</border>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ UI.click("Autopilot ALT+VS"); ]]>
+							</script>
+						</binding>
+					</button>
+					<button>
+						<legend>VS</legend>
+						<keynum>v</keynum>
+						<border>2</border>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ UI.click("Autopilot VS"); ]]>
+							</script>
+						</binding>
+					</button>
+				</group>
+				<group>
+					<row>0</row>
+					<col>5</col>
 					<layout>hbox</layout>
 					<button>
 						
@@ -791,13 +817,13 @@
 	</group>
   <hrule/>
 
-  <button>
-    <legend>Close</legend>
-    <default>true</default>
-    <key>Esc</key>
-    <binding>
-      <command>dialog-close</command>
-    </binding>
-  </button>
+       <button>
+	       <legend>Close</legend>
+	       <default>true</default>
+	       <key>Esc</key>
+	       <binding>
+		       <command>dialog-close</command>
+	       </binding>
+       </button>
 
 </PropertyList>

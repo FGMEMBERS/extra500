@@ -140,7 +140,11 @@ var SwitchFactory = {
 	new : func(root,name,cfg=nil){
 		var m = nil;
 		if(cfg!=nil){
-			return SwitchClass.new(root,name,cfg);
+			if (cfg._type != "BOOL" ){
+				return SwitchClass.new(root,name,cfg);
+			}else{
+				return SwitchBoolClass.new(root,name,cfg._default);	
+			}
 		}else{
 			return SwitchBoolClass.new(root,name);
 		}
@@ -157,6 +161,13 @@ var SwitchFactory = {
 		};
 		return m;
 	},
+	cfgBOOL : func(default=0){
+		var m = {
+			_type		: "BOOL",
+			_default	: default,
+		};
+		return m;
+	}
 };
 
 
@@ -850,8 +861,8 @@ eSystem.switch = {
 	Generator 		: SwitchFactory.new("extra500/panel/Side/Main/Generator","Main Generator",SwitchFactory.config("INT",-1,1,1,0,{"reset":-1,"off":0,"on":1})), 
 	External 		: SwitchFactory.new("extra500/panel/Side/Main/ExternalPower","Main External Power"),
 	GeneratorTest 		: SwitchFactory.new("extra500/panel/Side/Main/GeneratorTest","Main Generator Test",SwitchFactory.config("INT",-1,1,1,0,{"trip":-1,"off":0,"on":1})),
-	Avionics 		: SwitchFactory.new("extra500/panel/Side/Main/Avionics","Main Avionics"),
-	Strobe	 		: SwitchFactory.new("extra500/panel/Side/Light/Strobe","Light Strobe"),
+	Avionics 		: SwitchFactory.new("extra500/panel/Side/Main/Avionics","Main Avionics",SwitchFactory.cfgBOOL(1)),
+	Strobe	 		: SwitchFactory.new("extra500/panel/Side/Light/Strobe","Light Strobe",SwitchFactory.cfgBOOL(1)),
 	Navigation 		: SwitchFactory.new("extra500/panel/Side/Light/Navigation","Light Navigation"),
 	Landing 		: SwitchFactory.new("extra500/panel/Side/Light/Landing","Light Landing"),
 	Recognition 		: SwitchFactory.new("extra500/panel/Side/Light/Recognition","Light Recognition"),
@@ -862,33 +873,33 @@ eSystem.switch = {
 	Night	 		: SwitchFactory.new("extra500/panel/Side/Light/Night","Night",SwitchFactory.config("INT",-1,1,1,0,{"test":-1,"day":0,"night":1})),
 	Ice 			: SwitchFactory.new("extra500/panel/Side/Light/Ice","Light Ice"),
 	Propeller 		: SwitchFactory.new("extra500/panel/Side/Deicing/Propeller","Deicing Propeller"),
-	PitotL 			: SwitchFactory.new("extra500/panel/Side/Deicing/PitotL","Deicing Pitot Left",SwitchFactory.config("INT",-1,1,1,0,{"test":-1,"off":0,"on":1})),
-	PitotR 			: SwitchFactory.new("extra500/panel/Side/Deicing/PitotR","Deicing Pitot Right",SwitchFactory.config("INT",-1,1,1,0,{"test":-1,"off":0,"on":1})),
+	PitotL 			: SwitchFactory.new("extra500/panel/Side/Deicing/PitotL","Deicing Pitot Left",SwitchFactory.config("INT",-1,1,1,1,{"test":-1,"off":0,"on":1})),
+	PitotR 			: SwitchFactory.new("extra500/panel/Side/Deicing/PitotR","Deicing Pitot Right",SwitchFactory.config("INT",-1,1,1,1,{"test":-1,"off":0,"on":1})),
 	Windshield 		: SwitchFactory.new("extra500/panel/Side/Deicing/Windshield","Deicing Windshield"),
 	Boots 			: SwitchFactory.new("extra500/panel/Side/Deicing/Boots","Deicing Boots"),
-	Pressure 		: SwitchFactory.new("extra500/panel/Side/Cabin/Pressure","Cabin Pressure Controller",SwitchFactory.config("INT",-1,1,1,0,{"dump":-1,"off":0,"on":1})),
+	Pressure 		: SwitchFactory.new("extra500/panel/Side/Cabin/Pressure","Cabin Pressure Controller",SwitchFactory.config("INT",-1,1,1,1,{"dump":-1,"off":0,"on":1})),
 	AirCondition 		: SwitchFactory.new("extra500/panel/Side/Cabin/AirCondition","Cabin Air Condition"),
 	Vent 			: SwitchFactory.new("extra500/panel/Side/Cabin/Vent","Cabin Vent",SwitchFactory.config("INT",-1,1,1,-1,{"off":-1,"low":0,"high":1})),
 	EnvironmentalAir 	: SwitchFactory.new("extra500/panel/Side/Cabin/EnvironmentalAir","Cabin Environmental Air"),
 	TempMode 		: SwitchFactory.new("extra500/panel/Side/Cabin/TempMode","Cabin Temperature Controller Mode",SwitchFactory.config("INT",-1,1,1,0,{"cool":-1,"auto":0,"warm":1})),
-	TempCtrl 		: SwitchFactory.new("extra500/panel/Side/Cabin/TempCtrl","Cabin Temperature Controller"),
-	Temperature 		: SwitchFactory.new("extra500/panel/Side/Cabin/Temperature","Cabin Temperature",SwitchFactory.config("DOUBLE",-1.0,1.0,0.1,0)),
+	TempCtrl 		: SwitchFactory.new("extra500/panel/Side/Cabin/TempCtrl","Cabin Temperature Controller",SwitchFactory.cfgBOOL(1)),
+	Temperature 		: SwitchFactory.new("extra500/panel/Side/Cabin/Temperature","Cabin Temperature",SwitchFactory.config("DOUBLE",-1.0,1.0,0.1,0.6)),
 	Emergency 		: SwitchFactory.new("extra500/panel/Side/Emergency","Emergency"),
 #master panel
-	AutopilotMaster 	: SwitchFactory.new("extra500/panel/Master/Autopilot/Master","Autopilot Master",SwitchFactory.config("INT",-1,1,1,-1,{"off":-1,"fd":0,"ap":1})),
-	AutopilotPitchTrim 	: SwitchFactory.new("extra500/panel/Master/Autopilot/PitchTrim","Autopilot PitchTrim"),
-	AutopilotYawDamper 	: SwitchFactory.new("extra500/panel/Master/Autopilot/YawDamper","Autopilot YawDamper"),
+	AutopilotMaster 	: SwitchFactory.new("extra500/panel/Master/Autopilot/Master","Autopilot Master",SwitchFactory.config("INT",-1,1,1,1,{"off":-1,"fd":0,"ap":1})),
+	AutopilotPitchTrim 	: SwitchFactory.new("extra500/panel/Master/Autopilot/PitchTrim","Autopilot PitchTrim",SwitchFactory.cfgBOOL(1)),
+	AutopilotYawDamper 	: SwitchFactory.new("extra500/panel/Master/Autopilot/YawDamper","Autopilot YawDamper",SwitchFactory.cfgBOOL(1)),
 	AutopilotYawTrim 	: SwitchFactory.new("extra500/panel/Master/Autopilot/YawTrim","Autopilot Yaw Trim",SwitchFactory.config("DOUBLE",-1.0,1.0,0.1,0)),
-	FuelTransferLeft 	: SwitchFactory.new("extra500/panel/Master/Fuel/TransferLeft","Fuel Transfer Left"),
-	FuelTransferRight 	: SwitchFactory.new("extra500/panel/Master/Fuel/TransferRight","Fuel Transfer Right"),
+	FuelTransferLeft 	: SwitchFactory.new("extra500/panel/Master/Fuel/TransferLeft","Fuel Transfer Left",SwitchFactory.cfgBOOL(1)),
+	FuelTransferRight 	: SwitchFactory.new("extra500/panel/Master/Fuel/TransferRight","Fuel Transfer Right",SwitchFactory.cfgBOOL(1)),
 	FuelPump1 		: SwitchFactory.new("extra500/panel/Master/Fuel/Pump1","Fuel Pump 1"),
 	FuelPump2 		: SwitchFactory.new("extra500/panel/Master/Fuel/Pump2","Fuel Pump 2"),
 	EngineOverSpeed 	: SwitchFactory.new("extra500/panel/Master/Engine/OverSpeed","Engine OverSpeed"),
 	EngineMotoring 		: SwitchFactory.new("extra500/panel/Master/Engine/Motoring","Engine Motoring",SwitchFactory.config("INT",-1,1,1,-1,{"normal":-1,"abort":0,"on":1})),
 	EngineStart 		: SwitchFactory.new("extra500/panel/Master/Engine/Start","Engine Start",SwitchFactory.config("INT",-1,1,1,-1,{"off":-1,"ign":0,"on":1})),
 	DimmingKeypad 		: SwitchFactory.new("extra500/panel/Master/Dimming/Keypad","Dimmer Keypad",SwitchFactory.config("DOUBLE",0.0,1.0,0.1,0.5)),
-	DimmingGlare 		: SwitchFactory.new("extra500/panel/Master/Dimming/Glare","Dimmer Glare",SwitchFactory.config("DOUBLE",0.0,1.0,0.1,0.5)),
-	DimmingInstrument 	: SwitchFactory.new("extra500/panel/Master/Dimming/Instrument","Dimmer Instrument",SwitchFactory.config("DOUBLE",0.0,1.0,0.1,0.5)),
+	DimmingGlare 		: SwitchFactory.new("extra500/panel/Master/Dimming/Glare","Dimmer Glare",SwitchFactory.config("DOUBLE",0.0,1.0,0.1,0.25)),
+	DimmingInstrument 	: SwitchFactory.new("extra500/panel/Master/Dimming/Instrument","Dimmer Instrument",SwitchFactory.config("DOUBLE",0.0,1.0,0.1,0.75)),
 	DimmingSwitch 		: SwitchFactory.new("extra500/panel/Master/Dimming/Switch","Dimmer Switch",SwitchFactory.config("DOUBLE",0.0,1.0,0.1,0.5)),
 	DimmingAnnunciator 	: SwitchFactory.new("extra500/panel/Master/Dimming/Annunciator","Dimmer Annunciator",SwitchFactory.config("DOUBLE",0.0,1.0,0.1,0.5)),
 	
