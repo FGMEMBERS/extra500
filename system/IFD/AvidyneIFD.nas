@@ -140,7 +140,8 @@ var AvidyneData = {
 		m.nNAVinRange 	= props.globals.initNode("/autopilot/radionav-channel/in-range",0.0,"DOUBLE");
 		#m.nNAVLOC 	= props.globals.initNode("/autopilot/radionav-channel/is-localizer-frequency",0.0,"DOUBLE");
 		
-		m.FromFlag = 0;
+		m.cdiFromFlag 	= 0;
+		m.cdiToFlag 	= 0;
 		
 	#Box Primary Nav
 		m.nNavDistance	= props.globals.initNode("/autopilot/radionav-channel/nav-distance-nm",0.0,"DOUBLE");
@@ -373,7 +374,8 @@ var AvidynePagePFD = {
 		m.cCoursePointer	= m.page.getElementById("CoursePointer");
 		m.cCoursePointer.updateCenter();
 		m.cCDI			= m.page.getElementById("CDI");
-		m.cFromFlag		= m.page.getElementById("FromFlag");
+		m.cCDIFromFlag		= m.page.getElementById("CDI_FromFlag");
+		m.cCDIToFlag		= m.page.getElementById("CDI_ToFlag");
 		
 		
 	#DI	
@@ -492,6 +494,7 @@ var AvidynePagePFD = {
 		#append(me._listeners,setlistener("/autopilot/radionav-channel/radials/reciprocal-radial",func(n){me._onNavAidDegChange(n);},1,0));
 		#append(me._listeners,setlistener("/autopilot/radionav-channel/nav-distance-nm",func(n){me._onNavDistanceChange(n);},1,0));
 		append(me._listeners,setlistener("/autopilot/radionav-channel/from-flag",func(n){me._onFromFlagChange(n);},1,0));
+		append(me._listeners,setlistener("/autopilot/radionav-channel/to-flag",func(n){me._onToFlagChange(n);},1,0));
 		append(me._listeners,setlistener("/autopilot/radionav-channel/radial-deg",func(n){me._onRadialChange(n);},1,0));
 		append(me._listeners,setlistener("/autopilot/radionav-channel/is-localizer-frequency",func(n){me._onNavLocChange(n);},1,0));
 		append(me._listeners,setlistener("/autopilot/radionav-channel/has-gs",func(n){me._onGSableChange(n);},1,0));
@@ -520,7 +523,10 @@ var AvidynePagePFD = {
 		
 	},
 	_onFromFlagChange : func(n){
-		me.data.FromFlag = n.getValue();
+		me.data.cdiFromFlag = n.getValue();
+	},
+	_onToFlagChange : func(n){
+		me.data.cdiToFlag = n.getValue();
 	},
 	_onRadialChange : func(n){
 		me.data.navCoursePointer = n.getValue();
@@ -737,9 +743,9 @@ var AvidynePagePFD = {
 			me.cHDI_Needle.set("fill",COLOR["White"]);	
 		}
 		
-		if(me.data.FromFlag == 0){
-			me.cFromFlag.setRotation((180.0) * TORAD);
-		}
+		me.cCDIFromFlag.setVisible(me.data.cdiFromFlag);
+		me.cCDIToFlag.setVisible(me.data.cdiToFlag);
+		
 		
 		me.cCDI.setTranslation(me.data.HDI * 240,0);
 		me.cCoursePointer.setRotation((me.data.navCoursePointer-me.data.HDG) * TORAD);
