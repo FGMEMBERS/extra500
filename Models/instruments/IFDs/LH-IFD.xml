@@ -741,7 +741,7 @@
         <object-name>LKO</object-name>
         <object-name>LKI</object-name>
 	<action>
-		<button>3</button>
+		<button>4</button>
 		<repeatable>false</repeatable>
 		<binding>
 			<condition>
@@ -771,7 +771,7 @@
 	</action>
  
         <action>
-            <button>4</button>
+            <button>3</button>
 		<repeatable>false</repeatable>
 		<binding>
 			<condition>
@@ -820,22 +820,13 @@
         <object-name>RKI</object-name>
 
         <action>
-		<button>3</button>
-		<repeatable>true</repeatable>
+		<button>4</button>
+		<repeatable>false</repeatable>
 		<binding>
-			<command>nasal</command>
-			<script>
-				<![CDATA[
-					UI.click("IFD LH RK >");
-				]]>
-			</script>
-		</binding>
-		</action>
- 
-        <shift-action>
-        <button>3</button>
-		<repeatable>true</repeatable>
-		<binding>
+			<condition>
+				<property>devices/status/keyboard/shift</property>
+			</condition>
+                
 			<command>nasal</command>
 			<script>
 				<![CDATA[
@@ -843,25 +834,29 @@
 				]]>
 			</script>
 		</binding>
-        </shift-action>
-		
-		<action>
-		<button>4</button>
-		<repeatable>true</repeatable>
 		<binding>
+			<condition>
+				<not>
+					<property>devices/status/keyboard/shift</property>
+				</not>
+			</condition>
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-					UI.click("IFD LH RK <");
+					UI.click("IFD LH RK >");
 				]]>
 			</script>
 		</binding>
-		</action>
+	</action>
  
-        <shift-action>
-            <button>4</button>
-		<repeatable>true</repeatable>
+        <action>
+            <button>3</button>
+		<repeatable>false</repeatable>
 		<binding>
+			<condition>
+				<property>devices/status/keyboard/shift</property>
+			</condition>
+                
 			<command>nasal</command>
 			<script>
 				<![CDATA[
@@ -869,7 +864,20 @@
 				]]>
 			</script>
 		</binding>
-        </shift-action>
+		<binding>
+			<condition>
+				<not>
+					<property>devices/status/keyboard/shift</property>
+				</not>
+			</condition>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("IFD LH RK <");
+				]]>
+			</script>
+		</binding>
+	</action>
 		
 		<action>
 		<button>1</button>

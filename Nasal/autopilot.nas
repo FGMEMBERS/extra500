@@ -306,7 +306,7 @@ var AutopilotClass = {
 		#print("AutopilotClass.init() ... ");
 		eSystem.switch.AutopilotMaster.onStateChange = func(n){
 			me._state = n.getValue();
-			print(me._name~"onStateChange("~me._state~") ...");
+			#print(me._name~" onStateChange("~me._state~") ...");
 			if (me._state == 1){
 				autopilot.nSetAP.setValue(1);
 				autopilot.nSetFD.setValue(0);

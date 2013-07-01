@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.50980392"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="1002.9836"
-     inkscape:cy="470.42179"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="1098.6057"
+     inkscape:cy="527.89098"
      inkscape:document-units="px"
      inkscape:current-layer="layer8"
      showgrid="false"
@@ -1159,31 +1159,17 @@
          y="1817.262"
          id="tspan11083">Display</tspan></text>
     <text
-       xml:space="preserve"
-       style="font-size:50.89516068px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1.64769554;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
-       x="2356.6509"
-       y="1013.353"
-       id="HeadingSelected-2-8-1"
-       sodipodi:linespacing="125%"
-       transform="scale(0.91589761,1.0918251)"
-       inkscape:label="#text5341-2"><tspan
-         style="stroke-width:1.64769554"
-         sodipodi:role="line"
-         x="2356.6509"
-         y="1013.353"
-         id="tspan11053-1">Start Timer</tspan></text>
-    <text
        inkscape:label="#text5341-2"
        transform="scale(0.91589761,1.0918251)"
        sodipodi:linespacing="125%"
-       id="text11123"
-       y="1013.353"
-       x="2356.6509"
+       id="Timer_btn_Center"
+       y="1013.7357"
+       x="2358.0176"
        style="font-size:50.89516068px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1.64769554;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
        xml:space="preserve"><tspan
          id="tspan11125"
-         y="1013.353"
-         x="2356.6509"
+         y="1013.7357"
+         x="2358.0176"
          sodipodi:role="line"
          style="stroke-width:1.64769554">Start Timer</tspan></text>
     <text
@@ -1191,7 +1177,7 @@
        style="font-size:50.89516068px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.64769554;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
        x="2358.3655"
        y="1066.0817"
-       id="HeadingSelected-2-8-1-7"
+       id="Timer_Time"
        sodipodi:linespacing="125%"
        transform="scale(0.91589761,1.0918251)"
        inkscape:label="#text5341-2"><tspan
@@ -1432,6 +1418,50 @@
          x="2203.0505"
          sodipodi:role="line"
          style="stroke-width:1.64769554">Info</tspan></text>
+    <g
+       id="Timer_On"
+       inkscape:label="#g4860">
+      <path
+         style="fill:none;stroke:#60ffb8;stroke-width:10;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+         d="m 1920.9413,1119.468 46.1175,-17.8752 0,35.4584 z"
+         id="path10943-8-3-74"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccc" />
+      <path
+         style="fill:none;stroke:#60ffb8;stroke-width:10;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+         d="m 2400.9159,1119.468 -46.1175,-17.8752 0,35.4584 z"
+         id="path10943-8-3-7-1"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccc" />
+      <text
+         inkscape:label="#text5341-2"
+         transform="scale(0.91589761,1.0918251)"
+         sodipodi:linespacing="125%"
+         id="Timer_btn_Left"
+         y="1013.7357"
+         x="2213.9004"
+         style="font-size:50.89516068px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1.64769554;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"><tspan
+           id="tspan4852"
+           y="1013.7357"
+           x="2213.9004"
+           sodipodi:role="line"
+           style="stroke-width:1.64769554">Stop</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:50.89516068px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1.64769554;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
+         x="2491.2168"
+         y="1013.7357"
+         id="Timer_btn_Right"
+         sodipodi:linespacing="125%"
+         transform="scale(0.91589761,1.0918251)"
+         inkscape:label="#text5341-2"><tspan
+           style="stroke-width:1.64769554"
+           sodipodi:role="line"
+           x="2491.2168"
+           y="1013.7357"
+           id="tspan4856">Reset</tspan></text>
+    </g>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -1456,7 +1486,7 @@
          sodipodi:cy="449.28571"
          sodipodi:rx="336.35129"
          sodipodi:ry="365"
-         d="m 1518.5714,449.28571 a 336.35129,365 0 1 1 -672.7026,0 336.35129,365 0 1 1 672.7026,0 z"
+         d="m 1518.5714,449.28571 c 0,201.58393 -150.5896,365 -336.3513,365 -185.76169,0 -336.3513,-163.41607 -336.3513,-365 0,-201.58394 150.58961,-365.000004 336.3513,-365.000004 185.7617,0 336.3513,163.416064 336.3513,365.000004 z"
          transform="matrix(0.75349504,0.75349504,-0.69981776,0.69981776,627.9069,-759.69181)" />
     </g>
     <g
@@ -5314,6 +5344,14 @@
        id="CoursePointer"
        inkscape:transform-center-y="-8.9120904"
        style="stroke:#40b250;stroke-opacity:1">
+      <rect
+         style="fill:#40b250;fill-opacity:1;stroke:#40b250;stroke-width:0;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+         id="CDI"
+         width="10"
+         height="360.98868"
+         x="1199.2856"
+         y="1171.7244"
+         ry="0" />
       <path
          sodipodi:type="star"
          style="fill:#40b250;fill-opacity:1;stroke:#40b250;stroke-width:8;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
@@ -5401,12 +5439,6 @@
          sodipodi:ry="5.3033009"
          d="m 1060.6602,1363.0074 a 5.3033009,5.3033009 0 1 1 -10.6066,0 5.3033009,5.3033009 0 1 1 10.6066,0 z"
          transform="matrix(2.0741799,0,0,2.0741799,-784.46444,-1469.4185)" />
-      <path
-         sodipodi:nodetypes="cc"
-         inkscape:connector-curvature="0"
-         id="CDI"
-         d="m 1204.2857,1174.9405 0,355.1702"
-         style="fill:none;stroke:#40b250;stroke-width:9.44592762;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:none;display:inline" />
     </g>
   </g>
 </svg>

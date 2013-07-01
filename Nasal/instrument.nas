@@ -70,15 +70,15 @@ var DigitalInstrumentPackageClass = {
 		me._dt 		= me._now - me._lastTime;
 		me._lastTime	= me._now;
 		
-		interpolate(me.nIndicatedVDC,eSystem._volt,me._dt);
+		interpolate(me.nIndicatedVDC ,eSystem._volt+ 0.05,me._dt);
 		
 		#me.nIndicatedVDC.setValue(eSystem._volt);
-		me.nIndicatedGEN.setValue(eSystem._ampere);
-		me.nIndicatedBAT.setValue(eSystem._ampere);
+		me.nIndicatedGEN.setValue(eSystem._ampere + 0.5);
+		me.nIndicatedBAT.setValue(eSystem._ampere + 0.5);
 		
-		me.nIndicatedFuelPress.setValue(me.nFuelPress.getValue());
-		me.nIndicatedFuelTemp.setValue(me.nFuelTemp.getValue());
-		me.nIndicatedIAT.setValue(me.nIAT.getValue());
+		me.nIndicatedFuelPress.setValue(me.nFuelPress.getValue() + 0.5);
+		me.nIndicatedFuelTemp.setValue(me.nFuelTemp.getValue() + 0.5);
+		me.nIndicatedIAT.setValue(me.nIAT.getValue() + 0.5);
 	}
 	
 };
@@ -143,6 +143,7 @@ var InstrumentClass = {
 		m._brightnessListener   = nil;
 		m._nBacklight 		= m._nRoot.initNode("Backlight/state",0.0,"DOUBLE");
 		m._backLight 		= 0;
+		m._backLightState 		= 0;
 		return m;
 	},
 	setListerners : func() {
@@ -159,7 +160,11 @@ var InstrumentClass = {
 			me._watt = me._nWatt.getValue();
 			me._ampere = me._watt / me._volt;
 			me._state = 1;
-			me._backLight = me._brightness;
+			if (me._backLightState == 1){
+				me._backLight = me._brightness;
+			}else{
+				me._backLight = 0;	
+			}
 		}else{
 			me._ampere = 0;
 			me._state = 0;
@@ -173,6 +178,10 @@ var InstrumentClass = {
 	init : func(){
 		me.setListerners();
 	},
+	setBacklight : func(value){
+		me._backLightState = value;
+		me.electricWork();
+	}
 };
 
 var engineInstrumentPackage = EngineInstrumentPackageClass.new("extra500/instrumentation/EIP","Engine Instrument Package",24.0);
