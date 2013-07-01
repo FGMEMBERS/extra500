@@ -151,10 +151,14 @@ var AvidyneData = {
 		m.navDeg		= 0.0;
 		m.navAidUnit		= "";
 		m.navDistance	= 0.3;
+		
+	#Timer
+		m.timerSec 	= 0;
+		m.timerState	= 0;
 		return m;
 	},
 	#loading the data from PropertyTree
-	load20Hz : func(){
+	load20Hz : func(now,dt){
 	#autopilot
 		me.apPowered 	= me.nApPower.getValue();
 		me.apModeRdy 	= me.nApModeRdy.getValue();
@@ -197,12 +201,14 @@ var AvidyneData = {
 		me.NAVinRange 	= me.nNAVinRange.getValue();
 		#me.NAVLOC	= me.nNAVLOC.getValue();
 	
-	#Box Primary Nav
 		
 		
 	
 	},
-	load2Hz : func(){
+	load2Hz : func(now,dt){
+		#print("AvidyneData.load2Hz("~now~","~dt~") ... ");
+	#Box Timer
+		me._timerCount(dt);
 	#Box Primary Nav
 		me.navDeg	= me.nNavDeg.getValue();
 		me.navDistance	= me.nNavDistance.getValue();
@@ -218,8 +224,39 @@ var AvidyneData = {
 		if (me.link!=nil){
 			me.link.nHPA.setValue(me.HPA);
 		}
-	}
-	
+	},
+	timerStart : func(){
+		me.timerState = 2;
+	},
+	timerStop : func(){
+		me.timerState = 1;
+	},
+	timerReset : func(){
+		me.timerSec = 0;
+		if (me.timerState == 1){
+			me.timerState = 0;
+		}
+	},
+	_timerCount : func(dt){
+		if (me.timerState == 2){
+			me.timerSec += dt;
+		}
+	},
+	timerGetTime : func(){
+		var text = "00 00";
+		if(me.timerSec > 0){
+			var hour = math.mod(me.timerSec,86400.0) / 3600.0;
+			var min = math.mod(me.timerSec,3600.0) / 60.0;
+			var sec = math.mod(me.timerSec,60.0);
+			
+			if (hour > 1){
+				text = sprintf("%02i:%02i:%02i",hour,min,sec);
+			}else{
+				text = sprintf("%02i:%02i",min,sec);
+			}
+		}
+		return text;
+	},
 };
 
 var AvidynePage = {
@@ -420,6 +457,11 @@ var AvidynePagePFD = {
 		m.cNavAidDeg 		= m.page.getElementById("NAV_AidDeg");
 		m.cNavAidDegUnit 	= m.page.getElementById("NAV_AidDegUnit");
 		m.cNavDistance 		= m.page.getElementById("NAV_AidDistance");
+	# Box Timer
+		m.cTimerOn 		= m.page.getElementById("Timer_On");
+		m.cTimerBtnCenter	= m.page.getElementById("Timer_btn_Center");
+		m.cTimerBtnLeft		= m.page.getElementById("Timer_btn_Left");
+		m.cTimerTime 		= m.page.getElementById("Timer_Time");
 		
 		
 		return m;
@@ -441,7 +483,7 @@ var AvidynePagePFD = {
 		me.keys["LK >>"] = func(){me._adjustRadial(10);};
 		
 		
-		
+		me._timerRegisterKeys();
 	},
 	setListeners : func (){
 		append(me._listeners,setlistener("/instrumentation/nav-source",func(n){me._onNavSourceChange(n);},1,0));
@@ -494,16 +536,6 @@ var AvidynePagePFD = {
 		me.data.navID = n.getValue();
 		me._checkPrimaryNavBox();
 	},
-# 	_onNavAidDegChange : func(n){
-# 		me.data.navDeg = n.getValue();
-# 		#print(""~me.name~" AvidynePagePFD._onNavAidDegChange()" ~ me.data.navDeg);
-# 		me.cNavAidDeg.setText(sprintf("%i",me.data.navDeg +0.5));
-# 
-# 	},
-# 	_onNavDistanceChange : func(n){
-# 		me.data.navDistance = n.getValue() * global.CONST.METER2NM;
-# 		me.cNavDistance.setText(sprintf("%.1f",me.data.navDistance));
-# 	},
 	_checkPrimaryNavBox : func(){
 		if (me.data.NAVLOC == 0){
 			me.cNavAidName.setText(sprintf("%s (%s)",me.data.navID,"VOR"));
@@ -521,6 +553,30 @@ var AvidynePagePFD = {
 		me.cNavDistance.setText(sprintf("%.1f",me.data.navDistance));
 		me.cNavAidDeg.setText(sprintf("%i",me.data.navDeg +0.5));
 	},
+	
+### Using The Timer Pilot Guide Page 88
+	_timerRegisterKeys : func(){
+		if ((me.data.timerState == 0)){
+			me.keys["R2 <"] = func(){me.data.timerStart();me._timerRegisterKeys();};
+			me.keys["R2 >"] = func(){me.data.timerStart();me._timerRegisterKeys();};
+			me.cTimerOn.hide();
+			me.cTimerBtnCenter.show();
+			
+		}elsif ((me.data.timerState == 1)){
+			me.keys["R2 <"] = func(){me.data.timerStart();me._timerRegisterKeys();};
+			me.keys["R2 >"] = func(){me.data.timerReset();me._timerRegisterKeys();};
+			me.cTimerBtnLeft.setText("Start");
+			me.cTimerOn.show();
+			me.cTimerBtnCenter.hide();
+		}elsif ((me.data.timerState == 2)){
+			me.keys["R2 <"] = func(){me.data.timerStop();me._timerRegisterKeys();};
+			me.keys["R2 >"] = func(){me.data.timerReset();me._timerRegisterKeys();};
+			me.cTimerBtnLeft.setText("Stop");
+			me.cTimerOn.show();
+			me.cTimerBtnCenter.hide();
+		}
+	},
+		
 	_adjustNavSource : func (amount){
 		me.data.navSource += amount;
 		if (me.data.navSource > 1){
@@ -599,6 +655,7 @@ var AvidynePagePFD = {
 		me.cNavDistance.setText(sprintf("%.1f",me.data.navDistance));
 		me.cNavAidDeg.setText(sprintf("%i",me.data.navDeg +0.5));
 		me.cGroundSpeed.setText(sprintf("%i",me.data.GroundSpeed +0.5));
+		me.cTimerTime.setText(me.data.timerGetTime());
 	},
 	update20Hz : func(now,dt){
 		
@@ -664,15 +721,20 @@ var AvidynePagePFD = {
 		}else{
 			me.cVDI.hide();
 		}
-		
-		if ((me.data.HDI >= 1.0) or (me.data.HDI <= -1.0)){
-			me.cCDI.setColor(COLOR["Yellow"]);
-			me.cHDI_Needle.setColor(COLOR["Yellow"]);
+		if ((me.data.VDI <= -0.99) or (me.data.VDI >= 0.99)){
+			me.cVDI_Needle.set("fill",COLOR["Yellow"]);
 		}else{
-			me.cCDI.setColor(COLOR["Green"]);
-			me.cHDI_Needle.setColor(COLOR["White"]);
-			
+			me.cVDI_Needle.set("fill",COLOR["White"]);
 		}
+		
+		if ((me.data.HDI <= -0.99) or (me.data.HDI >= 0.99)){
+			me.cCDI.set("fill",COLOR["Yellow"]);
+			me.cHDI_Needle.set("fill",COLOR["Yellow"]);
+		}else{
+			me.cCDI.set("fill",COLOR["Green"]);
+			me.cHDI_Needle.set("fill",COLOR["White"]);	
+		}
+		
 		if(me.data.FromFlag == 0){
 			me.cFromFlag.setRotation((180.0) * TORAD);
 		}
@@ -780,7 +842,7 @@ var AvidyneIFD = {
 		me._dt2Hz = me._now2Hz - me._last2Hz;
 		me._last2Hz = me._now2Hz;
 				
-		me.data.load2Hz();
+		me.data.load2Hz(me._now2Hz,me._dt2Hz);
 		me.page[me.pageSelected].update2Hz(me._now2Hz,me._dt2Hz);		
 	},
 	update20Hz : func(){
@@ -789,7 +851,7 @@ var AvidyneIFD = {
 		me._dt20Hz = me._now20Hz - me._last20Hz;
 		me._last20Hz = me._now20Hz;
 				
-		me.data.load20Hz();
+		me.data.load20Hz(me._now20Hz,me._dt20Hz);
 		me.page[me.pageSelected].update20Hz(me._now20Hz,me._dt20Hz);		
 	},
 	clearLeds : func(){

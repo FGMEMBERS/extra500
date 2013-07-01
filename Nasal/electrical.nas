@@ -110,6 +110,8 @@ var ElectricClass = {
 		};
 		m._nVolt		= m._nRoot.initNode("volt",0.0,"DOUBLE");
 		m._nAmpere		= m._nRoot.initNode("ampere",0.0,"DOUBLE");
+		m._nVolt.setValue(0.0);
+		m._nAmpere.setValue(0.0);
 		m._ampere		= 0.0;
 		m._volt			= 0.0;
 		return m;
@@ -411,7 +413,9 @@ var CircuitBrakerClass = {
 	_onStateChange : func(n){
 		me._state = n.getValue();
 		me._deliverVolt();
-				
+		if (me._state == 0){
+			print("CircuitBrakerClass._onStateChange() ... "~me._name~" break.");
+		}
 	},
 	_onVoltChange : func(n){
 		me._volt = n.getValue();
@@ -419,6 +423,7 @@ var CircuitBrakerClass = {
 	},
 	_onAmpereChange : func(n){
 		me._ampere = n.getValue();
+		#print("CircuitBrakerClass._onAmpereChange("~me._ampere~") ... "~me._name~".");
 		if (me._ampere < me._ampereMax){
 			var dif = me._ampere - me._lastAmpere;
 			me._lastAmpere = me._ampere;
