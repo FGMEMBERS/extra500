@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             17.06.13
+      Date:             01.07.13
 
 -->
 
@@ -184,6 +184,12 @@
 	<object-name>FuelInstruments.MainLeft.Needle</object-name>
 	<object-name>FuelInstruments.CollRight.Needle</object-name>
 	<object-name>FuelInstruments.CollLeft.Needle</object-name>
+	<object-name>FuelInstruments.AuxRight.Scheibe</object-name>
+	<object-name>FuelInstruments.AuxLeft.Scheibe</object-name>
+	<object-name>FuelInstruments.MainRight.Scheibe</object-name>
+	<object-name>FuelInstruments.MainLeft.Scheibe</object-name>
+	<object-name>FuelInstruments.CollRight.Scheibe</object-name>
+	<object-name>FuelInstruments.CollLeft.Scheibe</object-name>
 	<emission>	
 		<red>1.0</red>	
 		<green>1.0</green>	
