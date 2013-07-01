@@ -35,6 +35,7 @@ COLOR["Green"] = "rgb(64,178,80)";
 COLOR["Magenta"] = "rgb(255,14,235)";
 COLOR["Yellow"] = "rgb(241,205,57)";
 COLOR["White"] = "rgb(255,255,255)";
+COLOR["Turquoise"] = "rgb(4,254,252)";
 
 var AvidyneFontMapper = func(family, weight){
 	#print(sprintf("Canvas font-mapper %s %s",family,weight));
@@ -142,8 +143,6 @@ var AvidyneData = {
 		m.FromFlag = 0;
 		
 	#Box Primary Nav
-		m.nNAVSource 	= props.globals.initNode("/instrumentation/nav-source",0,"INT");
-		m.nNavDeg	= props.globals.initNode("/autopilot/radionav-channel/radials/reciprocal-radial",0,"DOUBLE");
 		m.nNavDistance	= props.globals.initNode("/autopilot/radionav-channel/nav-distance-nm",0.0,"DOUBLE");
 		
 		m.navSource		= 0;
@@ -151,6 +150,10 @@ var AvidyneData = {
 		m.navDeg		= 0.0;
 		m.navAidUnit		= "";
 		m.navDistance	= 0.3;
+		m.navCoursePointer = 0;
+		
+	#Box Bearing Pointer
+		m.nBearingDeg	= props.globals.initNode("/autopilot/radionav-channel/radials/reciprocal-radial",0,"DOUBLE");
 		
 	#Timer
 		m.timerSec 	= 0;
@@ -210,7 +213,6 @@ var AvidyneData = {
 	#Box Timer
 		me._timerCount(dt);
 	#Box Primary Nav
-		me.navDeg	= me.nNavDeg.getValue();
 		me.navDistance	= me.nNavDistance.getValue();
 		me.GroundSpeed	= me.nGroundSpeed.getValue();
 	},
@@ -453,10 +455,10 @@ var AvidynePagePFD = {
 		
 	# Box Primary Nav 
 		m.cNavSource 		= m.page.getElementById("NAV_SourceName");
-		m.cNavAidName 		= m.page.getElementById("NAV_AidName");
-		m.cNavAidDeg 		= m.page.getElementById("NAV_AidDeg");
-		m.cNavAidDegUnit 	= m.page.getElementById("NAV_AidDegUnit");
-		m.cNavDistance 		= m.page.getElementById("NAV_AidDistance");
+		m.cNavID 		= m.page.getElementById("NAV_ID");
+		m.cNavCrs 		= m.page.getElementById("NAV_CRS");
+		m.cNavCrsUnit 		= m.page.getElementById("NAV_CRS_Unit");
+		m.cNavDistance 		= m.page.getElementById("NAV_Distance");
 	# Box Timer
 		m.cTimerOn 		= m.page.getElementById("Timer_On");
 		m.cTimerBtnCenter	= m.page.getElementById("Timer_btn_Center");
@@ -521,7 +523,8 @@ var AvidynePagePFD = {
 		me.data.FromFlag = n.getValue();
 	},
 	_onRadialChange : func(n){
-		me.data.CoursePointer = n.getValue();
+		me.data.navCoursePointer = n.getValue();
+		me._checkPrimaryNavBox();
 	},
 	_onGSableChange : func(n){
 		me.data.GSable = n.getValue();
@@ -538,20 +541,19 @@ var AvidynePagePFD = {
 	},
 	_checkPrimaryNavBox : func(){
 		if (me.data.NAVLOC == 0){
-			me.cNavAidName.setText(sprintf("%s (%s)",me.data.navID,"VOR"));
+			me.cNavID.setText(sprintf("%s (%s)",me.data.navID,"VOR"));
 		}else{
 			if (me.data.GSable == 1){
-				me.cNavAidName.setText(sprintf("%s (%s)",me.data.navID,"ILS"));
+				me.cNavID.setText(sprintf("%s (%s)",me.data.navID,"ILS"));
 			}else{
-				me.cNavAidName.setText(sprintf("%s (%s)",me.data.navID,"LOC"));
+				me.cNavID.setText(sprintf("%s (%s)",me.data.navID,"LOC"));
 			}
 		}
 		
-		me.data.navDeg		= me.data.nNavDeg.getValue();
 		me.data.navDistance	= me.data.nNavDistance.getValue();
 		
 		me.cNavDistance.setText(sprintf("%.1f",me.data.navDistance));
-		me.cNavAidDeg.setText(sprintf("%i",me.data.navDeg +0.5));
+		me.cNavCrs.setText(sprintf("%i",me.data.navCoursePointer +0.5));
 	},
 	
 ### Using The Timer Pilot Guide Page 88
@@ -588,10 +590,10 @@ var AvidynePagePFD = {
 		me.data.nNAVSource.setValue(me.data.navSource);
 	},
 	_adjustRadial : func(amount){
-		me.data.CoursePointer += amount;
-		me.data.CoursePointer = math.mod(me.data.CoursePointer,360.0);
-		setprop("/instrumentation/nav[0]/radials/selected-deg",me.data.CoursePointer);
-		setprop("/instrumentation/nav[1]/radials/selected-deg",me.data.CoursePointer);
+		me.data.navCoursePointer += amount;
+		me.data.navCoursePointer = math.mod(me.data.navCoursePointer,360.0);
+		setprop("/instrumentation/nav[0]/radials/selected-deg",me.data.navCoursePointer);
+		setprop("/instrumentation/nav[1]/radials/selected-deg",me.data.navCoursePointer);
 	},
 	_apUpdate : func(){
 		if (me.data.apPowered){
@@ -653,7 +655,7 @@ var AvidynePagePFD = {
 	},
 	update2Hz : func(now,dt){
 		me.cNavDistance.setText(sprintf("%.1f",me.data.navDistance));
-		me.cNavAidDeg.setText(sprintf("%i",me.data.navDeg +0.5));
+		me.cNavCrs.setText(sprintf("%i",me.data.navCoursePointer +0.5));
 		me.cGroundSpeed.setText(sprintf("%i",me.data.GroundSpeed +0.5));
 		me.cTimerTime.setText(me.data.timerGetTime());
 	},
@@ -708,19 +710,19 @@ var AvidynePagePFD = {
 			me.cDI_Source_Text.setText("VOR");
 		}
 		
-		if(me.data.GSable == 1){
+		
+		if (me.data.GSinRange == 1){
 			me.cVDI.show();
+			me.cVDI_Needle.setTranslation(0, me.data.VDI * 240);
+			me.cVDI_Needle.show();
 			me.cDI_Source_Text.setText("ILS");
-			if (me.data.GSinRange == 1){
-				me.cVDI_Needle.setTranslation(0, me.data.VDI * 240);
-				me.cVDI_Needle.show();
-			}else{
-				me.cVDI_Needle.hide();
-				
-			}
 		}else{
-			me.cVDI.hide();
+			me.cVDI.show();
+			me.cVDI_Needle.hide();
+			
 		}
+		
+		
 		if ((me.data.VDI <= -0.99) or (me.data.VDI >= 0.99)){
 			me.cVDI_Needle.set("fill",COLOR["Yellow"]);
 		}else{
@@ -738,8 +740,10 @@ var AvidynePagePFD = {
 		if(me.data.FromFlag == 0){
 			me.cFromFlag.setRotation((180.0) * TORAD);
 		}
+		
 		me.cCDI.setTranslation(me.data.HDI * 240,0);
-		me.cCoursePointer.setRotation((me.data.CoursePointer-me.data.HDG) * TORAD);
+		me.cCoursePointer.setRotation((me.data.navCoursePointer-me.data.HDG) * TORAD);
+		
 		
 		
 	#ALT
