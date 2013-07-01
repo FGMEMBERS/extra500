@@ -219,6 +219,22 @@
 			<output>/autopilot/radionav-channel/radials/reciprocal-radial</output>
 		</switch>
 
+		<switch name="navfromflagselect">
+			<default value="/instrumentation/nav[0]/from-flag"/>
+			<test value="/instrumentation/nav[1]/from-flag">
+				/instrumentation/nav-source eq 1
+			</test>
+			<output>/autopilot/radionav-channel/from-flag</output>
+		</switch>
+
+		<switch name="navtoflagselect">
+			<default value="/instrumentation/nav[0]/to-flag"/>
+			<test value="/instrumentation/nav[1]/to-flag">
+				/instrumentation/nav-source eq 1
+			</test>
+			<output>/autopilot/radionav-channel/to-flag</output>
+		</switch>
+
 		<switch name="navselect">
 			<default value="/instrumentation/nav[0]/heading-needle-deflection-norm"/>
 			<test value="/instrumentation/nav[1]/heading-needle-deflection-norm">
