@@ -977,7 +977,7 @@ eSystem.circuitBreaker = {
 #no Bus
 	FLAP_UNB		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/FlapUNB","Flap UNB",1),
 	RCCB			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/RCCB","RCCB",1),
-	BUS_TIE			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/BusTie","Bus Tie",1),
+	BUS_TIE			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/BusTie","Bus Tie",0),
 	
 };
 
