@@ -144,7 +144,7 @@ var AvidyneData = {
 		
 	#Box Primary Nav
 		m.nNavDistance	= props.globals.initNode("/autopilot/radionav-channel/nav-distance-nm",0.0,"DOUBLE");
-		
+		m.nNAVSource	= props.globals.initNode("/instrumentation/nav-source",0.0,"DOUBLE");
 		m.navSource		= 0;
 		m.navID		= "";
 		m.navDeg		= 0.0;
