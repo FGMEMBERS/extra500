@@ -193,7 +193,7 @@ var AutopilotClass = {
 # the apr knob can disable and enable the GS (armed)
 		if (me.nModeGs.getValue() == 1 ) {
 			me.nModeGSDisable.setValue(1);
-			onClickALT();
+			me.onClickALT();
 		} else {
 			me.nModeGSDisable.setValue(0);
 		}

@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-06-30
+      Date:             2013-07-01
 -->
 
 <autopilot name="STEC55X">
@@ -681,7 +681,30 @@
 			<output>/controls/flight/aileron</output>
 		</switch>
 
-<!-- GLIDESLOPE-->
+<!-- setting APR mode ON automatically-->
+		<switch name="APRmodeon">
+			<default value="/autopilot/mode/apr"/>
+			<test logic="AND" value="1">
+				/autopilot/mode/nav eq 1
+				/autopilot/mode/rev eq 0
+				/autopilot/radionav-channel/is-localizer-frequency eq 1
+				/autopilot/radionav-channel/timer-cap gt 5
+			</test>
+			<output>/autopilot/mode/apr</output>
+		</switch>
+
+<!-- switching APR mode off when nav mode is not on, not tuned to localizer freq, CDI needle defl more then 1 (less then -1)-->
+		<switch name="APRmodeoff">
+			<default value="/autopilot/mode/apr"/>
+			<test logic="OR" value="0">
+				/autopilot/mode/nav eq 0
+				/autopilot/radionav-channel/is-localizer-frequency eq 0
+				/autopilot/radionav-channel/timer-full-defl eq 1
+			</test>
+			<output>/autopilot/mode/apr</output>
+		</switch>
+
+<!-- ********************* GLIDESLOPE ********************-->
 		
 	<!-- arming GS -->
 		<switch name="gsselect">
