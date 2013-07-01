@@ -670,9 +670,9 @@ var AvidynePagePFD = {
 			me.cHDI_Needle.setColor(COLOR["Yellow"]);
 		}else{
 			me.cCDI.setColor(COLOR["Green"]);
-			me.cHDI_Needle.setColor(COLOR["White"]);
-			
+			me.cHDI_Needle.setColor(COLOR["White"]);	
 		}
+		
 		if(me.data.FromFlag == 0){
 			me.cFromFlag.setRotation((180.0) * TORAD);
 		}
