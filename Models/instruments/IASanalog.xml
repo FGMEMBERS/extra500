@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             21.05.13
+      Date:             01.07.13
 
 -->
 
@@ -57,6 +57,7 @@
 <animation>
 	<type>material</type>
 	<object-name>IASanalog.Needle</object-name>
+	<object-name>IASanalog.Scheibe</object-name>
 	<emission>	
 		<red>1.0</red>	
 		<green>1.0</green>	
