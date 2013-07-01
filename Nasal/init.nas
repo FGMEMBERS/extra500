@@ -28,6 +28,7 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 	settimer(func(){
 		
 		print("Extra500 init");
+		extra500.eSystem.checkSource();
 		extra500.eSystem.init();
 		extra500.engine.init();
 		extra500.gearSystem.init();
@@ -38,6 +39,7 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		IFD.RH.init();
 		extra500.keypad.init();
 		
+		
 		extra500.engineInstrumentPackage.init();
 		extra500.digitalInstrumentPackage.init();
 		extra500.lumi.init();
@@ -47,6 +49,9 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		extra500.fuelQuantity.init();
 		extra500.propellerHeat.init();
 		extra500.turnCoordinator.init();
+		extra500.annunciator.init();
+		
+		
 		
 		print("Extra500 starting");
 		
@@ -61,7 +66,9 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		extra500.digitalInstrumentPackage.timerLoop.start();
 		#extra500.gearSystem.timerLoop.start();
 		#extra500.flapSystem.timerLoop.start();
-	},5);
+		
+		
+	},1);
 
 		
 });

@@ -49,6 +49,12 @@ var DimmingSystemClass = {
 			me._state = n.getValue();
 			m.checkDimming();
 			lumi.setState(me._state);
+			stbyHSI.setBacklight(me._state);
+			stbyIAS.setBacklight(me._state);
+			stbyALT.setBacklight(me._state);
+			fuelQuantity.setBacklight(me._state);
+			propellerHeat.setBacklight(me._state);
+			turnCoordinator.setBacklight(me._state);
 		};
 		eSystem.switch.Night.onStateChange = func(n){
 			me._state = n.getValue();
