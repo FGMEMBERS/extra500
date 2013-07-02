@@ -125,14 +125,19 @@ var EngineClass = {
 		m.nIsRunning		= props.globals.initNode("/fdm/jsbsim/propulsion/engine/set-running",0,"BOOL");
 		m.nTRQ			= props.globals.initNode("/fdm/jsbsim/aircraft/engine/TRQ-perc",0.0,"DOUBLE");
 		m.nOilPress		= props.globals.initNode("/fdm/jsbsim/aircraft/engine/OP-psi",0.0,"DOUBLE");
+		m.nFuelPress 		= props.globals.initNode("/fdm/jsbsim/aircraft/engine/FP-psi",0.0,"DOUBLE");
+		
 		m._nN1			= props.globals.initNode("/engines/engine[0]/n1");
 		
 		m.nCutOff		= props.globals.initNode("/controls/engines/engine[0]/cutoff",0,"BOOL");
 		m.nReverser		= props.globals.initNode("/controls/engines/engine[0]/reverser",0,"BOOL");
 		m.nThrottle		= props.globals.initNode("/controls/engines/engine[0]/throttle",0.0,"DOUBLE");
 		
-		m.nLowTorquePress	= m._nRoot.initNode("LowTorquePressure",0,"BOOL");
-		m.nLowOilPress		= m._nRoot.initNode("LowOilPressure",0,"BOOL");
+		m.nLowTorquePress	= m._nRoot.initNode("lowTorquePressure",0,"BOOL");
+		m.nLowOilPress		= m._nRoot.initNode("lowOilPressure",0,"BOOL");
+		m.nLowFuelPress		= m._nRoot.initNode("lowFuelPressure",0,"BOOL");
+		m.nChip			= m._nRoot.initNode("defectChip",0,"BOOL");
+		
 		m.nCutOffState		= m._nRoot.initNode("cutoff",1,"BOOL");
 		
 		m._cutoffState = m.nCutOffState.getValue();
@@ -214,21 +219,20 @@ var EngineClass = {
 	init : func(){
 		
 		eSystem.switch.EngineStart.onStateChange = func(n){
-				me._state = n.getValue();
-				engine._checkIgnitionCutoff();
-				if(me._state == 1){
-					settimer(func{UI.click("Engine Start ign")}, 0.2);
-				}
+			me._state = n.getValue();
+			#print("eSystem.switch.EngineStart.onStateChange("~me._state~") ...");
+			engine._checkIgnitionCutoff();
+			if(me._state == 1){
+				settimer(func{UI.click("Engine Start ign")}, 0.2);
+			}
 					
 		};
-		
 		eSystem.switch.EngineMotoring.onStateChange = func(n){
-				me._state = n.getValue();
-				engine._checkIgnitionCutoff();
+			me._state = n.getValue();
+			engine._checkIgnitionCutoff();
 		};
-		
 		eSystem.switch.EngineOverSpeed.onStateChange = func(n){
-				me._state = n.getValue();
+			me._state = n.getValue();
 		};
 		
 		
@@ -243,10 +247,18 @@ var EngineClass = {
 		
 		me.ignition.setListerners();
 		eSystem.circuitBreaker.IGN.addOutput(me.ignition);
+		
 		me.starter.setListerners();
 		eSystem.addOutput(me.starter);
+		
+		me._checkIgnitionCutoff();
 	},
 	update : func(){
+		if(me.nFuelPress.getValue() < 1.5){
+			me.nLowFuelPress.setValue(1);
+		}else{
+			me.nLowFuelPress.setValue(0);
+		}
 		
 		if(me.nTRQ.getValue() < 35.0){
 			me.nLowTorquePress.setValue(1);

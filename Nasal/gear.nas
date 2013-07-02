@@ -33,7 +33,7 @@ var HydraulicMotorClass = {
 		};
 		m._motoring		= 0;
 		m._direction		= 0;
-		m._nMotor 		= m._nRoot.initNode("motoring",0,"BOOL");
+		m._nMotor 		= m._nRoot.initNode("isMotoring",0,"BOOL");
 		m._nPositionNose 	= props.globals.initNode("/gear/gear[0]/position-norm");
 		m._nGearControl 	= props.globals.initNode("/controls/gear/gear-down");
 		
@@ -71,6 +71,8 @@ var GearSystemClass = {
 			GearSystemClass,
 			ServiceClass.new(root,name)
 		]};
+		m._nWarning 		= m._nRoot.initNode("hasWarning",0,"BOOL");
+		
 		m._nGearControl = props.globals.getNode("/controls/gear/gear-down",1);
 		m._nWowNose = props.globals.getNode("/gear/gear[0]/wow",1);
 		m._nPositionNose = props.globals.getNode("/gear/gear[0]/position-norm",1);
@@ -93,7 +95,7 @@ var GearSystemClass = {
 		
 		m._ledListemer		= nil;
 		
-		m._hydaulicMotor = HydraulicMotorClass.new("/extra500/system/gear/HydraulicMotor","Gear Hydraulic Motor",300.0);
+		m._hydaulicMotor = HydraulicMotorClass.new("/extra500/system/gear/motor","Gear Hydraulic Motor",300.0);
 		
 		m._wowNose = 0;
 		m._positionNose = 0.0;
@@ -175,8 +177,13 @@ var GearSystemClass = {
 		
 		if (me._gearPosition == 1.0){
 			me._leds.on();
+			me._nWarning.setValue(0);
+		}elsif (me._gearPosition == 0.0){
+			me._nWarning.setValue(0);
+			me._leds.off();
 		}else{
 			me._leds.off();
+			me._nWarning.setValue(1);
 		}
 		
 		if (me._wowNose == 0){

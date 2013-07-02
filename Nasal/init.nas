@@ -38,6 +38,8 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		IFD.LH.init();
 		IFD.RH.init();
 		extra500.keypad.init();
+		extra500.mainDoor.init();
+		extra500.cabin.init();
 		
 		
 		extra500.engineInstrumentPackage.init();

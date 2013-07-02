@@ -182,33 +182,37 @@ var GeneratorClass = {
 				ElectricClass.new(root,name)
 			]
 		};
-		m._nAmpereAvailable	= m._nRoot.initNode("ampere_available",0.0,"DOUBLE");
-		m._nN1			= props.globals.initNode("/engines/engine[0]/n1");
-		m._nCtrlStarter		= props.globals.initNode("/controls/engines/engine[0]/starter",0,"BOOL");
-		m._nCtrlGenerator	= props.globals.initNode("/controls/electric/engine[0]/generator",0,"BOOL");
+		m._ampereAvailable	= 0.0;
+		m._nAmpereAvailable	= m._nRoot.initNode("ampere_available",m._ampereAvailable,"DOUBLE");
+		m._generating		= 0.0;
+		m._nGenerating		= m._nRoot.initNode("generating",m._generating,"BOOL");
 		m._N1			= 0.0;
+		m._nN1			= props.globals.initNode("/engines/engine[0]/n1");
+		#m._nCtrlStarter		= props.globals.initNode("/controls/engines/engine[0]/starter",0,"BOOL");
+		#m._nCtrlGenerator	= props.globals.initNode("/controls/electric/engine[0]/generator",0,"BOOL");
 		m._voltMax		= 28.5;
 		m._ampereMax		= 200.0;
-		m._ampereAvailable	= 0.0;
+		
 			
 		return m;
 	},
 	_gernerateVolt : func(now,dt){
 		me._N1 = me._nN1.getValue();
 		if (me._N1 > 30.0){
-			me._volt = 0.8 * me._N1;
-			me._ampereAvailable = 2.85 * me._N1;
-			me._volt = global.clamp(me._volt,0.0,me._voltMax);
-			me._ampereAvailable = global.clamp(me._ampereAvailable,0.0,me._ampereMax);
-			#interpolate(me._nVolt,me._volt,dt);
-			#interpolate(me._nAmpereAvailable,me._ampereAvailable,dt);
-			me._nVolt.setValue(me._volt);
-			me._nAmpereAvailable.setValue(me._ampereAvailable);
+			me._volt 		= 0.8 * me._N1;
+			me._ampereAvailable	= 2.85 * me._N1;
 			
+			me._volt 		= global.clamp(me._volt,0.0,me._voltMax);
+			me._ampereAvailable 	= global.clamp(me._ampereAvailable,0.0,me._ampereMax);
+			me._generating 		= 1;
 		}else{
-			me._nVolt.setValue(0);
-			me._nAmpereAvailable.setValue(0);
+			me._volt 		= 0;
+			me._ampereAvailable	= 0;
+			me._generating 		= 0;
 		}
+		me._nVolt.setValue(me._volt);
+		me._nAmpereAvailable.setValue(me._ampereAvailable);
+		me._nGenerating.setValue(me._generating);
 	},
 	_genSinusTest : func(now,dt){
 		var sin = math.sin(now);
@@ -228,12 +232,8 @@ var GeneratorClass = {
 	},
 	update : func(now,dt){
 		
-		me._genSinusTest(now,dt);
-# 		if ( me._nCtrlGenerator.getValue() ){
-# 			me._spoolEngine(now,dt);
-# 		}else{
-# 			me._gernerateVolt(now,dt);
-# 		}
+		me._gernerateVolt(now,dt);
+
 	},
 	_onVoltChange : func (n){
 		me._volt = n.getValue();
@@ -259,8 +259,9 @@ var AlternatorClass = {
 		};
 		m._nAmpereAvailable	= m._nRoot.initNode("ampere_available",0.0,"DOUBLE");
 		m._nField		= m._nRoot.initNode("field_volt",0,"BOOL");
+		m._nHasLoad		= m._nRoot.initNode("hasLoad",0,"BOOL");
 		m._nN1			= props.globals.initNode("/engines/engine[0]/n1");
-		m._nBusVolt		= props.globals.initNode("/extra500/electric2/Bus/EmergencyBus/volt");
+		m._nBusVolt		= props.globals.initNode("/extra500/electric/Bus/EmergencyBus/volt");
 		m._N1			= 0.0;
 		m._voltMax		= 26.0;
 		m._ampereMax		= 20.0;
@@ -270,19 +271,17 @@ var AlternatorClass = {
 	_gernerateVolt : func(now,dt){
 		me._N1 = me._nN1.getValue();
 		if (me._N1 > 30.0){
-			me._volt = 0.8 * me._N1;
-			me._ampereAvailable = me._N1 * 0.594795539 - 36.0892193309;
-			me._volt = global.clamp(me._volt,0.0,me._voltMax);
-			me._ampereAvailable = global.clamp(me._ampereAvailable,0.0,me._ampereMax);
-			#interpolate(me._nVolt,me._volt,dt);
-			#interpolate(me._nAmpereAvailable,me._ampereAvailable,dt);
-			me._nVolt.setValue(me._volt);
-			me._nAmpereAvailable.setValue(me._ampereAvailable);
-			
+			me._volt 		= 0.8 * me._N1;
+			me._ampereAvailable 	= me._N1 * 0.594795539 - 36.0892193309;
+			me._volt 		= global.clamp(me._volt,0.0,me._voltMax);
+			me._ampereAvailable 	= global.clamp(me._ampereAvailable,0.0,me._ampereMax);
 		}else{
-			me._nVolt.setValue(0);
-			me._nAmpereAvailable.setValue(0);
+			me._volt 		= 0;
+			me._ampereAvailable 	= 0;
 		}
+		me._nVolt.setValue(me._volt);
+		me._nAmpereAvailable.setValue(me._ampereAvailable);
+			
 	},
 	update : func(now,dt){
 		if (me._nBusVolt.getValue() < me._voltMax){
@@ -297,8 +296,11 @@ var AlternatorClass = {
 	},
 	applyAmpere : func(electron=nil){
 		me._ampereAvailable = me._nAmpereAvailable.getValue();
-		if (electron.ampere > 0){
+		if (electron.ampere > 0 and me._ampereAvailable > 0){
 			electron.ampere -= me._ampereAvailable;
+			me._nHasLoad.setValue(1);
+		}else{
+			me._nHasLoad.setValue(0);
 		}
 	},
 };
@@ -312,15 +314,23 @@ var ExternalGeneratorClass = {
 			]
 		};
 		m._nAmpereAvailable	= m._nRoot.initNode("ampere_available",0.0,"DOUBLE");
+		m._pluged	= 0;
+		m._nIsPluged	= m._nRoot.initNode("isPluged",m._pluged,"BOOL");
 		m._voltMax		= 28.5;
 		m._ampereMax		= 1200.0;
 		m._ampereAvailable	= 0.0;			
 		return m;
 	},
 	update : func(now,dt){
-		me._volt = me._voltMax;
+		if (me._pluged == 1){
+			me._volt 		= me._voltMax;
+			me._ampereAvailable 	= me._ampereMax;
+		}else{
+			me._volt 		= 0;
+			me._ampereAvailable 	= 0;
+		}
 		me._nVolt.setValue(me._volt);
-		me._nAmpereAvailable.setValue(me._ampereMax);
+		me._nAmpereAvailable.setValue(me._ampereAvailable);
 	},
 	_onVoltChange : func (n){
 		me._volt = n.getValue();
@@ -333,6 +343,20 @@ var ExternalGeneratorClass = {
 		if (electron.ampere > 0){
 			electron.ampere -= me._ampereAvailable;
 		}
+	},
+	onPlug : func(value = nil){
+		if (value == nil){
+			me._pluged 	= me._pluged == 1 ? 0 : 1;
+		}else{
+			me._pluged	= value;
+		}
+		me._nIsPluged.setValue(me._pluged);
+	},
+	registerUI : func(){
+		UI.register("Ground External Power Generator", 		func{me.onPlug(); } 	);
+		UI.register("Ground External Power Generator on",	func{me.onPlug(1); } 	);
+		UI.register("Ground External Power Generator off",	func{me.onPlug(0); } 	);
+		
 	},
 };
 
@@ -379,6 +403,25 @@ var BatteryClass = {
 			me._nUsedAs.setValue(me._usedAs);
 			me._nLoadLevel.setValue(me._loadLevel);
 		}
+	},
+};
+var RelayClass = {
+	new : func(root,name,default=0){
+		var m = { 
+			parents 		: [
+				RelayClass,
+				ServiceClass.new(root,name)
+			]
+		};
+		m._nState		= m._nRoot.initNode("state",default,"BOOL");
+		
+		return m;
+	},
+	setState : func(value){
+		me._nState.setValue(value);
+	},
+	getState : func(value){
+		return me._nState.getValue();
 	},
 };
 
@@ -716,12 +759,16 @@ var ESystem = {
 		};
 		m._nVolt		= m._nRoot.initNode("volt",0.0,"DOUBLE");
 		m._nAmpere		= m._nRoot.initNode("ampere",0.0,"DOUBLE");
+		m._nLowVoltage		= m._nRoot.initNode("lowVoltage",0,"BOOL");
 		m._voltListener 	= nil;
 		m._ampereListener 	= nil;
+		
+		m.relay		 	= nil;
 		m.source	 	= nil;
 		m.switch	 	= nil;
 		m.circuitBreaker 	= nil;
 		m.consumer	 	= nil;
+		
 		m._outputs		= {};
 		m._outputIndex		= [];
 		
@@ -733,15 +780,32 @@ var ESystem = {
 		m._electron = ElectronClass.new();
 		
 		m.timerLoop = maketimer(1.0,m,ESystem.checkSource);
-		
+		print("ESystem.new() ... created.");
 		return m;
 	},
 	init : func(){
-		
+		me.source.ExternalGenerator.registerUI();
+		me.setListerners();
+		var index = nil;
+
+		index =  keys(me.switch);
+		foreach (i;index){
+			me.switch[i].registerUI();
+			me.switch[i].setListerners();
+		}
+		index =  keys(me.circuitBreaker);
+		var consumerCount = 0;
+		foreach (i;index){
+			me.circuitBreaker[i].registerUI();
+			me.circuitBreaker[i].setListerners();
+			me.addOutput(me.circuitBreaker[i]);
+		}
+		#print("Consumer count " ~ consumerCount);
+		#connectStatik();
 	},
 	setListerners : func() {
-		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},0,0);
-		me._ampereListener 	= setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},0,0);
+		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0);
+		me._ampereListener 	= setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0);
 	},
 	connectOutput : func(obj){
 		me._outputs[obj.getName()] = obj;
@@ -782,12 +846,17 @@ var ESystem = {
 			me.source.Generator.update(now,dt);
 			me._setMaxVolt(me.source.Generator._volt);
 # 			print ("Generator " ~ me.source.generator._volt);
+			eSystem.relais.K3.setState(me.source.Generator._generating);
+		}else{
+			eSystem.relais.K3.setState(0);
 		}
 				
 		if(me.switch.Alternator._state == 1){
 			me.source.Alternator.update(now,dt);
 			me._setMaxVolt(me.source.Alternator._volt);
 # 			print ("Alternator " ~ me.source.alternator._volt);
+		}else{
+			me.source.Alternator._nHasLoad.setValue(0);
 		}
 		
 		if(me.switch.Battery._state == 1){
@@ -796,7 +865,15 @@ var ESystem = {
 # 			print ("Battery " ~ me.source.battery._volt);
 		}
 		#print("Bus Volt " ~ me._volt);
+		
+		if (me._volt < 25.5){
+			me._nLowVoltage.setValue(1);
+		}else{
+			me._nLowVoltage.setValue(0);
+		}
+		
 		me._nVolt.setValue(me._volt);
+		
 	},
 	applyAmpere : func(ampere){
 		var now = systime();
@@ -845,13 +922,18 @@ var ESystem = {
 
 
 
-var eSystem = ESystem.new("/extra500/electric2/eSystem","EBox");
+var eSystem = ESystem.new("/extra500/electric/eSystem","EBox");
+
+eSystem.relais = {
+	K3			: RelayClass.new("/extra500/electric/relay/K3","Generator Relay K3"),
+};
+
 
 eSystem.source = {
-	Generator 		: GeneratorClass.new("/extra500/electric2/Generator","Generator"),
-	ExternalGenerator 	: ExternalGeneratorClass.new("/extra500/electric2/ExternalGenerator","ExternalGenerator"),
-	Alternator 		: AlternatorClass.new("/extra500/electric2/Alternator","Alternator"),
-	Battery 		: BatteryClass.new("/extra500/electric2/Battery","Battery"),
+	Generator 		: GeneratorClass.new("/extra500/electric/source/Generator","Generator"),
+	ExternalGenerator 	: ExternalGeneratorClass.new("/extra500/electric/source/ExternalGenerator","ExternalGenerator"),
+	Alternator 		: AlternatorClass.new("/extra500/electric/source/Alternator","Alternator"),
+	Battery 		: BatteryClass.new("/extra500/electric/source/Battery","Battery"),
 };
 
 eSystem.switch = {
@@ -1034,25 +1116,7 @@ eSystem.switch.Avionics.onStateChange = func(n){
 
 var ConsumerPerCircuitBreaker = 6;
 
-eSystem.init = func(){
-	me.setListerners();
-	var index = nil;
 
-	index =  keys(me.switch);
-	foreach (i;index){
-		me.switch[i].registerUI();
-		me.switch[i].setListerners();
-	}
-	index =  keys(me.circuitBreaker);
-	var consumerCount = 0;
-	foreach (i;index){
-		me.circuitBreaker[i].registerUI();
-		me.circuitBreaker[i].setListerners();
-		me.addOutput(me.circuitBreaker[i]);
-	}
-	#print("Consumer count " ~ consumerCount);
-	#connectStatik();
-};
 
 
 
