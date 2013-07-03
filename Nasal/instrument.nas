@@ -192,7 +192,7 @@ var stbyHSI 		= InstrumentClass.new("extra500/instrumentation/StbyHSI","Standby 
 var stbyIAS		= InstrumentClass.new("extra500/instrumentation/StbyIAS","Standby Indecated Airspeed","/extra500/system/dimming/Instrument",6.0);
 var stbyALT		= InstrumentClass.new("extra500/instrumentation/StbyALT","Standby Altitude","/extra500/system/dimming/Instrument",6.0);
 var fuelQuantity	= InstrumentClass.new("extra500/instrumentation/FuelQuantity","Fuel Quantity","/extra500/system/dimming/Instrument",12.0);
-var propellerHeat	= InstrumentClass.new("extra500/instrumentation/PropellerHeat","Propeller Heat","/extra500/system/dimming/Instrument",6.0);
+var propellerHeat	= InstrumentClass.new("extra500/instrumentation/PropellerHeat","Propeller Heat Ammeter","/extra500/system/dimming/Instrument",6.0);
 var turnCoordinator	= InstrumentClass.new("extra500/instrumentation/TrunCoordinator","Trun Coordinator","/extra500/system/dimming/Instrument",60.0);
 
 eSystem.circuitBreaker.STBY_GYRO.addOutput(stbyHSI);

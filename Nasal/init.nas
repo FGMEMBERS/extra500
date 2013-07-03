@@ -29,7 +29,7 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		
 		print("Extra500 init");
 		extra500.eSystem.checkSource();
-		extra500.eSystem.init();
+		
 		extra500.engine.init();
 		extra500.gearSystem.init();
 		extra500.flapSystem.init();
@@ -40,6 +40,8 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		extra500.keypad.init();
 		extra500.mainDoor.init();
 		extra500.cabin.init();
+		extra500.deiceSystem.init();
+		
 		
 		
 		extra500.engineInstrumentPackage.init();
@@ -53,6 +55,7 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		extra500.turnCoordinator.init();
 		extra500.annunciator.init();
 		
+		extra500.eSystem.init();
 		
 		
 		print("Extra500 starting");

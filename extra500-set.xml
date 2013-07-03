@@ -790,6 +790,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/annunciator.nas</file>
 		<file>Aircraft/extra500/Nasal/door.nas</file>
 		<file>Aircraft/extra500/Nasal/cabin.nas</file>
+		<file>Aircraft/extra500/Nasal/deice.nas</file>
 		
 	</extra500>
 	<IFD>
