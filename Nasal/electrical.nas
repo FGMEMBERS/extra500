@@ -89,6 +89,7 @@ var ServiceClass = {
 			_nRoot		: props.globals.initNode(root),
 			_name		: name,
 		};
+		m._listeners = [];
 		return m;
 	},
 	getName : func(){
@@ -96,7 +97,16 @@ var ServiceClass = {
 	},
 	getPath : func(){
 		return me._path;
-	}
+	},
+	setListeners  :func(){
+		
+	},
+	removeListeners  :func(){
+		foreach(l;me._listeners){
+			removelistener(l);
+		}
+		me._listeners = [];
+	},
 	
 };
 
@@ -535,12 +545,16 @@ var ConsumerClass = {
 		m._state		= 0;
 		return m;
 	},
+	init : func(){
+		me.setListerners();
+	},
 	setInput : func(obj){
 		me._input = obj;
 	},
 	setListerners : func() {
 		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0);
 		me._ampereListener 	= setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0);
+		me._wattListener 	= setlistener(me._nWatt,func(n){me._onWattChange(n);},1,0);
 	},
 	_onVoltChange : func(n){
 		
@@ -549,7 +563,6 @@ var ConsumerClass = {
 		me.electricWork();
 	},
 	electricWork : func(){
-		me._watt = me._nWatt.getValue();
 		if(me._volt > 0){
 			me._ampere = me._watt / me._volt;
 			me._state  = 1;
@@ -559,6 +572,10 @@ var ConsumerClass = {
 		}
 		me._nState.setValue(me._state);
 		me._nAmpere.setValue(me._ampere);
+	},
+	_onWattChange : func(){
+		me._watt = me._nWatt.getValue();
+		me.electricWork();
 	},
 	_onAmpereChange : func(n){
 		me._ampere = n.getValue();
@@ -794,14 +811,13 @@ var ESystem = {
 			me.switch[i].setListerners();
 		}
 		index =  keys(me.circuitBreaker);
-		var consumerCount = 0;
+
 		foreach (i;index){
 			me.circuitBreaker[i].registerUI();
 			me.circuitBreaker[i].setListerners();
 			me.addOutput(me.circuitBreaker[i]);
 		}
-		#print("Consumer count " ~ consumerCount);
-		#connectStatik();
+
 	},
 	setListerners : func() {
 		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0);
@@ -1113,8 +1129,6 @@ eSystem.switch.Avionics.onStateChange = func(n){
 	
 };
 
-
-var ConsumerPerCircuitBreaker = 6;
 
 
 
