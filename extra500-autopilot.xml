@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-07-01
+      Date:             2013-07-03
 -->
 
 <autopilot name="STEC55X">
@@ -323,6 +323,31 @@
 			<output>/autopilot/radionav-channel/is-localizer-frequency</output>
 		</switch>
 
+<!--switching REV mode off when not a localizer freq -->
+		<switch name="revmodeautodisc">
+			<default value="/autopilot/mode/rev"/>
+			<test value="0">
+				/autopilot/radionav-channel/is-localizer-frequency eq 0
+			</test>
+			<output>/autopilot/mode/rev</output>
+		</switch>
+
+		<switch name="revmodeautodisc2">
+			<default value="/instrumentation/nav[0]/back-course-btn"/>
+			<test value="0">
+				/autopilot/mode/rev eq 0
+			</test>
+			<output>/instrumentation/nav[0]/back-course-btn</output>
+		</switch>
+
+		<switch name="revmodeautodisc3">
+			<default value="/instrumentation/nav[1]/back-course-btn"/>
+			<test value="0">
+				/autopilot/mode/rev eq 0
+			</test>
+			<output>/instrumentation/nav[1]/back-course-btn</output>
+		</switch>
+
 <!--logic for cap and soft modes -->
 <!-- NOTE: gain-mode is changed to 0 or 1 all the time, do not use this property outside this channel!!! -->
 		<switch name="gainmode1">
@@ -545,7 +570,8 @@
 			</function>
 		</fcs_function>
 
-		<fcs_function name="/autopilot/radionav-channel/heading-target-deg">
+<!--normal target heading -->
+		<fcs_function name="/autopilot/radionav-channel/hdgtarget/heading-target-n-deg">
 			<function>
 				<sum>
 					<property>/autopilot/radionav-channel/radial-deg</property> 
@@ -553,6 +579,41 @@
 				</sum>
 			</function>
 		</fcs_function>
+
+<!--target heading for rev mode -->
+		<fcs_function name="/autopilot/radionav-channel/hdgtarget/heading-target-revpos-deg">
+			<function>
+				<sum>
+					<property>/autopilot/radionav-channel/hdgtarget/heading-target-n-deg</property> 
+					<value>180</value> 
+				</sum>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/autopilot/radionav-channel/hdgtarget/heading-target-revneg-deg">
+			<function>
+				<difference>
+					<property>/autopilot/radionav-channel/hdgtarget/heading-target-n-deg</property> 
+					<value>180</value> 
+				</difference>
+			</function>
+		</fcs_function>
+
+		<switch name="hdgtargetselect">
+			<default value="/autopilot/radionav-channel/hdgtarget/heading-target-revneg-deg"/>
+			<test value="/autopilot/radionav-channel/hdgtarget/heading-target-revpos-deg">
+				/autopilot/radionav-channel/hdgtarget/heading-target-revneg-deg le 0
+			</test>
+			<output>/autopilot/radionav-channel/hdgtarget/heading-target-rev-deg</output>
+		</switch>
+
+		<switch name="revhdgselect">
+			<default value="/autopilot/radionav-channel/hdgtarget/heading-target-n-deg"/>
+			<test value="/autopilot/radionav-channel/hdgtarget/heading-target-rev-deg">
+				/autopilot/mode/rev eq 1
+			</test>
+			<output>/autopilot/radionav-channel/heading-target-deg</output>
+		</switch>
 
 		<switch name="hdgselect2">
 			<default value="/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg"/>

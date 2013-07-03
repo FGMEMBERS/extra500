@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jun 26 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             29.06.13
+#      Last change:      Eric van den Berg
+#      Date:             03.07.13
 #
 
 
@@ -198,8 +198,15 @@ var AutopilotClass = {
 			me.nModeGSDisable.setValue(0);
 		}
 	},
+# switching REV mode. And setting the /back-course-btn property to switch the heading-needle-defection around
 	onClickREV : func(){
-		me.nModeRev.setValue(!me.nModeRev.getValue());
+		if ( (me.nIsLocalizer.getValue() == 1) and (me.nModeNav.getValue() == 1) and (me.nModeRev.getValue() == 0) )  {
+			setprop("/instrumentation/nav["~getprop("/instrumentation/nav-source")~"]/back-course-btn",1 );
+			me.nModeRev.setValue(1);
+		} else if (me.nModeRev.getValue() == 1) {
+			me.nModeRev.setValue(0);
+			# NOTE: the /back-course-btn properties (both nav[0] as nav[1] ) are reset in autopilot.xml based on /mode/rev = 0
+		}
 	},
 	onClickALT : func(){
 		if ( ( me.nModeAlt.getValue() == 0 ) or ( ( me.nModeAlt.getValue() == 1 ) and ( me.nModeVs.getValue() == 1 ) ) ){
