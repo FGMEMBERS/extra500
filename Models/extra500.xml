@@ -60,6 +60,17 @@
 
 <!-- Submodels -->
 <model>
+  <name>MiddleConsole</name>
+  <path>Aircraft/extra500/Models/MiddleConsole.xml</path>
+	<offsets>
+		<x-m>-0.80979</x-m>
+		<y-m>0</y-m>	
+		<z-m>-0.39665</z-m>
+	<pitch-deg>17</pitch-deg>
+	</offsets>
+</model>
+
+<model>
   <name>Propellix</name>
   <path>Aircraft/extra500/Models/propeller.xml</path>
 	<offsets>

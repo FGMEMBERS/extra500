@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Thomas Grossberger 
+      Date: July 04 2013
+
+      Last change:      Thomas Grossberger
+      Date:             04.07.13
+-->
+<PropertyList>
+
+<path>MiddleConsole.ac</path>
+
+<model>
+  <name>Keypad</name>
+  <path>Aircraft/extra500/Models/instruments/Keypad.ac</path>
+	<offsets>
+		<x-m>0.33196</x-m>
+		<y-m>0</y-m>	
+		<z-m>-0.006</z-m>
+	</offsets>
+</model>
+
+</PropertyList>
