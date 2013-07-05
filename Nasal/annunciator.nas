@@ -17,7 +17,7 @@
 #      Date: Jun 30 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             30.06.13
+#      Date:             05.07.13
 #
 
 # MM Page 590

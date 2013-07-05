@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             26.06.13
+#      Date:             05.07.13
 #
 
 var init_listener = setlistener("/sim/signals/fdm-initialized", func {
