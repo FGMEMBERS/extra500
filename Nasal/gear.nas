@@ -117,7 +117,7 @@ var GearSystemClass = {
 		m._dt = 0;
 		m._now = systime();
 		m._lastTime = m._now;
-		m.timerLoop = maketimer(1.0,m,GearSystemClass.update);
+		m._timerLoop = nil;
 	
 		return m;
 	},
@@ -141,6 +141,9 @@ var GearSystemClass = {
 		
 		me._gearListener = setlistener(me._nPositionNose,func(n){me._onGearChange(n);},1,0);
 		me._testListener = setlistener("/extra500/system/dimming/Test",func(n){me._onDimTestChange(n);},1,0);
+		
+		me._timerLoop = maketimer(1.0,me,GearSystemClass.update);
+		me._timerLoop.start();
 		
 	},
 	_onDimTestChange : func(n){

@@ -846,8 +846,8 @@ var AvidyneIFD = {
 		m._now2Hz = systime();
 		m._last2Hz = systime();
 		
-		m._timerLoop20Hz = maketimer(0.05,m,AvidyneIFD.update20Hz);
-		m._timerLoop2Hz = maketimer(0.5,m,AvidyneIFD.update2Hz);
+		m._timerLoop20Hz = nil;
+		m._timerLoop2Hz = nil;
 	
 		return m;
 	},
@@ -859,6 +859,9 @@ var AvidyneIFD = {
 		
 		me.gotoPage(me._startPage);
 		
+		me._timerLoop20Hz = maketimer(0.05,me,AvidyneIFD.update20Hz);
+		me._timerLoop2Hz = maketimer(0.5,me,AvidyneIFD.update2Hz);
+	
 		me._timerLoop20Hz.start();
 		me._timerLoop2Hz.start();
 		

@@ -123,7 +123,7 @@ var AnnunciatorClass = {
 		m._dt = 0;
 		m._now = systime();
 		m._lastTime = m._now;
-		m.timerLoop = maketimer(1.0,m,AnnunciatorClass.update);
+		m._timerLoop = nil;
 				
 		
 		return m;
@@ -172,7 +172,8 @@ var AnnunciatorClass = {
 		append(me._listeners, setlistener("/extra500/electric/source/ExternalGenerator/isPluged",		func(n){me._leds["ExternalPower"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/deice/WindshieldHeat/state",	func(n){me._leds["WindshieldHeatOn"].setState(n.getValue());},1,0) );
 		
-		me.timerLoop.start();
+		me._timerLoop = maketimer(1.0,me,AnnunciatorClass.update);
+		me._timerLoop.start();
 		
 	},
 		

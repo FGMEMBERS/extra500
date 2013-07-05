@@ -832,7 +832,7 @@ var ESystem = {
 		
 		m._electron = ElectronClass.new();
 		
-		m.timerLoop = maketimer(1.0,m,ESystem.checkSource);
+		m.timerLoop = nil;
 		print("ESystem.new() ... created.");
 		return m;
 	},
@@ -853,7 +853,9 @@ var ESystem = {
 			me.circuitBreaker[i].setListerners();
 			me.addOutput(me.circuitBreaker[i]);
 		}
-
+		me._timerLoop = maketimer(1.0,me,ESystem.checkSource);
+		me._timerLoop.start();
+		
 	},
 	setListerners : func() {
 		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0);

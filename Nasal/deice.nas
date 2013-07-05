@@ -163,7 +163,7 @@ var DeicingSystemClass = {
 		m._dt = 0;
 		m._now = systime();
 		m._lastTime = m._now;
-		m.timerLoop = maketimer(5.0,m,DeicingSystemClass.update);
+		m._timerLoop = nil;
 		
 		return m;
 	},
@@ -213,9 +213,8 @@ var DeicingSystemClass = {
 		append(me._listeners, setlistener("/fdm/jsbsim/aircraft/stallwarner/state",func(n){me._onStallWarning(n);},1,0) );
 		
 		
-				
-		me.timerLoop.start();
-		
+		me._timerLoop = maketimer(5.0,me,DeicingSystemClass.update);
+		me._timerLoop.start();
 	},
 	_onStallWarning : func(n){
 # 		var warning = n.getBoolValue();

@@ -79,7 +79,7 @@ var AutopilotClass = {
 		m.dt = 0;
 		m.now = systime();
 		m._lastTime = 0;
-		m.timerLoop = maketimer(1.0,m,AutopilotClass.update);
+		m.timerLoop = nil;
 		
 		return m;
 	},
@@ -384,6 +384,8 @@ var AutopilotClass = {
 		eSystem.circuitBreaker.AP_CMPTR.addOutput(me);
 		me.setListerners();
 		
+		me._timerLoop = maketimer(1.0,me,AutopilotClass.update);
+		me._timerLoop.start();
 	},
 	
 };

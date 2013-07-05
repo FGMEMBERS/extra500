@@ -218,7 +218,7 @@ var FuelSystemClass = {
 		m.dt = 0;
 		m.now = systime();
 		m._lastTime = 0;
-		m.timerLoop = maketimer(1.0,m,FuelSystemClass.update);
+		m._timerLoop = nil;
 	
 		return m;
 	},
@@ -226,6 +226,9 @@ var FuelSystemClass = {
 		me.initUI();
 				
 		append(me._listeners, setlistener(me._nSelectValve,func(n){me._selectValve = n.getValue();me.update();},1,0) );
+		
+		me._timerLoop = maketimer(1.0,me,FuelSystemClass.update);
+		me._timerLoop.start();
 		
 	},
 	onValveClick : func(value){

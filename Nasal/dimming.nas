@@ -81,10 +81,6 @@ var DimmingSystemClass = {
 			m.checkDimming();
 		};
 		
-# 		m.dt = 0;
-# 		m.now = systime();
-# 		m._lastTime = 0;
-# 		m.timerLoop = maketimer(1.0,m,DimmingSystemClass.update);
 	
 		return m;
 	},
@@ -127,9 +123,7 @@ var DimmingSystemClass = {
 	init : func(){
 		
 	},
-	update : func(){
-		
-	}
+	
 };
 
 var dimmingSystem = DimmingSystemClass.new("extra500/system/dimming","Dimming Control");

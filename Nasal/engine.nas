@@ -253,6 +253,8 @@ var EngineClass = {
 		eSystem.addOutput(me.starter);
 		
 		me._checkIgnitionCutoff();
+		me._timerLoop = maketimer(1.0,me,EngineClass.update);
+		me._timerLoop.start();
 	},
 	update : func(){
 		if(me.nFuelPress.getValue() < 1.5){

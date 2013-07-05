@@ -59,19 +59,6 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		extra500.eSystem.init();
 		
 		
-		print("Extra500 starting");
-		
-		extra500.eSystem.timerLoop.start();
-		extra500.engine.timerLoop.start();
-		extra500.fuelSystem.timerLoop.start();
-		extra500.autopilot.timerLoop.start();
-		#IFD.LH.timerLoop.start();
-		#IFD.RH.timerLoop.start();
-		#extra500.keypad.start();
-		
-		extra500.digitalInstrumentPackage.timerLoop.start();
-		#extra500.gearSystem.timerLoop.start();
-		#extra500.flapSystem.timerLoop.start();
 		
 		
 	},1);
