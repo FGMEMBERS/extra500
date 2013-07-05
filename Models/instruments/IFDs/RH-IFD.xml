@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Eric van den Berg
-      Date:             2013-06-17
+      Last change:      Thomas Grossberger
+      Date:             2013-07-05
 
 -->
 
@@ -32,21 +32,668 @@
 <animation>
         <type>material</type>
         <object-name>RH-IFD.Screen</object-name>
-		<condition>
-		<equals>
-		<property>extra500/panel/Side/Light/Instrument/state</property>
-		<value>1</value>
-		</equals>
-	</condition>
         <emission>
             <red>0.7</red>
             <green>0.7</green>
             <blue>0.7</blue>
-            <factor-prop>extra500/panel/Master/Dimming/Instrument/state</factor-prop>
+            <factor-prop>extra500/instrumentation/IFD-RH/Backlight/state</factor-prop>
         </emission>
 </animation>
 
+<!-- dimming button -->
+<animation>
+      <type>pick</type>
+      <object-name>Dim.up</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH DIM >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
 
+<animation>
+      <type>pick</type>
+      <object-name>Dim.down</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH DIM <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<!-- buttons L1-L6 -->
+<animation>
+      <type>pick</type>
+      <object-name>L1.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH L1 <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>L1.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH L1 >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>L2.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH L2 <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>L2.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH L2 >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>L3.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH L3 <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>L3.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH L3 >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>L4.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH L4 <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>L4.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH L4 >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>L5.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH L5 <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>L5.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH L5 >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>L6.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH L6 <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>L6.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH L6 >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<!-- buttons R1-R6 -->
+<animation>
+      <type>pick</type>
+      <object-name>R1.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH R1 <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>R1.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH R1 >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>R2.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH R2 <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>R2.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH R2 >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>R3.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH R3 <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>R3.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH R3 >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>R4.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH R4 <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>R4.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH R4 >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>R5.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH R5 <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>R5.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH R5 >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>R6.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH R6 <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>R6.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH R6 >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<!-- buttons PFD, FMS, MAP, SYS, CHKL -->
+<animation>
+      <type>pick</type>
+      <object-name>PFD.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH PFD <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>PFD.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH PFD >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>FMS.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH FMS <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>FMS.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH FMS >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>MAP.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH MAP <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>MAP.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH MAP >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>SYS.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH SYS <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>SYS.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH SYS >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>CHKL.left</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH CHKL <");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>CHKL.right</object-name>
+      <visible>false</visible>
+      <action>
+        <button>0</button>
+        <repeatable>true</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("IFD RH CHKL >");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+
+<!-- knobs -->
+<!-- BaroKnob -->
 <animation>
 	<type>pick</type>
 	<object-name>BaroKnob</object-name>
@@ -88,85 +735,664 @@
 	</action>
 </animation>
 
+<!-- LeftKnob -->
 <animation>
-	<type>pick</type>
-	<object-name>PFD.R</object-name>
+        <type>pick</type>
+        <object-name>LKO</object-name>
+        <object-name>LKI</object-name>
 	<action>
-		<button>0</button>
+		<button>3</button>
 		<repeatable>false</repeatable>
+		<binding>
+			<condition>
+				<property>devices/status/keyboard/shift</property>
+			</condition>
+                
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("IFD RH LK >>");
+				]]>
+			</script>
+		</binding>
+		<binding>
+			<condition>
+				<not>
+					<property>devices/status/keyboard/shift</property>
+				</not>
+			</condition>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("IFD RH LK >");
+				]]>
+			</script>
+		</binding>
+	</action>
+ 
+	<action>
+        <button>4</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<condition>
+				<property>devices/status/keyboard/shift</property>
+			</condition>
+                
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("IFD RH LK <<");
+				]]>
+			</script>
+		</binding>
+		<binding>
+			<condition>
+				<not>
+					<property>devices/status/keyboard/shift</property>
+				</not>
+			</condition>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("IFD RH LK <");
+				]]>
+			</script>
+		</binding>
+	</action>
+	<action>
+		<button>1</button>
+		<repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-					UI.click("IFD RH PFD >");
+					UI.click("IFD RH LK");
 				]]>
 			</script>
 		</binding>
 	</action>
 </animation>
+
+<!-- RightKnob -->
 <animation>
-	<type>pick</type>
-	<object-name>FMS.R</object-name>
-	<action>
-		<button>0</button>
+        <type>pick</type>
+        <object-name>RKO</object-name>
+        <object-name>RKI</object-name>
+
+        <action>
+		<button>3</button>
 		<repeatable>false</repeatable>
 		<binding>
+			<condition>
+				<property>devices/status/keyboard/shift</property>
+			</condition>
+                
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-					UI.click("IFD RH FMS >");
+					UI.click("IFD RH RK >>");
+				]]>
+			</script>
+		</binding>
+		<binding>
+			<condition>
+				<not>
+					<property>devices/status/keyboard/shift</property>
+				</not>
+			</condition>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("IFD RH RK >");
 				]]>
 			</script>
 		</binding>
 	</action>
-</animation>
-<animation>
-	<type>pick</type>
-	<object-name>MAP.R</object-name>
-	<action>
-		<button>0</button>
+ 
+        <action>
+            <button>4</button>
 		<repeatable>false</repeatable>
 		<binding>
+			<condition>
+				<property>devices/status/keyboard/shift</property>
+			</condition>
+                
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-					UI.click("IFD RH MAP >");
+					UI.click("IFD RH RK <<");
+				]]>
+			</script>
+		</binding>
+		<binding>
+			<condition>
+				<not>
+					<property>devices/status/keyboard/shift</property>
+				</not>
+			</condition>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("IFD RH RK <");
 				]]>
 			</script>
 		</binding>
 	</action>
-</animation>
-<animation>
-	<type>pick</type>
-	<object-name>SYS.R</object-name>
-	<action>
-		<button>0</button>
-		<repeatable>false</repeatable>
+		
+		<action>
+		<button>1</button>
+		<repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-					UI.click("IFD RH SYS >");
+					UI.click("IFD RH RK");
 				]]>
 			</script>
 		</binding>
-	</action>
+		</action>
+</animation>
+
+<!-- alte NON-Canvas-Technologie -->
+<!-- kuenstlicher horizont -->
+<!--
+<animation>
+  <type>texmultiple</type>
+  <object-name>Oben</object-name>
+  <transform>
+    <property>/orientation/pitch-deg</property>
+    <subtype>textranslate</subtype>
+    <factor>0.0045</factor>
+    <axis>
+     <x>0</x>
+     <y>1</y>
+     <z>0</z>
+   </axis>
+  </transform>
+  <transform>
+    <property>/orientation/roll-deg</property>
+    <subtype>texrotate</subtype>
+    <center>
+     <x>0.50</x>
+     <y>0.50</y>
+   </center>
+    <axis>
+     <x>0</x>
+     <y>0</y>
+     <z>-1</z>
+   </axis>
+  </transform>
+ </animation>
+-->
+
+<!-- IAS -->
+<!--
+	<animation>
+		<type>select</type>
+		<object-name>IAS.100er</object-name>
+		<condition>
+		  <greater-than-equals>
+		    <property>/instrumentation/airspeed-IFD-RH/indicated-airspeed-kt</property>
+		    <value>100</value>
+		  </greater-than-equals>
+		</condition>
+	</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>IAS</object-name>
+	<property>/instrumentation/airspeed-IFD-RH/indicated-airspeed-kt</property>
+	<factor>0.00289</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
 </animation>
 <animation>
-	<type>pick</type>
-	<object-name>CHKL.R</object-name>
-	<action>
-		<button>0</button>
-		<repeatable>false</repeatable>
-		<binding>
+	<type>textranslate</type>
+	<object-name>IAS.001er</object-name>
+	<property>/instrumentation/airspeed-IFD-RH/indicated-airspeed-kt</property>
+	<factor>0.1</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>IAS.010er</object-name>
+	<property>/instrumentation/airspeed-IFD-RH/indicated-airspeed-kt</property>
+	<factor>0.01</factor>
+	<step>10</step>
+	<scroll>1</scroll>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>IAS.100er</object-name>
+	<property>/instrumentation/airspeed-IFD-RH/indicated-airspeed-kt</property>
+	<factor>0.001</factor>
+	<step>100</step>
+	<scroll>1</scroll>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+-->
+
+<!-- Groundspeed -->
+<!--
+<animation>
+	<type>textranslate</type>
+	<object-name>Groundspeed.001er</object-name>
+	<property>/velocities/groundspeed-kt</property>
+	<factor>0.1</factor>
+	<step>1</step>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>Groundspeed.010er</object-name>
+	<property>/velocities/groundspeed-kt</property>
+	<factor>0.01</factor>
+	<step>10</step>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>Groundspeed.100er</object-name>
+	<property>/velocities/groundspeed-kt</property>
+	<factor>0.001</factor>
+	<step>100</step>
+
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+-->
+
+<!-- Altitude -->
+<!--
+	<animation>
+		<type>select</type>
+	<object-name>Altitude.10000er</object-name>
+		<condition>
+		  <greater-than-equals>
+			<property>/instrumentation/altimeter-IFD-RH/indicated-altitude-ft</property>
+		    <value>10000</value>
+		  </greater-than-equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+	<object-name>Altitude.01000er</object-name>
+		<condition>
+		  <greater-than-equals>
+			<property>/instrumentation/altimeter-IFD-RH/indicated-altitude-ft</property>
+		    <value>1000</value>
+		  </greater-than-equals>
+		</condition>
+	</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>Altitude.00011er</object-name>
+	<property>/instrumentation/altimeter-IFD-RH/indicated-altitude-ft</property>
+	<factor>0.01</factor>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>Altitude.00100er</object-name>
+	<property>/instrumentation/altimeter-IFD-RH/indicated-altitude-ft</property>
+	<factor>0.001</factor>
+	<step>100</step>
+	<scroll>10</scroll>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>Altitude.01000er</object-name>
+	<property>/instrumentation/altimeter-IFD-RH/indicated-altitude-ft</property>
+	<factor>0.0001</factor>
+	<step>1000</step>
+	<scroll>10</scroll>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>Altitude.10000er</object-name>
+	<property>/instrumentation/altimeter-IFD-RH/indicated-altitude-ft</property>
+	<factor>0.00001</factor>
+	<step>10000</step>
+	<scroll>10</scroll>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+-->
+
+<!-- Heading -->
+<!--
+<animation>
+	<type>textranslate</type>
+	<object-name>Heading.001er</object-name>
+	<property>/instrumentation/heading-indicator-IFD-RH/indicated-heading-deg</property>
+	<factor>0.1</factor>
+	<step>1</step>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>Heading.010er</object-name>
+	<property>/instrumentation/heading-indicator-IFD-RH/indicated-heading-deg</property>
+	<factor>0.01</factor>
+	<step>10</step>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>Heading.100er</object-name>
+	<property>/instrumentation/heading-indicator-IFD-RH/indicated-heading-deg</property>
+	<factor>0.001</factor>
+	<step>100</step>
+
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+-->
+
+<!-- WindDirection -->
+<!--
+<animation>
+	<type>textranslate</type>
+	<object-name>WindDegree.001er</object-name>
+	<property>/environment/wind-from-heading-deg</property>
+	<factor>0.1</factor>
+	<step>1</step>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>WindDegree.010er</object-name>
+	<property>/environment/wind-from-heading-deg</property>
+	<factor>0.01</factor>
+	<step>10</step>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>WindDegree.100er</object-name>
+	<property>/environment/wind-from-heading-deg</property>
+	<factor>0.001</factor>
+	<step>100</step>
+
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+-->
+
+<!-- WindSpeed -->
+<!--
+<animation>
+	<type>textranslate</type>
+	<object-name>WindSpeed.01er</object-name>
+	<property>/environment/wind-speed-kt</property>
+	<factor>0.1</factor>
+	<step>1</step>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>WindSpeed.10er</object-name>
+	<property>/environment/wind-speed-kt</property>
+	<factor>0.01</factor>
+	<step>10</step>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+  <type>rotate</type>
+	<object-name>Wind.Pfeil</object-name>
+	<property>orientation/heading-deg</property>
+	<offset-deg>180</offset-deg>
+	<factor>-1</factor>
+	<axis>
+		<x1-m>1</x1-m>
+		<y1-m>-0.09759</y1-m>
+		<z1-m>-0.0384</z1-m>
+		<x2-m>-1</x2-m>
+		<y2-m>-0.09759</y2-m>
+		<z2-m>-0.0384</z2-m>
+	</axis>
+</animation>
+<animation>
+  <type>rotate</type>
+	<object-name>Wind.Pfeil</object-name>
+	<property>environment/wind-from-heading-deg</property>
+	<factor>1</factor>
+	<axis>
+		<x1-m>1</x1-m>
+		<y1-m>-0.09759</y1-m>
+		<z1-m>-0.0384</z1-m>
+		<x2-m>-1</x2-m>
+		<y2-m>-0.09759</y2-m>
+		<z2-m>-0.0384</z2-m>
+	</axis>
+</animation>
+-->
+
+<!-- Temperature -->
+<!--
+<animation>
+	<type>textranslate</type>
+	<object-name>Temperature.01er</object-name>
+	<property>/environment/temperature-degc</property>
+	<factor>0.1</factor>
+	<step>1</step>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+<animation>
+	<type>textranslate</type>
+	<object-name>Temperature.10er</object-name>
+	<property>/environment/temperature-degc</property>
+	<factor>0.01</factor>
+	<step>10</step>
+	<axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</axis>
+</animation>
+-->
+
+<!-- Kompass -->
+<!--
+<animation>
+	<type>texrotate</type>
+	<object-name>Kompass</object-name>
+<property>/instrumentation/heading-indicator-IFD-RH/indicated-heading-deg</property>
+	<factor>1</factor>
+	<axis>
+		<x>0</x>
+		<y>0</y>
+		<z>-1</z>
+	</axis>
+	<center>
+		<x>0.5</x>
+		<y>0.5</y>
+	</center>
+</animation>
+-->
+
+<!--Dimming Test -->
+<!--
+<animation>
+        <type>material</type>
+        <object-name>Oben</object-name>
+        <object-name>IAS</object-name>
+		<object-name>IAS.001er</object-name>
+		<object-name>IAS.010er</object-name>
+		<object-name>IAS.100er</object-name>
+		<object-name>Heading.001er</object-name>
+		<object-name>Heading.010er</object-name>
+		<object-name>Heading.100er</object-name>
+		<object-name>Altitude.10000er</object-name>
+		<object-name>Altitude.01000er</object-name>
+		<object-name>Altitude.00100er</object-name>
+		<object-name>Altitude.00011er</object-name>
+		<object-name>WindDegree.100er</object-name>
+		<object-name>WindDegree.010er</object-name>
+		<object-name>WindDegree.001er</object-name>
+		<object-name>WindSpeed.10er</object-name>
+		<object-name>WindSpeed.01er</object-name>
+		<object-name>Groundspeed.100er</object-name>
+		<object-name>Groundspeed.010er</object-name>
+		<object-name>Groundspeed.001er</object-name>
+		<object-name>TrueAirSpeed.100er</object-name>
+		<object-name>TrueAirSpeed.010er</object-name>
+		<object-name>TrueAirSpeed.001er</object-name>
+		<object-name>Kompass</object-name>
+		<object-name>GS</object-name>
+		<object-name>Degree</object-name>
+		<object-name>Temperature.01er</object-name>
+		<object-name>Temperature.10er</object-name>
+		<object-name>Temperature.DegreeC</object-name>
+		<object-name>TAS</object-name>
+		<object-name>Kts</object-name>
+		<condition>
+		<equals>
+		<property>extra500/panel/Side/Light/Instrument/state</property>
+		<value>1</value>
+		</equals>
+	</condition>
+        <emission>
+            <red>0.7</red>
+            <green>0.7</green>
+            <blue>0.7</blue>
+            <factor-prop>extra500/panel/Master/Dimming/Instrument/state</factor-prop>
+        </emission>
+</animation>
+-->
+
+<!--BaroKnob-->
+<!--    
+	<animation>
+        <type>pick</type>
+        <object-name>BaroKnob</object-name>
+        <action>
+            <button>0</button>
+            <repeatable>false</repeatable>
+            <binding>
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-					UI.click("IFD RH CHKL >");
+				UI.click("KLICKEN");
 				]]>
 			</script>
 		</binding>
-	</action>
-</animation>
+        </action>
+    </animation>
+
+    <animation>
+        <type>pick</type>
+        <object-name>BaroKnob</object-name>
+        <action>
+            <button>3</button>
+            <repeatable>true</repeatable>
+            <interval-sec>0.15</interval-sec>
+            <binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("RechtsDREH");
+				]]>
+			</script>
+		</binding>
+        </action>
+    </animation>
+
+    <animation>
+        <type>pick</type>
+        <object-name>BaroKnob</object-name>
+        <action>
+            <button>4</button>
+            <binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("LinksDREH");
+				]]>
+			</script>
+		</binding>
+        </action>
+    </animation>
+-->
+
+
+
 </PropertyList>
 
