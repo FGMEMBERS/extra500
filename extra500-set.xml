@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Eric van den Berg
-      Date:             2013-07-01
+      Last change:      Thomas Grossberger
+      Date:             2013-07-05
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -306,6 +306,21 @@ JSBSim Extra Aircraft - Extra 500.
 			<!--<heading-offset-deg archive="y">90.0</heading-offset-deg>-->
 		</config>
 	</view>
+	
+		<view n="108">
+		<!-- x=rechts y=hoch z=zurueck -->
+			<name>Keypad View</name>
+			<type>lookfrom</type>
+			<internal archive="y">true</internal>
+			<config>
+				<from-model type="bool">true</from-model>
+				<x-offset-m archive="y">0</x-offset-m>
+				<y-offset-m archive="y">-0.25</y-offset-m>
+				<z-offset-m archive="y">-0.30</z-offset-m>
+				<pitch-offset-deg archive="y">-55</pitch-offset-deg>
+			</config>
+		</view>	
+	
 	<systems>
             <path>Aircraft/extra500/system/instrumentation/systems.xml</path>
 	</systems>
