@@ -31,7 +31,12 @@ var CenterConsole = {
 		m._Deice		= 0;
 		m._GearClearHorn	= 0;
 		m._PitchTrim		= 0;
+		m._ParkingbrakePressure = 0;
 		
+		
+		m._nCtrlLeftBrake	= props.globals.initNode("/controls/gear/brake-left",0.0,"DOUBLE");
+		m._nCtrlRightBrake	= props.globals.initNode("/controls/gear/brake-right",0.0,"DOUBLE");
+		m._nCtrlParkingbrake	= props.globals.initNode("/controls/gear/brake-parking",0.0,"DOUBLE");
 		m._nDefrost 		= m._nRoot.initNode("Defrost/state",0,"BOOL");
 		m._nDeice 		= m._nRoot.initNode("Deice/state",0,"BOOL");
 		m._nParkingbrake 	= m._nRoot.initNode("Parkingbrake/state",0,"BOOL");
@@ -42,6 +47,17 @@ var CenterConsole = {
 	},
 	init : func (){
 		me.initUI();
+		append(me._listeners, setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0) );
+		
+	},
+	onBrakeChange : func(n){
+		if (me._Parkingbrake == 1){
+			var pressure = n.getValue();
+			if (pressure > me._ParkingbrakePressure){
+				me._ParkingbrakePressure = pressure;
+				me._nCtrlParkingbrake.setValue(me._ParkingbrakePressure);
+			}
+		}
 	},
 	onParkBrakeClick : func(value = nil){
 		if (value == nil){
@@ -49,6 +65,11 @@ var CenterConsole = {
 		}else{
 			me._Parkingbrake = value;
 		}
+		if (me._Parkingbrake == 0){
+			me._ParkingbrakePressure = 0;
+			me._nCtrlParkingbrake.setValue(me._ParkingbrakePressure);
+		}
+		
 		me._nParkingbrake.setValue(me._Parkingbrake);
 	},
 	onDefrostClick : func(value = nil){

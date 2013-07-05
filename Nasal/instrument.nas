@@ -65,7 +65,7 @@ var DigitalInstrumentPackageClass = {
 		eSystem.circuitBreaker.DIP_2.addOutput(me._backlight);
 		
 		me._timerLoop = maketimer(1.0,me,DigitalInstrumentPackageClass.update);
-		
+		me._timerLoop.start();
 		
 	},
 	update : func(){
