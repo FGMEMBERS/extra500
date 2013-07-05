@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             17.06.13
+      Date:             05.07.13
 
 -->
 
@@ -60,8 +60,8 @@
 
 <!-- Submodels -->
 <model>
-  <name>MiddleConsole</name>
-  <path>Aircraft/extra500/Models/MiddleConsole.xml</path>
+  <name>CenterConsole</name>
+  <path>Aircraft/extra500/Models/CenterConsole.xml</path>
 	<offsets>
 		<x-m>-0.80979</x-m>
 		<y-m>0</y-m>	

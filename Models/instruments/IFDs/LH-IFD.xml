@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Thomas Grossberger
-      Date:             2013-06-30
+      Date:             2013-07-05
 
 -->
 
@@ -741,7 +741,7 @@
         <object-name>LKO</object-name>
         <object-name>LKI</object-name>
 	<action>
-		<button>4</button>
+		<button>3</button>
 		<repeatable>false</repeatable>
 		<binding>
 			<condition>
@@ -770,8 +770,8 @@
 		</binding>
 	</action>
  
-        <action>
-            <button>3</button>
+	<action>
+        <button>4</button>
 		<repeatable>false</repeatable>
 		<binding>
 			<condition>
@@ -820,7 +820,7 @@
         <object-name>RKI</object-name>
 
         <action>
-		<button>4</button>
+		<button>3</button>
 		<repeatable>false</repeatable>
 		<binding>
 			<condition>
@@ -850,7 +850,7 @@
 	</action>
  
         <action>
-            <button>3</button>
+            <button>4</button>
 		<repeatable>false</repeatable>
 		<binding>
 			<condition>
