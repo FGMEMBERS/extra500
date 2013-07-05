@@ -90,6 +90,14 @@ var ServiceClass = {
 			_name		: name,
 		};
 		m._listeners = [];
+		m._nService = m._nRoot.getNode("service",1);
+		m._qos = 1.0;
+		
+		m._nQos  		= m._nService.initNode("qos",1.0,"DOUBLE");
+		m._nLifetime 		= m._nService.initNode("lifetime",72000000,"INT");
+		m._nBuildin 		= m._nService.initNode("buildin",0,"INT");
+		m._nSerialNumber 	= m._nService.initNode("SerialNumber","","STRING");
+		
 		return m;
 	},
 	getName : func(){
@@ -118,12 +126,12 @@ var ElectricClass = {
 				ServiceClass.new(root,name)
 			]
 		};
-		m._nVolt		= m._nRoot.initNode("volt",0.0,"DOUBLE");
-		m._nAmpere		= m._nRoot.initNode("ampere",0.0,"DOUBLE");
-		m._nVolt.setValue(0.0);
-		m._nAmpere.setValue(0.0);
 		m._ampere		= 0.0;
 		m._volt			= 0.0;
+		m._nVolt		= m._nRoot.initNode("volt",m._volt,"DOUBLE");
+		m._nAmpere		= m._nRoot.initNode("ampere",m._ampere,"DOUBLE");
+		m._nVolt.setValue(0.0);
+		m._nAmpere.setValue(0.0);
 		return m;
 	},
 	setVolt : func(volt){ 
@@ -535,11 +543,15 @@ var ConsumerClass = {
 				ElectricClass.new(root,name)
 			]
 		};
-		m._voltListener 	= nil;
-		m._ampereListener 	= nil;
 		m._input 		= nil;
 		m._lastAmpere		= 0.0;
 		m._watt			= watt;
+		m._voltMin		= 18.0;
+		m._voltMax		= 28.0;
+		m._voltNorm		= global.norm(m._volt,m._voltMin,m._voltMax);
+		m._nVoltMin		= m._nRoot.initNode("voltMin",m._voltMin,"DOUBLE");
+		m._nVoltMax		= m._nRoot.initNode("voltMax",m._voltMax,"DOUBLE");
+		m._nVoltNorm		= m._nRoot.initNode("voltNorm",m._voltNorm,"DOUBLE");
 		m._nWatt		= m._nRoot.initNode("watt",watt,"DOUBLE");
 		m._nState		= m._nRoot.initNode("state",0,"BOOL");
 		m._state		= 0;
@@ -552,13 +564,34 @@ var ConsumerClass = {
 		me._input = obj;
 	},
 	setListerners : func() {
-		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0);
-		me._ampereListener 	= setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0);
-		me._wattListener 	= setlistener(me._nWatt,func(n){me._onWattChange(n);},1,0);
+		append(me._listeners, setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nWatt,func(n){me._onWattChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nVoltMin,func(n){me._onVoltMinChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nVoltMax,func(n){me._onVoltMaxChange(n);},1,0) );
+		
+	},
+	_onVoltMinChange : func(n){
+		
+		me._voltMin = n.getValue();
+		me._voltNorm	= global.norm(me._volt,me._voltMin,me._voltMax);
+		me._nVoltNorm.setValue(me._voltNorm);
+		#print ("ConsumerClass._onVoltChange() ... "~me._name~" "~me._volt~"V");
+		me.electricWork();
+	},
+	_onVoltMaxChange : func(n){
+		
+		me._voltMax = n.getValue();
+		me._voltNorm	= global.norm(me._volt,me._voltMin,me._voltMax);
+		me._nVoltNorm.setValue(me._voltNorm);
+		#print ("ConsumerClass._onVoltChange() ... "~me._name~" "~me._volt~"V");
+		me.electricWork();
 	},
 	_onVoltChange : func(n){
 		
 		me._volt = n.getValue();
+		me._voltNorm	= global.norm(me._volt,me._voltMin,me._voltMax);
+		me._nVoltNorm.setValue(me._voltNorm);
 		#print ("ConsumerClass._onVoltChange() ... "~me._name~" "~me._volt~"V");
 		me.electricWork();
 	},
@@ -602,7 +635,6 @@ var LedClass = {
 		};
 		m._nBrightness		= props.globals.initNode(bright,1.0,"DOUBLE");
 		m._brightness		= 0;
-		m._brightnessListener   = nil;
 		m._nState		= m._nRoot.initNode("state",0.0,"DOUBLE",1);
 		
 		m._on = 0;
@@ -611,19 +643,23 @@ var LedClass = {
 		return m;
 	},
 	setListerners : func() {
-		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0);
-		me._ampereListener 	= setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0);
-		me._brightnessListener	= setlistener(me._nBrightness,func(n){me._onBrightnessChange(n);},1,0);
+		append(me._listeners, setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nWatt,func(n){me._onWattChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nVoltMin,func(n){me._onVoltMinChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nVoltMax,func(n){me._onVoltMaxChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nBrightness,func(n){me._onBrightnessChange(n);},1,0));
+		
 	},
 	_onBrightnessChange : func(n){
 		me._brightness = n.getValue();
 		me.electricWork();
 	},
 	electricWork : func(){
-		if ((me._on == 1 or me._test ==1) and me._volt > 22.0){
+		if ((me._on == 1 or me._test ==1) and me._volt > me._voltMin){
 			me._watt = me._nWatt.getValue() * me._brightness;
 			me._ampere = me._watt / me._volt;
-			me._state = me._brightness;
+			me._state = me._brightness * me._qos * me._voltNorm;
 		}else{
 			me._ampere = 0;
 			me._state = 0;
