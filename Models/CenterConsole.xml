@@ -40,7 +40,7 @@
 <animation>
   <type>translate</type>
   <object-name>ParkingBrake</object-name>
-  <property>controls/gear/brake-parking</property>
+  <property>/extra500/panel/CenterConsole/Parkingbrake/state</property>
   <factor>-0.025</factor>
   <axis>
    <x1-m>0.41777</x1-m>
@@ -60,14 +60,14 @@
     <repeatable>false</repeatable>
     <binding>
 			<command>property-toggle</command>
-			<property>controls/gear/brake-parking</property>
+			<property>/extra500/panel/CenterConsole/Parkingbrake/state</property>
 	</binding>
   </action>
 </animation>
 
-<!-- PowerLever # pick muss noch erstellt werden # -->
 
 
+<!-- PowerLever # muss pick noch erstellt werden ? # -->
 
 <animation>
   <type>rotate</type>
@@ -141,7 +141,7 @@
   </axis>
 </animation>
 
-<!-- ConditionLever # pick muss noch erstellt werden # -->
+<!-- ConditionLever # muss pick noch erstellt werden ? # -->
 <animation>
   <type>rotate</type>
   <object-name>ConditionLever</object-name>
