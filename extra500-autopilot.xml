@@ -762,8 +762,20 @@
 		<switch name="hdgoff">
 			<default value="/autopilot/mode/heading"/>
 			<test logic="AND" value="0">
-				/autopilot/mode/nav eq 1
-				/autopilot/radionav-channel/needle-defl-full eq 0
+				<test logic="AND" value="1">
+					/autopilot/mode/nav eq 1
+					/autopilot/radionav-channel/needle-defl-full eq 0
+				</test>
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/autopilot/radionav-channel/heading-needle-deflection-norm gt 0
+						/autopilot/radionav-channel/heading-error-deg lt 0
+					</test>
+					<test logic="AND" value="1">
+						/autopilot/radionav-channel/heading-needle-deflection-norm lt 0
+						/autopilot/radionav-channel/heading-error-deg gt 0
+					</test>
+				</test>
 			</test>
 			<output>/autopilot/mode/heading</output>
 		</switch>
