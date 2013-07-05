@@ -136,7 +136,8 @@ var EngineClass = {
 		m.nLowTorquePress	= m._nRoot.initNode("lowTorquePressure",0,"BOOL");
 		m.nLowOilPress		= m._nRoot.initNode("lowOilPressure",0,"BOOL");
 		m.nLowFuelPress		= m._nRoot.initNode("lowFuelPressure",0,"BOOL");
-		m.nChip			= m._nRoot.initNode("defectChip",0,"BOOL");
+		m.nLowPitch		= m._nRoot.initNode("lowPitch",0,"BOOL");
+		m.nChip			= m._nRoot.initNode("defectChip",0,"BOOL"); 
 		
 		m.nCutOffState		= m._nRoot.initNode("cutoff",1,"BOOL");
 		
@@ -260,6 +261,12 @@ var EngineClass = {
 			me.nLowFuelPress.setValue(0);
 		}
 		
+		if (me.nThrottle.getValue() >= 0.05 and me.nReverser.getValue() == 1){
+			me.nLowPitch.setValue(1);
+		}else{
+			me.nLowPitch.setValue(0);
+		}
+				
 		if(me.nTRQ.getValue() < 35.0){
 			me.nLowTorquePress.setValue(1);
 		}else{

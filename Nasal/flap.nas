@@ -78,6 +78,7 @@ var FlapSystemClass = {
 		m._flapListener 	= nil;
 		m._flapPosition 	= 0;
 		
+		m._nWarning 		= m._nRoot.initNode("hasWarning",0,"BOOL");
 		m._nFlaps 		= props.globals.getNode("/controls/flight/flaps");
 		m._nFlapPosition      	= props.globals.initNode("/fdm/jsbsim/fcs/flap-pos-norm",0.0,"DOUBLE");
 		m._nFlapCmdPosition   	 = props.globals.initNode("/fdm/jsbsim/fcs/flap-wp-cmd-norm",0.0,"DOUBLE");

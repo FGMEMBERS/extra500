@@ -84,7 +84,6 @@ var BootsClass = {
 	electricWork : func(){
 		
 		if ((me._value == 1 ) and (me._volt >= 22.0) ){
-			me._watt = me._nWatt.getValue();
 			me._ampere = me._watt / me._volt;
 			me._state  = 1;
 		}else{
@@ -121,6 +120,7 @@ var DeicingSystemClass = {
 		
 		m._nWowNose 	= props.globals.initNode("/gear/gear[0]/wow",0,"BOOL");
 		m._nIAT 	= props.globals.initNode("/environment/temperature-degc",0.0,"DOUBLE");
+		m._nRPM		= props.globals.initNode("/engines/engine[0]/rpm");
 		
 		
 		m._nIntakeHeat 		= HeatClass.new("/extra500/system/deice/IntakeHeat","Intake Heat",24.0);
@@ -152,8 +152,11 @@ var DeicingSystemClass = {
 		eSystem.circuitBreaker.BOOTS.addOutput(m._Boots);
 		m._bootsTimer = 0;
 		
-		m._PropellerHeat 		= HeatClass.new("/extra500/system/deice/Propeller","Propeller Heat",240.0);
+		m._PropellerHeat 	= HeatClass.new("/extra500/system/deice/Propeller","Propeller Heat",0.0);
 		eSystem.circuitBreaker.PROP_HT.addOutput(m._PropellerHeat);
+		
+		m._StallWarner 		= HeatClass.new("/extra500/system/pitot/StallWarn","Stall Warner",1.0);
+		eSystem.circuitBreaker.STALL_WARN.addOutput(m._StallWarner);
 		
 		
 		
@@ -175,6 +178,7 @@ var DeicingSystemClass = {
 		me._StallHeat.init();
 		me._Boots.init();
 		me._PropellerHeat.init();
+		me._StallWarner.init();
 		
 		eSystem.switch.Propeller.onStateChange = func(n){
 			me._state = n.getValue();
@@ -206,9 +210,17 @@ var DeicingSystemClass = {
 
 		append(me._listeners, setlistener(me._WindshieldCtrl._nState,func(n){me._checkWindshieldHeat();},1,0) );
 		append(me._listeners, setlistener(me._nWowNose,func(n){me._checkPitot();},1,0) );
+		append(me._listeners, setlistener("/fdm/jsbsim/aircraft/stallwarner/state",func(n){me._onStallWarning(n);},1,0) );
+		
+		
 				
 		me.timerLoop.start();
 		
+	},
+	_onStallWarning : func(n){
+# 		var warning = n.getBoolValue();
+# 		print("We have a Stall Warning. "~warning);
+		me._StallWarner.setOn(n.getBoolValue());
 	},
 	_checkWindshieldHeat : func(){
 		me._WindshieldHeat.setOn(eSystem.switch.Windshield._state * me._WindshieldCtrl._state);
@@ -262,18 +274,19 @@ var DeicingSystemClass = {
 		}
 		
 	# Propeller heat
-		# C	Watt	A
-		# 0	120	5
-		# -30  	432	18
-		# -10.4x +120
+		# RPM		A	Watt
+		# 0		16	384
+		# 2030		19	456
+		# 0.03546x + 16
+		
 		
 		if (eSystem.switch.Propeller._state == 1){
 			#me._PropellerHeat._nWatt.setValue(global.clamp((me.nIAT.getValue()*-5.2+120),120,432)); 
 			var watt = 0;
-			watt = me._nIAT.getValue();
+			watt = me._nRPM.getValue();
 			#print ("IAT : "~watt);
-			watt =(( watt * -10.4) +120 );
-			watt = global.clamp(watt,120,432);
+			watt =( ( watt * 0.03546) + 384 );
+			watt = global.clamp(watt,384,456);
 			interpolate(me._PropellerHeat._nWatt,watt,me._dt);
 		}
 		

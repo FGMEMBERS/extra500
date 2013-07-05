@@ -1069,7 +1069,7 @@ eSystem.circuitBreaker = {
 	HYDR			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Hydraulic","Hydraulic",50),
 	WSH_HT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/WindShieldHeat","Wind Shield Heat",20),
 	WSH_CTRL		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/WindShieldControl","Wind Shield Control",2),
-	PROP_HT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/PropellerHeat","PropellerHeat",20),
+	PROP_HT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/PropellerHeat","PropellerHeat",30),
 	FUEL_P_2		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/FuelPump2","Fuel Pump 2",7.5),
 	START			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Start","Start",5),
 	IGN			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Ignition","Ignition",5),
