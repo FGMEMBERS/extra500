@@ -751,50 +751,8 @@ JSBSim Extra Aircraft - Extra 500.
 	<UI>
 		<file>Aircraft/extra500/UserInterface/ui.nas</file>
 	</UI>
-	<Part>
-		<file>Aircraft/extra500/Nasal/part/able.nas</file>
-		<file>Aircraft/extra500/Nasal/part/part.nas</file>
-		<file>Aircraft/extra500/Nasal/part/part.electric.nas</file>
-		<file>Aircraft/extra500/Nasal/part/part.fuel.nas</file>
-		<file>Aircraft/extra500/Nasal/part/part.hydraulic.nas</file>
-	</Part>
 	<extra500>
 		
-		<!-- electric 
-		<file>Aircraft/extra500/system/electric/eBox.nas</file>
-		<file>Aircraft/extra500/system/electric/panel.Fuse.nas</file>
-		<file>Aircraft/extra500/system/electric/panel.CircuitBreaker.nas</file>
-		<file>Aircraft/extra500/system/electric/panel.Master.nas</file>
-		<file>Aircraft/extra500/system/electric/panel.Side.nas</file>
-		<file>Aircraft/extra500/system/electric/panel.Annunciator.nas</file>
-		<file>Aircraft/extra500/system/electric/light.nas</file>
-		<file>Aircraft/extra500/system/electric/system.flap.nas</file>
-		<file>Aircraft/extra500/system/electric/system.gear.nas</file>
-		<file>Aircraft/extra500/system/electric/system.pitot.nas</file>
-		<file>Aircraft/extra500/system/electric/lowVoltageMonitor.nas</file>
-		<file>Aircraft/extra500/system/electric/gearWarningBoard.nas</file>
-		
-		<file>Aircraft/extra500/system/engine/engine.nas</file>
-		
-		<file>Aircraft/extra500/system/fuel/fuelSystem.nas</file>-->
-		<!-- instrumentation 
-		<file>Aircraft/extra500/system/instrumentation/Audiopanel.nas</file>
-		<file>Aircraft/extra500/system/instrumentation/Autopilot.nas</file>
-		<file>Aircraft/extra500/system/instrumentation/DigitalInstrumentPackage.nas</file>
-		<file>Aircraft/extra500/system/instrumentation/DME.nas</file>
-		<file>Aircraft/extra500/system/instrumentation/EngineInstrumentPackage.nas</file>
-		<file>Aircraft/extra500/system/instrumentation/FuelFow.nas</file>
-		<file>Aircraft/extra500/system/instrumentation/Keypad.nas</file>
-		<file>Aircraft/extra500/system/instrumentation/StbyAirspeed.nas</file>
-		<file>Aircraft/extra500/system/instrumentation/StbyAltimeter.nas</file>
-		<file>Aircraft/extra500/system/instrumentation/StbyAttitude.nas</file>
-		<file>Aircraft/extra500/system/instrumentation/TurnCoordinator.nas</file>-->
-		<!-- cabling & defaults 
-		<file>Aircraft/extra500/system/electric/cabling.nas</file>
-		<file>Aircraft/extra500/system/default.nas</file>-->
-		
-		
-		<!-- Eclectic v2 -->
 		<file>Aircraft/extra500/Nasal/electrical.nas</file>
 		<file>Aircraft/extra500/Nasal/engine.nas</file>
 		<file>Aircraft/extra500/Nasal/dimming.nas</file>
@@ -809,6 +767,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/cabin.nas</file>
 		<file>Aircraft/extra500/Nasal/deice.nas</file>
 		<file>Aircraft/extra500/Nasal/light.nas</file>
+		<file>Aircraft/extra500/Nasal/centerConsole.nas</file>
 		
 	</extra500>
 	<IFD>
