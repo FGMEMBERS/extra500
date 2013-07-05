@@ -17,7 +17,7 @@
 #      Date: Jul 03 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             03.07.13
+#      Date:             05.07.13
 #
 
 # MM page 
@@ -184,35 +184,12 @@ var DeicingSystemClass = {
 		
 		eSystem.switch.PitotL.onStateChange = func(n){
 			me._state = n.getValue();
-			if (me._state == 1){
-				deiceSystem._PitotHeatLeft.setOn( !deiceSystem._nWowNose.getValue() );
-				deiceSystem._StaticHeatLeft.setOn( !deiceSystem._nWowNose.getValue() );
-			}elsif (me._state == 0){
-				deiceSystem._PitotHeatLeft.setOn(0);
-				deiceSystem._StaticHeatLeft.setOn(0);
-			}elsif (me._state == -1){
-				deiceSystem._PitotHeatLeft.setOn(1);
-				deiceSystem._StaticHeatLeft.setOn(1);
-			}
+			deiceSystem._checkPitot();
 		};
 
 		eSystem.switch.PitotR.onStateChange = func(n){
 			me._state = n.getValue();
-			if (me._state == 1){
-				deiceSystem._PitotHeatRight.setOn( !deiceSystem._nWowNose.getValue() );
-				deiceSystem._StaticHeatRight.setOn( !deiceSystem._nWowNose.getValue() );
-				deiceSystem._StallHeat.setOn( !deiceSystem._nWowNose.getValue() );
-				
-			}elsif (me._state == 0){
-				deiceSystem._PitotHeatRight.setOn(0);
-				deiceSystem._StaticHeatRight.setOn(0);
-				deiceSystem._StallHeat.setOn(0);
-				
-			}elsif (me._state == -1){
-				deiceSystem._PitotHeatRight.setOn(1);
-				deiceSystem._StaticHeatRight.setOn(1);
-				deiceSystem._StallHeat.setOn(1);
-			}
+			deiceSystem._checkPitot();
 		};
 
 		eSystem.switch.Windshield.onStateChange = func(n){
@@ -228,12 +205,42 @@ var DeicingSystemClass = {
 		};
 
 		append(me._listeners, setlistener(me._WindshieldCtrl._nState,func(n){me._checkWindshieldHeat();},1,0) );
+		append(me._listeners, setlistener(me._nWowNose,func(n){me._checkPitot();},1,0) );
 				
 		me.timerLoop.start();
 		
 	},
 	_checkWindshieldHeat : func(){
 		me._WindshieldHeat.setOn(eSystem.switch.Windshield._state * me._WindshieldCtrl._state);
+	},
+	_checkPitot : func(){
+		
+		if (eSystem.switch.PitotL._state == 1){
+			me._PitotHeatLeft.setOn( !me._nWowNose.getValue() );
+			me._StaticHeatLeft.setOn( !me._nWowNose.getValue() );
+		}elsif (eSystem.switch.PitotL._state == 0){
+			me._PitotHeatLeft.setOn(0);
+			me._StaticHeatLeft.setOn(0);
+		}elsif (eSystem.switch.PitotL._state == -1){
+			me._PitotHeatLeft.setOn(1);
+			me._StaticHeatLeft.setOn(1);
+		}
+				
+		if (eSystem.switch.PitotR._state == 1){
+			me._PitotHeatRight.setOn( !me._nWowNose.getValue() );
+			me._StaticHeatRight.setOn( !me._nWowNose.getValue() );
+			me._StallHeat.setOn( !me._nWowNose.getValue() );
+			
+		}elsif (eSystem.switch.PitotR._state == 0){
+			me._PitotHeatRight.setOn(0);
+			me._StaticHeatRight.setOn(0);
+			me._StallHeat.setOn(0);
+			
+		}elsif (eSystem.switch.PitotR._state == -1){
+			me._PitotHeatRight.setOn(1);
+			me._StaticHeatRight.setOn(1);
+			me._StallHeat.setOn(1);
+		}
 	},
 	setIntakeHeat : func(value){
 		me._intakeHeat  = value;

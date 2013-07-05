@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             26.06.13
+#      Date:             05.07.13
 #
 
 var init_listener = setlistener("/sim/signals/fdm-initialized", func {
@@ -54,6 +54,7 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		extra500.propellerHeat.init();
 		extra500.turnCoordinator.init();
 		extra500.annunciator.init();
+		extra500.light.init();
 		
 		extra500.eSystem.init();
 		

@@ -17,7 +17,7 @@
 #      Date: Jun 30 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             30.06.13
+#      Date:             05.07.13
 #
 
 # MM Page 590
@@ -139,33 +139,33 @@ var AnnunciatorClass = {
 		append(me._listeners, setlistener("/extra500/system/dimming/Annunciator",func(n){me._onBrightnessChange(n);},1,0) );
 		
 		append(me._listeners, setlistener("/extra500/door/main/isOpen",			func(n){me._leds["AFTDoor"].setState(n.getValue());},1,0) );
-		append(me._listeners, setlistener("/extra500/system/deice/StallHeat/state",	func(n){me._leds["StallHeat"].setState(n.getValue());},1,0) );
+		append(me._listeners, setlistener("/extra500/system/deice/StallHeat/state",	func(n){me._leds["StallHeat"].setState(!n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/engine/lowOilPressure",		func(n){me._leds["OilPress"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/electric/relay/K3",		func(n){me._leds["GeneratorFail"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/engine/defectChip",		func(n){me._leds["ChipDetection"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/gear/motor/isMotoring",	func(n){me._leds["HydraulicPump"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/gear/hasWarning",		func(n){me._leds["GearWarn"].setState(n.getValue());},1,0) );
-		append(me._listeners, setlistener("fdm/jsbsim/aircraft/stallwarner/state",	func(n){me._leds["StallWarn"].setState(n.getValue());},1,0) );
+		append(me._listeners, setlistener("/fdm/jsbsim/aircraft/stallwarner/state",	func(n){me._leds["StallWarn"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/deice/WindshieldHeat/Fail",	func(n){me._leds["WindshieldHeatFail"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/engine/lowFuelPressure",		func(n){me._leds["FuelPress"].setState(n.getValue());},1,0) );
-		append(me._listeners, setlistener("/extra500/system/deice/PitotHeatLeft/state",	func(n){me._leds["PitotHeatLeft"].setState(n.getValue());},1,0) );
-		append(me._listeners, setlistener("/extra500/system/deice/PitotHeatRight/state",	func(n){me._leds["PitotHeatRight"].setState(n.getValue());},1,0) );
+		append(me._listeners, setlistener("/extra500/system/deice/PitotHeatLeft/state",	func(n){me._leds["PitotHeatLeft"].setState(!n.getValue());},1,0) );
+		append(me._listeners, setlistener("/extra500/system/deice/PitotHeatRight/state",func(n){me._leds["PitotHeatRight"].setState(!n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/flap/motor/state",		func(n){me._leds["Flaps"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/cabin/hasPressureWarning",		func(n){me._leds["CabinPressure"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/cabin/hasBleedOvertempWarning",	func(n){me._leds["BleedOvertemp"].setState(n.getValue());},1,0) );
-		append(me._listeners, setlistener("/extra500/system/deice/StaticHeatLeft/state",	func(n){me._leds["StaticHeatLeft"].setState(n.getValue());},1,0) );
-		append(me._listeners, setlistener("/extra500/system/deice/StaticHeatRight/state",func(n){me._leds["StaticHeatRight"].setState(n.getValue());},1,0) );
+		append(me._listeners, setlistener("/extra500/system/deice/StaticHeatLeft/state",func(n){me._leds["StaticHeatLeft"].setState(!n.getValue());},1,0) );
+		append(me._listeners, setlistener("/extra500/system/deice/StaticHeatRight/state",func(n){me._leds["StaticHeatRight"].setState(!n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/fuel/FuelPumpTransLeft/state",	func(n){me._leds["FuelTransLeft"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/fuel/FuelPumpTransRight/state",	func(n){me._leds["FuelTransRight"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/electric/source/Alternator/hasLoad",	func(n){me._leds["StandByAlternOn"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/controls/engines/engine[0]/ignition",	func(n){me._leds["IgnitionActive"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/deice/IntakeHeat/state",	func(n){me._leds["IntakeHeat"].setState(n.getValue());},1,0) );
-		append(me._listeners, setlistener("extra500/panel/Side/Light/Recognition/state",func(n){me._leds["RecognLight"].setState(n.getValue());},1,0) );
+		append(me._listeners, setlistener("/extra500/panel/Side/Light/Recognition/state",func(n){me._leds["RecognLight"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/fuel/FuelFilterByPass",	func(n){me._leds["FuelFilterByPass"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/deice/Boots/PneumaticLow",	func(n){me._leds["PneumaticLow"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/electric/eSystem/lowVoltage",	func(n){me._leds["LowVoltage"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/deice/Boots/state",		func(n){me._leds["DeiceBoots"].setState(n.getValue());},1,0) );
-		append(me._listeners, setlistener("extra500/panel/Side/Light/Landing/state",	func(n){me._leds["LandingLight"].setState(n.getValue());},1,0) );
+		append(me._listeners, setlistener("/extra500/panel/Side/Light/Landing/state",	func(n){me._leds["LandingLight"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/fuel/FuelLowLeft",		func(n){me._leds["FuelLowLeft"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/fuel/FuelLowRight",		func(n){me._leds["FuelLowRight"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/engine/lowTorquePressure",		func(n){me._leds["PropellerLowPitch"].setState(n.getValue());},1,0) );

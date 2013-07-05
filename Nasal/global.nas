@@ -17,7 +17,7 @@
 #      Date: April 04 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             29.04.13
+#      Date:             05.07.13
 #
 
 # print("#############################################");
@@ -45,6 +45,13 @@ var fnAnnounce = func(type,msg){
 var clamp = func(value,min=0.0,max=0.0){
 	if(value < min) {value = min;}
 	if(value > max) {value = max;}
+	return value;
+}
+
+var norm = func(value,min=0.0,max=0.0){
+	value = (value-min) / (max-min);
+	if(value < 0) {value = 0;}
+	if(value > 1.0) {value = 1.0;}
 	return value;
 }
 
