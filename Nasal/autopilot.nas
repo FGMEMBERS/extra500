@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             03.07.13
+#      Date:             05.07.13
 #
 
 
@@ -150,8 +150,8 @@ var AutopilotClass = {
 	},
 # Events from the UI
 	onClickHDG : func(){
-		if ( me.nModeHeading.getValue() == 0 ){
-			if ( ( me.nModeRdy.getValue() == 1 ) or (me.nModeNav.getValue() > 0) ){
+#		if ( me.nModeHeading.getValue() == 0 ){
+			if ( ( me.nModeRdy.getValue() == 1 ) or (me.nModeNav.getValue() == 1) ){
 				me.nModeRdy.setValue(0);
 				me.nModeHeading.setValue(1);
 				me.nModeNav.setValue(0);
@@ -160,15 +160,23 @@ var AutopilotClass = {
 			} else {
 				me.nModeFail.setValue(1);
 			}
-		} else {
-		}
+#		} else {
+#		}
 	},
 	onClickHDGNAV : func(){
-		print ("Autopilot.onClickHDGNAV() ... ");
+		if ( (me.nModeRdy.getValue() == 1) or (me.nModeHeading.getValue() == 1) or (me.nModeNav.getValue() == 1) ) {
+			me.nModeRdy.setValue(0);
+			me.nModeNav.setValue(1);
+			me.nModeHeading.setValue(1);
+			me.nModeNavGpss.setValue(0);
+			me.ndisengSound.setValue(0);
+		} else {
+			me.nModeFail.setValue(1);
+		}
 	},
 #
 	onClickNAV : func(){
-		if ( me.nModeNav.getValue() == 0 ){
+		if ( (me.nModeNav.getValue() == 0) or ( (me.nModeNav.getValue() == 1) and (me.nModeHeading.getValue() == 1) ) ){
 			if ( ( me.nModeRdy.getValue() == 1 ) or (me.nModeHeading.getValue() == 1) ){
 				me.nModeRdy.setValue(0);
 				me.nModeNav.setValue(1);
