@@ -151,7 +151,7 @@ var EngineClass = {
 		m.dt = 0;
 		m.now = systime();
 		m._lastTime = 0;
-		m.timerLoop = maketimer(1.0,m,EngineClass.update);
+		m._timerLoop = nil;
 		
 		return m;
 	},

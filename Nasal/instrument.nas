@@ -50,7 +50,7 @@ var DigitalInstrumentPackageClass = {
 		m._dt = 0;
 		m._now = systime();
 		m._lastTime = m._now;
-		m.timerLoop = maketimer(1.0,m,DigitalInstrumentPackageClass.update);
+		m._timerLoop = nil;
 		
 		
 		return m;
@@ -63,6 +63,9 @@ var DigitalInstrumentPackageClass = {
 		#eSystem.circuitBreaker.DIP_1.addOutput(me);
 		eSystem.circuitBreaker.DIP_2.addOutput(me);
 		eSystem.circuitBreaker.DIP_2.addOutput(me._backlight);
+		
+		me._timerLoop = maketimer(1.0,me,DigitalInstrumentPackageClass.update);
+		
 		
 	},
 	update : func(){
