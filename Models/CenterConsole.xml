@@ -41,14 +41,14 @@
   <type>translate</type>
   <object-name>ParkingBrake</object-name>
   <property>controls/gear/brake-parking</property>
-  <factor>0.012</factor>
+  <factor>-0.025</factor>
   <axis>
-   <x1-m>0.43049</x1-m>
+   <x1-m>0.41777</x1-m>
    <y1-m>0</y1-m>
-   <z1-m>-0.13172</z1-m>
-   <x2-m>0.38124</x2-m>
+   <z1-m>-0.13577</z1-m>
+   <x2-m>0.36853</x2-m>
    <y2-m>0</y2-m>
-   <z2-m>-0.14741</z2-m>
+   <z2-m>-0.15146</z2-m>
   </axis>
 </animation>
 
@@ -66,14 +66,23 @@
 </animation>
 
 <!-- PowerLever # pick muss noch erstellt werden # -->
+
+
+
 <animation>
   <type>rotate</type>
   <object-name>PowerLever</object-name>
   <property>controls/engines/engine/throttle</property>
+  <condition>
+    <equals>
+      <property>controls/engines/engine/reverser</property>
+      <value>1</value>
+    </equals>
+  </condition>
   <interpolation>
             <entry>
                 <ind>0</ind>
-                <dep>30</dep>
+                <dep>-5</dep>
             </entry>
             <entry>
                 <ind>1</ind>
@@ -82,11 +91,53 @@
         </interpolation>
   <axis>
     <x1-m>0.17205</x1-m>
-    <y1-m>-1</y1-m>
+    <y1-m>1</y1-m>
     <z1-m>-0.03982</z1-m>
     <x2-m>0.17205</x2-m>
-    <y2-m>1</y2-m>
+    <y2-m>-1</y2-m>
     <z2-m>-0.03982</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>rotate</type>
+  <object-name>PowerLever</object-name>
+  <property>controls/engines/engine/throttle</property>
+  <condition>
+    <equals>
+      <property>controls/engines/engine/reverser</property>
+      <value>0</value>
+    </equals>
+  </condition>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>-5</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>30</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>0.17205</x1-m>
+    <y1-m>1</y1-m>
+    <z1-m>-0.03982</z1-m>
+    <x2-m>0.17205</x2-m>
+    <y2-m>-1</y2-m>
+    <z2-m>-0.03982</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>translate</type>
+  <object-name>PowerLever</object-name>
+  <property>controls/engines/engine/reverser</property>
+  <factor>0.02</factor>
+  <axis>
+    <x>0</x>
+    <y>0</y>
+    <z>1</z>
   </axis>
 </animation>
 
