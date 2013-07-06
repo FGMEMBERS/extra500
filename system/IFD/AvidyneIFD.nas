@@ -290,6 +290,9 @@ var AvidynePage = {
 	registerKeys : func(){
 		
 	},
+	setVisible : func(value){
+		me.page.setVisible(value);
+	},
 	hide : func(){
 		me.page.hide();
 	},
@@ -790,13 +793,19 @@ var AvidynePagePFD = {
 
 
 var AvidyneIFD = {
-	new: func(nRoot,name,acPlace,startPage="none"){
-		var m = { parents: [AvidyneIFD] };
+	new: func(root,name,acPlace,startPage="none"){
+		var m = { parents: [
+			AvidyneIFD,
+			extra500.ServiceClass.new(root,name)
+		] };
 		m.name = name;
 		m.keys = {};
-		m.nBacklight  	= nRoot.initNode("Backlight/state",1.0,"DOUBLE");
+		m.nBacklight  	= m._nRoot.initNode("Backlight/state",1.0,"DOUBLE");
+		m._nState  	= m._nRoot.initNode("state",0,"BOOL");
 		
-		m.nRoot = nRoot;
+		m._powerA	= extra500.ConsumerClass.new(root~"/powerA",name~" Power A",60.0);
+		m._powerB	= extra500.ConsumerClass.new(root~"/powerB",name~" Power B",60.0);
+		
 		m.canvas = canvas.new({
 		"name": "IFD",
 		"size": [2410, 1810],
@@ -816,21 +825,21 @@ var AvidyneIFD = {
 		m.pageSelected = "none";
 			
 		
-		m.nPageSelected = nRoot.initNode("PageSelected","","STRING");
+		m.nPageSelected = m._nRoot.initNode("PageSelected","","STRING");
 		
-		m.nL1 = nRoot.initNode("L1",0,"BOOL");
-		m.nL2 = nRoot.initNode("L2",0,"BOOL");
-		m.nL3 = nRoot.initNode("L3",0,"BOOL");
-		m.nL4 = nRoot.initNode("L4",0,"BOOL");
-		m.nL5 = nRoot.initNode("L5",0,"BOOL");
-		m.nL6 = nRoot.initNode("L6",0,"BOOL");
+		m.nL1 = m._nRoot.initNode("L1",0,"BOOL");
+		m.nL2 = m._nRoot.initNode("L2",0,"BOOL");
+		m.nL3 = m._nRoot.initNode("L3",0,"BOOL");
+		m.nL4 = m._nRoot.initNode("L4",0,"BOOL");
+		m.nL5 = m._nRoot.initNode("L5",0,"BOOL");
+		m.nL6 = m._nRoot.initNode("L6",0,"BOOL");
 		
-		m.nR1 = nRoot.initNode("R1",0,"BOOL");
-		m.nR2 = nRoot.initNode("R2",0,"BOOL");
-		m.nR3 = nRoot.initNode("R3",0,"BOOL");
-		m.nR4 = nRoot.initNode("R4",0,"BOOL");
-		m.nR5 = nRoot.initNode("R5",0,"BOOL");
-		m.nR6 = nRoot.initNode("R6",0,"BOOL");
+		m.nR1 = m._nRoot.initNode("R1",0,"BOOL");
+		m.nR2 = m._nRoot.initNode("R2",0,"BOOL");
+		m.nR3 = m._nRoot.initNode("R3",0,"BOOL");
+		m.nR4 = m._nRoot.initNode("R4",0,"BOOL");
+		m.nR5 = m._nRoot.initNode("R5",0,"BOOL");
+		m.nR6 = m._nRoot.initNode("R6",0,"BOOL");
 		
 		m._startPage = startPage;
 		
@@ -854,10 +863,17 @@ var AvidyneIFD = {
 	init : func(){
 		me.initUI();
 		
+		me._powerA.setListerners();
+		me._powerB.setListerners();
+		
+		append(me._listeners, setlistener(me._powerA._nState,func(n){me._onPowerAChange(n);},1,0) );
+		append(me._listeners, setlistener(me._powerB._nState,func(n){me._onPowerBChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nState,func(n){me._onStateChange(n);},1,0) );
+		
 		me.keys["DIM >"] = func(){me._adjustBrightness(0.1);};
 		me.keys["DIM <"] = func(){me._adjustBrightness(-0.1);};
 		
-		me.gotoPage(me._startPage);
+		#me.gotoPage(me._startPage);
 		
 		me._timerLoop20Hz = maketimer(0.05,me,AvidyneIFD.update20Hz);
 		me._timerLoop2Hz = maketimer(0.5,me,AvidyneIFD.update2Hz);
@@ -865,6 +881,49 @@ var AvidyneIFD = {
 		me._timerLoop20Hz.start();
 		me._timerLoop2Hz.start();
 		
+	},
+	_onPowerAChange : func(n){
+		me._powerA._state = n.getBoolValue();
+		if (me._powerA._state == 0){
+			me._powerB._nWatt.setValue(120);
+		}else{
+			if (me._powerB._state == 1){
+				me._powerA._nWatt.setValue(60);
+			}else{
+				me._powerA._nWatt.setValue(120);
+			}
+		}
+		
+		if ( (me._powerA._state == 0) and (me._powerB._state == 0) ){
+			me._nState.setValue(0);
+		}else{
+			me._nState.setValue(1);
+		}
+	},
+	_onPowerBChange : func(n){
+		me._powerB._state = n.getBoolValue();
+		if (me._powerB._state == 0){
+			me._powerA._nWatt.setValue(120);
+		}else{
+			if (me._powerA._state == 1){
+				me._powerB._nWatt.setValue(60);
+			}else{
+				me._powerB._nWatt.setValue(120);
+			}
+		}
+		
+		if ( (me._powerA._state == 0) and (me._powerB._state == 0) ){
+			me._nState.setValue(0);
+		}else{
+			me._nState.setValue(1);
+		}
+	},
+	_onStateChange : func(n){
+		me._state = n.getBoolValue();
+		if (me._state == 1){
+			me.gotoPage(me._startPage);
+		}
+		me.page[me.pageSelected].setVisible(me._state);
 	},
 	connectDataBus : func(ifd){
 		me.data.link = ifd;
@@ -904,21 +963,22 @@ var AvidyneIFD = {
 	},
 	gotoPage : func(name){
 		#print("IFD "~me.name ~" gotoPage("~name~") ... ");
-		if (!contains(me.page,name)){
-			name = "none";	
-		}
+		if (me._state == 1){
+			if (!contains(me.page,name)){
+				name = "none";	
+			}
 		
-		if (me.pageSelected != name){
-			me.page[me.pageSelected].hide();
-			me.page[me.pageSelected].removeListeners();
-			me.pageSelected = name;
-			me.nPageSelected.setValue(me.pageSelected);
-			me.clearLeds();
-			me.page[me.pageSelected].setListeners();
-			me.page[me.pageSelected].registerKeys();
-			me.page[me.pageSelected].show();
+			if (me.pageSelected != name){
+				me.page[me.pageSelected].hide();
+				me.page[me.pageSelected].removeListeners();
+				me.pageSelected = name;
+				me.nPageSelected.setValue(me.pageSelected);
+				me.clearLeds();
+				me.page[me.pageSelected].setListeners();
+				me.page[me.pageSelected].registerKeys();
+				me.page[me.pageSelected].show();
+			}
 		}
-		
 	},
 	_adjustBrightness : func(amount){
 		var brightness = me.nBacklight.getValue();
@@ -929,12 +989,14 @@ var AvidyneIFD = {
 	
 	onClick: func(key){
 		#print ("AvidyneIFD.onClick("~key~")");
-		if (contains(me.keys,key)){
-			me.keys[key]();
-			return 1;
+		if (me._state == 1){
+			if (contains(me.keys,key)){
+				me.keys[key]();
+				return 1;
+			}
+			
+			me.page[me.pageSelected].onClick(key);
 		}
-		
-		me.page[me.pageSelected].onClick(key);
 	},
 	initUI : func(){
 		
@@ -1006,9 +1068,14 @@ var AvidyneIFD = {
 };
 
 
-var LH = AvidyneIFD.new(props.globals.initNode("extra500/instrumentation/IFD-LH"),"LH","LH-IFD.Screen","PFD");
-var RH = AvidyneIFD.new(props.globals.initNode("extra500/instrumentation/IFD-RH"),"RH","RH-IFD.Screen");
+var LH = AvidyneIFD.new("extra500/instrumentation/IFD-LH","LH","LH-IFD.Screen","PFD");
+var RH = AvidyneIFD.new("extra500/instrumentation/IFD-RH","RH","RH-IFD.Screen");
 
+extra500.eSystem.circuitBreaker.IFD_LH_A.addOutput(LH._powerA);
+extra500.eSystem.circuitBreaker.IFD_LH_B.addOutput(LH._powerB);
+extra500.eSystem.circuitBreaker.IFD_RH_A.addOutput(RH._powerA);
+extra500.eSystem.circuitBreaker.IFD_RH_B.addOutput(RH._powerB);
+		
 LH.connectDataBus(RH.data);
 RH.connectDataBus(LH.data);
 

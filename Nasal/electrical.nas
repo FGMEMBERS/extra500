@@ -596,7 +596,7 @@ var ConsumerClass = {
 		me.electricWork();
 	},
 	electricWork : func(){
-		if(me._volt > 0){
+		if(me._volt > me._voltMin){
 			me._ampere = me._watt / me._volt;
 			me._state  = 1;
 		}else{
