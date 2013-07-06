@@ -173,4 +173,34 @@ in Systems/extra500-system-indication.xml-->
     <z2-m>-0.03982</z2-m>
   </axis>
 </animation>
+
+<animation>
+	<type>pick</type>
+	<object-name>ConditionLever</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("Engine cutoff off");
+				]]>
+			</script>
+		</binding>
+	</action>
+	<action>
+		<button>1</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("Engine cutoff on");
+				]]>
+			</script>
+		</binding>
+	</action>
+</animation>
+
 </PropertyList>
