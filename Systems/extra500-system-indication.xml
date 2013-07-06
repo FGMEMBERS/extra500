@@ -998,7 +998,7 @@
 			<function>
 				<abs>
 					<sum>
-						<property>/controls/engines/engine[0]/cutoff</property>
+						<property>/extra500/engine/cutoff</property>
 						<value>-1.0</value>
 					</sum>	
 				</abs>

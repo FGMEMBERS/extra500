@@ -145,9 +145,9 @@
   </axis>
 </animation>
 
-<!-- ConditionLever # muss pick noch erstellt werden ? # 
+<!-- ConditionLever  
 /controls/engines/engine[0]/condition-lever-norm is controlled by: 	
-		/controls/engines/engine[0]/cutoff (press: s)
+		/extra500/engine/cutoff (press: s)
 		/controls/engines/engine[0]/propeller-pitch (press: n/N)
 in Systems/extra500-system-indication.xml-->
 <animation>
@@ -184,12 +184,12 @@ in Systems/extra500-system-indication.xml-->
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-					UI.click("Engine cutoff off");
+					UI.click("Engine cutoff");
 				]]>
 			</script>
 		</binding>
 	</action>
-	<action>
+	<!--action>
 		<button>1</button>
 		<repeatable>false</repeatable>
 		<binding>
@@ -200,7 +200,7 @@ in Systems/extra500-system-indication.xml-->
 				]]>
 			</script>
 		</binding>
-	</action>
+	</action-->
 </animation>
 
 </PropertyList>
