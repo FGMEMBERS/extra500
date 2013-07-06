@@ -19,7 +19,7 @@
       Authors: Thomas Grossberger 
       Date: July 04 2013
 
-      Last change:      Thomas Grossberger
+      Last change:      Eric van den Berg
       Date:             05.07.13
 -->
 <PropertyList>
@@ -145,11 +145,15 @@
   </axis>
 </animation>
 
-<!-- ConditionLever # muss pick noch erstellt werden ? # -->
+<!-- ConditionLever # muss pick noch erstellt werden ? # 
+/controls/engines/engine[0]/condition-lever-norm is controlled by: 	
+		/controls/engines/engine[0]/cutoff (press: s)
+		/controls/engines/engine[0]/propeller-pitch (press: n/N)
+in Systems/extra500-system-indication.xml-->
 <animation>
   <type>rotate</type>
   <object-name>ConditionLever</object-name>
-  <property>controls/engines/engine/mixture</property>
+  <property>/controls/engines/engine[0]/condition-lever-norm</property>
   <interpolation>
             <entry>
                 <ind>0</ind>

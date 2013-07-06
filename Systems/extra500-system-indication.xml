@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-06-16
+      Date:             2013-07-06
 -->
 
 <system name="indication">
@@ -989,6 +989,43 @@
 				</product>	
 			</function>
 		</fcs_function>
+	</channel>
+
+<!--*****************************************Condition lever*****************************************************************-->
+	<channel name="conditionlever">
+
+		<fcs_function name="/controls/engines/engine[0]/cutoff-inv">
+			<function>
+				<abs>
+					<sum>
+						<property>/controls/engines/engine[0]/cutoff</property>
+						<value>-1.0</value>
+					</sum>	
+				</abs>
+			</function>
+		</fcs_function>
+
+		<lead_lag_filter name="/controls/engines/engine[0]/cutoff-filtered">
+			<input>/controls/engines/engine[0]/cutoff-inv</input>
+			<c1>0.0</c1>
+			<c2>1.0</c2>
+			<c3>0.075</c3>
+			<c4>1.0</c4>
+		</lead_lag_filter>
+
+		<fcs_function name="/controls/engines/engine[0]/condition-lever-norm">
+			<function>
+				<product>
+					<value>0.833333</value>
+					<sum>
+						<value>0.2</value>
+						<property>/controls/engines/engine[0]/propeller-pitch</property>
+					</sum>
+					<property>/controls/engines/engine[0]/cutoff-filtered</property>
+				</product>	
+			</function>
+		</fcs_function>
+
 	</channel>
 
 </system>
