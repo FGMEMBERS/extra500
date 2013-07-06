@@ -979,7 +979,11 @@ var ESystem = {
 var eSystem = ESystem.new("/extra500/electric/eSystem","EBox");
 
 eSystem.relais = {
+	K1			: RelayClass.new("/extra500/electric/relay/K1","EXT Power Relay K1"),
+	K2			: RelayClass.new("/extra500/electric/relay/K2","Start Relay K2"),
 	K3			: RelayClass.new("/extra500/electric/relay/K3","Generator Relay K3"),
+	K4			: RelayClass.new("/extra500/electric/relay/K4","Battery Relay K4"),
+	K5			: RelayClass.new("/extra500/electric/relay/K5","RCCB Relay K5"),
 };
 
 
