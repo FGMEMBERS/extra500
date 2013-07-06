@@ -49,6 +49,14 @@ var gearDown = func(v) {
 var gearToggle = func { UI.click("Gear"); }
 
 
+##
+# ParkingBrak handling.
+#
+var applyParkingBrake = func(v) {
+    if (!v) { return; }
+    UI.click("Parkingbrake");
+}
+
 # GEAR ##
 # prevent retraction of the landing gear when any of the wheels are compressed
 # setlistener("controls/gear/gear-down", func

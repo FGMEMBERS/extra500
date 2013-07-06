@@ -32,45 +32,56 @@ var CenterConsole = {
 		m._GearClearHorn	= 0;
 		m._PitchTrim		= 0;
 		m._ParkingbrakePressure = 0;
+		m._BrakePressure 	= 0;
 		
 		
-		m._nCtrlLeftBrake	= props.globals.initNode("/controls/gear/brake-left",0.0,"DOUBLE");
-		m._nCtrlRightBrake	= props.globals.initNode("/controls/gear/brake-right",0.0,"DOUBLE");
-		m._nCtrlParkingbrake	= props.globals.initNode("/controls/gear/brake-parking",0.0,"DOUBLE");
-		m._nDefrost 		= m._nRoot.initNode("Defrost/state",0,"BOOL");
-		m._nDeice 		= m._nRoot.initNode("Deice/state",0,"BOOL");
-		m._nParkingbrake 	= m._nRoot.initNode("Parkingbrake/state",0,"BOOL");
-		m._nGearClearHorn 	= m._nRoot.initNode("GearClearHorn/state",0,"BOOL");
-		m._nPitchTrim 		= m._nRoot.initNode("PitchTrim/state",0.0,"DOUBLE");
+		m._nCtrlLeftBrake		= props.globals.initNode("/controls/gear/brake-left",0.0,"DOUBLE");
+		m._nCtrlRightBrake		= props.globals.initNode("/controls/gear/brake-right",0.0,"DOUBLE");
+		m._nCtrlParkingbrake		= props.globals.initNode("/controls/gear/brake-parking",0.0,"DOUBLE");
+		m._nParkingbrake 		= m._nRoot.initNode("Parkingbrake/state",0,"BOOL");
+		m._nParkingbrakePressure 	= m._nRoot.initNode("Parkingbrake/Pressure",0.0,"DOUBLE");
+		m._nDefrost 			= m._nRoot.initNode("Defrost/state",0,"BOOL");
+		m._nDeice 			= m._nRoot.initNode("Deice/state",0,"BOOL");
+		m._nGearClearHorn 		= m._nRoot.initNode("GearClearHorn/state",0,"BOOL");
+		m._nPitchTrim 			= m._nRoot.initNode("PitchTrim/state",0.0,"DOUBLE");
 		
 		return m;
 	},
 	init : func (){
 		me.initUI();
-		append(me._listeners, setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nParkingbrake,func(n){me.onParkBrakeChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nParkingbrakePressure,func(n){me.onParkingbrakePressureChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nCtrlLeftBrake,func(n){me.onBrakeChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nCtrlRightBrake,func(n){me.onBrakeChange(n);},1,0) );
 		
 	},
+	onParkingbrakePressureChange : func(n){
+		me._ParkingbrakePressure = n.getValue();
+		me._nCtrlParkingbrake.setValue(me._ParkingbrakePressure);
+	},
 	onBrakeChange : func(n){
+		me._BrakePressure = n.getValue();
 		if (me._Parkingbrake == 1){
-			var pressure = n.getValue();
-			if (pressure > me._ParkingbrakePressure){
-				me._ParkingbrakePressure = pressure;
-				me._nCtrlParkingbrake.setValue(me._ParkingbrakePressure);
+			if (me._BrakePressure > me._ParkingbrakePressure){
+				me._nParkingbrakePressure.setValue(me._BrakePressure);
 			}
 		}
 	},
+	onParkBrakeChange : func(n){
+		me._Parkingbrake = n.getValue();
+		if (me._Parkingbrake == 0){
+			me._ParkingbrakePressure = 0;
+			me._nParkingbrakePressure.setValue(me._ParkingbrakePressure);
+		}
+		
+	},
 	onParkBrakeClick : func(value = nil){
 		if (value == nil){
-			me._Parkingbrake = value == 1 ? 0 : 1;
+			me._Parkingbrake = me._Parkingbrake == 1 ? 0 : 1;
 		}else{
 			me._Parkingbrake = value;
 		}
-		if (me._Parkingbrake == 0){
-			me._ParkingbrakePressure = 0;
-			me._nCtrlParkingbrake.setValue(me._ParkingbrakePressure);
-		}
-		
-		me._nParkingbrake.setValue(me._Parkingbrake);
+		me._nParkingbrake.setValue(me._Parkingbrake);		
 	},
 	onDefrostClick : func(value = nil){
 		if (value == nil){
