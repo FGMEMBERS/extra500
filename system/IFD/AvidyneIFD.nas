@@ -889,6 +889,7 @@ var AvidyneIFD = {
 		}else{
 			if (me._powerB._state == 1){
 				me._powerA._nWatt.setValue(60);
+				me._powerB._nWatt.setValue(60);
 			}else{
 				me._powerA._nWatt.setValue(120);
 			}
@@ -907,6 +908,7 @@ var AvidyneIFD = {
 		}else{
 			if (me._powerA._state == 1){
 				me._powerB._nWatt.setValue(60);
+				me._powerA._nWatt.setValue(60);
 			}else{
 				me._powerB._nWatt.setValue(120);
 			}
