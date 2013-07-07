@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Dirk Dittmann
-      Date:             05.07.13
+      Date:             07.07.13
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -430,7 +430,9 @@ JSBSim Extra Aircraft - Extra 500.
 		<alt type="int">0</alt>
 		<vs type="int">0</vs>
 		<gs type="int">0</gs>
-		<gsdisable type="int">0</gsdisable>
+		<gs-disable type="int">0</gs-disable>
+		<gs-armed type="int">0</gs-armed>
+		<gs-follow type="int">0</gs-follow>
 		<rev type="int">0</rev>
 		<apr type="int">0</apr>
 		<rdy type="int">0</rdy>

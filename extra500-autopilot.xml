@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-07-05
+      Date:             2013-07-07
 -->
 
 <autopilot name="STEC55X">
@@ -803,15 +803,18 @@
 			<output>/autopilot/mode/apr</output>
 		</switch>
 
+	</channel>
+
 <!-- ********************* GLIDESLOPE ********************-->
-		
+	<channel name="glideslope">
+	
 	<!-- arming GS -->
 		<switch name="gsselect">
 			<default value="/instrumentation/nav[0]/gs-in-range"/>
 			<test value="/instrumentation/nav[1]/gs-in-range">
 				/instrumentation/nav-source eq 1
 			</test>
-			<output>/autopilot/radionav-channel/gs-in-range</output>
+			<output>/autopilot/gs-channel/gs-in-range</output>
 		</switch>
 
 		<switch name="gsselect2">
@@ -819,7 +822,7 @@
 			<test value="/instrumentation/nav[1]/has-gs">
 				/instrumentation/nav-source eq 1
 			</test>
-			<output>/autopilot/radionav-channel/has-gs</output>
+			<output>/autopilot/gs-channel/has-gs</output>
 		</switch>
 
 		<switch name="gsselect3">
@@ -827,22 +830,48 @@
 			<test value="/instrumentation/nav[1]/gs-needle-deflection-norm">
 				/instrumentation/nav-source eq 1
 			</test>
-			<output>/autopilot/radionav-channel/gs-needle-deflection-norm</output>
+			<output>/autopilot/gs-channel/gs-needle-deflection-norm</output>
 		</switch>
 
 		<switch name="armgs">
-			<default value="0"/>
+			<default value="/autopilot/mode/gs-armed"/>
 			<test logic="AND" value="1">
 				/autopilot/mode/nav eq 1
 				/autopilot/mode/apr eq 1
 				/autopilot/mode/alt eq 1
-				/autopilot/radionav-channel/gs-in-range eq 1
+				/autopilot/gs-channel/gs-in-range eq 1
 				/autopilot/radionav-channel/is-localizer-frequency eq 1
 				/autopilot/radionav-channel/needle-defl-gt-half eq 0
-				/autopilot/radionav-channel/gs-needle-deflection-norm lt 0.1
-				/autopilot/mode/gsdisable eq 0
+				/autopilot/gs-channel/gs-needle-deflection-norm lt 0.1
+				/autopilot/mode/gs-disable eq 0
+			</test>
+			<output>/autopilot/mode/gs-armed</output>
+		</switch>
+
+		<switch name="gs-follow">
+			<default value="/autopilot/mode/gs-follow"/>
+			<test logic="AND" value="1">
+				/autopilot/gs-channel/gs-needle-deflection-norm lt 0.05	
+				/autopilot/mode/gs-armed eq 1
+			</test>
+			<output>/autopilot/mode/gs-follow</output>
+		</switch>
+
+		<switch name="gs-ind">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/autopilot/mode/gs-follow eq 1		
+				/autopilot/mode/gs-armed eq 1
 			</test>
 			<output>/autopilot/mode/gs</output>
+		</switch>
+
+		<switch name="altoff">
+			<default value="/autopilot/mode/alt"/>
+			<test logic="AND" value="0">
+				/autopilot/mode/gs-follow eq 1	
+			</test>
+			<output>/autopilot/mode/alt</output>
 		</switch>
 
 
