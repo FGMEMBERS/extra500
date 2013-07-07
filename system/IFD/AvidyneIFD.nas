@@ -61,6 +61,8 @@ var AvidyneData = {
 		m.apModeFail 	= 0;
 		m.apModeALT 	= 0;
 		m.apModeNAV 	= 0;
+		m.apModeAPR 	= 0;
+		m.apModeTRIM 	= 0;
 		m.apModeVS 	= 0;
 		m.apModeHDG 	= 0;
 		m.apModeAP 	= 0;
@@ -71,6 +73,8 @@ var AvidyneData = {
 		m.nApModeFail 	= props.globals.initNode("/autopilot/mode/fail",0.0,"INT");
 		m.nApModeALT 	= props.globals.initNode("/autopilot/mode/alt",0.0,"INT");
 		m.nApModeNAV 	= props.globals.initNode("/autopilot/mode/nav",0.0,"INT");
+		m.nApModeAPR 	= props.globals.initNode("/autopilot/mode/apr",0.0,"INT");
+		m.nApModeTRIM 	= props.globals.initNode("/autopilot/mode/trim",0.0,"INT");
 		m.nApModeVS  	= props.globals.initNode("/autopilot/mode/vs",0.0,"INT");
 		m.nApModeHDG 	= props.globals.initNode("/autopilot/mode/heading",0.0,"INT");
 		m.nApModeAP  	= props.globals.initNode("/autopilot/settings/ap",0.0,"INT");
@@ -107,6 +111,7 @@ var AvidyneData = {
 		m.HPA 		= 0;
 		
 		m.nALT = props.globals.initNode("/instrumentation/altimeter-IFD-"~m.name~"/indicated-altitude-ft",0.0,"DOUBLE");
+		#m.nALT = props.globals.initNode("/instrumentation/altimeter-IFD-"~m.name~"/setting-hpa",0.0,"DOUBLE");
 		m.nALTBug = props.globals.initNode("/autopilot/settings/target-altitude-ft",0.0,"DOUBLE");
 		m.nHPA = props.globals.initNode("/instrumentation/altimeter-IFD-"~m.name~"/setting-hpa",0.0,"DOUBLE");
 		
@@ -173,6 +178,8 @@ var AvidyneData = {
 		me.apModeFail 	= me.nApModeFail.getValue();
 		me.apModeALT 	= me.nApModeALT.getValue();
 		me.apModeNAV 	= me.nApModeNAV.getValue();
+		me.apModeAPR 	= me.nApModeAPR.getValue();
+		me.apModeTRIM 	= me.nApModeTRIM.getValue();
 		me.apModeVS 	= me.nApModeVS.getValue();
 		me.apModeHDG 	= me.nApModeHDG.getValue();
 		me.apModeAP 	= me.nApModeAP.getValue();
@@ -417,19 +424,15 @@ var AvidynePagePFD = {
 		
 	#autopilot
 		m.cAutopilot		= m.page.getElementById("Autopilot");
-		m.cAutopilotOff	= m.page.getElementById("AP_Off");
-		m.cAutopilotOff.hide();
+		m.cAutopilotOff	= m.page.getElementById("AP_Off").hide();
 		m.cApModeState 		= m.page.getElementById("AP_State");
-		m.cApModeHdg 		= m.page.getElementById("AP_HDG");
-		m.cApModeHdg.hide(); 
-		m.cApModeNav 		= m.page.getElementById("AP_NAV");
-		m.cApModeNav.hide();
-		m.cApModeAlt 		= m.page.getElementById("AP_ALT");
-		m.cApModeAlt.hide();
-		m.cApModeVs 		= m.page.getElementById("AP_VS");
-		m.cApModeVs.hide();
-		m.cApModeFd 		= m.page.getElementById("AP_FD");
-		m.cApModeFd.hide();
+		m.cApModeHdg 		= m.page.getElementById("AP_HDG").hide();
+		m.cApModeNav 		= m.page.getElementById("AP_NAV").hide();
+		m.cApModeApr 		= m.page.getElementById("AP_APR").hide();
+		m.cApModeTrim 		= m.page.getElementById("AP_TRIM").hide();
+		m.cApModeAlt 		= m.page.getElementById("AP_ALT").hide();
+		m.cApModeVs 		= m.page.getElementById("AP_VS").hide();
+		m.cApModeFd 		= m.page.getElementById("AP_FD").hide();
 		
 	#alt
 		
@@ -439,7 +442,7 @@ var AvidynePagePFD = {
 					;
 		m.cAltLadder	= m.page.getElementById("ALT_Ladder")
 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
-# # 					.set("z-index",1)
+# 					.set("z-index",1)
 					;
 					
 		m.cAltLad_Scale = m.page.getElementById("ALT_LAD_Scale")
@@ -746,7 +749,7 @@ var AvidynePagePFD = {
 			me.cAutopilot.show();
 			if (me.data.apModeFail == 1){
 				me.cApModeState.setText("AP FAIL");
-				me.cApModeState.setColor(COLOR["Red"]);
+				me.cApModeState.setColor(COLOR["Yellow"]);
 				me.cApModeState.show();
 				me.cApModeFd.hide();
 			}else if (me.data.apModeRdy == 1 ){
@@ -770,6 +773,18 @@ var AvidynePagePFD = {
 				me.cApModeNav.show();
 			}else{
 				me.cApModeNav.hide();
+			}
+			
+			if (me.data.apModeAPR == 1){
+				me.cApModeApr.show();
+			}else{
+				me.cApModeApr.hide();
+			}
+			
+			if (me.data.apModeTRIM == 1){
+				me.cApModeTrim.show();
+			}else{
+				me.cApModeTrim.hide();
 			}
 			
 			if (me.data.apModeVS == 1){
@@ -918,9 +933,27 @@ var AvidynePagePFD = {
 		me.cAltLad_U100H.setText(sprintf("%03i",math.floor(math.mod(alt,1000) / 100) * 100));
 		
 		alt-=100;
-		altTrans = alt;
+		altTrans = math.mod(me.data.ALT,100);
 		me.cAltLad_C000T.setText(sprintf("%i",math.floor(alt/1000)));
 		me.cAltLad_C000H.setText(sprintf("%03i",math.floor(math.mod(alt,1000) / 100) * 100));
+			
+		if(altTrans < 55 ){
+			me.cAltLad_U100T.show();
+			me.cAltLad_U100H.show();
+
+		}else{
+			me.cAltLad_U100T.hide();
+			me.cAltLad_U100H.hide();
+		}
+		
+		if(altTrans > 45 ){
+			me.cAltLad_C000T.show();
+			me.cAltLad_C000H.show();
+
+		}else{
+			me.cAltLad_C000T.hide();
+			me.cAltLad_C000H.hide();
+		}
 		
 		alt-=100;
 		
@@ -943,15 +976,43 @@ var AvidynePagePFD = {
 		me.cAltLad_D400H.setText(sprintf("%03i",math.floor(math.mod(alt,1000) / 100) * 100));
 		
 		# 136 px
-		me.cAltLadder.setTranslation(0,math.mod(altTrans,100)*1.36);
+		me.cAltLadder.setTranslation(0,math.mod(me.data.ALT,100)*1.36);
 		
 		me.cHPA.setText(sprintf("%4i",me.data.HPA));
 		me.cAltSelected.setText(sprintf("%4i",me.data.ALTBug));
 		
-		me.cAltBar10.setTranslation(0,math.mod(me.data.ALT,100)*(75.169/20));
-		me.cAltBar100.setTranslation(0,math.floor((math.mod(me.data.ALT,1000)/100))*75.169);
-		me.cAltBar1000.setTranslation(0,math.floor((math.mod(me.data.ALT,10000)/1000))*75.169);
-		me.cAltBar10000.setTranslation(0,math.floor((math.mod(me.data.ALT,100000)/10000))*75.169);
+		var alt	= 0;
+		var alladd = 0;
+		
+		alt = math.mod(me.data.ALT,100);
+		me.cAltBar10.setTranslation(0, alt * (75.169/20));
+		
+		if (alt > 80) {
+			alladd = alt - 80;
+		}else{
+			alladd = 0;
+		}
+		alt = math.floor(math.mod(me.data.ALT,1000)/100);
+		me.cAltBar100.setTranslation(0,(alt * 75.169) + ( alladd * (75.169/20) ));
+		
+		if (alt == 9) {
+			#alladd = alt - 9;
+		}else{
+			alladd = 0;
+		}
+		#print("update20Hz() ... "~alt~" + "~alladd);
+		
+		alt = math.floor(math.mod(me.data.ALT,10000)/1000);
+		me.cAltBar1000.setTranslation(0,alt*75.169 + ( alladd * (75.169/20) ));
+		
+		if (alt == 9) {
+			#alladd = alt - 9;
+		}else{
+			alladd = 0;
+		}
+		
+		alt = math.floor(math.mod(me.data.ALT,100000)/10000);
+		me.cAltBar10000.setTranslation(0,alt*75.169 + ( alladd * (75.169/20) ));
 		#me.cAltBar10000.setTranslation(0,math.floor(((me.alt)/1000))*7.5169);
 		
 		var altBugDif = me.data.ALT - me.data.ALTBug;
