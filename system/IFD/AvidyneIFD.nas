@@ -101,7 +101,7 @@ var AvidyneData = {
 		m.nVS = props.globals.initNode("/instrumentation/ivsi-IFD-"~m.name~"/indicated-speed-fpm",0.0,"DOUBLE");
 		m.nVSBug = props.globals.initNode("/autopilot/settings/vertical-speed-fpm",0.0,"DOUBLE");
 		
-	#altitude
+	# ALT
 		m.ALT 		= 0;
 		m.ALTBug 	= 0;
 		m.HPA 		= 0;
@@ -214,7 +214,7 @@ var AvidyneData = {
 	
 	},
 	load2Hz : func(now,dt){
-		#print("AvidyneData.load2Hz("~now~","~dt~") ... ");
+		#print("AvidyneData.load2Hz("~now~","~dt~") .. ");
 	#Box Timer
 		me._timerCount(dt);
 	#Box Primary Nav
@@ -270,7 +270,7 @@ var AvidynePage = {
 	new: func(ifd,name,data){
 		var m = { parents: [AvidynePage] };
 		m.IFD = ifd;
-		m.page = m.IFD.canvas.createGroup();
+		m.page = m.IFD.canvas.createGroup(name);
 		m.page.hide();
 		m.name = name;
 		m.data = data;
@@ -354,7 +354,7 @@ var AvidynePagePFD = {
 			"font-mapper": AvidyneFontMapper
 			}
 		);
-
+				
 		m.CompassRose = m.page.getElementById("CompassRose");
 		m.CompassRose.updateCenter();
 		m.cWindSpeed = m.page.getElementById("WindSpeed");
@@ -432,25 +432,141 @@ var AvidynePagePFD = {
 		m.cApModeFd.hide();
 		
 	#alt
-		m.AltIndicated = m.page.getElementById("AltIndicated");
-		m.cHPA = m.page.getElementById("hPa");
+		
+		m.cAltLayer	= m.page.getElementById("layer5")
+					.set("clip","rect(95px, 2070px, 880px, 1680px)")
+# 					.set("z-index",1)
+					;
+		m.cAltLadder	= m.page.getElementById("ALT_Ladder")
+					.set("clip","rect(170px, 2060px, 785px, 1680px)")
+# # 					.set("z-index",1)
+					;
+					
+		m.cAltLad_Scale = m.page.getElementById("ALT_LAD_Scale")
+					.set("clip","rect(170px, 2060px, 785px, 1680px)")
+# 					.set("z-index",1)
+					;
+# 		
+		m.cAltLad_C000T	= m.page.getElementById("ALT_LAD_C000T")
+# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
+					.set("z-index",1)
+					;
+		m.cAltLad_C000H	= m.page.getElementById("ALT_LAD_C000H")
+# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
+					.set("z-index",1)
+					;
+		
+		
+		m.cAltLad_D100T	= m.page.getElementById("ALT_LAD_D100T")
+# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
+					.set("z-index",1)
+					;
+		m.cAltLad_D100H	= m.page.getElementById("ALT_LAD_D100H")
+# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
+					.set("z-index",1)
+					;
+		m.cAltLad_D200T	= m.page.getElementById("ALT_LAD_D200T")
+# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
+					.set("z-index",1)
+					;
+		m.cAltLad_D200H	= m.page.getElementById("ALT_LAD_D200H")
+# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
+					.set("z-index",1)
+					;
+		m.cAltLad_D300T	= m.page.getElementById("ALT_LAD_D300T")
+# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
+					.set("z-index",1)
+					;
+		m.cAltLad_D300H	= m.page.getElementById("ALT_LAD_D300H")
+# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
+					.set("z-index",1)
+					;
+		m.cAltLad_D400T	= m.page.getElementById("ALT_LAD_D400T")
+# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
+					.set("z-index",1)
+					;
+		m.cAltLad_D400H	= m.page.getElementById("ALT_LAD_D400H")
+# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
+					.set("z-index",1)
+					;
+		
+		m.cAltLad_U100T	= m.page.getElementById("ALT_LAD_U100T")
+# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
+					.set("z-index",1)
+					;
+		m.cAltLad_U100H	= m.page.getElementById("ALT_LAD_U100H")
+# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
+					.set("z-index",1)
+					;
+		m.cAltLad_U200T	= m.page.getElementById("ALT_LAD_U200T")
+# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
+					.set("z-index",1)
+					;
+		m.cAltLad_U200H	= m.page.getElementById("ALT_LAD_U200H")
+# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
+					.set("z-index",1)
+					;
+		m.cAltLad_U300T	= m.page.getElementById("ALT_LAD_U300T")
+# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
+					.set("z-index",1)
+					;
+		m.cAltLad_U300H	= m.page.getElementById("ALT_LAD_U300H")
+# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
+					.set("z-index",1)
+					;
+		m.cAltLad_U400T	= m.page.getElementById("ALT_LAD_U400T")
+# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
+					.set("z-index",1)
+					;
+		m.cAltLad_U400H	= m.page.getElementById("ALT_LAD_U400H")
+# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
+					.set("z-index",1)
+					;
+		
 		m.cAltBar10 = m.page.getElementById("AltBar10")
-					.updateCenter()
-					.set("clip","rect(377px, 2060px, 605px,1680px)");
+# 					.updateCenter()
+					.set("clip","rect(377px, 2060px, 605px,1680px)")
+					.set("z-index",3)
+					;
 		m.cAltBar100 = m.page.getElementById("AltBar100")
-					.updateCenter()
-					.set("clip","rect(451px, 2060px, 527px, 1680px)");
+# 					.updateCenter()
+					.set("clip","rect(451px, 2060px, 527px, 1680px)")
+					.set("z-index",3)
+					;
 		m.cAltBar1000 = m.page.getElementById("AltBar1000")
-					.updateCenter()
-					.set("clip","rect(451px, 2060px, 527px, 1680px)");
+# 					.updateCenter()
+					.set("clip","rect(451px, 2060px, 527px, 1680px)")
+					.set("z-index",3)
+					;
 		m.cAltBar10000 = m.page.getElementById("AltBar10000")
-					.updateCenter()
-					.set("clip","rect(451px, 2060px, 527px, 1680px)");
-		m.cAltBarBack = m.page.getElementById("AltBarBack")
-					.updateCenter()
-					.set("clip","rect(170px, 2060px, 785px, 1680px)");
-		m.cAltBlackPlade = m.page.getElementById("AltBlackPlade");
-		m.cAltBlackPlade.set("clip","rect(170px, 2060px, 785px, 1680px)");
+# 					.updateCenter()
+					.set("clip","rect(451px, 2060px, 527px, 1680px)")
+					.set("z-index",3)
+					;
+		m.cAltBlackPlade = m.page.getElementById("AltBlackPlade")
+					.set("clip","rect(95px, 2070px, 880px, 1680px)")
+					.set("z-index",3)
+					;
+					
+		m.cAltBug = m.page.getElementById("ALT_Bug")
+					.set("clip","rect(140px, 2060px, 840px, 1680px)")
+					.set("z-index",4)
+					;
+		m.cAltUbox = m.page.getElementById("ALT_UBOX")
+					.set("clip","rect(95px, 2070px, 880px, 1680px)")
+					.set("z-index",5)
+					;
+		m.cAltDbox = m.page.getElementById("ALT_DBOX")
+					.set("clip","rect(95px, 2070px, 880px, 1680px)")
+					.set("z-index",5)
+					;
+		m.cAltBorder = m.page.getElementById("ALT_Border")
+					.set("clip","rect(95px, 2070px, 880px, 1680px)")
+					.set("z-index",5)
+					;
+					
+		m.cAltSelected = m.page.getElementById("ALT_Selected");
+		m.cHPA = m.page.getElementById("hPa");
 		
 	#OAT
 		m.cOAT = m.page.getElementById("OAT");
@@ -459,7 +575,7 @@ var AvidynePagePFD = {
 		#m.CompassRose.setCenter(356,-356);
 		
 		#m.tfCompassRose = m.CompassRose.createTransform();
-		debug.dump("AvidynePagePFD.new() ... for "~m.name~" IFD created.");
+		debug.dump("AvidynePagePFD.new() .. for "~m.name~" IFD created.");
 		#debug.dump(m.CompassRose.getBoundingBox());
 		
 	# Box Primary Nav 
@@ -644,8 +760,10 @@ var AvidynePagePFD = {
 			
 			if (me.data.apModeALT == 1){
 				me.cApModeAlt.show();
+				me.cAltBug.set("fill",COLOR["Magenta"]);
 			}else{
 				me.cApModeAlt.hide();
+				me.cAltBug.set("fill","none");
 			}
 			
 			if (me.data.apModeNAV == 1){
@@ -776,8 +894,59 @@ var AvidynePagePFD = {
 		
 		
 	#ALT
+		
+		
+		var alt 	= me.data.ALT + 400;
+		var altTrans	= 0;
+		
+		me.cAltLad_U400T.setText(sprintf("%i",math.floor(alt/1000)));
+		me.cAltLad_U400H.setText(sprintf("%03i",math.floor(math.mod(alt,1000) / 100) * 100));
+		
+		alt-=100;
+		
+		me.cAltLad_U300T.setText(sprintf("%i",math.floor(alt/1000)));
+		me.cAltLad_U300H.setText(sprintf("%03i",math.floor(math.mod(alt,1000) / 100) * 100));
+		
+		alt-=100;
+		
+		me.cAltLad_U200T.setText(sprintf("%i",math.floor(alt/1000)));
+		me.cAltLad_U200H.setText(sprintf("%03i",math.floor(math.mod(alt,1000) / 100) * 100));
+		
+		alt-=100;
+		
+		me.cAltLad_U100T.setText(sprintf("%i",math.floor(alt/1000)));
+		me.cAltLad_U100H.setText(sprintf("%03i",math.floor(math.mod(alt,1000) / 100) * 100));
+		
+		alt-=100;
+		altTrans = alt;
+		me.cAltLad_C000T.setText(sprintf("%i",math.floor(alt/1000)));
+		me.cAltLad_C000H.setText(sprintf("%03i",math.floor(math.mod(alt,1000) / 100) * 100));
+		
+		alt-=100;
+		
+		me.cAltLad_D100T.setText(sprintf("%i",math.floor(alt/1000)));
+		me.cAltLad_D100H.setText(sprintf("%03i",math.floor(math.mod(alt,1000) / 100) * 100));
+		
+		alt-=100;
+		
+		me.cAltLad_D200T.setText(sprintf("%i",math.floor(alt/1000)));
+		me.cAltLad_D200H.setText(sprintf("%03i",math.floor(math.mod(alt,1000) / 100) * 100));
+		
+		alt-=100;
+		
+		me.cAltLad_D300T.setText(sprintf("%i",math.floor(alt/1000)));
+		me.cAltLad_D300H.setText(sprintf("%03i",math.floor(math.mod(alt,1000) / 100) * 100));
+		
+		alt-=100;
+		
+		me.cAltLad_D400T.setText(sprintf("%i",math.floor(alt/1000)));
+		me.cAltLad_D400H.setText(sprintf("%03i",math.floor(math.mod(alt,1000) / 100) * 100));
+		
+		# 136 px
+		me.cAltLadder.setTranslation(0,math.mod(altTrans,100)*1.36);
+		
 		me.cHPA.setText(sprintf("%4i",me.data.HPA));
-		me.AltIndicated.setText(sprintf("%4i",me.data.ALTBug));
+		me.cAltSelected.setText(sprintf("%4i",me.data.ALTBug));
 		
 		me.cAltBar10.setTranslation(0,math.mod(me.data.ALT,100)*(75.169/20));
 		me.cAltBar100.setTranslation(0,math.floor((math.mod(me.data.ALT,1000)/100))*75.169);
@@ -785,8 +954,12 @@ var AvidynePagePFD = {
 		me.cAltBar10000.setTranslation(0,math.floor((math.mod(me.data.ALT,100000)/10000))*75.169);
 		#me.cAltBar10000.setTranslation(0,math.floor(((me.alt)/1000))*7.5169);
 		
+		var altBugDif = me.data.ALT - me.data.ALTBug;
+		altBugDif *= 1.36;
+		# up 322 down 294
+		altBugDif = global.clamp(altBugDif,-322,294);
 		
-		
+		me.cAltBug.setTranslation(0,altBugDif);
 		
 	},
 };
@@ -815,7 +988,7 @@ var AvidyneIFD = {
 		m.canvas.addPlacement({"node": acPlace});
 		m.canvas.setColorBackground(0,0,0);
 		
-		# ... and place it on the object called PFD-Screen
+		# .. and place it on the object called PFD-Screen
 
 		#m.nHeadingBug = props.globals.initNode("/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg",0.0,"DOUBLE");
 		
@@ -964,7 +1137,7 @@ var AvidyneIFD = {
 		me.nR6.setValue(0);	
 	},
 	gotoPage : func(name){
-		#print("IFD "~me.name ~" gotoPage("~name~") ... ");
+		#print("IFD "~me.name ~" gotoPage("~name~") .. ");
 		if (me._state == 1){
 			if (!contains(me.page,name)){
 				name = "none";	
