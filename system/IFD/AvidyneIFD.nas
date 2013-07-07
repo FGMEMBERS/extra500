@@ -987,34 +987,46 @@ var AvidynePagePFD = {
 		alt = math.mod(me.data.ALT,100);
 		me.cAltBar10.setTranslation(0, alt * (75.169/20));
 		
-		if (alt > 80) {
-			alladd = alt - 80;
+		if (me.data.ALT>=100){
+			if (alt > 80) {
+				alladd = alt - 80;
+			}else{
+				alladd = 0;
+			}
+		
+			alt = math.floor(math.mod(me.data.ALT,1000)/100);
+			me.cAltBar100.setTranslation(0,(alt * 75.169) + ( alladd * (75.169/20) ));
+			me.cAltBar100.show();
+			if(me.data.ALT>=1000){
+				if (alt == 9) {
+					#alladd = alt - 9;
+				}else{
+					alladd = 0;
+				}
+				#print("update20Hz() ... "~alt~" + "~alladd);
+				
+				alt = math.floor(math.mod(me.data.ALT,10000)/1000);
+				me.cAltBar1000.setTranslation(0,alt*75.169 + ( alladd * (75.169/20) ));
+				me.cAltBar1000.show();
+				if (me.data.ALT>=10000){
+					if (alt == 9) {
+						#alladd = alt - 9;
+					}else{
+						alladd = 0;
+					}
+					
+					alt = math.floor(math.mod(me.data.ALT,100000)/10000);
+					me.cAltBar10000.setTranslation(0,alt*75.169 + ( alladd * (75.169/20) ));
+					me.cAltBar10000.show();
+				}else{
+					me.cAltBar10000.hide();
+				}
+			}else{
+				me.cAltBar1000.hide();
+			}
 		}else{
-			alladd = 0;
+			me.cAltBar100.hide();
 		}
-		alt = math.floor(math.mod(me.data.ALT,1000)/100);
-		me.cAltBar100.setTranslation(0,(alt * 75.169) + ( alladd * (75.169/20) ));
-		
-		if (alt == 9) {
-			#alladd = alt - 9;
-		}else{
-			alladd = 0;
-		}
-		#print("update20Hz() ... "~alt~" + "~alladd);
-		
-		alt = math.floor(math.mod(me.data.ALT,10000)/1000);
-		me.cAltBar1000.setTranslation(0,alt*75.169 + ( alladd * (75.169/20) ));
-		
-		if (alt == 9) {
-			#alladd = alt - 9;
-		}else{
-			alladd = 0;
-		}
-		
-		alt = math.floor(math.mod(me.data.ALT,100000)/10000);
-		me.cAltBar10000.setTranslation(0,alt*75.169 + ( alladd * (75.169/20) ));
-		#me.cAltBar10000.setTranslation(0,math.floor(((me.alt)/1000))*7.5169);
-		
 		var altBugDif = me.data.ALT - me.data.ALTBug;
 		altBugDif *= 1.36;
 		# up 322 down 294
