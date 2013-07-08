@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             05.07.13
+#      Date:             07.07.13
 #
 
 
@@ -46,7 +46,9 @@ var AutopilotClass = {
 		m.nModeCws 	= props.globals.initNode("/autopilot/mode/cws",0,"INT");
 		m.nModeFail 	= props.globals.initNode("/autopilot/mode/fail",0,"INT");
 		m.nModeTrim 	= props.globals.initNode("/autopilot/mode/trim",0,"INT");
-		m.nModeGSDisable = props.globals.initNode("/autopilot/mode/gsdisable",0,"INT");
+		m.nModeGSDisable = props.globals.initNode("/autopilot/mode/gs-disable",0,"INT");
+		m.nModeGSArmed 	= props.globals.initNode("/autopilot/mode/gs-armed",0,"INT");
+		m.nModeGSFollow = props.globals.initNode("/autopilot/mode/gs-follow",0,"INT");
 		
 		
 		m.nSetAP 		= props.globals.initNode("/autopilot/settings/ap",0,"BOOL");			# Master Panel AP
@@ -122,6 +124,8 @@ var AutopilotClass = {
 		me.nModeAlt.setValue(0);
 		me.nModeVs.setValue(0);
 		me.nModeDiseng.setValue(1);
+		me.nModeGSArmed.setValue(0);
+		me.nModeGSFollow.setValue(0);
 	},
 # checks is a roll mode (HDG or NAV) is active. Must be active to engage any pitch mode or yaw damper
 	_CheckRollModeActive : func(){
@@ -150,18 +154,17 @@ var AutopilotClass = {
 	},
 # Events from the UI
 	onClickHDG : func(){
-#		if ( me.nModeHeading.getValue() == 0 ){
-			if ( ( me.nModeRdy.getValue() == 1 ) or (me.nModeNav.getValue() == 1) ){
-				me.nModeRdy.setValue(0);
-				me.nModeHeading.setValue(1);
-				me.nModeNav.setValue(0);
-				me.nModeNavGpss.setValue(0);
-				me.ndisengSound.setValue(0);
-			} else {
-				me.nModeFail.setValue(1);
-			}
-#		} else {
-#		}
+		if ( ( me.nModeRdy.getValue() == 1 ) or (me.nModeNav.getValue() == 1) ){
+			me.nModeRdy.setValue(0);
+			me.nModeHeading.setValue(1);
+			me.nModeNav.setValue(0);
+			me.nModeNavGpss.setValue(0);
+			me.nModeGSArmed.setValue(0);
+			me.nModeGSFollow.setValue(0);
+			me.ndisengSound.setValue(0);
+		} else {
+			me.nModeFail.setValue(1);
+		}
 	},
 	onClickHDGNAV : func(){
 		if ( (me.nModeRdy.getValue() == 1) or (me.nModeHeading.getValue() == 1) or (me.nModeNav.getValue() == 1) ) {
@@ -169,6 +172,8 @@ var AutopilotClass = {
 			me.nModeNav.setValue(1);
 			me.nModeHeading.setValue(1);
 			me.nModeNavGpss.setValue(0);
+			me.nModeGSArmed.setValue(0);
+			me.nModeGSFollow.setValue(0);
 			me.ndisengSound.setValue(0);
 		} else {
 			me.nModeFail.setValue(1);
@@ -201,6 +206,8 @@ var AutopilotClass = {
 # the apr knob can disable and enable the GS (armed)
 		if (me.nModeGs.getValue() == 1 ) {
 			me.nModeGSDisable.setValue(1);
+			me.nModeGSArmed.setValue(0);
+			me.nModeGSFollow.setValue(0);
 			me.onClickALT();
 		} else {
 			me.nModeGSDisable.setValue(0);
@@ -223,6 +230,8 @@ var AutopilotClass = {
 				me.nSetAltitudeBugFt.setValue( 100 * int( me.nCurrentAlt.getValue()/100 ) );			# setting bug (indicated on IFD)
 				me.nModeAlt.setValue(1);
 				me.nModeVs.setValue(0);
+				me.nModeGSArmed.setValue(0);
+				me.nModeGSFollow.setValue(0);
 			} else {
 				if ( getprop("fdm/jsbsim/aircraft/events/show-events") == 1 ) {
 					UI.msg.info("A roll mode must be active before a pitch mode can be engaged");
@@ -236,6 +245,8 @@ var AutopilotClass = {
 			if ( me._CheckRollModeActive() == 1 ) {
 				me.nModeAlt.setValue(1);
 				me.nModeVs.setValue(1);
+				me.nModeGSArmed.setValue(0);
+				me.nModeGSFollow.setValue(0);
 				if ( math.abs( me.nSetVerticalSpeedFpm.getValue() ) < 100 ) {
 					me.nSetVerticalSpeedFpm.setValue( math.sgn( me.nAlterror.getValue() ) * -700 );
 				}
@@ -274,6 +285,8 @@ var AutopilotClass = {
 			if ( me._CheckRollModeActive() == 1 ) {
 				me.nModeVs.setValue(1);
 				me.nModeAlt.setValue(0);
+				me.nModeGSArmed.setValue(0);
+				me.nModeGSFollow.setValue(0);
 			} else {
 				if ( getprop("fdm/jsbsim/aircraft/events/show-events") == 1 ) {
 					UI.msg.info("A roll mode must be active before a pitch mode can be engaged");
