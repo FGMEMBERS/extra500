@@ -849,7 +849,7 @@ var AvidynePagePFD = {
 		var iasLadderpx	= 74.596;
 		var ias_Vso	= 59;
 		var ias_Vne	= 205;
-		var ias_Zero	= 3;
+		var ias_Zero	= 20;
 		
 		#me.data.IAS_Rate = (( me.data.IAS_Last - me.data.IAS) * dt * 60);
 		#me.data.IAS_Last = me.data.IAS ;
