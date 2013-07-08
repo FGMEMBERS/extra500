@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: April 27 2013
 #
-#      Last change:      Thomas Grossberger
-#      Date:             2013-06-30
+#      Last change:      Eric van den Berg
+#      Date:             2013-07-08
 #
 var TODEG = 180/math.pi;
 var TORAD = math.pi/180;
@@ -144,9 +144,9 @@ var AvidyneData = {
 		m.NAVinRange = 0;
 		m.NAVLOC = 0;
 		m.nHDI 		= props.globals.initNode("/autopilot/radionav-channel/heading-needle-deflection-norm",0.0,"DOUBLE");
-		m.nVDI 		= props.globals.initNode("/autopilot/radionav-channel/gs-needle-deflection-norm",0.0,"DOUBLE");
-		#m.nGSable 	= props.globals.initNode("/autopilot/radionav-channel/has-gs",0.0,"DOUBLE");
-		m.nGSinRange 	= props.globals.initNode("/autopilot/radionav-channel/gs-in-range",0.0,"DOUBLE");
+		m.nVDI 		= props.globals.initNode("/autopilot/gs-channel/gs-needle-deflection-norm",0.0,"DOUBLE");
+		#m.nGSable 	= props.globals.initNode("/autopilot/gs-channel/has-gs",0.0,"DOUBLE");
+		m.nGSinRange 	= props.globals.initNode("/autopilot/gs-channel/gs-in-range",0.0,"DOUBLE");
 		m.nNAVinRange 	= props.globals.initNode("/autopilot/radionav-channel/in-range",0.0,"DOUBLE");
 		#m.nNAVLOC 	= props.globals.initNode("/autopilot/radionav-channel/is-localizer-frequency",0.0,"DOUBLE");
 		
@@ -643,7 +643,7 @@ var AvidynePagePFD = {
 		append(me._listeners,setlistener("/autopilot/radionav-channel/to-flag",func(n){me._onToFlagChange(n);},1,0));
 		append(me._listeners,setlistener("/autopilot/radionav-channel/radial-deg",func(n){me._onRadialChange(n);},1,0));
 		append(me._listeners,setlistener("/autopilot/radionav-channel/is-localizer-frequency",func(n){me._onNavLocChange(n);},1,0));
-		append(me._listeners,setlistener("/autopilot/radionav-channel/has-gs",func(n){me._onGSableChange(n);},1,0));
+		append(me._listeners,setlistener("/autopilot/gs-channel/has-gs",func(n){me._onGSableChange(n);},1,0));
 		
 	},
 	removeListeners : func(){
