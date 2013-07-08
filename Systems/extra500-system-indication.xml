@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-07-06
+      Date:             2013-07-08
 -->
 
 <system name="indication">
@@ -909,6 +909,40 @@
       				</table>
     			</function>
 		</fcs_function>
+
+<!-- airspeed change indication on IFD-s -->
+		<pid name="/instrumentation/airspeed-IFD-LH/airspeed-change">
+			<input>/instrumentation/airspeed-IFD-LH/indicated-airspeed-kt</input>
+			<kp>0</kp>							
+			<ki>0</ki>
+			<kd>1</kd>
+			<output>/instrumentation/airspeed-IFD-LH/airspeed-change-unfiltered</output>
+		</pid>
+
+		<lead_lag_filter name="/instrumentation/airspeed-IFD-LH/airspeed-change-ktps">
+			<input>/instrumentation/airspeed-IFD-LH/airspeed-change-unfiltered</input>
+			<c1>/autopilot/altsensor/c1</c1>
+			<c2>/autopilot/altsensor/c2</c2>
+			<c3>/autopilot/altsensor/c3</c3>
+			<c4>/autopilot/altsensor/c4</c4>
+		</lead_lag_filter>
+
+		<pid name="/instrumentation/airspeed-IFD-RH/airspeed-change">
+			<input>/instrumentation/airspeed-IFD-RH/indicated-airspeed-kt</input>
+			<kp>0</kp>							
+			<ki>0</ki>
+			<kd>1</kd>
+			<output>/instrumentation/airspeed-IFD-RH/airspeed-change-unfiltered</output>
+		</pid>
+
+		<lead_lag_filter name="/instrumentation/airspeed-IFD-RH/airspeed-change-ktps">
+			<input>/instrumentation/airspeed-IFD-RH/airspeed-change-unfiltered</input>
+			<c1>/autopilot/altsensor/c1</c1>
+			<c2>/autopilot/altsensor/c2</c2>
+			<c3>/autopilot/altsensor/c3</c3>
+			<c4>/autopilot/altsensor/c4</c4>
+		</lead_lag_filter>
+
 	</channel>
 
 <!--*****************************************Vertical speed LH IFD*****************************************************************-->
