@@ -89,10 +89,12 @@ var AvidyneData = {
 		
 		m.nHDG = props.globals.initNode("/instrumentation/heading-indicator-IFD-"~m.name~"/indicated-heading-deg",0.0,"DOUBLE");
 		m.nHDGBug = props.globals.initNode("/autopilot/settings/heading-bug-deg",0.0,"DOUBLE");
-	#speed 	
+	# IAS 	
 		m.IAS 		= 0;
 		m.TAS 		= 0;
 		m.GroundSpeed	= 0;
+		m.IAS_Last	= 0;
+		m.IAS_Rate	= 0;
 		
 		m.nIAS 		= props.globals.initNode("/instrumentation/airspeed-IFD-"~m.name~"/indicated-airspeed-kt",0.0,"DOUBLE");
 		m.nTAS 		= props.globals.initNode("/instrumentation/airspeed-IFD-"~m.name~"/true-speed-kt",0.0,"DOUBLE");
@@ -410,15 +412,21 @@ var AvidynePagePFD = {
 		
 		
 		
-	#AirSpeed
-		m.cAirSpeedBar = m.page.getElementById("AirSpeedBar");
-		m.cAirSpeedBar.set("clip","rect(126px, 648px, 784px, 413px)");
-		m.cAirSpeedIndicatedOne = m.page.getElementById("AirSpeedIndicatedOne"); # 79.25
-		m.cAirSpeedIndicatedOne.set("clip","rect(383px, 581px, 599px, 505px)");
-		m.cAirSpeedIndicated = m.page.getElementById("AirSpeedIndicated");
-		m.cAirSpeedTAS = m.page.getElementById("AirSpeedTAS");
-		m.cAirSpeedBlackPlade = m.page.getElementById("AirSpeedBlackPlade");
-		m.cAirSpeedBlackPlade.set("clip","rect(126px, 648px, 784px, 380px)");
+	# IAS
+		m.cIAS_Ladder = m.page.getElementById("IAS_Ladder")
+					.set("clip","rect(126px, 648px, 784px, 413px)");
+		m.cIAS_001 = m.page.getElementById("IAS_001") # 79.25
+					.set("clip","rect(383px, 581px, 599px, 505px)");
+		m.cIAS_010 = m.page.getElementById("IAS_010")
+					.set("clip","rect(453px, 514px, 528px, 384px)");
+		m.cIAS_100 = m.page.getElementById("IAS_100")
+					.set("clip","rect(453px, 514px, 528px, 384px)");
+		m.cIAS_BlackPlade = m.page.getElementById("IAS_BlackPlade")
+					.set("clip","rect(126px, 648px, 784px, 380px)");
+		m.cIAS_Zero = m.page.getElementById("IAS_Zero").hide();
+		m.cIAS_Rate = m.page.getElementById("IAS_Rate");
+		m.cIAS_RateTF = m.cIAS_Rate.createTransform();
+		m.cIAS_TAS = m.page.getElementById("IAS_TAS");
 		
 		m.cGroundSpeed = m.page.getElementById("GroundSpeed");
 		
@@ -832,15 +840,109 @@ var AvidynePagePFD = {
 		me.cOAT.setText(sprintf("%2i",me.data.OAT));
 				
 	# IAS
-		me.cAirSpeedBar.setTranslation(0,(me.data.IAS-20)*10);
-		me.cAirSpeedIndicatedOne.setTranslation(0,(math.mod(me.data.IAS,10)*80));
-		me.cAirSpeedIndicated.setText(sprintf("%2i",me.data.IAS/10));
-		me.cAirSpeedTAS.setText(sprintf("%3i",me.data.TAS));
+		me.cIAS_Ladder.setTranslation(0,(me.data.IAS-20)*10);
+		
+		
+		var speed 	= 0;
+		var speedadd 	= 0;
+		var iasLadderpx	= 74.596;
+		var ias_Vso	= 59;
+		var ias_Vne	= 205;
+		var ias_Zero	= 3;
+		
+		me.data.IAS_Rate = (( me.data.IAS_Last - me.data.IAS) * dt * 60);
+		me.data.IAS_Last = me.data.IAS ;
+		
+		if (me.data.IAS < ias_Zero){
+			me.cIAS_100.hide();
+			me.cIAS_010.hide();
+			me.cIAS_001.hide();
+			me.cIAS_Zero.show();
+			me.cIAS_BlackPlade.hide();
+			me.cIAS_TAS.setText("---");
+			me.cIAS_Rate.hide();
+		}else{
+			
+			#me.cIAS_Rate.setScale(1,me.data.IAS_Rate / 10);
+			#me.cIAS_Rate.setTranslation(0,(-me.data.IAS_Rate / 10) *5);
+			me.cIAS_Rate.show();
+			me.cIAS_Rate.setData([2,6,8,6,0],[585.5,491.4286+(me.data.IAS_Rate*100),604,491.4286,585.5]);
+			
+			me.cIAS_TAS.setText(sprintf("%3i",me.data.TAS));
+			me.cIAS_BlackPlade.show();
+			me.cIAS_Zero.hide();
+			speed = math.mod(me.data.IAS,10);
+			me.cIAS_001.setTranslation(0,(speed * iasLadderpx));
+			me.cIAS_001.show();
+			
+			if (me.data.IAS > 10){
+				
+				if (speed >= 9){
+					speedadd = speed - 9;
+				}else{
+					speedadd = 0;
+				}
+						
+				speed = math.floor(math.mod(me.data.IAS,100)/10);
+				me.cIAS_010.setTranslation(0,((speed+speedadd) * iasLadderpx));
+				me.cIAS_010.show();
+				if (me.data.IAS > 100){
+					
+					if (speed < 9){
+						speedadd = 0;
+					}
+					
+					speed = math.floor(math.mod(me.data.IAS,1000)/100);
+					me.cIAS_100.setTranslation(0,((speed+speedadd) * iasLadderpx));
+					me.cIAS_100.show();
+				
+					me.cIAS_100.show();
+				}else{
+					me.cIAS_100.hide();
+				}
+				
+				
+			}else{
+				me.cIAS_100.hide();
+				me.cIAS_010.hide();
+			}
+			
+			if (me.data.IAS < ias_Vso or me.data.IAS > ias_Vne){
+				me.cIAS_100.set("fill",COLOR["Red"]);
+				me.cIAS_010.set("fill",COLOR["Red"]);
+				me.cIAS_001.set("fill",COLOR["Red"]);
+				
+			}else{
+				me.cIAS_100.set("fill",COLOR["White"]);
+				me.cIAS_010.set("fill",COLOR["White"]);
+				me.cIAS_001.set("fill",COLOR["White"]);
+				
+			}
+		
+		}
+		
+		
 		
 	# Vertical Speed
 		me.VerticalSpeedIndicated.setText(sprintf("%4i",math.floor( me.data.VSBug + 0.5 )));
-		me.VerticalSpeedNeedle.setRotation((me.data.VS/100*1.8) * TORAD);
-		me.VerticalSpeedBug.setRotation((me.data.VSBug/100*1.8) * TORAD);
+		if (me.data.VS >= -1000){
+			if (me.data.VS <= 1000){
+				me.VerticalSpeedNeedle.setRotation((me.data.VS/100*1.50) * TORAD);
+			}else{
+				me.VerticalSpeedNeedle.setRotation( ( 15 + ((me.data.VS-1000)/100*0.75) ) * TORAD);
+			}
+		}else{
+			me.VerticalSpeedNeedle.setRotation( ( -15 + ((me.data.VS+1000)/100*0.75) ) * TORAD);
+		}
+		if (me.data.VSBug >= -1000 ){
+			if (me.data.VSBug <= 1000){
+				me.VerticalSpeedBug.setRotation((me.data.VSBug/100*1.50) * TORAD);
+			}else{
+				me.VerticalSpeedBug.setRotation( ( 15 + ((me.data.VSBug-1000)/100*0.75) ) * TORAD);
+			}
+		}else{
+			me.VerticalSpeedBug.setRotation( ( -15 + ((me.data.VSBug+1000)/100*0.75) ) * TORAD);
+		}
 				
 	#CompassRose
 		me.HeadingSelected.setText(sprintf("%03i",me.data.HDGBug));
@@ -1022,9 +1124,12 @@ var AvidynePagePFD = {
 					me.cAltBar10000.hide();
 				}
 			}else{
+				me.cAltBar10000.hide();
 				me.cAltBar1000.hide();
 			}
 		}else{
+			me.cAltBar10000.hide();
+			me.cAltBar1000.hide();
 			me.cAltBar100.hide();
 		}
 		var altBugDif = me.data.ALT - me.data.ALTBug;
