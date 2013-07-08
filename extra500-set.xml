@@ -500,8 +500,8 @@ JSBSim Extra Aircraft - Extra 500.
 	<gs-channel>
 		<turnrate-gain type="double">2000.0</turnrate-gain>
 		<acc-offset-gain type="double">0.0</acc-offset-gain>
-		<accel-rate-gain type="double">1000.0</accel-rate-gain>
-		<pitch-error-gain type="double">-0.05</pitch-error-gain>
+		<accel-rate-gain type="double">20.0</accel-rate-gain>
+		<pitch-error-gain type="double">-0.75</pitch-error-gain>
 	</gs-channel>
 	<alt-channel>	
 		<turnrate-gain type="double">10.0</turnrate-gain>

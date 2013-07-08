@@ -912,20 +912,25 @@
 				<product>
 					<property>/autopilot/mode/gs-follow</property>
 					<property>/autopilot/gs-channel/pitch-error-gain</property>
-					<!--sum>
-						<product>
-							<property>/autopilot/gs-channel/turnrate-gain2</property>	
-							<property>/autopilot/gs-channel/gs-needle-deflection-norm</property>
-						</product-->
+					<sum>
+						<property>/autopilot/gs-channel/gs-needle-deflection-norm</property>
 						<product>	
 							<property>/autopilot/gs-channel/accel-rate-gain</property>
 							<sum>
 								<property>/autopilot/accsens-channel/ap-z-accel</property>
 								<property>/autopilot/gs-channel/acc-offset</property>
 							</sum>
-						</product>	
+						</product>
+					</sum>
+					<!--sum>
+						<product>
+							<property>/autopilot/gs-channel/turnrate-gain2</property>	
+							<property>/autopilot/gs-channel/gs-needle-deflection-norm</property>
+						</product-->
+	
 					<!--/sum-->
 				</product>
+
 			</function>
 		</fcs_function>
 
