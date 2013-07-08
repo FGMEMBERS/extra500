@@ -93,10 +93,10 @@ var AvidyneData = {
 		m.IAS 		= 0;
 		m.TAS 		= 0;
 		m.GroundSpeed	= 0;
-		m.IAS_Last	= 0;
 		m.IAS_Rate	= 0;
 		
 		m.nIAS 		= props.globals.initNode("/instrumentation/airspeed-IFD-"~m.name~"/indicated-airspeed-kt",0.0,"DOUBLE");
+		m.nIASRate	= props.globals.initNode("/instrumentation/airspeed-IFD-"~m.name~"/airspeed-change-ktps",0.0,"DOUBLE");
 		m.nTAS 		= props.globals.initNode("/instrumentation/airspeed-IFD-"~m.name~"/true-speed-kt",0.0,"DOUBLE");
 		m.nGroundSpeed 	= props.globals.initNode("/velocities/groundspeed-kt",0.0,"DOUBLE");
 		
@@ -192,6 +192,7 @@ var AvidyneData = {
 		me.HDGBug 	= me.nHDGBug.getValue();
 	#speed 	
 		me.IAS 		= me.nIAS.getValue();
+		me.IAS_Rate	= me.nIASRate.getValue();
 		me.TAS 		= me.nTAS.getValue();
 	#vertical speed
 		me.VS 		= me.nVS.getValue();
@@ -850,8 +851,8 @@ var AvidynePagePFD = {
 		var ias_Vne	= 205;
 		var ias_Zero	= 3;
 		
-		me.data.IAS_Rate = (( me.data.IAS_Last - me.data.IAS) * dt * 60);
-		me.data.IAS_Last = me.data.IAS ;
+		#me.data.IAS_Rate = (( me.data.IAS_Last - me.data.IAS) * dt * 60);
+		#me.data.IAS_Last = me.data.IAS ;
 		
 		if (me.data.IAS < ias_Zero){
 			me.cIAS_100.hide();
