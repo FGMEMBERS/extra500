@@ -425,8 +425,8 @@ var AvidynePagePFD = {
 		m.cIAS_BlackPlade = m.page.getElementById("IAS_BlackPlade")
 					.set("clip","rect(126px, 648px, 784px, 380px)");
 		m.cIAS_Zero = m.page.getElementById("IAS_Zero").hide();
-		m.cIAS_Rate = m.page.getElementById("IAS_Rate");
-		m.cIAS_RateTF = m.cIAS_Rate.createTransform();
+		m.cIAS_Rate = m.page.getElementById("IAS_Rate")
+					.set("clip","rect(126px, 648px, 784px, 413px)");
 		m.cIAS_TAS = m.page.getElementById("IAS_TAS");
 		
 		m.cGroundSpeed = m.page.getElementById("GroundSpeed");
@@ -867,7 +867,7 @@ var AvidynePagePFD = {
 			#me.cIAS_Rate.setScale(1,me.data.IAS_Rate / 10);
 			#me.cIAS_Rate.setTranslation(0,(-me.data.IAS_Rate / 10) *5);
 			me.cIAS_Rate.show();
-			me.cIAS_Rate.setData([2,6,8,6,0],[585.5,491.4286+(me.data.IAS_Rate*100),604,491.4286,585.5]);
+			me.cIAS_Rate.setData([2,6,8,6,0],[585.5,491.4286+(-me.data.IAS_Rate*62),604,491.4286,585.5]);
 			
 			me.cIAS_TAS.setText(sprintf("%3i",me.data.TAS));
 			me.cIAS_BlackPlade.show();
