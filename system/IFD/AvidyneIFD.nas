@@ -39,6 +39,7 @@ COLOR["Magenta"] = "rgb(255,14,235)";
 COLOR["Yellow"] = "rgb(241,205,57)";
 COLOR["White"] = "rgb(255,255,255)";
 COLOR["Turquoise"] = "rgb(4,254,252)";
+COLOR["Blue"] = "rgb(51,145,232)";
 
 var AvidyneFontMapper = func(family, weight){
 	#print(sprintf("Canvas font-mapper %s %s",family,weight));
@@ -286,6 +287,7 @@ var AvidynePage = {
 		m.data = data;
 		m.keys = {};
 		m._listeners = [];
+		m._subPage = "";
 		return m;
 	},
 	setListeners : func(){
@@ -336,7 +338,8 @@ var AvidynePagePFD = {
 			AvidynePage.new(ifd,name,data)
 		] };
 		
-		
+		m._SubPages 	= ["Nav Display","Bug Select"];
+		m._SubPageIndex = 0;
 		m._navListeners = []; 
 		
 		# creating the page 
@@ -433,7 +436,7 @@ var AvidynePagePFD = {
 		
 	#autopilot
 		m.cAutopilot		= m.page.getElementById("Autopilot");
-		m.cAutopilotOff	= m.page.getElementById("AP_Off").hide();
+		m.cAutopilotOff		= m.page.getElementById("AP_Off").hide();
 		m.cApModeState 		= m.page.getElementById("AP_State");
 		m.cApModeHdg 		= m.page.getElementById("AP_HDG").hide();
 		m.cApModeNav 		= m.page.getElementById("AP_NAV").hide();
@@ -613,6 +616,16 @@ var AvidynePagePFD = {
 		m.cTimerBtnLeft		= m.page.getElementById("Timer_btn_Left");
 		m.cTimerTime 		= m.page.getElementById("Timer_Time");
 		
+	# Page NavDisplay
+		m.cPage_NavDisplay	= m.page.getElementById("Page_NavDisplay");
+	# Page BugSelect
+		m.cPage_BugSelect	= m.page.getElementById("Page_BugSelect").hide();
+		m.cSetHeadingBorder	= m.page.getElementById("Set_Heading_Border");
+		m.cSetHeadingText	= m.page.getElementById("Set_Heading_Text");
+		m.cSetAltitudeBorder	= m.page.getElementById("Set_Altitude_Border");
+		m.cSetAltitudeText	= m.page.getElementById("Set_Altitude_Text");
+		m.cSetVsBorder		= m.page.getElementById("Set_VS_Border");
+		m.cSetVsText		= m.page.getElementById("Set_VS_Text");
 		
 		return m;
 	},
@@ -631,6 +644,9 @@ var AvidynePagePFD = {
 		me.keys["LK <"] = func(){me._adjustRadial(-1);};
 		me.keys["LK >"] = func(){me._adjustRadial(1);};
 		me.keys["LK >>"] = func(){me._adjustRadial(10);};
+		
+		me.keys["PFD >"] = func(){me._scrollSubPage(1);};
+		me.keys["PFD <"] = func(){me._scrollSubPage(-1);};
 		
 		
 		me._timerRegisterKeys();
@@ -751,6 +767,98 @@ var AvidynePagePFD = {
 		me.data.navCoursePointer = math.mod(me.data.navCoursePointer,360.0);
 		setprop("/instrumentation/nav[0]/radials/selected-deg",me.data.navCoursePointer);
 		setprop("/instrumentation/nav[1]/radials/selected-deg",me.data.navCoursePointer);
+	},
+	_scrollSubPage : func(amount){
+		me._SubPageIndex += amount;
+		if (me._SubPageIndex > 1){
+			me._SubPageIndex = 0;
+		}
+		if (me._SubPageIndex < 0){
+			me._SubPageIndex = 1;
+		}
+		if (me._SubPageIndex == 0){ # Page NavDisplay
+			me.cPage_BugSelect.hide();
+			me.cPage_NavDisplay.show();
+			
+			delete(me.keys,"R3 <");
+			delete(me.keys,"R3 >");
+			delete(me.keys,"R4 <");
+			delete(me.keys,"R4 >");
+			delete(me.keys,"R5 <");
+			delete(me.keys,"R5 >");
+			
+			me._setModeRK("none");
+			
+		}elsif(me._SubPageIndex == 1){ # Page BugSelect
+			me.cPage_BugSelect.show();
+			me.cPage_NavDisplay.hide();
+			me.keys["R3 <"] = func(){me._setModeRK("HDG");};
+			me.keys["R3 >"] = func(){me._setModeRK("HDG");};
+			me.keys["R4 <"] = func(){me._setModeRK("ALT");};
+			me.keys["R4 >"] = func(){me._setModeRK("ALT");};
+			me.keys["R5 <"] = func(){me._setModeRK("VS");};
+			me.keys["R5 >"] = func(){me._setModeRK("VS");};
+			
+			
+		}else{
+			print("_scrollSubPage() ... mist");
+		}
+	},
+	_setModeRK : func(value){
+		me._modeRK = value;
+		if (me._modeRK == "HDG"){
+			me.cSetHeadingBorder.set("stroke",COLOR["Turquoise"]);
+			me.cSetHeadingText.setColor(COLOR["Turquoise"]);
+			me.cSetAltitudeBorder.set("stroke",COLOR["Blue"]);
+			me.cSetAltitudeText.setColor(COLOR["Blue"]);
+			me.cSetVsBorder.set("stroke",COLOR["Blue"]);
+			me.cSetVsText.setColor(COLOR["Blue"]);
+			
+			me.keys["RK >>"] 	= func(){extra500.keypad.onAdjustHeading(10);};
+			me.keys["RK <<"] 	= func(){extra500.keypad.onAdjustHeading(-10);};
+			me.keys["RK"] 		= func(){extra500.keypad.onHeadingSync();};
+			me.keys["RK >"] 	= func(){extra500.keypad.onAdjustHeading(1);};
+			me.keys["RK <"] 	= func(){extra500.keypad.onAdjustHeading(-1);};
+		}elsif (me._modeRK == "ALT"){
+			me.cSetHeadingBorder.set("stroke",COLOR["Blue"]);
+			me.cSetHeadingText.setColor(COLOR["Blue"]);
+			me.cSetAltitudeBorder.set("stroke",COLOR["Turquoise"]);
+			me.cSetAltitudeText.setColor(COLOR["Turquoise"]);
+			me.cSetVsBorder.set("stroke",COLOR["Blue"]);
+			me.cSetVsText.setColor(COLOR["Blue"]);
+						
+			me.keys["RK >>"] 	= func(){extra500.keypad.onAdjustAltitude(500);};
+			me.keys["RK <<"] 	= func(){extra500.keypad.onAdjustAltitude(-500);};
+			me.keys["RK"] 		= func(){extra500.keypad.onHeadingSync();};
+			me.keys["RK >"] 	= func(){extra500.keypad.onAdjustAltitude(100);};
+			me.keys["RK <"] 	= func(){extra500.keypad.onAdjustAltitude(-100);};
+		}elsif (me._modeRK == "VS"){
+			me.cSetHeadingBorder.set("stroke",COLOR["Blue"]);
+			me.cSetHeadingText.setColor(COLOR["Blue"]);
+			me.cSetAltitudeBorder.set("stroke",COLOR["Blue"]);
+			me.cSetAltitudeText.setColor(COLOR["Blue"]);
+			me.cSetVsBorder.set("stroke",COLOR["Turquoise"]);
+			me.cSetVsText.setColor(COLOR["Turquoise"]);
+			
+			me.keys["RK >>"] 	= func(){extra500.autopilot.onAdjustVS(100);};
+			me.keys["RK <<"] 	= func(){extra500.autopilot.onAdjustVS(-100);};
+			me.keys["RK"] 		= func(){extra500.autopilot.onSetVS(0);};
+			me.keys["RK >"] 	= func(){extra500.autopilot.onAdjustVS(100);};
+			me.keys["RK <"] 	= func(){extra500.autopilot.onAdjustVS(-100);};
+		}else{
+			me.cSetHeadingBorder.set("stroke",COLOR["Blue"]);
+			me.cSetHeadingText.setColor(COLOR["Blue"]);
+			me.cSetAltitudeBorder.set("stroke",COLOR["Blue"]);
+			me.cSetAltitudeText.setColor(COLOR["Blue"]);
+			me.cSetVsBorder.set("stroke",COLOR["Blue"]);
+			me.cSetVsText.setColor(COLOR["Blue"]);
+						
+			delete(me.keys,"RK >>");
+			delete(me.keys,"RK <<");
+			delete(me.keys,"RK");
+			delete(me.keys,"RK >");
+			delete(me.keys,"RK <");
+		}
 	},
 	_apUpdate : func(){
 		if (me.data.apPowered){
