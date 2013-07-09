@@ -53,6 +53,7 @@ var CenterConsole = {
 		append(me._listeners, setlistener(me._nParkingbrakePressure,func(n){me.onParkingbrakePressureChange(n);},1,0) );
 		append(me._listeners, setlistener(me._nCtrlLeftBrake,func(n){me.onBrakeChange(n);},1,0) );
 		append(me._listeners, setlistener(me._nCtrlRightBrake,func(n){me.onBrakeChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nDeice,func(n){me.onDeiceChange(n);},1,0) );
 		
 	},
 	onParkingbrakePressureChange : func(n){
@@ -99,7 +100,10 @@ var CenterConsole = {
 			me._Deice = value;
 		}
 		me._nDeice.setValue(me._Deice);
-		
+	},
+	onDeiceChange : func(n){
+		me._Deice = n.getValue();
+		deiceSystem.setIntakeHeat(me._Deice);
 	},
 	onGearClearHornClick : func(value = nil){
 		if (value == nil){

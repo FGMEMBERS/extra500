@@ -28,8 +28,8 @@ var course = func(deg){ return math.mod(deg,360.0);}
 var NAV_SOURCE_NAME 	= ["NAV 1","NAV 2","FMS"];
 var NAV_SOURCE_TREE 	= ["/instrumentation/nav[0]","/instrumentation/nav[1]","/instrumentation/fms"];
 
-var BEARING_SOURCE_NAME = ["NAV 1","NAV 2","FMS"];
-var BEARING_SOURCE_TREE = ["/instrumentation/nav[0]","/instrumentation/nav[1]","/instrumentation/fms"];
+var BEARING_SOURCE_NAME = ["0ff","NAV 1","NAV 2","FMS"];
+var BEARING_SOURCE_TREE = [nil,"/instrumentation/nav[0]","/instrumentation/nav[1]","/instrumentation/fms"];
 
 
 var COLOR = {};
@@ -166,8 +166,13 @@ var AvidyneData = {
 		m.navCoursePointer = 0;
 		
 	#Box Bearing Pointer
-		m.nBearingSource	= nil;
-		
+		m.brgSource		= 0;
+		m.brgID			= "";	
+		m.brgNAVLOC		= 0;
+		m.brgGSable		= 0;
+		m.brgFrequency		= 0.0;
+		m.brgDistance		= 0.0;
+		m.brgCoursePointer	= 0.0;
 	#Timer
 		m.timerSec 	= 0;
 		m.timerState	= 0;
@@ -204,8 +209,8 @@ var AvidyneData = {
 		me.ALTBug 	= me.nALTBug.getValue();
 		me.HPA 		= me.nHPA.getValue();
 	#wind
-		me.WindDirection = me.nWindDirection.getValue();
-		me.WindSpeed 	= me.nWindSpeed.getValue();
+		me.WindDirection 	= me.nWindDirection.getValue();
+		me.WindSpeed 		= me.nWindSpeed.getValue();
 	#attitude
 		me.pitch 	= me.nPitch.getValue();
 		me.roll 	= me.nRoll.getValue();
@@ -220,7 +225,10 @@ var AvidyneData = {
 		me.NAVinRange 	= me.nNAVinRange.getValue();
 		#me.NAVLOC	= me.nNAVLOC.getValue();
 	
-		
+	# Bearing Pointer
+		if (me.brgSource > 0){
+			me.brgCoursePointer	= getprop(BEARING_SOURCE_TREE[me.brgSource]~"/radials/reciprocal-radial-deg") or 0;
+		}
 		
 	
 	},
@@ -282,7 +290,7 @@ var AvidynePage = {
 		var m = { parents: [AvidynePage] };
 		m.IFD = ifd;
 		m.page = m.IFD.canvas.createGroup(name);
-		m.page.hide();
+		m.page.setVisible(0);
 		m.name = name;
 		m.data = data;
 		m.keys = {};
@@ -306,10 +314,10 @@ var AvidynePage = {
 		me.page.setVisible(value);
 	},
 	hide : func(){
-		me.page.hide();
+		me.page.setVisible(0);
 	},
 	show : func(){
-		me.page.show();
+		me.page.setVisible(1);
 	},
 	onClick : func(key){
 		if (contains(me.keys,key)){
@@ -341,6 +349,7 @@ var AvidynePagePFD = {
 		m._SubPages 	= ["Nav Display","Bug Select"];
 		m._SubPageIndex = 0;
 		m._navListeners = []; 
+		m._brgListeners = []; 
 		
 		# creating the page 
 		
@@ -368,15 +377,11 @@ var AvidynePagePFD = {
 			}
 		);
 				
-		m.CompassRose = m.page.getElementById("CompassRose");
-		m.CompassRose.updateCenter();
-		m.cWindSpeed = m.page.getElementById("WindSpeed");
-		m.cWindDirection = m.page.getElementById("WindDirection");
-		m.cWindArrow = m.page.getElementById("WindArrow");
-		m.cWindArrow.updateCenter();
+		m.CompassRose = m.page.getElementById("CompassRose").updateCenter();
+		m.cWindVector = m.page.getElementById("WindVector");
+		m.cWindArrow = m.page.getElementById("WindArrow").updateCenter();
 		
-		m.HeadingBug = m.page.getElementById("HDG_Bug");
-		m.HeadingBug.updateCenter();
+		m.HeadingBug = m.page.getElementById("HDG_Bug").updateCenter();
 		m.Heading = m.page.getElementById("Heading");
 		m.HeadingSelected = m.page.getElementById("HDG_Selected");
 	#HSI
@@ -427,7 +432,7 @@ var AvidynePagePFD = {
 					.set("clip","rect(453px, 514px, 528px, 384px)");
 		m.cIAS_BlackPlade = m.page.getElementById("IAS_BlackPlade")
 					.set("clip","rect(126px, 648px, 784px, 380px)");
-		m.cIAS_Zero = m.page.getElementById("IAS_Zero").hide();
+		m.cIAS_Zero = m.page.getElementById("IAS_Zero").setVisible(0);
 		m.cIAS_Rate = m.page.getElementById("IAS_Rate")
 					.set("clip","rect(126px, 648px, 784px, 413px)");
 		m.cIAS_TAS = m.page.getElementById("IAS_TAS");
@@ -436,15 +441,15 @@ var AvidynePagePFD = {
 		
 	#autopilot
 		m.cAutopilot		= m.page.getElementById("Autopilot");
-		m.cAutopilotOff		= m.page.getElementById("AP_Off").hide();
+		m.cAutopilotOff		= m.page.getElementById("AP_Off").setVisible(0);
 		m.cApModeState 		= m.page.getElementById("AP_State");
-		m.cApModeHdg 		= m.page.getElementById("AP_HDG").hide();
-		m.cApModeNav 		= m.page.getElementById("AP_NAV").hide();
-		m.cApModeApr 		= m.page.getElementById("AP_APR").hide();
-		m.cApModeTrim 		= m.page.getElementById("AP_TRIM").hide();
-		m.cApModeAlt 		= m.page.getElementById("AP_ALT").hide();
-		m.cApModeVs 		= m.page.getElementById("AP_VS").hide();
-		m.cApModeFd 		= m.page.getElementById("AP_FD").hide();
+		m.cApModeHdg 		= m.page.getElementById("AP_HDG").setVisible(0);
+		m.cApModeNav 		= m.page.getElementById("AP_NAV").setVisible(0);
+		m.cApModeApr 		= m.page.getElementById("AP_APR").setVisible(0);
+		m.cApModeTrim 		= m.page.getElementById("AP_TRIM").setVisible(0);
+		m.cApModeAlt 		= m.page.getElementById("AP_ALT").setVisible(0);
+		m.cApModeVs 		= m.page.getElementById("AP_VS").setVisible(0);
+		m.cApModeFd 		= m.page.getElementById("AP_FD").setVisible(0);
 		
 	#alt
 		
@@ -602,13 +607,13 @@ var AvidynePagePFD = {
 	# Box Bearing Pointer
 		
 		m.cBearingOff 		= m.page.getElementById("BearingPtr_Off");
-		m.cBearingOn	 	= m.page.getElementById("BearingPtr_On").hide();
+		m.cBearingOn	 	= m.page.getElementById("BearingPtr_On").setVisible(0);
 		m.cBearingSource 	= m.page.getElementById("BearingPtr_Source");
 		m.cBearingID 		= m.page.getElementById("BearingPtr_ID");
 		m.cBearingBrg 		= m.page.getElementById("BearingPtr_BRG");
 		m.cBearingBrgUnit 	= m.page.getElementById("BearingPtr_Unit");
 		m.cBearingDistance 	= m.page.getElementById("BearingPtr_NM");
-		m.cBearingPointer 	= m.page.getElementById("BearingPtr_Pointer").hide();
+		m.cBearingPointer 	= m.page.getElementById("BearingPtr_Pointer").updateCenter().setVisible(0);
 		
 	# Box Timer
 		m.cTimerOn 		= m.page.getElementById("Timer_On");
@@ -619,27 +624,34 @@ var AvidynePagePFD = {
 	# Page NavDisplay
 		m.cPage_NavDisplay	= m.page.getElementById("Page_NavDisplay");
 	# Page BugSelect
-		m.cPage_BugSelect	= m.page.getElementById("Page_BugSelect").hide();
+		m.cPage_BugSelect	= m.page.getElementById("Page_BugSelect").setVisible(0);
+		m.cSetHeading		= m.page.getElementById("Set_Heading");
 		m.cSetHeadingBorder	= m.page.getElementById("Set_Heading_Border");
-		m.cSetHeadingText	= m.page.getElementById("Set_Heading_Text");
+		m.cSetAltitude		= m.page.getElementById("Set_Altitude");
 		m.cSetAltitudeBorder	= m.page.getElementById("Set_Altitude_Border");
-		m.cSetAltitudeText	= m.page.getElementById("Set_Altitude_Text");
+		m.cSetVs		= m.page.getElementById("Set_VS");
 		m.cSetVsBorder		= m.page.getElementById("Set_VS_Border");
-		m.cSetVsText		= m.page.getElementById("Set_VS_Text");
-		
+# funny unreal Ice Warning just for Test
+		m._cIceWarning		= m.page.getElementById("ICE_Warning").hide();
 		return m;
 	},
 	registerKeys : func(){
 		
 		
-		me.IFD.nL1.setValue(1);
+		me.IFD.nLedBaro.setValue(1);
 		me.keys["BARO >"] = func(){me.data.adjustBaro(1);};
 		me.keys["BARO <"] = func(){me.data.adjustBaro(-1);};
 		me.keys["BARO STD"] = func(){me.data.adjustBaro();};
 		
+		me.IFD.nLedL1.setValue(1);
 		me.keys["L1 >"] = func(){me._adjustNavSource(1);};
 		me.keys["L1 <"] = func(){me._adjustNavSource(-1);};
 		
+		me.IFD.nLedL3.setValue(1);
+		me.keys["L3 >"] = func(){me._scrollBrg(1);};
+		me.keys["L3 <"] = func(){me._scrollBrg(-1);};
+		
+		me.IFD.nLedLK.setValue(1);
 		me.keys["LK <<"] = func(){me._adjustRadial(-10);};
 		me.keys["LK <"] = func(){me._adjustRadial(-1);};
 		me.keys["LK >"] = func(){me._adjustRadial(1);};
@@ -729,26 +741,103 @@ var AvidynePagePFD = {
 		me.cNavCrs.setText(sprintf("%i",me.data.navCoursePointer +0.5));
 	},
 	
+### Bearing Pointer Box
+	
+	_scrollBrg : func(amount){
+		me.data.brgSource += amount;
+		if (me.data.brgSource > 2){ me.data.brgSource = 0; }
+		if (me.data.brgSource < 0){ me.data.brgSource = 2; }
+		me.cBearingSource.setText(BEARING_SOURCE_NAME[me.data.brgSource]);
+		foreach(l;me._brgListeners){
+			removelistener(l);
+		}
+		me._brgListeners = [];
+		
+		if(me.data.brgSource == 0){
+			me.cBearingOn.setVisible(0);
+			me.cBearingOff.setVisible(1);
+		}elsif(me.data.brgSource == 1){
+			me.cBearingOff.setVisible(0);
+			me.cBearingOn.setVisible(1);
+			append(me._navListeners, setlistener(BEARING_SOURCE_TREE[me.data.brgSource]~"/nav-id",func(n){me._onBrgIdChange(n);},1,0));
+			append(me._navListeners, setlistener(BEARING_SOURCE_TREE[me.data.brgSource]~"/frequencies/selected-mhz-fmt",func(n){me._onBrgFrequencyChange(n);},1,0));
+			append(me._navListeners, setlistener(BEARING_SOURCE_TREE[me.data.brgSource]~"/is-localizer-frequency",func(n){me._onBrgNavLocChange(n);},1,0));
+			append(me._navListeners, setlistener(BEARING_SOURCE_TREE[me.data.brgSource]~"/has-gs",func(n){me._onBrgGsAbleChange(n);},1,0));
+		
+		
+		}elsif(me.data.brgSource == 2){
+			me.cBearingOff.setVisible(0);
+			me.cBearingOn.setVisible(1);
+			
+			append(me._navListeners, setlistener(BEARING_SOURCE_TREE[me.data.brgSource]~"/nav-id",func(n){me._onBrgIdChange(n);},1,0));
+			append(me._navListeners, setlistener(BEARING_SOURCE_TREE[me.data.brgSource]~"/frequencies/selected-mhz-fmt",func(n){me._onBrgFrequencyChange(n);},1,0));
+			append(me._navListeners, setlistener(BEARING_SOURCE_TREE[me.data.brgSource]~"/is-localizer-frequency",func(n){me._onBrgNavLocChange(n);},1,0));
+			append(me._navListeners, setlistener(BEARING_SOURCE_TREE[me.data.brgSource]~"/has-gs",func(n){me._onBrgGsAbleChange(n);},1,0));
+		
+		}elsif(me.data.brgSource == 3){
+			me.cBearingOff.setVisible(0);
+			me.cBearingOn.setVisible(1);
+		}
+		
+	},
+	_onBrgIdChange : func(n){
+		me.data.brgID = n.getValue();
+		me._checkBrgBox();
+	},
+	_onBrgFrequencyChange : func(n){
+		me.data.brgFrequency = n.getValue();
+		me._checkBrgBox();
+	},
+	_onBrgNavLocChange : func(n){
+		me.data.brgNAVLOC = n.getValue();
+		me._checkBrgBox();
+	},
+	_onBrgGsAbleChange : func(n){
+		me.data.brgGSable = n.getValue();
+		me._checkBrgBox();
+	},
+	_checkBrgBox : func(){
+		if (me.data.brgSource > 0){
+			if (me.data.brgNAVLOC == 0){
+				me.cBearingID.setText(sprintf("%.2f (%s)",me.data.brgFrequency,"VOR"));
+			}else{
+				if (me.data.brgGSable == 1){
+					me.cBearingID.setText(sprintf("%.2f (%s)",me.data.brgFrequency,"ILS"));
+				}else{
+					me.cBearingID.setText(sprintf("%.2f (%s)",me.data.brgFrequency,"LOC"));
+				}
+			}
+			
+			me.data.brgDistance	= getprop(BEARING_SOURCE_TREE[me.data.brgSource]~"/nav-distance") * global.CONST.METER2NM;
+			
+			me.cBearingDistance.setText(sprintf("%.1f",me.data.brgDistance));
+			me.cBearingBrg.setText(sprintf("%i",me.data.brgCoursePointer +0.5));
+		}
+	},
+	
 ### Using The Timer Pilot Guide Page 88
 	_timerRegisterKeys : func(){
 		if ((me.data.timerState == 0)){
+			me.IFD.nLedR2.setValue(1);
 			me.keys["R2 <"] = func(){me.data.timerStart();me._timerRegisterKeys();};
 			me.keys["R2 >"] = func(){me.data.timerStart();me._timerRegisterKeys();};
-			me.cTimerOn.hide();
-			me.cTimerBtnCenter.show();
+			me.cTimerOn.setVisible(0);
+			me.cTimerBtnCenter.setVisible(1);
 			
 		}elsif ((me.data.timerState == 1)){
+			me.IFD.nLedR2.setValue(1);
 			me.keys["R2 <"] = func(){me.data.timerStart();me._timerRegisterKeys();};
 			me.keys["R2 >"] = func(){me.data.timerReset();me._timerRegisterKeys();};
 			me.cTimerBtnLeft.setText("Start");
-			me.cTimerOn.show();
-			me.cTimerBtnCenter.hide();
+			me.cTimerOn.setVisible(1);
+			me.cTimerBtnCenter.setVisible(0);
 		}elsif ((me.data.timerState == 2)){
+			me.IFD.nLedR2.setValue(1);
 			me.keys["R2 <"] = func(){me.data.timerStop();me._timerRegisterKeys();};
 			me.keys["R2 >"] = func(){me.data.timerReset();me._timerRegisterKeys();};
 			me.cTimerBtnLeft.setText("Stop");
-			me.cTimerOn.show();
-			me.cTimerBtnCenter.hide();
+			me.cTimerOn.setVisible(1);
+			me.cTimerBtnCenter.setVisible(0);
 		}
 	},
 		
@@ -777,25 +866,31 @@ var AvidynePagePFD = {
 			me._SubPageIndex = 1;
 		}
 		if (me._SubPageIndex == 0){ # Page NavDisplay
-			me.cPage_BugSelect.hide();
-			me.cPage_NavDisplay.show();
+			me.cPage_BugSelect.setVisible(0);
+			me.cPage_NavDisplay.setVisible(1);
 			
+			me.IFD.nLedR3.setValue(0);
 			delete(me.keys,"R3 <");
 			delete(me.keys,"R3 >");
+			me.IFD.nLedR4.setValue(0);
 			delete(me.keys,"R4 <");
 			delete(me.keys,"R4 >");
+			me.IFD.nLedR5.setValue(0);
 			delete(me.keys,"R5 <");
 			delete(me.keys,"R5 >");
 			
-			me._setModeRK("none");
+			me._setModeRK();
 			
 		}elsif(me._SubPageIndex == 1){ # Page BugSelect
-			me.cPage_BugSelect.show();
-			me.cPage_NavDisplay.hide();
+			me.cPage_BugSelect.setVisible(1);
+			me.cPage_NavDisplay.setVisible(0);
+			me.IFD.nLedR3.setValue(1);
 			me.keys["R3 <"] = func(){me._setModeRK("HDG");};
 			me.keys["R3 >"] = func(){me._setModeRK("HDG");};
+			me.IFD.nLedR4.setValue(1);
 			me.keys["R4 <"] = func(){me._setModeRK("ALT");};
 			me.keys["R4 >"] = func(){me._setModeRK("ALT");};
+			me.IFD.nLedR5.setValue(1);
 			me.keys["R5 <"] = func(){me._setModeRK("VS");};
 			me.keys["R5 >"] = func(){me._setModeRK("VS");};
 			
@@ -804,16 +899,22 @@ var AvidynePagePFD = {
 			print("_scrollSubPage() ... mist");
 		}
 	},
-	_setModeRK : func(value){
+	_setModeRK : func(value=nil){
+		
 		me._modeRK = value;
+		
 		if (me._modeRK == "HDG"){
 			me.cSetHeadingBorder.set("stroke",COLOR["Turquoise"]);
-			me.cSetHeadingText.setColor(COLOR["Turquoise"]);
+			me.cSetHeadingBorder.set("stroke-width",20);
+			me.cSetHeading.set("z-index",2);
 			me.cSetAltitudeBorder.set("stroke",COLOR["Blue"]);
-			me.cSetAltitudeText.setColor(COLOR["Blue"]);
+			me.cSetAltitudeBorder.set("stroke-width",10);
+			me.cSetAltitude.set("z-index",1);
 			me.cSetVsBorder.set("stroke",COLOR["Blue"]);
-			me.cSetVsText.setColor(COLOR["Blue"]);
+			me.cSetVsBorder.set("stroke-width",10);
+			me.cSetVs.set("z-index",1);
 			
+			me.IFD.nLedRK.setValue(1);
 			me.keys["RK >>"] 	= func(){extra500.keypad.onAdjustHeading(10);};
 			me.keys["RK <<"] 	= func(){extra500.keypad.onAdjustHeading(-10);};
 			me.keys["RK"] 		= func(){extra500.keypad.onHeadingSync();};
@@ -821,12 +922,16 @@ var AvidynePagePFD = {
 			me.keys["RK <"] 	= func(){extra500.keypad.onAdjustHeading(-1);};
 		}elsif (me._modeRK == "ALT"){
 			me.cSetHeadingBorder.set("stroke",COLOR["Blue"]);
-			me.cSetHeadingText.setColor(COLOR["Blue"]);
+			me.cSetHeadingBorder.set("stroke-width",10);
+			me.cSetHeading.set("z-index",1);
 			me.cSetAltitudeBorder.set("stroke",COLOR["Turquoise"]);
-			me.cSetAltitudeText.setColor(COLOR["Turquoise"]);
+			me.cSetAltitudeBorder.set("stroke-width",20);
+			me.cSetAltitude.set("z-index",2);
 			me.cSetVsBorder.set("stroke",COLOR["Blue"]);
-			me.cSetVsText.setColor(COLOR["Blue"]);
+			me.cSetVsBorder.set("stroke-width",10);
+			me.cSetVs.set("z-index",1);
 						
+			me.IFD.nLedRK.setValue(1);
 			me.keys["RK >>"] 	= func(){extra500.keypad.onAdjustAltitude(500);};
 			me.keys["RK <<"] 	= func(){extra500.keypad.onAdjustAltitude(-500);};
 			me.keys["RK"] 		= func(){extra500.keypad.onHeadingSync();};
@@ -834,25 +939,34 @@ var AvidynePagePFD = {
 			me.keys["RK <"] 	= func(){extra500.keypad.onAdjustAltitude(-100);};
 		}elsif (me._modeRK == "VS"){
 			me.cSetHeadingBorder.set("stroke",COLOR["Blue"]);
-			me.cSetHeadingText.setColor(COLOR["Blue"]);
+			me.cSetHeadingBorder.set("stroke-width",10);
+			me.cSetHeading.set("z-index",1);
 			me.cSetAltitudeBorder.set("stroke",COLOR["Blue"]);
-			me.cSetAltitudeText.setColor(COLOR["Blue"]);
+			me.cSetAltitudeBorder.set("stroke-width",10);
+			me.cSetAltitude.set("z-index",1);
 			me.cSetVsBorder.set("stroke",COLOR["Turquoise"]);
-			me.cSetVsText.setColor(COLOR["Turquoise"]);
+			me.cSetVsBorder.set("stroke-width",20);
+			me.cSetVs.set("z-index",2);
 			
-			me.keys["RK >>"] 	= func(){extra500.autopilot.onAdjustVS(100);};
-			me.keys["RK <<"] 	= func(){extra500.autopilot.onAdjustVS(-100);};
+			me.IFD.nLedRK.setValue(1);
+			me.keys["RK >>"] 	= func(){extra500.autopilot.onAdjustVS(-100);};
+			me.keys["RK <<"] 	= func(){extra500.autopilot.onAdjustVS(100);};
 			me.keys["RK"] 		= func(){extra500.autopilot.onSetVS(0);};
-			me.keys["RK >"] 	= func(){extra500.autopilot.onAdjustVS(100);};
-			me.keys["RK <"] 	= func(){extra500.autopilot.onAdjustVS(-100);};
+			me.keys["RK >"] 	= func(){extra500.autopilot.onAdjustVS(-100);};
+			me.keys["RK <"] 	= func(){extra500.autopilot.onAdjustVS(100);};
 		}else{
+			
 			me.cSetHeadingBorder.set("stroke",COLOR["Blue"]);
-			me.cSetHeadingText.setColor(COLOR["Blue"]);
+			me.cSetHeadingBorder.set("stroke-width",10);
+			me.cSetHeading.set("z-index",1);
 			me.cSetAltitudeBorder.set("stroke",COLOR["Blue"]);
-			me.cSetAltitudeText.setColor(COLOR["Blue"]);
+			me.cSetAltitudeBorder.set("stroke-width",10);
+			me.cSetAltitude.set("z-index",1);
 			me.cSetVsBorder.set("stroke",COLOR["Blue"]);
-			me.cSetVsText.setColor(COLOR["Blue"]);
+			me.cSetVsBorder.set("stroke-width",10);
+			me.cSetVs.set("z-index",1);
 						
+			me.IFD.nLedRK.setValue(0);
 			delete(me.keys,"RK >>");
 			delete(me.keys,"RK <<");
 			delete(me.keys,"RK");
@@ -862,62 +976,62 @@ var AvidynePagePFD = {
 	},
 	_apUpdate : func(){
 		if (me.data.apPowered){
-			me.cAutopilotOff.hide();
-			me.cAutopilot.show();
+			me.cAutopilotOff.setVisible(0);
+			me.cAutopilot.setVisible(1);
 			if (me.data.apModeFail == 1){
 				me.cApModeState.setText("AP FAIL");
 				me.cApModeState.setColor(COLOR["Yellow"]);
-				me.cApModeState.show();
-				me.cApModeFd.hide();
+				me.cApModeState.setVisible(1);
+				me.cApModeFd.setVisible(0);
 			}else if (me.data.apModeRdy == 1 ){
 				me.cApModeState.setText("AP RDY");
 				me.cApModeState.setColor(COLOR["Green"]);
-				me.cApModeState.show();
-				me.cApModeFd.show();
+				me.cApModeState.setVisible(1);
+				me.cApModeFd.setVisible(1);
 			}else{
-				me.cApModeState.hide();
+				me.cApModeState.setVisible(0);
 			}
 			
 			if (me.data.apModeALT == 1){
-				me.cApModeAlt.show();
+				me.cApModeAlt.setVisible(1);
 				me.cAltBug.set("fill",COLOR["Magenta"]);
 			}else{
-				me.cApModeAlt.hide();
+				me.cApModeAlt.setVisible(0);
 				me.cAltBug.set("fill","none");
 			}
 			
 			if (me.data.apModeNAV == 1){
-				me.cApModeNav.show();
+				me.cApModeNav.setVisible(1);
 			}else{
-				me.cApModeNav.hide();
+				me.cApModeNav.setVisible(0);
 			}
 			
 			if (me.data.apModeAPR == 1){
-				me.cApModeApr.show();
+				me.cApModeApr.setVisible(1);
 			}else{
-				me.cApModeApr.hide();
+				me.cApModeApr.setVisible(0);
 			}
 			
 			if (me.data.apModeTRIM == 1){
-				me.cApModeTrim.show();
+				me.cApModeTrim.setVisible(1);
 			}else{
-				me.cApModeTrim.hide();
+				me.cApModeTrim.setVisible(0);
 			}
 			
 			if (me.data.apModeVS == 1){
-				me.cApModeVs.show();
+				me.cApModeVs.setVisible(1);
 				me.VerticalSpeedBug.set("fill",COLOR["Magenta"]);
 			}else{
-				me.cApModeVs.hide();
+				me.cApModeVs.setVisible(0);
 				me.VerticalSpeedBug.set("fill","none");
 			}
 			
 			if (me.data.apModeHDG == 1){
 				me.cApModeHdg.setText("HDG");
-				me.cApModeHdg.show();
+				me.cApModeHdg.setVisible(1);
 				me.HeadingBug.set("fill",COLOR["Magenta"]);
 			}else{
-				me.cApModeHdg.hide();
+				me.cApModeHdg.setVisible(0);
 				me.HeadingBug.set("fill","none");
 			}
 			
@@ -928,24 +1042,42 @@ var AvidynePagePFD = {
 			}
 			
 		}else{
-			me.cAutopilot.hide();
-			me.cAutopilotOff.show();
+			me.cAutopilot.setVisible(0);
+			me.cAutopilotOff.setVisible(1);
 		}
 	},
+	
+# Ice Warning
 	update2Hz : func(now,dt){
 		me.cNavDistance.setText(sprintf("%.1f",me.data.navDistance));
 		me.cNavCrs.setText(sprintf("%i",me.data.navCoursePointer +0.5));
+		
+		me.cBearingDistance.setText(sprintf("%.1f",me.data.brgDistance));
+		me.cBearingBrg.setText(sprintf("%i",me.data.brgCoursePointer +0.5));
+		
 		me.cGroundSpeed.setText(sprintf("%i",me.data.GroundSpeed +0.5));
 		me.cTimerTime.setText(me.data.timerGetTime());
+		
+		# Ice Warning
+		
+		me._cIceWarning.setVisible(getprop("/extra500/system/deice/iceWarning"));
+		
+	
 	},
 	update20Hz : func(now,dt){
 		
 		me._apUpdate();
 		
 	#wind & environment
-		me.cWindSpeed.setText(sprintf("%3i",me.data.WindSpeed));
-		me.cWindDirection.setText(sprintf("%03i",me.data.WindDirection));
-		me.cWindArrow.setRotation((180 + me.data.WindDirection - me.data.HDG) * TORAD);
+		if (me.data.WindSpeed > 2){
+			me.cWindVector.setText(sprintf("%03i / %3i",me.data.WindDirection,me.data.WindSpeed));
+			me.cWindArrow.setRotation((180 + me.data.WindDirection - me.data.HDG) * TORAD);
+			me.cWindArrow.setVisible(1);
+		}else{
+			me.cWindVector.setText("Wind Calm");
+			me.cWindArrow.setVisible(0);
+		}
+		
 		me.cOAT.setText(sprintf("%2i",me.data.OAT));
 				
 	# IAS
@@ -963,26 +1095,26 @@ var AvidynePagePFD = {
 		#me.data.IAS_Last = me.data.IAS ;
 		
 		if (me.data.IAS < ias_Zero){
-			me.cIAS_100.hide();
-			me.cIAS_010.hide();
-			me.cIAS_001.hide();
-			me.cIAS_Zero.show();
-			me.cIAS_BlackPlade.hide();
+			me.cIAS_100.setVisible(0);
+			me.cIAS_010.setVisible(0);
+			me.cIAS_001.setVisible(0);
+			me.cIAS_Zero.setVisible(1);
+			me.cIAS_BlackPlade.setVisible(0);
 			me.cIAS_TAS.setText("---");
-			me.cIAS_Rate.hide();
+			me.cIAS_Rate.setVisible(0);
 		}else{
 			
 			#me.cIAS_Rate.setScale(1,me.data.IAS_Rate / 10);
 			#me.cIAS_Rate.setTranslation(0,(-me.data.IAS_Rate / 10) *5);
-			me.cIAS_Rate.show();
+			me.cIAS_Rate.setVisible(1);
 			me.cIAS_Rate.setData([2,6,8,6,0],[585.5,491.4286+(-me.data.IAS_Rate*62),604,491.4286,585.5]);
 			
 			me.cIAS_TAS.setText(sprintf("%3i",me.data.TAS));
-			me.cIAS_BlackPlade.show();
-			me.cIAS_Zero.hide();
+			me.cIAS_BlackPlade.setVisible(1);
+			me.cIAS_Zero.setVisible(0);
 			speed = math.mod(me.data.IAS,10);
 			me.cIAS_001.setTranslation(0,(speed * iasLadderpx));
-			me.cIAS_001.show();
+			me.cIAS_001.setVisible(1);
 			
 			if (me.data.IAS > 10){
 				
@@ -994,7 +1126,7 @@ var AvidynePagePFD = {
 						
 				speed = math.floor(math.mod(me.data.IAS,100)/10);
 				me.cIAS_010.setTranslation(0,((speed+speedadd) * iasLadderpx));
-				me.cIAS_010.show();
+				me.cIAS_010.setVisible(1);
 				if (me.data.IAS > 100){
 					
 					if (speed < 9){
@@ -1003,17 +1135,17 @@ var AvidynePagePFD = {
 					
 					speed = math.floor(math.mod(me.data.IAS,1000)/100);
 					me.cIAS_100.setTranslation(0,((speed+speedadd) * iasLadderpx));
-					me.cIAS_100.show();
+					me.cIAS_100.setVisible(1);
 				
-					me.cIAS_100.show();
+					me.cIAS_100.setVisible(1);
 				}else{
-					me.cIAS_100.hide();
+					me.cIAS_100.setVisible(0);
 				}
 				
 				
 			}else{
-				me.cIAS_100.hide();
-				me.cIAS_010.hide();
+				me.cIAS_100.setVisible(0);
+				me.cIAS_010.setVisible(0);
 			}
 			
 			if (me.data.IAS < ias_Vso or me.data.IAS > ias_Vne){
@@ -1059,6 +1191,12 @@ var AvidynePagePFD = {
 		me.CompassRose.setRotation(-me.data.HDG * TORAD);
 		me.HeadingBug.setRotation((me.data.HDGBug-me.data.HDG) * TORAD);
 		
+		if (me.data.brgSource > 0){
+			me.cBearingPointer.setRotation((me.data.brgCoursePointer-me.data.HDG) * TORAD);
+			me.cBearingPointer.setVisible(1);
+		}else{
+			me.cBearingPointer.setVisible(0);
+		}
 	#HSI
 		me.PitchLadder.setRotation(-me.data.roll * TORAD);
 		me.PitchLadder.setTranslation(0,me.data.pitch*10);
@@ -1071,10 +1209,10 @@ var AvidynePagePFD = {
 		
 		
 		if(me.data.NAVinRange){
-			me.cHDI_Needle.show();
+			me.cHDI_Needle.setVisible(1);
 			me.cHDI_Needle.setTranslation(me.data.HDI * 240,0);
 		}else{
-			me.cHDI_Needle.hide();
+			me.cHDI_Needle.setVisible(0);
 		}
 		
 		if(me.data.NAVLOC == 1){
@@ -1085,13 +1223,13 @@ var AvidynePagePFD = {
 		
 		
 		if (me.data.GSinRange == 1){
-			me.cVDI.show();
+			me.cVDI.setVisible(1);
 			me.cVDI_Needle.setTranslation(0, me.data.VDI * 240);
-			me.cVDI_Needle.show();
+			me.cVDI_Needle.setVisible(1);
 			me.cDI_Source_Text.setText("ILS");
 		}else{
-			me.cVDI.hide();
-			me.cVDI_Needle.hide();
+			me.cVDI.setVisible(0);
+			me.cVDI_Needle.setVisible(0);
 			
 		}
 		
@@ -1149,21 +1287,21 @@ var AvidynePagePFD = {
 		me.cAltLad_C000H.setText(sprintf("%03i",math.floor(math.mod(alt,1000) / 100) * 100));
 			
 		if(altTrans < 55 ){
-			me.cAltLad_U100T.show();
-			me.cAltLad_U100H.show();
+			me.cAltLad_U100T.setVisible(1);
+			me.cAltLad_U100H.setVisible(1);
 
 		}else{
-			me.cAltLad_U100T.hide();
-			me.cAltLad_U100H.hide();
+			me.cAltLad_U100T.setVisible(0);
+			me.cAltLad_U100H.setVisible(0);
 		}
 		
 		if(altTrans > 45 ){
-			me.cAltLad_C000T.show();
-			me.cAltLad_C000H.show();
+			me.cAltLad_C000T.setVisible(1);
+			me.cAltLad_C000H.setVisible(1);
 
 		}else{
-			me.cAltLad_C000T.hide();
-			me.cAltLad_C000H.hide();
+			me.cAltLad_C000T.setVisible(0);
+			me.cAltLad_C000H.setVisible(0);
 		}
 		
 		alt-=100;
@@ -1207,7 +1345,7 @@ var AvidynePagePFD = {
 		
 			alt = math.floor(math.mod(me.data.ALT,1000)/100);
 			me.cAltBar100.setTranslation(0,(alt * 75.169) + ( alladd * (75.169/20) ));
-			me.cAltBar100.show();
+			me.cAltBar100.setVisible(1);
 			if(me.data.ALT>=1000){
 				if (alt == 9) {
 					#alladd = alt - 9;
@@ -1218,7 +1356,7 @@ var AvidynePagePFD = {
 				
 				alt = math.floor(math.mod(me.data.ALT,10000)/1000);
 				me.cAltBar1000.setTranslation(0,alt*75.169 + ( alladd * (75.169/20) ));
-				me.cAltBar1000.show();
+				me.cAltBar1000.setVisible(1);
 				if (me.data.ALT>=10000){
 					if (alt == 9) {
 						#alladd = alt - 9;
@@ -1228,18 +1366,18 @@ var AvidynePagePFD = {
 					
 					alt = math.floor(math.mod(me.data.ALT,100000)/10000);
 					me.cAltBar10000.setTranslation(0,alt*75.169 + ( alladd * (75.169/20) ));
-					me.cAltBar10000.show();
+					me.cAltBar10000.setVisible(1);
 				}else{
-					me.cAltBar10000.hide();
+					me.cAltBar10000.setVisible(0);
 				}
 			}else{
-				me.cAltBar10000.hide();
-				me.cAltBar1000.hide();
+				me.cAltBar10000.setVisible(0);
+				me.cAltBar1000.setVisible(0);
 			}
 		}else{
-			me.cAltBar10000.hide();
-			me.cAltBar1000.hide();
-			me.cAltBar100.hide();
+			me.cAltBar10000.setVisible(0);
+			me.cAltBar1000.setVisible(0);
+			me.cAltBar100.setVisible(0);
 		}
 		var altBugDif = me.data.ALT - me.data.ALTBug;
 		altBugDif *= 1.36;
@@ -1287,19 +1425,25 @@ var AvidyneIFD = {
 		
 		m.nPageSelected = m._nRoot.initNode("PageSelected","","STRING");
 		
-		m.nL1 = m._nRoot.initNode("L1",0,"BOOL");
-		m.nL2 = m._nRoot.initNode("L2",0,"BOOL");
-		m.nL3 = m._nRoot.initNode("L3",0,"BOOL");
-		m.nL4 = m._nRoot.initNode("L4",0,"BOOL");
-		m.nL5 = m._nRoot.initNode("L5",0,"BOOL");
-		m.nL6 = m._nRoot.initNode("L6",0,"BOOL");
+		m.nLedL1 = m._nRoot.initNode("led/L1",0,"BOOL");
+		m.nLedL2 = m._nRoot.initNode("led/L2",0,"BOOL");
+		m.nLedL3 = m._nRoot.initNode("led/L3",0,"BOOL");
+		m.nLedL4 = m._nRoot.initNode("led/L4",0,"BOOL");
+		m.nLedL5 = m._nRoot.initNode("led/L5",0,"BOOL");
+		m.nLedL6 = m._nRoot.initNode("led/L6",0,"BOOL");
 		
-		m.nR1 = m._nRoot.initNode("R1",0,"BOOL");
-		m.nR2 = m._nRoot.initNode("R2",0,"BOOL");
-		m.nR3 = m._nRoot.initNode("R3",0,"BOOL");
-		m.nR4 = m._nRoot.initNode("R4",0,"BOOL");
-		m.nR5 = m._nRoot.initNode("R5",0,"BOOL");
-		m.nR6 = m._nRoot.initNode("R6",0,"BOOL");
+		m.nLedR1 = m._nRoot.initNode("led/R1",0,"BOOL");
+		m.nLedR2 = m._nRoot.initNode("led/R2",0,"BOOL");
+		m.nLedR3 = m._nRoot.initNode("led/R3",0,"BOOL");
+		m.nLedR4 = m._nRoot.initNode("led/R4",0,"BOOL");
+		m.nLedR5 = m._nRoot.initNode("led/R5",0,"BOOL");
+		m.nLedR6 = m._nRoot.initNode("led/R6",0,"BOOL");
+		
+		m.nLedLK = m._nRoot.initNode("led/LK",0,"BOOL");
+		m.nLedRK = m._nRoot.initNode("led/RK",0,"BOOL");
+		
+		m.nLedBaro = m._nRoot.initNode("led/Baro",0,"BOOL");
+		m.nLedDim = m._nRoot.initNode("led/Dim",0,"BOOL");
 		
 		m._startPage = startPage;
 		
@@ -1329,9 +1473,23 @@ var AvidyneIFD = {
 		append(me._listeners, setlistener(me._powerA._nState,func(n){me._onPowerAChange(n);},1,0) );
 		append(me._listeners, setlistener(me._powerB._nState,func(n){me._onPowerBChange(n);},1,0) );
 		append(me._listeners, setlistener(me._nState,func(n){me._onStateChange(n);},1,0) );
-		
+		me.nLedDim.setValue(1);
 		me.keys["DIM >"] = func(){me._adjustBrightness(0.1);};
 		me.keys["DIM <"] = func(){me._adjustBrightness(-0.1);};
+		
+		me.keys["PFD >"] = func(){me.gotoPage("PFD","PFD >");};
+		me.keys["PFD <"] = func(){me.gotoPage("PFD","PFD <");};
+		me.keys["FMS >"] = func(){me.gotoPage("FMS","FMS >");};
+		me.keys["FMS <"] = func(){me.gotoPage("FMS","FMS <");};
+		me.keys["MAP >"] = func(){me.gotoPage("MAP","MAP >");};
+		me.keys["MAP <"] = func(){me.gotoPage("MAP","MAP <");};
+		me.keys["SYS >"] = func(){me.gotoPage("SYS","SYS >");};
+		me.keys["SYS <"] = func(){me.gotoPage("SYS","SYS <");};
+		me.keys["CHKL >"] = func(){me.gotoPage("CHKL","CHKL >");};
+		me.keys["CHKL <"] = func(){me.gotoPage("CHKL","CHKL <");};
+		
+		
+		
 		
 		#me.gotoPage(me._startPage);
 		
@@ -1409,21 +1567,26 @@ var AvidyneIFD = {
 		me.page[me.pageSelected].update20Hz(me._now20Hz,me._dt20Hz);		
 	},
 	clearLeds : func(){
-		me.nL1.setValue(0);
-		me.nL2.setValue(0);
-		me.nL3.setValue(0);
-		me.nL4.setValue(0);
-		me.nL5.setValue(0);
-		me.nL6.setValue(0);
+		me.nLedL1.setValue(0);
+		me.nLedL2.setValue(0);
+		me.nLedL3.setValue(0);
+		me.nLedL4.setValue(0);
+		me.nLedL5.setValue(0);
+		me.nLedL6.setValue(0);
 		
-		me.nR1.setValue(0);
-		me.nR2.setValue(0);
-		me.nR3.setValue(0);
-		me.nR4.setValue(0);
-		me.nR5.setValue(0);
-		me.nR6.setValue(0);	
+		me.nLedR1.setValue(0);
+		me.nLedR2.setValue(0);
+		me.nLedR3.setValue(0);
+		me.nLedR4.setValue(0);
+		me.nLedR5.setValue(0);
+		me.nLedR6.setValue(0);	
+		
+		me.nLedLK.setValue(0);	
+		me.nLedRK.setValue(0);	
+		
+		
 	},
-	gotoPage : func(name){
+	gotoPage : func(name,key=nil){
 		#print("IFD "~me.name ~" gotoPage("~name~") .. ");
 		if (me._state == 1){
 			if (!contains(me.page,name)){
@@ -1431,14 +1594,18 @@ var AvidyneIFD = {
 			}
 		
 			if (me.pageSelected != name){
-				me.page[me.pageSelected].hide();
+				me.page[me.pageSelected].setVisible(0);
 				me.page[me.pageSelected].removeListeners();
 				me.pageSelected = name;
 				me.nPageSelected.setValue(me.pageSelected);
 				me.clearLeds();
 				me.page[me.pageSelected].setListeners();
 				me.page[me.pageSelected].registerKeys();
-				me.page[me.pageSelected].show();
+				me.page[me.pageSelected].setVisible(1);
+			}else{
+				if(key!=nil){
+					me.page[me.pageSelected].onClick(key);
+				}
 			}
 		}
 	},
@@ -1492,16 +1659,16 @@ var AvidyneIFD = {
 		UI.register("IFD "~me.name~" R6 >",func{me.onClick("R6 >"); } );
 		UI.register("IFD "~me.name~" R6 <",func{me.onClick("R6 <"); } );
 		
-		UI.register("IFD "~me.name~" PFD >",func{me.gotoPage("PFD");me.onClick("PFD >"); } );
-		UI.register("IFD "~me.name~" PFD <",func{me.gotoPage("PFD");me.onClick("PFD <"); } );
-		UI.register("IFD "~me.name~" FMS >",func{me.gotoPage("FMS");me.onClick("FMS >"); } );
-		UI.register("IFD "~me.name~" FMS <",func{me.gotoPage("FMS");me.onClick("FMS <"); } );
-		UI.register("IFD "~me.name~" MAP >",func{me.gotoPage("MAP");me.onClick("MAP >"); } );
-		UI.register("IFD "~me.name~" MAP <",func{me.gotoPage("MAP");me.onClick("MAP <"); } );
-		UI.register("IFD "~me.name~" SYS >",func{me.gotoPage("SYS");me.onClick("SYS >"); } );
-		UI.register("IFD "~me.name~" SYS <",func{me.gotoPage("SYS");me.onClick("SYS <"); } );
-		UI.register("IFD "~me.name~" CHKL >",func{me.gotoPage("CHKL");me.onClick("CHKL >"); } );
-		UI.register("IFD "~me.name~" CHKL <",func{me.gotoPage("CHKL");me.onClick("CHKL <"); } );
+		UI.register("IFD "~me.name~" PFD >",func{me.onClick("PFD >"); } );
+		UI.register("IFD "~me.name~" PFD <",func{me.onClick("PFD <"); } );
+		UI.register("IFD "~me.name~" FMS >",func{me.onClick("FMS >"); } );
+		UI.register("IFD "~me.name~" FMS <",func{me.onClick("FMS <"); } );
+		UI.register("IFD "~me.name~" MAP >",func{me.onClick("MAP >"); } );
+		UI.register("IFD "~me.name~" MAP <",func{me.onClick("MAP <"); } );
+		UI.register("IFD "~me.name~" SYS >",func{me.onClick("SYS >"); } );
+		UI.register("IFD "~me.name~" SYS <",func{me.onClick("SYS <"); } );
+		UI.register("IFD "~me.name~" CHKL >",func{me.onClick("CHKL >"); } );
+		UI.register("IFD "~me.name~" CHKL <",func{me.onClick("CHKL <"); } );
 		
 		UI.register("IFD "~me.name~" BARO >",func{me.onClick("BARO >"); } );
 		UI.register("IFD "~me.name~" BARO <",func{me.onClick("BARO <"); } );
