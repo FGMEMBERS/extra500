@@ -1148,16 +1148,22 @@ var AvidynePagePFD = {
 				me.cIAS_010.setVisible(0);
 			}
 			
-			if (me.data.IAS < ias_Vso or me.data.IAS > ias_Vne){
+			
+			if( me.data.IAS >= ias_Vne){
 				me.cIAS_100.set("fill",COLOR["Red"]);
 				me.cIAS_010.set("fill",COLOR["Red"]);
 				me.cIAS_001.set("fill",COLOR["Red"]);
-				
+				me.IFD._nOverSpeedWarning.setValue(1);
+			}elsif (me.data.IAS < ias_Vso){
+				me.cIAS_100.set("fill",COLOR["Red"]);
+				me.cIAS_010.set("fill",COLOR["Red"]);
+				me.cIAS_001.set("fill",COLOR["Red"]);
+				me.IFD._nOverSpeedWarning.setValue(0);
 			}else{
 				me.cIAS_100.set("fill",COLOR["White"]);
 				me.cIAS_010.set("fill",COLOR["White"]);
 				me.cIAS_001.set("fill",COLOR["White"]);
-				
+				me.IFD._nOverSpeedWarning.setValue(0);
 			}
 		
 		}
@@ -1404,6 +1410,9 @@ var AvidyneIFD = {
 		m._powerA	= extra500.ConsumerClass.new(root~"/powerA",name~" Power A",60.0);
 		m._powerB	= extra500.ConsumerClass.new(root~"/powerB",name~" Power B",60.0);
 		
+		m._nOverSpeedWarning  	= props.globals.initNode("/extra500/sound/overspeedWarning",0.0,"BOOL");
+		
+		
 		m.canvas = canvas.new({
 		"name": "IFD",
 		"size": [2410, 1810],
@@ -1549,22 +1558,24 @@ var AvidyneIFD = {
 		me.data.link = ifd;
 	},
 	update2Hz : func(){
-		
-		me._now2Hz = systime();
-		me._dt2Hz = me._now2Hz - me._last2Hz;
-		me._last2Hz = me._now2Hz;
-				
-		me.data.load2Hz(me._now2Hz,me._dt2Hz);
-		me.page[me.pageSelected].update2Hz(me._now2Hz,me._dt2Hz);		
+		if (me._state == 1){
+			me._now2Hz = systime();
+			me._dt2Hz = me._now2Hz - me._last2Hz;
+			me._last2Hz = me._now2Hz;
+					
+			me.data.load2Hz(me._now2Hz,me._dt2Hz);
+			me.page[me.pageSelected].update2Hz(me._now2Hz,me._dt2Hz);
+		}		
 	},
 	update20Hz : func(){
-		
-		me._now20Hz = systime();
-		me._dt20Hz = me._now20Hz - me._last20Hz;
-		me._last20Hz = me._now20Hz;
-				
-		me.data.load20Hz(me._now20Hz,me._dt20Hz);
-		me.page[me.pageSelected].update20Hz(me._now20Hz,me._dt20Hz);		
+		if (me._state == 1){
+			me._now20Hz = systime();
+			me._dt20Hz = me._now20Hz - me._last20Hz;
+			me._last20Hz = me._now20Hz;
+					
+			me.data.load20Hz(me._now20Hz,me._dt20Hz);
+			me.page[me.pageSelected].update20Hz(me._now20Hz,me._dt20Hz);	
+		}
 	},
 	clearLeds : func(){
 		me.nLedL1.setValue(0);
