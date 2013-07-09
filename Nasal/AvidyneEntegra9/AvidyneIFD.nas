@@ -66,6 +66,8 @@ var AvidyneData = {
 		m.apModeTRIM 	= 0;
 		m.apModeVS 	= 0;
 		m.apModeHDG 	= 0;
+		m.apModeCAP 	= 0;
+		m.apModeSOFT 	= 0;
 		m.apModeAP 	= 0;
 		m.apModeFD 	= 0;
 		
@@ -77,6 +79,8 @@ var AvidyneData = {
 		m.nApModeAPR 	= props.globals.initNode("/autopilot/mode/apr",0.0,"INT");
 		m.nApModeTRIM 	= props.globals.initNode("/autopilot/mode/trim",0.0,"INT");
 		m.nApModeVS  	= props.globals.initNode("/autopilot/mode/vs",0.0,"INT");
+		m.nApModeCAP 	= props.globals.initNode("/autopilot/mode/cap",0.0,"INT");
+		m.nApModeSOFT  	= props.globals.initNode("/autopilot/mode/soft",0.0,"INT");
 		m.nApModeHDG 	= props.globals.initNode("/autopilot/mode/heading",0.0,"INT");
 		m.nApModeAP  	= props.globals.initNode("/autopilot/settings/ap",0.0,"INT");
 		m.nApModeFD  	= props.globals.initNode("/autopilot/settings/fd",0.0,"INT");
@@ -190,6 +194,8 @@ var AvidyneData = {
 		me.apModeTRIM 	= me.nApModeTRIM.getValue();
 		me.apModeVS 	= me.nApModeVS.getValue();
 		me.apModeHDG 	= me.nApModeHDG.getValue();
+		me.apModeCAP 	= me.nApModeCAP.getValue();
+		me.apModeSOFT 	= me.nApModeSOFT.getValue();
 		me.apModeAP 	= me.nApModeAP.getValue();
 		me.apModeFD 	= me.nApModeFD.getValue();
 		
@@ -449,6 +455,8 @@ var AvidynePagePFD = {
 		m.cApModeTrim 		= m.page.getElementById("AP_TRIM").setVisible(0);
 		m.cApModeAlt 		= m.page.getElementById("AP_ALT").setVisible(0);
 		m.cApModeVs 		= m.page.getElementById("AP_VS").setVisible(0);
+		m.cApModeCap 		= m.page.getElementById("AP_CAP").setVisible(0);
+		m.cApModeSoft 		= m.page.getElementById("AP_SOFT").setVisible(0);
 		m.cApModeFd 		= m.page.getElementById("AP_FD").setVisible(0);
 		
 	#alt
@@ -1016,6 +1024,18 @@ var AvidynePagePFD = {
 				me.cApModeTrim.setVisible(1);
 			}else{
 				me.cApModeTrim.setVisible(0);
+			}
+			
+			if (me.data.apModeCAP == 1){
+				me.cApModeCap.setVisible(1);
+			}else{
+				me.cApModeCap.setVisible(0);
+			}
+			
+			if (me.data.apModeSOFT == 1){
+				me.cApModeSoft.setVisible(1);
+			}else{
+				me.cApModeSoft.setVisible(0);
 			}
 			
 			if (me.data.apModeVS == 1){
