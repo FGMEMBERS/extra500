@@ -338,11 +338,11 @@ JSBSim Extra Aircraft - Extra 500.
 
 	
 	<systems>
-            <path>Aircraft/extra500/system/instrumentation/systems.xml</path>
+            <path>Aircraft/extra500/Systems/systems.xml</path>
 	</systems>
 
       <instrumentation>
-            <path>Aircraft/extra500/system/instrumentation/instrumentation.xml</path>
+            <path>Aircraft/extra500/Systems/instrumentation.xml</path>
       </instrumentation>
 
 	<flaps>
@@ -762,9 +762,6 @@ JSBSim Extra Aircraft - Extra 500.
        </engines>
 
 <nasal>
-	<Dev>
-		<file>Aircraft/extra500/Nasal/DevTools/screen.nas</file>
-	</Dev>
 	<global>
 		<file>Aircraft/extra500/Nasal/constant.nas</file>
 		<file>Aircraft/extra500/Nasal/global.nas</file>
@@ -773,7 +770,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/sound.nas</file>
 	</sound>
 	<UI>
-		<file>Aircraft/extra500/UserInterface/ui.nas</file>
+		<file>Aircraft/extra500/Nasal/UserInterface/ui.nas</file>
 	</UI>
 	<extra500>
 		
@@ -796,7 +793,7 @@ JSBSim Extra Aircraft - Extra 500.
 	</extra500>
 	<IFD>
 		<!--<file>Aircraft/extra500/system/IFD/IFD_test.nas</file>-->
-		<file>Aircraft/extra500/system/IFD/AvidyneIFD.nas</file>
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/AvidyneIFD.nas</file>
 	</IFD>
 	<Dialogs>
             <file>Aircraft/extra500/Nasal/dialogs.nas</file>
@@ -810,9 +807,6 @@ JSBSim Extra Aircraft - Extra 500.
 	<e1>
 		<file>Nasal/e1.nas</file>
 	</e1>
-	<Dev>
-		<file>Aircraft/extra500/Nasal/DevTools/engineer.book.nas</file>
-	</Dev>
 	<!---->
 	<controls>
 		<file>Aircraft/extra500/Nasal/controls.nas</file>
