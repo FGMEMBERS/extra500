@@ -79,9 +79,14 @@ var DigitalInstrumentPackageClass = {
 		me.nIndicatedGEN.setValue(eSystem._ampere + 0.5);
 		me.nIndicatedBAT.setValue(eSystem._ampere + 0.5);
 		
-		me.nIndicatedFuelPress.setValue(me.nFuelPress.getValue() + 0.5);
-		me.nIndicatedFuelTemp.setValue(me.nFuelTemp.getValue() + 0.5);
+# 		me.nIndicatedFuelPress.setValue(me.nFuelPress.getValue() + 0.5);
+# 		me.nIndicatedFuelTemp.setValue(me.nFuelTemp.getValue() + 0.5);
+		interpolate(me.nIndicatedFuelPress ,me.nFuelPress.getValue()+ 0.5,me._dt);
+		interpolate(me.nIndicatedFuelTemp ,me.nFuelTemp.getValue()+ 0.5,me._dt);
+		
 		me.nIndicatedIAT.setValue(me.nIAT.getValue() + 0.5);
+		
+		
 	}
 	
 };
