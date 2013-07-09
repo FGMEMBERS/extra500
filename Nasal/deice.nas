@@ -120,7 +120,23 @@ var DeicingSystemClass = {
 		
 		m._nWowNose 	= props.globals.initNode("/gear/gear[0]/wow",0,"BOOL");
 		m._nIAT 	= props.globals.initNode("/environment/temperature-degc",0.0,"DOUBLE");
+		
+		m._nTemperature = props.globals.initNode("/environment/temperature-degc",0.0,"DOUBLE");
+		m._nHumidity 	= props.globals.initNode("/environment/relative-humidity",0.0,"DOUBLE");
+		m._nDewpoint 	= props.globals.initNode("/environment/dewpoint-degc",0.0,"DOUBLE");
+		m._nVisibility 	= props.globals.initNode("/environment/visibility-m",0.0,"DOUBLE");
+		m._nRain 	= props.globals.initNode("/environment/rain-norm",0.0,"DOUBLE");
+		
+		m._temperature	= 0;
+		m._humidity	= 0;
+		m._dewpoint	= 0;
+		m._visibility	= 0;
+		m._rain	= 0;
+		
+		
+		
 		m._nRPM		= props.globals.initNode("/engines/engine[0]/rpm");
+		m._nIceWarning	= m._nRoot.initNode("iceWarning",0,"BOOL");
 		
 		
 		m._nIntakeHeat 		= HeatClass.new("/extra500/system/deice/IntakeHeat","Intake Heat",24.0);
@@ -255,13 +271,29 @@ var DeicingSystemClass = {
 	},
 	setIntakeHeat : func(value){
 		me._intakeHeat  = value;
-		me._nIntakeHeat.setValue(me._intakeHeat);
+		me._nIntakeHeat.setOn(me._intakeHeat);
+	},
+	_checkIce : func(dt){
+		me._temperature = me._nTemperature.getValue();
+		me._humidity	= me._nHumidity.getValue();
+		#me._dewpoint	= me._nDewpoint.getValue();
+		#me._visibility	= me._nVisibility.getValue();
+		#me._rain	= me._nRain.getValue();
+		
+		if ( (me._humidity >= 100) and (me._temperature <= 0)){
+			me._nIceWarning.setValue(1);
+		}else{
+			me._nIceWarning.setValue(0);
+		}
+		
 	},
 	update : func(){
 		me._now 	= systime();
 		me._dt 		= me._now - me._lastTime;
 		me._lastTime	= me._now;
 		
+		
+		me._checkIce(me._dt);
 	#Boots
 		
 		if (eSystem.switch.Boots._state == 1){

@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-07-05
+      Date:             2013-07-08
 -->
 
 <flight_control name="FCS: extra500">
@@ -222,13 +222,19 @@
                                 				<property>/autopilot/mode/vs</property>
 	                          				<value>-1</value> 
                               				</sum>
+						</abs>
+	                          		<abs>
+                               				<sum>
+                                				<property>/autopilot/mode/gs-follow</property>
+	                          				<value>-1</value> 
+                              				</sum>
 						</abs>					
 	                          		<property>state/controls-fixed</property>
 	                       			<sum>
 							<property>fcs/elevator-cmd-norm</property>
 						</sum>
 					</product>
-					<product>  					<!--controls NOT fixed (trim controls aileron position)-->
+					<product>  					<!--controls NOT fixed (trim controls elevator position)-->
 	                          		<abs>
                                				<sum>
                                 				<property>/autopilot/mode/alt</property>
@@ -238,6 +244,12 @@
 	                          		<abs>
                                				<sum>
                                 				<property>/autopilot/mode/vs</property>
+	                          				<value>-1</value> 
+                              				</sum>
+						</abs>	
+	                          		<abs>
+                               				<sum>
+                                				<property>/autopilot/mode/gs-follow</property>
 	                          				<value>-1</value> 
                               				</sum>
 						</abs>	
@@ -264,6 +276,10 @@
                               				</sum>
 						</abs>
                               			<property>/autopilot/alt-channel/cmd-ap-elev-pos-norm</property>	
+					</product>
+					<product>					<!--autopilot GS mode in control -->
+                                  		<property>/autopilot/mode/gs-follow</property>
+                              			<property>/autopilot/gs-channel/cmd-ap-elev-pos-norm</property>	
 					</product>
 				</sum>
 				</function>
@@ -359,6 +375,12 @@
 		                          					<value>-1</value> 
 	                              					</sum>
 								</abs>	
+		                          			<abs>
+	                               					<sum>
+	                                					<property>/autopilot/mode/gs-follow</property>
+		                          					<value>-1</value> 
+	                              					</sum>
+								</abs>
 							</product>
 						</sum>				
 	                       			<sum>
@@ -379,6 +401,11 @@
 	                          				<value>-1</value> 
                               				</sum>
 						</abs>
+                              			<property>/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm</property>	
+					</product>
+					<product>					<!--autopilot GS mode in control and electrical trim operational -->
+						<property>/autopilot/settings/trim</property>
+                                  		<property>/autopilot/mode/gs-follow</property>
                               			<property>/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm</property>	
 					</product>
 				</sum>

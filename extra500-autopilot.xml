@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-07-05
+      Date:             2013-07-08
 -->
 
 <autopilot name="STEC55X">
@@ -803,15 +803,18 @@
 			<output>/autopilot/mode/apr</output>
 		</switch>
 
+	</channel>
+
 <!-- ********************* GLIDESLOPE ********************-->
-		
-	<!-- arming GS -->
+	<channel name="glideslope">
+	
+	<!-- selecting GS properties from active nav -->
 		<switch name="gsselect">
 			<default value="/instrumentation/nav[0]/gs-in-range"/>
 			<test value="/instrumentation/nav[1]/gs-in-range">
 				/instrumentation/nav-source eq 1
 			</test>
-			<output>/autopilot/radionav-channel/gs-in-range</output>
+			<output>/autopilot/gs-channel/gs-in-range</output>
 		</switch>
 
 		<switch name="gsselect2">
@@ -819,7 +822,7 @@
 			<test value="/instrumentation/nav[1]/has-gs">
 				/instrumentation/nav-source eq 1
 			</test>
-			<output>/autopilot/radionav-channel/has-gs</output>
+			<output>/autopilot/gs-channel/has-gs</output>
 		</switch>
 
 		<switch name="gsselect3">
@@ -827,25 +830,145 @@
 			<test value="/instrumentation/nav[1]/gs-needle-deflection-norm">
 				/instrumentation/nav-source eq 1
 			</test>
-			<output>/autopilot/radionav-channel/gs-needle-deflection-norm</output>
+			<output>/autopilot/gs-channel/gs-needle-deflection-norm</output>
 		</switch>
 
+	<!-- arming GS -->
 		<switch name="armgs">
-			<default value="0"/>
+			<default value="/autopilot/mode/gs-armed"/>
 			<test logic="AND" value="1">
 				/autopilot/mode/nav eq 1
 				/autopilot/mode/apr eq 1
 				/autopilot/mode/alt eq 1
-				/autopilot/radionav-channel/gs-in-range eq 1
+				/autopilot/gs-channel/gs-in-range eq 1
 				/autopilot/radionav-channel/is-localizer-frequency eq 1
 				/autopilot/radionav-channel/needle-defl-gt-half eq 0
-				/autopilot/radionav-channel/gs-needle-deflection-norm lt 0.1
-				/autopilot/mode/gsdisable eq 0
+				/autopilot/gs-channel/gs-needle-deflection-norm lt 0.1
+				/autopilot/mode/gs-disable eq 0
+			</test>
+			<output>/autopilot/mode/gs-armed</output>
+		</switch>
+
+	<!-- follow gs signal -->
+		<switch name="gs-follow">
+			<default value="/autopilot/mode/gs-follow"/>
+			<test logic="AND" value="1">
+				/autopilot/gs-channel/gs-needle-deflection-norm lt 0.05	
+				/autopilot/mode/gs-armed eq 1
+			</test>
+			<output>/autopilot/mode/gs-follow</output>
+		</switch>
+
+	<!-- setting the GS indication (armed or following) -->
+		<switch name="gs-ind">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/autopilot/mode/gs-follow eq 1		
+				/autopilot/mode/gs-armed eq 1
 			</test>
 			<output>/autopilot/mode/gs</output>
 		</switch>
 
+	<!-- automatic ALT mode off when GS(-follow) is active  -->
+		<switch name="altoff">
+			<default value="/autopilot/mode/alt"/>
+			<test logic="AND" value="0">
+				/autopilot/mode/gs-follow eq 1	
+			</test>
+			<output>/autopilot/mode/alt</output>
+		</switch>
 
+<!-- the next two functions calculate a gain and an offset for turning, dependent on turn-coordinator data -->
+		<fcs_function name="/autopilot/gs-channel/turnrate-gain2">
+			<function>
+				<sum>
+					<value>1.0</value>
+					<product>
+						<property>/autopilot/gs-channel/turnrate-gain</property>
+						<abs>
+							<property>/instrumentation/turn-indicator/indicated-turn-rate</property>
+						</abs>
+					</product>		
+				</sum>
+			</function>
+			<output>/autopilot/gs-channel/turnrate-gain2</output>
+		</fcs_function>
+
+		<fcs_function name="/autopilot/gs-channel/acc-offset">
+			<function>
+					<product>
+						<property>/autopilot/gs-channel/acc-offset-gain</property>
+						<abs>
+							<property>/instrumentation/turn-indicator/indicated-turn-rate</property>
+						</abs>
+					</product>		
+			</function>
+			<output>/autopilot/gs-channel/acc-offset</output>
+		</fcs_function>	
+	
+<!-- pitch error (NOT in deg) using the glideslope deflection, dampened by the accel sensor inthe AP computer-->
+		<fcs_function name="/autopilot/gs-channel/pitch-error">
+			<function>
+				<product>
+					<property>/autopilot/mode/gs-follow</property>
+					<property>/autopilot/gs-channel/pitch-error-gain</property>
+					<sum>
+						<property>/autopilot/gs-channel/gs-needle-deflection-norm</property>
+						<product>	
+							<property>/autopilot/gs-channel/accel-rate-gain</property>
+							<sum>
+								<property>/autopilot/accsens-channel/ap-z-accel</property>
+								<property>/autopilot/gs-channel/acc-offset</property>
+							</sum>
+						</product>
+					</sum>
+					<!--sum>
+						<product>
+							<property>/autopilot/gs-channel/turnrate-gain2</property>	
+							<property>/autopilot/gs-channel/gs-needle-deflection-norm</property>
+						</product-->
+	
+					<!--/sum-->
+				</product>
+
+			</function>
+		</fcs_function>
+
+<!-- moving the elevator -->
+		<fcs_function name="/autopilot/gs-channel/cmd-ap-elev-pos-norm-raw">
+			<function>
+				<sum>
+					<property>fcs/elevator-cmd-tot</property>	
+					<product>
+                                  		<property>/autopilot/mode/gs-follow</property>
+						<value>1.0</value>
+						<property>/autopilot/gs-channel/pitch-error</property>
+						<property>sim-dt-sec</property>
+					</product>
+				</sum>
+			</function>
+			<output>/autopilot/gs-channel/cmd-ap-elev-pos-norm-raw</output>
+		</fcs_function>
+
+<!-- limiting the elevator movement speed -->
+		<actuator name="/autopilot/gs-channel/pitch-servo">
+			<input>/autopilot/gs-channel/cmd-ap-elev-pos-norm-raw</input>
+			<rate_limit>0.2</rate_limit>
+			<clipto>
+				<min>-1</min>
+				<max>1</max>
+			</clipto>
+			<output>/autopilot/gs-channel/cmd-ap-elev-pos-norm</output>
+		</actuator>
+
+<!--this makes the elevator pilot input to move along, so when the vs mode is disconnected, the elevator is in the correct position-->
+		<switch name="gson">
+			<default value="/controls/flight/elevator"/>
+			<test value="/autopilot/gs-channel/cmd-ap-elev-pos-norm">
+				/autopilot/mode/gs-follow eq 1
+			</test>
+			<output>/controls/flight/elevator</output>
+		</switch>
 
 	</channel>
 
