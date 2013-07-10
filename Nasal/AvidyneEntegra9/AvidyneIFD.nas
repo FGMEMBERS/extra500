@@ -66,6 +66,8 @@ var AvidyneData = {
 		m.apModeTRIM 	= 0;
 		m.apModeVS 	= 0;
 		m.apModeHDG 	= 0;
+		m.apModeCAP 	= 0;
+		m.apModeSOFT 	= 0;
 		m.apModeAP 	= 0;
 		m.apModeFD 	= 0;
 		
@@ -77,6 +79,8 @@ var AvidyneData = {
 		m.nApModeAPR 	= props.globals.initNode("/autopilot/mode/apr",0.0,"INT");
 		m.nApModeTRIM 	= props.globals.initNode("/autopilot/mode/trim",0.0,"INT");
 		m.nApModeVS  	= props.globals.initNode("/autopilot/mode/vs",0.0,"INT");
+		m.nApModeCAP 	= props.globals.initNode("/autopilot/mode/cap",0.0,"INT");
+		m.nApModeSOFT  	= props.globals.initNode("/autopilot/mode/soft",0.0,"INT");
 		m.nApModeHDG 	= props.globals.initNode("/autopilot/mode/heading",0.0,"INT");
 		m.nApModeAP  	= props.globals.initNode("/autopilot/settings/ap",0.0,"INT");
 		m.nApModeFD  	= props.globals.initNode("/autopilot/settings/fd",0.0,"INT");
@@ -190,6 +194,8 @@ var AvidyneData = {
 		me.apModeTRIM 	= me.nApModeTRIM.getValue();
 		me.apModeVS 	= me.nApModeVS.getValue();
 		me.apModeHDG 	= me.nApModeHDG.getValue();
+		me.apModeCAP 	= me.nApModeCAP.getValue();
+		me.apModeSOFT 	= me.nApModeSOFT.getValue();
 		me.apModeAP 	= me.nApModeAP.getValue();
 		me.apModeFD 	= me.nApModeFD.getValue();
 		
@@ -449,6 +455,8 @@ var AvidynePagePFD = {
 		m.cApModeTrim 		= m.page.getElementById("AP_TRIM").setVisible(0);
 		m.cApModeAlt 		= m.page.getElementById("AP_ALT").setVisible(0);
 		m.cApModeVs 		= m.page.getElementById("AP_VS").setVisible(0);
+		m.cApModeCap 		= m.page.getElementById("AP_CAP").setVisible(0);
+		m.cApModeSoft 		= m.page.getElementById("AP_SOFT").setVisible(0);
 		m.cApModeFd 		= m.page.getElementById("AP_FD").setVisible(0);
 		
 	#alt
@@ -1018,6 +1026,18 @@ var AvidynePagePFD = {
 				me.cApModeTrim.setVisible(0);
 			}
 			
+			if (me.data.apModeCAP == 1){
+				me.cApModeCap.setVisible(1);
+			}else{
+				me.cApModeCap.setVisible(0);
+			}
+			
+			if (me.data.apModeSOFT == 1){
+				me.cApModeSoft.setVisible(1);
+			}else{
+				me.cApModeSoft.setVisible(0);
+			}
+			
 			if (me.data.apModeVS == 1){
 				me.cApModeVs.setVisible(1);
 				me.VerticalSpeedBug.set("fill",COLOR["Magenta"]);
@@ -1148,16 +1168,22 @@ var AvidynePagePFD = {
 				me.cIAS_010.setVisible(0);
 			}
 			
-			if (me.data.IAS < ias_Vso or me.data.IAS > ias_Vne){
+			
+			if( me.data.IAS >= ias_Vne){
 				me.cIAS_100.set("fill",COLOR["Red"]);
 				me.cIAS_010.set("fill",COLOR["Red"]);
 				me.cIAS_001.set("fill",COLOR["Red"]);
-				
+				me.IFD._nOverSpeedWarning.setValue(1);
+			}elsif (me.data.IAS < ias_Vso){
+				me.cIAS_100.set("fill",COLOR["Red"]);
+				me.cIAS_010.set("fill",COLOR["Red"]);
+				me.cIAS_001.set("fill",COLOR["Red"]);
+				me.IFD._nOverSpeedWarning.setValue(0);
 			}else{
 				me.cIAS_100.set("fill",COLOR["White"]);
 				me.cIAS_010.set("fill",COLOR["White"]);
 				me.cIAS_001.set("fill",COLOR["White"]);
-				
+				me.IFD._nOverSpeedWarning.setValue(0);
 			}
 		
 		}
@@ -1404,6 +1430,9 @@ var AvidyneIFD = {
 		m._powerA	= extra500.ConsumerClass.new(root~"/powerA",name~" Power A",60.0);
 		m._powerB	= extra500.ConsumerClass.new(root~"/powerB",name~" Power B",60.0);
 		
+		m._nOverSpeedWarning  	= props.globals.initNode("/extra500/sound/overspeedWarning",0.0,"BOOL");
+		
+		
 		m.canvas = canvas.new({
 		"name": "IFD",
 		"size": [2410, 1810],
@@ -1549,22 +1578,24 @@ var AvidyneIFD = {
 		me.data.link = ifd;
 	},
 	update2Hz : func(){
-		
-		me._now2Hz = systime();
-		me._dt2Hz = me._now2Hz - me._last2Hz;
-		me._last2Hz = me._now2Hz;
-				
-		me.data.load2Hz(me._now2Hz,me._dt2Hz);
-		me.page[me.pageSelected].update2Hz(me._now2Hz,me._dt2Hz);		
+		if (me._state == 1){
+			me._now2Hz = systime();
+			me._dt2Hz = me._now2Hz - me._last2Hz;
+			me._last2Hz = me._now2Hz;
+					
+			me.data.load2Hz(me._now2Hz,me._dt2Hz);
+			me.page[me.pageSelected].update2Hz(me._now2Hz,me._dt2Hz);
+		}		
 	},
 	update20Hz : func(){
-		
-		me._now20Hz = systime();
-		me._dt20Hz = me._now20Hz - me._last20Hz;
-		me._last20Hz = me._now20Hz;
-				
-		me.data.load20Hz(me._now20Hz,me._dt20Hz);
-		me.page[me.pageSelected].update20Hz(me._now20Hz,me._dt20Hz);		
+		if (me._state == 1){
+			me._now20Hz = systime();
+			me._dt20Hz = me._now20Hz - me._last20Hz;
+			me._last20Hz = me._now20Hz;
+					
+			me.data.load20Hz(me._now20Hz,me._dt20Hz);
+			me.page[me.pageSelected].update20Hz(me._now20Hz,me._dt20Hz);	
+		}
 	},
 	clearLeds : func(){
 		me.nLedL1.setValue(0);
