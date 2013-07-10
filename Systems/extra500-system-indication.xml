@@ -277,6 +277,7 @@
     			</function>
 		</fcs_function>
 
+	<!-- these are properties used for messages -->
 		<switch name="TRQ111limitevent">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -910,7 +911,7 @@
     			</function>
 		</fcs_function>
 
-<!-- airspeed change indication on IFD-s -->
+<!-- airspeed change indication on IFD-s (blue stripe) -->
 		<pid name="/instrumentation/airspeed-IFD-LH/airspeed-change">
 			<input>/instrumentation/airspeed-IFD-LH/indicated-airspeed-kt</input>
 			<kp>0</kp>							
