@@ -166,15 +166,15 @@ var FuelSystemClass = {
 		m._FuelTransLeft	= FuelPumpClass.new("extra500/system/fuel/FuelPumpTransLeft","Fuel Transfer Pump Left",30.0);
 		m._FuelTransRight	= FuelPumpClass.new("extra500/system/fuel/FuelPumpTransRight","Fuel Transfer Pump Right",30.0);
 		
-		m._FuelPump1.setListerners();
-		m._FuelPump2.setListerners();
-		m._FuelTransLeft.setListerners();
-		m._FuelTransRight.setListerners();
+		m._FuelPump1.setListeners();
+		m._FuelPump2.setListeners();
+		m._FuelTransLeft.setListeners();
+		m._FuelTransRight.setListeners();
 		
-		eSystem.circuitBreaker.FUEL_P_1.addOutput(m._FuelPump1);
-		eSystem.circuitBreaker.FUEL_P_2.addOutput(m._FuelPump2);
-		eSystem.circuitBreaker.FUEL_TR_L.addOutput(m._FuelTransLeft);
-		eSystem.circuitBreaker.FUEL_TR_R.addOutput(m._FuelTransRight);
+		eSystem.circuitBreaker.FUEL_P_1.outputAdd(m._FuelPump1);
+		eSystem.circuitBreaker.FUEL_P_2.outputAdd(m._FuelPump2);
+		eSystem.circuitBreaker.FUEL_TR_L.outputAdd(m._FuelTransLeft);
+		eSystem.circuitBreaker.FUEL_TR_R.outputAdd(m._FuelTransRight);
 		
 		
 		eSystem.switch.FuelPump1.onStateChange = func(n){

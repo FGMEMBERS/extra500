@@ -129,11 +129,11 @@ var AnnunciatorClass = {
 		return m;
 	},
 	init : func(){
-		me.setListerners();
+		me.setListeners();
 		
-		eSystem.circuitBreaker.WARN_LT.addOutput(me);
-		#eSystem.circuitBreaker.DIP_2.addOutput(me);
-		#eSystem.circuitBreaker.DIP_2.addOutput(me._backlight);
+		eSystem.circuitBreaker.WARN_LT.outputAdd(me);
+		#eSystem.circuitBreaker.DIP_2.outputAdd(me);
+		#eSystem.circuitBreaker.DIP_2.outputAdd(me._backlight);
 		
 		append(me._listeners, setlistener("/extra500/system/dimming/Test",func(n){me._onDimTestChange(n);},1,0) );
 		append(me._listeners, setlistener("/extra500/system/dimming/Annunciator",func(n){me._onBrightnessChange(n);},1,0) );
@@ -141,7 +141,7 @@ var AnnunciatorClass = {
 		append(me._listeners, setlistener("/extra500/door/main/isOpen",			func(n){me._leds["AFTDoor"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/deice/StallHeat/state",	func(n){me._leds["StallHeat"].setState(!n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/engine/lowOilPressure",		func(n){me._leds["OilPress"].setState(n.getValue());},1,0) );
-		append(me._listeners, setlistener("/extra500/electric/relay/K3",		func(n){me._leds["GeneratorFail"].setState(n.getValue());},1,0) );
+		append(me._listeners, setlistener("/extra500/electric/relay/K3/state",		func(n){me._leds["GeneratorFail"].setState(!n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/engine/defectChip",		func(n){me._leds["ChipDetection"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/gear/motor/isMotoring",	func(n){me._leds["HydraulicPump"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/gear/hasWarning",		func(n){me._leds["GearWarn"].setState(n.getValue());},1,0) );
@@ -163,7 +163,7 @@ var AnnunciatorClass = {
 		append(me._listeners, setlistener("/extra500/panel/Side/Light/Recognition/state",func(n){me._leds["RecognLight"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/fuel/FuelFilterByPass",	func(n){me._leds["FuelFilterByPass"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/deice/Boots/PneumaticLow",	func(n){me._leds["PneumaticLow"].setState(n.getValue());},1,0) );
-		append(me._listeners, setlistener("/extra500/electric/eSystem/lowVoltage",	func(n){me._leds["LowVoltage"].setState(n.getValue());},1,0) );
+		append(me._listeners, setlistener("/extra500/electric/pcBoard1/lowVoltage",	func(n){me._leds["LowVoltage"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/deice/Boots/state",		func(n){me._leds["DeiceBoots"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/panel/Side/Light/Landing/state",	func(n){me._leds["LandingLight"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/fuel/FuelLowLeft",		func(n){me._leds["FuelLowLeft"].setState(n.getValue());},1,0) );

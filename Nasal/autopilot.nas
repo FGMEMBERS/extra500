@@ -85,7 +85,7 @@ var AutopilotClass = {
 		
 		return m;
 	},
-	setListerners : func() {
+	setListeners : func() {
 		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0);
 		me._ampereListener 	= setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0);
 		me._brightnessListener	= setlistener(me._nBrightness,func(n){me._onBrightnessChange(n);},1,0);
@@ -394,8 +394,8 @@ var AutopilotClass = {
 		UI.register("Autopilot Pitch Command off",	func{extra500.autopilot.onClickPitchCommand(0); } 	);
 		UI.register("Autopilot Pitch Command up",	func{extra500.autopilot.onClickPitchCommand(-1); } 	);
 		
-		eSystem.circuitBreaker.AP_CMPTR.addOutput(me);
-		me.setListerners();
+		eSystem.circuitBreaker.AP_CMPTR.outputAdd(me);
+		me.setListeners();
 		
 		me._timerLoop = maketimer(1.0,me,AutopilotClass.update);
 		me._timerLoop.start();

@@ -73,7 +73,7 @@ var StarterClass = {
 		
 		return m;
 	},
-	setListerners : func() {
+	setListeners : func() {
 		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0);
 		me._ampereListener 	= setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0);
 		#me._starterListener 	= setlistener(me._nStarter,func(n){me._onStarterChange(n);},1,0);
@@ -246,11 +246,11 @@ var EngineClass = {
 		UI.register("Engine reverser on",	func{extra500.engine.onReverserClick(1); } 	);
 		UI.register("Engine reverser off",	func{extra500.engine.onReverserClick(0); } 	);
 		
-		me.ignition.setListerners();
-		eSystem.circuitBreaker.IGN.addOutput(me.ignition);
+		me.ignition.setListeners();
+		eSystem.circuitBreaker.IGN.outputAdd(me.ignition);
 		
-		me.starter.setListerners();
-		eSystem.addOutput(me.starter);
+		me.starter.setListeners();
+		eSystem._PreBatteryBus.outputAdd(me.starter);
 		
 		me._checkIgnitionCutoff();
 		me._timerLoop = maketimer(1.0,me,EngineClass.update);

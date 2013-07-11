@@ -39,7 +39,7 @@ var HeatClass = {
 		return m;
 	},
 	init : func(){
-		me.setListerners();
+		me.setListeners();
 	},
 	electricWork : func(){
 		if ((me._value == 1 ) and (me._volt >= 22.0) ){
@@ -77,7 +77,7 @@ var BootsClass = {
 		return m;
 	},
 	init : func(){
-		me.setListerners();
+		me.setListeners();
 		append(me._listeners, setlistener(me._nPneumaticPressure,func(n){me._onPneumaticPressureChange(n);},1,0) );
 		
 	},
@@ -140,39 +140,39 @@ var DeicingSystemClass = {
 		
 		
 		m._nIntakeHeat 		= HeatClass.new("/extra500/system/deice/IntakeHeat","Intake Heat",24.0);
-		eSystem.circuitBreaker.INTAKE_AI.addOutput(m._nIntakeHeat);
+		eSystem.circuitBreaker.INTAKE_AI.outputAdd(m._nIntakeHeat);
 		
 		m._WindshieldHeatFail		= m._nRoot.initNode("WindshieldHeat/Fail",0,"BOOL");
 		m._WindshieldHeat 		= HeatClass.new("/extra500/system/deice/WindshieldHeat","Windshield Heat",240.0);
-		eSystem.circuitBreaker.WSH_HT.addOutput(m._WindshieldHeat);
+		eSystem.circuitBreaker.WSH_HT.outputAdd(m._WindshieldHeat);
 		
 		m._WindshieldCtrl 		= ConsumerClass.new("/extra500/system/deice/WindshieldCtrl","Windshield Control",24.0);
-		eSystem.circuitBreaker.WSH_CTRL.addOutput(m._WindshieldCtrl);
+		eSystem.circuitBreaker.WSH_CTRL.outputAdd(m._WindshieldCtrl);
 		
 		m._PitotHeatLeft 		= HeatClass.new("/extra500/system/deice/PitotHeatLeft","Pitot Heat Left",60.0);
-		eSystem.circuitBreaker.PITOT_L.addOutput(m._PitotHeatLeft);
+		eSystem.circuitBreaker.PITOT_L.outputAdd(m._PitotHeatLeft);
 		
 		m._PitotHeatRight 		= HeatClass.new("/extra500/system/deice/PitotHeatRight","Pitot Heat Right",60.0);
-		eSystem.circuitBreaker.PITOT_R.addOutput(m._PitotHeatRight);
+		eSystem.circuitBreaker.PITOT_R.outputAdd(m._PitotHeatRight);
 		
 		m._StaticHeatLeft 		= HeatClass.new("/extra500/system/deice/StaticHeatLeft","Static Heat Left",60.0);
-		eSystem.circuitBreaker.PITOT_L.addOutput(m._StaticHeatLeft);
+		eSystem.circuitBreaker.PITOT_L.outputAdd(m._StaticHeatLeft);
 		
 		m._StaticHeatRight 		= HeatClass.new("/extra500/system/deice/StaticHeatRight","Static Heat Right",60.0);
-		eSystem.circuitBreaker.PITOT_R.addOutput(m._StaticHeatRight);
+		eSystem.circuitBreaker.PITOT_R.outputAdd(m._StaticHeatRight);
 		
 		m._StallHeat 		= HeatClass.new("/extra500/system/deice/StallHeat","Stall Heat",60.0);
-		eSystem.circuitBreaker.PITOT_R.addOutput(m._StallHeat);
+		eSystem.circuitBreaker.PITOT_R.outputAdd(m._StallHeat);
 		
 		m._Boots 		= BootsClass.new("/extra500/system/deice/Boots","Boots",20.0);
-		eSystem.circuitBreaker.BOOTS.addOutput(m._Boots);
+		eSystem.circuitBreaker.BOOTS.outputAdd(m._Boots);
 		m._bootsTimer = 0;
 		
 		m._PropellerHeat 	= HeatClass.new("/extra500/system/deice/Propeller","Propeller Heat",0.0);
-		eSystem.circuitBreaker.PROP_HT.addOutput(m._PropellerHeat);
+		eSystem.circuitBreaker.PROP_HT.outputAdd(m._PropellerHeat);
 		
 		m._StallWarner 		= HeatClass.new("/extra500/system/pitot/StallWarn","Stall Warner",1.0);
-		eSystem.circuitBreaker.STALL_WARN.addOutput(m._StallWarner);
+		eSystem.circuitBreaker.STALL_WARN.outputAdd(m._StallWarner);
 		
 		
 		

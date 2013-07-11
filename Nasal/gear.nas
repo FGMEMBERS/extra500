@@ -123,18 +123,18 @@ var GearSystemClass = {
 	},
 	init : func(){
 		me._swtGear.registerUI();
-		me._swtGear.setListerners();
+		me._swtGear.setListeners();
 		
 		me._leds.shine = func(light){
 			gearSystem._nLEDLeft.setValue(light);
 			gearSystem._nLEDNose.setValue(light);
 			gearSystem._nLEDRight.setValue(light);
 		};
-		me._leds.setListerners();
-		me._hydaulicMotor.setListerners();
+		me._leds.setListeners();
+		me._hydaulicMotor.setListeners();
 		
-		eSystem.circuitBreaker.WARN_LT.addOutput(me._leds);
-		eSystem.circuitBreaker.HYDR.addOutput(me._hydaulicMotor);
+		eSystem.circuitBreaker.WARN_LT.outputAdd(me._leds);
+		eSystem.circuitBreaker.HYDR.outputAdd(me._hydaulicMotor);
 		
 		UI.register("Gear up", 		func{me._swtGear.onClick(0); } 	);
 		UI.register("Gear down",	func{me._swtGear.onClick(1); } 	);

@@ -43,7 +43,7 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		extra500.deiceSystem.init();
 		
 		
-		
+	# instrument.nas
 		extra500.engineInstrumentPackage.init();
 		extra500.digitalInstrumentPackage.init();
 		extra500.lumi.init();
@@ -53,9 +53,12 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		extra500.fuelQuantity.init();
 		extra500.propellerHeat.init();
 		extra500.turnCoordinator.init();
+		extra500.pcBoard1.init();
+		
 		extra500.annunciator.init();
 		extra500.light.init();
 		extra500.centerConsole.init();
+		
 		extra500.eSystem.init();
 		
 		

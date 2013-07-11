@@ -1496,8 +1496,8 @@ var AvidyneIFD = {
 	init : func(){
 		me.initUI();
 		
-		me._powerA.setListerners();
-		me._powerB.setListerners();
+		me._powerA.setListeners();
+		me._powerB.setListeners();
 		
 		append(me._listeners, setlistener(me._powerA._nState,func(n){me._onPowerAChange(n);},1,0) );
 		append(me._listeners, setlistener(me._powerB._nState,func(n){me._onPowerBChange(n);},1,0) );
@@ -1731,10 +1731,10 @@ var AvidyneIFD = {
 var LH = AvidyneIFD.new("extra500/instrumentation/IFD-LH","LH","LH-IFD.Screen","PFD");
 var RH = AvidyneIFD.new("extra500/instrumentation/IFD-RH","RH","RH-IFD.Screen");
 
-extra500.eSystem.circuitBreaker.IFD_LH_A.addOutput(LH._powerA);
-extra500.eSystem.circuitBreaker.IFD_LH_B.addOutput(LH._powerB);
-extra500.eSystem.circuitBreaker.IFD_RH_A.addOutput(RH._powerA);
-extra500.eSystem.circuitBreaker.IFD_RH_B.addOutput(RH._powerB);
+extra500.eSystem.circuitBreaker.IFD_LH_A.outputAdd(LH._powerA);
+extra500.eSystem.circuitBreaker.IFD_LH_B.outputAdd(LH._powerB);
+extra500.eSystem.circuitBreaker.IFD_RH_A.outputAdd(RH._powerA);
+extra500.eSystem.circuitBreaker.IFD_RH_B.outputAdd(RH._powerB);
 		
 LH.connectDataBus(RH.data);
 RH.connectDataBus(LH.data);
