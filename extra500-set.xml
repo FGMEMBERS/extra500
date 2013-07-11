@@ -514,9 +514,9 @@ JSBSim Extra Aircraft - Extra 500.
 		<pitch-error-gain type="double">-0.00005</pitch-error-gain>
 	</vs-channel>
 	<gs-channel>
-		<gs-ndefl-gain-kd type="double">40.0</gs-ndefl-gain-kd>
+		<gs-ndefl-gain-kd type="double">15.0</gs-ndefl-gain-kd>
 		<accel-rate-gain type="double">20.0</accel-rate-gain> 
-		<pitch-error-gain type="double">-0.75</pitch-error-gain>
+		<pitch-error-gain type="double">-0.65</pitch-error-gain>
 	</gs-channel>
 	<alt-channel>	
 		<turnrate-gain type="double">10.0</turnrate-gain>
