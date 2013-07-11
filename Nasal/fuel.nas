@@ -20,9 +20,9 @@
 #      Date:             26.06.13
 #
 
-var UNUSABLE_AUXILIARY	= 3.5;
-var UNUSABLE_MAIN	= 3.5;
-var UNUSABLE_COLLECTOR	= 3.5;
+var UNUSABLE_AUXILIARY	= 0;
+var UNUSABLE_MAIN	= 0;
+var UNUSABLE_COLLECTOR	= 0;
 
 var FLOW_JETPUMP	= 0.503 / 60.0;		# 0.503 Gal/min
 var FLOW_COl2MAIN	= 1.585 / 3600.0;	# 6 L/Std
