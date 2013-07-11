@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             10.07.13
+      Date:             11.07.13
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -874,7 +874,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<RANKINE2KELVIN type="double">0.555555555</RANKINE2KELVIN>
 		<KELVIN2RANKINE type="double">1.8</KELVIN2RANKINE>		<!-- exact factor: to be used with priority -->
 		<LBM2KG type="double">0.5144</LBM2KG>				<!-- exact factor: to be used with priority -->
-		<JETA_LBGAL type="double">6.74</JETA_LBGAL>				<!-- exact factor: to be used with priority -->
+		<JETA_LBGAL type="double">6.7898</JETA_LBGAL>			
 	</const>
 	<!--system>
 		<fuel>
