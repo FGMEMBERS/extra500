@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-07-08
+      Date:             2013-07-10
 -->
 
 <autopilot name="STEC55X">
@@ -396,18 +396,28 @@
 
 		<switch name="cap">
 			<default value="0"/>
-			<test logic="OR" value="1">
-				/autopilot/radionav-channel/gain-mode eq 1
-				/autopilot/radionav-channel/gain-mode eq 2
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/autopilot/radionav-channel/gain-mode eq 1
+					/autopilot/radionav-channel/gain-mode eq 2
+				</test>
+				<test value="1">
+					/autopilot/radionav-channel/is-localizer-frequency eq 0
+				</test>
 			</test>
 			<output>/autopilot/mode/cap</output>
 		</switch>
 
 		<switch name="soft">
 			<default value="0"/>
-			<test logic="OR" value="1">
-				/autopilot/radionav-channel/gain-mode eq 2
-				/autopilot/radionav-channel/gain-mode eq 3
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/autopilot/radionav-channel/gain-mode eq 2
+					/autopilot/radionav-channel/gain-mode eq 3
+				</test>
+				<test value="1">
+					/autopilot/radionav-channel/is-localizer-frequency eq 0
+				</test>
 			</test>
 			<output>/autopilot/mode/soft</output>
 		</switch>
@@ -749,7 +759,7 @@
 			<output>/autopilot/radionav-channel/cmd-ap-ail-pos-norm</output>
 		</actuator>
 
-<!--this makes the aileron pilot input to move along, so when the hdg mode is disconnected, the ailerons are in the correct position-->
+<!--this makes the aileron pilot input to move along, so when the nav mode is disconnected, the ailerons are in the correct position-->
 		<switch name="radionavon">
 			<default value="/controls/flight/aileron"/>
 			<test value="/autopilot/radionav-channel/cmd-ap-ail-pos-norm">
@@ -758,7 +768,7 @@
 			<output>/controls/flight/aileron</output>
 		</switch>
 
-<!-- switch off HDG mode-->
+<!-- switch off HDG mode (for HDG+NAV mode)-->
 		<switch name="hdgoff">
 			<default value="/autopilot/mode/heading"/>
 			<test logic="AND" value="0">
@@ -878,33 +888,14 @@
 			<output>/autopilot/mode/alt</output>
 		</switch>
 
-<!-- the next two functions calculate a gain and an offset for turning, dependent on turn-coordinator data -->
-		<fcs_function name="/autopilot/gs-channel/turnrate-gain2">
-			<function>
-				<sum>
-					<value>1.0</value>
-					<product>
-						<property>/autopilot/gs-channel/turnrate-gain</property>
-						<abs>
-							<property>/instrumentation/turn-indicator/indicated-turn-rate</property>
-						</abs>
-					</product>		
-				</sum>
-			</function>
-			<output>/autopilot/gs-channel/turnrate-gain2</output>
-		</fcs_function>
-
-		<fcs_function name="/autopilot/gs-channel/acc-offset">
-			<function>
-					<product>
-						<property>/autopilot/gs-channel/acc-offset-gain</property>
-						<abs>
-							<property>/instrumentation/turn-indicator/indicated-turn-rate</property>
-						</abs>
-					</product>		
-			</function>
-			<output>/autopilot/gs-channel/acc-offset</output>
-		</fcs_function>	
+<!-- the gs-needle deflection differential part -->
+		<pid name="/autopilot/gs-channel/gs-needle-deflection-pid">
+			<input>/autopilot/gs-channel/gs-needle-deflection-norm</input>
+			<kp>0</kp>							
+			<ki>0</ki>
+			<kd>/autopilot/gs-channel/gs-ndefl-gain-kd</kd>
+			<output>/autopilot/gs-channel/gs-needle-deflection-diff</output>
+		</pid>
 	
 <!-- pitch error (NOT in deg) using the glideslope deflection, dampened by the accel sensor inthe AP computer-->
 		<fcs_function name="/autopilot/gs-channel/pitch-error">
@@ -914,23 +905,13 @@
 					<property>/autopilot/gs-channel/pitch-error-gain</property>
 					<sum>
 						<property>/autopilot/gs-channel/gs-needle-deflection-norm</property>
+						<property>/autopilot/gs-channel/gs-needle-deflection-diff</property>
 						<product>	
 							<property>/autopilot/gs-channel/accel-rate-gain</property>
-							<sum>
-								<property>/autopilot/accsens-channel/ap-z-accel</property>
-								<property>/autopilot/gs-channel/acc-offset</property>
-							</sum>
+							<property>/autopilot/accsens-channel/ap-z-accel</property>
 						</product>
 					</sum>
-					<!--sum>
-						<product>
-							<property>/autopilot/gs-channel/turnrate-gain2</property>	
-							<property>/autopilot/gs-channel/gs-needle-deflection-norm</property>
-						</product-->
-	
-					<!--/sum-->
 				</product>
-
 			</function>
 		</fcs_function>
 
@@ -961,7 +942,7 @@
 			<output>/autopilot/gs-channel/cmd-ap-elev-pos-norm</output>
 		</actuator>
 
-<!--this makes the elevator pilot input to move along, so when the vs mode is disconnected, the elevator is in the correct position-->
+<!--this makes the elevator pilot input to move along, so when the gs mode is disconnected, the elevator is in the correct position-->
 		<switch name="gson">
 			<default value="/controls/flight/elevator"/>
 			<test value="/autopilot/gs-channel/cmd-ap-elev-pos-norm">

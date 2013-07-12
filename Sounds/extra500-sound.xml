@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2013-06-30
+      Date:             2013-07-11
 -->
  
 <PropertyList>
@@ -50,16 +50,36 @@
 	       </position>
        </ignition>
 
-       <crank>
+       <motoring>
+	       <name>motoring</name>
+	       <reference-dist>3.0</reference-dist>
+	       <max-dist>6.0</max-dist>
+	       <mode>once</mode>
+	       <path>Aircraft/extra500/Sounds/motoring.wav</path>
+	       <condition>
+		       <or>
+			       <property>/fdm/jsbsim/aircraft/engine/motoring</property>
+		       </or>
+	       </condition>
+	       <volume>
+		       <offset>0.4</offset>
+	       </volume>
+	       <position>
+		       <x>0</x>
+		       <y>0</y>
+		       <z>0</z>
+	       </position>
+       </motoring>
+
+       <start>
 	       <name>engine_start</name>
 	       <reference-dist>3.0</reference-dist>
 	       <max-dist>6.0</max-dist>
 	       <mode>once</mode>
-	       <path>Aircraft/extra500/Sounds/extra500turbineUP.wav</path>
+	       <path>Aircraft/extra500/Sounds/spoolup.wav</path>
 	       <condition>
 		       <or>
 			       <property>/fdm/jsbsim/aircraft/engine/spooling-up</property>
-			       <property>/fdm/jsbsim/aircraft/engine/motoring</property>
 		       </or>
 	       </condition>
 	       <volume>
@@ -70,7 +90,7 @@
 		       <y>0</y>
 		       <z>0</z>
 	       </position>
-       </crank>
+       </start>
 <!---->
        <propeller>
 	       <name>propeller</name>
@@ -84,8 +104,7 @@
 	       <!---->
 	       <condition>
 		       <or>
-			       <property>/engines/engine[0]/running</property>
-			       
+			       <property>/engines/engine[0]/running</property>		       
 		       </or>
 	       </condition>
 	       <volume>
@@ -277,7 +296,6 @@
 	       <condition>
 		       <or>
 			       <property>/autopilot/mode/disengsound</property>
-	<!-- the property for day/night/test must be here -->
 		       </or>
 	       </condition>
 	       <volume>
@@ -300,6 +318,7 @@
 	       <condition>
 		       <or>
 			       <property>/extra500/sound/gearWarning</property>
+	<!-- FIXME: the property for day/night/test must be here -->
 		       </or>
 	       </condition>
 	       <volume>
@@ -322,6 +341,7 @@
 	       <condition>
 		       <or>
 			       <property>/extra500/system/pitot/StallWarn/state</property>
+	<!-- FIXME: the property for day/night/test must be here -->
 		       </or>
 	       </condition>
 	       <volume>
@@ -333,6 +353,29 @@
 		       <z>0</z>
 	       </position>
        </stallwarn>
+
+<!--overspeed-->
+       <overspeed>
+	       <name>over speed</name>
+	       <reference-dist>0.5</reference-dist>
+	       <max-dist>1.0</max-dist>
+	       <mode>looped</mode>
+	       <path>Aircraft/extra500/Sounds/overspeed.wav</path>
+	       <condition>
+		       <or>
+			       <property>/extra500/sound/overspeedWarning</property>
+	<!-- FIXME: the property for day/night/test must be here -->
+		       </or>
+	       </condition>
+	       <volume>
+		       <offset>0.9</offset>
+	       </volume>
+	       <position>
+		       <x>0</x>
+		       <y>0</y>
+		       <z>0</z>
+	       </position>
+       </overspeed>
         
 	</fx>
 </PropertyList>

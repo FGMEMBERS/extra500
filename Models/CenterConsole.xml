@@ -20,7 +20,7 @@
       Date: July 04 2013
 
       Last change:      Eric van den Berg
-      Date:             05.07.13
+      Date:             11.07.13
 -->
 <PropertyList>
 
@@ -86,11 +86,11 @@
   <interpolation>
             <entry>
                 <ind>0</ind>
-                <dep>-5</dep>
+                <dep>-8</dep>
             </entry>
             <entry>
                 <ind>1</ind>
-                <dep>-30</dep>
+                <dep>-26</dep>
             </entry>
         </interpolation>
   <axis>
@@ -116,11 +116,11 @@
   <interpolation>
             <entry>
                 <ind>0</ind>
-                <dep>-5</dep>
+                <dep>-8</dep>
             </entry>
             <entry>
                 <ind>1</ind>
-                <dep>30</dep>
+                <dep>36</dep>
             </entry>
         </interpolation>
   <axis>
@@ -157,11 +157,11 @@ in Systems/extra500-system-indication.xml-->
   <interpolation>
             <entry>
                 <ind>0</ind>
-                <dep>20</dep>
+                <dep>26.6</dep>
             </entry>
             <entry>
                 <ind>1</ind>
-                <dep>-20</dep>
+                <dep>-14.4</dep>
             </entry>
         </interpolation>
   <axis>

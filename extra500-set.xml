@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
-      Date:             08.07.13
+      Last change:      Eric van den Berg
+      Date:             11.07.13
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -514,10 +514,9 @@ JSBSim Extra Aircraft - Extra 500.
 		<pitch-error-gain type="double">-0.00005</pitch-error-gain>
 	</vs-channel>
 	<gs-channel>
-		<turnrate-gain type="double">2000.0</turnrate-gain>
-		<acc-offset-gain type="double">0.0</acc-offset-gain>
-		<accel-rate-gain type="double">20.0</accel-rate-gain>
-		<pitch-error-gain type="double">-0.75</pitch-error-gain>
+		<gs-ndefl-gain-kd type="double">15.0</gs-ndefl-gain-kd>
+		<accel-rate-gain type="double">20.0</accel-rate-gain> 
+		<pitch-error-gain type="double">-0.65</pitch-error-gain>
 	</gs-channel>
 	<alt-channel>	
 		<turnrate-gain type="double">10.0</turnrate-gain>
@@ -875,7 +874,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<RANKINE2KELVIN type="double">0.555555555</RANKINE2KELVIN>
 		<KELVIN2RANKINE type="double">1.8</KELVIN2RANKINE>		<!-- exact factor: to be used with priority -->
 		<LBM2KG type="double">0.5144</LBM2KG>				<!-- exact factor: to be used with priority -->
-		<JETA_LBGAL type="double">6.74</JETA_LBGAL>				<!-- exact factor: to be used with priority -->
+		<JETA_LBGAL type="double">6.7898</JETA_LBGAL>			
 	</const>
 	<!--system>
 		<fuel>

@@ -20,16 +20,13 @@
 #      Date:             26.06.13
 #
 
-var UNUSABLE_AUXILIARY	= 3.5;
-var UNUSABLE_MAIN	= 3.5;
-var UNUSABLE_COLLECTOR	= 3.5;
 
 var FLOW_JETPUMP	= 0.503 / 60.0;		# 0.503 Gal/min
 var FLOW_COl2MAIN	= 1.585 / 3600.0;	# 6 L/Std
 var FLOW_MAIN2COL	= FLOW_JETPUMP * 4;
 
 var FuelTankClass = {
-	new : func(name,nr,unusable=3.0){
+	new : func(name,nr){
 		var m = {parents:[
 			FuelTankClass,
 		]};
@@ -38,21 +35,16 @@ var FuelTankClass = {
 		m._nTank 	= props.globals.getNode("/consumables/fuel/tank["~nr~"]",1);
 		m._nLevel 	= m._nTank.getNode("level-gal_us",1);
 		m._nCapacity 	= m._nTank.getNode("capacity-gal_us",1);
-		m._unusable	= unusable;
-		m._useable	= 0;
 		
 		m._level	= m._nLevel.getValue();
 		m._capacity	= m._nCapacity.getValue();
 		m._fraction	= m._level / m._capacity;
-		m._useable	= m._level - m._unusable;
 		
 		return m;
 	},
 	load : func(){
 		me._level	= me._nLevel.getValue();
-		me._fraction	= me._level / me._capacity;
-		me._useable	= me._level - me._unusable;
-		
+		me._fraction	= me._level / me._capacity;	
 	},
 	save : func(dt){
 		me._nLevel.setValue(me._level);
@@ -62,22 +54,21 @@ var FuelTankClass = {
 		me._level = me._capacity;
 	},
 	flow : func(amount){
-		if (me._useable >= amount){
+		if (me._level >= amount){
 			me._level -= amount;
 			amount = 0;
 		}else{
-			amount -= me._useable;
-			me._level = me._unusable;
+			amount -= me._level;
+			me._level = 0;
 		}
 		return amount;
 	},
 	get : func(amount){
 		#print(sprintf("%s get\t %.4f\t %.4f",me._name,amount,me._level));
-		if (amount > me._useable){
-			amount 	= me._useable;
+		if (amount > me._level){
+			amount 	= me._level;
 		}
 		me._level 	-= amount;
-		me._useable	= me._level - me._unusable;
 		return amount;
 	},
 	add : func(amount){
@@ -89,7 +80,6 @@ var FuelTankClass = {
 			me._level += amount;
 			amount = 0;
 		}
-		me._useable	= me._level - me._unusable;
 		return amount;
 	},
 	gravity : func(amount,target){
@@ -199,13 +189,13 @@ var FuelSystemClass = {
 		};
 		
 		
-		m._TankLeftAuxiliary 	= FuelTankClass.new("LA",0,UNUSABLE_AUXILIARY);
-		m._TankLeftMain 	= FuelTankClass.new("LM",1,UNUSABLE_MAIN);
-		m._TankLeftCollector 	= FuelTankClass.new("LC",2,UNUSABLE_COLLECTOR);
-		m._TankEngine 		= FuelTankClass.new("EN",3,0.01);
-		m._TankRightCollector 	= FuelTankClass.new("RC",4,UNUSABLE_COLLECTOR);
-		m._TankRightMain 	= FuelTankClass.new("RM",5,UNUSABLE_MAIN);
-		m._TankRightAuxiliary 	= FuelTankClass.new("RA",6,UNUSABLE_AUXILIARY);
+		m._TankLeftAuxiliary 	= FuelTankClass.new("LA",0);
+		m._TankLeftMain 	= FuelTankClass.new("LM",1);
+		m._TankLeftCollector 	= FuelTankClass.new("LC",2);
+		m._TankEngine 		= FuelTankClass.new("EN",3);
+		m._TankRightCollector 	= FuelTankClass.new("RC",4);
+		m._TankRightMain 	= FuelTankClass.new("RM",5);
+		m._TankRightAuxiliary 	= FuelTankClass.new("RA",6);
 		
 
 		

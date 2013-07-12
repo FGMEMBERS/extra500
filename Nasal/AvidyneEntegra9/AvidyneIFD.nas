@@ -17,7 +17,7 @@
 #      Date: April 27 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             2013-07-08
+#      Date:             2013-07-10
 #
 var TODEG = 180/math.pi;
 var TORAD = math.pi/180;
@@ -1107,8 +1107,8 @@ var AvidynePagePFD = {
 		var speed 	= 0;
 		var speedadd 	= 0;
 		var iasLadderpx	= 74.596;
-		var ias_Vso	= 59;
-		var ias_Vne	= 205;
+		var ias_Vso	= 58;
+		var ias_Vne	= 207;
 		var ias_Zero	= 20;
 		
 		#me.data.IAS_Rate = (( me.data.IAS_Last - me.data.IAS) * dt * 60);
@@ -1173,16 +1173,21 @@ var AvidynePagePFD = {
 				me.cIAS_100.set("fill",COLOR["Red"]);
 				me.cIAS_010.set("fill",COLOR["Red"]);
 				me.cIAS_001.set("fill",COLOR["Red"]);
-				me.IFD._nOverSpeedWarning.setValue(1);
 			}elsif (me.data.IAS < ias_Vso){
 				me.cIAS_100.set("fill",COLOR["Red"]);
 				me.cIAS_010.set("fill",COLOR["Red"]);
 				me.cIAS_001.set("fill",COLOR["Red"]);
-				me.IFD._nOverSpeedWarning.setValue(0);
 			}else{
 				me.cIAS_100.set("fill",COLOR["White"]);
 				me.cIAS_010.set("fill",COLOR["White"]);
 				me.cIAS_001.set("fill",COLOR["White"]);
+			}
+
+			if( me.data.IAS >= ias_Vne + 3.0){
+				me.IFD._nOverSpeedWarning.setValue(1);
+			}elsif (me.data.IAS < ias_Vso){
+				me.IFD._nOverSpeedWarning.setValue(0);
+			}else{
 				me.IFD._nOverSpeedWarning.setValue(0);
 			}
 		
