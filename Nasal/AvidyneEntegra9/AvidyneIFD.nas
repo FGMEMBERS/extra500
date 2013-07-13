@@ -769,7 +769,7 @@ var AvidynePagePFD = {
 			me.cBearingOn.setVisible(1);
 			append(me._navListeners, setlistener(BEARING_SOURCE_TREE[me.data.brgSource]~"/nav-id",func(n){me._onBrgIdChange(n);},1,0));
 			append(me._navListeners, setlistener(BEARING_SOURCE_TREE[me.data.brgSource]~"/frequencies/selected-mhz-fmt",func(n){me._onBrgFrequencyChange(n);},1,0));
-			append(me._navListeners, setlistener(BEARING_SOURCE_TREE[me.data.brgSource]~"/is-localizer-frequency",func(n){me._onBrgNavLocChange(n);},1,0));
+			append(me._navListeners, setlistener(BEARING_SOURCE_TREE[me.data.brgSource]~"/frequencies/is-localizer-frequency",func(n){me._onBrgNavLocChange(n);},1,0));
 			append(me._navListeners, setlistener(BEARING_SOURCE_TREE[me.data.brgSource]~"/has-gs",func(n){me._onBrgGsAbleChange(n);},1,0));
 		
 		
@@ -779,7 +779,7 @@ var AvidynePagePFD = {
 			
 			append(me._navListeners, setlistener(BEARING_SOURCE_TREE[me.data.brgSource]~"/nav-id",func(n){me._onBrgIdChange(n);},1,0));
 			append(me._navListeners, setlistener(BEARING_SOURCE_TREE[me.data.brgSource]~"/frequencies/selected-mhz-fmt",func(n){me._onBrgFrequencyChange(n);},1,0));
-			append(me._navListeners, setlistener(BEARING_SOURCE_TREE[me.data.brgSource]~"/is-localizer-frequency",func(n){me._onBrgNavLocChange(n);},1,0));
+			append(me._navListeners, setlistener(BEARING_SOURCE_TREE[me.data.brgSource]~"/frequencies/is-localizer-frequency",func(n){me._onBrgNavLocChange(n);},1,0));
 			append(me._navListeners, setlistener(BEARING_SOURCE_TREE[me.data.brgSource]~"/has-gs",func(n){me._onBrgGsAbleChange(n);},1,0));
 		
 		}elsif(me.data.brgSource == 3){
