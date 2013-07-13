@@ -129,11 +129,11 @@ var AnnunciatorClass = {
 		return m;
 	},
 	init : func(){
-		me.setListerners();
+		me.setListeners();
 		
-		eSystem.circuitBreaker.WARN_LT.addOutput(me);
-		#eSystem.circuitBreaker.DIP_2.addOutput(me);
-		#eSystem.circuitBreaker.DIP_2.addOutput(me._backlight);
+		eSystem.circuitBreaker.WARN_LT.outputAdd(me);
+		#eSystem.circuitBreaker.DIP_2.outputAdd(me);
+		#eSystem.circuitBreaker.DIP_2.outputAdd(me._backlight);
 		
 		append(me._listeners, setlistener("/extra500/system/dimming/Test",func(n){me._onDimTestChange(n);},1,0) );
 		append(me._listeners, setlistener("/extra500/system/dimming/Annunciator",func(n){me._onBrightnessChange(n);},1,0) );
@@ -141,7 +141,7 @@ var AnnunciatorClass = {
 		append(me._listeners, setlistener("/extra500/door/main/isOpen",			func(n){me._leds["AFTDoor"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/deice/StallHeat/state",	func(n){me._leds["StallHeat"].setState(!n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/engine/lowOilPressure",		func(n){me._leds["OilPress"].setState(n.getValue());},1,0) );
-		append(me._listeners, setlistener("/extra500/electric/relay/K3",		func(n){me._leds["GeneratorFail"].setState(n.getValue());},1,0) );
+		append(me._listeners, setlistener("/extra500/electric/relay/K3/state",		func(n){me._leds["GeneratorFail"].setState(!n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/engine/defectChip",		func(n){me._leds["ChipDetection"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/gear/motor/isMotoring",	func(n){me._leds["HydraulicPump"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/gear/hasWarning",		func(n){me._leds["GearWarn"].setState(n.getValue());},1,0) );
@@ -163,7 +163,7 @@ var AnnunciatorClass = {
 		append(me._listeners, setlistener("/extra500/panel/Side/Light/Recognition/state",func(n){me._leds["RecognLight"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/fuel/FuelFilterByPass",	func(n){me._leds["FuelFilterByPass"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/deice/Boots/PneumaticLow",	func(n){me._leds["PneumaticLow"].setState(n.getValue());},1,0) );
-		append(me._listeners, setlistener("/extra500/electric/eSystem/lowVoltage",	func(n){me._leds["LowVoltage"].setState(n.getValue());},1,0) );
+		append(me._listeners, setlistener("/extra500/electric/pcBoard1/lowVoltage",	func(n){me._leds["LowVoltage"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/deice/Boots/state",		func(n){me._leds["DeiceBoots"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/panel/Side/Light/Landing/state",	func(n){me._leds["LandingLight"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/fuel/FuelLowLeft",		func(n){me._leds["FuelLowLeft"].setState(n.getValue());},1,0) );
@@ -178,7 +178,7 @@ var AnnunciatorClass = {
 	},
 		
 	electricWork : func(){
-		if (me._volt > 22.0){
+		if (me._volt > me._voltMin){
 			me._watt = me._nWatt.getValue() * me._brightness;
 			me._ampere = me._watt / me._volt;
 			me._state = 1;
@@ -186,40 +186,42 @@ var AnnunciatorClass = {
 # 			foreach(l;me._ledsIndex){
 # 				me._leds[l].setBrightness(me._brightness,me._test);
 # 			}
+			
+			var brightness = me._brightness  * me._qos * me._voltNorm;
 # 			
-			me._leds["GeneratorFail"].setBrightness(me._brightness,me._test);
-			me._leds["AFTDoor"].setBrightness(me._brightness,me._test);
-			me._leds["StallHeat"].setBrightness(me._brightness,me._test);
-			me._leds["OilPress"].setBrightness(me._brightness,me._test);
-			me._leds["ChipDetection"].setBrightness(me._brightness,me._test);
-			me._leds["HydraulicPump"].setBrightness(me._brightness,me._test);
-			me._leds["GearWarn"].setBrightness(me._brightness,me._test);
-			me._leds["StallWarn"].setBrightness(me._brightness,me._test);
-			me._leds["WindshieldHeatFail"].setBrightness(me._brightness,me._test);
-			me._leds["FuelPress"].setBrightness(me._brightness,me._test);
-			me._leds["PitotHeatLeft"].setBrightness(me._brightness,me._test);
-			me._leds["PitotHeatRight"].setBrightness(me._brightness,me._test);
-			me._leds["Flaps"].setBrightness(me._brightness,me._test);
-			me._leds["CabinPressure"].setBrightness(me._brightness,me._test);
-			me._leds["BleedOvertemp"].setBrightness(me._brightness,me._test);
-			me._leds["StaticHeatLeft"].setBrightness(me._brightness,me._test);
-			me._leds["StaticHeatRight"].setBrightness(me._brightness,me._test);
-			me._leds["FuelTransLeft"].setBrightness(me._brightness,me._test);
-			me._leds["FuelTransRight"].setBrightness(me._brightness,me._test);
-			me._leds["StandByAlternOn"].setBrightness(me._brightness,me._test);
-			me._leds["IgnitionActive"].setBrightness(me._brightness,me._test);
-			me._leds["IntakeHeat"].setBrightness(me._brightness,me._test);
-			me._leds["RecognLight"].setBrightness(me._brightness,me._test);
-			me._leds["FuelFilterByPass"].setBrightness(me._brightness,me._test);
-			me._leds["PneumaticLow"].setBrightness(me._brightness,me._test);
-			me._leds["LowVoltage"].setBrightness(me._brightness,me._test);
-			me._leds["DeiceBoots"].setBrightness(me._brightness,me._test);
-			me._leds["LandingLight"].setBrightness(me._brightness,me._test);
-			me._leds["FuelLowLeft"].setBrightness(me._brightness,me._test);
-			me._leds["FuelLowRight"].setBrightness(me._brightness,me._test);
-			me._leds["PropellerLowPitch"].setBrightness(me._brightness,me._test);
+			me._leds["GeneratorFail"].setBrightness(brightness,me._test);
+			me._leds["AFTDoor"].setBrightness(brightness,me._test);
+			me._leds["StallHeat"].setBrightness(brightness,me._test);
+			me._leds["OilPress"].setBrightness(brightness,me._test);
+			me._leds["ChipDetection"].setBrightness(brightness,me._test);
+			me._leds["HydraulicPump"].setBrightness(brightness,me._test);
+			me._leds["GearWarn"].setBrightness(brightness,me._test);
+			me._leds["StallWarn"].setBrightness(brightness,me._test);
+			me._leds["WindshieldHeatFail"].setBrightness(brightness,me._test);
+			me._leds["FuelPress"].setBrightness(brightness,me._test);
+			me._leds["PitotHeatLeft"].setBrightness(brightness,me._test);
+			me._leds["PitotHeatRight"].setBrightness(brightness,me._test);
+			me._leds["Flaps"].setBrightness(brightness,me._test);
+			me._leds["CabinPressure"].setBrightness(brightness,me._test);
+			me._leds["BleedOvertemp"].setBrightness(brightness,me._test);
+			me._leds["StaticHeatLeft"].setBrightness(brightness,me._test);
+			me._leds["StaticHeatRight"].setBrightness(brightness,me._test);
+			me._leds["FuelTransLeft"].setBrightness(brightness,me._test);
+			me._leds["FuelTransRight"].setBrightness(brightness,me._test);
+			me._leds["StandByAlternOn"].setBrightness(brightness,me._test);
+			me._leds["IgnitionActive"].setBrightness(brightness,me._test);
+			me._leds["IntakeHeat"].setBrightness(brightness,me._test);
+			me._leds["RecognLight"].setBrightness(brightness,me._test);
+			me._leds["FuelFilterByPass"].setBrightness(brightness,me._test);
+			me._leds["PneumaticLow"].setBrightness(brightness,me._test);
+			me._leds["LowVoltage"].setBrightness(brightness,me._test);
+			me._leds["DeiceBoots"].setBrightness(brightness,me._test);
+			me._leds["LandingLight"].setBrightness(brightness,me._test);
+			me._leds["FuelLowLeft"].setBrightness(brightness,me._test);
+			me._leds["FuelLowRight"].setBrightness(brightness,me._test);
+			me._leds["PropellerLowPitch"].setBrightness(brightness,me._test);
 			me._leds["ExternalPower"].setBrightness(1.0,me._test);
-			me._leds["WindshieldHeatOn"].setBrightness(me._brightness,me._test);
+			me._leds["WindshieldHeatOn"].setBrightness(brightness,me._test);
 			
 		}else{
 			me._ampere = 0;

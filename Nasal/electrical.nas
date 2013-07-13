@@ -78,6 +78,13 @@ var ElectronClass ={
 			return 0;
 		}
 	},
+	balanceVolt : func(obj){
+		if(obj.volt > me.volt){
+			me.volt = obj.volt;
+		}else{
+			obj.volt = me.volt;
+		}
+	},
 	
 };
 
@@ -106,6 +113,12 @@ var ServiceClass = {
 	getPath : func(){
 		return me._path;
 	},
+	init : func(){
+		me.setListeners();
+	},
+	deinit : func(){
+		me.removeListeners();
+	},
 	setListeners  :func(){
 		
 	},
@@ -118,10 +131,48 @@ var ServiceClass = {
 	
 };
 
+var OutPutClass = {
+	new : func(){
+		var m = { parents : [ OutPutClass ] };
+		m._outputs		= {};
+		m._outputIndex		= [];
+		return m;
+	},
+	outputIndexRebuild : func(){
+		me._outputIndex = keys(me._outputs);
+	},
+	outputAdd : func(obj){
+		if (!contains(me._outputs,obj.getName())){
+			me._outputs[obj.getName()] = obj;
+			me._outputIndex = keys(me._outputs);
+			obj.setInput(me);
+			obj.setVolt(me._volt);
+		}
+	},
+	outputRemove : func(obj){
+		if (contains(me._outputs,obj.getName())){
+			delete(me._outputs, obj.getName());
+			me._outputIndex = keys(me._outputs);
+			obj.setVolt(0);
+		}
+	},
+};
+
+var InputClass = {
+	new : func(){
+		var m = { parents : [ InputClass ] };
+		m._input 		= nil;
+		return m;
+	},
+	setInput : func(obj){
+		me._input = obj;
+	},
+};
+
 var ElectricClass = {
 	new : func(root,name){
 		var m = { 
-			parents 	: [
+			parents : [
 				ElectricClass, 
 				ServiceClass.new(root,name)
 			]
@@ -208,15 +259,15 @@ var GeneratorClass = {
 		m._nN1			= props.globals.initNode("/engines/engine[0]/n1");
 		#m._nCtrlStarter		= props.globals.initNode("/controls/engines/engine[0]/starter",0,"BOOL");
 		#m._nCtrlGenerator	= props.globals.initNode("/controls/electric/engine[0]/generator",0,"BOOL");
-		m._voltMax		= 28.5;
+		m._voltMax		= 28.0;
 		m._ampereMax		= 200.0;
-		
+		m._modeGenerator	= 0;
 			
 		return m;
 	},
 	_gernerateVolt : func(now,dt){
 		me._N1 = me._nN1.getValue();
-		if (me._N1 > 30.0){
+		if ( (me._N1 > 55.0) and (me._modeGenerator == 1) ){
 			me._volt 		= 0.8 * me._N1;
 			me._ampereAvailable	= 2.85 * me._N1;
 			
@@ -232,6 +283,9 @@ var GeneratorClass = {
 		me._nAmpereAvailable.setValue(me._ampereAvailable);
 		me._nGenerating.setValue(me._generating);
 	},
+	setModeGenerator : func(value){
+		me._modeGenerator = value;
+	},
 	_genSinusTest : func(now,dt){
 		var sin = math.sin(now);
 		
@@ -245,13 +299,8 @@ var GeneratorClass = {
 		me._nAmpereAvailable.setValue(me._ampereAvailable);
 		
 	},
-	_spoolEngine : func(now,dt) {
-		
-	},
 	update : func(now,dt){
-		
 		me._gernerateVolt(now,dt);
-
 	},
 	_onVoltChange : func (n){
 		me._volt = n.getValue();
@@ -261,7 +310,9 @@ var GeneratorClass = {
 	},
 	applyAmpere : func(electron=nil){
 		me._ampereAvailable = me._nAmpereAvailable.getValue();
-		if (electron.ampere > 0){
+		if (electron.ampere <= me._ampereAvailable){
+			electron.ampere = 0;
+		}else{
 			electron.ampere -= me._ampereAvailable;
 		}
 	},
@@ -288,7 +339,7 @@ var AlternatorClass = {
 	},
 	_gernerateVolt : func(now,dt){
 		me._N1 = me._nN1.getValue();
-		if (me._N1 > 30.0){
+		if (me._N1 > 55.0){
 			me._volt 		= 0.8 * me._N1;
 			me._ampereAvailable 	= me._N1 * 0.594795539 - 36.0892193309;
 			me._volt 		= global.clamp(me._volt,0.0,me._voltMax);
@@ -296,6 +347,7 @@ var AlternatorClass = {
 		}else{
 			me._volt 		= 0;
 			me._ampereAvailable 	= 0;
+			me._nHasLoad.setValue(0);
 		}
 		me._nVolt.setValue(me._volt);
 		me._nAmpereAvailable.setValue(me._ampereAvailable);
@@ -314,12 +366,18 @@ var AlternatorClass = {
 	},
 	applyAmpere : func(electron=nil){
 		me._ampereAvailable = me._nAmpereAvailable.getValue();
-		if (electron.ampere > 0 and me._ampereAvailable > 0){
-			electron.ampere -= me._ampereAvailable;
+		if(electron.ampere>0){
 			me._nHasLoad.setValue(1);
+			if (electron.ampere <= me._ampereAvailable){
+				electron.ampere = 0;
+			}else{
+				electron.ampere -= me._ampereAvailable;
+			}
 		}else{
 			me._nHasLoad.setValue(0);
 		}
+		
+			
 	},
 };
 
@@ -332,15 +390,15 @@ var ExternalGeneratorClass = {
 			]
 		};
 		m._nAmpereAvailable	= m._nRoot.initNode("ampere_available",0.0,"DOUBLE");
-		m._pluged	= 0;
-		m._nIsPluged	= m._nRoot.initNode("isPluged",m._pluged,"BOOL");
+		m._isPluged		= 0;
+		m._nIsPluged		= m._nRoot.initNode("isPluged",m._isPluged,"BOOL");
 		m._voltMax		= 28.5;
 		m._ampereMax		= 1200.0;
 		m._ampereAvailable	= 0.0;			
 		return m;
 	},
 	update : func(now,dt){
-		if (me._pluged == 1){
+		if (me._isPluged == 1){
 			me._volt 		= me._voltMax;
 			me._ampereAvailable 	= me._ampereMax;
 		}else{
@@ -358,17 +416,19 @@ var ExternalGeneratorClass = {
 	},
 	applyAmpere : func(electron=nil){
 		me._ampereAvailable = me._nAmpereAvailable.getValue();
-		if (electron.ampere > 0){
+		if (electron.ampere <= me._ampereAvailable){
+			electron.ampere = 0;
+		}else{
 			electron.ampere -= me._ampereAvailable;
 		}
 	},
 	onPlug : func(value = nil){
 		if (value == nil){
-			me._pluged 	= me._pluged == 1 ? 0 : 1;
+			me._isPluged 	= me._isPluged == 1 ? 0 : 1;
 		}else{
-			me._pluged	= value;
+			me._isPluged	= value;
 		}
-		me._nIsPluged.setValue(me._pluged);
+		me._nIsPluged.setValue(me._isPluged);
 	},
 	registerUI : func(){
 		UI.register("Ground External Power Generator", 		func{me.onPlug(); } 	);
@@ -386,21 +446,31 @@ var BatteryClass = {
 				ElectricClass.new(root,name)
 			]
 		};
-		m._nAmpereAvailable	= m._nRoot.initNode("ampere_available",0.0,"DOUBLE");
-		m._nUsedAs		= m._nRoot.initNode("ampere_sec_used",0.0,"DOUBLE");
-		m._nLoadLevel		= m._nRoot.initNode("loadLevel",0.0,"DOUBLE");
 		m._capacityAs		= 28.0*3600;
-		m._loadLevel = 0.8;
-		m._usedAs = -(m._capacityAs * (1.0-m._loadLevel));
-		m._voltMax		= 24.0;
 		m._ampereMax		= 1000.0;
+		m._loadLevel 		= 0.97;
+		m._usedAs 		= (m._capacityAs * (1.0-m._loadLevel));
+		m._nAmpereAvailable	= m._nRoot.initNode("ampere_available",m._ampereMax,"DOUBLE");
+		m._nUsedAs		= m._nRoot.initNode("ampere_sec_used",m._usedAs,"DOUBLE");
+		m._nLoadLevel		= m._nRoot.initNode("loadLevel",m._loadLevel,"DOUBLE");
+		m._nAmpereCharge	= m._nRoot.initNode("ampere_charge",0,"DOUBLE",1);
+		m._voltMin		= 15.3;
+		m._voltMax		= 24.3;
+		m._voltDelta		= m._voltMax - m._voltMin;
 		m._lastTime		= systime();
+		m._dt			= 0;
 		return m;
 	},
+	init : func(){
+		me._loadLevel 		= me._nLoadLevel.getValue();
+		me._usedAs 		= (me._capacityAs * (1.0-me._loadLevel));
+		me._nUsedAs.setValue(me._usedAs);
+		
+	},
 	update : func(now,dt){
-		me._volt = me._voltMax;
+		me._dt = dt;
+		me._volt = math.floor((me._voltMin + (me._voltDelta * me._loadLevel) + 0.05)*10 )/10; ### FIXME : Better Volt Curve depending on Load Level
 		me._nVolt.setValue(me._volt);
-		me._nAmpereAvailable.setValue(me._ampereMax);
 	},
 	_onVoltChange : func (n){
 		me._volt = n.getValue();
@@ -410,19 +480,28 @@ var BatteryClass = {
 	},
 	applyAmpere : func(electron=nil){
 		if (electron.ampere > 0){
-			var now = systime();
-			var dt 	= now - me._lastTime;
-			me._lastTime = now;
-			
-			me._usedAs += electron.ampere * dt;
-					
-			me._loadLevel = (me._capacityAs + me._usedAs) / me._capacityAs;
+			me._usedAs += electron.ampere * me._dt;
+			me._usedAs = global.clamp(me._usedAs,0,me._capacityAs);
+			me._loadLevel = (me._capacityAs - me._usedAs) / me._capacityAs;
 			
 			me._nUsedAs.setValue(me._usedAs);
 			me._nLoadLevel.setValue(me._loadLevel);
 		}
 	},
+	charge : func(electron=nil){
+		if (electron.volt > me._volt){
+			electron.ampere = 48.0 * (1 - ((me._volt - me._voltMin) / (electron.volt - me._voltMin))) * (1-me._loadLevel) ; ### FIXME : Better charge Curve
+			me._nAmpereCharge.setValue(electron.ampere);
+			me._usedAs -= electron.ampere * me._dt;
+			me._usedAs = global.clamp(me._usedAs,0,me._capacityAs);
+			me._loadLevel = (me._capacityAs - me._usedAs) / me._capacityAs;
+			
+			me._nUsedAs.setValue(me._usedAs);
+			me._nLoadLevel.setValue(me._loadLevel);
+		}
+	}
 };
+
 var RelayClass = {
 	new : func(root,name,default=0){
 		var m = { 
@@ -431,9 +510,22 @@ var RelayClass = {
 				ServiceClass.new(root,name)
 			]
 		};
-		m._nState		= m._nRoot.initNode("state",default,"BOOL");
+		m._nState	= m._nRoot.initNode("state",default,"BOOL");
+		m._state 	= 0;
 		
 		return m;
+	},
+	setListeners : func() {
+		append(me._listeners ,setlistener(me._nState,func(n){me._onStateChange(n);},1,0) );
+	},
+	init : func(){
+		me.setListeners();
+	},
+	_onStateChange : func(n){
+		me._state = n.getValue();
+	},
+	checkCondition : func(){
+		
 	},
 	setState : func(value){
 		me._nState.setValue(value);
@@ -443,110 +535,20 @@ var RelayClass = {
 	},
 };
 
-var CircuitBrakerClass = {
-	new : func(root,name,ampereMax=1.0,default=1){
-		var m = { 
-			parents 		: [
-				CircuitBrakerClass,
-				ElectricClass.new(root,name)
-			]
-		};
-		m._outputs		= {};
-		m._outputIndex		= [];
-		m._voltListener 	= nil;
-		m._ampereListener 	= nil;
-		m._stateListener	= nil;
-		m._input 		= nil;
-		m._lastAmpere		= 0.0;
-		m._ampereMax		= ampereMax;
-		m._nState		= m._nRoot.initNode("state",default,"BOOL");
-		m._voltOut		= 0;
-		return m;
-	},
-	setListerners : func() {
-		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},0,0);
-		me._ampereListener 	= setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},0,0);
-		me._stateListener 	= setlistener(me._nState,func(n){me._onStateChange(n);},1,0);
-	},
-	setInput : func(obj){
-		me._input = obj;
-	},
-	_deliverVolt : func(){
-		if (me._state == 0){
-			me._voltOut = 0;
-		}else{
-			me._voltOut = me._volt;
-		}
-		
-		foreach( i;  me._outputIndex ){
-			me._outputs[i].setVolt(me._voltOut);
-		}
-	},
-	_onStateChange : func(n){
-		me._state = n.getValue();
-		me._deliverVolt();
-		if (me._state == 0){
-			print("CircuitBrakerClass._onStateChange() ... "~me._name~" break.");
-		}
-	},
-	_onVoltChange : func(n){
-		me._volt = n.getValue();
-		me._deliverVolt();
-	},
-	_onAmpereChange : func(n){
-		me._ampere = n.getValue();
-		#print("CircuitBrakerClass._onAmpereChange("~me._ampere~") ... "~me._name~".");
-		if (me._ampere < me._ampereMax){
-			var dif = me._ampere - me._lastAmpere;
-			me._lastAmpere = me._ampere;
-			me._input.addAmpere(dif);
-		}else{
-			me._nState.setValue(0);
-		}
-	},
-	onClick : func(value = nil){
-		if (value == nil){
-			me._nState.setValue(!me._nState.getValue());
-		}else{
-			me._nState.setValue(value);
-		}
-	},
-	addAmpere : func(ampere){
-		me._ampere = me._nAmpere.getValue();
-		me._nAmpere.setValue(me._ampere + ampere);
-	},
-	addOutput : func(obj){
-		me._outputs[obj.getName()] = obj;
-		me._outputIndex = keys(me._outputs);
-		obj.setInput(me);
-		obj.setVolt(me._volt);
-	},
-	removeOutput : func(obj){
-		delete(me._outputs, obj.getName());
-		me._outputIndex = keys(me._outputs);
-		obj.setVolt(0);
-	},
-	registerUI : func(){
-		UI.register("Circuit Breaker "~me._name~"", 		func{me.onClick(); } 	);
-		UI.register("Circuit Breaker "~me._name~" open", 	func{me.onClick(0); }	);
-		UI.register("Circuit Breaker "~me._name~" close", 	func{me.onClick(1); }	);
-		
-	}
-	
-};
+
 
 var ConsumerClass = {
 	new : func(root,name,watt=1.0){
 		var m = { 
 			parents : [
 				ConsumerClass,
+				InputClass.new(),
 				ElectricClass.new(root,name)
 			]
 		};
-		m._input 		= nil;
 		m._lastAmpere		= 0.0;
 		m._watt			= watt;
-		m._voltMin		= 18.0;
+		m._voltMin		= 16.0;
 		m._voltMax		= 28.0;
 		m._voltNorm		= global.norm(m._volt,m._voltMin,m._voltMax);
 		m._nVoltMin		= m._nRoot.initNode("voltMin",m._voltMin,"DOUBLE");
@@ -558,12 +560,9 @@ var ConsumerClass = {
 		return m;
 	},
 	init : func(){
-		me.setListerners();
+		me.setListeners();
 	},
-	setInput : func(obj){
-		me._input = obj;
-	},
-	setListerners : func() {
+	setListeners : func() {
 		append(me._listeners, setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0) );
 		append(me._listeners, setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0) );
 		append(me._listeners, setlistener(me._nWatt,func(n){me._onWattChange(n);},1,0) );
@@ -620,8 +619,7 @@ var ConsumerClass = {
 	},
 	registerUI : func(){
 		
-	}
-	
+	},
 	
 };
 
@@ -642,7 +640,7 @@ var LedClass = {
 		m._state = 0;
 		return m;
 	},
-	setListerners : func() {
+	setListeners : func() {
 		append(me._listeners, setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0) );
 		append(me._listeners, setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0) );
 		append(me._listeners, setlistener(me._nWatt,func(n){me._onWattChange(n);},1,0) );
@@ -650,6 +648,9 @@ var LedClass = {
 		append(me._listeners, setlistener(me._nVoltMax,func(n){me._onVoltMaxChange(n);},1,0) );
 		append(me._listeners, setlistener(me._nBrightness,func(n){me._onBrightnessChange(n);},1,0));
 		
+	},
+	init : func(){
+		me.setListeners();
 	},
 	_onBrightnessChange : func(n){
 		me._brightness = n.getValue();
@@ -708,8 +709,12 @@ var SwitchBoolClass = {
 		m._state	= 0;
 		return m;
 	},
-	setListerners : func() {
-		me._stateListener = setlistener(me._nState,func(n){me.onStateChange(n);},1,0);
+	init : func(){
+		me.registerUI();
+		me.setListeners();
+	},
+	setListeners : func() {
+		append(me._listeners, setlistener(me._nState,func(n){me.onStateChange(n);},1,0) );
 	},
 	onStateChange : func (n){
 		me._state	= n.getValue();
@@ -748,8 +753,12 @@ var SwitchClass = {
 		m._default		= cfg._default;
 		return m;
 	},
-	setListerners : func() {
-		me._stateListener = setlistener(me._nState,func(n){me.onStateChange(n);},1,0);
+	setListeners : func() {
+		append(me._listeners, setlistener(me._nState,func(n){me.onStateChange(n);},1,0) );
+	},
+	init : func(){
+		me.registerUI();
+		me.setListeners();
 	},
 	onStateChange : func (n){
 		me._state	= n.getValue();
@@ -801,29 +810,159 @@ var SwitchClass = {
 	
 };
 
+var DcBusClass = {
+	new : func(root,name){
+		var m = { 
+			parents 		: [
+				DcBusClass,
+				InputClass.new(),
+				OutPutClass.new(),
+				ElectricClass.new(root,name)
+			]
+		};
+		m._lastAmpere		= 0;
+		return m;
+	},
+	setListeners : func() {
+		append(me._listeners ,setlistener(me._nVolt,func(n){me._onVoltChange(n);},0,0) );
+		append(me._listeners ,setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},0,0) );
+	},
+	init : func(){
+		me.outputIndexRebuild();
+		me.setListeners();
+	},
+	_deliverVolt : func(){
+		foreach( i;  me._outputIndex ){
+			me._outputs[i].setVolt(me._volt);
+		}
+	},
+	_onVoltChange : func(n){
+		me._volt = n.getValue();
+		me._deliverVolt();
+	},
+	_onAmpereChange : func(n){
+		me._ampere = n.getValue();
+		var dif = me._ampere - me._lastAmpere;
+		me._lastAmpere = me._ampere;
+		me._input.addAmpere(dif);
+	},
+	addAmpere : func(ampere){
+		me._ampere = me._nAmpere.getValue();
+		me._nAmpere.setValue(me._ampere + ampere);
+	},
+
+};
+
+var CircuitBrakerClass = {
+	new : func(root,name,ampereMax=1.0,default=1){
+		var m = { 
+			parents 		: [
+				CircuitBrakerClass,
+				DcBusClass.new(root,name)
+			]
+		};
+		m._ampereMax		= ampereMax;
+		m._state		= 0;
+		m._nState		= m._nRoot.initNode("state",default,"BOOL");
+		m._voltOut		= 0;
+		m._nVoltOut		= m._nRoot.initNode("voltOut",0.0,"DOUBLE");
+		return m;
+	},
+	setListeners : func() {
+		append(me._listeners ,setlistener(me._nVolt,func(n){me._onVoltChange(n);},0,0) );
+		append(me._listeners ,setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},0,0) );
+		append(me._listeners ,setlistener(me._nState,func(n){me._onStateChange(n);},1,0) );
+	},
+	init : func(){
+		me.outputIndexRebuild();
+		me.registerUI();
+		me.setListeners();
+	},
+	_deliverVolt : func(){
+		if (me._state == 0){
+			me._voltOut = 0;
+		}else{
+			me._voltOut = me._volt;
+		}
+		me._nVoltOut.setValue(me._voltOut);
+		foreach( i;  me._outputIndex ){
+			me._outputs[i].setVolt(me._voltOut);
+		}
+		
+	},
+	_onStateChange : func(n){
+		me._state = n.getValue();
+		me._deliverVolt();
+		if (me._state == 0){
+			print("CircuitBrakerClass._onStateChange() ... "~me._name~" break.");
+		}
+	},
+	_onAmpereChange : func(n){
+		me._ampere = n.getValue();
+		#print("CircuitBrakerClass._onAmpereChange("~me._ampere~") ... "~me._name~".");
+		if (me._ampere < me._ampereMax){
+			var dif = me._ampere - me._lastAmpere;
+			me._lastAmpere = me._ampere;
+			me._input.addAmpere(dif);
+		}else{
+			me._nState.setValue(0);
+		}
+	},
+	onClick : func(value = nil){
+		if (value == nil){
+			me._nState.setValue(!me._nState.getValue());
+		}else{
+			me._nState.setValue(value);
+		}
+	},
+	registerUI : func(){
+		UI.register("Circuit Breaker "~me._name~"", 		func{me.onClick(); } 	);
+		UI.register("Circuit Breaker "~me._name~" open", 	func{me.onClick(0); }	);
+		UI.register("Circuit Breaker "~me._name~" close", 	func{me.onClick(1); }	);
+		
+	}
+	
+};
+
+
 var ESystem = {
 	new : func(root,name){ 
 		var m = { 
 			parents : [
 				ESystem,
+				OutPutClass.new(),
 				ServiceClass.new(root,name),
 				
 			]			
 		};
 		m._nVolt		= m._nRoot.initNode("volt",0.0,"DOUBLE");
 		m._nAmpere		= m._nRoot.initNode("ampere",0.0,"DOUBLE");
-		m._nLowVoltage		= m._nRoot.initNode("lowVoltage",0,"BOOL");
-		m._voltListener 	= nil;
-		m._ampereListener 	= nil;
+		m._nLoadBattery		= m._nRoot.initNode("loadBattery",0.0,"DOUBLE");
+		m._nLoadGenerator	= m._nRoot.initNode("loadGenerator",0.0,"DOUBLE");
+		
+		m._loadBattery		= 0.0;
+		m._loadGenerator	= 0.0;
+		
 		
 		m.relay		 	= nil;
 		m.source	 	= nil;
 		m.switch	 	= nil;
 		m.circuitBreaker 	= nil;
 		m.consumer	 	= nil;
+				
+		m._HotBus		= DcBusClass.new("/extra500/electric/bus/hot","Emergency Bus PP1");
+		m._BatteryBus		= DcBusClass.new("/extra500/electric/bus/battery","Battery Bus PP2");
+		m._LoadBus		= DcBusClass.new("/extra500/electric/bus/load","Load Bus PP3");
+		m._EmergencyBus		= DcBusClass.new("/extra500/electric/bus/emergency","Emergency Bus PP4");
+		m._AvionicsBus		= DcBusClass.new("/extra500/electric/bus/avionics","Avionics Bus PP5");
+		m._AvionicsBus		= DcBusClass.new("/extra500/electric/bus/avionics","Avionics Bus PP5");
+		m._PreBatteryBus	= DcBusClass.new("/extra500/electric/bus/preBattery","PreBatteryBus Bus PPx2");
 		
-		m._outputs		= {};
-		m._outputIndex		= [];
+		m._vHotBus 		= ElectronClass.new();
+		m._vBatteryBus 		= ElectronClass.new();
+		m._vLoadBus 		= ElectronClass.new();
+		m._vEmergencyBus 	= ElectronClass.new();
+		m._vPreBatteryBus 	= ElectronClass.new();
 		
 		m._volt = 0;
 		m._ampere = 0;
@@ -834,32 +973,155 @@ var ESystem = {
 		
 		m.timerLoop = nil;
 		print("ESystem.new() ... created.");
+		debug.dump(m.parents);
 		return m;
 	},
 	init : func(){
+		print("ESystem.init() ...");
 		me.source.ExternalGenerator.registerUI();
-		me.setListerners();
+		me.setListeners();
 		var index = nil;
 
+		
+		
+				
+		me._LoadBus.outputAdd(me.circuitBreaker.AIR_CON);
+		me._LoadBus.outputAdd(me.circuitBreaker.VENT);
+		me._LoadBus.outputAdd(me.circuitBreaker.AIR_CTRL);
+		me._LoadBus.outputAdd(me.circuitBreaker.PITOT_R);
+		me._LoadBus.outputAdd(me.circuitBreaker.CIGA_LTR);
+		me._LoadBus.outputAdd(me.circuitBreaker.DIP_2);
+		me._LoadBus.outputAdd(me.circuitBreaker.ENG_INST_2);
+		me._LoadBus.outputAdd(me.circuitBreaker.FUEL_TR_L);
+		me._LoadBus.outputAdd(me.circuitBreaker.FUEL_TR_R);
+		me._LoadBus.outputAdd(me.circuitBreaker.P_VENT);
+		me._LoadBus.outputAdd(me.circuitBreaker.CABIN_LT);
+		me._LoadBus.outputAdd(me.circuitBreaker.NAV_LT);
+		me._LoadBus.outputAdd(me.circuitBreaker.RECO_LT);
+		me._LoadBus.outputAdd(me.circuitBreaker.O_SP_TEST);
+		me._LoadBus.outputAdd(me.circuitBreaker.IFD_RH_A);
+		me._LoadBus.outputAdd(me.circuitBreaker.WTHR_DET);
+		me._LoadBus.outputAdd(me.circuitBreaker.DME);
+		me._LoadBus.outputAdd(me.circuitBreaker.AUDIO_MRK);
+		me._LoadBus.outputAdd(me.circuitBreaker.VDC12);
+		me._LoadBus.outputAdd(me.circuitBreaker.IRIDUM);
+		me._LoadBus.outputAdd(me.circuitBreaker.SIRIUS);
+		me._LoadBus.outputAdd(me.circuitBreaker.EMGC_2);
+
+		me._BatteryBus.outputAdd(me.circuitBreaker.GEAR_AUX_1);
+		me._BatteryBus.outputAdd(me.circuitBreaker.GEAR_CTRL);
+		me._BatteryBus.outputAdd(me.circuitBreaker.HYDR);
+		me._BatteryBus.outputAdd(me.circuitBreaker.WSH_HT);
+		me._BatteryBus.outputAdd(me.circuitBreaker.WSH_CTRL);
+		me._BatteryBus.outputAdd(me.circuitBreaker.PROP_HT);
+		me._BatteryBus.outputAdd(me.circuitBreaker.FUEL_P_2);
+		me._BatteryBus.outputAdd(me.circuitBreaker.START);
+		me._BatteryBus.outputAdd(me.circuitBreaker.IGN);
+		me._BatteryBus.outputAdd(me.circuitBreaker.ENV_BLEED);
+		me._BatteryBus.outputAdd(me.circuitBreaker.FLAP_CTRL);
+		me._BatteryBus.outputAdd(me.circuitBreaker.FLAP);
+		me._BatteryBus.outputAdd(me.circuitBreaker.FUEL_FLOW);
+		me._BatteryBus.outputAdd(me.circuitBreaker.ICE_LT);
+		me._BatteryBus.outputAdd(me.circuitBreaker.STROBE_LT);
+		me._BatteryBus.outputAdd(me.circuitBreaker.INST_LT);
+		me._BatteryBus.outputAdd(me.circuitBreaker.BOOTS);
+		me._BatteryBus.outputAdd(me.circuitBreaker.AP_SERVO);
+		me._BatteryBus.outputAdd(me.circuitBreaker.IFD_LH_B);
+		me._BatteryBus.outputAdd(me.circuitBreaker.VNE_WARN);
+		me._BatteryBus.outputAdd(me.circuitBreaker.AV_BUS);
+		me._BatteryBus.outputAdd(me.circuitBreaker.EMGC_1);
+
+		me._EmergencyBus.outputAdd(me.circuitBreaker.GEAR_WARN);
+		me._EmergencyBus.outputAdd(me.circuitBreaker.FUEL_P_1);
+		me._EmergencyBus.outputAdd(me.circuitBreaker.PITOT_L);
+		me._EmergencyBus.outputAdd(me.circuitBreaker.DIP_1);
+		me._EmergencyBus.outputAdd(me.circuitBreaker.ENG_INST_1);
+		me._EmergencyBus.outputAdd(me.circuitBreaker.C_PRESS);
+		me._EmergencyBus.outputAdd(me.circuitBreaker.DUMP);
+		me._EmergencyBus.outputAdd(me.circuitBreaker.FUEL_QTY);
+		me._EmergencyBus.outputAdd(me.circuitBreaker.LOW_VOLT);
+		me._EmergencyBus.outputAdd(me.circuitBreaker.STALL_WARN);
+		me._EmergencyBus.outputAdd(me.circuitBreaker.VOLT_MON);
+		me._EmergencyBus.outputAdd(me.circuitBreaker.LDG_LT);
+		me._EmergencyBus.outputAdd(me.circuitBreaker.WARN_LT);
+		me._EmergencyBus.outputAdd(me.circuitBreaker.GLARE_LT);
+		me._EmergencyBus.outputAdd(me.circuitBreaker.INTAKE_AI);
+		me._EmergencyBus.outputAdd(me.circuitBreaker.STBY_GYRO);
+		me._EmergencyBus.outputAdd(me.circuitBreaker.IFD_LH_A);
+		me._EmergencyBus.outputAdd(me.circuitBreaker.KEYPAD);
+		me._EmergencyBus.outputAdd(me.circuitBreaker.ATC);
+		me._EmergencyBus.outputAdd(me.circuitBreaker.GEN_RESET);
+		me._EmergencyBus.outputAdd(me.circuitBreaker.ALT);
+
+		me._HotBus.outputAdd(me.circuitBreaker.GEAR_AUX_2);
+		me._HotBus.outputAdd(me.circuitBreaker.EXT_LADER);
+		me._HotBus.outputAdd(me.circuitBreaker.ALT_FIELD);
+		me._HotBus.outputAdd(me.circuitBreaker.COURTESY_LT);
+		me._HotBus.outputAdd(me.circuitBreaker.ELT);
+
+		me._AvionicsBus.outputAdd(me.circuitBreaker.IFD_RH_B);
+		me._AvionicsBus.outputAdd(me.circuitBreaker.TAS);
+		me._AvionicsBus.outputAdd(me.circuitBreaker.AP_CMPTR);
+		me._AvionicsBus.outputAdd(me.circuitBreaker.TB);
+
+		me._AvionicsBus.outputAdd(me.circuitBreaker.IFD_RH_B);
+		me._AvionicsBus.outputAdd(me.circuitBreaker.TAS);
+		me._AvionicsBus.outputAdd(me.circuitBreaker.AP_CMPTR);
+		me._AvionicsBus.outputAdd(me.circuitBreaker.TB);
+		
+		
+		me.outputAdd(me._HotBus);
+		me.outputAdd(me._BatteryBus);
+		me.outputAdd(me._LoadBus);
+		me.outputAdd(me._EmergencyBus);
+		me.outputAdd(me._PreBatteryBus);
+		#me.outputAdd(me._AvionicsBus);
+		
+		me._HotBus.init();
+		me._BatteryBus.init();
+		me._LoadBus.init();
+		me._EmergencyBus.init();
+		me._AvionicsBus.init();
+		me._PreBatteryBus.init();
+		
+		index =  keys(me.source);
+		foreach (i;index){
+			me.source[i].init();
+		}
+		
+		
+		index =  keys(me.relay);
+		foreach (i;index){
+			me.relay[i].init();
+		}
+		
+		index =  keys(me.circuitBreaker);
+		foreach (i;index){
+			me.circuitBreaker[i].init();
+			#me.outputAdd(me.circuitBreaker[i]);
+		}
+		
 		index =  keys(me.switch);
 		foreach (i;index){
-			me.switch[i].registerUI();
-			me.switch[i].setListerners();
+			me.switch[i].init();
 		}
-		index =  keys(me.circuitBreaker);
 
-		foreach (i;index){
-			me.circuitBreaker[i].registerUI();
-			me.circuitBreaker[i].setListerners();
-			me.addOutput(me.circuitBreaker[i]);
-		}
+		eSystem.relay.K1.checkCondition();
+		eSystem.relay.K2.checkCondition();
+		eSystem.relay.K3.checkCondition();
+		eSystem.relay.K4.checkCondition();
+		eSystem.relay.K5.checkCondition();
+		eSystem.relay.K7.checkCondition();
+		eSystem.relay.K10.checkCondition();
+		
+
 		me._timerLoop = maketimer(1.0,me,ESystem.checkSource);
 		me._timerLoop.start();
 		
 	},
-	setListerners : func() {
-		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0);
-		me._ampereListener 	= setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0);
+	setListeners : func() {
+		#append(me._listeners, setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0) );
+		#append(me._listeners, setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0) );
 	},
 	connectOutput : func(obj){
 		me._outputs[obj.getName()] = obj;
@@ -869,9 +1131,9 @@ var ESystem = {
 	_onVoltChange : func(n){
 		me._volt = n.getValue();
 		
-		foreach( i;  me._outputIndex ){
-			me._outputs[i].setVolt(me._volt);
-		}
+# 		foreach( i;  me._outputIndex ){
+# 			me._outputs[i].setVolt(me._volt);
+# 		}
 	},
 	_onAmpereChange : func(n){
 		me._ampere = n.getValue();
@@ -888,47 +1150,223 @@ var ESystem = {
 		me._lastTime = now;
 		
 		me._volt = 0;
+		me.source.Generator.update(now,dt);
+		me.source.Battery.update(now,dt);
+		me.source.ExternalGenerator.update(now,dt);
+		me.source.Alternator.update(now,dt);
 		
-# 		print ("\n ESystem.checkSource() ... "~now ~" "~dt~"\n");
-		if(me.switch.External._state == 1){
-			me.source.ExternalGenerator.update(now,dt);
-			me._setMaxVolt(me.source.ExternalGenerator._volt);
-# 			print ("External Generator " ~ me.source.externalGenerator._volt);
+		me._vHotBus.volt = me.source.Battery._volt;
+		me._vBatteryBus.volt = 0;
+		me._vLoadBus.volt = 0;
+		me._vEmergencyBus.volt = 0;
+		me._vPreBatteryBus.volt = 0;
+				
+
+		if(me.relay.K1._state == 1){
+			me._vPreBatteryBus.volt = me.source.ExternalGenerator._volt;
+			me._vPreBatteryBus.balanceVolt(me._vBatteryBus);
 		}
 		
-		if(me.switch.Generator._state == 1){
-			me.source.Generator.update(now,dt);
-			me._setMaxVolt(me.source.Generator._volt);
-# 			print ("Generator " ~ me.source.generator._volt);
-			eSystem.relais.K3.setState(me.source.Generator._generating);
-		}else{
-			eSystem.relais.K3.setState(0);
+		if(me.relay.K3._state == 1){
+			me._vLoadBus.volt = me.source.Generator._volt;
 		}
 				
-		if(me.switch.Alternator._state == 1){
-			me.source.Alternator.update(now,dt);
-			me._setMaxVolt(me.source.Alternator._volt);
-# 			print ("Alternator " ~ me.source.alternator._volt);
+		if(me.relay.K7._state == 0){
+			me._vEmergencyBus.volt = me.source.Alternator._volt;
+		}
+		
+		
+		
+		if(me.relay.K4._state == 1){
+			me._vHotBus.balanceVolt(me._vPreBatteryBus);
+			me._vPreBatteryBus.balanceVolt(me._vBatteryBus);
+		}
+		if(me.relay.K5._state == 1){
+			me._vBatteryBus.balanceVolt(me._vLoadBus);
+		}
+		if(me.relay.K10._state == 0){
+			me._vBatteryBus.balanceVolt(me._vEmergencyBus);
+		}
+		if(me.relay.K4._state == 1){
+			me._vBatteryBus.balanceVolt(me._vPreBatteryBus);
+			me._vPreBatteryBus.balanceVolt(me._vHotBus);
+		}
+		
+		
+		
+		
+		me._HotBus._nVolt.setValue(me._vHotBus.volt);
+		me._BatteryBus._nVolt.setValue(me._vBatteryBus.volt);
+		me._LoadBus._nVolt.setValue(me._vLoadBus.volt);
+		me._EmergencyBus._nVolt.setValue(me._vEmergencyBus.volt);
+		me._PreBatteryBus._nVolt.setValue(me._vPreBatteryBus.volt);
+		
+		me._loadBattery 	= 0;
+		me._loadGenerator	= 0;
+			
+		me._vHotBus.ampere		= 0;
+		me._vBatteryBus.ampere 		= 0;
+		me._vLoadBus.ampere 		= 0;
+		me._vEmergencyBus.ampere 	= 0;
+		me._vPreBatteryBus.ampere 	= 0;
+		
+		me.source.Battery.charge(me._vHotBus);
+		
+		me._vHotBus.ampere		+= me._HotBus._ampere;
+		me._vBatteryBus.ampere 		+= me._BatteryBus._ampere;
+		me._vLoadBus.ampere 		+= me._LoadBus._ampere;
+		me._vEmergencyBus.ampere 	+= me._EmergencyBus._ampere;
+		me._vPreBatteryBus.ampere 	+= me._PreBatteryBus._ampere;
+		
+		
+		if (me.relay.K1._state == 1){ # Load goes to external Generator
+			if(me.relay.K5._state == 1){
+				me._vBatteryBus.ampere += me._LoadBus._ampere;
+			}
+			if(me.relay.K10._state == 0){
+				me._vBatteryBus.ampere += me._EmergencyBus._ampere;
+			}else{
+				me._vHotBus.ampere 	+= me._EmergencyBus._ampere;
+			}
+			
+			me._loadBattery			-= me._vBatteryBus.ampere;
+			me._vPreBatteryBus.ampere	+= me._vBatteryBus.ampere;
+			
+			if(me.relay.K4._state == 1){
+				me._vPreBatteryBus.ampere	+= me._vHotBus.ampere;
+			}else{
+				me.source.Battery.applyAmpere(me._vHotBus,dt);
+			}
+						
+			me.source.ExternalGenerator.applyAmpere(me._vPreBatteryBus,dt);
+			
+			
 		}else{
-			me.source.Alternator._nHasLoad.setValue(0);
+			if (me.relay.K3._state == 1){ # Load goes to Generator
+				
+				if(me.relay.K5._state == 1){
+					
+					if(me.relay.K10._state == 0){
+						me._vBatteryBus.ampere += me._EmergencyBus._ampere;
+					}else{
+						me._vHotBus.ampere 	+= me._EmergencyBus._ampere;
+					}
+										
+					if(me.relay.K4._state == 1){
+						me._vPreBatteryBus.ampere 	+= me._vHotBus.ampere;						
+					}else{
+						if (me.relay.K10._state == 1  and (me.relay.K7._state == 0) ){
+							me.source.Alternator.applyAmpere(me._vHotBus,dt);
+						}
+						me.source.Battery.applyAmpere(me._vHotBus,dt);
+					}
+					
+					me._loadBattery 	+= me._vPreBatteryBus.ampere;
+					me._vBatteryBus.ampere 	+= me._vPreBatteryBus.ampere;
+					
+					me._vLoadBus.ampere 	+= me._vBatteryBus.ampere;
+					
+					me._loadGenerator 	= me._vLoadBus.ampere;
+					me.source.Generator.applyAmpere(me._vLoadBus,dt);
+					me._loadGenerator	-= me._vLoadBus.ampere;
+						
+					
+					if ( (me.relay.K10._state == 0) and (me.relay.K7._state == 0) ){
+						me.source.Alternator.applyAmpere(me._vLoadBus,dt);
+					}
+					
+					if (me.relay.K4._state == 1 ){
+						me._loadBattery		+= me._vLoadBus.ampere;
+						me.source.Battery.applyAmpere(me._vLoadBus,dt);
+					}
+				}
+				
+
+				
+			
+			}else{
+				if( (me.relay.K7._state == 0) ){# Load goes to Alternator
+					if(me.relay.K10._state == 0){
+						
+						if(me.relay.K5._state == 1){
+							me._vBatteryBus.ampere += me._vLoadBus.ampere;
+						}
+						
+						if(me.relay.K4._state == 1){
+							me._vPreBatteryBus.ampere 	+= me._vHotBus.ampere;
+							
+						}
+						me._vBatteryBus.ampere 		+= me._vPreBatteryBus.ampere;
+						me._loadBattery			+= me._vPreBatteryBus.ampere;
+						me._vEmergencyBus.ampere 	+= me._vBatteryBus.ampere;
+						
+						me._loadGenerator 	= me._vEmergencyBus.ampere;
+						
+						me.source.Alternator.applyAmpere(me._vEmergencyBus,dt);
+						me._loadGenerator	-= me._vEmergencyBus.ampere;
+						
+						if (me.relay.K4._state == 1 ){
+							me._loadBattery		-= me._vEmergencyBus.ampere;
+							me.source.Battery.applyAmpere(me._vEmergencyBus,dt);
+						}
+						
+					}else{
+						if(me.relay.K4._state == 1){
+							if(me.relay.K5._state == 1){
+								me._vBatteryBus.ampere += me._vLoadBus.ampere;
+							}
+							me._vPreBatteryBus.ampere += me._vBatteryBus.ampere;
+							me._loadBattery		  -= me._vBatteryBus.ampere;
+						
+						}
+						me._vEmergencyBus.ampere 	+= me._vHotBus.ampere;
+						
+						me._loadGenerator 	= me._vEmergencyBus.ampere;
+						me.source.Alternator.applyAmpere(me._vEmergencyBus,dt);
+						me._loadGenerator	-= me._vEmergencyBus.ampere;
+						me.source.Battery.applyAmpere(me._vEmergencyBus,dt);
+						
+					}
+					
+					
+					
+				}else{
+					if (me.relay.K4._state == 1 ){# Load goes to Battery
+						
+						if(me.relay.K5._state == 1){
+							me._vBatteryBus.ampere += me._LoadBus._ampere;
+						}
+						
+						if(me.relay.K10._state == 0){
+							me._vBatteryBus.ampere += me._EmergencyBus._ampere;
+						}else{
+							me._vHotBus.ampere 	+= me._EmergencyBus._ampere;
+						}
+						
+						
+						me._loadBattery		-= me._vBatteryBus.ampere;
+						
+						me._vHotBus.ampere		+= me._vBatteryBus.ampere;
+						me._vHotBus.ampere		+= me._PreBatteryBus._ampere;
+							
+						me.source.Battery.applyAmpere(me._vHotBus,dt);
+					}else{
+						#print("eSystem.checkSource() ... WARNING ! no Source to apply load.")
+					}
+					
+				}
+			}
+
 		}
 		
-		if(me.switch.Battery._state == 1){
-			me.source.Battery.update(now,dt);
-			me._setMaxVolt(me.source.Battery._volt);
-# 			print ("Battery " ~ me.source.battery._volt);
-		}
-		#print("Bus Volt " ~ me._volt);
 		
-		if (me._volt < 25.5){
-			me._nLowVoltage.setValue(1);
-		}else{
-			me._nLowVoltage.setValue(0);
-		}
 		
-		me._nVolt.setValue(me._volt);
+		
+		me._nLoadBattery.setValue(me._loadBattery);
+		me._nLoadGenerator.setValue(me._loadGenerator);
 		
 	},
+	
 	applyAmpere : func(ampere){
 		var now = systime();
 		var dt = now - me._lastTime;
@@ -962,14 +1400,6 @@ var ESystem = {
 		me._ampere = me._nAmpere.getValue();
 		me._nAmpere.setValue(me._ampere + ampere);
 	},
-	addOutput : func(obj){
-		me._outputs[obj.getName()] = obj;
-		me._outputIndex = keys(me._outputs);
-		obj.setInput(me);
-		obj.setVolt(me._volt);
-	},
-	
-	
 };
 
 
@@ -978,8 +1408,14 @@ var ESystem = {
 
 var eSystem = ESystem.new("/extra500/electric/eSystem","EBox");
 
-eSystem.relais = {
+eSystem.relay = {
+	K1			: RelayClass.new("/extra500/electric/relay/K1","EXT Power Relay K1"),
+	K2			: RelayClass.new("/extra500/electric/relay/K2","Start Relay K2"),
 	K3			: RelayClass.new("/extra500/electric/relay/K3","Generator Relay K3"),
+	K4			: RelayClass.new("/extra500/electric/relay/K4","Battery Relay K4"),
+	K5			: RelayClass.new("/extra500/electric/relay/K5","RCCB Relay K5"),
+	K7			: RelayClass.new("/extra500/electric/relay/K7","Alternator Relay K7"),
+	K10			: RelayClass.new("/extra500/electric/relay/K10","Alt Charge Relay K10"),
 };
 
 
@@ -1043,115 +1479,243 @@ eSystem.switch = {
 
 eSystem.circuitBreaker = {
 #load bus
-	AIR_CON			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/AirCondition","Air Condition",125),
-	VENT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/Vent","Vent",30),
-	AIR_CTRL		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/AirControl","Air Control",2),
-	PITOT_R			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/PitotR","Pitot R",15),
-	CIGA_LTR		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/CigaretteLighter","Cigarette Lighter",10),
-	DIP_2			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/DIP2","DIP-2",1),
-	ENG_INST_2		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/EngineInstrument2","Engine Instrument 2",2),
-	FUEL_TR_L		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/FuelTransferL","Fuel Transfer L",5),
-	FUEL_TR_R		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/FuelTransferR","Fuel Transfer R",5),
-	P_VENT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/PanelVent","Panel Vent",2),
-	CABIN_LT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/CabinLight","Cabin Light",5),
-	NAV_LT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/NavLight","Nav Light",5),
-	RECO_LT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/RecognitionLight","Recognition Light",5),
-	O_SP_TEST		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/OverSpeed","Over Speed Test",2),
-	IFD_RH_A		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/IFD-RH-A","IFD Right A",10),
-	WTHR_DET		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/WeatherDetection","Weather Detection",10),
-	DME			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/DME","DME",2),
-	AUDIO_MRK		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/AudioMarker","Audio Marker",5),
-	VDC12			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/VDC12","VDC12",10),
-	IRIDUM			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/Iridium","Iridium",10),
-	SIRIUS			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/Sirius","Sirius",10),
-	EMGC_2			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/Emergency2","Emergency 2",10),
+	AIR_CON		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/AirCondition","Air Condition",125),
+	VENT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/Vent","Vent",30),
+	AIR_CTRL	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/AirControl","Air Control",2),
+	PITOT_R		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/PitotR","Pitot R",15),
+	CIGA_LTR	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/CigaretteLighter","Cigarette Lighter",10),
+	DIP_2		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/DIP2","DIP-2",1),
+	ENG_INST_2	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/EngineInstrument2","Engine Instrument 2",2),
+	FUEL_TR_L	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/FuelTransferL","Fuel Transfer L",5),
+	FUEL_TR_R	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/FuelTransferR","Fuel Transfer R",5),
+	P_VENT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/PanelVent","Panel Vent",2),
+	CABIN_LT	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/CabinLight","Cabin Light",5),
+	NAV_LT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/NavLight","Nav Light",5),
+	RECO_LT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/RecognitionLight","Recognition Light",5),
+	O_SP_TEST	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/OverSpeed","Over Speed Test",2),
+	IFD_RH_A	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/IFD-RH-A","IFD Right A",10),
+	WTHR_DET	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/WeatherDetection","Weather Detection",10),
+	DME		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/DME","DME",2),
+	AUDIO_MRK	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/AudioMarker","Audio Marker",5),
+	VDC12		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/VDC12","VDC12",10),
+	IRIDUM		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/Iridium","Iridium",10),
+	SIRIUS		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankA/Sirius","Sirius",10),
+	EMGC_2		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/Emergency2","Emergency 2",10),
 #battery bus
-	GEAR_AUX_1		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/GearAux1","Gear Aux 1",5),
-	GEAR_CTRL		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/GearControl","Gear Control",5),
-	HYDR			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Hydraulic","Hydraulic",50),
-	WSH_HT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/WindShieldHeat","Wind Shield Heat",20),
-	WSH_CTRL		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/WindShieldControl","Wind Shield Control",2),
-	PROP_HT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/PropellerHeat","PropellerHeat",30),
-	FUEL_P_2		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/FuelPump2","Fuel Pump 2",7.5),
-	START			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Start","Start",5),
-	IGN			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Ignition","Ignition",5),
-	ENV_BLEED		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/EnvironmentalBleed","Environmental Bleed",5),
-	FLAP_CTRL		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/FlapControl","Flap Control",5),
-	FLAP			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Flap","Flap",7.5),
-	FUEL_FLOW		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/FuelFlow","Fuel Flow",1),
-	ICE_LT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/IceLight","Ice Light",7.5),
-	STROBE_LT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/StrobeLight","Strobe Light",7.5),
-	INST_LT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/InstrumentLight","Instrument Light",7.5),
-	BOOTS			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Boots","Boots",2),
-	AP_SERVO		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/AutopilotServo","Autopilot Servo",5),
-	IFD_LH_B		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/IFD-LH-B","IFD Left B",10),
-	VNE_WARN		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/VneWarn","Vne Warn",1),
-	AV_BUS			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/AvBus","AV Bus",30),
-	EMGC_1			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Emergency1","Emergency 1",30),
+	GEAR_AUX_1	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/GearAux1","Gear Aux 1",5),
+	GEAR_CTRL	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/GearControl","Gear Control",5),
+	HYDR		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Hydraulic","Hydraulic",50),
+	WSH_HT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/WindShieldHeat","Wind Shield Heat",20),
+	WSH_CTRL	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/WindShieldControl","Wind Shield Control",2),
+	PROP_HT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/PropellerHeat","PropellerHeat",30),
+	FUEL_P_2	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/FuelPump2","Fuel Pump 2",7.5),
+	START		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Start","Start",5),
+	IGN		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Ignition","Ignition",5),
+	ENV_BLEED	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/EnvironmentalBleed","Environmental Bleed",5),
+	FLAP_CTRL	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/FlapControl","Flap Control",5),
+	FLAP		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Flap","Flap",7.5),
+	FUEL_FLOW	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/FuelFlow","Fuel Flow",1),
+	ICE_LT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/IceLight","Ice Light",7.5),
+	STROBE_LT	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/StrobeLight","Strobe Light",7.5),
+	INST_LT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/InstrumentLight","Instrument Light",7.5),
+	BOOTS		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Boots","Boots",2),
+	AP_SERVO	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/AutopilotServo","Autopilot Servo",5),
+	IFD_LH_B	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/IFD-LH-B","IFD Left B",10),
+	VNE_WARN	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/VneWarn","Vne Warn",1),
+	AV_BUS		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/AvBus","AV Bus",30),
+	EMGC_1		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/Emergency1","Emergency 1",30),
 #emergency bus
-	GEAR_WARN		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/GearWarn","Gear Warn",2),
-	FUEL_P_1		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/FuelPump1","Fuel Pump 1",7.5),
-	PITOT_L			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/PitotL","Pitot L",10),
-	DIP_1			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/DIP1","DIP 1",1),
-	ENG_INST_1		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/EngineInstrument1","Engine Instrument 1",2),
-	C_PRESS			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/CabinPressure","Cabin Pressure",3),
-	DUMP			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/Dump","Dump",2),
-	FUEL_QTY		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/FuelQuantity","Fuel Quantity",2),
-	LOW_VOLT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/LowVolt","Low Volt",1),
-	STALL_WARN		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/StallWarning","Stall Warning",1),
-	VOLT_MON		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/VoltMonitor","Volt Monitor",1),
-	LDG_LT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/LandingLight","Landing Light",10),
-	WARN_LT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/WarnLight","Warn Light",7.5),
-	GLARE_LT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/GlareLight","Glare Light",1),
-	INTAKE_AI		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/IntakeAI","Intake AI",2),
-	STBY_GYRO		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/StandbyGyroskop","Standby Gyroskop",2),
-	IFD_LH_A		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/IFD-LH-A","IFD Left A",10),
-	KEYPAD			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/Keypad","Keypad",1),
-	ATC			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/ATC","ATC",3),
-	GEN_RESET		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/GeneratorReset","Generator Reset",5),
-	ALT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/Alt","Alt",2),
+	GEAR_WARN	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/GearWarn","Gear Warn",2),
+	FUEL_P_1	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/FuelPump1","Fuel Pump 1",7.5),
+	PITOT_L		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/PitotL","Pitot L",10),
+	DIP_1		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/DIP1","DIP 1",1),
+	ENG_INST_1	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/EngineInstrument1","Engine Instrument 1",2),
+	C_PRESS		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/CabinPressure","Cabin Pressure",3),
+	DUMP		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/Dump","Dump",2),
+	FUEL_QTY	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/FuelQuantity","Fuel Quantity",2),
+	LOW_VOLT	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/LowVolt","Low Volt",1),
+	STALL_WARN	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/StallWarning","Stall Warning",1),
+	VOLT_MON	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/VoltMonitor","Volt Monitor",1),
+	LDG_LT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/LandingLight","Landing Light",10),
+	WARN_LT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/WarnLight","Warn Light",7.5),
+	GLARE_LT	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/GlareLight","Glare Light",1),
+	INTAKE_AI	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/IntakeAI","Intake AI",2),
+	STBY_GYRO	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/StandbyGyroskop","Standby Gyroskop",2),
+	IFD_LH_A	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/IFD-LH-A","IFD Left A",10),
+	KEYPAD		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/Keypad","Keypad",1),
+	ATC		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/ATC","ATC",3),
+	GEN_RESET	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/GeneratorReset","Generator Reset",5),
+	ALT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankD/Alt","Alt",2),
 #hot bus
-	GEAR_AUX_2		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/GearAux2","Gear Aux 2",5),
-	EXT_LADER		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/EXT_LADER","EXT LADER",5),
-	ALT_FIELD		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/ALT_FIELD","ALT FIELD",2),
-	COURTESY_LT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/COURTESY_LT","Courtesy Light",5),
-	ELT			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/ELT","ELT",1),
+	GEAR_AUX_2	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/GearAux2","Gear Aux 2",5),
+	EXT_LADER	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/EXT_LADER","EXT LADER",5),
+	ALT_FIELD	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/ALT_FIELD","ALT FIELD",2),
+	COURTESY_LT	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/COURTESY_LT","Courtesy Light",5),
+	ELT		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/ELT","ELT",1),
 #avionic bus
-	IFD_RH_B		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/IFD-RH-B","IFD Right B",10),
-	TAS			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/TAS","TAS",3),
-	AP_CMPTR		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/AutopilotComputer","Autopilot Computer",5),
-	TB			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/TurnCoordinator","Turn Coordinator",5),
+	IFD_RH_B	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/IFD-RH-B","IFD Right B",10),
+	TAS		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/TAS","TAS",3),
+	AP_CMPTR	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/AutopilotComputer","Autopilot Computer",5),
+	TB		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/TurnCoordinator","Turn Coordinator",5),
 #no Bus
-	FLAP_UNB		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/FlapUNB","Flap UNB",1),
-	RCCB			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/RCCB","RCCB",1),
-	BUS_TIE			: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/BusTie","Bus Tie",0),
+	FLAP_UNB	: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankC/FlapUNB","Flap UNB",1),
+	RCCB		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/RCCB","RCCB",1),
+	BUS_TIE		: CircuitBrakerClass.new("extra500/panel/CircuitBreaker/BankB/BusTie","Bus Tie",0),
 	
 };
 
 
-# switches 
+
+
+### External Power K1 Relay MM Page 571
+eSystem.relay.K1.checkCondition = func(){
+	if ( 	(eSystem.switch.External._state == 1) 
+		and (eSystem.relay.K3._state == 0 ) 
+		and (eSystem.source.ExternalGenerator._isPluged == 1 )
+	){
+		me.setState(1);
+	}else{
+		me.setState(0);
+	}
+
+};
+eSystem.relay.K1.setListeners = func() {
+	append(me._listeners ,setlistener(me._nState,func(n){me._onStateChange(n);},1,0) );
+	append(me._listeners ,setlistener(eSystem.source.ExternalGenerator._nIsPluged,func(){me.checkCondition();eSystem.checkSource();},1,0) );
+};
+	
+eSystem.relay.K1._onStateChange = func(n){
+	me._state = n.getValue();
+	eSystem.relay.K5.checkCondition();
+}
+
+
+### Start Relay K2 MM Page 567, 569 
+eSystem.relay.K2.checkCondition = func(){
+	
+};
+eSystem.relay.K2._onStateChange = func(n){
+	me._state = n.getValue();
+	eSystem.relay.K5.checkCondition();
+}
+
+### Generator Relay K3 MM Page 567, 569
+eSystem.relay.K3.checkCondition = func(){
+	if ( (eSystem.switch.Generator._state == 1) and (eSystem.source.Generator._generating == 1) ){
+		me.setState(1);
+	}else{
+		me.setState(0);
+	}
+	
+};
+eSystem.relay.K3.setListeners = func() {
+	append(me._listeners ,setlistener(me._nState,func(n){me._onStateChange(n);},1,0) );
+	append(me._listeners ,setlistener(eSystem.source.Generator._nGenerating,func(){me.checkCondition();eSystem.checkSource();},1,0) );
+};
+eSystem.relay.K3._onStateChange = func(n){
+	me._state = n.getValue();
+	eSystem.relay.K1.checkCondition();
+	eSystem.relay.K5.checkCondition();
+}
+
+### Battery Relay K4 MM Page 567, 569
+eSystem.relay.K4.checkCondition = func(){
+	if ( (eSystem.switch.Battery._state == 1) ){
+		me.setState(1);
+	}else{
+		me.setState(0);
+	}
+	
+};
+eSystem.relay.K4._onStateChange = func(n){
+	me._state = n.getValue();
+	eSystem.relay.K5.checkCondition();
+}
+
+
+### RCCB Relay K5 MM Page 569
+eSystem.relay.K5.checkCondition = func(){
+	if ( 			
+		(eSystem.circuitBreaker.RCCB._state == 1)
+		and
+		((eSystem.relay.K1._state == 1) or (eSystem.relay.K3._state == 1))
+		and
+		(eSystem.relay.K2._state == 0)
+				
+	){
+		me.setState(1);
+	}else{
+		me.setState(0);
+	}
+	
+};
+eSystem.relay.K5._onStateChange = func(n){
+	me._state = n.getValue();
+}
+
+### Alternator Relay K7 MM Page 569, 568
+eSystem.relay.K7.checkCondition = func(){
+	if ( (eSystem.switch.Alternator._state == 0) and (eSystem.circuitBreaker.ALT._volt >= 14.0) ){
+		me.setState(1);
+	}else{
+		me.setState(0);
+	}
+	
+};
+eSystem.relay.K7._onStateChange = func(n){
+	me._state = n.getValue();
+}
+
+### Alt Charge Relay K10 MM Page 569, 568
+eSystem.relay.K10.checkCondition = func(){
+	if ( (eSystem.switch.Emergency._state == 1)){
+		me.setState(1);
+	}else{
+		me.setState(0);
+	}
+	
+};
+eSystem.relay.K10._onStateChange = func(n){
+	me._state = n.getValue();
+}
+
+
+### Circuit Breaker
+
+eSystem.circuitBreaker.RCCB._onStateChange = func(n){
+	me._state = n.getValue();
+	eSystem.relay.K5.checkCondition();
+	eSystem.checkSource();
+};
+
+
+### switches 
 
 eSystem.switch.Battery.onStateChange = func(n){
 	me._state = n.getValue();
-	#print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
+# 	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
+	eSystem.relay.K4.checkCondition();
 	eSystem.checkSource();
 };
 
 eSystem.switch.Alternator.onStateChange = func(n){
 	me._state = n.getValue();
-	#print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
+# 	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
+	eSystem.relay.K7.checkCondition();
 	eSystem.checkSource();
 };
 
 eSystem.switch.Generator.onStateChange = func(n){
 	me._state = n.getValue();
 	#print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
+	eSystem.relay.K3.checkCondition();
 	eSystem.checkSource();
 };
 
 eSystem.switch.External.onStateChange = func(n){
 	me._state = n.getValue();
 	#print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
+	eSystem.relay.K1.checkCondition();
 	eSystem.checkSource();
 };
 
@@ -1164,10 +1728,20 @@ eSystem.switch.GeneratorTest.onStateChange = func(n){
 eSystem.switch.Avionics.onStateChange = func(n){
 	me._state = n.getValue();
 	#print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
+	if (me._state == 1){
+		eSystem.circuitBreaker.AV_BUS.outputAdd(eSystem._AvionicsBus);
+	}else{
+		eSystem.circuitBreaker.AV_BUS.outputRemove(eSystem._AvionicsBus);
+	}
 	
 };
 
-
+eSystem.switch.Emergency.onStateChange = func(n){
+	me._state = n.getValue();
+	#print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
+	eSystem.relay.K10.checkCondition();
+	eSystem.checkSource();
+};
 
 
 

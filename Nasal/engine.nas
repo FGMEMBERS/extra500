@@ -32,7 +32,7 @@ var IgnitionClass = {
 		return m;
 	},
 	electricWork : func(){
-		if (me._ignition == 1 and me._volt > 22.0){
+		if (me._ignition == 1 and me._volt > me._voltMin){
 			me._watt = me._nWatt.getValue();
 			me._ampere = me._watt / me._volt;
 			me._nIgnition.setValue(1);
@@ -73,7 +73,7 @@ var StarterClass = {
 		
 		return m;
 	},
-	setListerners : func() {
+	setListeners : func() {
 		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0);
 		me._ampereListener 	= setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0);
 		#me._starterListener 	= setlistener(me._nStarter,func(n){me._onStarterChange(n);},1,0);
@@ -82,8 +82,9 @@ var StarterClass = {
 	_onRunningChange : func(n){
 		me._running		= n.getValue();
 		if (me._running == 1){
-			me._starter 		= 0;
+			me._starter = 0;
 		}
+		eSystem.source.Generator.setModeGenerator(me._running);
 		me.electricWork();
 	},
 	_onStarterChange : func(n){
@@ -91,17 +92,16 @@ var StarterClass = {
 		me.electricWork();
 	},
 	electricWork : func(){
-		if ((me._starter == 1) and (me._volt > 22.0)){
+		if ((me._starter == 1) and (me._volt > me._voltMin)){
 			me._watt = me._nWatt.getValue();
 			me._ampere = me._watt / me._volt;
-			me._nGenerator.setValue(1);
-			me._nStarter.setValue(1);
 		}else{
 			me._ampere = 0;
 			me._starter = 0;
-			me._nGenerator.setValue(0);
-			me._nStarter.setValue(0);
+			
 		}
+		me._nGenerator.setValue(me._starter);
+		me._nStarter.setValue(me._starter);
 		me._nAmpere.setValue(me._ampere);
 	},
 	on : func(){
@@ -246,11 +246,11 @@ var EngineClass = {
 		UI.register("Engine reverser on",	func{extra500.engine.onReverserClick(1); } 	);
 		UI.register("Engine reverser off",	func{extra500.engine.onReverserClick(0); } 	);
 		
-		me.ignition.setListerners();
-		eSystem.circuitBreaker.IGN.addOutput(me.ignition);
+		me.ignition.setListeners();
+		eSystem.circuitBreaker.IGN.outputAdd(me.ignition);
 		
-		me.starter.setListerners();
-		eSystem.addOutput(me.starter);
+		me.starter.setListeners();
+		eSystem._PreBatteryBus.outputAdd(me.starter);
 		
 		me._checkIgnitionCutoff();
 		me._timerLoop = maketimer(1.0,me,EngineClass.update);

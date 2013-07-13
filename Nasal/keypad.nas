@@ -42,7 +42,7 @@ var KeypadClass = {
 		return m;
 
 	},
-	setListerners : func() {
+	setListeners : func() {
 		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0);
 		me._ampereListener 	= setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0);
 		me._brightnessListener	= setlistener(me._nBrightness,func(n){me._onBrightnessChange(n);},1,0);
@@ -52,7 +52,7 @@ var KeypadClass = {
 		me.electricWork();
 	},
 	electricWork : func(){
-		if (me._volt > 22.0){
+		if (me._volt > me._voltMin){
 			me._watt = me._nWatt.getValue();
 			me._ampere = me._watt / me._volt;
 			me._state = 1;
@@ -69,8 +69,8 @@ var KeypadClass = {
 	},
 	init : func(){
 		me.initUI();
-		me.setListerners();
-		eSystem.circuitBreaker.KEYPAD.addOutput(me);
+		me.setListeners();
+		eSystem.circuitBreaker.KEYPAD.outputAdd(me);
 	},
 	
 	

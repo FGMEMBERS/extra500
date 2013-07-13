@@ -35,7 +35,7 @@ var LightClass = {
 		return m;
 	},
 	init : func(){
-		me.setListerners();
+		me.setListeners();
 	},
 	electricWork : func(){
 		if ((me._value == 1 ) and (me._volt > me._voltMin) ){
@@ -81,15 +81,15 @@ var LightPanelClass = {
 		return m;
 	},
 	init : func(){
-		eSystem.circuitBreaker.STROBE_LT.addOutput(me.strope);
-		eSystem.circuitBreaker.NAV_LT.addOutput(me.nav);
-		eSystem.circuitBreaker.LDG_LT.addOutput(me.landing);
-		eSystem.circuitBreaker.RECO_LT.addOutput(me.recognition);
-		eSystem.circuitBreaker.CABIN_LT.addOutput(me.cabin);
-		eSystem.circuitBreaker.CABIN_LT.addOutput(me.map);
-		eSystem.circuitBreaker.GLARE_LT.addOutput(me.glare);
-		eSystem.circuitBreaker.ICE_LT.addOutput(me.ice);
-		eSystem.circuitBreaker.COURTESY_LT.addOutput(me.courtesy);
+		eSystem.circuitBreaker.STROBE_LT.outputAdd(me.strope);
+		eSystem.circuitBreaker.NAV_LT.outputAdd(me.nav);
+		eSystem.circuitBreaker.LDG_LT.outputAdd(me.landing);
+		eSystem.circuitBreaker.RECO_LT.outputAdd(me.recognition);
+		eSystem.circuitBreaker.CABIN_LT.outputAdd(me.cabin);
+		eSystem.circuitBreaker.CABIN_LT.outputAdd(me.map);
+		eSystem.circuitBreaker.GLARE_LT.outputAdd(me.glare);
+		eSystem.circuitBreaker.ICE_LT.outputAdd(me.ice);
+		eSystem.circuitBreaker.COURTESY_LT.outputAdd(me.courtesy);
 		
 		me.strope.init();
 		me.nav.init();

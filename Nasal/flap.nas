@@ -39,7 +39,7 @@ var FlapMotorClass = {
 	},
 	electricWork : func(){
 		
-		if ((me._target != me._value) and (me._volt >= 22.0) ){
+		if ((me._target != me._value) and (me._volt >= me._voltMin) ){
 			#print ("FlapMotorClass.electricWork() ... on");
 			me._watt = me._nWatt.getValue();
 			me._ampere = me._watt / me._volt;
@@ -109,31 +109,31 @@ var FlapSystemClass = {
 	init : func(){
 				
 		me._switch.registerUI();
-		me._switch.setListerners();
-		me._motor.setListerners();
+		me._switch.setListeners();
+		me._motor.setListeners();
 		
 		me._ledTrans.shine = func(light){
 			flapSystem._nLEDTrans.setValue(light);
 		};
-		me._ledTrans.setListerners();
+		me._ledTrans.setListeners();
 		
 		me._led15.shine = func(light){
 			flapSystem._nLED15.setValue(light);
 		};
-		me._led15.setListerners();
+		me._led15.setListeners();
 		
 		me._led30.shine = func(light){
 			flapSystem._nLED30.setValue(light);
 		};
-		me._led30.setListerners();
+		me._led30.setListeners();
 		
 		
 		
 		
-		eSystem.circuitBreaker.FLAP.addOutput(me._motor);
-		eSystem.circuitBreaker.WARN_LT.addOutput(me._ledTrans);
-		eSystem.circuitBreaker.WARN_LT.addOutput(me._led15);
-		eSystem.circuitBreaker.WARN_LT.addOutput(me._led30);
+		eSystem.circuitBreaker.FLAP.outputAdd(me._motor);
+		eSystem.circuitBreaker.WARN_LT.outputAdd(me._ledTrans);
+		eSystem.circuitBreaker.WARN_LT.outputAdd(me._led15);
+		eSystem.circuitBreaker.WARN_LT.outputAdd(me._led30);
 		
 		
 		UI.register("Flaps down", 	func{me._switch.onAdjust(-1); } 	);
