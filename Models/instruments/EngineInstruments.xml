@@ -749,7 +749,7 @@
 		<object-name>EngineInstruments.BAT.minus</object-name>
 		<condition>
 		<less-than>
-			<property>extra500/electric/eBox/BatteryShunt/indicatedAmpere</property>
+			<property>/extra500/electric/eSystem/loadBattery</property>
 			<value>0</value>
 		</less-than>
 		</condition>

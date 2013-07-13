@@ -1431,9 +1431,11 @@ var AvidyneIFD = {
 		m.keys = {};
 		m.nBacklight  	= m._nRoot.initNode("Backlight/state",1.0,"DOUBLE");
 		m._nState  	= m._nRoot.initNode("state",0,"BOOL");
+		m._brightness	= 1;
 		
 		m._powerA	= extra500.ConsumerClass.new(root~"/powerA",name~" Power A",60.0);
 		m._powerB	= extra500.ConsumerClass.new(root~"/powerB",name~" Power B",60.0);
+		m._voltNorm	= 0;
 		
 		m._nOverSpeedWarning  	= props.globals.initNode("/extra500/sound/overspeedWarning",0.0,"BOOL");
 		
@@ -1506,6 +1508,8 @@ var AvidyneIFD = {
 		
 		append(me._listeners, setlistener(me._powerA._nState,func(n){me._onPowerAChange(n);},1,0) );
 		append(me._listeners, setlistener(me._powerB._nState,func(n){me._onPowerBChange(n);},1,0) );
+		append(me._listeners, setlistener(me._powerA._nVoltNorm,func(n){me._onPowerVoltNormChange(n);},1,0) );
+		append(me._listeners, setlistener(me._powerB._nVoltNorm,func(n){me._onPowerVoltNormChange(n);},1,0) );
 		append(me._listeners, setlistener(me._nState,func(n){me._onStateChange(n);},1,0) );
 		me.nLedDim.setValue(1);
 		me.keys["DIM >"] = func(){me._adjustBrightness(0.1);};
@@ -1534,6 +1538,11 @@ var AvidyneIFD = {
 		me._timerLoop2Hz.start();
 		
 	},
+	_onPowerVoltNormChange : func(n){
+		me._voltNorm = n.getValue();
+		me.nBacklight.setValue(me._brightness * me._voltNorm);
+	},
+
 	_onPowerAChange : func(n){
 		me._powerA._state = n.getBoolValue();
 		if (me._powerA._state == 0){
@@ -1576,6 +1585,13 @@ var AvidyneIFD = {
 		me._state = n.getBoolValue();
 		if (me._state == 1){
 			me.gotoPage(me._startPage);
+			if(me._powerA._voltNorm > me._powerB._voltNorm){
+				me._voltNorm = me._powerA._voltNorm;
+			}else{
+				me._voltNorm = me._powerB._voltNorm;
+			}
+		}else{
+			me._voltNorm = 0;
 		}
 		me.page[me.pageSelected].setVisible(me._state);
 	},
@@ -1646,10 +1662,9 @@ var AvidyneIFD = {
 		}
 	},
 	_adjustBrightness : func(amount){
-		var brightness = me.nBacklight.getValue();
-		brightness += amount;
-		brightness = global.clamp(brightness,0,1.0);
-		me.nBacklight.setValue(brightness);
+		me._brightness += amount;
+		me._brightness = global.clamp(me._brightness,0,1.0);
+		me.nBacklight.setValue(me._brightness * me._voltNorm);
 	},
 	
 	onClick: func(key){

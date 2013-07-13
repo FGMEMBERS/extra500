@@ -52,7 +52,7 @@ var KeypadClass = {
 		me.electricWork();
 	},
 	electricWork : func(){
-		if (me._volt > 22.0){
+		if (me._volt > me._voltMin){
 			me._watt = me._nWatt.getValue();
 			me._ampere = me._watt / me._volt;
 			me._state = 1;

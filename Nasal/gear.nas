@@ -42,7 +42,7 @@ var HydraulicMotorClass = {
 	},
 	electricWork : func(){
 		
-		if ((me._motoring == 1) and (me._volt >= 22.0) ){
+		if ((me._motoring == 1) and (me._volt >= me._voltMin) ){
 			#print ("HydraulicMotorClass.electricWork() ... on");
 			me._watt = me._nWatt.getValue();
 			me._ampere = me._watt / me._volt;

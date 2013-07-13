@@ -95,7 +95,7 @@ var AutopilotClass = {
 		me.electricWork();
 	},
 	electricWork : func(){
-		if (eSystem.switch.AutopilotMaster._state >= 0 and me._volt > 22.0){
+		if (eSystem.switch.AutopilotMaster._state >= 0 and me._volt > me._voltMin){
 			me._watt = me._nWatt.getValue();
 			me._ampere = me._watt / me._volt;
 			me._ampere += (0.3 * me._brightness) / me._volt;
@@ -104,7 +104,7 @@ var AutopilotClass = {
 			me._ampere = 0;
 			me.nAPState.setValue(0);
 		}
-		me._nBacklight.setValue(me._brightness);
+		me._nBacklight.setValue(me._brightness * me._qos * me._voltNorm);
 		me._nAmpere.setValue(me._ampere);
 	},
 	update : func(){

@@ -178,7 +178,7 @@ var AnnunciatorClass = {
 	},
 		
 	electricWork : func(){
-		if (me._volt > 22.0){
+		if (me._volt > me._voltMin){
 			me._watt = me._nWatt.getValue() * me._brightness;
 			me._ampere = me._watt / me._volt;
 			me._state = 1;
@@ -186,40 +186,42 @@ var AnnunciatorClass = {
 # 			foreach(l;me._ledsIndex){
 # 				me._leds[l].setBrightness(me._brightness,me._test);
 # 			}
+			
+			var brightness = me._brightness  * me._qos * me._voltNorm;
 # 			
-			me._leds["GeneratorFail"].setBrightness(me._brightness,me._test);
-			me._leds["AFTDoor"].setBrightness(me._brightness,me._test);
-			me._leds["StallHeat"].setBrightness(me._brightness,me._test);
-			me._leds["OilPress"].setBrightness(me._brightness,me._test);
-			me._leds["ChipDetection"].setBrightness(me._brightness,me._test);
-			me._leds["HydraulicPump"].setBrightness(me._brightness,me._test);
-			me._leds["GearWarn"].setBrightness(me._brightness,me._test);
-			me._leds["StallWarn"].setBrightness(me._brightness,me._test);
-			me._leds["WindshieldHeatFail"].setBrightness(me._brightness,me._test);
-			me._leds["FuelPress"].setBrightness(me._brightness,me._test);
-			me._leds["PitotHeatLeft"].setBrightness(me._brightness,me._test);
-			me._leds["PitotHeatRight"].setBrightness(me._brightness,me._test);
-			me._leds["Flaps"].setBrightness(me._brightness,me._test);
-			me._leds["CabinPressure"].setBrightness(me._brightness,me._test);
-			me._leds["BleedOvertemp"].setBrightness(me._brightness,me._test);
-			me._leds["StaticHeatLeft"].setBrightness(me._brightness,me._test);
-			me._leds["StaticHeatRight"].setBrightness(me._brightness,me._test);
-			me._leds["FuelTransLeft"].setBrightness(me._brightness,me._test);
-			me._leds["FuelTransRight"].setBrightness(me._brightness,me._test);
-			me._leds["StandByAlternOn"].setBrightness(me._brightness,me._test);
-			me._leds["IgnitionActive"].setBrightness(me._brightness,me._test);
-			me._leds["IntakeHeat"].setBrightness(me._brightness,me._test);
-			me._leds["RecognLight"].setBrightness(me._brightness,me._test);
-			me._leds["FuelFilterByPass"].setBrightness(me._brightness,me._test);
-			me._leds["PneumaticLow"].setBrightness(me._brightness,me._test);
-			me._leds["LowVoltage"].setBrightness(me._brightness,me._test);
-			me._leds["DeiceBoots"].setBrightness(me._brightness,me._test);
-			me._leds["LandingLight"].setBrightness(me._brightness,me._test);
-			me._leds["FuelLowLeft"].setBrightness(me._brightness,me._test);
-			me._leds["FuelLowRight"].setBrightness(me._brightness,me._test);
-			me._leds["PropellerLowPitch"].setBrightness(me._brightness,me._test);
+			me._leds["GeneratorFail"].setBrightness(brightness,me._test);
+			me._leds["AFTDoor"].setBrightness(brightness,me._test);
+			me._leds["StallHeat"].setBrightness(brightness,me._test);
+			me._leds["OilPress"].setBrightness(brightness,me._test);
+			me._leds["ChipDetection"].setBrightness(brightness,me._test);
+			me._leds["HydraulicPump"].setBrightness(brightness,me._test);
+			me._leds["GearWarn"].setBrightness(brightness,me._test);
+			me._leds["StallWarn"].setBrightness(brightness,me._test);
+			me._leds["WindshieldHeatFail"].setBrightness(brightness,me._test);
+			me._leds["FuelPress"].setBrightness(brightness,me._test);
+			me._leds["PitotHeatLeft"].setBrightness(brightness,me._test);
+			me._leds["PitotHeatRight"].setBrightness(brightness,me._test);
+			me._leds["Flaps"].setBrightness(brightness,me._test);
+			me._leds["CabinPressure"].setBrightness(brightness,me._test);
+			me._leds["BleedOvertemp"].setBrightness(brightness,me._test);
+			me._leds["StaticHeatLeft"].setBrightness(brightness,me._test);
+			me._leds["StaticHeatRight"].setBrightness(brightness,me._test);
+			me._leds["FuelTransLeft"].setBrightness(brightness,me._test);
+			me._leds["FuelTransRight"].setBrightness(brightness,me._test);
+			me._leds["StandByAlternOn"].setBrightness(brightness,me._test);
+			me._leds["IgnitionActive"].setBrightness(brightness,me._test);
+			me._leds["IntakeHeat"].setBrightness(brightness,me._test);
+			me._leds["RecognLight"].setBrightness(brightness,me._test);
+			me._leds["FuelFilterByPass"].setBrightness(brightness,me._test);
+			me._leds["PneumaticLow"].setBrightness(brightness,me._test);
+			me._leds["LowVoltage"].setBrightness(brightness,me._test);
+			me._leds["DeiceBoots"].setBrightness(brightness,me._test);
+			me._leds["LandingLight"].setBrightness(brightness,me._test);
+			me._leds["FuelLowLeft"].setBrightness(brightness,me._test);
+			me._leds["FuelLowRight"].setBrightness(brightness,me._test);
+			me._leds["PropellerLowPitch"].setBrightness(brightness,me._test);
 			me._leds["ExternalPower"].setBrightness(1.0,me._test);
-			me._leds["WindshieldHeatOn"].setBrightness(me._brightness,me._test);
+			me._leds["WindshieldHeatOn"].setBrightness(brightness,me._test);
 			
 		}else{
 			me._ampere = 0;

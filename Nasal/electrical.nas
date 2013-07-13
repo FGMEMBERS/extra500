@@ -78,6 +78,13 @@ var ElectronClass ={
 			return 0;
 		}
 	},
+	balanceVolt : func(obj){
+		if(obj.volt > me.volt){
+			me.volt = obj.volt;
+		}else{
+			obj.volt = me.volt;
+		}
+	},
 	
 };
 
@@ -254,13 +261,13 @@ var GeneratorClass = {
 		#m._nCtrlGenerator	= props.globals.initNode("/controls/electric/engine[0]/generator",0,"BOOL");
 		m._voltMax		= 28.0;
 		m._ampereMax		= 200.0;
-		
+		m._modeGenerator	= 0;
 			
 		return m;
 	},
 	_gernerateVolt : func(now,dt){
 		me._N1 = me._nN1.getValue();
-		if (me._N1 > 30.0){
+		if ( (me._N1 > 55.0) and (me._modeGenerator == 1) ){
 			me._volt 		= 0.8 * me._N1;
 			me._ampereAvailable	= 2.85 * me._N1;
 			
@@ -276,6 +283,9 @@ var GeneratorClass = {
 		me._nAmpereAvailable.setValue(me._ampereAvailable);
 		me._nGenerating.setValue(me._generating);
 	},
+	setModeGenerator : func(value){
+		me._modeGenerator = value;
+	},
 	_genSinusTest : func(now,dt){
 		var sin = math.sin(now);
 		
@@ -289,13 +299,8 @@ var GeneratorClass = {
 		me._nAmpereAvailable.setValue(me._ampereAvailable);
 		
 	},
-	_spoolEngine : func(now,dt) {
-		
-	},
 	update : func(now,dt){
-		
 		me._gernerateVolt(now,dt);
-
 	},
 	_onVoltChange : func (n){
 		me._volt = n.getValue();
@@ -305,7 +310,9 @@ var GeneratorClass = {
 	},
 	applyAmpere : func(electron=nil){
 		me._ampereAvailable = me._nAmpereAvailable.getValue();
-		if (electron.ampere > 0){
+		if (electron.ampere <= me._ampereAvailable){
+			electron.ampere = 0;
+		}else{
 			electron.ampere -= me._ampereAvailable;
 		}
 	},
@@ -332,7 +339,7 @@ var AlternatorClass = {
 	},
 	_gernerateVolt : func(now,dt){
 		me._N1 = me._nN1.getValue();
-		if (me._N1 > 30.0){
+		if (me._N1 > 55.0){
 			me._volt 		= 0.8 * me._N1;
 			me._ampereAvailable 	= me._N1 * 0.594795539 - 36.0892193309;
 			me._volt 		= global.clamp(me._volt,0.0,me._voltMax);
@@ -340,6 +347,7 @@ var AlternatorClass = {
 		}else{
 			me._volt 		= 0;
 			me._ampereAvailable 	= 0;
+			me._nHasLoad.setValue(0);
 		}
 		me._nVolt.setValue(me._volt);
 		me._nAmpereAvailable.setValue(me._ampereAvailable);
@@ -358,12 +366,18 @@ var AlternatorClass = {
 	},
 	applyAmpere : func(electron=nil){
 		me._ampereAvailable = me._nAmpereAvailable.getValue();
-		if (electron.ampere > 0 and me._ampereAvailable > 0){
-			electron.ampere -= me._ampereAvailable;
+		if(electron.ampere>0){
 			me._nHasLoad.setValue(1);
+			if (electron.ampere <= me._ampereAvailable){
+				electron.ampere = 0;
+			}else{
+				electron.ampere -= me._ampereAvailable;
+			}
 		}else{
 			me._nHasLoad.setValue(0);
 		}
+		
+			
 	},
 };
 
@@ -402,7 +416,9 @@ var ExternalGeneratorClass = {
 	},
 	applyAmpere : func(electron=nil){
 		me._ampereAvailable = me._nAmpereAvailable.getValue();
-		if (electron.ampere > 0){
+		if (electron.ampere <= me._ampereAvailable){
+			electron.ampere = 0;
+		}else{
 			electron.ampere -= me._ampereAvailable;
 		}
 	},
@@ -430,21 +446,31 @@ var BatteryClass = {
 				ElectricClass.new(root,name)
 			]
 		};
-		m._nAmpereAvailable	= m._nRoot.initNode("ampere_available",0.0,"DOUBLE");
-		m._nUsedAs		= m._nRoot.initNode("ampere_sec_used",0.0,"DOUBLE");
-		m._nLoadLevel		= m._nRoot.initNode("loadLevel",0.0,"DOUBLE");
 		m._capacityAs		= 28.0*3600;
-		m._loadLevel = 0.8;
-		m._usedAs = -(m._capacityAs * (1.0-m._loadLevel));
-		m._voltMax		= 24.0;
 		m._ampereMax		= 1000.0;
+		m._loadLevel 		= 0.97;
+		m._usedAs 		= (m._capacityAs * (1.0-m._loadLevel));
+		m._nAmpereAvailable	= m._nRoot.initNode("ampere_available",m._ampereMax,"DOUBLE");
+		m._nUsedAs		= m._nRoot.initNode("ampere_sec_used",m._usedAs,"DOUBLE");
+		m._nLoadLevel		= m._nRoot.initNode("loadLevel",m._loadLevel,"DOUBLE");
+		m._nAmpereCharge	= m._nRoot.initNode("ampere_charge",0,"DOUBLE",1);
+		m._voltMin		= 15.3;
+		m._voltMax		= 24.3;
+		m._voltDelta		= m._voltMax - m._voltMin;
 		m._lastTime		= systime();
+		m._dt			= 0;
 		return m;
 	},
+	init : func(){
+		me._loadLevel 		= me._nLoadLevel.getValue();
+		me._usedAs 		= (me._capacityAs * (1.0-me._loadLevel));
+		me._nUsedAs.setValue(me._usedAs);
+		
+	},
 	update : func(now,dt){
-		me._volt = me._voltMax;
+		me._dt = dt;
+		me._volt = math.floor((me._voltMin + (me._voltDelta * me._loadLevel) + 0.05)*10 )/10; ### FIXME : Better Volt Curve depending on Load Level
 		me._nVolt.setValue(me._volt);
-		me._nAmpereAvailable.setValue(me._ampereMax);
 	},
 	_onVoltChange : func (n){
 		me._volt = n.getValue();
@@ -454,18 +480,26 @@ var BatteryClass = {
 	},
 	applyAmpere : func(electron=nil){
 		if (electron.ampere > 0){
-			var now = systime();
-			var dt 	= now - me._lastTime;
-			me._lastTime = now;
-			
-			me._usedAs += electron.ampere * dt;
-					
-			me._loadLevel = (me._capacityAs + me._usedAs) / me._capacityAs;
+			me._usedAs += electron.ampere * me._dt;
+			me._usedAs = global.clamp(me._usedAs,0,me._capacityAs);
+			me._loadLevel = (me._capacityAs - me._usedAs) / me._capacityAs;
 			
 			me._nUsedAs.setValue(me._usedAs);
 			me._nLoadLevel.setValue(me._loadLevel);
 		}
 	},
+	charge : func(electron=nil){
+		if (electron.volt > me._volt){
+			electron.ampere = 48.0 * (1 - ((me._volt - me._voltMin) / (electron.volt - me._voltMin))) * (1-me._loadLevel) ; ### FIXME : Better charge Curve
+			me._nAmpereCharge.setValue(electron.ampere);
+			me._usedAs -= electron.ampere * me._dt;
+			me._usedAs = global.clamp(me._usedAs,0,me._capacityAs);
+			me._loadLevel = (me._capacityAs - me._usedAs) / me._capacityAs;
+			
+			me._nUsedAs.setValue(me._usedAs);
+			me._nLoadLevel.setValue(me._loadLevel);
+		}
+	}
 };
 
 var RelayClass = {
@@ -514,7 +548,7 @@ var ConsumerClass = {
 		};
 		m._lastAmpere		= 0.0;
 		m._watt			= watt;
-		m._voltMin		= 18.0;
+		m._voltMin		= 16.0;
 		m._voltMax		= 28.0;
 		m._voltNorm		= global.norm(m._volt,m._voltMin,m._voltMax);
 		m._nVoltMin		= m._nRoot.initNode("voltMin",m._voltMin,"DOUBLE");
@@ -890,22 +924,6 @@ var CircuitBrakerClass = {
 	
 };
 
-var VirtualBusClass = {
-	new : func(){ 
-		var m = { parents : [ VirtualBusClass ]	};
-		m._volt = 0;
-		m._ampere = 0;
-		return m;
-	},
-	balanceVolt : func(obj){
-		if(obj._volt > me._volt){
-			me._volt = obj._volt;
-		}else{
-			obj._volt = me._volt;
-		}
-	}
-	
-};
 
 var ESystem = {
 	new : func(root,name){ 
@@ -919,9 +937,12 @@ var ESystem = {
 		};
 		m._nVolt		= m._nRoot.initNode("volt",0.0,"DOUBLE");
 		m._nAmpere		= m._nRoot.initNode("ampere",0.0,"DOUBLE");
-		m._nLowVoltage		= m._nRoot.initNode("lowVoltage",0,"BOOL");
-		m._voltListener 	= nil;
-		m._ampereListener 	= nil;
+		m._nLoadBattery		= m._nRoot.initNode("loadBattery",0.0,"DOUBLE");
+		m._nLoadGenerator	= m._nRoot.initNode("loadGenerator",0.0,"DOUBLE");
+		
+		m._loadBattery		= 0.0;
+		m._loadGenerator	= 0.0;
+		
 		
 		m.relay		 	= nil;
 		m.source	 	= nil;
@@ -937,11 +958,11 @@ var ESystem = {
 		m._AvionicsBus		= DcBusClass.new("/extra500/electric/bus/avionics","Avionics Bus PP5");
 		m._PreBatteryBus	= DcBusClass.new("/extra500/electric/bus/preBattery","PreBatteryBus Bus PPx2");
 		
-		m._vHotBus 		= VirtualBusClass.new();
-		m._vBatteryBus 		= VirtualBusClass.new();
-		m._vLoadBus 		= VirtualBusClass.new();
-		m._vEmergencyBus 	= VirtualBusClass.new();
-		m._vPreBatteryBus 	= VirtualBusClass.new();
+		m._vHotBus 		= ElectronClass.new();
+		m._vBatteryBus 		= ElectronClass.new();
+		m._vLoadBus 		= ElectronClass.new();
+		m._vEmergencyBus 	= ElectronClass.new();
+		m._vPreBatteryBus 	= ElectronClass.new();
 		
 		m._volt = 0;
 		m._ampere = 0;
@@ -1063,6 +1084,12 @@ var ESystem = {
 		me._AvionicsBus.init();
 		me._PreBatteryBus.init();
 		
+		index =  keys(me.source);
+		foreach (i;index){
+			me.source[i].init();
+		}
+		
+		
 		index =  keys(me.relay);
 		foreach (i;index){
 			me.relay[i].init();
@@ -1079,7 +1106,13 @@ var ESystem = {
 			me.switch[i].init();
 		}
 
-		
+		eSystem.relay.K1.checkCondition();
+		eSystem.relay.K2.checkCondition();
+		eSystem.relay.K3.checkCondition();
+		eSystem.relay.K4.checkCondition();
+		eSystem.relay.K5.checkCondition();
+		eSystem.relay.K7.checkCondition();
+		eSystem.relay.K10.checkCondition();
 		
 
 		me._timerLoop = maketimer(1.0,me,ESystem.checkSource);
@@ -1087,8 +1120,8 @@ var ESystem = {
 		
 	},
 	setListeners : func() {
-		append(me._listeners, setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0) );
+		#append(me._listeners, setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0) );
+		#append(me._listeners, setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0) );
 	},
 	connectOutput : func(obj){
 		me._outputs[obj.getName()] = obj;
@@ -1122,25 +1155,27 @@ var ESystem = {
 		me.source.ExternalGenerator.update(now,dt);
 		me.source.Alternator.update(now,dt);
 		
-		me._vHotBus._volt = me.source.Battery._volt;
-		me._vBatteryBus._volt = 0;
-		me._vLoadBus._volt = 0;
-		me._vEmergencyBus._volt = 0;
-		me._vPreBatteryBus._volt = 0;
+		me._vHotBus.volt = me.source.Battery._volt;
+		me._vBatteryBus.volt = 0;
+		me._vLoadBus.volt = 0;
+		me._vEmergencyBus.volt = 0;
+		me._vPreBatteryBus.volt = 0;
 				
 
 		if(me.relay.K1._state == 1){
-			me._vPreBatteryBus._volt = me.source.ExternalGenerator._volt;
+			me._vPreBatteryBus.volt = me.source.ExternalGenerator._volt;
 			me._vPreBatteryBus.balanceVolt(me._vBatteryBus);
 		}
 		
 		if(me.relay.K3._state == 1){
-			me._vLoadBus._volt = me.source.Generator._volt;
+			me._vLoadBus.volt = me.source.Generator._volt;
 		}
 				
-		if(eSystem.relay.K7._state == 0){
-			me._vEmergencyBus._volt = me.source.Alternator._volt;
+		if(me.relay.K7._state == 0){
+			me._vEmergencyBus.volt = me.source.Alternator._volt;
 		}
+		
+		
 		
 		if(me.relay.K4._state == 1){
 			me._vHotBus.balanceVolt(me._vPreBatteryBus);
@@ -1158,23 +1193,177 @@ var ESystem = {
 		}
 		
 		
-		if (me._volt < 25.5){
-			me._nLowVoltage.setValue(1);
+		
+		
+		me._HotBus._nVolt.setValue(me._vHotBus.volt);
+		me._BatteryBus._nVolt.setValue(me._vBatteryBus.volt);
+		me._LoadBus._nVolt.setValue(me._vLoadBus.volt);
+		me._EmergencyBus._nVolt.setValue(me._vEmergencyBus.volt);
+		me._PreBatteryBus._nVolt.setValue(me._vPreBatteryBus.volt);
+		
+		me._loadBattery 	= 0;
+		me._loadGenerator	= 0;
+			
+		me._vHotBus.ampere		= 0;
+		me._vBatteryBus.ampere 		= 0;
+		me._vLoadBus.ampere 		= 0;
+		me._vEmergencyBus.ampere 	= 0;
+		me._vPreBatteryBus.ampere 	= 0;
+		
+		me.source.Battery.charge(me._vHotBus);
+		
+		me._vHotBus.ampere		+= me._HotBus._ampere;
+		me._vBatteryBus.ampere 		+= me._BatteryBus._ampere;
+		me._vLoadBus.ampere 		+= me._LoadBus._ampere;
+		me._vEmergencyBus.ampere 	+= me._EmergencyBus._ampere;
+		me._vPreBatteryBus.ampere 	+= me._PreBatteryBus._ampere;
+		
+		
+		if (me.relay.K1._state == 1){ # Load goes to external Generator
+			if(me.relay.K5._state == 1){
+				me._vBatteryBus.ampere += me._LoadBus._ampere;
+			}
+			if(me.relay.K10._state == 0){
+				me._vBatteryBus.ampere += me._EmergencyBus._ampere;
+			}else{
+				me._vHotBus.ampere 	+= me._EmergencyBus._ampere;
+			}
+			
+			me._loadBattery			-= me._vBatteryBus.ampere;
+			me._vPreBatteryBus.ampere	+= me._vBatteryBus.ampere;
+			
+			if(me.relay.K4._state == 1){
+				me._vPreBatteryBus.ampere	+= me._vHotBus.ampere;
+			}else{
+				me.source.Battery.applyAmpere(me._vHotBus,dt);
+			}
+						
+			me.source.ExternalGenerator.applyAmpere(me._vPreBatteryBus,dt);
+			
+			
 		}else{
-			me._nLowVoltage.setValue(0);
+			if (me.relay.K3._state == 1){ # Load goes to Generator
+				
+				if(me.relay.K5._state == 1){
+					
+					if(me.relay.K10._state == 0){
+						me._vBatteryBus.ampere += me._EmergencyBus._ampere;
+					}else{
+						me._vHotBus.ampere 	+= me._EmergencyBus._ampere;
+					}
+										
+					if(me.relay.K4._state == 1){
+						me._vPreBatteryBus.ampere 	+= me._vHotBus.ampere;						
+					}else{
+						if (me.relay.K10._state == 1  and (me.relay.K7._state == 0) ){
+							me.source.Alternator.applyAmpere(me._vHotBus,dt);
+						}
+						me.source.Battery.applyAmpere(me._vHotBus,dt);
+					}
+					
+					me._loadBattery 	+= me._vPreBatteryBus.ampere;
+					me._vBatteryBus.ampere 	+= me._vPreBatteryBus.ampere;
+					
+					me._vLoadBus.ampere 	+= me._vBatteryBus.ampere;
+					
+					me._loadGenerator 	= me._vLoadBus.ampere;
+					me.source.Generator.applyAmpere(me._vLoadBus,dt);
+					me._loadGenerator	-= me._vLoadBus.ampere;
+						
+					
+					if ( (me.relay.K10._state == 0) and (me.relay.K7._state == 0) ){
+						me.source.Alternator.applyAmpere(me._vLoadBus,dt);
+					}
+					
+					if (me.relay.K4._state == 1 ){
+						me._loadBattery		+= me._vLoadBus.ampere;
+						me.source.Battery.applyAmpere(me._vLoadBus,dt);
+					}
+				}
+				
+
+				
+			
+			}else{
+				if( (me.relay.K7._state == 0) ){# Load goes to Alternator
+					if(me.relay.K10._state == 0){
+						
+						if(me.relay.K5._state == 1){
+							me._vBatteryBus.ampere += me._vLoadBus.ampere;
+						}
+						
+						if(me.relay.K4._state == 1){
+							me._vPreBatteryBus.ampere 	+= me._vHotBus.ampere;
+							
+						}
+						me._vBatteryBus.ampere 		+= me._vPreBatteryBus.ampere;
+						me._loadBattery			+= me._vPreBatteryBus.ampere;
+						me._vEmergencyBus.ampere 	+= me._vBatteryBus.ampere;
+						
+						me._loadGenerator 	= me._vEmergencyBus.ampere;
+						
+						me.source.Alternator.applyAmpere(me._vEmergencyBus,dt);
+						me._loadGenerator	-= me._vEmergencyBus.ampere;
+						
+						if (me.relay.K4._state == 1 ){
+							me._loadBattery		-= me._vEmergencyBus.ampere;
+							me.source.Battery.applyAmpere(me._vEmergencyBus,dt);
+						}
+						
+					}else{
+						if(me.relay.K4._state == 1){
+							if(me.relay.K5._state == 1){
+								me._vBatteryBus.ampere += me._vLoadBus.ampere;
+							}
+							me._vPreBatteryBus.ampere += me._vBatteryBus.ampere;
+							me._loadBattery		  -= me._vBatteryBus.ampere;
+						
+						}
+						me._vEmergencyBus.ampere 	+= me._vHotBus.ampere;
+						
+						me._loadGenerator 	= me._vEmergencyBus.ampere;
+						me.source.Alternator.applyAmpere(me._vEmergencyBus,dt);
+						me._loadGenerator	-= me._vEmergencyBus.ampere;
+						me.source.Battery.applyAmpere(me._vEmergencyBus,dt);
+						
+					}
+					
+					
+					
+				}else{
+					if (me.relay.K4._state == 1 ){# Load goes to Battery
+						
+						if(me.relay.K5._state == 1){
+							me._vBatteryBus.ampere += me._LoadBus._ampere;
+						}
+						
+						if(me.relay.K10._state == 0){
+							me._vBatteryBus.ampere += me._EmergencyBus._ampere;
+						}else{
+							me._vHotBus.ampere 	+= me._EmergencyBus._ampere;
+						}
+						
+						
+						me._loadBattery		-= me._vBatteryBus.ampere;
+						
+						me._vHotBus.ampere		+= me._vBatteryBus.ampere;
+						me._vHotBus.ampere		+= me._PreBatteryBus._ampere;
+							
+						me.source.Battery.applyAmpere(me._vHotBus,dt);
+					}else{
+						#print("eSystem.checkSource() ... WARNING ! no Source to apply load.")
+					}
+					
+				}
+			}
+
 		}
 		
-		#print("Bus Volt " ~ me._volt);
-		#me._nVolt.setValue(me._volt);
-		
-		me._HotBus._nVolt.setValue(me._vHotBus._volt);
-		me._BatteryBus._nVolt.setValue(me._vBatteryBus._volt);
-		me._LoadBus._nVolt.setValue(me._vLoadBus._volt);
-		me._EmergencyBus._nVolt.setValue(me._vEmergencyBus._volt);
-		me._PreBatteryBus._nVolt.setValue(me._vPreBatteryBus._volt);
 		
 		
 		
+		me._nLoadBattery.setValue(me._loadBattery);
+		me._nLoadGenerator.setValue(me._loadGenerator);
 		
 	},
 	
@@ -1466,7 +1655,7 @@ eSystem.relay.K5._onStateChange = func(n){
 
 ### Alternator Relay K7 MM Page 569, 568
 eSystem.relay.K7.checkCondition = func(){
-	if ( (eSystem.switch.Alternator._state == 0) and eSystem.circuitBreaker.ALT._volt >= 14.0){
+	if ( (eSystem.switch.Alternator._state == 0) and (eSystem.circuitBreaker.ALT._volt >= 14.0) ){
 		me.setState(1);
 	}else{
 		me.setState(0);
@@ -1504,14 +1693,14 @@ eSystem.circuitBreaker.RCCB._onStateChange = func(n){
 
 eSystem.switch.Battery.onStateChange = func(n){
 	me._state = n.getValue();
-	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
+# 	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
 	eSystem.relay.K4.checkCondition();
 	eSystem.checkSource();
 };
 
 eSystem.switch.Alternator.onStateChange = func(n){
 	me._state = n.getValue();
-	#print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
+# 	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
 	eSystem.relay.K7.checkCondition();
 	eSystem.checkSource();
 };

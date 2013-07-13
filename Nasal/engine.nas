@@ -32,7 +32,7 @@ var IgnitionClass = {
 		return m;
 	},
 	electricWork : func(){
-		if (me._ignition == 1 and me._volt > 22.0){
+		if (me._ignition == 1 and me._volt > me._voltMin){
 			me._watt = me._nWatt.getValue();
 			me._ampere = me._watt / me._volt;
 			me._nIgnition.setValue(1);
@@ -82,8 +82,9 @@ var StarterClass = {
 	_onRunningChange : func(n){
 		me._running		= n.getValue();
 		if (me._running == 1){
-			me._starter 		= 0;
+			me._starter = 0;
 		}
+		eSystem.source.Generator.setModeGenerator(me._running);
 		me.electricWork();
 	},
 	_onStarterChange : func(n){
@@ -91,17 +92,16 @@ var StarterClass = {
 		me.electricWork();
 	},
 	electricWork : func(){
-		if ((me._starter == 1) and (me._volt > 22.0)){
+		if ((me._starter == 1) and (me._volt > me._voltMin)){
 			me._watt = me._nWatt.getValue();
 			me._ampere = me._watt / me._volt;
-			me._nGenerator.setValue(1);
-			me._nStarter.setValue(1);
 		}else{
 			me._ampere = 0;
 			me._starter = 0;
-			me._nGenerator.setValue(0);
-			me._nStarter.setValue(0);
+			
 		}
+		me._nGenerator.setValue(me._starter);
+		me._nStarter.setValue(me._starter);
 		me._nAmpere.setValue(me._ampere);
 	},
 	on : func(){

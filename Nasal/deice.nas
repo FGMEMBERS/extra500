@@ -42,7 +42,7 @@ var HeatClass = {
 		me.setListeners();
 	},
 	electricWork : func(){
-		if ((me._value == 1 ) and (me._volt >= 22.0) ){
+		if ((me._value == 1 ) and (me._volt >= me._voltMin) ){
 			me._ampere = me._watt / me._volt;
 			me._state  = 1;
 		}else{
@@ -83,7 +83,7 @@ var BootsClass = {
 	},
 	electricWork : func(){
 		
-		if ((me._value == 1 ) and (me._volt >= 22.0) ){
+		if ((me._value == 1 ) and (me._volt >= me._voltMin) ){
 			me._ampere = me._watt / me._volt;
 			me._state  = 1;
 		}else{

@@ -62,11 +62,21 @@ var DigitalInstrumentPackageClass = {
 		append(me._listeners, setlistener(me._nVoltMin,func(n){me._onVoltMinChange(n);},1,0) );
 		append(me._listeners, setlistener(me._nVoltMax,func(n){me._onVoltMaxChange(n);},1,0) );
 		append(me._listeners, setlistener(eSystem.circuitBreaker.VOLT_MON._nVoltOut,func(n){me._onVoltMonitorChange(n);},1,0) );
+		append(me._listeners, setlistener(eSystem._nLoadBattery,func(n){me._onBatteryMonitorChange(n);},1,0) );
+		append(me._listeners, setlistener(eSystem._nLoadGenerator,func(n){me._onGeneratorMonitorChange(n);},1,0) );
+		
 		
 	},
 	_onVoltMonitorChange : func(n){
-		me.nIndicatedVDC.setValue(n.getValue()+ 0.05) 
+		me.nIndicatedVDC.setValue(n.getValue()+ 0.05); 
 	},
+	_onBatteryMonitorChange : func(n){
+		me.nIndicatedBAT.setValue(math.abs(n.getValue()+ 0.5));
+	},
+	_onGeneratorMonitorChange : func(n){
+		me.nIndicatedGEN.setValue(math.abs(n.getValue()+ 0.5));
+	},
+	
 	init : func(){
 		me.setListeners();
 		me._backlight.setListeners();
@@ -86,15 +96,15 @@ var DigitalInstrumentPackageClass = {
 		me._lastTime	= me._now;
 		
 		
-		me.nIndicatedGEN.setValue(eSystem._ampere + 0.5);
-		me.nIndicatedBAT.setValue(eSystem._ampere + 0.5);
+		#me.nIndicatedGEN.setValue(eSystem._ampere + 0.5);
+		#me.nIndicatedBAT.setValue(eSystem._ampere + 0.5);
 		
 # 		me.nIndicatedFuelPress.setValue(me.nFuelPress.getValue() + 0.5);
 # 		me.nIndicatedFuelTemp.setValue(me.nFuelTemp.getValue() + 0.5);
 		interpolate(me.nIndicatedFuelPress ,me.nFuelPress.getValue()+ 0.5,me._dt);
-		interpolate(me.nIndicatedFuelTemp ,me.nFuelTemp.getValue()+ 0.5,me._dt);
+		interpolate(me.nIndicatedFuelTemp ,math.abs(me.nFuelTemp.getValue()+ 0.5),me._dt);
 		
-		me.nIndicatedIAT.setValue(me.nIAT.getValue() + 0.5);
+		me.nIndicatedIAT.setValue(math.abs(me.nIAT.getValue() + 0.5));
 		
 		
 	}
@@ -184,7 +194,7 @@ var InstrumentClass = {
 			me._ampere = me._watt / me._volt;
 			me._state = 1;
 			if (me._backLightState == 1){
-				me._backLight = me._brightness;
+				me._backLight = me._brightness * me._qos * me._voltNorm;
 			}else{
 				me._backLight = 0;	
 			}

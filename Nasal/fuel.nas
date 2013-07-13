@@ -115,7 +115,7 @@ var FuelPumpClass = {
 	},
 	electricWork : func(){
 		me._watt = me._nWatt.getValue();
-		if((me._on  == 1) and (me._volt > 22.0) ){
+		if((me._on  == 1) and (me._volt > me._voltMin) ){
 			me._ampere = me._watt / me._volt;
 			me._state  = 1;
 		}else{

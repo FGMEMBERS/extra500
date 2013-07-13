@@ -39,7 +39,7 @@ var FlapMotorClass = {
 	},
 	electricWork : func(){
 		
-		if ((me._target != me._value) and (me._volt >= 22.0) ){
+		if ((me._target != me._value) and (me._volt >= me._voltMin) ){
 			#print ("FlapMotorClass.electricWork() ... on");
 			me._watt = me._nWatt.getValue();
 			me._ampere = me._watt / me._volt;
