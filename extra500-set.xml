@@ -608,9 +608,9 @@ JSBSim Extra Aircraft - Extra 500.
  <instrumentation>
     <hdg-source type="int">0</hdg-source>		<!-- 0= IFD-LH, 1= IFD-RH-->
     <nav-source type="int">2</nav-source>		<!-- 0= IFD-LH, 1= IFD-RH, 2 = FMS-->
-    <nav1-selected type="int">1</nav1-selected>
+    <nav1-selected type="int">0</nav1-selected>
     <nav2-selected type="int">0</nav2-selected>
-    <fms-selected type="int">0</fms-selected>
+    <fms-selected type="int">1</fms-selected>
     <com1-selected type="int">1</com1-selected>
     <com2-selected type="int">0</com2-selected>
 

@@ -53,9 +53,15 @@ Modified standard FG file
 			if (selected == 0){
 				setprop("/instrumentation/nav1-selected",1);
 				setprop("/instrumentation/nav2-selected",0);
+				setprop("/instrumentation/fms-selected",0);
 			}elsif (selected == 1){
 				setprop("/instrumentation/nav1-selected",0);
 				setprop("/instrumentation/nav2-selected",1);
+				setprop("/instrumentation/fms-selected",0);
+			}elsif (selected == 2){
+				setprop("/instrumentation/nav1-selected",0);
+				setprop("/instrumentation/nav2-selected",0);
+				setprop("/instrumentation/fms-selected",1);
 			}
 		},1);
 
