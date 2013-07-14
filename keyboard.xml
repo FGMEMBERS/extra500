@@ -100,7 +100,7 @@
 		 
 		 <!-- keys only for development -->
 
-		 <key n="32">
+		 <!--key n="32">
 			 <name>space</name>
 			 <desc>reload-model</desc>
 			 <repeatable type="bool">false</repeatable>
@@ -108,7 +108,7 @@
 				 <command>reinit</command>
 				 <subsystem>aircraft-model</subsystem>
 			 </binding>
-		 </key>
+		 </key-->
 		 <key n="119">
 			 <name>w</name>
 			 <desc>run simulation cycle once</desc>

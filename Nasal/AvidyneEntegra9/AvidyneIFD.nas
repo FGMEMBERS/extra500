@@ -17,7 +17,7 @@
 #      Date: April 27 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             2013-07-10
+#      Date:             2013-07-14
 #
 var TODEG = 180/math.pi;
 var TORAD = math.pi/180;
@@ -25,10 +25,10 @@ var deg = func(rad){ return rad*TODEG; }
 var rad = func(deg){ return deg*TORAD; }
 var course = func(deg){ return math.mod(deg,360.0);}
 
-var NAV_SOURCE_NAME 	= ["NAV 1","NAV 2","FMS"];
+var NAV_SOURCE_NAME 	= ["Nav 1","Nav 2","FMS"];
 var NAV_SOURCE_TREE 	= ["/instrumentation/nav[0]","/instrumentation/nav[1]","/instrumentation/fms"];
 
-var BEARING_SOURCE_NAME = ["0ff","NAV 1","NAV 2","FMS"];
+var BEARING_SOURCE_NAME = ["0ff","Nav 1","Nav 2","FMS"];
 var BEARING_SOURCE_TREE = [nil,"/instrumentation/nav[0]","/instrumentation/nav[1]","/instrumentation/fms"];
 
 
@@ -851,11 +851,11 @@ var AvidynePagePFD = {
 		
 	_adjustNavSource : func (amount){
 		me.data.navSource += amount;
-		if (me.data.navSource > 1){
+		if (me.data.navSource > 2){
 			me.data.navSource = 0;
 		}
 		if (me.data.navSource < 0){
-			me.data.navSource = 1;
+			me.data.navSource = 2;
 		}
 		me.data.nNAVSource.setValue(me.data.navSource);
 	},

@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             11.07.13
+      Date:             14.07.13
 
 ************************************************************************
 JSBSim Extra Aircraft - Extra 500.
@@ -533,8 +533,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<radials>
 			<diff>0</diff>
 			<old-radial>0</old-radial>
-			<reciprocal-radial>0</reciprocal-radial>
-			
+			<reciprocal-radial>0</reciprocal-radial>		
 		</radials>
 		<nav-distance-nm type="double">0</nav-distance-nm>
 	</radionav-channel>
@@ -608,9 +607,10 @@ JSBSim Extra Aircraft - Extra 500.
 
  <instrumentation>
     <hdg-source type="int">0</hdg-source>		<!-- 0= IFD-LH, 1= IFD-RH-->
-    <nav-source type="int">0</nav-source>		<!-- 0= IFD-LH, 1= IFD-RH-->
+    <nav-source type="int">2</nav-source>		<!-- 0= IFD-LH, 1= IFD-RH, 2 = FMS-->
     <nav1-selected type="int">1</nav1-selected>
     <nav2-selected type="int">0</nav2-selected>
+    <fms-selected type="int">0</fms-selected>
     <com1-selected type="int">1</com1-selected>
     <com2-selected type="int">0</com2-selected>
 

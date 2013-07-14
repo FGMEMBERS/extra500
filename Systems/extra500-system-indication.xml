@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-07-08
+      Date:             2013-07-13
 -->
 
 <system name="indication">
@@ -738,7 +738,7 @@
 				propulsion/engine/set-running eq 1
 				/controls/flight/flaps eq 0
 				/gear/gear/position-norm eq 0
-				aircraft/engine/TOT-target-degC gt 752
+				aircraft/engine/TOT-target-degC ge 753
 				aircraft/engine/TOT-target-degC le 810
 			</test>
 			<output>aircraft/events/TOT752</output>

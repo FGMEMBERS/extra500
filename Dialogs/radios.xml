@@ -18,8 +18,8 @@
       Author: Eric van den Berg
       Date: 2013-06-24
 
-      Last change:      -
-      Date:             -
+      Last change:      Eric van den Berg
+      Date:             2013-07-14
 
 Modified standard FG file
 -->
@@ -27,7 +27,7 @@ Modified standard FG file
 <PropertyList>
 
   <name>radios</name>
-  <width>550</width>
+  <width>600</width>
   <modal>false</modal>
 
   <nasal>
@@ -316,8 +316,74 @@ Modified standard FG file
     </input>
 
   <checkbox>
-      <name>nav1</name>   
+      <name>fms</name>   
       <row>3</row>
+      <col>0</col>
+      <width>12</width>
+      <height>24</height>
+      <live>true</live>
+      <property>/instrumentation/fms-selected</property>
+      <binding>
+            <command>nasal</command>
+		<script>
+                        if ( getprop("/instrumentation/nav-source") != 2 ) {
+				setprop("/instrumentation/nav-source",2);
+				setprop("/instrumentation/nav2-selected",0);
+				setprop("/instrumentation/nav1-selected",0);
+			} 
+                </script>  
+	</binding>
+      <binding>
+		<command>dialog-apply</command>
+		<object-name>fms</object-name>
+      </binding>
+  </checkbox>
+
+    <text>
+      <row>3</row>
+      <col>1</col>
+      <halign>right</halign>
+      <label>FMS</label>
+    </text>
+
+    <input>
+      <name>nxwp</name>
+      <row>3</row>
+      <col>2</col>
+      <width>75</width>
+      <height>25</height>
+      <label>NxWp</label>
+      <live>true</live>
+      <property>/autopilot/route-manager/wp/id</property>
+    </input>
+
+    <input>
+      <name>nxwp-distance</name>
+      <row>3</row>
+      <col>4</col>
+      <halign>right</halign>
+      <width>50</width>
+      <height>25</height>
+      <label>NM</label>
+      <live>true</live>
+      <property>/autopilot/route-manager/wp/dist</property>
+    </input>
+
+    <input>
+      <name>nxwp-distance</name>
+      <row>3</row>
+      <col>5</col>
+      <halign>right</halign>
+      <width>50</width>
+      <height>25</height>
+      <label>deg</label>
+      <live>true</live>
+      <property>/autopilot/route-manager/wp/bearing-deg</property>
+    </input>
+
+  <checkbox>
+      <name>nav1</name>   
+      <row>4</row>
       <col>0</col>
       <width>12</width>
       <height>12</height>
@@ -329,6 +395,7 @@ Modified standard FG file
                         if ( getprop("/instrumentation/nav-source") != 0 ) {
 				setprop("/instrumentation/nav-source",0);
 				setprop("/instrumentation/nav2-selected",0);
+				setprop("/instrumentation/fms-selected",0);
 			} 
                 </script>  
 	</binding>
@@ -339,7 +406,7 @@ Modified standard FG file
   </checkbox>
 
     <text>
-      <row>3</row>
+      <row>4</row>
       <col>1</col>
       <halign>right</halign>
       <label>NAV 1</label>
@@ -347,7 +414,7 @@ Modified standard FG file
 
     <input>
       <name>nav1-selected</name>
-      <row>3</row>
+      <row>4</row>
       <col>2</col>
       <width>75</width>
       <height>25</height>
@@ -361,7 +428,7 @@ Modified standard FG file
     </input>
 
     <button>
-      <row>3</row>
+      <row>4</row>
       <col>4</col>
       <width>35</width>
       <height>26</height>
@@ -392,7 +459,7 @@ Modified standard FG file
 
     <input>
       <name>nav1-standby</name>
-      <row>3</row>
+      <row>4</row>
       <col>5</col>
       <width>75</width>
       <height>25</height>
@@ -407,7 +474,7 @@ Modified standard FG file
 
   <checkbox>
       <name>dme1</name>   
-      <row>3</row>
+      <row>4</row>
       <col>7</col>
       <width>12</width>
       <height>12</height>
@@ -430,7 +497,7 @@ Modified standard FG file
 
   <checkbox>
       <name>nav2</name>   
-      <row>4</row>
+      <row>5</row>
       <col>0</col>
       <width>12</width>
       <height>12</height>
@@ -442,6 +509,7 @@ Modified standard FG file
                         if ( getprop("/instrumentation/nav-source") != 1 ) {
 				setprop("/instrumentation/nav-source",1);
 				setprop("/instrumentation/nav1-selected",0);
+				setprop("/instrumentation/fms-selected",0);
 			} 
                 </script>  
 	</binding>
@@ -452,7 +520,7 @@ Modified standard FG file
   </checkbox>
 
     <text>
-      <row>4</row>
+      <row>5</row>
       <col>1</col>
       <halign>right</halign>
       <label>NAV 2</label>
@@ -460,7 +528,7 @@ Modified standard FG file
 
     <input>
       <name>nav2-selected</name>
-      <row>4</row>
+      <row>5</row>
       <col>2</col>
       <width>75</width>
       <height>25</height>
@@ -474,7 +542,7 @@ Modified standard FG file
     </input>
 
     <button>
-      <row>4</row>
+      <row>5</row>
       <col>4</col>
       <width>35</width>
       <height>26</height>
@@ -505,7 +573,7 @@ Modified standard FG file
 
     <input>
       <name>nav2-standby</name>
-      <row>4</row>
+      <row>5</row>
       <col>5</col>
       <width>75</width>
       <height>25</height>
@@ -520,7 +588,7 @@ Modified standard FG file
 
   <checkbox>
       <name>dme2</name>   
-      <row>4</row>
+      <row>5</row>
       <col>7</col>
       <width>12</width>
       <height>12</height>
@@ -542,7 +610,7 @@ Modified standard FG file
   </checkbox>
 
     <text>
-      <row>5</row>
+      <row>6</row>
       <col>1</col>
       <halign>right</halign>
       <label>RADIAL</label>
@@ -550,7 +618,7 @@ Modified standard FG file
 
     <input>
       <name>nav-radial</name>
-      <row>5</row>
+      <row>6</row>
       <col>2</col>
       <width>75</width>
       <height>25</height>
