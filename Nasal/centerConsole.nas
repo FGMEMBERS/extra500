@@ -47,14 +47,19 @@ var CenterConsole = {
 		
 		return m;
 	},
-	init : func (){
-		me.initUI();
-		append(me._listeners, setlistener(me._nParkingbrake,func(n){me.onParkBrakeChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nParkingbrakePressure,func(n){me.onParkingbrakePressureChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nCtrlLeftBrake,func(n){me.onBrakeChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nCtrlRightBrake,func(n){me.onBrakeChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nDeice,func(n){me.onDeiceChange(n);},1,0) );
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._nParkingbrake,func(n){instance.onParkBrakeChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nParkingbrakePressure,func(n){instance.onParkingbrakePressureChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nCtrlLeftBrake,func(n){instance.onBrakeChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nCtrlRightBrake,func(n){instance.onBrakeChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nDeice,func(n){instance.onDeiceChange(n);},1,0) );	
+	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		me.setListeners(instance);
 		
+		me.initUI();
 	},
 	onParkingbrakePressureChange : func(n){
 		me._ParkingbrakePressure = n.getValue();

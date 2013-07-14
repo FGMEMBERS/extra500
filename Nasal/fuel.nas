@@ -113,6 +113,10 @@ var FuelPumpClass = {
 		m._on = 0;
 		return m;
 	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+	},
 	electricWork : func(){
 		me._watt = me._nWatt.getValue();
 		if((me._on  == 1) and (me._volt > me._voltMin) ){
@@ -156,10 +160,6 @@ var FuelSystemClass = {
 		m._FuelTransLeft	= FuelPumpClass.new("extra500/system/fuel/FuelPumpTransLeft","Fuel Transfer Pump Left",30.0);
 		m._FuelTransRight	= FuelPumpClass.new("extra500/system/fuel/FuelPumpTransRight","Fuel Transfer Pump Right",30.0);
 		
-		m._FuelPump1.setListeners();
-		m._FuelPump2.setListeners();
-		m._FuelTransLeft.setListeners();
-		m._FuelTransRight.setListeners();
 		
 		eSystem.circuitBreaker.FUEL_P_1.outputAdd(m._FuelPump1);
 		eSystem.circuitBreaker.FUEL_P_2.outputAdd(m._FuelPump2);
@@ -212,9 +212,16 @@ var FuelSystemClass = {
 	
 		return m;
 	},
-	init : func(){
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
 		me.initUI();
-				
+		
+		me._FuelPump1.init();
+		me._FuelPump2.init();
+		me._FuelTransLeft.init();
+		me._FuelTransRight.init();
+			
 		append(me._listeners, setlistener(me._nSelectValve,func(n){me._selectValve = n.getValue();me.update();},1,0) );
 		
 		me._timerLoop = maketimer(1.0,me,FuelSystemClass.update);

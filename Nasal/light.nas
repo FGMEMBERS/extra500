@@ -34,8 +34,9 @@ var LightClass = {
 		m._output= 0.0;
 		return m;
 	},
-	init : func(){
-		me.setListeners();
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
 	},
 	electricWork : func(){
 		if ((me._value == 1 ) and (me._volt > me._voltMin) ){
@@ -80,7 +81,8 @@ var LightPanelClass = {
 		
 		return m;
 	},
-	init : func(){
+	init : func(instance=nil){
+		
 		eSystem.circuitBreaker.STROBE_LT.outputAdd(me.strope);
 		eSystem.circuitBreaker.NAV_LT.outputAdd(me.nav);
 		eSystem.circuitBreaker.LDG_LT.outputAdd(me.landing);

@@ -55,16 +55,25 @@ var DigitalInstrumentPackageClass = {
 		
 		return m;
 	},
-	setListeners : func() {
-		append(me._listeners, setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nWatt,func(n){me._onWattChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nVoltMin,func(n){me._onVoltMinChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nVoltMax,func(n){me._onVoltMaxChange(n);},1,0) );
-		append(me._listeners, setlistener(eSystem.circuitBreaker.VOLT_MON._nVoltOut,func(n){me._onVoltMonitorChange(n);},1,0) );
-		append(me._listeners, setlistener(eSystem._nLoadBattery,func(n){me._onBatteryMonitorChange(n);},1,0) );
-		append(me._listeners, setlistener(eSystem._nLoadGenerator,func(n){me._onGeneratorMonitorChange(n);},1,0) );
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(eSystem.circuitBreaker.VOLT_MON._nVoltOut,func(n){instance._onVoltMonitorChange(n);},1,0) );
+		append(me._listeners, setlistener(eSystem._nLoadBattery,func(n){instance._onBatteryMonitorChange(n);},1,0) );
+		append(me._listeners, setlistener(eSystem._nLoadGenerator,func(n){instance._onGeneratorMonitorChange(n);},1,0) );
+	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		me.setListeners(instance);
 		
+		me._backlight.init();
+		me._backlight.on();
+		
+		#eSystem.circuitBreaker.DIP_1.outputAdd(me);
+		eSystem.circuitBreaker.DIP_1.outputAdd(me);
+		eSystem.circuitBreaker.DIP_1.outputAdd(me._backlight);
+		
+		me._timerLoop = maketimer(1.0,me,DigitalInstrumentPackageClass.update);
+		me._timerLoop.start();
 		
 	},
 	_onVoltMonitorChange : func(n){
@@ -77,19 +86,6 @@ var DigitalInstrumentPackageClass = {
 		me.nIndicatedGEN.setValue(math.abs(n.getValue()+ 0.5));
 	},
 	
-	init : func(){
-		me.setListeners();
-		me._backlight.setListeners();
-		me._backlight.on();
-		
-		#eSystem.circuitBreaker.DIP_1.outputAdd(me);
-		eSystem.circuitBreaker.DIP_1.outputAdd(me);
-		eSystem.circuitBreaker.DIP_1.outputAdd(me._backlight);
-		
-		me._timerLoop = maketimer(1.0,me,DigitalInstrumentPackageClass.update);
-		me._timerLoop.start();
-		
-	},
 	update : func(){
 		me._now 	= systime();
 		me._dt 		= me._now - me._lastTime;
@@ -122,9 +118,11 @@ var EngineInstrumentPackageClass = {
 		
 		return m;
 	},
-	init : func(){
-		me.setListeners();
-		me._backlight.setListeners();
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		
+		me._backlight.init();
 		me._backlight.on();
 		
 		eSystem.circuitBreaker.ENG_INST_1.outputAdd(me);
@@ -145,10 +143,12 @@ var LumiClass = {
 		
 		return m;
 	},
-	init : func(){
-		me._backlight.setListeners();
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
 		
-		
+		me._backlight.init();
+				
 		eSystem.circuitBreaker.INST_LT.outputAdd(me._backlight);
 	},
 	setState : func(value){
@@ -168,22 +168,19 @@ var InstrumentClass = {
 		
 		m._nBrightness		= props.globals.initNode(brightness,0.0,"DOUBLE");
 		m._brightness		= 0;
-		m._brightnessListener   = nil;
 		m._nBacklight 		= m._nRoot.initNode("Backlight/state",0.0,"DOUBLE");
 		m._backLight 		= 0;
 		m._backLightState 		= 0;
 		return m;
 	},
-	setListeners : func() {
-		append(me._listeners, setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nWatt,func(n){me._onWattChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nVoltMin,func(n){me._onVoltMinChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nVoltMax,func(n){me._onVoltMaxChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nBrightness,func(n){me._onBrightnessChange(n);},1,0) );
-		
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._nBrightness,func(n){instance._onBrightnessChange(n);},1,0) );
 	},
-	
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		me.setListeners(instance);
+	},
 	_onBrightnessChange : func(n){
 		me._brightness = n.getValue();
 		me.electricWork();
@@ -208,9 +205,6 @@ var InstrumentClass = {
 		me._nState.setValue(me._state);
 		me._nBacklight.setValue(me._backLight);
 	},
-	init : func(){
-		me.setListeners();
-	},
 	setBacklight : func(value){
 		me._backLightState = value;
 		me.electricWork();
@@ -229,17 +223,14 @@ var PcBoard1Class = {
 		
 		return m;
 	},
-	init : func(){
-		me.setListeners();
-	},
-	setListeners : func() {
-		append(me._listeners, setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nWatt,func(n){me._onWattChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nVoltMin,func(n){me._onVoltMinChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nVoltMax,func(n){me._onVoltMaxChange(n);},1,0) );
-		append(me._listeners, setlistener(eSystem.circuitBreaker.LOW_VOLT._nVoltOut,func(n){me._onVoltMonitorChange(n);},1,0) );
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(eSystem.circuitBreaker.LOW_VOLT._nVoltOut,func(n){instance._onVoltMonitorChange(n);},1,0) );
 		
+	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		me.setListeners(instance);
 	},
 	_onVoltMonitorChange : func(n){
 		me._lowVoltMonitor = n.getValue();

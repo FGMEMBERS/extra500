@@ -35,12 +35,13 @@ var DoorClass = {
 		
 		return m;
 	},
-	init : func(){
-		me.setListeners();
-		me.registerUI();
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		me.setListeners(instance);
 	},
-	setListeners : func() {
-		me._stateListener 	= setlistener(me._nState,func(n){me._onStateChange(n);},1,0);
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._nState,func(n){instance._onStateChange(n);},1,0) );
 	},
 	_onStateChange : func(n){
 		me._state = n.getValue();

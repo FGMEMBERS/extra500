@@ -1511,17 +1511,21 @@ var AvidyneIFD = {
 	
 		return m;
 	},
-	init : func(){
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		#me.setListeners(instance);
 		me.initUI();
 		
-		me._powerA.setListeners();
-		me._powerB.setListeners();
+		me._powerA.init();
+		me._powerB.init();
 		
-		append(me._listeners, setlistener(me._powerA._nState,func(n){me._onPowerAChange(n);},1,0) );
-		append(me._listeners, setlistener(me._powerB._nState,func(n){me._onPowerBChange(n);},1,0) );
-		append(me._listeners, setlistener(me._powerA._nVoltNorm,func(n){me._onPowerVoltNormChange(n);},1,0) );
-		append(me._listeners, setlistener(me._powerB._nVoltNorm,func(n){me._onPowerVoltNormChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nState,func(n){me._onStateChange(n);},1,0) );
+		append(me._listeners, setlistener(me._powerA._nState,func(n){instance._onPowerAChange(n);},1,0) );
+		append(me._listeners, setlistener(me._powerB._nState,func(n){instance._onPowerBChange(n);},1,0) );
+		append(me._listeners, setlistener(me._powerA._nVoltNorm,func(n){instance._onPowerVoltNormChange(n);},1,0) );
+		append(me._listeners, setlistener(me._powerB._nVoltNorm,func(n){instance._onPowerVoltNormChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nState,func(n){instance._onStateChange(n);},1,0) );
+		
 		me.nLedDim.setValue(1);
 		me.keys["DIM >"] = func(){me._adjustBrightness(0.1);};
 		me.keys["DIM <"] = func(){me._adjustBrightness(-0.1);};

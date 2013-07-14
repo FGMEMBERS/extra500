@@ -34,9 +34,11 @@ var CabinClass = {
 		
 		return m;
 	},
-	init : func(){
-
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
 	},
+
 };
 
 var cabin = CabinClass.new("/extra500/cabin","Cabin");

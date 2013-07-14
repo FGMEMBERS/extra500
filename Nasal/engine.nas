@@ -31,6 +31,10 @@ var IgnitionClass = {
 		m._ignition		= 0;
 		return m;
 	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+	},
 	electricWork : func(){
 		if (me._ignition == 1 and me._volt > me._voltMin){
 			me._watt = me._nWatt.getValue();
@@ -73,11 +77,14 @@ var StarterClass = {
 		
 		return m;
 	},
-	setListeners : func() {
-		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0);
-		me._ampereListener 	= setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0);
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		me.setListeners(instance);
+	},
+	setListeners : func(instance) {
 		#me._starterListener 	= setlistener(me._nStarter,func(n){me._onStarterChange(n);},1,0);
-		me._runningListener 	= setlistener(me._nRunning,func(n){me._onRunningChange(n);},1,0);
+		me._runningListener 	= setlistener(me._nRunning,func(n){instance._onRunningChange(n);},1,0);
 	},
 	_onRunningChange : func(n){
 		me._running		= n.getValue();
@@ -217,7 +224,9 @@ var EngineClass = {
 		}
 	},
 
-	init : func(){
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
 		
 		eSystem.switch.EngineStart.onStateChange = func(n){
 			me._state = n.getValue();
@@ -246,10 +255,10 @@ var EngineClass = {
 		UI.register("Engine reverser on",	func{extra500.engine.onReverserClick(1); } 	);
 		UI.register("Engine reverser off",	func{extra500.engine.onReverserClick(0); } 	);
 		
-		me.ignition.setListeners();
+		me.ignition.init();
 		eSystem.circuitBreaker.IGN.outputAdd(me.ignition);
 		
-		me.starter.setListeners();
+		me.starter.init();
 		eSystem._PreBatteryBus.outputAdd(me.starter);
 		
 		me._checkIgnitionCutoff();

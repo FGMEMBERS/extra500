@@ -35,7 +35,7 @@ var DimmingSystemClass = {
 		m.nSwitch 	= m._nRoot.initNode("Switch",0.0,"DOUBLE");
 		m.nAnnunciator 	= m._nRoot.initNode("Annunciator",0.0,"DOUBLE");
 		
-		m.nTest	= m._nRoot.initNode("Test",0,"BOOL");
+		m._nTest	= m._nRoot.initNode("Test",0,"BOOL");
 		
 		m.keypad 	= 0.0;
 		m.glare 	= 0.0;
@@ -101,14 +101,14 @@ var DimmingSystemClass = {
 					me.switch 	= 0.2+eSystem.switch.DimmingSwitch._state*0.8;
 					me.annuciator 	= 0.2+eSystem.switch.DimmingAnnunciator._state*0.8;
 				}
-				me.nTest.setValue(0);
+				me._nTest.setValue(0);
 				
 		}elsif (eSystem.switch.Night._state == -1){
 							
-			me.nTest.setValue(1);
+			me._nTest.setValue(1);
 		}else{
 							
-			me.nTest.setValue(0);
+			me._nTest.setValue(0);
 		}
 			
 		
@@ -120,8 +120,9 @@ var DimmingSystemClass = {
 				
 		
 	},
-	init : func(){
-		
+	init : func(instance){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);		
 	},
 	
 };

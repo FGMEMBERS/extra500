@@ -38,8 +38,9 @@ var HeatClass = {
 		m._value = 0;
 		return m;
 	},
-	init : func(){
-		me.setListeners();
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
 	},
 	electricWork : func(){
 		if ((me._value == 1 ) and (me._volt >= me._voltMin) ){
@@ -76,9 +77,13 @@ var BootsClass = {
 		
 		return m;
 	},
-	init : func(){
-		me.setListeners();
-		append(me._listeners, setlistener(me._nPneumaticPressure,func(n){me._onPneumaticPressureChange(n);},1,0) );
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		me.setListeners(instance);
+	},
+	setListeners : func(instance){
+		append(me._listeners, setlistener(me._nPneumaticPressure,func(n){instance._onPneumaticPressureChange(n);},1,0) );
 		
 	},
 	electricWork : func(){
@@ -183,7 +188,16 @@ var DeicingSystemClass = {
 		
 		return m;
 	},
-	init : func(){
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._WindshieldCtrl._nState,func(n){instance._checkWindshieldHeat();},1,0) );
+		append(me._listeners, setlistener(me._nWowNose,func(n){instance._checkPitot();},1,0) );
+		append(me._listeners, setlistener("/fdm/jsbsim/aircraft/stallwarner/state",func(n){instance._onStallWarning(n);},1,0) );
+	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		me.setListeners(instance);
+		
 		me._nIntakeHeat.init();
 		me._WindshieldHeat.init();
 		me._WindshieldCtrl.init();
@@ -224,9 +238,6 @@ var DeicingSystemClass = {
 			deiceSystem.update();
 		};
 
-		append(me._listeners, setlistener(me._WindshieldCtrl._nState,func(n){me._checkWindshieldHeat();},1,0) );
-		append(me._listeners, setlistener(me._nWowNose,func(n){me._checkPitot();},1,0) );
-		append(me._listeners, setlistener("/fdm/jsbsim/aircraft/stallwarner/state",func(n){me._onStallWarning(n);},1,0) );
 		
 		
 		me._timerLoop = maketimer(5.0,me,DeicingSystemClass.update);
