@@ -330,7 +330,6 @@ var AlternatorClass = {
 		m._nField		= m._nRoot.initNode("field_volt",0,"BOOL");
 		m._nHasLoad		= m._nRoot.initNode("hasLoad",0,"BOOL");
 		m._nN1			= props.globals.initNode("/engines/engine[0]/n1");
-		m._nBusVolt		= props.globals.initNode("/extra500/electric/Bus/EmergencyBus/volt");
 		m._N1			= 0.0;
 		m._voltMax		= 26.0;
 		m._ampereMax		= 20.0;
@@ -354,9 +353,9 @@ var AlternatorClass = {
 			
 	},
 	update : func(now,dt){
-		if (me._nBusVolt.getValue() < me._voltMax){
-			me._gernerateVolt(now,dt);
-		}
+		
+		me._gernerateVolt(now,dt);
+		
 	},
 	_onVoltChange : func (n){
 		me._volt = n.getValue();
@@ -973,7 +972,7 @@ var ESystem = {
 		
 		m.timerLoop = nil;
 		print("ESystem.new() ... created.");
-		debug.dump(m.parents);
+		
 		return m;
 	},
 	init : func(){

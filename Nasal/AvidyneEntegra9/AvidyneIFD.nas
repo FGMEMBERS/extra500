@@ -234,6 +234,7 @@ var AvidyneData = {
 	# Bearing Pointer
 		if (me.brgSource > 0){
 			me.brgCoursePointer	= getprop(BEARING_SOURCE_TREE[me.brgSource]~"/radials/reciprocal-radial-deg") or 0;
+			
 		}
 		
 	
@@ -245,6 +246,10 @@ var AvidyneData = {
 	#Box Primary Nav
 		me.navDistance	= me.nNavDistance.getValue();
 		me.GroundSpeed	= me.nGroundSpeed.getValue();
+	# Box Bearing Pointer
+		if (me.brgSource > 0){
+			me.brgDistance		= getprop(BEARING_SOURCE_TREE[me.brgSource]~"/nav-distance") * global.CONST.METER2NM;
+		}
 	},
 	adjustBaro : func(value=nil){
 		if (value==nil){
@@ -400,7 +405,7 @@ var AvidynePagePFD = {
 		m.PitchLadder.set("clip","rect(168px, 1562px, 785px, 845px)");
 		
 		m.cARS = m.page.getElementById("ARS");
-		m.cARS.set("clip","rect(168px, 1562px, 785px, 845px)");
+		m.cARS.set("clip","rect(168px, 1650px, 785px, 780px)");
 		
 		m.cCoursePointer	= m.page.getElementById("CoursePointer");
 		m.cCoursePointer.updateCenter();
@@ -1239,52 +1244,58 @@ var AvidynePagePFD = {
 	#DI
 		
 		
-		if(me.data.NAVinRange){
+		if(me.data.NAVinRange == 1){
 			me.cHDI_Needle.setVisible(1);
 			me.cHDI_Needle.setTranslation(me.data.HDI * 240,0);
+			me.cDI.setVisible(1);
+			me.cCoursePointer.setVisible(1);
+			
+			if(me.data.NAVLOC == 1){
+				me.cDI_Source_Text.setText("LOC");
+			}else{
+				me.cDI_Source_Text.setText("VOR");
+			}
+			
+			if (me.data.GSinRange == 1){
+				me.cVDI.setVisible(1);
+				me.cVDI_Needle.setTranslation(0, me.data.VDI * 240);
+				me.cVDI_Needle.setVisible(1);
+				me.cDI_Source_Text.setText("ILS");
+			}else{
+				me.cVDI.setVisible(0);
+				me.cVDI_Needle.setVisible(0);
+				
+			}
+			
+			if ((me.data.VDI <= -0.99) or (me.data.VDI >= 0.99)){
+				me.cVDI_Needle.set("fill",COLOR["Yellow"]);
+			}else{
+				me.cVDI_Needle.set("fill",COLOR["White"]);
+			}
+			
+			if ((me.data.HDI <= -0.99) or (me.data.HDI >= 0.99)){
+				me.cCDI.set("fill",COLOR["Yellow"]);
+				me.cHDI_Needle.set("fill",COLOR["Yellow"]);
+			}else{
+				me.cCDI.set("fill",COLOR["Green"]);
+				me.cHDI_Needle.set("fill",COLOR["White"]);	
+			}
+			
+			me.cCDIFromFlag.setVisible(me.data.cdiFromFlag);
+			me.cCDIToFlag.setVisible(me.data.cdiToFlag);
+			
+			
+			me.cCDI.setTranslation(me.data.HDI * 240,0);
+			me.cCoursePointer.setRotation((me.data.navCoursePointer-me.data.HDG) * TORAD);
+		
+			
 		}else{
 			me.cHDI_Needle.setVisible(0);
+			me.cDI.setVisible(0);
+			me.cCoursePointer.setVisible(0);
 		}
-		
-		if(me.data.NAVLOC == 1){
-			me.cDI_Source_Text.setText("LOC");
-		}else{
-			me.cDI_Source_Text.setText("VOR");
-		}
-		
-		
-		if (me.data.GSinRange == 1){
-			me.cVDI.setVisible(1);
-			me.cVDI_Needle.setTranslation(0, me.data.VDI * 240);
-			me.cVDI_Needle.setVisible(1);
-			me.cDI_Source_Text.setText("ILS");
-		}else{
-			me.cVDI.setVisible(0);
-			me.cVDI_Needle.setVisible(0);
 			
-		}
 		
-		
-		if ((me.data.VDI <= -0.99) or (me.data.VDI >= 0.99)){
-			me.cVDI_Needle.set("fill",COLOR["Yellow"]);
-		}else{
-			me.cVDI_Needle.set("fill",COLOR["White"]);
-		}
-		
-		if ((me.data.HDI <= -0.99) or (me.data.HDI >= 0.99)){
-			me.cCDI.set("fill",COLOR["Yellow"]);
-			me.cHDI_Needle.set("fill",COLOR["Yellow"]);
-		}else{
-			me.cCDI.set("fill",COLOR["Green"]);
-			me.cHDI_Needle.set("fill",COLOR["White"]);	
-		}
-		
-		me.cCDIFromFlag.setVisible(me.data.cdiFromFlag);
-		me.cCDIToFlag.setVisible(me.data.cdiToFlag);
-		
-		
-		me.cCDI.setTranslation(me.data.HDI * 240,0);
-		me.cCoursePointer.setRotation((me.data.navCoursePointer-me.data.HDG) * TORAD);
 		
 		
 		
