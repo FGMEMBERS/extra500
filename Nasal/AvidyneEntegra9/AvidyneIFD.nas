@@ -405,7 +405,6 @@ var AvidynePagePFD = {
 		m.PitchLadder.set("clip","rect(168px, 1562px, 785px, 845px)");
 		
 		m.cARS = m.page.getElementById("ARS");
-		m.cARS.set("clip","rect(168px, 1650px, 785px, 780px)");
 		
 		m.cCoursePointer	= m.page.getElementById("CoursePointer");
 		m.cCoursePointer.updateCenter();
@@ -441,8 +440,7 @@ var AvidynePagePFD = {
 					.set("clip","rect(453px, 514px, 528px, 384px)");
 		m.cIAS_100 = m.page.getElementById("IAS_100")
 					.set("clip","rect(453px, 514px, 528px, 384px)");
-		m.cIAS_BlackPlade = m.page.getElementById("IAS_BlackPlade")
-					.set("clip","rect(126px, 648px, 784px, 380px)");
+		m.cIAS_BlackPlade = m.page.getElementById("IAS_BlackPlade");
 		m.cIAS_Zero = m.page.getElementById("IAS_Zero").setVisible(0);
 		m.cIAS_Rate = m.page.getElementById("IAS_Rate")
 					.set("clip","rect(126px, 648px, 784px, 413px)");
@@ -466,95 +464,36 @@ var AvidynePagePFD = {
 		
 	#alt
 		
-		m.cAltLayer	= m.page.getElementById("layer5")
-					.set("clip","rect(95px, 2070px, 880px, 1680px)")
-# 					.set("z-index",1)
-					;
+		m.cAltLayer	= m.page.getElementById("layer5");
 		m.cAltLadder	= m.page.getElementById("ALT_Ladder")
-					.set("clip","rect(170px, 2060px, 785px, 1680px)")
-# 					.set("z-index",1)
-					;
+					.set("clip","rect(170px, 2060px, 785px, 1680px)");
 					
-		m.cAltLad_Scale = m.page.getElementById("ALT_LAD_Scale")
-					.set("clip","rect(170px, 2060px, 785px, 1680px)")
-# 					.set("z-index",1)
-					;
-# 		
-		m.cAltLad_C000T	= m.page.getElementById("ALT_LAD_C000T")
-# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
-					.set("z-index",1)
-					;
-		m.cAltLad_C000H	= m.page.getElementById("ALT_LAD_C000H")
-# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
-					.set("z-index",1)
-					;
+		m.cAltLad_Scale = m.page.getElementById("ALT_LAD_Scale");
+
 		
 		
-		m.cAltLad_D100T	= m.page.getElementById("ALT_LAD_D100T")
-# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
-					.set("z-index",1)
-					;
-		m.cAltLad_D100H	= m.page.getElementById("ALT_LAD_D100H")
-# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
-					.set("z-index",1)
-					;
-		m.cAltLad_D200T	= m.page.getElementById("ALT_LAD_D200T")
-# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
-					.set("z-index",1)
-					;
-		m.cAltLad_D200H	= m.page.getElementById("ALT_LAD_D200H")
-# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
-					.set("z-index",1)
-					;
-		m.cAltLad_D300T	= m.page.getElementById("ALT_LAD_D300T")
-# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
-					.set("z-index",1)
-					;
-		m.cAltLad_D300H	= m.page.getElementById("ALT_LAD_D300H")
-# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
-					.set("z-index",1)
-					;
-		m.cAltLad_D400T	= m.page.getElementById("ALT_LAD_D400T")
-# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
-					.set("z-index",1)
-					;
-		m.cAltLad_D400H	= m.page.getElementById("ALT_LAD_D400H")
-# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
-					.set("z-index",1)
-					;
+# 		m.cAltLad_U400T	= m.page.getElementById("ALT_LAD_U400T").hide();
+# 		m.cAltLad_U400H	= m.page.getElementById("ALT_LAD_U400H").hide();
+		m.cAltLad_U300T	= m.page.getElementById("ALT_LAD_U300T");
+		m.cAltLad_U300H	= m.page.getElementById("ALT_LAD_U300H");
+		m.cAltLad_U200T	= m.page.getElementById("ALT_LAD_U200T");
+		m.cAltLad_U200H	= m.page.getElementById("ALT_LAD_U200H");
+		m.cAltLad_U100T	= m.page.getElementById("ALT_LAD_U100T");
+		m.cAltLad_U100H	= m.page.getElementById("ALT_LAD_U100H");
 		
-		m.cAltLad_U100T	= m.page.getElementById("ALT_LAD_U100T")
-# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
-					.set("z-index",1)
-					;
-		m.cAltLad_U100H	= m.page.getElementById("ALT_LAD_U100H")
-# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
-					.set("z-index",1)
-					;
-		m.cAltLad_U200T	= m.page.getElementById("ALT_LAD_U200T")
-# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
-					.set("z-index",1)
-					;
-		m.cAltLad_U200H	= m.page.getElementById("ALT_LAD_U200H")
-# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
-					.set("z-index",1)
-					;
-		m.cAltLad_U300T	= m.page.getElementById("ALT_LAD_U300T")
-# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
-					.set("z-index",1)
-					;
-		m.cAltLad_U300H	= m.page.getElementById("ALT_LAD_U300H")
-# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
-					.set("z-index",1)
-					;
-		m.cAltLad_U400T	= m.page.getElementById("ALT_LAD_U400T")
-# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
-					.set("z-index",1)
-					;
-		m.cAltLad_U400H	= m.page.getElementById("ALT_LAD_U400H")
-# 					.set("clip","rect(170px, 2060px, 785px, 1680px)")
-					.set("z-index",1)
-					;
+		m.cAltLad_C000T	= m.page.getElementById("ALT_LAD_C000T");
+		m.cAltLad_C000H	= m.page.getElementById("ALT_LAD_C000H");
+		
+		
+		m.cAltLad_D100T	= m.page.getElementById("ALT_LAD_D100T");
+		m.cAltLad_D100H	= m.page.getElementById("ALT_LAD_D100H");
+		m.cAltLad_D200T	= m.page.getElementById("ALT_LAD_D200T");
+		m.cAltLad_D200H	= m.page.getElementById("ALT_LAD_D200H");
+# 		m.cAltLad_D300T	= m.page.getElementById("ALT_LAD_D300T").hide();
+# 		m.cAltLad_D300H	= m.page.getElementById("ALT_LAD_D300H").hide();
+# 		m.cAltLad_D400T	= m.page.getElementById("ALT_LAD_D400T").hide();
+# 		m.cAltLad_D400H	= m.page.getElementById("ALT_LAD_D400H").hide();
+		
 		
 		m.cAltBar10 = m.page.getElementById("AltBar10")
 # 					.updateCenter()
@@ -578,25 +517,14 @@ var AvidynePagePFD = {
 					;
 		m.cAltBlackPlade = m.page.getElementById("AltBlackPlade")
 					.set("clip","rect(95px, 2070px, 880px, 1680px)")
-					.set("z-index",3)
+					.set("z-index",2)
+# 					.hide();
 					;
 					
-		m.cAltBug = m.page.getElementById("ALT_Bug")
-					.set("clip","rect(140px, 2060px, 840px, 1680px)")
-					.set("z-index",4)
-					;
-		m.cAltUbox = m.page.getElementById("ALT_UBOX")
-					.set("clip","rect(95px, 2070px, 880px, 1680px)")
-					.set("z-index",5)
-					;
-		m.cAltDbox = m.page.getElementById("ALT_DBOX")
-					.set("clip","rect(95px, 2070px, 880px, 1680px)")
-					.set("z-index",5)
-					;
-		m.cAltBorder = m.page.getElementById("ALT_Border")
-					.set("clip","rect(95px, 2070px, 880px, 1680px)")
-					.set("z-index",5)
-					;
+		m.cAltBug = m.page.getElementById("ALT_Bug").set("z-index",4);
+		m.cAltUbox = m.page.getElementById("ALT_UBOX").set("z-index",5);
+		m.cAltDbox = m.page.getElementById("ALT_DBOX").set("z-index",5);
+		m.cAltBorder = m.page.getElementById("ALT_Border").set("z-index",5);
 					
 		m.cAltSelected = m.page.getElementById("ALT_Selected");
 		m.cHPA = m.page.getElementById("hPa");
@@ -1302,13 +1230,8 @@ var AvidynePagePFD = {
 	#ALT
 		
 		
-		var alt 	= me.data.ALT + 400;
-		var altTrans	= 0;
+		var alt 	= me.data.ALT + 300;
 		
-		me.cAltLad_U400T.setText(sprintf("%i",math.floor(alt/1000)));
-		me.cAltLad_U400H.setText(sprintf("%03i",math.floor(math.mod(alt,1000) / 100) * 100));
-		
-		alt-=100;
 		
 		me.cAltLad_U300T.setText(sprintf("%i",math.floor(alt/1000)));
 		me.cAltLad_U300H.setText(sprintf("%03i",math.floor(math.mod(alt,1000) / 100) * 100));
@@ -1324,28 +1247,9 @@ var AvidynePagePFD = {
 		me.cAltLad_U100H.setText(sprintf("%03i",math.floor(math.mod(alt,1000) / 100) * 100));
 		
 		alt-=100;
-		altTrans = math.mod(me.data.ALT,100);
 		me.cAltLad_C000T.setText(sprintf("%i",math.floor(alt/1000)));
 		me.cAltLad_C000H.setText(sprintf("%03i",math.floor(math.mod(alt,1000) / 100) * 100));
 			
-		if(altTrans < 55 ){
-			me.cAltLad_U100T.setVisible(1);
-			me.cAltLad_U100H.setVisible(1);
-
-		}else{
-			me.cAltLad_U100T.setVisible(0);
-			me.cAltLad_U100H.setVisible(0);
-		}
-		
-		if(altTrans > 45 ){
-			me.cAltLad_C000T.setVisible(1);
-			me.cAltLad_C000H.setVisible(1);
-
-		}else{
-			me.cAltLad_C000T.setVisible(0);
-			me.cAltLad_C000H.setVisible(0);
-		}
-		
 		alt-=100;
 		
 		me.cAltLad_D100T.setText(sprintf("%i",math.floor(alt/1000)));
@@ -1356,16 +1260,7 @@ var AvidynePagePFD = {
 		me.cAltLad_D200T.setText(sprintf("%i",math.floor(alt/1000)));
 		me.cAltLad_D200H.setText(sprintf("%03i",math.floor(math.mod(alt,1000) / 100) * 100));
 		
-		alt-=100;
-		
-		me.cAltLad_D300T.setText(sprintf("%i",math.floor(alt/1000)));
-		me.cAltLad_D300H.setText(sprintf("%03i",math.floor(math.mod(alt,1000) / 100) * 100));
-		
-		alt-=100;
-		
-		me.cAltLad_D400T.setText(sprintf("%i",math.floor(alt/1000)));
-		me.cAltLad_D400H.setText(sprintf("%03i",math.floor(math.mod(alt,1000) / 100) * 100));
-		
+
 		# 136 px
 		me.cAltLadder.setTranslation(0,math.mod(me.data.ALT,100)*1.36);
 		
