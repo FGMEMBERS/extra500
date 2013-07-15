@@ -19,8 +19,8 @@
       Authors: Thomas Grossberger 
       Date: July 04 2013
 
-      Last change:      Eric van den Berg
-      Date:             11.07.13
+      Last change:      Thomas Grossberger
+      Date:             15.07.13
 -->
 <PropertyList>
 
@@ -41,7 +41,7 @@
   <type>translate</type>
   <object-name>ParkingBrake</object-name>
   <property>/extra500/panel/CenterConsole/Parkingbrake/state</property>
-  <factor>-0.025</factor>
+  <factor>-0.040</factor> <!--0.055 is the correct factor-->
   <axis>
    <x1-m>0.41777</x1-m>
    <y1-m>0</y1-m>
@@ -86,11 +86,11 @@
   <interpolation>
             <entry>
                 <ind>0</ind>
-                <dep>-8</dep>
+                <dep>0</dep>
             </entry>
             <entry>
                 <ind>1</ind>
-                <dep>-26</dep>
+                <dep>-41</dep>
             </entry>
         </interpolation>
   <axis>
@@ -116,11 +116,11 @@
   <interpolation>
             <entry>
                 <ind>0</ind>
-                <dep>-8</dep>
+                <dep>0</dep>
             </entry>
             <entry>
                 <ind>1</ind>
-                <dep>36</dep>
+                <dep>41</dep>
             </entry>
         </interpolation>
   <axis>
@@ -157,11 +157,15 @@ in Systems/extra500-system-indication.xml-->
   <interpolation>
             <entry>
                 <ind>0</ind>
-                <dep>26.6</dep>
+                <dep>19</dep>
+            </entry>
+	    <entry>
+                <ind>0.2</ind>
+                <dep>0</dep>
             </entry>
             <entry>
                 <ind>1</ind>
-                <dep>-14.4</dep>
+                <dep>-19</dep>
             </entry>
         </interpolation>
   <axis>
