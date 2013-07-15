@@ -20,7 +20,7 @@
 #      Date:             26.06.13
 #
 
-
+# Fuel Flow Gal(US)/sec
 var FLOW_JETPUMP	= 0.503 / 60.0;		# 0.503 Gal/min
 var FLOW_COl2MAIN	= 1.585 / 3600.0;	# 6 L/Std
 var FLOW_MAIN2COL	= FLOW_JETPUMP * 4;
@@ -46,7 +46,7 @@ var FuelTankClass = {
 		me._level	= me._nLevel.getValue();
 		me._fraction	= me._level / me._capacity;	
 	},
-	save : func(dt){
+	save : func(){
 		me._nLevel.setValue(me._level);
 		#interpolate(me._nLevel,me._level,dt);
 	},
@@ -97,7 +97,18 @@ var FuelTankClass = {
 		me._level += amount;
 		
 	},
-	
+	ballance : func(target){
+		if (me._fraction != target._fraction){
+			var sumLevel 	= me._level + target._level;
+			var sumCap	= me._capacity + target._capacity;
+			
+			var fraction 	= sumLevel / sumCap;
+			
+			me._level	= me._capacity * fraction;
+			target._level	= target._capacity * fraction;
+			
+		}
+	},
 
 	
 };
@@ -112,6 +123,10 @@ var FuelPumpClass = {
 		};
 		m._on = 0;
 		return m;
+	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
 	},
 	electricWork : func(){
 		me._watt = me._nWatt.getValue();
@@ -156,10 +171,6 @@ var FuelSystemClass = {
 		m._FuelTransLeft	= FuelPumpClass.new("extra500/system/fuel/FuelPumpTransLeft","Fuel Transfer Pump Left",30.0);
 		m._FuelTransRight	= FuelPumpClass.new("extra500/system/fuel/FuelPumpTransRight","Fuel Transfer Pump Right",30.0);
 		
-		m._FuelPump1.setListeners();
-		m._FuelPump2.setListeners();
-		m._FuelTransLeft.setListeners();
-		m._FuelTransRight.setListeners();
 		
 		eSystem.circuitBreaker.FUEL_P_1.outputAdd(m._FuelPump1);
 		eSystem.circuitBreaker.FUEL_P_2.outputAdd(m._FuelPump2);
@@ -212,13 +223,37 @@ var FuelSystemClass = {
 	
 		return m;
 	},
-	init : func(){
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
 		me.initUI();
-				
+		
+		me._FuelPump1.init();
+		me._FuelPump2.init();
+		me._FuelTransLeft.init();
+		me._FuelTransRight.init();
+			
+		me.startupBallance();
+		
 		append(me._listeners, setlistener(me._nSelectValve,func(n){me._selectValve = n.getValue();me.update();},1,0) );
 		
 		me._timerLoop = maketimer(1.0,me,FuelSystemClass.update);
 		me._timerLoop.start();
+		
+	},
+	startupBallance : func(){
+		me._TankLeftMain.load();
+		me._TankLeftCollector.load();
+		me._TankRightCollector.load();
+		me._TankRightMain.load();
+		
+		me._TankLeftCollector.ballance(me._TankLeftMain);
+		me._TankRightCollector.ballance(me._TankRightMain);
+		
+		me._TankLeftMain.save();
+		me._TankLeftCollector.save();
+		me._TankRightCollector.save();
+		me._TankRightMain.save();
 		
 	},
 	onValveClick : func(value){
@@ -331,12 +366,12 @@ var FuelSystemClass = {
 		
 		me._nFuelEmpty.setValue(me._empty);
 		
-		me._TankLeftAuxiliary.save(me._dt);
-		me._TankLeftMain.save(me._dt);
-		me._TankLeftCollector.save(me._dt);
-		me._TankRightCollector.save(me._dt);
-		me._TankRightMain.save(me._dt);
-		me._TankRightAuxiliary.save(me._dt);
+		me._TankLeftAuxiliary.save();
+		me._TankLeftMain.save();
+		me._TankLeftCollector.save();
+		me._TankRightCollector.save();
+		me._TankRightMain.save();
+		me._TankRightAuxiliary.save();
 
 		
 		

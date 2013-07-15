@@ -85,10 +85,56 @@ var AutopilotClass = {
 		
 		return m;
 	},
-	setListeners : func() {
-		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0);
-		me._ampereListener 	= setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0);
-		me._brightnessListener	= setlistener(me._nBrightness,func(n){me._onBrightnessChange(n);},1,0);
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._nBrightness,func(n){instance._onBrightnessChange(n);},1,0) );
+	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		me.setListeners(instance);
+		
+		me.initUI();
+		
+		#print("AutopilotClass.init() ... ");
+		eSystem.switch.AutopilotMaster.onStateChange = func(n){
+			me._state = n.getValue();
+			#print(me._name~" onStateChange("~me._state~") ...");
+			if (me._state == 1){
+				autopilot.nSetAP.setValue(1);
+				autopilot.nSetFD.setValue(0);
+			}elsif(me._state == 0){
+				autopilot.nSetAP.setValue(0);
+				autopilot.nSetFD.setValue(1);
+			}else{
+				#Power off
+				autopilot.nSetAP.setValue(0);
+				autopilot.nSetFD.setValue(0);
+			}
+			autopilot.electricWork();
+			autopilot.update();
+		};
+		eSystem.switch.AutopilotPitchTrim.onStateChange = func(n){
+			me._state = n.getValue();
+			autopilot.nSetTrim.setValue(me._state);	
+			autopilot.update();
+		};
+		eSystem.switch.AutopilotYawDamper.onStateChange = func(n){
+			me._state = n.getValue();
+			autopilot.nSetYawDamper.setValue(me._state);
+			autopilot.update();
+		};
+		eSystem.switch.AutopilotYawTrim.onStateChange = func(n){
+			me._state = n.getValue();
+			autopilot.nSetYawTrim.setValue(me._state);
+			autopilot.update();
+		};
+		
+		
+		eSystem.circuitBreaker.AP_CMPTR.outputAdd(me);
+		
+		
+		me._timerLoop = maketimer(1.0,me,AutopilotClass.update);
+		me._timerLoop.start();
 	},
 	_onBrightnessChange : func(n){
 		me._brightness = n.getValue();
@@ -330,44 +376,7 @@ var AutopilotClass = {
 	onClickPitchCommand : func(){
 					
 	},
-	init : func(){
-		#print("AutopilotClass.init() ... ");
-		eSystem.switch.AutopilotMaster.onStateChange = func(n){
-			me._state = n.getValue();
-			#print(me._name~" onStateChange("~me._state~") ...");
-			if (me._state == 1){
-				autopilot.nSetAP.setValue(1);
-				autopilot.nSetFD.setValue(0);
-			}elsif(me._state == 0){
-				autopilot.nSetAP.setValue(0);
-				autopilot.nSetFD.setValue(1);
-			}else{
-				#Power off
-				autopilot.nSetAP.setValue(0);
-				autopilot.nSetFD.setValue(0);
-			}
-			autopilot.electricWork();
-			autopilot.update();
-		};
-		eSystem.switch.AutopilotPitchTrim.onStateChange = func(n){
-			me._state = n.getValue();
-			autopilot.nSetTrim.setValue(me._state);	
-			autopilot.update();
-		};
-		eSystem.switch.AutopilotYawDamper.onStateChange = func(n){
-			me._state = n.getValue();
-			autopilot.nSetYawDamper.setValue(me._state);
-			autopilot.update();
-		};
-		eSystem.switch.AutopilotYawTrim.onStateChange = func(n){
-			me._state = n.getValue();
-			autopilot.nSetYawTrim.setValue(me._state);
-			autopilot.update();
-		};
-		
-		
-		
-		
+	initUI : func(){
 		UI.register("Autopilot HDG", 		func{extra500.autopilot.onClickHDG(); } 	);
 		UI.register("Autopilot HDG+NAV", 	func{extra500.autopilot.onClickHDGNAV(); } 	);
 		UI.register("Autopilot NAV", 		func{extra500.autopilot.onClickNAV(); } 	);
@@ -394,11 +403,6 @@ var AutopilotClass = {
 		UI.register("Autopilot Pitch Command off",	func{extra500.autopilot.onClickPitchCommand(0); } 	);
 		UI.register("Autopilot Pitch Command up",	func{extra500.autopilot.onClickPitchCommand(-1); } 	);
 		
-		eSystem.circuitBreaker.AP_CMPTR.outputAdd(me);
-		me.setListeners();
-		
-		me._timerLoop = maketimer(1.0,me,AutopilotClass.update);
-		me._timerLoop.start();
 	},
 	
 };

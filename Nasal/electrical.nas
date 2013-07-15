@@ -105,6 +105,8 @@ var ServiceClass = {
 		m._nBuildin 		= m._nService.initNode("buildin",0,"INT");
 		m._nSerialNumber 	= m._nService.initNode("SerialNumber","","STRING");
 		
+		
+		
 		return m;
 	},
 	getName : func(){
@@ -113,14 +115,16 @@ var ServiceClass = {
 	getPath : func(){
 		return me._path;
 	},
-	init : func(){
-		me.setListeners();
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.setListeners(instance);
+		#print("Service init\t" ~me._name);
 	},
 	deinit : func(){
 		me.removeListeners();
 	},
-	setListeners  :func(){
-		
+	setListeners  :func(instance){
+		#print("ServiceClass.setListeners() ... " ~me._name);
 	},
 	removeListeners  :func(){
 		foreach(l;me._listeners){
@@ -185,6 +189,21 @@ var ElectricClass = {
 		m._nAmpere.setValue(0.0);
 		return m;
 	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		me.setListeners(instance);
+	},
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._nVolt,func(n){instance._onVoltChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nAmpere,func(n){instance._onAmpereChange(n);},1,0) );
+	},
+	_onVoltChange : func(n){
+		#print ("ElectricClass._onVoltChange() ... Not what i want. WARNING !!!" ~me._name);
+	},
+	_onAmpereChange : func(n){
+		#print ("ElectricClass._onAmpereChange() ... Not what i want. WARNING !!!"~me._name);
+	},
 	setVolt : func(volt){ 
 		#print("ElectricClass.setVolt("~volt~") ... "~me._name);
 		me._nVolt.setValue(volt);
@@ -248,7 +267,8 @@ var GeneratorClass = {
 		var m = { 
 			parents : [
 				GeneratorClass,
-				ElectricClass.new(root,name)
+				ElectricClass.new(root,name),
+				OutPutClass.new()
 			]
 		};
 		m._ampereAvailable	= 0.0;
@@ -264,6 +284,12 @@ var GeneratorClass = {
 		m._modeGenerator	= 0;
 			
 		return m;
+	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		
+		me.outputIndexRebuild();
 	},
 	_gernerateVolt : func(now,dt){
 		me._N1 = me._nN1.getValue();
@@ -323,7 +349,8 @@ var AlternatorClass = {
 		var m = { 
 			parents : [
 				AlternatorClass,
-				ElectricClass.new(root,name)
+				ElectricClass.new(root,name),
+				OutPutClass.new()
 			]
 		};
 		m._nAmpereAvailable	= m._nRoot.initNode("ampere_available",0.0,"DOUBLE");
@@ -335,6 +362,12 @@ var AlternatorClass = {
 		m._ampereMax		= 20.0;
 		m._ampereAvailable	= 0.0;
 		return m;
+	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		
+		me.outputIndexRebuild();
 	},
 	_gernerateVolt : func(now,dt){
 		me._N1 = me._nN1.getValue();
@@ -385,7 +418,8 @@ var ExternalGeneratorClass = {
 		var m = { 
 			parents : [
 				ExternalGeneratorClass,
-				ElectricClass.new(root,name)
+				ElectricClass.new(root,name),
+				OutPutClass.new()
 			]
 		};
 		m._nAmpereAvailable	= m._nRoot.initNode("ampere_available",0.0,"DOUBLE");
@@ -395,6 +429,14 @@ var ExternalGeneratorClass = {
 		m._ampereMax		= 1200.0;
 		m._ampereAvailable	= 0.0;			
 		return m;
+	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		
+		me.outputIndexRebuild();
+		
+		me.registerUI();
 	},
 	update : func(now,dt){
 		if (me._isPluged == 1){
@@ -442,7 +484,8 @@ var BatteryClass = {
 		var m = { 
 			parents : [
 				BatteryClass,
-				ElectricClass.new(root,name)
+				ElectricClass.new(root,name),
+				OutPutClass.new()
 			]
 		};
 		m._capacityAs		= 28.0*3600;
@@ -460,7 +503,12 @@ var BatteryClass = {
 		m._dt			= 0;
 		return m;
 	},
-	init : func(){
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		
+		me.outputIndexRebuild();
+		
 		me._loadLevel 		= me._nLoadLevel.getValue();
 		me._usedAs 		= (me._capacityAs * (1.0-me._loadLevel));
 		me._nUsedAs.setValue(me._usedAs);
@@ -514,11 +562,13 @@ var RelayClass = {
 		
 		return m;
 	},
-	setListeners : func() {
-		append(me._listeners ,setlistener(me._nState,func(n){me._onStateChange(n);},1,0) );
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		me.setListeners(instance);
 	},
-	init : func(){
-		me.setListeners();
+	setListeners : func(instance) {
+		append(me._listeners ,setlistener(me._nState,func(n){instance._onStateChange(n);},1,0) );
 	},
 	_onStateChange : func(n){
 		me._state = n.getValue();
@@ -541,8 +591,9 @@ var ConsumerClass = {
 		var m = { 
 			parents : [
 				ConsumerClass,
+				ElectricClass.new(root,name),
 				InputClass.new(),
-				ElectricClass.new(root,name)
+				
 			]
 		};
 		m._lastAmpere		= 0.0;
@@ -558,16 +609,15 @@ var ConsumerClass = {
 		m._state		= 0;
 		return m;
 	},
-	init : func(){
-		me.setListeners();
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._nWatt,func(n){instance._onWattChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nVoltMin,func(n){instance._onVoltMinChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nVoltMax,func(n){instance._onVoltMaxChange(n);},1,0) );
 	},
-	setListeners : func() {
-		append(me._listeners, setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nWatt,func(n){me._onWattChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nVoltMin,func(n){me._onVoltMinChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nVoltMax,func(n){me._onVoltMaxChange(n);},1,0) );
-		
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		me.setListeners(instance);
 	},
 	_onVoltMinChange : func(n){
 		
@@ -639,17 +689,13 @@ var LedClass = {
 		m._state = 0;
 		return m;
 	},
-	setListeners : func() {
-		append(me._listeners, setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nWatt,func(n){me._onWattChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nVoltMin,func(n){me._onVoltMinChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nVoltMax,func(n){me._onVoltMaxChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nBrightness,func(n){me._onBrightnessChange(n);},1,0));
-		
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._nBrightness,func(n){instance._onBrightnessChange(n);},1,0));
 	},
-	init : func(){
-		me.setListeners();
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		me.setListeners(instance);
 	},
 	_onBrightnessChange : func(n){
 		me._brightness = n.getValue();
@@ -708,12 +754,14 @@ var SwitchBoolClass = {
 		m._state	= 0;
 		return m;
 	},
-	init : func(){
-		me.registerUI();
-		me.setListeners();
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._nState,func(n){instance.onStateChange(n);},1,0) );
 	},
-	setListeners : func() {
-		append(me._listeners, setlistener(me._nState,func(n){me.onStateChange(n);},1,0) );
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		me.setListeners(instance);
+		me.registerUI();
 	},
 	onStateChange : func (n){
 		me._state	= n.getValue();
@@ -730,7 +778,6 @@ var SwitchBoolClass = {
 		UI.register(me._name~"", 	func{me.onClick(); } 	);
 		UI.register(me._name~" off", 	func{me.onClick(0); }	);
 		UI.register(me._name~" on", 	func{me.onClick(1); }	);
-		
 	},
 	
 };
@@ -752,12 +799,14 @@ var SwitchClass = {
 		m._default		= cfg._default;
 		return m;
 	},
-	setListeners : func() {
-		append(me._listeners, setlistener(me._nState,func(n){me.onStateChange(n);},1,0) );
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._nState,func(n){instance.onStateChange(n);},1,0) );
 	},
-	init : func(){
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		me.setListeners(instance);
 		me.registerUI();
-		me.setListeners();
 	},
 	onStateChange : func (n){
 		me._state	= n.getValue();
@@ -791,16 +840,7 @@ var SwitchClass = {
 		if (me._labels != nil){
 			#debug.dump(me._labels["0"]);
 			var labelIndex = keys(me._labels);
-			#debug.dump(labelIndex);
-# 			for (var i=me._min; i <= me._max; i = i+1){
-# 				
-# 				if(contains(me._labels,i)){
-# 					UI.register(me._name~" "~me._labels[i], 	func{me.onSet(i); }	);
-# 				}else{
-# 					print("no key at "~i);
-# 				}
-# 			}
-			
+
 			foreach(i ; labelIndex){
 				UI.register(me._name~" "~i, 	func(i){me.onLable(""~i); },i	);
 			}
@@ -814,21 +854,22 @@ var DcBusClass = {
 		var m = { 
 			parents 		: [
 				DcBusClass,
+				ElectricClass.new(root,name),
 				InputClass.new(),
 				OutPutClass.new(),
-				ElectricClass.new(root,name)
 			]
 		};
 		m._lastAmpere		= 0;
 		return m;
 	},
-	setListeners : func() {
-		append(me._listeners ,setlistener(me._nVolt,func(n){me._onVoltChange(n);},0,0) );
-		append(me._listeners ,setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},0,0) );
+	setListeners : func(instance) {
+
 	},
-	init : func(){
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		me.setListeners(instance);
 		me.outputIndexRebuild();
-		me.setListeners();
 	},
 	_deliverVolt : func(){
 		foreach( i;  me._outputIndex ){
@@ -843,7 +884,9 @@ var DcBusClass = {
 		me._ampere = n.getValue();
 		var dif = me._ampere - me._lastAmpere;
 		me._lastAmpere = me._ampere;
-		me._input.addAmpere(dif);
+		if(me._input!=nil){
+			me._input.addAmpere(dif);
+		}
 	},
 	addAmpere : func(ampere){
 		me._ampere = me._nAmpere.getValue();
@@ -867,15 +910,15 @@ var CircuitBrakerClass = {
 		m._nVoltOut		= m._nRoot.initNode("voltOut",0.0,"DOUBLE");
 		return m;
 	},
-	setListeners : func() {
-		append(me._listeners ,setlistener(me._nVolt,func(n){me._onVoltChange(n);},0,0) );
-		append(me._listeners ,setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},0,0) );
-		append(me._listeners ,setlistener(me._nState,func(n){me._onStateChange(n);},1,0) );
+	setListeners : func(instance) {
+		append(me._listeners ,setlistener(me._nState,func(n){instance._onStateChange(n);},1,0) );
 	},
-	init : func(){
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		me.setListeners(instance);
 		me.outputIndexRebuild();
 		me.registerUI();
-		me.setListeners();
 	},
 	_deliverVolt : func(){
 		if (me._state == 0){
@@ -902,7 +945,9 @@ var CircuitBrakerClass = {
 		if (me._ampere < me._ampereMax){
 			var dif = me._ampere - me._lastAmpere;
 			me._lastAmpere = me._ampere;
-			me._input.addAmpere(dif);
+			if(me._input!=nil){
+				me._input.addAmpere(dif);
+			}
 		}else{
 			me._nState.setValue(0);
 		}
@@ -929,8 +974,8 @@ var ESystem = {
 		var m = { 
 			parents : [
 				ESystem,
-				OutPutClass.new(),
 				ServiceClass.new(root,name),
+				OutPutClass.new(),
 				
 			]			
 		};
@@ -975,10 +1020,15 @@ var ESystem = {
 		
 		return m;
 	},
-	init : func(){
+	init : func(instance=nil){
 		print("ESystem.init() ...");
-		me.source.ExternalGenerator.registerUI();
-		me.setListeners();
+		
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		me.setListeners(instance);
+		
+		
+		
 		var index = nil;
 
 		
@@ -1118,7 +1168,7 @@ var ESystem = {
 		me._timerLoop.start();
 		
 	},
-	setListeners : func() {
+	setListeners : func(instance) {
 		#append(me._listeners, setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0) );
 		#append(me._listeners, setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0) );
 	},

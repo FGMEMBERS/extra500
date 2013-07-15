@@ -35,17 +35,23 @@ var KeypadClass = {
 		
 		m._nBrightness		= props.globals.initNode("/extra500/system/dimming/Keypad",0.0,"DOUBLE");
 		m._brightness		= 0;
-		m._brightnessListener   = nil;
 		m._nBacklight 		= m._nRoot.initNode("Backlight/state",0.0,"DOUBLE");
 		m._backLight 		= 0;
 		
 		return m;
 
 	},
-	setListeners : func() {
-		me._voltListener 	= setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0);
-		me._ampereListener 	= setlistener(me._nAmpere,func(n){me._onAmpereChange(n);},1,0);
-		me._brightnessListener	= setlistener(me._nBrightness,func(n){me._onBrightnessChange(n);},1,0);
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._nBrightness,func(n){instance._onBrightnessChange(n);},1,0) );
+	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		me.setListeners(instance);
+		
+		me.initUI();
+
+		eSystem.circuitBreaker.KEYPAD.outputAdd(me);
 	},
 	_onBrightnessChange : func(n){
 		me._brightness = n.getValue();
@@ -66,11 +72,6 @@ var KeypadClass = {
 		me._nAmpere.setValue(me._ampere);
 		me._nState.setValue(me._state);
 		me._nBacklight.setValue(me._backLight);
-	},
-	init : func(){
-		me.initUI();
-		me.setListeners();
-		eSystem.circuitBreaker.KEYPAD.outputAdd(me);
 	},
 	
 	

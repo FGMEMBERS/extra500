@@ -37,6 +37,10 @@ var FlapMotorClass = {
 					
 		return m;
 	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+	},
 	electricWork : func(){
 		
 		if ((me._target != me._value) and (me._volt >= me._voltMin) ){
@@ -75,7 +79,6 @@ var FlapSystemClass = {
 		m._switchFlapPosition[0]= 0.5;
 		m._switchFlapPosition[1]= 0.0;
 		
-		m._flapListener 	= nil;
 		m._flapPosition 	= 0;
 		
 		m._nWarning 		= m._nRoot.initNode("hasWarning",0,"BOOL");
@@ -106,30 +109,33 @@ var FlapSystemClass = {
 	
 		return m;
 	},
-	init : func(){
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._nFlapPosition,func(n){instance._onFlapChange(n);},1,0) );
+		append(me._listeners, setlistener(extra500.dimmingSystem._nTest,func(n){instance._onDimTestChange(n);},1,0) );
+	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		me.setListeners(instance);
 				
-		me._switch.registerUI();
-		me._switch.setListeners();
-		me._motor.setListeners();
+		me._switch.init();
+		me._motor.init();
 		
 		me._ledTrans.shine = func(light){
 			flapSystem._nLEDTrans.setValue(light);
 		};
-		me._ledTrans.setListeners();
+		me._ledTrans.init();
 		
 		me._led15.shine = func(light){
 			flapSystem._nLED15.setValue(light);
 		};
-		me._led15.setListeners();
+		me._led15.init();
 		
 		me._led30.shine = func(light){
 			flapSystem._nLED30.setValue(light);
 		};
-		me._led30.setListeners();
-		
-		
-		
-		
+		me._led30.init();
+				
 		eSystem.circuitBreaker.FLAP.outputAdd(me._motor);
 		eSystem.circuitBreaker.WARN_LT.outputAdd(me._ledTrans);
 		eSystem.circuitBreaker.WARN_LT.outputAdd(me._led15);
@@ -141,11 +147,7 @@ var FlapSystemClass = {
 # 		UI.register("Flaps 0", 		func{me._switch.onSet(1); } 	);
 # 		UI.register("Flaps 15", 	func{me._switch.onSet(0); } 	);
 # 		UI.register("Flaps 30", 	func{me._switch.onSet(-1); } );
-		
-		
-		me._flapListener = setlistener(me._nFlapPosition,func(n){me._onFlapChange(n);},1,0);
-		me._testListener = setlistener("/extra500/system/dimming/Test",func(n){me._onDimTestChange(n);},1,0);
-		
+				
 		me._timerLoop = maketimer(1.0,me,FlapSystemClass.update);
 		me._timerLoop.start();
 	},

@@ -40,6 +40,10 @@ var HydraulicMotorClass = {
 				
 		return m;
 	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+	},
 	electricWork : func(){
 		
 		if ((me._motoring == 1) and (me._volt >= me._voltMin) ){
@@ -121,17 +125,27 @@ var GearSystemClass = {
 	
 		return m;
 	},
-	init : func(){
-		me._swtGear.registerUI();
-		me._swtGear.setListeners();
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._nPositionNose,func(n){instance._onGearChange(n);},1,0) );
+		append(me._listeners, setlistener(extra500.dimmingSystem._nTest,func(n){instance._onDimTestChange(n);},1,0) );
+	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		me.setListeners(instance);
+		
+		
+		
 		
 		me._leds.shine = func(light){
 			gearSystem._nLEDLeft.setValue(light);
 			gearSystem._nLEDNose.setValue(light);
 			gearSystem._nLEDRight.setValue(light);
 		};
-		me._leds.setListeners();
-		me._hydaulicMotor.setListeners();
+		
+		me._swtGear.init();
+		me._leds.init();
+		me._hydaulicMotor.init();
 		
 		eSystem.circuitBreaker.WARN_LT.outputAdd(me._leds);
 		eSystem.circuitBreaker.HYDR.outputAdd(me._hydaulicMotor);
@@ -139,8 +153,6 @@ var GearSystemClass = {
 		UI.register("Gear up", 		func{me._swtGear.onClick(0); } 	);
 		UI.register("Gear down",	func{me._swtGear.onClick(1); } 	);
 		
-		me._gearListener = setlistener(me._nPositionNose,func(n){me._onGearChange(n);},1,0);
-		me._testListener = setlistener("/extra500/system/dimming/Test",func(n){me._onDimTestChange(n);},1,0);
 		
 		me._timerLoop = maketimer(1.0,me,GearSystemClass.update);
 		me._timerLoop.start();
