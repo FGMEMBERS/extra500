@@ -833,6 +833,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/AvidyneIFD.nas</file>
 	</IFD>
 	<Dialogs>
+            <file>Aircraft/extra500/Dialogs/fuelpayload.nas</file>
             <file>Aircraft/extra500/Nasal/dialogs.nas</file>
         </Dialogs>
         <run>

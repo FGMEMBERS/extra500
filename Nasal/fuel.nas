@@ -26,13 +26,16 @@ var FLOW_COl2MAIN	= 1.585 / 3600.0;	# 6 L/Std
 var FLOW_MAIN2COL	= FLOW_JETPUMP * 4;
 
 var FuelTankClass = {
-	new : func(name,nr){
+	new : func(position,name,index,refuelable=1){
 		var m = {parents:[
 			FuelTankClass,
 		]};
-		m._name = name;
+		m._index 	= index;
+		m._position 	= position;
+		m._name 	= name;
+		m._refuelable 	= refuelable;
 		
-		m._nTank 	= props.globals.getNode("/consumables/fuel/tank["~nr~"]",1);
+		m._nTank 	= props.globals.getNode("/consumables/fuel/tank["~m._index~"]",1);
 		m._nLevel 	= m._nTank.getNode("level-gal_us",1);
 		m._nCapacity 	= m._nTank.getNode("capacity-gal_us",1);
 		
@@ -199,17 +202,17 @@ var FuelSystemClass = {
 			m.update();
 		};
 		
+		m._tank = {
+			LeftAuxiliary 	: FuelTankClass.new("Left","Auxiliary",0),
+			LeftMain 	: FuelTankClass.new("Left","Main",1),
+			LeftCollector 	: FuelTankClass.new("Left","Collector",2,0),
+			Engine 		: FuelTankClass.new("Center","Engine Filter",3,0),
+			RightCollector 	: FuelTankClass.new("Right","Collector",4,0),
+			RightMain 	: FuelTankClass.new("Right","Main",5),
+			RightAuxiliary 	: FuelTankClass.new("Right","Auxiliary",6),
+		};
 		
-		m._TankLeftAuxiliary 	= FuelTankClass.new("LA",0);
-		m._TankLeftMain 	= FuelTankClass.new("LM",1);
-		m._TankLeftCollector 	= FuelTankClass.new("LC",2);
-		m._TankEngine 		= FuelTankClass.new("EN",3);
-		m._TankRightCollector 	= FuelTankClass.new("RC",4);
-		m._TankRightMain 	= FuelTankClass.new("RM",5);
-		m._TankRightAuxiliary 	= FuelTankClass.new("RA",6);
-		
-
-		
+				
 		m._fuelFlowGalUsPerSec 	= 0.0;
 		m._fuelFlowAmount	= 0.0;
 		m._empty		= 0;
@@ -242,18 +245,18 @@ var FuelSystemClass = {
 		
 	},
 	startupBallance : func(){
-		me._TankLeftMain.load();
-		me._TankLeftCollector.load();
-		me._TankRightCollector.load();
-		me._TankRightMain.load();
+		me._tank.LeftMain.load();
+		me._tank.LeftCollector.load();
+		me._tank.RightCollector.load();
+		me._tank.RightMain.load();
 		
-		me._TankLeftCollector.ballance(me._TankLeftMain);
-		me._TankRightCollector.ballance(me._TankRightMain);
+		me._tank.LeftCollector.ballance(me._tank.LeftMain);
+		me._tank.RightCollector.ballance(me._tank.RightMain);
 		
-		me._TankLeftMain.save();
-		me._TankLeftCollector.save();
-		me._TankRightCollector.save();
-		me._TankRightMain.save();
+		me._tank.LeftMain.save();
+		me._tank.LeftCollector.save();
+		me._tank.RightCollector.save();
+		me._tank.RightMain.save();
 		
 	},
 	onValveClick : func(value){
@@ -266,42 +269,42 @@ var FuelSystemClass = {
 		me._dt 		= me._now - me._lastTime;
 		me._lastTime	= me._now;
 		
-		me._TankEngine.load();
+		me._tank.Engine.load();
 		
 		if (me._empty == 0){
-			me._TankEngine.setFull();
-			me._TankEngine.save(me._dt);
+			me._tank.Engine.setFull();
+			me._tank.Engine.save(me._dt);
 		}
 		
 		
-		me._TankLeftAuxiliary.load();
-		me._TankLeftMain.load();
-		me._TankLeftCollector.load();
-		me._TankRightCollector.load();
-		me._TankRightMain.load();
-		me._TankRightAuxiliary.load();
+		me._tank.LeftAuxiliary.load();
+		me._tank.LeftMain.load();
+		me._tank.LeftCollector.load();
+		me._tank.RightCollector.load();
+		me._tank.RightMain.load();
+		me._tank.RightAuxiliary.load();
 		
 				
 		
 		
 	# by gravity
-		me._TankLeftMain.gravity(FLOW_MAIN2COL,me._TankLeftCollector);
-		me._TankRightMain.gravity(FLOW_MAIN2COL,me._TankRightCollector);
+		me._tank.LeftMain.gravity(FLOW_MAIN2COL,me._tank.LeftCollector);
+		me._tank.RightMain.gravity(FLOW_MAIN2COL,me._tank.RightCollector);
 		
-		me._TankLeftCollector.gravity(FLOW_COl2MAIN,me._TankLeftMain);
-		me._TankRightCollector.gravity(FLOW_COl2MAIN,me._TankRightMain);
+		me._tank.LeftCollector.gravity(FLOW_COl2MAIN,me._tank.LeftMain);
+		me._tank.RightCollector.gravity(FLOW_COl2MAIN,me._tank.RightMain);
 		
 				
 	# by pump 
 		if (me._FuelTransLeft._state == 1){
 			#print("\nFuel Trans Left "~me._now~"\n");
-			me._TankLeftAuxiliary.pump(FLOW_JETPUMP,me._TankLeftMain);
-			me._TankLeftMain.pump(FLOW_JETPUMP*2,me._TankLeftCollector);
+			me._tank.LeftAuxiliary.pump(FLOW_JETPUMP,me._tank.LeftMain);
+			me._tank.LeftMain.pump(FLOW_JETPUMP*2,me._tank.LeftCollector);
 		}
 		if (me._FuelTransRight._state == 1){
 			#print("\nFuel Trans Right "~me._now~"\n");
-			me._TankRightAuxiliary.pump(FLOW_JETPUMP,me._TankRightMain);
-			me._TankRightMain.pump(FLOW_JETPUMP*2,me._TankRightCollector);
+			me._tank.RightAuxiliary.pump(FLOW_JETPUMP,me._tank.RightMain);
+			me._tank.RightMain.pump(FLOW_JETPUMP*2,me._tank.RightCollector);
 		}
 		
 		
@@ -315,7 +318,7 @@ var FuelSystemClass = {
 		if (me._selectValve == 0){	#none
 			me._empty = 1;
 		}elsif(me._selectValve == 1){ # Left
-			if (me._TankLeftCollector.flow(me._fuelFlowAmount) >  0){
+			if (me._tank.LeftCollector.flow(me._fuelFlowAmount) >  0){
 				me._empty = 1;
 			}else{
 				me._empty = 0;
@@ -324,14 +327,14 @@ var FuelSystemClass = {
 			me._fuelFlowAmount /= 2;
 			me._toFlow = me._fuelFlowAmount;
 			
-			if (me._TankLeftCollector._level > me._TankRightCollector._level){
-				me._toFlow 	 = me._TankLeftCollector.flow(me._toFlow);
+			if (me._tank.LeftCollector._level > me._tank.RightCollector._level){
+				me._toFlow 	 = me._tank.LeftCollector.flow(me._toFlow);
 				me._toFlow 	+= me._fuelFlowAmount;
-				me._toFlow 	 = me._TankRightCollector.flow(me._toFlow);
+				me._toFlow 	 = me._tank.RightCollector.flow(me._toFlow);
 			}else{
-				me._toFlow 	 = me._TankRightCollector.flow(me._toFlow);
+				me._toFlow 	 = me._tank.RightCollector.flow(me._toFlow);
 				me._toFlow 	+= me._fuelFlowAmount;
-				me._toFlow 	 = me._TankLeftCollector.flow(me._toFlow);
+				me._toFlow 	 = me._tank.LeftCollector.flow(me._toFlow);
 			}
 			
 			if (me._toFlow >  0){
@@ -342,7 +345,7 @@ var FuelSystemClass = {
 			
 			
 		}elsif(me._selectValve == 3){ #Right
-			if (me._TankRightCollector.flow(me._fuelFlowAmount) >  0){
+			if (me._tank.RightCollector.flow(me._fuelFlowAmount) >  0){
 				me._empty = 1;
 			}else{
 				me._empty = 0;
@@ -350,12 +353,12 @@ var FuelSystemClass = {
 		}
 		
 		
-		if (me._TankLeftCollector._fraction <= 0.68){
+		if (me._tank.LeftCollector._fraction <= 0.68){
 			me._nFuelLowLeft.setValue(1);
 		}else{
 			me._nFuelLowLeft.setValue(0);
 		}
-		if (me._TankRightCollector._fraction <= 0.68){
+		if (me._tank.RightCollector._fraction <= 0.68){
 			me._nFuelLowRight.setValue(1);
 		}else{
 			me._nFuelLowRight.setValue(0);
@@ -366,12 +369,12 @@ var FuelSystemClass = {
 		
 		me._nFuelEmpty.setValue(me._empty);
 		
-		me._TankLeftAuxiliary.save();
-		me._TankLeftMain.save();
-		me._TankLeftCollector.save();
-		me._TankRightCollector.save();
-		me._TankRightMain.save();
-		me._TankRightAuxiliary.save();
+		me._tank.LeftAuxiliary.save();
+		me._tank.LeftMain.save();
+		me._tank.LeftCollector.save();
+		me._tank.RightCollector.save();
+		me._tank.RightMain.save();
+		me._tank.RightAuxiliary.save();
 
 		
 		
