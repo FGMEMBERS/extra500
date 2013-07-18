@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-07-08
+      Date:             2013-07-18
 -->
 
 <flight_control name="FCS: extra500">
@@ -424,18 +424,53 @@
   	</channel> 
 
 		
-		<channel name="Roll">
+	<channel name="Roll">
 
-			<aerosurface_scale name="rudder aileron control"> 	<!-- this is to simulate the rudder-aileron interconnect, a spring in RL -->
-				<input>fcs/rudder-cmd-norm</input>
-				<range>
-					<min> 0.15 </min>
-					<max>-0.15 </max>
-				</range>
-				<output>fcs/rudder-cmd-aileron</output>
-			</aerosurface_scale>
+		<aerosurface_scale name="rudder aileron control"> 	<!-- this is to simulate the rudder-aileron interconnect, a spring in RL -->
+			<input>fcs/rudder-cmd-norm</input>
+			<range>
+				<min> 0.15 </min>
+				<max>-0.15 </max>
+			</range>
+			<output>fcs/rudder-cmd-aileron</output>
+		</aerosurface_scale>
 
-			<fcs_function name="aileron-cmd-tot-nc">
+		<fcs_function name="aileron-cmd-rdr-ail">
+			<function>
+			<sum>
+				<property>fcs/rudder-cmd-aileron</property>	
+				<property>fcs/aileron-cmd-norm</property>
+			</sum>
+			</function>
+		</fcs_function>
+
+		<switch name="ailradionavmode">
+			<default value="fcs/aileron-cmd-rdr-ail"/>
+			<test logic="OR" value="/autopilot/radionav-channel/cmd-ap-ail-pos-norm">
+				/autopilot/mode/nav eq 1
+			</test>
+			<output>fcs/aileron-cmd-1</output>
+		</switch>
+
+		<switch name="ailfmsmode">
+			<default value="fcs/aileron-cmd-1"/>
+			<test logic="AND" value="/autopilot/fms-channel/cmd-ap-ail-pos-norm">
+				/autopilot/mode/nav eq 1
+				/instrumentation/nav-source eq 2
+			</test>
+			<output>fcs/aileron-cmd-2</output>
+		</switch>
+
+	<!--hdg goes over nav (hdg+nav mode). hdg is switched off in radionav-channel (extra500-autopilot.xml). --> 
+		<switch name="ailhdgmode">
+			<default value="fcs/aileron-cmd-2"/>
+			<test logic="OR" value="/autopilot/hdg-channel/cmd-ap-ail-pos-norm">
+				/autopilot/mode/heading eq 1
+			</test>
+			<output>fcs/aileron-cmd-tot-nc</output>
+		</switch>
+
+			<!--fcs_function name="aileron-cmd-tot-nc">
 				<function>
 				<sum>
 					<product>
@@ -460,7 +495,7 @@
 							<property>fcs/aileron-cmd-norm</property>
 						</sum>
 					</product>
-					<!--hdg goes over nav (hdg+nav mode). hdg is switched off in radionav-channel (extra500-autopilot.xml). --> 
+
 					<product>
                                   		<property>/autopilot/mode/heading</property>
                               			<property>/autopilot/hdg-channel/cmd-ap-ail-pos-norm</property>	
@@ -477,7 +512,7 @@
 					</product>
 				</sum>
 				</function>
-			</fcs_function>
+			</fcs_function-->
 
 			 <summer name="aileron-cmd-tot">
                 		<input>fcs/aileron-cmd-tot-nc</input>

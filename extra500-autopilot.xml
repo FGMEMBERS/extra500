@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-07-10
+      Date:             2013-07-18
 -->
 
 <autopilot name="STEC55X">
@@ -762,8 +762,14 @@
 <!--this makes the aileron pilot input to move along, so when the nav mode is disconnected, the ailerons are in the correct position-->
 		<switch name="radionavon">
 			<default value="/controls/flight/aileron"/>
-			<test value="/autopilot/radionav-channel/cmd-ap-ail-pos-norm">
-				/autopilot/mode/nav eq 1
+			<test logic="AND" value="/autopilot/radionav-channel/cmd-ap-ail-pos-norm">
+				<test value="1">
+					/autopilot/mode/nav eq 1
+				</test>
+				<test logic="OR" value="1">
+					/instrumentation/nav-source eq 0
+					/instrumentation/nav-source eq 1
+				</test>
 			</test>
 			<output>/controls/flight/aileron</output>
 		</switch>
@@ -794,10 +800,16 @@
 		<switch name="APRmodeon">
 			<default value="/autopilot/mode/apr"/>
 			<test logic="AND" value="1">
-				/autopilot/mode/nav eq 1
-				/autopilot/mode/rev eq 0
-				/autopilot/radionav-channel/is-localizer-frequency eq 1
-				/autopilot/radionav-channel/timer-cap gt 5
+				<test logic="OR" value="1">
+					/instrumentation/nav-source eq 0
+					/instrumentation/nav-source eq 1
+				</test>
+				<test logic="AND" value="1">
+					/autopilot/mode/nav eq 1
+					/autopilot/mode/rev eq 0
+					/autopilot/radionav-channel/is-localizer-frequency eq 1
+					/autopilot/radionav-channel/timer-cap gt 5
+				</test>
 			</test>
 			<output>/autopilot/mode/apr</output>
 		</switch>
@@ -953,6 +965,257 @@
 
 	</channel>
 
+<!--***************************************FMS (GPS) NAVIGATION**********************************************************************-->
+
+	<channel name="fmsnav">
+
+<!-- 	/instrumentation/gps/wp/leg-true-course-deg
+	/instrumentation/gps/wp/leg-distance-nm
+	/instrumentation/gps/wp/wp[1]/distance-nm
+	/instrumentation/gps/wp/wp[1]/bearing-true-deg (direct to next waypoint, wp[1])
+	/instrumentation/gps/wp/wp[1]/course-error-nm (left of leg =pos) = /instrumentation/nav[2]/crosstrack-error-m
+	/instrumentation/gps/cdi-deflection = /instrumentation/nav[2]/heading-needle-deflection-norm = (dependent on /instrumentation/gps/config/cdi-max-deflection-nm
+	/instrumentation/gps/indicated-ground-speed-kt
+	/instrumentation/gps/indicated-track-true-deg (aircraft track)
+	/instrumentation/gps/serviceable
+	/instrumentation/gps/raim (should be 1)
+
+-->
+
+	<!-- selecting GPS properties from gps1 or 2 depending on "servicable" -->
+		<switch name="gpsselect1">
+			<default value="/instrumentation/gps/wp/leg-true-course-deg"/>
+			<test value="/instrumentation/gps[1]/wp/leg-true-course-deg">
+				/instrumentation/gps/serviceable eq 1
+			</test>
+			<output>/autopilot/fms-channel/leg-true-course-deg</output>
+		</switch>
+
+		<switch name="gpsselect2">
+			<default value="/instrumentation/gps/wp/wp[1]/course-error-nm"/>
+			<test value="/instrumentation/gps[1]/wp/wp[1]/course-error-nm">
+				/instrumentation/gps/serviceable eq 1
+			</test>
+			<output>/autopilot/fms-channel/course-error-nm</output>
+		</switch>
+
+		<switch name="gpsselect3">
+			<default value="/instrumentation/gps/cdi-deflection"/>
+			<test value="/instrumentation/gps[1]/cdi-deflection">
+				/instrumentation/gps/serviceable eq 1
+			</test>
+			<output>/autopilot/fms-channel/cdi-deflection</output>
+		</switch>
+
+		<switch name="gpsselect4">
+			<default value="/instrumentation/gps/indicated-track-true-deg"/>
+			<test value="/instrumentation/gps[1]/indicated-track-true-deg">
+				/instrumentation/gps/serviceable eq 1
+			</test>
+			<output>/autopilot/fms-channel/indicated-track-true-deg</output>
+		</switch>
+
+		<switch name="gpsselect5">
+			<default value="/instrumentation/gps/wp/leg-distance-nm"/>
+			<test value="/instrumentation/gps[1]/wp/leg-distance-nm">
+				/instrumentation/gps/serviceable eq 1
+			</test>
+			<output>/autopilot/fms-channel/leg-distance</output>
+		</switch>
+
+
+
+<!--calculating the target heading to intercept the leg-->
+		<pid name="/autopilot/fms-channel/relative-diff-heading-target-deg">
+			<input>/autopilot/fms-channel/course-error-nm</input>
+			<kp>/autopilot/fms-channel/tgt-hdg-kp</kp>							
+			<ki>/autopilot/fms-channel/tgt-hdg-ki</ki>
+			<kd>/autopilot/fms-channel/tgt-hdg-kd</kd>
+			<output>/autopilot/fms-channel/relative-d-heading-target-deg</output>
+		</pid>
+
+		<fcs_function name="/autopilot/fms-channel/p-gain">
+			<function>
+				<product>
+					<property>/autopilot/fms-channel/gain</property>
+					<pow> 
+						<max>
+							<abs>
+								<property>/autopilot/fms-channel/relative-d-heading-target-deg</property> 
+							</abs>
+							<value>0.000001</value>
+						</max>
+						<value>-1</value>
+					</pow>
+				</product>
+			</function>
+		</fcs_function>
+
+		<pure_gain name="/autopilot/fms-channel/p-gain-lmd">
+			<input>/autopilot/fms-channel/p-gain</input>
+			<gain>1</gain>
+			<clipto>
+				<min>0</min>
+				<max>225</max>		<!-- making sure it starts to turns at min needle defl of |0.2| --> 
+			</clipto>
+		</pure_gain>
+
+		<pure_gain name="/autopilot/fms-channel/relative-course-target-deg">
+			<input>/autopilot/fms-channel/course-error-nm</input>
+			<gain>/autopilot/fms-channel/p-gain-lmd</gain>
+			<clipto>
+				<min>/autopilot/fms-channel/rel-hdg-min</min>
+				<max>/autopilot/fms-channel/rel-hdg-max</max>
+			</clipto>
+		</pure_gain>
+
+<!--target course -->
+		<fcs_function name="/autopilot/fms-channel/course-target-deg">
+			<function>
+				<sum>
+					<property>/autopilot/fms-channel/leg-true-course-deg</property> 
+					<property>/autopilot/fms-channel/relative-course-target-deg</property> 
+				</sum>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/autopilot/fms-channel/crs-error/course-1-error-deg">
+			<function>
+				<difference>
+					<property>/autopilot/fms-channel/course-target-deg</property> 
+					<property>/autopilot/fms-channel/indicated-track-true-deg</property> 
+				</difference>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/autopilot/fms-channel/crs-error/course-2-error-deg">
+			<function>
+				<sum>
+					<property>/autopilot/fms-channel/crs-error/course-1-error-deg</property> 
+					<value>360</value> 
+				</sum>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/autopilot/fms-channel/crs-error/course-3-error-deg">
+			<function>
+				<difference>
+					<property>/autopilot/fms-channel/crs-error/course-1-error-deg</property> 
+					<value>360</value> 
+				</difference>
+			</function>
+		</fcs_function>
+
+		<switch name="crsdirection">
+			<default value="/autopilot/fms-channel/crs-error/course-1-error-deg"/>
+			<test value="/autopilot/fms-channel/crs-error/course-2-error-deg">
+				/autopilot/fms-channel/crs-error/course-1-error-deg lt -180
+			</test>
+			<output>/autopilot/fms-channel/crs-error/course-4-error-deg</output>
+		</switch>
+
+		<switch name="crsdirection2">
+			<default value="/autopilot/fms-channel/crs-error/course-4-error-deg"/>
+			<test value="/autopilot/fms-channel/crs-error/course-3-error-deg">
+				/autopilot/fms-channel/crs-error/course-1-error-deg gt 180
+			</test>
+			<output>/autopilot/fms-channel/crs-error/course-error-deg</output>
+		</switch>
+
+<!--the course error is clipped to -20 to 20 deg -->
+		<pure_gain name="/autopilot/fms-channel/lmd-crs-error-clp">
+			<input>/autopilot/fms-channel/crs-error/course-error-deg</input>
+			<gain>1.0</gain>
+			<clipto>
+				<min>-20</min>
+				<max>20</max>
+			</clipto>
+		</pure_gain>
+
+		<switch name="crserrorendofflp">
+			<default value="/autopilot/fms-channel/lmd-crs-error-clp"/>
+			<test value="0">
+				/autopilot/fms-channel/leg-distance lt 0.0
+			</test>
+			<output>/autopilot/fms-channel/lmd-crs-error</output>
+		</switch>
+
+<!--determining the target turn rate using the crs error. Note that kp and the clipped crs error determines the maximum turnrate-->
+		<pid name="/autopilot/fms-channel/target-turn-rate">
+			<input>/autopilot/fms-channel/lmd-crs-error</input>
+			<kp>/autopilot/fms-channel/lmd-hdg-error-kp</kp>							<!--180deg/min devided by 20deg -->
+			<ki>/autopilot/fms-channel/lmd-hdg-error-ki</ki>
+			<kd>/autopilot/fms-channel/lmd-hdg-error-kd</kd>
+		</pid>
+		
+<!-- the turn rate (inverted) as measured by the turn coordinator in deg/s (RH panel) -->
+		<fcs_function name="/autopilot/fms-channel/turn-rate-inv">
+			<function>
+				<product>
+					<value>-180.0</value>
+					<property>/instrumentation/turn-indicator/indicated-turn-rate</property>  <!--pos right-->
+				</product>
+			</function>
+		</fcs_function>
+
+<!-- the turn rate error -->
+		<fcs_function name="/autopilot/fms-channel/turn-rate-error">
+			<function>
+				<sum>
+					<property>/autopilot/fms-channel/target-turn-rate</property>	
+					<property>/autopilot/fms-channel/turn-rate-inv</property>
+				</sum>
+			</function>
+		</fcs_function>
+
+<!-- the commanded aileron position change using the turn rate error -->
+		<pid name="/autopilot/fms-channel/cmd-ail-change">
+			<input>/autopilot/fms-channel/turn-rate-error</input>
+			<kp>/autopilot/fms-channel/turn-rate-error-kp</kp>							
+			<ki>/autopilot/fms-channel/turn-rate-error-ki</ki>
+			<kd>/autopilot/fms-channel/turn-rate-error-kd</kd>
+		</pid>
+
+<!-- calculating the new aileron position-->
+		<fcs_function name="/autopilot/fms-channel/cmd-ap-ail-pos-norm-raw">
+			<function>
+				<sum>
+					<property>fcs/aileron-cmd-tot</property>	
+					<product>
+                                  		<property>/autopilot/mode/nav</property>
+						<value>1.0</value>
+						<property>/autopilot/fms-channel/cmd-ail-change</property>
+						<property>sim-dt-sec</property>
+					</product>
+				</sum>
+			</function>
+			<output>/autopilot/fms-channel/cmd-ap-ail-pos-norm-raw</output>
+		</fcs_function>
+
+<!-- making sure the aileron servo is not going to fast-->	
+		<actuator name="/autopilot/fms-channel/ail-servo">
+			<input>/autopilot/fms-channel/cmd-ap-ail-pos-norm-raw</input>
+			<rate_limit>0.05</rate_limit>
+			<clipto>
+				<min>-1</min>
+				<max>1</max>
+			</clipto>
+			<output>/autopilot/fms-channel/cmd-ap-ail-pos-norm</output>
+		</actuator>
+
+<!--this makes the aileron pilot input to move along, so when the nav mode is disconnected, the ailerons are in the correct position-->
+		<switch name="fmsnavon">
+			<default value="/controls/flight/aileron"/>
+			<test logic="AND" value="/autopilot/fms-channel/cmd-ap-ail-pos-norm">
+				/autopilot/mode/nav eq 1
+				/instrumentation/nav-source eq 2
+			</test>
+			<output>/controls/flight/aileron</output>
+		</switch>
+
+
+	</channel>
+
 <!--********************************VERTICAL SPEED****************************************************************-->
 
 	<channel name="verticalspeed">
@@ -1068,7 +1331,7 @@
 
 		<switch name="vson2">
 			<default value="/autopilot/alt-channel/target-alt-ft"/>
-			<test logic="AND" value="/autopilot/settings/target-altitude-ft">
+			<test logic="AND" value="/autopilot/settings/tgt-altitude-ft">
 				/autopilot/mode/vs eq 1
 			</test>
 			<output>/autopilot/alt-channel/target-alt-ft</output>
