@@ -24,11 +24,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.1069337"
-     inkscape:cx="408.31577"
-     inkscape:cy="463.95431"
+     inkscape:zoom="4.4277349"
+     inkscape:cx="95.881798"
+     inkscape:cy="165.18925"
      inkscape:document-units="px"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer3"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1025"
@@ -37,19 +37,17 @@
      inkscape:window-maximized="1"
      inkscape:snap-bbox="true"
      inkscape:bbox-paths="true"
-     inkscape:snap-bbox-edge-midpoints="false"
+     inkscape:snap-bbox-edge-midpoints="true"
      inkscape:snap-midpoints="true"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:snap-page="true">
+     inkscape:snap-page="true"
+     inkscape:snap-object-midpoints="false"
+     inkscape:snap-center="true">
     <sodipodi:guide
        orientation="1,0"
-       position="64,745.49258"
+       position="64.5,208.80959"
        id="guide4694" />
-    <sodipodi:guide
-       orientation="1,0"
-       position="832,620.23366"
-       id="guide4696" />
     <sodipodi:guide
        orientation="0,1"
        position="-45.714286,608"
@@ -58,14 +56,6 @@
        orientation="0,1"
        position="-97.142857,484"
        id="guide4700" />
-    <sodipodi:guide
-       orientation="1,0"
-       position="512,778.57143"
-       id="guide4704" />
-    <sodipodi:guide
-       orientation="1,0"
-       position="448,803.07127"
-       id="guide4706" />
     <sodipodi:guide
        orientation="1,0"
        position="4,932.85714"
@@ -82,6 +72,22 @@
        orientation="0,1"
        position="-101.42857,4"
        id="guide5058" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="-40.652841,24"
+       id="guide5068" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="682.57396,217.99999"
+       id="guide5070" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="677,-46.07322"
+       id="guide5421" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="577.87051,88.66666"
+       id="guide5187" />
   </sodipodi:namedview>
   <metadata
      id="metadata7">
@@ -191,7 +197,7 @@
     </g>
     <path
        style="color:#000000;fill:#f2f2f2;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       d="m 14.802099,541.75977 995.895801,0 c 5.1534,0 9.3021,4.14873 9.3021,9.30209 l 0,202.23375 c 0,5.15337 -4.1487,9.3021 -9.3021,9.3021 l -995.895801,0 C 9.6487363,762.59771 5.5,758.44898 5.5,753.29561 l 0,-202.23375 c 0,-5.15336 4.1487363,-9.30209 9.302099,-9.30209 z"
+       d="m 14.8021,541.75977 995.8958,0 c 5.1534,0 9.3021,4.14873 9.3021,9.30209 l 0,202.23375 c 0,5.15337 -4.1487,9.3021 -9.3021,9.3021 l -995.8958,0 c -5.15337,0 -9.3021,-4.14873 -9.3021,-9.3021 l 0,-202.23375 c 0,-5.15336 4.14873,-9.30209 9.3021,-9.30209 z"
        id="TabFrameLower"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="sssssssss" />
@@ -1535,126 +1541,698 @@
      inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="Payload"
-     style="display:inline" />
+     style="display:inline">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 504.4375,75.3125 C 480.04576,90.90905 481.5,187.78125 481.5,187.78125 c 0,0 -201.61606,30.65645 -205.1875,31.28125 -3.57144,0.6248 -5.03294,3.49162 -5.75,8.25 -0.71706,4.75838 -4.0625,30.5 -4.0625,30.5 L 276.5625,256 l 205.71875,0 c -2.83349,27.99995 24.625,170.84375 24.625,170.84375 l -5.625,2.71875 1,8.6875 c 0,0 -58.80656,11.44497 -66.40625,13 -2.588,0.52955 -5.24994,3.32787 -5.1875,5.96875 0.14767,6.24556 0.125,19.09375 0.125,19.09375 l 76.65625,0.21875 c 4.51703,-0.0847 4.53125,11.43039 4.53125,11.43039 0,0 0.38922,-11.51509 4.90625,-11.43039 l 76.6875,-0.21875 c 0,0 -0.0539,-12.84819 0.0937,-19.09375 0.0624,-2.64088 -2.5995,-5.4392 -5.1875,-5.96875 -7.59969,-1.55503 -66.40625,-13 -66.40625,-13 l 1.03125,-8.6875 -5.65625,-2.71875 c 0,0 27.45849,-142.8438 24.625,-170.84375 l 205.75,0 10.03125,1.8125 c 0,0 -3.34544,-25.74162 -4.0625,-30.5 -0.71706,-4.75838 -2.17856,-7.6252 -5.75,-8.25 -3.57144,-0.6248 -205.1875,-31.28125 -205.1875,-31.28125 0,0 1.48549,-96.8722 -22.90625,-112.46875 0.10828,-10.420781 -6.33129,-20.54784 -7.9687,-20.53125 -1.63741,-0.01659 -7.67078,10.110469 -7.5625,20.53125 z"
+       id="path3749"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccssccccccsscccccssccccccsscccc" />
+    <g
+       id="Seat_1B"
+       transform="translate(28,-20)">
+      <g
+         transform="matrix(1.0559007,0,0,1.0559007,-22.43067,-5.6434201)"
+         id="Seat1">
+        <path
+           style="color:#000000;fill:#b3b3b3;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           d="m 829.48719,109.47212 c -3.80755,0 -6.89112,3.26207 -6.89112,7.29004 0,4.02797 3.08357,7.29004 6.89112,7.29004 3.80756,0 6.90328,-3.26207 6.90328,-7.29004 0,-4.02797 -3.09572,-7.29004 -6.90328,-7.29004 z m -8.10648,16.94581 c -5.34695,0 -8.19157,3.69051 -8.19157,7.0329 l 0,24.95587 c 0,3.78654 5.72437,3.78654 5.72437,0 l 0,-22.16585 c 0.33118,-1.17174 2.10913,-1.18288 2.4672,0 l 0,61.14894 c 0,3.99951 6.55082,3.99951 6.55082,0 l 0,-34.02021 c 0,-1.77493 3.26933,-1.77493 3.26933,0 l 0,34.02021 c 0,3.99951 6.56297,3.99951 6.56297,0 l 0,-61.14894 c 0.56338,-0.87695 1.62311,-0.87115 2.1755,0 l 0,22.16585 c 0,3.78654 5.73653,3.78654 5.73653,0 l 0,-24.95587 c 0,-3.14044 -2.87515,-7.0329 -7.91203,-7.0329 z"
+           id="Seat_1B_Cat1"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="sssssssssccssssssccsssss" />
+      </g>
+      <text
+         sodipodi:linespacing="125%"
+         id="Seat_1B_Name"
+         y="102.65698"
+         x="797.22485"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="102.65698"
+           x="797.22485"
+           id="tspan4740"
+           sodipodi:role="line">Seat 1B</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+         x="939.10211"
+         y="102.65698"
+         id="Seat_1B_Lbs"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan6196-5"
+           x="939.10211"
+           y="102.65698">000.00</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text6198-1"
+         y="102.65698"
+         x="942.4873"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="102.65698"
+           x="942.4873"
+           id="tspan6200-9"
+           sodipodi:role="line">lbs</tspan></text>
+      <g
+         id="Seat_1B_Bar">
+        <rect
+           style="color:#000000;fill:#b3b3b3;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="Seat_1B_Frame"
+           width="24.774126"
+           height="95.999741"
+           x="798.04224"
+           y="109.94827" />
+        <rect
+           y="165.84308"
+           x="798.04224"
+           height="40.104935"
+           width="24.774126"
+           id="Seat_1B_Level"
+           style="color:#000000;fill:#008000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      </g>
+    </g>
+    <g
+       transform="translate(28,123)"
+       id="Seat_2B">
+      <g
+         id="g4800"
+         transform="matrix(1.0559007,0,0,1.0559007,-22.43067,-5.6434201)">
+        <path
+           sodipodi:nodetypes="ccccccccccccccscccccsccccccccccccccccccccc"
+           inkscape:connector-curvature="0"
+           id="Seat_2B_Cat3"
+           d="m 909.81966,200.00212 c -0.2265,-0.59574 -0.19585,-0.70248 0.7603,-2.64866 0.64288,-1.36954 1.51666,-3.54064 0.53404,-4.61221 -0.35995,-0.38609 -0.59654,-1.37146 -0.81076,-3.37672 -0.13063,-0.75417 -0.50757,-0.92099 -1.13383,-1.22256 -0.22989,2.16986 -1.2635,6.51878 -0.45099,8.79197 0.20796,0.73609 -0.36023,0.89797 -0.36962,1.6415 0,0.75501 -0.28947,1.15984 -0.67994,0.95086 -0.55678,-0.17864 -0.88101,0.41911 -1.37621,0.24576 -1.3668,-0.49622 -1.74482,-1.02544 -1.2329,-1.72593 0.44213,-0.6772 0.72686,-1.29737 1.08115,-2.02641 -0.0199,-3.84915 -0.4825,-7.93053 -0.74571,-11.46577 -0.0267,-2.29447 -1.41243,-5.46283 -0.53268,-7.52601 0.4677,-1.15999 0.28817,-2.73737 0.96353,-3.5177 0.50965,-0.58204 0.8003,-2.03015 0.40747,-2.03015 -0.15479,0 -0.24054,-0.17419 -0.27187,-0.55227 0.13627,-0.76699 -0.95613,-0.51028 -0.8797,-1.00103 0.0136,-0.81739 0.47801,-2.33486 -0.14253,-2.77778 -0.18836,-0.13197 -0.55748,-0.23987 -0.82025,-0.23987 -1.31439,-0.51982 -2.07511,-1.41023 -3.0538,-2.70492 -0.39531,-0.53324 -0.41633,-0.63438 -0.35439,-1.70454 0.0362,-0.62571 0.11097,-1.21072 0.1662,-1.30002 1.64373,-0.23213 2.74089,-0.10612 4.59636,-0.0665 0.78639,-0.3942 1.5728,-0.78841 2.3592,-1.18262 l 1.66479,0.099 c 1.50857,-0.14391 2.2392,0.63306 3.52322,0.99224 0.5894,0.15413 2.69538,3.36289 2.69881,4.11204 10e-4,0.33242 -0.3809,0.8707 -0.61862,0.8707 -0.14355,-0.25457 -1.2535,-1.79428 -0.92593,-0.93616 0.19409,0.44697 0.5529,3.00013 0.57103,4.06314 0.50848,2.41362 2.06313,3.40419 2.15488,5.6896 1.73606,3.25829 4.4145,6.28673 5.64567,9.68843 0.87585,3.15503 2.06025,5.37786 1.98541,7.46829 -0.0559,1.57442 -0.0291,2.22165 0.0959,2.32544 2.7571,1.68502 5.54853,1.74357 8.05663,0.95306 2.23604,-0.71768 2.78044,-0.64865 2.01565,0.25563 -2.02965,1.61129 -6.56623,2.65202 -8.51797,1.74825 -0.9004,-0.3888 -2.06377,0.12835 -2.08335,0.26182 -0.65747,1.19874 -2.82801,1.15005 -3.75551,1.02771 -1.28342,0.0326 -6.23374,-0.69283 -6.46908,-0.004 0.0813,1.67377 -3.6161,2.30088 -4.05467,1.43643 z"
+           style="fill:#b3b3b3;fill-opacity:1;stroke:none;display:inline" />
+        <path
+           sodipodi:nodetypes="sssssssssccssssssccsssss"
+           inkscape:connector-curvature="0"
+           id="Seat_2B_Cat1"
+           d="m 829.48719,109.47212 c -3.80755,0 -6.89112,3.26207 -6.89112,7.29004 0,4.02797 3.08357,7.29004 6.89112,7.29004 3.80756,0 6.90328,-3.26207 6.90328,-7.29004 0,-4.02797 -3.09572,-7.29004 -6.90328,-7.29004 z m -8.10648,16.94581 c -5.34695,0 -8.19157,3.69051 -8.19157,7.0329 l 0,24.95587 c 0,3.78654 5.72437,3.78654 5.72437,0 l 0,-22.16585 c 0.33118,-1.17174 2.10913,-1.18288 2.4672,0 l 0,61.14894 c 0,3.99951 6.55082,3.99951 6.55082,0 l 0,-34.02021 c 0,-1.77493 3.26933,-1.77493 3.26933,0 l 0,34.02021 c 0,3.99951 6.56297,3.99951 6.56297,0 l 0,-61.14894 c 0.56338,-0.87695 1.62311,-0.87115 2.1755,0 l 0,22.16585 c 0,3.78654 5.73653,3.78654 5.73653,0 l 0,-24.95587 c 0,-3.14044 -2.87515,-7.0329 -7.91203,-7.0329 z"
+           style="color:#000000;fill:#b3b3b3;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        <path
+           style="color:#000000;fill:#b3b3b3;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           d="m 873.68334,135.02096 c -2.73759,0 -4.95464,2.34539 -4.95464,5.24144 0,2.89607 2.21705,5.24146 4.95464,5.24146 2.73759,0 4.96337,-2.34539 4.96337,-5.24146 0,-2.89605 -2.22578,-5.24144 -4.96337,-5.24144 z m -5.82848,12.18383 c -3.84439,0 -5.88963,2.65343 -5.88963,5.05658 l 0,17.94297 c 0,2.72247 4.11575,2.72247 4.11575,0 l 0,-15.93698 c 0.23811,-0.84247 1.51645,-0.85047 1.77388,0 l 0,43.96536 c 0,2.8756 4.70997,2.8756 4.70997,0 l 0,-24.46012 c 0,-1.27616 2.35061,-1.27616 2.35061,0 l 0,24.46012 c 0,2.8756 4.71869,2.8756 4.71869,0 l 0,-43.96536 c 0.40508,-0.63052 1.167,-0.62634 1.56416,0 l 0,15.93698 c 0,2.72247 4.1245,2.72247 4.1245,0 l 0,-17.94297 c 0,-2.25794 -2.0672,-5.05658 -5.68866,-5.05658 z"
+           id="Seat_2B_Cat2"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="sssssssssccssssssccsssss" />
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="797.22485"
+         y="102.65698"
+         id="Seat_2B_Name"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4810"
+           x="797.22485"
+           y="102.65698">Seat 2B</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="Seat_2B_Lbs"
+         y="102.65698"
+         x="939.10211"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+         xml:space="preserve"><tspan
+           y="102.65698"
+           x="939.10211"
+           id="tspan4814"
+           sodipodi:role="line">000.00</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="942.4873"
+         y="102.65698"
+         id="text4816"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4818"
+           x="942.4873"
+           y="102.65698">lbs</tspan></text>
+      <g
+         id="Seat_2B_Bar">
+        <rect
+           y="109.94827"
+           x="798.04224"
+           height="95.999741"
+           width="24.774126"
+           id="Seat_2B_Frame"
+           style="color:#000000;fill:#b3b3b3;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        <rect
+           style="color:#000000;fill:#008000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="Seat_2B_Level"
+           width="24.774126"
+           height="40.104935"
+           x="798.04224"
+           y="165.84308" />
+      </g>
+    </g>
+    <g
+       id="Seat_3B"
+       transform="translate(28,266)">
+      <g
+         transform="matrix(1.0559007,0,0,1.0559007,-22.43067,-5.6434201)"
+         id="g4828">
+        <path
+           style="fill:#b3b3b3;fill-opacity:1;stroke:none;display:inline"
+           d="m 909.81966,200.00212 c -0.2265,-0.59574 -0.19585,-0.70248 0.7603,-2.64866 0.64288,-1.36954 1.51666,-3.54064 0.53404,-4.61221 -0.35995,-0.38609 -0.59654,-1.37146 -0.81076,-3.37672 -0.13063,-0.75417 -0.50757,-0.92099 -1.13383,-1.22256 -0.22989,2.16986 -1.2635,6.51878 -0.45099,8.79197 0.20796,0.73609 -0.36023,0.89797 -0.36962,1.6415 0,0.75501 -0.28947,1.15984 -0.67994,0.95086 -0.55678,-0.17864 -0.88101,0.41911 -1.37621,0.24576 -1.3668,-0.49622 -1.74482,-1.02544 -1.2329,-1.72593 0.44213,-0.6772 0.72686,-1.29737 1.08115,-2.02641 -0.0199,-3.84915 -0.4825,-7.93053 -0.74571,-11.46577 -0.0267,-2.29447 -1.41243,-5.46283 -0.53268,-7.52601 0.4677,-1.15999 0.28817,-2.73737 0.96353,-3.5177 0.50965,-0.58204 0.8003,-2.03015 0.40747,-2.03015 -0.15479,0 -0.24054,-0.17419 -0.27187,-0.55227 0.13627,-0.76699 -0.95613,-0.51028 -0.8797,-1.00103 0.0136,-0.81739 0.47801,-2.33486 -0.14253,-2.77778 -0.18836,-0.13197 -0.55748,-0.23987 -0.82025,-0.23987 -1.31439,-0.51982 -2.07511,-1.41023 -3.0538,-2.70492 -0.39531,-0.53324 -0.41633,-0.63438 -0.35439,-1.70454 0.0362,-0.62571 0.11097,-1.21072 0.1662,-1.30002 1.64373,-0.23213 2.74089,-0.10612 4.59636,-0.0665 0.78639,-0.3942 1.5728,-0.78841 2.3592,-1.18262 l 1.66479,0.099 c 1.50857,-0.14391 2.2392,0.63306 3.52322,0.99224 0.5894,0.15413 2.69538,3.36289 2.69881,4.11204 10e-4,0.33242 -0.3809,0.8707 -0.61862,0.8707 -0.14355,-0.25457 -1.2535,-1.79428 -0.92593,-0.93616 0.19409,0.44697 0.5529,3.00013 0.57103,4.06314 0.50848,2.41362 2.06313,3.40419 2.15488,5.6896 1.73606,3.25829 4.4145,6.28673 5.64567,9.68843 0.87585,3.15503 2.06025,5.37786 1.98541,7.46829 -0.0559,1.57442 -0.0291,2.22165 0.0959,2.32544 2.7571,1.68502 5.54853,1.74357 8.05663,0.95306 2.23604,-0.71768 2.78044,-0.64865 2.01565,0.25563 -2.02965,1.61129 -6.56623,2.65202 -8.51797,1.74825 -0.9004,-0.3888 -2.06377,0.12835 -2.08335,0.26182 -0.65747,1.19874 -2.82801,1.15005 -3.75551,1.02771 -1.28342,0.0326 -6.23374,-0.69283 -6.46908,-0.004 0.0813,1.67377 -3.6161,2.30088 -4.05467,1.43643 z"
+           id="Seat_3B_Cat3"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="ccccccccccccccscccccsccccccccccccccccccccc" />
+        <path
+           style="color:#000000;fill:#b3b3b3;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           d="m 829.48719,109.47212 c -3.80755,0 -6.89112,3.26207 -6.89112,7.29004 0,4.02797 3.08357,7.29004 6.89112,7.29004 3.80756,0 6.90328,-3.26207 6.90328,-7.29004 0,-4.02797 -3.09572,-7.29004 -6.90328,-7.29004 z m -8.10648,16.94581 c -5.34695,0 -8.19157,3.69051 -8.19157,7.0329 l 0,24.95587 c 0,3.78654 5.72437,3.78654 5.72437,0 l 0,-22.16585 c 0.33118,-1.17174 2.10913,-1.18288 2.4672,0 l 0,61.14894 c 0,3.99951 6.55082,3.99951 6.55082,0 l 0,-34.02021 c 0,-1.77493 3.26933,-1.77493 3.26933,0 l 0,34.02021 c 0,3.99951 6.56297,3.99951 6.56297,0 l 0,-61.14894 c 0.56338,-0.87695 1.62311,-0.87115 2.1755,0 l 0,22.16585 c 0,3.78654 5.73653,3.78654 5.73653,0 l 0,-24.95587 c 0,-3.14044 -2.87515,-7.0329 -7.91203,-7.0329 z"
+           id="Seat_3B_Cat1"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="sssssssssccssssssccsssss" />
+        <path
+           sodipodi:nodetypes="sssssssssccssssssccsssss"
+           inkscape:connector-curvature="0"
+           id="Seat_3B_Cat2"
+           d="m 873.68334,135.02096 c -2.73759,0 -4.95464,2.34539 -4.95464,5.24144 0,2.89607 2.21705,5.24146 4.95464,5.24146 2.73759,0 4.96337,-2.34539 4.96337,-5.24146 0,-2.89605 -2.22578,-5.24144 -4.96337,-5.24144 z m -5.82848,12.18383 c -3.84439,0 -5.88963,2.65343 -5.88963,5.05658 l 0,17.94297 c 0,2.72247 4.11575,2.72247 4.11575,0 l 0,-15.93698 c 0.23811,-0.84247 1.51645,-0.85047 1.77388,0 l 0,43.96536 c 0,2.8756 4.70997,2.8756 4.70997,0 l 0,-24.46012 c 0,-1.27616 2.35061,-1.27616 2.35061,0 l 0,24.46012 c 0,2.8756 4.71869,2.8756 4.71869,0 l 0,-43.96536 c 0.40508,-0.63052 1.167,-0.62634 1.56416,0 l 0,15.93698 c 0,2.72247 4.1245,2.72247 4.1245,0 l 0,-17.94297 c 0,-2.25794 -2.0672,-5.05658 -5.68866,-5.05658 z"
+           style="color:#000000;fill:#b3b3b3;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      </g>
+      <text
+         sodipodi:linespacing="125%"
+         id="Seat_3B_Name"
+         y="102.65698"
+         x="797.22485"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="102.65698"
+           x="797.22485"
+           id="tspan4838"
+           sodipodi:role="line">Seat 3B</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+         x="939.10211"
+         y="102.65698"
+         id="Seat_3B_Lbs"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4842"
+           x="939.10211"
+           y="102.65698">000.00</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text4844"
+         y="102.65698"
+         x="942.4873"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="102.65698"
+           x="942.4873"
+           id="tspan4846"
+           sodipodi:role="line">lbs</tspan></text>
+      <g
+         id="Seat_3B_Bar">
+        <rect
+           style="color:#000000;fill:#b3b3b3;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="Seat_3B_Frame"
+           width="24.774126"
+           height="95.999741"
+           x="798.04224"
+           y="109.94827" />
+        <rect
+           y="165.84308"
+           x="798.04224"
+           height="40.104935"
+           width="24.774126"
+           id="Seat_3B_Level"
+           style="color:#000000;fill:#008000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      </g>
+    </g>
+    <g
+       transform="translate(-766,-20)"
+       id="Seat_1A">
+      <g
+         id="g4856"
+         transform="matrix(1.0559007,0,0,1.0559007,-22.43067,-5.6434201)">
+        <path
+           sodipodi:nodetypes="sssssssssccssssssccsssss"
+           inkscape:connector-curvature="0"
+           id="Seat_1A_Cat1"
+           d="m 829.48719,109.47212 c -3.80755,0 -6.89112,3.26207 -6.89112,7.29004 0,4.02797 3.08357,7.29004 6.89112,7.29004 3.80756,0 6.90328,-3.26207 6.90328,-7.29004 0,-4.02797 -3.09572,-7.29004 -6.90328,-7.29004 z m -8.10648,16.94581 c -5.34695,0 -8.19157,3.69051 -8.19157,7.0329 l 0,24.95587 c 0,3.78654 5.72437,3.78654 5.72437,0 l 0,-22.16585 c 0.33118,-1.17174 2.10913,-1.18288 2.4672,0 l 0,61.14894 c 0,3.99951 6.55082,3.99951 6.55082,0 l 0,-34.02021 c 0,-1.77493 3.26933,-1.77493 3.26933,0 l 0,34.02021 c 0,3.99951 6.56297,3.99951 6.56297,0 l 0,-61.14894 c 0.56338,-0.87695 1.62311,-0.87115 2.1755,0 l 0,22.16585 c 0,3.78654 5.73653,3.78654 5.73653,0 l 0,-24.95587 c 0,-3.14044 -2.87515,-7.0329 -7.91203,-7.0329 z"
+           style="color:#000000;fill:#b3b3b3;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="797.22485"
+         y="102.65698"
+         id="Seat_1A_Name"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4866"
+           x="797.22485"
+           y="102.65698">Seat 1A</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="Seat_1A_Lbs"
+         y="102.65698"
+         x="939.10211"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+         xml:space="preserve"><tspan
+           y="102.65698"
+           x="939.10211"
+           id="tspan4870"
+           sodipodi:role="line">000.00</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="942.4873"
+         y="102.65698"
+         id="text4872"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4874"
+           x="942.4873"
+           y="102.65698">lbs</tspan></text>
+      <g
+         id="Seat_1A_Bar">
+        <rect
+           y="109.94827"
+           x="798.04224"
+           height="95.999741"
+           width="24.774126"
+           id="Seat_1A_Frame"
+           style="color:#000000;fill:#b3b3b3;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        <rect
+           style="color:#000000;fill:#008000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="Seat_1A_Level"
+           width="24.774126"
+           height="40.104935"
+           x="798.04224"
+           y="165.84308" />
+      </g>
+    </g>
+    <g
+       id="Seat_2A"
+       transform="translate(-766,123)">
+      <g
+         transform="matrix(1.0559007,0,0,1.0559007,-22.43067,-5.6434201)"
+         id="g4884">
+        <path
+           style="fill:#b3b3b3;fill-opacity:1;stroke:none;display:inline"
+           d="m 909.81966,200.00212 c -0.2265,-0.59574 -0.19585,-0.70248 0.7603,-2.64866 0.64288,-1.36954 1.51666,-3.54064 0.53404,-4.61221 -0.35995,-0.38609 -0.59654,-1.37146 -0.81076,-3.37672 -0.13063,-0.75417 -0.50757,-0.92099 -1.13383,-1.22256 -0.22989,2.16986 -1.2635,6.51878 -0.45099,8.79197 0.20796,0.73609 -0.36023,0.89797 -0.36962,1.6415 0,0.75501 -0.28947,1.15984 -0.67994,0.95086 -0.55678,-0.17864 -0.88101,0.41911 -1.37621,0.24576 -1.3668,-0.49622 -1.74482,-1.02544 -1.2329,-1.72593 0.44213,-0.6772 0.72686,-1.29737 1.08115,-2.02641 -0.0199,-3.84915 -0.4825,-7.93053 -0.74571,-11.46577 -0.0267,-2.29447 -1.41243,-5.46283 -0.53268,-7.52601 0.4677,-1.15999 0.28817,-2.73737 0.96353,-3.5177 0.50965,-0.58204 0.8003,-2.03015 0.40747,-2.03015 -0.15479,0 -0.24054,-0.17419 -0.27187,-0.55227 0.13627,-0.76699 -0.95613,-0.51028 -0.8797,-1.00103 0.0136,-0.81739 0.47801,-2.33486 -0.14253,-2.77778 -0.18836,-0.13197 -0.55748,-0.23987 -0.82025,-0.23987 -1.31439,-0.51982 -2.07511,-1.41023 -3.0538,-2.70492 -0.39531,-0.53324 -0.41633,-0.63438 -0.35439,-1.70454 0.0362,-0.62571 0.11097,-1.21072 0.1662,-1.30002 1.64373,-0.23213 2.74089,-0.10612 4.59636,-0.0665 0.78639,-0.3942 1.5728,-0.78841 2.3592,-1.18262 l 1.66479,0.099 c 1.50857,-0.14391 2.2392,0.63306 3.52322,0.99224 0.5894,0.15413 2.69538,3.36289 2.69881,4.11204 10e-4,0.33242 -0.3809,0.8707 -0.61862,0.8707 -0.14355,-0.25457 -1.2535,-1.79428 -0.92593,-0.93616 0.19409,0.44697 0.5529,3.00013 0.57103,4.06314 0.50848,2.41362 2.06313,3.40419 2.15488,5.6896 1.73606,3.25829 4.4145,6.28673 5.64567,9.68843 0.87585,3.15503 2.06025,5.37786 1.98541,7.46829 -0.0559,1.57442 -0.0291,2.22165 0.0959,2.32544 2.7571,1.68502 5.54853,1.74357 8.05663,0.95306 2.23604,-0.71768 2.78044,-0.64865 2.01565,0.25563 -2.02965,1.61129 -6.56623,2.65202 -8.51797,1.74825 -0.9004,-0.3888 -2.06377,0.12835 -2.08335,0.26182 -0.65747,1.19874 -2.82801,1.15005 -3.75551,1.02771 -1.28342,0.0326 -6.23374,-0.69283 -6.46908,-0.004 0.0813,1.67377 -3.6161,2.30088 -4.05467,1.43643 z"
+           id="Seat_2A_Cat3"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="ccccccccccccccscccccsccccccccccccccccccccc" />
+        <path
+           style="color:#000000;fill:#b3b3b3;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           d="m 829.48719,109.47212 c -3.80755,0 -6.89112,3.26207 -6.89112,7.29004 0,4.02797 3.08357,7.29004 6.89112,7.29004 3.80756,0 6.90328,-3.26207 6.90328,-7.29004 0,-4.02797 -3.09572,-7.29004 -6.90328,-7.29004 z m -8.10648,16.94581 c -5.34695,0 -8.19157,3.69051 -8.19157,7.0329 l 0,24.95587 c 0,3.78654 5.72437,3.78654 5.72437,0 l 0,-22.16585 c 0.33118,-1.17174 2.10913,-1.18288 2.4672,0 l 0,61.14894 c 0,3.99951 6.55082,3.99951 6.55082,0 l 0,-34.02021 c 0,-1.77493 3.26933,-1.77493 3.26933,0 l 0,34.02021 c 0,3.99951 6.56297,3.99951 6.56297,0 l 0,-61.14894 c 0.56338,-0.87695 1.62311,-0.87115 2.1755,0 l 0,22.16585 c 0,3.78654 5.73653,3.78654 5.73653,0 l 0,-24.95587 c 0,-3.14044 -2.87515,-7.0329 -7.91203,-7.0329 z"
+           id="Seat_2A_Cat1"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="sssssssssccssssssccsssss" />
+        <path
+           sodipodi:nodetypes="sssssssssccssssssccsssss"
+           inkscape:connector-curvature="0"
+           id="Seat_2A_Cat2"
+           d="m 873.68334,135.02096 c -2.73759,0 -4.95464,2.34539 -4.95464,5.24144 0,2.89607 2.21705,5.24146 4.95464,5.24146 2.73759,0 4.96337,-2.34539 4.96337,-5.24146 0,-2.89605 -2.22578,-5.24144 -4.96337,-5.24144 z m -5.82848,12.18383 c -3.84439,0 -5.88963,2.65343 -5.88963,5.05658 l 0,17.94297 c 0,2.72247 4.11575,2.72247 4.11575,0 l 0,-15.93698 c 0.23811,-0.84247 1.51645,-0.85047 1.77388,0 l 0,43.96536 c 0,2.8756 4.70997,2.8756 4.70997,0 l 0,-24.46012 c 0,-1.27616 2.35061,-1.27616 2.35061,0 l 0,24.46012 c 0,2.8756 4.71869,2.8756 4.71869,0 l 0,-43.96536 c 0.40508,-0.63052 1.167,-0.62634 1.56416,0 l 0,15.93698 c 0,2.72247 4.1245,2.72247 4.1245,0 l 0,-17.94297 c 0,-2.25794 -2.0672,-5.05658 -5.68866,-5.05658 z"
+           style="color:#000000;fill:#b3b3b3;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      </g>
+      <text
+         sodipodi:linespacing="125%"
+         id="Seat_2A_Name"
+         y="102.65698"
+         x="797.22485"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="102.65698"
+           x="797.22485"
+           id="tspan4894"
+           sodipodi:role="line">Seat 2A</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+         x="939.10211"
+         y="102.65698"
+         id="Seat_2A_Lbs"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4898"
+           x="939.10211"
+           y="102.65698">000.00</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text4900"
+         y="102.65698"
+         x="942.4873"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="102.65698"
+           x="942.4873"
+           id="tspan4902"
+           sodipodi:role="line">lbs</tspan></text>
+      <g
+         id="Seat_2A_Bar">
+        <rect
+           style="color:#000000;fill:#b3b3b3;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="Seat_2A_Frame"
+           width="24.774126"
+           height="95.999741"
+           x="798.04224"
+           y="109.94827" />
+        <rect
+           y="165.84308"
+           x="798.04224"
+           height="40.104935"
+           width="24.774126"
+           id="Seat_2A_Level"
+           style="color:#000000;fill:#008000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      </g>
+    </g>
+    <g
+       transform="translate(-766,266)"
+       id="Seat_3A">
+      <g
+         id="g4912"
+         transform="matrix(1.0559007,0,0,1.0559007,-22.43067,-5.6434201)">
+        <path
+           sodipodi:nodetypes="ccccccccccccccscccccsccccccccccccccccccccc"
+           inkscape:connector-curvature="0"
+           id="Seat_3A_Cat3"
+           d="m 909.81966,200.00212 c -0.2265,-0.59574 -0.19585,-0.70248 0.7603,-2.64866 0.64288,-1.36954 1.51666,-3.54064 0.53404,-4.61221 -0.35995,-0.38609 -0.59654,-1.37146 -0.81076,-3.37672 -0.13063,-0.75417 -0.50757,-0.92099 -1.13383,-1.22256 -0.22989,2.16986 -1.2635,6.51878 -0.45099,8.79197 0.20796,0.73609 -0.36023,0.89797 -0.36962,1.6415 0,0.75501 -0.28947,1.15984 -0.67994,0.95086 -0.55678,-0.17864 -0.88101,0.41911 -1.37621,0.24576 -1.3668,-0.49622 -1.74482,-1.02544 -1.2329,-1.72593 0.44213,-0.6772 0.72686,-1.29737 1.08115,-2.02641 -0.0199,-3.84915 -0.4825,-7.93053 -0.74571,-11.46577 -0.0267,-2.29447 -1.41243,-5.46283 -0.53268,-7.52601 0.4677,-1.15999 0.28817,-2.73737 0.96353,-3.5177 0.50965,-0.58204 0.8003,-2.03015 0.40747,-2.03015 -0.15479,0 -0.24054,-0.17419 -0.27187,-0.55227 0.13627,-0.76699 -0.95613,-0.51028 -0.8797,-1.00103 0.0136,-0.81739 0.47801,-2.33486 -0.14253,-2.77778 -0.18836,-0.13197 -0.55748,-0.23987 -0.82025,-0.23987 -1.31439,-0.51982 -2.07511,-1.41023 -3.0538,-2.70492 -0.39531,-0.53324 -0.41633,-0.63438 -0.35439,-1.70454 0.0362,-0.62571 0.11097,-1.21072 0.1662,-1.30002 1.64373,-0.23213 2.74089,-0.10612 4.59636,-0.0665 0.78639,-0.3942 1.5728,-0.78841 2.3592,-1.18262 l 1.66479,0.099 c 1.50857,-0.14391 2.2392,0.63306 3.52322,0.99224 0.5894,0.15413 2.69538,3.36289 2.69881,4.11204 10e-4,0.33242 -0.3809,0.8707 -0.61862,0.8707 -0.14355,-0.25457 -1.2535,-1.79428 -0.92593,-0.93616 0.19409,0.44697 0.5529,3.00013 0.57103,4.06314 0.50848,2.41362 2.06313,3.40419 2.15488,5.6896 1.73606,3.25829 4.4145,6.28673 5.64567,9.68843 0.87585,3.15503 2.06025,5.37786 1.98541,7.46829 -0.0559,1.57442 -0.0291,2.22165 0.0959,2.32544 2.7571,1.68502 5.54853,1.74357 8.05663,0.95306 2.23604,-0.71768 2.78044,-0.64865 2.01565,0.25563 -2.02965,1.61129 -6.56623,2.65202 -8.51797,1.74825 -0.9004,-0.3888 -2.06377,0.12835 -2.08335,0.26182 -0.65747,1.19874 -2.82801,1.15005 -3.75551,1.02771 -1.28342,0.0326 -6.23374,-0.69283 -6.46908,-0.004 0.0813,1.67377 -3.6161,2.30088 -4.05467,1.43643 z"
+           style="fill:#b3b3b3;fill-opacity:1;stroke:none;display:inline" />
+        <path
+           sodipodi:nodetypes="sssssssssccssssssccsssss"
+           inkscape:connector-curvature="0"
+           id="Seat_3A_Cat1"
+           d="m 829.48719,109.47212 c -3.80755,0 -6.89112,3.26207 -6.89112,7.29004 0,4.02797 3.08357,7.29004 6.89112,7.29004 3.80756,0 6.90328,-3.26207 6.90328,-7.29004 0,-4.02797 -3.09572,-7.29004 -6.90328,-7.29004 z m -8.10648,16.94581 c -5.34695,0 -8.19157,3.69051 -8.19157,7.0329 l 0,24.95587 c 0,3.78654 5.72437,3.78654 5.72437,0 l 0,-22.16585 c 0.33118,-1.17174 2.10913,-1.18288 2.4672,0 l 0,61.14894 c 0,3.99951 6.55082,3.99951 6.55082,0 l 0,-34.02021 c 0,-1.77493 3.26933,-1.77493 3.26933,0 l 0,34.02021 c 0,3.99951 6.56297,3.99951 6.56297,0 l 0,-61.14894 c 0.56338,-0.87695 1.62311,-0.87115 2.1755,0 l 0,22.16585 c 0,3.78654 5.73653,3.78654 5.73653,0 l 0,-24.95587 c 0,-3.14044 -2.87515,-7.0329 -7.91203,-7.0329 z"
+           style="color:#000000;fill:#b3b3b3;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        <path
+           style="color:#000000;fill:#b3b3b3;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           d="m 873.68334,135.02096 c -2.73759,0 -4.95464,2.34539 -4.95464,5.24144 0,2.89607 2.21705,5.24146 4.95464,5.24146 2.73759,0 4.96337,-2.34539 4.96337,-5.24146 0,-2.89605 -2.22578,-5.24144 -4.96337,-5.24144 z m -5.82848,12.18383 c -3.84439,0 -5.88963,2.65343 -5.88963,5.05658 l 0,17.94297 c 0,2.72247 4.11575,2.72247 4.11575,0 l 0,-15.93698 c 0.23811,-0.84247 1.51645,-0.85047 1.77388,0 l 0,43.96536 c 0,2.8756 4.70997,2.8756 4.70997,0 l 0,-24.46012 c 0,-1.27616 2.35061,-1.27616 2.35061,0 l 0,24.46012 c 0,2.8756 4.71869,2.8756 4.71869,0 l 0,-43.96536 c 0.40508,-0.63052 1.167,-0.62634 1.56416,0 l 0,15.93698 c 0,2.72247 4.1245,2.72247 4.1245,0 l 0,-17.94297 c 0,-2.25794 -2.0672,-5.05658 -5.68866,-5.05658 z"
+           id="Seat_3A_Cat2"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="sssssssssccssssssccsssss" />
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="797.22485"
+         y="102.65698"
+         id="Seat_3A_Name"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4922"
+           x="797.22485"
+           y="102.65698">Seat 3A</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="Seat_3A_Lbs"
+         y="102.65698"
+         x="939.10211"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+         xml:space="preserve"><tspan
+           y="102.65698"
+           x="939.10211"
+           id="tspan4926"
+           sodipodi:role="line">000.00</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="942.4873"
+         y="102.65698"
+         id="text4928"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4930"
+           x="942.4873"
+           y="102.65698">lbs</tspan></text>
+      <g
+         id="Seat_3A_Bar">
+        <rect
+           y="109.94827"
+           x="798.04224"
+           height="95.999741"
+           width="24.774126"
+           id="Seat_3A_Frame"
+           style="color:#000000;fill:#b3b3b3;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        <rect
+           style="color:#000000;fill:#008000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="Seat_3A_Level"
+           width="24.774126"
+           height="40.104935"
+           x="798.04224"
+           y="165.84308" />
+      </g>
+    </g>
+    <rect
+       style="color:#000000;fill:#d45500;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4966"
+       width="19.048632"
+       height="26.876045"
+       x="486.16684"
+       y="167.01549"
+       ry="9.3020992" />
+    <rect
+       ry="9.3020992"
+       y="167.33488"
+       x="518.78442"
+       height="26.876045"
+       width="19.048632"
+       id="rect4968"
+       style="color:#000000;fill:#d45500;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+    <rect
+       ry="9.3020992"
+       y="203.01549"
+       x="486.16684"
+       height="26.876045"
+       width="19.048632"
+       id="rect4970"
+       style="color:#000000;fill:#d45500;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+    <rect
+       style="color:#000000;fill:#d45500;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4972"
+       width="19.048632"
+       height="26.876045"
+       x="518.78442"
+       y="203.33488"
+       ry="9.3020992" />
+    <rect
+       style="color:#000000;fill:#d45500;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4974"
+       width="19.048632"
+       height="26.876045"
+       x="490.16684"
+       y="295.0155"
+       ry="9.3020992" />
+    <rect
+       ry="9.3020992"
+       y="295.3349"
+       x="514.78442"
+       height="26.876045"
+       width="19.048632"
+       id="rect4976"
+       style="color:#000000;fill:#d45500;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+    <rect
+       style="color:#000000;fill:#d45500;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="rect4978"
+       width="35.140026"
+       height="26.876045"
+       x="494.43002"
+       y="325.55988"
+       ry="9.3020992" />
+    <g
+       id="Seat_4A"
+       transform="translate(52,44)">
+      <g
+         id="g4940"
+         transform="matrix(1.0559007,0,0,1.0559007,-254.43067,216.35658)" />
+      <text
+         xml:space="preserve"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="565.22485"
+         y="324.65698"
+         id="Seat_4A_Name"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4950"
+           x="565.22485"
+           y="324.65698">Baggage</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="Seat_4A_Lbs"
+         y="324.65698"
+         x="707.10211"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+         xml:space="preserve"><tspan
+           y="324.65698"
+           x="707.10211"
+           id="tspan4954"
+           sodipodi:role="line">000.00</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="710.4873"
+         y="324.65698"
+         id="text4956"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4958"
+           x="710.4873"
+           y="324.65698">lbs</tspan></text>
+      <g
+         transform="translate(-232,222)"
+         id="Seat_4A_Bar">
+        <rect
+           y="109.94827"
+           x="798.04224"
+           height="95.999741"
+           width="24.774126"
+           id="Seat_4A_Frame"
+           style="color:#000000;fill:#b3b3b3;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        <rect
+           style="color:#000000;fill:#008000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="Seat_4A_Level"
+           width="24.774126"
+           height="40.104935"
+           x="798.04224"
+           y="165.84308" />
+      </g>
+      <path
+         inkscape:connector-curvature="0"
+         id="Seat_4A_Cat1"
+         d="m 632.6557,348.32851 c -1.52343,0 -2.76161,1.72668 -2.76161,3.85672 l 0,5.04708 c 0,0.17261 0.032,0.35729 0.0476,0.52375 l -8.28482,0 c -4.48185,0 -8.09437,3.61252 -8.09437,8.09437 l 0,53.89895 c 0,4.48185 3.61252,8.09437 8.09437,8.09437 l 21.99763,0 c 4.48184,0 8.09436,-3.61252 8.09436,-8.09437 l 0,-53.89895 c 0,-4.48185 -3.61252,-8.09437 -8.09436,-8.09437 l -8.28483,0 c 0.0156,-0.16646 0.0476,-0.35114 0.0476,-0.52375 l 0,-5.04708 c 0,-2.13004 -1.23818,-3.85672 -2.76161,-3.85672 z"
+         style="color:#000000;fill:#b3b3b3;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <path
+         style="color:#000000;fill:#b3b3b3;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         d="m 679.55092,366.19931 c -1.18104,0 -2.14094,1.33862 -2.14094,2.98994 l 0,3.91276 c 0,0.13382 0.0248,0.27699 0.0369,0.40604 l -6.42283,0 c -3.47457,0 -6.27519,2.80062 -6.27519,6.27519 l 0,41.78532 c 0,3.47457 2.80062,6.27519 6.27519,6.27519 l 17.05373,0 c 3.47456,0 6.27517,-2.80062 6.27517,-6.27519 l 0,-41.78532 c 0,-3.47457 -2.80061,-6.27519 -6.27517,-6.27519 l -6.42284,0 c 0.0121,-0.12905 0.0369,-0.27222 0.0369,-0.40604 l 0,-3.91276 c 0,-1.65132 -0.9599,-2.98994 -2.14095,-2.98994 z"
+         id="Seat_4A_Cat2"
+         inkscape:connector-curvature="0" />
+      <path
+         inkscape:connector-curvature="0"
+         id="Seat_4A_Cat3"
+         d="m 716.28293,390.6541 c -0.71252,0 -1.29162,0.80758 -1.29162,1.80381 l 0,2.36054 c 0,0.0807 0.015,0.16711 0.0223,0.24496 l -3.87484,0 c -2.09619,0 -3.78578,1.68959 -3.78578,3.78578 l 0,25.20878 c 0,2.09619 1.68959,3.78578 3.78578,3.78578 l 10.28839,0 c 2.09618,0 3.78577,-1.68959 3.78577,-3.78578 l 0,-25.20878 c 0,-2.09619 -1.68959,-3.78578 -3.78577,-3.78578 l -3.87485,0 c 0.007,-0.0778 0.0223,-0.16423 0.0223,-0.24496 l 0,-2.36054 c 0,-0.99623 -0.5791,-1.80381 -1.29162,-1.80381 z"
+         style="color:#000000;fill:#b3b3b3;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+    </g>
+  </g>
   <g
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="Weight"
      style="display:inline">
-    <path
-       sodipodi:type="arc"
-       style="color:#000000;fill:none;stroke:#c83737;stroke-width:1.80907916999999996;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       id="path5177"
-       sodipodi:cx="916.6748"
-       sodipodi:cy="656.21039"
-       sodipodi:rx="37.689068"
-       sodipodi:ry="37.689068"
-       d="m 954.36387,656.21039 a 37.689068,37.689068 0 1 1 -75.37813,0 37.689068,37.689068 0 1 1 75.37813,0 z"
-       transform="matrix(1.6583022,0,0,1.6583022,-641.75255,-436.01639)" />
-    <path
-       transform="matrix(0.80925267,0,0,0.80925267,136.54977,121.13873)"
-       d="m 954.36387,656.21039 a 37.689068,37.689068 0 1 1 -75.37813,0 37.689068,37.689068 0 1 1 75.37813,0 z"
-       sodipodi:ry="37.689068"
-       sodipodi:rx="37.689068"
-       sodipodi:cy="656.21039"
-       sodipodi:cx="916.6748"
-       id="path5179"
-       style="color:#000000;fill:none;stroke:#ffd42a;stroke-width:3.70712398999999992;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       sodipodi:type="arc" />
-    <path
-       sodipodi:type="arc"
-       style="color:#000000;fill:none;stroke:#b3b3b3;stroke-width:8.47174072;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       id="path5181"
-       sodipodi:cx="916.6748"
-       sodipodi:cy="656.21039"
-       sodipodi:rx="37.689068"
-       sodipodi:ry="37.689068"
-       d="m 954.36387,656.21039 a 37.689068,37.689068 0 1 1 -75.37813,0 37.689068,37.689068 0 1 1 75.37813,0 z"
-       transform="matrix(0.35411848,0,0,0.35411848,553.75981,419.80251)" />
-    <text
-       xml:space="preserve"
-       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-       x="856.95428"
-       y="583.95764"
-       id="CenterGravity_Y"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan5193"
-         x="856.95428"
-         y="583.95764">999.99</tspan></text>
-    <text
-       sodipodi:linespacing="125%"
-       id="text5195"
-       y="583.95764"
-       x="902.95428"
-       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-       xml:space="preserve"><tspan
+    <g
+       id="g5018"
+       transform="translate(0,14)">
+      <path
+         transform="matrix(1.6583022,0,0,1.6583022,-641.75255,-436.01639)"
+         d="m 954.36387,656.21039 a 37.689068,37.689068 0 1 1 -75.37813,0 37.689068,37.689068 0 1 1 75.37813,0 z"
+         sodipodi:ry="37.689068"
+         sodipodi:rx="37.689068"
+         sodipodi:cy="656.21039"
+         sodipodi:cx="916.6748"
+         id="path5177"
+         style="color:#000000;fill:none;stroke:#c83737;stroke-width:1.80907917;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         sodipodi:type="arc" />
+      <path
+         sodipodi:type="arc"
+         style="color:#000000;fill:none;stroke:#ffd42a;stroke-width:3.70712399;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="path5179"
+         sodipodi:cx="916.6748"
+         sodipodi:cy="656.21039"
+         sodipodi:rx="37.689068"
+         sodipodi:ry="37.689068"
+         d="m 954.36387,656.21039 a 37.689068,37.689068 0 1 1 -75.37813,0 37.689068,37.689068 0 1 1 75.37813,0 z"
+         transform="matrix(0.80925267,0,0,0.80925267,136.54977,121.13873)" />
+      <path
+         transform="matrix(0.35411848,0,0,0.35411848,553.75981,419.80251)"
+         d="m 954.36387,656.21039 a 37.689068,37.689068 0 1 1 -75.37813,0 37.689068,37.689068 0 1 1 75.37813,0 z"
+         sodipodi:ry="37.689068"
+         sodipodi:rx="37.689068"
+         sodipodi:cy="656.21039"
+         sodipodi:cx="916.6748"
+         id="path5181"
+         style="color:#000000;fill:none;stroke:#b3b3b3;stroke-width:8.47174072;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         sodipodi:type="arc" />
+      <text
+         sodipodi:linespacing="125%"
+         id="CenterGravity_Y"
          y="583.95764"
+         x="856.95428"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="583.95764"
+           x="856.95428"
+           id="tspan5193"
+           sodipodi:role="line">999.99</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
          x="902.95428"
-         id="tspan5197"
-         sodipodi:role="line">in</tspan></text>
-    <text
-       sodipodi:linespacing="125%"
-       id="CenterGravity_X"
-       y="656.99805"
-       x="946.95435"
-       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-       xml:space="preserve"><tspan
-         y="656.99805"
+         y="583.95764"
+         id="text5195"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan5197"
+           x="902.95428"
+           y="583.95764">in</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
          x="946.95435"
-         id="tspan5201"
-         sodipodi:role="line">999.99</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-       x="992.95428"
-       y="656.99805"
-       id="text5203"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan5205"
+         y="656.99805"
+         id="CenterGravity_X"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan5201"
+           x="946.95435"
+           y="656.99805">999.99</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text5203"
+         y="656.99805"
          x="992.95428"
-         y="656.99805">in</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-       x="800.95435"
-       y="656.99805"
-       id="text5207"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         id="tspan5209"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="656.99805"
+           x="992.95428"
+           id="tspan5205"
+           sodipodi:role="line">in</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text5207"
+         y="656.99805"
          x="800.95435"
-         y="656.99805">X</tspan></text>
-    <text
-       sodipodi:linespacing="125%"
-       id="text5211"
-       y="729.95764"
-       x="873.69208"
-       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-       xml:space="preserve"><tspan
-         y="729.95764"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="656.99805"
+           x="800.95435"
+           id="tspan5209"
+           sodipodi:role="line">X</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
          x="873.69208"
-         id="tspan5213"
-         sodipodi:role="line">Y</tspan></text>
-    <path
-       style="fill:#b3b3b3;stroke:#b3b3b3;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
-       d="m 815.58507,652.17874 125.52376,0"
-       id="path6022"
-       inkscape:connector-curvature="0" />
-    <path
-       inkscape:connector-curvature="0"
-       id="path6024"
-       d="m 878.34695,714.94062 0,-125.52376"
-       style="fill:#b3b3b3;stroke:#b3b3b3;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline" />
-    <rect
-       style="color:#000000;fill:#000080;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       id="CenterGravity_Ball"
-       width="12"
-       height="12"
-       x="872.37128"
-       y="646.17877"
-       ry="6" />
+         y="729.95764"
+         id="text5211"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan5213"
+           x="873.69208"
+           y="729.95764">Y</tspan></text>
+      <path
+         inkscape:connector-curvature="0"
+         id="path6022"
+         d="m 815.58507,652.17874 125.52376,0"
+         style="fill:#b3b3b3;stroke:#b3b3b3;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline" />
+      <path
+         style="fill:#b3b3b3;stroke:#b3b3b3;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+         d="m 878.34695,714.94062 0,-125.52376"
+         id="path6024"
+         inkscape:connector-curvature="0" />
+      <rect
+         ry="6"
+         y="646.17877"
+         x="872.37128"
+         height="12"
+         width="12"
+         id="CenterGravity_Ball"
+         style="color:#000000;fill:#000080;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+    </g>
     <text
        xml:space="preserve"
        style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
@@ -1764,18 +2342,18 @@
          y="627.42322"
          x="595.63477"
          id="tspan6156"
-         sodipodi:role="line">Fuel :</tspan></text>
+         sodipodi:role="line">Payload :</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
        x="667.63477"
-       y="627.42322"
+       y="651.10333"
        id="Weight_Fuel"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan6160"
          x="667.63477"
-         y="627.42322">0000.00</tspan></text>
+         y="651.10333">0000.00</tspan></text>
     <text
        sodipodi:linespacing="125%"
        id="text6162"
@@ -1797,15 +2375,15 @@
          sodipodi:role="line"
          id="tspan6168"
          x="595.63477"
-         y="651.34064">Pax :</tspan></text>
+         y="651.34064">Fuel :</tspan></text>
     <text
        sodipodi:linespacing="125%"
-       id="Weight_Max_Pax"
-       y="651.34064"
+       id="Weight_Payload"
+       y="628.9657"
        x="667.63477"
        style="font-size:18px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
        xml:space="preserve"><tspan
-         y="651.34064"
+         y="628.9657"
          x="667.63477"
          id="tspan6172"
          sodipodi:role="line">0000.00</tspan></text>
@@ -1895,17 +2473,796 @@
        sodipodi:linespacing="125%"
        id="text6208"
        y="599.42322"
-       x="221.63477"
+       x="285.63477"
        style="font-size:22px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
        xml:space="preserve"><tspan
          y="599.42322"
-         x="221.63477"
+         x="285.63477"
          id="tspan6210"
-         sodipodi:role="line">Limits :</tspan></text>
+         sodipodi:role="line">Max Limits</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:18px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="877.90747"
+       y="572.94592"
+       id="text5038"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5040"
+         x="877.90747"
+         y="572.94592">Center of Gravity</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer6"
      inkscape:label="Trip"
-     style="display:inline" />
+     style="display:inline">
+    <g
+       id="Trip_Reserve_FL"
+       transform="translate(-18,0)">
+      <rect
+         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect5101"
+         width="44.266426"
+         height="20.100571"
+         x="679.71667"
+         y="670.14148"
+         ry="2.6635487" />
+      <text
+         sodipodi:linespacing="125%"
+         id="Trip_Reserve_FL_Value"
+         y="685.01111"
+         x="713.28302"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="685.01111"
+           x="713.28302"
+           id="tspan4251"
+           sodipodi:role="line">100</tspan></text>
+    </g>
+    <path
+       style="fill:none;stroke:#cccccc;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       d="m 64.52148,744 511.84903,0"
+       id="path5085"
+       inkscape:connector-curvature="0" />
+    <g
+       id="Trip_Graph">
+      <g
+         id="Trip_Graph_axes_x_scale">
+        <text
+           xml:space="preserve"
+           style="font-size:12.76281548px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           x="64.503113"
+           y="757.35144"
+           id="Trip_NM_000"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan5052-2"
+             x="64.503113"
+             y="757.35144">0</tspan></text>
+        <text
+           sodipodi:linespacing="125%"
+           id="Trip_NM_100"
+           y="757.35144"
+           x="577.63684"
+           style="font-size:12.76281548px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           xml:space="preserve"><tspan
+             y="757.35144"
+             x="577.63684"
+             id="tspan5185"
+             sodipodi:role="line">100</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-size:12.76281548px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           x="192.79279"
+           y="757.35144"
+           id="Trip_NM_025"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan5191"
+             x="192.79279"
+             y="757.35144">25</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-size:12.76281548px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           x="321.18216"
+           y="757.35144"
+           id="Trip_NM_050"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan5195"
+             x="321.18216"
+             y="757.35144">50</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-size:12.76281548px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           x="449.4718"
+           y="757.35144"
+           id="Trip_NM_075"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan5199"
+             x="449.4718"
+             y="757.35144">75</tspan></text>
+      </g>
+      <path
+         style="fill:none;stroke:#cccccc;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+         d="m 64.52148,679.33334 511.84903,0"
+         id="path5087"
+         inkscape:connector-curvature="0" />
+      <path
+         style="fill:none;stroke:#cccccc;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+         d="m 64.52148,614.66667 511.84903,0"
+         id="path5096"
+         inkscape:connector-curvature="0" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path5089"
+         d="m 64.52148,582.33334 511.84903,0"
+         style="fill:none;stroke:#800000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:5.99999999, 17.99999999;stroke-dashoffset:0;display:inline" />
+      <path
+         style="fill:none;stroke:#cccccc;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+         d="m 64.52148,550.00001 511.84903,0"
+         id="path5094"
+         inkscape:connector-curvature="0" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text5048"
+         y="554.13086"
+         x="18.554916"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cccccc;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="554.13086"
+           x="18.554916"
+           id="tspan5050"
+           sodipodi:role="line">FL300</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cccccc;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="18.554916"
+         y="618.79755"
+         id="text5062"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan5064"
+           x="18.554916"
+           y="618.79755">FL200</tspan></text>
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path5072"
+         d="M 55.735105,744 64.5,744"
+         style="fill:none;stroke:#cccccc;stroke-width:3;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline" />
+      <path
+         style="fill:#cccccc;fill-opacity:1;stroke:#cccccc;stroke-width:3;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+         d="m 55.735105,550.00001 8.764895,0"
+         id="path5075"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cc" />
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path5077"
+         d="m 55.735105,614.66667 8.764895,0"
+         style="fill:#cccccc;fill-opacity:1;stroke:#cccccc;stroke-width:3;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline" />
+      <path
+         style="fill:#cccccc;fill-opacity:1;stroke:#cccccc;stroke-width:3;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+         d="m 55.735105,679.33334 8.764895,0"
+         id="path5079"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cc" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text5081"
+         y="683.46417"
+         x="18.554916"
+         style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cccccc;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="683.46417"
+           x="18.554916"
+           id="tspan5083"
+           sodipodi:role="line">FL100</tspan></text>
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path5066"
+         d="m 64.5,550 0,194"
+         style="fill:none;stroke:#cccccc;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline" />
+    </g>
+    <path
+       style="fill:none;stroke:#225500;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 64.500001,744.00001 52.986129,0 310.40694,0 148.48726,0"
+       id="Trip_FlightProfile"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc" />
+    <g
+       id="Trip_FL"
+       transform="matrix(1.2762815,0,0,1.2762815,-229.44833,-54.472035)">
+      <rect
+         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect4279"
+         width="40.558586"
+         height="12.833464"
+         x="186.93596"
+         y="619.20703"
+         ry="2.6635487" />
+      <text
+         xml:space="preserve"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="222.60194"
+         y="629.06616"
+         id="Trip_FL_Value"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan5262"
+           x="222.60194"
+           y="629.06616">000</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text5050"
+         y="629.06616"
+         x="192.82805"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="629.06616"
+           x="192.82805"
+           id="tspan5052"
+           sodipodi:role="line">FL</tspan></text>
+    </g>
+    <g
+       id="Trip_TOD"
+       transform="matrix(1.2762815,0,0,1.2762815,-161.37943,-237.31323)"
+       style="opacity:0.86000001">
+      <text
+         xml:space="preserve"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="177.11185"
+         y="631.6947"
+         id="text5329"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan5331"
+           x="177.11185"
+           y="631.6947">TOD</tspan></text>
+    </g>
+    <g
+       id="Trip_TOC"
+       transform="matrix(1.2762815,0,0,1.2762815,-161.44175,-237.2478)"
+       style="opacity:0.86000001">
+      <text
+         sodipodi:linespacing="125%"
+         id="text5249"
+         y="631.6947"
+         x="177.11185"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="631.6947"
+           x="177.11185"
+           id="tspan5251"
+           sodipodi:role="line">TOC</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="929.91199"
+       y="608.93933"
+       id="Trip_Climb_Time_Value"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5371"
+         x="929.91199"
+         y="608.93933">00:00:00</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="Trip_Climb_Fuel_Value"
+       y="608.93933"
+       x="989.91199"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       xml:space="preserve"><tspan
+         y="608.93933"
+         x="989.91199"
+         id="tspan5375"
+         sodipodi:role="line">1000.00</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="Trip_Cruise_Time_Value"
+       y="635.19568"
+       x="929.91199"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       xml:space="preserve"><tspan
+         y="635.19568"
+         x="929.91199"
+         id="tspan5383"
+         sodipodi:role="line">00:00:00</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="989.91199"
+       y="635.19568"
+       id="Trip_Cruise_Fuel_Value"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5387"
+         x="989.91199"
+         y="635.19568">1000.00</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="929.91199"
+       y="661.01111"
+       id="Trip_Descent_Time_Value"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5395"
+         x="929.91199"
+         y="661.01111">00:00:00</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="Trip_Descent_Fuel_Value"
+       y="661.01111"
+       x="989.91199"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       xml:space="preserve"><tspan
+         y="661.01111"
+         x="989.91199"
+         id="tspan5399"
+         sodipodi:role="line">1000.00</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+       x="989.91199"
+       y="731.01111"
+       id="Trip_Fuel_Value"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5409"
+         x="989.91199"
+         y="731.01111">1000.00</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="Trip_Climb_NM_Value"
+       y="608.93933"
+       x="843.91199"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       xml:space="preserve"><tspan
+         y="608.93933"
+         x="843.91199"
+         id="tspan4054"
+         sodipodi:role="line">1000</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="843.91199"
+       y="635.19568"
+       id="Trip_Cruise_NM_Value"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4058"
+         x="843.91199"
+         y="635.19568">1000</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="Trip_Descent_NM_Value"
+       y="661.01111"
+       x="843.91199"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       xml:space="preserve"><tspan
+         y="661.01111"
+         x="843.91199"
+         id="tspan4062"
+         sodipodi:role="line">1000</tspan></text>
+    <g
+       id="Trip_NM"
+       transform="translate(-18,0)">
+      <rect
+         ry="2.6635487"
+         y="716.14148"
+         x="840.0351"
+         height="20.100571"
+         width="44.266426"
+         id="rect5115"
+         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         sodipodi:linespacing="125%"
+         id="Trip_NM_Value"
+         y="731.01111"
+         x="877.49792"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="731.01111"
+           x="877.49792"
+           id="tspan4066"
+           sodipodi:role="line">1000</tspan></text>
+    </g>
+    <g
+       id="Trip_Climb_VS"
+       transform="translate(-18,0)">
+      <rect
+         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect5105"
+         width="44.266426"
+         height="20.100571"
+         x="737.71667"
+         y="593.88513"
+         ry="2.6635487" />
+      <text
+         sodipodi:linespacing="125%"
+         id="Trip_Climb_VS_Value"
+         y="608.75476"
+         x="775.1795"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="608.75476"
+           x="775.1795"
+           id="tspan4066-2"
+           sodipodi:role="line">1000</tspan></text>
+    </g>
+    <g
+       id="Trip_Climb_GS"
+       transform="translate(-18,0)">
+      <rect
+         ry="2.6635487"
+         y="593.88513"
+         x="791.3382"
+         height="20.100571"
+         width="44.266426"
+         id="rect5107"
+         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         sodipodi:linespacing="125%"
+         id="Trip_Climb_GS_Value"
+         y="608.75476"
+         x="824.90454"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="608.75476"
+           x="824.90454"
+           id="tspan4066-4"
+           sodipodi:role="line">100</tspan></text>
+    </g>
+    <g
+       id="Trip_Cruise_GS"
+       transform="translate(-18,0)">
+      <rect
+         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect5109"
+         width="44.266426"
+         height="20.100571"
+         x="791.3382"
+         y="620.32605"
+         ry="2.6635487" />
+      <text
+         xml:space="preserve"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="824.90454"
+         y="635.19568"
+         id="Trip_Cruise_GS_Value"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4158"
+           x="824.90454"
+           y="635.19568">100</tspan></text>
+    </g>
+    <g
+       id="Trip_Descent_GS"
+       transform="translate(-18,0)">
+      <rect
+         ry="2.6635487"
+         y="646.14148"
+         x="791.3382"
+         height="20.100571"
+         width="44.266426"
+         id="rect5111"
+         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         sodipodi:linespacing="125%"
+         id="Trip_Descent_GS_Value"
+         y="661.01111"
+         x="824.90454"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="661.01111"
+           x="824.90454"
+           id="tspan4170"
+           sodipodi:role="line">100</tspan></text>
+    </g>
+    <text
+       sodipodi:linespacing="125%"
+       id="Trip_Reserve_Time_Value"
+       y="685.01111"
+       x="929.91199"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       xml:space="preserve"><tspan
+         y="685.01111"
+         x="929.91199"
+         id="tspan4184"
+         sodipodi:role="line">00:00:00</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="989.91199"
+       y="685.01111"
+       id="Trip_Reserve_Fuel_Value"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4188"
+         x="989.91199"
+         y="685.01111">1000.00</tspan></text>
+    <g
+       id="Trip_Reserve_NM"
+       transform="translate(-18,0)">
+      <rect
+         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect5115-6"
+         width="44.266426"
+         height="20.100571"
+         x="840.0351"
+         y="670.14148"
+         ry="2.6635487" />
+      <text
+         sodipodi:linespacing="125%"
+         id="Trip_Reserve_NM_Value"
+         y="685.01111"
+         x="861.91199"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="685.01111"
+           x="861.91199"
+           id="tspan4196"
+           sodipodi:role="line">1000</tspan></text>
+    </g>
+    <g
+       id="Trip_Reserve_GS"
+       transform="translate(-18,0)">
+      <rect
+         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect5113"
+         width="44.266426"
+         height="20.100571"
+         x="791.3382"
+         y="670.14148"
+         ry="2.6635487" />
+      <text
+         xml:space="preserve"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="824.90454"
+         y="685.01111"
+         id="Trip_Reserve_GS_Value"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4202"
+           x="824.90454"
+           y="685.01111">100</tspan></text>
+    </g>
+    <g
+       id="Trip_Table">
+      <text
+         sodipodi:linespacing="125%"
+         id="text5349"
+         y="608.93933"
+         x="649.91199"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="608.93933"
+           x="649.91199"
+           id="tspan5351"
+           sodipodi:role="line">Climb</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="649.94617"
+         y="635.19568"
+         id="text5353"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan5355"
+           x="649.94617"
+           y="635.19568">Cruise</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text5357"
+         y="660.93933"
+         x="649.41296"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="660.93933"
+           x="649.41296"
+           id="tspan5359"
+           sodipodi:role="line">Descent</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="902.80408"
+         y="586.93933"
+         id="text5361"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan5363"
+           x="902.80408"
+           y="586.93933">Time</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text5365"
+         y="586.93933"
+         x="964.74548"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="586.93933"
+           x="964.74548"
+           id="tspan5367"
+           sodipodi:role="line">Fuel</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text5377"
+         y="608.93933"
+         x="993.91199"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="608.93933"
+           x="993.91199"
+           id="tspan5379"
+           sodipodi:role="line">lbs</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="993.91199"
+         y="635.19568"
+         id="text5389"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan5391"
+           x="993.91199"
+           y="635.19568">lbs</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text5401"
+         y="661.19568"
+         x="993.91199"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="661.19568"
+           x="993.91199"
+           id="tspan5403"
+           sodipodi:role="line">lbs</tspan></text>
+      <path
+         inkscape:connector-curvature="0"
+         id="path5405"
+         d="m 597.64021,706.88488 410.02759,0"
+         style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <text
+         xml:space="preserve"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="993.91199"
+         y="731.19568"
+         id="text5411"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan5413"
+           x="993.91199"
+           y="731.19568">lbs</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text4048"
+         y="586.93933"
+         x="843.91199"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="586.93933"
+           x="843.91199"
+           id="tspan4050"
+           sodipodi:role="line">nm</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="797.91199"
+         y="586.93933"
+         id="text4150"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4152"
+           x="797.91199"
+           y="586.93933">GS</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="649.41296"
+         y="684.93933"
+         id="text4178"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4180"
+           x="649.41296"
+           y="684.93933">Reserve</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="993.91199"
+         y="685.19568"
+         id="text4190"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4192"
+           x="993.91199"
+           y="685.19568">lbs</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text4227"
+         y="587.1239"
+         x="753.36304"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="587.1239"
+           x="753.36304"
+           id="tspan4229"
+           sodipodi:role="line">VS</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text4231"
+         y="586.93933"
+         x="685.91199"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="586.93933"
+           x="685.91199"
+           id="tspan4233"
+           sodipodi:role="line">FL</tspan></text>
+    </g>
+    <g
+       id="Trip_Cruise_FL"
+       transform="translate(-18,0)">
+      <rect
+         ry="2.6635487"
+         y="620.14148"
+         x="679.71667"
+         height="20.100571"
+         width="44.266426"
+         id="rect5282"
+         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         xml:space="preserve"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="713.28302"
+         y="635.01111"
+         id="Trip_Cruise_FL_Value"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4239"
+           x="713.28302"
+           y="635.01111">100</tspan></text>
+    </g>
+    <g
+       id="Trip_Descent_VS"
+       transform="translate(-18,0)">
+      <rect
+         ry="2.6635487"
+         y="646.14148"
+         x="737.71667"
+         height="20.100571"
+         width="44.266426"
+         id="rect5103"
+         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         xml:space="preserve"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="775.1795"
+         y="661.01111"
+         id="Trip_Descent_VS_Value"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4263"
+           x="775.1795"
+           y="661.01111">1000</tspan></text>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="929.91199"
+       y="731.01111"
+       id="Trip_Time_Value"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5203"
+         x="929.91199"
+         y="731.01111">00:00:00</tspan></text>
+  </g>
 </svg>

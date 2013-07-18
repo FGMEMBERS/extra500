@@ -215,11 +215,12 @@ var MyWindow = {
 
 var COLOR = {};
 COLOR["Red"] = "rgb(244,28,33)";
-COLOR["Green"] = "rgb(64,178,80)";
+COLOR["Green"] = "#008000";
 
 var SvgWidget = {
 	new: func(canvasGroup,name){
 		var m = {parents:[SvgWidget]};
+		m._class = "SvgWidget";
 		m._listeners 	= [];
 		m._name 	= name;
 		m._group	= canvasGroup;
@@ -237,12 +238,16 @@ var SvgWidget = {
 	init : func(instance=me){
 		
 	},
+	deinit : func(){
+		me.removeListeners();	
+	},
 	
 };
 
 var TankWidget = {
 	new: func(canvasGroup,name,lable,index,refuelable=1){
 		var m = {parents:[TankWidget,SvgWidget.new(canvasGroup,name)]};
+		m._class = "TankWidget";
 		m._index 	= index;
 		m._refuelable 	= refuelable;
 		m._lable 	= lable;
@@ -279,6 +284,8 @@ var TankWidget = {
 		if(me._refuelable == 1){
 			me._cFrame.addEventListener("drag",func(e){me._onFuelInputChange(e);});
 			me._cLevel.addEventListener("drag",func(e){me._onFuelInputChange(e);});
+			me._cFrame.addEventListener("wheel",func(e){me._onFuelInputChange(e);});
+			me._cLevel.addEventListener("wheel",func(e){me._onFuelInputChange(e);});
 			
 		}
 	},
@@ -300,7 +307,12 @@ var TankWidget = {
 			
 	},
 	_onFuelInputChange : func(e){
-		var newFraction = me._fraction - (e.deltaY/me._height);
+		var newFraction = 0;
+		if(e.type == "wheel"){
+			newFraction = me._fraction + (e.deltaY/me._height);
+		}else{
+			newFraction = me._fraction - (e.deltaY/me._height);
+		}
 		newFraction = global.clamp(newFraction,0.0,1.0);
 		me._nLevel.setValue(me._capacity * newFraction);
 		
@@ -308,10 +320,11 @@ var TankWidget = {
 };
 
 var TankerWidget = {
-	new: func(canvasGroup,name,lable,tanks){
+	new: func(canvasGroup,name,lable,widgets){
 		var m = {parents:[TankerWidget,SvgWidget.new(canvasGroup,name)]};
+		m._class = "TankerWidget";
 		m._lable 	= lable;
-		m._tanks	= tanks;
+		m._widget	= {};
 		m._nLevel 	= props.globals.initNode("/consumables/fuel/total-fuel-norm",0.0,"DOUBLE");
 		
 		m._level		= 0;
@@ -319,16 +332,25 @@ var TankerWidget = {
 		m._levelTotal		= 0;
 		m._capacityTotal	= 0;
 		
-		#debug.dump(m._tanks);
-		foreach(tank;keys(m._tanks)){
-			if (m._tanks[tank]._refuelable == 1){
-			print ("TankerWidget.new() ... "~tank);
-				
-				m._capacity 	+= m._tanks[tank]._capacity;
-				m._level	+= m._tanks[tank]._level;
+		#debug.dump(m._widget);
+		foreach(tank;keys(widgets)){
+			if(widgets[tank] != nil){
+				if(widgets[tank]._class == "TankWidget"){
+					m._widget[tank] = widgets[tank];
+				}
 			}
-			m._capacityTotal 	+= m._tanks[tank]._capacity;
-			m._levelTotal		+= m._tanks[tank]._level;
+		}
+		
+		foreach(tank;keys(m._widget)){
+			
+			if (m._widget[tank]._refuelable == 1){
+			#print ("TankerWidget.new() ... "~tank);
+				
+				m._capacity 	+= m._widget[tank]._capacity;
+				m._level	+= m._widget[tank]._level;
+			}
+			m._capacityTotal 	+= m._widget[tank]._capacity;
+			m._levelTotal		+= m._widget[tank]._level;
 			
 		}
 		m._fraction		= m._level / m._capacity;
@@ -370,6 +392,8 @@ var TankerWidget = {
 		append(me._listeners, setlistener(fuelPayload._nNotify,func(n){me._onNotifyChange(n);},1,0) );
 		me._cFrame.addEventListener("drag",func(e){me._onFuelInputChange(e);});
 		me._cLevel.addEventListener("drag",func(e){me._onFuelInputChange(e);});
+		me._cFrame.addEventListener("wheel",func(e){me._onFuelInputChange(e);});
+		me._cLevel.addEventListener("wheel",func(e){me._onFuelInputChange(e);});
 
 	},
 	init : func(instance=me){
@@ -381,11 +405,11 @@ var TankerWidget = {
 	_onNotifyChange : func(n){
 		me._level 	= 0;
 		me._levelTotal 	= 0;
-		foreach(tank;keys(me._tanks)){
-			if (me._tanks[tank]._refuelable == 1){
-				me._level	+= me._tanks[tank]._level;
+		foreach(tank;keys(me._widget)){
+			if (me._widget[tank]._refuelable == 1){
+				me._level	+= me._widget[tank]._level;
 			}
-			me._levelTotal		+= me._tanks[tank]._level;
+			me._levelTotal		+= me._widget[tank]._level;
 		}
 		
 		me._fraction		= me._level / me._capacity;
@@ -403,31 +427,35 @@ var TankerWidget = {
 	
 	},
 	_onFuelInputChange : func(e){
-		
-		var newFraction = me._fraction - (e.deltaY/me._height);
+		var newFraction = 0;
+		if(e.type == "wheel"){
+			newFraction = me._fraction + (e.deltaY/me._height);
+		}else{
+			newFraction = me._fraction - (e.deltaY/me._height);
+		}
 		newFraction = global.clamp(newFraction,0.0,1.0);
 		
-# 		foreach(tank;keys(me._tanks)){
-# 			if (me._tanks[tank]._refuelable == 1){
-# 				me._tanks[tank]._nLevel.setValue(me._tanks[tank]._capacity * newFraction);
+# 		foreach(tank;keys(me._widget)){
+# 			if (me._widget[tank]._refuelable == 1){
+# 				me._widget[tank]._nLevel.setValue(me._widget[tank]._capacity * newFraction);
 # 			}
 # 			
 # 		}
 		var fuelamount  = (me._capacity * newFraction) /2;
-		var fuelAux	= fuelamount - me._tanks.LeftMain._capacity;
+		var fuelAux	= fuelamount - me._widget.LeftMain._capacity;
 		
 		if (fuelAux > 0){
-			me._tanks.LeftMain._nLevel.setValue(me._tanks.LeftMain._capacity);
-			me._tanks.RightMain._nLevel.setValue(me._tanks.RightMain._capacity);
+			me._widget.LeftMain._nLevel.setValue(me._widget.LeftMain._capacity);
+			me._widget.RightMain._nLevel.setValue(me._widget.RightMain._capacity);
 			
-			me._tanks.LeftAux._nLevel.setValue(fuelAux);
-			me._tanks.RightAux._nLevel.setValue(fuelAux);
+			me._widget.LeftAux._nLevel.setValue(fuelAux);
+			me._widget.RightAux._nLevel.setValue(fuelAux);
 		}else{
-			me._tanks.LeftMain._nLevel.setValue(fuelamount);
-			me._tanks.RightMain._nLevel.setValue(fuelamount);
+			me._widget.LeftMain._nLevel.setValue(fuelamount);
+			me._widget.RightMain._nLevel.setValue(fuelamount);
 			
-			me._tanks.LeftAux._nLevel.setValue(0);
-			me._tanks.RightAux._nLevel.setValue(0);
+			me._widget.LeftAux._nLevel.setValue(0);
+			me._widget.RightAux._nLevel.setValue(0);
 			
 		}
 		
@@ -443,6 +471,7 @@ COLOR["TabPassive"] = "#cccccc";
 var TabWidget = {
 	new: func(canvasGroup,name){
 		var m = {parents:[TabWidget,SvgWidget.new(canvasGroup,name)]};
+		m._class = "TabWidget";
 		m._cTabFuel	 	= m._group.getElementById("Tab_Fuel").set("z-index",3);
 		m._cTabFuelBack	 	= m._group.getElementById("Tab_Fuel_Back").setColorFill(COLOR["TabActive"]);
 		m._cTabPayload	 	= m._group.getElementById("Tab_Payload").set("z-index",1);
@@ -511,13 +540,26 @@ var TabWidget = {
 };
 
 var WightWidget = {
-	new: func(canvasGroup,name){
+	new: func(canvasGroup,name,widgets){
 		var m = {parents:[WightWidget,SvgWidget.new(canvasGroup,name)]};
+		m._class = "WightWidget";
+		m._widget = {};
+		
+		foreach(w;keys(widgets)){
+			if(widgets[w] != nil){
+				if(widgets[w]._class == "PayloadWidget"){
+					m._widget[w] = widgets[w];
+				}
+			}
+		}
+		
+		
 		m._cCenterGravityX	 	= m._group.getElementById("CenterGravity_X");
 		m._cCenterGravityY	 	= m._group.getElementById("CenterGravity_Y");
 		m._cCenterGravityBall	 	= m._group.getElementById("CenterGravity_Ball").updateCenter();
 		m._cWeightEmpty		 	= m._group.getElementById("Weight_Empty");
 		m._cWeightGross	 		= m._group.getElementById("Weight_Gross");
+		m._cWeightPayload	 	= m._group.getElementById("Weight_Payload");
 		m._cWeightMaxRamp	 	= m._group.getElementById("Weight_Max_Ramp");
 		m._cWeightMaxTakeoff	 	= m._group.getElementById("Weight_Max_Takeoff");
 		m._cWeightMaxLanding	 	= m._group.getElementById("Weight_Max_Landing");
@@ -531,11 +573,20 @@ var WightWidget = {
 		m._nLanding 	= props.globals.initNode("/limits/mass-and-balance/maximum-landing-mass-lbs");
 		m._cgX  = 0;
 		m._cgY  = 0;
+		m._empty = 0;
+		m._payload = 0;
 		m._gross = 0;
 		m._ramp  = 0;
 		m._takeoff  = 0;
 		m._landing = 0;
-		m._empty = 0;
+		
+		m._ramp = m._nRamp.getValue();
+		m._cWeightMaxRamp.setText(sprintf("%.2f",m._ramp));
+		m._takeoff = m._nTakeoff.getValue();
+		m._cWeightMaxTakeoff.setText(sprintf("%.2f",m._takeoff));
+		m._landing = m._nLanding.getValue();
+		m._cWeightMaxLanding.setText(sprintf("%.2f",m._landing));
+		
 		
 		return m;
 	},
@@ -556,19 +607,21 @@ var WightWidget = {
 		me._cCenterGravityY.setText(sprintf("%.2f",me._cgY));
 		me._gross = me._nGross.getValue();
 		me._cWeightGross.setText(sprintf("%.2f",me._gross));
-		me._ramp = me._nRamp.getValue();
-		me._cWeightMaxRamp.setText(sprintf("%.2f",me._ramp));
-		me._takeoff = me._nTakeoff.getValue();
-		me._cWeightMaxTakeoff.setText(sprintf("%.2f",me._takeoff));
-		me._landing = me._nLanding.getValue();
-		me._cWeightMaxLanding.setText(sprintf("%.2f",me._landing));
 		me._empty = me._nEmpty.getValue();
 		me._cWeightEmpty.setText(sprintf("%.2f",me._empty));
+		
+		me._payload = 0;
+		foreach(w;keys(me._widget)){
+			me._payload	+= me._widget[w]._level;
+		}
+		#print("WightWidget._onNotifyChange() ... _payload="~me._payload);
+		me._cWeightPayload.setText(sprintf("%.2f",me._payload));
+		
 		
 		#me._cCenterGravityBall.setTranslation(me._cgX * (64/13), (me._cgY - 136.0) * (64/13) );
 		#me._cCenterGravityBall.setTranslation((me._cgY - 136.0) , me._cgX);
 		
-		var y = (me._cgX - 138.0) * (64/5);
+		var y = (me._cgX - 135.0) * (64/18);
 		var x = (me._cgY ) * (64/13);
 		me._cCenterGravityBall.setTranslation(x ,y );
 		
@@ -577,6 +630,547 @@ var WightWidget = {
 	
 	
 };
+
+var PayloadWidget = {
+	new: func(canvasGroup,name,lable,index,listCategory=nil){
+		var m = {parents:[PayloadWidget,SvgWidget.new(canvasGroup,name)]};
+		m._class = "PayloadWidget";
+		m._index 	= index;
+		m._lable 	= lable;
+		m._listCategory	= listCategory;
+		
+		m._nRoot	= props.globals.getNode("/payload/weight["~m._index~"]");
+		m._nLable 	= m._nRoot.initNode("name","","STRING");
+		m._nLevel 	= m._nRoot.initNode("weight-lb",0.0,"DOUBLE");
+		m._nCapacity 	= m._nRoot.initNode("max-lb",0.0,"DOUBLE");
+		m._nCategory 	= m._nRoot.initNode("category","","STRING");
+		
+		m._level	= m._nLevel.getValue();
+		m._capacity	= m._nCapacity.getValue();
+		m._fraction	= m._level / m._capacity;
+		m._category	= m._nCategory.getValue();
+		
+		m._cFrame 	= m._group.getElementById(m._name~"_Frame");
+		m._cLevel 	= m._group.getElementById(m._name~"_Level");
+		m._cLBS 	= m._group.getElementById(m._name~"_Lbs");
+		m._cName 	= m._group.getElementById(m._name~"_Name");
+		
+		m._cCats	= {
+			Cat1	: nil,
+			Cat2	: nil,
+			Cat3	: nil,
+		};
+		
+		if (m._listCategory!=nil){
+			foreach(cat;keys(m._listCategory)){
+				m._cCats[cat]	= m._group.getElementById(m._name~"_"~cat);
+			}
+		}
+		m._cLBS.setText(sprintf("%3.2f",m._level));
+		m._cName.setText(m._lable);
+				
+		m._bottom	= m._cFrame.get("coord[3]");
+		m._top		= m._cFrame.get("coord[1]");
+		m._height	= m._bottom - m._top;
+		
+		return m;
+	},
+	setListeners : func(instance) {
+		
+		#append(me._listeners, setlistener(me._nLevel,func(n){me._onLevelChange(n);},1,0) );
+		append(me._listeners, setlistener(fuelPayload._nNotify,func(n){me._onNotifyChange(n);},1,0) );
+		
+		me._cFrame.addEventListener("drag",func(e){me._onInputChange(e);});
+		me._cLevel.addEventListener("drag",func(e){me._onInputChange(e);});
+		me._cFrame.addEventListener("wheel",func(e){me._onInputChange(e);});
+		me._cLevel.addEventListener("wheel",func(e){me._onInputChange(e);});
+		if (me._listCategory!=nil){
+			if(me._cCats["Cat1"] != nil){
+				me._cCats["Cat1"].addEventListener("click",func(e){me._onCatClick(e,"Cat1");});
+			}
+			if(me._cCats["Cat2"] != nil){
+				me._cCats["Cat2"].addEventListener("click",func(e){me._onCatClick(e,"Cat2");});
+			}
+			if(me._cCats["Cat3"] != nil){
+				me._cCats["Cat3"].addEventListener("click",func(e){me._onCatClick(e,"Cat3");});
+			}
+		}
+			
+		
+	},
+	init : func(instance=me){
+		me.setListeners(instance);
+		me._checkCat();
+	},
+	deinit : func(){
+		me.removeListeners();	
+	},
+	_checkCat : func(){
+						
+		if(me._category == "Cat1"){
+			if(me._cCats["Cat1"] != nil){
+				me._cCats["Cat1"].set("fill",COLOR["Green"]);
+			}
+			if(me._cCats["Cat2"] != nil){
+				me._cCats["Cat2"].set("fill",COLOR["TabPassive"]);
+			}
+			if(me._cCats["Cat3"] != nil){
+				me._cCats["Cat3"].set("fill",COLOR["TabPassive"]);
+			}
+		}elsif(me._category == "Cat2"){
+			if(me._cCats["Cat1"] != nil){
+				me._cCats["Cat1"].set("fill",COLOR["TabPassive"]);
+			}
+			if(me._cCats["Cat2"] != nil){
+				me._cCats["Cat2"].set("fill",COLOR["Green"]);
+			}
+			if(me._cCats["Cat3"] != nil){
+				me._cCats["Cat3"].set("fill",COLOR["TabPassive"]);
+			}
+			
+		}elsif(me._category == "Cat3"){
+			if(me._cCats["Cat1"] != nil){
+				me._cCats["Cat1"].set("fill",COLOR["TabPassive"]);
+			}
+			if(me._cCats["Cat2"] != nil){
+				me._cCats["Cat2"].set("fill",COLOR["TabPassive"]);
+			}
+			if(me._cCats["Cat3"] != nil){
+				me._cCats["Cat3"].set("fill",COLOR["Green"]);
+			}
+			
+		}else{
+			if(me._cCats["Cat1"] != nil){
+				me._cCats["Cat1"].set("fill",COLOR["TabPassive"]);
+			}
+			if(me._cCats["Cat2"] != nil){
+				me._cCats["Cat2"].set("fill",COLOR["TabPassive"]);
+			}
+			if(me._cCats["Cat3"] != nil){
+				me._cCats["Cat3"].set("fill",COLOR["TabPassive"]);
+			}
+			
+		}
+	},
+	_onCatClick : func(e,cat){
+		#print("PayloadWidget._onCatClick() ... "~cat);
+		if(me._category == cat){
+			me._category = "";
+		}else{
+			me._category = cat;
+		}
+		if(me._category != ""){
+			me._nLevel.setValue(me._listCategory[me._category]*me._capacity);
+		}
+		me._nCategory.setValue(me._category);
+		me._checkCat();
+		fuelPayload._nNotify.setValue(systime());
+	},
+	_onNotifyChange : func(n){
+		me._level	= me._nLevel.getValue();
+		me._fraction	= me._level / me._capacity;
+		
+		me._cLBS.setText(sprintf("%3.2f",me._level));
+		
+		me._cLevel.set("coord[1]", me._bottom - (me._height * me._fraction));
+		
+		
+			
+	},
+	_onInputChange : func(e){
+		var newFraction =0;
+		if(e.type == "wheel"){
+			newFraction = me._fraction + (e.deltaY/me._height);
+		}else{
+			newFraction = me._fraction - (e.deltaY/me._height);
+		}
+		newFraction = global.clamp(newFraction,0.0,1.0);
+		me._nLevel.setValue(me._capacity * newFraction);
+		fuelPayload._nNotify.setValue(systime());
+		
+	},
+};
+
+
+var TripWidget = {
+	new: func(canvasGroup,name){
+		var m = {parents:[TripWidget,SvgWidget.new(canvasGroup,name)]};
+		m._class = "TripWidget";
+		m._can = {
+			climb : {
+				vsFrame	: m._group.getElementById(m._name~"_Climb_VS"),
+				vs	: m._group.getElementById(m._name~"_Climb_VS_Value"),
+				gsFrame	: m._group.getElementById(m._name~"_Climb_GS"),
+				gs	: m._group.getElementById(m._name~"_Climb_GS_Value"),
+				nm	: m._group.getElementById(m._name~"_Climb_NM_Value"),
+				time	: m._group.getElementById(m._name~"_Climb_Time_Value"),
+				fuel	: m._group.getElementById(m._name~"_Climb_Fuel_Value"),
+			},
+			cruise : {
+				flFrame	: m._group.getElementById(m._name~"_Cruise_FL"),
+				fl	: m._group.getElementById(m._name~"_Cruise_FL_Value"),
+				gsFrame	: m._group.getElementById(m._name~"_Cruise_GS"),
+				gs	: m._group.getElementById(m._name~"_Cruise_GS_Value"),
+				nm	: m._group.getElementById(m._name~"_Cruise_NM_Value"),
+				time	: m._group.getElementById(m._name~"_Cruise_Time_Value"),
+				fuel	: m._group.getElementById(m._name~"_Cruise_Fuel_Value"),
+			},
+			descent : {
+				vsFrame	: m._group.getElementById(m._name~"_Descent_VS"),
+				vs	: m._group.getElementById(m._name~"_Descent_VS_Value"),
+				gsFrame	: m._group.getElementById(m._name~"_Descent_GS"),
+				gs	: m._group.getElementById(m._name~"_Descent_GS_Value"),
+				nm	: m._group.getElementById(m._name~"_Descent_NM_Value"),
+				time	: m._group.getElementById(m._name~"_Descent_Time_Value"),
+				fuel	: m._group.getElementById(m._name~"_Descent_Fuel_Value"),
+			},
+			reserve : {
+				flFrame	: m._group.getElementById(m._name~"_Reserve_FL"),
+				fl	: m._group.getElementById(m._name~"_Reserve_FL_Value"),
+				gsFrame	: m._group.getElementById(m._name~"_Reserve_GS"),
+				gs	: m._group.getElementById(m._name~"_Reserve_GS_Value"),
+				nmFrame	: m._group.getElementById(m._name~"_Reserve_NM"),
+				nm	: m._group.getElementById(m._name~"_Reserve_NM_Value"),
+				time	: m._group.getElementById(m._name~"_Reserve_Time_Value"),
+				fuel	: m._group.getElementById(m._name~"_Reserve_Fuel_Value"),
+			},
+			trip : {
+				nm	: m._group.getElementById(m._name~"_NM_Value"),
+				time	: m._group.getElementById(m._name~"_Time_Value"),
+				fuel	: m._group.getElementById(m._name~"_Fuel_Value"),
+			},
+			trip : {
+				nmFrame	: m._group.getElementById(m._name~"_NM"),
+				nm	: m._group.getElementById(m._name~"_NM_Value"),
+				time	: m._group.getElementById(m._name~"_Time_Value"),
+				fuel	: m._group.getElementById(m._name~"_Fuel_Value"),
+			},
+			graph : {
+				x0	: m._group.getElementById(m._name~"_NM_000"),
+				x25	: m._group.getElementById(m._name~"_NM_025"),
+				x50	: m._group.getElementById(m._name~"_NM_050"),
+				x75	: m._group.getElementById(m._name~"_NM_075"),
+				x100	: m._group.getElementById(m._name~"_NM_100"),
+				flFrame	: m._group.getElementById(m._name~"_FL"),
+				fl	: m._group.getElementById(m._name~"_FL_Value"),
+				toc	: m._group.getElementById(m._name~"_TOC"),
+				tod	: m._group.getElementById(m._name~"_TOD"),
+				profile	: m._group.getElementById(m._name~"_FlightProfile"),
+			},
+		};
+		
+		
+		
+		m._data = {
+			climb : {
+				vs	: 1000,
+				gs	: 150,
+				nm	: 65,
+				time	: 0,
+				fuel	: 0,
+				burnrate: 230/3600, # lbs/sec
+			},
+			cruise : {
+				fl	: 120,
+				gs	: 200,
+				nm	: 0,
+				time	: 0,
+				fuel	: 0,
+				burnrate: 221/3600,
+			},
+			descent : {
+				vs	: -1000,
+				gs	: 180,
+				nm	: 50,
+				time	: 0,
+				fuel	: 0,
+				burnrate: 145/3600, # lbs/sec
+			},
+			reserve : {
+				fl	: 30,
+				gs	: 180,
+				nm	: 50,
+				time	: 0,
+				fuel	: 0,
+				burnrate: 180/3600, # lbs/sec
+			},
+			trip : {
+				nm	: 250,
+				time	: 0,
+				fuel	: 0,
+			},
+			graph : {
+				x0	: 0,
+				x25	: 0,
+				x50	: 0,
+				x75	: 0,
+				x100	: 0,
+				toc	: 0,
+				tod	: 0,
+				flScale : 196/300,
+				nmScale : 512/100,
+			},
+			
+			
+		};
+		
+		
+		
+		
+		return m;
+	},
+	setListeners : func(instance) {
+		me._can.graph.flFrame.addEventListener("drag",func(e){me._onCruiseFlChange(e);});
+		me._can.cruise.flFrame.addEventListener("drag",func(e){me._onCruiseFlChange(e);});
+		me._can.cruise.flFrame.addEventListener("wheel",func(e){me._onCruiseFlChange(e);});
+		me._can.cruise.gsFrame.addEventListener("drag",func(e){me._onCruiseGsChange(e);});
+		me._can.cruise.gsFrame.addEventListener("wheel",func(e){me._onCruiseGsChange(e);});
+		
+		me._can.climb.gsFrame.addEventListener("drag",func(e){me._onClimbGsChange(e);});
+		me._can.climb.gsFrame.addEventListener("wheel",func(e){me._onClimbGsChange(e);});
+		me._can.climb.vsFrame.addEventListener("drag",func(e){me._onClimbVsChange(e);});
+		me._can.climb.vsFrame.addEventListener("wheel",func(e){me._onClimbVsChange(e);});
+		
+		me._can.descent.gsFrame.addEventListener("drag",func(e){me._onDescentGsChange(e);});
+		me._can.descent.gsFrame.addEventListener("wheel",func(e){me._onDescentGsChange(e);});
+		me._can.descent.vsFrame.addEventListener("drag",func(e){me._onDescentVsChange(e);});
+		me._can.descent.vsFrame.addEventListener("wheel",func(e){me._onDescentVsChange(e);});
+		
+		me._can.reserve.flFrame.addEventListener("drag",func(e){me._onReserveFlChange(e);});
+		me._can.reserve.flFrame.addEventListener("wheel",func(e){me._onReserveFlChange(e);});
+		me._can.reserve.gsFrame.addEventListener("drag",func(e){me._onReserveGsChange(e);});
+		me._can.reserve.gsFrame.addEventListener("wheel",func(e){me._onReserveGsChange(e);});
+		
+		me._can.trip.nmFrame.addEventListener("drag",func(e){me._onTripNmChange(e);});
+		me._can.trip.nmFrame.addEventListener("wheel",func(e){me._onTripNmChange(e);});
+		me._can.reserve.nmFrame.addEventListener("drag",func(e){me._onReserveNmChange(e);});
+		me._can.reserve.nmFrame.addEventListener("wheel",func(e){me._onReserveNmChange(e);});
+		
+	},
+	init : func(instance=me){
+		me.setListeners(instance);
+		me._draw();
+	},
+	_onCruiseFlChange : func(e){
+		if(e.type == "wheel"){
+			me._data.cruise.fl += e.deltaY / me._data.graph.flScale;
+		}else{
+			me._data.cruise.fl -= e.deltaY / me._data.graph.flScale;
+		}
+		me._data.cruise.fl = math.floor(me._data.cruise.fl);
+		me._data.cruise.fl = global.clamp(me._data.cruise.fl,0,250.0);
+
+		me._draw();
+	},
+	_onCruiseGsChange : func(e){
+		if(e.type == "wheel"){
+			me._data.cruise.gs += e.deltaY;
+		}else{
+			me._data.cruise.gs -= e.deltaY;
+		}
+		me._data.cruise.gs = global.clamp(me._data.cruise.gs,80,250.0);
+
+		me._draw();
+	},
+	_onClimbGsChange : func(e){
+		if(e.type == "wheel"){
+			me._data.climb.gs += e.deltaY;
+		}else{
+			me._data.climb.gs -= e.deltaY;
+		}
+		me._data.climb.gs = global.clamp(me._data.climb.gs,80,250.0);
+
+		me._draw();
+	},
+	_onClimbVsChange : func(e){
+		if(e.type == "wheel"){
+			me._data.climb.vs += e.deltaY * 100;
+		}else{
+			me._data.climb.vs -= e.deltaY * 100;
+		}
+		me._data.climb.vs = global.clamp(me._data.climb.vs,100,1600.0);
+
+		me._draw();
+	},
+	_onDescentGsChange : func(e){
+		if(e.type == "wheel"){
+			me._data.descent.gs += e.deltaY;
+		}else{
+			me._data.descent.gs -= e.deltaY;
+		}
+		me._data.descent.gs = global.clamp(me._data.descent.gs,80,250.0);
+
+		me._draw();
+	},
+	_onDescentVsChange : func(e){
+		if(e.type == "wheel"){
+			me._data.descent.vs += e.deltaY * 100;
+		}else{
+			me._data.descent.vs -= e.deltaY * 100;
+		}
+		me._data.descent.vs = global.clamp(me._data.descent.vs,-1600,-100);
+
+		me._draw();
+	},
+	_onReserveFlChange : func(e){
+		if(e.type == "wheel"){
+			me._data.reserve.fl += e.deltaY / me._data.graph.flScale;
+		}else{
+			me._data.reserve.fl -= e.deltaY / me._data.graph.flScale;
+		}
+		me._data.reserve.fl = math.floor(me._data.reserve.fl);
+		me._data.reserve.fl = global.clamp(me._data.reserve.fl,0,250.0);
+
+		me._draw();
+	},
+	_onReserveGsChange : func(e){
+		if(e.type == "wheel"){
+			me._data.reserve.gs += e.deltaY;
+		}else{
+			me._data.reserve.gs -= e.deltaY;
+		}
+		me._data.reserve.gs = global.clamp(me._data.reserve.gs,80,250.0);
+
+		me._draw();
+	},
+	_onTripNmChange: func(e){
+		if(e.type == "wheel"){
+			me._data.trip.nm += e.deltaY;
+		}else{
+			me._data.trip.nm -= e.deltaY;
+		}
+		me._data.trip.nm = global.clamp(me._data.trip.nm,20,8000.0);
+
+		me._draw();
+	},
+	_onReserveNmChange: func(e){
+		if(e.type == "wheel"){
+			me._data.reserve.nm += e.deltaY;
+		}else{
+			me._data.reserve.nm -= e.deltaY;
+		}
+		me._data.reserve.nm = global.clamp(me._data.reserve.nm,20,150.0);
+
+		me._draw();
+	},
+	
+	getTime : func(time){
+		var text = "00:00";
+		if(time > 0){
+			var hour = math.mod(time,86400.0) / 3600.0;
+			var min = math.mod(time,3600.0) / 60.0;
+			var sec = math.mod(time,60.0);
+			
+			if (hour > 1){
+				text = sprintf("%02i:%02i:%02i",hour,min,sec);
+			}else{
+				text = sprintf("%02i:%02i",min,sec);
+			}
+		}
+		return text;
+	},
+	_calculate : func(){
+		
+		me._data.climb.nm 	= me._data.climb.gs * (( (me._data.cruise.fl*100) / me._data.climb.vs) / 60) ;
+		me._data.climb.time	= (me._data.climb.nm / me._data.climb.gs) * 3600;
+		me._data.climb.fuel	= me._data.climb.time * me._data.climb.burnrate;
+		
+		me._data.descent.nm 	= math.abs(me._data.descent.gs * (( (me._data.cruise.fl*100) / me._data.descent.vs) / 60) );
+		me._data.descent.time	= (me._data.descent.nm / me._data.descent.gs) * 3600;
+		me._data.descent.fuel	= me._data.descent.time * me._data.descent.burnrate;
+		
+		
+		me._data.reserve.time	= (me._data.reserve.nm / me._data.reserve.gs) * 3600;
+		me._data.reserve.fuel	= me._data.reserve.time * me._data.reserve.burnrate;
+		
+		
+		me._data.cruise.nm 	= me._data.trip.nm - me._data.climb.nm - me._data.descent.nm;
+		me._data.cruise.time	= (me._data.cruise.nm / me._data.cruise.gs) * 3600;
+		me._data.cruise.fuel	= me._data.cruise.time * me._data.cruise.burnrate;
+		
+		me._data.trip.time	= me._data.climb.time + me._data.cruise.time + me._data.descent.time;
+		me._data.trip.fuel	= me._data.climb.fuel + me._data.cruise.fuel + me._data.descent.fuel;
+		
+		
+		me._data.graph.x25	= me._data.trip.nm * 0.25;
+		me._data.graph.x50	= me._data.trip.nm * 0.50;
+		me._data.graph.x75	= me._data.trip.nm * 0.75;
+		me._data.graph.x100	= me._data.trip.nm;
+		
+		me._data.graph.nmScale =  512 / me._data.trip.nm;
+	},
+	_draw : func(){
+		
+		me._calculate();
+		
+		me._can.graph.flFrame.setTranslation(0,-me._data.cruise.fl*me._data.graph.flScale);
+		me._can.graph.fl.setText(sprintf("%3i",me._data.cruise.fl));
+		
+		me._can.climb.vs.setText(sprintf("%4i",me._data.climb.vs));
+		me._can.climb.gs.setText(sprintf("%3i",me._data.climb.gs));
+		me._can.climb.nm.setText(sprintf("%i",me._data.climb.nm));
+		me._can.climb.time.setText(me.getTime(me._data.climb.time));
+		me._can.climb.fuel.setText(sprintf("%.2f",me._data.climb.fuel));
+		
+		me._can.cruise.fl.setText(sprintf("%3i",me._data.cruise.fl));
+		me._can.cruise.gs.setText(sprintf("%3i",me._data.cruise.gs));
+		me._can.cruise.nm.setText(sprintf("%i",me._data.cruise.nm));
+		me._can.cruise.time.setText(me.getTime(me._data.cruise.time));
+		me._can.cruise.fuel.setText(sprintf("%.2f",me._data.cruise.fuel));
+		
+		me._can.descent.vs.setText(sprintf("%4i",me._data.descent.vs));
+		me._can.descent.gs.setText(sprintf("%3i",me._data.descent.gs));
+		me._can.descent.nm.setText(sprintf("%i",me._data.descent.nm));
+		me._can.descent.time.setText(me.getTime(me._data.descent.time));
+		me._can.descent.fuel.setText(sprintf("%.2f",me._data.descent.fuel));
+		
+		me._can.reserve.fl.setText(sprintf("%3i",me._data.reserve.fl));
+		me._can.reserve.gs.setText(sprintf("%3i",me._data.reserve.gs));
+		me._can.reserve.nm.setText(sprintf("%i",me._data.reserve.nm));
+		me._can.reserve.time.setText(me.getTime(me._data.reserve.time));
+		me._can.reserve.fuel.setText(sprintf("%.2f",me._data.reserve.fuel));
+		
+		me._can.trip.nm.setText(sprintf("%i",me._data.trip.nm));
+		me._can.trip.time.setText(me.getTime(me._data.trip.time));
+		me._can.trip.fuel.setText(sprintf("%.2f",me._data.trip.fuel));
+		
+		
+		me._can.graph.x0.setText(sprintf("%i",me._data.graph.x0));
+		me._can.graph.x25.setText(sprintf("%i",me._data.graph.x25));
+		me._can.graph.x50.setText(sprintf("%i",me._data.graph.x50));
+		me._can.graph.x75.setText(sprintf("%i",me._data.graph.x75));
+		me._can.graph.x100.setText(sprintf("%i",me._data.graph.x100));
+		
+		
+		me._can.graph.profile.set("coord[3]",-me._data.cruise.fl * me._data.graph.flScale);
+		me._can.graph.profile.set("coord[7]",me._data.cruise.fl * me._data.graph.flScale);
+		
+		me._can.graph.profile.set("coord[2]",me._data.climb.nm * me._data.graph.nmScale);
+		me._can.graph.profile.set("coord[4]",me._data.cruise.nm * me._data.graph.nmScale);
+		me._can.graph.profile.set("coord[6]",me._data.descent.nm * me._data.graph.nmScale);
+		
+		me._can.graph.toc.setTranslation(me._data.climb.nm * me._data.graph.nmScale,0);
+		me._can.graph.tod.setTranslation((me._data.climb.nm+me._data.cruise.nm) * me._data.graph.nmScale,0);
+		
+		
+	},
+	_draw2 : func(){
+		me._cFL.setTranslation(me._pFL.x,-me._pFL.y);
+		me._cTOC.setTranslation(me._pTOC.x,me._pTOC.y);
+		me._cTOD.setTranslation(me._pTOC.x + me._pTOD.x,me._pTOD.y);
+		me._cNM.setTranslation(me._pTOC.x + me._pTOD.x + me._pNM.x,me._pNM.y);
+		
+		me._cFlightProfile.set("coord[3]",-me._pFL.y);
+		me._cFlightProfile.set("coord[7]",me._pFL.y);
+		
+		me._cFlightProfile.set("coord[2]",me._pTOC.coordX + me._pTOC.x);
+		me._cFlightProfile.set("coord[4]",me._pTOD.coordX + me._pTOD.x);
+		me._cFlightProfile.set("coord[6]",me._pNM.coordX  + me._pNM.x);
+		
+	}
+	
+};
+
 
 var FuelPayloadClass = {
 	new : func(){
@@ -608,7 +1202,7 @@ var FuelPayloadClass = {
 		m._isOpen = 0;
 		m._isNotInitialized = 1;
 		
-		m._tanks = {
+		m._widget = {
 			LeftAux 	: nil,
 			LeftMain 	: nil,
 			LeftCol 	: nil,
@@ -616,12 +1210,22 @@ var FuelPayloadClass = {
 			RightAux 	: nil,
 			RightMain 	: nil,
 			RightCol 	: nil,
+		
+			Seat1A	 	: nil,
+			Seat1B 		: nil,
+			Seat2A 		: nil,
+			Seat2B 		: nil,
+			Seat3A 		: nil,
+			Seat3B 		: nil,
+			Seat4A 		: nil,
+		   
+			tanker		: nil,
+			selector	: nil,
+			weight		: nil,
+			trip		: nil,
 		};
 		
-		m._tanker 	= nil;
-		m._selector 	= nil;
-		m._weight 	= nil;
-		
+
 		return m;
 	},
 	toggle : func(){
@@ -653,34 +1257,61 @@ var FuelPayloadClass = {
 		me.removeListeners();
 		me._dlg.del();
 		
-		me._selector.deinit();
-		me._weight.deinit();
-		
-		me._tanks.LeftAux.deinit();
-		me._tanks.LeftMain.deinit();
-		me._tanks.LeftCol.deinit();
-		me._tanks.CenterEngine.deinit();
-		me._tanks.RightCol.deinit();
-		me._tanks.RightMain.deinit();
-		me._tanks.RightAux.deinit();
-		
-		me._tanker.deinit();
-		
-		me._selector 			= nil;
-		me._weight 			= nil;
-		
-		me._tanks.LeftAux 		= nil;
-		me._tanks.LeftMain 		= nil;
-		me._tanks.LeftCol 		= nil;
-		me._tanks.CenterEngine 		= nil;
-		me._tanks.RightCol 		= nil;
-		me._tanks.RightMain 		= nil;
-		me._tanks.RightAux 		= nil;
-		
-		me._tanker 			= nil;
+		foreach(widget;keys(me._widget)){
+			if(me._widget[widget] != nil){
+				me._widget[widget].deinit();
+				me._widget[widget] = nil;
+			}
+		}
 		
 	},
 	open : func(){
+		if(getprop("/gear/gear[0]/wow") == 1){
+			me.openFuel();
+		}else{
+			me.openMsg();
+		}
+		
+	},
+	openMsg : func(){
+		me._dlg = MyWindow.new([512,384], "dialog");
+		me._dlg._onClose = func(){
+			fuelPayload._onClose();
+		}
+		me._dlg.set("title", "Unable to refuel in Air");
+		me._dlg.move(100,100);
+		
+		me._canvas = me._dlg.createCanvas();
+		me._canvas.set("background", "#3F3D38");
+#              
+		me._group = me._canvas.createGroup();
+
+		canvas.parsesvg(me._group, "Dialogs/FuelPayload_msg.svg",{"font-mapper": IFD.AvidyneFontMapper});
+		
+		var apt = airportinfo();
+		
+		
+		var airportCoord = geo.Coord.new();
+		airportCoord.set_latlon(apt.lat, apt.lon,apt.elevation);
+		
+		var aicraftCoord = geo.aircraft_position();
+		
+		
+		me._group.getElementById("ICAO").setText(apt.id);
+		me._group.getElementById("Name").setText(apt.name);
+		me._group.getElementById("Lat").setText(sprintf("%.2f",apt.lat));
+		me._group.getElementById("Lon").setText(sprintf("%.2f",apt.lon));
+		me._group.getElementById("Course").setText(sprintf("%.2f",aicraftCoord.course_to(airportCoord)));
+		me._group.getElementById("Distance").setText(sprintf("%.2f",aicraftCoord.distance_to(airportCoord) * global.CONST.METER2NM));
+		me._group.getElementById("Elevation").setText(sprintf("%.2f",apt.elevation * global.CONST.METER2FEET));
+		
+		
+		
+		
+		
+		
+	},
+	openFuel : func(){
 		
 		
 		me._dlg = MyWindow.new([1024,768], "dialog");
@@ -699,32 +1330,35 @@ var FuelPayloadClass = {
 
 		canvas.parsesvg(me._group, "Dialogs/FuelPayload.svg",{"font-mapper": IFD.AvidyneFontMapper});
 		
-		me._selector = TabWidget.new(me._group,"Tab Selector");
+		me._widget.selector = TabWidget.new(me._group,"Tab Selector");
 		
-		me._weight = WightWidget.new(me._group,"Weight");
 		
-		me._tanks.LeftAux 		= TankWidget.new(me._group,"Left_Aux","Auxiliary",0,1);
-		me._tanks.LeftMain 		= TankWidget.new(me._group,"Left_Main","Main",1,1);
-		me._tanks.LeftCol 		= TankWidget.new(me._group,"Left_Collector","Collector",2,0);
-		me._tanks.CenterEngine 		= TankWidget.new(me._group,"Center_Engine","Engine",3,0);
-		me._tanks.RightCol 		= TankWidget.new(me._group,"Right_Collector","Collector",4,0);
-		me._tanks.RightMain 		= TankWidget.new(me._group,"Right_Main","Main",5,1);
-		me._tanks.RightAux 		= TankWidget.new(me._group,"Right_Aux","Auxiliary",6,1);
+		me._widget.LeftAux 		= TankWidget.new(me._group,"Left_Aux","Auxiliary",0,1);
+		me._widget.LeftMain 		= TankWidget.new(me._group,"Left_Main","Main",1,1);
+		me._widget.LeftCol 		= TankWidget.new(me._group,"Left_Collector","Collector",2,0);
+		me._widget.CenterEngine 	= TankWidget.new(me._group,"Center_Engine","Engine",3,0);
+		me._widget.RightCol 		= TankWidget.new(me._group,"Right_Collector","Collector",4,0);
+		me._widget.RightMain 		= TankWidget.new(me._group,"Right_Main","Main",5,1);
+		me._widget.RightAux 		= TankWidget.new(me._group,"Right_Aux","Auxiliary",6,1);
 		
-		me._tanker			= TankerWidget.new(me._group,"Tanker","Tanker",me._tanks);
+		me._widget.tanker		= TankerWidget.new(me._group,"Tanker","Tanker",me._widget);
+
+		me._widget.Seat1A		= PayloadWidget.new(me._group,"Seat_1A","Pilot",0,{"Cat1":0.55});
+		me._widget.Seat1B		= PayloadWidget.new(me._group,"Seat_1B","Co-Pilot",1,{"Cat1":0.55});
+		me._widget.Seat2A		= PayloadWidget.new(me._group,"Seat_2A","Seat 2A",2,{"Cat1":0.6,"Cat2":0.4,"Cat3":0.1});
+		me._widget.Seat2B		= PayloadWidget.new(me._group,"Seat_2B","Seat 2B",3,{"Cat1":0.6,"Cat2":0.4,"Cat3":0.1});
+		me._widget.Seat3A		= PayloadWidget.new(me._group,"Seat_3A","Seat 3A",4,{"Cat1":0.6,"Cat2":0.4,"Cat3":0.1});
+		me._widget.Seat3B		= PayloadWidget.new(me._group,"Seat_3B","Seat 3B",5,{"Cat1":0.6,"Cat2":0.4,"Cat3":0.1});
+		me._widget.Seat4A		= PayloadWidget.new(me._group,"Seat_4A","Baggage",6,{"Cat1":0.8,"Cat2":0.5,"Cat3":0.2});
 		
-		me._selector.init();
-		me._weight.init();
+		me._widget.weight = WightWidget.new(me._group,"Weight",me._widget);
+		me._widget.trip = TripWidget.new(me._group,"Trip");
 		
-		me._tanks.LeftAux.init();
-		me._tanks.LeftMain.init();
-		me._tanks.LeftCol.init();
-		me._tanks.CenterEngine.init();
-		me._tanks.RightCol.init();
-		me._tanks.RightMain.init();
-		me._tanks.RightAux.init();
-		
-		me._tanker.init();
+		foreach(widget;keys(me._widget)){
+			if(me._widget[widget] != nil){
+				me._widget[widget].init();
+			}
+		}
 		
 		#me.setListeners();
 		
