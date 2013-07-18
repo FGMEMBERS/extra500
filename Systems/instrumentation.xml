@@ -20,7 +20,7 @@
       Date: 21.04.13
 
       Last change:      Eric van den Berg
-      Date:             2013-06-23
+      Date:             2013-07-15
 -->
 
 <PropertyList>
@@ -136,6 +136,11 @@
     <name>nav</name>
     <number>1</number>
   </nav-radio>
+
+  <!--nav-radio>                                                                
+    <name>nav</name>
+    <number>2</number>
+  </nav-radio-->
 
   <tcas>
      <name>tcas</name>

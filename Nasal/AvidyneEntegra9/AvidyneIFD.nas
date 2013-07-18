@@ -17,7 +17,7 @@
 #      Date: April 27 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             2013-07-14
+#      Date:             2013-07-18
 #
 var TODEG = 180/math.pi;
 var TORAD = math.pi/180;
@@ -119,7 +119,7 @@ var AvidyneData = {
 		
 		m.nALT = props.globals.initNode("/instrumentation/altimeter-IFD-"~m.name~"/indicated-altitude-ft",0.0,"DOUBLE");
 		#m.nALT = props.globals.initNode("/instrumentation/altimeter-IFD-"~m.name~"/setting-hpa",0.0,"DOUBLE");
-		m.nALTBug = props.globals.initNode("/autopilot/settings/target-altitude-ft",0.0,"DOUBLE");
+		m.nALTBug = props.globals.initNode("/autopilot/settings/tgt-altitude-ft",0.0,"DOUBLE");
 		m.nHPA = props.globals.initNode("/instrumentation/altimeter-IFD-"~m.name~"/setting-hpa",0.0,"DOUBLE");
 		
 	#wind

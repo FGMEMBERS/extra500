@@ -62,7 +62,7 @@
       /autopilot/locks/passive-mode
       /autopilot/settings/heading-bug-deg
       /autopilot/settings/target-agl-ft
-      /autopilot/settings/target-altitude-ft
+      /autopilot/settings/tgt-altitude-ft
       /autopilot/settings/target-aoa-deg
       /autopilot/settings/target-pitch-deg
       /autopilot/settings/target-speed-kt
