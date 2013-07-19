@@ -37,7 +37,11 @@ var KeypadClass = {
 		m._brightness		= 0;
 		m._nBacklight 		= m._nRoot.initNode("Backlight/state",0.0,"DOUBLE");
 		m._backLight 		= 0;
-		
+		m._nCursorX 		= m._nRoot.initNode("cursorX",0,"INT");
+		m._nCursorY 		= m._nRoot.initNode("cursorY",0,"INT");
+		m._nCursorPush 		= m._nRoot.initNode("cursorPush",0,"BOOL");
+		m._nCursorScroll	= m._nRoot.initNode("cursorScroll",0,"INT");
+		m._cursorScroll = 0;
 		return m;
 
 	},
@@ -211,6 +215,19 @@ var KeypadClass = {
 	onCom2Page : func(amount=nil){
 		
 	},
+	onCursorPush : func(value) {
+		me._nCursorPush.setValue(value);
+	},
+	onCursorScroll : func(amount) {
+		me._cursorScroll += amount;
+		me._nCursorScroll.setValue(amount);
+	},
+	onCursor : func(x=0,y=0) {
+		me._nCursorX.setValue(x);
+		me._nCursorY.setValue(y);
+	},
+	
+	
 	initUI : func(){
 		UI.register("Keypad Heading sync", 	func{extra500.keypad.onHeadingSync(); } 	);
 		UI.register("Keypad Heading >", 	func{extra500.keypad.onAdjustHeading(1); } 	);
@@ -292,11 +309,24 @@ var KeypadClass = {
 		
 		UI.register("Keypad Com1Volume >", 	func{extra500.keypad.onCom1Volume(1); } 	);
 		UI.register("Keypad Com2Volume <", 	func{extra500.keypad.onCom2Volume(-1); } 	);
-		UI.register("Keypad Com1SQ", 	func{extra500.keypad.onCom1SQ(); } 	);
-		UI.register("Keypad Com2SQ", 	func{extra500.keypad.onCom2SQ(); } 	);
+		UI.register("Keypad Com1SQ", 		func{extra500.keypad.onCom1SQ(); } 	);
+		UI.register("Keypad Com2SQ", 		func{extra500.keypad.onCom2SQ(); } 	);
 		UI.register("Keypad Com1Page >", 	func{extra500.keypad.onCom1Page(1); } 	);
 		UI.register("Keypad Com2Page <", 	func{extra500.keypad.onCom2Page(-1); } 	);
 
+		UI.register("Keypad Cursor center", 	func{extra500.keypad.onCursor(0,0); } 	);
+		UI.register("Keypad Cursor N", 		func{extra500.keypad.onCursor(0,1); } 	);
+		UI.register("Keypad Cursor NE", 	func{extra500.keypad.onCursor(1,1); } 	);
+		UI.register("Keypad Cursor E", 		func{extra500.keypad.onCursor(1,0); } 	);
+		UI.register("Keypad Cursor SE", 	func{extra500.keypad.onCursor(1,-1); } 	);
+		UI.register("Keypad Cursor S", 		func{extra500.keypad.onCursor(0,-1); } 	);
+		UI.register("Keypad Cursor SW", 	func{extra500.keypad.onCursor(-1,-1); }	);
+		UI.register("Keypad Cursor W", 		func{extra500.keypad.onCursor(-1,0); } 	);
+		UI.register("Keypad Cursor NW", 	func{extra500.keypad.onCursor(-1,1); } 	);
+		UI.register("Keypad Cursor push down", 	func{extra500.keypad.onCursorPush(1); } 	);
+		UI.register("Keypad Cursor push up", 	func{extra500.keypad.onCursorPush(0); } 	);
+		UI.register("Keypad Cursor >", 		func{extra500.keypad.onCursorScroll(1); } 	);
+		UI.register("Keypad Cursor <", 		func{extra500.keypad.onCursorScroll(-1); } 	);
 		
 	}
 	
