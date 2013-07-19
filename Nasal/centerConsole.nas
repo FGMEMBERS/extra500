@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jul 05 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             05.07.13
+#      Last change:      Thomas Grossberger
+#      Date:             19.07.13
 #
 
 var CenterConsole = {
@@ -91,7 +91,7 @@ var CenterConsole = {
 	},
 	onDefrostClick : func(value = nil){
 		if (value == nil){
-			me._Defrost = value == 1 ? 0 : 1;
+			me._Defrost = me._Defrost == 1 ? 0 : 1;
 		}else{
 			me._Defrost = value;
 		}
@@ -100,7 +100,7 @@ var CenterConsole = {
 	},
 	onDeiceClick : func(value = nil){
 		if (value == nil){
-			me._Deice = value == 1 ? 0 : 1;
+			me._Deice = me._Deice == 1 ? 0 : 1;
 		}else{
 			me._Deice = value;
 		}
@@ -112,7 +112,7 @@ var CenterConsole = {
 	},
 	onGearClearHornClick : func(value = nil){
 		if (value == nil){
-			me._GearClearHorn = value == 1 ? 0 : 1;
+			me._GearClearHorn = me._GearClearHorn == 1 ? 0 : 1;
 		}else{
 			me._GearClearHorn = value;
 		}
