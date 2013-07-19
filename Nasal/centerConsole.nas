@@ -112,11 +112,11 @@ var CenterConsole = {
 	},
 	onGearClearHornClick : func(value = nil){
 		if (value == nil){
-			me._Deice = value == 1 ? 0 : 1;
+			me._GearClearHorn = value == 1 ? 0 : 1;
 		}else{
-			me._Deice = value;
+			me._GearClearHorn = value;
 		}
-		me._nGearClearHorn.setValue(me._Deice);
+		me._nGearClearHorn.setValue(me._GearClearHorn);
 		
 	},
 	onPitchTrimClick : func(value = nil){
