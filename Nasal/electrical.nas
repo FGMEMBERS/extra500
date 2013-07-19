@@ -343,24 +343,30 @@ var GeneratorClass = {
 		}
 	},
 };
-
+# MM Page 568
 var AlternatorClass = {
 	new : func(root,name){
 		var m = { 
 			parents : [
 				AlternatorClass,
 				ElectricClass.new(root,name),
-				OutPutClass.new()
+				OutPutClass.new(),
+				InputClass.new()
 			]
 		};
 		m._nAmpereAvailable	= m._nRoot.initNode("ampere_available",0.0,"DOUBLE");
-		m._nField		= m._nRoot.initNode("field_volt",0,"BOOL");
+		m._nAmpereSurplus	= m._nRoot.initNode("ampere_surplus",0.0,"DOUBLE");
+		m._nField		= m._nRoot.initNode("volt_field",0.0,"DOUBLE");
 		m._nHasLoad		= m._nRoot.initNode("hasLoad",0,"BOOL");
 		m._nN1			= props.globals.initNode("/engines/engine[0]/n1");
 		m._N1			= 0.0;
+		m._voltMin		= 18.0;
 		m._voltMax		= 26.0;
 		m._ampereMax		= 20.0;
 		m._ampereAvailable	= 0.0;
+		m._online		= 0;
+		m._field		= 0;
+		m._surplusAmpere	= 0;
 		return m;
 	},
 	init : func(instance=nil){
@@ -369,13 +375,32 @@ var AlternatorClass = {
 		
 		me.outputIndexRebuild();
 	},
+	setVolt : func(volt){ 
+		#print("ElectricClass.setVolt("~volt~") ... "~me._name);
+		me._field = volt;
+		me._nField.setValue(me._field);
+	},
+	_checkBusSource : func(){
+		
+	},
 	_gernerateVolt : func(now,dt){
 		me._N1 = me._nN1.getValue();
-		if (me._N1 > 55.0){
-			me._volt 		= 0.8 * me._N1;
-			me._ampereAvailable 	= me._N1 * 0.594795539 - 36.0892193309;
-			me._volt 		= global.clamp(me._volt,0.0,me._voltMax);
-			me._ampereAvailable 	= global.clamp(me._ampereAvailable,0.0,me._ampereMax);
+		if ( (me._N1 > 55.0) and (me._online == 1) and (me._field >= me._voltMin) ){
+			me._volt 		= me._voltMax;
+			#me._ampereAvailable 	= me._N1 * 0.594795539 - 36.0892193309;
+			
+			if(me._N1 < 67.4){ 
+				me._ampereAvailable = 4.0;
+			}elsif(me._N1 > 90.3){ #94.3
+				me._ampereAvailable = 20.0;
+			}else{
+				me._ampereAvailable = me._N1 * 0.594795539 - 36.0892193309;
+			}
+			me._volt = (me._voltMin) + (8 * me._surplusAmpere);
+			
+			me._volt 		= global.clamp(me._volt,0,me._voltMax);
+			#me._ampereAvailable 	= global.clamp(me._ampereAvailable,0.0,me._ampereMax);
+			
 		}else{
 			me._volt 		= 0;
 			me._ampereAvailable 	= 0;
@@ -384,6 +409,10 @@ var AlternatorClass = {
 		me._nVolt.setValue(me._volt);
 		me._nAmpereAvailable.setValue(me._ampereAvailable);
 			
+	},
+	setOnline : func(value){
+		me._online = value;
+		me._nHasLoad.setValue(0);
 	},
 	update : func(now,dt){
 		
@@ -398,18 +427,23 @@ var AlternatorClass = {
 	},
 	applyAmpere : func(electron=nil){
 		me._ampereAvailable = me._nAmpereAvailable.getValue();
+		me._ampere = electron.ampere;
+		
 		if(electron.ampere>0){
 			me._nHasLoad.setValue(1);
-			if (electron.ampere <= me._ampereAvailable){
+			me._surplusAmpere = me._ampereAvailable / electron.ampere;
+			if (me._surplusAmpere >= 1.0){
 				electron.ampere = 0;
 			}else{
 				electron.ampere -= me._ampereAvailable;
 			}
 		}else{
+			me._surplusAmpere = me._ampereAvailable;
 			me._nHasLoad.setValue(0);
 		}
+		me._nAmpereSurplus.setValue(me._surplusAmpere);
+		me._nAmpere.setValue(me._ampere);
 		
-			
 	},
 };
 
@@ -1713,6 +1747,7 @@ eSystem.relay.K7.checkCondition = func(){
 };
 eSystem.relay.K7._onStateChange = func(n){
 	me._state = n.getValue();
+	eSystem.source.Alternator.setOnline(!me._state);
 }
 
 ### Alt Charge Relay K10 MM Page 569, 568
@@ -1729,6 +1764,16 @@ eSystem.relay.K10._onStateChange = func(n){
 }
 
 
+eSystem.source.Alternator._checkBusSource = func(){
+	if (eSystem.switch.Alternator._state == 1){
+		eSystem.circuitBreaker.ALT.outputAdd(eSystem.source.Alternator);
+	}else{
+		eSystem.circuitBreaker.ALT.outputRemove(eSystem.source.Alternator);
+	}
+};
+	
+
+
 ### Circuit Breaker
 
 eSystem.circuitBreaker.RCCB._onStateChange = func(n){
@@ -1743,13 +1788,16 @@ eSystem.circuitBreaker.RCCB._onStateChange = func(n){
 eSystem.switch.Battery.onStateChange = func(n){
 	me._state = n.getValue();
 # 	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
+	eSystem.source.Alternator._checkBusSource();
 	eSystem.relay.K4.checkCondition();
 	eSystem.checkSource();
+	
 };
 
 eSystem.switch.Alternator.onStateChange = func(n){
 	me._state = n.getValue();
 # 	print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
+	eSystem.source.Alternator._checkBusSource();
 	eSystem.relay.K7.checkCondition();
 	eSystem.checkSource();
 };
