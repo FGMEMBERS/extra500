@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             18.07.2013
+#      Date:             19.07.2013
 #
 
 
@@ -154,8 +154,11 @@ var AutopilotClass = {
 		me._nAmpere.setValue(me._ampere);
 	},
 	update : func(){
-		
 		me._CheckRollModeAble();
+		var wpno = getprop("/autopilot/route-manager/current-wp");
+		if ( wpno >= 0 ) {
+			setprop("/autopilot/fms-channel/gpss/next-bearing-deg",getprop("/autopilot/route-manager/route/wp["~wpno~"]/leg-bearing-true-deg"));
+		}
 	},
 # disengages the autopilot
 	_APDisengage : func(){

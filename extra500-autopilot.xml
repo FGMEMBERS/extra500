@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-07-18
+      Date:             2013-07-20
 -->
 
 <autopilot name="STEC55X">
@@ -1023,6 +1023,126 @@
 			<output>/autopilot/fms-channel/leg-distance</output>
 		</switch>
 
+		<switch name="gpsselect6">
+			<default value="/instrumentation/gps/indicated-ground-speed-kt"/>
+			<test value="/instrumentation/gps[1]/indicated-ground-speed-kt">
+				/instrumentation/gps/serviceable eq 1
+			</test>
+			<output>/autopilot/fms-channel/indicated-ground-speed-kt</output>
+		</switch>
+
+<!-- GPSS calcs -->
+<!-- the course change at next waypoint -->
+		<fcs_function name="/autopilot/fms-channel/gpss/angle/d-psi-deg-1">
+			<function>
+				<difference> 
+						<property>/autopilot/fms-channel/gpss/next-bearing-deg</property> 
+						<property>/autopilot/fms-channel/indicated-track-true-deg</property> 
+				</difference>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/autopilot/fms-channel/gpss/angle/d-psi-deg-2">
+			<function>
+				<sum>
+					<property>/autopilot/fms-channel/gpss/angle/d-psi-deg-1</property> 
+					<value>360</value> 
+				</sum>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/autopilot/fms-channel/gpss/angle/d-psi-deg-3">
+			<function>
+				<difference>
+					<property>/autopilot/fms-channel/gpss/angle/d-psi-deg-1</property> 
+					<value>360</value> 
+				</difference>
+			</function>
+		</fcs_function>
+
+		<switch name="gpssangle">
+			<default value="/autopilot/fms-channel/gpss/angle/d-psi-deg-1"/>
+			<test value="/autopilot/fms-channel/gpss/angle/d-psi-deg-2">
+				/autopilot/fms-channel/gpss/angle/d-psi-deg-1 lt -180
+			</test>
+			<output>/autopilot/fms-channel/gpss/angle/d-psi-deg-4</output>
+		</switch>
+
+		<switch name="gpssangle2">
+			<default value="/autopilot/fms-channel/gpss/angle/d-psi-deg-4"/>
+			<test value="/autopilot/fms-channel/gpss/angle/d-psi-deg-3">
+				/autopilot/fms-channel/gpss/angle/d-psi-deg-1 gt 180
+			</test>
+			<output>/autopilot/fms-channel/gpss/angle/d-psi-deg</output>
+		</switch>
+
+<!-- target turn rate in GPSS turn dependent on course change -->
+		<fcs_function name="/autopilot/fms-channel/gpss/gpss-turn-rate-nc">
+			<function>
+				<product>
+					<property>/autopilot/fms-channel/gpss/gpss-turn-rate-p</property> 
+					<property>/autopilot/fms-channel/gpss/angle/d-psi-deg</property> 
+				</product>
+			</function>
+		</fcs_function>
+
+<!-- limiting the target turn rate to standard turn (188.49162 rad/h) -->
+		<pure_gain name="/autopilot/fms-channel/gpss/gpss-turn-rate">
+			<input>/autopilot/fms-channel/gpss/gpss-turn-rate-nc</input>
+			<gain>1.0</gain>
+			<clipto>
+				<min>-188.49162</min>
+				<max>188.49162</max>
+			</clipto>
+		</pure_gain>
+
+<!-- lead in time dependent on target turn rate -->
+		<fcs_function name="/autopilot/fms-channel/gpss/time-lead-in-h">
+			<function>
+				<product>
+					<abs>
+						<property>/autopilot/fms-channel/gpss/gpss-turn-rate</property>
+					</abs> 
+					<property>/autopilot/fms-channel/gpss/time-lead-in-p</property> 
+				</product>
+			</function>
+		</fcs_function>
+
+<!-- when next waypoint distance less than this number: start to turn -->
+		<fcs_function name="/autopilot/fms-channel/gpss/distance-to-turn">
+			<function>
+			<sum>
+				<product>
+					<property>/autopilot/fms-channel/indicated-ground-speed-kt</property> 
+					<pow>
+						<max>
+							<abs>
+								<property>/autopilot/fms-channel/gpss/gpss-turn-rate</property>
+							</abs>
+							<value>1</value> <!--just to prevent seg fault -->
+						</max>
+						<value>-1</value>
+					</pow>
+					<tan> 
+						<abs>
+							<product>
+								<value>0.5</value>
+								<property>/extra500/const/DEG2RAD</property>
+								<property>/autopilot/fms-channel/gpss/angle/d-psi-deg</property> 
+							</product>
+						</abs>
+					</tan>
+				</product>
+				<product>
+					<property>/autopilot/fms-channel/gpss/time-lead-in-h</property> 
+					<max>
+						<property>/autopilot/fms-channel/indicated-ground-speed-kt</property>
+						<value>60</value>
+					</max>
+				</product>
+			</sum>
+			</function>
+		</fcs_function>
 
 
 <!--calculating the target heading to intercept the leg-->
@@ -1043,7 +1163,7 @@
 							<abs>
 								<property>/autopilot/fms-channel/relative-d-heading-target-deg</property> 
 							</abs>
-							<value>0.000001</value>
+							<value>0.000001</value>  <!--just to prevent seg fault -->
 						</max>
 						<value>-1</value>
 					</pow>
@@ -1141,12 +1261,22 @@
 		</switch>
 
 <!--determining the target turn rate using the crs error. Note that kp and the clipped crs error determines the maximum turnrate-->
-		<pid name="/autopilot/fms-channel/target-turn-rate">
+		<pid name="/autopilot/fms-channel/target-turn-rate-pid">
 			<input>/autopilot/fms-channel/lmd-crs-error</input>
 			<kp>/autopilot/fms-channel/lmd-hdg-error-kp</kp>							<!--180deg/min devided by 20deg -->
 			<ki>/autopilot/fms-channel/lmd-hdg-error-ki</ki>
 			<kd>/autopilot/fms-channel/lmd-hdg-error-kd</kd>
+			<output>/autopilot/fms-channel/target-turn-rate-n</output>
 		</pid>
+
+		<switch name="gpsson">
+			<default value="/autopilot/fms-channel/target-turn-rate-n"/>
+			<test logic="AND" value="/autopilot/fms-channel/gpss/gpss-turn-rate">
+				/autopilot/mode/gpss eq 1
+				/autopilot/fms-channel/gpss/distance-to-turn gt /autopilot/route-manager/wp/dist
+			</test>
+			<output>/autopilot/fms-channel/target-turn-rate</output>
+		</switch>
 		
 <!-- the turn rate (inverted) as measured by the turn coordinator in deg/s (RH panel) -->
 		<fcs_function name="/autopilot/fms-channel/turn-rate-inv">
