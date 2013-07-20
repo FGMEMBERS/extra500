@@ -16,14 +16,13 @@
 #      Authors: Dirk Dittmann
 #      Date: April 27 2013
 #
-#      Last change:      Eric van den Berg
-#      Date:             2013-07-18
+#      Last change:      Dirk Dittmann
+#      Date:             20.07.13
 #
-var TODEG = 180/math.pi;
-var TORAD = math.pi/180;
-var deg = func(rad){ return rad*TODEG; }
-var rad = func(deg){ return deg*TORAD; }
-var course = func(deg){ return math.mod(deg,360.0);}
+
+# var deg = func(rad){ return rad*global.CONST.RAD2DEG; }
+# var rad = func(deg){ return deg*global.CONST.DEG2RAD; }
+# var course = func(deg){ return math.mod(deg,360.0);}
 
 var NAV_SOURCE_NAME 	= ["Nav 1","Nav 2","FMS"];
 var NAV_SOURCE_TREE 	= ["/instrumentation/nav[0]","/instrumentation/nav[1]","/instrumentation/fms"];
@@ -41,15 +40,6 @@ COLOR["White"] = "rgb(255,255,255)";
 COLOR["Turquoise"] = "rgb(4,254,252)";
 COLOR["Blue"] = "rgb(51,145,232)";
 
-var AvidyneFontMapper = func(family, weight){
-	#print(sprintf("Canvas font-mapper %s %s",family,weight));
-	if (weight == "bold"){
-		return "LiberationFonts/LiberationSans-Bold.ttf";
-	}elsif(weight == "normal"){
-		return "LiberationFonts/LiberationSans-Regular.ttf";
-	}
-	
-}
 
 var AvidyneData = {
 	new: func(name){
@@ -384,7 +374,7 @@ var AvidynePagePFD = {
 		
 	#loading svg
 		canvas.parsesvg(m.page, "Models/instruments/IFDs/RH-IFD_CanvasTest.svg",{
-			"font-mapper": AvidyneFontMapper
+			"font-mapper": global.canvas.FontMapper
 			}
 		);
 				
@@ -1024,7 +1014,7 @@ var AvidynePagePFD = {
 	#wind & environment
 		if (me.data.WindSpeed > 2){
 			me.cWindVector.setText(sprintf("%03i / %3i",me.data.WindDirection,me.data.WindSpeed));
-			me.cWindArrow.setRotation((180 + me.data.WindDirection - me.data.HDG) * TORAD);
+			me.cWindArrow.setRotation((180 + me.data.WindDirection - me.data.HDG) * global.CONST.DEG2RAD);
 			me.cWindArrow.setVisible(1);
 		}else{
 			me.cWindVector.setText("Wind Calm");
@@ -1132,42 +1122,42 @@ var AvidynePagePFD = {
 		me.VerticalSpeedIndicated.setText(sprintf("%4i",math.floor( me.data.VSBug + 0.5 )));
 		if (me.data.VS >= -1000){
 			if (me.data.VS <= 1000){
-				me.VerticalSpeedNeedle.setRotation((me.data.VS/100*1.50) * TORAD);
+				me.VerticalSpeedNeedle.setRotation((me.data.VS/100*1.50) * global.CONST.DEG2RAD);
 			}else{
-				me.VerticalSpeedNeedle.setRotation( ( 15 + ((me.data.VS-1000)/100*0.75) ) * TORAD);
+				me.VerticalSpeedNeedle.setRotation( ( 15 + ((me.data.VS-1000)/100*0.75) ) * global.CONST.DEG2RAD);
 			}
 		}else{
-			me.VerticalSpeedNeedle.setRotation( ( -15 + ((me.data.VS+1000)/100*0.75) ) * TORAD);
+			me.VerticalSpeedNeedle.setRotation( ( -15 + ((me.data.VS+1000)/100*0.75) ) * global.CONST.DEG2RAD);
 		}
 		if (me.data.VSBug >= -1000 ){
 			if (me.data.VSBug <= 1000){
-				me.VerticalSpeedBug.setRotation((me.data.VSBug/100*1.50) * TORAD);
+				me.VerticalSpeedBug.setRotation((me.data.VSBug/100*1.50) * global.CONST.DEG2RAD);
 			}else{
-				me.VerticalSpeedBug.setRotation( ( 15 + ((me.data.VSBug-1000)/100*0.75) ) * TORAD);
+				me.VerticalSpeedBug.setRotation( ( 15 + ((me.data.VSBug-1000)/100*0.75) ) * global.CONST.DEG2RAD);
 			}
 		}else{
-			me.VerticalSpeedBug.setRotation( ( -15 + ((me.data.VSBug+1000)/100*0.75) ) * TORAD);
+			me.VerticalSpeedBug.setRotation( ( -15 + ((me.data.VSBug+1000)/100*0.75) ) * global.CONST.DEG2RAD);
 		}
 				
 	#CompassRose
 		me.HeadingSelected.setText(sprintf("%03i",me.data.HDGBug));
 		me.Heading.setText(sprintf("%03i",math.floor( me.data.HDG + 0.5)));
-		me.CompassRose.setRotation(-me.data.HDG * TORAD);
-		me.HeadingBug.setRotation((me.data.HDGBug-me.data.HDG) * TORAD);
+		me.CompassRose.setRotation(-me.data.HDG * global.CONST.DEG2RAD);
+		me.HeadingBug.setRotation((me.data.HDGBug-me.data.HDG) * global.CONST.DEG2RAD);
 		
 		if (me.data.brgSource > 0){
-			me.cBearingPointer.setRotation((me.data.brgCoursePointer-me.data.HDG) * TORAD);
+			me.cBearingPointer.setRotation((me.data.brgCoursePointer-me.data.HDG) * global.CONST.DEG2RAD);
 			me.cBearingPointer.setVisible(1);
 		}else{
 			me.cBearingPointer.setVisible(0);
 		}
 	#HSI
-		me.PitchLadder.setRotation(-me.data.roll * TORAD);
+		me.PitchLadder.setRotation(-me.data.roll * global.CONST.DEG2RAD);
 		me.PitchLadder.setTranslation(0,me.data.pitch*10);
-		me.BankAngleIndicator.setRotation(-me.data.roll * TORAD);
+		me.BankAngleIndicator.setRotation(-me.data.roll * global.CONST.DEG2RAD);
 		
 		me.nHorizon.setTranslation(0,me.data.pitch*10);
-		me.nHorizon.setRotation(-me.data.roll * TORAD);
+		me.nHorizon.setRotation(-me.data.roll * global.CONST.DEG2RAD);
 		
 	#DI
 		
@@ -1223,7 +1213,7 @@ var AvidynePagePFD = {
 		me.cCDIToFlag.setVisible(me.data.cdiToFlag);
 			
 		me.cCDI.setTranslation(me.data.HDI * 240,0);
-		me.cCoursePointer.setRotation((me.data.navCoursePointer-me.data.HDG) * TORAD);
+		me.cCoursePointer.setRotation((me.data.navCoursePointer-me.data.HDG) * global.CONST.DEG2RAD);
 		
 		
 		

@@ -28,7 +28,7 @@
 
 <model>
   <name>Keypad</name>
-  <path>Aircraft/extra500/Models/instruments/Keypad.ac</path>
+  <path>Aircraft/extra500/Models/instruments/Keypad.xml</path>
 	<offsets>
 		<x-m>0.33196</x-m>
 		<y-m>0</y-m>	
@@ -138,8 +138,6 @@
 	</action>
 </animation>
 
-<!-- PowerLever # muss pick noch erstellt werden ? # -->
-
 <!-- OverSpeed # wrong name # -->
 <animation>
   <type>translate</type>
@@ -176,6 +174,7 @@
   </action>
 </animation>
 
+<!-- PowerLever -->
 <animation>
   <type>rotate</type>
   <object-name>PowerLever</object-name>
@@ -238,6 +237,23 @@
     <y2-m>-1</y2-m>
     <z2-m>-0.03982</z2-m>
   </axis>
+</animation>
+
+<animation>
+	<type>pick</type>
+	<object-name>PowerLever</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("Engine reverser");
+				]]>
+			</script>
+		</binding>
+	</action>
 </animation>
 
 <animation>
