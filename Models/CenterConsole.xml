@@ -28,7 +28,7 @@
 
 <model>
   <name>Keypad</name>
-  <path>Aircraft/extra500/Models/instruments/Keypad.ac</path>
+  <path>Aircraft/extra500/Models/instruments/Keypad.xml</path>
 	<offsets>
 		<x-m>0.33196</x-m>
 		<y-m>0</y-m>	
