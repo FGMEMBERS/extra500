@@ -536,7 +536,99 @@
 		</condition>
 	</animation>
 	
-<!-- PROVISORIUM -->
+	<animation>
+		<type>select</type>
+		<object-name>xFMSgreen</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+		    <value>FMS</value>
+		  </equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>xFMSwhite</object-name>
+		<condition>
+		  <not>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+		    <value>FMS</value>
+		  </equals>
+		</not>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>xMAPgreen</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+		    <value>MAP</value>
+		  </equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>xMAPwhite</object-name>
+		<condition>
+		  <not>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+		    <value>MAP</value>
+		  </equals>
+		</not>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>xSYSgreen</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+		    <value>SYS</value>
+		  </equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>xSYSwhite</object-name>
+		<condition>
+		  <not>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+		    <value>SYS</value>
+		  </equals>
+		</not>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>xCHKLgreen</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+		    <value>CHKL</value>
+		  </equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>xCHKLwhite</object-name>
+		<condition>
+		  <not>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+		    <value>CHKL</value>
+		  </equals>
+		</not>
+		</condition>
+	</animation>
+
+<!-- PROVISORIUM 
 	<animation>
 		<type>select</type>
 		<object-name>xFMSwhite</object-name>
@@ -563,7 +655,7 @@
 		  </equals>
 		</condition>
 	</animation>	
-<!-- PROVISORIUM -->
+-->
 
 <animation>
       <type>pick</type>
