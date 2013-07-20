@@ -442,6 +442,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<path>/consumables/fuel/tank[4]/level-gal_us</path>
 		<path>/consumables/fuel/tank[5]/level-gal_us</path>
 		<path>/consumables/fuel/tank[6]/level-gal_us</path>
+		<!--<path>/extra500/log/fuel</path>-->
 	</aircraft-data> 
 	
   <!-- <help include="extra500-help.xml"/> -->
@@ -915,6 +916,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/deice.nas</file>
 		<file>Aircraft/extra500/Nasal/light.nas</file>
 		<file>Aircraft/extra500/Nasal/centerConsole.nas</file>
+		<file>Aircraft/extra500/Nasal/log.nas</file>
 		
 	</extra500>
 	<IFD>

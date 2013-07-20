@@ -58,6 +58,7 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		extra500.annunciator.init();
 		extra500.light.init();
 		extra500.centerConsole.init();
+		extra500.fuelFlowLog.init();
 		
 		extra500.eSystem.init();
 		

@@ -1328,7 +1328,7 @@ var FuelPayloadClass = {
 		
 		me._group = me._canvas.createGroup();
 
-		canvas.parsesvg(me._group, "Dialogs/FuelPayload.svg",{"font-mapper": IFD.AvidyneFontMapper});
+		canvas.parsesvg(me._group, "Dialogs/FuelPayload.svg",{"font-mapper": global.canvas.FontMapper});
 		
 		me._widget.selector = TabWidget.new(me._group,"Tab Selector");
 		
