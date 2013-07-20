@@ -20,8 +20,8 @@
       Date: March 13 2013
 
 
-      Last change:      Eric van den Berg
-      Date:             18.07.2013
+      Last change:      Thomas Grossberger
+      Date:             20.07.2013
 
 
 ************************************************************************
@@ -125,7 +125,21 @@ JSBSim Extra Aircraft - Extra 500.
 		</config>
 	</view>
 	
-	<view n="101">
+      <view n="101">
+	<!-- x=rechts y=hoch z=zurueck -->
+		<name>Copilot</name>
+		<type>lookfrom</type>
+		<internal archive="y">true</internal>
+		<config>
+		  <from-model type="bool">true</from-model>
+			<x-offset-m archive="y">0.37</x-offset-m>
+			<y-offset-m archive="y">0.1</y-offset-m>
+			<z-offset-m archive="y">-0.05</z-offset-m>
+			<pitch-offset-deg type="double">-15</pitch-offset-deg>
+		</config>
+	</view>	
+	
+	<view n="102">
 	<!-- x=rechts y=hoch z=zurueck -->
 		<name>CenterConsole View1</name>
 		<type>lookfrom</type>
@@ -140,7 +154,7 @@ JSBSim Extra Aircraft - Extra 500.
 		</config>
 	</view>		
 
-	<view n="102">
+	<view n="103">
 	<!-- x=rechts y=hoch z=zurueck -->
 		<name>CenterConsole View2</name>
 		<type>lookfrom</type>
@@ -154,7 +168,7 @@ JSBSim Extra Aircraft - Extra 500.
 		</config>
 	</view>		
 
-	<view n="103">
+	<view n="104">
 	<!-- x=rechts y=hoch z=zurueck -->
 		<name>Keypad View</name>
 		<type>lookfrom</type>
@@ -168,7 +182,7 @@ JSBSim Extra Aircraft - Extra 500.
 		</config>
 	</view>	
 	
-	<view n="104">
+	<view n="105">
 		<name>Model Front View</name>
 		<enabled type="bool">true</enabled>
 		<type>lookfrom</type>
@@ -184,7 +198,8 @@ JSBSim Extra Aircraft - Extra 500.
 			<heading-offset-deg archive="y">180.0</heading-offset-deg>
 		</config>
 	</view>
-	<view n="105">
+
+	<view n="106">
 		<name>Model Right View</name>
 		<enabled type="bool">true</enabled>
 		<type>lookfrom</type>
@@ -200,7 +215,8 @@ JSBSim Extra Aircraft - Extra 500.
 			<heading-offset-deg archive="y">90.0</heading-offset-deg>
 		</config>
 	</view>
-	<view n="106">
+
+	<view n="107">
 		<name>Model Left View</name>
 		<enabled type="bool">true</enabled>
 		<type>lookfrom</type>
@@ -218,7 +234,8 @@ JSBSim Extra Aircraft - Extra 500.
 
 		</config>
 	</view>
-	<view n="107">
+
+	<view n="108">
 		<name>Model Back View</name>
 		<enabled type="bool">true</enabled>
 		<type>lookfrom</type>
@@ -234,7 +251,8 @@ JSBSim Extra Aircraft - Extra 500.
 			<heading-offset-deg archive="y">0.0</heading-offset-deg>
 		</config>
 	</view>
-	<view n="108">
+
+	<view n="109">
 		<name>Model Heli Back View</name>
 		<enabled type="bool">true</enabled>
 		<type>lookat</type>
@@ -262,7 +280,8 @@ JSBSim Extra Aircraft - Extra 500.
 			<z-offset-m type="double">7.0</z-offset-m>
 		</config>
 	</view>
-	<view n="109">
+
+	<view n="110">
 		<name>Model Heli Nose View</name>
 		<enabled type="bool">true</enabled>
 		<type>lookat</type>
@@ -290,7 +309,8 @@ JSBSim Extra Aircraft - Extra 500.
 			<z-offset-m type="double">7.0</z-offset-m>
 		</config>
 	</view>
-	<view n="110">
+
+	<view n="111">
 		<name>Model Heli Right Wing View</name>
 		<enabled type="bool">true</enabled>
 		<type>lookat</type>
@@ -321,7 +341,8 @@ JSBSim Extra Aircraft - Extra 500.
 			<!--<heading-offset-deg archive="y">90.0</heading-offset-deg>-->
 		</config>
 	</view>
-	<view n="111">
+
+	<view n="112">
 		<name>Model Heli Left Wing View</name>
 		<enabled type="bool">true</enabled>
 		<type>lookat</type>
@@ -352,7 +373,8 @@ JSBSim Extra Aircraft - Extra 500.
 			<!--<heading-offset-deg archive="y">90.0</heading-offset-deg>-->
 		</config>
 	</view>
-	<view n="112">
+
+	<view n="113">
 		<name>Cuircuit Breaker Panel</name>
 		<enabled type="bool">true</enabled>
 		<type>lookfrom</type>
@@ -384,6 +406,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<dynamic-view type="bool">true</dynamic-view>-->
 		</config>
 	</view>
+
 	<systems>
             <path>Aircraft/extra500/Systems/systems.xml</path>
 	</systems>
