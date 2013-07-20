@@ -865,8 +865,9 @@ JSBSim Extra Aircraft - Extra 500.
 
 <nasal>
 	<global>
-		<file>Aircraft/extra500/Nasal/constant.nas</file>
 		<file>Aircraft/extra500/Nasal/global.nas</file>
+		<file>Aircraft/extra500/Nasal/global.constant.nas</file>
+		<file>Aircraft/extra500/Nasal/global.canvas.nas</file>
 	</global>
 	<sound>
 		<file>Aircraft/extra500/Nasal/sound.nas</file>

@@ -1286,7 +1286,7 @@ var FuelPayloadClass = {
 #              
 		me._group = me._canvas.createGroup();
 
-		canvas.parsesvg(me._group, "Dialogs/FuelPayload_msg.svg",{"font-mapper": IFD.AvidyneFontMapper});
+		canvas.parsesvg(me._group, "Dialogs/FuelPayload_msg.svg",{"font-mapper": global.canvas.FontMapper});
 		
 		var apt = airportinfo();
 		
