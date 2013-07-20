@@ -19,9 +19,7 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-
-
-      Last change:      Thomas Grossberger
+      Last change:      Eric van den Berg
       Date:             20.07.2013
 
 
@@ -594,8 +592,8 @@ JSBSim Extra Aircraft - Extra 500.
 		<cdi-deflection type="double">0</cdi-deflection>
 		<indicated-track-true-deg type="double">0</indicated-track-true-deg>
 		<gpss>
-			<gpss-turn-rate-abs type="double">188.49162</gpss-turn-rate-abs>		<!-- rad/h -->
-			<time-lead-in-h type="double">0.002</time-lead-in-h>
+			<gpss-turn-rate-p type="double">9.424581</gpss-turn-rate-p>		<!-- rad/h/deg (standard turn at 20 deg course change) -->
+			<time-lead-in-p type="double">0.000011</time-lead-in-p>			<!-- lead in time proportional to turn rate [h/ (rad/h)] -->
 			<next-bearing-deg type="double">0</next-bearing-deg>
 		</gpss>
 		<gain type="double">1.3</gain>

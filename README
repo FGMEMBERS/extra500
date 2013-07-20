@@ -16,7 +16,7 @@
       Author: Eric van den Berg
       Date: 2013-05-12
 
-      Last change:      2013-07-07
+      Last change:      2013-07-20
       Date:             Eric van den Berg
 
 ========================================================================
@@ -76,7 +76,8 @@ Engine shut-off: Press s ( or click on condition lever )
 Principle Autopilot functionality (currently in place)
 
 - HDG 		Follows the heading bug
-- NAV		Intercepts and tracks VORs and LOCs
+- NAV		Intercepts and tracks VORs, LOCs or your Flight Plan
+- NAV/GPSS	Intercepts and tracks your Flight Plan and cuts the corners (Press NAV twice)
 - HDG+NAV	Intercept the course with your set heading
 - NAV+REV	Intercepts and tracks the LOC back course
 - GS		Is armed and activated automatically when captured on the LOC. You can switch it off by pressing APR, 
