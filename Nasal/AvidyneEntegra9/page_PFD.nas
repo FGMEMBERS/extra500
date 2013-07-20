@@ -134,6 +134,7 @@ var AvidynePagePFD = {
 		m.cApModeHdg 		= m.page.getElementById("AP_HDG").setVisible(0);
 		m.cApModeNav 		= m.page.getElementById("AP_NAV").setVisible(0);
 		m.cApModeApr 		= m.page.getElementById("AP_APR").setVisible(0);
+		m.cApModeGPSS 		= m.page.getElementById("AP_GPSS").setVisible(0);
 		m.cApModeTrim 		= m.page.getElementById("AP_TRIM").setVisible(0);
 		m.cApModeAlt 		= m.page.getElementById("AP_ALT").setVisible(0);
 		m.cApModeVs 		= m.page.getElementById("AP_VS").setVisible(0);
@@ -630,6 +631,12 @@ var AvidynePagePFD = {
 				me.cApModeApr.setVisible(1);
 			}else{
 				me.cApModeApr.setVisible(0);
+			}
+			
+			if (me.data.apModeGPSS == 1){
+				me.cApModeGPSS.setVisible(1);
+			}else{
+				me.cApModeGPSS.setVisible(0);
 			}
 			
 			if (me.data.apModeTRIM == 1){
