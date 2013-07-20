@@ -40,6 +40,51 @@
         </emission>
 </animation>
 
+<animation>
+        <type>material</type>
+		<object-name>xL1white</object-name>
+		<object-name>xL2white</object-name>
+		<object-name>xL3white</object-name>
+		<object-name>xL4white</object-name>
+		<object-name>xL5white</object-name>
+		<object-name>xL6white</object-name>
+		<object-name>xR1white</object-name>
+		<object-name>xR2white</object-name>
+		<object-name>xR3white</object-name>
+		<object-name>xR4white</object-name>
+		<object-name>xR5white</object-name>
+		<object-name>xR6white</object-name>
+		<object-name>xPFDwhite</object-name>
+		<object-name>xFMSwhite</object-name>
+		<object-name>xMAPwhite</object-name>
+		<object-name>xSYSwhite</object-name>
+		<object-name>xCHKLwhite</object-name>
+		<object-name>xL1green</object-name>
+		<object-name>xL2green</object-name>
+		<object-name>xL3green</object-name>
+		<object-name>xL4green</object-name>
+		<object-name>xL5green</object-name>
+		<object-name>xL6green</object-name>
+		<object-name>xR1green</object-name>
+		<object-name>xR2green</object-name>
+		<object-name>xR3green</object-name>
+		<object-name>xR4green</object-name>
+		<object-name>xR5green</object-name>
+		<object-name>xR6green</object-name>
+		<object-name>xPFDgreen</object-name>
+		<object-name>xFMSgreen</object-name>
+		<object-name>xMAPgreen</object-name>
+		<object-name>xSYSgreen</object-name>
+		<object-name>xCHKLgreen</object-name>
+	
+        <emission>
+            <red>0.7</red>
+            <green>0.7</green>
+            <blue>0.7</blue>
+            <factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+        </emission>
+</animation>
+
 <!-- dimming button -->
 <animation>
       <type>pick</type>
