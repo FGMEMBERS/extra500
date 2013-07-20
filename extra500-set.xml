@@ -21,7 +21,7 @@
 
 
       Last change:      Eric van den Berg
-      Date:             18.07.2013
+      Date:             19.07.2013
 
 
 ************************************************************************
@@ -491,6 +491,9 @@ JSBSim Extra Aircraft - Extra 500.
 		<trim type="bool">false</trim>
 		<yawdamper type="int">0</yawdamper>
 	</settings>
+	<route-manager>
+		<current-wp>-1</current-wp>
+	</route-manager>
 	<mode>
 		<disengsound type="int">0</disengsound>
 		<diseng type="int">0</diseng>
@@ -566,6 +569,11 @@ JSBSim Extra Aircraft - Extra 500.
 		<course-error-nm type="double">0</course-error-nm>
 		<cdi-deflection type="double">0</cdi-deflection>
 		<indicated-track-true-deg type="double">0</indicated-track-true-deg>
+		<gpss>
+			<gpss-turn-rate-abs type="double">188.49162</gpss-turn-rate-abs>		<!-- rad/h -->
+			<time-lead-in-h type="double">0.002</time-lead-in-h>
+			<next-bearing-deg type="double">0</next-bearing-deg>
+		</gpss>
 		<gain type="double">1.3</gain>
 		<tgt-hdg-kp type="double">0</tgt-hdg-kp>
 		<tgt-hdg-kd type="double">0.75</tgt-hdg-kd>
@@ -793,6 +801,7 @@ JSBSim Extra Aircraft - Extra 500.
 	<gps n="0">
 		<cdi-deflection>0</cdi-deflection>
 		<indicated-track-true-deg>0</indicated-track-true-deg>
+		<indicated-ground-speed-kt>0</indicated-ground-speed-kt>
 		<wp>
 			<leg-true-course-deg>0</leg-true-course-deg>
 			<leg-distance-nm>0</leg-distance-nm>
@@ -804,6 +813,7 @@ JSBSim Extra Aircraft - Extra 500.
 	<gps n="1">
 		<cdi-deflection>0</cdi-deflection>
 		<indicated-track-true-deg>0</indicated-track-true-deg>
+		<indicated-ground-speed-kt>0</indicated-ground-speed-kt>
 		<wp>
 			<leg-true-course-deg>0</leg-true-course-deg>
 			<leg-distance-nm>0</leg-distance-nm>
