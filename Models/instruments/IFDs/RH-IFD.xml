@@ -42,7 +42,7 @@
 
 <animation>
         <type>material</type>
-		<object-name>xL1white</object-name>
+<!--		<object-name>xL1white</object-name>
 		<object-name>xL2white</object-name>
 		<object-name>xL3white</object-name>
 		<object-name>xL4white</object-name>
@@ -53,7 +53,7 @@
 		<object-name>xR3white</object-name>
 		<object-name>xR4white</object-name>
 		<object-name>xR5white</object-name>
-		<object-name>xR6white</object-name>
+		<object-name>xR6white</object-name> -->
 		<object-name>xPFDwhite</object-name>
 		<object-name>xFMSwhite</object-name>
 		<object-name>xMAPwhite</object-name>
@@ -673,7 +673,260 @@
 		</condition>
 	</animation>
 
+	
+       <!-- LSK LEDs -->
+	<animation>
+		<type>select</type>
+		<object-name>xL1green</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/led/L1</property>
+		    <value>1</value>
+		  </equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>xL1white</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/led/L1</property>
+		    <value>0</value>
+		  </equals>
+		</condition>
+	</animation>	
 
+	<animation>
+		<type>select</type>
+		<object-name>xL2green</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/led/L2</property>
+		    <value>1</value>
+		  </equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>xL2white</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/led/L2</property>
+		    <value>0</value>
+		  </equals>
+		</condition>
+	</animation>	
+
+	<animation>
+		<type>select</type>
+		<object-name>xL3green</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/led/L3</property>
+		    <value>1</value>
+		  </equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>xL3white</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/led/L3</property>
+		    <value>0</value>
+		  </equals>
+		</condition>
+	</animation>	
+	
+	<animation>
+		<type>select</type>
+		<object-name>xL4green</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/led/L4</property>
+		    <value>1</value>
+		  </equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>xL4white</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/led/L4</property>
+		    <value>0</value>
+		  </equals>
+		</condition>
+	</animation>	
+	
+	<animation>
+		<type>select</type>
+		<object-name>xL5green</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/led/L5</property>
+		    <value>1</value>
+		  </equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>xL5white</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/led/L5</property>
+		    <value>0</value>
+		  </equals>
+		</condition>
+	</animation>	
+	
+	<animation>
+		<type>select</type>
+		<object-name>xL6green</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/led/L6</property>
+		    <value>1</value>
+		  </equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>xL6white</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/led/L6</property>
+		    <value>0</value>
+		  </equals>
+		</condition>
+	</animation>	
+	
+
+	<animation>
+		<type>select</type>
+		<object-name>xR1green</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/led/R1</property>
+		    <value>1</value>
+		  </equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>xR1white</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/led/R1</property>
+		    <value>0</value>
+		  </equals>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>xR2green</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/led/R2</property>
+		    <value>1</value>
+		  </equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>xR2white</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/led/R2</property>
+		    <value>0</value>
+		  </equals>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>xR3green</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/led/R3</property>
+		    <value>1</value>
+		  </equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>xR3white</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/led/R3</property>
+		    <value>0</value>
+		  </equals>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>xR4green</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/led/R4</property>
+		    <value>1</value>
+		  </equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>xR4white</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/led/R4</property>
+		    <value>0</value>
+		  </equals>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>xR5green</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/led/R5</property>
+		    <value>1</value>
+		  </equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>xR5white</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/led/R5</property>
+		    <value>0</value>
+		  </equals>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>xR6green</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/led/R6</property>
+		    <value>1</value>
+		  </equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>xR6white</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/led/R6</property>
+		    <value>0</value>
+		  </equals>
+		</condition>
+	</animation>
 
 <animation>
       <type>pick</type>

@@ -927,7 +927,7 @@
 		  </equals>
 		</condition>
 	</animation>
-	
+
 <animation>
       <type>pick</type>
       <object-name>PFD.left</object-name>
