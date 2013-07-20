@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jun 27 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             27.06.13
+#      Last change:      Thomas Grossberger
+#      Date:             20.07.13
 #
 
 
@@ -41,6 +41,9 @@ var KeypadClass = {
 		m._nCursorY 		= m._nRoot.initNode("cursorY",0,"INT");
 		m._nCursorPush 		= m._nRoot.initNode("cursorPush",0,"BOOL");
 		m._nCursorScroll	= m._nRoot.initNode("cursorScroll",0,"INT");
+		m._nCom1SQ		= m._nRoot.initNode("com1VolumeSQ",0,"BOOL");
+		m._nCom2SQ		= m._nRoot.initNode("com2VolumeSQ",0,"BOOL");
+		
 		m._cursorScroll = 0;
 		return m;
 
@@ -95,9 +98,9 @@ var KeypadClass = {
 		}
 	},
 	onHeadingSync : func(){
-		var value = me.nHeading.getValue();
-		value = int( math.mod(value,360) );
-		autopilot.nSetHeadingBugDeg.setValue(value);
+		var hdg = me.nHeading.getValue();
+		hdg = int( math.mod(hdg,360) );
+		autopilot.nSetHeadingBugDeg.setValue(hdg);
 	},
 	onSetAltitude : func(alt){
 		if (alt > 50000){alt = 50000;}
@@ -122,107 +125,133 @@ var KeypadClass = {
 		if (alt < 0){alt = 0;}	
 		autopilot.nSetAltitudeBugFt.setValue( 100*int( alt/100 ) );
 	},
-	onFMS : func(amount=nil){
-		
+	onFMS : func(amount=0){
+		print("KeypadClass.onFMS() ... "~amount);
+	},
+	onFMSpush : func(){
+		print("KeypadClass.onFMSpush() ... ");
 	},
 	onKey : func(key){
-		
+		print("KeypadClass.onKey() ... "~key);
 	},
 	onCom1 : func(){
-		
+		print("KeypadClass.onCom1() ...");
 	},
 	onCom2 : func(){
+		print("KeypadClass.onCom2() ...");
 		
 	},
 	onFreqList : func(){
+		print("KeypadClass.onFreqList() ...");
 		
 	},
 	onAux : func(){
+		print("KeypadClass.onAux() ...");
 		
 	},
 	onNav1 : func(){
+		print("KeypadClass.onNav1() ...");
 		
 	},
 	onNav2 : func(){
+		print("KeypadClass.onNav2() ...");
 		
 	},
 	onXPDR : func(){
+		print("KeypadClass.onXPDR() ...");
 		
 	},
 	onVFR : func(){
+		print("KeypadClass.onVFR() ...");
 		
 	},
 	onMode : func(){
+		print("KeypadClass.onMode() ...");
 		
 	},
 	onIdent : func(){
+		print("KeypadClass.onIdent() ...");
 		
 	},
 	onPhone : func(){
+		print("KeypadClass.onPhone() ...");
 		
 	},
-	onMusik : func(){
+	onSound : func(){
+		print("KeypadClass.onSound() ...");
 		
 	},
 	onProc : func(){
+		print("KeypadClass.onProc() ...");
 		
 	},
 	onD : func(){
+		print("KeypadClass.onD() ...");
 		
 	},
 	onV : func(){
+		print("KeypadClass.onV() ...");
 		
 	},
 	onNRST : func(){
+		print("KeypadClass.onNRST() ...");
 		
 	},
 	onMap : func(){
+		print("KeypadClass.onMap() ...");
 		
 	},
 	onCLR : func(){
+		print("KeypadClass.onCLR() ...");
 		
 	},
 	onCNCL : func(){
+		print("KeypadClass.onCNCL() ...");
 		
 	},
 	onSYB : func(){
-		
-	},
-	onAt : func(){
-		
-	},
-	onSpace : func(){
+		print("KeypadClass.onSYB() ...");
 		
 	},
 	onEnter : func(){
+		print("KeypadClass.onEnter() ...");
 		
 	},
 	onCom1Volume : func(amount=nil){
+		print("KeypadClass.onCom1Volume() ... " ~amount);
 		
 	},
 	onCom2Volume : func(amount=nil){
+		print("KeypadClass.onCom2Volume() ... " ~amount);
 		
 	},
-	onCom1SQ : func(){
+	onCom1SQ : func(value){
+		print("KeypadClass.onCom1SQ() ... "~value);
+		me._nCom1SQ.setValue(value);
+	},
+	onCom2SQ : func(value){
+		print("KeypadClass.onCom2SQ() ... "~value);
+		me._nCom2SQ.setValue(value);
+	},
+	onCom1Scroll : func(amount=nil){
+		print("KeypadClass.onCom1Scroll() ... " ~amount);
 		
 	},
-	onCom2SQ : func(){
-		
-	},
-	onCom1Page : func(amount=nil){
-		
-	},
-	onCom2Page : func(amount=nil){
+	onCom2Scroll : func(amount=nil){
+		print("KeypadClass.onCom2Scroll() ... "~amount);
 		
 	},
 	onCursorPush : func(value) {
+		print("KeypadClass.onCursorPush() ... "~value);
 		me._nCursorPush.setValue(value);
 	},
 	onCursorScroll : func(amount) {
+		print("KeypadClass.onCursorScroll() ..."~amount);
 		me._cursorScroll += amount;
-		me._nCursorScroll.setValue(amount);
+		me._nCursorScroll.setValue(me._cursorScroll);
 	},
 	onCursor : func(x=0,y=0) {
+		print("KeypadClass.onCursor() ... x:"~x~" y:"~y);
 		me._nCursorX.setValue(x);
 		me._nCursorY.setValue(y);
 	},
@@ -232,18 +261,22 @@ var KeypadClass = {
 		UI.register("Keypad Heading sync", 	func{extra500.keypad.onHeadingSync(); } 	);
 		UI.register("Keypad Heading >", 	func{extra500.keypad.onAdjustHeading(1); } 	);
 		UI.register("Keypad Heading <", 	func{extra500.keypad.onAdjustHeading(-1); } 	);
+		UI.register("Keypad Heading >>", 	func{extra500.keypad.onAdjustHeading(10); } 	);
+		UI.register("Keypad Heading <<", 	func{extra500.keypad.onAdjustHeading(-10); } 	);
 		UI.register("Keypad Heading =", 	func(v=0){extra500.keypad.onSetHeading(v); } 	);
 		UI.register("Keypad Heading +=", 	func(v=0){extra500.keypad.onAdjustHeading(v); } );
 		
 		UI.register("Keypad Altitude sync", 	func{extra500.keypad.onAltitudeSync(); } 	);
-		UI.register("Keypad Altitude >", 	func{extra500.keypad.onAdjustAltitude(1); } 	);
-		UI.register("Keypad Altitude <", 	func{extra500.keypad.onAdjustAltitude(-1); } 	);
+		UI.register("Keypad Altitude >", 	func{extra500.keypad.onAdjustAltitude(100); } 	);
+		UI.register("Keypad Altitude <", 	func{extra500.keypad.onAdjustAltitude(-100); } 	);
+		UI.register("Keypad Altitude >>", 	func{extra500.keypad.onAdjustAltitude(500); } 	);
+		UI.register("Keypad Altitude <<", 	func{extra500.keypad.onAdjustAltitude(-500); } 	);
 		UI.register("Keypad Altitude =", 	func(v=0){extra500.keypad.onSetAltitude(v); } 	);
 		UI.register("Keypad Altitude +=", 	func(v=0){extra500.keypad.onAdjustAltitude(v); });
 		
-		UI.register("Keypad FMS push", 	func{extra500.keypad.onFMS(); } 	);
-		UI.register("Keypad FMS >", 	func{extra500.keypad.onFMS(1); } 	);
-		UI.register("Keypad FMS <", 	func{extra500.keypad.onFMS(-1); } 	);
+		UI.register("Keypad FMS push", 		func{extra500.keypad.onFMS(0); } 	);
+		UI.register("Keypad FMS >", 		func{extra500.keypad.onFMS(1); } 	);
+		UI.register("Keypad FMS <", 		func{extra500.keypad.onFMS(-1); } 	);
 		
 		UI.register("Keypad Key 0", 	func{extra500.keypad.onKey("0"); } 	);
 		UI.register("Keypad Key 1", 	func{extra500.keypad.onKey("1"); } 	);
@@ -282,6 +315,12 @@ var KeypadClass = {
 		UI.register("Keypad Key B", 	func{extra500.keypad.onKey("B"); } 	);
 		UI.register("Keypad Key N", 	func{extra500.keypad.onKey("N"); } 	);
 		UI.register("Keypad Key M", 	func{extra500.keypad.onKey("M"); } 	);
+		UI.register("Keypad Key At", 	func{extra500.keypad.onKey("@"); } 	);
+		UI.register("Keypad Key Space", func{extra500.keypad.onKey(" "); } 	);
+		UI.register("Keypad Key CLR", 	func{extra500.keypad.onCLR(); } 	);
+		UI.register("Keypad Key CNCL", 	func{extra500.keypad.onCNCL(); } 	);
+		UI.register("Keypad Key SYB", 	func{extra500.keypad.onSYB(); } 	);
+		UI.register("Keypad Key Enter", func{extra500.keypad.onEnter(); } 	);
 		
 		UI.register("Keypad Com1", 	func{extra500.keypad.onCom1(); } 	);
 		UI.register("Keypad Com2", 	func{extra500.keypad.onCom2(); } 	);
@@ -294,26 +333,26 @@ var KeypadClass = {
 		UI.register("Keypad Mode", 	func{extra500.keypad.onMode(); } 	);
 		UI.register("Keypad Ident", 	func{extra500.keypad.onIdent(); } 	);
 		UI.register("Keypad Phone", 	func{extra500.keypad.onPhone(); } 	);
-		UI.register("Keypad Musik", 	func{extra500.keypad.onMusik(); } 	);
+		UI.register("Keypad Sound", 	func{extra500.keypad.onSound(); } 	);
 		UI.register("Keypad Proc", 	func{extra500.keypad.onProc(); } 	);
 		UI.register("Keypad D", 	func{extra500.keypad.onD(); } 	);
 		UI.register("Keypad V", 	func{extra500.keypad.onV(); } 	);
 		UI.register("Keypad NRST", 	func{extra500.keypad.onNRST(); } 	);
 		UI.register("Keypad Map", 	func{extra500.keypad.onMap(); } 	);
-		UI.register("Keypad CLR", 	func{extra500.keypad.onCLR(); } 	);
-		UI.register("Keypad CNCL", 	func{extra500.keypad.onCNCL(); } 	);
-		UI.register("Keypad SYB", 	func{extra500.keypad.onSYB(); } 	);
-		UI.register("Keypad At", 	func{extra500.keypad.onAt(); } 	);
-		UI.register("Keypad Space", 	func{extra500.keypad.onSpace(); } 	);
-		UI.register("Keypad Enter", 	func{extra500.keypad.onEnter(); } 	);
 		
-		UI.register("Keypad Com1Volume >", 	func{extra500.keypad.onCom1Volume(1); } 	);
-		UI.register("Keypad Com2Volume <", 	func{extra500.keypad.onCom2Volume(-1); } 	);
-		UI.register("Keypad Com1SQ", 		func{extra500.keypad.onCom1SQ(); } 	);
-		UI.register("Keypad Com2SQ", 		func{extra500.keypad.onCom2SQ(); } 	);
-		UI.register("Keypad Com1Page >", 	func{extra500.keypad.onCom1Page(1); } 	);
-		UI.register("Keypad Com2Page <", 	func{extra500.keypad.onCom2Page(-1); } 	);
-
+		UI.register("Keypad Com1 Volume >", 	func{extra500.keypad.onCom1Volume(1); } 	);
+		UI.register("Keypad Com1 Volume <", 	func{extra500.keypad.onCom1Volume(-1); } 	);
+		UI.register("Keypad Com2 Volume >", 	func{extra500.keypad.onCom2Volume(1); } 	);
+		UI.register("Keypad Com2 Volume <", 	func{extra500.keypad.onCom2Volume(-1); } 	);
+		UI.register("Keypad Com1 SQ down", 	func{extra500.keypad.onCom1SQ(1); } 	);
+		UI.register("Keypad Com1 SQ up", 	func{extra500.keypad.onCom1SQ(0); } 	);
+		UI.register("Keypad Com2 SQ down", 	func{extra500.keypad.onCom2SQ(1); } 	);
+		UI.register("Keypad Com2 SQ up", 	func{extra500.keypad.onCom2SQ(0); } 	);
+		UI.register("Keypad Com1 Scroll >", 	func{extra500.keypad.onCom1Scroll(1); } 	);
+		UI.register("Keypad Com1 Scroll <", 	func{extra500.keypad.onCom1Scroll(-1); } 	);
+		UI.register("Keypad Com2 Scroll >", 	func{extra500.keypad.onCom2Scroll(1); } 	);
+		UI.register("Keypad Com2 Scroll <", 	func{extra500.keypad.onCom2Scroll(-1); } 	);
+		
 		UI.register("Keypad Cursor center", 	func{extra500.keypad.onCursor(0,0); } 	);
 		UI.register("Keypad Cursor N", 		func{extra500.keypad.onCursor(0,1); } 	);
 		UI.register("Keypad Cursor NE", 	func{extra500.keypad.onCursor(1,1); } 	);
