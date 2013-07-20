@@ -512,6 +512,59 @@
 </animation>
 
 <!-- buttons PFD, FMS, MAP, SYS, CHKL -->
+
+	<animation>
+		<type>select</type>
+		<object-name>xPFDgreen</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+		    <value>PFD</value>
+		  </equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>xPFDwhite</object-name>
+		<condition>
+		  <not>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+		    <value>PFD</value>
+		  </equals>
+		</not>
+		</condition>
+	</animation>
+	
+<!-- PROVISORIUM -->
+	<animation>
+		<type>select</type>
+		<object-name>xFMSwhite</object-name>
+		<object-name>xMAPwhite</object-name>
+		<object-name>xSYSwhite</object-name>
+		<object-name>xCHKLwhite</object-name>
+		<condition>
+		  <equals>
+		    <property>/sim/aircraft</property>
+		    <value>extra500</value>
+		  </equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>xFMSgreen</object-name>
+		<object-name>xMAPgreen</object-name>
+		<object-name>xSYSgreen</object-name>
+		<object-name>xCHKLgreen</object-name>
+		<condition>
+		  <equals>
+		    <property>/sim/aircraft</property>
+		    <value>blubb</value>
+		  </equals>
+		</condition>
+	</animation>	
+<!-- PROVISORIUM -->
+
 <animation>
       <type>pick</type>
       <object-name>PFD.left</object-name>
