@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jun 27 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             27.06.13
+#      Last change:      Thomas Grossberger
+#      Date:             20.07.13
 #
 
 
@@ -307,13 +307,17 @@ var KeypadClass = {
 		UI.register("Keypad Space", 	func{extra500.keypad.onSpace(); } 	);
 		UI.register("Keypad Enter", 	func{extra500.keypad.onEnter(); } 	);
 		
-		UI.register("Keypad Com1Volume >", 	func{extra500.keypad.onCom1Volume(1); } 	);
-		UI.register("Keypad Com2Volume <", 	func{extra500.keypad.onCom2Volume(-1); } 	);
-		UI.register("Keypad Com1SQ", 		func{extra500.keypad.onCom1SQ(); } 	);
-		UI.register("Keypad Com2SQ", 		func{extra500.keypad.onCom2SQ(); } 	);
-		UI.register("Keypad Com1Page >", 	func{extra500.keypad.onCom1Page(1); } 	);
-		UI.register("Keypad Com2Page <", 	func{extra500.keypad.onCom2Page(-1); } 	);
-
+		UI.register("Keypad Com1 Volume >", 	func{extra500.keypad.onCom1Volume(1); } 	);
+		UI.register("Keypad Com1 Volume <", 	func{extra500.keypad.onCom1Volume(-1); } 	);
+		UI.register("Keypad Com2 Volume >", 	func{extra500.keypad.onCom2Volume(1); } 	);
+		UI.register("Keypad Com2 Volume <", 	func{extra500.keypad.onCom2Volume(-1); } 	);
+		UI.register("Keypad Com1 SQ", 		func{extra500.keypad.onCom1SQ(); } 	);
+		UI.register("Keypad Com2 SQ", 		func{extra500.keypad.onCom2SQ(); } 	);
+		UI.register("Keypad Com1 Page >", 	func{extra500.keypad.onCom1Page(1); } 	);
+		UI.register("Keypad Com1 Page <", 	func{extra500.keypad.onCom1Page(-1); } 	);
+		UI.register("Keypad Com2 Page >", 	func{extra500.keypad.onCom2Page(1); } 	);
+		UI.register("Keypad Com2 Page <", 	func{extra500.keypad.onCom2Page(-1); } 	);
+		
 		UI.register("Keypad Cursor center", 	func{extra500.keypad.onCursor(0,0); } 	);
 		UI.register("Keypad Cursor N", 		func{extra500.keypad.onCursor(0,1); } 	);
 		UI.register("Keypad Cursor NE", 	func{extra500.keypad.onCursor(1,1); } 	);
