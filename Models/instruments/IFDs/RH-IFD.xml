@@ -512,6 +512,124 @@
 </animation>
 
 <!-- buttons PFD, FMS, MAP, SYS, CHKL -->
+
+	<animation>
+		<type>select</type>
+		<object-name>xPFDgreen</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/PageSelected</property>
+		    <value>PFD</value>
+		  </equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>xPFDwhite</object-name>
+		<condition>
+		  <not>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/PageSelected</property>
+		    <value>PFD</value>
+		  </equals>
+		</not>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>xFMSgreen</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/PageSelected</property>
+		    <value>FMS</value>
+		  </equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>xFMSwhite</object-name>
+		<condition>
+		  <not>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/PageSelected</property>
+		    <value>FMS</value>
+		  </equals>
+		</not>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>xMAPgreen</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/PageSelected</property>
+		    <value>MAP</value>
+		  </equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>xMAPwhite</object-name>
+		<condition>
+		  <not>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/PageSelected</property>
+		    <value>MAP</value>
+		  </equals>
+		</not>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>xSYSgreen</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/PageSelected</property>
+		    <value>SYS</value>
+		  </equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>xSYSwhite</object-name>
+		<condition>
+		  <not>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/PageSelected</property>
+		    <value>SYS</value>
+		  </equals>
+		</not>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>xCHKLgreen</object-name>
+		<condition>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/PageSelected</property>
+		    <value>CHKL</value>
+		  </equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>xCHKLwhite</object-name>
+		<condition>
+		  <not>
+		  <equals>
+		    <property>/extra500/instrumentation/IFD-RH/PageSelected</property>
+		    <value>CHKL</value>
+		  </equals>
+		</not>
+		</condition>
+	</animation>
+
+
+
 <animation>
       <type>pick</type>
       <object-name>PFD.left</object-name>
