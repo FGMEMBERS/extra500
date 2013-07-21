@@ -26,11 +26,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.50980392"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8284271"
-     inkscape:cx="1024.2133"
-     inkscape:cy="1727.7784"
+     inkscape:zoom="0.5"
+     inkscape:cx="1144.2591"
+     inkscape:cy="1430.5449"
      inkscape:document-units="px"
-     inkscape:current-layer="layer7"
+     inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1025"
@@ -2472,27 +2472,6 @@
      inkscape:label="AttitudeIndicator"
      style="display:inline">
     <g
-       id="BankAngleIndicator"
-       transform="matrix(1.157625,0,0,1.157625,-189.82554,-24.225607)">
-      <path
-         inkscape:transform-center-y="-308.92857"
-         style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-         d="m 1204.4581,127.78767 -21.0987,17.49133 41.8526,0 z"
-         id="path14205"
-         inkscape:connector-curvature="0"
-         sodipodi:nodetypes="cccc" />
-      <path
-         sodipodi:type="arc"
-         style="fill:none;stroke:none"
-         id="path14199"
-         sodipodi:cx="1182.2201"
-         sodipodi:cy="449.28571"
-         sodipodi:rx="336.35129"
-         sodipodi:ry="365"
-         d="m 1518.5714,449.28571 c 0,201.58393 -150.5896,365 -336.3513,365 -185.76169,0 -336.3513,-163.41607 -336.3513,-365 0,-201.58394 150.58961,-365.000004 336.3513,-365.000004 185.7617,0 336.3513,163.416064 336.3513,365.000004 z"
-         transform="matrix(0.75349504,0.75349504,-0.69981776,0.69981776,627.9069,-759.69181)" />
-    </g>
-    <g
        id="PitchLadder">
       <path
          sodipodi:nodetypes="ccccccccc"
@@ -2812,14 +2791,26 @@
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="ccccccc" />
     </g>
-    <path
-       style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:5.78812504;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
-       d="m 1180.0609,143.953 48.3722,0 21.6045,18.88737 -91.5038,0 z"
-       id="rect13203"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccc" />
     <g
-       id="g4030">
+       id="BankAngleIndicator"
+       transform="matrix(1.157625,0,0,1.157625,-189.82554,-24.225607)"
+       inkscape:transform-center-y="-344.95697">
+      <path
+         style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:5.78812504;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+         d="m 1180.0609,147.84028 48.3722,0 21.6045,18.88737 -91.5038,0 z"
+         id="SlipSkidIndicator"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="ccccc" />
+      <path
+         inkscape:transform-center-y="-308.92857"
+         style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         d="m 1204.4581,127.78767 -21.0987,17.49133 41.8526,0 z"
+         id="path14205"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccc" />
+    </g>
+    <g
+       id="BankAngleScale">
       <path
          inkscape:connector-curvature="0"
          id="path3786-3"
@@ -2897,7 +2888,7 @@
          sodipodi:nodetypes="cccccccc"
          inkscape:connector-curvature="0"
          id="rect12810"
-         d="m 902.36729,570.78016 302.67131,-78.10392 301.1655,78.10392 -243.4417,0 0,-23.2861 -115.4477,0 0,23.2861 z"
+         d="m 902.36729,570.09501 302.67131,-78.10392 301.1655,78.10392 -243.4417,0 0,-23.2861 -115.4477,0 0,23.2861 z"
          style="fill:#ffc215;fill-opacity:1;stroke:#000000;stroke-width:1.12498665;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0" />
     </g>
   </g>

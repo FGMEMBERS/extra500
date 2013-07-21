@@ -54,6 +54,12 @@ var PageClass = {
 		}
 		me._listeners = [];
 	},
+	init : func(instance=me){
+		
+	},
+	deinit : func(){
+		me.removeListeners();
+	},
 	registerKeys : func(){
 		
 	},
@@ -74,4 +80,35 @@ var PageClass = {
 	update20Hz : func(now,dt){},
 	update2Hz  : func(now,dt){},
 	
+};
+
+
+var IfdWidget = {
+	new: func(ifd,canvasGroup,name){
+		var m = {parents:[IfdWidget]};
+		m._class = "IfdWidget";
+		m._IFD 		= ifd;	# parent pointer to IFD
+		m._name 	= name;
+		m._listeners 	= [];
+		m._group	= canvasGroup;
+		m._can		= {};
+		return m;
+	},
+	removeListeners  :func(){
+		foreach(l;me._listeners){
+			removelistener(l);
+		}
+		me._listeners = [];
+	},
+	setListeners : func(instance) {
+		
+	},
+	init : func(instance=me){
+		
+	},
+	deinit : func(){
+		me.removeListeners();	
+	},
+	update20Hz : func(now,dt){},
+	update2Hz  : func(now,dt){},
 };
