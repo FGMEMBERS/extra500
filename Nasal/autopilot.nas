@@ -156,7 +156,9 @@ var AutopilotClass = {
 	update : func(){
 		me._CheckRollModeAble();
 		var wpno = getprop("/autopilot/route-manager/current-wp");
+#		var previouswpno = wpno - 1;
 		if ( wpno >= 0 ) {
+#			setprop("/autopilot/fms-channel/leg-true-course-deg",getprop("/autopilot/route-manager/route/wp["~previouswpno~"]/leg-bearing-true-deg"));
 			setprop("/autopilot/fms-channel/gpss/next-bearing-deg",getprop("/autopilot/route-manager/route/wp["~wpno~"]/leg-bearing-true-deg"));
 		}
 	},
