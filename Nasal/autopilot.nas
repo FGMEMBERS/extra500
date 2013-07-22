@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             19.07.2013
+#      Date:             21.07.2013
 #
 
 
@@ -70,7 +70,11 @@ var AutopilotClass = {
 		m.nTCSpin 	= props.globals.getNode("/instrumentation/turn-indicator/spin");			
 		m.nAPacc 	= props.globals.getNode("/autopilot/accsens-channel/ap-z-accel");
 		m.nCurrentAlt 	= props.globals.getNode("/instrumentation/altimeter-IFD-LH/indicated-altitude-ft");	
-		m.nAlterror 	= props.globals.getNode("/autopilot/alt-channel/alt-error-ft");															
+		m.nAlterror 	= props.globals.getNode("/autopilot/alt-channel/alt-error-ft");	
+		m.nNavsource	= props.globals.getNode("/instrumentation/nav-source");	
+		m.nGPS1serv 	= props.globals.getNode("/instrumentation/gps/serviceable");
+		m.nGPS2serv 	= props.globals.getNode("/instrumentation/gps[1]/serviceable");	
+		m.nRouteActive 	= props.globals.getNode("/autopilot/route-manager/active");																																																												
 
 		m._nBrightness		= props.globals.initNode("/extra500/system/dimming/Instrument",0.0,"DOUBLE");
 		m._brightness		= 0;
@@ -231,7 +235,7 @@ var AutopilotClass = {
 #
 	onClickNAV : func(){
 		if ( (me.nModeNav.getValue() == 0) or ( (me.nModeNav.getValue() == 1) and (me.nModeHeading.getValue() == 1) ) ){
-			if ( ( me.nModeRdy.getValue() == 1 ) or (me.nModeHeading.getValue() == 1) ){
+			if ( (( me.nModeRdy.getValue() == 1 ) or (me.nModeHeading.getValue() == 1)) and ( (me.nNavsource.getValue() != 2) or ( (me.nNavsource.getValue() == 2) and (me.nRouteActive.getValue() == 1) ) ) ){
 				me.nModeRdy.setValue(0);
 				me.nModeNav.setValue(1);
 				me.nModeHeading.setValue(0);
@@ -240,8 +244,11 @@ var AutopilotClass = {
 				me.nModeFail.setValue(1);
 			} 
 		} else if ( ( me.nModeNav.getValue() == 1) and ( me.nModeNavGpss.getValue() == 0) ) {
-# a check if GPSS is possible fails here!
-			me.nModeNavGpss.setValue(1);
+			if ( (me.nGPS1serv.getValue() == 1) and (me.nGPS1serv.getValue() == 1) and (me.nNavsource.getValue() == 2) ) {
+				me.nModeNavGpss.setValue(1);
+			} else {
+				UI.msg.info("FMS must be selected to engage GPSS mode");
+			}
 		} else { 
 		}
 	},
