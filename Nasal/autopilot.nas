@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             21.07.2013
+#      Date:             22.07.2013
 #
 
 
@@ -418,3 +418,9 @@ var AutopilotClass = {
 };
 
 var autopilot = AutopilotClass.new("extra500/instrumentation/Autopilot","Autopilot");
+
+setlistener("/autopilot/fms-channel/gpss/next-wp", func {
+	if ( getprop("/autopilot/fms-channel/gpss/next-wp") == 1 ) {
+		setprop("/autopilot/route-manager/input","@NEXT");
+	}
+ }, 1, 0);
