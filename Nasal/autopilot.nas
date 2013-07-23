@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             21.07.2013
+#      Date:             23.07.2013
 #
 
 
@@ -246,6 +246,7 @@ var AutopilotClass = {
 		} else if ( ( me.nModeNav.getValue() == 1) and ( me.nModeNavGpss.getValue() == 0) ) {
 			if ( (me.nGPS1serv.getValue() == 1) and (me.nGPS1serv.getValue() == 1) and (me.nNavsource.getValue() == 2) ) {
 				me.nModeNavGpss.setValue(1);
+				setprop("/autopilot/fms-channel/gpss/next-wp",0); # a small but necessary safety feature: stays 1 at end of route
 			} else {
 				UI.msg.info("FMS must be selected to engage GPSS mode");
 			}
@@ -418,3 +419,10 @@ var AutopilotClass = {
 };
 
 var autopilot = AutopilotClass.new("extra500/instrumentation/Autopilot","Autopilot");
+
+setlistener("/autopilot/fms-channel/gpss/next-wp", func {
+	if ( getprop("/autopilot/fms-channel/gpss/next-wp") == 1 ) {
+		setprop("/autopilot/fms-channel/gpss/next-wp",0);
+		setprop("/autopilot/route-manager/input","@NEXT");
+	}
+ }, 1, 0);
