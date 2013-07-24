@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             23.07.2013
+      Date:             24.07.2013
 
 
 ************************************************************************
@@ -543,6 +543,9 @@ JSBSim Extra Aircraft - Extra 500.
 	</settings>
 	<route-manager>
 		<current-wp>-1</current-wp>
+		<route>
+			<num>0</num>
+		</route>
 	</route-manager>
 	<mode>
 		<disengsound type="int">0</disengsound>
@@ -625,7 +628,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<next-bearing-deg type="double">0</next-bearing-deg>
 			<turn-timer type="double">0</turn-timer>
 			<turn-time-s type="double">0</turn-time-s>
-			<next-wp>0</next-wp>
+			<!--next-wp>0</next-wp-->
 			<in-turn2>0</in-turn2>
 		</gpss>
 		<gain type="double">1.3</gain>
