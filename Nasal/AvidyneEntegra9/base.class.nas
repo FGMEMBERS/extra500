@@ -84,13 +84,13 @@ var PageClass = {
 
 
 var IfdWidget = {
-	new: func(ifd,canvasGroup,name){
+	new: func(page,canvasGroup,name){
 		var m = {parents:[IfdWidget]};
 		m._class = "IfdWidget";
-		m._IFD 		= ifd;	# parent pointer to IFD
+		m._Page 	= page;	# parent pointer to parent Page
+		m._group	= canvasGroup;
 		m._name 	= name;
 		m._listeners 	= [];
-		m._group	= canvasGroup;
 		m._can		= {};
 		return m;
 	},

@@ -67,15 +67,15 @@ var AvidyneData = {
 		m.nHDG = props.globals.initNode("/instrumentation/heading-indicator-IFD-"~m.name~"/indicated-heading-deg",0.0,"DOUBLE");
 		m.nHDGBug = props.globals.initNode("/autopilot/settings/heading-bug-deg",0.0,"DOUBLE");
 	# IAS 	
-		m.IAS 		= 0;
-		m.TAS 		= 0;
-		m.GroundSpeed	= 0;
-		m.IAS_Rate	= 0;
-		
-		m.nIAS 		= props.globals.initNode("/instrumentation/airspeed-IFD-"~m.name~"/indicated-airspeed-kt",0.0,"DOUBLE");
-		m.nIASRate	= props.globals.initNode("/instrumentation/airspeed-IFD-"~m.name~"/airspeed-change-ktps",0.0,"DOUBLE");
-		m.nTAS 		= props.globals.initNode("/instrumentation/airspeed-IFD-"~m.name~"/true-speed-kt",0.0,"DOUBLE");
-		m.nGroundSpeed 	= props.globals.initNode("/velocities/groundspeed-kt",0.0,"DOUBLE");
+# 		m.IAS 		= 0;
+# 		m.TAS 		= 0;
+# 		m.GroundSpeed	= 0;
+# 		m.IAS_Rate	= 0;
+# 		
+# 		m.nIAS 		= props.globals.initNode("/instrumentation/airspeed-IFD-"~m.name~"/indicated-airspeed-kt",0.0,"DOUBLE");
+# 		m.nIASRate	= props.globals.initNode("/instrumentation/airspeed-IFD-"~m.name~"/airspeed-change-ktps",0.0,"DOUBLE");
+# 		m.nTAS 		= props.globals.initNode("/instrumentation/airspeed-IFD-"~m.name~"/true-speed-kt",0.0,"DOUBLE");
+# 		m.nGroundSpeed 	= props.globals.initNode("/velocities/groundspeed-kt",0.0,"DOUBLE");
 		
 	#vertical speed
 # 		m.VS 		 = 0;
@@ -85,14 +85,14 @@ var AvidyneData = {
 # 		m.nVSBug = props.globals.initNode("/autopilot/settings/vertical-speed-fpm",0.0,"DOUBLE");
 		
 	# ALT
-		m.ALT 		= 0;
-		m.ALTBug 	= 0;
-		m.HPA 		= 0;
-		
-		m.nALT = props.globals.initNode("/instrumentation/altimeter-IFD-"~m.name~"/indicated-altitude-ft",0.0,"DOUBLE");
-		#m.nALT = props.globals.initNode("/instrumentation/altimeter-IFD-"~m.name~"/setting-hpa",0.0,"DOUBLE");
-		m.nALTBug = props.globals.initNode("/autopilot/settings/tgt-altitude-ft",0.0,"DOUBLE");
-		m.nHPA = props.globals.initNode("/instrumentation/altimeter-IFD-"~m.name~"/setting-hpa",0.0,"DOUBLE");
+# 		m.ALT 		= 0;
+# 		m.ALTBug 	= 0;
+# 		m.HPA 		= 0;
+# 		
+# 		m.nALT = props.globals.initNode("/instrumentation/altimeter-IFD-"~m.name~"/indicated-altitude-ft",0.0,"DOUBLE");
+# 		#m.nALT = props.globals.initNode("/instrumentation/altimeter-IFD-"~m.name~"/setting-hpa",0.0,"DOUBLE");
+# 		m.nALTBug = props.globals.initNode("/autopilot/settings/tgt-altitude-ft",0.0,"DOUBLE");
+# 		m.nHPA = props.globals.initNode("/instrumentation/altimeter-IFD-"~m.name~"/setting-hpa",0.0,"DOUBLE");
 		
 	#wind
 		m.WindDirection = 0;
@@ -173,56 +173,56 @@ var AvidyneData = {
 # 		me.apModeFD 	= me.nApModeFD.getValue();
 		
 	#heading 
-		me.HDG 		= me.nHDG.getValue();
-		me.HDGBug 	= me.nHDGBug.getValue();
+# 		me.HDG 		= me.nHDG.getValue();
+# 		me.HDGBug 	= me.nHDGBug.getValue();
 	#speed 	
-		me.IAS 		= me.nIAS.getValue();
-		me.IAS_Rate	= me.nIASRate.getValue();
-		me.TAS 		= me.nTAS.getValue();
+# 		me.IAS 		= me.nIAS.getValue();
+# 		me.IAS_Rate	= me.nIASRate.getValue();
+# 		me.TAS 		= me.nTAS.getValue();
 	#vertical speed
 # 		me.VS 		= me.nVS.getValue();
 # 		me.VSBug	= me.nVSBug.getValue();
 	#altitude
-		me.ALT 		= me.nALT.getValue() ;
-		#me.ALT		= me.ALT < 0 ? 0 : me.ALT;
-		me.ALTBug 	= me.nALTBug.getValue();
-		me.HPA 		= me.nHPA.getValue();
+# 		me.ALT 		= me.nALT.getValue() ;
+# 		#me.ALT		= me.ALT < 0 ? 0 : me.ALT;
+# 		me.ALTBug 	= me.nALTBug.getValue();
+# 		me.HPA 		= me.nHPA.getValue();
 	#wind
-		me.WindDirection 	= me.nWindDirection.getValue();
-		me.WindSpeed 		= me.nWindSpeed.getValue();
+# 		me.WindDirection 	= me.nWindDirection.getValue();
+# 		me.WindSpeed 		= me.nWindSpeed.getValue();
 	#attitude
-		me.pitch 	= me.nPitch.getValue();
-		me.roll 	= me.nRoll.getValue();
+# 		me.pitch 	= me.nPitch.getValue();
+# 		me.roll 	= me.nRoll.getValue();
 
 	#enviroment
-		me.OAT = me.nOAT.getValue();
+# 		me.OAT = me.nOAT.getValue();
 	#DI 
-		me.HDI 		= me.nHDI.getValue();
-		me.VDI 		= -me.nVDI.getValue();
-		#me.GSable 	= me.nGSable.getValue();
-		me.GSinRange 	= me.nGSinRange.getValue();
-		me.NAVinRange 	= me.nNAVinRange.getValue();
-		#me.NAVLOC	= me.nNAVLOC.getValue();
+# 		me.HDI 		= me.nHDI.getValue();
+# 		me.VDI 		= -me.nVDI.getValue();
+# 		#me.GSable 	= me.nGSable.getValue();
+# 		me.GSinRange 	= me.nGSinRange.getValue();
+# 		me.NAVinRange 	= me.nNAVinRange.getValue();
+# 		#me.NAVLOC	= me.nNAVLOC.getValue();
 	
 	# Bearing Pointer
-		if (me.brgSource > 0){
-			me.brgCoursePointer	= getprop(BEARING_SOURCE_TREE[me.brgSource]~"/radials/reciprocal-radial-deg") or 0;
-			
-		}
+# 		if (me.brgSource > 0){
+# 			me.brgCoursePointer	= getprop(BEARING_SOURCE_TREE[me.brgSource]~"/radials/reciprocal-radial-deg") or 0;
+# 			
+# 		}
 		
 	
 	},
 	load2Hz : func(now,dt){
 		#print("AvidyneData.load2Hz("~now~","~dt~") .. ");
 	#Box Timer
-		me._timerCount(dt);
-	#Box Primary Nav
-		me.navDistance	= me.nNavDistance.getValue();
-		me.GroundSpeed	= me.nGroundSpeed.getValue();
-	# Box Bearing Pointer
-		if (me.brgSource > 0){
-			me.brgDistance		= getprop(BEARING_SOURCE_TREE[me.brgSource]~"/nav-distance") * global.CONST.METER2NM;
-		}
+# 		me._timerCount(dt);
+# 	#Box Primary Nav
+# 		me.navDistance	= me.nNavDistance.getValue();
+# 		me.GroundSpeed	= me.nGroundSpeed.getValue();
+# 	# Box Bearing Pointer
+# 		if (me.brgSource > 0){
+# 			me.brgDistance		= getprop(BEARING_SOURCE_TREE[me.brgSource]~"/nav-distance") * global.CONST.METER2NM;
+# 		}
 	},
 	adjustBaro : func(value=nil){
 		if (value==nil){
