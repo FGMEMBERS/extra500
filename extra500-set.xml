@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             24.07.2013
+      Date:             25.07.2013
 
 
 ************************************************************************
@@ -628,7 +628,6 @@ JSBSim Extra Aircraft - Extra 500.
 			<next-bearing-deg type="double">0</next-bearing-deg>
 			<turn-timer type="double">0</turn-timer>
 			<turn-time-s type="double">0</turn-time-s>
-			<!--next-wp>0</next-wp-->
 			<in-turn2>0</in-turn2>
 		</gpss>
 		<gain type="double">1.3</gain>
@@ -849,11 +848,6 @@ JSBSim Extra Aircraft - Extra 500.
 	       <to-flag type="bool">false</to-flag>
 	       <from-flag type="bool">false</from-flag>
        </nav>
-       <!--nav n="2">
-	       	<volume type="double">0.0</volume>
-	       	<serviceable type="bool">true</serviceable>
-		<slaved-to-gps type="bool">true</slaved-to-gps>
-       </nav-->
 
 	<gps n="0">
 		<cdi-deflection>0</cdi-deflection>

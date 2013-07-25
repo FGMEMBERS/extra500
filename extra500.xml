@@ -147,17 +147,17 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		<pointmass name="LMainGear">
 			<weight unit="KG"> 30 </weight>  
 			<location name="POINTMASS" unit="M">
-				<x> 4.233 </x>				<!--TBD: moves 0.5 m forward when retracted -->
+				<x> 4.233 </x>				<!--moves 0.5 m forward when retracted -->
 				<y>  -0.5 </y>
-				<z> 0.6 </z>				<!--TBD: moves 0.3 m up when retracted -->
+				<z> 0.6 </z>				<!--moves 0.3 m up when retracted -->
 			</location>
 		</pointmass>
 		<pointmass name="RMainGear">
 			<weight unit="KG"> 30 </weight>  
 			<location name="POINTMASS" unit="M">
-				<x> 4.233 </x>				<!--TBD: moves 0.5 m forward when retracted -->
+				<x> 4.233 </x>				<!--moves 0.5 m forward when retracted -->
 				<y>  0.5 </y>
-				<z> 0.6 </z>				<!--TBD: moves 0.3 m up when retracted -->
+				<z> 0.6 </z>				<!--moves 0.3 m up when retracted -->
 			</location>
 		</pointmass>
 	</mass_balance>

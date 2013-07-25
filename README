@@ -16,7 +16,7 @@
       Author: Eric van den Berg
       Date: 2013-05-12
 
-      Last change:      2013-07-20
+      Last change:      2013-07-24
       Date:             Eric van den Berg
 
 ========================================================================
@@ -78,7 +78,7 @@ Principle Autopilot functionality (currently in place)
 - HDG 		Follows the heading bug
 - NAV		Intercepts and tracks VORs, LOCs or your Flight Plan
 - NAV/GPSS	Intercepts and tracks your Flight Plan and cuts the corners (Press NAV twice)
-- HDG+NAV	Intercept the course with your set heading
+- HDG+NAV	Intercept the course or active flightplan  leg with your set heading
 - NAV+REV	Intercepts and tracks the LOC back course
 - GS		Is armed and activated automatically when captured on the LOC. You can switch it off by pressing APR, 
 		ALT mode will become active. To arm the GS again, press APR for a second time 
@@ -103,8 +103,8 @@ The AP will disengage when:
 
 Navigation and Communication
 
-Nav 1 or Nav 2 may be selected on the IFD or in the NAV dialog (F12)
-The DME will source of either, independent on which NAV is selected (=indicated / used by autopilot in NAV mode)
+FMS, Nav 1 or Nav 2 may be selected on the IFD or in the NAV dialog (F12)
+The DME will source of either Nav 1 or 2, independent on which NAV is selected (=indicated / used by autopilot in NAV mode)
 
 XPDR squawk can be set in the NAV dialog (F12). Default is 7000 (Europe VFR).
 XPDR modes are selected automatically (GND or ALT), but automatic selection may be switched off

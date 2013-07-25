@@ -19,8 +19,8 @@
       Authors: Thomas Grossberger 
       Date: July 04 2013
 
-      Last change:      Thomas Grossberger
-      Date:             19.07.13
+      Last change:      Eric van den Berg
+      Date:             25.07.13
 -->
 <PropertyList>
 
@@ -138,7 +138,7 @@
 	</action>
 </animation>
 
-<!-- OverSpeed # wrong name # -->
+<!-- gear warn mute -->
 <animation>
   <type>translate</type>
   <object-name>OverSpeed</object-name>
@@ -190,11 +190,11 @@
   <interpolation>
             <entry>
                 <ind>0</ind>
-                <dep>0</dep>
+                <dep>-5.4</dep>
             </entry>
             <entry>
                 <ind>1</ind>
-                <dep>-41</dep>
+                <dep>-41.7</dep>
             </entry>
         </interpolation>
   <axis>
@@ -222,11 +222,11 @@
   <interpolation>
             <entry>
                 <ind>0</ind>
-                <dep>0</dep>
+                <dep>-5.4</dep>
             </entry>
             <entry>
                 <ind>1</ind>
-                <dep>41</dep>
+                <dep>40.5</dep>
             </entry>
         </interpolation>
   <axis>
@@ -282,15 +282,11 @@ in Systems/extra500-system-indication.xml-->
   <interpolation>
             <entry>
                 <ind>0</ind>
-                <dep>19</dep>
-            </entry>
-	    <entry>
-                <ind>0.2</ind>
-                <dep>0</dep>
+                <dep>22.7</dep>
             </entry>
             <entry>
                 <ind>1</ind>
-                <dep>-19</dep>
+                <dep>-18.2</dep>
             </entry>
         </interpolation>
   <axis>

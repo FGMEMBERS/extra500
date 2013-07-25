@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-07-13
+      Date:             2013-07-25
 -->
 
 <system name="indication">
@@ -1051,9 +1051,9 @@
 		<fcs_function name="/controls/engines/engine[0]/condition-lever-norm">
 			<function>
 				<product>
-					<value>0.833333</value>
+					<value>0.5</value>
 					<sum>
-						<value>0.2</value>
+						<value>1.0</value>
 						<property>/controls/engines/engine[0]/propeller-pitch</property>
 					</sum>
 					<property>/controls/engines/engine[0]/cutoff-filtered</property>
