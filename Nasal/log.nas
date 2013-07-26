@@ -73,8 +73,8 @@ var FuelFlowLogClass = {
 		
 		if(me._stats.gs > 60.0){
 			
-			me._stats.alt 	= getprop("/position/altitude-ft") or 0;
-			me._stats.vs		= getprop("/instrumentation/ivsi-IFD-LH/indicated-speed-fpm") or 0;
+			me._stats.alt 	= getprop("/instrumentation/altimeter-IFD-LH/indicated-altitude-ft") or 0;
+			me._stats.vs	= getprop("/instrumentation/ivsi-IFD-LH/indicated-speed-fpm") or 0;
 			
 			me._stats.FL		= sprintf("FL%03i",int((me._stats.alt/1000)+0.5)*10);
 			me._stats.GS		= sprintf("GS%03i",int((me._stats.gs/10)+0.5)*10);
@@ -88,7 +88,14 @@ var FuelFlowLogClass = {
 		}
 		
 	},
-	
+	getBurnRate : func(alt,gs,vs){
+		me._stats.FL		= sprintf("FL%03i",int((alt/10)+0.5)*10);
+		me._stats.GS		= sprintf("GS%03i",int((gs/10)+0.5)*10);
+		me._stats.VS		= sprintf("VS%05i",int(vs));
+		
+		me._stats.pPath 	= "/extra500/log/fuel/"~me._stats.FL~"_"~me._stats.GS~"_"~me._stats.VS~"_ffph";
+		return getprop(me._stats.pPath) or 250.0;
+	}
 };
 
 var fuelFlowLog = FuelFlowLogClass.new();

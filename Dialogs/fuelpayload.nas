@@ -218,9 +218,10 @@ COLOR["Red"] = "rgb(244,28,33)";
 COLOR["Green"] = "#008000";
 
 var SvgWidget = {
-	new: func(canvasGroup,name){
+	new: func(dialog,canvasGroup,name){
 		var m = {parents:[SvgWidget]};
 		m._class = "SvgWidget";
+		m._dialog 	= dialog;
 		m._listeners 	= [];
 		m._name 	= name;
 		m._group	= canvasGroup;
@@ -245,8 +246,8 @@ var SvgWidget = {
 };
 
 var TankWidget = {
-	new: func(canvasGroup,name,lable,index,refuelable=1){
-		var m = {parents:[TankWidget,SvgWidget.new(canvasGroup,name)]};
+	new: func(dialog,canvasGroup,name,lable,index,refuelable=1){
+		var m = {parents:[TankWidget,SvgWidget.new(dialog,canvasGroup,name)]};
 		m._class = "TankWidget";
 		m._index 	= index;
 		m._refuelable 	= refuelable;
@@ -320,8 +321,8 @@ var TankWidget = {
 };
 
 var TankerWidget = {
-	new: func(canvasGroup,name,lable,widgets){
-		var m = {parents:[TankerWidget,SvgWidget.new(canvasGroup,name)]};
+	new: func(dialog,canvasGroup,name,lable,widgets){
+		var m = {parents:[TankerWidget,SvgWidget.new(dialog,canvasGroup,name)]};
 		m._class = "TankerWidget";
 		m._lable 	= lable;
 		m._widget	= {};
@@ -469,8 +470,8 @@ COLOR["TabActive"] = "#f2f2f2";
 COLOR["TabPassive"] = "#cccccc";
 
 var TabWidget = {
-	new: func(canvasGroup,name){
-		var m = {parents:[TabWidget,SvgWidget.new(canvasGroup,name)]};
+	new: func(dialog,canvasGroup,name){
+		var m = {parents:[TabWidget,SvgWidget.new(dialog,canvasGroup,name)]};
 		m._class = "TabWidget";
 		m._cTabFuel	 	= m._group.getElementById("Tab_Fuel").set("z-index",3);
 		m._cTabFuelBack	 	= m._group.getElementById("Tab_Fuel_Back").setColorFill(COLOR["TabActive"]);
@@ -540,8 +541,8 @@ var TabWidget = {
 };
 
 var WightWidget = {
-	new: func(canvasGroup,name,widgets){
-		var m = {parents:[WightWidget,SvgWidget.new(canvasGroup,name)]};
+	new: func(dialog,canvasGroup,name,widgets){
+		var m = {parents:[WightWidget,SvgWidget.new(dialog,canvasGroup,name)]};
 		m._class = "WightWidget";
 		m._widget = {};
 		
@@ -632,8 +633,8 @@ var WightWidget = {
 };
 
 var PayloadWidget = {
-	new: func(canvasGroup,name,lable,index,listCategory=nil){
-		var m = {parents:[PayloadWidget,SvgWidget.new(canvasGroup,name)]};
+	new: func(dialog,canvasGroup,name,lable,index,listCategory=nil){
+		var m = {parents:[PayloadWidget,SvgWidget.new(dialog,canvasGroup,name)]};
 		m._class = "PayloadWidget";
 		m._index 	= index;
 		m._lable 	= lable;
@@ -793,9 +794,33 @@ var PayloadWidget = {
 
 
 var TripWidget = {
-	new: func(canvasGroup,name){
-		var m = {parents:[TripWidget,SvgWidget.new(canvasGroup,name)]};
+	new: func(dialog,canvasGroup,name){
+		var m = {parents:[TripWidget,SvgWidget.new(dialog,canvasGroup,name)]};
 		m._class = "TripWidget";
+		
+		m._ptree = {
+			climb : {
+				vs	: m._dialog._nRoot.initNode("climb/vs",1000.0,"DOUBLE"),
+				gs	: m._dialog._nRoot.initNode("climb/gs",150.0,"DOUBLE"),
+			},
+			cruise : {
+				fl	: m._dialog._nRoot.initNode("cruise/fl",120.0,"DOUBLE"),
+				gs	: m._dialog._nRoot.initNode("cruise/gs",200.0,"DOUBLE"),
+			},
+			descent : {
+				vs	: m._dialog._nRoot.initNode("descent/vs",-1000.0,"DOUBLE"),
+				gs	: m._dialog._nRoot.initNode("descent/gs",180.0,"DOUBLE"),
+			},
+			reserve : {
+				fl	: m._dialog._nRoot.initNode("reserve/fl",30.0,"DOUBLE"),
+				gs	: m._dialog._nRoot.initNode("reserve/gs",180.0,"DOUBLE"),
+				nm	: m._dialog._nRoot.initNode("reserve/nm",50.0,"DOUBLE"),
+			},
+			trip : {
+				nm	: m._dialog._nRoot.initNode("trip/nm",250.0,"DOUBLE"),
+			},
+		};
+		
 		m._can = {
 			climb : {
 				vsFrame	: m._group.getElementById(m._name~"_Climb_VS"),
@@ -835,11 +860,6 @@ var TripWidget = {
 				fuel	: m._group.getElementById(m._name~"_Reserve_Fuel_Value"),
 			},
 			trip : {
-				nm	: m._group.getElementById(m._name~"_NM_Value"),
-				time	: m._group.getElementById(m._name~"_Time_Value"),
-				fuel	: m._group.getElementById(m._name~"_Fuel_Value"),
-			},
-			trip : {
 				nmFrame	: m._group.getElementById(m._name~"_NM"),
 				nm	: m._group.getElementById(m._name~"_NM_Value"),
 				time	: m._group.getElementById(m._name~"_Time_Value"),
@@ -863,39 +883,39 @@ var TripWidget = {
 		
 		m._data = {
 			climb : {
-				vs	: 1000,
-				gs	: 150,
+				vs	: m._ptree.climb.vs.getValue(),
+				gs	: m._ptree.climb.gs.getValue(),
 				nm	: 65,
 				time	: 0,
 				fuel	: 0,
 				burnrate: 230/3600, # lbs/sec
 			},
 			cruise : {
-				fl	: 120,
-				gs	: 200,
+				fl	: m._ptree.cruise.fl.getValue(),
+				gs	: m._ptree.cruise.gs.getValue(),
 				nm	: 0,
 				time	: 0,
 				fuel	: 0,
 				burnrate: 221/3600,
 			},
 			descent : {
-				vs	: -1000,
-				gs	: 180,
+				vs	: m._ptree.descent.vs.getValue(),
+				gs	: m._ptree.descent.gs.getValue(),
 				nm	: 50,
 				time	: 0,
 				fuel	: 0,
 				burnrate: 145/3600, # lbs/sec
 			},
 			reserve : {
-				fl	: 30,
-				gs	: 180,
-				nm	: 50,
+				fl	: m._ptree.reserve.fl.getValue(),
+				gs	: m._ptree.reserve.gs.getValue(),
+				nm	: m._ptree.reserve.nm.getValue(),
 				time	: 0,
 				fuel	: 0,
 				burnrate: 180/3600, # lbs/sec
 			},
 			trip : {
-				nm	: 250,
+				nm	: m._ptree.trip.nm.getValue(),
 				time	: 0,
 				fuel	: 0,
 			},
@@ -959,7 +979,7 @@ var TripWidget = {
 		}
 		me._data.cruise.fl = math.floor(me._data.cruise.fl);
 		me._data.cruise.fl = global.clamp(me._data.cruise.fl,0,250.0);
-
+		me._ptree.cruise.fl.setValue(me._data.cruise.fl);
 		me._draw();
 	},
 	_onCruiseGsChange : func(e){
@@ -969,7 +989,8 @@ var TripWidget = {
 			me._data.cruise.gs -= e.deltaY;
 		}
 		me._data.cruise.gs = global.clamp(me._data.cruise.gs,80,250.0);
-
+		me._ptree.cruise.gs.setValue(me._data.cruise.gs);
+		
 		me._draw();
 	},
 	_onClimbGsChange : func(e){
@@ -979,7 +1000,8 @@ var TripWidget = {
 			me._data.climb.gs -= e.deltaY;
 		}
 		me._data.climb.gs = global.clamp(me._data.climb.gs,80,250.0);
-
+		me._ptree.climb.gs.setValue(me._data.climb.gs);
+		
 		me._draw();
 	},
 	_onClimbVsChange : func(e){
@@ -989,7 +1011,8 @@ var TripWidget = {
 			me._data.climb.vs -= e.deltaY * 100;
 		}
 		me._data.climb.vs = global.clamp(me._data.climb.vs,100,1600.0);
-
+		me._ptree.climb.vs.setValue(me._data.climb.vs);
+		
 		me._draw();
 	},
 	_onDescentGsChange : func(e){
@@ -999,7 +1022,8 @@ var TripWidget = {
 			me._data.descent.gs -= e.deltaY;
 		}
 		me._data.descent.gs = global.clamp(me._data.descent.gs,80,250.0);
-
+		me._ptree.descent.gs.setValue(me._data.descent.gs);
+		
 		me._draw();
 	},
 	_onDescentVsChange : func(e){
@@ -1009,7 +1033,8 @@ var TripWidget = {
 			me._data.descent.vs -= e.deltaY * 100;
 		}
 		me._data.descent.vs = global.clamp(me._data.descent.vs,-1600,-100);
-
+		me._ptree.descent.vs.setValue(me._data.descent.vs);
+		
 		me._draw();
 	},
 	_onReserveFlChange : func(e){
@@ -1020,7 +1045,8 @@ var TripWidget = {
 		}
 		me._data.reserve.fl = math.floor(me._data.reserve.fl);
 		me._data.reserve.fl = global.clamp(me._data.reserve.fl,0,250.0);
-
+		me._ptree.reserve.fl.setValue(me._data.reserve.fl);
+		
 		me._draw();
 	},
 	_onReserveGsChange : func(e){
@@ -1030,7 +1056,8 @@ var TripWidget = {
 			me._data.reserve.gs -= e.deltaY;
 		}
 		me._data.reserve.gs = global.clamp(me._data.reserve.gs,80,250.0);
-
+		me._ptree.reserve.gs.setValue(me._data.reserve.gs);
+		
 		me._draw();
 	},
 	_onTripNmChange: func(e){
@@ -1040,7 +1067,8 @@ var TripWidget = {
 			me._data.trip.nm -= e.deltaY;
 		}
 		me._data.trip.nm = global.clamp(me._data.trip.nm,20,8000.0);
-
+		me._ptree.trip.nm.setValue(me._data.trip.nm);
+		
 		me._draw();
 	},
 	_onReserveNmChange: func(e){
@@ -1050,7 +1078,8 @@ var TripWidget = {
 			me._data.reserve.nm -= e.deltaY;
 		}
 		me._data.reserve.nm = global.clamp(me._data.reserve.nm,20,150.0);
-
+		me._ptree.reserve.nm.setValue(me._data.reserve.nm);
+		
 		me._draw();
 	},
 	
@@ -1073,19 +1102,31 @@ var TripWidget = {
 		
 		me._data.climb.nm 	= me._data.climb.gs * (( (me._data.cruise.fl*100) / me._data.climb.vs) / 60) ;
 		me._data.climb.time	= (me._data.climb.nm / me._data.climb.gs) * 3600;
+		me._data.climb.burnrate = extra500.fuelFlowLog.getBurnRate(me._data.cruise.fl,me._data.climb.gs,me._data.climb.vs);
+		me._data.climb.burnrate += extra500.fuelFlowLog.getBurnRate(30,me._data.climb.gs,me._data.climb.vs);
+		me._data.climb.burnrate /=2;
+		me._data.climb.burnrate /=3600;
 		me._data.climb.fuel	= me._data.climb.time * me._data.climb.burnrate;
 		
 		me._data.descent.nm 	= math.abs(me._data.descent.gs * (( (me._data.cruise.fl*100) / me._data.descent.vs) / 60) );
 		me._data.descent.time	= (me._data.descent.nm / me._data.descent.gs) * 3600;
+		me._data.descent.burnrate = extra500.fuelFlowLog.getBurnRate(me._data.cruise.fl,me._data.descent.gs,me._data.descent.vs);
+		me._data.descent.burnrate += extra500.fuelFlowLog.getBurnRate(30,me._data.descent.gs,me._data.descent.vs);
+		me._data.descent.burnrate /=2;
+		me._data.descent.burnrate /=3600;
 		me._data.descent.fuel	= me._data.descent.time * me._data.descent.burnrate;
 		
 		
 		me._data.reserve.time	= (me._data.reserve.nm / me._data.reserve.gs) * 3600;
+		me._data.reserve.burnrate = extra500.fuelFlowLog.getBurnRate(me._data.reserve.fl,me._data.reserve.gs,0);
+		me._data.reserve.burnrate /=3600;
 		me._data.reserve.fuel	= me._data.reserve.time * me._data.reserve.burnrate;
 		
 		
 		me._data.cruise.nm 	= me._data.trip.nm - me._data.climb.nm - me._data.descent.nm;
 		me._data.cruise.time	= (me._data.cruise.nm / me._data.cruise.gs) * 3600;
+		me._data.cruise.burnrate = extra500.fuelFlowLog.getBurnRate(me._data.cruise.fl,me._data.cruise.gs,0);
+		me._data.cruise.burnrate /=3600;
 		me._data.cruise.fuel	= me._data.cruise.time * me._data.cruise.burnrate;
 		
 		me._data.trip.time	= me._data.climb.time + me._data.cruise.time + me._data.descent.time;
@@ -1175,8 +1216,9 @@ var TripWidget = {
 var FuelPayloadClass = {
 	new : func(){
 		var m = {parents:[FuelPayloadClass]};
-		m._nRoot 	= props.globals.initNode("/sim/gui/dialogs/FuelPayload/dialog");
+		m._nRoot 	= props.globals.initNode("/extra500/dialog/fuel");
 		m._nNotify 	= m._nRoot.initNode("dialogNotify",0.0,"DOUBLE");
+		
 		m._name  = "Fuel and Payload";
 		m._title = "Fuel and Payload Settings";
 		m._fdmdata = {
@@ -1206,7 +1248,6 @@ var FuelPayloadClass = {
 			LeftAux 	: nil,
 			LeftMain 	: nil,
 			LeftCol 	: nil,
-			CenterEngine 	: nil,
 			RightAux 	: nil,
 			RightMain 	: nil,
 			RightCol 	: nil,
@@ -1330,29 +1371,28 @@ var FuelPayloadClass = {
 
 		canvas.parsesvg(me._group, "Dialogs/FuelPayload.svg",{"font-mapper": global.canvas.FontMapper});
 		
-		me._widget.selector = TabWidget.new(me._group,"Tab Selector");
+		me._widget.selector = TabWidget.new(me,me._group,"Tab Selector");
 		
 		
-		me._widget.LeftAux 		= TankWidget.new(me._group,"Left_Aux","Auxiliary",0,1);
-		me._widget.LeftMain 		= TankWidget.new(me._group,"Left_Main","Main",1,1);
-		me._widget.LeftCol 		= TankWidget.new(me._group,"Left_Collector","Collector",2,0);
-		me._widget.CenterEngine 	= TankWidget.new(me._group,"Center_Engine","Engine",3,0);
-		me._widget.RightCol 		= TankWidget.new(me._group,"Right_Collector","Collector",4,0);
-		me._widget.RightMain 		= TankWidget.new(me._group,"Right_Main","Main",5,1);
-		me._widget.RightAux 		= TankWidget.new(me._group,"Right_Aux","Auxiliary",6,1);
+		me._widget.LeftAux 		= TankWidget.new(me,me._group,"Left_Aux","Auxiliary",0,1);
+		me._widget.LeftMain 		= TankWidget.new(me,me._group,"Left_Main","Main",1,1);
+		me._widget.LeftCol 		= TankWidget.new(me,me._group,"Left_Collector","Collector",2,0);
+		me._widget.RightCol 		= TankWidget.new(me,me._group,"Right_Collector","Collector",4,0);
+		me._widget.RightMain 		= TankWidget.new(me,me._group,"Right_Main","Main",5,1);
+		me._widget.RightAux 		= TankWidget.new(me,me._group,"Right_Aux","Auxiliary",6,1);
 		
-		me._widget.tanker		= TankerWidget.new(me._group,"Tanker","Tanker",me._widget);
+		me._widget.tanker		= TankerWidget.new(me,me._group,"Tanker","Tanker",me._widget);
 
-		me._widget.Seat1A		= PayloadWidget.new(me._group,"Seat_1A","Pilot",0,{"Cat1":0.55});
-		me._widget.Seat1B		= PayloadWidget.new(me._group,"Seat_1B","Co-Pilot",1,{"Cat1":0.55});
-		me._widget.Seat2A		= PayloadWidget.new(me._group,"Seat_2A","Seat 2A",2,{"Cat1":0.6,"Cat2":0.4,"Cat3":0.1});
-		me._widget.Seat2B		= PayloadWidget.new(me._group,"Seat_2B","Seat 2B",3,{"Cat1":0.6,"Cat2":0.4,"Cat3":0.1});
-		me._widget.Seat3A		= PayloadWidget.new(me._group,"Seat_3A","Seat 3A",4,{"Cat1":0.6,"Cat2":0.4,"Cat3":0.1});
-		me._widget.Seat3B		= PayloadWidget.new(me._group,"Seat_3B","Seat 3B",5,{"Cat1":0.6,"Cat2":0.4,"Cat3":0.1});
-		me._widget.Seat4A		= PayloadWidget.new(me._group,"Seat_4A","Baggage",6,{"Cat1":0.8,"Cat2":0.5,"Cat3":0.2});
+		me._widget.Seat1A		= PayloadWidget.new(me,me._group,"Seat_1A","Pilot",0,{"Cat1":0.55});
+		me._widget.Seat1B		= PayloadWidget.new(me,me._group,"Seat_1B","Co-Pilot",1,{"Cat1":0.55});
+		me._widget.Seat2A		= PayloadWidget.new(me,me._group,"Seat_2A","Seat 2A",2,{"Cat1":0.6,"Cat2":0.4,"Cat3":0.1});
+		me._widget.Seat2B		= PayloadWidget.new(me,me._group,"Seat_2B","Seat 2B",3,{"Cat1":0.6,"Cat2":0.4,"Cat3":0.1});
+		me._widget.Seat3A		= PayloadWidget.new(me,me._group,"Seat_3A","Seat 3A",4,{"Cat1":0.6,"Cat2":0.4,"Cat3":0.1});
+		me._widget.Seat3B		= PayloadWidget.new(me,me._group,"Seat_3B","Seat 3B",5,{"Cat1":0.6,"Cat2":0.4,"Cat3":0.1});
+		me._widget.Seat4A		= PayloadWidget.new(me,me._group,"Seat_4A","Baggage",6,{"Cat1":0.8,"Cat2":0.5,"Cat3":0.2});
 		
-		me._widget.weight = WightWidget.new(me._group,"Weight",me._widget);
-		me._widget.trip = TripWidget.new(me._group,"Trip");
+		me._widget.weight = WightWidget.new(me,me._group,"Weight",me._widget);
+		me._widget.trip = TripWidget.new(me,me._group,"Trip");
 		
 		foreach(widget;keys(me._widget)){
 			if(me._widget[widget] != nil){

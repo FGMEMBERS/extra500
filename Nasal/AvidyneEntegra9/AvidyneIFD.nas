@@ -27,35 +27,35 @@ var AvidyneData = {
 		m.name = name;
 		m.link = nil; #link to the other IFD DATA
 	#autopilot
-		m.apPowered 	= 0;
-		m.apModeRdy	= 0;
-		m.apModeFail 	= 0;
-		m.apModeALT 	= 0;
-		m.apModeNAV 	= 0;
-		m.apModeAPR 	= 0;
-		m.apModeGPSS 	= 0;
-		m.apModeTRIM 	= 0;
-		m.apModeVS 	= 0;
-		m.apModeHDG 	= 0;
-		m.apModeCAP 	= 0;
-		m.apModeSOFT 	= 0;
-		m.apModeAP 	= 0;
-		m.apModeFD 	= 0;
-		
-		m.nApPower 	= props.globals.initNode("/extra500/instrumentation/Autopilot/state",0.0,"INT");
-		m.nApModeRdy 	= props.globals.initNode("/autopilot/mode/rdy",0.0,"INT");
-		m.nApModeFail 	= props.globals.initNode("/autopilot/mode/fail",0.0,"INT");
-		m.nApModeALT 	= props.globals.initNode("/autopilot/mode/alt",0.0,"INT");
-		m.nApModeNAV 	= props.globals.initNode("/autopilot/mode/nav",0.0,"INT");
-		m.nApModeAPR 	= props.globals.initNode("/autopilot/mode/apr",0.0,"INT");
-		m.nApModeGPSS 	= props.globals.initNode("/autopilot/mode/gpss",0.0,"INT");
-		m.nApModeTRIM 	= props.globals.initNode("/autopilot/mode/trim",0.0,"INT");
-		m.nApModeVS  	= props.globals.initNode("/autopilot/mode/vs",0.0,"INT");
-		m.nApModeCAP 	= props.globals.initNode("/autopilot/mode/cap",0.0,"INT");
-		m.nApModeSOFT  	= props.globals.initNode("/autopilot/mode/soft",0.0,"INT");
-		m.nApModeHDG 	= props.globals.initNode("/autopilot/mode/heading",0.0,"INT");
-		m.nApModeAP  	= props.globals.initNode("/autopilot/settings/ap",0.0,"INT");
-		m.nApModeFD  	= props.globals.initNode("/autopilot/settings/fd",0.0,"INT");
+# 		m.apPowered 	= 0;
+# 		m.apModeRdy	= 0;
+# 		m.apModeFail 	= 0;
+# 		m.apModeALT 	= 0;
+# 		m.apModeNAV 	= 0;
+# 		m.apModeAPR 	= 0;
+# 		m.apModeGPSS 	= 0;
+# 		m.apModeTRIM 	= 0;
+# 		m.apModeVS 	= 0;
+# 		m.apModeHDG 	= 0;
+# 		m.apModeCAP 	= 0;
+# 		m.apModeSOFT 	= 0;
+# 		m.apModeAP 	= 0;
+# 		m.apModeFD 	= 0;
+# 		
+# 		m.nApPower 	= props.globals.initNode("/extra500/instrumentation/Autopilot/state",0.0,"INT");
+# 		m.nApModeRdy 	= props.globals.initNode("/autopilot/mode/rdy",0.0,"INT");
+# 		m.nApModeFail 	= props.globals.initNode("/autopilot/mode/fail",0.0,"INT");
+# 		m.nApModeALT 	= props.globals.initNode("/autopilot/mode/alt",0.0,"INT");
+# 		m.nApModeNAV 	= props.globals.initNode("/autopilot/mode/nav",0.0,"INT");
+# 		m.nApModeAPR 	= props.globals.initNode("/autopilot/mode/apr",0.0,"INT");
+# 		m.nApModeGPSS 	= props.globals.initNode("/autopilot/mode/gpss",0.0,"INT");
+# 		m.nApModeTRIM 	= props.globals.initNode("/autopilot/mode/trim",0.0,"INT");
+# 		m.nApModeVS  	= props.globals.initNode("/autopilot/mode/vs",0.0,"INT");
+# 		m.nApModeCAP 	= props.globals.initNode("/autopilot/mode/cap",0.0,"INT");
+# 		m.nApModeSOFT  	= props.globals.initNode("/autopilot/mode/soft",0.0,"INT");
+# 		m.nApModeHDG 	= props.globals.initNode("/autopilot/mode/heading",0.0,"INT");
+# 		m.nApModeAP  	= props.globals.initNode("/autopilot/settings/ap",0.0,"INT");
+# 		m.nApModeFD  	= props.globals.initNode("/autopilot/settings/fd",0.0,"INT");
 		
 		
 		
@@ -67,32 +67,32 @@ var AvidyneData = {
 		m.nHDG = props.globals.initNode("/instrumentation/heading-indicator-IFD-"~m.name~"/indicated-heading-deg",0.0,"DOUBLE");
 		m.nHDGBug = props.globals.initNode("/autopilot/settings/heading-bug-deg",0.0,"DOUBLE");
 	# IAS 	
-		m.IAS 		= 0;
-		m.TAS 		= 0;
-		m.GroundSpeed	= 0;
-		m.IAS_Rate	= 0;
-		
-		m.nIAS 		= props.globals.initNode("/instrumentation/airspeed-IFD-"~m.name~"/indicated-airspeed-kt",0.0,"DOUBLE");
-		m.nIASRate	= props.globals.initNode("/instrumentation/airspeed-IFD-"~m.name~"/airspeed-change-ktps",0.0,"DOUBLE");
-		m.nTAS 		= props.globals.initNode("/instrumentation/airspeed-IFD-"~m.name~"/true-speed-kt",0.0,"DOUBLE");
-		m.nGroundSpeed 	= props.globals.initNode("/velocities/groundspeed-kt",0.0,"DOUBLE");
+# 		m.IAS 		= 0;
+# 		m.TAS 		= 0;
+# 		m.GroundSpeed	= 0;
+# 		m.IAS_Rate	= 0;
+# 		
+# 		m.nIAS 		= props.globals.initNode("/instrumentation/airspeed-IFD-"~m.name~"/indicated-airspeed-kt",0.0,"DOUBLE");
+# 		m.nIASRate	= props.globals.initNode("/instrumentation/airspeed-IFD-"~m.name~"/airspeed-change-ktps",0.0,"DOUBLE");
+# 		m.nTAS 		= props.globals.initNode("/instrumentation/airspeed-IFD-"~m.name~"/true-speed-kt",0.0,"DOUBLE");
+# 		m.nGroundSpeed 	= props.globals.initNode("/velocities/groundspeed-kt",0.0,"DOUBLE");
 		
 	#vertical speed
-		m.VS 		 = 0;
-		m.VSBug		 = 0;
-		
-		m.nVS = props.globals.initNode("/instrumentation/ivsi-IFD-"~m.name~"/indicated-speed-fpm",0.0,"DOUBLE");
-		m.nVSBug = props.globals.initNode("/autopilot/settings/vertical-speed-fpm",0.0,"DOUBLE");
+# 		m.VS 		 = 0;
+# 		m.VSBug		 = 0;
+# 		
+# 		m.nVS = props.globals.initNode("/instrumentation/ivsi-IFD-"~m.name~"/indicated-speed-fpm",0.0,"DOUBLE");
+# 		m.nVSBug = props.globals.initNode("/autopilot/settings/vertical-speed-fpm",0.0,"DOUBLE");
 		
 	# ALT
-		m.ALT 		= 0;
-		m.ALTBug 	= 0;
-		m.HPA 		= 0;
-		
-		m.nALT = props.globals.initNode("/instrumentation/altimeter-IFD-"~m.name~"/indicated-altitude-ft",0.0,"DOUBLE");
-		#m.nALT = props.globals.initNode("/instrumentation/altimeter-IFD-"~m.name~"/setting-hpa",0.0,"DOUBLE");
-		m.nALTBug = props.globals.initNode("/autopilot/settings/tgt-altitude-ft",0.0,"DOUBLE");
-		m.nHPA = props.globals.initNode("/instrumentation/altimeter-IFD-"~m.name~"/setting-hpa",0.0,"DOUBLE");
+# 		m.ALT 		= 0;
+# 		m.ALTBug 	= 0;
+# 		m.HPA 		= 0;
+# 		
+# 		m.nALT = props.globals.initNode("/instrumentation/altimeter-IFD-"~m.name~"/indicated-altitude-ft",0.0,"DOUBLE");
+# 		#m.nALT = props.globals.initNode("/instrumentation/altimeter-IFD-"~m.name~"/setting-hpa",0.0,"DOUBLE");
+# 		m.nALTBug = props.globals.initNode("/autopilot/settings/tgt-altitude-ft",0.0,"DOUBLE");
+# 		m.nHPA = props.globals.initNode("/instrumentation/altimeter-IFD-"~m.name~"/setting-hpa",0.0,"DOUBLE");
 		
 	#wind
 		m.WindDirection = 0;
@@ -157,58 +157,58 @@ var AvidyneData = {
 	#loading the data from PropertyTree
 	load20Hz : func(now,dt){
 	#autopilot
-		me.apPowered 	= me.nApPower.getValue();
-		me.apModeRdy 	= me.nApModeRdy.getValue();
-		me.apModeFail 	= me.nApModeFail.getValue();
-		me.apModeALT 	= me.nApModeALT.getValue();
-		me.apModeNAV 	= me.nApModeNAV.getValue();
-		me.apModeAPR 	= me.nApModeAPR.getValue();
-		me.apModeGPSS 	= me.nApModeGPSS.getValue();
-		me.apModeTRIM 	= me.nApModeTRIM.getValue();
-		me.apModeVS 	= me.nApModeVS.getValue();
-		me.apModeHDG 	= me.nApModeHDG.getValue();
-		me.apModeCAP 	= me.nApModeCAP.getValue();
-		me.apModeSOFT 	= me.nApModeSOFT.getValue();
-		me.apModeAP 	= me.nApModeAP.getValue();
-		me.apModeFD 	= me.nApModeFD.getValue();
+# 		me.apPowered 	= me.nApPower.getValue();
+# 		me.apModeRdy 	= me.nApModeRdy.getValue();
+# 		me.apModeFail 	= me.nApModeFail.getValue();
+# 		me.apModeALT 	= me.nApModeALT.getValue();
+# 		me.apModeNAV 	= me.nApModeNAV.getValue();
+# 		me.apModeAPR 	= me.nApModeAPR.getValue();
+# 		me.apModeGPSS 	= me.nApModeGPSS.getValue();
+# 		me.apModeTRIM 	= me.nApModeTRIM.getValue();
+# 		me.apModeVS 	= me.nApModeVS.getValue();
+# 		me.apModeHDG 	= me.nApModeHDG.getValue();
+# 		me.apModeCAP 	= me.nApModeCAP.getValue();
+# 		me.apModeSOFT 	= me.nApModeSOFT.getValue();
+# 		me.apModeAP 	= me.nApModeAP.getValue();
+# 		me.apModeFD 	= me.nApModeFD.getValue();
 		
 	#heading 
-		me.HDG 		= me.nHDG.getValue();
-		me.HDGBug 	= me.nHDGBug.getValue();
+# 		me.HDG 		= me.nHDG.getValue();
+# 		me.HDGBug 	= me.nHDGBug.getValue();
 	#speed 	
-		me.IAS 		= me.nIAS.getValue();
-		me.IAS_Rate	= me.nIASRate.getValue();
-		me.TAS 		= me.nTAS.getValue();
+# 		me.IAS 		= me.nIAS.getValue();
+# 		me.IAS_Rate	= me.nIASRate.getValue();
+# 		me.TAS 		= me.nTAS.getValue();
 	#vertical speed
-		me.VS 		= me.nVS.getValue();
-		me.VSBug	= me.nVSBug.getValue();
+# 		me.VS 		= me.nVS.getValue();
+# 		me.VSBug	= me.nVSBug.getValue();
 	#altitude
-		me.ALT 		= me.nALT.getValue() ;
-		#me.ALT		= me.ALT < 0 ? 0 : me.ALT;
-		me.ALTBug 	= me.nALTBug.getValue();
-		me.HPA 		= me.nHPA.getValue();
+# 		me.ALT 		= me.nALT.getValue() ;
+# 		#me.ALT		= me.ALT < 0 ? 0 : me.ALT;
+# 		me.ALTBug 	= me.nALTBug.getValue();
+# 		me.HPA 		= me.nHPA.getValue();
 	#wind
-		me.WindDirection 	= me.nWindDirection.getValue();
-		me.WindSpeed 		= me.nWindSpeed.getValue();
+# 		me.WindDirection 	= me.nWindDirection.getValue();
+# 		me.WindSpeed 		= me.nWindSpeed.getValue();
 	#attitude
-		me.pitch 	= me.nPitch.getValue();
-		me.roll 	= me.nRoll.getValue();
+# 		me.pitch 	= me.nPitch.getValue();
+# 		me.roll 	= me.nRoll.getValue();
 
 	#enviroment
-		me.OAT = me.nOAT.getValue();
+# 		me.OAT = me.nOAT.getValue();
 	#DI 
-		me.HDI 		= me.nHDI.getValue();
-		me.VDI 		= -me.nVDI.getValue();
-		#me.GSable 	= me.nGSable.getValue();
-		me.GSinRange 	= me.nGSinRange.getValue();
-		me.NAVinRange 	= me.nNAVinRange.getValue();
-		#me.NAVLOC	= me.nNAVLOC.getValue();
+# 		me.HDI 		= me.nHDI.getValue();
+# 		me.VDI 		= -me.nVDI.getValue();
+# 		#me.GSable 	= me.nGSable.getValue();
+# 		me.GSinRange 	= me.nGSinRange.getValue();
+# 		me.NAVinRange 	= me.nNAVinRange.getValue();
+# 		#me.NAVLOC	= me.nNAVLOC.getValue();
 	
 	# Bearing Pointer
-		if (me.brgSource > 0){
-			me.brgCoursePointer	= getprop(BEARING_SOURCE_TREE[me.brgSource]~"/radials/reciprocal-radial-deg") or 0;
-			
-		}
+# 		if (me.brgSource > 0){
+# 			me.brgCoursePointer	= getprop(BEARING_SOURCE_TREE[me.brgSource]~"/radials/reciprocal-radial-deg") or 0;
+# 			
+# 		}
 		
 	
 	},
@@ -216,13 +216,13 @@ var AvidyneData = {
 		#print("AvidyneData.load2Hz("~now~","~dt~") .. ");
 	#Box Timer
 		me._timerCount(dt);
-	#Box Primary Nav
-		me.navDistance	= me.nNavDistance.getValue();
-		me.GroundSpeed	= me.nGroundSpeed.getValue();
-	# Box Bearing Pointer
-		if (me.brgSource > 0){
-			me.brgDistance		= getprop(BEARING_SOURCE_TREE[me.brgSource]~"/nav-distance") * global.CONST.METER2NM;
-		}
+# 	#Box Primary Nav
+# 		me.navDistance	= me.nNavDistance.getValue();
+# 		me.GroundSpeed	= me.nGroundSpeed.getValue();
+# 	# Box Bearing Pointer
+# 		if (me.brgSource > 0){
+# 			me.brgDistance		= getprop(BEARING_SOURCE_TREE[me.brgSource]~"/nav-distance") * global.CONST.METER2NM;
+# 		}
 	},
 	adjustBaro : func(value=nil){
 		if (value==nil){
@@ -301,13 +301,20 @@ var AvidyneIFD = {
 		
 		m._nOverSpeedWarning  	= props.globals.initNode("/extra500/sound/overspeedWarning",0.0,"BOOL");
 		
-		
+# 		m.width 	= 1024;
+# 		m.height	= 768;
+# 		m.width 	= 2048;
+# 		m.height	= 1536;
+		m.width 	= 2410;
+		m.height	= 1810;
+# 		
 		m.canvas = canvas.new({
 		"name": "IFD",
-		"size": [2410, 1810],
-		"view": [2410, 1810],
+		"size": [m.width, m.height],
+		"view": [m.width, m.height],
 		"mipmapping": 1,
 		});
+
 		m.canvas.addPlacement({"node": acPlace});
 		m.canvas.setColorBackground(0,0,0);
 		
@@ -380,6 +387,12 @@ var AvidyneIFD = {
 		me.nLedDim.setValue(1);
 		me.keys["DIM >"] = func(){me._adjustBrightness(0.1);};
 		me.keys["DIM <"] = func(){me._adjustBrightness(-0.1);};
+		
+		me.nLedBaro.setValue(1);
+		me.keys["BARO >"] = func(){me.data.adjustBaro(1);};
+		me.keys["BARO <"] = func(){me.data.adjustBaro(-1);};
+		me.keys["BARO STD"] = func(){me.data.adjustBaro();};
+		
 		
 		me.keys["PFD >"] = func(){me.gotoPage("PFD","PFD >");};
 		me.keys["PFD <"] = func(){me.gotoPage("PFD","PFD <");};
@@ -505,21 +518,27 @@ var AvidyneIFD = {
 		
 	},
 	gotoPage : func(name,key=nil){
-		#print("IFD "~me.name ~" gotoPage("~name~") .. ");
+		print("IFD "~me.name ~" gotoPage("~name~") .. ");
 		if (me._state == 1){
 			if (!contains(me.page,name)){
 				name = "none";	
 			}
 		
 			if (me.pageSelected != name){
-				me.page[me.pageSelected].setVisible(0);
-				me.page[me.pageSelected].removeListeners();
+# 				me.page[me.pageSelected].setVisible(0);
+# 				me.page[me.pageSelected].removeListeners();
+# 				me.pageSelected = name;
+# 				me.nPageSelected.setValue(me.pageSelected);
+# 				me.clearLeds();
+# 				me.page[me.pageSelected].setListeners();
+# 				me.page[me.pageSelected].registerKeys();
+# 				me.page[me.pageSelected].setVisible(1);
+				
+				me.page[me.pageSelected].deinit();
+				me.clearLeds();
 				me.pageSelected = name;
 				me.nPageSelected.setValue(me.pageSelected);
-				me.clearLeds();
-				me.page[me.pageSelected].setListeners();
-				me.page[me.pageSelected].registerKeys();
-				me.page[me.pageSelected].setVisible(1);
+				me.page[me.pageSelected].init();
 			}else{
 				if(key!=nil){
 					me.page[me.pageSelected].onClick(key);
