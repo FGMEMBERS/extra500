@@ -404,6 +404,10 @@
 				<test value="1">
 					/autopilot/radionav-channel/is-localizer-frequency eq 0
 				</test>
+				<test logic="OR" value="1">
+					/instrumentation/nav-source eq 0
+					/instrumentation/nav-source eq 1
+				</test>
 			</test>
 			<output>/autopilot/mode/cap</output>
 		</switch>
@@ -417,6 +421,10 @@
 				</test>
 				<test value="1">
 					/autopilot/radionav-channel/is-localizer-frequency eq 0
+				</test>
+				<test logic="OR" value="1">
+					/instrumentation/nav-source eq 0
+					/instrumentation/nav-source eq 1
 				</test>
 			</test>
 			<output>/autopilot/mode/soft</output>
@@ -1486,6 +1494,7 @@
 			<default value="/autopilot/mode/heading"/>
 			<test logic="AND" value="0">
 				/autopilot/mode/nav eq 1
+				/instrumentation/nav-source eq 2
 				/autopilot/fms-channel/course-error-nm lt 3.0
 				/autopilot/fms-channel/course-error-nm gt -3.0
 			</test>
