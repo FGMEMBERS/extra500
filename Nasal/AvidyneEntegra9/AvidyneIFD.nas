@@ -301,13 +301,20 @@ var AvidyneIFD = {
 		
 		m._nOverSpeedWarning  	= props.globals.initNode("/extra500/sound/overspeedWarning",0.0,"BOOL");
 		
-		
+# 		m.width 	= 1024;
+# 		m.height	= 768;
+# 		m.width 	= 2048;
+# 		m.height	= 1536;
+		m.width 	= 2410;
+		m.height	= 1810;
+# 		
 		m.canvas = canvas.new({
 		"name": "IFD",
-		"size": [2410, 1810],
-		"view": [2410, 1810],
+		"size": [m.width, m.height],
+		"view": [m.width, m.height],
 		"mipmapping": 1,
 		});
+
 		m.canvas.addPlacement({"node": acPlace});
 		m.canvas.setColorBackground(0,0,0);
 		

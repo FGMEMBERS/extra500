@@ -52,6 +52,10 @@ var AutopilotWidget = {
 		me._state	= 0;
 		me._ready	= 0;
 		me._fail	= 0;
+		
+		me._modeALT	= 0;
+		me._modeHDG	= 0;
+		me._modeVS	= 0;
 		return m;
 	},
 	setListeners : func(instance) {
@@ -95,7 +99,13 @@ var AutopilotWidget = {
 		}
 	},
 	_onALT : func(n){
-		me._can.ModeALT.setVisible(n.getValue());
+		me._modeALT = n.getValue();
+		me._can.ModeALT.setVisible(me._modeALT);
+		if(me._modeALT == 1){
+			me._Page._widget.Altitude._can.Bug.set("fill",COLOR["Magenta"]);
+		}else{
+			me._Page._widget.Altitude._can.Bug.set("fill","none");
+		}
 	},
 	_onNAV : func(n){
 		me._can.ModeNAV.setVisible(n.getValue());
@@ -110,7 +120,13 @@ var AutopilotWidget = {
 		me._can.ModeTRIM.setVisible(n.getValue());
 	},
 	_onVS : func(n){
-		me._can.ModeVS.setVisible(n.getValue());
+		me._modeVS = n.getValue();
+		me._can.ModeVS.setVisible(me._modeVS);
+		if(me._modeVS == 1){
+			me._Page._widget.VerticalSpeed._can.Bug.set("fill",COLOR["Magenta"]);
+		}else{
+			me._Page._widget.VerticalSpeed._can.Bug.set("fill","none");
+		}
 	},
 	_onCAP : func(n){
 		me._can.ModeCAP.setVisible(n.getValue());
@@ -119,7 +135,13 @@ var AutopilotWidget = {
 		me._can.ModeSOFT.setVisible(n.getValue());
 	},
 	_onHDG : func(n){
-		me._can.ModeHDG.setVisible(n.getValue());
+		me._modeHDG = n.getValue();
+		me._can.ModeHDG.setVisible(me._modeHDG);
+		if(me._modeHDG == 1){
+			me._Page._widget.HSI._can.HeadingBug.set("fill",COLOR["Magenta"]);
+		}else{
+			me._Page._widget.HSI._can.HeadingBug.set("fill","none");
+		}
 	},
 	_onAP : func(n){
 		me._can.ModeFD.setText("AP");
@@ -343,12 +365,12 @@ var AltitudeWidget = {
 			D100H		: m._group.getElementById("ALT_LAD_D100H"),
 			D200T		: m._group.getElementById("ALT_LAD_D200T"),
 			D200H		: m._group.getElementById("ALT_LAD_D200H"),
-			Plade		: m._group.getElementById("AltBlackPlade").set("z-index",2),
-			Bar10		: m._group.getElementById("AltBar10").set("clip","rect(377px, 2060px, 605px,1680px)").set("z-index",3),
-			Bar100		: m._group.getElementById("AltBar100").set("clip","rect(451px, 2060px, 527px, 1680px)").set("z-index",3),
-			Bar1000		: m._group.getElementById("AltBar1000").set("clip","rect(451px, 2060px, 527px, 1680px)").set("z-index",3),
-			Bar10000	: m._group.getElementById("AltBar10000").set("clip","rect(451px, 2060px, 527px, 1680px)").set("z-index",3),
-			Bug		: m._group.getElementById("ALT_Bug").set("z-index",4),
+			Plade		: m._group.getElementById("AltBlackPlade"),
+			Bar10		: m._group.getElementById("AltBar10").set("clip","rect(377px, 2060px, 605px,1680px)"),
+			Bar100		: m._group.getElementById("AltBar100").set("clip","rect(451px, 2060px, 527px, 1680px)"),
+			Bar1000		: m._group.getElementById("AltBar1000").set("clip","rect(451px, 2060px, 527px, 1680px)"),
+			Bar10000	: m._group.getElementById("AltBar10000").set("clip","rect(451px, 2060px, 527px, 1680px)"),
+			Bug		: m._group.getElementById("ALT_Bug"),
 			BugValue	: m._group.getElementById("ALT_Selected"),
 			HPA		: m._group.getElementById("hPa"),
 		};
@@ -1228,14 +1250,15 @@ var AvidynePagePFD = {
 		] };
 		
 		# creating the page 
+		m.svgFile	= "IFD_PFD_"~m.IFD.width~"x"~m.IFD.height~".svg";
 		
 		m.nHorizon = m.page.createChild("image","Horizon");
 		m.nHorizon.set("file", "Models/instruments/IFDs/Horizon.png");
-		m.nHorizon.setSize(2410,1810);
+		m.nHorizon.setSize(m.IFD.width ,m.IFD.height);
 		m.nHorizon.setScale(2.0);
 		
 		m.nHorizonTF = m.nHorizon.createTransform();
-		m.nHorizonTF.setTranslation(-2410*1/2,-1810*3/4 +80);
+		m.nHorizonTF.setTranslation(-m.IFD.width *1/2,-m.IFD.height*3/4 +80);
 		
 		m.nHorizon.updateCenter();
 		
@@ -1248,11 +1271,19 @@ var AvidynePagePFD = {
 			
 		
 	#loading svg
-		canvas.parsesvg(m.page, "Models/instruments/IFDs/RH-IFD_CanvasTest.svg",{
+# 		canvas.parsesvg(m.page, "Models/instruments/IFDs/RH-IFD_CanvasTest.svg",{
+# 			"font-mapper": global.canvas.FontMapper
+# 			}
+# 		);
+		canvas.parsesvg(m.page, "Models/instruments/IFDs/"~m.svgFile,{
 			"font-mapper": global.canvas.FontMapper
 			}
 		);
-		
+# 		canvas.parsesvg(m.page, "Models/instruments/IFDs/IFD_PFD_1024x768.svg",{
+# 			"font-mapper": global.canvas.FontMapper
+# 			}
+# 		);
+# 		m.page.setScale(2.0);
 		
 		m._widget	= {
 			Attitude		: AttitudeIndicatorWidget.new(m,m.page,"Altitude"),
