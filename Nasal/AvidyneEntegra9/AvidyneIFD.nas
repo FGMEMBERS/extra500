@@ -215,7 +215,7 @@ var AvidyneData = {
 	load2Hz : func(now,dt){
 		#print("AvidyneData.load2Hz("~now~","~dt~") .. ");
 	#Box Timer
-# 		me._timerCount(dt);
+		me._timerCount(dt);
 # 	#Box Primary Nav
 # 		me.navDistance	= me.nNavDistance.getValue();
 # 		me.GroundSpeed	= me.nGroundSpeed.getValue();

@@ -22,11 +22,11 @@
 
 
 
-var NAV_SOURCE_NAME 	= ["Nav 1","Nav 2","FMS"];
-var NAV_SOURCE_TREE 	= ["/instrumentation/nav[0]","/instrumentation/nav[1]","/instrumentation/fms"];
-
-var BEARING_SOURCE_NAME = ["0ff","Nav 1","Nav 2","FMS"];
-var BEARING_SOURCE_TREE = [nil,"/instrumentation/nav[0]","/instrumentation/nav[1]","/instrumentation/fms"];
+# var NAV_SOURCE_NAME 	= ["Nav 1","Nav 2","FMS"];
+# var NAV_SOURCE_TREE 	= ["/instrumentation/nav[0]","/instrumentation/nav[1]","/instrumentation/fms"];
+# 
+# var BEARING_SOURCE_NAME = ["0ff","Nav 1","Nav 2","FMS"];
+# var BEARING_SOURCE_TREE = [nil,"/instrumentation/nav[0]","/instrumentation/nav[1]","/instrumentation/fms"];
 
 
 var AutopilotWidget = {
@@ -312,9 +312,9 @@ var AirspeedSpeedWidget = {
 			}
 			
 			if( me._ias >= me._limitVne + 3.0){
-				me._IFD._nOverSpeedWarning.setValue(1);
+				me._Page.IFD._nOverSpeedWarning.setValue(1);
 			}else{
-				me._IFD._nOverSpeedWarning.setValue(0);
+				me._Page.IFD._nOverSpeedWarning.setValue(0);
 			}
 			
 		}
@@ -633,13 +633,28 @@ var NavSourceWidget = {
 		me._Page.keys["L1 >"] = func(){me._scroll(1);};
 		me._Page.keys["L1 <"] = func(){me._scroll(-1);};
 		
+		me._Page.IFD.nLedLK.setValue(1);
+		me._Page.keys["LK <<"]	= func(){me._adjustRadial(-10);};
+		me._Page.keys["LK <"] 	= func(){me._adjustRadial(-1);};
+		me._Page.keys["LK >"] 	= func(){me._adjustRadial(1);};
+		me._Page.keys["LK >>"] 	= func(){me._adjustRadial(10);};
+		
+		
 		me._scroll(0);
 	},
 	deinit : func(){
-		me.removeListeners();	
+		me.removeListeners();
+		
 		me._Page.IFD.nLedL1.setValue(0);
 		me._Page.keys["L1 >"] = nil;
 		me._Page.keys["L1 <"] = nil;
+		
+		me._Page.IFD.nLedLK.setValue(0);
+		me._Page.keys["LK <<"] 	= nil;
+		me._Page.keys["LK <"] 	= nil;
+		me._Page.keys["LK >"] 	= nil;
+		me._Page.keys["LK >>"] 	= nil;
+		
 	},
 	setSource : func(src){
 		me._source = src;
@@ -654,6 +669,12 @@ var NavSourceWidget = {
 		
 		me._can.Source.setText(me._NAME[me._source]);
 				
+	},
+	_adjustRadial : func(amount){
+		me._Pointer += amount;
+		me._Pointer = math.mod(me._Pointer,360.0);
+		setprop("/instrumentation/nav[0]/radials/selected-deg",me._Pointer);
+		setprop("/instrumentation/nav[1]/radials/selected-deg",me._Pointer);
 	},
 	_onInRangeChange : func(n){
 		me._isInRange = n.getValue();
@@ -804,9 +825,14 @@ var BearingSourceWidget = {
 		
 		me._can.Source.setText(me._NAME[me._source]);
 		
+		me.update20Hz(0,0);
+		me.update2Hz(0,0);
+		
 		me._can.Off.setVisible (!me._source);
 		me._can.On.setVisible (me._source);
-				
+		me._can.Pointer.setVisible(me._source);	
+		
+		
 	},
 	_onFrequencyChange : func(n){
 		me._frequency = n.getValue();
@@ -841,7 +867,7 @@ var BearingSourceWidget = {
 	update20Hz : func(now,dt){
 		if (me._source > 0){
 			me._Pointer	= me._ptree.Pointer.getValue();
-			
+			me._can.Pointer.setRotation((me._Pointer - me._Page._widget.HSI._heading) * global.CONST.DEG2RAD);
 			me._can.Brg.setText(sprintf("%i",me._Pointer +0.5));
 		}
 	},
@@ -905,10 +931,10 @@ var DeviationIndicatorWidget = {
 			}
 			
 			if ((me._Page._widget.NavSource._horizontalDeviation <= -0.99) or (me._Page._widget.NavSource._horizontalDeviation >= 0.99)){
-				#me._can.CDI.set("fill",COLOR["Yellow"]);
+				me._Page._widget.HSI._can.CDI.set("fill",COLOR["Yellow"]);
 				me._can.HDI_Needle.set("fill",COLOR["Yellow"]);
 			}else{
-				#me._can.CDI.set("fill",COLOR["Green"]);
+				me._Page._widget.HSI._can.CDI.set("fill",COLOR["Green"]);
 				me._can.HDI_Needle.set("fill",COLOR["White"]);	
 			}
 			
@@ -940,7 +966,6 @@ var HeadingSituationIndicatorWidget = {
 			HeadingBug_Text	: m._group.getElementById("HDG_Bug_Value").updateCenter(),
 			Heading_Text	: m._group.getElementById("HDG_Value").updateCenter(),
 			CompassRose	: m._group.getElementById("CompassRose").updateCenter(),
-			BearingPointer	: m._group.getElementById("BearingPtr_Pointer").updateCenter(),
 		};
 		m._heading		= 0;
 		m._headingBug		= 0;
@@ -959,23 +984,21 @@ var HeadingSituationIndicatorWidget = {
 	update20Hz : func(now,dt){
 		me._heading = me._ptree.Heading.getValue();
 		
+		me._can.Heading_Text.setText(sprintf("%03i",math.floor( me._heading + 0.5)));
+		me._can.CompassRose.setRotation(-me._heading * global.CONST.DEG2RAD);
+		
+		me._can.HeadingBug_Text.setText(sprintf("%03i",me._headingBug));
+		me._can.HeadingBug.setRotation((me._headingBug - me._heading) * global.CONST.DEG2RAD);
+		
+		me._can.CoursePointer.setRotation((me._Page._widget.NavSource._Pointer - me._heading) * global.CONST.DEG2RAD);
 		me._can.FromFlag.setVisible(me._Page._widget.NavSource._fromFlag);
 		me._can.ToFlag.setVisible(me._Page._widget.NavSource._toFlag);
 			
 		me._can.CDI.setTranslation(me._Page._widget.NavSource._horizontalDeviation * 240,0);
-		me._can.CoursePointer.setRotation((me._Page._widget.NavSource._Pointer - me._heading) * global.CONST.DEG2RAD);
+		# CDI visibility/color contolled by DeviationIndicatorWidget
 		
-		me._can.HeadingBug_Text.setText(sprintf("%03i",me._headingBug));
-		me._can.Heading_Text.setText(sprintf("%03i",math.floor( me._heading + 0.5)));
-		me._can.CompassRose.setRotation(-me._heading * global.CONST.DEG2RAD);
-		me._can.HeadingBug.setRotation((me._headingBug - me._heading) * global.CONST.DEG2RAD);
+		# Bearing Pointer visibility/rotation controlled by BearingSourceWidget
 		
-		if (me._Page._widget.BearingSource._source > 0){
-			me._can.BearingPointer.setRotation((me._Page._widget.BearingSource._Pointer - me._heading) * global.CONST.DEG2RAD);
-			me._can.BearingPointer.setVisible(1);
-		}else{
-			me._can.BearingPointer.setVisible(0);
-		}
 		
 	},
 	
@@ -1024,6 +1047,233 @@ var EnvironmentWidget = {
 		me._can.GroundSpeed.setText(sprintf("%2i",me._groundSpeed));
 		
 	},
+};
+
+var TimerWidget = {
+	new: func(page,canvasGroup,name){
+		var m = {parents:[TimerWidget,IfdWidget.new(page,canvasGroup,name)]};
+		m._class 	= "TimerWidget";
+		m._ptree	= {
+			OAT		: props.globals.initNode("/environment/temperature-degc",0.0,"DOUBLE"),
+			WindDirection	: props.globals.initNode("/environment/wind-from-heading-deg",0.0,"DOUBLE"),
+			WindSpeed	: props.globals.initNode("/environment/wind-speed-kt",0.0,"DOUBLE"),
+			GroundSpeed	: props.globals.initNode("/velocities/groundspeed-kt",0.0,"DOUBLE"),
+		};
+		m._can		= {
+			On		: m._group.getElementById("Timer_On"),
+			Center		: m._group.getElementById("Timer_btn_Center").updateCenter(),
+			Left		: m._group.getElementById("Timer_btn_Left"),
+			Time		: m._group.getElementById("Timer_Time"),
+			
+		};
+		m._windSpeed 		= 0;
+		m._windDirection 	= 0;
+		m._oat			= 0;
+		m._groundSpeed		= 0;
+		return m;
+	},
+	init : func(instance=me){
+		me.registerKeys();
+	},
+	deinit : func(){
+		me._Page.IFD.nLedR2.setValue(0);
+		me._Page.keys["R2 <"] = nil;
+		me._Page.keys["R2 >"] = nil;
+	},
+	registerKeys : func(){
+		if ((me._Page.data.timerState == 0)){
+			me._Page.IFD.nLedR2.setValue(1);
+			me._Page.keys["R2 <"] = func(){me._Page.data.timerStart();me.registerKeys();};
+			me._Page.keys["R2 >"] = func(){me._Page.data.timerStart();me.registerKeys();};
+			me._can.On.setVisible(0);
+			me._can.Center.setVisible(1);
+			
+		}elsif ((me._Page.data.timerState == 1)){
+			me._Page.IFD.nLedR2.setValue(1);
+			me._Page.keys["R2 <"] = func(){me._Page.data.timerStart();me.registerKeys();};
+			me._Page.keys["R2 >"] = func(){me._Page.data.timerReset();me.registerKeys();};
+			me._can.Left.setText("Start");
+			me._can.On.setVisible(1);
+			me._can.Center.setVisible(0);
+		}elsif ((me._Page.data.timerState == 2)){
+			me._Page.IFD.nLedR2.setValue(1);
+			me._Page.keys["R2 <"] = func(){me._Page.data.timerStop();me.registerKeys();};
+			me._Page.keys["R2 >"] = func(){me._Page.data.timerReset();me.registerKeys();};
+			me._can.Left.setText("Stop");
+			me._can.On.setVisible(1);
+			me._can.Center.setVisible(0);
+		}
+		me._can.Time.setText(me._Page.data.timerGetTime());
+	},
+	update2Hz : func(now,dt){
+		me._can.Time.setText(me._Page.data.timerGetTime());
+	}
+};
+
+var BugSelectWidget = {
+	new: func(page,canvasGroup,name){
+		var m = {parents:[BugSelectWidget,IfdWidget.new(page,canvasGroup,name)]};
+		m._class 	= "BugSelectWidget";
+		m._can		= {
+			Heading		: m._group.getElementById("Set_Heading"),
+			HeadingBorder	: m._group.getElementById("Set_Heading_Border"),
+			Altitude	: m._group.getElementById("Set_Altitude"),
+			AltitudeBorder	: m._group.getElementById("Set_Altitude_Border"),
+			VS		: m._group.getElementById("Set_VS"),
+			VSBorder	: m._group.getElementById("Set_VS_Border"),
+		};
+		m._modeRK = nil;
+		return m;
+	},
+	init : func(instance=me){
+		me.registerKeys();
+	},
+	deinit : func(){
+		me._Page.IFD.nLedR3.setValue(0);
+		me._Page.keys["R3 <"] 	= nil;
+		me._Page.keys["R3 >"] 	= nil;
+		me._Page.IFD.nLedR4.setValue(0);
+		me._Page.keys["R4 <"] 	= nil;
+		me._Page.keys["R4 >"] 	= nil;
+		me._Page.IFD.nLedR5.setValue(0);
+		me._Page.keys["R5 <"] 	= nil;
+		me._Page.keys["R5 >"] 	= nil;
+		
+		me._Page.IFD.nLedRK.setValue(0);
+		me._Page.keys["RK >>"] 	= nil;
+		me._Page.keys["RK <<"] 	= nil;
+		me._Page.keys["RK"] 	= nil;
+		me._Page.keys["RK >"] 	= nil;
+		me._Page.keys["RK <"] 	= nil;
+		
+	},
+	registerKeys : func(){
+		me._Page.IFD.nLedR3.setValue(1);
+		me._Page.keys["R3 <"] = func(){me._setModeRK("HDG");};
+		me._Page.keys["R3 >"] = func(){me._setModeRK("HDG");};
+		me._Page.IFD.nLedR4.setValue(1);
+		me._Page.keys["R4 <"] = func(){me._setModeRK("ALT");};
+		me._Page.keys["R4 >"] = func(){me._setModeRK("ALT");};
+		me._Page.IFD.nLedR5.setValue(1);
+		me._Page.keys["R5 <"] = func(){me._setModeRK("VS");};
+		me._Page.keys["R5 >"] = func(){me._setModeRK("VS");};
+	},
+	_setModeRK : func(value=nil){
+		
+		me._modeRK = value;
+		
+		
+		me._can.HeadingBorder.set("stroke",COLOR["Blue"]);
+		me._can.HeadingBorder.set("stroke-width",10);
+		me._can.Heading.set("z-index",1);
+		me._can.AltitudeBorder.set("stroke",COLOR["Blue"]);
+		me._can.AltitudeBorder.set("stroke-width",10);
+		me._can.Altitude.set("z-index",1);
+		me._can.VSBorder.set("stroke",COLOR["Blue"]);
+		me._can.VSBorder.set("stroke-width",10);
+		me._can.VS.set("z-index",1);
+			
+		
+		if (me._modeRK == "HDG"){
+			me._can.HeadingBorder.set("stroke",COLOR["Turquoise"]);
+			me._can.HeadingBorder.set("stroke-width",20);
+			me._can.Heading.set("z-index",2);
+		
+			me._Page.IFD.nLedRK.setValue(1);
+			me._Page.keys["RK >>"] 	= func(){extra500.keypad.onAdjustHeading(10);};
+			me._Page.keys["RK <<"] 	= func(){extra500.keypad.onAdjustHeading(-10);};
+			me._Page.keys["RK"] 	= func(){extra500.keypad.onHeadingSync();};
+			me._Page.keys["RK >"] 	= func(){extra500.keypad.onAdjustHeading(1);};
+			me._Page.keys["RK <"] 	= func(){extra500.keypad.onAdjustHeading(-1);};
+		}elsif (me._modeRK == "ALT"){
+			me._can.AltitudeBorder.set("stroke",COLOR["Turquoise"]);
+			me._can.AltitudeBorder.set("stroke-width",20);
+			me._can.Altitude.set("z-index",2);
+						
+			me._Page.IFD.nLedRK.setValue(1);
+			me._Page.keys["RK >>"] 	= func(){extra500.keypad.onAdjustAltitude(500);};
+			me._Page.keys["RK <<"] 	= func(){extra500.keypad.onAdjustAltitude(-500);};
+			me._Page.keys["RK"] 	= func(){extra500.keypad.onHeadingSync();};
+			me._Page.keys["RK >"] 	= func(){extra500.keypad.onAdjustAltitude(100);};
+			me._Page.keys["RK <"] 	= func(){extra500.keypad.onAdjustAltitude(-100);};
+		}elsif (me._modeRK == "VS"){
+			me._can.VSBorder.set("stroke",COLOR["Turquoise"]);
+			me._can.VSBorder.set("stroke-width",20);
+			me._can.VS.set("z-index",2);
+			
+			me._Page.IFD.nLedRK.setValue(1);
+			me._Page.keys["RK >>"] 	= func(){extra500.autopilot.onAdjustVS(-100);};
+			me._Page.keys["RK <<"] 	= func(){extra500.autopilot.onAdjustVS(100);};
+			me._Page.keys["RK"] 	= func(){extra500.autopilot.onSetVS(0);};
+			me._Page.keys["RK >"] 	= func(){extra500.autopilot.onAdjustVS(-100);};
+			me._Page.keys["RK <"] 	= func(){extra500.autopilot.onAdjustVS(100);};
+		}else{
+							
+			me._Page.IFD.nLedRK.setValue(0);
+			delete(me.keys,"RK >>");
+			delete(me.keys,"RK <<");
+			delete(me.keys,"RK");
+			delete(me.keys,"RK >");
+			delete(me.keys,"RK <");
+		}
+	},
+	update2Hz : func(now,dt){
+		me._can.Time.setText(me._Page.data.timerGetTime());
+	}
+};
+
+var TabWidget = {
+	new: func(page,canvasGroup,name){
+		var m = {parents:[TabWidget,IfdWidget.new(page,canvasGroup,name)]};
+		m._class 	= "TabWidget";
+		m._tab		= [];
+		m._can		= {};
+		m._index 	= 0;
+		m._max  	= 0;
+		return m;
+	},
+	init : func(instance=me){
+		foreach(t;me._tab){
+			me._can[t] = {
+				content	: me._group.getElementById("Tab_"~t~"_Content"),
+				tab	: me._group.getElementById("Tab_"~t~""),
+				text	: me._group.getElementById("Tab_"~t~"_Text"),
+				back	: me._group.getElementById("Tab_"~t~"_Back"),
+			}
+		}
+		me._max = size(me._tab)-1;
+		me.scroll(0);
+		
+		me._Page.keys["PFD >"] = func(){me.scroll(1);};
+		me._Page.keys["PFD <"] = func(){me.scroll(-1);};
+		
+	},
+	deinit : func(){
+		me._Page.keys["PFD >"] = nil;
+		me._Page.keys["PFD <"] = nil;
+	},
+	scroll : func(amount){
+		me._index += amount;
+		if (me._index > me._max){ me._index = 0; }
+		if (me._index < 0){ me._index = me._max; }
+		
+		foreach(t;me._tab){
+			me._can[t].content.setVisible(0);
+			me._can[t].tab.set("z-index",1);
+			me._can[t].back.set("stroke",COLOR["Blue"]);
+			me._can[t].back.set("stroke-width",10);
+			me._can[t].text.set("fill",COLOR["Blue"]);
+		}
+		
+		me._can[me._tab[me._index]].content.setVisible(1);
+		me._can[me._tab[me._index]].tab.set("z-index",2);
+		me._can[me._tab[me._index]].back.set("stroke",COLOR["Turquoise"]);
+		me._can[me._tab[me._index]].back.set("stroke-width",20);
+		me._can[me._tab[me._index]].text.set("fill",COLOR["Turquoise"]);
+	
+		me._Page._scrollToTab(me._index);
+	}
+	
 };
 
 var AvidynePagePFD = {
@@ -1076,9 +1326,12 @@ var AvidynePagePFD = {
 			DI			: DeviationIndicatorWidget.new(m,m.page,"Deviation Indicator"),
 			HSI	 		: HeadingSituationIndicatorWidget.new(m,m.page,"Deviation Indicator"),
 			Environment 		: EnvironmentWidget.new(m,m.page,"Environment"),
+			Timer	 		: TimerWidget.new(m,m.page,"Timer"),
+			BugSelect 		: BugSelectWidget.new(m,m.page,"BugSelect"),
+			Tab	 		: TabWidget.new(m,m.page,"BugSelect"),
 		};
 		
-		
+		m._widget.Tab._tab = ["Nav","Bug"];
 		
 				
 # 		m.CompassRose = m.page.getElementById("CompassRose").updateCenter();
@@ -1252,21 +1505,21 @@ var AvidynePagePFD = {
 # 		m.cBearingPointer 	= m.page.getElementById("BearingPtr_Pointer").updateCenter().setVisible(0);
 		
 	# Box Timer
-		m.cTimerOn 		= m.page.getElementById("Timer_On");
-		m.cTimerBtnCenter	= m.page.getElementById("Timer_btn_Center");
-		m.cTimerBtnLeft		= m.page.getElementById("Timer_btn_Left");
-		m.cTimerTime 		= m.page.getElementById("Timer_Time");
+# 		m.cTimerOn 		= m.page.getElementById("Timer_On");
+# 		m.cTimerBtnCenter	= m.page.getElementById("Timer_btn_Center");
+# 		m.cTimerBtnLeft		= m.page.getElementById("Timer_btn_Left");
+# 		m.cTimerTime 		= m.page.getElementById("Timer_Time");
 		
 	# Page NavDisplay
-		m.cPage_NavDisplay	= m.page.getElementById("Page_NavDisplay");
+# 		m.cPage_NavDisplay	= m.page.getElementById("Page_NavDisplay");
 	# Page BugSelect
-		m.cPage_BugSelect	= m.page.getElementById("Page_BugSelect").setVisible(0);
-		m.cSetHeading		= m.page.getElementById("Set_Heading");
-		m.cSetHeadingBorder	= m.page.getElementById("Set_Heading_Border");
-		m.cSetAltitude		= m.page.getElementById("Set_Altitude");
-		m.cSetAltitudeBorder	= m.page.getElementById("Set_Altitude_Border");
-		m.cSetVs		= m.page.getElementById("Set_VS");
-		m.cSetVsBorder		= m.page.getElementById("Set_VS_Border");
+# 		m.cPage_BugSelect	= m.page.getElementById("Page_BugSelect").setVisible(0);
+# 		m.cSetHeading		= m.page.getElementById("Set_Heading");
+# 		m.cSetHeadingBorder	= m.page.getElementById("Set_Heading_Border");
+# 		m.cSetAltitude		= m.page.getElementById("Set_Altitude");
+# 		m.cSetAltitudeBorder	= m.page.getElementById("Set_Altitude_Border");
+# 		m.cSetVs		= m.page.getElementById("Set_VS");
+# 		m.cSetVsBorder		= m.page.getElementById("Set_VS_Border");
 # funny unreal Ice Warning just for Test
 		m._cIceWarning		= m.page.getElementById("ICE_Warning").hide();
 		
@@ -1276,20 +1529,10 @@ var AvidynePagePFD = {
 	},
 	registerKeys : func(){
 		
-		
-		
-				
-		me.IFD.nLedLK.setValue(1);
-		me.keys["LK <<"] = func(){me._adjustRadial(-10);};
-		me.keys["LK <"] = func(){me._adjustRadial(-1);};
-		me.keys["LK >"] = func(){me._adjustRadial(1);};
-		me.keys["LK >>"] = func(){me._adjustRadial(10);};
-		
-		me.keys["PFD >"] = func(){me._scrollSubPage(1);};
-		me.keys["PFD <"] = func(){me._scrollSubPage(-1);};
-		
-		
-		me._timerRegisterKeys();
+# 		me.keys["PFD >"] = func(){me._scrollSubPage(1);};
+# 		me.keys["PFD <"] = func(){me._scrollSubPage(-1);};
+			
+# 		me._timerRegisterKeys();
 	},
 	setListeners : func (){
 # 		append(me._listeners,setlistener("/instrumentation/nav-source",func(n){me._onNavSourceChange(n);},1,0));
@@ -1473,164 +1716,129 @@ var AvidynePagePFD = {
 # 	},
 	
 ### Using The Timer Pilot Guide Page 88
-	_timerRegisterKeys : func(){
-		if ((me.data.timerState == 0)){
-			me.IFD.nLedR2.setValue(1);
-			me.keys["R2 <"] = func(){me.data.timerStart();me._timerRegisterKeys();};
-			me.keys["R2 >"] = func(){me.data.timerStart();me._timerRegisterKeys();};
-			me.cTimerOn.setVisible(0);
-			me.cTimerBtnCenter.setVisible(1);
-			
-		}elsif ((me.data.timerState == 1)){
-			me.IFD.nLedR2.setValue(1);
-			me.keys["R2 <"] = func(){me.data.timerStart();me._timerRegisterKeys();};
-			me.keys["R2 >"] = func(){me.data.timerReset();me._timerRegisterKeys();};
-			me.cTimerBtnLeft.setText("Start");
-			me.cTimerOn.setVisible(1);
-			me.cTimerBtnCenter.setVisible(0);
-		}elsif ((me.data.timerState == 2)){
-			me.IFD.nLedR2.setValue(1);
-			me.keys["R2 <"] = func(){me.data.timerStop();me._timerRegisterKeys();};
-			me.keys["R2 >"] = func(){me.data.timerReset();me._timerRegisterKeys();};
-			me.cTimerBtnLeft.setText("Stop");
-			me.cTimerOn.setVisible(1);
-			me.cTimerBtnCenter.setVisible(0);
-		}
-	},
+# 	_timerRegisterKeys : func(){
+# 		if ((me.data.timerState == 0)){
+# 			me.IFD.nLedR2.setValue(1);
+# 			me.keys["R2 <"] = func(){me.data.timerStart();me._timerRegisterKeys();};
+# 			me.keys["R2 >"] = func(){me.data.timerStart();me._timerRegisterKeys();};
+# 			me.cTimerOn.setVisible(0);
+# 			me.cTimerBtnCenter.setVisible(1);
+# 			
+# 		}elsif ((me.data.timerState == 1)){
+# 			me.IFD.nLedR2.setValue(1);
+# 			me.keys["R2 <"] = func(){me.data.timerStart();me._timerRegisterKeys();};
+# 			me.keys["R2 >"] = func(){me.data.timerReset();me._timerRegisterKeys();};
+# 			me.cTimerBtnLeft.setText("Start");
+# 			me.cTimerOn.setVisible(1);
+# 			me.cTimerBtnCenter.setVisible(0);
+# 		}elsif ((me.data.timerState == 2)){
+# 			me.IFD.nLedR2.setValue(1);
+# 			me.keys["R2 <"] = func(){me.data.timerStop();me._timerRegisterKeys();};
+# 			me.keys["R2 >"] = func(){me.data.timerReset();me._timerRegisterKeys();};
+# 			me.cTimerBtnLeft.setText("Stop");
+# 			me.cTimerOn.setVisible(1);
+# 			me.cTimerBtnCenter.setVisible(0);
+# 		}
+# 	},
 		
-	_adjustNavSource : func (amount){
-		me.data.navSource += amount;
-		if (me.data.navSource > 2){
-			me.data.navSource = 0;
-		}
-		if (me.data.navSource < 0){
-			me.data.navSource = 2;
-		}
-		me.data.nNAVSource.setValue(me.data.navSource);
-	},
-	_adjustRadial : func(amount){
-		me.data.navCoursePointer += amount;
-		me.data.navCoursePointer = math.mod(me.data.navCoursePointer,360.0);
-		setprop("/instrumentation/nav[0]/radials/selected-deg",me.data.navCoursePointer);
-		setprop("/instrumentation/nav[1]/radials/selected-deg",me.data.navCoursePointer);
-	},
-	_scrollSubPage : func(amount){
-		me._SubPageIndex += amount;
-		if (me._SubPageIndex > 1){
-			me._SubPageIndex = 0;
-		}
-		if (me._SubPageIndex < 0){
-			me._SubPageIndex = 1;
-		}
-		if (me._SubPageIndex == 0){ # Page NavDisplay
-			me.cPage_BugSelect.setVisible(0);
-			me.cPage_NavDisplay.setVisible(1);
+# 	_adjustNavSource : func (amount){
+# 		me.data.navSource += amount;
+# 		if (me.data.navSource > 2){
+# 			me.data.navSource = 0;
+# 		}
+# 		if (me.data.navSource < 0){
+# 			me.data.navSource = 2;
+# 		}
+# 		me.data.nNAVSource.setValue(me.data.navSource);
+# 	},
+	_scrollToTab : func(index){
+		if (index == 0){ # Page NavDisplay
 			
-			me.IFD.nLedR3.setValue(0);
-			delete(me.keys,"R3 <");
-			delete(me.keys,"R3 >");
-			me.IFD.nLedR4.setValue(0);
-			delete(me.keys,"R4 <");
-			delete(me.keys,"R4 >");
-			me.IFD.nLedR5.setValue(0);
-			delete(me.keys,"R5 <");
-			delete(me.keys,"R5 >");
+			me._widget.BugSelect.deinit();
 			
-			me._setModeRK();
-			
-		}elsif(me._SubPageIndex == 1){ # Page BugSelect
-			me.cPage_BugSelect.setVisible(1);
-			me.cPage_NavDisplay.setVisible(0);
-			me.IFD.nLedR3.setValue(1);
-			me.keys["R3 <"] = func(){me._setModeRK("HDG");};
-			me.keys["R3 >"] = func(){me._setModeRK("HDG");};
-			me.IFD.nLedR4.setValue(1);
-			me.keys["R4 <"] = func(){me._setModeRK("ALT");};
-			me.keys["R4 >"] = func(){me._setModeRK("ALT");};
-			me.IFD.nLedR5.setValue(1);
-			me.keys["R5 <"] = func(){me._setModeRK("VS");};
-			me.keys["R5 >"] = func(){me._setModeRK("VS");};
-			
+		}elsif(index == 1){ # Page BugSelect
+
+			me._widget.BugSelect.init();
 			
 		}else{
-			print("_scrollSubPage() ... mist");
+			print("_scrollToTab() ... mist");
 		}
 	},
-	_setModeRK : func(value=nil){
-		
-		me._modeRK = value;
-		
-		if (me._modeRK == "HDG"){
-			me.cSetHeadingBorder.set("stroke",COLOR["Turquoise"]);
-			me.cSetHeadingBorder.set("stroke-width",20);
-			me.cSetHeading.set("z-index",2);
-			me.cSetAltitudeBorder.set("stroke",COLOR["Blue"]);
-			me.cSetAltitudeBorder.set("stroke-width",10);
-			me.cSetAltitude.set("z-index",1);
-			me.cSetVsBorder.set("stroke",COLOR["Blue"]);
-			me.cSetVsBorder.set("stroke-width",10);
-			me.cSetVs.set("z-index",1);
-			
-			me.IFD.nLedRK.setValue(1);
-			me.keys["RK >>"] 	= func(){extra500.keypad.onAdjustHeading(10);};
-			me.keys["RK <<"] 	= func(){extra500.keypad.onAdjustHeading(-10);};
-			me.keys["RK"] 		= func(){extra500.keypad.onHeadingSync();};
-			me.keys["RK >"] 	= func(){extra500.keypad.onAdjustHeading(1);};
-			me.keys["RK <"] 	= func(){extra500.keypad.onAdjustHeading(-1);};
-		}elsif (me._modeRK == "ALT"){
-			me.cSetHeadingBorder.set("stroke",COLOR["Blue"]);
-			me.cSetHeadingBorder.set("stroke-width",10);
-			me.cSetHeading.set("z-index",1);
-			me.cSetAltitudeBorder.set("stroke",COLOR["Turquoise"]);
-			me.cSetAltitudeBorder.set("stroke-width",20);
-			me.cSetAltitude.set("z-index",2);
-			me.cSetVsBorder.set("stroke",COLOR["Blue"]);
-			me.cSetVsBorder.set("stroke-width",10);
-			me.cSetVs.set("z-index",1);
-						
-			me.IFD.nLedRK.setValue(1);
-			me.keys["RK >>"] 	= func(){extra500.keypad.onAdjustAltitude(500);};
-			me.keys["RK <<"] 	= func(){extra500.keypad.onAdjustAltitude(-500);};
-			me.keys["RK"] 		= func(){extra500.keypad.onHeadingSync();};
-			me.keys["RK >"] 	= func(){extra500.keypad.onAdjustAltitude(100);};
-			me.keys["RK <"] 	= func(){extra500.keypad.onAdjustAltitude(-100);};
-		}elsif (me._modeRK == "VS"){
-			me.cSetHeadingBorder.set("stroke",COLOR["Blue"]);
-			me.cSetHeadingBorder.set("stroke-width",10);
-			me.cSetHeading.set("z-index",1);
-			me.cSetAltitudeBorder.set("stroke",COLOR["Blue"]);
-			me.cSetAltitudeBorder.set("stroke-width",10);
-			me.cSetAltitude.set("z-index",1);
-			me.cSetVsBorder.set("stroke",COLOR["Turquoise"]);
-			me.cSetVsBorder.set("stroke-width",20);
-			me.cSetVs.set("z-index",2);
-			
-			me.IFD.nLedRK.setValue(1);
-			me.keys["RK >>"] 	= func(){extra500.autopilot.onAdjustVS(-100);};
-			me.keys["RK <<"] 	= func(){extra500.autopilot.onAdjustVS(100);};
-			me.keys["RK"] 		= func(){extra500.autopilot.onSetVS(0);};
-			me.keys["RK >"] 	= func(){extra500.autopilot.onAdjustVS(-100);};
-			me.keys["RK <"] 	= func(){extra500.autopilot.onAdjustVS(100);};
-		}else{
-			
-			me.cSetHeadingBorder.set("stroke",COLOR["Blue"]);
-			me.cSetHeadingBorder.set("stroke-width",10);
-			me.cSetHeading.set("z-index",1);
-			me.cSetAltitudeBorder.set("stroke",COLOR["Blue"]);
-			me.cSetAltitudeBorder.set("stroke-width",10);
-			me.cSetAltitude.set("z-index",1);
-			me.cSetVsBorder.set("stroke",COLOR["Blue"]);
-			me.cSetVsBorder.set("stroke-width",10);
-			me.cSetVs.set("z-index",1);
-						
-			me.IFD.nLedRK.setValue(0);
-			delete(me.keys,"RK >>");
-			delete(me.keys,"RK <<");
-			delete(me.keys,"RK");
-			delete(me.keys,"RK >");
-			delete(me.keys,"RK <");
-		}
-	},
+# 	_setModeRK : func(value=nil){
+# 		
+# 		me._modeRK = value;
+# 		
+# 		if (me._modeRK == "HDG"){
+# 			me.cSetHeadingBorder.set("stroke",COLOR["Turquoise"]);
+# 			me.cSetHeadingBorder.set("stroke-width",20);
+# 			me.cSetHeading.set("z-index",2);
+# 			me.cSetAltitudeBorder.set("stroke",COLOR["Blue"]);
+# 			me.cSetAltitudeBorder.set("stroke-width",10);
+# 			me.cSetAltitude.set("z-index",1);
+# 			me.cSetVsBorder.set("stroke",COLOR["Blue"]);
+# 			me.cSetVsBorder.set("stroke-width",10);
+# 			me.cSetVs.set("z-index",1);
+# 			
+# 			me.IFD.nLedRK.setValue(1);
+# 			me.keys["RK >>"] 	= func(){extra500.keypad.onAdjustHeading(10);};
+# 			me.keys["RK <<"] 	= func(){extra500.keypad.onAdjustHeading(-10);};
+# 			me.keys["RK"] 		= func(){extra500.keypad.onHeadingSync();};
+# 			me.keys["RK >"] 	= func(){extra500.keypad.onAdjustHeading(1);};
+# 			me.keys["RK <"] 	= func(){extra500.keypad.onAdjustHeading(-1);};
+# 		}elsif (me._modeRK == "ALT"){
+# 			me.cSetHeadingBorder.set("stroke",COLOR["Blue"]);
+# 			me.cSetHeadingBorder.set("stroke-width",10);
+# 			me.cSetHeading.set("z-index",1);
+# 			me.cSetAltitudeBorder.set("stroke",COLOR["Turquoise"]);
+# 			me.cSetAltitudeBorder.set("stroke-width",20);
+# 			me.cSetAltitude.set("z-index",2);
+# 			me.cSetVsBorder.set("stroke",COLOR["Blue"]);
+# 			me.cSetVsBorder.set("stroke-width",10);
+# 			me.cSetVs.set("z-index",1);
+# 						
+# 			me.IFD.nLedRK.setValue(1);
+# 			me.keys["RK >>"] 	= func(){extra500.keypad.onAdjustAltitude(500);};
+# 			me.keys["RK <<"] 	= func(){extra500.keypad.onAdjustAltitude(-500);};
+# 			me.keys["RK"] 		= func(){extra500.keypad.onHeadingSync();};
+# 			me.keys["RK >"] 	= func(){extra500.keypad.onAdjustAltitude(100);};
+# 			me.keys["RK <"] 	= func(){extra500.keypad.onAdjustAltitude(-100);};
+# 		}elsif (me._modeRK == "VS"){
+# 			me.cSetHeadingBorder.set("stroke",COLOR["Blue"]);
+# 			me.cSetHeadingBorder.set("stroke-width",10);
+# 			me.cSetHeading.set("z-index",1);
+# 			me.cSetAltitudeBorder.set("stroke",COLOR["Blue"]);
+# 			me.cSetAltitudeBorder.set("stroke-width",10);
+# 			me.cSetAltitude.set("z-index",1);
+# 			me.cSetVsBorder.set("stroke",COLOR["Turquoise"]);
+# 			me.cSetVsBorder.set("stroke-width",20);
+# 			me.cSetVs.set("z-index",2);
+# 			
+# 			me.IFD.nLedRK.setValue(1);
+# 			me.keys["RK >>"] 	= func(){extra500.autopilot.onAdjustVS(-100);};
+# 			me.keys["RK <<"] 	= func(){extra500.autopilot.onAdjustVS(100);};
+# 			me.keys["RK"] 		= func(){extra500.autopilot.onSetVS(0);};
+# 			me.keys["RK >"] 	= func(){extra500.autopilot.onAdjustVS(-100);};
+# 			me.keys["RK <"] 	= func(){extra500.autopilot.onAdjustVS(100);};
+# 		}else{
+# 			
+# 			me.cSetHeadingBorder.set("stroke",COLOR["Blue"]);
+# 			me.cSetHeadingBorder.set("stroke-width",10);
+# 			me.cSetHeading.set("z-index",1);
+# 			me.cSetAltitudeBorder.set("stroke",COLOR["Blue"]);
+# 			me.cSetAltitudeBorder.set("stroke-width",10);
+# 			me.cSetAltitude.set("z-index",1);
+# 			me.cSetVsBorder.set("stroke",COLOR["Blue"]);
+# 			me.cSetVsBorder.set("stroke-width",10);
+# 			me.cSetVs.set("z-index",1);
+# 						
+# 			me.IFD.nLedRK.setValue(0);
+# 			delete(me.keys,"RK >>");
+# 			delete(me.keys,"RK <<");
+# 			delete(me.keys,"RK");
+# 			delete(me.keys,"RK >");
+# 			delete(me.keys,"RK <");
+# 		}
+# 	},
 # 	_apUpdate : func(){
 # 		if (me.data.apPowered){
 # 			me.cAutopilotOff.setVisible(0);
@@ -1738,6 +1946,7 @@ var AvidynePagePFD = {
 # # 		me._cIceWarning.setVisible(getprop("/extra500/system/deice/iceWarning"));
 		me._widget.NavSource.update2Hz(now,dt);
 		me._widget.BearingSource.update2Hz(now,dt);
+		me._widget.Timer.update2Hz(now,dt);
 		
 	
 	},
@@ -1750,9 +1959,9 @@ var AvidynePagePFD = {
 		me._widget.Altitude.update20Hz(now,dt);
 		me._widget.Attitude.update20Hz(now,dt);
 		me._widget.NavSource.update20Hz(now,dt);
-		me._widget.BearingSource.update20Hz(now,dt);
 		me._widget.DI.update20Hz(now,dt);
 		me._widget.HSI.update20Hz(now,dt);
+		me._widget.BearingSource.update20Hz(now,dt);
 		me._widget.Environment.update20Hz(now,dt);
 		
 		
