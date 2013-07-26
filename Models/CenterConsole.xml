@@ -20,7 +20,7 @@
       Date: July 04 2013
 
       Last change:      Eric van den Berg
-      Date:             25.07.13
+      Date:             26.07.13
 -->
 <PropertyList>
 
@@ -333,8 +333,8 @@ in Systems/extra500-system-indication.xml-->
 <animation>
   <type>rotate</type>
   <object-name>PitchTrimWheel</object-name>
-  <property>/extra500/panel/CenterConsole/PitchTrim/state</property>
-  <factor>100</factor>
+  <property>/fdm/jsbsim/fcs/pitch-trim-pos-deg</property>
+  <factor>10</factor>
   <axis>
     <x1-m>0.17205</x1-m>
     <y1-m>1</y1-m>
