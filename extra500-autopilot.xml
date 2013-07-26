@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-07-24
+      Date:             2013-07-26
 -->
 
 <autopilot name="STEC55X">
@@ -998,6 +998,15 @@
 			</test>
 			<output>/autopilot/fms-channel/course-error-nm</output>
 		</switch>
+
+		<pure_gain name="/autopilot/fms-channel/course-error-norm">
+			<input>/autopilot/fms-channel/course-error-nm</input>
+			<gain>0.3333333</gain>
+			<clipto>
+				<min>-1</min>
+				<max>1</max>
+			</clipto>
+		</pure_gain>
 
 		<switch name="gpsselect3">
 			<default value="/instrumentation/gps/cdi-deflection"/>
