@@ -555,17 +555,17 @@ var NavSourceWidget = {
 		m._NAME 	= ["Nav 1","Nav 2","FMS"];
 		m._PATH	=	{
 			FMS 	: {
-				Pointer			: "/instrumentation/fms[0]/radials/selected-deg",
-				horizontalDeviation 	: "/instrumentation/fms[0]/heading-needle-deflection-norm",
+				Pointer			: "/autopilot/route-manager/wp/bearing-deg",
+				horizontalDeviation 	: "/autopilot/fms-channel/course-error-norm",
 				verticalDeviation	: "/instrumentation/fms[0]/gs-needle-deflection-norm",
-				Frequeny		: "/instrumentation/fms[0]/frequencies/selected-mhz-fmt",
+				Frequeny		: "/autopilot/route-manager/wp/id",
 				isInRange		: "/instrumentation/fms[0]/in-range",
 				isLOC			: "/instrumentation/fms[0]/frequencies/is-localizer-frequency",
 				isGSinRange		: "/instrumentation/fms[0]/gs-in-range",
 				hasGS			: "/instrumentation/fms[0]/has-gs",
 				fromFlag		: "/instrumentation/fms[0]/from-flag",
 				toFlag			: "/instrumentation/fms[0]/to-flag",
-				distance		: "/instrumentation/fms[0]/nav-distance",
+				distance		: "/autopilot/route-manager/wp/dist",
 			},
 			Nav1 	: {
 				Pointer			: "/instrumentation/nav[0]/radials/selected-deg",
@@ -578,7 +578,7 @@ var NavSourceWidget = {
 				hasGS			: "/instrumentation/nav[0]/has-gs",
 				fromFlag		: "/instrumentation/nav[0]/from-flag",
 				toFlag			: "/instrumentation/nav[0]/to-flag",
-				distance		: "/instrumentation/nav[0]/nav-distance",
+				distance		: "/autopilot/radionav-channel/nav-distance-nm",
 			},
 			Nav2 	: {
 				Pointer			: "/instrumentation/nav[1]/radials/selected-deg",
@@ -591,10 +591,13 @@ var NavSourceWidget = {
 				hasGS			: "/instrumentation/nav[1]/has-gs",
 				fromFlag		: "/instrumentation/nav[1]/from-flag",
 				toFlag			: "/instrumentation/nav[1]/to-flag",
-				distance		: "/instrumentation/nav[1]/nav-distance",
+				distance		: "/autopilot/radionav-channel/nav-distance-nm",
 			},
 			
 		};
+		
+		setprop(m._PATH.FMS.isInRange,1);
+		
 		m._ptree	= {
 			hDev		: nil,
 			vDev		: nil,
@@ -605,13 +608,17 @@ var NavSourceWidget = {
 			ToFlag		: nil,
 			Pointer		: nil,
 			Distance	: nil,
+			Source		: props.globals.initNode("/instrumentation/nav-source",0,"INT"),
 		};
+		
 		m._can		= {
 			Source 		: m._group.getElementById("NAV_SourceName"),
 			ID 		: m._group.getElementById("NAV_ID"),
 			Crs 		: m._group.getElementById("NAV_CRS"),
 			Distance 	: m._group.getElementById("NAV_Distance"),
 		};
+		
+		m._sourceListeners	= [];
 		
 		m._source		= 2;
 		m._horizontalDeviation	= 0;
@@ -629,24 +636,19 @@ var NavSourceWidget = {
 		return m;
 	},
 	setListeners : func(instance) {
-		me._ptree.hDev 		= props.globals.initNode(me._PATH[me._SOURCE[me._source]].horizontalDeviation,0,"DOUBLE");
-		me._ptree.vDev 		= props.globals.initNode(me._PATH[me._SOURCE[me._source]].verticalDeviation,0,"DOUBLE");
-		me._ptree.Distance 	= props.globals.initNode(me._PATH[me._SOURCE[me._source]].distance,0,"DOUBLE");
-		me._ptree.Pointer	= props.globals.initNode(me._PATH[me._SOURCE[me._source]].Pointer,0,"DOUBLE");
-# 		me._ptree.inRange 	= props.globals.initNode(me._PATH[me._SOURCE[me._source]].isInRange,0,"BOOL");
-# 		me._ptree.LOC 		= props.globals.initNode(me._PATH[me._SOURCE[me._source]].isLOC,0,"BOOL");
-# 		me._ptree.GSinRange 	= props.globals.initNode(me._PATH[me._SOURCE[me._source]].isGSinRange,0,"BOOL");
-# 		me._ptree.FromFlag 	= props.globals.initNode(me._PATH[me._SOURCE[me._source]].fromFlag,0,"BOOL");
-# 		me._ptree.ToFlag 	= props.globals.initNode(me._PATH[me._SOURCE[me._source]].toFlag,0,"BOOL");
 		
-		append(me._listeners, setlistener(me._PATH[me._SOURCE[me._source]].isInRange,func(n){me._onInRangeChange(n);},1,0));
-		append(me._listeners, setlistener(me._PATH[me._SOURCE[me._source]].isLOC,func(n){me._onIsLocChange(n);},1,0));
-		append(me._listeners, setlistener(me._PATH[me._SOURCE[me._source]].isGSinRange,func(n){me._onGsInRangeChange(n);},1,0));
-		append(me._listeners, setlistener(me._PATH[me._SOURCE[me._source]].fromFlag,func(n){me._onFromFlagChange(n);},1,0));
-		append(me._listeners, setlistener(me._PATH[me._SOURCE[me._source]].toFlag,func(n){me._onToFlagChange(n);},1,0));
-		append(me._listeners, setlistener(me._PATH[me._SOURCE[me._source]].hasGS,func(n){me._onHasGSChange(n);},1,0));
-		append(me._listeners, setlistener(me._PATH[me._SOURCE[me._source]].Frequeny,func(n){me._onFrequencyChange(n);},1,0));
+		append(me._listeners, setlistener(me._ptree.Source,func(n){me._onSourceChange(n);},1,0));
 				
+	},
+	removeListeners : func(){
+		foreach(l;me._listeners){
+			removelistener(l);
+		}
+		me._listeners = [];
+		foreach(l;me._sourceListeners){
+			removelistener(l);
+		}
+		me._sourceListeners = [];
 	},
 	init : func(instance=me){
 		me.setListeners(instance);
@@ -678,17 +680,37 @@ var NavSourceWidget = {
 		me._Page.keys["LK >>"] 	= nil;
 		
 	},
+	_onSourceChange : func(n){
+		me._source = n.getValue();
+		me.setSource(me._source);
+	},
 	setSource : func(src){
 		me._source = src;
-		me.removeListeners();
-		me.setListeners(me);
+		foreach(l;me._sourceListeners){
+			removelistener(l);
+		}
+		me._sourceListeners = [];
+		
+		me._ptree.hDev 		= props.globals.initNode(me._PATH[me._SOURCE[me._source]].horizontalDeviation,0,"DOUBLE");
+		me._ptree.vDev 		= props.globals.initNode(me._PATH[me._SOURCE[me._source]].verticalDeviation,0,"DOUBLE");
+		me._ptree.Distance 	= props.globals.initNode(me._PATH[me._SOURCE[me._source]].distance,0,"DOUBLE");
+		me._ptree.Pointer	= props.globals.initNode(me._PATH[me._SOURCE[me._source]].Pointer,0,"DOUBLE");
+
+		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].isInRange,func(n){me._onInRangeChange(n);},1,0));
+		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].isLOC,func(n){me._onIsLocChange(n);},1,0));
+		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].isGSinRange,func(n){me._onGsInRangeChange(n);},1,0));
+		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].fromFlag,func(n){me._onFromFlagChange(n);},1,0));
+		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].toFlag,func(n){me._onToFlagChange(n);},1,0));
+		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].hasGS,func(n){me._onHasGSChange(n);},1,0));
+		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].Frequeny,func(n){me._onFrequencyChange(n);},1,0));
+		
 	},
 	_scroll : func(amount){
 		me._source += amount;
 		if (me._source > 2){ me._source = 0; }
 		if (me._source < 0){ me._source = 2; }
 		me.setSource(me._source);
-		
+		me._ptree.Source.setValue(me._source);
 		me._can.Source.setText(me._NAME[me._source]);
 				
 	},
@@ -723,20 +745,28 @@ var NavSourceWidget = {
 		me._checkStationType();
 	},
 	_checkStationType : func(){
-		if (me._isLOC == 1){
-			if (me._hasGS == 1){
-				me._stationType = "ILS";
-			}else{
-				me._stationType = "LOC";
-			}
+		me._distance	= me._ptree.Distance.getValue();
+		me._can.Distance.setText(sprintf("%.1f",me._distance));
+		if (me._source == 2){
+			me._can.ID.setText(sprintf("%s",me._frequency));
 		}else{
-			me._stationType = "VOR";
+			if (me._isLOC == 1){
+				if (me._hasGS == 1){
+					me._stationType = "ILS";
+				}else{
+					me._stationType = "LOC";
+				}
+			}else{
+				me._stationType = "VOR";
+			}
+			me._can.ID.setText(sprintf("%.2f (%s)",me._frequency,me._stationType));
+			
+			
 		}
-		me._can.ID.setText(sprintf("%.2f (%s)",me._frequency,me._stationType));
 	},
 	update2Hz : func(now,dt){
-	
-		me._distance	= me._ptree.Distance.getValue() * global.CONST.METER2NM;
+		
+		me._distance	= me._ptree.Distance.getValue();
 		me._can.Distance.setText(sprintf("%.1f",me._distance));
 		
 	},
@@ -767,24 +797,24 @@ var BearingSourceWidget = {
 		m._PATH	=	{
 			FMS 	: {
 				isLOC			: "/instrumentation/fms[0]/frequencies/is-localizer-frequency",
-				Frequeny		: "/instrumentation/fms[0]/frequencies/selected-mhz-fmt",
-				Pointer			: "/instrumentation/fms[0]/radials/reciprocal-radial-deg",
+				Frequency		: "/autopilot/route-manager/wp/id",
+				Pointer			: "/autopilot/route-manager/wp/bearing-deg",
 				hasGS			: "/instrumentation/fms[0]/has-gs",
-				distance		: "/instrumentation/fms[0]/nav-distance",
+				distance		: "/autopilot/route-manager/wp/dist",
 			},
 			Nav1 	: {
 				isLOC			: "/instrumentation/nav[0]/frequencies/is-localizer-frequency",
-				Frequeny		: "/instrumentation/nav[0]/frequencies/selected-mhz-fmt",
+				Frequency		: "/instrumentation/nav[0]/frequencies/selected-mhz-fmt",
 				Pointer			: "/instrumentation/nav[0]/radials/reciprocal-radial-deg",
 				hasGS			: "/instrumentation/nav[0]/has-gs",
-				distance		: "/instrumentation/nav[0]/nav-distance",
+				distance		: "/autopilot/radionav-channel/nav-distance-nm",
 			},
 			Nav2 	: {
 				isLOC			: "/instrumentation/nav[1]/frequencies/is-localizer-frequency",
-				Frequeny		: "/instrumentation/nav[1]/frequencies/selected-mhz-fmt",
+				Frequency		: "/instrumentation/nav[1]/frequencies/selected-mhz-fmt",
 				Pointer			: "/instrumentation/nav[1]/radials/reciprocal-radial-deg",
 				hasGS			: "/instrumentation/nav[1]/has-gs",
-				distance		: "/instrumentation/nav[1]/nav-distance",
+				distance		: "/autopilot/radionav-channel/nav-distance-nm",
 			},
 			
 		};
@@ -815,7 +845,7 @@ var BearingSourceWidget = {
 			me._ptree.Distance 	= props.globals.initNode(me._PATH[me._SOURCE[me._source]].distance,0,"DOUBLE");
 			me._ptree.Pointer	= props.globals.initNode(me._PATH[me._SOURCE[me._source]].Pointer,0,"DOUBLE");
 			
-			append(me._listeners, setlistener(me._PATH[me._SOURCE[me._source]].Frequeny,func(n){me._onFrequencyChange(n);},1,0));
+			append(me._listeners, setlistener(me._PATH[me._SOURCE[me._source]].Frequency,func(n){me._onFrequencyChange(n);},1,0));
 			append(me._listeners, setlistener(me._PATH[me._SOURCE[me._source]].isLOC,func(n){me._onIsLocChange(n);},1,0));
 			append(me._listeners, setlistener(me._PATH[me._SOURCE[me._source]].hasGS,func(n){me._onHasGSChange(n);},1,0));
 			
@@ -869,20 +899,27 @@ var BearingSourceWidget = {
 		me._checkStationType();
 	},
 	_checkStationType : func(){
-		if (me._isLOC == 1){
-			if (me._hasGS == 1){
-				me._stationType = "ILS";
-			}else{
-				me._stationType = "LOC";
-			}
+		me._distance	= me._ptree.Distance.getValue();
+		me._can.Distance.setText(sprintf("%.1f",me._distance));
+		if (me._source == 3){
+			me._can.ID.setText(sprintf("%s",me._frequency));
 		}else{
-			me._stationType = "VOR";
+			if (me._isLOC == 1){
+				if (me._hasGS == 1){
+					me._stationType = "ILS";
+				}else{
+					me._stationType = "LOC";
+				}
+			}else{
+				me._stationType = "VOR";
+			}
+			me._can.ID.setText(sprintf("%.2f (%s)",me._frequency,me._stationType));
 		}
-		me._can.ID.setText(sprintf("%.2f (%s)",me._frequency,me._stationType));
+		
 	},
 	update2Hz : func(now,dt){
 		if (me._source > 0){
-			me._distance	= me._ptree.Distance.getValue() * global.CONST.METER2NM;
+			me._distance	= me._ptree.Distance.getValue();
 			me._can.Distance.setText(sprintf("%.1f",me._distance));
 		}
 	},
@@ -964,6 +1001,7 @@ var DeviationIndicatorWidget = {
 			me._can.HDI_Needle.setVisible(0);
 			me._can.DI.setVisible(0);
 			#me._can.CDI.setVisible(0);
+			me._Page._widget.HSI._can.CDI.set("fill",COLOR["Green"]);
 		}
 			
 		
