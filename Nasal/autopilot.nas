@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             21.07.2013
+#      Date:             25.07.2013
 #
 
 
@@ -80,6 +80,7 @@ var AutopilotClass = {
 		m._brightness		= 0;
 		m._brightnessListener   = nil;
 		m._nBacklight 		= m._nRoot.initNode("Backlight/state",0.0,"DOUBLE");
+		m.nStallWarnerOn 	= props.globals.getNode("/extra500/panel/Annunciator/StallWarn/state");																																																												
 		
 		
 		m.dt = 0;
@@ -192,8 +193,9 @@ var AutopilotClass = {
 # 1 no internal fault, 
 # 2 turn coordinator ok, 
 # 3 g-forces not to high (above 0.6, disregarding 1g of earth)
+# 4 aircraft stall warner ON
 	_CheckRollModeAble : func(){
-		if ( (me.nAPState.getValue() == 1) and (me.nTCSpin.getValue() > 0.9) and ( math.abs(me.nAPacc.getValue()) < 0.6 ) ){
+		if ( (me.nAPState.getValue() == 1) and (me.nTCSpin.getValue() > 0.9) and ( math.abs(me.nAPacc.getValue()) < 0.6 ) and ( me.nStallWarnerOn.getValue() != 1) ){
 			if ( ( me.nModeFail.getValue() == 1 ) or ( me.nModeDiseng.getValue() == 1 ) ) {
 				me.nModeFail.setValue(0);
 				me.nModeRdy.setValue(1);

@@ -634,6 +634,36 @@
 			</binding>
 		</action>
 	</animation>
+
+<!-- PROPERTY? -->
+	<animation>
+		<type>translate</type>
+		<object-name>Keypad.FMS</object-name>
+		<property>extra500/instrumentation/Keypad/cursorPush</property>
+		<factor>-0.003</factor>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis> 
+	</animation>	
+	
+<!-- PROPERTY? -->
+	<animation>
+		<type>rotate</type>
+		<object-name>Keypad.FMS</object-name>
+		<property>extra500/instrumentation/Keypad/cursorScroll</property>
+		<factor>15</factor>
+		<axis>
+			<x1-m>0.05614</x1-m>
+			<y1-m>0.06072</y1-m>
+			<z1-m>1</z1-m>
+			<x2-m>0.05614</x2-m>
+			<y2-m>0.06072</y2-m>
+			<z2-m>-1</z2-m>
+		</axis> 
+	</animation>	
+	
 	<animation>
 		<type>pick</type>
 		<object-name>Keypad.FreqList</object-name>
@@ -1587,10 +1617,22 @@
 		</action>
 	</animation>
  
-	
+  <animation>
+    <name>Keypad.Cursor.Picks</name>
+      <object-name>Keypad.Cursor.N</object-name>
+      <object-name>Keypad.Cursor.NE</object-name>
+      <object-name>Keypad.Cursor.E</object-name>
+      <object-name>Keypad.Cursor.SE</object-name>
+      <object-name>Keypad.Cursor.S</object-name>
+      <object-name>Keypad.Cursor.SW</object-name>
+      <object-name>Keypad.Cursor.W</object-name>
+      <object-name>Keypad.Cursor.NW</object-name>
+    </animation> 
+ 
 	<animation>
 		<type>rotate</type>
 		<object-name>Keypad.Cursor</object-name>
+		<object-name>Keypad.Cursor.Picks</object-name>
 		<property>extra500/instrumentation/Keypad/cursorX</property>
 		<interpolation>
 			<entry>
@@ -1618,6 +1660,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>Keypad.Cursor</object-name>
+		<object-name>Keypad.Cursor.Picks</object-name>
 		<property>extra500/instrumentation/Keypad/cursorY</property>
 		<interpolation>
 			<entry>
@@ -1659,8 +1702,9 @@
 	<animation>
 		<type>translate</type>
 		<object-name>Keypad.Cursor</object-name>
+		<object-name>Keypad.Cursor.Picks</object-name>
 		<property>extra500/instrumentation/Keypad/cursorPush</property>
-		<factor>-0.007</factor>
+		<factor>-0.003</factor>
 		<axis>
 			<x>0</x>
 			<y>0</y>
@@ -1672,18 +1716,35 @@
 		<type>translate</type>
 		<object-name>Keypad.Com1.Volume</object-name>
 		<property>extra500/instrumentation/Keypad/com1VolumeSQ</property>
-		<factor>-0.01</factor>
+		<factor>-0.003</factor>
 		<axis>
 			<x>0</x>
 			<y>0</y>
 			<z>1</z>
 		</axis> 
 	</animation>
+
+<!-- PROPERTY? -->
+	<animation>
+		<type>rotate</type>
+		<object-name>Keypad.Com1.Volume</object-name>
+		<property>extra500/instrumentation/Keypad/cursorScroll</property>
+		<factor>15</factor>
+		<axis>
+			<x1-m>-0.03307</x1-m>
+			<y1-m>-0.06723</y1-m>
+			<z1-m>1</z1-m>
+			<x2-m>-0.03307</x2-m>
+			<y2-m>-0.06723</y2-m>
+			<z2-m>-1</z2-m>
+		</axis> 
+	</animation>	
+
 	<animation>
 		<type>translate</type>
 		<object-name>Keypad.Com2.Volume</object-name>
 		<property>extra500/instrumentation/Keypad/com2VolumeSQ</property>
-		<factor>-0.01</factor>
+		<factor>-0.003</factor>
 		<axis>
 			<x>0</x>
 			<y>0</y>
@@ -1691,5 +1752,20 @@
 		</axis> 
 	</animation>
 	
+<!-- PROPERTY? -->
+	<animation>
+		<type>rotate</type>
+		<object-name>Keypad.Com2.Volume</object-name>
+		<property>extra500/instrumentation/Keypad/cursorScroll</property>
+		<factor>15</factor>
+		<axis>
+			<x1-m>-0.01175</x1-m>
+			<y1-m>-0.06723</y1-m>
+			<z1-m>1</z1-m>
+			<x2-m>-0.01175</x2-m>
+			<y2-m>-0.06723</y2-m>
+			<z2-m>-1</z2-m>
+		</axis> 
+	</animation>	
 	
 </PropertyList>

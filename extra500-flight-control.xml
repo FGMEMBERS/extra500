@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-07-18
+      Date:             2013-07-24
 -->
 
 <flight_control name="FCS: extra500">
@@ -470,103 +470,59 @@
 			<output>fcs/aileron-cmd-tot-nc</output>
 		</switch>
 
-			<!--fcs_function name="aileron-cmd-tot-nc">
-				<function>
-				<sum>
-					<product>
-						<abs>
-                               				<sum>
-								<product>
-                                  					<property>/autopilot/mode/heading</property>
-								</product>
-                                  				<value>-1</value> 
-                              				</sum>
-                         			</abs>
-						<abs>
-                               				<sum>
-								<product>
-                                  					<property>/autopilot/mode/nav</property>
-								</product>
-                                  				<value>-1</value> 
-                              				</sum>
-                         			</abs>
-						<sum>
-							<property>fcs/rudder-cmd-aileron</property>	
-							<property>fcs/aileron-cmd-norm</property>
-						</sum>
-					</product>
-
-					<product>
-                                  		<property>/autopilot/mode/heading</property>
-                              			<property>/autopilot/hdg-channel/cmd-ap-ail-pos-norm</property>	
-					</product>
-					<product>
-                                  		<property>/autopilot/mode/nav</property>
-						<abs>
-							<sum>
-                                  				<property>/autopilot/mode/heading</property>
-	                          				<value>-1</value> 
-                              				</sum>
-						</abs>
-                              			<property>/autopilot/radionav-channel/cmd-ap-ail-pos-norm</property>	
-					</product>
-				</sum>
-				</function>
-			</fcs_function-->
-
-			 <summer name="aileron-cmd-tot">
-                		<input>fcs/aileron-cmd-tot-nc</input>
-                		<clipto>
-                    			<min>-1</min>
-                    			<max>1</max>
-               			 </clipto>
-            		</summer>
+		 <summer name="aileron-cmd-tot">
+               		<input>fcs/aileron-cmd-tot-nc</input>
+               		<clipto>
+               			<min>-1</min>
+               			<max>1</max>
+       			 </clipto>
+       		</summer>
 				
-			<aerosurface_scale name="Left Aileron Control">
-				<input>fcs/aileron-cmd-tot</input>
-				<range>
-					<min> -0.4712 </min>
-					<max>  0.3316 </max>
-				</range>
-				<output>fcs/left-aileron-pos-rad</output>
-			</aerosurface_scale>
+		<aerosurface_scale name="Left Aileron Control">
+			<input>fcs/aileron-cmd-tot</input>
+			<range>
+				<min> -0.4712 </min>
+				<max>  0.3316 </max>
+			</range>
+			<output>fcs/left-aileron-pos-rad</output>
+		</aerosurface_scale>
 			
-			<aerosurface_scale name="Right Aileron Control">
-				<input>fcs/aileron-cmd-tot</input>
-				<range>
-					<min> -0.3316 </min>
-					<max>  0.4712 </max>
-				</range>
-				<output>fcs/right-aileron-pos-rad</output>
-			</aerosurface_scale>
+		<aerosurface_scale name="Right Aileron Control">
+			<input>fcs/aileron-cmd-tot</input>
+			<range>
+				<min> -0.3316 </min>
+				<max>  0.4712 </max>
+			</range>
+			<output>fcs/right-aileron-pos-rad</output>
+		</aerosurface_scale>
 			
-			<aerosurface_scale name="left aileron normalization">
-				<input>fcs/left-aileron-pos-rad</input>
-				<domain>
-					<min> -0.4712 </min>
-					<max>  0.3316 </max>
-				</domain>
-				<range>
-					<min> -1 </min>
-					<max>  1 </max>
-				</range>
-				<output>fcs/left-aileron-pos-norm</output>
-			</aerosurface_scale>
+		<aerosurface_scale name="left aileron normalization">
+			<input>fcs/left-aileron-pos-rad</input>
+			<domain>
+				<min> -0.4712 </min>
+				<max>  0.3316 </max>
+			</domain>
+			<range>
+				<min> -1 </min>
+				<max>  1 </max>
+			</range>
+			<output>fcs/left-aileron-pos-norm</output>
+		</aerosurface_scale>
 			
-			<aerosurface_scale name="right aileron normalization">
-				<input>fcs/right-aileron-pos-rad</input>
-				<domain>
-					<min> -0.3316 </min>
-					<max>  0.4712 </max>
-				</domain>
-				<range>
-					<min> -1 </min>
-					<max>  1 </max>
-				</range>
-				<output>fcs/right-aileron-pos-norm</output>
-			</aerosurface_scale>
+		<aerosurface_scale name="right aileron normalization">
+			<input>fcs/right-aileron-pos-rad</input>
+			<domain>
+				<min> -0.3316 </min>
+				<max>  0.4712 </max>
+			</domain>
+			<range>
+				<min> -1 </min>
+				<max>  1 </max>
+			</range>
+			<output>fcs/right-aileron-pos-norm</output>
+		</aerosurface_scale>
 			
-		</channel>
+	</channel>
 		
 		<channel name="Yaw">
 
