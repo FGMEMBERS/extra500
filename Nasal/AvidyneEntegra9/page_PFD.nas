@@ -774,7 +774,7 @@ var NavSourceWidget = {
 	update20Hz : func(now,dt){
 		me._Pointer		= me._ptree.Pointer.getValue();
 		me._horizontalDeviation	= me._ptree.hDev.getValue();
-		me._verticalDeviation	= me._ptree.vDev.getValue();
+		me._verticalDeviation	= -me._ptree.vDev.getValue();
 		
 # 		me._isInRange		= me._ptree.inRange.getValue();
 # 		me._isGSinRange		= me._ptree.GSinRange.getValue();
