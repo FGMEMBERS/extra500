@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jun 27 2013
 #
-#      Last change:      Thomas Grossberger
-#      Date:             20.07.13
+#      Last change:      Eric van den Berg
+#      Date:             27.07.13
 #
 
 
@@ -162,8 +162,7 @@ var KeypadClass = {
 		
 	},
 	onVFR : func(){
-		print("KeypadClass.onVFR() ...");
-		
+		setprop("/instrumentation/transponder/id-code",getprop("/instrumentation/transponder/vfr-id") );		
 	},
 	onMode : func(){
 		print("KeypadClass.onMode() ...");
@@ -186,8 +185,7 @@ var KeypadClass = {
 		
 	},
 	onD : func(){
-		print("KeypadClass.onD() ...");
-		
+		extra500.autopilot.DirectTO();		
 	},
 	onV : func(){
 		print("KeypadClass.onV() ...");

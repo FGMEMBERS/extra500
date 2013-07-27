@@ -800,6 +800,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<knob-mode>3</knob-mode>
 		<auto-select>1</auto-select>
 	</inputs>
+	<vfr-id type="int">7000</vfr-id>
     </transponder>
 
     <turn-indicator>

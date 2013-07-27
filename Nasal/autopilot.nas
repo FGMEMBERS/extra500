@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             25.07.2013
+#      Date:             27.07.2013
 #
 
 
@@ -207,9 +207,17 @@ var AutopilotClass = {
 			me.nModeRdy.setValue(0);
 		}
 	},
+	DirectTO : func(){									# called from keypad.nas
+		var selIndex = getprop("/sim/gui/dialogs/route-manager/selection");		# selection index in route manager
+		var deleteIndex = selIndex -1;
+		while ( deleteIndex > -1 ) {
+			flightplan().deleteWP( deleteIndex );					# deleting all wp-s before selection
+			deleteIndex = deleteIndex -1 ;						
+		}
+	},
 # Events from the UI
 	onClickHDG : func(){
-		if ( ( me.nModeRdy.getValue() == 1 ) or (me.nModeNav.getValue() == 1) ){
+		if ( ( me.nModeRdy.getValue() == 1 ) or (me.nModeNav.getValue() == 1) or (me.nModeHeading.getValue() == 1) ){
 			me.nModeRdy.setValue(0);
 			me.nModeHeading.setValue(1);
 			me.nModeNav.setValue(0);

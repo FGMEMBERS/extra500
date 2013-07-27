@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-07-26
+      Date:             2013-07-27
 -->
 
 <autopilot name="STEC55X">
@@ -994,7 +994,7 @@
 		<switch name="gpsselect1">
 			<default value="/instrumentation/gps/wp/leg-true-course-deg"/>
 			<test value="/instrumentation/gps[1]/wp/leg-true-course-deg">
-				/instrumentation/gps/serviceable eq 1
+				/instrumentation/gps/serviceable eq 0
 			</test>
 			<output>/autopilot/fms-channel/leg-true-course-deg</output>
 		</switch>
@@ -1002,7 +1002,7 @@
 		<switch name="gpsselect2">
 			<default value="/instrumentation/gps/wp/wp[1]/course-error-nm"/>
 			<test value="/instrumentation/gps[1]/wp/wp[1]/course-error-nm">
-				/instrumentation/gps/serviceable eq 1
+				/instrumentation/gps/serviceable eq 0
 			</test>
 			<output>/autopilot/fms-channel/course-error-nm</output>
 		</switch>
@@ -1019,7 +1019,7 @@
 		<switch name="gpsselect3">
 			<default value="/instrumentation/gps/cdi-deflection"/>
 			<test value="/instrumentation/gps[1]/cdi-deflection">
-				/instrumentation/gps/serviceable eq 1
+				/instrumentation/gps/serviceable eq 0
 			</test>
 			<output>/autopilot/fms-channel/cdi-deflection</output>
 		</switch>
@@ -1027,7 +1027,7 @@
 		<switch name="gpsselect4">
 			<default value="/instrumentation/gps/indicated-track-true-deg"/>
 			<test value="/instrumentation/gps[1]/indicated-track-true-deg">
-				/instrumentation/gps/serviceable eq 1
+				/instrumentation/gps/serviceable eq 0
 			</test>
 			<output>/autopilot/fms-channel/indicated-track-true-deg</output>
 		</switch>
@@ -1035,7 +1035,7 @@
 		<switch name="gpsselect5">
 			<default value="/instrumentation/gps/wp/leg-distance-nm"/>
 			<test value="/instrumentation/gps[1]/wp/leg-distance-nm">
-				/instrumentation/gps/serviceable eq 1
+				/instrumentation/gps/serviceable eq 0
 			</test>
 			<output>/autopilot/fms-channel/leg-distance</output>
 		</switch>
@@ -1043,7 +1043,7 @@
 		<switch name="gpsselect6">
 			<default value="/instrumentation/gps/indicated-ground-speed-kt"/>
 			<test value="/instrumentation/gps[1]/indicated-ground-speed-kt">
-				/instrumentation/gps/serviceable eq 1
+				/instrumentation/gps/serviceable eq 0
 			</test>
 			<output>/autopilot/fms-channel/indicated-ground-speed-kt</output>
 		</switch>
