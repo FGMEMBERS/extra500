@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             25.07.2013
+      Date:             29.07.2013
 
 
 ************************************************************************
@@ -856,6 +856,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<cdi-deflection>0</cdi-deflection>
 		<indicated-track-true-deg>0</indicated-track-true-deg>
 		<indicated-ground-speed-kt>0</indicated-ground-speed-kt>
+		<raim>0</raim>
 		<wp>
 			<leg-true-course-deg>0</leg-true-course-deg>
 			<leg-distance-nm>0</leg-distance-nm>
@@ -865,9 +866,11 @@ JSBSim Extra Aircraft - Extra 500.
 		</wp>
 	</gps>
 	<gps n="1">
+	       	<serviceable type="bool">true</serviceable>
 		<cdi-deflection>0</cdi-deflection>
 		<indicated-track-true-deg>0</indicated-track-true-deg>
 		<indicated-ground-speed-kt>0</indicated-ground-speed-kt>
+		<raim>0</raim>
 		<wp>
 			<leg-true-course-deg>0</leg-true-course-deg>
 			<leg-distance-nm>0</leg-distance-nm>

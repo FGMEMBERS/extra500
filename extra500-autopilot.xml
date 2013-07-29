@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-07-27
+      Date:             2013-07-29
 -->
 
 <autopilot name="STEC55X">
@@ -990,6 +990,20 @@
 
 -->
 
+	<!-- determining if fms is "servicable" -->
+		<switch name="fmsservicable">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="AND" value="1">
+					/instrumentation/gps/raim eq 1
+				</test>
+				<test logic="OR" value="1">
+					/instrumentation/gps/serviceable eq 1
+					/instrumentation/gps[1]/serviceable eq 1
+				</test>
+			</test>
+			<output>/autopilot/fms-channel/serviceable</output>
+		</switch>
 	<!-- selecting GPS properties from gps1 or 2 depending on "servicable" -->
 		<switch name="gpsselect1">
 			<default value="/instrumentation/gps/wp/leg-true-course-deg"/>
@@ -1273,8 +1287,9 @@
 
 		<switch name="crserrorendofflp">
 			<default value="/autopilot/fms-channel/lmd-crs-error-clp"/>
-			<test value="0">
-				/autopilot/fms-channel/leg-distance lt 0.0
+			<test logic="OR" value="0">
+				/autopilot/fms-channel/leg-distance lt 0.0		<!-- end of flightplan -->
+				/autopilot/fms-channel/serviceable eq 0			<!-- gps not working (both units or no satellites), no position -->
 			</test>
 			<output>/autopilot/fms-channel/lmd-crs-error</output>
 		</switch>
@@ -1353,6 +1368,7 @@
 			</function>
 		</fcs_function>
 
+<!-- making sure the turn time is the last one BEFORE entering the turn (as it is calculated all the time, in the turn the turn time decreases..) -->
 		<switch name="turntime">
 			<default value="/autopilot/fms-channel/gpss/turn-time-raw-s"/>
 			<test value="/autopilot/fms-channel/gpss/turn-time-s">
@@ -1479,12 +1495,13 @@
 			<output>/controls/flight/aileron</output>
 		</switch>
 
-<!-- switching gpss mode off when fms is NOT selected -->
+<!-- switching gpss mode off when fms is NOT selected or GPS fails to work -->
 		<switch name="gpssmodeoff">
 			<default value="/autopilot/mode/gpss"/>
 			<test logic="OR" value="0">
 				/instrumentation/nav-source eq 0
 				/instrumentation/nav-source eq 1
+				/autopilot/fms-channel/serviceable eq 0
 			</test>
 			<output>/autopilot/mode/gpss</output>
 		</switch>

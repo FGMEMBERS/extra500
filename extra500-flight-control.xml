@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-07-24
+      Date:             2013-07-29
 -->
 
 <flight_control name="FCS: extra500">
@@ -203,96 +203,54 @@
 				state/controls-fixed eq 0
 				/autopilot/mode/alt eq 0
 				/autopilot/mode/vs eq 0
+				/autopilot/mode/gs-follow eq 0
 			</test>
 			<output>/controls/flight/elevator</output>
 		</switch>
 
-			<fcs_function name="elevator-cmd-tot-nc">
-				<function>
-				<sum>
-					<product>  					<!--controls fixed (direct pilot control)-->
-	                          		<abs>
-                               				<sum>
-                                				<property>/autopilot/mode/alt</property>
-	                          				<value>-1</value> 
-                              				</sum>
-						</abs>
-	                          		<abs>
-                               				<sum>
-                                				<property>/autopilot/mode/vs</property>
-	                          				<value>-1</value> 
-                              				</sum>
-						</abs>
-	                          		<abs>
-                               				<sum>
-                                				<property>/autopilot/mode/gs-follow</property>
-	                          				<value>-1</value> 
-                              				</sum>
-						</abs>					
-	                          		<property>state/controls-fixed</property>
-	                       			<sum>
-							<property>fcs/elevator-cmd-norm</property>
-						</sum>
-					</product>
-					<product>  					<!--controls NOT fixed (trim controls elevator position)-->
-	                          		<abs>
-                               				<sum>
-                                				<property>/autopilot/mode/alt</property>
-	                          				<value>-1</value> 
-                              				</sum>
-						</abs>
-	                          		<abs>
-                               				<sum>
-                                				<property>/autopilot/mode/vs</property>
-	                          				<value>-1</value> 
-                              				</sum>
-						</abs>	
-	                          		<abs>
-                               				<sum>
-                                				<property>/autopilot/mode/gs-follow</property>
-	                          				<value>-1</value> 
-                              				</sum>
-						</abs>	
-	                          		<abs>
-                               				<sum>
-                                				<property>state/controls-fixed</property>
-	                          				<value>-1</value> 
-                              				</sum>
-						</abs>
-                              			<sum>
-							<property>aircraft/hstab/elevator/d_e_free-norm</property>
-						</sum>
-					</product>
-					<product>					<!--autopilot VS mode in control -->
-                                  		<property>/autopilot/mode/vs</property>
-                              			<property>/autopilot/vs-channel/cmd-ap-elev-pos-norm</property>	
-					</product>
-					<product>					<!--autopilot ALT mode in control NOTE: VS goes over ALT; VS is shut off in altitude mode when reaching target altitude -->
-                                  		<property>/autopilot/mode/alt</property>
-	                          		<abs>
-                               				<sum>
-                                				<property>/autopilot/mode/vs</property>
-	                          				<value>-1</value> 
-                              				</sum>
-						</abs>
-                              			<property>/autopilot/alt-channel/cmd-ap-elev-pos-norm</property>	
-					</product>
-					<product>					<!--autopilot GS mode in control -->
-                                  		<property>/autopilot/mode/gs-follow</property>
-                              			<property>/autopilot/gs-channel/cmd-ap-elev-pos-norm</property>	
-					</product>
-				</sum>
-				</function>
-			</fcs_function>
+<!-- control choices for elevator-->
+		<switch name="elevnotfixed">
+			<default value="fcs/elevator-cmd-norm"/>
+			<test logic="AND" value="aircraft/hstab/elevator/d_e_free-norm">
+				state/controls-fixed eq 0
+				/autopilot/mode/alt eq 0
+				/autopilot/mode/vs eq 0
+				/autopilot/mode/gs-follow eq 0
+			</test>
+			<output>fcs/elevator-cmd-tot-nc1</output>
+		</switch>
 
+		<switch name="elevaltmode">
+			<default value="fcs/elevator-cmd-tot-nc1"/>
+			<test logic="AND" value="/autopilot/alt-channel/cmd-ap-elev-pos-norm">
+				/autopilot/mode/alt eq 1
+			</test>
+			<output>fcs/elevator-cmd-tot-nc2</output>
+		</switch>
 
-			 <summer name="elevator-cmd-tot">
-                		<input>fcs/elevator-cmd-tot-nc</input>
-                		<clipto>
-                    			<min>-1</min>
-                    			<max>1</max>
-               			 </clipto>
-            		</summer>	
+		<switch name="elevvsmode">
+			<default value="fcs/elevator-cmd-tot-nc2"/>
+			<test logic="AND" value="/autopilot/vs-channel/cmd-ap-elev-pos-norm">
+				/autopilot/mode/vs eq 1
+			</test>
+			<output>fcs/elevator-cmd-tot-nc3</output>
+		</switch>
+
+		<switch name="elevgsmode">
+			<default value="fcs/elevator-cmd-tot-nc3"/>
+			<test logic="AND" value="/autopilot/gs-channel/cmd-ap-elev-pos-norm">
+				/autopilot/mode/gs eq 1
+			</test>
+			<output>fcs/elevator-cmd-tot-nc</output>
+		</switch>
+
+		 <summer name="elevator-cmd-tot">
+               		<input>fcs/elevator-cmd-tot-nc</input>
+               		<clipto>
+              			<min>-1</min>
+               			<max>1</max>
+       			 </clipto>
+       		</summer>	
 
 
      	 	<aerosurface_scale name="Elevator Control">
@@ -350,67 +308,20 @@
 
   	<channel name="Pitch trim">
 
-			<fcs_function name="pitch-trim-cmd-tot-norm">
-				<function>
-				<sum>
-					 <product>
-						<sum> 					<!--no autotrim, AP not coupled in a pitch mode OR pitch trim off-->
-		                          		<abs>
-	                               				<sum>
-	                                				<property>/autopilot/settings/trim</property>
-		                          				<value>-1</value> 
-	                              				</sum>
-							</abs>
-							<product>
-								<property>/autopilot/settings/trim</property>	
-		                          			<abs>
-	                               					<sum>
-	                                					<property>/autopilot/mode/alt</property>
-		                          					<value>-1</value> 
-	                              					</sum>
-								</abs>
-		                          			<abs>
-	                               					<sum>
-	                                					<property>/autopilot/mode/vs</property>
-		                          					<value>-1</value> 
-	                              					</sum>
-								</abs>	
-		                          			<abs>
-	                               					<sum>
-	                                					<property>/autopilot/mode/gs-follow</property>
-		                          					<value>-1</value> 
-	                              					</sum>
-								</abs>
-							</product>
-						</sum>				
-	                       			<sum>
-							<property>fcs/pitch-trim-cmd-norm</property>
-						</sum>
-					</product>
-					<product>					<!--autopilot VS mode in control and electrical trim operational -->
-						<property>/autopilot/settings/trim</property>
-                                  		<property>/autopilot/mode/vs</property>
-                              			<property>/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm</property>	
-					</product>
-					<product>					<!--autopilot ALT mode in control NOTE: VS goes over ALT; VS is shut off in altitude mode when reaching target altitude -->
-						<property>/autopilot/settings/trim</property>
-                                  		<property>/autopilot/mode/alt</property>
-	                          		<abs>
-                               				<sum>
-                                				<property>/autopilot/mode/vs</property>
-	                          				<value>-1</value> 
-                              				</sum>
-						</abs>
-                              			<property>/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm</property>	
-					</product>
-					<product>					<!--autopilot GS mode in control and electrical trim operational -->
-						<property>/autopilot/settings/trim</property>
-                                  		<property>/autopilot/mode/gs-follow</property>
-                              			<property>/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm</property>	
-					</product>
-				</sum>
-				</function>
-			</fcs_function>
+		<switch name="autotrim">
+			<default value="fcs/pitch-trim-cmd-norm"/>
+			<test logic="AND" value="/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm">
+				<test logic="AND" value="1">
+					/autopilot/settings/trim eq 1
+				</test>
+				<test logic="OR" value="1">
+					/autopilot/mode/alt eq 1
+					/autopilot/mode/vs eq 1
+					/autopilot/mode/gs-follow eq 1
+				</test>
+			</test>
+			<output>fcs/pitch-trim-cmd-tot-norm</output>
+		</switch>
 
       		<aerosurface_scale name="Pitch trim Control">
 	      		<input>fcs/pitch-trim-cmd-tot-norm</input>

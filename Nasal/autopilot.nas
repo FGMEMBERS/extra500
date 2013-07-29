@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             27.07.2013
+#      Date:             29.07.2013
 #
 
 
@@ -72,8 +72,7 @@ var AutopilotClass = {
 		m.nCurrentAlt 	= props.globals.getNode("/instrumentation/altimeter-IFD-LH/indicated-altitude-ft");	
 		m.nAlterror 	= props.globals.getNode("/autopilot/alt-channel/alt-error-ft");	
 		m.nNavsource	= props.globals.getNode("/instrumentation/nav-source");	
-		m.nGPS1serv 	= props.globals.getNode("/instrumentation/gps/serviceable");
-		m.nGPS2serv 	= props.globals.getNode("/instrumentation/gps[1]/serviceable");	
+		m.nFMSserv 	= props.globals.getNode("/autopilot/fms-channel/serviceable");
 		m.nRouteActive 	= props.globals.getNode("/autopilot/route-manager/active");																																																												
 
 		m._nBrightness		= props.globals.initNode("/extra500/system/dimming/Instrument",0.0,"DOUBLE");
@@ -254,10 +253,10 @@ var AutopilotClass = {
 				me.nModeFail.setValue(1);
 			} 
 		} else if ( ( me.nModeNav.getValue() == 1) and ( me.nModeNavGpss.getValue() == 0) ) {
-			if ( (me.nGPS1serv.getValue() == 1) and (me.nGPS1serv.getValue() == 1) and (me.nNavsource.getValue() == 2) ) {
+			if ( (me.nFMSserv.getValue() == 1) and (me.nNavsource.getValue() == 2) ) {
 				me.nModeNavGpss.setValue(1);
 			} else {
-				UI.msg.info("FMS must be selected to engage GPSS mode");
+				UI.msg.info("FMS must be selected and working to engage GPSS mode");
 			}
 		} else { 
 		}
