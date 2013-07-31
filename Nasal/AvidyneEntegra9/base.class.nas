@@ -29,23 +29,13 @@ COLOR["White"] = "rgb(255,255,255)";
 COLOR["Turquoise"] = "rgb(4,254,252)";
 COLOR["Blue"] = "rgb(51,145,232)";
 
-
-
-
-var PageClass = {
-	new: func(ifd,name,data){
-		var m = { parents: [PageClass] };
-		m.IFD = ifd;	# parent pointer to IFD
-		m.page = m.IFD.canvas.createGroup(name);
-		m.page.setVisible(0);
-		m.name = name;
-		m.data = data;
-		m.keys = {};
+var ListenerClass = {
+	new: func(){
+		var m = { parents: [ListenerClass] };
 		m._listeners = [];
-		m._subPage = "";
 		return m;
 	},
-	setListeners : func(){
+	setListeners : func(instance=me){
 		
 	},
 	removeListeners : func(){
@@ -53,6 +43,22 @@ var PageClass = {
 			removelistener(l);
 		}
 		me._listeners = [];
+	},
+	
+};
+
+
+var PageClass = {
+	new: func(ifd,name,data){
+		var m = { parents: [PageClass,ListenerClass.new()] };
+		m.IFD = ifd;	# parent pointer to IFD
+		m.page = m.IFD.canvas.createGroup(name);
+		m.page.setVisible(0);
+		m.name = name;
+		m.data = data;
+		m.keys = {};
+		m._subPage = "";
+		return m;
 	},
 	init : func(instance=me){
 		
@@ -85,23 +91,13 @@ var PageClass = {
 
 var IfdWidget = {
 	new: func(page,canvasGroup,name){
-		var m = {parents:[IfdWidget]};
+		var m = {parents:[IfdWidget,ListenerClass.new()]};
 		m._class = "IfdWidget";
 		m._Page 	= page;	# parent pointer to parent Page
 		m._group	= canvasGroup;
 		m._name 	= name;
-		m._listeners 	= [];
 		m._can		= {};
 		return m;
-	},
-	removeListeners  :func(){
-		foreach(l;me._listeners){
-			removelistener(l);
-		}
-		me._listeners = [];
-	},
-	setListeners : func(instance) {
-		
 	},
 	init : func(instance=me){
 		

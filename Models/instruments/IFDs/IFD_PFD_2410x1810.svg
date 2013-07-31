@@ -13,7 +13,7 @@
    inkscape:export-ydpi="90"
    inkscape:export-xdpi="90"
    inkscape:export-filename="D:\Dropbox\Dirk\extra500\blenderei\LH_IFD\extra500_LH-IFD_kompass.png"
-   sodipodi:docname="RH-IFD_CanvasTest.svg"
+   sodipodi:docname="IFD_PFD_2410x1810.svg"
    inkscape:version="0.48.4 r9939"
    version="1.1"
    id="svg2"
@@ -26,11 +26,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.50980392"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.5"
-     inkscape:cx="1144.2591"
-     inkscape:cy="630.5449"
+     inkscape:zoom="1"
+     inkscape:cx="1020.6154"
+     inkscape:cy="1712.5243"
      inkscape:document-units="px"
-     inkscape:current-layer="layer13"
+     inkscape:current-layer="layer7"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1025"
@@ -5655,6 +5655,19 @@
            x="1150.7441"
            y="45.224854"
            id="tspan5842">GPSS</tspan></text>
+      <text
+         inkscape:label="#text5341-2"
+         transform="scale(0.95067337,1.051886)"
+         sodipodi:linespacing="125%"
+         id="AP_GS"
+         y="45.224854"
+         x="1319.0547"
+         style="font-size:65.7323761px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#40b250;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+         xml:space="preserve"><tspan
+           id="tspan5228"
+           y="45.224854"
+           x="1319.0547"
+           sodipodi:role="line">GS</tspan></text>
     </g>
     <path
        style="fill:#ffc215;fill-opacity:1;stroke:#ffc215;stroke-width:6.02772856;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:48.22182846, 48.22182846;stroke-dashoffset:0;display:inline"

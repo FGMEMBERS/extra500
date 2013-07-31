@@ -41,6 +41,7 @@ var AutopilotWidget = {
 			ModeHDG 	: m._group.getElementById("AP_HDG").setVisible(0),
 			ModeNAV 	: m._group.getElementById("AP_NAV").setVisible(0),
 			ModeAPR 	: m._group.getElementById("AP_APR").setVisible(0),
+			ModeGS	 	: m._group.getElementById("AP_GS").setVisible(0),
 			ModeGPSS 	: m._group.getElementById("AP_GPSS").setVisible(0),
 			ModeTRIM 	: m._group.getElementById("AP_TRIM").setVisible(0),
 			ModeALT 	: m._group.getElementById("AP_ALT").setVisible(0),
@@ -65,6 +66,7 @@ var AutopilotWidget = {
 		append(me._listeners, setlistener("/autopilot/mode/alt",func(n){me._onALT(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/mode/nav",func(n){me._onNAV(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/mode/apr",func(n){me._onAPR(n)},1,0));
+		append(me._listeners, setlistener("/autopilot/mode/gs",func(n){me._onGS(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/mode/gpss",func(n){me._onGPSS(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/mode/trim",func(n){me._onTRIM(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/mode/vs",func(n){me._onVS(n)},1,0));
@@ -80,23 +82,33 @@ var AutopilotWidget = {
 		me._can.Autopilot.setVisible(me._state);
 		me._can.Off.setVisible(!me._state);
 	},
-	_onReady : func(n){
-		me._ready	= n.getValue();
-		if( me._ready == 1 ){
-			me._can.State.setText("AP RDY");
-			me._can.State.setColor(COLOR["Green"]);
-			me._can.State.setVisible(1);
-			me._can.ModeFD.setVisible(1);
-		}
-	},
-	_onFail : func(n){
-		me._fail	= n.getValue();
+	_checkState : func(){
 		if( me._fail == 1 ){
 			me._can.State.setText("AP FAIL");
 			me._can.State.setColor(COLOR["Yellow"]);
 			me._can.State.setVisible(1);
 			me._can.ModeFD.setVisible(0);
+		}else{
+			if( me._ready == 1 ){
+				me._can.State.setText("AP RDY");
+				me._can.State.setColor(COLOR["Green"]);
+				me._can.State.setVisible(1);
+				me._can.ModeFD.setVisible(1);
+			}else{
+				me._can.State.setText("AP");
+				me._can.State.setColor(COLOR["Green"]);
+				me._can.State.setVisible(1);
+				me._can.ModeFD.setVisible(1);
+			}
 		}
+	},
+	_onReady : func(n){
+		me._ready	= n.getValue();
+		me._checkState();
+	},
+	_onFail : func(n){
+		me._fail	= n.getValue();
+		me._checkState();
 	},
 	_onALT : func(n){
 		me._modeALT = n.getValue();
@@ -112,6 +124,9 @@ var AutopilotWidget = {
 	},
 	_onAPR : func(n){
 		me._can.ModeAPR.setVisible(n.getValue());
+	},
+	_onGS : func(n){
+		me._can.ModeGS.setVisible(n.getValue());
 	},
 	_onGPSS : func(n){
 		me._can.ModeGPSS.setVisible(n.getValue());
@@ -417,33 +432,33 @@ var AltitudeWidget = {
 		
 		me._tmpAlt	= me._alt + 300;
 		
-		me._can.U300T.setText(sprintf("%i",math.floor(me._alt/1000)));
-		me._can.U300H.setText(sprintf("%03i",math.floor(math.mod(me._alt,1000) / 100) * 100));
+		me._can.U300T.setText(sprintf("%i",math.floor(me._tmpAlt/1000)));
+		me._can.U300H.setText(sprintf("%03i",math.floor(math.mod(me._tmpAlt,1000) / 100) * 100));
 		
 		me._tmpAlt-=100;
 		
-		me._can.U200T.setText(sprintf("%i",math.floor(me._alt/1000)));
-		me._can.U200H.setText(sprintf("%03i",math.floor(math.mod(me._alt,1000) / 100) * 100));
+		me._can.U200T.setText(sprintf("%i",math.floor(me._tmpAlt/1000)));
+		me._can.U200H.setText(sprintf("%03i",math.floor(math.mod(me._tmpAlt,1000) / 100) * 100));
 		
 		me._tmpAlt-=100;
 		
-		me._can.U100T.setText(sprintf("%i",math.floor(me._alt/1000)));
-		me._can.U100H.setText(sprintf("%03i",math.floor(math.mod(me._alt,1000) / 100) * 100));
+		me._can.U100T.setText(sprintf("%i",math.floor(me._tmpAlt/1000)));
+		me._can.U100H.setText(sprintf("%03i",math.floor(math.mod(me._tmpAlt,1000) / 100) * 100));
 		
 		me._tmpAlt-=100;
 		
-		me._can.C000T.setText(sprintf("%i",math.floor(me._alt/1000)));
-		me._can.C000H.setText(sprintf("%03i",math.floor(math.mod(me._alt,1000) / 100) * 100));
+		me._can.C000T.setText(sprintf("%i",math.floor(me._tmpAlt/1000)));
+		me._can.C000H.setText(sprintf("%03i",math.floor(math.mod(me._tmpAlt,1000) / 100) * 100));
 			
 		me._tmpAlt-=100;
 		
-		me._can.D100T.setText(sprintf("%i",math.floor(me._alt/1000)));
-		me._can.D100H.setText(sprintf("%03i",math.floor(math.mod(me._alt,1000) / 100) * 100));
+		me._can.D100T.setText(sprintf("%i",math.floor(me._tmpAlt/1000)));
+		me._can.D100H.setText(sprintf("%03i",math.floor(math.mod(me._tmpAlt,1000) / 100) * 100));
 		
 		me._tmpAlt-=100;
 		
-		me._can.D200T.setText(sprintf("%i",math.floor(me._alt/1000)));
-		me._can.D200H.setText(sprintf("%03i",math.floor(math.mod(me._alt,1000) / 100) * 100));
+		me._can.D200T.setText(sprintf("%i",math.floor(me._tmpAlt/1000)));
+		me._can.D200H.setText(sprintf("%03i",math.floor(math.mod(me._tmpAlt,1000) / 100) * 100));
 		
 		
 		me._can.Ladder.setTranslation(0,math.mod(me._alt,100) * me._SCALE_LAD_PX);
