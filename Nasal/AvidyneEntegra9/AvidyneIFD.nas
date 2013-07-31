@@ -23,207 +23,37 @@
 
 var AvidyneData = {
 	new: func(name){
-		var m = { parents: [AvidyneData] };
+		var m = { parents: [AvidyneData,ListenerClass.new()] };
 		m.name = name;
 		m.link = nil; #link to the other IFD DATA
-	#autopilot
-# 		m.apPowered 	= 0;
-# 		m.apModeRdy	= 0;
-# 		m.apModeFail 	= 0;
-# 		m.apModeALT 	= 0;
-# 		m.apModeNAV 	= 0;
-# 		m.apModeAPR 	= 0;
-# 		m.apModeGPSS 	= 0;
-# 		m.apModeTRIM 	= 0;
-# 		m.apModeVS 	= 0;
-# 		m.apModeHDG 	= 0;
-# 		m.apModeCAP 	= 0;
-# 		m.apModeSOFT 	= 0;
-# 		m.apModeAP 	= 0;
-# 		m.apModeFD 	= 0;
-# 		
-# 		m.nApPower 	= props.globals.initNode("/extra500/instrumentation/Autopilot/state",0.0,"INT");
-# 		m.nApModeRdy 	= props.globals.initNode("/autopilot/mode/rdy",0.0,"INT");
-# 		m.nApModeFail 	= props.globals.initNode("/autopilot/mode/fail",0.0,"INT");
-# 		m.nApModeALT 	= props.globals.initNode("/autopilot/mode/alt",0.0,"INT");
-# 		m.nApModeNAV 	= props.globals.initNode("/autopilot/mode/nav",0.0,"INT");
-# 		m.nApModeAPR 	= props.globals.initNode("/autopilot/mode/apr",0.0,"INT");
-# 		m.nApModeGPSS 	= props.globals.initNode("/autopilot/mode/gpss",0.0,"INT");
-# 		m.nApModeTRIM 	= props.globals.initNode("/autopilot/mode/trim",0.0,"INT");
-# 		m.nApModeVS  	= props.globals.initNode("/autopilot/mode/vs",0.0,"INT");
-# 		m.nApModeCAP 	= props.globals.initNode("/autopilot/mode/cap",0.0,"INT");
-# 		m.nApModeSOFT  	= props.globals.initNode("/autopilot/mode/soft",0.0,"INT");
-# 		m.nApModeHDG 	= props.globals.initNode("/autopilot/mode/heading",0.0,"INT");
-# 		m.nApModeAP  	= props.globals.initNode("/autopilot/settings/ap",0.0,"INT");
-# 		m.nApModeFD  	= props.globals.initNode("/autopilot/settings/fd",0.0,"INT");
-		
-		
-		
-		
-	#heading 
-		m.HDG 		= 0;
-		m.HDGBug 	= 0;
-		
-		m.nHDG = props.globals.initNode("/instrumentation/heading-indicator-IFD-"~m.name~"/indicated-heading-deg",0.0,"DOUBLE");
-		m.nHDGBug = props.globals.initNode("/autopilot/settings/heading-bug-deg",0.0,"DOUBLE");
-	# IAS 	
-# 		m.IAS 		= 0;
-# 		m.TAS 		= 0;
-# 		m.GroundSpeed	= 0;
-# 		m.IAS_Rate	= 0;
-# 		
-# 		m.nIAS 		= props.globals.initNode("/instrumentation/airspeed-IFD-"~m.name~"/indicated-airspeed-kt",0.0,"DOUBLE");
-# 		m.nIASRate	= props.globals.initNode("/instrumentation/airspeed-IFD-"~m.name~"/airspeed-change-ktps",0.0,"DOUBLE");
-# 		m.nTAS 		= props.globals.initNode("/instrumentation/airspeed-IFD-"~m.name~"/true-speed-kt",0.0,"DOUBLE");
-# 		m.nGroundSpeed 	= props.globals.initNode("/velocities/groundspeed-kt",0.0,"DOUBLE");
-		
-	#vertical speed
-# 		m.VS 		 = 0;
-# 		m.VSBug		 = 0;
-# 		
-# 		m.nVS = props.globals.initNode("/instrumentation/ivsi-IFD-"~m.name~"/indicated-speed-fpm",0.0,"DOUBLE");
-# 		m.nVSBug = props.globals.initNode("/autopilot/settings/vertical-speed-fpm",0.0,"DOUBLE");
-		
 	# ALT
-# 		m.ALT 		= 0;
-# 		m.ALTBug 	= 0;
-# 		m.HPA 		= 0;
-# 		
-# 		m.nALT = props.globals.initNode("/instrumentation/altimeter-IFD-"~m.name~"/indicated-altitude-ft",0.0,"DOUBLE");
-# 		#m.nALT = props.globals.initNode("/instrumentation/altimeter-IFD-"~m.name~"/setting-hpa",0.0,"DOUBLE");
-# 		m.nALTBug = props.globals.initNode("/autopilot/settings/tgt-altitude-ft",0.0,"DOUBLE");
-# 		m.nHPA = props.globals.initNode("/instrumentation/altimeter-IFD-"~m.name~"/setting-hpa",0.0,"DOUBLE");
+ 		m.HPA 		= 0;
+ 		m.nHPA = props.globals.initNode("/instrumentation/altimeter-IFD-"~m.name~"/setting-hpa",0.0,"DOUBLE");
 		
-	#wind
-		m.WindDirection = 0;
-		m.WindSpeed 	= 0;
-		
-		m.nWindDirection = props.globals.initNode("/environment/wind-from-heading-deg",0.0,"INT");
-		m.nWindSpeed = props.globals.initNode("/environment/wind-speed-kt",0.0,"INT");
-	
-	#attitude
-		m.pitch 	= 0;
-		m.roll 		= 0;
-		
-		m.nPitch = props.globals.initNode("/orientation/pitch-deg",0.0,"DOUBLE");
-		m.nRoll = props.globals.initNode("/orientation/roll-deg",0.0,"DOUBLE");
-		
-	#enviroment
-		m.OAT = 0;
-		
-		m.nOAT = props.globals.initNode("/environment/temperature-degc",0.0,"DOUBLE");
-		
-	#DI
-		m.HDI = 0;
-		m.VDI = 0;
-		m.GSable = 0;
-		m.GSinRange = 0;
-		m.NAVinRange = 0;
-		m.NAVLOC = 0;
-		m.nHDI 		= props.globals.initNode("/autopilot/radionav-channel/heading-needle-deflection-norm",0.0,"DOUBLE");
-		m.nVDI 		= props.globals.initNode("/autopilot/gs-channel/gs-needle-deflection-norm",0.0,"DOUBLE");
-		#m.nGSable 	= props.globals.initNode("/autopilot/gs-channel/has-gs",0.0,"DOUBLE");
-		m.nGSinRange 	= props.globals.initNode("/autopilot/gs-channel/gs-in-range",0.0,"DOUBLE");
-		m.nNAVinRange 	= props.globals.initNode("/autopilot/radionav-channel/in-range",0.0,"DOUBLE");
-		#m.nNAVLOC 	= props.globals.initNode("/autopilot/radionav-channel/is-localizer-frequency",0.0,"DOUBLE");
-		
-		m.cdiFromFlag 	= 0;
-		m.cdiToFlag 	= 0;
-		
-	#Box Primary Nav
-		m.nNavDistance	= props.globals.initNode("/autopilot/radionav-channel/nav-distance-nm",0.0,"DOUBLE");
-		m.nNAVSource	= props.globals.initNode("/instrumentation/nav-source",0.0,"DOUBLE");
-		m.navSource		= 0;
-		m.navID		= "";
-		m.navFrequency  = 0.0;
-		m.navDeg		= 0.0;
-		m.navAidUnit		= "";
-		m.navDistance	= 0.3;
-		m.navCoursePointer = 0;
-		
-	#Box Bearing Pointer
-		m.brgSource		= 0;
-		m.brgID			= "";	
-		m.brgNAVLOC		= 0;
-		m.brgGSable		= 0;
-		m.brgFrequency		= 0.0;
-		m.brgDistance		= 0.0;
-		m.brgCoursePointer	= 0.0;
 	#Timer
 		m.timerSec 	= 0;
 		m.timerState	= 0;
+		
 		return m;
 	},
+	setListeners : func(instance=me) {
+		append(me._listeners, setlistener("/instrumentation/altimeter-IFD-"~me.name~"/setting-hpa",func(n){me._onHpaChange(n)},1,0));	
+	
+	},
+	init : func(instance=me){
+		me.setListeners(instance);
+	},
+	
 	#loading the data from PropertyTree
 	load20Hz : func(now,dt){
-	#autopilot
-# 		me.apPowered 	= me.nApPower.getValue();
-# 		me.apModeRdy 	= me.nApModeRdy.getValue();
-# 		me.apModeFail 	= me.nApModeFail.getValue();
-# 		me.apModeALT 	= me.nApModeALT.getValue();
-# 		me.apModeNAV 	= me.nApModeNAV.getValue();
-# 		me.apModeAPR 	= me.nApModeAPR.getValue();
-# 		me.apModeGPSS 	= me.nApModeGPSS.getValue();
-# 		me.apModeTRIM 	= me.nApModeTRIM.getValue();
-# 		me.apModeVS 	= me.nApModeVS.getValue();
-# 		me.apModeHDG 	= me.nApModeHDG.getValue();
-# 		me.apModeCAP 	= me.nApModeCAP.getValue();
-# 		me.apModeSOFT 	= me.nApModeSOFT.getValue();
-# 		me.apModeAP 	= me.nApModeAP.getValue();
-# 		me.apModeFD 	= me.nApModeFD.getValue();
 		
-	#heading 
-# 		me.HDG 		= me.nHDG.getValue();
-# 		me.HDGBug 	= me.nHDGBug.getValue();
-	#speed 	
-# 		me.IAS 		= me.nIAS.getValue();
-# 		me.IAS_Rate	= me.nIASRate.getValue();
-# 		me.TAS 		= me.nTAS.getValue();
-	#vertical speed
-# 		me.VS 		= me.nVS.getValue();
-# 		me.VSBug	= me.nVSBug.getValue();
-	#altitude
-# 		me.ALT 		= me.nALT.getValue() ;
-# 		#me.ALT		= me.ALT < 0 ? 0 : me.ALT;
-# 		me.ALTBug 	= me.nALTBug.getValue();
-# 		me.HPA 		= me.nHPA.getValue();
-	#wind
-# 		me.WindDirection 	= me.nWindDirection.getValue();
-# 		me.WindSpeed 		= me.nWindSpeed.getValue();
-	#attitude
-# 		me.pitch 	= me.nPitch.getValue();
-# 		me.roll 	= me.nRoll.getValue();
-
-	#enviroment
-# 		me.OAT = me.nOAT.getValue();
-	#DI 
-# 		me.HDI 		= me.nHDI.getValue();
-# 		me.VDI 		= -me.nVDI.getValue();
-# 		#me.GSable 	= me.nGSable.getValue();
-# 		me.GSinRange 	= me.nGSinRange.getValue();
-# 		me.NAVinRange 	= me.nNAVinRange.getValue();
-# 		#me.NAVLOC	= me.nNAVLOC.getValue();
-	
-	# Bearing Pointer
-# 		if (me.brgSource > 0){
-# 			me.brgCoursePointer	= getprop(BEARING_SOURCE_TREE[me.brgSource]~"/radials/reciprocal-radial-deg") or 0;
-# 			
-# 		}
-		
-	
 	},
 	load2Hz : func(now,dt){
-		#print("AvidyneData.load2Hz("~now~","~dt~") .. ");
-	#Box Timer
 		me._timerCount(dt);
-# 	#Box Primary Nav
-# 		me.navDistance	= me.nNavDistance.getValue();
-# 		me.GroundSpeed	= me.nGroundSpeed.getValue();
-# 	# Box Bearing Pointer
-# 		if (me.brgSource > 0){
-# 			me.brgDistance		= getprop(BEARING_SOURCE_TREE[me.brgSource]~"/nav-distance") * global.CONST.METER2NM;
-# 		}
 	},
+	_onHpaChange : func(n){
+		me.HPA = n.getValue();	
+	},	
 	adjustBaro : func(value=nil){
 		if (value==nil){
 			me.HPA = 1013;
@@ -374,6 +204,7 @@ var AvidyneIFD = {
 		me.parents[1].init(instance);
 		#me.setListeners(instance);
 		me.initUI();
+		me.data.init();
 		
 		me._powerA.init();
 		me._powerB.init();
@@ -385,13 +216,17 @@ var AvidyneIFD = {
 		append(me._listeners, setlistener(me._nState,func(n){instance._onStateChange(n);},1,0) );
 		
 		me.nLedDim.setValue(1);
-		me.keys["DIM >"] = func(){me._adjustBrightness(0.1);};
-		me.keys["DIM <"] = func(){me._adjustBrightness(-0.1);};
+		me.keys["DIM >"] = func(){me._adjustBrightness(0.05);};
+		me.keys["DIM <"] = func(){me._adjustBrightness(-0.05);};
+		
+		
+		
 		
 		me.nLedBaro.setValue(1);
 		me.keys["BARO >"] = func(){me.data.adjustBaro(1);};
 		me.keys["BARO <"] = func(){me.data.adjustBaro(-1);};
 		me.keys["BARO STD"] = func(){me.data.adjustBaro();};
+		
 		
 		
 		me.keys["PFD >"] = func(){me.gotoPage("PFD","PFD >");};
@@ -548,7 +383,7 @@ var AvidyneIFD = {
 	},
 	_adjustBrightness : func(amount){
 		me._brightness += amount;
-		me._brightness = global.clamp(me._brightness,0,1.0);
+		me._brightness = global.clamp(me._brightness,0.2,1.0);
 		me.nBacklight.setValue(me._brightness * me._voltNorm);
 	},
 	
