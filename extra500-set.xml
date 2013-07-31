@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             29.07.2013
+      Date:             31.07.2013
 
 
 ************************************************************************
@@ -864,6 +864,9 @@ JSBSim Extra Aircraft - Extra 500.
 				<course-error-nm>0</course-error-nm>
 			</wp>
 		</wp>
+		<config>
+			<over-flight-arm-distance-nm>0</over-flight-arm-distance-nm>
+		</config>
 	</gps>
 	<gps n="1">
 	       	<serviceable type="bool">true</serviceable>
@@ -878,6 +881,9 @@ JSBSim Extra Aircraft - Extra 500.
 				<course-error-nm>0</course-error-nm>
 			</wp>
 		</wp>
+		<config>
+			<over-flight-arm-distance-nm>0</over-flight-arm-distance-nm>
+		</config>
 	</gps>
 
 
