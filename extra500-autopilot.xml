@@ -1005,23 +1005,6 @@
 			<output>/autopilot/fms-channel/serviceable</output>
 		</switch>
 
-	<!-- setting over-flight-arm-distance-nm to 0 if gpss active (as gpss decides itself to switch to next leg) -->
-		<switch name="overflightgps1">
-			<default value="1"/>
-			<test value="0">
-				/autopilot/mode/gpss eq 1
-			</test>
-			<output>/instrumentation/gps/config/over-flight-arm-distance-nm</output>
-		</switch>
-
-		<switch name="overflightgps2">
-			<default value="1"/>
-			<test value="0">
-				/autopilot/mode/gpss eq 1
-			</test>
-			<output>/instrumentation/gps[1]/config/over-flight-arm-distance-nm</output>
-		</switch>
-
 	<!-- selecting GPS properties from gps1 or 2 depending on "servicable" -->
 		<switch name="gpsselect1">
 			<default value="/instrumentation/gps/wp/leg-true-course-deg"/>
@@ -1447,6 +1430,27 @@
 				</product>
 			</function>
 		</fcs_function>
+
+<!-- setting over-flight-arm-distance-nm to 0 if gpss active (as gpss decides itself to switch to next leg), but not at last wp -->
+		<switch name="overflightgps1">
+			<default value="1"/>
+			<test logic="AND" value="0">
+				/autopilot/mode/gpss eq 1
+				/autopilot/route-manager/current-wp-plus ne /autopilot/route-manager/route/num
+				/autopilot/route-manager/current-wp ne 0
+			</test>
+			<output>/instrumentation/gps/config/over-flight-arm-distance-nm</output>
+		</switch>
+
+		<switch name="overflightgps2">
+			<default value="1"/>
+			<test logic="AND" value="0">
+				/autopilot/mode/gpss eq 1
+				/autopilot/route-manager/current-wp-plus ne /autopilot/route-manager/route/num
+				/autopilot/route-manager/current-wp ne 0
+			</test>
+			<output>/instrumentation/gps[1]/config/over-flight-arm-distance-nm</output>
+		</switch>
 		
 <!-- the turn rate (inverted) as measured by the turn coordinator in deg/s (RH panel) -->
 		<fcs_function name="/autopilot/fms-channel/turn-rate-inv">
