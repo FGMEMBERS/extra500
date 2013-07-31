@@ -208,11 +208,13 @@ var AutopilotClass = {
 	},
 	DirectTO : func(){									# called from keypad.nas
 		var selIndex = getprop("/sim/gui/dialogs/route-manager/selection");		# selection index in route manager
-		var deleteIndex = selIndex -1;
-		while ( deleteIndex > -1 ) {
-			flightplan().deleteWP( deleteIndex );					# deleting all wp-s before selection
-			deleteIndex = deleteIndex -1 ;						
-		}
+# 		var deleteIndex = selIndex -1;
+# 		while ( deleteIndex > -1 ) {
+# 			flightplan().deleteWP( deleteIndex );					# deleting all wp-s before selection
+# 			deleteIndex = deleteIndex -1 ;						
+# 		}
+		flightplan().current = selIndex-1;
+		flightplan().current = selIndex;
 	},
 # Events from the UI
 	onClickHDG : func(){
