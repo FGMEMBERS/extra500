@@ -30,7 +30,7 @@ var AutopilotClass = {
 		
 		
 		m.dimmingVolt = 0.0;
-		
+		m._gpsMode	= "";
 		
 		m.ndisengSound  = props.globals.initNode("/autopilot/mode/disengsound",0,"INT");
 		m.nModeDiseng	= props.globals.initNode("/autopilot/mode/diseng",0,"INT");
@@ -91,6 +91,7 @@ var AutopilotClass = {
 	},
 	setListeners : func(instance) {
 		append(me._listeners, setlistener(me._nBrightness,func(n){instance._onBrightnessChange(n);},1,0) );
+		append(me._listeners, setlistener("/instrumentation/gps/active-mode",func(n){instance._onGPSModeChange(n);},1,0) );
 	},
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
@@ -143,6 +144,21 @@ var AutopilotClass = {
 	_onBrightnessChange : func(n){
 		me._brightness = n.getValue();
 		me.electricWork();
+	},
+	_onGPSModeChange : func(n){
+		me._gpsMode = n.getValue();
+		print("AutopilotClass._onGPSModeChange() ... GPS mode change to "~me._gpsMode);
+		if(me._gpsMode == "leg"){
+			if(me.nModeNavGpss.getValue()){
+				
+			}else{
+				
+			}
+		}elsif(me._gpsMode == "dto"){
+			
+		}elsif(me._gpsMode == "obs"){
+			
+		}
 	},
 	electricWork : func(){
 		if (eSystem.switch.AutopilotMaster._state >= 0 and me._volt > me._voltMin){
