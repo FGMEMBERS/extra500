@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             31.07.2013
+      Date:             02.08.2013
 
 
 ************************************************************************
@@ -683,25 +683,25 @@ JSBSim Extra Aircraft - Extra 500.
  </autopilot>
 
  <systems>
-      <pitotL>
-            <serviceable>1</serviceable>
-      </pitotL>
-      <pitotR>
-            <serviceable>1</serviceable>
-      </pitotR>
-      <staticL>
-            <serviceable>1</serviceable>
-            <sideslip-error-factor>1</sideslip-error-factor>
-      </staticL>
-      <staticR>
-            <serviceable>1</serviceable>
-            <sideslip-error-factor>1</sideslip-error-factor>
-      </staticR>
-      <staticAP>
-            <serviceable>1</serviceable>
-            <sideslip-error-factor>0.1</sideslip-error-factor>
-      </staticAP>
-      <electrical>	
+	<pitotL>
+        	<serviceable>1</serviceable>
+	</pitotL>
+	<pitotR>
+		<serviceable>1</serviceable>
+	</pitotR>
+	<staticL>
+		<serviceable>1</serviceable>
+		<sideslip-error-factor>1</sideslip-error-factor>
+	</staticL>
+	<staticR>
+		<serviceable>1</serviceable>
+		<sideslip-error-factor>1</sideslip-error-factor>
+	</staticR>
+	<staticAP>
+		<serviceable>1</serviceable>
+		<sideslip-error-factor>0.1</sideslip-error-factor>
+	</staticAP>
+	<electrical>	
 		<outputs>
 			<turn-coordinator>12</turn-coordinator>
 			<DG>1.0</DG> <!-- the gyro eats norm Power -->
@@ -711,7 +711,10 @@ JSBSim Extra Aircraft - Extra 500.
 			<dme>1</dme> 			<!--expects a bool 0 or 1 -->
 			<transponder>24</transponder>
 		</outputs>
-      </electrical>
+	</electrical>
+	<pressurization>
+		<airport-alt>0</airport-alt>
+	</pressurization>
  </systems>
 
  <instrumentation>
@@ -1055,7 +1058,8 @@ JSBSim Extra Aircraft - Extra 500.
 		<RANKINE2KELVIN type="double">0.555555555</RANKINE2KELVIN>
 		<KELVIN2RANKINE type="double">1.8</KELVIN2RANKINE>		<!-- exact factor: to be used with priority -->
 		<LBM2KG type="double">0.5144</LBM2KG>				<!-- exact factor: to be used with priority -->
-		<JETA_LBGAL type="double">6.7898</JETA_LBGAL>			
+		<JETA_LBGAL type="double">6.7898</JETA_LBGAL>	
+		<PSI2INHG type="double">2.03602</PSI2INHG>		
 	</const>
 	<instrumentation>
 		<EIP>
@@ -1063,6 +1067,28 @@ JSBSim Extra Aircraft - Extra 500.
 		</EIP>
 	</instrumentation>
 	<panel>
+		<CircuitBreaker>
+			<BankC>
+				<EnvironmentalBleed>
+					<voltOut>0</voltOut>
+				</EnvironmentalBleed>
+			</BankC>
+			<BankD>
+				<CabinPressure>
+					<voltOut>0</voltOut>
+				</CabinPressure>
+			</BankD>
+		</CircuitBreaker>
+		<Side>
+			<Cabin>
+				<EnvironmentalAir>
+					<state>0</state>
+				</EnvironmentalAir>
+				<Pressure>
+					<state>0</state>
+				</Pressure>
+			</Cabin>
+		</Side>
 		<Master>
 			<Autopilot>
 				<YawTrim>
@@ -1071,6 +1097,11 @@ JSBSim Extra Aircraft - Extra 500.
 			</Autopilot>
 		</Master>
 	</panel>
+	<door>
+		<main>
+			<IsOpen>0</IsOpen>
+		</main>
+	</door>
 	<!--<light>
 		<strobe>
 			<output type="double">0</output>

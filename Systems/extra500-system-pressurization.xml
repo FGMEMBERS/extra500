@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+	
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Eric van den Berg
+      Date: 2013-08-02
+
+      Last change:      -
+      Date:             -
+-->
+
+<!--
+/extra500/panel/Side/Cabin/Pressure/state -1 dump, 0 off, 1 on
+/extra500/panel/Side/Cabin/EnvironmentalAir/state 1 on, 0 off
+/engines/engine/running
+/extra500/panel/CircuitBreaker/BankC/EnvironmentalBleed/voltOut
+/extra500/panel/CircuitBreaker/BankD/CabinPressure/voltOut
+/extra500/panel/CircuitBreaker/BankD/Dump/voltOut
+/extra500/door/main/IsOpen
+-->
+<system name="pressurization">
+	<channel name="cabin">
+
+		<switch name="/systems/pressurization/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/engines/engine/running eq 1
+				/extra500/panel/Side/Cabin/Pressure/state eq 1
+				/extra500/panel/Side/Cabin/EnvironmentalAir/state eq 1
+				/extra500/panel/CircuitBreaker/BankC/EnvironmentalBleed/voltOut ge 10
+				/extra500/panel/CircuitBreaker/BankD/CabinPressure/voltOut ge 15
+				/extra500/door/main/IsOpen eq 0
+			</test>
+		</switch>
+
+		<fcs_function name="/systems/pressurization/deltap-psi">
+			<function>
+				<value>0</value>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/systems/pressurization/cabin-pressure-inhg">
+			<function>
+				<sum>
+					<product>
+						<property>/extra500/const/PSI2INHG</property>
+						<property>/systems/pressurization/deltap-psi</property>
+					</product>
+					<property>/environment/pressure-inhg</property>
+				</sum>
+			</function>
+		</fcs_function>
+
+
+
+	</channel>
+</system>

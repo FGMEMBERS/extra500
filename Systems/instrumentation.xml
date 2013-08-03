@@ -20,7 +20,7 @@
       Date: 21.04.13
 
       Last change:      Eric van den Berg
-      Date:             2013-07-15
+      Date:             2013-08-02
 -->
 
 <PropertyList>
@@ -88,8 +88,7 @@
   <altimeter>                                                                
     <name>cabin-altitude</name>
     <number>0</number>
-    <!--static-pressure>/systems/pressurization/pressure-inhg</static-pressure--> <!--CHANGE WHEN PRESSURIZATION SYSTEM IS OPERATIONAL -->
-    <static-pressure>/systems/staticL/pressure-inhg</static-pressure>
+    <static-pressure>/systems/pressurization/cabin-pressure-inhg</static-pressure> 
   </altimeter>
 
   <dme>                                                                      
@@ -137,11 +136,6 @@
     <number>1</number>
   </nav-radio>
 
-  <!--nav-radio>                                                                
-    <name>nav</name>
-    <number>2</number>
-  </nav-radio-->
-
   <tcas>
      <name>tcas</name>
      <number>0</number>
@@ -152,7 +146,6 @@
     <number>0</number>
     <mode>2</mode>
     <encoder-path>/instrumentation/altimeter-IFD-RH/</encoder-path>
-    <!--mode-s-altitude>/instrumentation/altimeter-IFD-RH</mode-s-altitude-->
   </transponder>
 
   <turn-indicator>
@@ -168,8 +161,7 @@
   <vertical-speed-indicator>                                                 
     <name>cabin-rate-climb</name>
     <number>0</number>
-    <!--static-pressure>/systems/pressurization/pressure-inhg</static-pressure--> <!--CHANGE WHEN PRESSURIZATION SYSTEM IS OPERATIONAL -->
-    <static-pressure>/systems/staticL/pressure-inhg</static-pressure>
+    <static-pressure>/systems/pressurization/cabin-pressure-inhg</static-pressure>
   </vertical-speed-indicator>
 
 </PropertyList>
