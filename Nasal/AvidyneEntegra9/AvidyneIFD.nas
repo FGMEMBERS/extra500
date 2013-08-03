@@ -353,22 +353,13 @@ var AvidyneIFD = {
 		
 	},
 	gotoPage : func(name,key=nil){
-		print("IFD "~me.name ~" gotoPage("~name~") .. ");
+		#print("IFD "~me.name ~" gotoPage("~name~") .. ");
 		if (me._state == 1){
 			if (!contains(me.page,name)){
 				name = "none";	
 			}
 		
 			if (me.pageSelected != name){
-# 				me.page[me.pageSelected].setVisible(0);
-# 				me.page[me.pageSelected].removeListeners();
-# 				me.pageSelected = name;
-# 				me.nPageSelected.setValue(me.pageSelected);
-# 				me.clearLeds();
-# 				me.page[me.pageSelected].setListeners();
-# 				me.page[me.pageSelected].registerKeys();
-# 				me.page[me.pageSelected].setVisible(1);
-				
 				me.page[me.pageSelected].deinit();
 				me.clearLeds();
 				me.pageSelected = name;
