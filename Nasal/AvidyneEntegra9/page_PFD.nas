@@ -243,13 +243,13 @@ var AirspeedSpeedWidget = {
 			tas	: props.globals.initNode("/instrumentation/airspeed-IFD-"~m._Page.IFD.name~"/true-speed-kt",0.0,"DOUBLE"),
 		};
 		m._can		= {
-			IAS_Ladder	: m._group.getElementById("IAS_Ladder").set("clip","rect(126px, 648px, 784px, 413px)"),
-			IAS_001		: m._group.getElementById("IAS_001").set("clip","rect(383px, 581px, 599px, 505px)"),
-			IAS_010		: m._group.getElementById("IAS_010").set("clip","rect(453px, 514px, 528px, 384px)"),
-			IAS_100		: m._group.getElementById("IAS_100").set("clip","rect(453px, 514px, 528px, 384px)"),
+			IAS_Ladder	: m._group.getElementById("IAS_Ladder").set("clip","rect(82px, 639px, 671px, 320px)"),
+			IAS_001		: m._group.getElementById("IAS_001").set("clip","rect(327px, 639px, 506px, 320px)"),
+			IAS_010		: m._group.getElementById("IAS_010").set("clip","rect(385px, 639px, 449px, 320px)"),
+			IAS_100		: m._group.getElementById("IAS_100").set("clip","rect(385px, 639px, 449px, 320px)"),
 			Plade		: m._group.getElementById("IAS_BlackPlade"),
 			Zero		: m._group.getElementById("IAS_Zero").setVisible(1),
-			Rate		: m._group.getElementById("IAS_Rate").set("clip","rect(126px, 648px, 784px, 413px)"),
+			Rate		: m._group.getElementById("IAS_Rate").set("clip","rect(82px, 639px, 671px, 320px)"),
 			TAS		: m._group.getElementById("IAS_TAS"),
 		};
 		m._ias		= 0;
@@ -258,7 +258,8 @@ var AirspeedSpeedWidget = {
 		m._limitVne	= 207;
 		m._limitVso	= 58;
 		m._limitZero	= 20;
-		m._ladderPX	= 74.596;
+		m._LADER_PX	= 63.463;
+		m._RATE_OFFSET	= m._can.Rate.get("coord[3]");
 		
 		m._speed	= 0;
 		m._speedAdd	= 0;
@@ -280,7 +281,7 @@ var AirspeedSpeedWidget = {
 		me._tas		= me._ptree.tas.getValue();;
 		
 		
-		me._can.IAS_Ladder.setTranslation(0,(me._ias-20)*10);
+		me._can.IAS_Ladder.setTranslation(0,(me._ias-20)*8.4978);
 		if ( me._ias < me._limitZero ){
 			me._can.IAS_100.setVisible(0);
 			me._can.IAS_010.setVisible(0);
@@ -295,14 +296,13 @@ var AirspeedSpeedWidget = {
 			me._can.Plade.setVisible(1);
 			me._can.IAS_001.setVisible(1);
 			
-			#me._can.Rate.set("coord[1]",4286+(-me._rate*62));
-			me._can.Rate.setData([2,6,8,6,0],[585.5,491.4286+(-me._rate*62),604,491.4286,585.5]);
-# 			
+			me._can.Rate.set("coord[1]",me._RATE_OFFSET+(-me._rate*58));
+		
 			me._can.TAS.setText(sprintf("%3i",me._tas));
 			
 			me._speed = math.mod(me._ias,10);
 			
-			me._can.IAS_001.setTranslation(0,(me._speed * me._ladderPX));
+			me._can.IAS_001.setTranslation(0,(me._speed * me._LADER_PX));
 			
 			if (me._ias > 10){
 				if (me._speed >= 9){
@@ -311,7 +311,7 @@ var AirspeedSpeedWidget = {
 					me._speedAdd = 0;
 				}
 				me._speed = math.floor(math.mod(me._ias,100)/10);
-				me._can.IAS_010.setTranslation(0,((me._speed+me._speedAdd) * me._ladderPX));
+				me._can.IAS_010.setTranslation(0,((me._speed+me._speedAdd) * me._LADER_PX));
 				me._can.IAS_010.setVisible(1);
 				
 				if (me._ias > 100){
@@ -321,7 +321,7 @@ var AirspeedSpeedWidget = {
 					}
 					
 					me._speed = math.floor(math.mod(me._ias,1000)/100);
-					me._can.IAS_100.setTranslation(0,((me._speed+me._speedAdd) * me._ladderPX));
+					me._can.IAS_100.setTranslation(0,((me._speed+me._speedAdd) * me._LADER_PX));
 					me._can.IAS_100.setVisible(1);
 				
 					me._can.IAS_100.setVisible(1);
@@ -367,7 +367,7 @@ var AltitudeWidget = {
 			alt	: props.globals.initNode("/instrumentation/altimeter-IFD-"~m._Page.IFD.name~"/indicated-altitude-ft",0.0,"DOUBLE"),
 		};
 		m._can		= {
-			Ladder		: m._group.getElementById("ALT_Ladder").set("clip","rect(170px, 2060px, 785px, 1680px)"),
+			Ladder		: m._group.getElementById("ALT_Ladder").set("clip","rect(100px, 1718px, 650px, 1410px)"),
 			U300T		: m._group.getElementById("ALT_LAD_U300T"),
 			U300H		: m._group.getElementById("ALT_LAD_U300H"),
 			U200T		: m._group.getElementById("ALT_LAD_U200T"),
@@ -381,22 +381,24 @@ var AltitudeWidget = {
 			D200T		: m._group.getElementById("ALT_LAD_D200T"),
 			D200H		: m._group.getElementById("ALT_LAD_D200H"),
 			Plade		: m._group.getElementById("AltBlackPlade"),
-			Bar10		: m._group.getElementById("AltBar10").set("clip","rect(377px, 2060px, 605px,1680px)"),
-			Bar100		: m._group.getElementById("AltBar100").set("clip","rect(451px, 2060px, 527px, 1680px)"),
-			Bar1000		: m._group.getElementById("AltBar1000").set("clip","rect(451px, 2060px, 527px, 1680px)"),
-			Bar10000	: m._group.getElementById("AltBar10000").set("clip","rect(451px, 2060px, 527px, 1680px)"),
+			BarMinus	: m._group.getElementById("AltBarMinus").setVisible(0),
+			Bar10		: m._group.getElementById("AltBar10").set("clip","rect(326px, 1718px, 507px, 1478px)"),
+			Bar100		: m._group.getElementById("AltBar100").set("clip","rect(385px, 1718px, 449px, 1478px)"),
+			Bar1000		: m._group.getElementById("AltBar1000").set("clip","rect(385px, 1718px, 449px, 1478px)"),
+			Bar10000	: m._group.getElementById("AltBar10000").set("clip","rect(385px, 1718px, 449px, 1478px)"),
 			Bug		: m._group.getElementById("ALT_Bug"),
 			BugValue	: m._group.getElementById("ALT_Selected"),
 			HPA		: m._group.getElementById("hPa"),
 		};
 		m._alt	 	= 0;
+		m._absAlt	= 0;
 		m._bugDiff 	= 0;
 		m._hpa 		= 0;
 		m._tmpAlt 	= 0;
 		m._tmpAltAdd 	= 0;
-		m._SCALE_BAR_PX_100	= 75.169;
+		m._SCALE_BAR_PX_100	= 63.426;
 		m._SCALE_BAR_PX_10	= (m._SCALE_BAR_PX_100/20);
-		m._SCALE_LAD_PX		= 1.36;# 136 px
+		m._SCALE_LAD_PX		= 1.14901;# 114.901 px
 		return m;
 	},
 	setListeners : func(instance) {
@@ -420,46 +422,75 @@ var AltitudeWidget = {
 		me._can.BugValue.setText(sprintf("%4i",math.floor( me._bug + 0.5 )));
 		
 		me._bugDiff = (me._alt - me._bug) * me._SCALE_LAD_PX;
-		me._bugDiff = global.clamp(me._bugDiff,-322,294);
+		me._bugDiff = global.clamp(me._bugDiff,-272,254);
 		me._can.Bug.setTranslation(0,me._bugDiff);
 	},
 	update20Hz : func(now,dt){
 		me._alt		= me._ptree.alt.getValue();
 		
 		me._bugDiff = (me._alt - me._bug) * me._SCALE_LAD_PX;
-		me._bugDiff = global.clamp(me._bugDiff,-322,294);
+		me._bugDiff = global.clamp(me._bugDiff,-272,254);
 		me._can.Bug.setTranslation(0,me._bugDiff);
 		
 		me._tmpAlt	= me._alt + 300;
+		if(me._tmpAlt>=0){
+			me._can.U300T.setText(sprintf("%i",math.floor((me._tmpAlt/1000))));
+			me._can.U300H.setText(sprintf("%03i",math.floor(math.mod(me._tmpAlt,1000) / 100) * 100));
+		}else{
+			me._can.U300T.setText(sprintf("-%i",math.floor(math.abs(me._tmpAlt-100)/1000) ));
+			me._can.U300H.setText(sprintf("%03i",math.floor(math.mod(math.abs(me._tmpAlt-100),1000) / 100) * 100));
 		
-		me._can.U300T.setText(sprintf("%i",math.floor(me._tmpAlt/1000)));
-		me._can.U300H.setText(sprintf("%03i",math.floor(math.mod(me._tmpAlt,1000) / 100) * 100));
-		
+		}
 		me._tmpAlt-=100;
 		
-		me._can.U200T.setText(sprintf("%i",math.floor(me._tmpAlt/1000)));
-		me._can.U200H.setText(sprintf("%03i",math.floor(math.mod(me._tmpAlt,1000) / 100) * 100));
-		
-		me._tmpAlt-=100;
-		
-		me._can.U100T.setText(sprintf("%i",math.floor(me._tmpAlt/1000)));
-		me._can.U100H.setText(sprintf("%03i",math.floor(math.mod(me._tmpAlt,1000) / 100) * 100));
-		
-		me._tmpAlt-=100;
-		
-		me._can.C000T.setText(sprintf("%i",math.floor(me._tmpAlt/1000)));
-		me._can.C000H.setText(sprintf("%03i",math.floor(math.mod(me._tmpAlt,1000) / 100) * 100));
+		if(me._tmpAlt>=0){
+			me._can.U200T.setText(sprintf("%i",math.floor((me._tmpAlt/1000))));
+			me._can.U200H.setText(sprintf("%03i",math.floor(math.mod(me._tmpAlt,1000) / 100) * 100));
+		}else{
+			me._can.U200T.setText(sprintf("-%i",math.floor(math.abs(me._tmpAlt-100)/1000) ));
+			me._can.U200H.setText(sprintf("%03i",math.floor(math.mod(math.abs(me._tmpAlt-100),1000) / 100) * 100));
 			
+		}
 		me._tmpAlt-=100;
 		
-		me._can.D100T.setText(sprintf("%i",math.floor(me._tmpAlt/1000)));
-		me._can.D100H.setText(sprintf("%03i",math.floor(math.mod(me._tmpAlt,1000) / 100) * 100));
-		
+		if(me._tmpAlt>=0){
+			me._can.U100T.setText(sprintf("%i",math.floor((me._tmpAlt/1000))));
+			me._can.U100H.setText(sprintf("%03i",math.floor(math.mod(me._tmpAlt,1000) / 100) * 100));
+		}else{
+			me._can.U100T.setText(sprintf("-%i",math.floor(math.abs(me._tmpAlt-100)/1000) ));
+			me._can.U100H.setText(sprintf("%03i",math.floor(math.mod(math.abs(me._tmpAlt-100),1000) / 100) * 100));
+			
+		}
 		me._tmpAlt-=100;
 		
-		me._can.D200T.setText(sprintf("%i",math.floor(me._tmpAlt/1000)));
-		me._can.D200H.setText(sprintf("%03i",math.floor(math.mod(me._tmpAlt,1000) / 100) * 100));
+		if(me._tmpAlt>=0){
+			me._can.C000T.setText(sprintf("%i",math.floor((me._tmpAlt/1000))));
+			me._can.C000H.setText(sprintf("%03i",math.floor(math.mod(me._tmpAlt,1000) / 100) * 100));
+		}else{
+			me._can.C000T.setText(sprintf("-%i",math.floor(math.abs(me._tmpAlt-100)/1000) ));
+			me._can.C000H.setText(sprintf("%03i",math.floor(math.mod(math.abs(me._tmpAlt-100),1000) / 100) * 100));
+			
+		}
+		me._tmpAlt-=100;
 		
+		if(me._tmpAlt>=0){
+			me._can.D100T.setText(sprintf("%i",math.floor((me._tmpAlt/1000))));
+			me._can.D100H.setText(sprintf("%03i",math.floor(math.mod(me._tmpAlt,1000) / 100) * 100));
+		}else{
+			me._can.D100T.setText(sprintf("-%i",math.floor(math.abs(me._tmpAlt-100)/1000) ));
+			me._can.D100H.setText(sprintf("%03i",math.floor(math.mod(math.abs(me._tmpAlt-100),1000) / 100) * 100));
+			
+		}
+		me._tmpAlt-=100;
+		
+		if(me._tmpAlt>=0){
+			me._can.D200T.setText(sprintf("%i",math.floor((me._tmpAlt/1000))));
+			me._can.D200H.setText(sprintf("%03i",math.floor(math.mod(me._tmpAlt,1000) / 100) * 100));
+		}else{
+			me._can.D200T.setText(sprintf("-%i",math.floor(math.abs(me._tmpAlt-100)/1000) ));
+			me._can.D200H.setText(sprintf("%03i",math.floor(math.mod(math.abs(me._tmpAlt-100),1000) / 100) * 100));
+			
+		}
 		
 		me._can.Ladder.setTranslation(0,math.mod(me._alt,100) * me._SCALE_LAD_PX);
 		
@@ -467,18 +498,21 @@ var AltitudeWidget = {
 		
 		me._tmpAlt = math.mod(me._alt,100);
 		me._can.Bar10.setTranslation(0, me._tmpAlt * me._SCALE_BAR_PX_10);
-				
-		if (me._alt>=100){
+		me._absAlt = math.abs(me._alt);
+		
+		me._can.BarMinus.setVisible( (me._alt<0) );
+		
+		if (me._absAlt>=100){
 			if (me._tmpAlt > 80) {
 				me._tmpAltAdd = me._tmpAlt - 80;
 			}else{
 				me._tmpAltAdd = 0;
 			}
 		
-			me._tmpAlt = math.floor(math.mod(me._alt,1000)/100);
+			me._tmpAlt = math.floor(math.mod(me._absAlt,1000)/100);
 			me._can.Bar100.setTranslation(0,(me._tmpAlt * me._SCALE_BAR_PX_100) + ( me._tmpAltAdd * me._SCALE_BAR_PX_10 ));
 			me._can.Bar100.setVisible(1);
-			if(me._alt>=1000){
+			if(me._absAlt>=1000){
 				if (me._tmpAlt == 9) {
 # 					me._tmpAltAdd = me._tmpAlt - 9;
 				}else{
@@ -486,17 +520,17 @@ var AltitudeWidget = {
 				}
 				#print("update20Hz() ... "~me._tmpAlt~" + "~me._tmpAltAdd);
 				
-				me._tmpAlt = math.floor(math.mod(me._alt,10000)/1000);
+				me._tmpAlt = math.floor(math.mod(me._absAlt,10000)/1000);
 				me._can.Bar1000.setTranslation(0,me._tmpAlt * me._SCALE_BAR_PX_100 + ( me._tmpAltAdd * me._SCALE_BAR_PX_10 ));
 				me._can.Bar1000.setVisible(1);
-				if (me._alt>=10000){
+				if (me._absAlt>=10000){
 					if (me._tmpAlt == 9) {
 						#me._tmpAltAdd = me._tmpAlt - 9;
 					}else{
 						me._tmpAltAdd = 0;
 					}
 					
-					me._tmpAlt = math.floor(math.mod(me._alt,100000)/10000);
+					me._tmpAlt = math.floor(math.mod(me._absAlt,100000)/10000);
 					me._can.Bar10000.setTranslation(0,me._tmpAlt * me._SCALE_BAR_PX_100 + ( me._tmpAltAdd * me._SCALE_BAR_PX_10 ));
 					me._can.Bar10000.setVisible(1);
 				}else{
@@ -523,12 +557,14 @@ var AttitudeIndicatorWidget = {
 			pitch	: props.globals.initNode("/orientation/pitch-deg",0.0,"DOUBLE"),
 			roll	: props.globals.initNode("/orientation/roll-deg",0.0,"DOUBLE"),
 			SlipSkid: props.globals.initNode("/instrumentation/slip-skid-ball/indicated-slip-skid",0.0,"DOUBLE"),
+			
 		};
 		m._can		= {
-			PitchLadder	: m._group.getElementById("PitchLadder").updateCenter().set("clip","rect(168px, 1562px, 785px, 845px)"),
+			PitchLadder	: m._group.getElementById("PitchLadder").updateCenter().set("clip","rect(144px, 1293px, 671px, 750px)"),
 			BankAngle	: m._group.getElementById("BankAngleIndicator").updateCenter(),
 			SlipSkid	: m._group.getElementById("SlipSkidIndicator").updateCenter(),
 			Horizon		: m._group.getElementById("Horizon"),
+			
 		};
 		
 		m._pitch	= 0;
@@ -537,6 +573,7 @@ var AttitudeIndicatorWidget = {
 		return m;
 	},
 	setListeners : func(instance) {
+	
 		
 	},
 	init : func(instance=me){
@@ -546,6 +583,7 @@ var AttitudeIndicatorWidget = {
 		me.removeListeners();	
 	},
 	update20Hz : func(now,dt){
+		
 		me._pitch	= me._ptree.pitch.getValue();
 		me._roll	= me._ptree.roll.getValue();
 		me._slipskid	= me._ptree.SlipSkid.getValue();
@@ -559,6 +597,109 @@ var AttitudeIndicatorWidget = {
 		me._can.Horizon.setRotation(-me._roll * global.CONST.DEG2RAD);
 		
 	},
+	
+};
+
+
+var MarkerWidget = {
+	new: func(page,canvasGroup,name){
+		var m = {parents:[MarkerWidget,IfdWidget.new(page,canvasGroup,name)]};
+		m._class 	= "MarkerWidget";
+		m._ptree	= {
+			markerInner	: props.globals.initNode("/instrumentation/marker-beacon/inner",0,"BOOL"),
+			markerMiddle	: props.globals.initNode("/instrumentation/marker-beacon/middle",0,"BOOL"),
+			markerOuter	: props.globals.initNode("/instrumentation/marker-beacon/outer",0,"BOOL"),
+			
+		};
+		m._can		= {
+			Marker		: m._group.getElementById("Marker").setVisible(0),
+			MarkerBack	: m._group.getElementById("Marker_Back"),
+			MarkerText	: m._group.getElementById("Marker_Text"),
+		};
+		
+		m._active	= 0;
+		m._seqence	= [];
+		m._seqenceIndex	= 0;
+		m._seqenceSize = 0;
+		m._Time	= 0;
+		m._slipskid	= 0;
+		m._timer 	= nil;
+		
+		m._inner	= 0;
+		m._middle	= 0;
+		m._outer	= 0;
+		
+		return m;
+	},
+	setListeners : func(instance) {
+		#append(me._listeners, setlistener(me._ptree.markerInner,func(n){me._onMarkerInnerChange(n);},1,0));
+		#append(me._listeners, setlistener(me._ptree.markerMiddle,func(n){me._onMarkerMiddleChange(n);},1,0));
+		#append(me._listeners, setlistener(me._ptree.markerOuter,func(n){me._onMarkerOuterChange(n);},1,0));
+		
+	},
+	init : func(instance=me){
+		me.setListeners(instance);
+	},
+	deinit : func(){
+		me.removeListeners();	
+	},
+	_onMarkerInnerChange : func(n){
+		me._inner = n.getValue();
+		print("MarkerWidget._onMarkerInnerChange() ... IM " ~ me._inner);
+		if (me._inner == 1){
+			me._can.MarkerText.setText("IM");
+			me._can.MarkerBack.set("fill",COLOR["White"]);
+			me._can.Marker.setVisible(1);
+		}else{
+			me._can.Marker.setVisible(0);
+		}
+	},
+	_onMarkerMiddleChange : func(n){
+		me._middle = n.getValue();
+		print("MarkerWidget._onMarkerMiddleChange() ... MM " ~ me._middle);
+		if (me._middle == 1){
+			me._can.MarkerText.setText("MM");
+			me._can.MarkerBack.set("fill",COLOR["Yellow"]);
+			me._can.Marker.setVisible(1);
+		}else{
+			me._can.Marker.setVisible(0);
+		}
+	},
+	_onMarkerOuterChange : func(n){
+		me._outer = n.getValue();
+		print("MarkerWidget._onMarkerOuterChange() ... OM " ~ me._outer);
+		if (me._outer == 1){
+			me._can.MarkerText.setText("OM");
+			me._can.MarkerBack.set("fill",COLOR["Blue"]);
+			me._can.Marker.setVisible(1);
+		}else{
+			me._can.Marker.setVisible(0);
+		}
+
+	},
+	update20Hz : func(now,dt){
+		me._inner	= me._ptree.markerInner.getValue();
+		me._middle	= me._ptree.markerMiddle.getValue();
+		me._outer	= me._ptree.markerOuter.getValue();
+		
+		if (me._inner){
+			me._can.MarkerText.setText("IM");
+			me._can.MarkerBack.set("fill",COLOR["White"]);
+			
+		}
+		if (me._middle){
+			me._can.MarkerText.setText("MM");
+			me._can.MarkerBack.set("fill",COLOR["Yellow"]);
+			
+		}
+		if (me._outer){
+			me._can.MarkerText.setText("OM");
+			me._can.MarkerBack.set("fill",COLOR["Blue"]);
+			
+		}
+		me._can.Marker.setVisible(me._inner or me._middle or me._outer);
+
+	}
 	
 };
 
@@ -1241,58 +1382,65 @@ var BugSelectWidget = {
 	}
 };
 
-var TabWidget = {
+var TimerWidget = {
 	new: func(page,canvasGroup,name){
-		var m = {parents:[TabWidget,IfdWidget.new(page,canvasGroup,name)]};
-		m._class 	= "TabWidget";
-		m._tab		= [];
-		m._can		= {};
-		m._index 	= 0;
-		m._max  	= 0;
+		var m = {parents:[TimerWidget,IfdWidget.new(page,canvasGroup,name)]};
+		m._class 	= "TimerWidget";
+		m._ptree	= {
+			OAT		: props.globals.initNode("/environment/temperature-degc",0.0,"DOUBLE"),
+			WindDirection	: props.globals.initNode("/environment/wind-from-heading-deg",0.0,"DOUBLE"),
+			WindSpeed	: props.globals.initNode("/environment/wind-speed-kt",0.0,"DOUBLE"),
+			GroundSpeed	: props.globals.initNode("/velocities/groundspeed-kt",0.0,"DOUBLE"),
+		};
+		m._can		= {
+			On		: m._group.getElementById("Timer_On"),
+			Center		: m._group.getElementById("Timer_btn_Center").updateCenter(),
+			Left		: m._group.getElementById("Timer_btn_Left"),
+			Time		: m._group.getElementById("Timer_Time"),
+			
+		};
+		m._windSpeed 		= 0;
+		m._windDirection 	= 0;
+		m._oat			= 0;
+		m._groundSpeed		= 0;
 		return m;
 	},
 	init : func(instance=me){
-		foreach(t;me._tab){
-			me._can[t] = {
-				content	: me._group.getElementById("Tab_"~t~"_Content"),
-				tab	: me._group.getElementById("Tab_"~t~""),
-				text	: me._group.getElementById("Tab_"~t~"_Text"),
-				back	: me._group.getElementById("Tab_"~t~"_Back"),
-			}
-		}
-		me._max = size(me._tab)-1;
-		me.scroll(0);
-		
-		me._Page.keys["PFD >"] = func(){me.scroll(1);};
-		me._Page.keys["PFD <"] = func(){me.scroll(-1);};
-		
+		me.registerKeys();
 	},
 	deinit : func(){
-		me._Page.keys["PFD >"] = nil;
-		me._Page.keys["PFD <"] = nil;
+		me._Page.IFD.nLedR2.setValue(0);
+		me._Page.keys["R2 <"] = nil;
+		me._Page.keys["R2 >"] = nil;
 	},
-	scroll : func(amount){
-		me._index += amount;
-		if (me._index > me._max){ me._index = 0; }
-		if (me._index < 0){ me._index = me._max; }
-		
-		foreach(t;me._tab){
-			me._can[t].content.setVisible(0);
-			me._can[t].tab.set("z-index",1);
-			me._can[t].back.set("stroke",COLOR["Blue"]);
-			me._can[t].back.set("stroke-width",10);
-			me._can[t].text.set("fill",COLOR["Blue"]);
+	registerKeys : func(){
+		if ((me._Page.data.timerState == 0)){
+			me._Page.IFD.nLedR2.setValue(1);
+			me._Page.keys["R2 <"] = func(){me._Page.data.timerStart();me.registerKeys();};
+			me._Page.keys["R2 >"] = func(){me._Page.data.timerStart();me.registerKeys();};
+			me._can.On.setVisible(0);
+			me._can.Center.setVisible(1);
+			
+		}elsif ((me._Page.data.timerState == 1)){
+			me._Page.IFD.nLedR2.setValue(1);
+			me._Page.keys["R2 <"] = func(){me._Page.data.timerStart();me.registerKeys();};
+			me._Page.keys["R2 >"] = func(){me._Page.data.timerReset();me.registerKeys();};
+			me._can.Left.setText("Start");
+			me._can.On.setVisible(1);
+			me._can.Center.setVisible(0);
+		}elsif ((me._Page.data.timerState == 2)){
+			me._Page.IFD.nLedR2.setValue(1);
+			me._Page.keys["R2 <"] = func(){me._Page.data.timerStop();me.registerKeys();};
+			me._Page.keys["R2 >"] = func(){me._Page.data.timerReset();me.registerKeys();};
+			me._can.Left.setText("Stop");
+			me._can.On.setVisible(1);
+			me._can.Center.setVisible(0);
 		}
-		
-		me._can[me._tab[me._index]].content.setVisible(1);
-		me._can[me._tab[me._index]].tab.set("z-index",2);
-		me._can[me._tab[me._index]].back.set("stroke",COLOR["Turquoise"]);
-		me._can[me._tab[me._index]].back.set("stroke-width",20);
-		me._can[me._tab[me._index]].text.set("fill",COLOR["Turquoise"]);
-	
-		me._Page._initWidgetsForTab(me._index);
+		me._can.Time.setText(me._Page.data.timerGetTime());
+	},
+	update2Hz : func(now,dt){
+		me._can.Time.setText(me._Page.data.timerGetTime());
 	}
-	
 };
 
 var AvidynePagePFD = {
@@ -1303,7 +1451,7 @@ var AvidynePagePFD = {
 		] };
 		
 		# creating the page 
-		m.svgFile	= "IFD_PFD_"~m.IFD.width~"x"~m.IFD.height~".svg";
+		m.svgFile	= "IFD_PFD.svg";
 		
 		m.nHorizon = m.page.createChild("image","Horizon");
 		m.nHorizon.set("file", "Models/instruments/IFDs/Horizon.png");
@@ -1352,6 +1500,7 @@ var AvidynePagePFD = {
 			Timer	 		: TimerWidget.new(m,m.page,"Timer"),
 			BugSelect 		: BugSelectWidget.new(m,m.page,"BugSelect"),
 			Tab	 		: TabWidget.new(m,m.page,"BugSelect"),
+			Marker	 		: MarkerWidget.new(m,m.page,"Marker"),
 		};
 		
 		m._widget.Tab._tab = ["Nav","Bug"];
@@ -1408,7 +1557,7 @@ var AvidynePagePFD = {
 		me._widget.NavSource.update2Hz(now,dt);
 		me._widget.BearingSource.update2Hz(now,dt);
 		me._widget.Timer.update2Hz(now,dt);
-	
+		
 	},
 	update20Hz : func(now,dt){
 		
@@ -1421,7 +1570,8 @@ var AvidynePagePFD = {
 		me._widget.HSI.update20Hz(now,dt);
 		me._widget.BearingSource.update20Hz(now,dt);
 		me._widget.Environment.update20Hz(now,dt);
-		
+		me._widget.Marker.update20Hz(now,dt);
+	
 	},
 };
 	

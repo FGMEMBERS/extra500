@@ -133,10 +133,10 @@ var AvidyneIFD = {
 		
 # 		m.width 	= 1024;
 # 		m.height	= 768;
-# 		m.width 	= 2048;
-# 		m.height	= 1536;
-		m.width 	= 2410;
-		m.height	= 1810;
+		m.width 	= 2048;
+		m.height	= 1536;
+# 		m.width 	= 2410;
+# 		m.height	= 1810;
 # 		
 		m.canvas = canvas.new({
 		"name": "IFD",
