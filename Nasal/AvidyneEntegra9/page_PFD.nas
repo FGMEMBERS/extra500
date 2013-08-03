@@ -41,13 +41,15 @@ var AutopilotWidget = {
 			ModeHDG 	: m._group.getElementById("AP_HDG").setVisible(0),
 			ModeNAV 	: m._group.getElementById("AP_NAV").setVisible(0),
 			ModeAPR 	: m._group.getElementById("AP_APR").setVisible(0),
-			ModeGS	 	: m._group.getElementById("AP_GS").setVisible(0),
 			ModeGPSS 	: m._group.getElementById("AP_GPSS").setVisible(0),
+			ModeCWS 	: m._group.getElementById("AP_CWS").setVisible(0),
+			ModeCAP 	: m._group.getElementById("AP_CAP").setVisible(0),
+			ModeSOFT 	: m._group.getElementById("AP_SOFT").setVisible(0),
 			ModeTRIM 	: m._group.getElementById("AP_TRIM").setVisible(0),
 			ModeALT 	: m._group.getElementById("AP_ALT").setVisible(0),
 			ModeVS 		: m._group.getElementById("AP_VS").setVisible(0),
-			ModeCAP 	: m._group.getElementById("AP_CAP").setVisible(0),
-			ModeSOFT 	: m._group.getElementById("AP_SOFT").setVisible(0),
+			ModeGS	 	: m._group.getElementById("AP_GS").setVisible(0),
+			ModeDSBL 	: m._group.getElementById("AP_DSBL").setVisible(0),
 			ModeFD 		: m._group.getElementById("AP_FD").setVisible(0),
 		};
 		me._state	= 0;
@@ -63,16 +65,18 @@ var AutopilotWidget = {
 		append(me._listeners, setlistener("/extra500/instrumentation/Autopilot/state",func(n){me._onStateChange(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/mode/rdy",func(n){me._onReady(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/mode/fail",func(n){me._onFail(n)},1,0));
-		append(me._listeners, setlistener("/autopilot/mode/alt",func(n){me._onALT(n)},1,0));
+		append(me._listeners, setlistener("/autopilot/mode/heading",func(n){me._onHDG(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/mode/nav",func(n){me._onNAV(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/mode/apr",func(n){me._onAPR(n)},1,0));
-		append(me._listeners, setlistener("/autopilot/mode/gs",func(n){me._onGS(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/mode/gpss",func(n){me._onGPSS(n)},1,0));
-		append(me._listeners, setlistener("/autopilot/mode/trim",func(n){me._onTRIM(n)},1,0));
-		append(me._listeners, setlistener("/autopilot/mode/vs",func(n){me._onVS(n)},1,0));
+		append(me._listeners, setlistener("/autopilot/mode/cws",func(n){me._onCWS(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/mode/cap",func(n){me._onCAP(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/mode/soft",func(n){me._onSOFT(n)},1,0));
-		append(me._listeners, setlistener("/autopilot/mode/heading",func(n){me._onHDG(n)},1,0));
+		append(me._listeners, setlistener("/autopilot/mode/trim",func(n){me._onTRIM(n)},1,0));
+		append(me._listeners, setlistener("/autopilot/mode/alt",func(n){me._onALT(n)},1,0));
+		append(me._listeners, setlistener("/autopilot/mode/vs",func(n){me._onVS(n)},1,0));
+		append(me._listeners, setlistener("/autopilot/mode/gs",func(n){me._onGS(n)},1,0));
+		append(me._listeners, setlistener("/autopilot/mode/dsbl",func(n){me._onDSBL(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/settings/ap",func(n){me._onAP(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/settings/fd",func(n){me._onFP(n)},1,0));
 		
@@ -110,13 +114,13 @@ var AutopilotWidget = {
 		me._fail	= n.getValue();
 		me._checkState();
 	},
-	_onALT : func(n){
-		me._modeALT = n.getValue();
-		me._can.ModeALT.setVisible(me._modeALT);
-		if(me._modeALT == 1){
-			me._Page._widget.Altitude._can.Bug.set("fill",COLOR["Magenta"]);
+	_onHDG : func(n){
+		me._modeHDG = n.getValue();
+		me._can.ModeHDG.setVisible(me._modeHDG);
+		if(me._modeHDG == 1){
+			me._Page._widget.HSI._can.HeadingBug.set("fill",COLOR["Magenta"]);
 		}else{
-			me._Page._widget.Altitude._can.Bug.set("fill","none");
+			me._Page._widget.HSI._can.HeadingBug.set("fill","none");
 		}
 	},
 	_onNAV : func(n){
@@ -125,14 +129,29 @@ var AutopilotWidget = {
 	_onAPR : func(n){
 		me._can.ModeAPR.setVisible(n.getValue());
 	},
-	_onGS : func(n){
-		me._can.ModeGS.setVisible(n.getValue());
-	},
 	_onGPSS : func(n){
 		me._can.ModeGPSS.setVisible(n.getValue());
 	},
+	_onCWS : func(n){
+		me._can.ModeCWS.setVisible(n.getValue());
+	},
+	_onCAP : func(n){
+		me._can.ModeCAP.setVisible(n.getValue());
+	},
+	_onSOFT : func(n){
+		me._can.ModeSOFT.setVisible(n.getValue());
+	},
 	_onTRIM : func(n){
 		me._can.ModeTRIM.setVisible(n.getValue());
+	},
+	_onALT : func(n){
+		me._modeALT = n.getValue();
+		me._can.ModeALT.setVisible(me._modeALT);
+		if(me._modeALT == 1){
+			me._Page._widget.Altitude._can.Bug.set("fill",COLOR["Magenta"]);
+		}else{
+			me._Page._widget.Altitude._can.Bug.set("fill","none");
+		}
 	},
 	_onVS : func(n){
 		me._modeVS = n.getValue();
@@ -143,26 +162,23 @@ var AutopilotWidget = {
 			me._Page._widget.VerticalSpeed._can.Bug.set("fill","none");
 		}
 	},
-	_onCAP : func(n){
-		me._can.ModeCAP.setVisible(n.getValue());
+	_onGS : func(n){
+		me._can.ModeGS.setVisible(n.getValue());
 	},
-	_onSOFT : func(n){
-		me._can.ModeSOFT.setVisible(n.getValue());
-	},
-	_onHDG : func(n){
-		me._modeHDG = n.getValue();
-		me._can.ModeHDG.setVisible(me._modeHDG);
-		if(me._modeHDG == 1){
-			me._Page._widget.HSI._can.HeadingBug.set("fill",COLOR["Magenta"]);
-		}else{
-			me._Page._widget.HSI._can.HeadingBug.set("fill","none");
-		}
+	_onDSBL : func(n){
+		me._can.ModeDSBL.setVisible(n.getValue());
 	},
 	_onAP : func(n){
-		me._can.ModeFD.setText("AP");
+		if(n.getValue()){
+			me._can.ModeFD.setText("AP");
+			me._Page._widget.Attitude._can.FDBug.setVisible(0);
+		}
 	},
 	_onFP : func(n){
-		me._can.ModeFD.setText("FD");
+		if(n.getValue()){
+			me._can.ModeFD.setText("FD");
+			me._Page._widget.Attitude._can.FDBug.setVisible(1);
+		}
 	},
 	init : func(instance=me){
 		#print("AutopilotWidget.init() ... ");
@@ -564,6 +580,7 @@ var AttitudeIndicatorWidget = {
 			BankAngle	: m._group.getElementById("BankAngleIndicator").updateCenter(),
 			SlipSkid	: m._group.getElementById("SlipSkidIndicator").updateCenter(),
 			Horizon		: m._group.getElementById("Horizon"),
+			FDBug		: m._group.getElementById("FD_Bug").setVisible(0),
 			
 		};
 		
@@ -714,7 +731,7 @@ var NavSourceWidget = {
 				Pointer			: "/autopilot/route-manager/wp/bearing-deg",
 				horizontalDeviation 	: "/autopilot/fms-channel/course-error-norm",
 				verticalDeviation	: "/instrumentation/fms[0]/gs-needle-deflection-norm",
-				Frequeny		: "/autopilot/route-manager/wp/id",
+				Frequency		: "/autopilot/route-manager/wp/id",
 				isInRange		: "/instrumentation/fms[0]/in-range",
 				isLOC			: "/instrumentation/fms[0]/frequencies/is-localizer-frequency",
 				isGSinRange		: "/instrumentation/fms[0]/gs-in-range",
@@ -727,7 +744,7 @@ var NavSourceWidget = {
 				Pointer			: "/instrumentation/nav[0]/radials/selected-deg",
 				horizontalDeviation 	: "/instrumentation/nav[0]/heading-needle-deflection-norm",
 				verticalDeviation	: "/instrumentation/nav[0]/gs-needle-deflection-norm",
-				Frequeny		: "/instrumentation/nav[0]/frequencies/selected-mhz-fmt",
+				Frequency		: "/instrumentation/nav[0]/frequencies/selected-mhz-fmt",
 				isInRange		: "/instrumentation/nav[0]/in-range",
 				isLOC			: "/instrumentation/nav[0]/frequencies/is-localizer-frequency",
 				isGSinRange		: "/instrumentation/nav[0]/gs-in-range",
@@ -740,7 +757,7 @@ var NavSourceWidget = {
 				Pointer			: "/instrumentation/nav[1]/radials/selected-deg",
 				horizontalDeviation 	: "/instrumentation/nav[1]/heading-needle-deflection-norm",
 				verticalDeviation	: "/instrumentation/nav[1]/gs-needle-deflection-norm",
-				Frequeny		: "/instrumentation/nav[1]/frequencies/selected-mhz-fmt",
+				Frequency		: "/instrumentation/nav[1]/frequencies/selected-mhz-fmt",
 				isInRange		: "/instrumentation/nav[1]/in-range",
 				isLOC			: "/instrumentation/nav[1]/frequencies/is-localizer-frequency",
 				isGSinRange		: "/instrumentation/nav[1]/gs-in-range",
@@ -750,9 +767,9 @@ var NavSourceWidget = {
 				distance		: "/autopilot/radionav-channel/nav-distance-nm",
 			},
 			
+			
 		};
 		
-		setprop(m._PATH.FMS.isInRange,1);
 		
 		m._ptree	= {
 			hDev		: nil,
@@ -776,6 +793,9 @@ var NavSourceWidget = {
 		
 		m._sourceListeners	= [];
 		
+		m._routeManagerActive 	= 0;
+		m._fmsServiceable	= 0;
+		
 		m._source		= 2;
 		m._horizontalDeviation	= 0;
 		m._verticalDeviation	= 0;
@@ -794,6 +814,8 @@ var NavSourceWidget = {
 	setListeners : func(instance) {
 		
 		append(me._listeners, setlistener(me._ptree.Source,func(n){me._onSourceChange(n);},1,0));
+		append(me._listeners, setlistener("/autopilot/route-manager/active",func(n){me._onRouteActiveChange(n);},1,0));
+		append(me._listeners, setlistener("/autopilot/fms-channel/serviceable",func(n){me._onFmsServiceChange(n);},1,0));
 				
 	},
 	removeListeners : func(){
@@ -858,7 +880,7 @@ var NavSourceWidget = {
 		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].fromFlag,func(n){me._onFromFlagChange(n);},1,0));
 		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].toFlag,func(n){me._onToFlagChange(n);},1,0));
 		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].hasGS,func(n){me._onHasGSChange(n);},1,0));
-		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].Frequeny,func(n){me._onFrequencyChange(n);},1,0));
+		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].Frequency,func(n){me._onFrequencyChange(n);},1,0));
 		
 	},
 	_scroll : func(amount){
@@ -875,6 +897,14 @@ var NavSourceWidget = {
 		me._Pointer = math.mod(me._Pointer,360.0);
 		setprop("/instrumentation/nav[0]/radials/selected-deg",me._Pointer);
 		setprop("/instrumentation/nav[1]/radials/selected-deg",me._Pointer);
+	},
+	_onRouteActiveChange : func(n){
+		me._routeManagerActive = n.getValue();
+		setprop(me._PATH.FMS.isInRange,( (me._fmsServiceable == 1) and (me._routeManagerActive == 1) ) );
+	},
+	_onFmsServiceChange : func(n){
+		me._fmsServiceable = n.getValue();
+		setprop(me._PATH.FMS.isInRange,( (me._fmsServiceable == 1) and (me._routeManagerActive == 1) ) );
 	},
 	_onInRangeChange : func(n){
 		me._isInRange = n.getValue();
@@ -1107,7 +1137,7 @@ var DeviationIndicatorWidget = {
 		if(me._Page._widget.NavSource._isInRange == 1){
 			me._can.HDI_Needle.setVisible(1);
 			me._can.DI.setVisible(1);
-			#me._can.CDI.setVisible(1);
+			me._Page._widget.HSI._can.CDI.setVisible(1);
 			me._can.HDI_Needle.setTranslation(me._Page._widget.NavSource._horizontalDeviation * 240,0);
 			if (me._Page._widget.NavSource._source == 2){
 				me._can.DI_Source_Text.setText("FMS");
@@ -1156,8 +1186,8 @@ var DeviationIndicatorWidget = {
 		}else{
 			me._can.HDI_Needle.setVisible(0);
 			me._can.DI.setVisible(0);
-			#me._can.CDI.setVisible(0);
-			me._Page._widget.HSI._can.CDI.set("fill",COLOR["Green"]);
+			#me._Page._widget.HSI._can.CDI.set("fill",COLOR["Green"]);
+			me._Page._widget.HSI._can.CDI.setVisible(0);
 		}
 			
 		
@@ -1471,20 +1501,12 @@ var AvidynePagePFD = {
 # 			.setTranslation(32,96);
 			
 		
-	#loading svg
-# 		canvas.parsesvg(m.page, "Models/instruments/IFDs/RH-IFD_CanvasTest.svg",{
-# 			"font-mapper": global.canvas.FontMapper
-# 			}
-# 		);
+
 		canvas.parsesvg(m.page, "Models/instruments/IFDs/"~m.svgFile,{
 			"font-mapper": global.canvas.FontMapper
 			}
 		);
-# 		canvas.parsesvg(m.page, "Models/instruments/IFDs/IFD_PFD_1024x768.svg",{
-# 			"font-mapper": global.canvas.FontMapper
-# 			}
-# 		);
-# 		m.page.setScale(2.0);
+
 		
 		m._widget	= {
 			Attitude		: AttitudeIndicatorWidget.new(m,m.page,"Altitude"),
@@ -1510,12 +1532,12 @@ var AvidynePagePFD = {
 		return m;
 	},
 	init : func(instance=me){
-		print("AvidynePagePFD.init() ... ");
+		#print("AvidynePagePFD.init() ... ");
 				
 		me.setListeners(instance);
 		
 		foreach(widget;keys(me._widget)){
-			print("widget : "~widget);
+			#print("widget : "~widget);
 			if(me._widget[widget] != nil){
 				
 				me._widget[widget].init();
