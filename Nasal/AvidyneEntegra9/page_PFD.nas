@@ -861,6 +861,7 @@ var NavSourceWidget = {
 	_onSourceChange : func(n){
 		me._source = n.getValue();
 		me.setSource(me._source);
+		me._checkStationType();
 	},
 	setSource : func(src){
 		me._source = src;
@@ -888,9 +889,7 @@ var NavSourceWidget = {
 		if (me._source > 2){ me._source = 0; }
 		if (me._source < 0){ me._source = 2; }
 		me.setSource(me._source);
-		me._ptree.Source.setValue(me._source);
-		me._can.Source.setText(me._NAME[me._source]);
-				
+		me._ptree.Source.setValue(me._source);				
 	},
 	_adjustRadial : func(amount){
 		me._Pointer += amount;
@@ -933,6 +932,7 @@ var NavSourceWidget = {
 	_checkStationType : func(){
 		me._distance	= me._ptree.Distance.getValue();
 		me._can.Distance.setText(sprintf("%.1f",me._distance));
+		me._can.Source.setText(me._NAME[me._source]);
 		if (me._source == 2){
 			me._can.ID.setText(sprintf("%s",me._frequency));
 		}else{
@@ -1202,6 +1202,8 @@ var HeadingSituationIndicatorWidget = {
 		m._class 	= "HeadingSituationIndicatorWidget";
 		m._ptree	= {
 			Heading		: props.globals.initNode("/instrumentation/heading-indicator-IFD-"~m._Page.IFD.name~"/indicated-heading-deg",0.0,"DOUBLE"),
+			HeadingTrue	: props.globals.initNode("/orientation/heading-deg",0.0,"DOUBLE"),
+			TrunRate	: props.globals.initNode("/instrumentation/turn-indicator/indicated-turn-rate",0.0,"DOUBLE"),
 		};
 		m._can		= {
 			CoursePointer	: m._group.getElementById("CoursePointer").updateCenter(),
@@ -1212,9 +1214,12 @@ var HeadingSituationIndicatorWidget = {
 			HeadingBug_Text	: m._group.getElementById("HDG_Bug_Value").updateCenter(),
 			Heading_Text	: m._group.getElementById("HDG_Value").updateCenter(),
 			CompassRose	: m._group.getElementById("CompassRose").updateCenter(),
+			HeadingTrue	: m._group.getElementById("HDG_True").updateCenter(),
+			TrunRate	: m._group.getElementById("TrunRate_Needle").updateCenter(),
 		};
 		m._heading		= 0;
 		m._headingBug		= 0;
+		m._trunRate		= 0;
 		return m;
 	},
 	setListeners : func(instance) {
@@ -1229,12 +1234,17 @@ var HeadingSituationIndicatorWidget = {
 	},
 	update20Hz : func(now,dt){
 		me._heading = me._ptree.Heading.getValue();
+		me._headingTrue = me._ptree.HeadingTrue.getValue();
+		me._trunRate = me._ptree.TrunRate.getValue();
+		
 		
 		me._can.Heading_Text.setText(sprintf("%03i",math.floor( me._heading + 0.5)));
 		me._can.CompassRose.setRotation(-me._heading * global.CONST.DEG2RAD);
+		me._can.TrunRate.setRotation(me._trunRate * 30.0 * global.CONST.DEG2RAD);
 		
 		me._can.HeadingBug_Text.setText(sprintf("%03i",me._headingBug));
 		me._can.HeadingBug.setRotation((me._headingBug - me._heading) * global.CONST.DEG2RAD);
+		me._can.HeadingTrue.setRotation((me._headingTrue - me._heading) * global.CONST.DEG2RAD);
 		
 		me._can.CoursePointer.setRotation((me._Page._widget.NavSource._Pointer - me._heading) * global.CONST.DEG2RAD);
 		me._can.FromFlag.setVisible(me._Page._widget.NavSource._fromFlag);

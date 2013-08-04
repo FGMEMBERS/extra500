@@ -155,7 +155,7 @@ var TabWidget = {
 		me._can[me._tab[me._index]].content.setVisible(1);
 		me._can[me._tab[me._index]].tab.set("z-index",2);
 		me._can[me._tab[me._index]].back.set("stroke",COLOR["Turquoise"]);
-		me._can[me._tab[me._index]].back.set("stroke-width",20);
+		me._can[me._tab[me._index]].back.set("stroke-width",12);
 		me._can[me._tab[me._index]].text.set("fill",COLOR["Turquoise"]);
 	
 		me._Page._initWidgetsForTab(me._index);
