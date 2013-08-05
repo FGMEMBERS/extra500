@@ -20,7 +20,7 @@
       Date: 21.04.13
 
       Last change:      Eric van den Berg
-      Date:             2013-08-02
+      Date:             2013-08-05
 -->
 
 <PropertyList>
@@ -158,10 +158,10 @@
         <number>0</number>
     </slip-skid-ball>
 
-  <vertical-speed-indicator>                                                 
-    <name>cabin-rate-climb</name>
-    <number>0</number>
-    <static-pressure>/systems/pressurization/cabin-pressure-inhg</static-pressure>
-  </vertical-speed-indicator>
+    <vertical-speed-indicator>
+        <name>cabin-climb-rate</name>
+        <number>0</number>
+        <static-pressure>/systems/pressurization/cabin-pressure-inhg</static-pressure>
+    </vertical-speed-indicator>
 
 </PropertyList>

@@ -19,8 +19,8 @@
       Author: Eric van den Berg
       Date: 2013-08-02
 
-      Last change:      -
-      Date:             -
+      Last change:      Eric van den Berg
+      Date:             2013-08-05
 -->
 
 <!--
@@ -33,27 +33,79 @@
 /extra500/door/main/IsOpen
 -->
 <system name="pressurization">
-	<channel name="cabin">
+	<channel name="controlvalve">
 
-		<switch name="/systems/pressurization/state">
+		<switch name="/systems/pressurization/bleedairin">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/engines/engine/running eq 1
-				/extra500/panel/Side/Cabin/Pressure/state eq 1
 				/extra500/panel/Side/Cabin/EnvironmentalAir/state eq 1
 				/extra500/panel/CircuitBreaker/BankC/EnvironmentalBleed/voltOut ge 10
-				/extra500/panel/CircuitBreaker/BankD/CabinPressure/voltOut ge 15
 				/extra500/door/main/IsOpen eq 0
 			</test>
 		</switch>
 
-		<fcs_function name="/systems/pressurization/deltap-psi">
+		<switch name="/systems/pressurization/controlvalvestate">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/extra500/panel/Side/Cabin/Pressure/state eq 1
+				/extra500/panel/CircuitBreaker/BankD/CabinPressure/voltOut ge 15
+			</test>
+		</switch>
+
+		<switch name="/systems/pressurization/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pressurization/bleedairin eq 1
+				/systems/pressurization/controlvalvestate eq 1
+			</test>
+		</switch>
+
+		<fcs_function name="/systems/pressurization/airport-alt-valve">
 			<function>
-				<value>0</value>
+				<property>/systems/pressurization/airport-alt</property>
 			</function>
 		</fcs_function>
 
-		<fcs_function name="/systems/pressurization/cabin-pressure-inhg">
+<!-- deltap when everything is working, but with a constant control valve setting -->
+		<fcs_function name="/systems/pressurization/deltap-psi-nc">
+			<function>
+				<table>
+				<independentVar lookup="row">/systems/pressurization/airport-alt-valve</independentVar>
+				<independentVar lookup="column">/fdm/jsbsim/atmosphere/pressure-altitude</independentVar>
+                  		<tableData>
+        					-300	2700	5700	8700	10962	11700	16459	21236	26407	32129
+					-1000	0	1.917	3.324	4.608	5.5	5.778	7.417	8.8241	10.108	11.278
+					2000	0	0	1.4407	2.691	3.583	3.860	5.5	6.907	8.191	9.36
+					5000	0	0	0	1.284	2.176	2.453	4.093	5.5	6.784	7.953
+					8000	0	0	0	0	0.8919	1.1695	2.809	4.216	5.5	6.6695
+					11000	0	0	0	0	0	0	1.640	3.047	4.3305	5.5
+				</tableData>
+				</table>
+			</function>
+		</fcs_function>
+
+<!-- control valve limits to 5.6 psid (luckily) and only diff pressure when bleed air available-->
+		<pure_gain name="/systems/pressurization/deltap-psi">
+			<input>/systems/pressurization/deltap-psi-nc</input>
+			<gain>/systems/pressurization/bleedairin</gain>
+			<clipto>
+				<min>0</min>
+				<max>5.6</max>
+			</clipto>
+		</pure_gain>
+
+<!-- cabin pressure -->
+
+ <!-- eeh just a trick to get a "non-tied" property so the vertical speed indicator can read it 
+	not sure why I need to do this. The altimeter has no problems with tied properties....
+	Note that an "output" label is required for a non-tied property AND the function name may not be the output property name (it may be non-esistant though)!!!!
+EDIT:
+	ok, looks like the altimeter.hxx has some "includes" to tied property list or something.
+  	adding this to the vertical speed indicator would probably solve the problem.
+
+-->
+		<fcs_function>
 			<function>
 				<sum>
 					<product>
@@ -63,8 +115,17 @@
 					<property>/environment/pressure-inhg</property>
 				</sum>
 			</function>
+			<output>/systems/pressurization/cabin-pressure-inhg</output>
 		</fcs_function>
 
+<!-- property for warning "cabin pressure" on annunciator panel -->
+		<switch name="/systems/pressurization/warning">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pressurization/deltap-psi gt 5.65
+				/instrumentation/cabin-altitude/pressure-alt-ft gt 10000
+			</test>
+		</switch>
 
 
 	</channel>

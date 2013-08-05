@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             29.07.2013
+#      Date:             05.08.2013
 #
 
 
@@ -147,7 +147,7 @@ var AutopilotClass = {
 	},
 	_onGPSModeChange : func(n){
 		me._gpsMode = n.getValue();
-		print("AutopilotClass._onGPSModeChange() ... GPS mode change to "~me._gpsMode);
+#		print("AutopilotClass._onGPSModeChange() ... GPS mode change to "~me._gpsMode);
 		if(me._gpsMode == "leg"){
 			if(me.nModeNavGpss.getValue()){
 				
@@ -208,7 +208,7 @@ var AutopilotClass = {
 # 1 no internal fault, 
 # 2 turn coordinator ok, 
 # 3 g-forces not to high (above 0.6, disregarding 1g of earth)
-# 4 aircraft stall warner ON
+# 4 aircraft stall warner not ON
 	_CheckRollModeAble : func(){
 		if ( (me.nAPState.getValue() == 1) and (me.nTCSpin.getValue() > 0.9) and ( math.abs(me.nAPacc.getValue()) < 0.6 ) and ( me.nStallWarnerOn.getValue() != 1) ){
 			if ( ( me.nModeFail.getValue() == 1 ) or ( me.nModeDiseng.getValue() == 1 ) ) {
@@ -224,13 +224,15 @@ var AutopilotClass = {
 	},
 	DirectTO : func(){									# called from keypad.nas
 		var selIndex = getprop("/sim/gui/dialogs/route-manager/selection");		# selection index in route manager
-# 		var deleteIndex = selIndex -1;
-# 		while ( deleteIndex > -1 ) {
-# 			flightplan().deleteWP( deleteIndex );					# deleting all wp-s before selection
-# 			deleteIndex = deleteIndex -1 ;						
-# 		}
-		flightplan().current = selIndex-1;
-		flightplan().current = selIndex;
+		if (selIndex != nil) {
+ 			var deleteIndex = selIndex -1;
+ 			while ( deleteIndex > -1 ) {
+ 				flightplan().deleteWP( deleteIndex );					# deleting all wp-s before selection
+ 				deleteIndex = deleteIndex -1 ;						
+ 			}
+#		flightplan().current = selIndex-1;
+#		flightplan().current = selIndex;
+		}
 	},
 # Events from the UI
 	onClickHDG : func(){

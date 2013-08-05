@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             02.08.2013
+      Date:             05.08.2013
 
 
 ************************************************************************
@@ -707,13 +707,13 @@ JSBSim Extra Aircraft - Extra 500.
 			<DG>1.0</DG> <!-- the gyro eats norm Power -->
 			<nav n="0">1.1</nav>	<!-- FIXME: a hack to get the nav working expects >1 -->
 			<nav n="1">1.1</nav>
-			<!--nav n="2">1.1</nav-->
 			<dme>1</dme> 			<!--expects a bool 0 or 1 -->
 			<transponder>24</transponder>
 		</outputs>
 	</electrical>
 	<pressurization>
 		<airport-alt>0</airport-alt>
+		<cabin-pressure-inhg type="double">29.92</cabin-pressure-inhg>
 	</pressurization>
  </systems>
 
@@ -770,9 +770,12 @@ JSBSim Extra Aircraft - Extra 500.
 	<alt-old>0.0</alt-old>
         <serviceable type="bool">true</serviceable>
     </ivsi-IFD-RH>
-    <cabin-rate-climb>
+    <cabin-climb-rate n="0">
         <serviceable type="bool">true</serviceable>
-    </cabin-rate-climb>
+    </cabin-climb-rate>
+    <cabin-altitude n="0">
+        <pressure-alt-ft type="double">0</pressure-alt-ft>
+    </cabin-altitude>
 
     <dme>                                                             
       <frequencies>
