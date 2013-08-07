@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             05.08.2013
+      Date:             07.08.2013
 
 
 ************************************************************************
@@ -712,7 +712,9 @@ JSBSim Extra Aircraft - Extra 500.
 		</outputs>
 	</electrical>
 	<pressurization>
-		<airport-alt>0</airport-alt>
+		<cabin-climb-rate-fpm type="double">500</cabin-climb-rate-fpm>
+		<c1-dp-filter type="double">0.1</c1-dp-filter>
+		<airport-alt type="double">0</airport-alt>
 		<cabin-pressure-inhg type="double">29.92</cabin-pressure-inhg>
 	</pressurization>
  </systems>
@@ -740,6 +742,9 @@ JSBSim Extra Aircraft - Extra 500.
 	  <indicated-speed-kt>0</indicated-speed-kt>
     </airspeed-backup>
 
+    <altimeter>
+	<indicated-altitude-ft>0</indicated-altitude-ft>
+    </altimeter>
     <altimeter-IFD-LH>
 	  <serviceable type="bool" archive="y">true</serviceable>
 	  <indicated-altitude-ft>0.0</indicated-altitude-ft>
@@ -1062,7 +1067,8 @@ JSBSim Extra Aircraft - Extra 500.
 		<KELVIN2RANKINE type="double">1.8</KELVIN2RANKINE>		<!-- exact factor: to be used with priority -->
 		<LBM2KG type="double">0.5144</LBM2KG>				<!-- exact factor: to be used with priority -->
 		<JETA_LBGAL type="double">6.7898</JETA_LBGAL>	
-		<PSI2INHG type="double">2.03602</PSI2INHG>		
+		<PSI2INHG type="double">2.03602</PSI2INHG>
+		<SEC2MIN type="double">0.0166666666667</SEC2MIN>		
 	</const>
 	<instrumentation>
 		<EIP>

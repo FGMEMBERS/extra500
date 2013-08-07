@@ -20,7 +20,7 @@
       Date: 2013-08-02
 
       Last change:      Eric van den Berg
-      Date:             2013-08-05
+      Date:             2013-08-07
 -->
 
 <!--
@@ -35,7 +35,7 @@
 <system name="pressurization">
 	<channel name="controlvalve">
 
-		<switch name="/systems/pressurization/bleedairin">
+		<switch name="/systems/pressurization/switches/bleedairin">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/engines/engine/running eq 1
@@ -43,57 +43,115 @@
 				/extra500/panel/CircuitBreaker/BankC/EnvironmentalBleed/voltOut ge 10
 				/extra500/door/main/IsOpen eq 0
 			</test>
+			<output>/systems/pressurization/bleedairin</output>
 		</switch>
 
-		<switch name="/systems/pressurization/controlvalvestate">
+		<switch name="/systems/pressurization/switches/controlvalvestate">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/extra500/panel/Side/Cabin/Pressure/state eq 1
 				/extra500/panel/CircuitBreaker/BankD/CabinPressure/voltOut ge 15
 			</test>
+			<output>/systems/pressurization/controlvalvestate</output>
 		</switch>
 
-		<switch name="/systems/pressurization/state">
+		<switch name="/systems/pressurization/switches/state">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/pressurization/bleedairin eq 1
 				/systems/pressurization/controlvalvestate eq 1
 			</test>
+			<output>/systems/pressurization/state</output>
 		</switch>
 
-		<fcs_function name="/systems/pressurization/airport-alt-valve">
+<!-- climb rate to a factor which we use for calcs later (multiplied with delta_alt_valve) -->
+		<fcs_function name="/systems/pressurization/functions/climb-factor">
 			<function>
-				<property>/systems/pressurization/airport-alt</property>
+				<table>
+					<independentVar lookup="row">/systems/pressurization/cabin-climb-rate-fpm</independentVar>
+                  			<tableData>
+						250	0.025
+						500	0.05
+						2500	0.25
+					</tableData>
+				</table>
 			</function>
+			<output>/systems/pressurization/climb-factor</output>
+		</fcs_function>
+
+<!-- positive when ascending, neg when descending -->
+		<fcs_function name="/systems/pressurization/functions/alt-diff">
+			<function>
+				<difference>
+					<property>/systems/pressurization/airport-alt</property>
+					<property>/systems/pressurization/airport-alt-valve</property>
+				</difference>
+			</function>
+			<output>/systems/pressurization/alt-diff</output>
+		</fcs_function>
+
+		<switch name="/systems/pressurization/switches/valvemoving">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/pressurization/alt-diff gt 1
+				/systems/pressurization/alt-diff lt -1
+			</test>
+			<output>/systems/pressurization/valvemoving</output>
+		</switch>
+
+		<fcs_function name="/systems/pressurization/functions/airport-alt-valve">
+			<function>
+				<sum>
+					<property>/systems/pressurization/airport-alt-valve</property>
+					<product>
+						<property>/systems/pressurization/controlvalvestate</property>
+						<property>/systems/pressurization/valvemoving</property>
+						<property>/systems/pressurization/climb-factor</property>
+						<sum>
+							<property>/systems/pressurization/alt-diff</property>
+							<value>700</value>
+						</sum>
+						<property>sim-dt-sec</property>
+						<property>/extra500/const/SEC2MIN</property>
+					</product>
+				</sum>
+			</function>
+			<output>/systems/pressurization/airport-alt-valve</output>
 		</fcs_function>
 
 <!-- deltap when everything is working, but with a constant control valve setting -->
-		<fcs_function name="/systems/pressurization/deltap-psi-nc">
+		<fcs_function name="/systems/pressurization/functions/deltap-psi-nc">
 			<function>
-				<table>
-				<independentVar lookup="row">/systems/pressurization/airport-alt-valve</independentVar>
-				<independentVar lookup="column">/fdm/jsbsim/atmosphere/pressure-altitude</independentVar>
-                  		<tableData>
-        					-300	2700	5700	8700	10962	11700	16459	21236	26407	32129
-					-1000	0	1.917	3.324	4.608	5.5	5.778	7.417	8.8241	10.108	11.278
-					2000	0	0	1.4407	2.691	3.583	3.860	5.5	6.907	8.191	9.36
-					5000	0	0	0	1.284	2.176	2.453	4.093	5.5	6.784	7.953
-					8000	0	0	0	0	0.8919	1.1695	2.809	4.216	5.5	6.6695
-					11000	0	0	0	0	0	0	1.640	3.047	4.3305	5.5
-				</tableData>
-				</table>
+				<product>
+					<property>/systems/pressurization/bleedairin</property>
+					<table>
+					<independentVar lookup="row">/systems/pressurization/airport-alt-valve</independentVar>
+					<independentVar lookup="column">/instrumentation/altimeter/indicated-altitude-ft</independentVar>
+                  			<tableData>
+        						-300	700	2700	5700	8700	11700	11974	13441	16459	21236	26407	32129
+						-1000	0	0.528	1.538	2.945	4.229	5.4	5.5	6.028	7.038	8.445	9.729	10.899
+						0	0	0	1.01	2.417	3.701	4.871	4.972	5.5	6.51	7.917	9.201	10.37
+						2000	0	0	0	1.407	2.690	3.86	3.961	4.49	5.5	6.907	8.191	9.36
+						5000	0	0	0	0	1.284	2.453	2.555	3.083	4.093	5.5	6.784	7.953
+						8000	0	0	0	0	0	1.17	1.271	1.799	2.809	4.216	5.5	6.67
+						11000	0	0	0	0	0	0	0.101	0.629	1.64	3.047	4.33	5.5
+					</tableData>
+					</table>
+				</product>
 			</function>
+			<output>/systems/pressurization/deltap-psi-ncnf</output>
 		</fcs_function>
 
 <!-- control valve limits to 5.6 psid (luckily) and only diff pressure when bleed air available-->
-		<pure_gain name="/systems/pressurization/deltap-psi">
-			<input>/systems/pressurization/deltap-psi-nc</input>
-			<gain>/systems/pressurization/bleedairin</gain>
+		<lag_filter name ="/systems/pressurization/filter/deltap-psi">
+ 			<input>/systems/pressurization/deltap-psi-ncnf</input>
+			<c1>/systems/pressurization/c1-dp-filter</c1>
 			<clipto>
 				<min>0</min>
 				<max>5.6</max>
 			</clipto>
-		</pure_gain>
+			<output>/systems/pressurization/deltap-psi</output>
+		</lag_filter>
 
 <!-- cabin pressure -->
 
@@ -105,7 +163,7 @@ EDIT:
   	adding this to the vertical speed indicator would probably solve the problem.
 
 -->
-		<fcs_function>
+		<fcs_function name="/systems/pressurization/functions/cabin-pressure-inhg">
 			<function>
 				<sum>
 					<product>
@@ -119,12 +177,13 @@ EDIT:
 		</fcs_function>
 
 <!-- property for warning "cabin pressure" on annunciator panel -->
-		<switch name="/systems/pressurization/warning">
+		<switch name="/systems/pressurization/switches/warning">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/pressurization/deltap-psi gt 5.65
 				/instrumentation/cabin-altitude/pressure-alt-ft gt 10000
 			</test>
+			<output>/systems/pressurization/warning</output>
 		</switch>
 
 
