@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             07.08.2013
+      Date:             10.08.2013
 
 
 ************************************************************************
@@ -1086,6 +1086,9 @@ JSBSim Extra Aircraft - Extra 500.
 				<CabinPressure>
 					<voltOut>0</voltOut>
 				</CabinPressure>
+				<Dump>
+					<voltOut>0</voltOut>
+				</Dump>
 			</BankD>
 		</CircuitBreaker>
 		<Side>

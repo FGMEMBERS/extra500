@@ -20,7 +20,7 @@
       Date: 2013-08-02
 
       Last change:      Eric van den Berg
-      Date:             2013-08-07
+      Date:             2013-08-10
 -->
 
 <!--
@@ -31,6 +31,7 @@
 /extra500/panel/CircuitBreaker/BankD/CabinPressure/voltOut
 /extra500/panel/CircuitBreaker/BankD/Dump/voltOut
 /extra500/door/main/IsOpen
+/gear/gear/wow
 -->
 <system name="pressurization">
 	<channel name="controlvalve">
@@ -70,9 +71,9 @@
 				<table>
 					<independentVar lookup="row">/systems/pressurization/cabin-climb-rate-fpm</independentVar>
                   			<tableData>
-						250	0.025
-						500	0.05
-						2500	0.25
+						250	35
+						500	70
+						2500	350
 					</tableData>
 				</table>
 			</function>
@@ -90,6 +91,14 @@
 			<output>/systems/pressurization/alt-diff</output>
 		</fcs_function>
 
+		<switch name="/systems/pressurization/switches/valvemovupdown">
+			<default value="1"/>
+			<test value="-1">
+				/systems/pressurization/alt-diff lt 0
+			</test>
+			<output>/systems/pressurization/valvemovupdown</output>
+		</switch>
+
 		<switch name="/systems/pressurization/switches/valvemoving">
 			<default value="0"/>
 			<test logic="OR" value="1">
@@ -106,11 +115,17 @@
 					<product>
 						<property>/systems/pressurization/controlvalvestate</property>
 						<property>/systems/pressurization/valvemoving</property>
+						<property>/systems/pressurization/valvemovupdown</property>
 						<property>/systems/pressurization/climb-factor</property>
-						<sum>
-							<property>/systems/pressurization/alt-diff</property>
-							<value>700</value>
-						</sum>
+						<pow>
+							<sum>
+								<abs>
+									<property>/systems/pressurization/alt-diff</property>
+								</abs>
+								<value>700</value>
+							</sum>
+							<value>0.1</value>
+						</pow>
 						<property>sim-dt-sec</property>
 						<property>/extra500/const/SEC2MIN</property>
 					</product>
@@ -124,6 +139,10 @@
 			<function>
 				<product>
 					<property>/systems/pressurization/bleedairin</property>
+					<difference>
+						<value>1</value>
+						<property>/systems/pressurization/dumping</property>
+					</difference>
 					<table>
 					<independentVar lookup="row">/systems/pressurization/airport-alt-valve</independentVar>
 					<independentVar lookup="column">/instrumentation/altimeter/indicated-altitude-ft</independentVar>
@@ -179,13 +198,29 @@ EDIT:
 <!-- property for warning "cabin pressure" on annunciator panel -->
 		<switch name="/systems/pressurization/switches/warning">
 			<default value="0"/>
-			<test logic="AND" value="1">
+			<test logic="OR" value="1">
 				/systems/pressurization/deltap-psi gt 5.65
 				/instrumentation/cabin-altitude/pressure-alt-ft gt 10000
 			</test>
 			<output>/systems/pressurization/warning</output>
 		</switch>
 
+
+	</channel>
+
+	<channel name="safetyvalve">
+
+		<switch name="/systems/pressurization/switches/dumping">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/extra500/panel/Side/Cabin/Pressure/state eq -1
+					/gear/gear/wow eq 1
+				</test>
+				/extra500/panel/CircuitBreaker/BankD/Dump/voltOut gt 15
+			</test>
+			<output>/systems/pressurization/dumping</output>
+		</switch>
 
 	</channel>
 </system>
