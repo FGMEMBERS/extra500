@@ -24,10 +24,18 @@
 var canvas = {
 	FontMapper : func(family, weight){
 		#print(sprintf("Canvas font-mapper %s %s",family,weight));
-		if (weight == "bold"){
-			return "LiberationFonts/LiberationSans-Bold.ttf";
-		}elsif(weight == "normal"){
-			return "LiberationFonts/LiberationSans-Regular.ttf";
+		if (family =="Liberation Mono"){
+			if (weight == "bold"){
+				return "LiberationFonts/LiberationMono-Bold.ttf";
+			}elsif(weight == "normal"){
+				return "LiberationFonts/LiberationMono-Regular.ttf";
+			}
+		}elsif(family =="Liberation Sans"){
+			if (weight == "bold"){
+				return "LiberationFonts/LiberationSans-Bold.ttf";
+			}elsif(weight == "normal"){
+				return "LiberationFonts/LiberationSans-Regular.ttf";
+			}
 		}
 		
 	},
