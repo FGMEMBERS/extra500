@@ -16,7 +16,7 @@
       Author: Eric van den Berg
       Date: 2013-05-12
 
-      Last change:      2013-07-24
+      Last change:      2013-08-18
       Date:             Eric van den Berg
 
 ========================================================================
@@ -26,8 +26,8 @@ See the Extra500 POH for full procedures! Below are just quickstart.
 
 Engine starting:
 
-- Parking Brake:	Set ( Shift-B or pull out middle Bowden cable in middle console AND press B )
-- Battery:		Switch ON
+- Parking Brake:		Set ( Shift-B or pull out middle Bowden cable in middle console AND press B )
+- Battery:			Switch ON
 - Fuel Pump 1 or 2:	Switch ON
 - Engine Start:		START
 - at 12-15% N1:		Press s ( or click on condition lever, its the red one )
@@ -39,14 +39,14 @@ CAUTION: TOT limit for starting is max. 10sec above 810degC and below 927degC
 
 Take-off:
 
-- Flaps:		15 degrees ( ] or use the flap switch )
+- Flaps:			15 degrees ( ] or use the flap switch )
 - Power lever:		TRQ 111%
 CAUTION: for Take-off (5 minutes) maximum TRQ limit is 111%, TOT 810degC
-- Parking Brake:	Release ( Shift-B or push in middle Bowden cable in middle console )
+- Parking Brake:		Release ( Shift-B or push in middle Bowden cable in middle console )
 NOTE: For strong sidewind, turn the ailerons against the wind
 - At 71KIAS:		Rotate
 - Gear:			Retract ( G or click the gear switch )
-- Flaps:		0 degrees ( [ or use the flap switch )
+- Flaps:			0 degrees ( [ or use the flap switch )
 CAUTION: Flaps need to be retracted before reaching 120KIAS, gear 140KIAS
 - Power lever:		TRQ 92%
 CAUTION: For continuous operation the TRQ limit is 92%, TOT 752degC, watch the TOT while climbing!
@@ -75,16 +75,17 @@ Engine shut-off: Press s ( or click on condition lever )
 		
 Principle Autopilot functionality (currently in place)
 
-- HDG 		Follows the heading bug
-- NAV		Intercepts and tracks VORs, LOCs or your Flight Plan
+- HDG 	Follows the heading bug (set HDG bug using the keypad, press to sync)
+- NAV		Intercepts and tracks VORs, LOCs or your Flight Plan (set course with LH lower rotary knob on IFD)
 - NAV/GPSS	Intercepts and tracks your Flight Plan and cuts the corners (Press NAV twice)
-- HDG+NAV	Intercept the course or active flightplan  leg with your set heading
+- HDG+NAV	Intercept the course or active flightplan leg with your set heading
 - NAV+REV	Intercepts and tracks the LOC back course
 - GS		Is armed and activated automatically when captured on the LOC. You can switch it off by pressing APR, 
 		ALT mode will become active. To arm the GS again, press APR for a second time 
-- VS		Follows the VS bug (limited to +/-1600fpm)
-- ALT 		Holds the current altitude (rounded to 100ft)
-- ALT+VS	Brings and holds the aircraft to the selected altitude with the selected vertical speed.
+- VS		Follows the VS bug (limited to +/-1600fpm, set with AP rotary knob)
+- ALT 	Holds the current altitude (rounded to 100ft)
+- ALT+VS	Brings and holds the aircraft to the selected altitude (set ALT bug using the keypad, press to sync)
+		with the selected vertical speed.
 
 To disconnect press: d
 
@@ -103,9 +104,20 @@ The AP will disengage when:
 
 Navigation and Communication
 
+The active COM standby frequency can be inputted on the keypad. The first "1" is not needed and any trailing "0" neither.
+Just type in the frequency and switch active/standby with the button just left of the frequencies.
+
+not-active-COM and NAV standby frequencies are similar, just press the NAV1 / NAV2 button first. 
+
 FMS, Nav 1 or Nav 2 may be selected on the IFD or in the NAV dialog (F12)
 The DME will source of either Nav 1 or 2, independent on which NAV is selected (=indicated / used by autopilot in NAV mode)
 
-XPDR squawk can be set in the NAV dialog (F12). Default is 7000 (Europe VFR).
+The FMS (Flight Management System) can be used with or without the autopilot. You can put your flightplan in the 
+autopilot - route manager (dont forget to press "activate"). The autopilot will intercept the active leg.
+Direct-To functionality is also included: In the route manager select the waypoint and on the keypad press the "D with arrow" button.
+Close to the waypoint diret-to mode will be deselected automatically or you can do that manually by pressing the same button again.  
+
+XPDR squawk can be set on the keypad (press XPDR and squawk code) and in the NAV dialog (F12). Default is 7000 (Europe VFR).
 XPDR modes are selected automatically (GND or ALT), but automatic selection may be switched off
 Manual mode selection is then possible.
+The MODE button on the keypad will set the mode manually also.
