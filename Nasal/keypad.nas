@@ -17,7 +17,7 @@
 #      Date: Jun 27 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             27.07.13
+#      Date:             18.08.13
 #
 var KeypadClassDisplay = {
 	new: func(root,name,acPlace){
@@ -424,12 +424,13 @@ var KeypadClass = {
 		setprop("/instrumentation/transponder/id-code",getprop("/instrumentation/transponder/vfr-id") );		
 	},
 	onMode : func(){
-		print("KeypadClass.onMode() ...");
-		
+		setprop("/instrumentation/transponder/inputs/auto-select",0 );
+		var mode = getprop("/instrumentation/transponder/inputs/knob-mode")+1;
+		if (mode == 6) {mode = 1;}
+		setprop("/instrumentation/transponder/inputs/knob-mode",mode );		
 	},
 	onIdent : func(){
-		print("KeypadClass.onIdent() ...");
-		
+		setprop("/instrumentation/transponder/inputs/ident-btn","true");	 #FIXME: should return to "false" after ~2sec	
 	},
 	onPhone : func(){
 		print("KeypadClass.onPhone() ...");
