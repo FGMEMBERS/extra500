@@ -426,7 +426,7 @@ var KeypadClass = {
 	onMode : func(){
 		setprop("/instrumentation/transponder/inputs/auto-select",0 );
 		var mode = getprop("/instrumentation/transponder/inputs/knob-mode")+1;
-		if (mode == 6) {mode = 1;}
+		if (mode == 6) {mode = 0;}
 		setprop("/instrumentation/transponder/inputs/knob-mode",mode );		
 	},
 	onIdent : func(){
