@@ -19,10 +19,97 @@
 #      Last change:      Eric van den Berg
 #      Date:             18.08.13
 #
-var KeypadClassDisplay = {
+
+var KeypadDisplayFreqencyWidgetClass = {
+	new: func(page,canvasGroup,name,path){
+		var m = { parents: [
+			KeypadDisplayFreqencyWidgetClass
+		] };
+		m._Page 	= page;	# parent pointer to parent Page
+		m._group	= canvasGroup;
+		me._listeners	= [];
+		m._tree = {
+			selected	: props.globals.initNode("/instrumentation/"~path~"/frequencies/selected-mhz",0,"DOUBLE"),
+			standby 	: props.globals.initNode("/instrumentation/"~path~"/frequencies/standby-mhz",0,"DOUBLE"),
+		};
+		
+		m._can = {
+			selected 	: m._group.getElementById(name ~ "_selected"),
+			standby 	: m._group.getElementById(name ~ "_standby"),
+			input	 	: m._group.getElementById(name ~ "_input").setVisible(0),
+		};
+		m._standby		= "";
+		m._input		= ["1","-","-",".","-","-","-"];
+		m._inputIndex		= 0;
+		return m;
+	},
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._tree.selected,func(n){instance._onSelectedChange(n);},1,0) );
+		append(me._listeners, setlistener(me._tree.standby,func(n){instance._onStanbyChange(n);},1,0) );
+	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		#me.parents[1].init(instance);
+		me.setListeners(instance);
+	},
+	_onSelectedChange : func(n){
+		me._can.selected.setText(sprintf("%.3f",n.getValue()));
+	},
+	_onStanbyChange : func(n){
+		me._standby = sprintf("%.3f",n.getValue());
+		me._can.standby.setText(me._standby);
+	},
+	select : func(value){
+		if (value){
+			me._can.input.setVisible(1);
+			me._can.standby.set("fill","rgb(255,255,255)");
+		}else{
+			me._can.input.setVisible(0);
+			me._can.standby.set("fill","rgb(0,0,0)");
+		}
+	},
+	swap : func(){
+		var tmp = me._tree.selected.getValue();
+		me._tree.selected.setValue(me._tree.standby.getValue());
+		me._tree.standby.setValue(tmp);
+	},
+	resetInput : func(){
+		if (me._inputIndex > 0){
+			for (var i = me._inputIndex+1;i <= 6;i +=1){
+				if (i != 3){
+					me._input[i] = "0";
+				}
+			}
+			me._inputUpdate();
+			me._inputIndex = 0;
+			me._input		= ["1","-","-",".","-","-","-"];
+			me._tree.standby.setValue(me._standby);
+		}
+	},
+	_inputUpdate : func(){
+		me._standby = sprintf("%s%s%s%s%s%s%s",me._input[0],me._input[1],me._input[2],me._input[3],me._input[4],me._input[5],me._input[6]);
+		me._can.standby.setText(me._standby);
+	},
+	handleInput : func (key){
+		if (num(key) != nil){
+			print ("KeypadClass.handleInputCom("~key~") ... "~me._standby);
+			me._inputIndex +=1;
+			if (me._inputIndex == 3){me._inputIndex = 4}
+			if (me._inputIndex >= 7){me._inputIndex = 1}
+			me._input[me._inputIndex] = key;
+# 			me._standby = substr(me._standby,0,me._inputIndex) ~ key ~ substr(me._standby,me._inputIndex+1);
+# 			#me._tree.standby.setValue(me._standby);
+# 			me._can.standby.setText(me._standby);
+			me._inputUpdate();
+		}
+	},
+	
+};
+
+var KeypadDisplayClass = {
 	new: func(root,name,acPlace){
 		var m = { parents: [
-			KeypadClassDisplay,
+			KeypadDisplayClass,
 			extra500.ServiceClass.new(root,name)
 		] };
 		m.svgFile	= "Keypad.svg";
@@ -46,42 +133,46 @@ var KeypadClassDisplay = {
 			}
 		);
 		
+		
+		m._widget = {
+			com : [
+				KeypadDisplayFreqencyWidgetClass.new(m,m.page,"Com1","comm[0]"),
+				KeypadDisplayFreqencyWidgetClass.new(m,m.page,"Com2","comm[1]"),
+			],
+			nav : [
+				KeypadDisplayFreqencyWidgetClass.new(m,m.page,"Nav1","nav[0]"),
+				KeypadDisplayFreqencyWidgetClass.new(m,m.page,"Nav2","nav[1]"),
+			]
+		};
+		
 		m._can = {
-			com1Selected 	: m.page.getElementById("Com1_selected"),
-			com1Standby 	: m.page.getElementById("Com1_standby"),
-			com1input 	: m.page.getElementById("Com1_input").setVisible(0),
-			com2Selected 	: m.page.getElementById("Com2_selected"),
-			com2Standby 	: m.page.getElementById("Com2_standby"),
-			com2input 	: m.page.getElementById("Com2_input").setVisible(0),
-			nav1Selected 	: m.page.getElementById("Nav1_selected"),
-			nav1Standby 	: m.page.getElementById("Nav1_standby"),
-			nav1input 	: m.page.getElementById("Nav1_input").setVisible(0),
-			nav2Selected 	: m.page.getElementById("Nav2_selected"),
-			nav2Standby 	: m.page.getElementById("Nav2_standby"),
-			nav2input 	: m.page.getElementById("Nav2_input").setVisible(0),
 			dataXPDR 	: m.page.getElementById("DATA_XPDR"),
 			XPDRvalue 	: m.page.getElementById("XPDR_Value"),
 			ALTvalue 	: m.page.getElementById("ALT_Value"),
 			HDGvalue 	: m.page.getElementById("HDG_Value"),
-			layerData 	: m.page.getElementById("layer2").setVisible(1),
+			layerCOM 	: m.page.getElementById("layer1").setVisible(0),
+			layerDATA 	: m.page.getElementById("layer2").setVisible(1),
 			layerXPDR 	: m.page.getElementById("layer3").setVisible(0),
 			layerHDG 	: m.page.getElementById("layer4").setVisible(0),
 			layerALT 	: m.page.getElementById("layer5").setVisible(0),
 			layerNAV 	: m.page.getElementById("layer6").setVisible(0),
 		};
 		
+	
 		m._xpdr = 0;
+		m._layerLeft = "";
+		m._layerRight = "";
 		return m;
 	},
 	setListeners : func(instance) {
-		append(me._listeners, setlistener("/instrumentation/comm[0]/frequencies/selected-mhz",func(n){instance._onCom1SelectedChange(n);},1,0) );
-		append(me._listeners, setlistener("/instrumentation/comm[0]/frequencies/standby-mhz",func(n){instance._onCom1StanbyChange(n);},1,0) );
-		append(me._listeners, setlistener("/instrumentation/comm[1]/frequencies/selected-mhz",func(n){instance._onCom2SelectedChange(n);},1,0) );
-		append(me._listeners, setlistener("/instrumentation/comm[1]/frequencies/standby-mhz",func(n){instance._onCom2StanbyChange(n);},1,0) );
-		append(me._listeners, setlistener("/instrumentation/nav[0]/frequencies/selected-mhz",func(n){instance._onNav1SelectedChange(n);},1,0) );
-		append(me._listeners, setlistener("/instrumentation/nav[0]/frequencies/standby-mhz",func(n){instance._onNav1StanbyChange(n);},1,0) );
-		append(me._listeners, setlistener("/instrumentation/nav[1]/frequencies/selected-mhz",func(n){instance._onNav2SelectedChange(n);},1,0) );
-		append(me._listeners, setlistener("/instrumentation/nav[1]/frequencies/standby-mhz",func(n){instance._onNav2StanbyChange(n);},1,0) );
+# 		append(me._listeners, setlistener("/instrumentation/comm[0]/frequencies/selected-mhz",func(n){instance._onCom1SelectedChange(n);},1,0) );
+# 		append(me._listeners, setlistener("/instrumentation/comm[0]/frequencies/standby-mhz",func(n){instance._onCom1StanbyChange(n);},1,0) );
+# 		append(me._listeners, setlistener("/instrumentation/comm[1]/frequencies/selected-mhz",func(n){instance._onCom2SelectedChange(n);},1,0) );
+# 		append(me._listeners, setlistener("/instrumentation/comm[1]/frequencies/standby-mhz",func(n){instance._onCom2StanbyChange(n);},1,0) );
+# 		append(me._listeners, setlistener("/instrumentation/nav[0]/frequencies/selected-mhz",func(n){instance._onNav1SelectedChange(n);},1,0) );
+# 		append(me._listeners, setlistener("/instrumentation/nav[0]/frequencies/standby-mhz",func(n){instance._onNav1StanbyChange(n);},1,0) );
+# 		append(me._listeners, setlistener("/instrumentation/nav[1]/frequencies/selected-mhz",func(n){instance._onNav2SelectedChange(n);},1,0) );
+# 		append(me._listeners, setlistener("/instrumentation/nav[1]/frequencies/standby-mhz",func(n){instance._onNav2StanbyChange(n);},1,0) );
 		append(me._listeners, setlistener("/instrumentation/transponder/id-code",func(n){instance._onXPDRChange(n);},1,0) );
 		append(me._listeners, setlistener("/autopilot/settings/heading-bug-deg",func(n){instance._onHdgChange(n);},1,0) );
 		append(me._listeners, setlistener("/autopilot/settings/tgt-altitude-ft",func(n){instance._onAltChange(n);},1,0) );
@@ -90,30 +181,12 @@ var KeypadClassDisplay = {
 		if (instance==nil){instance=me;}
 		me.parents[1].init(instance);
 		me.setListeners(instance);
-	},
-	_onCom1SelectedChange : func(n){
-		me._can.com1Selected.setText(sprintf("%.3f",n.getValue()));
-	},
-	_onCom1StanbyChange : func(n){
-		me._can.com1Standby.setText(sprintf("%.3f",n.getValue()));
-	},
-	_onCom2SelectedChange : func(n){
-		me._can.com2Selected.setText(sprintf("%.3f",n.getValue()));
-	},
-	_onCom2StanbyChange : func(n){
-		me._can.com2Standby.setText(sprintf("%.3f",n.getValue()));
-	},
-	_onNav1SelectedChange : func(n){
-		me._can.nav1Selected.setText(sprintf("%.3f",n.getValue()));
-	},
-	_onNav1StanbyChange : func(n){
-		me._can.nav1Standby.setText(sprintf("%.3f",n.getValue()));
-	},
-	_onNav2SelectedChange : func(n){
-		me._can.nav2Selected.setText(sprintf("%.3f",n.getValue()));
-	},
-	_onNav2StanbyChange : func(n){
-		me._can.nav2Standby.setText(sprintf("%.3f",n.getValue()));
+		
+		me._widget.com[0].init();
+		me._widget.com[1].init();
+		me._widget.nav[0].init();
+		me._widget.nav[1].init();
+		
 	},
 	_onXPDRChange : func(n){
 		me._xpdr = n.getValue(); 
@@ -128,56 +201,50 @@ var KeypadClassDisplay = {
 	},
 	selectCom : func(nr){
 		if (nr == 0){
-			me._can.com2input.setVisible(0);
-			me._can.com2Standby.set("fill","rgb(0,0,0)");
-			me._can.com1input.setVisible(1);
-			me._can.com1Standby.set("fill","rgb(255,255,255)");
+			me._widget.com[1].select(0);
+			me._widget.com[0].select(1);
 			
 		}elsif(nr == 1){
-			me._can.com1Standby.set("fill","rgb(0,0,0)");
-			me._can.com1input.setVisible(0);
-			me._can.com2Standby.set("fill","rgb(255,255,255)");
-			me._can.com2input.setVisible(1);
-			
+			me._widget.com[0].select(0);
+			me._widget.com[1].select(1);
 		}else{
-			me._can.com1Standby.set("fill","rgb(0,0,0)");
-			me._can.com1input.setVisible(0);
-			me._can.com2Standby.set("fill","rgb(0,0,0)");
-			me._can.com2input.setVisible(0);
-			
+			me._widget.com[1].select(0);
+			me._widget.com[0].select(0);
 		}
 	},
 	selectNav : func(nr){
 		if (nr == 0){
-			me._can.nav2input.setVisible(0);
-			me._can.nav2Standby.set("fill","rgb(0,0,0)");
-			me._can.nav1input.setVisible(1);
-			me._can.nav1Standby.set("fill","rgb(255,255,255)");
+			me._widget.nav[1].select(0);
+			me._widget.nav[0].select(1);
 			
 		}elsif(nr == 1){
-			me._can.nav1Standby.set("fill","rgb(0,0,0)");
-			me._can.nav1input.setVisible(0);
-			me._can.nav2Standby.set("fill","rgb(255,255,255)");
-			me._can.nav2input.setVisible(1);
-			
+			me._widget.nav[0].select(0);
+			me._widget.nav[1].select(1);
 		}else{
-			me._can.nav1Standby.set("fill","rgb(0,0,0)");
-			me._can.nav1input.setVisible(0);
-			me._can.nav2Standby.set("fill","rgb(0,0,0)");
-			me._can.nav2input.setVisible(0);
-			
+			me._widget.nav[1].select(0);
+			me._widget.nav[0].select(0);
 		}
 	},
-	selectLayer : func(name){
-		me._can.layerData.setVisible(0);
+	resetInput : func(){
+		me._widget.com[1].resetInput();
+		me._widget.com[0].resetInput();
+		me._widget.nav[1].resetInput();
+		me._widget.nav[0].resetInput();
+	},
+	selectLayer : func(Left="COM",Right="DATA"){
+		
+		me._layerLeft = Left;
+		me._layerRight = Right;
+		
+		me._can.layerCOM.setVisible(0);
+		me._can.layerDATA.setVisible(0);
 		me._can.layerXPDR.setVisible(0);
 		me._can.layerHDG.setVisible(0);
 		me._can.layerALT.setVisible(0);
 		me._can.layerNAV.setVisible(0);
-		me.selectCom(-1);
-		
-		
-		me._can["layer"~name].setVisible(1);
+				
+		me._can["layer"~Left].setVisible(1);
+		me._can["layer"~Right].setVisible(1);
 		
 	}
 };
@@ -207,12 +274,14 @@ var KeypadClass = {
 		
 		m._cursorScroll = 0;
 		
-		m._display = KeypadClassDisplay.new("extra500/instrumentation/Keypad/display","LH","Keypad.Display");
+		m._display = KeypadDisplayClass.new("extra500/instrumentation/Keypad/display","LH","Keypad.Display");
 		
 		m._inputWatchDog = 0;
 		m._inputIndex = 0;
 		m._inputValue = "";
 		m._inputPath = "";
+		m._inputHandle = nil;
+		
 		m._timerLoop = nil;
 		return m;
 
@@ -258,14 +327,18 @@ var KeypadClass = {
 		if(me._inputWatchDog > 10){
 			me.resetSelection();
 		}elsif(me._inputWatchDog >2){
-			me._inputIndex = 0;
+			me.resetInput();
 		}
 		
+	},
+	resetInput : func(){
+		me._inputIndex = 0;
+		me._display.resetInput();
 	},
 	resetSelection : func(){
 		#print("KeypadClass.resetSelection() ...");
 		me._inputWatchDog = 0;
-		me._display.selectLayer("Data");
+		me._display.selectLayer("COM","DATA");
 		me.onComSelect(getprop("/instrumentation/com2-selected"));
 		
 	},
@@ -275,9 +348,9 @@ var KeypadClass = {
 		hdg = int( math.mod(hdg,360) );
 		autopilot.nSetHeadingBugDeg.setValue(hdg);
 		
-		me._display.selectLayer("HDG");
+		me._display.selectLayer("COM","HDG");
 		me._inputWatchDog = 0;
-		me._inputFunc = nil;
+		me._inputHandle = nil;
 	},
 	onAdjustHeading : func(amount=nil){
 		if (amount!=nil){
@@ -294,18 +367,18 @@ var KeypadClass = {
 			me.onHeadingSync();
 		}
 		
-		me._display.selectLayer("HDG");
+		me._display.selectLayer("COM","HDG");
 		me._inputWatchDog = 0;
-		me._inputFunc = nil;
+		me._inputHandle = nil;
 	},
 	onHeadingSync : func(){
 		var hdg = me.nHeading.getValue();
 		hdg = int( math.mod(hdg,360) );
 		autopilot.nSetHeadingBugDeg.setValue(hdg);
 		
-		me._display.selectLayer("HDG");
+		me._display.selectLayer("COM","HDG");
 		me._inputWatchDog = 0;
-		me._inputFunc = nil;
+		me._inputHandle = nil;
 	},
 	onSetAltitude : func(alt){
 		if (alt > 50000){alt = 50000;}
@@ -313,9 +386,9 @@ var KeypadClass = {
 			
 		autopilot.nSetAltitudeBugFt.setValue(100*int( alt/100) );
 		
-		me._display.selectLayer("ALT");
+		me._display.selectLayer("COM","ALT");
 		me._inputWatchDog = 0;
-		me._inputFunc = nil;
+		me._inputHandle = nil;
 	},
 	onAdjustAltitude : func(amount=nil){
 		if (amount!=nil){
@@ -333,9 +406,9 @@ var KeypadClass = {
 			me.onAltitudeSync();
 		}
 		
-		me._display.selectLayer("ALT");
+		me._display.selectLayer("COM","ALT");
 		me._inputWatchDog = 0;
-		me._inputFunc = nil;
+		me._inputHandle = nil;
 	},
 	onAltitudeSync : func(){
 		var alt = me.nAltitude.getValue();
@@ -343,9 +416,9 @@ var KeypadClass = {
 		if (alt < 0){alt = 0;}	
 		autopilot.nSetAltitudeBugFt.setValue( 100*int( alt/100 ) );
 		
-		me._display.selectLayer("ALT");
+		me._display.selectLayer("COM","ALT");
 		me._inputWatchDog = 0;
-		me._inputFunc = nil;
+		me._inputHandle = nil;
 	},
 	onFMS : func(amount=0){
 		print("KeypadClass.onFMS() ... "~amount);
@@ -355,22 +428,23 @@ var KeypadClass = {
 	},
 	onKey : func(key){
 		print("KeypadClass.onKey() ... "~key);
-		if (me._inputFunc != nil){
-			me._inputFunc(key);
+		me._inputWatchDog = 0;
+		if (me._inputHandle != nil){
+			me._inputHandle(key);
 		}
 	},
-	handleInputCom : func (key){
-		if (num(key) != nil){
-			#print ("KeypadClass.handleInputCom("~key~") ... "~me._inputValue);
-			me._inputIndex +=1;
-			if (me._inputIndex == 3){me._inputIndex = 4}
-			if (me._inputIndex >= 7){me._inputIndex = 1}
-			me._inputValue = substr(me._inputValue,0,me._inputIndex) ~ key ~ substr(me._inputValue,me._inputIndex+1);
-			setprop(me._inputPath,me._inputValue);
-			me._inputWatchDog = 0;
-			
-		}
-	},
+# 	handleInputCom : func (key){
+# 		if (num(key) != nil){
+# 			#print ("KeypadClass.handleInputCom("~key~") ... "~me._inputValue);
+# 			me._inputIndex +=1;
+# 			if (me._inputIndex == 3){me._inputIndex = 4}
+# 			if (me._inputIndex >= 7){me._inputIndex = 1}
+# 			me._inputValue = substr(me._inputValue,0,me._inputIndex) ~ key ~ substr(me._inputValue,me._inputIndex+1);
+# 			setprop(me._inputPath,me._inputValue);
+# 			me._inputWatchDog = 0;
+# 			
+# 		}
+# 	},
 	handleInputXDPR : func (key){
 		if (num(key) != nil){
 			#print ("KeypadClass.handleInputXDPR("~key~") ... "~me._inputValue);
@@ -384,13 +458,14 @@ var KeypadClass = {
 	},
 	onComSelect : func(nr){
 		#print("KeypadClass.onComSelect("~nr~") ...");
-		me._display.selectLayer("Data");
+		me._display.selectLayer("COM","DATA");
+		me._display.resetInput();
 		me._display.selectCom(nr);
 		me._inputIndex = 0;
 		me._inputWatchDog = 0;
 		me._inputPath = "/instrumentation/comm["~nr~"]/frequencies/standby-mhz";
 		me._inputValue = sprintf("%0.3f",getprop(me._inputPath));
-		me._inputFunc = me.handleInputCom;
+		me._inputHandle = func(key){me._display._widget.com[nr].handleInput(key);};
 		
 	},
 	onFreqList : func(){
@@ -403,22 +478,23 @@ var KeypadClass = {
 	},
 	onNavSelect : func(nr){
 		#print("KeypadClass.onNavSelect("~nr~") ...");
-		me._display.selectLayer("NAV");
+		me._display.selectLayer("NAV","DATA");
+		me._display.resetInput();
 		me._display.selectNav(nr);
 		me._inputIndex = 0;
 		me._inputWatchDog = 0;
 		me._inputPath = "/instrumentation/nav["~nr~"]/frequencies/standby-mhz";
 		me._inputValue = sprintf("%0.3f",getprop(me._inputPath));
-		me._inputFunc = me.handleInputCom;
+		me._inputHandle = func(key){me._display._widget.nav[nr].handleInput(key);};
 	},
 	onXPDR : func(){
 		#print("KeypadClass.onXPDR() ...");
-		me._display.selectLayer("XPDR");
+		me._display.selectLayer("COM","XPDR");
 		me._inputIndex = 0;
 		me._inputWatchDog = 0;
 		me._inputPath = "/instrumentation/transponder/id-code";
 		me._inputValue = sprintf("%i",getprop(me._inputPath));
-		me._inputFunc = me.handleInputXDPR;
+		me._inputHandle = me.handleInputXDPR;
 	},
 	onVFR : func(){
 		setprop("/instrumentation/transponder/id-code",getprop("/instrumentation/transponder/vfr-id") );		
@@ -499,11 +575,19 @@ var KeypadClass = {
 	},
 	onCom1Scroll : func(amount=nil){
 		#print("KeypadClass.onCom1Scroll() ... " ~amount);
-		me.swapCom1();
+		if (me._display._layerLeft == "COM"){
+			me._display._widget.com[0].swap();
+		}else{
+			me._display._widget.nav[0].swap();
+		}
 	},
 	onCom2Scroll : func(amount=nil){
 		#print("KeypadClass.onCom2Scroll() ... "~amount);
-		me.swapCom2();
+		if (me._display._layerLeft == "COM"){
+			me._display._widget.com[1].swap();
+		}else{
+			me._display._widget.nav[1].swap();
+		}
 	},
 	onCursorPush : func(value) {
 		print("KeypadClass.onCursorPush() ... "~value);
@@ -520,20 +604,6 @@ var KeypadClass = {
 		me._nCursorY.setValue(y);
 	},
 	
-	swapCom1 : func(){
-		var selected 	= getprop("/instrumentation/comm[0]/frequencies/selected-mhz");
-		var standby	= getprop("/instrumentation/comm[0]/frequencies/standby-mhz");
-		
-		setprop("/instrumentation/comm[0]/frequencies/selected-mhz",standby);
-		setprop("/instrumentation/comm[0]/frequencies/standby-mhz",selected);
-	},
-	swapCom2 : func(){
-		var selected 	= getprop("/instrumentation/comm[1]/frequencies/selected-mhz");
-		var standby	= getprop("/instrumentation/comm[1]/frequencies/standby-mhz");
-		
-		setprop("/instrumentation/comm[1]/frequencies/selected-mhz",standby);
-		setprop("/instrumentation/comm[1]/frequencies/standby-mhz",selected);
-	},
 	
 	initUI : func(){
 		UI.register("Keypad Heading sync", 	func{extra500.keypad.onHeadingSync(); } 	);
