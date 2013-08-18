@@ -163,7 +163,7 @@ var KeypadDisplayClass = {
 	
 		m._xpdr = 0;
 		m._xpdrMode = 0;
-		m.XPDRMODE = ["OFF","SBY","GND","TST","ON","ALT"];
+		m.XPDRMODE = ["OFF","SBY","TST","GND","ON","ALT"];
 		m._layerLeft = "";
 		m._layerRight = "";
 		return m;
