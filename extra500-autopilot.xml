@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-07-31
+      Date:             2013-08-18
 -->
 
 <autopilot name="STEC55X">
@@ -1015,6 +1015,14 @@
 		</switch>
 
 		<switch name="gpsselect2">
+			<default value="/instrumentation/gps/wp/wp[1]/bearing-true-deg"/>
+			<test value="/instrumentation/gps[1]/wp/wp[1]/bearing-true-deg">
+				/instrumentation/gps/serviceable eq 0
+			</test>
+			<output>/autopilot/fms-channel/dto/true-course-deg</output>
+		</switch>
+
+		<switch name="gpsselect3">
 			<default value="/instrumentation/gps/wp/wp[1]/course-error-nm"/>
 			<test value="/instrumentation/gps[1]/wp/wp[1]/course-error-nm">
 				/instrumentation/gps/serviceable eq 0
@@ -1031,7 +1039,7 @@
 			</clipto>
 		</pure_gain>
 
-		<switch name="gpsselect3">
+		<switch name="gpsselect4">
 			<default value="/instrumentation/gps/cdi-deflection"/>
 			<test value="/instrumentation/gps[1]/cdi-deflection">
 				/instrumentation/gps/serviceable eq 0
@@ -1039,7 +1047,7 @@
 			<output>/autopilot/fms-channel/cdi-deflection</output>
 		</switch>
 
-		<switch name="gpsselect4">
+		<switch name="gpsselect5">
 			<default value="/instrumentation/gps/indicated-track-true-deg"/>
 			<test value="/instrumentation/gps[1]/indicated-track-true-deg">
 				/instrumentation/gps/serviceable eq 0
@@ -1047,7 +1055,7 @@
 			<output>/autopilot/fms-channel/indicated-track-true-deg</output>
 		</switch>
 
-		<switch name="gpsselect5">
+		<switch name="gpsselect6">
 			<default value="/instrumentation/gps/wp/leg-distance-nm"/>
 			<test value="/instrumentation/gps[1]/wp/leg-distance-nm">
 				/instrumentation/gps/serviceable eq 0
@@ -1055,7 +1063,7 @@
 			<output>/autopilot/fms-channel/leg-distance</output>
 		</switch>
 
-		<switch name="gpsselect6">
+		<switch name="gpsselect7">
 			<default value="/instrumentation/gps/indicated-ground-speed-kt"/>
 			<test value="/instrumentation/gps[1]/indicated-ground-speed-kt">
 				/instrumentation/gps/serviceable eq 0
@@ -1224,7 +1232,7 @@
 		</pure_gain>
 
 <!--target course -->
-		<fcs_function name="/autopilot/fms-channel/course-target-deg">
+		<fcs_function name="/autopilot/fms-channel/course-target1-deg">
 			<function>
 				<sum>
 					<property>/autopilot/fms-channel/leg-true-course-deg</property> 
@@ -1232,6 +1240,15 @@
 				</sum>
 			</function>
 		</fcs_function>
+	
+	<!-- switching target course between normal fms and Direct To course -->
+		<switch name="dtoselect">
+			<default value="/autopilot/fms-channel/course-target1-deg"/>
+			<test value="/autopilot/fms-channel/dto/true-course-deg">
+				/autopilot/settings/dto-leg eq 1
+			</test>
+			<output>/autopilot/fms-channel/course-target-deg</output>
+		</switch>
 
 		<fcs_function name="/autopilot/fms-channel/crs-error/course-1-error-deg">
 			<function>
@@ -1314,20 +1331,27 @@
 			</function>
 		</fcs_function>
 
+		<switch name="dtooff">
+			<default value="/autopilot/settings/dto-leg"/>
+			<test logic="AND" value="0">
+				/autopilot/fms-channel/gpss/distance-to-turn gt /autopilot/route-manager/wp/dist
+			</test>
+			<output>/autopilot/settings/dto-leg</output>
+		</switch>
+
 <!-- switching the gpss turn on (and off), with latching function (by in-turn2)-->
 	<!-- also the next waypoint may not be the last to prevent "double next wp"-->
 		<switch name="gpsson">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				<test value="1">
+				<test logic="AND" value="1">
+					/autopilot/settings/dto-leg ne 1 <!-- this is needed for some reason; else when pressing Direct To, it will do into turn -->
 					/autopilot/mode/gpss eq 1
+					/autopilot/route-manager/current-wp-plus ne /autopilot/route-manager/route/num
 				</test>
 				<test logic="OR" value="1">
 					/autopilot/fms-channel/gpss/distance-to-turn gt /autopilot/route-manager/wp/dist
 					/autopilot/fms-channel/gpss/in-turn2 eq 1
-				</test>
-				<test value="1">
-					/autopilot/route-manager/current-wp-plus ne /autopilot/route-manager/route/num
 				</test>
 			</test>
 			<output>/autopilot/fms-channel/gpss/in-turn</output>

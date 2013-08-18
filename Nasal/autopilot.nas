@@ -223,12 +223,15 @@ var AutopilotClass = {
 		}
 	},
 	DirectTO : func(){# called from keypad.nas
-		var selIndex = getprop("/sim/gui/dialogs/route-manager/selection");		# selection index in route manager
-		
-		setprop("/autopilot/route-manager/current-wp",selIndex);
-		setprop("/autopilot/fms-channel/gpss/next-bearing-deg",getprop("/autopilot/route-manager/route/wp["~selIndex~"]/leg-bearing-true-deg"));
-		setprop("/autopilot/settings/dto-leg",1);
-		
+		if ( getprop("/autopilot/settings/dto-leg") == 0) {
+			var selIndex = getprop("/sim/gui/dialogs/route-manager/selection");		# selection index in route manager
+			if (selIndex != nil) {
+				setprop("/autopilot/route-manager/current-wp",selIndex);
+				setprop("/autopilot/settings/dto-leg",1);
+			} 
+		} else {
+				setprop("/autopilot/settings/dto-leg",0);
+		}
 									
 # 		if (selIndex != nil) {
 #  			var deleteIndex = selIndex -1;
