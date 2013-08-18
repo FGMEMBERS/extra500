@@ -25,10 +25,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="3.7689823"
-     inkscape:cx="158.7945"
-     inkscape:cy="89.433743"
+     inkscape:cx="245.02468"
+     inkscape:cy="90.229714"
      inkscape:document-units="px"
-     inkscape:current-layer="layer7"
+     inkscape:current-layer="layer3"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -191,14 +191,14 @@
        xml:space="preserve"
        style="font-size:20px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono Bold"
        x="218.76056"
-       y="946.60803"
+       y="28.642784"
        id="text2985-0"
        sodipodi:linespacing="125%"
-       transform="matrix(0.99307963,0,0,1.0069686,0,-924.36218)"><tspan
+       transform="scale(0.99307963,1.0069686)"><tspan
          sodipodi:role="line"
          id="tspan2987-91"
          x="218.76056"
-         y="946.60803">XPDR - SBY</tspan></text>
+         y="28.642784">XPDR </tspan></text>
     <text
        transform="matrix(0.99307963,0,0,1.0069686,0,-924.36218)"
        sodipodi:linespacing="125%"
@@ -247,6 +247,30 @@
          x="351.95331"
          id="tspan4108"
          sodipodi:role="line">FT</tspan></text>
+    <text
+       transform="scale(0.99307963,1.0069686)"
+       sodipodi:linespacing="125%"
+       id="text3216"
+       y="28.642784"
+       x="279.22714"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono Bold"
+       xml:space="preserve"><tspan
+         y="28.642784"
+         x="279.22714"
+         id="tspan3218"
+         sodipodi:role="line">-</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono Bold"
+       x="303.34604"
+       y="28.642784"
+       id="XPDR_MODE"
+       sodipodi:linespacing="125%"
+       transform="scale(0.99307963,1.0069686)"><tspan
+         sodipodi:role="line"
+         id="tspan3222"
+         x="303.34604"
+         y="28.642784">SBY</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -533,13 +557,13 @@
     <text
        transform="scale(0.99307963,1.0069686)"
        sodipodi:linespacing="125%"
-       id="text4004"
+       id="DATA_XPDR_MODE"
        y="26.961023"
-       x="248.34967"
+       x="244.22945"
        style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
        xml:space="preserve"><tspan
          y="26.961023"
-         x="248.34967"
+         x="244.22945"
          id="tspan4006"
          sodipodi:role="line">SBY</tspan></text>
     <text

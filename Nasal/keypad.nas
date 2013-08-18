@@ -147,7 +147,9 @@ var KeypadDisplayClass = {
 		
 		m._can = {
 			dataXPDR 	: m.page.getElementById("DATA_XPDR"),
+			dataXPDRmode 	: m.page.getElementById("DATA_XPDR_MODE"),
 			XPDRvalue 	: m.page.getElementById("XPDR_Value"),
+			XPDRmode 	: m.page.getElementById("XPDR_MODE"),
 			ALTvalue 	: m.page.getElementById("ALT_Value"),
 			HDGvalue 	: m.page.getElementById("HDG_Value"),
 			layerCOM 	: m.page.getElementById("layer1").setVisible(0),
@@ -160,20 +162,15 @@ var KeypadDisplayClass = {
 		
 	
 		m._xpdr = 0;
+		m._xpdrMode = 0;
+		m.XPDRMODE = ["OFF","SBY","GND","TST","ON","ALT"];
 		m._layerLeft = "";
 		m._layerRight = "";
 		return m;
 	},
 	setListeners : func(instance) {
-# 		append(me._listeners, setlistener("/instrumentation/comm[0]/frequencies/selected-mhz",func(n){instance._onCom1SelectedChange(n);},1,0) );
-# 		append(me._listeners, setlistener("/instrumentation/comm[0]/frequencies/standby-mhz",func(n){instance._onCom1StanbyChange(n);},1,0) );
-# 		append(me._listeners, setlistener("/instrumentation/comm[1]/frequencies/selected-mhz",func(n){instance._onCom2SelectedChange(n);},1,0) );
-# 		append(me._listeners, setlistener("/instrumentation/comm[1]/frequencies/standby-mhz",func(n){instance._onCom2StanbyChange(n);},1,0) );
-# 		append(me._listeners, setlistener("/instrumentation/nav[0]/frequencies/selected-mhz",func(n){instance._onNav1SelectedChange(n);},1,0) );
-# 		append(me._listeners, setlistener("/instrumentation/nav[0]/frequencies/standby-mhz",func(n){instance._onNav1StanbyChange(n);},1,0) );
-# 		append(me._listeners, setlistener("/instrumentation/nav[1]/frequencies/selected-mhz",func(n){instance._onNav2SelectedChange(n);},1,0) );
-# 		append(me._listeners, setlistener("/instrumentation/nav[1]/frequencies/standby-mhz",func(n){instance._onNav2StanbyChange(n);},1,0) );
 		append(me._listeners, setlistener("/instrumentation/transponder/id-code",func(n){instance._onXPDRChange(n);},1,0) );
+		append(me._listeners, setlistener("/instrumentation/transponder/inputs/knob-mode",func(n){instance._onXPDRmodeChange(n);},1,0) );
 		append(me._listeners, setlistener("/autopilot/settings/heading-bug-deg",func(n){instance._onHdgChange(n);},1,0) );
 		append(me._listeners, setlistener("/autopilot/settings/tgt-altitude-ft",func(n){instance._onAltChange(n);},1,0) );
 	},
@@ -192,6 +189,11 @@ var KeypadDisplayClass = {
 		me._xpdr = n.getValue(); 
 		me._can.dataXPDR.setText(sprintf("%i",me._xpdr));
 		me._can.XPDRvalue.setText(sprintf("%i",me._xpdr));
+	},
+	_onXPDRmodeChange : func(n){
+		me._xpdrMode = n.getValue(); 
+		me._can.dataXPDRmode.setText(me.XPDRMODE[me._xpdrMode]);
+		me._can.XPDRmode.setText(me.XPDRMODE[me._xpdrMode]);
 	},
 	_onHdgChange : func(n){
 		me._can.HDGvalue.setText(sprintf("%03i",n.getValue()));
@@ -355,12 +357,20 @@ var KeypadClass = {
 	onAdjustHeading : func(amount=nil){
 		if (amount!=nil){
 			var value = autopilot.nSetHeadingBugDeg.getValue();
-			value += amount;
-			
 			if (math.abs(amount) > 1){
-				value = int(value/10)*10;
+				if (math.mod(value,10) != 0){
+					if (amount > 0){
+						value = math.ceil(value/10)*10;
+					}else{
+						value = math.floor(value/10)*10;
+					}
+				}else{
+					value += amount;
+				}
+			}else{
+				value += amount;
 			}
-			
+						
 			value = int( math.mod(value,360) );
 			autopilot.nSetHeadingBugDeg.setValue(value);
 		}else{
@@ -393,12 +403,22 @@ var KeypadClass = {
 	onAdjustAltitude : func(amount=nil){
 		if (amount!=nil){
 			var value = autopilot.nSetAltitudeBugFt.getValue();
-			value += amount;
 			
-			if (math.abs(amount) > 100){
-				value = int(value/500)*500;
+			if (math.abs(amount) > 1){
+				if (math.mod(value,500) != 0){
+					if (amount > 0){
+						value = math.ceil(value/500)*500;
+					}else{
+						value = math.floor(value/500)*500;
+					}
+				}else{
+					value += amount;
+				}
+			}else{
+				value += amount;
 			}
 			
+						
 			if (value > 50000){value = 50000;}
 			if (value < 0){value = 0;}
 			autopilot.nSetAltitudeBugFt.setValue(value);
@@ -575,6 +595,7 @@ var KeypadClass = {
 	},
 	onCom1Scroll : func(amount=nil){
 		#print("KeypadClass.onCom1Scroll() ... " ~amount);
+		me._display.resetInput();
 		if (me._display._layerLeft == "COM"){
 			me._display._widget.com[0].swap();
 		}else{
@@ -583,6 +604,7 @@ var KeypadClass = {
 	},
 	onCom2Scroll : func(amount=nil){
 		#print("KeypadClass.onCom2Scroll() ... "~amount);
+		me._display.resetInput();
 		if (me._display._layerLeft == "COM"){
 			me._display._widget.com[1].swap();
 		}else{
