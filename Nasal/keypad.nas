@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jun 27 2013
 #
-#      Last change:      Eric van den Berg
-#      Date:             18.08.13
+#      Last change:      Thomas Grossberger
+#      Date:             21.08.13
 #
 
 var KeypadDisplayFreqencyWidgetClass = {
@@ -113,13 +113,13 @@ var KeypadDisplayClass = {
 			extra500.ServiceClass.new(root,name)
 		] };
 		m.svgFile	= "Keypad.svg";
-		m.width 	= 378;
+		m.width 	= 384;
 		m.height	= 128;
 		
 		
 		m.canvas = canvas.new({
 		"name": "Keypad",
-		"size": [m.width, m.height],
+		"size": [m.width*2, m.height*2],
 		"view": [m.width, m.height],
 		"mipmapping": 1,
 		});
