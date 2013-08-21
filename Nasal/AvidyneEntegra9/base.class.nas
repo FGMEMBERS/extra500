@@ -120,6 +120,8 @@ var TabWidget = {
 		return m;
 	},
 	init : func(instance=me){
+		#print("TabWidget.init() ... ");
+			
 		foreach(t;me._tab){
 			me._can[t] = {
 				content	: me._group.getElementById("Tab_"~t~"_Content"),
@@ -131,20 +133,21 @@ var TabWidget = {
 		me._max = size(me._tab)-1;
 		me.scroll(0);
 		
-		me._Page.keys["PFD >"] = func(){me.scroll(1);};
-		me._Page.keys["PFD <"] = func(){me.scroll(-1);};
+		me._Page.keys[me._Page.name~" >"] = func(){me.scroll(1);};
+		me._Page.keys[me._Page.name~" <"] = func(){me.scroll(-1);};
 		
 	},
 	deinit : func(){
-		me._Page.keys["PFD >"] = nil;
-		me._Page.keys["PFD <"] = nil;
+		me._Page.keys[me._Page.name~" >"] = nil;
+		me._Page.keys[me._Page.name~" <"] = nil;
 	},
 	scroll : func(amount){
 		me._index += amount;
 		if (me._index > me._max){ me._index = 0; }
 		if (me._index < 0){ me._index = me._max; }
-		
+
 		foreach(t;me._tab){
+			#print("TabWidget.scroll() ... "~t);
 			me._can[t].content.setVisible(0);
 			me._can[t].tab.set("z-index",1);
 			me._can[t].back.set("stroke",COLOR["Blue"]);

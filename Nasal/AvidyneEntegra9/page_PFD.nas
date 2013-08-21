@@ -1531,7 +1531,7 @@ var AvidynePagePFD = {
 			Environment 		: EnvironmentWidget.new(m,m.page,"Environment"),
 			Timer	 		: TimerWidget.new(m,m.page,"Timer"),
 			BugSelect 		: BugSelectWidget.new(m,m.page,"BugSelect"),
-			Tab	 		: TabWidget.new(m,m.page,"BugSelect"),
+			Tab	 		: TabWidget.new(m,m.page,"TabSelectPFD"),
 			Marker	 		: MarkerWidget.new(m,m.page,"Marker"),
 		};
 		
