@@ -183,8 +183,9 @@ var AvidyneIFD = {
 		m._startPage = startPage;
 		
 		m.page = {};
-		m.page["PFD"] = AvidynePagePFD.new(m,"PFD",m.data);
 		m.page["none"] = AvidynePageDummy.new(m,"none",m.data);
+		m.page["PFD"] = AvidynePagePFD.new(m,"PFD",m.data);
+		m.page["MAP"] = AvidynePageMAP.new(m,"MAP",m.data);
 		
 		m._dt20Hz = 0;
 		m._now20Hz = systime();
@@ -240,8 +241,7 @@ var AvidyneIFD = {
 		me.keys["CHKL >"] = func(){me.gotoPage("CHKL","CHKL >");};
 		me.keys["CHKL <"] = func(){me.gotoPage("CHKL","CHKL <");};
 		
-		
-		
+				
 		
 		#me.gotoPage(me._startPage);
 		
