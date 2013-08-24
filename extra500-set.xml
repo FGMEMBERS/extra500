@@ -989,6 +989,7 @@ JSBSim Extra Aircraft - Extra 500.
 	<IFD>
 		<!--<file>Aircraft/extra500/system/IFD/IFD_test.nas</file>-->
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/base.class.nas</file>
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/widget.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/page_PFD.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/page_FMS.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/page_MAP.nas</file>

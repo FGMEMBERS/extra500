@@ -260,6 +260,8 @@ var KeypadClass = {
 		]};
 		
 		
+		
+		
 		m.nHeading = props.globals.initNode("/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg",0,"DOUBLE");
 		m.nAltitude = props.globals.initNode("/instrumentation/altimeter-IFD-LH/indicated-altitude-ft",0,"DOUBLE");
 		
@@ -517,6 +519,7 @@ var KeypadClass = {
 		
 	},
 	onD : func(){
+		
 		extra500.autopilot.DirectTO();		
 	},
 	onV : func(){
