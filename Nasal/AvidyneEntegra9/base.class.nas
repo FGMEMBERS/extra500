@@ -110,7 +110,7 @@ var IfdWidget = {
 };
 
 var TabWidget = {
-	new: func(page,canvasGroup,name){
+	new : func(page,canvasGroup,name){
 		var m = {parents:[TabWidget,IfdWidget.new(page,canvasGroup,name)]};
 		m._class 	= "TabWidget";
 		m._tab		= [];
@@ -163,5 +163,47 @@ var TabWidget = {
 	
 		me._Page._initWidgetsForTab(me._index);
 	}
+	
+};
+
+var ComWidget = {
+	new : func(page,canvasGroup,name){
+		var m = {parents:[ComWidget,IfdWidget.new(page,canvasGroup,name)]};
+		m._class 	= "ComWidget";
+		m._tab		= [];
+		m._can		= {};
+		return m;
+	},
+	setListeners : func(instance) {
+		append(me._listeners, setlistener("/instrumentation/comm[0]/frequencies/selected-mhz",func(n){me._onCom1SelectedChange(n)},1,0));	
+		append(me._listeners, setlistener("/instrumentation/comm[0]/frequencies/standby-mhz",func(n){me._onCom1StandbyChange(n)},1,0));	
+		append(me._listeners, setlistener("/instrumentation/comm[1]/frequencies/selected-mhz",func(n){me._onCom2SelectedChange(n)},1,0));	
+		append(me._listeners, setlistener("/instrumentation/comm[1]/frequencies/standby-mhz",func(n){me._onCom2StandbyChange(n)},1,0));	
+	},
+	init : func(instance=me){
+		print("ComWidget.init() ... ");
+		me._can = {
+			com1selected	: me._group.getElementById("Com1_selected"),
+			com1standby	: me._group.getElementById("Com1_standby"),
+			com2selected	: me._group.getElementById("Com2_selected"),
+			com2standby	: me._group.getElementById("Com2_standby"),
+		};
+		me.setListeners(instance);
+		
+	},
+	_onCom1SelectedChange : func(n){
+		me._can.com1selected.setText(sprintf("%.3f",n.getValue()));
+	},
+	_onCom1StandbyChange : func(n){
+		me._can.com1standby.setText(sprintf("%.3f",n.getValue()));
+	},
+	_onCom2SelectedChange : func(n){
+		me._can.com2selected.setText(sprintf("%.3f",n.getValue()));
+	},
+	_onCom2StandbyChange : func(n){
+		me._can.com2standby.setText(sprintf("%.3f",n.getValue()));
+	},
+
+	
 	
 };
