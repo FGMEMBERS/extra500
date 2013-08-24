@@ -68,6 +68,8 @@ var AvidynePageFMS = {
 			Tab	 : TabWidget.new(m,m.page,"TabSelectMAP"),
 			Com	 : ComWidget.new(m,m.page,"Com"),
 			DirectTo : DirectToWidget.new(m,m.page,"DirectTo"),
+			Tuning	 : TuningWidget.new(m,m.page,"Tuning"),
+			TCAS	 : TcasWidget.new(m,m.page,"TCAS"),
 			
 		};
 		m._can = {
@@ -85,13 +87,15 @@ var AvidynePageFMS = {
 				
 		me.setListeners(instance);
 		
-		foreach(widget;keys(me._widget)){
-			#print("widget : "~widget);
-			if(me._widget[widget] != nil){
-				
-				me._widget[widget].init();
-			}
-		}
+# 		foreach(widget;keys(me._widget)){
+# 			#print("widget : "~widget);
+# 			if(me._widget[widget] != nil){
+# 				
+# 				me._widget[widget].init();
+# 			}
+# 		}
+		me._widget.Tab.init();
+		me._widget.Com.init();
 		
 		me.registerKeys();
 		
@@ -111,24 +115,36 @@ var AvidynePageFMS = {
 	_initWidgetsForTab : func(index){
 		me._can.side.setVisible(0);
 		me._widget.DirectTo.deinit();
+		me._widget.Tuning.deinit();
+		me._widget.TCAS.deinit();
 		
 		if (index == 0){ # FPL
 			me._can.side.setVisible(1);
 			me._widget.DirectTo.init();
+			me._widget.Tuning.init();
+			me._widget.TCAS.init();
 		}elsif(index == 1){ # MapFPL
 			
 		}elsif(index == 2){ # Info
 			me._can.side.setVisible(1);
 			me._widget.DirectTo.init();
+			me._widget.Tuning.init();
+			me._widget.TCAS.init();
 		}elsif(index == 3){ # Routes
 			me._can.side.setVisible(1);
+			me._widget.Tuning.init();
+			me._widget.TCAS.init();
 			
 		}elsif(index == 4){ # UserWypts
 			me._can.side.setVisible(1);
 			me._widget.DirectTo.init();
+			me._widget.Tuning.init();
+			me._widget.TCAS.init();
 		}elsif(index == 5){ # Nearest
 			me._can.side.setVisible(1);
 			me._widget.DirectTo.init();
+			me._widget.Tuning.init();
+			me._widget.TCAS.init();
 		}elsif(index == 6){ # MapNearest
 			
 		}else{

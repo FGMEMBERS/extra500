@@ -28,6 +28,7 @@ COLOR["Yellow"] = "rgb(241,205,57)";
 COLOR["White"] = "rgb(255,255,255)";
 COLOR["Turquoise"] = "rgb(4,254,252)";
 COLOR["Blue"] = "rgb(51,145,232)";
+COLOR["DarkGreen"] = "#16502d";
 
 var tool = {
 	adjustStep : func(value,amount,step=10){

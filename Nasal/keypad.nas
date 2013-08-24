@@ -259,7 +259,8 @@ var KeypadClass = {
 			ConsumerClass.new(root,name,3.0)
 		]};
 		
-		
+		m.nTungingSource = m._nRoot.initNode("tuningSource",0,"INT");
+		m.nTungingChannel = m._nRoot.initNode("tuningChannel",0,"INT");
 		
 		
 		m.nHeading = props.globals.initNode("/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg",0,"DOUBLE");
@@ -287,12 +288,20 @@ var KeypadClass = {
 		m._inputHandle = nil;
 		
 		m._timerLoop = nil;
+		
+		
+		m._tuningChannel = 0;
+		m._tuningSource = 0;
+		
 		return m;
 
 	},
 	setListeners : func(instance) {
 		append(me._listeners, setlistener(me._nBrightness,func(n){instance._onBrightnessChange(n);},1,0) );
 		append(me._listeners, setlistener("/instrumentation/comm-selected-index",func(n){me._onComSelectedChange(n)},1,0));	
+		append(me._listeners, setlistener(me.nTungingSource,func(n){me._onTuningSourceChange(n)},1,0));	
+		append(me._listeners, setlistener(me.nTungingChannel,func(n){me._onTuningChannelChange(n)},1,0));	
+		
 	},
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
@@ -307,13 +316,38 @@ var KeypadClass = {
 		me._timerLoop = maketimer(1,me,KeypadClass.update);
 		me._timerLoop.start();
 	},
-	_onComSelectedChange : func(n){
-		me.onComSelect(n.getValue());
-	},
 	_onBrightnessChange : func(n){
 		me._brightness = n.getValue();
 		me.electricWork();
 	},
+	_onComSelectedChange : func(n){
+		me.onComSelect(n.getValue());
+	},
+	_onTuningSourceChange : func(n){
+		me._tuningSource = n.getValue();
+		me._checkTuning();
+	},
+	_onTuningChannelChange : func(n){
+		me._tuningChannel = n.getValue();
+		me._checkTuning();
+	},
+	_checkTuning : func(){
+		if (me._tuningSource == 0){ # COM
+			me._display.selectLayer("COM","DATA");
+			me._display.resetInput();
+			me._display.selectCom(me._tuningChannel);
+			me._inputHandle = func(key){me._display._widget.com[me._tuningChannel].handleInput(key);};
+		}else{	# NAV
+			me._display.selectLayer("NAV","DATA");
+			me._display.resetInput();
+			me._display.selectNav(me._tuningChannel);
+			me._inputHandle = func(key){me._display._widget.nav[me._tuningChannel].handleInput(key);};
+		}
+		me._inputIndex = 0;
+		me._inputWatchDog = 0;
+	},
+	
+	
 	electricWork : func(){
 		if (me._volt > me._voltMin){
 			me._watt = me._nWatt.getValue();
@@ -431,18 +465,6 @@ var KeypadClass = {
 			me._inputHandle(key);
 		}
 	},
-# 	handleInputCom : func (key){
-# 		if (num(key) != nil){
-# 			#print ("KeypadClass.handleInputCom("~key~") ... "~me._inputValue);
-# 			me._inputIndex +=1;
-# 			if (me._inputIndex == 3){me._inputIndex = 4}
-# 			if (me._inputIndex >= 7){me._inputIndex = 1}
-# 			me._inputValue = substr(me._inputValue,0,me._inputIndex) ~ key ~ substr(me._inputValue,me._inputIndex+1);
-# 			setprop(me._inputPath,me._inputValue);
-# 			me._inputWatchDog = 0;
-# 			
-# 		}
-# 	},
 	handleInputXDPR : func (key){
 		if (num(key) != nil){
 			#print ("KeypadClass.handleInputXDPR("~key~") ... "~me._inputValue);
@@ -456,14 +478,8 @@ var KeypadClass = {
 	},
 	onComSelect : func(nr){
 		#print("KeypadClass.onComSelect("~nr~") ...");
-		me._display.selectLayer("COM","DATA");
-		me._display.resetInput();
-		me._display.selectCom(nr);
-		me._inputIndex = 0;
-		me._inputWatchDog = 0;
-		me._inputPath = "/instrumentation/comm["~nr~"]/frequencies/standby-mhz";
-		me._inputValue = sprintf("%0.3f",getprop(me._inputPath));
-		me._inputHandle = func(key){me._display._widget.com[nr].handleInput(key);};
+		me.nTungingSource.setValue(0);
+		me.nTungingChannel.setValue(nr);
 		
 	},
 	onFreqList : func(){
@@ -476,14 +492,8 @@ var KeypadClass = {
 	},
 	onNavSelect : func(nr){
 		#print("KeypadClass.onNavSelect("~nr~") ...");
-		me._display.selectLayer("NAV","DATA");
-		me._display.resetInput();
-		me._display.selectNav(nr);
-		me._inputIndex = 0;
-		me._inputWatchDog = 0;
-		me._inputPath = "/instrumentation/nav["~nr~"]/frequencies/standby-mhz";
-		me._inputValue = sprintf("%0.3f",getprop(me._inputPath));
-		me._inputHandle = func(key){me._display._widget.nav[nr].handleInput(key);};
+		me.nTungingSource.setValue(1);
+		me.nTungingChannel.setValue(nr);
 	},
 	onXPDR : func(){
 		#print("KeypadClass.onXPDR() ...");
