@@ -357,19 +357,8 @@ var KeypadClass = {
 	onAdjustHeading : func(amount=nil){
 		if (amount!=nil){
 			var value = autopilot.nSetHeadingBugDeg.getValue();
-			if (math.abs(amount) > 1){
-				if (math.mod(value,10) != 0){
-					if (amount > 0){
-						value = math.ceil(value/10)*10;
-					}else{
-						value = math.floor(value/10)*10;
-					}
-				}else{
-					value += amount;
-				}
-			}else{
-				value += amount;
-			}
+			
+			value = IFD.tool.adjustStep(value,amount,10);
 						
 			value = int( math.mod(value,360) );
 			autopilot.nSetHeadingBugDeg.setValue(value);
@@ -391,9 +380,7 @@ var KeypadClass = {
 		me._inputHandle = nil;
 	},
 	onSetAltitude : func(alt){
-		if (alt > 50000){alt = 50000;}
-		if (alt < 0){alt = 0;}
-			
+		alt = global.clamp(alt,0,50000);
 		autopilot.nSetAltitudeBugFt.setValue(100*int( alt/100) );
 		
 		me._display.selectLayer("COM","ALT");
@@ -402,26 +389,12 @@ var KeypadClass = {
 	},
 	onAdjustAltitude : func(amount=nil){
 		if (amount!=nil){
-			var value = autopilot.nSetAltitudeBugFt.getValue();
+			var alt = autopilot.nSetAltitudeBugFt.getValue();
 			
-			if (math.abs(amount) > 500){
-				if (math.mod(value,500) != 0){
-					if (amount > 0){
-						value = math.ceil(value/500)*500;
-					}else{
-						value = math.floor(value/500)*500;
-					}
-				}else{
-					value += amount;
-				}
-			}else{
-				value += amount;
-			}
-			
-						
-			if (value > 50000){value = 50000;}
-			if (value < 0){value = 0;}
-			autopilot.nSetAltitudeBugFt.setValue(value);
+			alt = IFD.tool.adjustStep(alt,amount,500);
+			alt = global.clamp(alt,0,50000);
+
+			autopilot.nSetAltitudeBugFt.setValue(alt);
 		}else{
 			me.onAltitudeSync();
 		}
@@ -432,8 +405,7 @@ var KeypadClass = {
 	},
 	onAltitudeSync : func(){
 		var alt = me.nAltitude.getValue();
-		if (alt > 50000){alt = 50000;}
-		if (alt < 0){alt = 0;}	
+		alt = global.clamp(alt,0,50000);
 		autopilot.nSetAltitudeBugFt.setValue( 100*int( alt/100 ) );
 		
 		me._display.selectLayer("COM","ALT");

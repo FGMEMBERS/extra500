@@ -892,7 +892,8 @@ var NavSourceWidget = {
 		me._ptree.Source.setValue(me._source);				
 	},
 	_adjustRadial : func(amount){
-		me._Pointer += amount;
+		#me._Pointer += amount;
+		me._Pointer = tool.adjustStep(me._Pointer,amount,10);
 		me._Pointer = math.mod(me._Pointer,360.0);
 		setprop("/instrumentation/nav[0]/radials/selected-deg",me._Pointer);
 		setprop("/instrumentation/nav[1]/radials/selected-deg",me._Pointer);

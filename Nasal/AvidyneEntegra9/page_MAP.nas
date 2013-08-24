@@ -12,6 +12,8 @@ var AvidynePageMAP = {
 		);
 		m._widget	= {
 			Tab	 : TabWidget.new(m,m.page,"TabSelectMAP"),
+			Com	 : ComWidget.new(m,m.page,"Com"),
+			
 		};
 		
 		m._widget.Tab._tab = ["Map+","Map","Split","Chart","Chart+"];
