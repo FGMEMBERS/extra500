@@ -68,6 +68,7 @@
 <animation>
   <type>pick</type>
   <object-name>left</object-name>
+  <visible>false</visible>
   <action>
     <button>0</button>
     <repeatable>false</repeatable>
@@ -83,6 +84,7 @@
 <animation>
   <type>pick</type>
   <object-name>right</object-name>
+  <visible>false</visible>
   <action>
     <button>0</button>
     <repeatable>false</repeatable>
