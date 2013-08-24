@@ -1,3 +1,57 @@
+
+
+var DirectToWidget = {
+	new : func(page,canvasGroup,name){
+		var m = {parents:[DirectToWidget,IfdWidget.new(page,canvasGroup,name)]};
+		m._class 	= "DirectToWidget";
+		m._tab		= [];
+		m._can		= {};
+		
+		m._can = {
+			button		: m._group.getElementById("DirectTo").setVisible(0),
+			text		: m._group.getElementById("DirectTo_Text"),
+			border		: m._group.getElementById("DirectTo_Border"),
+		};
+		
+		return m;
+	},
+	setListeners : func(instance) {
+		append(me._listeners, setlistener("/autopilot/settings/dto-leg",func(n){me._onChange(n)},1,0));	
+	},
+	init : func(instance=me){
+		#print("ActiveComWidget.init() ... ");
+		me.setListeners(instance);
+		
+		me._Page.IFD.nLedR4.setValue(1);
+		me._Page.keys["R4 <"] 	= func(){extra500.keypad.onD()};
+		me._Page.keys["R4 >"] 	= func(){extra500.keypad.onD()};
+		me._can.button.setVisible(1);
+	},
+	deinit : func(){
+		me._can.button.setVisible(0);
+		me._Page.IFD.nLedR4.setValue(0);
+		me._Page.keys["R4 <"] 	= nil;
+		me._Page.keys["R4 >"] 	= nil;
+		me.removeListeners();
+		
+	},
+	_onChange : func(n){
+		if (n.getValue()==1){
+			me._can.text.set("fill",COLOR["White"]);
+			me._can.border.set("stroke",COLOR["Turquoise"]);
+			me._can.border.set("stroke-width",20);
+		}else{
+			me._can.text.set("fill",COLOR["Turquoise"]);
+			me._can.border.set("stroke",COLOR["Blue"]);
+			me._can.border.set("stroke-width",10);
+		}
+	},
+	
+	
+};
+
+
+
 var AvidynePageFMS = {
 	new: func(ifd,name,data){
 		var m = { parents: [
@@ -13,6 +67,11 @@ var AvidynePageFMS = {
 		m._widget	= {
 			Tab	 : TabWidget.new(m,m.page,"TabSelectMAP"),
 			Com	 : ComWidget.new(m,m.page,"Com"),
+			DirectTo : DirectToWidget.new(m,m.page,"DirectTo"),
+			
+		};
+		m._can = {
+			side	 : m.page.getElementById("layer11").setVisible(0),
 			
 		};
 		
@@ -50,9 +109,27 @@ var AvidynePageFMS = {
 		}
 	},
 	_initWidgetsForTab : func(index){
-		if (index == 0){ # Page NavDisplay
+		me._can.side.setVisible(0);
+		me._widget.DirectTo.deinit();
+		
+		if (index == 0){ # FPL
+			me._can.side.setVisible(1);
+			me._widget.DirectTo.init();
+		}elsif(index == 1){ # MapFPL
 			
-		}elsif(index == 1){ # Page BugSelect
+		}elsif(index == 2){ # Info
+			me._can.side.setVisible(1);
+			me._widget.DirectTo.init();
+		}elsif(index == 3){ # Routes
+			me._can.side.setVisible(1);
+			
+		}elsif(index == 4){ # UserWypts
+			me._can.side.setVisible(1);
+			me._widget.DirectTo.init();
+		}elsif(index == 5){ # Nearest
+			me._can.side.setVisible(1);
+			me._widget.DirectTo.init();
+		}elsif(index == 6){ # MapNearest
 			
 		}else{
 			
