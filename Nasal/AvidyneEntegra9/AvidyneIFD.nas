@@ -461,7 +461,7 @@ var AvidyneIFD = {
 
 
 var LH = AvidyneIFD.new("extra500/instrumentation/IFD-LH","LH","LH-IFD.Screen","PFD");
-var RH = AvidyneIFD.new("extra500/instrumentation/IFD-RH","RH","RH-IFD.Screen");
+var RH = AvidyneIFD.new("extra500/instrumentation/IFD-RH","RH","RH-IFD.Screen","FMS");
 
 extra500.eSystem.circuitBreaker.IFD_LH_A.outputAdd(LH._powerA);
 extra500.eSystem.circuitBreaker.IFD_LH_B.outputAdd(LH._powerB);
