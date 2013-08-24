@@ -1,4 +1,4 @@
-    This file is part of extra500
+﻿    This file is part of extra500
 
     The extra500 is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ See the Extra500 POH for full procedures! Below are just quickstart.
 Engine starting:
 
 - Parking Brake:		Set ( Shift-B or pull out middle Bowden cable in middle console AND press B )
-- Battery:			Switch ON
+- Battery:		Switch ON
 - Fuel Pump 1 or 2:	Switch ON
 - Engine Start:		START
 - at 12-15% N1:		Press s ( or click on condition lever, its the red one )
@@ -75,7 +75,7 @@ Engine shut-off: Press s ( or click on condition lever )
 		
 Principle Autopilot functionality (currently in place)
 
-- HDG 	Follows the heading bug (set HDG bug using the keypad, press to sync)
+- HDG 		Follows the heading bug (set HDG bug using the keypad, press to sync)
 - NAV		Intercepts and tracks VORs, LOCs or your Flight Plan (set course with LH lower rotary knob on IFD)
 - NAV/GPSS	Intercepts and tracks your Flight Plan and cuts the corners (Press NAV twice)
 - HDG+NAV	Intercept the course or active flightplan leg with your set heading
@@ -83,7 +83,7 @@ Principle Autopilot functionality (currently in place)
 - GS		Is armed and activated automatically when captured on the LOC. You can switch it off by pressing APR, 
 		ALT mode will become active. To arm the GS again, press APR for a second time 
 - VS		Follows the VS bug (limited to +/-1600fpm, set with AP rotary knob)
-- ALT 	Holds the current altitude (rounded to 100ft)
+- ALT 		Holds the current altitude (rounded to 100ft)
 - ALT+VS	Brings and holds the aircraft to the selected altitude (set ALT bug using the keypad, press to sync)
 		with the selected vertical speed.
 
