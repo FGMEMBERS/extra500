@@ -168,8 +168,8 @@ var TabWidget = {
 	},
 	scroll : func(amount){
 		me._index += amount;
-		if (me._index > me._max){ me._index = 0; }
-		if (me._index < 0){ me._index = me._max; }
+		if (me._index > me._max){ me._index = me._max; }
+		if (me._index < 0){ me._index = 0; }
 
 		foreach(t;me._tab){
 			#print("TabWidget.scroll() ... "~t);

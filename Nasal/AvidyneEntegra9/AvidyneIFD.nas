@@ -185,6 +185,7 @@ var AvidyneIFD = {
 		m.page = {};
 		m.page["none"] = AvidynePageDummy.new(m,"none",m.data);
 		m.page["PFD"] = AvidynePagePFD.new(m,"PFD",m.data);
+		m.page["FMS"] = AvidynePageFMS.new(m,"FMS",m.data);
 		m.page["MAP"] = AvidynePageMAP.new(m,"MAP",m.data);
 		
 		m._dt20Hz = 0;
