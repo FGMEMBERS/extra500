@@ -290,6 +290,7 @@ var KeypadClass = {
 	},
 	setListeners : func(instance) {
 		append(me._listeners, setlistener(me._nBrightness,func(n){instance._onBrightnessChange(n);},1,0) );
+		append(me._listeners, setlistener("/instrumentation/comm-selected-index",func(n){me._onComSelectedChange(n)},1,0));	
 	},
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
@@ -303,6 +304,9 @@ var KeypadClass = {
 		
 		me._timerLoop = maketimer(1,me,KeypadClass.update);
 		me._timerLoop.start();
+	},
+	_onComSelectedChange : func(n){
+		me.onComSelect(n.getValue());
 	},
 	_onBrightnessChange : func(n){
 		me._brightness = n.getValue();

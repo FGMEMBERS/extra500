@@ -26,9 +26,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.50980392"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.5"
-     inkscape:cx="902.706"
-     inkscape:cy="677.54293"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="1675.5433"
+     inkscape:cy="648.13364"
      inkscape:document-units="px"
      inkscape:current-layer="layer3"
      showgrid="false"
@@ -486,7 +486,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -2157,7 +2157,7 @@
          style="font-size:43.24956512px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1.40017474;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
          x="2002.9275"
          y="997.36835"
-         id="text11123-4"
+         id="Com_active_Channel_Airport"
          sodipodi:linespacing="125%"
          transform="scale(0.91589761,1.0918251)"
          inkscape:label="#text5341-2"><tspan
@@ -2170,7 +2170,7 @@
          inkscape:label="#text5341-2"
          transform="scale(0.91589761,1.0918251)"
          sodipodi:linespacing="125%"
-         id="HeadingSelected-2-8-1-7-7"
+         id="Com_active_Channel_Freqency"
          y="1042.1759"
          x="2078.6074"
          style="font-size:43.24956512px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.40017474;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
@@ -2185,7 +2185,7 @@
          style="font-size:43.24956512px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1.40017474;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
          x="1872.1003"
          y="1043.7673"
-         id="text11123-4-7"
+         id="Com_active_Channel_Info"
          sodipodi:linespacing="125%"
          transform="scale(0.91589761,1.0918251)"
          inkscape:label="#text5341-2"><tspan

@@ -1484,6 +1484,40 @@ var TimerWidget = {
 	}
 };
 
+var ActiveComWidget = {
+	new : func(page,canvasGroup,name){
+		var m = {parents:[ActiveComWidget,IfdWidget.new(page,canvasGroup,name)]};
+		m._class 	= "ActiveComWidget";
+		m._tab		= [];
+		m._can		= {};
+		return m;
+	},
+	setListeners : func(instance) {
+		append(me._listeners, setlistener("/instrumentation/comm-selected-index",func(n){me._onComSelectedChange(n)},1,0));	
+	},
+	init : func(instance=me){
+		#print("ActiveComWidget.init() ... ");
+		me._can = {
+			freqency	: me._group.getElementById("Com_active_Channel_Freqency"),
+			info		: me._group.getElementById("Com_active_Channel_Info").setText("active"),
+			airport		: me._group.getElementById("Com_active_Channel_Airport").setText(""),
+		};
+		me.setListeners(instance);
+		
+	},
+	_onComSelectedChange : func(n){
+		var index = n.getValue();
+		me._can.freqency.setText(sprintf("%.3f",getprop("/instrumentation/comm["~index~"]/frequencies/selected-mhz")));
+		if(index==0){
+			me._can.airport.setText("Com 1");
+		}else{
+			me._can.airport.setText("Com 2");
+		}
+	},
+	
+	
+};
+
 var AvidynePagePFD = {
 	new: func(ifd,name,data){
 		var m = { parents: [
@@ -1534,6 +1568,7 @@ var AvidynePagePFD = {
 			BugSelect 		: BugSelectWidget.new(m,m.page,"BugSelect"),
 			Tab	 		: TabWidget.new(m,m.page,"TabSelectPFD"),
 			Marker	 		: MarkerWidget.new(m,m.page,"Marker"),
+			ActiveCom	 	: ActiveComWidget.new(m,m.page,"ActiveCom"),
 		};
 		
 		m._widget.Tab._tab = ["Nav","Bug"];

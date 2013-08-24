@@ -64,12 +64,22 @@ Modified standard FG file
 				setprop("/instrumentation/fms-selected",1);
 			}
 		},1);
-
+		var lCom = setlistener("/instrumentation/comm-selected-index",func(n){ 
+			var index = n.getValue();
+			if (index == 0){
+				setprop("/instrumentation/com1-selected",1);
+				setprop("/instrumentation/com2-selected",0);
+			}elsif (index == 1){
+				setprop("/instrumentation/com1-selected",0);
+				setprop("/instrumentation/com2-selected",1);
+			}
+		},1);
 	]]>
 	</open>
 	<close>
 		<![CDATA[
 		removelistener(lSource);
+		removelistener(lCom);
 		]]>
 	</close>
   </nasal>
@@ -156,6 +166,7 @@ Modified standard FG file
 		<script>
                         if ( getprop("/instrumentation/com1-selected") == 0 ) {
 				setprop("/instrumentation/com2-selected",0);
+				setprop("/instrumentation/comm-selected-index",0);
 			} 
                 </script>  
 	</binding>
@@ -245,6 +256,7 @@ Modified standard FG file
 		<script>
                         if ( getprop("/instrumentation/com2-selected") == 0 ) {
 				setprop("/instrumentation/com1-selected",0);
+				setprop("/instrumentation/comm-selected-index",1);
 			} 
                 </script>  
 	</binding>
