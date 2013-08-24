@@ -29,6 +29,29 @@ COLOR["White"] = "rgb(255,255,255)";
 COLOR["Turquoise"] = "rgb(4,254,252)";
 COLOR["Blue"] = "rgb(51,145,232)";
 
+var tool = {
+	adjustStep : func(value,amount,step=10){
+		
+		if (math.abs(amount) >= step){
+			if (math.mod(value,step) != 0){
+				if (amount > 0){
+					value = math.ceil(value/step)*step;
+				}else{
+					value = math.floor(value/step)*step;
+				}
+			}else{
+				value += amount;
+			}
+		}else{
+			value += amount;
+		}
+		return value;
+	},
+};
+
+
+
+
 var ListenerClass = {
 	new: func(){
 		var m = { parents: [ListenerClass] };
@@ -80,7 +103,9 @@ var PageClass = {
 	},
 	onClick : func(key){
 		if (contains(me.keys,key)){
-			me.keys[key]();
+			if(me.keys[key]!=nil){
+				me.keys[key]();
+			}
 		}
 	},
 	update20Hz : func(now,dt){},
