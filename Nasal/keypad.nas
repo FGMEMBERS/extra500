@@ -404,7 +404,7 @@ var KeypadClass = {
 		if (amount!=nil){
 			var value = autopilot.nSetAltitudeBugFt.getValue();
 			
-			if (math.abs(amount) > 1){
+			if (math.abs(amount) > 500){
 				if (math.mod(value,500) != 0){
 					if (amount > 0){
 						value = math.ceil(value/500)*500;
