@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-08-18
+      Date:             2013-08-25
 -->
 
 <autopilot name="STEC55X">
@@ -1149,7 +1149,7 @@
 		</fcs_function>
 
 <!-- when next waypoint distance less than this number: start to turn -->
-		<fcs_function name="/autopilot/fms-channel/gpss/distance-to-turn">
+		<fcs_function name="/autopilot/fms-channel/gpss/distance-to-turn-raw">
 			<function>
 			<product>
 				<sum>
@@ -1185,6 +1185,15 @@
 			</product>
 			</function>
 		</fcs_function>
+
+<!-- limiting the distance-to-turn to 5 nm (needed for some direct-to cases, maybe a better dto-off can be devised?)-->
+		<pure_gain name="/autopilot/fms-channel/gpss/distance-to-turn">
+			<input>/autopilot/fms-channel/gpss/distance-to-turn-raw</input>
+			<gain>1.0</gain>
+			<clipto>
+				<max>5</max>
+			</clipto>
+		</pure_gain>
 
 
 <!--calculating the target heading to intercept the leg-->
