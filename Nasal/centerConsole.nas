@@ -33,6 +33,8 @@ var CenterConsole = {
 		m._PitchTrim		= 0;
 		m._ParkingbrakePressure = 0;
 		m._BrakePressure 	= 0;
+		m._CabinAltSetting = 0;
+		m._CabinRate = 0;
 		
 		
 		m._nCtrlLeftBrake		= props.globals.initNode("/controls/gear/brake-left",0.0,"DOUBLE");
@@ -44,6 +46,8 @@ var CenterConsole = {
 		m._nDeice 			= m._nRoot.initNode("Deice/state",0,"BOOL");
 		m._nGearClearHorn 		= m._nRoot.initNode("GearClearHorn/state",0,"BOOL");
 		m._nPitchTrim 			= m._nRoot.initNode("PitchTrim/state",0.0,"DOUBLE");
+		m._nCabinAltSetting		= m._nRoot.initNode("/systems/pressurization/airport-alt",0.0,"DOUBLE");
+		m._nCabinRate			= m._nRoot.initNode("/systems/pressurization/cabin-climb-rate-fpm",0.0,"DOUBLE");
 		
 		return m;
 	},
@@ -128,6 +132,24 @@ var CenterConsole = {
 		me._PitchTrim = global.clamp(me._PitchTrim,-1.0,1.0);
 		me._nPitchTrim.setValue(me._PitchTrim);	
 	},
+	onCabinAltitude : func(value = nil){
+		if (value == nil){
+			me._CabinAltSetting = 0;
+		}else{
+			me._CabinAltSetting += value;
+		}
+		me._CabinAltSetting = global.clamp(me._CabinAltSetting,0.0,9500);
+		me._nCabinAltSetting.setValue(me._CabinAltSetting);	
+	},
+	onCabinRate : func(value = nil){
+		if (value == nil){
+			me._CabinRate = 0;
+		}else{
+			me._CabinRate += value;
+		}
+		me._CabinRate = global.clamp(me._CabinRate,250,1250);
+		me._nCabinRate.setValue(me._CabinRate);	
+	},
 	
 	initUI : func(){
 		
@@ -150,6 +172,14 @@ var CenterConsole = {
 		UI.register("PitchTrim", 	func{me.onPitchTrimClick(); } );
 		UI.register("PitchTrim >", 	func{me.onPitchTrimClick(0.05); } );
 		UI.register("PitchTrim <",	func{me.onPitchTrimClick(-0.05); } );
+
+		UI.register("Cabin Altitude", 	func{me.onCabinAltitude(); } );
+		UI.register("Cabin Altitude >", 	func{me.onCabinAltitude(100); } );
+		UI.register("Cabin Altitude <",	func{me.onCabinAltitude(-100); } );
+
+		UI.register("Cabin Rate", 	func{me.onCabinRate(); } );
+		UI.register("Cabin Rate >", 	func{me.onCabinRate(50); } );
+		UI.register("Cabin Rate <",	func{me.onCabinRate(-50); } );
 		
 		
 	},

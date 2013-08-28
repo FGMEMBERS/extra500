@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jun 26 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             26.06.13
+#      Last change:      Eric van den Berg
+#      Date:             24.08.13
 #
 
 # Fuel Flow Gal(US)/sec
@@ -261,7 +261,7 @@ var FuelSystemClass = {
 	},
 	onValveClick : func(value){
 		me._selectValve += value;
-		me._selectValve = global.clamp(me._selectValve,0,3);
+		me._selectValve = global.clamp(me._selectValve,0,4);
 		me._nSelectValve.setValue(me._selectValve);
 	},	
 	update : func(){
@@ -315,7 +315,7 @@ var FuelSystemClass = {
 		
 		me._fuelFlowAmount = me._fuelFlowGalUsPerSec * me._dt;
 		
-		if (me._selectValve == 0){	#none
+		if ((me._selectValve == 0) or (me._selectValve == 4)){	#none
 			me._empty = 1;
 		}elsif(me._selectValve == 1){ # Left
 			if (me._tank.LeftCollector.flow(me._fuelFlowAmount) >  0){
