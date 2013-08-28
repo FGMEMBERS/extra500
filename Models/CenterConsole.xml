@@ -20,7 +20,7 @@
       Date: July 04 2013
 
       Last change:      Eric van den Berg
-      Date:             26.07.13
+      Date:             28.07.13
 -->
 <PropertyList>
 
@@ -35,6 +35,18 @@
 		<z-m>-0.006</z-m>
 	</offsets>
 </model>
+
+<model>
+  <name>cabincontroller</name>
+  <path>Aircraft/extra500/Models/instruments/cabincontroller.xml</path>
+	<offsets>
+		<x-m>0.0635</x-m>
+		<y-m>0</y-m>	
+		<z-m>-0.003</z-m>
+		<heading-deg>180.0</heading-deg>
+	</offsets>
+</model>
+
 
 <!-- Defrost -->
 <animation>
