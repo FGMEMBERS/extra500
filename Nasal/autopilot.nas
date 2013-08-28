@@ -16,10 +16,57 @@
 #      Authors: Dirk Dittmann
 #      Date: Jun 26 2013
 #
-#      Last change:      Eric van den Berg
-#      Date:             05.08.2013
+#      Last change:      Dirk Dittmann
+#      Date:             28.08.2013
 #
+var FlightManagementSystemClass = {
+	new : func(root,name){
+		var m = {parents:[
+			FlightManagementSystemClass,
+			ServiceClass.new(root,name)
+		]};
+		m._currentWaypointIndex = 0;
+		m._selectedWaypointIndex = 0;
+		
+		return m;
+	},
+	setListeners : func(instance) {
+		append(me._listeners, setlistener("/autopilot/route-manager/current-wp",func(n){me._onCurrentWaypointChange(n);},1,0) );
+	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.setListeners(instance);
+	
+	},
+#IFD & route Manager selection, called from IFD page_FMS.nas
+	setSelectedWaypoint : func(index){
+		me._selectedWaypointIndex = index;
+	},
+	_onCurrentWaypointChange : func(n){
+		me._currentWaypointIndex = n.getValue();
+		if ( me._currentWaypointIndex >= 0 ) {
+			settimer(func(){me._nextGpssBearing()},1);
+		}
+	},
+	_nextGpssBearing : func(){
+		setprop("/autopilot/fms-channel/gpss/next-bearing-deg",getprop("/autopilot/route-manager/route/wp["~me._currentWaypointIndex~"]/leg-bearing-true-deg"));
+	},
+# Operation functions of Avidyne FMS 
+	jumpTo : func(){
+		setprop("/autopilot/route-manager/current-wp",me._selectedWaypointIndex);
+	},
+	directTo : func(){# called from keypad.nas
+		if ( getprop("/autopilot/settings/dto-leg") == 0) {
+			setprop("/autopilot/route-manager/current-wp",me._selectedWaypointIndex);
+			setprop("/autopilot/settings/dto-leg",1);
+		} else {
+				setprop("/autopilot/settings/dto-leg",0);
+		}
+	
+	},
+	
 
+};
 
 var AutopilotClass = {
 	new : func(root,name){
@@ -175,10 +222,7 @@ var AutopilotClass = {
 	},
 	update : func(){
 		me._CheckRollModeAble();
-		var wpno = getprop("/autopilot/route-manager/current-wp");
-		if ( wpno >= 0 ) {
-			setprop("/autopilot/fms-channel/gpss/next-bearing-deg",getprop("/autopilot/route-manager/route/wp["~wpno~"]/leg-bearing-true-deg"));
-		}
+		
 	},
 # disengages the autopilot
 	_APDisengage : func(){
@@ -221,27 +265,6 @@ var AutopilotClass = {
 			me.nModeFail.setValue(1);
 			me.nModeRdy.setValue(0);
 		}
-	},
-	DirectTO : func(){# called from keypad.nas
-		if ( getprop("/autopilot/settings/dto-leg") == 0) {
-			var selIndex = getprop("/sim/gui/dialogs/route-manager/selection");		# selection index in route manager
-			if (selIndex != nil) {
-				setprop("/autopilot/route-manager/current-wp",selIndex);
-				setprop("/autopilot/settings/dto-leg",1);
-			} 
-		} else {
-				setprop("/autopilot/settings/dto-leg",0);
-		}
-									
-# 		if (selIndex != nil) {
-#  			var deleteIndex = selIndex -1;
-#  			while ( deleteIndex > -1 ) {
-#  				flightplan().deleteWP( deleteIndex );					# deleting all wp-s before selection
-#  				deleteIndex = deleteIndex -1 ;						
-#  			}
-#  		}
- 		
-		
 	},
 # Events from the UI
 	onClickHDG : func(){
@@ -456,3 +479,4 @@ var AutopilotClass = {
 };
 
 var autopilot = AutopilotClass.new("extra500/instrumentation/Autopilot","Autopilot");
+var fms = FlightManagementSystemClass.new("extra500/instrumentation/FMS","FMS");

@@ -1,3 +1,26 @@
+#    This file is part of extra500
+#
+#    extra500 is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    extra500 is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+#
+#      Authors: Dirk Dittmann
+#      Date: Aug 24 2013
+#
+#      Last change:      Dirk Dittmann
+#      Date:             28.08.2013
+#
+
+
 var TabWidget = {
 	new : func(page,canvasGroup,name){
 		var m = {parents:[TabWidget,IfdWidget.new(page,canvasGroup,name)]};
@@ -94,6 +117,125 @@ var ComWidget = {
 	},
 };
 
+var CurrentWaypointWidget = {
+	new : func(page,canvasGroup,name){
+		var m = {parents:[CurrentWaypointWidget,IfdWidget.new(page,canvasGroup,name)]};
+		m._class 	= "CurrentWaypointWidget";
+		m._tab		= [];
+		m._can		= {};
+		m._index	= 0;
+		m._path		= "";
+		m._timer	= maketimer(1.0,m,CurrentWaypointWidget.update);
+		return m;
+	},
+	setListeners : func(instance) {
+		append(me._listeners, setlistener("/autopilot/route-manager/current-wp",func(n){me._onCurrentWaypointChange(n)},1,0));	
+		append(me._listeners, setlistener("/autopilot/route-manager/signals/waypoint-changed",func(n){me._onWaypointChange(n)},1,0));	
+	},
+	init : func(instance=me){
+		#print("ComWidget.init() ... ");
+		me._can = {
+			Name		: me._group.getElementById("FPL_Current_Name").setText("----"),
+			Course		: me._group.getElementById("FPL_Current_LegCourse").setText("---"),
+			Distance	: me._group.getElementById("FPL_Current_LegDistance").setText("---"),
+			Fuel		: me._group.getElementById("FPL_Current_LegGal").setText("---"),
+			ETA		: me._group.getElementById("FPL_Current_LegETA").setText("--:--"),
+			DestName	: me._group.getElementById("FPL_Dest_Name").setText("----"),
+			DestBearing	: me._group.getElementById("FPL_Dest_Bearing_Deg").setText("---"),
+			DestDistance	: me._group.getElementById("FPL_Dest_Bearing_Distance").setText("---"),
+		};
+		me.setListeners(instance);
+		me._timer.start();
+	},
+	deinit : func(){
+		me.removeListeners();
+		me._timer.stop();
+	},
+	_onCurrentWaypointChange : func(n){
+		me._index = n.getValue();
+		if(me._index >= 0 ){
+			me._path = "/autopilot/route-manager/route/wp["~me._index~"]";
+			me._can.Name.setText(sprintf("%s",getprop(me._path~"/id")));
+			me._can.Course.setText(sprintf("%03.0f",getprop(me._path~"/leg-bearing-true-deg")));
+			me._can.Distance.setText(sprintf("%03.0f",getprop(me._path~"/leg-distance-nm")));
+			me._can.Fuel.setText("---");
+		}else{
+			me._can.Name.setText("----");
+			me._can.Course.setText("---");
+			me._can.Distance.setText("---");
+			me._can.Fuel.setText("---");
+			me._can.ETA.setText("--:--");
+		}
+	},
+	_onWaypointChange : func(n){
+		me._can.DestName.setText(getprop("/autopilot/route-manager/destination/airport"));	
+		me._can.DestBearing.setText("---");
+		me._can.DestDistance.setText("---");
+			
+	},
+	update : func(){
+		me._can.ETA.setText(getprop("/autopilot/route-manager/wp/eta"));
+		me._can.Distance.setText(sprintf("%.1f",getprop("/autopilot/route-manager/wp/dist")));
+		me._can.Course.setText(sprintf("%03.0f",getprop("/autopilot/route-manager/wp/bearing-deg")));
+			
+	},
+};
+
+var HeadlineWidget = {
+	new : func(page,canvasGroup,name){
+		var m = {parents:[HeadlineWidget,IfdWidget.new(page,canvasGroup,name)]};
+		m._class 	= "HeadlineWidget";
+		m._tab		= [];
+		m._can		= {};
+		m._index	= 0;
+		m._path		= "";
+		m._timer	= maketimer(1.0,m,HeadlineWidget.update);
+		return m;
+	},
+	setListeners : func(instance) {
+		append(me._listeners, setlistener("/instrumentation/transponder/id-code",func(n){me._onXPDRChange(n);},1,0) );
+		append(me._listeners, setlistener("/instrumentation/transponder/inputs/knob-mode",func(n){me._onXPDRmodeChange(n);},1,0) );
+		append(me._listeners, setlistener("/autopilot/route-manager/signals/waypoint-changed",func(n){me._onWaypointChange(n)},1,0));	
+	},
+	init : func(instance=me){
+		#print("ComWidget.init() ... ");
+		me._can = {
+			Xpdr		: me._group.getElementById("Head_xpdr"),
+			XpdrMode	: me._group.getElementById("Head_xpdr_mode"),
+			Dest		: me._group.getElementById("Head_Dest"),
+			Fuel		: me._group.getElementById("Head_gal"),
+			ETA		: me._group.getElementById("Head_eta"),
+			Time		: me._group.getElementById("Head_time"),
+		};
+		me.setListeners(instance);
+		me._timer.start();
+	},
+	deinit : func(){
+		me.removeListeners();
+		me._timer.stop();
+	},
+	_onXPDRChange : func(n){
+		me._can.Xpdr.setText(sprintf("%4i",n.getValue()));	
+	},
+	_onXPDRmodeChange : func(n){
+		me._can.XpdrMode.setText(XPDRMODE[n.getValue()]);	
+	},
+	_onWaypointChange : func(n){
+		me._can.Dest.setText(getprop("/autopilot/route-manager/destination/airport"));		
+	},
+	update : func(){
+		var gs = getprop("/velocities/groundspeed-kt");
+		if(gs > 50){
+		var eta = getprop("/autopilot/route-manager/ete") + systime();
+			me._can.ETA.setText(global.formatTime(eta));
+		}else{
+			me._can.ETA.setText("--:--");
+		}
+		me._can.Time.setText(getprop("/sim/time/gmt-string"));
+		me._can.Fuel.setText("---");
+	},
+};
+
 var TuningWidget = {
 	new : func(page,canvasGroup,name){
 		var m = {parents:[TuningWidget,IfdWidget.new(page,canvasGroup,name)]};
@@ -112,7 +254,7 @@ var TuningWidget = {
 		append(me._listeners, setlistener("/extra500/instrumentation/Keypad/tuningChannel",func(n){me._onTuningChannelChange(n)},1,0));	
 	},
 	init : func(instance=me){
-		print("TuningWidget.init() ... ");
+		#print("TuningWidget.init() ... ");
 		me._can = {
 			source	: me._group.getElementById("Tuning_Source_Text"),
 			channel	: [ 

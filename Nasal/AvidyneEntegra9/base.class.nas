@@ -17,7 +17,7 @@
 #      Date: Jul 20 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             20.07.13
+#      Date:             28.08.13
 #
 
 var COLOR = {};
@@ -29,6 +29,9 @@ COLOR["White"] = "rgb(255,255,255)";
 COLOR["Turquoise"] = "rgb(4,254,252)";
 COLOR["Blue"] = "rgb(51,145,232)";
 COLOR["DarkGreen"] = "#16502d";
+
+
+var XPDRMODE = ["OFF","SBY","TST","GND","ON","ALT"];
 
 var tool = {
 	adjustStep : func(value,amount,step=10){

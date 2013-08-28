@@ -55,5 +55,23 @@ var norm = func(value,min=0.0,max=0.0){
 	return value;
 }
 
+var formatTime = func(daysec,format="H:i"){
+	daysec = math.mod(daysec,86400);
+	var hour = daysec/3600;
+	var min =  math.mod(daysec,3600)/60;
+	var timeString = "";
+	
+	if(format == "H:i:s"){
+		var sec =  math.mod(daysec,60);
+		timeString = sprintf("%02u:%02u:%02u",hour,min,sec);
+	}elsif(format == "i:s"){
+		var sec =  math.mod(daysec,60);
+		timeString = sprintf("%02u:%02u",min,sec);
+	}else{
+		timeString = sprintf("%02u:%02u",hour,min);	
+	}
+	return timeString;
+}
+
 
 

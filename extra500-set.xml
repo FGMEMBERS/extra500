@@ -549,6 +549,11 @@ JSBSim Extra Aircraft - Extra 500.
 		<route>
 			<num>0</num>
 		</route>
+		<disable-fms>1</disable-fms>
+		<disable-route-manager>1</disable-route-manager>
+		<signals>
+			<waypoint-changed type="double"></waypoint-changed>
+		</signals>
 	</route-manager>
 	<mode>
 		<disengsound type="int">0</disengsound>
@@ -984,6 +989,8 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/light.nas</file>
 		<file>Aircraft/extra500/Nasal/centerConsole.nas</file>
 		<file>Aircraft/extra500/Nasal/log.nas</file>
+		
+		<file>Aircraft/extra500/Nasal/route_manager.nas</file>
 		
 	</extra500>
 	<IFD>

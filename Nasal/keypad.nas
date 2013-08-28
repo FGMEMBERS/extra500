@@ -163,7 +163,6 @@ var KeypadDisplayClass = {
 	
 		m._xpdr = 0;
 		m._xpdrMode = 0;
-		m.XPDRMODE = ["OFF","SBY","TST","GND","ON","ALT"];
 		m._layerLeft = "";
 		m._layerRight = "";
 		return m;
@@ -192,8 +191,8 @@ var KeypadDisplayClass = {
 	},
 	_onXPDRmodeChange : func(n){
 		me._xpdrMode = n.getValue(); 
-		me._can.dataXPDRmode.setText(me.XPDRMODE[me._xpdrMode]);
-		me._can.XPDRmode.setText(me.XPDRMODE[me._xpdrMode]);
+		me._can.dataXPDRmode.setText(IFD.XPDRMODE[me._xpdrMode]);
+		me._can.XPDRmode.setText(IFD.XPDRMODE[me._xpdrMode]);
 	},
 	_onHdgChange : func(n){
 		me._can.HDGvalue.setText(sprintf("%03i",n.getValue()));
@@ -530,7 +529,7 @@ var KeypadClass = {
 	},
 	onD : func(){
 		
-		extra500.autopilot.DirectTO();		
+		extra500.fms.directTo();		
 	},
 	onV : func(){
 		print("KeypadClass.onV() ...");
