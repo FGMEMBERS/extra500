@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: Aug 28 2013
 
-      Last change:      
-      Date:             
+      Last change: Eric van den Berg     
+      Date: 2013-08-29            
 -->
 <PropertyList>
 
@@ -134,7 +134,16 @@
   </action>
 </animation>
 
-
+<animation>
+	<type>material</type>
+	<object-name>scale</object-name>
+	<emission>	
+		<red>0.1</red>	
+		<green>0.3</green>	
+		<blue>1.0</blue>
+		<factor-prop>extra500/instrumentation/CabinController/Backlight/state</factor-prop>
+	</emission>
+</animation>
 
 
 </PropertyList>

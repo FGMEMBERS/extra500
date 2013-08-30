@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jun 26 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             05.07.13
+#      Last change:      Eric van den Berg
+#      Date:             29.08.13
 #
 
 var init_listener = setlistener("/sim/signals/fdm-initialized", func {
@@ -55,6 +55,9 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		extra500.propellerHeat.init();
 		extra500.turnCoordinator.init();
 		extra500.pcBoard1.init();
+		extra500.cabincontroller.init();
+		extra500.cabinaltimeter.init();
+		extra500.cabinvertspeed.init();
 		
 		extra500.annunciator.init();
 		extra500.light.init();

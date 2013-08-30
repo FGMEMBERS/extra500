@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jun 27 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             27.06.13
+#      Last change:      Eric van den Berg
+#      Date:             29.08.13
 #
 
 var DigitalInstrumentPackageClass = {
@@ -254,6 +254,10 @@ var fuelQuantity	= InstrumentClass.new("extra500/instrumentation/FuelQuantity","
 var propellerHeat	= InstrumentClass.new("extra500/instrumentation/PropellerHeat","Propeller Heat Ammeter","/extra500/system/dimming/Instrument",6.0);
 var turnCoordinator	= InstrumentClass.new("extra500/instrumentation/TrunCoordinator","Trun Coordinator","/extra500/system/dimming/Instrument",60.0);
 var pcBoard1		= PcBoard1Class.new("extra500/electric/pcBoard1","PC Board 1",1.0);
+var cabincontroller = InstrumentClass.new("extra500/instrumentation/CabinController","Cabin Controller","/extra500/system/dimming/Instrument",6.0);
+var cabinaltimeter = InstrumentClass.new("extra500/instrumentation/CabinAltimeter","Cabin Altimeter","/extra500/system/dimming/Instrument",0.0);
+var cabinvertspeed = InstrumentClass.new("extra500/instrumentation/CabinVertspeed","Cabin Vertspeed","/extra500/system/dimming/Instrument",0.0);
+
 
 eSystem.circuitBreaker.STBY_GYRO.outputAdd(stbyHSI);
 eSystem.circuitBreaker.STBY_GYRO.outputAdd(stbyIAS);
@@ -261,6 +265,9 @@ eSystem.circuitBreaker.STBY_GYRO.outputAdd(stbyALT);
 eSystem.circuitBreaker.FUEL_QTY.outputAdd(fuelQuantity);
 eSystem.circuitBreaker.PROP_HT.outputAdd(propellerHeat);
 eSystem.circuitBreaker.TB.outputAdd(turnCoordinator);
+eSystem.circuitBreaker.C_PRESS.outputAdd(cabincontroller);
+eSystem.circuitBreaker.C_PRESS.outputAdd(cabinaltimeter);
+eSystem.circuitBreaker.C_PRESS.outputAdd(cabinvertspeed);
 
 
 

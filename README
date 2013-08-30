@@ -115,7 +115,7 @@ The DME will source of either Nav 1 or 2, independent on which NAV is selected (
 The FMS (Flight Management System) can be used with or without the autopilot. You can put your flightplan in the 
 autopilot - route manager (dont forget to press "activate"). The autopilot will intercept the active leg.
 Direct-To functionality is also included: In the route manager select the waypoint and on the keypad press the "D with arrow" button.
-Close to the waypoint diret-to mode will be deselected automatically or you can do that manually by pressing the same button again.  
+Close to the waypoint direct-to mode will be de-selected automatically or you can do that manually by pressing the same button again.  
 
 XPDR squawk can be set on the keypad (press XPDR and squawk code) and in the NAV dialog (F12). Default is 7000 (Europe VFR).
 XPDR modes are selected automatically (GND or ALT), but automatic selection may be switched off

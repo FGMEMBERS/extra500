@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             18.08.2013
+      Date:             30.08.2013
 
 
 ************************************************************************
@@ -116,10 +116,10 @@ JSBSim Extra Aircraft - Extra 500.
 			<default-field-of-view-deg type="double">90.0</default-field-of-view-deg>  
 		</config>-->
 		<config>
-			<x-offset-m archive="y" type="double">-0.37</x-offset-m>
-			<y-offset-m archive="y" type="double">0.1</y-offset-m>
+			<x-offset-m archive="y" type="double">-0.34</x-offset-m>
+			<y-offset-m archive="y" type="double">0.13</y-offset-m>
 			<z-offset-m archive="y" type="double">-0.05</z-offset-m>
-			<pitch-offset-deg type="double">-15</pitch-offset-deg>
+			<pitch-offset-deg type="double">-17</pitch-offset-deg>
 			<default-field-of-view-deg type="double">75.0</default-field-of-view-deg>  <!--this somehow does not work, why??? does not work on other aircraft either: flightgear bug? yes bugs 1110 and 1111-->
 		</config>
 	</view>
