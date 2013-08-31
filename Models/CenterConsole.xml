@@ -58,6 +58,17 @@
 	</offsets>
 </model>
 
+<model>
+  <name>cabinalt</name>
+  <path>Aircraft/extra500/Models/instruments/cabinalt.xml</path>
+	<offsets>
+		<x-m>0.036</x-m>
+		<y-m>-0.061</y-m>	
+		<z-m>-0.002</z-m>
+		<heading-deg>0.0</heading-deg>
+	</offsets>
+</model>
+
 
 <!-- Defrost -->
 <animation>
