@@ -243,6 +243,92 @@ var PcBoard1Class = {
 	
 };
 
+var FuelInstrumentClass = {
+	new : func(root,name,brightness="/extra500/system/dimming/Instrument",watt=24.0){
+		var m = { 
+			parents : [
+				FuelInstrumentClass,
+				InstrumentClass.new(root,name,brightness,watt)
+			]
+		};
+		m._tankLevel = [
+			props.globals.initNode("/consumables/fuel/tank[0]/level-norm",0.0,"DOUBLE"),
+			props.globals.initNode("/consumables/fuel/tank[1]/level-norm",0.0,"DOUBLE"),
+			props.globals.initNode("/consumables/fuel/tank[2]/level-norm",0.0,"DOUBLE"),
+			props.globals.initNode("/consumables/fuel/tank[4]/level-norm",0.0,"DOUBLE"),
+			props.globals.initNode("/consumables/fuel/tank[5]/level-norm",0.0,"DOUBLE"),
+			props.globals.initNode("/consumables/fuel/tank[6]/level-norm",0.0,"DOUBLE"),
+		];
+		m._tankIndication = [
+			m._nRoot.initNode("tank[0]/level-norm",0.0,"DOUBLE"),
+			m._nRoot.initNode("tank[1]/level-norm",0.0,"DOUBLE"),
+			m._nRoot.initNode("tank[2]/level-norm",0.0,"DOUBLE"),
+			m._nRoot.initNode("tank[4]/level-norm",0.0,"DOUBLE"),
+			m._nRoot.initNode("tank[5]/level-norm",0.0,"DOUBLE"),
+			m._nRoot.initNode("tank[6]/level-norm",0.0,"DOUBLE"),
+		];
+		m._interpolating = 0; 
+		m._indication = 0;
+		m._tankCount = 6;
+		m._timer = maketimer(1.0,m,FuelInstrumentClass.checkIndication);
+		return m;
+	},
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._nBrightness,func(n){instance._onBrightnessChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nState,func(n){instance._onStateChange(n);},1,0) );
+	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		me.setListeners(instance);
+		#me._timer.start();
+	},
+	_onStateChange : func(){
+		if (me._state == 0){
+			for (var i = 0; i < 6 ; i += 1){
+				me._tankIndication[i].unalias();
+				me._tankIndication[i].setValue(me._tankLevel[i].getValue());
+				interpolate(me._tankIndication[i],0,1);
+			}
+		}elsif(me._state == 1){
+			for (var i = 0; i < 6 ; i += 1){
+				interpolate(me._tankIndication[i],me._tankLevel[i].getValue(),1);
+			}
+			settimer(func{
+				for (var i = 0; i < 6 ; i += 1){
+					me._tankIndication[i].alias(me._tankLevel[i]);
+				}
+			},1);
+		}
+			
+	},
+	checkIndication : func(){
+		print("FuelInstrumentClass.checkIndication() ... s:"~me._state~" i:"~me._indication);
+		if (me._indication == 1){
+			for (var i = 0 ; i < 6 ; i += 1){
+				me._tankIndication[i].setValue(me._tankLevel[i].getValue());
+			}
+			
+		}
+		
+		if(me._indication != me._state){
+			if (me._state == 0){
+				for (var i = 0; i < 6 ; i += 1){
+					interpolate(me._tankIndication[i].getPath(),0,1);
+				}
+			}elsif(me._state == 1){
+				for (var i = 0; i < 6 ; i += 1){
+					interpolate(me._tankIndication[i].getPath(),me._tankLevel[i].getValue(),1);
+				}
+			}
+			me._indication = me._state;
+		}
+		
+		
+	}
+	
+};
+
 var engineInstrumentPackage = EngineInstrumentPackageClass.new("extra500/instrumentation/EIP","Engine Instrument Package",24.0);
 var digitalInstrumentPackage = DigitalInstrumentPackageClass.new("extra500/instrumentation/DIP","Digital Instrument Package",12.0);
 var lumi = LumiClass.new("extra500/light/Lumi","Lumi Switch",42.0);
@@ -250,7 +336,7 @@ var lumi = LumiClass.new("extra500/light/Lumi","Lumi Switch",42.0);
 var stbyHSI 		= InstrumentClass.new("extra500/instrumentation/StbyHSI","Standby Horizontal Sitiuation Indicator","/extra500/system/dimming/Instrument",6.0);
 var stbyIAS		= InstrumentClass.new("extra500/instrumentation/StbyIAS","Standby Indecated Airspeed","/extra500/system/dimming/Instrument",6.0);
 var stbyALT		= InstrumentClass.new("extra500/instrumentation/StbyALT","Standby Altitude","/extra500/system/dimming/Instrument",6.0);
-var fuelQuantity	= InstrumentClass.new("extra500/instrumentation/FuelQuantity","Fuel Quantity","/extra500/system/dimming/Instrument",12.0);
+var fuelQuantity	= FuelInstrumentClass.new("extra500/instrumentation/FuelQuantity","Fuel Quantity","/extra500/system/dimming/Instrument",12.0);
 var propellerHeat	= InstrumentClass.new("extra500/instrumentation/PropellerHeat","Propeller Heat Ammeter","/extra500/system/dimming/Instrument",6.0);
 var turnCoordinator	= InstrumentClass.new("extra500/instrumentation/TrunCoordinator","Trun Coordinator","/extra500/system/dimming/Instrument",60.0);
 var pcBoard1		= PcBoard1Class.new("extra500/electric/pcBoard1","PC Board 1",1.0);

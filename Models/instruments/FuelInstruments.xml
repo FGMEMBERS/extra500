@@ -32,7 +32,7 @@
 <animation>
   <type>rotate</type>
   <object-name>FuelInstruments.CollLeft.Needle</object-name>
-  <property>/consumables/fuel/tank[2]/level-norm</property>
+  <property>/extra500/instrumentation/FuelQuantity/tank[2]/level-norm</property>
 		<interpolation>
             <entry>
                 <ind>0</ind>
@@ -56,7 +56,7 @@
 <animation>
   <type>rotate</type>
   <object-name>FuelInstruments.CollRight.Needle</object-name>
-  <property>/consumables/fuel/tank[4]/level-norm</property>
+  <property>/extra500/instrumentation/FuelQuantity/tank[4]/level-norm</property>
 		<interpolation>
             <entry>
                 <ind>0</ind>
@@ -81,7 +81,7 @@
 <animation>
   <type>rotate</type>
   <object-name>FuelInstruments.MainLeft.Needle</object-name>
-  <property>/consumables/fuel/tank[1]/level-norm</property>
+  <property>/extra500/instrumentation/FuelQuantity/tank[1]/level-norm</property>
 		<interpolation>
             <entry>
                 <ind>0</ind>
@@ -105,7 +105,7 @@
 <animation>
   <type>rotate</type>
   <object-name>FuelInstruments.MainRight.Needle</object-name>
-  <property>/consumables/fuel/tank[5]/level-norm</property>
+  <property>/extra500/instrumentation/FuelQuantity/tank[5]/level-norm</property>
 		<interpolation>
             <entry>
                 <ind>0</ind>
@@ -130,7 +130,7 @@
 <animation>
   <type>rotate</type>
   <object-name>FuelInstruments.AuxLeft.Needle</object-name>
-  <property>/consumables/fuel/tank[0]/level-norm</property>
+  <property>/extra500/instrumentation/FuelQuantity/tank[0]/level-norm</property>
 		<interpolation>
             <entry>
                 <ind>0</ind>
@@ -154,7 +154,7 @@
 <animation>
   <type>rotate</type>
   <object-name>FuelInstruments.AuxRight.Needle</object-name>
-  <property>/consumables/fuel/tank[6]/level-norm</property>
+  <property>/extra500/instrumentation/FuelQuantity/tank[6]/level-norm</property>
 		<interpolation>
             <entry>
                 <ind>0</ind>
