@@ -270,7 +270,6 @@ var FuelInstrumentClass = {
 		m._interpolating = 0; 
 		m._indication = 0;
 		m._tankCount = 6;
-		m._timer = maketimer(1.0,m,FuelInstrumentClass.checkIndication);
 		return m;
 	},
 	setListeners : func(instance) {
@@ -281,7 +280,6 @@ var FuelInstrumentClass = {
 		if (instance==nil){instance=me;}
 		me.parents[1].init(instance);
 		me.setListeners(instance);
-		#me._timer.start();
 	},
 	_onStateChange : func(){
 		if (me._state == 0){
@@ -302,31 +300,7 @@ var FuelInstrumentClass = {
 		}
 			
 	},
-	checkIndication : func(){
-		print("FuelInstrumentClass.checkIndication() ... s:"~me._state~" i:"~me._indication);
-		if (me._indication == 1){
-			for (var i = 0 ; i < 6 ; i += 1){
-				me._tankIndication[i].setValue(me._tankLevel[i].getValue());
-			}
-			
-		}
-		
-		if(me._indication != me._state){
-			if (me._state == 0){
-				for (var i = 0; i < 6 ; i += 1){
-					interpolate(me._tankIndication[i].getPath(),0,1);
-				}
-			}elsif(me._state == 1){
-				for (var i = 0; i < 6 ; i += 1){
-					interpolate(me._tankIndication[i].getPath(),me._tankLevel[i].getValue(),1);
-				}
-			}
-			me._indication = me._state;
-		}
-		
-		
-	}
-	
+
 };
 
 var engineInstrumentPackage = EngineInstrumentPackageClass.new("extra500/instrumentation/EIP","Engine Instrument Package",24.0);
