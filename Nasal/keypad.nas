@@ -125,7 +125,7 @@ var KeypadDisplayClass = {
 		});
 		
 		m.canvas.addPlacement({"node": acPlace});
-		m.canvas.setColorBackground(1,1,1);
+		m.canvas.setColorBackground(0,0,0);
 		m.page = m.canvas.createGroup(name);
 		
 		canvas.parsesvg(m.page, "Models/instruments/IFDs/"~m.svgFile,{
@@ -183,6 +183,9 @@ var KeypadDisplayClass = {
 		me._widget.nav[0].init();
 		me._widget.nav[1].init();
 		
+	},
+	setPower : func(state){
+		me.page.setVisible(state);
 	},
 	_onXPDRChange : func(n){
 		me._xpdr = n.getValue(); 
@@ -362,6 +365,7 @@ var KeypadClass = {
 		me._nAmpere.setValue(me._ampere);
 		me._nState.setValue(me._state);
 		me._nBacklight.setValue(me._backLight);
+		me._display.setPower(me._backLight);
 	},
 	update : func(){
 		me._inputWatchDog += 1;
