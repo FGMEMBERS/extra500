@@ -17,7 +17,7 @@
 #      Date: Jun 27 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             29.08.13
+#      Date:             31.08.13
 #
 
 var DigitalInstrumentPackageClass = {
@@ -256,7 +256,7 @@ var turnCoordinator	= InstrumentClass.new("extra500/instrumentation/TrunCoordina
 var pcBoard1		= PcBoard1Class.new("extra500/electric/pcBoard1","PC Board 1",1.0);
 var cabincontroller = InstrumentClass.new("extra500/instrumentation/CabinController","Cabin Controller","/extra500/system/dimming/Instrument",6.0);
 var cabinaltimeter = InstrumentClass.new("extra500/instrumentation/CabinAltimeter","Cabin Altimeter","/extra500/system/dimming/Instrument",0.0);
-var cabinvertspeed = InstrumentClass.new("extra500/instrumentation/CabinVertspeed","Cabin Vertspeed","/extra500/system/dimming/Instrument",0.0);
+var cabinclimb = InstrumentClass.new("extra500/instrumentation/CabinClimb","Cabin Climb","/extra500/system/dimming/Instrument",0.0);
 
 
 eSystem.circuitBreaker.STBY_GYRO.outputAdd(stbyHSI);
@@ -267,7 +267,7 @@ eSystem.circuitBreaker.PROP_HT.outputAdd(propellerHeat);
 eSystem.circuitBreaker.TB.outputAdd(turnCoordinator);
 eSystem.circuitBreaker.C_PRESS.outputAdd(cabincontroller);
 eSystem.circuitBreaker.C_PRESS.outputAdd(cabinaltimeter);
-eSystem.circuitBreaker.C_PRESS.outputAdd(cabinvertspeed);
+eSystem.circuitBreaker.C_PRESS.outputAdd(cabinclimb);
 
 
 
