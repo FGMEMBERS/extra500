@@ -163,7 +163,7 @@ var AnnunciatorClass = {
 		append(me._listeners, setlistener("/extra500/system/deice/PitotHeatLeft/state",	func(n){instance._leds["PitotHeatLeft"].setState(!n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/deice/PitotHeatRight/state",func(n){instance._leds["PitotHeatRight"].setState(!n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/flap/hasWarning",		func(n){instance._leds["Flaps"].setState(n.getValue());},1,0) );
-		append(me._listeners, setlistener("/extra500/cabin/hasPressureWarning",		func(n){instance._leds["CabinPressure"].setState(n.getValue());},1,0) );
+		append(me._listeners, setlistener("/systems/pressurization/warning",		func(n){instance._leds["CabinPressure"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/cabin/hasBleedOvertempWarning",	func(n){instance._leds["BleedOvertemp"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/deice/StaticHeatLeft/state",func(n){instance._leds["StaticHeatLeft"].setState(!n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/deice/StaticHeatRight/state",func(n){instance._leds["StaticHeatRight"].setState(!n.getValue());},1,0) );
