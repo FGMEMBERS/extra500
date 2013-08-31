@@ -166,30 +166,30 @@ var EngineClass = {
 		if (me.nIsRunning.getValue()){
 			me.nCutOff.setValue(me._cutoffState);
 			
-			if (eSystem.switch.EngineStart._state == -1){
+			if(eSystem.switch.EngineStart._state >= 0){
+				me.ignition.on();
+			}elsif (eSystem.switch.EngineStart._state == -1){
 				me.ignition.off();
 			}
-			
+						
 			if (eSystem.switch.EngineMotoring._state >= 0){
 				me.ignition.off();
+				
 			}
 			
 		}else{
-			
-			if (eSystem.switch.EngineMotoring._state == 0){
+			if (eSystem.switch.EngineMotoring._state == 1){
+				me.starter.on();
+				me.nCutOff.setValue(1);
+				me.ignition.off();
+			}elsif(eSystem.switch.EngineMotoring._state == 0){
 				me.starter.off();
 				me.nCutOff.setValue(1);
 				me.ignition.off();
-			}elsif(eSystem.switch.EngineMotoring._state == 1){
-				me.starter.on();
 			}else{
 				if (eSystem.switch.EngineStart._state >= 0){
 					me.ignition.on();
-					if (me._cutoffState == 0){
-						me.nCutOff.setValue(0);
-					}else{
-						me.nCutOff.setValue(1);
-					}
+					me.nCutOff.setValue(me._cutoffState);
 					if (eSystem.switch.EngineStart._state == 1){
 						me.starter.on();
 					}
@@ -200,6 +200,7 @@ var EngineClass = {
 					
 				}
 			}
+			
 		}
 		
 		
