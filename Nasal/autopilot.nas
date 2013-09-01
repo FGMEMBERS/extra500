@@ -46,7 +46,7 @@ var FlightManagementSystemClass = {
 		me._currentWaypointIndex = n.getValue();
 		if ( me._currentWaypointIndex >= 0 ) {
 #			settimer(func(){me._nextGpssBearing()},1);
-		me._nextGpssBearing()
+		me._nextGpssBearing();
 		}
 	},
 	_nextGpssBearing : func(){
