@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             28.08.2013
+#      Date:             01.09.2013
 #
 var FlightManagementSystemClass = {
 	new : func(root,name){
@@ -45,7 +45,8 @@ var FlightManagementSystemClass = {
 	_onCurrentWaypointChange : func(n){
 		me._currentWaypointIndex = n.getValue();
 		if ( me._currentWaypointIndex >= 0 ) {
-			settimer(func(){me._nextGpssBearing()},1);
+#			settimer(func(){me._nextGpssBearing()},1);
+		me._nextGpssBearing()
 		}
 	},
 	_nextGpssBearing : func(){

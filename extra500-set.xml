@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             30.08.2013
+      Date:             01.09.2013
 
 
 ************************************************************************
@@ -883,6 +883,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<leg-distance-nm>0</leg-distance-nm>
 			<wp n="1">
 				<course-error-nm>0</course-error-nm>
+				<distance-nm>0</distance-nm>
 				<bearing-true-deg type="double">0</bearing-true-deg>
 			</wp>
 		</wp>
@@ -901,6 +902,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<leg-distance-nm>0</leg-distance-nm>
 			<wp n="1">
 				<course-error-nm>0</course-error-nm>
+				<distance-nm>0</distance-nm>
 				<bearing-true-deg type="double">0</bearing-true-deg>
 			</wp>
 		</wp>

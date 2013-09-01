@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-08-25
+      Date:             2013-09-01
 -->
 
 <autopilot name="STEC55X">
@@ -1071,6 +1071,14 @@
 			<output>/autopilot/fms-channel/indicated-ground-speed-kt</output>
 		</switch>
 
+		<switch name="gpsselect8">
+			<default value="/instrumentation/gps/wp/wp[1]/distance-nm"/>
+			<test value="/instrumentation/gps[1]/wp/wp[1]/distance-nm">
+				/instrumentation/gps/serviceable eq 0
+			</test>
+			<output>/autopilot/fms-channel/gpss/distance-nm</output>
+		</switch>
+
 <!-- GPSS calcs -->
 <!-- the course change at next waypoint -->
 		<fcs_function name="/autopilot/fms-channel/gpss/angle/d-psi-deg-1">
@@ -1343,7 +1351,7 @@
 		<switch name="dtooff">
 			<default value="/autopilot/settings/dto-leg"/>
 			<test logic="AND" value="0">
-				/autopilot/fms-channel/gpss/distance-to-turn gt /autopilot/route-manager/wp/dist
+				/autopilot/fms-channel/gpss/distance-to-turn gt /autopilot/fms-channel/gpss/distance-nm
 			</test>
 			<output>/autopilot/settings/dto-leg</output>
 		</switch>
@@ -1359,7 +1367,7 @@
 					/autopilot/route-manager/current-wp-plus ne /autopilot/route-manager/route/num
 				</test>
 				<test logic="OR" value="1">
-					/autopilot/fms-channel/gpss/distance-to-turn gt /autopilot/route-manager/wp/dist
+					/autopilot/fms-channel/gpss/distance-to-turn gt /autopilot/fms-channel/gpss/distance-nm
 					/autopilot/fms-channel/gpss/in-turn2 eq 1
 				</test>
 			</test>
