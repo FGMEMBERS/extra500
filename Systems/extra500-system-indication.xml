@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-07-25
+      Date:             2013-09-05
 -->
 
 <system name="indication">
@@ -250,6 +250,16 @@
 					<property>aircraft/engine/fuelflow-0rd</property>
 				</sum>
 			</product>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/FF-l_h">
+    			<function>
+      			<description>fuel flow in liter per hour</description>
+				<product>
+					<property>aircraft/engine/FF-lbs_h</property>   
+					<property>/extra500/const/JETA_LB2L</property>   
+				</product>
     			</function>
 		</fcs_function>
 

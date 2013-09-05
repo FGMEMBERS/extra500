@@ -17,7 +17,7 @@
 #      Date: Jun 27 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             31.08.13
+#      Date:             05.09.13
 #
 
 var DigitalInstrumentPackageClass = {
@@ -211,6 +211,60 @@ var InstrumentClass = {
 	}
 };
 
+var DigitalInstrumentClass = {
+	new : func(root,name,brightness="/extra500/system/dimming/Instrument",watt=24.0){
+		var m = { 
+			parents : [
+				InstrumentClass,
+				ConsumerClass.new(root,name,watt)
+			]
+		};
+		
+		m._nBrightness		= props.globals.initNode(brightness,0.0,"DOUBLE");
+		m._brightness		= 0;
+		m._nBacklight 		= m._nRoot.initNode("Backlight/state",0.0,"DOUBLE");
+		m._backLight 		= 0;
+		m._backLightState 	= 0;
+		return m;
+	},
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._nBrightness,func(n){instance._onBrightnessChange(n);},1,0) );
+	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		me.setListeners(instance);
+	},
+	_onBrightnessChange : func(n){
+		me._brightness = n.getValue();
+		me.electricWork();
+	},
+	electricWork : func(){
+		if (me._volt > me._voltMin){
+			me._watt = me._nWatt.getValue();
+			me._ampere = me._watt / me._volt;
+			me._state = 1;
+			if (me._backLightState == 1){
+				me._backLight = me._brightness * me._qos * me._voltNorm;
+			}else{
+				me._backLight = 1;	
+			}
+		}else{
+			me._ampere = 0;
+			me._state = 0;
+			me._backLight = 0;
+		}
+		
+		me._nAmpere.setValue(me._ampere);
+		me._nState.setValue(me._state);
+		me._nBacklight.setValue(me._backLight);
+	},
+	setBacklight : func(value){
+		me._backLightState = value;
+		me.electricWork();
+	}
+};
+
 var PcBoard1Class = {
 	new : func(root,name,watt=1.0){
 		var m = { 
@@ -311,6 +365,7 @@ var stbyHSI 		= InstrumentClass.new("extra500/instrumentation/StbyHSI","Standby 
 var stbyIAS		= InstrumentClass.new("extra500/instrumentation/StbyIAS","Standby Indecated Airspeed","/extra500/system/dimming/Instrument",6.0);
 var stbyALT		= InstrumentClass.new("extra500/instrumentation/StbyALT","Standby Altitude","/extra500/system/dimming/Instrument",6.0);
 var fuelQuantity	= FuelInstrumentClass.new("extra500/instrumentation/FuelQuantity","Fuel Quantity","/extra500/system/dimming/Instrument",12.0);
+var fuelFlow	= DigitalInstrumentClass.new("extra500/instrumentation/FuelFlow","Fuel Flow","/extra500/system/dimming/Instrument",6.0);
 var propellerHeat	= InstrumentClass.new("extra500/instrumentation/PropellerHeat","Propeller Heat Ammeter","/extra500/system/dimming/Instrument",6.0);
 var turnCoordinator	= InstrumentClass.new("extra500/instrumentation/TrunCoordinator","Trun Coordinator","/extra500/system/dimming/Instrument",60.0);
 var pcBoard1		= PcBoard1Class.new("extra500/electric/pcBoard1","PC Board 1",1.0);
@@ -323,6 +378,7 @@ eSystem.circuitBreaker.STBY_GYRO.outputAdd(stbyHSI);
 eSystem.circuitBreaker.STBY_GYRO.outputAdd(stbyIAS);
 eSystem.circuitBreaker.STBY_GYRO.outputAdd(stbyALT);
 eSystem.circuitBreaker.FUEL_QTY.outputAdd(fuelQuantity);
+eSystem.circuitBreaker.FUEL_FLOW.outputAdd(fuelFlow);
 eSystem.circuitBreaker.PROP_HT.outputAdd(propellerHeat);
 eSystem.circuitBreaker.TB.outputAdd(turnCoordinator);
 eSystem.circuitBreaker.C_PRESS.outputAdd(cabincontroller);

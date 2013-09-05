@@ -19,8 +19,8 @@
       Authors: Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
-      Date:             17.06.13
+      Last change:      Eric van den Berg
+      Date:             05.09.13
 -->
 <PropertyList>
 
@@ -88,6 +88,18 @@
 		<x-m>0</x-m>
 		<y-m>0.20847</y-m>	
 		<z-m>0.21489</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>FuelFlowind</name>
+  <path>Aircraft/extra500/Models/instruments/fuelflowind.xml</path>
+	<offsets>
+		<x-m>0</x-m>
+		<y-m>0.20847</y-m>	
+		<z-m>0.12711</z-m>
+		<pitch-deg>90</pitch-deg>
+		<roll-deg>90</roll-deg>
 	</offsets>
 </model>
 
