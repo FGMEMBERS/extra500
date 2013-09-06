@@ -54,7 +54,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -63,13 +63,6 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-988.36218)">
-    <rect
-       style="color:#000000;fill:#ff7f2a;fill-opacity:1;fill-rule:nonzero;stroke:#ff7f2a;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       id="rect3803"
-       width="50"
-       height="63.482143"
-       x="0"
-       y="988.88" />
     <text
        xml:space="preserve"
        style="font-size:22px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
@@ -127,7 +120,7 @@
        sodipodi:cy="32.125"
        sodipodi:rx="11.25"
        sodipodi:ry="11.25"
-       d="m 26.964286,32.125 a 11.25,11.25 0 1 1 -22.5000001,0 11.25,11.25 0 1 1 22.5000001,0 z"
+       d="m 26.964286,32.125 c 0,6.213203 -5.036797,11.25 -11.25,11.25 -6.2132036,0 -11.2500001,-5.036797 -11.2500001,-11.25 0,-6.213203 5.0367965,-11.25 11.2500001,-11.25 6.213203,0 11.25,5.036797 11.25,11.25 z"
        transform="matrix(1.2888897,0,0,1.2888884,-4.2539588,978.95663)" />
     <rect
        style="color:#000000;fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"

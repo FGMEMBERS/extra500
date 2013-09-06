@@ -373,12 +373,14 @@ var TcasItemClass = {
 			ThreadLevel2 	: m._group.getElementById("Thread_Level_2").setVisible(0),
 			ThreadLevel3	: m._group.getElementById("Thread_Level_3").setVisible(0),
 		};
+		m._can.layer.setTranslation(-16,-32);
 		m._color = COLOR["TCAS_LEVEL_0"];
 
 		return m;
 	},
 	setData : func(lat,lon,alt,vs,level){
 		me._group.setVisible(1);
+		me._can.layer.setVisible(1);
 		me._group.setGeoPosition(lat,lon);
 		me._color = COLOR["TCAS_LEVEL_"~level];
 		
@@ -386,10 +388,13 @@ var TcasItemClass = {
 			me._can.AltAbove.setText(sprintf("%+i",alt));
 			me._can.AltAbove.set("fill",me._color);
 			me._can.AltAbove.setVisible(1);
+			me._can.AltBelow.setVisible(0);
+			
 		}elsif(alt < 0){
 			me._can.AltBelow.setText(sprintf("%+i",alt));
 			me._can.AltBelow.set("fill",me._color);
 			me._can.AltBelow.setVisible(1);
+			me._can.AltAbove.setVisible(0);
 			
 		}else{
 			me._can.AltAbove.setVisible(0);
@@ -454,6 +459,7 @@ var TcasWidget = {
 		m._can		= {};
 		m.MODE		= ["Normal","Above","Unlimited","Below"];
 		m.RANGE		= ["2 NM","6 NM"];
+		m.RANGESCALE	= 1.6;
 		m._service	= 0;
 		m._mode		= 0;
 		m._range	= 6;
@@ -461,8 +467,7 @@ var TcasWidget = {
 		m._item		= [];
 		m._itemCount	= 0;
 		m._itemIndex	= 0;
-		m._map		= nil;
-		
+		m._map		= nil;		
 		m._timer	= maketimer(1.0,m,TcasWidget.update);
 		return m;
 	},
@@ -480,15 +485,16 @@ var TcasWidget = {
 			online	: me._group.getElementById("TCAS_online").setVisible(0),
 		};
 		me._map		= TcasMap.new(me._can.map,"TcasMap");
-		me._map.setZoom(10000);
-		me._map.set("z-index",1);
+		me._map.setZoom(me.RANGESCALE*me._range);
 		me._map.setVisible(1);
-		me._map.setTranslation(360,360);
+		#me._map.setTranslation(250,750);
+		me._map.setTranslation(200,609);
+		
 		me.setListeners(instance);
 		
 		me._Page.IFD.nLedL1.setValue(1);
-		me._Page.keys["L1 <"] 	= func(){me._adjustRange(4);};
-		me._Page.keys["L1 >"] 	= func(){me._adjustMode(1);};
+		me._Page.keys["L1 <"] 	= func(){me._adjustMode(1);};
+		me._Page.keys["L1 >"] 	= func(){me._adjustRange(4);};
 		me.updateCan();
 		me._timer.start();
 	},
@@ -528,11 +534,15 @@ var TcasWidget = {
 		me._map.setRefPos(lat,lon);
 		me._map.setHdg(hdg);
 		
+		
+		
 		me._itemIndex = 0;
 		var models = props.globals.getNode("/ai/models");
 		print ("### tcas - Screen update ###");
 		foreach(aircraft;models.getChildren("aircraft")){
+			#me._checkAircraft(aircraft);
 			var nInRange = aircraft.getNode("radar/in-range");
+			
 			if(nInRange.getValue() == 1){
 				var range = aircraft.getNode("radar/range-nm").getValue();
 				if(range <= me._range){
@@ -548,7 +558,7 @@ var TcasWidget = {
 		for (me._itemIndex ; me._itemIndex < me._itemCount ; me._itemIndex += 1){
 			me._item[me._itemIndex]._group.setVisible(0);
 		}
-	
+		
 	},
 	_checkAircraft : func(aircraft){
 		var nTcasThreat = aircraft.getNode("tcas/threat-level");	
@@ -592,7 +602,7 @@ var TcasWidget = {
 						
 				print (conntact);
 				
-				me._item[me._itemIndex].setData(lon,lat,alt,vs,level);
+				me._item[me._itemIndex].setData(lat,lon,alt,vs,level);
 				me._itemIndex += 1;
 			}
 		}
@@ -601,18 +611,20 @@ var TcasWidget = {
 		me._can.mode.setText(me.MODE[me._mode]);
 		me._can.range.setText(sprintf("%i NM",me._range));
 	},
-	_adjustRange : func(amount){
+	_adjustMode : func(amount){
 		me._mode += amount;
 		if(me._mode > 3){me._mode=0;}
 		if(me._mode < 0){me._mode=3;}
 		me._can.mode.setText(me.MODE[me._mode]);
+		
+		
 	},
-	_adjustMode : func(amount){
+	_adjustRange : func(amount){
 		me._range += amount;
 		if(me._range > 6){me._range=2;}
 		if(me._range < 2){me._range=6;}
 		me._can.range.setText(sprintf("%i NM",me._range));
 		setprop("/instrumentation/radar/range",me._range);
-		
+		me._map.setZoom(me.RANGESCALE*me._range);
 	}
 };

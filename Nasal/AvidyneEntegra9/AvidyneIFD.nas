@@ -187,6 +187,7 @@ var AvidyneIFD = {
 		m.page["PFD"] = AvidynePagePFD.new(m,"PFD",m.data);
 		m.page["FMS"] = AvidynePageFMS.new(m,"FMS",m.data);
 		m.page["MAP"] = AvidynePageMAP.new(m,"MAP",m.data);
+		#m.page["CHKL"] = AvidynePageTest.new(m,"Test",m.data);
 		
 		m._dt20Hz = 0;
 		m._now20Hz = systime();
