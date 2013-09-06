@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-09-05
+      Date:             2013-09-06
 -->
 
 <system name="indication">
@@ -226,7 +226,7 @@
     			</function>
 		</fcs_function>
 
-		<fcs_function name="aircraft/engine/FF-lbs_h">
+		<fcs_function name="aircraft/engine/FF-lbs_h-raw">
     			<function>
       			<description>fuel flow in pounds per hour</description>
 			<product>
@@ -252,6 +252,16 @@
 			</product>
     			</function>
 		</fcs_function>
+
+		<switch name="Fuelflowcutoff">
+			<default value="aircraft/engine/FF-lbs_h-raw"/>
+			<test logic="OR" value="0">
+				/extra500/system/fuel/SelectValve eq 0
+				/extra500/system/fuel/SelectValve eq 4
+				/controls/engines/engine[0]/condition-lever-norm lt 0.1
+			</test>
+			<output>aircraft/engine/FF-lbs_h</output>
+		</switch>
 
 		<fcs_function name="aircraft/engine/FF-l_h">
     			<function>

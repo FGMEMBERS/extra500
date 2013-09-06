@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             05.09.2013
+      Date:             06.09.2013
 
 
 ************************************************************************
@@ -520,6 +520,7 @@ JSBSim Extra Aircraft - Extra 500.
 		       <engine n="0">
 			       <propeller-feather type="bool">true</propeller-feather>
 			       <cutoff type="bool">true</cutoff>
+				 <condition-lever-norm>0</condition-lever-norm>
 		       </engine>
 	       </engines>
 	       <lighting>
@@ -1134,6 +1135,11 @@ JSBSim Extra Aircraft - Extra 500.
 			<IsOpen>0</IsOpen>
 		</main>
 	</door>
+	<system>
+		<fuel>
+			<SelectValve>2</SelectValve>
+		</fuel>
+	</system>
 	<!--<light>
 		<strobe>
 			<output type="double">0</output>
