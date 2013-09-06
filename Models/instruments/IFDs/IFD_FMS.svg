@@ -38,9 +38,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.49497475"
-     inkscape:cx="1778.7531"
-     inkscape:cy="1301.066"
+     inkscape:zoom="1.4"
+     inkscape:cx="322.522"
+     inkscape:cy="875.6119"
      inkscape:document-units="px"
      inkscape:current-layer="layer11"
      showgrid="false"
@@ -1153,6 +1153,17 @@
          width="488.29932"
          id="rect4088"
          style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#3391e8;stroke-width:9.59069061;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <g
+         id="TCAS_Map"
+         style="stroke:#00ff00;fill:none">
+        <rect
+           y="495.31763"
+           x="19.732254"
+           height="415.11404"
+           width="460.48532"
+           id="rect3652"
+           style="color:#000000;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#00ff00;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      </g>
       <g
          id="TCAS_online">
         <text

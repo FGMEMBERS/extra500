@@ -811,8 +811,78 @@ JSBSim Extra Aircraft - Extra 500.
 	<indicated-heading-deg>0</indicated-heading-deg>
     </heading-indicator-IFD-RH>
 
-    <tcas>
-        <serviceable type="bool">true</serviceable>
+    <radar>
+            <mode-control type="int" archive="y">1</mode-control>
+            <display-mode type="string">plan</display-mode>
+            <display-controls>
+                <WX type="bool" archive="y">false</WX>
+                <pos type="bool" archive="y">false</pos>
+                <data type="bool" archive="y">false</data>
+                <symbol type="bool" archive="y">false</symbol>
+                <rotate type="bool" archive="y">false</rotate>
+                <tcas type="bool" archive="n">false</tcas>
+                <abs-altitude type="bool" archive="y">false</abs-altitude>
+            </display-controls>
+            <serviceable type="bool">true</serviceable>
+	    <range >6</range>
+            <reference-range-nm type="double" archive="y">640</reference-range-nm>
+            <mode type="string" archive="y">WX</mode>
+            <font>
+                <color>
+                    <red type="float">0.7</red>
+                    <green type="float">0.7</green>
+                    <blue type="float">0.7</blue>
+                    <alpha type="float">1</alpha>
+                </color>
+                <tcas>
+                    <color n="0"> <!-- distant targets -->
+                        <red type="float">0</red>
+                        <green type="float">1</green>
+                        <blue type="float">1</blue>
+                    </color>
+                    <color n="1"> <!-- proximity targets -->
+                        <red type="float">0</red>
+                        <green type="float">1</green>
+                        <blue type="float">1</blue>
+                    </color>
+                    <color n="2"> <!-- TA threat targets -->
+                        <red type="float">1</red>
+                        <green type="float">0.5</green>
+                        <blue type="float">0</blue>
+                    </color>
+                    <color n="3"> <!-- RA threat targets -->
+                        <red type="float">1</red>
+                        <green type="float">0</green>
+                        <blue type="float">0</blue>
+                    </color>
+                </tcas>
+                <name type="string">helvetica_bold.txf</name>
+                <size type="float">12</size>
+                <line-spacing type="float">0.01</line-spacing>
+            </font>
+            <lightning type="bool">true</lightning>
+            <radar-texture-path type="string">Aircraft/777/Models/Instruments/MFD/od_wxradar.png</radar-texture-path>
+            <echo-texture-path type="string">Aircraft/777/Models/Instruments/MFD/wxecho.png</echo-texture-path>
+            <minimized type="bool">false</minimized>
+            <heading-marker type="bool">true</heading-marker>
+            <limit-deg type="int">360</limit-deg>
+        </radar>
+        <groundradar>
+            <range type="double">1.2</range>
+        </groundradar>
+        
+       <tcas>
+	       <serviceable type="bool">true</serviceable>
+	       <inputs>
+			<mode type="int">3</mode>	<!-- 0=off, 1=standby, 2=TA-only, 3=auto(TA/RA) -->
+	       </inputs>
+	       <speaker>
+			<!-- Speaker Configuration -->
+			<max-dist type="double"> 200.0 </max-dist>		<!-- Max. distance where speaker is heard -->
+			<reference-dist type="double"> 2 </reference-dist>	<!-- Distance to pilot -->
+			<volume type="double"> 1 </volume>			<!-- Volume at reference distance -->
+            </speaker>
+          
     </tcas>
 
     <transponder>
@@ -999,6 +1069,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<!--<file>Aircraft/extra500/system/IFD/IFD_test.nas</file>-->
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/base.class.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/widget.nas</file>
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/tcas.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/page_PFD.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/page_FMS.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/page_MAP.nas</file>

@@ -29,6 +29,10 @@ COLOR["White"] = "rgb(255,255,255)";
 COLOR["Turquoise"] = "rgb(4,254,252)";
 COLOR["Blue"] = "rgb(51,145,232)";
 COLOR["DarkGreen"] = "#16502d";
+COLOR["TCAS_LEVEL_0"] = "#00ffff";
+COLOR["TCAS_LEVEL_1"] = "#00ffff";
+COLOR["TCAS_LEVEL_2"] = "#ff7f2a";
+COLOR["TCAS_LEVEL_3"] = "#ff0000";
 
 
 var XPDRMODE = ["OFF","SBY","TST","GND","ON","ALT"];

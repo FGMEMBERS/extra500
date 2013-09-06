@@ -357,6 +357,94 @@ var TuningWidget = {
 	
 	
 };
+var TcasItemClass = {
+	new : func(canvasGroup,index){
+		var m = {parents:[TcasItemClass]};
+		m._group = canvasGroup.createChild("group", "TcasItem_"~index);
+		canvas.parsesvg(m._group, "Models/instruments/IFDs/IFD_TCAS_Item.svg");
+		m._can = {
+			layer 		: m._group.getElementById("layer1").setVisible(0),
+			AltAbove 	: m._group.getElementById("Alt_above").setVisible(0),
+			AltBelow 	: m._group.getElementById("Alt_below").setVisible(0),
+			ArrowClimb	: m._group.getElementById("Arrow_climb").setVisible(0),
+			ArrowDescent	: m._group.getElementById("Arrow_descent").setVisible(0),
+			ThreadLevel0 	: m._group.getElementById("Thread_Level_0").setVisible(0),
+			ThreadLevel1 	: m._group.getElementById("Thread_Level_1").setVisible(0),
+			ThreadLevel2 	: m._group.getElementById("Thread_Level_2").setVisible(0),
+			ThreadLevel3	: m._group.getElementById("Thread_Level_3").setVisible(0),
+		};
+		m._color = COLOR["TCAS_LEVEL_0"];
+
+		return m;
+	},
+	setData : func(lat,lon,alt,vs,level){
+		me._group.setVisible(1);
+		me._group.setGeoPosition(lat,lon);
+		me._color = COLOR["TCAS_LEVEL_"~level];
+		
+		if(alt > 0){
+			me._can.AltAbove.setText(sprintf("%+i",alt));
+			me._can.AltAbove.set("fill",me._color);
+			me._can.AltAbove.setVisible(1);
+		}elsif(alt < 0){
+			me._can.AltBelow.setText(sprintf("%+i",alt));
+			me._can.AltBelow.set("fill",me._color);
+			me._can.AltBelow.setVisible(1);
+			
+		}else{
+			me._can.AltAbove.setVisible(0);
+			me._can.AltBelow.setVisible(0);
+		}
+				
+		if (vs < -3.0){# descending
+			vMovement = "\\";
+			me._can.ArrowClimb.setVisible(0);
+			me._can.ArrowDescent.set("fill",me._color);
+			me._can.ArrowDescent.set("stroke",me._color);
+			me._can.ArrowDescent.setVisible(1);
+		}elsif (vs > 3.0){ # climbing
+			me._can.ArrowDescent.setVisible(0);
+			me._can.ArrowClimb.set("fill",me._color);
+			me._can.ArrowClimb.set("stroke",me._color);
+			me._can.ArrowClimb.setVisible(1);
+		}else{
+			me._can.ArrowDescent.setVisible(0);
+			me._can.ArrowClimb.setVisible(0);
+		}
+		
+		if(level == 0){
+			me._can.ThreadLevel0.setVisible(1);
+			me._can.ThreadLevel1.setVisible(0);
+			me._can.ThreadLevel2.setVisible(0);
+			me._can.ThreadLevel3.setVisible(0);
+			me._group.set("z-index",1);
+		}elsif(level == 1){
+			me._can.ThreadLevel0.setVisible(0);
+			me._can.ThreadLevel1.setVisible(1);
+			me._can.ThreadLevel2.setVisible(0);
+			me._can.ThreadLevel3.setVisible(0);
+			me._group.set("z-index",2);
+		}elsif(level == 2){
+			me._can.ThreadLevel0.setVisible(0);
+			me._can.ThreadLevel1.setVisible(0);
+			me._can.ThreadLevel2.setVisible(1);
+			me._can.ThreadLevel3.setVisible(0);
+			me._group.set("z-index",3);
+		}elsif(level == 3){
+			me._can.ThreadLevel0.setVisible(0);
+			me._can.ThreadLevel1.setVisible(0);
+			me._can.ThreadLevel2.setVisible(0);
+			me._can.ThreadLevel3.setVisible(1);
+			me._group.set("z-index",4);
+		}else{
+			me._can.ThreadLevel0.setVisible(0);
+			me._can.ThreadLevel1.setVisible(0);
+			me._can.ThreadLevel2.setVisible(0);
+			me._can.ThreadLevel3.setVisible(0);			
+		}
+	},
+	
+};
 
 var TcasWidget = {
 	new : func(page,canvasGroup,name){
@@ -368,42 +456,63 @@ var TcasWidget = {
 		m.RANGE		= ["2 NM","6 NM"];
 		m._service	= 0;
 		m._mode		= 0;
-		m._range	= 0;
+		m._range	= 6;
+		m._alert	= 0;
+		m._item		= [];
+		m._itemCount	= 0;
+		m._itemIndex	= 0;
+		m._map		= nil;
 		
+		m._timer	= maketimer(1.0,m,TcasWidget.update);
 		return m;
 	},
 	setListeners : func(instance) {
 		append(me._listeners, setlistener("/instrumentation/tcas/serviceable",func(n){me._onStateChange(n)},1,0));	
+		append(me._listeners, setlistener("/instrumentation/tcas/ouputs/traffic-alert",func(n){me._onAlertChange(n)},1,0));	
 	},
 	init : func(instance=me){
 		#print("TcasWidget.init() ... ");
 		me._can = {
+			map	: me._group.getElementById("TCAS_Map"),
 			mode	: me._group.getElementById("TCAS_Mode"),
 			range	: me._group.getElementById("TCAS_Range"),
 			offline	: me._group.getElementById("TCAS_offline"),
 			online	: me._group.getElementById("TCAS_online").setVisible(0),
 		};
+		me._map		= TcasMap.new(me._can.map,"TcasMap");
+		me._map.setZoom(10000);
+		me._map.set("z-index",1);
+		me._map.setVisible(1);
+		me._map.setTranslation(360,360);
 		me.setListeners(instance);
 		
 		me._Page.IFD.nLedL1.setValue(1);
-		me._Page.keys["L1 <"] 	= func(){me._adjustRange(1);};
+		me._Page.keys["L1 <"] 	= func(){me._adjustRange(4);};
 		me._Page.keys["L1 >"] 	= func(){me._adjustMode(1);};
-		me.update();
+		me.updateCan();
+		me._timer.start();
 	},
 	deinit : func(){
+		me._timer.stop();
 		me.removeListeners();
 		me._Page.IFD.nLedL1.setValue(0);
 		me._Page.keys["L1 <"] 	= nil;
 		me._Page.keys["L1 >"] 	= nil;
 		
 	},	
+	_onAlertChange : func(n){
+		me._alert = n.getValue();
+		if(me._alert == 1){
+			print ("TcasWidget._onAlertChange() ... TCAS : traffic alert.");
+		}
+	},
 	_onStateChange : func(n){
 		me._service = n.getValue();
 		me._can.offline.setVisible(!me._service);
 		me._can.online.setVisible(me._service);
 		if (me._service==1){
 			me._Page.IFD.nLedL1.setValue(1);
-			me._Page.keys["L1 <"] 	= func(){me._adjustRange(1);};
+			me._Page.keys["L1 <"] 	= func(){me._adjustRange(4);};
 			me._Page.keys["L1 >"] 	= func(){me._adjustMode(1);};
 		}else{
 			me._Page.IFD.nLedL1.setValue(0);
@@ -412,8 +521,85 @@ var TcasWidget = {
 		}
 	},
 	update : func(){
+		var lat = getprop("/position/latitude-deg");
+		var lon = getprop("/position/longitude-deg");
+		var hdg = getprop("/orientation/heading-deg");
+				
+		me._map.setRefPos(lat,lon);
+		me._map.setHdg(hdg);
+		
+		me._itemIndex = 0;
+		var models = props.globals.getNode("/ai/models");
+		print ("### tcas - Screen update ###");
+		foreach(aircraft;models.getChildren("aircraft")){
+			var nInRange = aircraft.getNode("radar/in-range");
+			if(nInRange.getValue() == 1){
+				var range = aircraft.getNode("radar/range-nm").getValue();
+				if(range <= me._range){
+					me._checkAircraft(aircraft);
+					
+					
+				}else{
+					nInRange.setValue(0);
+				}
+			}
+			
+		}
+		for (me._itemIndex ; me._itemIndex < me._itemCount ; me._itemIndex += 1){
+			me._item[me._itemIndex]._group.setVisible(0);
+		}
+	
+	},
+	_checkAircraft : func(aircraft){
+		var nTcasThreat = aircraft.getNode("tcas/threat-level");	
+		if (nTcasThreat != nil){
+			var level = nTcasThreat.getValue();
+			if(level > -1){
+				
+				if(me._itemIndex >= me._itemCount){
+					append(me._item,TcasItemClass.new(me._map,me._itemIndex));
+					me._itemCount = size(me._item);
+				}
+		
+				
+				var conntact = "";
+			
+				var nRadarRange = aircraft.getNode("radar/range-nm");
+				var lat 	= aircraft.getNode("position/latitude-deg").getValue();
+				var lon 	= aircraft.getNode("position/longitude-deg").getValue();
+				var vs		= aircraft.getNode("velocities/vertical-speed-fps").getValue();
+				var aAlt 	= aircraft.getNode("position/altitude-ft").getValue();
+				var uAlt 	= getprop("/position/altitude-ft");
+				var alt 	= math.floor(((aAlt-uAlt)/100)+0.5);
+				
+				var vMovement = "-";
+				if (vs < -3.0){# descending
+					vMovement = "\\";
+				}elsif (vs > 3.0){ # climbing
+					vMovement = "/";
+				}else{
+					
+				}
+				
+			
+				conntact ~= sprintf("%i/%i - ",me._itemIndex+1,me._itemCount);
+				conntact ~= sprintf("[%i]%s : ",aircraft.getIndex(),aircraft.getChild("callsign").getValue());
+				conntact ~= sprintf("threat:%i ",level);
+				conntact ~= sprintf("range:%.2f ",nRadarRange.getValue());
+								
+				conntact ~= sprintf("v:%s ",vMovement);
+				conntact ~= sprintf("a:%i",alt);
+						
+				print (conntact);
+				
+				me._item[me._itemIndex].setData(lon,lat,alt,vs,level);
+				me._itemIndex += 1;
+			}
+		}
+	},
+	updateCan : func(){
 		me._can.mode.setText(me.MODE[me._mode]);
-		me._can.range.setText(me.RANGE[me._range]);
+		me._can.range.setText(sprintf("%i NM",me._range));
 	},
 	_adjustRange : func(amount){
 		me._mode += amount;
@@ -423,8 +609,10 @@ var TcasWidget = {
 	},
 	_adjustMode : func(amount){
 		me._range += amount;
-		if(me._range > 1){me._range=0;}
-		if(me._range < 0){me._range=1;}
-		me._can.range.setText(me.RANGE[me._range]);
+		if(me._range > 6){me._range=2;}
+		if(me._range < 2){me._range=6;}
+		me._can.range.setText(sprintf("%i NM",me._range));
+		setprop("/instrumentation/radar/range",me._range);
+		
 	}
 };

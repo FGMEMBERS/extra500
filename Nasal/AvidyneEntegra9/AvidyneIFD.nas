@@ -144,10 +144,10 @@ var AvidyneIFD = {
 		"view": [m.width, m.height],
 		"mipmapping": 1,
 		});
+		
 
 		m.canvas.addPlacement({"node": acPlace});
 		m.canvas.setColorBackground(0,0,0);
-		
 		# .. and place it on the object called PFD-Screen
 
 		#m.nHeadingBug = props.globals.initNode("/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg",0.0,"DOUBLE");
