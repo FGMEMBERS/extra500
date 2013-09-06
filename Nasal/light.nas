@@ -17,7 +17,7 @@
 #      Date: Jul 04 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             05.07.13
+#      Date:             06.09.13
 #
 
 var LightClass = {
@@ -73,7 +73,7 @@ var LightPanelClass = {
 		m.landing	= LightClass.new("/extra500/light/landing","Landing Light",25.0);
 		m.recognition	= LightClass.new("/extra500/light/recognition","Recognition Light",25.0);
 		m.cabin		= LightClass.new("/extra500/light/cabin","Cabin Light",25.0);
-		m.map		= LightClass.new("/extra500/light/map","Cabin Light",25.0);
+		m.map		= LightClass.new("/extra500/light/map","Map Light",25.0);
 		m.glare		= LedClass.new("/extra500/light/glare","Glare Light","/extra500/system/dimming/Glare",25.0);
 		m.ice		= LightClass.new("/extra500/light/ice","Ice Light",25.0);
 		m.courtesy	= LightClass.new("/extra500/light/courtesy","Courtesy Light",25.0);

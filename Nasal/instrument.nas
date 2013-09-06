@@ -16,7 +16,7 @@
 #      Authors: Dirk Dittmann
 #      Date: Jun 27 2013
 #
-#      Last change:      Eric van den Berg
+#      Last change:      Dirk Dittmann
 #      Date:             06.09.13
 #
 
@@ -156,21 +156,20 @@ var LumiClass = {
 	}
 };
 
-
-var InstrumentClass = {
-	new : func(root,name,brightness="/extra500/system/dimming/Instrument",watt=24.0){
+var BacklightClass = {
+	new : func(root,name,brightness="/extra500/system/dimming/Instrument",watt=1.0){
 		var m = { 
 			parents : [
-				InstrumentClass,
+				BacklightClass,
 				ConsumerClass.new(root,name,watt)
 			]
 		};
-		
+		m._nState		= m._nRoot.initNode("state",0,"DOUBLE",1);
 		m._nBrightness		= props.globals.initNode(brightness,0.0,"DOUBLE");
 		m._brightness		= 0;
-		m._nBacklight 		= m._nRoot.initNode("Backlight/state",0.0,"DOUBLE");
+		#m._nBacklight 		= m._nRoot.initNode("Backlight/state",0.0,"DOUBLE");
 		m._backLight 		= 0;
-		m._backLightState 		= 0;
+		m._backLightState 	= 0;
 		return m;
 	},
 	setListeners : func(instance) {
@@ -202,8 +201,8 @@ var InstrumentClass = {
 		}
 		
 		me._nAmpere.setValue(me._ampere);
-		me._nState.setValue(me._state);
-		me._nBacklight.setValue(me._backLight);
+		me._nState.setValue(me._backLight);
+		#me._nBacklight.setValue(me._backLight);
 	},
 	setBacklight : func(value){
 		me._backLightState = value;
@@ -211,6 +210,30 @@ var InstrumentClass = {
 	}
 };
 
+var InstrumentClass = {
+	new : func(root,name,brightness="/extra500/system/dimming/Instrument",powerWatt=24.0,lightWatt=1.0){
+		var m = { 
+			parents : [
+				InstrumentClass,
+				ConsumerClass.new(root,name,powerWatt)
+			]
+		};
+		
+		m._light	= BacklightClass.new(root~"/Backlight",name~" Backlight",brightness,lightWatt);
+
+		return m;
+	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.parents[1].init(instance);
+		me._light.init();
+		me.setListeners(instance);
+	},
+	setBacklight : func(value){
+		me._light.setBacklight(value);
+	}
+	
+};
 var DigitalInstrumentClass = {
 	new : func(root,name,brightness="/extra500/system/dimming/Instrument",watt=24.0){
 		var m = { 
@@ -327,7 +350,7 @@ var FuelInstrumentClass = {
 		return m;
 	},
 	setListeners : func(instance) {
-		append(me._listeners, setlistener(me._nBrightness,func(n){instance._onBrightnessChange(n);},1,0) );
+		#append(me._listeners, setlistener(me._nBrightness,func(n){instance._onBrightnessChange(n);},1,0) );
 		append(me._listeners, setlistener(me._nState,func(n){instance._onStateChange(n);},1,0) );
 	},
 	init : func(instance=nil){
@@ -364,26 +387,40 @@ var lumi = LumiClass.new("extra500/light/Lumi","Lumi Switch",42.0);
 var stbyHSI 		= InstrumentClass.new("extra500/instrumentation/StbyHSI","Standby Horizontal Sitiuation Indicator","/extra500/system/dimming/Instrument",6.0);
 var stbyIAS		= InstrumentClass.new("extra500/instrumentation/StbyIAS","Standby Indecated Airspeed","/extra500/system/dimming/Instrument",6.0);
 var stbyALT		= InstrumentClass.new("extra500/instrumentation/StbyALT","Standby Altitude","/extra500/system/dimming/Instrument",6.0);
-var fuelQuantity	= FuelInstrumentClass.new("extra500/instrumentation/FuelQuantity","Fuel Quantity","/extra500/system/dimming/Instrument",12.0);
-var fuelFlow	= DigitalInstrumentClass.new("extra500/instrumentation/FuelFlow","Fuel Flow","/extra500/system/dimming/Instrument",6.0);
+var cabincontroller 	= InstrumentClass.new("extra500/instrumentation/CabinController","Cabin Controller","/extra500/system/dimming/Instrument",6.0);
+var cabinaltimeter 	= InstrumentClass.new("extra500/instrumentation/CabinAltimeter","Cabin Altimeter","/extra500/system/dimming/Instrument",0.0);
+var cabinclimb 		= InstrumentClass.new("extra500/instrumentation/CabinClimb","Cabin Climb","/extra500/system/dimming/Instrument",0.0);
 var propellerHeat	= InstrumentClass.new("extra500/instrumentation/PropellerHeat","Propeller Heat Ammeter","/extra500/system/dimming/Instrument",6.0);
 var turnCoordinator	= InstrumentClass.new("extra500/instrumentation/TrunCoordinator","Trun Coordinator","/extra500/system/dimming/Instrument",60.0);
+
+var fuelQuantity	= FuelInstrumentClass.new("extra500/instrumentation/FuelQuantity","Fuel Quantity","/extra500/system/dimming/Instrument",12.0,6.0);
+var fuelFlow		= DigitalInstrumentClass.new("extra500/instrumentation/FuelFlow","Fuel Flow","/extra500/system/dimming/Instrument",6.0);
 var pcBoard1		= PcBoard1Class.new("extra500/electric/pcBoard1","PC Board 1",1.0);
-var cabincontroller = InstrumentClass.new("extra500/instrumentation/CabinController","Cabin Controller","/extra500/system/dimming/Instrument",6.0);
-var cabinaltimeter = InstrumentClass.new("extra500/instrumentation/CabinAltimeter","Cabin Altimeter","/extra500/system/dimming/Instrument",0.0);
-var cabinclimb = InstrumentClass.new("extra500/instrumentation/CabinClimb","Cabin Climb","/extra500/system/dimming/Instrument",0.0);
 
 
 eSystem.circuitBreaker.STBY_GYRO.outputAdd(stbyHSI);
-eSystem.circuitBreaker.STBY_GYRO.outputAdd(stbyIAS);
-eSystem.circuitBreaker.STBY_GYRO.outputAdd(stbyALT);
-eSystem.circuitBreaker.FUEL_QTY.outputAdd(fuelQuantity);
-eSystem.circuitBreaker.FUEL_FLOW.outputAdd(fuelFlow);
-eSystem.circuitBreaker.PROP_HT.outputAdd(propellerHeat);
-eSystem.circuitBreaker.TB.outputAdd(turnCoordinator);
 eSystem.circuitBreaker.C_PRESS.outputAdd(cabincontroller);
 eSystem.circuitBreaker.C_PRESS.outputAdd(cabinaltimeter);
 eSystem.circuitBreaker.C_PRESS.outputAdd(cabinclimb);
+eSystem.circuitBreaker.PROP_HT.outputAdd(propellerHeat);
+eSystem.circuitBreaker.TB.outputAdd(turnCoordinator);
+eSystem.circuitBreaker.FUEL_QTY.outputAdd(fuelQuantity);
+eSystem.circuitBreaker.FUEL_FLOW.outputAdd(fuelFlow);
+
+
+eSystem.circuitBreaker.INST_LT.outputAdd(stbyIAS._light);
+eSystem.circuitBreaker.INST_LT.outputAdd(stbyHSI._light);
+eSystem.circuitBreaker.INST_LT.outputAdd(stbyALT._light);
+eSystem.circuitBreaker.INST_LT.outputAdd(cabincontroller._light);
+eSystem.circuitBreaker.INST_LT.outputAdd(cabinaltimeter._light);
+eSystem.circuitBreaker.INST_LT.outputAdd(cabinclimb._light);
+eSystem.circuitBreaker.INST_LT.outputAdd(propellerHeat._light);
+eSystem.circuitBreaker.INST_LT.outputAdd(turnCoordinator._light);
+eSystem.circuitBreaker.INST_LT.outputAdd(fuelQuantity._light);
+
+
+
+
 
 
 
