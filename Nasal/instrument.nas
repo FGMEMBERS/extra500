@@ -17,7 +17,7 @@
 #      Date: Jun 27 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             05.09.13
+#      Date:             06.09.13
 #
 
 var DigitalInstrumentPackageClass = {
@@ -215,7 +215,7 @@ var DigitalInstrumentClass = {
 	new : func(root,name,brightness="/extra500/system/dimming/Instrument",watt=24.0){
 		var m = { 
 			parents : [
-				InstrumentClass,
+				DigitalInstrumentClass,
 				ConsumerClass.new(root,name,watt)
 			]
 		};
