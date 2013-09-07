@@ -357,103 +357,11 @@ var TuningWidget = {
 	
 	
 };
-var TcasItemClass = {
-	new : func(canvasGroup,index){
-		var m = {parents:[TcasItemClass]};
-		m._group = canvasGroup.createChild("group", "TcasItem_"~index);
-		canvas.parsesvg(m._group, "Models/instruments/IFDs/IFD_TCAS_Item.svg");
-		m._can = {
-			layer 		: m._group.getElementById("layer1").setVisible(0),
-			AltAbove 	: m._group.getElementById("Alt_above").setVisible(0),
-			AltBelow 	: m._group.getElementById("Alt_below").setVisible(0),
-			ArrowClimb	: m._group.getElementById("Arrow_climb").setVisible(0),
-			ArrowDescent	: m._group.getElementById("Arrow_descent").setVisible(0),
-			ThreadLevel0 	: m._group.getElementById("Thread_Level_0").setVisible(0),
-			ThreadLevel1 	: m._group.getElementById("Thread_Level_1").setVisible(0),
-			ThreadLevel2 	: m._group.getElementById("Thread_Level_2").setVisible(0),
-			ThreadLevel3	: m._group.getElementById("Thread_Level_3").setVisible(0),
-		};
-		m._can.layer.setTranslation(-16,-32);
-		m._color = COLOR["TCAS_LEVEL_0"];
 
-		return m;
-	},
-	setData : func(lat,lon,alt,vs,level){
-		me._group.setVisible(1);
-		me._can.layer.setVisible(1);
-		me._group.setGeoPosition(lat,lon);
-		me._color = COLOR["TCAS_LEVEL_"~level];
-		
-		if(alt > 0){
-			me._can.AltAbove.setText(sprintf("%+i",alt));
-			me._can.AltAbove.set("fill",me._color);
-			me._can.AltAbove.setVisible(1);
-			me._can.AltBelow.setVisible(0);
-			
-		}elsif(alt < 0){
-			me._can.AltBelow.setText(sprintf("%+i",alt));
-			me._can.AltBelow.set("fill",me._color);
-			me._can.AltBelow.setVisible(1);
-			me._can.AltAbove.setVisible(0);
-			
-		}else{
-			me._can.AltAbove.setVisible(0);
-			me._can.AltBelow.setVisible(0);
-		}
-				
-		if (vs < -3.0){# descending
-			vMovement = "\\";
-			me._can.ArrowClimb.setVisible(0);
-			me._can.ArrowDescent.set("fill",me._color);
-			me._can.ArrowDescent.set("stroke",me._color);
-			me._can.ArrowDescent.setVisible(1);
-		}elsif (vs > 3.0){ # climbing
-			me._can.ArrowDescent.setVisible(0);
-			me._can.ArrowClimb.set("fill",me._color);
-			me._can.ArrowClimb.set("stroke",me._color);
-			me._can.ArrowClimb.setVisible(1);
-		}else{
-			me._can.ArrowDescent.setVisible(0);
-			me._can.ArrowClimb.setVisible(0);
-		}
-		
-		if(level == 0){
-			me._can.ThreadLevel0.setVisible(1);
-			me._can.ThreadLevel1.setVisible(0);
-			me._can.ThreadLevel2.setVisible(0);
-			me._can.ThreadLevel3.setVisible(0);
-			me._group.set("z-index",1);
-		}elsif(level == 1){
-			me._can.ThreadLevel0.setVisible(0);
-			me._can.ThreadLevel1.setVisible(1);
-			me._can.ThreadLevel2.setVisible(0);
-			me._can.ThreadLevel3.setVisible(0);
-			me._group.set("z-index",2);
-		}elsif(level == 2){
-			me._can.ThreadLevel0.setVisible(0);
-			me._can.ThreadLevel1.setVisible(0);
-			me._can.ThreadLevel2.setVisible(1);
-			me._can.ThreadLevel3.setVisible(0);
-			me._group.set("z-index",3);
-		}elsif(level == 3){
-			me._can.ThreadLevel0.setVisible(0);
-			me._can.ThreadLevel1.setVisible(0);
-			me._can.ThreadLevel2.setVisible(0);
-			me._can.ThreadLevel3.setVisible(1);
-			me._group.set("z-index",4);
-		}else{
-			me._can.ThreadLevel0.setVisible(0);
-			me._can.ThreadLevel1.setVisible(0);
-			me._can.ThreadLevel2.setVisible(0);
-			me._can.ThreadLevel3.setVisible(0);			
-		}
-	},
-	
-};
 
-var TcasWidget = {
+var TcasWidgetOld = {
 	new : func(page,canvasGroup,name){
-		var m = {parents:[TcasWidget,IfdWidget.new(page,canvasGroup,name)]};
+		var m = {parents:[TcasWidgetOld,IfdWidget.new(page,canvasGroup,name)]};
 		m._class 	= "TcasWidget";
 		m._tab		= [];
 		m._can		= {};
@@ -616,15 +524,15 @@ var TcasWidget = {
 		if(me._mode > 3){me._mode=0;}
 		if(me._mode < 0){me._mode=3;}
 		me._can.mode.setText(me.MODE[me._mode]);
-		
-		
 	},
 	_adjustRange : func(amount){
 		me._range += amount;
 		if(me._range > 6){me._range=2;}
 		if(me._range < 2){me._range=6;}
 		me._can.range.setText(sprintf("%i NM",me._range));
-		setprop("/instrumentation/radar/range",me._range);
+		#setprop("/instrumentation/radar/range",me._range);
 		me._map.setZoom(me.RANGESCALE*me._range);
 	}
 };
+
+

@@ -824,7 +824,7 @@ JSBSim Extra Aircraft - Extra 500.
                 <abs-altitude type="bool" archive="y">false</abs-altitude>
             </display-controls>
             <serviceable type="bool">true</serviceable>
-	    <range >6</range>
+	    <range >100</range>
             <reference-range-nm type="double" archive="y">640</reference-range-nm>
             <mode type="string" archive="y">WX</mode>
             <font>
