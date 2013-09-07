@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jun 26 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             01.09.2013
+#      Last change:      Eric van den Berg 
+#      Date:             02.09.2013
 #
 var FlightManagementSystemClass = {
 	new : func(root,name){
@@ -255,7 +255,7 @@ var AutopilotClass = {
 # 3 g-forces not to high (above 0.6, disregarding 1g of earth)
 # 4 aircraft stall warner not ON
 	_CheckRollModeAble : func(){
-		if ( (me.nAPState.getValue() == 1) and (me.nTCSpin.getValue() > 0.9) and ( math.abs(me.nAPacc.getValue()) < 0.6 ) and ( me.nStallWarnerOn.getValue() != 1) ){
+		if ( (me.nAPState.getValue() == 1) and (me.nTCSpin.getValue() > 0.9) and ( math.abs(me.nAPacc.getValue()) < 0.6 ) and ( me.nStallWarnerOn.getValue() == 0) ){
 			if ( ( me.nModeFail.getValue() == 1 ) or ( me.nModeDiseng.getValue() == 1 ) ) {
 				me.nModeFail.setValue(0);
 				me.nModeRdy.setValue(1);

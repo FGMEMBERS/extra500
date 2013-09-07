@@ -17,7 +17,7 @@
 #      Date: Jun 27 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             31.08.13
+#      Date:             05.09.13
 #
 
 # MM Page 607
@@ -53,6 +53,7 @@ var DimmingSystemClass = {
 			stbyIAS.setBacklight(me._state);
 			stbyALT.setBacklight(me._state);
 			fuelQuantity.setBacklight(me._state);
+			fuelFlow.setBacklight(me._state);
 			propellerHeat.setBacklight(me._state);
 			turnCoordinator.setBacklight(me._state);
 			cabincontroller.setBacklight(me._state);

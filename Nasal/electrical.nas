@@ -17,7 +17,7 @@
 #      Date: Jun 06 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             05.07.13
+#      Date:             06.09.13
 #
 
 
@@ -151,6 +151,11 @@ var OutPutClass = {
 			me._outputIndex = keys(me._outputs);
 			obj.setInput(me);
 			obj.setVolt(me._volt);
+		}else{
+# 			print("OutPutClass.outputAdd("~obj.getName()~") ... exists at "~me.getName());
+# 			foreach( i;  me._outputIndex ){
+# 				print (i~" : "~me._outputs[i].getName());
+# 			}
 		}
 	},
 	outputRemove : func(obj){
@@ -1033,7 +1038,6 @@ var ESystem = {
 		m._LoadBus		= DcBusClass.new("/extra500/electric/bus/load","Load Bus PP3");
 		m._EmergencyBus		= DcBusClass.new("/extra500/electric/bus/emergency","Emergency Bus PP4");
 		m._AvionicsBus		= DcBusClass.new("/extra500/electric/bus/avionics","Avionics Bus PP5");
-		m._AvionicsBus		= DcBusClass.new("/extra500/electric/bus/avionics","Avionics Bus PP5");
 		m._PreBatteryBus	= DcBusClass.new("/extra500/electric/bus/preBattery","PreBatteryBus Bus PPx2");
 		
 		m._vHotBus 		= ElectronClass.new();
@@ -1147,12 +1151,6 @@ var ESystem = {
 		me._AvionicsBus.outputAdd(me.circuitBreaker.AP_CMPTR);
 		me._AvionicsBus.outputAdd(me.circuitBreaker.TB);
 
-		me._AvionicsBus.outputAdd(me.circuitBreaker.IFD_RH_B);
-		me._AvionicsBus.outputAdd(me.circuitBreaker.TAS);
-		me._AvionicsBus.outputAdd(me.circuitBreaker.AP_CMPTR);
-		me._AvionicsBus.outputAdd(me.circuitBreaker.TB);
-		
-		
 		me.outputAdd(me._HotBus);
 		me.outputAdd(me._BatteryBus);
 		me.outputAdd(me._LoadBus);
