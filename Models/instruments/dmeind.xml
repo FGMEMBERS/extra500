@@ -17,7 +17,7 @@
     along with extra500.  If not, see <http://www.gnu.org/licenses/>.
 
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
-      Date: August 07 2013
+      Date: August 08 2013
 
       Last change:      -
       Date:             -
@@ -42,6 +42,14 @@
 	<object-name>min.10</object-name>
 	<object-name>min.01</object-name>
 	<object-name>min</object-name>
+	<object-name>nm.002</object-name>
+	<object-name>nm.011</object-name>
+	<object-name>nm.101</object-name>
+	<object-name>kt.002</object-name>
+	<object-name>kt.011</object-name>
+	<object-name>kt.101</object-name>
+	<object-name>min.02</object-name>
+	<object-name>min.11</object-name>
 	<emission>	
 		<red>1.0</red>	
 		<green>1.0</green>	
@@ -53,17 +61,9 @@
 	<animation>
 		<!-- Power on/off -->
 		<type>select</type>
-		<object-name>nm.100</object-name>
-		<object-name>nm.010</object-name>
-		<object-name>nm.001</object-name>
 		<object-name>nm</object-name>
 		<object-name>1</object-name>
-		<object-name>kt.100</object-name>
-		<object-name>kt.010</object-name>
-		<object-name>kt.001</object-name>
 		<object-name>kt</object-name>
-		<object-name>min.10</object-name>
-		<object-name>min.01</object-name>
 		<object-name>min</object-name>
 		<condition>
 			<greater-than>
@@ -73,6 +73,8 @@
 		</condition>
 	</animation>
 <!--NM-->
+
+<!--normal operation-->
 	<animation>
 		<type>textranslate</type>
 		<object-name>nm.001</object-name>
@@ -82,7 +84,6 @@
 		<axis>
 			<x>1</x>
 			<y>0</y>
-			<z>0</z>
 		</axis>
 	</animation>
 	<animation>
@@ -94,7 +95,6 @@
 		<axis>
 			<x>1</x>
 			<y>0</y>
-			<z>0</z>
 		</axis>
 	</animation>
 	<animation>
@@ -106,28 +106,64 @@
 		<axis>
 			<x>1</x>
 			<y>0</y>
-			<z>0</z>
 		</axis>
 	</animation>
 
+
 	<animation>
+		<object-name>nm.001</object-name>
 		<type>select</type>
-		<object-name>nm.010</object-name>
 		<condition>
-			<greater-than-equals>
-				<property>/instrumentation/dme/indicated-distance-nm</property>
-				<value>10</value>
-			</greater-than-equals>
+			<and>
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>1</value>
+				</equals>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+			</and>
 		</condition>
 	</animation>
 	<animation>
+		<object-name>nm.010</object-name>
 		<type>select</type>
-		<object-name>nm.100</object-name>
 		<condition>
-			<greater-than-equals>
-				<property>/instrumentation/dme/indicated-distance-nm</property>
-				<value>100</value>
-			</greater-than-equals>
+			<and>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+				<greater-than-equals>
+					<property>/instrumentation/dme/indicated-distance-nm</property>
+					<value>10</value>
+				</greater-than-equals>
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>1</value>
+				</equals>
+			</and>
+		</condition>
+	</animation>
+	<animation>
+		<object-name>nm.100</object-name>
+		<type>select</type>
+		<condition>
+			<and>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+				<greater-than-equals>
+					<property>/instrumentation/dme/indicated-distance-nm</property>
+					<value>100</value>
+				</greater-than-equals>
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>1</value>
+				</equals>
+			</and>
 		</condition>
 	</animation>
 
@@ -170,23 +206,59 @@
 	</animation>
 
 	<animation>
+		<object-name>kt.001</object-name>
+		<type>select</type>
+		<condition>
+			<and>
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>1</value>
+				</equals>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+			</and>
+		</condition>
+	</animation>
+	<animation>
 		<type>select</type>
 		<object-name>kt.010</object-name>
 		<condition>
-			<greater-than-equals>
-				<property>/instrumentation/dme/indicated-ground-speed-kt</property>
-				<value>10</value>
-			</greater-than-equals>
+			<and>
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>1</value>
+				</equals>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+				<greater-than-equals>
+					<property>/instrumentation/dme/indicated-ground-speed-kt</property>
+					<value>10</value>
+				</greater-than-equals>
+			</and>
 		</condition>
 	</animation>
 	<animation>
 		<type>select</type>
 		<object-name>kt.100</object-name>
 		<condition>
-			<greater-than-equals>
-				<property>/instrumentation/dme/indicated-ground-speed-kt</property>
-				<value>100</value>
-			</greater-than-equals>
+			<and>
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>1</value>
+				</equals>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+				<greater-than-equals>
+					<property>/instrumentation/dme/indicated-ground-speed-kt</property>
+					<value>100</value>
+				</greater-than-equals>
+			</and>
 		</condition>
 	</animation>
 
@@ -218,14 +290,66 @@
 
 	<animation>
 		<type>select</type>
-		<object-name>min.10</object-name>
+		<object-name>min.01</object-name>
 		<condition>
-			<greater-than-equals>
-				<property>/instrumentation/dme/indicated-time-min-clp</property>
-				<value>10</value>
-			</greater-than-equals>
+			<and>
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>1</value>
+				</equals>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+			</and>
 		</condition>
 	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>min.10</object-name>
+		<condition>
+			<and>
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>1</value>
+				</equals>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+				<greater-than-equals>
+					<property>/instrumentation/dme/indicated-time-min-clp</property>
+					<value>10</value>
+				</greater-than-equals>
+			</and>
+		</condition>
+	</animation>
+
+<!-- not in range-->
+	<animation>
+		<object-name>nm.002</object-name>
+		<object-name>nm.011</object-name>
+		<object-name>nm.101</object-name>
+		<object-name>kt.002</object-name>
+		<object-name>kt.011</object-name>
+		<object-name>kt.101</object-name>
+		<object-name>min.02</object-name>
+		<object-name>min.11</object-name>
+		<type>select</type>
+		<condition>
+			<and>
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>0</value>
+				</equals>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+			</and>
+		</condition>
+	</animation>
+
 
 </PropertyList>
 
