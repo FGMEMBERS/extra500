@@ -38,9 +38,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.49497475"
-     inkscape:cx="1778.7531"
-     inkscape:cy="1301.066"
+     inkscape:zoom="0.7"
+     inkscape:cx="90.673711"
+     inkscape:cy="916.07941"
      inkscape:document-units="px"
      inkscape:current-layer="layer11"
      showgrid="false"
@@ -97,6 +97,14 @@
        orientation="0,1"
        position="713.67277,1466.9552"
        id="guide3861" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="200,927.14286"
+       id="guide3656" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="200,927.14286"
+       id="guide3658" />
   </sodipodi:namedview>
   <metadata
      id="metadata6210">
@@ -1142,18 +1150,19 @@
       </g>
     </g>
     <g
-       style="display:inline"
-       transform="matrix(0.8019151,0,0,0.86766437,-0.24596088,-21.949122)"
        id="TCAS">
       <rect
-         ry="25.772636"
-         y="484.28015"
-         x="5.8252625"
-         height="568.95966"
-         width="488.29932"
+         ry="22.361998"
+         y="398.2435"
+         x="4.425405"
+         height="493.66602"
+         width="391.57458"
          id="rect4088"
-         style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#3391e8;stroke-width:9.59069061;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+         style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#3391e8;stroke-width:7.99999952;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
       <g
+         id="TCAS_Map" />
+      <g
+         transform="matrix(0.8019151,0,0,0.86766437,-0.24596088,-21.949122)"
          id="TCAS_online">
         <text
            inkscape:label="#text5341-2"
@@ -1211,17 +1220,17 @@
              style="font-size:50.89516068px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr-tb;text-anchor:end;fill:#ffffff;stroke:#ffffff;stroke-width:1.62989461;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold">6 NM</tspan></text>
         <path
            sodipodi:type="arc"
-           style="color:#000000;fill:none;stroke:#ffffff;stroke-width:6.665658;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:6.66565838, 19.99697518;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           style="color:#000000;fill:none;stroke:#ffffff;stroke-width:5.33252621;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:5.33252671, 15.99758016;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
            id="path4106"
            sodipodi:cx="201.78572"
            sodipodi:cy="593.5"
            sodipodi:rx="103.21429"
            sodipodi:ry="103.21429"
-           d="m 305.00001,593.5 c 0,57.00368 -46.21061,103.21429 -103.21429,103.21429 -57.00368,0 -103.214286,-46.21061 -103.214286,-103.21429 0,-57.00368 46.210606,-103.21429 103.214286,-103.21429 57.00368,0 103.21429,46.21061 103.21429,103.21429 z"
-           transform="matrix(0.46815525,0,0,0.43267971,155.50788,469.65604)" />
+           d="m 305.00001,593.5 a 103.21429,103.21429 0 1 1 -206.428576,0 103.21429,103.21429 0 1 1 206.428576,0 z"
+           transform="matrix(0.58519406,0,0,0.54084964,131.89112,405.45719)" />
         <path
            transform="matrix(1.7971537,0,0,1.6609702,-112.66503,-259.33437)"
-           d="m 305.00001,593.5 c 0,57.00368 -46.21061,103.21429 -103.21429,103.21429 -57.00368,0 -103.214286,-46.21061 -103.214286,-103.21429 0,-57.00368 46.210606,-103.21429 103.214286,-103.21429 57.00368,0 103.21429,46.21061 103.21429,103.21429 z"
+           d="m 305.00001,593.5 a 103.21429,103.21429 0 1 1 -206.428576,0 103.21429,103.21429 0 1 1 206.428576,0 z"
            sodipodi:ry="103.21429"
            sodipodi:rx="103.21429"
            sodipodi:cy="593.5"
@@ -1232,7 +1241,7 @@
       </g>
       <g
          id="TCAS_offline"
-         transform="matrix(1.3202282,0,0,1.2127402,-14.54223,-12.071464)">
+         transform="matrix(1.0587109,0,0,1.0522515,-11.907595,-32.423101)">
         <path
            inkscape:connector-curvature="0"
            id="path7385"

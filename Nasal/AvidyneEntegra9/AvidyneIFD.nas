@@ -144,10 +144,10 @@ var AvidyneIFD = {
 		"view": [m.width, m.height],
 		"mipmapping": 1,
 		});
+		
 
 		m.canvas.addPlacement({"node": acPlace});
 		m.canvas.setColorBackground(0,0,0);
-		
 		# .. and place it on the object called PFD-Screen
 
 		#m.nHeadingBug = props.globals.initNode("/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg",0.0,"DOUBLE");
@@ -187,6 +187,7 @@ var AvidyneIFD = {
 		m.page["PFD"] = AvidynePagePFD.new(m,"PFD",m.data);
 		m.page["FMS"] = AvidynePageFMS.new(m,"FMS",m.data);
 		m.page["MAP"] = AvidynePageMAP.new(m,"MAP",m.data);
+		#m.page["CHKL"] = AvidynePageTest.new(m,"Test",m.data);
 		
 		m._dt20Hz = 0;
 		m._now20Hz = systime();

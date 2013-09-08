@@ -36,8 +36,11 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		extra500.fuelSystem.init();
 		extra500.autopilot.init();
 		extra500.fms.init();
+		
 		IFD.LH.init();
 		IFD.RH.init();
+		IFD.tcasModel.init();
+		
 		extra500.keypad.init();
 		extra500.mainDoor.init();
 		extra500.cabin.init();
