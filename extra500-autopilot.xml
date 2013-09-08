@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-09-01
+      Date:             2013-09-07
 -->
 
 <autopilot name="STEC55X">
@@ -822,11 +822,12 @@
 			<output>/autopilot/mode/apr</output>
 		</switch>
 
-<!-- switching APR mode off when nav mode is not on, not tuned to localizer freq, CDI needle defl more then 1 (less then -1)-->
+<!-- switching APR mode off when nav mode is not on, on FMS, not tuned to localizer freq, CDI needle defl more then 1 (less then -1)-->
 		<switch name="APRmodeoff">
 			<default value="/autopilot/mode/apr"/>
 			<test logic="OR" value="0">
 				/autopilot/mode/nav eq 0
+				/instrumentation/nav-source eq 2
 				/autopilot/radionav-channel/is-localizer-frequency eq 0
 				/autopilot/radionav-channel/timer-full-defl eq 1
 			</test>
@@ -1077,6 +1078,16 @@
 				/instrumentation/gps/serviceable eq 0
 			</test>
 			<output>/autopilot/fms-channel/gpss/distance-nm</output>
+		</switch>
+
+<!-- setting the course of nav1 automatically when fms active and selected -->
+		<switch name="courseNav1set">
+			<default value="/instrumentation/nav/radials/selected-deg"/>
+			<test logic="AND" value="/autopilot/fms-channel/leg-true-course-deg">
+				/autopilot/route-manager/current-wp gt -1
+				/instrumentation/nav-source eq 2
+			</test>
+			<output>/instrumentation/nav/radials/selected-deg</output>
 		</switch>
 
 <!-- GPSS calcs -->

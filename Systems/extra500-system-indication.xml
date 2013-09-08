@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-09-06
+      Date:             2013-09-07
 -->
 
 <system name="indication">
@@ -1080,6 +1080,17 @@
 				</product>	
 			</function>
 		</fcs_function>
+
+	</channel>
+
+	<channel name="dme">
+		<switch name="dmeminmax">
+			<default value="/instrumentation/dme/indicated-time-min"/>
+			<test logic="AND" value="99">
+				/instrumentation/dme/indicated-time-min gt 99
+			</test>
+			<output>/instrumentation/dme/indicated-time-min-clp</output>
+		</switch>
 
 	</channel>
 
