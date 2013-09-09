@@ -18,8 +18,8 @@
       Author: Eric van den Berg
       Date: 2013-06-24
 
-      Last change:      Eric van den Berg
-      Date:             2013-07-21
+      Last change:      Dirk Dittmann
+      Date:             2013-09-09
 
 Modified standard FG file
 -->
@@ -74,12 +74,19 @@ Modified standard FG file
 				setprop("/instrumentation/com2-selected",1);
 			}
 		},1);
+		var lDME = setlistener("/instrumentation/dme/frequencies/keypad-dme-mode",func(n){
+			var i = n.getValue();
+			var mode = {0:'Nav 1', 1:'Nav 2', 2:'Nav 1 Hold', 3:'Nav 2 Hold'};
+			setprop("/sim/gui/dialogs/radios/keypad-dme-mode", mode[i]);
+		},1);
 	]]>
 	</open>
 	<close>
 		<![CDATA[
 		removelistener(lSource);
 		removelistener(lCom);
+		removelistener(lDME);
+		
 		]]>
 	</close>
   </nasal>
@@ -138,12 +145,6 @@ Modified standard FG file
       <row>0</row>
       <col>5</col>
       <label>Standby</label>
-    </text>
-
-    <text>
-      <row>0</row>
-      <col>7</col>
-      <label>DME</label>
     </text>
 
     <!-- Dummy label to stretch table, as layout manager doesn't handle labels well -->
@@ -490,28 +491,7 @@ Modified standard FG file
       </binding>
     </input>
 
-  <checkbox>
-      <name>dme1</name>   
-      <row>4</row>
-      <col>7</col>
-      <width>12</width>
-      <height>12</height>
-      <live>true</live>
-      <property>/instrumentation/dme/frequencies/nav1-selected</property>
-      <binding>
-		<command>dialog-apply</command>
-		<object-name>dme1</object-name>
-      </binding>
-      <binding>
-            <command>nasal</command>
-		<script>
-                        if ( getprop("/instrumentation/dme/frequencies/source") == "/instrumentation/nav[1]/frequencies/selected-mhz" ) {
-				setprop("/instrumentation/dme/frequencies/source","/instrumentation/nav[0]/frequencies/selected-mhz");
-				setprop("/instrumentation/dme/frequencies/nav2-selected",0);
-			} 
-                </script>  
-	</binding>
-  </checkbox>
+
 
   <checkbox>
       <name>nav2</name>   
@@ -604,28 +584,7 @@ Modified standard FG file
       </binding>
     </input>
 
-  <checkbox>
-      <name>dme2</name>   
-      <row>5</row>
-      <col>7</col>
-      <width>12</width>
-      <height>12</height>
-      <live>true</live>
-      <property>/instrumentation/dme/frequencies/nav2-selected</property>
-      <binding>
-		<command>dialog-apply</command>
-		<object-name>dme2</object-name>
-      </binding>
-      <binding>
-            <command>nasal</command>
-		<script>
-                        if ( getprop("/instrumentation/dme/frequencies/source") == "/instrumentation/nav[0]/frequencies/selected-mhz" ) {
-				setprop("/instrumentation/dme/frequencies/source","/instrumentation/nav[1]/frequencies/selected-mhz");
-				setprop("/instrumentation/dme/frequencies/nav1-selected",0);
-			} 
-                </script>  
-      </binding>
-  </checkbox>
+
 
     <text>
       <row>6</row>
@@ -656,10 +615,53 @@ Modified standard FG file
     </input>
 
   </group>
-
-  <!-- transponder controls -->
+  <!-- DME Kypad mode selection -->
+	<group>
+		<layout>hbox</layout>
+		<text>
+			<label>DME</label>
+		</text>
+		<text>
+			<pref-width>100</pref-width>
+			<live>true</live>
+			<property>/instrumentation/dme/frequencies/keypad-selected-mhz</property>
+		</text>
+		<text>
+			<label>Mhz</label>
+		</text>
+	
+		<combo>
+			<name>DME-Mode</name>
+			<pref-width>150</pref-width>
+			<pref-height>25</pref-height>
+			<live>true</live>
+			<property>/sim/gui/dialogs/radios/keypad-dme-mode</property>
+			<value>Nav 1</value>
+			<value>Nav 2</value>
+			<value>Nav 1 Hold</value>
+			<value>Nav 2 Hold</value>
+			<binding>
+				<command>dialog-apply</command>
+				<object-name>DME-Mode</object-name>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>
+					<![CDATA[
+					var i = getprop("/sim/gui/dialogs/radios/keypad-dme-mode"); 
+					var mode = {'Nav 1':0, 'Nav 2':1, 'Nav 1 Hold':2, 'Nav 2 Hold':3};
+					setprop("/instrumentation/dme/frequencies/keypad-dme-mode", mode[i]);
+						]]>
+				</script>  
+			</binding>
+		</combo>
+		
+	
+	</group>	 
+  
 
   <hrule/>
+  <!-- transponder controls -->
   <group>
     <layout>hbox</layout>
     <text>
