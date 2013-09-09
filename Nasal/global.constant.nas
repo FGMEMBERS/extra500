@@ -23,8 +23,13 @@
 # Constans for Calculations
 # dynamic load from set.xml (PropertyTree)
 
-# call in Aircraft namespace global.CONST.DEG2RAD
+# init modes for all nasal components 
+var INIT_START 		= 1;
+var INIT_STOP		= 2;
+var INIT_RUN	 	= 3;
+var INIT_PAUSE 	 	= 4;
 
+# call in Aircraft namespace global.CONST.DEG2RAD
 var Constant = {
 	new : func(){
 		var m = {parents:[

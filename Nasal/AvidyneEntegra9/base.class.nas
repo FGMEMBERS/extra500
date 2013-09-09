@@ -138,7 +138,10 @@ var IfdWidget = {
 	deinit : func(){
 		me.removeListeners();	
 	},
-	update20Hz : func(now,dt){},
-	update2Hz  : func(now,dt){},
+	setVisible : func(visible){
+		
+	},
+# 	update20Hz : func(now,dt){},
+# 	update2Hz  : func(now,dt){},
 };
 

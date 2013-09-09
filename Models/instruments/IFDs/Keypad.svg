@@ -24,11 +24,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.8844912"
-     inkscape:cx="133.21261"
-     inkscape:cy="50.481611"
+     inkscape:zoom="3.90625"
+     inkscape:cx="13.056"
+     inkscape:cy="71.761831"
      inkscape:document-units="px"
-     inkscape:current-layer="layer8"
+     inkscape:current-layer="layer6"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -39,7 +39,7 @@
      inkscape:window-maximized="1"
      inkscape:snap-page="true"
      inkscape:snap-bbox="true"
-     inkscape:snap-global="true"
+     inkscape:snap-global="false"
      inkscape:bbox-nodes="true"
      inkscape:snap-grids="false"
      inkscape:snap-to-guides="false">
@@ -71,15 +71,170 @@
   <g
      inkscape:groupmode="layer"
      id="layer8"
-     inkscape:label="Background">
+     inkscape:label="Background"
+     style="display:inline">
     <rect
-       style="display:inline;color:#000000;fill:#e8e8d8;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;overflow:visible;enable-background:accumulate"
+       style="color:#000000;fill:#e8e8d8;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        id="rect3226"
        width="384"
        height="128"
        x="-4.8511542e-15"
        y="1.1604071e-14"
        ry="0" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer9"
+     inkscape:label="DME"
+     style="display:inline">
+    <text
+       transform="scale(0.99307963,1.0069686)"
+       sodipodi:linespacing="125%"
+       id="DME_Label"
+       y="26.956448"
+       x="236.27634"
+       style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
+       xml:space="preserve"><tspan
+         y="26.956448"
+         x="236.27634"
+         id="tspan3249"
+         sodipodi:role="line">DME FREQ</tspan></text>
+    <g
+       id="DME_Nav1">
+      <rect
+         y="33.940521"
+         x="180.26648"
+         height="18"
+         width="196.44089"
+         id="DME_Nav1_Selection"
+         style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         transform="scale(0.99307963,1.0069686)"
+         sodipodi:linespacing="125%"
+         id="DME_Nav1_Label"
+         y="48.724648"
+         x="183.91412"
+         style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
+         xml:space="preserve"><tspan
+           y="48.724648"
+           x="183.91412"
+           id="tspan3293"
+           sodipodi:role="line">Nav1</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
+         x="377.25244"
+         y="48.724648"
+         id="DME_Nav1_Freq"
+         sodipodi:linespacing="125%"
+         transform="scale(0.99307963,1.0069686)"><tspan
+           sodipodi:role="line"
+           id="tspan3301"
+           x="377.25244"
+           y="48.724648">108.800</tspan></text>
+    </g>
+    <g
+       id="DME_Nav2">
+      <rect
+         style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="DME_Nav2_Selection"
+         width="196.44089"
+         height="18"
+         x="180.26648"
+         y="56.141476" />
+      <text
+         xml:space="preserve"
+         style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
+         x="183.91412"
+         y="70.868057"
+         id="DME_Nav2_Label"
+         sodipodi:linespacing="125%"
+         transform="scale(0.99307963,1.0069686)"><tspan
+           sodipodi:role="line"
+           id="tspan3231"
+           x="183.91412"
+           y="70.868057">Nav2</tspan></text>
+      <text
+         transform="scale(0.99307963,1.0069686)"
+         sodipodi:linespacing="125%"
+         id="DME_Nav2_Freq"
+         y="70.868057"
+         x="377.25244"
+         style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
+         xml:space="preserve"><tspan
+           y="70.868057"
+           x="377.25244"
+           id="tspan3305"
+           sodipodi:role="line">108.800</tspan></text>
+    </g>
+    <g
+       id="DME_Nav1Hold">
+      <rect
+         y="78.992134"
+         x="180.26648"
+         height="18"
+         width="196.44089"
+         id="DME_Nav1Hold_Selection"
+         style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         transform="scale(0.99307963,1.0069686)"
+         sodipodi:linespacing="125%"
+         id="DME_Nav1Hold_Label"
+         y="94.054771"
+         x="183.91412"
+         style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
+         xml:space="preserve"><tspan
+           y="94.054771"
+           x="183.91412"
+           id="tspan3297"
+           sodipodi:role="line">Nav1 Hold</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
+         x="377.25244"
+         y="94.10968"
+         id="DME_Nav1Hold_Freq"
+         sodipodi:linespacing="125%"
+         transform="scale(0.99307963,1.0069686)"><tspan
+           sodipodi:role="line"
+           id="tspan3309"
+           x="377.25244"
+           y="94.10968">108.800</tspan></text>
+    </g>
+    <g
+       id="DME_Nav2Hold">
+      <rect
+         style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="DME_Nav2Hold_Selection"
+         width="196.44089"
+         height="18"
+         x="180.26648"
+         y="102.39571" />
+      <text
+         xml:space="preserve"
+         style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
+         x="183.91412"
+         y="117.29639"
+         id="DME_Nav2Hold_Label"
+         sodipodi:linespacing="125%"
+         transform="scale(0.99307963,1.0069686)"><tspan
+           sodipodi:role="line"
+           id="tspan3275"
+           x="183.91412"
+           y="117.29639">Nav2 Hold</tspan></text>
+      <text
+         transform="scale(0.99307963,1.0069686)"
+         sodipodi:linespacing="125%"
+         id="DME_Nav2Hold_Freq"
+         y="117.3513"
+         x="377.25244"
+         style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
+         xml:space="preserve"><tspan
+           y="117.3513"
+           x="377.25244"
+           id="tspan3313"
+           sodipodi:role="line">108.800</tspan></text>
+    </g>
   </g>
   <g
      inkscape:label="Com"
@@ -92,7 +247,7 @@
        style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
        x="12.293591"
        y="947.78326"
-       id="text2985"
+       id="Com1_Selected_Label"
        sodipodi:linespacing="125%"
        transform="scale(0.99307963,1.0069686)"><tspan
          sodipodi:role="line"
@@ -104,7 +259,7 @@
        style="font-size:27.28888893px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono Bold"
        x="177.13637"
        y="909.74615"
-       id="Com1_selected"
+       id="Com1_Selected_Frequency"
        sodipodi:linespacing="125%"
        transform="scale(0.95200051,1.0504196)"><tspan
          sodipodi:role="line"
@@ -113,14 +268,14 @@
          y="909.74615">122.700</tspan></text>
     <rect
        style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       id="Com1_input"
+       id="Com1_Standby_Selection"
        width="112.18446"
        height="24.217655"
        x="58.078304"
        y="957.16626" />
     <text
        sodipodi:linespacing="125%"
-       id="Com1_standby"
+       id="Com1_Standby_Frequency"
        y="931.74451"
        x="176.97647"
        style="font-size:27.28888893px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono Bold"
@@ -133,7 +288,7 @@
     <text
        transform="scale(0.99307963,1.0069686)"
        sodipodi:linespacing="125%"
-       id="text3921"
+       id="Com1_Standby_Label"
        y="970.73083"
        x="12.604749"
        style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
@@ -145,7 +300,7 @@
     <text
        transform="scale(0.99307963,1.0069686)"
        sodipodi:linespacing="125%"
-       id="text3943"
+       id="Com2_Selected_Label"
        y="1009.62"
        x="12.293591"
        style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
@@ -157,7 +312,7 @@
     <text
        transform="scale(0.95200051,1.0504196)"
        sodipodi:linespacing="125%"
-       id="Com2_selected"
+       id="Com2_Selected_Frequency"
        y="969.0249"
        x="177.13637"
        style="font-size:27.28888893px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono Bold"
@@ -171,7 +326,7 @@
        x="58.078304"
        height="24.217655"
        width="112.18446"
-       id="Com2_input"
+       id="Com2_Standby_Selection"
        style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
     <text
        transform="scale(0.95200051,1.0504196)"
@@ -179,7 +334,7 @@
        style="font-size:27.28888893px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono Bold"
        x="176.97647"
        y="991.02325"
-       id="Com2_standby"
+       id="Com2_Standby_Frequency"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3953"
@@ -190,7 +345,7 @@
        style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
        x="12.604749"
        y="1032.5679"
-       id="text3955"
+       id="Com2_Standby_Label"
        sodipodi:linespacing="125%"
        transform="scale(0.99307963,1.0069686)"><tspan
          sodipodi:role="line"
@@ -338,7 +493,7 @@
     <text
        transform="scale(0.99307963,1.0069686)"
        sodipodi:linespacing="125%"
-       id="text3177"
+       id="Nav1_Selected_Label"
        y="29.818016"
        x="12.293433"
        style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
@@ -350,7 +505,7 @@
     <text
        transform="scale(0.95200051,1.0504196)"
        sodipodi:linespacing="125%"
-       id="Nav1_selected"
+       id="Nav1_Selected_Frequency"
        y="29.752884"
        x="177.13603"
        style="font-size:27.28888893px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono Bold"
@@ -364,7 +519,7 @@
        x="58.078304"
        height="24.217655"
        width="112.18446"
-       id="Nav1_input"
+       id="Nav1_Standby_Selection"
        style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
     <text
        transform="scale(0.95200051,1.0504196)"
@@ -372,7 +527,7 @@
        style="font-size:27.28888893px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono Bold"
        x="176.97615"
        y="51.751236"
-       id="Nav1_standby"
+       id="Nav1_Standby_Frequency"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3189"
@@ -383,7 +538,7 @@
        style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
        x="12.60459"
        y="52.765587"
-       id="text3191"
+       id="Nav1_Standby_Label"
        sodipodi:linespacing="125%"
        transform="scale(0.99307963,1.0069686)"><tspan
          sodipodi:role="line"
@@ -395,7 +550,7 @@
        style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
        x="12.293433"
        y="91.654747"
-       id="text3195"
+       id="Nav2_Selected_Label"
        sodipodi:linespacing="125%"
        transform="scale(0.99307963,1.0069686)"><tspan
          sodipodi:role="line"
@@ -407,7 +562,7 @@
        style="font-size:27.28888893px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono Bold"
        x="177.13603"
        y="89.031631"
-       id="Nav2_selected"
+       id="Nav2_Selected_Frequency"
        sodipodi:linespacing="125%"
        transform="scale(0.95200051,1.0504196)"><tspan
          sodipodi:role="line"
@@ -416,14 +571,14 @@
          y="89.031631">122.700</tspan></text>
     <rect
        style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       id="Nav2_input"
+       id="Nav2_Standby_Selection"
        width="112.18446"
        height="24.217655"
        x="58.078304"
        y="95.071594" />
     <text
        sodipodi:linespacing="125%"
-       id="Nav2_standby"
+       id="Nav2_Standby_Frequency"
        y="111.02998"
        x="176.97615"
        style="font-size:27.28888893px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono Bold"
@@ -436,7 +591,7 @@
     <text
        transform="scale(0.99307963,1.0069686)"
        sodipodi:linespacing="125%"
-       id="text3209"
+       id="Nav2_Standby_Label"
        y="114.60262"
        x="12.60459"
        style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
@@ -573,7 +728,7 @@
     <text
        transform="scale(0.99307963,1.0069686)"
        sodipodi:linespacing="125%"
-       id="DATA_XPDR_MODE"
+       id="FMS_XPDR_MODE"
        y="26.961023"
        x="247.25035"
        style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
@@ -587,7 +742,7 @@
        style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
        x="299.70523"
        y="26.961023"
-       id="DATA_XPDR"
+       id="FMS_XPDR"
        sodipodi:linespacing="125%"
        transform="scale(0.99307963,1.0069686)"><tspan
          sodipodi:role="line"
@@ -597,7 +752,7 @@
     <text
        transform="scale(0.99307963,1.0069686)"
        sodipodi:linespacing="125%"
-       id="DATA_DEST_ETE"
+       id="FMS_DEST_ETE"
        y="48.318542"
        x="284.89316"
        style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
@@ -611,7 +766,7 @@
        style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
        x="284.89316"
        y="70.902382"
-       id="DATA_ETE"
+       id="FMS_ETE"
        sodipodi:linespacing="125%"
        transform="scale(0.99307963,1.0069686)"><tspan
          sodipodi:role="line"
@@ -621,7 +776,7 @@
     <text
        transform="scale(0.99307963,1.0069686)"
        sodipodi:linespacing="125%"
-       id="DATA_VSR"
+       id="FMS_VSR"
        y="93.51368"
        x="284.89316"
        style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
@@ -647,7 +802,7 @@
        style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
        x="284.89316"
        y="116.09752"
-       id="DATA_NRST"
+       id="FMS_NRST"
        sodipodi:linespacing="125%"
        transform="scale(0.99307963,1.0069686)"><tspan
          sodipodi:role="line"

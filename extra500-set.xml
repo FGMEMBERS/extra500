@@ -795,9 +795,9 @@ JSBSim Extra Aircraft - Extra 500.
 
     <dme>                                                             
       <frequencies>
-            	<source>/instrumentation/nav[0]/frequencies/selected-mhz</source>	<!--may be set to nav-RH-IFD on keyboard with aux button-->        
-		<nav1-selected type="int">1</nav1-selected>
-		<nav2-selected type="int">0</nav2-selected>
+            	<source>/instrumentation/dme/frequencies/keypad-selected-mhz</source>	<!--may be set to nav-RH-IFD on keyboard with aux button-->        
+		<!--<nav1-selected type="int">1</nav1-selected>
+		<nav2-selected type="int">0</nav2-selected>-->
       </frequencies>
 	<indicated-time-min>0</indicated-time-min>
       <selector type="int">0</selector>  
