@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             07.09.13
+#      Date:             10.09.13
 #
 
 var init_listener = setlistener("/sim/signals/fdm-initialized", func {
@@ -35,6 +35,7 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		extra500.flapSystem.init();
 		extra500.fuelSystem.init();
 		extra500.autopilot.init();
+		extra500.audiopanel.init();
 		extra500.fms.init();
 		
 		IFD.LH.init();
