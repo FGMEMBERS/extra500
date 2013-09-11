@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             10.09.2013
+      Date:             11.09.2013
 
 
 ************************************************************************
@@ -1167,6 +1167,26 @@ JSBSim Extra Aircraft - Extra 500.
 		<SEC2MIN type="double">0.0166666666667</SEC2MIN>		
 	</const>
 	<instrumentation>
+		<Audiopanel>
+			<knobs>
+				<crewVol>0.5</crewVol>
+				<passVol>0.5</passVol>
+				<mkrconfig>1</mkrconfig>
+				<icsconfig>1</icsconfig>
+				<com1rcv>1</com1rcv>
+				<com1xmt>1</com1xmt>
+				<com2rcv>0</com2rcv>
+				<com2xmt>0</com2xmt>
+				<nav1>0</nav1>
+				<nav2>0</nav2>
+				<mkr>0</mkr>
+				<tel>0</tel>
+				<mon1>0</mon1>
+				<mon2>0</mon2>
+				<mute>0</mute>
+				<spk>0</spk>
+			</knobs>
+		</Audiopanel>
 		<EIP>
 			<state type="bool">false</state>
 		</EIP>

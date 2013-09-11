@@ -19,50 +19,548 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: Aug 09 2013
 
-      Last change: -     
-      Date: -            
+      Last change: Eric van den Berg     
+      Date: Aug 11 2013            
 -->
 <PropertyList>
 
 <path>audiopanel.ac</path>
 
-<!--animation>
+<!--dimming-->
+<animation>
+        	<type>material</type>
+        	<object-name>body</object-name>
+  		<object-name>mrk.left</object-name>
+  		<object-name>ics</object-name>
+  		<object-name>com1.rcv</object-name>
+  		<object-name>com2.rcv</object-name>
+  		<object-name>com1.xmt</object-name>
+  		<object-name>com2.xmt</object-name>
+  		<object-name>nav1</object-name>
+  		<object-name>nav2</object-name>
+  		<object-name>mrk.right</object-name>
+  		<object-name>tel</object-name>
+  		<object-name>mon1</object-name>
+  		<object-name>mon2</object-name>
+  		<object-name>mute</object-name>
+  		<object-name>spk</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/state</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.4</red>
+            	<green>0.4</green>
+            	<blue>0.4</blue>
+	    		<factor-prop>extra500/instrumentation/Audiopanel/Backlight/state</factor-prop>
+        	</emission>
+</animation>
+<animation>
+        	<type>material</type>
+  		<object-name>o</object-name>
+  		<object-name>m</object-name>
+  		<object-name>i</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/state</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.1</red>
+            	<green>0.1</green>
+            	<blue>0.1</blue>
+	    		<factor-prop>extra500/instrumentation/Audiopanel/Backlight/state</factor-prop>
+        	</emission>
+</animation>
+
+<!--marker indication-->
+<animation>
+        	<type>material</type>
+  		<object-name>o</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/state</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>1</red>
+            	<green>1</green>
+            	<blue>1</blue>
+	    		<factor-prop>/instrumentation/marker-beacon/outer</factor-prop>
+        	</emission>
+</animation>
+<animation>
+        	<type>material</type>
+  		<object-name>m</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/state</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>1</red>
+            	<green>1</green>
+            	<blue>1</blue>
+	    		<factor-prop>/instrumentation/marker-beacon/middle</factor-prop>
+        	</emission>
+</animation>
+<animation>
+        	<type>material</type>
+  		<object-name>i</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/state</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>1</red>
+            	<green>1</green>
+            	<blue>1</blue>
+	    		<factor-prop>/instrumentation/marker-beacon/inner</factor-prop>
+        	</emission>
+</animation>
+
+<!--light animation-->
+<!--marker config-->
+<animation>
+        	<type>material</type>
+  		<object-name>light.mkr.high</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/knobs/mkrconfig</property>
+				<value>0</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.0</red>
+            	<green>1</green>
+            	<blue>0.0</blue>
+			<property>extra500/instrumentation/Audiopanel/state</property>
+        	</emission>
+</animation>
+<animation>
+        	<type>material</type>
+  		<object-name>light.mkr.low</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/knobs/mkrconfig</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.0</red>
+            	<green>1</green>
+            	<blue>0.0</blue>
+			<property>extra500/instrumentation/Audiopanel/state</property>
+        	</emission>
+</animation>
+<animation>
+        	<type>material</type>
+  		<object-name>light.mkr.tm</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/knobs/mkrconfig</property>
+				<value>2</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.0</red>
+            	<green>1</green>
+            	<blue>0.0</blue>
+			<property>extra500/instrumentation/Audiopanel/state</property>
+        	</emission>
+</animation>
+
+<!--ics config-->
+<animation>
+        	<type>material</type>
+  		<object-name>light.ics.iso</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/knobs/icsconfig</property>
+				<value>0</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.0</red>
+            	<green>1</green>
+            	<blue>0.0</blue>
+			<property>extra500/instrumentation/Audiopanel/state</property>
+        	</emission>
+</animation>
+<animation>
+        	<type>material</type>
+  		<object-name>light.ics.all</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/knobs/icsconfig</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.0</red>
+            	<green>1</green>
+            	<blue>0.0</blue>
+			<property>extra500/instrumentation/Audiopanel/state</property>
+        	</emission>
+</animation>
+<animation>
+        	<type>material</type>
+  		<object-name>light.ics.crw</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/knobs/icsconfig</property>
+				<value>2</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.0</red>
+            	<green>1</green>
+            	<blue>0.0</blue>
+			<property>extra500/instrumentation/Audiopanel/state</property>
+        	</emission>
+</animation>
+
+<!--com knob lights-->
+<animation>
+        	<type>material</type>
+  		<object-name>light.com1.rcv</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/knobs/com1rcv</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.0</red>
+            	<green>1</green>
+            	<blue>0.0</blue>
+			<property>extra500/instrumentation/Audiopanel/state</property>
+        	</emission>
+</animation>
+<animation>
+        	<type>material</type>
+  		<object-name>light.com2.rcv</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/knobs/com2rcv</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.0</red>
+            	<green>1</green>
+            	<blue>0.0</blue>
+			<property>extra500/instrumentation/Audiopanel/state</property>
+        	</emission>
+</animation>
+<animation>
+        	<type>material</type>
+  		<object-name>light.com1.xmt</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/knobs/com1xmt</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.0</red>
+            	<green>1</green>
+            	<blue>0.0</blue>
+			<property>extra500/instrumentation/Audiopanel/state</property>
+        	</emission>
+</animation>
+<animation>
+        	<type>material</type>
+  		<object-name>light.com2.xmt</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/knobs/com2xmt</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.0</red>
+            	<green>1</green>
+            	<blue>0.0</blue>
+			<property>extra500/instrumentation/Audiopanel/state</property>
+        	</emission>
+</animation>
+
+<!--nav knob lights-->
+<animation>
+        	<type>material</type>
+  		<object-name>light.nav1</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/knobs/nav1</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.0</red>
+            	<green>1</green>
+            	<blue>0.0</blue>
+			<property>extra500/instrumentation/Audiopanel/state</property>
+        	</emission>
+</animation>
+<animation>
+        	<type>material</type>
+  		<object-name>light.nav2</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/knobs/nav2</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.0</red>
+            	<green>1</green>
+            	<blue>0.0</blue>
+			<property>extra500/instrumentation/Audiopanel/state</property>
+        	</emission>
+</animation>
+
+<!--mon knob lights-->
+<animation>
+        	<type>material</type>
+  		<object-name>light.mon1</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/knobs/mon1</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.0</red>
+            	<green>1</green>
+            	<blue>0.0</blue>
+			<property>extra500/instrumentation/Audiopanel/state</property>
+        	</emission>
+</animation>
+<animation>
+        	<type>material</type>
+  		<object-name>light.mon2</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/knobs/mon2</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.0</red>
+            	<green>1</green>
+            	<blue>0.0</blue>
+			<property>extra500/instrumentation/Audiopanel/state</property>
+        	</emission>
+</animation>
+
+<!--mkr knob lights-->
+<animation>
+        	<type>material</type>
+  		<object-name>light.mkr</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/knobs/mkr</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.0</red>
+            	<green>1</green>
+            	<blue>0.0</blue>
+			<property>extra500/instrumentation/Audiopanel/state</property>
+        	</emission>
+</animation>
+
+<!--mkr knob lights-->
+<animation>
+        	<type>material</type>
+  		<object-name>light.tel</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/knobs/tel</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.0</red>
+            	<green>1</green>
+            	<blue>0.0</blue>
+			<property>extra500/instrumentation/Audiopanel/state</property>
+        	</emission>
+</animation>
+
+<!--mute knob lights-->
+<animation>
+        	<type>material</type>
+  		<object-name>light.mute</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/knobs/mute</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.0</red>
+            	<green>1</green>
+            	<blue>0.0</blue>
+			<property>extra500/instrumentation/Audiopanel/state</property>
+        	</emission>
+</animation>
+
+<!--spk knob lights-->
+<animation>
+        	<type>material</type>
+  		<object-name>light.spk</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/knobs/spk</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.0</red>
+            	<green>1</green>
+            	<blue>0.0</blue>
+			<property>extra500/instrumentation/Audiopanel/state</property>
+        	</emission>
+</animation>
+
+<animation>
   <type>rotate</type>
-  <object-name>selector</object-name>
-  <object-name>left</object-name>
-  <object-name>right</object-name>
-  <property>extra500/system/fuel/SelectValve</property>
+  <object-name>knob.vol.pass</object-name>
+  <property>extra500/instrumentation/Audiopanel/knobs/passVol</property>
   <interpolation>
             <entry>
                 <ind>0</ind>
-                <dep>165</dep>
+                <dep>160</dep>
             </entry>
             <entry>
                 <ind>1</ind>
-                <dep>90</dep>
-            </entry>
-            <entry>
-                <ind>2</ind>
-                <dep>0</dep>
-            </entry>
-            <entry>
-                <ind>3</ind>
-                <dep>-90</dep>
-            </entry>
-            <entry>
-                <ind>4</ind>
-                <dep>-165</dep>
+                <dep>-160</dep>
             </entry>
         </interpolation>
   <axis>
-    <x1-m>0.031</x1-m>
-    <y1-m>0</y1-m>
-    <z1-m>0.0</z1-m>
-    <x2-m>0.031</x2-m>
-    <y2-m>0</y2-m>
-    <z2-m>1.0</z2-m>
+    <x1-m>-0.06380</x1-m>
+    <y1-m>-0.003086</y1-m>
+    <z1-m>0</z1-m>
+    <x2-m>-0.06380</x2-m>
+    <y2-m>-0.003086</y2-m>
+    <z2-m>1</z2-m>
   </axis>
-</animation-->
+</animation>
+
+<animation>
+  <type>rotate</type>
+  <object-name>knob.vol.crew</object-name>
+  <property>extra500/instrumentation/Audiopanel/knobs/crewVol</property>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>160</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-160</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>-0.06380</x1-m>
+    <y1-m>-0.003086</y1-m>
+    <z1-m>0</z1-m>
+    <x2-m>-0.06380</x2-m>
+    <y2-m>-0.003086</y2-m>
+    <z2-m>1</z2-m>
+  </axis>
+</animation>
+
+<!--pick animations-->
+<animation>
+  <type>pick</type>
+  <object-name>knob.vol.crew</object-name>
+  <visible>true</visible>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Audiopanel on/off");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>knob.vol.crew</object-name>
+  <visible>true</visible>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Audiopanel volcrew <");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>knob.vol.crew</object-name>
+  <visible>true</visible>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Audiopanel volcrew >");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>knob.vol.pass</object-name>
+  <visible>true</visible>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Audiopanel volpass <");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>knob.vol.pass</object-name>
+  <visible>true</visible>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Audiopanel volpass >");
+	]]></script>
+    </binding>
+  </action>
+</animation>
 
 <animation>
   <type>pick</type>

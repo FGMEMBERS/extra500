@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
-      Date:             2013.06.24
+      Last change:      Eric van den Berg
+      Date:             2013.09.11
 -->
 
 <PropertyList>
@@ -389,7 +389,6 @@
 <animation>
         <type>material</type>
         <object-name>Autopilot.Display</object-name>
-        <object-name>Autopilot.Frame</object-name>
 		<object-name>Autopilot.Display.HDG</object-name>
 		<object-name>Autopilot.Display.RDY</object-name>
 		<object-name>Autopilot.Display.NAV</object-name>

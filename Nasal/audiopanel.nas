@@ -16,8 +16,8 @@
 #      Authors: Eric van den Berg
 #      Date: Aug 10 2013
 #
-#      Last change:      - 
-#      Date:             -
+#      Last change:      Eric van den Berg 
+#      Date:             Aug 11 2013
 #
 
 var AudiopanelClass = {
@@ -80,6 +80,21 @@ var AudiopanelClass = {
 	},
 
 # Events from the UI
+	onClickonoff: func(){
+		print("on off");
+	},
+	onClickvolcrewplus : func(){
+		print("crew vol plus");
+	},
+	onClickvolcrewmin : func(){
+		print("crew vol min");
+	},
+	onClickvolpassplus : func(){
+		print("vol pass plus");
+	},
+	onClickvolpassmin : func(){
+		print("vol pass min");
+	},
 	onClickMRKleft : func(){
 		print("mrk left");
 	},
@@ -123,6 +138,11 @@ var AudiopanelClass = {
 		print("spk");
 	},
 	initUI : func(){
+		UI.register("Audiopanel on/off", 		func{extra500.audiopanel.onClickonoff(); } 	);
+		UI.register("Audiopanel volcrew <", 	func{extra500.audiopanel.onClickvolcrewplus(); } 	);
+		UI.register("Audiopanel volcrew >", 	func{extra500.audiopanel.onClickvolcrewmin(); } 	);
+		UI.register("Audiopanel volpass <", 	func{extra500.audiopanel.onClickvolpassplus(); } 	);
+		UI.register("Audiopanel volpass >", 	func{extra500.audiopanel.onClickvolpassmin(); } 	);
 		UI.register("Audiopanel MRKleft", 		func{extra500.audiopanel.onClickMRKleft(); } 	);
 		UI.register("Audiopanel ICS", 		func{extra500.audiopanel.onClickICS(); } 	);
 		UI.register("Audiopanel com1rcv", 		func{extra500.audiopanel.onClickcom1rcv(); } 	);
