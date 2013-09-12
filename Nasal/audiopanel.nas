@@ -72,7 +72,7 @@ var AudiopanelClass = {
 		
 		print("AudiopanelClass.init() ... ");
 # initialisation of avionics and com volumes
-		var vol = getprop("/sim/sound/avionics/volume")
+		var vol = getprop("/sim/sound/avionics/volume");
 		setprop("/extra500/instrumentation/Audiopanel/knobs/crewVol",vol);
 		setprop("/instrumentation/comm[0]/volume",vol);
 		setprop("/instrumentation/comm[1]/volume",vol);
