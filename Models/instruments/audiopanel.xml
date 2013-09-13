@@ -20,7 +20,7 @@
       Date: Aug 09 2013
 
       Last change: Eric van den Berg     
-      Date: Aug 11 2013            
+      Date: Aug 13 2013            
 -->
 <PropertyList>
 
@@ -57,72 +57,69 @@
 	    		<factor-prop>extra500/instrumentation/Audiopanel/Backlight/state</factor-prop>
         	</emission>
 </animation>
-<animation>
-        	<type>material</type>
-  		<object-name>o</object-name>
-  		<object-name>m</object-name>
-  		<object-name>i</object-name>
-		<condition>
-			<equals>
-				<property>extra500/instrumentation/Audiopanel/state</property>
-				<value>1</value>
-			</equals>
-		</condition>
-        	<emission>
-            	<red>0.1</red>
-            	<green>0.1</green>
-            	<blue>0.1</blue>
-	    		<factor-prop>extra500/instrumentation/Audiopanel/Backlight/state</factor-prop>
-        	</emission>
-</animation>
 
 <!--marker indication-->
 <animation>
         	<type>material</type>
   		<object-name>o</object-name>
 		<condition>
-			<equals>
-				<property>extra500/instrumentation/Audiopanel/state</property>
-				<value>1</value>
-			</equals>
+			<and>
+				<equals>
+					<property>extra500/instrumentation/Audiopanel/state</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>/instrumentation/marker-beacon/outer</property>
+					<value>1</value>
+				</equals>
+			</and>
 		</condition>
         	<emission>
             	<red>1</red>
             	<green>1</green>
             	<blue>1</blue>
-	    		<factor-prop>/instrumentation/marker-beacon/outer</factor-prop>
         	</emission>
 </animation>
 <animation>
         	<type>material</type>
   		<object-name>m</object-name>
 		<condition>
-			<equals>
-				<property>extra500/instrumentation/Audiopanel/state</property>
-				<value>1</value>
-			</equals>
+			<and>
+				<equals>
+					<property>extra500/instrumentation/Audiopanel/state</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>/instrumentation/marker-beacon/middle</property>
+					<value>1</value>
+				</equals>
+			</and>
 		</condition>
         	<emission>
             	<red>1</red>
             	<green>1</green>
             	<blue>1</blue>
-	    		<factor-prop>/instrumentation/marker-beacon/middle</factor-prop>
         	</emission>
 </animation>
 <animation>
         	<type>material</type>
   		<object-name>i</object-name>
 		<condition>
-			<equals>
-				<property>extra500/instrumentation/Audiopanel/state</property>
-				<value>1</value>
-			</equals>
+			<and>
+				<equals>
+					<property>extra500/instrumentation/Audiopanel/state</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>/instrumentation/marker-beacon/inner</property>
+					<value>1</value>
+				</equals>
+			</and>
 		</condition>
         	<emission>
             	<red>1</red>
             	<green>1</green>
             	<blue>1</blue>
-	    		<factor-prop>/instrumentation/marker-beacon/inner</factor-prop>
         	</emission>
 </animation>
 
@@ -136,12 +133,15 @@
 				<property>extra500/instrumentation/Audiopanel/knobs/mkrconfig</property>
 				<value>0</value>
 			</equals>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/state</property>
+				<value>1</value>
+			</equals>
 		</condition>
         	<emission>
             	<red>0.0</red>
             	<green>1</green>
             	<blue>0.0</blue>
-			<property>extra500/instrumentation/Audiopanel/state</property>
         	</emission>
 </animation>
 <animation>
@@ -152,12 +152,15 @@
 				<property>extra500/instrumentation/Audiopanel/knobs/mkrconfig</property>
 				<value>1</value>
 			</equals>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/state</property>
+				<value>1</value>
+			</equals>
 		</condition>
         	<emission>
             	<red>0.0</red>
             	<green>1</green>
             	<blue>0.0</blue>
-			<property>extra500/instrumentation/Audiopanel/state</property>
         	</emission>
 </animation>
 <animation>
@@ -168,12 +171,15 @@
 				<property>extra500/instrumentation/Audiopanel/knobs/mkrconfig</property>
 				<value>2</value>
 			</equals>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/state</property>
+				<value>1</value>
+			</equals>
 		</condition>
         	<emission>
             	<red>0.0</red>
             	<green>1</green>
             	<blue>0.0</blue>
-			<property>extra500/instrumentation/Audiopanel/state</property>
         	</emission>
 </animation>
 
@@ -186,12 +192,15 @@
 				<property>extra500/instrumentation/Audiopanel/knobs/icsconfig</property>
 				<value>0</value>
 			</equals>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/state</property>
+				<value>1</value>
+			</equals>
 		</condition>
         	<emission>
             	<red>0.0</red>
             	<green>1</green>
             	<blue>0.0</blue>
-			<property>extra500/instrumentation/Audiopanel/state</property>
         	</emission>
 </animation>
 <animation>
@@ -200,6 +209,10 @@
 		<condition>
 			<equals>
 				<property>extra500/instrumentation/Audiopanel/knobs/icsconfig</property>
+				<value>1</value>
+			</equals>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/state</property>
 				<value>1</value>
 			</equals>
 		</condition>
@@ -217,6 +230,10 @@
 			<equals>
 				<property>extra500/instrumentation/Audiopanel/knobs/icsconfig</property>
 				<value>2</value>
+			</equals>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/state</property>
+				<value>1</value>
 			</equals>
 		</condition>
         	<emission>
@@ -236,12 +253,15 @@
 				<property>extra500/instrumentation/Audiopanel/knobs/com1rcv</property>
 				<value>1</value>
 			</equals>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/state</property>
+				<value>1</value>
+			</equals>
 		</condition>
         	<emission>
             	<red>0.0</red>
             	<green>1</green>
             	<blue>0.0</blue>
-			<property>extra500/instrumentation/Audiopanel/state</property>
         	</emission>
 </animation>
 <animation>
@@ -252,12 +272,15 @@
 				<property>extra500/instrumentation/Audiopanel/knobs/com2rcv</property>
 				<value>1</value>
 			</equals>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/state</property>
+				<value>1</value>
+			</equals>
 		</condition>
         	<emission>
             	<red>0.0</red>
             	<green>1</green>
             	<blue>0.0</blue>
-			<property>extra500/instrumentation/Audiopanel/state</property>
         	</emission>
 </animation>
 <animation>
@@ -268,12 +291,15 @@
 				<property>extra500/instrumentation/Audiopanel/knobs/com1xmt</property>
 				<value>1</value>
 			</equals>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/state</property>
+				<value>1</value>
+			</equals>
 		</condition>
         	<emission>
             	<red>0.0</red>
             	<green>1</green>
             	<blue>0.0</blue>
-			<property>extra500/instrumentation/Audiopanel/state</property>
         	</emission>
 </animation>
 <animation>
@@ -284,12 +310,15 @@
 				<property>extra500/instrumentation/Audiopanel/knobs/com2xmt</property>
 				<value>1</value>
 			</equals>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/state</property>
+				<value>1</value>
+			</equals>
 		</condition>
         	<emission>
             	<red>0.0</red>
             	<green>1</green>
             	<blue>0.0</blue>
-			<property>extra500/instrumentation/Audiopanel/state</property>
         	</emission>
 </animation>
 
@@ -302,12 +331,15 @@
 				<property>extra500/instrumentation/Audiopanel/knobs/nav1</property>
 				<value>1</value>
 			</equals>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/state</property>
+				<value>1</value>
+			</equals>
 		</condition>
         	<emission>
             	<red>0.0</red>
             	<green>1</green>
             	<blue>0.0</blue>
-			<property>extra500/instrumentation/Audiopanel/state</property>
         	</emission>
 </animation>
 <animation>
@@ -318,12 +350,15 @@
 				<property>extra500/instrumentation/Audiopanel/knobs/nav2</property>
 				<value>1</value>
 			</equals>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/state</property>
+				<value>1</value>
+			</equals>
 		</condition>
         	<emission>
             	<red>0.0</red>
             	<green>1</green>
             	<blue>0.0</blue>
-			<property>extra500/instrumentation/Audiopanel/state</property>
         	</emission>
 </animation>
 
@@ -336,12 +371,15 @@
 				<property>extra500/instrumentation/Audiopanel/knobs/mon1</property>
 				<value>1</value>
 			</equals>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/state</property>
+				<value>1</value>
+			</equals>
 		</condition>
         	<emission>
             	<red>0.0</red>
             	<green>1</green>
             	<blue>0.0</blue>
-			<property>extra500/instrumentation/Audiopanel/state</property>
         	</emission>
 </animation>
 <animation>
@@ -352,12 +390,15 @@
 				<property>extra500/instrumentation/Audiopanel/knobs/mon2</property>
 				<value>1</value>
 			</equals>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/state</property>
+				<value>1</value>
+			</equals>
 		</condition>
         	<emission>
             	<red>0.0</red>
             	<green>1</green>
             	<blue>0.0</blue>
-			<property>extra500/instrumentation/Audiopanel/state</property>
         	</emission>
 </animation>
 
@@ -370,12 +411,15 @@
 				<property>extra500/instrumentation/Audiopanel/knobs/mkr</property>
 				<value>1</value>
 			</equals>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/state</property>
+				<value>1</value>
+			</equals>
 		</condition>
         	<emission>
             	<red>0.0</red>
             	<green>1</green>
             	<blue>0.0</blue>
-			<property>extra500/instrumentation/Audiopanel/state</property>
         	</emission>
 </animation>
 
@@ -388,12 +432,15 @@
 				<property>extra500/instrumentation/Audiopanel/knobs/tel</property>
 				<value>1</value>
 			</equals>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/state</property>
+				<value>1</value>
+			</equals>
 		</condition>
         	<emission>
             	<red>0.0</red>
             	<green>1</green>
             	<blue>0.0</blue>
-			<property>extra500/instrumentation/Audiopanel/state</property>
         	</emission>
 </animation>
 
@@ -406,12 +453,15 @@
 				<property>extra500/instrumentation/Audiopanel/knobs/mute</property>
 				<value>1</value>
 			</equals>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/state</property>
+				<value>1</value>
+			</equals>
 		</condition>
         	<emission>
             	<red>0.0</red>
             	<green>1</green>
             	<blue>0.0</blue>
-			<property>extra500/instrumentation/Audiopanel/state</property>
         	</emission>
 </animation>
 
@@ -424,12 +474,15 @@
 				<property>extra500/instrumentation/Audiopanel/knobs/spk</property>
 				<value>1</value>
 			</equals>
+			<equals>
+				<property>extra500/instrumentation/Audiopanel/state</property>
+				<value>1</value>
+			</equals>
 		</condition>
         	<emission>
             	<red>0.0</red>
             	<green>1</green>
             	<blue>0.0</blue>
-			<property>extra500/instrumentation/Audiopanel/state</property>
         	</emission>
 </animation>
 

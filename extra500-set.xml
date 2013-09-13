@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             11.09.2013
+      Date:             13.09.2013
 
 
 ************************************************************************
@@ -1169,6 +1169,7 @@ JSBSim Extra Aircraft - Extra 500.
 	<instrumentation>
 		<Audiopanel>
 			<knobs>
+				<state>1</state>
 				<crewVol>0.5</crewVol>
 				<passVol>0.5</passVol>
 				<mkrconfig>1</mkrconfig>
