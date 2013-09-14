@@ -1,6 +1,6 @@
 var TcasMap = {
 	new : func(parent,name){
-		var m = {parents:[TcasMap,parent.createChild("map",name)]};
+		var m = {parents:[TcasMap,Map.new(parent,name)]};
 		#debug.dump(m);
 		m._can = {
 			plane	: m.createChild("group","plane"),
@@ -25,97 +25,7 @@ var TcasMap = {
 		me._can.plane.setGeoPosition(lat,lon);
 		me; # chainable
 	},
-	setHdg : func(hdg) { 
-		me._node.getNode("hdg",1).setDoubleValue(hdg); 
-		me; # chainable
-	},
-	setZoom : func(zoom){
-		me._node.getNode("range", 1).setDoubleValue(zoom);
-	},
 };
-
-var Layer = {
-	new : func(group,id="none"){
-		var m = {parents:[Layer] }; 
-		m._id 			= id;
-		m._model 		= nil;
-		m._group 		= group;
-		m._lModelObserver 	= nil;
-		m._modelNotification 	= "";
-		return m;
-	},
-	setModel : func(instance=nil,model=nil){
-		if(instance==nil){instance=me;}
-		me.unsetModel();
-		if(model!=nil){
-			me._model = model;
-			me._lModelObserver = setlistener(me._model._nObserver,func(n){instance.onModelObserverNotify(n);},0,1);
-		}
-	},
-	unsetModel : func(){
-		if(me._model != nil){
-			removelistener(me._lModelObserver);
-			me._lModelObserver = nil;
-			me._model = nil;
-		}
-	},
-	onModelObserverNotify : func(n){
-		print("Layer.onModelObserverNotify() ...");
-		me._modelNotification = n.getValue();
-	},
-};
-
-var ModelData = {
-	new : func(class="none"){
-		var m = {parents:[ModelData] }; 
-		m._class = class;
-		return m;
-	},
-};
-
-var Model = {
-	new : func(rootPath){
-		var m = {parents:[Model] }; 
-		m._nRoot 	= props.globals.initNode(rootPath);
-		m._nObserver	= m._nRoot.initNode("observer","","STRING");
-		m._data = [];
-		m._dataIndex = 0;
-		m._dataCount = 0;
-		return m;
-	},	
-};
-
-var ModelController = {
-	new : func(model = nil,layer = nil){
-		var m = {parents:[ModelController] }; 
-		m._model = model;
-		m._layer = layer;
-		return m;
-	},
-	setModel : func(model=nil){
-		me.unsetModel();
-		if(model!=nil){
-			me._model = model;
-		}
-	},
-	unsetModel : func(){
-		if(me._model != nil){
-			me._model = nil;
-		}
-	},
-	setLayer : func(layer=nil){
-		me.unsetLayer();
-		if(layer!=nil){
-			me._layer = layer;
-		}
-	},
-	unsetLayer : func(){
-		if(me._layer != nil){
-			me._layer = nil;
-		}
-	},
-};
-
 
 
 var TcasData = {
