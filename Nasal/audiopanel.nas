@@ -32,6 +32,7 @@
 # /instrumentation/dme/volume
 # /instrumentation/marker-beacon/volume
 # /instrumentation/marker-beacon/audio-btn
+# /sim/fgcom/speaker-level
 #
 # NOTE: 	it looks like it is currently not possible in FG to switch comm1 and 2, control receive and send seperately or even control the comm volumes
 # 		However the volume properties are controlled in the code below. So if FG implements...
@@ -73,15 +74,8 @@ var AudiopanelClass = {
 		me.initUI();
 		
 		print("AudiopanelClass.init() ... ");
-# initialisation of avionics and com volumes
-		var vol = getprop("/sim/sound/avionics/volume");
-		setprop("/extra500/instrumentation/Audiopanel/knobs/crewVol",vol);
-		setprop("/instrumentation/comm[0]/volume",vol);
-		setprop("/instrumentation/comm[1]/volume",vol);
 
 		eSystem.circuitBreaker.AUDIO_MRK.outputAdd(me);		
-		me._timerLoop = maketimer(1.0,me,AudiopanelClass.update);
-		me._timerLoop.start();
 	},
 	_onBrightnessChange : func(n){
 		me._brightness = n.getValue();
@@ -113,8 +107,6 @@ var AudiopanelClass = {
 		me._backLightState = value;
 		me.electricWork();
 	},
-	update : func(){	
-	},
 	_switchOn : func(){
 		var vol = getprop("/extra500/instrumentation/Audiopanel/knobs/crewVol");
 		setprop("/sim/sound/avionics/volume",vol);
@@ -123,11 +115,13 @@ var AudiopanelClass = {
 			setprop("/instrumentation/com1-selected",1);
 			setprop("/instrumentation/com2-selected",0);
 			setprop("/instrumentation/comm[0]/volume",vol);
+			setprop("/sim/fgcom/speaker-level",vol);
 		} else {
 			setprop("/instrumentation/comm[1]/volume",vol);
 			setprop("/instrumentation/comm-selected-index",1);
 			setprop("/instrumentation/com1-selected",0);
 			setprop("/instrumentation/com2-selected",1);
+			setprop("/sim/fgcom/speaker-level",0);
 		}
 		if (getprop("/extra500/instrumentation/Audiopanel/volsetting/effects") == 1) {
 			setprop("/sim/sound/effects/volume",0.25 * getprop("/sim/sound/effects/volume"));
@@ -137,6 +131,7 @@ var AudiopanelClass = {
 	_switchOff : func(){
 		setprop("/instrumentation/comm[0]/volume",1);
 		setprop("/instrumentation/comm[1]/volume",0);
+		setprop("/sim/fgcom/speaker-level",1);
 		setprop("/sim/sound/avionics/volume",0);
 		setprop("/instrumentation/comm-selected-index",0);
 		setprop("/instrumentation/com1-selected",1);
@@ -165,6 +160,7 @@ var AudiopanelClass = {
 		setprop("/sim/sound/avionics/volume",newvol);
 		if (getprop("/instrumentation/comm-selected-index") == 0 ) {
 			setprop("/instrumentation/comm[0]/volume",newvol);
+			setprop("/sim/fgcom/speaker-level",newvol);
 		} else {
 			setprop("/instrumentation/comm[1]/volume",newvol);
 		}
@@ -176,6 +172,7 @@ var AudiopanelClass = {
 		setprop("/sim/sound/avionics/volume",newvol);
 		if (getprop("/instrumentation/comm-selected-index") == 0 ) {
 			setprop("/instrumentation/comm[0]/volume",newvol);
+			setprop("/sim/fgcom/speaker-level",newvol);
 		} else {
 			setprop("/instrumentation/comm[1]/volume",newvol);
 		}
@@ -191,19 +188,30 @@ var AudiopanelClass = {
 		setprop("/extra500/instrumentation/Audiopanel/knobs/passVol",newvol);
 	},
 	onClickMRKleft : func(){
-		print("mrk left");
+		if (getprop("/extra500/instrumentation/Audiopanel/state") == 1) {
+			var new = getprop("/extra500/instrumentation/Audiopanel/knobs/mkrconfig") + 1;
+			if (new == 2) {new = 0;}
+			setprop("/extra500/instrumentation/Audiopanel/knobs/mkrconfig",new);
+		}
 	},
 	onClickICS : func(){
-		print("ICS");
+		if (getprop("/extra500/instrumentation/Audiopanel/state") == 1) {
+			var new = getprop("/extra500/instrumentation/Audiopanel/knobs/icsconfig") + 1;
+			if (new == 3) {new = 0;}
+			setprop("/extra500/instrumentation/Audiopanel/knobs/icsconfig",new);
+		}
 	},
 	onClickcom1rcv : func(){
 		if (getprop("/extra500/instrumentation/Audiopanel/state") == 1) {
 			if (getprop("/extra500/instrumentation/Audiopanel/knobs/com1rcv") == 0) {
 				setprop("/extra500/instrumentation/Audiopanel/knobs/com1rcv",1);
-				setprop("/instrumentation/comm[0]/volume",getprop("/extra500/instrumentation/Audiopanel/knobs/crewVol"));
+				var newvol = getprop("/extra500/instrumentation/Audiopanel/knobs/crewVol");
+				setprop("/instrumentation/comm[0]/volume",newvol);
+				setprop("/sim/fgcom/speaker-level",newvol);
 			} else if (getprop("/extra500/instrumentation/Audiopanel/knobs/com1xmt") == 0) {
 				setprop("/extra500/instrumentation/Audiopanel/knobs/com1rcv",0);
 				setprop("/instrumentation/comm[0]/volume",0.0);
+				setprop("/sim/fgcom/speaker-level",0.0);
 			} else {
 				# IRL the last received message in playbacked. no such functionality in FG yet
 			}
@@ -232,7 +240,9 @@ var AudiopanelClass = {
 				setprop("/instrumentation/com1-selected",1);
 				setprop("/instrumentation/com2-selected",0);
 				setprop("/instrumentation/comm-selected-index",0);
-				setprop("/instrumentation/comm[0]/volume",getprop("/extra500/instrumentation/Audiopanel/knobs/crewVol"));
+				var newvol = getprop("/extra500/instrumentation/Audiopanel/knobs/crewVol");
+				setprop("/instrumentation/comm[0]/volume",newvol);
+				setprop("/sim/fgcom/speaker-level",newvol);
 				setprop("/instrumentation/comm[1]/volume",0.0);
 			}
 		}
@@ -248,6 +258,7 @@ var AudiopanelClass = {
 				setprop("/instrumentation/com2-selected",1);
 				setprop("/instrumentation/comm-selected-index",1);
 				setprop("/instrumentation/comm[0]/volume",0.0);
+				setprop("/sim/fgcom/speaker-level",0.0);
 				setprop("/instrumentation/comm[1]/volume",getprop("/extra500/instrumentation/Audiopanel/knobs/crewVol"));
 			}
 		}
@@ -256,7 +267,7 @@ var AudiopanelClass = {
 		if (getprop("/extra500/instrumentation/Audiopanel/state") == 1) {
 			if (getprop("/extra500/instrumentation/Audiopanel/knobs/nav1") == 0) {
 				setprop("/extra500/instrumentation/Audiopanel/knobs/nav1",1);
-				setprop("/instrumentation/nav[0]/volume",0.2);
+				setprop("/instrumentation/nav[0]/volume",getprop("/extra500/instrumentation/Audiopanel/volsetting/nav1"));
 			} else {
 				setprop("/extra500/instrumentation/Audiopanel/knobs/nav1",0);
 				setprop("/instrumentation/nav[0]/volume",0.0);
@@ -267,7 +278,7 @@ var AudiopanelClass = {
 		if (getprop("/extra500/instrumentation/Audiopanel/state") == 1) {
 			if (getprop("/extra500/instrumentation/Audiopanel/knobs/nav2") == 0) {
 				setprop("/extra500/instrumentation/Audiopanel/knobs/nav2",1);
-				setprop("/instrumentation/nav[1]/volume",0.2);
+				setprop("/instrumentation/nav[1]/volume",getprop("/extra500/instrumentation/Audiopanel/volsetting/nav2"));
 			} else {
 				setprop("/extra500/instrumentation/Audiopanel/knobs/nav2",0);
 				setprop("/instrumentation/nav[1]/volume",0.0);
@@ -278,7 +289,7 @@ var AudiopanelClass = {
 		if (getprop("/extra500/instrumentation/Audiopanel/state") == 1) {
 			if (getprop("/extra500/instrumentation/Audiopanel/knobs/mkr") == 0) {
 				setprop("/extra500/instrumentation/Audiopanel/knobs/mkr",1);
-				setprop("/instrumentation/marker-beacon/volume",0.2);
+				setprop("/instrumentation/marker-beacon/volume",getprop("/extra500/instrumentation/Audiopanel/volsetting/mkr"));
 			} else {
 				setprop("/extra500/instrumentation/Audiopanel/knobs/mkr",0);
 				setprop("/instrumentation/marker-beacon/volume",0.0);
@@ -287,14 +298,18 @@ var AudiopanelClass = {
 	},
 	onClicktel : func(){
 		if (getprop("/extra500/instrumentation/Audiopanel/state") == 1) {
-			print("tel");
+			if (getprop("/extra500/instrumentation/Audiopanel/knobs/tel") == 0) {
+				setprop("/extra500/instrumentation/Audiopanel/knobs/tel",1);
+			} else {
+				setprop("/extra500/instrumentation/Audiopanel/knobs/tel",0);
+			}
 		}
 	},
 	onClickmon1 : func(){
 		if (getprop("/extra500/instrumentation/Audiopanel/state") == 1) {
 			if (getprop("/extra500/instrumentation/Audiopanel/knobs/mon1") == 0) {
 				setprop("/extra500/instrumentation/Audiopanel/knobs/mon1",1);
-				setprop("/instrumentation/dme/volume",0.2);
+				setprop("/instrumentation/dme/volume",getprop("/extra500/instrumentation/Audiopanel/volsetting/mon1"));
 			} else {
 				setprop("/extra500/instrumentation/Audiopanel/knobs/mon1",0);
 				setprop("/instrumentation/dme/volume",0.0);
@@ -303,17 +318,27 @@ var AudiopanelClass = {
 	},
 	onClickmon2 : func(){
 		if (getprop("/extra500/instrumentation/Audiopanel/state") == 1) {
-			print("mon2");
+			if (getprop("/extra500/instrumentation/Audiopanel/knobs/mon2") == 0) {
+				setprop("/extra500/instrumentation/Audiopanel/knobs/mon2",1);
+			} else {
+				setprop("/extra500/instrumentation/Audiopanel/knobs/mon2",0);
+			}
 		}
 	},
 	onClickmute : func(){
 		if (getprop("/extra500/instrumentation/Audiopanel/state") == 1) {
-			print("mute");
+			var new = getprop("/extra500/instrumentation/Audiopanel/knobs/mute") + 1;
+			if (new == 4) { new = 0;}
+			setprop("/extra500/instrumentation/Audiopanel/knobs/mute",new);
 		}
 	},
 	onClickspk : func(){
 		if (getprop("/extra500/instrumentation/Audiopanel/state") == 1) {
-			print("spk");
+			if (getprop("/extra500/instrumentation/Audiopanel/knobs/spk") == 0) {
+				setprop("/extra500/instrumentation/Audiopanel/knobs/spk",1);
+			} else {
+				setprop("/extra500/instrumentation/Audiopanel/knobs/spk",0);
+			}
 		}
 	},
 	initUI : func(){

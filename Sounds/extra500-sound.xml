@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2013-07-11
+      Date:             2013-09-14
 -->
  
 <PropertyList>
@@ -289,8 +289,8 @@
 <!--AP disconnect-->
        <apdis>
 	       <name>ap disconnect</name>
-	       <reference-dist>0.1</reference-dist>
-	       <max-dist>1.0</max-dist>
+	       <reference-dist>1</reference-dist>
+	       <max-dist>100.0</max-dist>
 	       <mode>once</mode>
 	       <path>Aircraft/extra500/Sounds/APdisconnect.wav</path>
 	       <condition>
@@ -299,7 +299,10 @@
 		       </or>
 	       </condition>
 	       <volume>
-		       <offset>0.9</offset>
+		       <property>/extra500/instrumentation/Audiopanel/volsetting/apdis</property>
+		       <factor>1.0</factor>
+		       <offset>0.5</offset>
+		       <min>0.0</min>
 	       </volume>
 	       <position>
 		       <x>0.2</x>
@@ -311,8 +314,8 @@
 <!--gear warn-->
        <gearwarn>
 	       <name>gear warning</name>
-	       <reference-dist>0.1</reference-dist>
-	       <max-dist>1.0</max-dist>
+	       <reference-dist>1</reference-dist>
+	       <max-dist>100.0</max-dist>
 	       <mode>looped</mode>
 	       <path>Aircraft/extra500/Sounds/gearwarn.wav</path>
 	       <condition>
@@ -322,7 +325,10 @@
 		       </or>
 	       </condition>
 	       <volume>
-		       <offset>0.9</offset>
+		       <property>/extra500/instrumentation/Audiopanel/volsetting/gearwarn</property>
+		       <factor>1.0</factor>
+		       <offset>0.0</offset>
+		       <min>0.0</min>
 	       </volume>
 	       <position>
 		       <x>0</x>
@@ -334,8 +340,8 @@
 <!--stall warn-->
        <stallwarn>
 	       <name>stall warning</name>
-	       <reference-dist>0.1</reference-dist>
-	       <max-dist>1.0</max-dist>
+	       <reference-dist>1</reference-dist>
+	       <max-dist>100.0</max-dist>
 	       <mode>looped</mode>
 	       <path>Aircraft/extra500/Sounds/stallwarning.wav</path>
 	       <condition>
@@ -345,7 +351,10 @@
 		       </or>
 	       </condition>
 	       <volume>
-		       <offset>0.9</offset>
+		       <property>/extra500/instrumentation/Audiopanel/volsetting/stallwarn</property>
+		       <factor>1.0</factor>
+		       <offset>0.0</offset>
+		       <min>0.0</min>
 	       </volume>
 	       <position>
 		       <x>0</x>
@@ -357,8 +366,8 @@
 <!--overspeed-->
        <overspeed>
 	       <name>over speed</name>
-	       <reference-dist>0.1</reference-dist>
-	       <max-dist>1.0</max-dist>
+	       <reference-dist>1</reference-dist>
+	       <max-dist>100.0</max-dist>
 	       <mode>looped</mode>
 	       <path>Aircraft/extra500/Sounds/overspeed.wav</path>
 	       <condition>
@@ -368,7 +377,10 @@
 		       </or>
 	       </condition>
 	       <volume>
-		       <offset>0.9</offset>
+		       <property>/extra500/instrumentation/Audiopanel/volsetting/overspeed</property>
+		       <factor>1.0</factor>
+		       <offset>0.0</offset>
+		       <min>0.0</min>
 	       </volume>
 	       <position>
 		       <x>0</x>
