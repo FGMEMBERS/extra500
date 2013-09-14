@@ -1,32 +1,24 @@
-var TcasMap = {
-	new : func(parent,name){
-		var m = {parents:[TcasMap,Map.new(parent,name)]};
-		#debug.dump(m);
-		m._can = {
-			plane	: m.createChild("group","plane"),
-		};
-		
-		m._can.plane.createChild("path", "icon")
-		 .setStrokeLineWidth(3)
-                 .setScale(1)
-                 .setColor(0.2,0.2,1.0)
-                 .moveTo(-5, -5)
-                 .line(0, 10)
-                 .line(10, 0)
-                 .line(0, -10)
-                 .line(-10, 0);
-		 
-		return m;
-	},
-	setRefPos : func(lat, lon) {
-	# print("RefPos set");
-		me._node.getNode("ref-lat", 1).setDoubleValue(lat);
-		me._node.getNode("ref-lon", 1).setDoubleValue(lon);
-		me._can.plane.setGeoPosition(lat,lon);
-		me; # chainable
-	},
-};
-
+#    This file is part of extra500
+#
+#    extra500 is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    extra500 is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+#
+#      Authors: Dirk Dittmann
+#      Date: Sep 10 2013
+#
+#      Last change:      Dirk Dittmann
+#      Date:             14.09.2013
+#
 
 var TcasData = {
 	new : func(id="",range=0,lat=0,lon=0,alt=0,vs=0,level=0){
@@ -280,7 +272,7 @@ var TcasWidget = {
 		m.initC();
 		return m;
 	},
-	setListeners : func(instance) {
+	setListeners : func(instance=me) {
 		append(me._listeners, setlistener("/instrumentation/tcas/serviceable",func(n){me._onStateChange(n)},1,0));	
 		append(me._listeners, setlistener("/instrumentation/tcas/inputs/mode",func(n){me._onModeChange(n)},1,0));	
 		append(me._listeners, setlistener(tcasModel._nObserver,func(n){me.onModelObserverNotify(n)},1,1));	
@@ -295,16 +287,14 @@ var TcasWidget = {
 			online	: me._group.getElementById("TCAS_online").setVisible(0),
 		};
 		var mapName 		= "IFD-"~me._Page.IFD.name~"-TCAS";
-		me._map			= TcasMap.new(me._can.map,mapName~"-Map");
+		me._map			= PlaneMap.new(me._can.map,mapName~"-Map");
 		me._map.set("clip","rect(409px, 385px, 776px, 15px)");
 		me._tcasLayer 		= TcasLayer.new(me._map,mapName~"-Layer",tcasModel);
 		me._tcasLayer.setModel(me._tcasLayer,tcasModel);
-		#me._tcasController	= TcasController.new(tcasModel,me._tcasLayer);
-
+		
 		
 		me._map.setZoom(me.RANGESCALE*me._range);
 		me._map.setVisible(1);
-		#me._map.setTranslation(250,750);
 		me._map.setTranslation(200,609);
 		
 		
@@ -312,25 +302,32 @@ var TcasWidget = {
 	deinitC :func(){
 		
 	},
+	setVisible : func(visibility){
+		if(visibility == 1){
+			me.setListeners();
+		
+			me._adjustMode(0);
+			me._adjustRange(0);
+			
+			me._Page.IFD.nLedL1.setValue(1);
+			me._Page.keys["L1 <"] 	= func(){me._adjustMode(1);};
+			me._Page.keys["L1 >"] 	= func(){me._adjustRange(4);};
+
+		}else{
+			me.removeListeners();
+			me._Page.IFD.nLedL1.setValue(0);
+			me._Page.keys["L1 <"] 	= nil;
+			me._Page.keys["L1 >"] 	= nil;
+		}
+	},
 	init : func(instance=me){
 		#print("TcasWidget.init() ... ");
-		me.setListeners(instance);
 		
-		me._adjustMode(0);
-		me._adjustRange(0);
-		
-		me._Page.IFD.nLedL1.setValue(1);
-		me._Page.keys["L1 <"] 	= func(){me._adjustMode(1);};
-		me._Page.keys["L1 >"] 	= func(){me._adjustRange(4);};
-
 		#me._timer.start();
 	},
 	deinit : func(){
 		#me._timer.stop();
-		me.removeListeners();
-		me._Page.IFD.nLedL1.setValue(0);
-		me._Page.keys["L1 <"] 	= nil;
-		me._Page.keys["L1 >"] 	= nil;
+		
 		
 	},	
 	onModelObserverNotify : func(n){

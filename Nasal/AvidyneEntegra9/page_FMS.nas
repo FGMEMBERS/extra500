@@ -444,7 +444,6 @@ var AvidynePageFMS = {
 		me._can.side.setVisible(0);
 		me._widget.DirectTo.deinit();
 		me._widget.Tuning.deinit();
-		me._widget.TCAS.deinit();
 		me._widget.FPL.deinit();
 		me._widget.currentWP.deinit();
 		
@@ -452,38 +451,40 @@ var AvidynePageFMS = {
 			me._can.side.setVisible(1);
 			me._widget.DirectTo.init();
 			me._widget.Tuning.init();
-			me._widget.TCAS.init();
+			me._widget.TCAS.setVisible(1);;
 			me._widget.FPL.init();
 			me._widget.currentWP.init();
 			
 		}elsif(index == 1){ # MapFPL
-			
+			me._widget.TCAS.setVisible(0);
+		
 		}elsif(index == 2){ # Info
 			me._can.side.setVisible(1);
 			me._widget.DirectTo.init();
 			me._widget.Tuning.init();
-			me._widget.TCAS.init();
+			me._widget.TCAS.setVisible(1);;
 			me._widget.currentWP.init();
 		}elsif(index == 3){ # Routes
 			me._can.side.setVisible(1);
 			me._widget.Tuning.init();
-			me._widget.TCAS.init();
+			me._widget.TCAS.setVisible(1);;
 			me._widget.currentWP.init();
 			
 		}elsif(index == 4){ # UserWypts
 			me._can.side.setVisible(1);
 			me._widget.DirectTo.init();
 			me._widget.Tuning.init();
-			me._widget.TCAS.init();
+			me._widget.TCAS.setVisible(1);;
 			me._widget.currentWP.init();
 		}elsif(index == 5){ # Nearest
 			me._can.side.setVisible(1);
 			me._widget.DirectTo.init();
 			me._widget.Tuning.init();
-			me._widget.TCAS.init();
+			me._widget.TCAS.setVisible(1);;
 			me._widget.currentWP.init();
 		}elsif(index == 6){ # MapNearest
-			
+			me._widget.TCAS.setVisible(0);
+		
 		}else{
 			
 		}
