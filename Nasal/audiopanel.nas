@@ -17,7 +17,7 @@
 #      Date: Aug 10 2013
 #
 #      Last change:      Eric van den Berg 
-#      Date:             Aug 13 2013
+#      Date:             Aug 14 2013
 #
 
 # /sim/sound/volume
@@ -52,7 +52,9 @@ var AudiopanelClass = {
 		m._brightness		= 0;
 		m._brightnessListener   = nil;
 		m._nBacklight 		= m._nRoot.initNode("Backlight/state",0.0,"DOUBLE");
-		
+		m._backLightState 	= 0;
+		m._backLight 		= 0;
+	
 		m.dt = 0;
 		m.now = systime();
 		m._lastTime = 0;
@@ -91,41 +93,68 @@ var AudiopanelClass = {
 			me._ampere = me._watt / me._volt;
 			me._ampere += (0.3 * me._brightness) / me._volt;
 			me.nAPState.setValue(1);
+			if (me._backLightState == 1){
+				me._backLight = me._brightness * me._qos * me._voltNorm;
+			}else{
+				me._backLight = 0;	
+			}
+			me._switchOn();
 		}else{
 			me._ampere = 0;
 			me.nAPState.setValue(0);
+			me._backLight = 0;
+			me._switchOff();	
 		}
-		me._nBacklight.setValue(me._brightness * me._qos * me._voltNorm);
+
+		me._nBacklight.setValue(me._backLight);
 		me._nAmpere.setValue(me._ampere);
 	},
+	setBacklight : func(value){
+		me._backLightState = value;
+		me.electricWork();
+	},
 	update : func(){	
+	},
+	_switchOn : func(){
+		var vol = getprop("/extra500/instrumentation/Audiopanel/knobs/crewVol");
+		setprop("/sim/sound/avionics/volume",vol);
+		if (getprop("/extra500/instrumentation/Audiopanel/knobs/com1xmt") == 1 ) {
+			setprop("/instrumentation/comm-selected-index",0);
+			setprop("/instrumentation/com1-selected",1);
+			setprop("/instrumentation/com2-selected",0);
+			setprop("/instrumentation/comm[0]/volume",vol);
+		} else {
+			setprop("/instrumentation/comm[1]/volume",vol);
+			setprop("/instrumentation/comm-selected-index",1);
+			setprop("/instrumentation/com1-selected",0);
+			setprop("/instrumentation/com2-selected",1);
+		}
+		if (getprop("/extra500/instrumentation/Audiopanel/volsetting/effects") == 1) {
+			setprop("/sim/sound/effects/volume",0.25 * getprop("/sim/sound/effects/volume"));
+			setprop("/extra500/instrumentation/Audiopanel/volsetting/effects",0);	
+		}
+	},
+	_switchOff : func(){
+		setprop("/instrumentation/comm[0]/volume",1);
+		setprop("/instrumentation/comm[1]/volume",0);
+		setprop("/sim/sound/avionics/volume",0);
+		setprop("/instrumentation/comm-selected-index",0);
+		setprop("/instrumentation/com1-selected",1);
+		setprop("/instrumentation/com2-selected",0);
+		if (getprop("/extra500/instrumentation/Audiopanel/volsetting/effects") == 0) {
+			setprop("/sim/sound/effects/volume",4.0 * getprop("/sim/sound/effects/volume"));
+			setprop("/extra500/instrumentation/Audiopanel/volsetting/effects",1);
+		}				
 	},
 
 # Events from the UI
 	onClickonoff: func(){
 		if (getprop("/extra500/instrumentation/Audiopanel/knobs/state") == 0 ) {
 			setprop("/extra500/instrumentation/Audiopanel/knobs/state",1);
-			var vol = getprop("/extra500/instrumentation/Audiopanel/knobs/crewVol");
-			setprop("/sim/sound/avionics/volume",vol);
-			if (getprop("/extra500/instrumentation/Audiopanel/knobs/com1xmt") == 1 ) {
-				setprop("/instrumentation/comm-selected-index",0);
-				setprop("/instrumentation/com1-selected",1);
-				setprop("/instrumentation/com2-selected",0);
-				setprop("/instrumentation/comm[0]/volume",vol);
-			} else {
-				setprop("/instrumentation/comm[1]/volume",vol);
-				setprop("/instrumentation/comm-selected-index",1);
-				setprop("/instrumentation/com1-selected",0);
-				setprop("/instrumentation/com2-selected",1);
-			}
+			me._switchOn();
 		} else { 
 			setprop("/extra500/instrumentation/Audiopanel/knobs/state",0);
-			setprop("/instrumentation/comm[0]/volume",1);
-			setprop("/instrumentation/comm[1]/volume",0);
-			setprop("/sim/sound/avionics/volume",0);
-			setprop("/instrumentation/comm-selected-index",0);
-			setprop("/instrumentation/com1-selected",1);
-			setprop("/instrumentation/com2-selected",0);
+			me._switchOff();
 		}
 		me.electricWork();
 	},

@@ -1,13 +1,13 @@
 AC3Db
 MATERIAL "DefaultWhite" rgb 1.0000 1.0000 1.0000  amb 0.2000 0.2000 0.2000  emis 0.0000 0.0000 0.0000  spec 0.5000 0.5000 0.5000  shi 10 trans 0.0000
-MATERIAL "ALTtextur" rgb 1.0000 1.0000 1.0000  amb 1.0000 1.0000 1.0000  emis 0.0000 0.0000 0.0000  spec 0.5000 0.5000 0.5000  shi 50 trans 0.0000
-MATERIAL "grau10" rgb 0.1000 0.1000 0.1000  amb 0.1000 0.1000 0.1000  emis 0.0000 0.0000 0.0000  spec 0.0500 0.0500 0.0500  shi 50 trans 0.0000
+MATERIAL "ALTtextur" rgb 1.0000 1.0000 1.0000  amb 1.0000 1.0000 1.0000  emis 0.0000 0.0000 0.0000  spec 0.2500 0.2500 0.2500  shi 50 trans 0.0000
+MATERIAL "grau10" rgb 0.1000 0.1000 0.1000  amb 0.1000 0.1000 0.1000  emis 0.0000 0.0000 0.0000  spec 0.0250 0.0250 0.0250  shi 50 trans 0.0000
 OBJECT world
 name "Blender_export__ALTanalog.ac"
-kids 7
+kids 8
 OBJECT poly
 name "ALTanalog.hpa"
-loc 0.0000000 -0.0000000 -0.0000000
+loc 0.0000000 0.0000000 0.0000000
 texture "ALTanalogTextur.png"
 texrep 1 1
 numvert 13
@@ -100,7 +100,7 @@ refs 3
 kids 0
 OBJECT poly
 name "ALTanalog.knob"
-loc 0.0000000 -0.0000000 -0.0000000
+loc 0.0000000 0.0000000 0.0000000
 numvert 33
 0.0020092 -0.0224000 -0.0224000
 -0.0118939 -0.0251343 -0.0251343
@@ -347,7 +347,7 @@ refs 4
 kids 0
 OBJECT poly
 name "ALTanalog.Needle100"
-loc 0.0000000 -0.0000000 -0.0000000
+loc 0.0000000 0.0000000 0.0000000
 texture "ALTanalogTextur.png"
 texrep 1 1
 numvert 44
@@ -743,7 +743,7 @@ refs 4
 kids 0
 OBJECT poly
 name "ALTanalog.Needle1000"
-loc 0.0000000 -0.0000000 -0.0000000
+loc 0.0000000 0.0000000 0.0000000
 texture "ALTanalogTextur.png"
 texrep 1 1
 numvert 44
@@ -1139,7 +1139,7 @@ refs 4
 kids 0
 OBJECT poly
 name "ALTanalog.Needle10000"
-loc 0.0000000 -0.0000000 -0.0000000
+loc 0.0000000 0.0000000 0.0000000
 texture "ALTanalogTextur.png"
 texrep 1 1
 numvert 44
@@ -1534,8 +1534,32 @@ refs 4
 43 0.410530 0.713754
 kids 0
 OBJECT poly
+name "ALTanalog.Needle10000.top"
+loc 0.0000000 0.0000000 0.0000000
+texture "ALTanalogTextur.png"
+texrep 1 1
+numvert 4
+0.0019837 0.0205056 0.0000022
+0.0019837 0.0232390 -0.0016577
+0.0019837 0.0232390 0.0016629
+0.0019837 0.0232390 0.0000022
+numsurf 2
+SURF 0X20
+mat 1
+refs 3
+3 0.954519 0.992635
+0 0.954519 0.972635
+1 0.979594 0.992635
+SURF 0X20
+mat 1
+refs 3
+2 0.929432 0.992635
+0 0.954519 0.972635
+3 0.954519 0.992635
+kids 0
+OBJECT poly
 name "ALTanalog.Rand"
-loc 0.0000000 -0.0000000 -0.0000000
+loc 0.0000000 0.0000000 0.0000000
 numvert 96
 -0.0003031 -0.0000034 -0.0282116
 -0.0003031 0.0055023 -0.0276693
@@ -2085,7 +2109,7 @@ refs 4
 kids 0
 OBJECT poly
 name "ALTanalog.Scheibe"
-loc 0.0000000 -0.0000000 -0.0000000
+loc 0.0000000 0.0000000 0.0000000
 texture "ALTanalogTextur.png"
 texrep 1 1
 numvert 45

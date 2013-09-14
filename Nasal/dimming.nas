@@ -17,7 +17,7 @@
 #      Date: Jun 27 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             07.09.13
+#      Date:             13.09.13
 #
 
 # MM Page 607
@@ -60,6 +60,7 @@ var DimmingSystemClass = {
 			cabinaltimeter.setBacklight(me._state);
 			cabinclimb.setBacklight(me._state);
 			dmeInd.setBacklight(me._state);
+			audiopanel.setBacklight(me._state);
 		};
 		eSystem.switch.Night.onStateChange = func(n){
 			me._state = n.getValue();
