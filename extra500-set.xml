@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             06.09.2013
+      Date:             14.09.2013
 
 
 ************************************************************************
@@ -1054,6 +1054,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/gear.nas</file>
 		<file>Aircraft/extra500/Nasal/fuel.nas</file>
 		<file>Aircraft/extra500/Nasal/autopilot.nas</file>
+		<file>Aircraft/extra500/Nasal/audiopanel.nas</file>
 		<file>Aircraft/extra500/Nasal/instrument.nas</file>
 		<file>Aircraft/extra500/Nasal/keypad.nas</file>
 		<file>Aircraft/extra500/Nasal/annunciator.nas</file>
@@ -1166,6 +1167,30 @@ JSBSim Extra Aircraft - Extra 500.
 		<SEC2MIN type="double">0.0166666666667</SEC2MIN>		
 	</const>
 	<instrumentation>
+		<Audiopanel>
+			<knobs>
+				<state>1</state>
+				<crewVol>0.5</crewVol>
+				<passVol>0.5</passVol>
+				<mkrconfig>1</mkrconfig>
+				<icsconfig>1</icsconfig>
+				<com1rcv>1</com1rcv>
+				<com1xmt>1</com1xmt>
+				<com2rcv>0</com2rcv>
+				<com2xmt>0</com2xmt>
+				<nav1>0</nav1>
+				<nav2>0</nav2>
+				<mkr>0</mkr>
+				<tel>0</tel>
+				<mon1>0</mon1>
+				<mon2>0</mon2>
+				<mute>0</mute>
+				<spk>0</spk>
+			</knobs>
+			<volsetting>
+				<effects>1</effects>
+			</volsetting>
+		</Audiopanel>
 		<EIP>
 			<state type="bool">false</state>
 		</EIP>

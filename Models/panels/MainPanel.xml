@@ -20,11 +20,17 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             05.09.13
+      Date:             09.09.13
 -->
 <PropertyList>
 
 <path>MainPanel.ac</path>
+
+  <animation>
+    <type>range</type>
+    <min-m>0</min-m>
+    <max-m>50</max-m>
+  </animation>
 
 <!-- Submodels -->
 
@@ -111,6 +117,18 @@
 		<x-m>0</x-m>
 		<y-m>-0.47982</y-m>
 		<z-m>0.13804</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>Audiopanel</name>
+  <path>Aircraft/extra500/Models/instruments/audiopanel.xml</path>
+	<offsets>
+		<x-m>0.015</x-m>
+		<y-m>0.0</y-m>	
+		<z-m>0.325</z-m>
+		<pitch-deg>90</pitch-deg>
+		<roll-deg>90</roll-deg>
 	</offsets>
 </model>
 
