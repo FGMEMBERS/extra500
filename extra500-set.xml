@@ -1194,6 +1194,17 @@ JSBSim Extra Aircraft - Extra 500.
 			</knobs>
 			<volsetting>
 				<effects>1</effects>
+				<apdis>1</apdis>
+				<gearwarn>1</gearwarn>
+				<stallwarn>1</stallwarn>
+				<overspeed>1</overspeed>
+				<nav1>0.2</nav1>
+				<nav2>0.2</nav2>
+				<mkr>0.2</mkr>
+				<tel>0.2</tel>
+				<mon1>0.2</mon1>
+				<mon2>0.2</mon2>
+				<spk>0.2</spk>
 			</volsetting>
 		</Audiopanel>
 		<EIP>
