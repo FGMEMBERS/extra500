@@ -60,6 +60,7 @@ var DimmingSystemClass = {
 			cabinaltimeter.setBacklight(me._state);
 			cabinclimb.setBacklight(me._state);
 			dmeInd.setBacklight(me._state);
+			dmeSwitch.setBacklight(me._state);
 			audiopanel.setBacklight(me._state);
 		};
 		eSystem.switch.Night.onStateChange = func(n){

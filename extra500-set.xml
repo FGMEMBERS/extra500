@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             14.09.2013
+      Date:             15.09.2013
 
 
 ************************************************************************
@@ -1064,6 +1064,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/light.nas</file>
 		<file>Aircraft/extra500/Nasal/centerConsole.nas</file>
 		<file>Aircraft/extra500/Nasal/log.nas</file>
+		<file>Aircraft/extra500/Nasal/dmeswitch.nas</file>
 		
 		<file>Aircraft/extra500/Nasal/route_manager.nas</file>
 		
@@ -1202,6 +1203,9 @@ JSBSim Extra Aircraft - Extra 500.
 				<spk>0.2</spk>
 			</volsetting>
 		</Audiopanel>
+		<dmeSwitch>
+			<pressed>0</pressed>
+		</dmeSwitch>
 		<EIP>
 			<state type="bool">false</state>
 		</EIP>

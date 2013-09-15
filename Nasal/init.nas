@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             10.09.13
+#      Date:             15.09.13
 #
 
 var init_listener = setlistener("/sim/signals/fdm-initialized", func {
@@ -64,6 +64,7 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		extra500.cabinaltimeter.init();
 		extra500.cabinclimb.init();
 		extra500.dmeInd.init();
+		extra500.dmeSwitch.init();
 		
 		extra500.annunciator.init();
 		extra500.light.init();

@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             07.09.13
+      Date:             15.09.13
 -->
 
 <PropertyList>
@@ -33,6 +33,18 @@
 		<x-m>-0.0005</x-m>
 		<y-m>-0.44892</y-m>	
 		<z-m>-0.0282</z-m>
+		<pitch-deg>90</pitch-deg>
+		<roll-deg>90</roll-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>DME switch</name>
+  <path>Aircraft/extra500/Models/instruments/dmeswitch.xml</path>
+	<offsets>
+		<x-m>0.00</x-m>
+		<y-m>-0.5255</y-m>	
+		<z-m>-0.0285</z-m>
 		<pitch-deg>90</pitch-deg>
 		<roll-deg>90</roll-deg>
 	</offsets>

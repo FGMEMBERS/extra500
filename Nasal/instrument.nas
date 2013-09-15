@@ -17,7 +17,7 @@
 #      Date: Jun 27 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             07.09.13
+#      Date:             15.09.13
 #
 
 var DigitalInstrumentPackageClass = {
@@ -396,6 +396,7 @@ var turnCoordinator	= InstrumentClass.new("extra500/instrumentation/TrunCoordina
 var fuelQuantity	= FuelInstrumentClass.new("extra500/instrumentation/FuelQuantity","Fuel Quantity","/extra500/system/dimming/Instrument",12.0,6.0);
 var fuelFlow		= DigitalInstrumentClass.new("extra500/instrumentation/FuelFlow","Fuel Flow","/extra500/system/dimming/Instrument",6.0);
 var dmeInd			= DigitalInstrumentClass.new("extra500/instrumentation/dmeInd","DME Indicator","/extra500/system/dimming/Instrument",6.0);
+var dmeSwitch		= DigitalInstrumentClass.new("extra500/instrumentation/dmeSwitch","DME Switch","/extra500/system/dimming/Instrument",1.0);
 var pcBoard1		= PcBoard1Class.new("extra500/electric/pcBoard1","PC Board 1",1.0);
 
 
@@ -408,6 +409,7 @@ eSystem.circuitBreaker.TB.outputAdd(turnCoordinator);
 eSystem.circuitBreaker.FUEL_QTY.outputAdd(fuelQuantity);
 eSystem.circuitBreaker.FUEL_FLOW.outputAdd(fuelFlow);
 eSystem.circuitBreaker.DME.outputAdd(dmeInd);
+eSystem.circuitBreaker.INST_LT.outputAdd(dmeSwitch);
 
 
 eSystem.circuitBreaker.INST_LT.outputAdd(stbyIAS._light);
@@ -419,11 +421,3 @@ eSystem.circuitBreaker.INST_LT.outputAdd(cabinclimb._light);
 eSystem.circuitBreaker.INST_LT.outputAdd(propellerHeat._light);
 eSystem.circuitBreaker.INST_LT.outputAdd(turnCoordinator._light);
 eSystem.circuitBreaker.INST_LT.outputAdd(fuelQuantity._light);
-
-
-
-
-
-
-
-

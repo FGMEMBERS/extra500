@@ -17,7 +17,7 @@
 #      Date: Aug 10 2013
 #
 #      Last change:      Eric van den Berg 
-#      Date:             Aug 14 2013
+#      Date:             Aug 15 2013
 #
 
 # /sim/sound/volume
@@ -73,7 +73,7 @@ var AudiopanelClass = {
 		
 		me.initUI();
 		
-		print("AudiopanelClass.init() ... ");
+#		print("AudiopanelClass.init() ... ");
 
 		eSystem.circuitBreaker.AUDIO_MRK.outputAdd(me);		
 	},
@@ -309,10 +309,8 @@ var AudiopanelClass = {
 		if (getprop("/extra500/instrumentation/Audiopanel/state") == 1) {
 			if (getprop("/extra500/instrumentation/Audiopanel/knobs/mon1") == 0) {
 				setprop("/extra500/instrumentation/Audiopanel/knobs/mon1",1);
-				setprop("/instrumentation/dme/volume",getprop("/extra500/instrumentation/Audiopanel/volsetting/mon1"));
 			} else {
 				setprop("/extra500/instrumentation/Audiopanel/knobs/mon1",0);
-				setprop("/instrumentation/dme/volume",0.0);
 			}
 		}
 	},
@@ -320,8 +318,10 @@ var AudiopanelClass = {
 		if (getprop("/extra500/instrumentation/Audiopanel/state") == 1) {
 			if (getprop("/extra500/instrumentation/Audiopanel/knobs/mon2") == 0) {
 				setprop("/extra500/instrumentation/Audiopanel/knobs/mon2",1);
+				setprop("/instrumentation/dme/volume",getprop("/extra500/instrumentation/Audiopanel/volsetting/mon2"));
 			} else {
 				setprop("/extra500/instrumentation/Audiopanel/knobs/mon2",0);
+				setprop("/instrumentation/dme/volume",0.0);
 			}
 		}
 	},
