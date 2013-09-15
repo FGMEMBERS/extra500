@@ -38,11 +38,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="90.673711"
-     inkscape:cy="916.07941"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="1157.3288"
+     inkscape:cy="556.22363"
      inkscape:document-units="px"
-     inkscape:current-layer="layer11"
+     inkscape:current-layer="g3709"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -105,6 +105,14 @@
        orientation="1,0"
        position="200,927.14286"
        id="guide3658" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="0,1536"
+       id="guide4432" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="1024,1090.9647"
+       id="guide4436" />
   </sodipodi:namedview>
   <metadata
      id="metadata6210">
@@ -122,7 +130,7 @@
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="Back"
-     style="display:inline">
+     style="display:none">
     <rect
        style="color:#000000;fill:#002255;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        id="rect4024"
@@ -141,13 +149,21 @@
        id="Tab_MapNearest_Content"
        style="stroke:none">
       <rect
-         style="fill:#000000;fill-opacity:1;stroke:none;display:inline"
+         style="fill:none;stroke:#3391e8;stroke-width:3.12154102;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
          id="rect3713"
-         width="2047.9852"
+         width="1022.8735"
          height="1470.1841"
-         x="0.0073976507"
+         x="0.0073976531"
          y="67.165611"
          ry="0" />
+      <rect
+         ry="0"
+         y="67.165611"
+         x="1025.8843"
+         height="1470.1841"
+         width="1022.1628"
+         id="rect4440"
+         style="fill:none;stroke:#3391e8;stroke-width:3.12154102;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline" />
     </g>
   </g>
   <g
@@ -769,11 +785,19 @@
       <rect
          ry="0"
          y="67.165611"
-         x="0.0073976503"
+         x="0.0073982948"
          height="1470.1841"
-         width="4156.2666"
+         width="2076.0466"
          id="rect3216"
-         style="fill:#000000;fill-opacity:1;stroke:none;display:inline" />
+         style="fill:none;stroke:#3391e8;stroke-width:4.4435401;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline" />
+      <rect
+         style="fill:none;stroke:#3391e8;stroke-width:4.44354057;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+         id="rect4438"
+         width="2071.6182"
+         height="1470.1841"
+         x="2081.6279"
+         y="67.165611"
+         ry="0" />
     </g>
   </g>
   <g

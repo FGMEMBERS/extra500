@@ -23,6 +23,7 @@
 var Map = {
 	new : func(parent,name){
 		var m = {parents:[Map,parent.createChild("map",name)]};
+		m._name = name;
 		return m;
 	},
 	setRefPos : func(lat, lon) {
@@ -68,6 +69,7 @@ var PlaneMap = {
 		me._can.plane.setGeoPosition(lat,lon);
 		me; # chainable
 	},
+	
 };
 
 var Layer = {

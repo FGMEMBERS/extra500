@@ -152,6 +152,9 @@ var AvidyneIFD = {
 
 		#m.nHeadingBug = props.globals.initNode("/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg",0.0,"DOUBLE");
 		
+		m.movingMap = MovingMap.new(m.canvas.createGroup(),name~"-MovingMap");
+		m.movingMap.setLayout("map");
+		
 		m.data = AvidyneData.new(m.name);
 		
 		
@@ -247,6 +250,8 @@ var AvidyneIFD = {
 		
 		#me.gotoPage(me._startPage);
 		
+		me.movingMap.init();
+		
 		me._timerLoop20Hz = maketimer(0.05,me,AvidyneIFD.update20Hz);
 		me._timerLoop2Hz = maketimer(0.5,me,AvidyneIFD.update2Hz);
 	
@@ -322,6 +327,7 @@ var AvidyneIFD = {
 					
 			me.data.load2Hz(me._now2Hz,me._dt2Hz);
 			me.page[me.pageSelected].update2Hz(me._now2Hz,me._dt2Hz);
+			
 		}		
 	},
 	update20Hz : func(){
@@ -332,6 +338,7 @@ var AvidyneIFD = {
 					
 			me.data.load20Hz(me._now20Hz,me._dt20Hz);
 			me.page[me.pageSelected].update20Hz(me._now20Hz,me._dt20Hz);	
+			me.movingMap.update20Hz(me._now20Hz,me._dt20Hz);
 		}
 	},
 	clearLeds : func(){

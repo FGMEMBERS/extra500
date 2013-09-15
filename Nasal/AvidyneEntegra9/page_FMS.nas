@@ -218,7 +218,7 @@ var FlightPlanListWidget = {
 				restriction ~= "IAS : " ~ fmsWP.speed_cstr ~"kts ";
 			}
 			me._fplItem[i]._can.Ristriction.setText(restriction);
-			if(fmsWP.leg_distance){
+			if(fmsWP.leg_distance != nil){
 				distSum += fmsWP.leg_distance;
 			}
 			me._fplItem[i]._can.Distance.setText(sprintf("%0.1f",distSum));
@@ -454,37 +454,41 @@ var AvidynePageFMS = {
 			me._widget.TCAS.setVisible(1);;
 			me._widget.FPL.init();
 			me._widget.currentWP.init();
-			
+			me.IFD.movingMap.setLayout("none");
 		}elsif(index == 1){ # MapFPL
 			me._widget.TCAS.setVisible(0);
+			me.IFD.movingMap.setLayout("split-left");
 		
 		}elsif(index == 2){ # Info
 			me._can.side.setVisible(1);
 			me._widget.DirectTo.init();
 			me._widget.Tuning.init();
-			me._widget.TCAS.setVisible(1);;
+			me._widget.TCAS.setVisible(1);
 			me._widget.currentWP.init();
+			me.IFD.movingMap.setLayout("none");
 		}elsif(index == 3){ # Routes
 			me._can.side.setVisible(1);
 			me._widget.Tuning.init();
 			me._widget.TCAS.setVisible(1);;
 			me._widget.currentWP.init();
-			
+			me.IFD.movingMap.setLayout("none");
 		}elsif(index == 4){ # UserWypts
 			me._can.side.setVisible(1);
 			me._widget.DirectTo.init();
 			me._widget.Tuning.init();
 			me._widget.TCAS.setVisible(1);;
 			me._widget.currentWP.init();
+			me.IFD.movingMap.setLayout("none");
 		}elsif(index == 5){ # Nearest
 			me._can.side.setVisible(1);
 			me._widget.DirectTo.init();
 			me._widget.Tuning.init();
 			me._widget.TCAS.setVisible(1);;
 			me._widget.currentWP.init();
+			me.IFD.movingMap.setLayout("none");
 		}elsif(index == 6){ # MapNearest
 			me._widget.TCAS.setVisible(0);
-		
+			me.IFD.movingMap.setLayout("split-left");
 		}else{
 			
 		}
