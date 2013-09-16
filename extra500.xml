@@ -24,13 +24,13 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             02.08.13
+      Date:             16.09.13
 -->
 
 	<fileheader>
 		<author> Eric van den Berg </author>
 		<filecreationdate>2013-03-13</filecreationdate>
-		<description> Models a extra500. </description>
+		<description>Models an extra500</description>
 	</fileheader>
 	
 	<autopilot file="extra500-autopilot"/>
@@ -39,6 +39,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	<system file="extra500-system-stallwarner.xml"/>
 	<system file="extra500-system-transponder.xml"/>
 	<system file="extra500-system-pressurization.xml"/>
+	<system file="extra500-system-electric.xml"/>
 	<aerodynamics file="extra500-aerodynamics.xml"/>
 
 	<metrics>

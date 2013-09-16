@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             15.09.2013
+      Date:             16.09.2013
 
 
 ************************************************************************
@@ -711,16 +711,6 @@ JSBSim Extra Aircraft - Extra 500.
 		<serviceable>1</serviceable>
 		<sideslip-error-factor>0.1</sideslip-error-factor>
 	</staticAP>
-	<electrical>	
-		<outputs>
-			<turn-coordinator>12</turn-coordinator>
-			<DG>1.0</DG> <!-- the gyro eats norm Power -->
-			<nav n="0">1.1</nav>	<!-- FIXME: a hack to get the nav working expects >1 -->
-			<nav n="1">1.1</nav>
-			<dme>1</dme> 			<!--expects a bool 0 or 1 -->
-			<transponder>24</transponder>
-		</outputs>
-	</electrical>
 	<pressurization>
 		<cabin-climb-rate-fpm type="double">500</cabin-climb-rate-fpm>
 		<c1-dp-filter type="double">0.1</c1-dp-filter>
@@ -1206,6 +1196,21 @@ JSBSim Extra Aircraft - Extra 500.
 		<dmeSwitch>
 			<pressed>0</pressed>
 		</dmeSwitch>
+		<TrunCoordinator>
+			<volt>0</volt>
+		</TrunCoordinator>
+		<IFD-LH>
+			<state type="bool">false</state>
+		</IFD-LH>
+		<IFD-RH>
+			<state type="bool">false</state>
+		</IFD-RH>
+		<dmeInd>
+			<volt>0</volt>
+		</dmeInd>
+		<xpdr>
+			<volt>0</volt>
+		</xpdr>
 		<EIP>
 			<state type="bool">false</state>
 		</EIP>

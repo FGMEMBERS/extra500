@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+	
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Eric van den Berg
+      Date: 2013-09-16
+
+      Last change:      -
+      Date:             -
+-->
+
+<!-- This "system" connects the extra500 electrical system to the hardcoded instrument power inputs -->
+
+<system name="electrics">
+
+	<channel name="power">
+
+		<switch name="turncoorpower">
+			<default value="0"/>
+			<test logic="AND" value="12">
+				/extra500/instrumentation/TrunCoordinator/volt gt 18
+			</test>
+			<output>/systems/electrical/outputs/turn-coordinator</output>
+		</switch>
+
+		<switch name="nav0power">
+			<default value="0"/>
+			<test logic="AND" value="1.1">
+				/extra500/instrumentation/IFD-LH/state eq 1
+			</test>
+			<output>/systems/electrical/outputs/nav[0]</output>
+		</switch>
+
+		<switch name="nav1power">
+			<default value="0"/>
+			<test logic="AND" value="1.1">
+				/extra500/instrumentation/IFD-RH/state eq 1
+			</test>
+			<output>/systems/electrical/outputs/nav[1]</output>
+		</switch>
+
+		<switch name="dmepower">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/extra500/instrumentation/dmeInd/volt gt 10
+			</test>
+			<output>/systems/electrical/outputs/dme</output>
+		</switch>
+
+		<switch name="xpdrpower">
+			<default value="0"/>
+			<test logic="AND" value="24">
+				/extra500/instrumentation/xpdr/volt gt 10
+			</test>
+			<output>/systems/electrical/outputs/transponder</output>
+		</switch>
+
+		<switch name="hdgpower">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/extra500/instrumentation/IFD-LH/state eq 1
+				/extra500/instrumentation/IFD-RH/state eq 1
+			</test>
+			<output>/systems/electrical/outputs/DG</output>
+		</switch>
+
+	</channel>
+
+</system>
+
+
+

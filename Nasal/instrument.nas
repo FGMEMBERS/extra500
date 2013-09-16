@@ -392,6 +392,7 @@ var cabinaltimeter 	= InstrumentClass.new("extra500/instrumentation/CabinAltimet
 var cabinclimb 		= InstrumentClass.new("extra500/instrumentation/CabinClimb","Cabin Climb","/extra500/system/dimming/Instrument",0.0);
 var propellerHeat	= InstrumentClass.new("extra500/instrumentation/PropellerHeat","Propeller Heat Ammeter","/extra500/system/dimming/Instrument",6.0);
 var turnCoordinator	= InstrumentClass.new("extra500/instrumentation/TrunCoordinator","Trun Coordinator","/extra500/system/dimming/Instrument",60.0);
+var xpdr		= InstrumentClass.new("extra500/instrumentation/xpdr","Transponder","/extra500/system/dimming/Instrument",6.0);
 
 var fuelQuantity	= FuelInstrumentClass.new("extra500/instrumentation/FuelQuantity","Fuel Quantity","/extra500/system/dimming/Instrument",12.0,6.0);
 var fuelFlow		= DigitalInstrumentClass.new("extra500/instrumentation/FuelFlow","Fuel Flow","/extra500/system/dimming/Instrument",6.0);
@@ -406,6 +407,7 @@ eSystem.circuitBreaker.C_PRESS.outputAdd(cabinaltimeter);
 eSystem.circuitBreaker.C_PRESS.outputAdd(cabinclimb);
 eSystem.circuitBreaker.PROP_HT.outputAdd(propellerHeat);
 eSystem.circuitBreaker.TB.outputAdd(turnCoordinator);
+eSystem.circuitBreaker.ATC.outputAdd(xpdr);
 eSystem.circuitBreaker.FUEL_QTY.outputAdd(fuelQuantity);
 eSystem.circuitBreaker.FUEL_FLOW.outputAdd(fuelFlow);
 eSystem.circuitBreaker.DME.outputAdd(dmeInd);

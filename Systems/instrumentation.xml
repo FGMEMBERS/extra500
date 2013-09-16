@@ -20,7 +20,7 @@
       Date: 21.04.13
 
       Last change:      Eric van den Berg
-      Date:             2013-08-05
+      Date:             2013-09-16
 -->
 
 <PropertyList>
@@ -29,6 +29,12 @@
         <name>clock</name>
         <number>0</number>
     </clock>
+
+  <attitude-indicator>
+    <name>attitude-indicator</name>
+    <number>0</number>
+    <suction>/extra500/instrumentation/StbyHSI/volt</suction>
+  </attitude-indicator>
 
   <airspeed-indicator>                                                       
     <name>airspeed-IFD-LH</name>
