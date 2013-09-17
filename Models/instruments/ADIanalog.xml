@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             16.09.13
+      Date:             17.09.13
 
 -->
 
@@ -86,6 +86,32 @@
 			<z>1</z>
 		</axis>
 	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>ADIanalog.flag</object-name>
+		<property>/instrumentation/attitude-indicator/spin</property>
+		<interpolation>
+       		<entry>
+          	 		<ind>0.99</ind>
+           			<dep>-55.0</dep>
+        		</entry>
+           		<entry>
+                		<ind>1</ind>
+                		<dep>0.0</dep>
+           		</entry>
+	      </interpolation>
+		<center>
+			<x-m>1</x-m>
+			<y-m>0</y-m>
+			<z-m>-0.01833</z-m>
+		</center>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
 	
 <!-- Dimming Instruments -->
 <animation>
@@ -95,6 +121,7 @@
 	<object-name>ADIanalog.Scheibe.innen</object-name>
 	<object-name>ADIanalog.Dreieck.oben</object-name>
 	<object-name>ADIanalog.Dreieck.unten</object-name>
+	<object-name>ADIanalog.flag</object-name>
 	<emission>	
 		<red>1.0</red>	
 		<green>1.0</green>	
