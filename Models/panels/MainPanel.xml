@@ -169,8 +169,8 @@
 
 
 <model>
-  <name>TESTtc</name>
-  <path>Aircraft/Instruments-3d/tc/tc.xml</path>
+  <name>tc</name>
+  <path>Aircraft/extra500/Models/instruments/tc.xml</path>
 	<offsets>
 		<x-m>0.005</x-m>
 		<y-m>0.30010</y-m>

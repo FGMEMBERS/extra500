@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: August 18 2013
+
+      Last change:      -
+      Date:             -
+
+modified instruments-3d/tc from fgdata
+
+-->
+
+<PropertyList>
+
+ <path>tc.ac</path>
+
+ <animation>
+  <type>material</type>
+  <object-name>Ball</object-name>
+  <object-name>Face</object-name>
+  <object-name>Airplane</object-name>
+  <object-name>flag</object-name>
+  <object-name>background</object-name>
+  <emission>
+   <red>0.5</red>
+   <green>0.5</green>
+   <blue>0.5</blue>
+   <factor-prop>/extra500/instrumentation/TrunCoordinator/Backlight/state</factor-prop>
+  </emission>
+ </animation>
+
+<animation>
+		<!-- flag -->
+ <type>select</type>
+  	<object-name>flag</object-name>
+	<condition>
+		<less-than>
+			<property>/instrumentation/turn-indicator/spin</property>
+			<value>0.99</value>
+		</less-than>	
+	</condition>
+</animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>Airplane</object-name>
+  <property>/instrumentation/turn-indicator/indicated-turn-rate</property>
+  <factor>20.0</factor>
+  <axis>
+   <x>-1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>Ball</object-name>
+  <property>/instrumentation/slip-skid-ball/indicated-slip-skid</property>
+  <factor>5.729</factor>
+<!--
+   From the source for slip_skid_ball.cxx, the number returned is (-z_accel/y_accel)*10.
+   For small theta, theta~=tan(theta) when theta is in radians.  So the angle of a "ball" 
+   undergoing z_accel and y_accel hung on the end of a string makes with the verticle
+   will be approximately -z_accel/y_accel radians. Converting to degrees, multiply by
+   180/pi=57.29, or 5.729 times the returned value. Edited by Dave Perry, 2/26/06.
+-->
+  <min-deg>-5</min-deg>
+  <max-deg>5</max-deg>
+  <center>
+   <x-m>0</x-m>
+   <y-m>0</y-m>
+   <z-m>0.25</z-m>  <!--  Makes the radius of curvature for the glass tube ~10 inches -->
+  </center>
+  <axis>
+   <x>-1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+</PropertyList>
+
+
