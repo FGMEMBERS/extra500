@@ -20,7 +20,7 @@
       Date: July 04 2013
 
       Last change:      Eric van den Berg
-      Date:             31.07.13
+      Date:             19.09.13
 -->
 <PropertyList>
 
@@ -422,6 +422,22 @@ in Systems/extra500-system-indication.xml-->
 	]]></script>
     </binding>
   </action>
+</animation>
+
+<!-- Pitchindication -->
+<animation>
+  <type>rotate</type>
+  <object-name>trim.ind</object-name>
+  <property>/fdm/jsbsim/fcs/pitch-trim-pos-deg</property>
+  <factor>1.2</factor>
+  <axis>
+    <x1-m>0.17205</x1-m>
+    <y1-m>1</y1-m>
+    <z1-m>-0.03982</z1-m>
+    <x2-m>0.17205</x2-m>
+    <y2-m>-1</y2-m>
+    <z2-m>-0.03982</z2-m>
+  </axis>
 </animation>
 
 </PropertyList>
