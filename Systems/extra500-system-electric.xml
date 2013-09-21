@@ -19,14 +19,56 @@
       Author: Eric van den Berg
       Date: 2013-09-16
 
-      Last change:      -
-      Date:             -
+      Last change:      Eric van den Berg
+      Date:             2013-09-21
 -->
-
-<!-- This "system" connects the extra500 electrical system to the hardcoded instrument power inputs -->
 
 <system name="electrics">
 
+<!-- some electrical consumers -->
+	<channel name="consumers">
+
+		<fcs_function>
+			<function>
+				<sum>
+					<product>
+						<property>/extra500/instrumentation/panelventswitchL/pressed</property>
+						<value>16.8</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/BankA/PanelVent/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+					<product>
+						<property>/extra500/instrumentation/panelventswitchR/pressed</property>
+						<value>16.8</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/BankA/PanelVent/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+				</sum>
+			</function>
+			<output>/extra500/consumers/panelvent/ampere</output>
+		</fcs_function>
+
+		<switch>
+			<default value="0"/>
+			<test logic="AND" value="/extra500/consumers/panelvent/ampere">
+				/extra500/panel/CircuitBreaker/BankA/PanelVent/voltOut gt 10
+			</test>
+			<output>/extra500/panel/CircuitBreaker/BankA/PanelVent/ampere</output>
+		</switch>
+
+	</channel>
+
+<!-- This "system" connects the extra500 electrical system to the hardcoded instrument power inputs -->
 	<channel name="power">
 
 		<switch name="turncoorpower">

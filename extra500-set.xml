@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             20.09.2013
+      Date:             21.09.2013
 
 
 ************************************************************************
@@ -1224,6 +1224,11 @@ JSBSim Extra Aircraft - Extra 500.
 	</instrumentation>
 	<panel>
 		<CircuitBreaker>
+			<BankA>
+				<PanelVent>
+					<voltOut>0</voltOut>
+				</PanelVent>
+			</BankA>
 			<BankC>
 				<EnvironmentalBleed>
 					<voltOut>0</voltOut>

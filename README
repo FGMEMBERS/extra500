@@ -16,7 +16,7 @@
       Author: Eric van den Berg
       Date: 2013-05-12
 
-      Last change:      2013-08-18
+      Last change:      2013-09-21
       Date:             Eric van den Berg
 
 ========================================================================
@@ -75,7 +75,7 @@ Engine shut-off: Press s ( or click on condition lever )
 		
 Principle Autopilot functionality (currently in place)
 
-- HDG 		Follows the heading bug (set HDG bug using the keypad, press to sync)
+- HDG 	Follows the heading bug (set HDG bug using the keypad, press to sync)
 - NAV		Intercepts and tracks VORs, LOCs or your Flight Plan (set course with LH lower rotary knob on IFD)
 - NAV/GPSS	Intercepts and tracks your Flight Plan and cuts the corners (Press NAV twice)
 - HDG+NAV	Intercept the course or active flightplan leg with your set heading
@@ -83,7 +83,7 @@ Principle Autopilot functionality (currently in place)
 - GS		Is armed and activated automatically when captured on the LOC. You can switch it off by pressing APR, 
 		ALT mode will become active. To arm the GS again, press APR for a second time 
 - VS		Follows the VS bug (limited to +/-1600fpm, set with AP rotary knob)
-- ALT 		Holds the current altitude (rounded to 100ft)
+- ALT 	Holds the current altitude (rounded to 100ft)
 - ALT+VS	Brings and holds the aircraft to the selected altitude (set ALT bug using the keypad, press to sync)
 		with the selected vertical speed.
 
@@ -104,13 +104,18 @@ The AP will disengage when:
 
 Navigation and Communication
 
+The COM unit (1 or 2 ) is selected on the audiopanel. Just hit the approprate "XMT" button. Note that FGCOM only works on COM1!
+If you want to hear the NAV station morse code or the marker tones, press the appropriate button on the audiopanel also. 
+The volume can be adjusted using the inner volume knob.
+ 
 The active COM standby frequency can be inputted on the keypad. The first "1" is not needed and any trailing "0" neither.
 Just type in the frequency and switch active/standby with the button just left of the frequencies.
 
 not-active-COM and NAV standby frequencies are similar, just press the NAV1 / NAV2 button first. 
 
 FMS, Nav 1 or Nav 2 may be selected on the IFD or in the NAV dialog (F12)
-The DME will source of either Nav 1 or 2, independent on which NAV is selected (=indicated / used by autopilot in NAV mode)
+The DME will source can be set using the AUX button on the keypad. Select with the FMS knob. The DME hold switch next to the DME
+indicator overrides all NAV frequency switching and holds the frequency to which the DMe was tuned when the HOLD button is pressed.
 
 The FMS (Flight Management System) can be used with or without the autopilot. You can put your flightplan in the 
 autopilot - route manager (dont forget to press "activate"). The autopilot will intercept the active leg.
@@ -121,3 +126,15 @@ XPDR squawk can be set on the keypad (press XPDR and squawk code) and in the NAV
 XPDR modes are selected automatically (GND or ALT), but automatic selection may be switched off
 Manual mode selection is then possible.
 The MODE button on the keypad will set the mode manually also.
+
+---------------------------------------------------------------------------------------------------------
+
+Pressurization system
+
+The extra500 is certified to 25000ft, where the air is pretty thin. So there is pressurization system that keeps the cabin altitude 
+below 8000ft which corresponds to a cabin differential pressure of 5.5psid at 25000ft. So if you are planning to fly above 10000ft, 
+you need to make sure that the ENV AIR and PRESS switches (left lower corner) on the side switch panel are on. 
+In addition, before take-off you should set the cabin controller (centre console) to the airport altitude 
+and just after take-off to your target altitude.
+Before descending from cruise, set the controller to your target airport altitude. You can monitor the cabin altitude, 
+differential pressure and cabin climb rate on the instruments next to the controller.

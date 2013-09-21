@@ -16,11 +16,11 @@
 #      Authors: Eric van den Berg
 #      Date: Aug 20 2013
 #
-#      Last change:      - 
-#      Date:             -
+#      Last change:      Eric van den Berg 
+#      Date:             Aug 21 2013
 #
-# The DME hold switch overrides any selection made on the keyboard (aux button) and holds the frequency that was active
-# as the hold switch is pressed. Indicated by the hold switch blue "HOLD" light.
+#
+# electric work in /Systems/extra500-system-electric.xml
 #
 	var onClickLonoff = func(){
 		if (getprop("/extra500/instrumentation/panelventswitchL/pressed") == 0) {
