@@ -19,14 +19,20 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
-      Date:             21.05.13
+      Last change:      Eric van den Berg
+      Date:             21.09.13
 
 -->
 
 <PropertyList>
 
 <path>MagneticCompass.ac</path>
+
+  <animation>
+    <type>range</type>
+    <min-m>0</min-m>
+    <max-m>50</max-m>
+  </animation>
 
 <animation>
   <type>rotate</type>

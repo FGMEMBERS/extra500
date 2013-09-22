@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: August 22 2013
+
+      Last change:      -
+      Date:             -
+
+-->
+
+<PropertyList>
+
+<path>panelvent.ac</path>
+
+<animation>
+  <type>rotate</type>
+  <object-name>ball</object-name>
+  <property>/extra500/instrumentation/panelventswitchR/updown</property>
+  <axis>
+    <x1-m>-0.005709</x1-m>
+    <y1-m>0</y1-m>
+    <z1-m>0</z1-m>
+    <x2-m>-0.005709</x2-m>
+    <y2-m>1</y2-m>
+    <z2-m>0</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>rotate</type>
+  <object-name>ball</object-name>
+  <property>/extra500/instrumentation/panelventswitchR/leftright</property>
+  <axis>
+    <x1-m>-0.005709</x1-m>
+    <y1-m>0</y1-m>
+    <z1-m>0</z1-m>
+    <x2-m>-0.005709</x2-m>
+    <y2-m>0</y2-m>
+    <z2-m>1</z2-m>
+  </axis>
+</animation>
+
+
+<!--pick animations-->
+<animation>
+  <type>pick</type>
+  <object-name>up</object-name>
+  <visible>true</visible>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("panelventR up");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>down</object-name>
+  <visible>true</visible>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("panelventR down");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>left</object-name>
+  <visible>true</visible>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("panelventR left");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>right</object-name>
+  <visible>true</visible>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("panelventR right");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+</PropertyList>
+

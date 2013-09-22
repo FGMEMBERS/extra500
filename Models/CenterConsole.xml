@@ -20,11 +20,17 @@
       Date: July 04 2013
 
       Last change:      Eric van den Berg
-      Date:             19.09.13
+      Date:             22.09.13
 -->
 <PropertyList>
 
 <path>CenterConsole.ac</path>
+
+  <animation>
+    <type>range</type>
+    <min-m>0</min-m>
+    <max-m>50</max-m>
+  </animation>
 
 <model>
   <name>Keypad</name>

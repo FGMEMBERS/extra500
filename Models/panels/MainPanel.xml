@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             21.09.13
+      Date:             22.09.13
 -->
 <PropertyList>
 
@@ -221,7 +221,7 @@
 
 <model>
   <name>panelventL</name>
-  <path>Aircraft/extra500/Models/instruments/panelvent.ac</path>
+  <path>Aircraft/extra500/Models/instruments/panelventL.xml</path>
 	<offsets>
 		<x-m>0.000</x-m>
 		<y-m>-0.57496</y-m>
@@ -231,7 +231,7 @@
 
 <model>
   <name>panelventR</name>
-  <path>Aircraft/extra500/Models/instruments/panelvent.ac</path>
+  <path>Aircraft/extra500/Models/instruments/panelventR.xml</path>
 	<offsets>
 		<x-m>0.000</x-m>
 		<y-m>0.54503</y-m>
