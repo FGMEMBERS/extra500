@@ -19,13 +19,19 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
-      Date:             30.06.13
+      Last change:      Eric van den Berg
+      Date:             21.09.13
 
 -->
 <PropertyList>
 
 <path>SidePanel.ac</path>
+
+  <animation>
+    <type>range</type>
+    <min-m>0</min-m>
+    <max-m>50</max-m>
+  </animation>
 
 <!-- ##### REIHE1 ##### -0.17003 -->
 <!-- SidePanel.Main.Battery -->

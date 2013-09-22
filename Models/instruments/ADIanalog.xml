@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
-      Date:             01.07.13
+      Last change:      Eric van den Berg
+      Date:             17.09.13
 
 -->
 
@@ -33,7 +33,7 @@
 	<object-name>ADIanalog.Scheibe.vorne</object-name>
 	<object-name>ADIanalog.Scheibe.hinten</object-name>
 	<object-name>ADIanalog.Scheibe.innen</object-name>
-		<property>/orientation/roll-deg</property>
+		<property>/instrumentation/attitude-indicator/indicated-roll-deg</property>
 		<center>
 			<x-m>1</x-m>
 			<y-m>0.0</y-m>
@@ -61,7 +61,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>ADIanalog.Scheibe.innen</object-name>
-		<property>/orientation/pitch-deg</property>
+		<property>/instrumentation/attitude-indicator/indicated-pitch-deg</property>
 		<interpolation>
         <entry>
            <ind>-30</ind>
@@ -86,6 +86,32 @@
 			<z>1</z>
 		</axis>
 	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>ADIanalog.flag</object-name>
+		<property>/instrumentation/attitude-indicator/spin</property>
+		<interpolation>
+       		<entry>
+          	 		<ind>0.99</ind>
+           			<dep>-55.0</dep>
+        		</entry>
+           		<entry>
+                		<ind>1</ind>
+                		<dep>0.0</dep>
+           		</entry>
+	      </interpolation>
+		<center>
+			<x-m>1</x-m>
+			<y-m>0</y-m>
+			<z-m>-0.01833</z-m>
+		</center>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
 	
 <!-- Dimming Instruments -->
 <animation>
@@ -95,6 +121,7 @@
 	<object-name>ADIanalog.Scheibe.innen</object-name>
 	<object-name>ADIanalog.Dreieck.oben</object-name>
 	<object-name>ADIanalog.Dreieck.unten</object-name>
+	<object-name>ADIanalog.flag</object-name>
 	<emission>	
 		<red>1.0</red>	
 		<green>1.0</green>	

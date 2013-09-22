@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             14.09.2013
+      Date:             22.09.2013
 
 
 ************************************************************************
@@ -711,16 +711,6 @@ JSBSim Extra Aircraft - Extra 500.
 		<serviceable>1</serviceable>
 		<sideslip-error-factor>0.1</sideslip-error-factor>
 	</staticAP>
-	<electrical>	
-		<outputs>
-			<turn-coordinator>12</turn-coordinator>
-			<DG>1.0</DG> <!-- the gyro eats norm Power -->
-			<nav n="0">1.1</nav>	<!-- FIXME: a hack to get the nav working expects >1 -->
-			<nav n="1">1.1</nav>
-			<dme>1</dme> 			<!--expects a bool 0 or 1 -->
-			<transponder>24</transponder>
-		</outputs>
-	</electrical>
 	<pressurization>
 		<cabin-climb-rate-fpm type="double">500</cabin-climb-rate-fpm>
 		<c1-dp-filter type="double">0.1</c1-dp-filter>
@@ -1064,6 +1054,8 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/light.nas</file>
 		<file>Aircraft/extra500/Nasal/centerConsole.nas</file>
 		<file>Aircraft/extra500/Nasal/log.nas</file>
+		<file>Aircraft/extra500/Nasal/dmeswitch.nas</file>
+		<file>Aircraft/extra500/Nasal/panelventswitch.nas</file>
 		
 		<file>Aircraft/extra500/Nasal/route_manager.nas</file>
 		
@@ -1207,12 +1199,45 @@ JSBSim Extra Aircraft - Extra 500.
 				<spk>0.2</spk>
 			</volsetting>
 		</Audiopanel>
+		<dmeSwitch>
+			<pressed>0</pressed>
+		</dmeSwitch>
+		<TrunCoordinator>
+			<volt>0</volt>
+		</TrunCoordinator>
+		<IFD-LH>
+			<state type="bool">false</state>
+		</IFD-LH>
+		<IFD-RH>
+			<state type="bool">false</state>
+		</IFD-RH>
+		<dmeInd>
+			<volt>0</volt>
+		</dmeInd>
+		<xpdr>
+			<volt>0</volt>
+		</xpdr>
 		<EIP>
 			<state type="bool">false</state>
 		</EIP>
+		<panelventswitchL>
+			<pressed>0</pressed>
+			<updown>0</updown>
+			<leftright>0</leftright>
+		</panelventswitchL>
+		<panelventswitchR>
+			<pressed>0</pressed>
+			<updown>0</updown>
+			<leftright>0</leftright>
+		</panelventswitchR>
 	</instrumentation>
 	<panel>
 		<CircuitBreaker>
+			<BankA>
+				<PanelVent>
+					<voltOut>0</voltOut>
+				</PanelVent>
+			</BankA>
 			<BankC>
 				<EnvironmentalBleed>
 					<voltOut>0</voltOut>
@@ -1302,33 +1327,33 @@ JSBSim Extra Aircraft - Extra 500.
                         	<x_ac-ft>29.834</x_ac-ft>
                         	<z_ac-ft>10.285</z_ac-ft>
                         	<incidence-deg>0.0</incidence-deg>
-				<cd0>0.021</cd0>
+					<cd0>0.021</cd0>
                         	<elevator>
-                              		<H-static-lbsft>2.0</H-static-lbsft>
-					<H-total-lbsft>0.0</H-total-lbsft>			<!--dummy value -->
-					<Ch0>-0.05</Ch0>
-                              		<Ch_de>-0.35</Ch_de>
-                              		<Ch_de2>0.0</Ch_de2>                     		<!--non linear part of Ch_de -->
-                              		<Ch_alpha>-0.05</Ch_alpha>
-					<Ch_alpha2>0.0</Ch_alpha2>				<!--non linear part of Ch_alpha -->
-                              		<downspring0-lbsft>16.5</downspring0-lbsft>
-                              		<downspring-lbsftprad>0.5</downspring-lbsftprad>
-                              		<bobweight-lbsft>0</bobweight-lbsft>
-					<Ip-lbsft2>1</Ip-lbsft2>		
-                              		<chord-frac>0.24</chord-frac>
-                              		<S-ft2>7.264</S-ft2>
-                              		<c_aero-ft>2.5796</c_aero-ft>
-                              		<max-defl-rad>0.3141</max-defl-rad>
-                              		<min-defl-rad>-0.5759</min-defl-rad>
-					<d_e_free-clipped-rad>0.0</d_e_free-clipped-rad>	<!--dummy value -->
-                              		<elevator-pos-rad>0</elevator-pos-rad>    		<!--dummy value -->
-                              		<elevator-pos-deg>0</elevator-pos-deg>    		<!--dummy value -->
-					<d_e_free-rad>0</d_e_free-rad>				<!--dummy value -->
-                              		<trim>
-                                    		<S-ft2>1.114</S-ft2>
-                                    		<c_aero-ft>0.4019</c_aero-ft>
-                                    		<coeff-norm>5.0</coeff-norm>        <!--this is multiplied with normalized trim position to get hinge moment of elevator -->
-                              		</trim>
+                              	<H-static-lbsft>2.0</H-static-lbsft>
+						<H-total-lbsft>0.0</H-total-lbsft>			<!--dummy value -->
+						<Ch0>-0.05</Ch0>
+                              	<Ch_de>-0.35</Ch_de>
+                              	<Ch_de2>0.0</Ch_de2>                     		<!--non linear part of Ch_de -->
+                              	<Ch_alpha>-0.05</Ch_alpha>
+						<Ch_alpha2>0.0</Ch_alpha2>				<!--non linear part of Ch_alpha -->
+                              	<downspring0-lbsft>16.5</downspring0-lbsft>
+                              	<downspring-lbsftprad>0.5</downspring-lbsftprad>
+                              	<bobweight-lbsft>0</bobweight-lbsft>
+						<Ip-lbsft2>1</Ip-lbsft2>		
+                              	<chord-frac>0.24</chord-frac>
+                              	<S-ft2>7.264</S-ft2>
+                              	<c_aero-ft>2.5796</c_aero-ft>
+                              	<max-defl-rad>0.3141</max-defl-rad>
+                              	<min-defl-rad>-0.5759</min-defl-rad>
+						<d_e_free-clipped-rad>0.0</d_e_free-clipped-rad>	<!--dummy value -->
+                              	<elevator-pos-rad>0</elevator-pos-rad>    		<!--dummy value -->
+                              	<elevator-pos-deg>0</elevator-pos-deg>    		<!--dummy value -->
+						<d_e_free-rad>0</d_e_free-rad>				<!--dummy value -->
+                              	<trim>
+                                    	<S-ft2>1.114</S-ft2>
+                                    	<c_aero-ft>0.4019</c_aero-ft>
+                                    	<coeff-norm>5.0</coeff-norm>        <!--this is multiplied with normalized trim position to get hinge moment of elevator -->
+                              	</trim>
                         	</elevator>
 				<alpha-deg>0.0</alpha-deg>					<!--dummy value -->	
                   	</hstab>

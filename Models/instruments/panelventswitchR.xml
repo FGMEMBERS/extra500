@@ -17,39 +17,47 @@
     along with extra500.  If not, see <http://www.gnu.org/licenses/>.
 
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
-      Date: March 13 2013
+      Date: August 20 2013
 
-      Last change:      Eric van den Berg
-      Date:             21.09.13
+      Last change:      -
+      Date:             -
 
 -->
 
 <PropertyList>
 
-<path>MagneticCompass.ac</path>
+<path>panelventswitch.ac</path>
 
-  <animation>
-    <type>range</type>
-    <min-m>0</min-m>
-    <max-m>50</max-m>
-  </animation>
+ 	<animation>
+  		<type>translate</type>
+		<object-name>switch</object-name>
+		<property>extra500/instrumentation/panelventswitchR/pressed</property>
+  		<factor>0.002</factor>
+  		<axis>
+   			<x>-1</x>
+   			<y>0</y>
+   			<z>0</z>
+  		</axis>
+ 	</animation>
 
+<!--pick animations-->
 <animation>
-  <type>rotate</type>
-	<object-name>Compassrose</object-name>
-	<property>/instrumentation/magnetic-compass/indicated-heading-deg</property>
-	<offset-deg>90</offset-deg>
-	<factor>-1</factor>
-	<axis>
-		<x1-m>0</x1-m>
-		<y1-m>0</y1-m>
-		<z1-m>1</z1-m>
-		<x2-m>0</x2-m>
-		<y2-m>0</y2-m>
-		<z2-m>-1</z2-m>
-	</axis>
+  <type>pick</type>
+  <object-name>switch</object-name>
+  <object-name>face</object-name>
+  <visible>true</visible>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("panelventswitchR on/off");
+	]]></script>
+    </binding>
+  </action>
 </animation>
 
-</PropertyList>
 
+</PropertyList>
 

@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             09.09.13
+      Date:             22.09.13
 -->
 <PropertyList>
 
@@ -169,8 +169,8 @@
 
 
 <model>
-  <name>TESTtc</name>
-  <path>Aircraft/Instruments-3d/tc/tc.xml</path>
+  <name>tc</name>
+  <path>Aircraft/extra500/Models/instruments/tc.xml</path>
 	<offsets>
 		<x-m>0.005</x-m>
 		<y-m>0.30010</y-m>
@@ -196,6 +196,46 @@
 		<x-m>0</x-m>
 		<y-m>0</y-m>	
 		<z-m>0.19839</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>panelventswitchL</name>
+  <path>Aircraft/extra500/Models/instruments/panelventswitchL.xml</path>
+	<offsets>
+		<x-m>0.000</x-m>
+		<y-m>-0.564</y-m>
+		<z-m>0.10815</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>panelventswitchR</name>
+  <path>Aircraft/extra500/Models/instruments/panelventswitchR.xml</path>
+	<offsets>
+		<x-m>0.000</x-m>
+		<y-m>0.534</y-m>
+		<z-m>0.10815</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>panelventL</name>
+  <path>Aircraft/extra500/Models/instruments/panelventL.xml</path>
+	<offsets>
+		<x-m>0.000</x-m>
+		<y-m>-0.57496</y-m>
+		<z-m>0.06185</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>panelventR</name>
+  <path>Aircraft/extra500/Models/instruments/panelventR.xml</path>
+	<offsets>
+		<x-m>0.000</x-m>
+		<y-m>0.54503</y-m>
+		<z-m>0.06185</z-m>
 	</offsets>
 </model>
 

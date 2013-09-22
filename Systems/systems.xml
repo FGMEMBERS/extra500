@@ -18,17 +18,11 @@
       Author: Eric van den Berg
       Date: 21.04.13
 
-      Last change:      -
-      Date:             -
+      Last change:      Eric van den Berg
+      Date:             16.09.13
 -->
 
 <PropertyList>
-
-  <!--electrical>
-    <name>electrical</name>
-    <number>0</number>
-    <path>Aircraft/Generic/generic-electrical.xml</path>
-  </electrical-->
 
   <pitot>
     <name>pitotL</name>

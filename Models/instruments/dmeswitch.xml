@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: August 15 2013
+
+      Last change:      -
+      Date:             -
+
+-->
+
+<PropertyList>
+
+<path>dmeswitch.ac</path>
+<!--Dimming -->
+<animation>
+	<type>material</type>
+	<object-name>dme</object-name>
+	<object-name>hold</object-name>
+	<emission>	
+		<red>1.0</red>	
+		<green>1.0</green>	
+		<blue>1.0</blue>
+		<factor-prop>/extra500/instrumentation/dmeSwitch/Backlight/state</factor-prop>
+	</emission>
+</animation>
+<!--DME switch-->
+	<animation>
+		<!-- Power on/off -->
+		<type>select</type>
+		<object-name>dme</object-name>
+		<condition>
+			<greater-than>
+				<property>extra500/instrumentation/dmeSwitch/state</property>
+				<value>0</value>
+			</greater-than>	
+		</condition>
+	</animation>
+
+<!--dme select-->
+	<animation>
+		<object-name>hold</object-name>
+		<type>select</type>
+		<condition>
+			<and>
+				<equals>
+					<property>extra500/instrumentation/dmeSwitch/pressed</property>
+					<value>1</value>
+				</equals>
+				<greater-than>
+					<property>extra500/instrumentation/dmeSwitch/state</property>
+					<value>0</value>
+				</greater-than>
+			</and>
+		</condition>
+	</animation>
+
+ 	<animation>
+  		<type>translate</type>
+		<object-name>hold</object-name>
+		<object-name>dme</object-name>
+  		<object-name>knob</object-name>
+		<property>extra500/instrumentation/dmeSwitch/pressed</property>
+  		<factor>0.002</factor>
+  		<axis>
+   			<x>0</x>
+   			<y>0</y>
+   			<z>-1</z>
+  		</axis>
+ 	</animation>
+
+<!--pick animations-->
+<animation>
+  <type>pick</type>
+  <object-name>knob</object-name>
+  <visible>true</visible>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("dmeswitch on/off");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+
+</PropertyList>
+
