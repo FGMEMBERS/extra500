@@ -23,7 +23,12 @@
 var Map = {
 	new : func(parent,name){
 		var m = {parents:[Map,parent.createChild("map",name)]};
+		m._parent = parent;
 		m._name = name;
+		m.RANGENM	= 1.6;
+		m.RANGENM	= 1.852;
+		m.RANGENM	= 1.852;
+		m._screenSize	= 200;
 		return m;
 	},
 	setRefPos : func(lat, lon) {
@@ -38,7 +43,15 @@ var Map = {
 		me; # chainable
 	},
 	setZoom : func(zoom){
+		
 		me._node.getNode("range", 1).setDoubleValue(zoom);
+	},
+	setScreenSize : func(pixel){
+		me._screenSize	= pixel;
+	},
+	setRangeNm : func(nm){
+		var range = 200 / (me._screenSize / nm);
+		me._node.getNode("range", 1).setDoubleValue(range);
 	},
 };
 
@@ -77,7 +90,7 @@ var Layer = {
 		var m = {parents:[Layer] }; 
 		m._id 			= id;
 		m._model 		= nil;
-		m._group 		= group;
+		m._group 		= group.createChild("group",id);
 		m._lModelObserver 	= nil;
 		m._modelNotification 	= "";
 		return m;
@@ -101,6 +114,10 @@ var Layer = {
 		print("Layer.onModelObserverNotify() ...");
 		me._modelNotification = n.getValue();
 	},
+	setVisible : func(v){
+		me._group.setVisible(v);
+	},
+	
 };
 
 var ModelData = {

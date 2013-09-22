@@ -151,9 +151,25 @@ var AvidyneIFD = {
 		# .. and place it on the object called PFD-Screen
 
 		#m.nHeadingBug = props.globals.initNode("/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg",0.0,"DOUBLE");
+		m._group = m.canvas.createGroup();
+		m._group.set("z-index",3);
 		
-		m.movingMap = MovingMap.new(m.canvas.createGroup(),name~"-MovingMap");
+		canvas.parsesvg(m._group, "Models/instruments/IFDs/IFD_Global.svg",{
+			"font-mapper": global.canvas.FontMapper
+			}
+		);
+		
+		
+		m.movingMap = MovingMap.new(m,m.canvas.createGroup(),name~"-MovingMap");
 		m.movingMap.setLayout("map");
+		
+		m._widget = {
+			#COM		: ComWidget.new(m,m._group.getElementById("layer1"),"Com"),
+			#CurrentWaypoint	: CurrentWaypointWidget.new(m,m._group,"CurrentWaypoint"),
+			Headline	: HeadlineWidget.new(m,m._group.getElementById("layer1"),"Headline"),
+			PlusData	: PlusDataWidget.new(m,m._group.getElementById("layer2"),"PlusData"),
+		};
+		
 		
 		m.data = AvidyneData.new(m.name);
 		
@@ -205,6 +221,7 @@ var AvidyneIFD = {
 	
 		return m;
 	},
+	getIFD : func(){ return me ;},
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
 		me.parents[1].init(instance);
@@ -251,6 +268,10 @@ var AvidyneIFD = {
 		#me.gotoPage(me._startPage);
 		
 		me.movingMap.init();
+		
+		me._widget.Headline.init();
+		me._widget.PlusData.init();
+		
 		
 		me._timerLoop20Hz = maketimer(0.05,me,AvidyneIFD.update20Hz);
 		me._timerLoop2Hz = maketimer(0.5,me,AvidyneIFD.update2Hz);
@@ -391,8 +412,10 @@ var AvidyneIFD = {
 		#print ("AvidyneIFD.onClick("~key~")");
 		if (me._state == 1){
 			if (contains(me.keys,key)){
-				me.keys[key]();
-				return 1;
+				if(me.keys[key] != nil){
+					me.keys[key]();
+					return 1;
+				}
 			}
 			
 			me.page[me.pageSelected].onClick(key);

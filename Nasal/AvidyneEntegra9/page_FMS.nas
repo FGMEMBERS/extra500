@@ -218,8 +218,11 @@ var FlightPlanListWidget = {
 				restriction ~= "IAS : " ~ fmsWP.speed_cstr ~"kts ";
 			}
 			me._fplItem[i]._can.Ristriction.setText(restriction);
-			if(fmsWP.leg_distance != nil){
-				distSum += fmsWP.leg_distance;
+			if(me._planSize > 1){
+				#debug.dump("fmsWP.leg_distance = ",fmsWP.leg_distance);
+# 				if(is_num(fmsWP.leg_distance)){
+					distSum += fmsWP.leg_distance;
+# 				}
 			}
 			me._fplItem[i]._can.Distance.setText(sprintf("%0.1f",distSum));
 			
@@ -389,18 +392,10 @@ var AvidynePageFMS = {
 			}
 		);
 		m._widget	= {
-			Tab	 : TabWidget.new(m,m.page,"TabSelectMAP"),
-			Com	 : ComWidget.new(m,m.page,"Com"),
-			DirectTo : DirectToWidget.new(m,m.page,"DirectTo"),
-			Tuning	 : TuningWidget.new(m,m.page,"Tuning"),
-			TCAS	 : TcasWidget.new(m,m.page,"TCAS"),
-			FPL	 : FlightPlanListWidget.new(m,m.page,"FPL-List"),
-			currentWP : CurrentWaypointWidget.new(m,m.page,"Current-Info"),
-			Headline : HeadlineWidget.new(m,m.page,"Headline"),
-			
-		};
-		m._can = {
-			side	 : m.page.getElementById("layer11").setVisible(0),
+			Tab	 	: TabWidget.new(m,m.page,"TabSelectMAP"),
+			DirectTo 	: DirectToWidget.new(m,m.page,"DirectTo"),
+			FPL	 	: FlightPlanListWidget.new(m,m.page,"FPL-List"),
+			MovingMapKnob	: MovingMapKnobWidget.new(m,m.page,"MovingMapKnob"),
 			
 		};
 		
@@ -421,9 +416,11 @@ var AvidynePageFMS = {
 # 				me._widget[widget].init();
 # 			}
 # 		}
+		
+
+		me.IFD._widget.Headline.setVisible(1);
+# 		me.IFD._widget.PlusData.setVisible(0);
 		me._widget.Tab.init();
-		me._widget.Com.init();
-		me._widget.Headline.init();
 		
 		me.registerKeys();
 		
@@ -441,54 +438,41 @@ var AvidynePageFMS = {
 		}
 	},
 	_initWidgetsForTab : func(index){
-		me._can.side.setVisible(0);
 		me._widget.DirectTo.deinit();
-		me._widget.Tuning.deinit();
 		me._widget.FPL.deinit();
-		me._widget.currentWP.deinit();
+		me.IFD._widget.PlusData.setVisible(0);
 		
 		if (index == 0){ # FPL
-			me._can.side.setVisible(1);
-			me._widget.DirectTo.init();
-			me._widget.Tuning.init();
-			me._widget.TCAS.setVisible(1);;
+			me.IFD._widget.PlusData.setVisible(1);
 			me._widget.FPL.init();
-			me._widget.currentWP.init();
 			me.IFD.movingMap.setLayout("none");
+			me._widget.MovingMapKnob.setVisible(0);
 		}elsif(index == 1){ # MapFPL
-			me._widget.TCAS.setVisible(0);
+			me.IFD._widget.PlusData.setVisible(0);
 			me.IFD.movingMap.setLayout("split-left");
-		
+			me._widget.MovingMapKnob.setHand(0);
+			me._widget.MovingMapKnob.setVisible(1);	
 		}elsif(index == 2){ # Info
-			me._can.side.setVisible(1);
-			me._widget.DirectTo.init();
-			me._widget.Tuning.init();
-			me._widget.TCAS.setVisible(1);
-			me._widget.currentWP.init();
+			me.IFD._widget.PlusData.setVisible(1);
 			me.IFD.movingMap.setLayout("none");
+			me._widget.MovingMapKnob.setVisible(0);
 		}elsif(index == 3){ # Routes
-			me._can.side.setVisible(1);
-			me._widget.Tuning.init();
-			me._widget.TCAS.setVisible(1);;
-			me._widget.currentWP.init();
+			me.IFD._widget.PlusData.setVisible(1);
 			me.IFD.movingMap.setLayout("none");
+			me._widget.MovingMapKnob.setVisible(0);
 		}elsif(index == 4){ # UserWypts
-			me._can.side.setVisible(1);
-			me._widget.DirectTo.init();
-			me._widget.Tuning.init();
-			me._widget.TCAS.setVisible(1);;
-			me._widget.currentWP.init();
+			me.IFD._widget.PlusData.setVisible(1);
 			me.IFD.movingMap.setLayout("none");
+			me._widget.MovingMapKnob.setVisible(0);
 		}elsif(index == 5){ # Nearest
-			me._can.side.setVisible(1);
-			me._widget.DirectTo.init();
-			me._widget.Tuning.init();
-			me._widget.TCAS.setVisible(1);;
-			me._widget.currentWP.init();
+			me.IFD._widget.PlusData.setVisible(1);
 			me.IFD.movingMap.setLayout("none");
+			me._widget.MovingMapKnob.setVisible(0);
 		}elsif(index == 6){ # MapNearest
-			me._widget.TCAS.setVisible(0);
+			me.IFD._widget.PlusData.setVisible(0);
 			me.IFD.movingMap.setLayout("split-left");
+			me._widget.MovingMapKnob.setHand(0);
+			me._widget.MovingMapKnob.setVisible(1);
 		}else{
 			
 		}

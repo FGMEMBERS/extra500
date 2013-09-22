@@ -195,7 +195,7 @@ var VerticalSpeedWidget = {
 		var m = {parents:[VerticalSpeedWidget,IfdWidget.new(page,canvasGroup,name)]};
 		m._class 	= "VerticalSpeedWidget";
 		m._ptree	= {
-			vs	: props.globals.initNode("/instrumentation/ivsi-IFD-"~m._Page.IFD.name~"/indicated-speed-fpm",0.0,"DOUBLE"),
+			vs	: props.globals.initNode("/instrumentation/ivsi-IFD-"~m._ifd.name~"/indicated-speed-fpm",0.0,"DOUBLE"),
 		};
 		m._can		= {
 			Needle		: m._group.getElementById("VS_Needle").updateCenter(),
@@ -254,9 +254,9 @@ var AirspeedSpeedWidget = {
 		var m = {parents:[AirspeedSpeedWidget,IfdWidget.new(page,canvasGroup,name)]};
 		m._class 	= "AirspeedSpeedWidget";
 		m._ptree	= {
-			ias	: props.globals.initNode("/instrumentation/airspeed-IFD-"~m._Page.IFD.name~"/indicated-airspeed-kt",0.0,"DOUBLE"),
-			iasRate	: props.globals.initNode("/instrumentation/airspeed-IFD-"~m._Page.IFD.name~"/airspeed-change-ktps",0.0,"DOUBLE"),
-			tas	: props.globals.initNode("/instrumentation/airspeed-IFD-"~m._Page.IFD.name~"/true-speed-kt",0.0,"DOUBLE"),
+			ias	: props.globals.initNode("/instrumentation/airspeed-IFD-"~m._ifd.name~"/indicated-airspeed-kt",0.0,"DOUBLE"),
+			iasRate	: props.globals.initNode("/instrumentation/airspeed-IFD-"~m._ifd.name~"/airspeed-change-ktps",0.0,"DOUBLE"),
+			tas	: props.globals.initNode("/instrumentation/airspeed-IFD-"~m._ifd.name~"/true-speed-kt",0.0,"DOUBLE"),
 		};
 		m._can		= {
 			IAS_Ladder	: m._group.getElementById("IAS_Ladder").set("clip","rect(82px, 639px, 671px, 320px)"),
@@ -365,9 +365,9 @@ var AirspeedSpeedWidget = {
 			}
 			
 			if( me._ias >= me._limitVne + 3.0){
-				me._Page.IFD._nOverSpeedWarning.setValue(1);
+				me._ifd._nOverSpeedWarning.setValue(1);
 			}else{
-				me._Page.IFD._nOverSpeedWarning.setValue(0);
+				me._ifd._nOverSpeedWarning.setValue(0);
 			}
 			
 		}
@@ -380,7 +380,7 @@ var AltitudeWidget = {
 		var m = {parents:[AltitudeWidget,IfdWidget.new(page,canvasGroup,name)]};
 		m._class 	= "AltitudeWidget";
 		m._ptree	= {
-			alt	: props.globals.initNode("/instrumentation/altimeter-IFD-"~m._Page.IFD.name~"/indicated-altitude-ft",0.0,"DOUBLE"),
+			alt	: props.globals.initNode("/instrumentation/altimeter-IFD-"~m._ifd.name~"/indicated-altitude-ft",0.0,"DOUBLE"),
 		};
 		m._can		= {
 			Ladder		: m._group.getElementById("ALT_Ladder").set("clip","rect(100px, 1718px, 650px, 1410px)"),
@@ -419,7 +419,7 @@ var AltitudeWidget = {
 	},
 	setListeners : func(instance) {
 		append(me._listeners, setlistener("/autopilot/settings/tgt-altitude-ft",func(n){me._onBugChange(n)},1,0));	
-		append(me._listeners, setlistener("/instrumentation/altimeter-IFD-"~me._Page.IFD.name~"/setting-hpa",func(n){me._onHpaChange(n)},1,0));	
+		append(me._listeners, setlistener("/instrumentation/altimeter-IFD-"~me._ifd.name~"/setting-hpa",func(n){me._onHpaChange(n)},1,0));	
 	
 	},
 	init : func(instance=me){
@@ -831,11 +831,11 @@ var NavSourceWidget = {
 	init : func(instance=me){
 		me.setListeners(instance);
 		
-		me._Page.IFD.nLedL1.setValue(1);
+		me._ifd.nLedL1.setValue(1);
 		me._Page.keys["L1 >"] = func(){me._scroll(1);};
 		me._Page.keys["L1 <"] = func(){me._scroll(-1);};
 		
-		me._Page.IFD.nLedLK.setValue(1);
+		me._ifd.nLedLK.setValue(1);
 		me._Page.keys["LK <<"]	= func(){me._adjustRadial(-10);};
 		me._Page.keys["LK <"] 	= func(){me._adjustRadial(-1);};
 		me._Page.keys["LK >"] 	= func(){me._adjustRadial(1);};
@@ -847,11 +847,11 @@ var NavSourceWidget = {
 	deinit : func(){
 		me.removeListeners();
 		
-		me._Page.IFD.nLedL1.setValue(0);
+		me._ifd.nLedL1.setValue(0);
 		me._Page.keys["L1 >"] = nil;
 		me._Page.keys["L1 <"] = nil;
 		
-		me._Page.IFD.nLedLK.setValue(0);
+		me._ifd.nLedLK.setValue(0);
 		me._Page.keys["LK <<"] 	= nil;
 		me._Page.keys["LK <"] 	= nil;
 		me._Page.keys["LK >"] 	= nil;
@@ -1040,13 +1040,13 @@ var BearingSourceWidget = {
 	},
 	init : func(instance=me){
 		me.setListeners(instance);
-		me._Page.IFD.nLedL3.setValue(1);
+		me._ifd.nLedL3.setValue(1);
 		me._Page.keys["L3 >"] = func(){me._scroll(1);};
 		me._Page.keys["L3 <"] = func(){me._scroll(-1);};
 		me._scroll(0);
 	},
 	deinit : func(){
-		me._Page.IFD.nLedL3.setValue(0);
+		me._ifd.nLedL3.setValue(0);
 		me._Page.keys["L3 >"] = nil;
 		me._Page.keys["L3 <"] = nil;
 		me.removeListeners();	
@@ -1202,25 +1202,30 @@ var HeadingSituationIndicatorWidget = {
 		var m = {parents:[HeadingSituationIndicatorWidget,IfdWidget.new(page,canvasGroup,name)]};
 		m._class 	= "HeadingSituationIndicatorWidget";
 		m._ptree	= {
-			Heading		: props.globals.initNode("/instrumentation/heading-indicator-IFD-"~m._Page.IFD.name~"/indicated-heading-deg",0.0,"DOUBLE"),
+			Heading		: props.globals.initNode("/instrumentation/heading-indicator-IFD-"~m._ifd.name~"/indicated-heading-deg",0.0,"DOUBLE"),
 			HeadingTrue	: props.globals.initNode("/orientation/heading-deg",0.0,"DOUBLE"),
 			TrunRate	: props.globals.initNode("/instrumentation/turn-indicator/indicated-turn-rate",0.0,"DOUBLE"),
+			FmsHeading	: props.globals.initNode("/autopilot/fms-channel/course-target-deg",0.0,"DOUBLE"),
 		};
 		m._can		= {
 			CoursePointer	: m._group.getElementById("CoursePointer").updateCenter(),
 			CDI		: m._group.getElementById("CDI").updateCenter(),
 			FromFlag	: m._group.getElementById("CDI_FromFlag"),
 			ToFlag		: m._group.getElementById("CDI_ToFlag"),
+			FMS_Bug		: m._group.getElementById("FMS_BUG").updateCenter(),
 			HeadingBug	: m._group.getElementById("HDG_Bug").updateCenter(),
 			HeadingBug_Text	: m._group.getElementById("HDG_Bug_Value").updateCenter(),
 			Heading_Text	: m._group.getElementById("HDG_Value").updateCenter(),
-			CompassRose	: m._group.getElementById("CompassRose").updateCenter(),
 			HeadingTrue	: m._group.getElementById("HDG_True").updateCenter(),
+			CompassRose	: m._group.getElementById("CompassRose").updateCenter(),
 			TrunRate	: m._group.getElementById("TrunRate_Needle").updateCenter(),
 		};
+		
 		m._heading		= 0;
 		m._headingBug		= 0;
 		m._trunRate		= 0;
+		m._fmsHeading		= 0;
+		
 		return m;
 	},
 	setListeners : func(instance) {
@@ -1228,15 +1233,18 @@ var HeadingSituationIndicatorWidget = {
 	},
 	init : func(instance=me){
 		me.setListeners(instance);
+		#me._movingMap.init();
+		me._ifd.movingMap.setLayout("pfd");
 	},
 	_onBugChange : func(n){
 		me._headingBug		= n.getValue();
 		me._can.HeadingBug.setRotation((me._headingBug - me._heading) * global.CONST.DEG2RAD);
 	},
 	update20Hz : func(now,dt){
-		me._heading = me._ptree.Heading.getValue();
-		me._headingTrue = me._ptree.HeadingTrue.getValue();
-		me._trunRate = me._ptree.TrunRate.getValue();
+		me._heading 		= me._ptree.Heading.getValue();
+		me._headingTrue 	= me._ptree.HeadingTrue.getValue();
+		me._trunRate 		= me._ptree.TrunRate.getValue();
+		me._fmsHeading 		= me._ptree.FmsHeading.getValue();
 		
 		
 		me._can.Heading_Text.setText(sprintf("%03i",math.floor( me._heading + 0.5)));
@@ -1253,6 +1261,14 @@ var HeadingSituationIndicatorWidget = {
 			
 		me._can.CDI.setTranslation(me._Page._widget.NavSource._horizontalDeviation * 240,0);
 		# CDI visibility/color contolled by DeviationIndicatorWidget
+		
+		if(me._Page._widget.NavSource._source == 2){
+			me._can.FMS_Bug.setRotation((me._fmsHeading - me._heading) * global.CONST.DEG2RAD);
+			me._can.FMS_Bug.setVisible(1);
+		}else{
+			me._can.FMS_Bug.setVisible(0);
+		}
+		
 		
 		# Bearing Pointer visibility/rotation controlled by BearingSourceWidget
 		
@@ -1309,7 +1325,113 @@ var EnvironmentWidget = {
 	},
 };
 
-
+var NavSelectWidget = {
+	new: func(page,canvasGroup,name){
+		var m = {parents:[NavSelectWidget,IfdWidget.new(page,canvasGroup,name)]};
+		m._class 	= "NavSelectWidget";
+		m._can		= {
+			SynVis		: m._group.getElementById("SynVis_State"),
+			FlightPlan	: m._group.getElementById("FlightPlan_State"),
+			CDI		: m._group.getElementById("CDI_State"),
+			CompassRangeMid	: m._group.getElementById("Compass_Map_Range_Mid"),
+			CompassRangeMax	: m._group.getElementById("Compass_Map_Range_Max"),
+			
+		};
+		m._synVis = 0;
+		m._flightPlan = 1;
+		m._cdi = 1;
+		m._mapRange 	= 30;
+		m._mapView 	= 0;
+		return m;
+	},
+	init : func(instance=me){
+		me.registerKeys();
+		me._ifd.movingMap.setLayerVisible("route",me._flightPlan);
+		me._ifd.movingMap.setRangeNm(me._mapRange);
+		me._can.CompassRangeMax.setText(sprintf("%.0f",me._mapRange));
+		me._can.CompassRangeMid.setText(sprintf("%.0f",me._mapRange/2));
+	},
+	deinit : func(){
+		me._ifd.nLedR3.setValue(0);
+		me._Page.keys["R3 <"] 	= nil;
+		me._Page.keys["R3 >"] 	= nil;
+		me._ifd.nLedR4.setValue(0);
+		me._Page.keys["R4 <"] 	= nil;
+		me._Page.keys["R4 >"] 	= nil;
+		me._ifd.nLedR5.setValue(0);
+		me._Page.keys["R5 <"] 	= nil;
+		me._Page.keys["R5 >"] 	= nil;
+		
+		me._ifd.nLedRK.setValue(0);
+		me._Page.keys["RK >>"] 	= nil;
+		me._Page.keys["RK <<"] 	= nil;
+		me._Page.keys["RK"] 	= nil;
+		me._Page.keys["RK >"] 	= nil;
+		me._Page.keys["RK <"] 	= nil;
+		
+		me._ifd.movingMap.setLayerVisible("route",1);
+		
+	},
+	registerKeys : func(){
+		me._ifd.nLedR3.setValue(1);
+		me._Page.keys["R3 <"] = func(){me.setSynVis();};
+		me._Page.keys["R3 >"] = func(){me.setSynVis();};
+		me._ifd.nLedR4.setValue(1);
+		me._Page.keys["R4 <"] = func(){me.setFlighPlan();};
+		me._Page.keys["R4 >"] = func(){me.setFlighPlan();};
+		me._ifd.nLedR5.setValue(1);
+		me._Page.keys["R5 <"] = func(){me.setCDI();};
+		me._Page.keys["R5 >"] = func(){me.setCDI();};
+		
+		me._ifd.nLedRK.setValue(1);
+		me._Page.keys["RK >>"] 	= func(){me.adjustMapRange(5);};
+		me._Page.keys["RK <<"] 	= func(){me.adjustMapRange(-5);};
+		me._Page.keys["RK"] 	= func(){me.adjustMapView(1);};;
+		me._Page.keys["RK >"] 	= func(){me.adjustMapRange(1);};
+		me._Page.keys["RK <"] 	= func(){me.adjustMapRange(-1);};
+		
+		
+	},
+	setSynVis : func(value=nil){
+		if (value == nil){
+			me._synVis = !me._synVis;
+		}else{
+			me._synVis = value;
+		}
+		me._can.SynVis.setText(LABEL_OFFON[me._synVis]);
+		
+	},
+	setFlighPlan : func(value=nil){
+		if (value == nil){
+			me._flightPlan = !me._flightPlan;
+		}else{
+			me._flightPlan = value;
+		}
+		me._can.FlightPlan.setText(LABEL_OFFON[me._flightPlan]);
+		me._ifd.movingMap.setLayerVisible("route",me._flightPlan);
+		
+	},
+	setCDI : func(value=nil){
+		if (value == nil){
+			me._cdi = !me._cdi;
+		}else{
+			me._cdi = value;
+		}
+		me._can.CDI.setText(LABEL_OFFON[me._cdi]);
+		me._Page._widget.HSI._can.CoursePointer.setVisible(me._cdi);
+	},
+	adjustMapRange : func(amount){
+		me._mapRange += amount;
+		me._mapRange = global.clamp(me._mapRange,2,300);
+		me._ifd.movingMap.setRangeNm(me._mapRange);
+		me._can.CompassRangeMax.setText(sprintf("%.0f",me._mapRange));
+		me._can.CompassRangeMid.setText(sprintf("%.0f",me._mapRange/2));
+	},
+	adjustMapView : func(amount){
+		me._mapView = global.cycle(me._mapView,0,3,amount);
+		me._ifd.movingMap.setView(me._mapView);
+	}
+};
 
 var BugSelectWidget = {
 	new: func(page,canvasGroup,name){
@@ -1330,17 +1452,17 @@ var BugSelectWidget = {
 		me.registerKeys();
 	},
 	deinit : func(){
-		me._Page.IFD.nLedR3.setValue(0);
+		me._ifd.nLedR3.setValue(0);
 		me._Page.keys["R3 <"] 	= nil;
 		me._Page.keys["R3 >"] 	= nil;
-		me._Page.IFD.nLedR4.setValue(0);
+		me._ifd.nLedR4.setValue(0);
 		me._Page.keys["R4 <"] 	= nil;
 		me._Page.keys["R4 >"] 	= nil;
-		me._Page.IFD.nLedR5.setValue(0);
+		me._ifd.nLedR5.setValue(0);
 		me._Page.keys["R5 <"] 	= nil;
 		me._Page.keys["R5 >"] 	= nil;
 		
-		me._Page.IFD.nLedRK.setValue(0);
+		me._ifd.nLedRK.setValue(0);
 		me._Page.keys["RK >>"] 	= nil;
 		me._Page.keys["RK <<"] 	= nil;
 		me._Page.keys["RK"] 	= nil;
@@ -1349,13 +1471,13 @@ var BugSelectWidget = {
 		
 	},
 	registerKeys : func(){
-		me._Page.IFD.nLedR3.setValue(1);
+		me._ifd.nLedR3.setValue(1);
 		me._Page.keys["R3 <"] = func(){me._setModeRK("HDG");};
 		me._Page.keys["R3 >"] = func(){me._setModeRK("HDG");};
-		me._Page.IFD.nLedR4.setValue(1);
+		me._ifd.nLedR4.setValue(1);
 		me._Page.keys["R4 <"] = func(){me._setModeRK("ALT");};
 		me._Page.keys["R4 >"] = func(){me._setModeRK("ALT");};
-		me._Page.IFD.nLedR5.setValue(1);
+		me._ifd.nLedR5.setValue(1);
 		me._Page.keys["R5 <"] = func(){me._setModeRK("VS");};
 		me._Page.keys["R5 >"] = func(){me._setModeRK("VS");};
 	},
@@ -1380,7 +1502,7 @@ var BugSelectWidget = {
 			me._can.HeadingBorder.set("stroke-width",20);
 			me._can.Heading.set("z-index",2);
 		
-			me._Page.IFD.nLedRK.setValue(1);
+			me._ifd.nLedRK.setValue(1);
 			me._Page.keys["RK >>"] 	= func(){extra500.keypad.onAdjustHeading(10);};
 			me._Page.keys["RK <<"] 	= func(){extra500.keypad.onAdjustHeading(-10);};
 			me._Page.keys["RK"] 	= func(){extra500.keypad.onHeadingSync();};
@@ -1391,7 +1513,7 @@ var BugSelectWidget = {
 			me._can.AltitudeBorder.set("stroke-width",20);
 			me._can.Altitude.set("z-index",2);
 						
-			me._Page.IFD.nLedRK.setValue(1);
+			me._ifd.nLedRK.setValue(1);
 			me._Page.keys["RK >>"] 	= func(){extra500.keypad.onAdjustAltitude(500);};
 			me._Page.keys["RK <<"] 	= func(){extra500.keypad.onAdjustAltitude(-500);};
 			me._Page.keys["RK"] 	= func(){extra500.keypad.onHeadingSync();};
@@ -1402,7 +1524,7 @@ var BugSelectWidget = {
 			me._can.VSBorder.set("stroke-width",20);
 			me._can.VS.set("z-index",2);
 			
-			me._Page.IFD.nLedRK.setValue(1);
+			me._ifd.nLedRK.setValue(1);
 			me._Page.keys["RK >>"] 	= func(){extra500.autopilot.onAdjustVS(-100);};
 			me._Page.keys["RK <<"] 	= func(){extra500.autopilot.onAdjustVS(100);};
 			me._Page.keys["RK"] 	= func(){extra500.autopilot.onSetVS(0);};
@@ -1410,16 +1532,13 @@ var BugSelectWidget = {
 			me._Page.keys["RK <"] 	= func(){extra500.autopilot.onAdjustVS(100);};
 		}else{
 							
-			me._Page.IFD.nLedRK.setValue(0);
+			me._ifd.nLedRK.setValue(0);
 			delete(me.keys,"RK >>");
 			delete(me.keys,"RK <<");
 			delete(me.keys,"RK");
 			delete(me.keys,"RK >");
 			delete(me.keys,"RK <");
 		}
-	},
-	update2Hz : func(now,dt){
-		me._can.Time.setText(me._Page.data.timerGetTime());
 	}
 };
 
@@ -1450,27 +1569,27 @@ var TimerWidget = {
 		me.registerKeys();
 	},
 	deinit : func(){
-		me._Page.IFD.nLedR2.setValue(0);
+		me._ifd.nLedR2.setValue(0);
 		me._Page.keys["R2 <"] = nil;
 		me._Page.keys["R2 >"] = nil;
 	},
 	registerKeys : func(){
 		if ((me._Page.data.timerState == 0)){
-			me._Page.IFD.nLedR2.setValue(1);
+			me._ifd.nLedR2.setValue(1);
 			me._Page.keys["R2 <"] = func(){me._Page.data.timerStart();me.registerKeys();};
 			me._Page.keys["R2 >"] = func(){me._Page.data.timerStart();me.registerKeys();};
 			me._can.On.setVisible(0);
 			me._can.Center.setVisible(1);
 			
 		}elsif ((me._Page.data.timerState == 1)){
-			me._Page.IFD.nLedR2.setValue(1);
+			me._ifd.nLedR2.setValue(1);
 			me._Page.keys["R2 <"] = func(){me._Page.data.timerStart();me.registerKeys();};
 			me._Page.keys["R2 >"] = func(){me._Page.data.timerReset();me.registerKeys();};
 			me._can.Left.setText("Start");
 			me._can.On.setVisible(1);
 			me._can.Center.setVisible(0);
 		}elsif ((me._Page.data.timerState == 2)){
-			me._Page.IFD.nLedR2.setValue(1);
+			me._ifd.nLedR2.setValue(1);
 			me._Page.keys["R2 <"] = func(){me._Page.data.timerStop();me.registerKeys();};
 			me._Page.keys["R2 >"] = func(){me._Page.data.timerReset();me.registerKeys();};
 			me._can.Left.setText("Stop");
@@ -1566,6 +1685,7 @@ var AvidynePagePFD = {
 			Environment 		: EnvironmentWidget.new(m,m.page,"Environment"),
 			Timer	 		: TimerWidget.new(m,m.page,"Timer"),
 			BugSelect 		: BugSelectWidget.new(m,m.page,"BugSelect"),
+			NavSelect 		: NavSelectWidget.new(m,m.page,"NavSelectWidget"),
 			Tab	 		: TabWidget.new(m,m.page,"TabSelectPFD"),
 			Marker	 		: MarkerWidget.new(m,m.page,"Marker"),
 			ActiveCom	 	: ActiveComWidget.new(m,m.page,"ActiveCom"),
@@ -1581,6 +1701,8 @@ var AvidynePagePFD = {
 		#print("AvidynePagePFD.init() ... ");
 				
 		me.setListeners(instance);
+		me.IFD._widget.Headline.setVisible(0);
+		me.IFD._widget.PlusData.setVisible(0);
 		
 		foreach(widget;keys(me._widget)){
 			#print("widget : "~widget);
@@ -1610,9 +1732,10 @@ var AvidynePagePFD = {
 		if (index == 0){ # Page NavDisplay
 			
 			me._widget.BugSelect.deinit();
+			me._widget.NavSelect.init();
 			
 		}elsif(index == 1){ # Page BugSelect
-
+			me._widget.NavSelect.deinit();
 			me._widget.BugSelect.init();
 			
 		}else{

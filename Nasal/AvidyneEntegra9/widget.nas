@@ -78,12 +78,13 @@ var TabWidget = {
 	
 };
 
-var ComWidget = {
+var HeadlineWidget = {
 	new : func(page,canvasGroup,name){
-		var m = {parents:[ComWidget,IfdWidget.new(page,canvasGroup,name)]};
-		m._class 	= "ComWidget";
+		var m = {parents:[HeadlineWidget,IfdWidget.new(page,canvasGroup,name)]};
+		m._class 	= "HeadlineWidget";
 		m._tab		= [];
 		m._can		= {};
+		m._timer	= maketimer(1.0,m,HeadlineWidget.update);
 		return m;
 	},
 	setListeners : func(instance) {
@@ -91,14 +92,23 @@ var ComWidget = {
 		append(me._listeners, setlistener("/instrumentation/comm[0]/frequencies/standby-mhz",func(n){me._onCom1StandbyChange(n)},1,0));	
 		append(me._listeners, setlistener("/instrumentation/comm[1]/frequencies/selected-mhz",func(n){me._onCom2SelectedChange(n)},1,0));	
 		append(me._listeners, setlistener("/instrumentation/comm[1]/frequencies/standby-mhz",func(n){me._onCom2StandbyChange(n)},1,0));	
+		append(me._listeners, setlistener("/instrumentation/transponder/id-code",func(n){me._onXPDRChange(n);},1,0) );
+		append(me._listeners, setlistener("/instrumentation/transponder/inputs/knob-mode",func(n){me._onXPDRmodeChange(n);},1,0) );
+		append(me._listeners, setlistener("/autopilot/route-manager/signals/waypoint-changed",func(n){me._onWaypointChange(n)},1,0));	
 	},
 	init : func(instance=me){
-		#print("ComWidget.init() ... ");
+		#print("HeadlineWidget.init() ... ");
 		me._can = {
 			com1selected	: me._group.getElementById("Com1_selected"),
 			com1standby	: me._group.getElementById("Com1_standby"),
 			com2selected	: me._group.getElementById("Com2_selected"),
 			com2standby	: me._group.getElementById("Com2_standby"),
+			Xpdr		: me._group.getElementById("Head_xpdr"),
+			XpdrMode	: me._group.getElementById("Head_xpdr_mode"),
+			Dest		: me._group.getElementById("Head_Dest"),
+			Fuel		: me._group.getElementById("Head_gal"),
+			ETA		: me._group.getElementById("Head_eta"),
+			Time		: me._group.getElementById("Head_time"),
 		};
 		me.setListeners(instance);
 		
@@ -115,12 +125,215 @@ var ComWidget = {
 	_onCom2StandbyChange : func(n){
 		me._can.com2standby.setText(sprintf("%.3f",n.getValue()));
 	},
+	_onXPDRChange : func(n){
+		me._can.Xpdr.setText(sprintf("%4i",n.getValue()));	
+	},
+	_onXPDRmodeChange : func(n){
+		me._can.XpdrMode.setText(XPDRMODE[n.getValue()]);	
+	},
+	_onWaypointChange : func(n){
+		me._can.Dest.setText(getprop("/autopilot/route-manager/destination/airport"));		
+	},
+	update : func(){
+		var gs = getprop("/velocities/groundspeed-kt");
+		if(gs > 50){
+		var eta = getprop("/autopilot/route-manager/ete") + systime();
+			me._can.ETA.setText(global.formatTime(eta));
+		}else{
+			me._can.ETA.setText("--:--");
+		}
+		me._can.Time.setText(getprop("/sim/time/gmt-string"));
+		me._can.Fuel.setText("---");
+	},
 };
 
-var CurrentWaypointWidget = {
+
+
+
+var PlusDataWidget = {
 	new : func(page,canvasGroup,name){
-		var m = {parents:[CurrentWaypointWidget,IfdWidget.new(page,canvasGroup,name)]};
-		m._class 	= "CurrentWaypointWidget";
+		var m = {parents:[PlusDataWidget,IfdWidget.new(page,canvasGroup,name)]};
+		m._class 	= "PlusDataWidget";
+		m._tab		= [];
+		m._can		= {};
+		m.SOURCE	= ["Com","Nav"];
+		m._widget = {
+			TCAS	: TcasWidget.new(page,m._group.getElementById("TCAS"),"TcasData"),
+		};
+
+		m._source = 0;
+		m._channel = 0;
+		m._index	= 0;
+		m._path		= "";
+		m._timer	= maketimer(1.0,m,PlusDataWidget.update);
+		return m;
+	},
+	setListeners : func(instance) {
+		append(me._listeners, setlistener("/extra500/instrumentation/Keypad/tuningSource",func(n){me._onTuningSourceChange(n)},1,0));	
+		append(me._listeners, setlistener("/extra500/instrumentation/Keypad/tuningChannel",func(n){me._onTuningChannelChange(n)},1,0));	
+		append(me._listeners, setlistener("/autopilot/route-manager/current-wp",func(n){me._onCurrentWaypointChange(n)},1,0));	
+		append(me._listeners, setlistener("/autopilot/route-manager/signals/waypoint-changed",func(n){me._onWaypointChange(n)},1,0));	
+	},
+	init : func(instance=me){
+		print("PlusDataWidget.init() ... ");
+		me._can = {
+			source	: me._group.getElementById("Tuning_Source_Text"),
+			channel	: [ 
+				me._group.getElementById("Tuning_Channel0_Text"),
+				me._group.getElementById("Tuning_Channel1_Text")
+				],
+			border	: [ 
+				me._group.getElementById("Tuning_Channel0_Swap_Border"),
+				me._group.getElementById("Tuning_Channel1_Swap_Border")
+				],
+			arrow	: [ 
+				me._group.getElementById("Tuning_Channel0_Swap_Arrow"),
+				me._group.getElementById("Tuning_Channel1_Swap_Arrow")
+				],
+			Name		: me._group.getElementById("FPL_Current_Name").setText("----"),
+			Course		: me._group.getElementById("FPL_Current_LegCourse").setText("---"),
+			Distance	: me._group.getElementById("FPL_Current_LegDistance").setText("---"),
+			Fuel		: me._group.getElementById("FPL_Current_LegGal").setText("---"),
+			ETA		: me._group.getElementById("FPL_Current_LegETA").setText("--:--"),
+			DestName	: me._group.getElementById("FPL_Dest_Name").setText("----"),
+			DestBearing	: me._group.getElementById("FPL_Dest_Bearing_Deg").setText("---"),
+			DestDistance	: me._group.getElementById("FPL_Dest_Bearing_Distance").setText("---"),
+			
+		};
+		me._widget.TCAS.init();
+		me.setListeners(instance);
+				
+		me._timer.start();
+	},
+	deinit : func(){
+		print("PlusDataWidget.deinit() ... ");
+		me._widget.TCAS.deinit();
+		me._timer.stop();
+		me.removeListeners();
+		
+	},
+	setVisible : func(visible){
+		if(visible == 1){
+			me._ifd.nLedL2.setValue(1);
+			me._Page.keys["L2 <"] 	= func(){me._scrollSource(-1);};
+			me._Page.keys["L2 >"] 	= func(){me._scrollSource(1);};
+			me._ifd.nLedL3.setValue(1);
+			me._Page.keys["L3 <"] 	= func(){extra500.keypad.onCom1Scroll(1);};
+			me._Page.keys["L3 >"] 	= func(){me._selectChannel(0);};
+			me._ifd.nLedL4.setValue(1);
+			me._Page.keys["L4 <"] 	= func(){extra500.keypad.onCom2Scroll(1);};
+			me._Page.keys["L4 >"] 	= func(){me._selectChannel(1);};
+			me._ifd.nLedLK.setValue(1);
+			me._Page.keys["LK >>"] 	= func(){me._adjustFreqency(1);};
+			me._Page.keys["LK <<"] 	= func(){me._adjustFreqency(-1);};
+			me._Page.keys["LK"] 	= nil;
+			me._Page.keys["LK >"] 	= func(){me._adjustFreqency(0.025);};
+			me._Page.keys["LK <"] 	= func(){me._adjustFreqency(-0.025);};
+		}else{
+			me._ifd.nLedL2.setValue(0);
+			me._Page.keys["L2 <"] 	= nil;
+			me._Page.keys["L2 >"] 	= nil;
+			me._ifd.nLedL3.setValue(0);
+			me._Page.keys["L3 <"] 	= nil;
+			me._Page.keys["L3 >"] 	= nil;
+			me._ifd.nLedL4.setValue(0);
+			me._Page.keys["L4 <"] 	= nil;
+			me._Page.keys["L4 >"] 	= nil;
+			me._ifd.nLedLK.setValue(0);
+			me._Page.keys["LK >>"] 	= nil;
+			me._Page.keys["LK <<"] 	= nil;
+			me._Page.keys["LK"] 	= nil;
+			me._Page.keys["LK >"] 	= nil;
+			me._Page.keys["LK <"] 	= nil;
+		}
+		me._group.setVisible(visible);
+		me._widget.TCAS.setVisible(visible);
+		
+	},
+	_onTuningSourceChange : func(n){
+		me._source = n.getValue();
+		me._can.source.setText(me.SOURCE[me._source]);
+		me._can.channel[0].setText(me.SOURCE[me._source]~" 1");
+		me._can.channel[1].setText(me.SOURCE[me._source]~" 2");
+
+	},
+	_onTuningChannelChange : func(n){
+		me._channel = n.getValue();
+		
+		if (me._channel == 0){
+			me._can.border[0].set("stroke",COLOR["Turquoise"]);
+			me._can.arrow[0].set("stroke",COLOR["Turquoise"]);
+			me._can.arrow[0].set("fill",COLOR["Turquoise"]);
+			me._can.border[1].set("stroke",COLOR["DarkGreen"]);
+			me._can.arrow[1].set("stroke",COLOR["DarkGreen"]);
+			me._can.arrow[1].set("fill",COLOR["DarkGreen"]);
+		}else{
+			me._can.border[1].set("stroke",COLOR["Turquoise"]);
+			me._can.arrow[1].set("stroke",COLOR["Turquoise"]);
+			me._can.arrow[1].set("fill",COLOR["Turquoise"]);
+			me._can.border[0].set("stroke",COLOR["DarkGreen"]);
+			me._can.arrow[0].set("stroke",COLOR["DarkGreen"]);
+			me._can.arrow[0].set("fill",COLOR["DarkGreen"]);
+		}
+	},
+	_scrollSource : func(amount){
+		me._source += amount;
+		me._source = global.clamp(me._source,0,1);
+		setprop("/extra500/instrumentation/Keypad/tuningSource",me._source);
+	},
+	_selectChannel : func(index){
+		setprop("/extra500/instrumentation/Keypad/tuningChannel",index);
+	},
+	_adjustFreqency : func(amount){
+		var source = ["comm","nav"];
+		var path = "/instrumentation/"~source[me._source]~"["~me._channel~"]/frequencies/standby-mhz";
+		var freq = getprop(path);
+		freq+=amount;
+		freq = global.clamp(freq,100.0,199.975);
+		setprop(path,freq);
+		extra500.keypad._inputWatchDog = 0;
+	},
+	_onCurrentWaypointChange : func(n){
+		me._index = n.getValue();
+		if(me._index >= 0 ){
+			me._path = "/autopilot/route-manager/route/wp["~me._index~"]";
+			me._can.Name.setText(sprintf("%s",getprop(me._path~"/id")));
+			me._can.Course.setText(sprintf("%03.0f",getprop(me._path~"/leg-bearing-true-deg")));
+			me._can.Distance.setText(sprintf("%03.0f",getprop(me._path~"/leg-distance-nm")));
+			me._can.Fuel.setText("---");
+		}else{
+			me._can.Name.setText("----");
+			me._can.Course.setText("---");
+			me._can.Distance.setText("---");
+			me._can.Fuel.setText("---");
+			me._can.ETA.setText("--:--");
+		}
+	},
+	_onWaypointChange : func(n){
+		me._can.DestName.setText(getprop("/autopilot/route-manager/destination/airport"));	
+		me._can.DestBearing.setText("---");
+		me._can.DestDistance.setText("---");
+			
+	},
+	update : func(){
+		me._can.ETA.setText(getprop("/autopilot/route-manager/wp/eta"));
+		me._can.Distance.setText(sprintf("%.1f",getprop("/autopilot/route-manager/wp/dist")));
+		me._can.Course.setText(sprintf("%03.0f",getprop("/autopilot/route-manager/wp/bearing-deg")));
+			
+	},
+	
+};
+
+
+
+
+
+
+
+var CurrentWaypointWidget_old = {
+	new : func(page,canvasGroup,name){
+		var m = {parents:[CurrentWaypointWidget_old,IfdWidget.new(page,canvasGroup,name)]};
+		m._class 	= "CurrentWaypointWidget_old";
 		m._tab		= [];
 		m._can		= {};
 		m._index	= 0;
@@ -181,65 +394,11 @@ var CurrentWaypointWidget = {
 	},
 };
 
-var HeadlineWidget = {
-	new : func(page,canvasGroup,name){
-		var m = {parents:[HeadlineWidget,IfdWidget.new(page,canvasGroup,name)]};
-		m._class 	= "HeadlineWidget";
-		m._tab		= [];
-		m._can		= {};
-		m._index	= 0;
-		m._path		= "";
-		m._timer	= maketimer(1.0,m,HeadlineWidget.update);
-		return m;
-	},
-	setListeners : func(instance) {
-		append(me._listeners, setlistener("/instrumentation/transponder/id-code",func(n){me._onXPDRChange(n);},1,0) );
-		append(me._listeners, setlistener("/instrumentation/transponder/inputs/knob-mode",func(n){me._onXPDRmodeChange(n);},1,0) );
-		append(me._listeners, setlistener("/autopilot/route-manager/signals/waypoint-changed",func(n){me._onWaypointChange(n)},1,0));	
-	},
-	init : func(instance=me){
-		#print("ComWidget.init() ... ");
-		me._can = {
-			Xpdr		: me._group.getElementById("Head_xpdr"),
-			XpdrMode	: me._group.getElementById("Head_xpdr_mode"),
-			Dest		: me._group.getElementById("Head_Dest"),
-			Fuel		: me._group.getElementById("Head_gal"),
-			ETA		: me._group.getElementById("Head_eta"),
-			Time		: me._group.getElementById("Head_time"),
-		};
-		me.setListeners(instance);
-		me._timer.start();
-	},
-	deinit : func(){
-		me.removeListeners();
-		me._timer.stop();
-	},
-	_onXPDRChange : func(n){
-		me._can.Xpdr.setText(sprintf("%4i",n.getValue()));	
-	},
-	_onXPDRmodeChange : func(n){
-		me._can.XpdrMode.setText(XPDRMODE[n.getValue()]);	
-	},
-	_onWaypointChange : func(n){
-		me._can.Dest.setText(getprop("/autopilot/route-manager/destination/airport"));		
-	},
-	update : func(){
-		var gs = getprop("/velocities/groundspeed-kt");
-		if(gs > 50){
-		var eta = getprop("/autopilot/route-manager/ete") + systime();
-			me._can.ETA.setText(global.formatTime(eta));
-		}else{
-			me._can.ETA.setText("--:--");
-		}
-		me._can.Time.setText(getprop("/sim/time/gmt-string"));
-		me._can.Fuel.setText("---");
-	},
-};
 
-var TuningWidget = {
+var TuningWidget_old = {
 	new : func(page,canvasGroup,name){
-		var m = {parents:[TuningWidget,IfdWidget.new(page,canvasGroup,name)]};
-		m._class 	= "TuningWidget";
+		var m = {parents:[TuningWidget_old,IfdWidget.new(page,canvasGroup,name)]};
+		m._class 	= "TuningWidget_old";
 		m._tab		= [];
 		m._can		= {};
 		m.SOURCE	= ["Com","Nav"];
@@ -273,16 +432,16 @@ var TuningWidget = {
 		};
 		me.setListeners(instance);
 		
-		me._Page.IFD.nLedL2.setValue(1);
+		me._ifd.nLedL2.setValue(1);
 		me._Page.keys["L2 <"] 	= func(){me._scrollSource(-1);};
 		me._Page.keys["L2 >"] 	= func(){me._scrollSource(1);};
-		me._Page.IFD.nLedL3.setValue(1);
+		me._ifd.nLedL3.setValue(1);
 		me._Page.keys["L3 <"] 	= func(){extra500.keypad.onCom1Scroll(1);};
 		me._Page.keys["L3 >"] 	= func(){me._selectChannel(0);};
-		me._Page.IFD.nLedL4.setValue(1);
+		me._ifd.nLedL4.setValue(1);
 		me._Page.keys["L4 <"] 	= func(){extra500.keypad.onCom2Scroll(1);};
 		me._Page.keys["L4 >"] 	= func(){me._selectChannel(1);};
-		me._Page.IFD.nLedLK.setValue(1);
+		me._ifd.nLedLK.setValue(1);
 		me._Page.keys["LK >>"] 	= func(){me._adjustFreqency(1);};
 		me._Page.keys["LK <<"] 	= func(){me._adjustFreqency(-1);};
 		me._Page.keys["LK"] 	= nil;
@@ -294,16 +453,16 @@ var TuningWidget = {
 	deinit : func(){
 		me.removeListeners();
 		
-		me._Page.IFD.nLedL2.setValue(0);
+		me._ifd.nLedL2.setValue(0);
 		me._Page.keys["L2 <"] 	= nil;
 		me._Page.keys["L2 >"] 	= nil;
-		me._Page.IFD.nLedL3.setValue(0);
+		me._ifd.nLedL3.setValue(0);
 		me._Page.keys["L3 <"] 	= nil;
 		me._Page.keys["L3 >"] 	= nil;
-		me._Page.IFD.nLedL4.setValue(0);
+		me._ifd.nLedL4.setValue(0);
 		me._Page.keys["L4 <"] 	= nil;
 		me._Page.keys["L4 >"] 	= nil;
-		me._Page.IFD.nLedLK.setValue(0);
+		me._ifd.nLedLK.setValue(0);
 		me._Page.keys["LK >>"] 	= nil;
 		me._Page.keys["LK <<"] 	= nil;
 		me._Page.keys["LK"] 	= nil;
@@ -358,6 +517,59 @@ var TuningWidget = {
 	
 };
 
+var HeadlineWidget_old = {
+	new : func(page,canvasGroup,name){
+		var m = {parents:[HeadlineWidget_old,IfdWidget.new(page,canvasGroup,name)]};
+		m._class 	= "HeadlineWidget_old";
+		m._tab		= [];
+		m._can		= {};
+		m._index	= 0;
+		m._path		= "";
+		return m;
+	},
+	setListeners : func(instance) {
+		append(me._listeners, setlistener("/instrumentation/transponder/id-code",func(n){me._onXPDRChange(n);},1,0) );
+		append(me._listeners, setlistener("/instrumentation/transponder/inputs/knob-mode",func(n){me._onXPDRmodeChange(n);},1,0) );
+		append(me._listeners, setlistener("/autopilot/route-manager/signals/waypoint-changed",func(n){me._onWaypointChange(n)},1,0));	
+	},
+	init : func(instance=me){
+		#print("ComWidget.init() ... ");
+		me._can = {
+			Xpdr		: me._group.getElementById("Head_xpdr"),
+			XpdrMode	: me._group.getElementById("Head_xpdr_mode"),
+			Dest		: me._group.getElementById("Head_Dest"),
+			Fuel		: me._group.getElementById("Head_gal"),
+			ETA		: me._group.getElementById("Head_eta"),
+			Time		: me._group.getElementById("Head_time"),
+		};
+		me.setListeners(instance);
+		me._timer.start();
+	},
+	deinit : func(){
+		me.removeListeners();
+		me._timer.stop();
+	},
+	_onXPDRChange : func(n){
+		me._can.Xpdr.setText(sprintf("%4i",n.getValue()));	
+	},
+	_onXPDRmodeChange : func(n){
+		me._can.XpdrMode.setText(XPDRMODE[n.getValue()]);	
+	},
+	_onWaypointChange : func(n){
+		me._can.Dest.setText(getprop("/autopilot/route-manager/destination/airport"));		
+	},
+	update : func(){
+		var gs = getprop("/velocities/groundspeed-kt");
+		if(gs > 50){
+		var eta = getprop("/autopilot/route-manager/ete") + systime();
+			me._can.ETA.setText(global.formatTime(eta));
+		}else{
+			me._can.ETA.setText("--:--");
+		}
+		me._can.Time.setText(getprop("/sim/time/gmt-string"));
+		me._can.Fuel.setText("---");
+	},
+};
 
 var TcasWidgetOld = {
 	new : func(page,canvasGroup,name){
@@ -400,7 +612,7 @@ var TcasWidgetOld = {
 		
 		me.setListeners(instance);
 		
-		me._Page.IFD.nLedL1.setValue(1);
+		me._ifd.nLedL1.setValue(1);
 		me._Page.keys["L1 <"] 	= func(){me._adjustMode(1);};
 		me._Page.keys["L1 >"] 	= func(){me._adjustRange(4);};
 		me.updateCan();
@@ -409,7 +621,7 @@ var TcasWidgetOld = {
 	deinit : func(){
 		me._timer.stop();
 		me.removeListeners();
-		me._Page.IFD.nLedL1.setValue(0);
+		me._ifd.nLedL1.setValue(0);
 		me._Page.keys["L1 <"] 	= nil;
 		me._Page.keys["L1 >"] 	= nil;
 		
@@ -425,11 +637,11 @@ var TcasWidgetOld = {
 		me._can.offline.setVisible(!me._service);
 		me._can.online.setVisible(me._service);
 		if (me._service==1){
-			me._Page.IFD.nLedL1.setValue(1);
+			me._ifd.nLedL1.setValue(1);
 			me._Page.keys["L1 <"] 	= func(){me._adjustRange(4);};
 			me._Page.keys["L1 >"] 	= func(){me._adjustMode(1);};
 		}else{
-			me._Page.IFD.nLedL1.setValue(0);
+			me._ifd.nLedL1.setValue(0);
 			me._Page.keys["L1 <"] 	= nil;
 			me._Page.keys["L1 >"] 	= nil;
 		}

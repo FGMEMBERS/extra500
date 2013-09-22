@@ -11,8 +11,8 @@ var AvidynePageMAP = {
 			}
 		);
 		m._widget	= {
-			Tab	 : TabWidget.new(m,m.page,"TabSelectMAP"),
-			Com	 : ComWidget.new(m,m.page,"Com"),
+			Tab	 	: TabWidget.new(m,m.page,"TabSelectMAP"),
+			MovingMapKnob	: MovingMapKnobWidget.new(m,m.page,"MovingMapKnob"),
 			
 		};
 		
@@ -35,8 +35,12 @@ var AvidynePageMAP = {
 		}
 		
 		me.registerKeys();
+		me.IFD._widget.Headline.setVisible(1);
+		me.IFD._widget.PlusData.setVisible(0);
+		me._widget.Tab.init();
 		
 		me.page.setVisible(1);
+		
 	},
 	deinit : func(){
 		me.page.setVisible(0);
@@ -50,10 +54,37 @@ var AvidynePageMAP = {
 		}
 	},
 	_initWidgetsForTab : func(index){
-		if (index == 0){ # Page NavDisplay
+		me._widget.MovingMapKnob.setVisible(0);
+		me.IFD._widget.PlusData.setVisible(0);
 			
-		}elsif(index == 1){ # Page BugSelect
+		if (index == 0){ # MAP+
+			me.IFD.movingMap.setLayout("map+");
+			me._widget.MovingMapKnob.setHand(1);
+			me._widget.MovingMapKnob.setVisible(1);
+			me.IFD._widget.PlusData.setVisible(1);
+		
 			
+		}elsif(index == 1){ # MAP
+			me.IFD.movingMap.setLayout("map");
+			me._widget.MovingMapKnob.setHand(1);
+			me._widget.MovingMapKnob.setVisible(1);
+			
+		
+			
+		}elsif(index == 2){ # Split
+			me.IFD.movingMap.setLayout("split-left");
+			me._widget.MovingMapKnob.setHand(0);
+			me._widget.MovingMapKnob.setVisible(1);
+			
+		
+		}elsif(index == 3){ # Chart
+			me.IFD.movingMap.setLayout("none");
+		}elsif(index == 4){ # Chart+
+			me.IFD.movingMap.setLayout("none");
+			me.IFD._widget.PlusData.setVisible(1);
+		
+		}elsif(index == 5){ # Radar
+			me.IFD.movingMap.setLayout("none");
 		}else{
 			
 		}

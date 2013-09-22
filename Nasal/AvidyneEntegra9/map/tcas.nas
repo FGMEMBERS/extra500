@@ -36,20 +36,28 @@ var TcasData = {
 
 var TcasModel = {
 	new : func(rootPath){
-		var m = {parents:[TcasModel,Model.new(rootPath)]};
+		var m = {parents:[TcasModel,
+			Model.new(rootPath),
+			ListenerClass.new(),
+		]};
 		m._nAIModels = nil;
-		m._range = 0;
 		m._minLevel = -1;
 		m._alt = 0;
 		m._lat = 0;
 		m._lon = 0;
 		m._hdg = 0;
-		m._nRange = m._nRoot.initNode("range",6,"DOUBLE");
+		m._range = 0;
+		m._nRange = m._nRoot.initNode("range",6.0,"DOUBLE");
+		m._range = m._nRange.getValue();
 		m._timer = maketimer(1.0,m,TcasModel.update);
 		return m;
 	},
+	setListeners : func(instance=me) {
+		append(me._listeners, setlistener(me._nRange,func(n){me.onRangeChange(n)},1,1));	
+	},
 	init : func(){
 		me._nAIModels = props.globals.getNode("/ai/models");
+		me.setListeners();
 		me._timer.start();
 	},
 	update : func(){
@@ -88,30 +96,32 @@ var TcasModel = {
 		me._nObserver.setValue("update");
 	},
 	setRange : func(range){
-		me._range = range;
 		me._nRange.setValue(me._range);
 	},
+	onRangeChange : func(n){
+		me._range = n.getValue();
+	}
 		
 };
 
-var TcasController = {
-	new : func(model = nil,layer = nil){
-		var m = {parents:[TcasController,ModelController.new(model,layer)]};
-		return m;
-	},
-	setRange : func(range){
-		if(range > 6){range=2;}
-		if(range < 2){range=6;}
-		if(me._model != nil){
-			me._model._range = range;
-		}
-	},
-	setMode : func(mode){
-		if(mode > 3){mode=0;}
-		if(mode < 0){mode=3;}
-		
-	}
-};
+# var TcasController = {
+# 	new : func(model = nil,layer = nil){
+# 		var m = {parents:[TcasController,ModelController.new(model,layer)]};
+# 		return m;
+# 	},
+# 	setRange : func(range){
+# 		if(range > 6){range=2;}
+# 		if(range < 2){range=6;}
+# 		if(me._model != nil){
+# 			me._model._range = range;
+# 		}
+# 	},
+# 	setMode : func(mode){
+# 		if(mode > 3){mode=0;}
+# 		if(mode < 0){mode=3;}
+# 		
+# 	}
+# };
 
 var TcasItemClass = {
 	new : func(canvasGroup,index){
@@ -249,7 +259,7 @@ var TcasLayer = {
 };
 
 
-var tcasModel = TcasModel.new("/extra500/instrument/tcas");
+var tcasModel = TcasModel.new("/extra500/instrumentation/tcas");
 
 var TcasWidget = {
 	new : func(page,canvasGroup,name){
@@ -269,81 +279,76 @@ var TcasWidget = {
 		m._itemIndex	= 0;
 		m._map		= nil;		
 		#m._timer	= maketimer(1.0,m,TcasWidget.update);
-		m.initC();
 		return m;
 	},
 	setListeners : func(instance=me) {
 		append(me._listeners, setlistener("/instrumentation/tcas/serviceable",func(n){me._onStateChange(n)},1,0));	
 		append(me._listeners, setlistener("/instrumentation/tcas/inputs/mode",func(n){me._onModeChange(n)},1,0));	
 		append(me._listeners, setlistener(tcasModel._nObserver,func(n){me.onModelObserverNotify(n)},1,1));	
-		append(me._listeners, setlistener(tcasModel._nRange,func(n){me.onRangeChange(n)},1,1));	
 	},
-	initC :func(){
+	init : func(){
+		#print("TcasWidget.init() ... "~me._ifd.name);
 		me._can = {
-			map	: me._group.getElementById("TCAS_Map"),
-			mode	: me._group.getElementById("TCAS_Mode"),
-			range	: me._group.getElementById("TCAS_Range"),
-			offline	: me._group.getElementById("TCAS_offline"),
+			map	: me._group.getElementById("TCAS_Map").setVisible(1),
+			mode	: me._group.getElementById("TCAS_Mode").setVisible(1),
+			range	: me._group.getElementById("TCAS_Range").setVisible(1),
+			offline	: me._group.getElementById("TCAS_offline").setVisible(1),
 			online	: me._group.getElementById("TCAS_online").setVisible(0),
 		};
-		var mapName 		= "IFD-"~me._Page.IFD.name~"-TCAS";
+		var mapName 		= "IFD-"~me._ifd.name~"-TCAS";
 		me._map			= PlaneMap.new(me._can.map,mapName~"-Map");
 		me._map.set("clip","rect(409px, 385px, 776px, 15px)");
+		me._map.setScreenSize(150);
 		me._tcasLayer 		= TcasLayer.new(me._map,mapName~"-Layer",tcasModel);
 		me._tcasLayer.setModel(me._tcasLayer,tcasModel);
 		
 		
-		me._map.setZoom(me.RANGESCALE*me._range);
+		me._map.setRangeNm(me._range);
 		me._map.setVisible(1);
 		me._map.setTranslation(200,609);
 		
-		
-	},
-	deinitC :func(){
-		
-	},
-	setVisible : func(visibility){
-		if(visibility == 1){
-			me.setListeners();
-		
-			me._adjustMode(0);
-			me._adjustRange(0);
-			
-			me._Page.IFD.nLedL1.setValue(1);
-			me._Page.keys["L1 <"] 	= func(){me._adjustMode(1);};
-			me._Page.keys["L1 >"] 	= func(){me._adjustRange(4);};
-
-		}else{
-			me.removeListeners();
-			me._Page.IFD.nLedL1.setValue(0);
-			me._Page.keys["L1 <"] 	= nil;
-			me._Page.keys["L1 >"] 	= nil;
-		}
-	},
-	init : func(instance=me){
-		#print("TcasWidget.init() ... ");
-		
-		#me._timer.start();
 	},
 	deinit : func(){
 		#me._timer.stop();
 		
 		
 	},	
+	setVisible : func(visibility){
+		#print("TcasWidget.setVisible("~visibility~") ... "~me._ifd.name);
+		if(visibility == 1){
+			me.setListeners();
+		
+			me._adjustMode(0);
+			me._adjustRange(0);
+			
+			me._ifd.nLedL1.setValue(1);
+			me._Page.keys["L1 <"] 	= func(){me._adjustMode(1);};
+			me._Page.keys["L1 >"] 	= func(){me._adjustRange(4);};
+
+		}else{
+			me.removeListeners();
+			me._ifd.nLedL1.setValue(0);
+			me._Page.keys["L1 <"] 	= nil;
+			me._Page.keys["L1 >"] 	= nil;
+		}
+		me._group.setVisible(visibility);
+	},
 	onModelObserverNotify : func(n){
 		me._map.setRefPos(tcasModel._lat,tcasModel._lon);
 		me._map.setHdg(tcasModel._hdg);
 	},
 	_onStateChange : func(n){
 		me._service = n.getValue();
+		#print("TcasWidget._onStateChange("~me._service~") ... "~me._ifd.name);
+# 		debug.dump(me._can);
 		me._can.offline.setVisible(!me._service);
 		me._can.online.setVisible(me._service);
 		if (me._service==1){
-			me._Page.IFD.nLedL1.setValue(1);
+			me._ifd.nLedL1.setValue(1);
 			me._Page.keys["L1 <"] 	= func(){me._adjustRange(4);};
 			me._Page.keys["L1 >"] 	= func(){me._adjustMode(1);};
 		}else{
-			me._Page.IFD.nLedL1.setValue(0);
+			me._ifd.nLedL1.setValue(0);
 			me._Page.keys["L1 <"] 	= nil;
 			me._Page.keys["L1 >"] 	= nil;
 		}
@@ -358,19 +363,13 @@ var TcasWidget = {
 		me._range += amount;
 		if(me._range > 6){me._range=2;}
 		if(me._range < 2){me._range=6;}
-		#me._can.range.setText(sprintf("%i NM",me._range));
-		#setprop("/instrumentation/radar/range",me._range);
-		#me._map.setZoom(me.RANGESCALE*me._range);
-		#me._tcasController.setRange(me._range);
-		tcasModel.setRange(me._range);
+		me._map.setRangeNm(me._range);
+		me._can.range.setText(sprintf("%i NM",me._range));
+		
 	},
 	_onModeChange : func(n){
 		me._mode = n.getValue();
 		me._can.mode.setText(me.MODE[me._mode]);
 	},
-	onRangeChange : func(n){
-		me._range = n.getValue();
-		me._map.setZoom(me.RANGESCALE*me._range);
-		me._can.range.setText(sprintf("%i NM",me._range));
-	}
+	
 };

@@ -66,9 +66,11 @@ var RouteItemClass = {
 
 var RouteLayer = {
 	new : func(group,id="none"){
-		var m = {parents:[RouteLayer,ListenerClass.new()] }; 
-		m._id 			= id;
-		m._group 		= group;
+		var m = {parents:[
+			RouteLayer,
+			Layer.new(group,id),
+			ListenerClass.new()
+		]}; 
 		m._item 	= [];
 		m._itemIndex	= 0;
 		m._itemCount	= 0;

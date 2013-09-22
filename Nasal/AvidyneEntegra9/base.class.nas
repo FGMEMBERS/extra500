@@ -35,8 +35,8 @@ COLOR["TCAS_LEVEL_2"] = "#ff7f2a";
 COLOR["TCAS_LEVEL_3"] = "#ff0000";
 
 
-var XPDRMODE = ["OFF","SBY","TST","GND","ON","ALT"];
-
+var XPDRMODE 	= ["OFF","SBY","TST","GND","ON","ALT"];
+var LABEL_OFFON	= ["Off","On"];
 var tool = {
 	adjustStep : func(value,amount,step=10){
 		
@@ -91,6 +91,7 @@ var PageClass = {
 		m._subPage = "";
 		return m;
 	},
+	getIFD : func(){ return me.IFD ;},
 	init : func(instance=me){
 		
 	},
@@ -127,11 +128,14 @@ var IfdWidget = {
 		var m = {parents:[IfdWidget,ListenerClass.new()]};
 		m._class = "IfdWidget";
 		m._Page 	= page;	# parent pointer to parent Page
+		m._ifd		= page.getIFD();
 		m._group	= canvasGroup;
 		m._name 	= name;
 		m._can		= {};
+		m._group.setVisible(0);
 		return m;
 	},
+	getIFD : func(){ return m._Page.getIFD() ;},
 	init : func(instance=me){
 		
 	},
@@ -139,7 +143,7 @@ var IfdWidget = {
 		me.removeListeners();	
 	},
 	setVisible : func(visible){
-		
+		me._group.setVisible(visible);
 	},
 # 	update20Hz : func(now,dt){},
 # 	update2Hz  : func(now,dt){},
