@@ -20,7 +20,7 @@
       Date: 2013-09-16
 
       Last change:      Eric van den Berg
-      Date:             2013-09-21
+      Date:             2013-09-23
 -->
 
 <system name="electrics">
@@ -74,7 +74,7 @@
 		<switch name="turncoorpower">
 			<default value="0"/>
 			<test logic="AND" value="12">
-				/extra500/instrumentation/TrunCoordinator/volt gt 18
+				/extra500/instrumentation/TurnCoordinator/volt gt 18
 			</test>
 			<output>/systems/electrical/outputs/turn-coordinator</output>
 		</switch>

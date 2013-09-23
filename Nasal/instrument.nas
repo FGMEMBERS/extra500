@@ -17,7 +17,7 @@
 #      Date: Jun 27 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             15.09.13
+#      Date:             23.09.13
 #
 
 var DigitalInstrumentPackageClass = {
@@ -391,7 +391,7 @@ var cabincontroller 	= InstrumentClass.new("extra500/instrumentation/CabinContro
 var cabinaltimeter 	= InstrumentClass.new("extra500/instrumentation/CabinAltimeter","Cabin Altimeter","/extra500/system/dimming/Instrument",0.0);
 var cabinclimb 		= InstrumentClass.new("extra500/instrumentation/CabinClimb","Cabin Climb","/extra500/system/dimming/Instrument",0.0);
 var propellerHeat	= InstrumentClass.new("extra500/instrumentation/PropellerHeat","Propeller Heat Ammeter","/extra500/system/dimming/Instrument",6.0);
-var turnCoordinator	= InstrumentClass.new("extra500/instrumentation/TrunCoordinator","Trun Coordinator","/extra500/system/dimming/Instrument",60.0);
+var turnCoordinator	= InstrumentClass.new("extra500/instrumentation/TurnCoordinator","Turn Coordinator","/extra500/system/dimming/Instrument",60.0);
 var xpdr		= InstrumentClass.new("extra500/instrumentation/xpdr","Transponder","/extra500/system/dimming/Instrument",6.0);
 
 var fuelQuantity	= FuelInstrumentClass.new("extra500/instrumentation/FuelQuantity","Fuel Quantity","/extra500/system/dimming/Instrument",12.0,6.0);

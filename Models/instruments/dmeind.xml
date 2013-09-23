@@ -35,6 +35,7 @@
 	<object-name>nm.001</object-name>
 	<object-name>nm</object-name>
 	<object-name>1</object-name>
+	<object-name>H</object-name>
 	<object-name>kt.100</object-name>
 	<object-name>kt.010</object-name>
 	<object-name>kt.001</object-name>
@@ -72,6 +73,23 @@
 			</greater-than>	
 		</condition>
 	</animation>
+
+	<animation>
+		<!-- Hold -->
+		<type>select</type>
+		<object-name>H</object-name>
+		<condition>
+			<greater-than>
+				<property>extra500/instrumentation/dmeInd/state</property>
+				<value>0</value>
+			</greater-than>	
+			<equals>
+				<property>extra500/instrumentation/dmeSwitch/pressed</property>
+				<value>1</value>
+			</equals>
+		</condition>
+	</animation>
+
 <!--NM-->
 
 <!--normal operation-->

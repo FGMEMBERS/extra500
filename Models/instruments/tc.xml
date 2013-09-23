@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: August 18 2013
 
-      Last change:      -
-      Date:             -
+      Last change:      Eric van den Berg
+      Date:             23 Sept 2013
 
 modified instruments-3d/tc from fgdata
 
@@ -41,7 +41,7 @@ modified instruments-3d/tc from fgdata
    <red>0.5</red>
    <green>0.5</green>
    <blue>0.5</blue>
-   <factor-prop>/extra500/instrumentation/TrunCoordinator/Backlight/state</factor-prop>
+   <factor-prop>/extra500/instrumentation/TurnCoordinator/Backlight/state</factor-prop>
   </emission>
  </animation>
 
