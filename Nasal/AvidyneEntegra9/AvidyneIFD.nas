@@ -272,6 +272,11 @@ var AvidyneIFD = {
 		me._widget.Headline.init();
 		me._widget.PlusData.init();
 		
+		me.page["none"].init();
+		me.page["PFD"].init();
+		me.page["FMS"].init();
+		me.page["MAP"].init();
+		
 		
 		me._timerLoop20Hz = maketimer(0.05,me,AvidyneIFD.update20Hz);
 		me._timerLoop2Hz = maketimer(0.5,me,AvidyneIFD.update2Hz);
@@ -390,11 +395,14 @@ var AvidyneIFD = {
 			}
 		
 			if (me.pageSelected != name){
-				me.page[me.pageSelected].deinit();
+# 				me.page[me.pageSelected].deinit();
+				me.page[me.pageSelected].setVisible(0);
 				me.clearLeds();
 				me.pageSelected = name;
 				me.nPageSelected.setValue(me.pageSelected);
-				me.page[me.pageSelected].init();
+# 				me.page[me.pageSelected].init();
+				me.page[me.pageSelected].setVisible(1);
+				
 			}else{
 				if(key!=nil){
 					me.page[me.pageSelected].onClick(key);

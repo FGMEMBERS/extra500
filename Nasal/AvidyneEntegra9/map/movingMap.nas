@@ -146,11 +146,12 @@ var MovingMap = {
 		me; # chainable
 	},
 	setLayout : func(layout){
+		me.setVisible(0);
+			
 		if(layout == "map"){
 			me._screenSize	= 512;
 			me.setTranslation(1024,768);
 			me.set("clip","rect(70px, 2048px, 1436px, 0px)");
-			me.setVisible(1);
 			me._can.Warning.setTranslation(-380,0);
 			me._can.UpHDG.setTranslation(400,0);
 			me._can.compass.setScale(1.0,1.0);
@@ -159,11 +160,12 @@ var MovingMap = {
 			me._can.layer1.setTranslation(-1024,-768);
 			me._can.layer1.setVisible(1);
 			me._parent.set("z-index",0);
+			me.setVisible(1);
+			
 		}elsif(layout == "map+"){
 			me._screenSize	= 512;
 			me.setTranslation(1024,768);
 			me.set("clip","rect(70px, 2048px, 1436px, 0px)");
-			me.setVisible(1);
 			me._can.Warning.setTranslation(0,0);
 			me._can.UpHDG.setTranslation(0,0);
 			me._can.compass.setScale(1.0,1.0);
@@ -172,12 +174,12 @@ var MovingMap = {
 			me._can.layer1.setTranslation(-1024,-768);
 			me._can.layer1.setVisible(1);
 			me._parent.set("z-index",0);
+			me.setVisible(1);
 			
 		}elsif(layout == "split-left"){
 			me._screenSize	= 384;
 			me.setTranslation(512,768);
 			me.set("clip","rect(70px, 1024px, 1436px, 0px)");
-			me.setVisible(1);
 			me._can.Warning.setTranslation(112,0);
 			me._can.UpHDG.setTranslation(-112,0);
 			me._can.compass.setScale(0.75,0.75);
@@ -186,6 +188,8 @@ var MovingMap = {
 			me._can.layer1.setTranslation(-1024,-768);
 			me._can.layer1.setVisible(1);
 			me._parent.set("z-index",0);
+			me.setVisible(1);
+			
 		}elsif(layout == "pfd"){
 			me._screenSize	= 291;
 			me.setTranslation(1024,1132);
@@ -195,8 +199,9 @@ var MovingMap = {
 			me._parent.set("z-index",1);
 			me._can.layer1.setVisible(0);
 			me.setVisible(1);
+			
 		}else{
-			me.setVisible(0);
+			
 		}
 	},
 	setListeners : func(instance=me) {

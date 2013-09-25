@@ -42,7 +42,7 @@
      inkscape:cx="1444.9952"
      inkscape:cy="703.80103"
      inkscape:document-units="px"
-     inkscape:current-layer="g3709"
+     inkscape:current-layer="layer2"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -955,8 +955,6 @@
              sodipodi:role="line"
              style="font-size:48px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:80.00000119%;writing-mode:lr-tb;text-anchor:middle;fill:#00ffff;stroke:#00ffff;stroke-width:1.35791647;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold">Waypoint</tspan></text>
       </g>
-      <g
-         id="FPL_List" />
       <rect
          y="70.54483"
          x="1630.0322"
@@ -972,6 +970,8 @@
          x="1630.0322"
          y="70.54483" />
     </g>
+    <g
+       id="FPL_List" />
   </g>
   <g
      inkscape:groupmode="layer"

@@ -25,8 +25,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.77729894"
-     inkscape:cx="488.02294"
-     inkscape:cy="-6.4417783"
+     inkscape:cx="568.4393"
+     inkscape:cy="57.919314"
      inkscape:document-units="px"
      inkscape:current-layer="svg2985"
      showgrid="false"
@@ -58,25 +58,25 @@
   <g
      style="display:inline"
      id="FPL_Pattern_Waypoint"
-     transform="matrix(1.3942952,0,0,1.3942952,-574.99973,-107.43285)">
+     transform="matrix(1.3942952,0,0,1.3942952,-550.39886,-107.43285)">
     <rect
        ry="11.240375"
        y="85.658218"
        x="420.96326"
        height="143.44165"
-       width="869.13031"
+       width="845.52643"
        id="Back"
        style="color:#000000;fill:#303030;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
     <text
        xml:space="preserve"
-       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:0.97509044000000000;stroke-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:0.97509044;stroke-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
        x="488.51785"
        y="106.64835"
        id="Headline"
        sodipodi:linespacing="125%"
        transform="scale(0.8805119,1.135703)"
        inkscape:label="#text5341-2"><tspan
-         style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;stroke:#60ffb8;stroke-width:0.97509044000000000;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans;fill-opacity:1;stroke-opacity:1"
+         style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:0.97509044;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
          sodipodi:role="line"
          x="488.51785"
          y="106.64835"

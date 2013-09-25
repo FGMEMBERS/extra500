@@ -182,11 +182,18 @@ var AutopilotWidget = {
 	},
 	init : func(instance=me){
 		#print("AutopilotWidget.init() ... ");
-		me.setListeners(instance);
+# 		me.setListeners(instance);
 	},
 	deinit : func(){
 		#print("AutopilotWidget.deinit() ... ");
 		me.removeListeners();	
+	},
+	setVisible : func(visible){
+		if(visible == 1){
+			me.setListeners(me);
+		}else{
+			me.removeListeners();
+		}
 	},
 };
 
@@ -237,10 +244,17 @@ var VerticalSpeedWidget = {
 		}
 	},
 	init : func(instance=me){
-		me.setListeners(instance);
+# 		me.setListeners(instance);
 	},
 	deinit : func(){
 		me.removeListeners();	
+	},
+	setVisible : func(visible){
+		if(visible == 1){
+			me.setListeners(me);
+		}else{
+			me.removeListeners();
+		}
 	},
 	update20Hz : func(now,dt){
 		me._vs	= me._ptree.vs.getValue();
@@ -286,10 +300,17 @@ var AirspeedSpeedWidget = {
 		
 	},
 	init : func(instance=me){
-		me.setListeners(instance);
+# 		me.setListeners(instance);
 	},
 	deinit : func(){
-		me.removeListeners();	
+		me.removeListeners();
+	},
+	setVisible : func(visible){
+		if(visible == 1){
+			me.setListeners(me);
+		}else{
+			me.removeListeners();
+		}
 	},
 	update20Hz : func(now,dt){
 		me._ias		= me._ptree.ias.getValue();
@@ -423,10 +444,17 @@ var AltitudeWidget = {
 	
 	},
 	init : func(instance=me){
-		me.setListeners(instance);
+# 		me.setListeners(instance);
 	},
 	deinit : func(){
 		me.removeListeners();	
+	},
+	setVisible : func(visible){
+		if(visible == 1){
+			me.setListeners(me);
+		}else{
+			me.removeListeners();
+		}
 	},
 	_onHpaChange : func(n){
 		me._hpa		= n.getValue();
@@ -594,10 +622,17 @@ var AttitudeIndicatorWidget = {
 		
 	},
 	init : func(instance=me){
-		me.setListeners(instance);
+# 		me.setListeners(instance);
 	},
 	deinit : func(){
-		me.removeListeners();	
+		me.removeListeners();
+	},
+	setVisible : func(visible){
+		if(visible == 1){
+			me.setListeners(me);
+		}else{
+			me.removeListeners();
+		}
 	},
 	update20Hz : func(now,dt){
 		
@@ -655,10 +690,17 @@ var MarkerWidget = {
 		
 	},
 	init : func(instance=me){
-		me.setListeners(instance);
+# 		me.setListeners(instance);
 	},
 	deinit : func(){
 		me.removeListeners();	
+	},
+	setVisible : func(visible){
+		if(visible == 1){
+			me.setListeners(me);
+		}else{
+			me.removeListeners();
+		}
 	},
 	_onMarkerInnerChange : func(n){
 		me._inner = n.getValue();
@@ -829,34 +871,63 @@ var NavSourceWidget = {
 		me._sourceListeners = [];
 	},
 	init : func(instance=me){
-		me.setListeners(instance);
-		
-		me._ifd.nLedL1.setValue(1);
-		me._Page.keys["L1 >"] = func(){me._scroll(1);};
-		me._Page.keys["L1 <"] = func(){me._scroll(-1);};
-		
-		me._ifd.nLedLK.setValue(1);
-		me._Page.keys["LK <<"]	= func(){me._adjustRadial(-10);};
-		me._Page.keys["LK <"] 	= func(){me._adjustRadial(-1);};
-		me._Page.keys["LK >"] 	= func(){me._adjustRadial(1);};
-		me._Page.keys["LK >>"] 	= func(){me._adjustRadial(10);};
-		
-		
-		me._scroll(0);
+# 		me.setListeners(instance);
+# 		
+# 		me._ifd.nLedL1.setValue(1);
+# 		me._Page.keys["L1 >"] = func(){me._scroll(1);};
+# 		me._Page.keys["L1 <"] = func(){me._scroll(-1);};
+# 		
+# 		me._ifd.nLedLK.setValue(1);
+# 		me._Page.keys["LK <<"]	= func(){me._adjustRadial(-10);};
+# 		me._Page.keys["LK <"] 	= func(){me._adjustRadial(-1);};
+# 		me._Page.keys["LK >"] 	= func(){me._adjustRadial(1);};
+# 		me._Page.keys["LK >>"] 	= func(){me._adjustRadial(10);};
+# 		
+# 		
+# 		me._scroll(0);
 	},
 	deinit : func(){
 		me.removeListeners();
+# 		
+# 		me._ifd.nLedL1.setValue(0);
+# 		me._Page.keys["L1 >"] = nil;
+# 		me._Page.keys["L1 <"] = nil;
+# 		
+# 		me._ifd.nLedLK.setValue(0);
+# 		me._Page.keys["LK <<"] 	= nil;
+# 		me._Page.keys["LK <"] 	= nil;
+# 		me._Page.keys["LK >"] 	= nil;
+# 		me._Page.keys["LK >>"] 	= nil;
 		
-		me._ifd.nLedL1.setValue(0);
-		me._Page.keys["L1 >"] = nil;
-		me._Page.keys["L1 <"] = nil;
-		
-		me._ifd.nLedLK.setValue(0);
-		me._Page.keys["LK <<"] 	= nil;
-		me._Page.keys["LK <"] 	= nil;
-		me._Page.keys["LK >"] 	= nil;
-		me._Page.keys["LK >>"] 	= nil;
-		
+	},
+	setVisible : func(visible){
+		if(visible == 1){
+			me.setListeners(me);
+			me._ifd.nLedL1.setValue(1);
+			me._Page.keys["L1 >"] = func(){me._scroll(1);};
+			me._Page.keys["L1 <"] = func(){me._scroll(-1);};
+			
+			me._ifd.nLedLK.setValue(1);
+			me._Page.keys["LK <<"]	= func(){me._adjustRadial(-10);};
+			me._Page.keys["LK <"] 	= func(){me._adjustRadial(-1);};
+			me._Page.keys["LK >"] 	= func(){me._adjustRadial(1);};
+			me._Page.keys["LK >>"] 	= func(){me._adjustRadial(10);};
+			
+			
+			me._scroll(0);
+		}else{
+			me.removeListeners();
+			
+			me._ifd.nLedL1.setValue(0);
+			me._Page.keys["L1 >"] = nil;
+			me._Page.keys["L1 <"] = nil;
+			
+			me._ifd.nLedLK.setValue(0);
+			me._Page.keys["LK <<"] 	= nil;
+			me._Page.keys["LK <"] 	= nil;
+			me._Page.keys["LK >"] 	= nil;
+			me._Page.keys["LK >>"] 	= nil;
+		}
 	},
 	_onSourceChange : func(n){
 		me._source = n.getValue();
@@ -1039,17 +1110,25 @@ var BearingSourceWidget = {
 		}
 	},
 	init : func(instance=me){
-		me.setListeners(instance);
-		me._ifd.nLedL3.setValue(1);
-		me._Page.keys["L3 >"] = func(){me._scroll(1);};
-		me._Page.keys["L3 <"] = func(){me._scroll(-1);};
-		me._scroll(0);
+# 		me.setListeners(instance);
+		
 	},
 	deinit : func(){
-		me._ifd.nLedL3.setValue(0);
-		me._Page.keys["L3 >"] = nil;
-		me._Page.keys["L3 <"] = nil;
-		me.removeListeners();	
+		me.removeListeners();
+	},
+	setVisible : func(visible){
+		if(visible == 1){
+			me.setListeners(me);
+			me._ifd.nLedL3.setValue(1);
+			me._Page.keys["L3 >"] = func(){me._scroll(1);};
+			me._Page.keys["L3 <"] = func(){me._scroll(-1);};
+			me._scroll(0);
+		}else{
+			me.removeListeners();
+			me._ifd.nLedL3.setValue(0);
+			me._Page.keys["L3 >"] = nil;
+			me._Page.keys["L3 <"] = nil;
+		}
 	},
 	setSource : func(src){
 		me._source = src;
@@ -1232,9 +1311,17 @@ var HeadingSituationIndicatorWidget = {
 		append(me._listeners, setlistener("/autopilot/settings/heading-bug-deg",func(n){me._onBugChange(n)},1,0));	
 	},
 	init : func(instance=me){
-		me.setListeners(instance);
+# 		me.setListeners(instance);
 		#me._movingMap.init();
-		me._ifd.movingMap.setLayout("pfd");
+		
+	},
+	setVisible : func(visible){
+		if(visible == 1){
+			me.setListeners(me);
+			me._ifd.movingMap.setLayout("pfd");
+		}else{
+			me.removeListeners();
+		}
 	},
 	_onBugChange : func(n){
 		me._headingBug		= n.getValue();
@@ -1345,32 +1432,44 @@ var NavSelectWidget = {
 		return m;
 	},
 	init : func(instance=me){
-		me.registerKeys();
-		me._ifd.movingMap.setLayerVisible("route",me._flightPlan);
-		me._ifd.movingMap.setRangeNm(me._mapRange);
-		me._can.CompassRangeMax.setText(sprintf("%.0f",me._mapRange));
-		me._can.CompassRangeMid.setText(sprintf("%.0f",me._mapRange/2));
+		
 	},
 	deinit : func(){
-		me._ifd.nLedR3.setValue(0);
-		me._Page.keys["R3 <"] 	= nil;
-		me._Page.keys["R3 >"] 	= nil;
-		me._ifd.nLedR4.setValue(0);
-		me._Page.keys["R4 <"] 	= nil;
-		me._Page.keys["R4 >"] 	= nil;
-		me._ifd.nLedR5.setValue(0);
-		me._Page.keys["R5 <"] 	= nil;
-		me._Page.keys["R5 >"] 	= nil;
-		
-		me._ifd.nLedRK.setValue(0);
-		me._Page.keys["RK >>"] 	= nil;
-		me._Page.keys["RK <<"] 	= nil;
-		me._Page.keys["RK"] 	= nil;
-		me._Page.keys["RK >"] 	= nil;
-		me._Page.keys["RK <"] 	= nil;
-		
-		me._ifd.movingMap.setLayerVisible("route",1);
-		
+		me.removeListeners();
+	},
+	setVisible : func(visible){
+		if(visible == 1){
+			me.setListeners(me);
+			me.registerKeys();
+			me._ifd.movingMap.setLayerVisible("route",me._flightPlan);
+			me._ifd.movingMap.setRangeNm(me._mapRange);
+			me._can.CompassRangeMax.setText(sprintf("%.0f",me._mapRange));
+			me._can.CompassRangeMid.setText(sprintf("%.0f",me._mapRange/2));
+			me._can.SynVis.setText(LABEL_OFFON[me._synVis]);
+			me._can.FlightPlan.setText(LABEL_OFFON[me._flightPlan]);
+			me._can.CDI.setText(LABEL_OFFON[me._cdi]);
+			
+		}else{
+			me.removeListeners();
+			me._ifd.nLedR3.setValue(0);
+			me._Page.keys["R3 <"] 	= nil;
+			me._Page.keys["R3 >"] 	= nil;
+			me._ifd.nLedR4.setValue(0);
+			me._Page.keys["R4 <"] 	= nil;
+			me._Page.keys["R4 >"] 	= nil;
+			me._ifd.nLedR5.setValue(0);
+			me._Page.keys["R5 <"] 	= nil;
+			me._Page.keys["R5 >"] 	= nil;
+			
+			me._ifd.nLedRK.setValue(0);
+			me._Page.keys["RK >>"] 	= nil;
+			me._Page.keys["RK <<"] 	= nil;
+			me._Page.keys["RK"] 	= nil;
+			me._Page.keys["RK >"] 	= nil;
+			me._Page.keys["RK <"] 	= nil;
+			
+			me._ifd.movingMap.setLayerVisible("route",1);
+		}
 	},
 	registerKeys : func(){
 		me._ifd.nLedR3.setValue(1);
@@ -1449,26 +1548,10 @@ var BugSelectWidget = {
 		return m;
 	},
 	init : func(instance=me){
-		me.registerKeys();
+		
 	},
 	deinit : func(){
-		me._ifd.nLedR3.setValue(0);
-		me._Page.keys["R3 <"] 	= nil;
-		me._Page.keys["R3 >"] 	= nil;
-		me._ifd.nLedR4.setValue(0);
-		me._Page.keys["R4 <"] 	= nil;
-		me._Page.keys["R4 >"] 	= nil;
-		me._ifd.nLedR5.setValue(0);
-		me._Page.keys["R5 <"] 	= nil;
-		me._Page.keys["R5 >"] 	= nil;
-		
-		me._ifd.nLedRK.setValue(0);
-		me._Page.keys["RK >>"] 	= nil;
-		me._Page.keys["RK <<"] 	= nil;
-		me._Page.keys["RK"] 	= nil;
-		me._Page.keys["RK >"] 	= nil;
-		me._Page.keys["RK <"] 	= nil;
-		
+		me.removeListeners();
 	},
 	registerKeys : func(){
 		me._ifd.nLedR3.setValue(1);
@@ -1480,6 +1563,30 @@ var BugSelectWidget = {
 		me._ifd.nLedR5.setValue(1);
 		me._Page.keys["R5 <"] = func(){me._setModeRK("VS");};
 		me._Page.keys["R5 >"] = func(){me._setModeRK("VS");};
+	},
+	setVisible : func(visible){
+		if(visible == 1){
+			me.setListeners(me);
+			me.registerKeys();
+		}else{
+			me.removeListeners();
+			me._ifd.nLedR3.setValue(0);
+			me._Page.keys["R3 <"] 	= nil;
+			me._Page.keys["R3 >"] 	= nil;
+			me._ifd.nLedR4.setValue(0);
+			me._Page.keys["R4 <"] 	= nil;
+			me._Page.keys["R4 >"] 	= nil;
+			me._ifd.nLedR5.setValue(0);
+			me._Page.keys["R5 <"] 	= nil;
+			me._Page.keys["R5 >"] 	= nil;
+			
+			me._ifd.nLedRK.setValue(0);
+			me._Page.keys["RK >>"] 	= nil;
+			me._Page.keys["RK <<"] 	= nil;
+			me._Page.keys["RK"] 	= nil;
+			me._Page.keys["RK >"] 	= nil;
+			me._Page.keys["RK <"] 	= nil;
+		}
 	},
 	_setModeRK : func(value=nil){
 		
@@ -1566,12 +1673,21 @@ var TimerWidget = {
 		return m;
 	},
 	init : func(instance=me){
-		me.registerKeys();
+		
 	},
 	deinit : func(){
-		me._ifd.nLedR2.setValue(0);
-		me._Page.keys["R2 <"] = nil;
-		me._Page.keys["R2 >"] = nil;
+		me.removeListeners();
+	},
+	setVisible : func(visible){
+		if(visible == 1){
+			me.setListeners(me);
+			me.registerKeys();
+		}else{
+			me.removeListeners();
+			me._ifd.nLedR2.setValue(0);
+			me._Page.keys["R2 <"] = nil;
+			me._Page.keys["R2 >"] = nil;
+		}
 	},
 	registerKeys : func(){
 		if ((me._Page.data.timerState == 0)){
@@ -1621,8 +1737,13 @@ var ActiveComWidget = {
 			info		: me._group.getElementById("Com_active_Channel_Info").setText("active"),
 			airport		: me._group.getElementById("Com_active_Channel_Airport").setText(""),
 		};
-		me.setListeners(instance);
-		
+	},
+	setVisible : func(visible){
+		if(visible == 1){
+			me.setListeners(me);
+		}else{
+			me.removeListeners();
+		}
 	},
 	_onComSelectedChange : func(n){
 		var index = n.getValue();
@@ -1699,11 +1820,6 @@ var AvidynePagePFD = {
 	},
 	init : func(instance=me){
 		#print("AvidynePagePFD.init() ... ");
-				
-		me.setListeners(instance);
-		me.IFD._widget.Headline.setVisible(0);
-		me.IFD._widget.PlusData.setVisible(0);
-		
 		foreach(widget;keys(me._widget)){
 			#print("widget : "~widget);
 			if(me._widget[widget] != nil){
@@ -1711,32 +1827,42 @@ var AvidynePagePFD = {
 				me._widget[widget].init();
 			}
 		}
-		
-		me.registerKeys();
-		
-		me.page.setVisible(1);
 	},
 	deinit : func(){
-		me.page.setVisible(0);
-		me.keys = {};
-		me.removeListeners();
-		
 		foreach(widget;keys(me._widget)){
 			if(me._widget[widget] != nil){
 				me._widget[widget].deinit();
 			}
 		}
 	},
-
+	setVisible : func(visible){
+		if(visible == 1){
+			me.setListeners(me);
+			me.IFD._widget.Headline.setVisible(0);
+			me.IFD._widget.PlusData.setVisible(0);
+			#me.IFD.movingMap.setLayout("pfd");
+			me.registerKeys();
+		}else{
+			me.keys = {};
+			me.removeListeners();
+			
+		}
+		foreach(widget;keys(me._widget)){
+			if(me._widget[widget] != nil){
+				me._widget[widget].setVisible(visible);
+			}
+		}
+		me.page.setVisible(visible);
+	},
 	_initWidgetsForTab : func(index){
 		if (index == 0){ # Page NavDisplay
 			
-			me._widget.BugSelect.deinit();
-			me._widget.NavSelect.init();
+			me._widget.BugSelect.setVisible(0);
+			me._widget.NavSelect.setVisible(1);
 			
 		}elsif(index == 1){ # Page BugSelect
-			me._widget.NavSelect.deinit();
-			me._widget.BugSelect.init();
+			me._widget.NavSelect.setVisible(0);
+			me._widget.BugSelect.setVisible(1);
 			
 		}else{
 			print("_scrollToTab() ... mist");

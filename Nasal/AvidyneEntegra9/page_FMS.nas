@@ -71,10 +71,44 @@ var DirectToWidget = {
 	
 };
 
-var FlighPlanItem = {
-	new : func(canvasGroup,index){
-		var m = {parents:[FlighPlanItem]};
-		m._group = canvasGroup.createChild("group", "waypoint_"~index).set("z-index",3).setVisible(1);
+
+var FlightPlanItemInterface = {
+	setType : func(type){},
+	setHeadline : func(value){},
+	setName : func(value){},
+	setRestriction : func(value){},
+	setETE : func(value){},
+	setETA : func(value){},
+	setDistance : func(value){},
+	setFuel : func(value){},
+	setActive   :func(value){},
+	setSelection   :func(value){},
+};
+
+var TYPE_COLOR = {
+	runway : {
+		back	: "#207C97",
+		inner	: "#56CCD3",
+	},
+	basic : {
+		back	: "#67584E",
+		inner	: "#C0AA9D",
+	},
+	bug : {
+		back	: "#BD5889",
+		inner	: "#FE80C8",
+	},
+};
+
+
+var FlighPlanItem_old = {
+	new : func(canvasGroup,index,type){
+		var m = {parents:[
+			FlighPlanItem_old,
+			FlightPlanItemInterface
+ 			]};
+		m._type = type;
+		m._group = canvasGroup.createChild("group", "waypoint_"~index).setVisible(0).set("z-index",3);
 		canvas.parsesvg(m._group, "Models/instruments/IFDs/IFD_FMS_FPL_ItemWP.svg");
 		m._can = {
 			Item 		: m._group.getElementById("FPL_Pattern_Waypoint"),
@@ -88,42 +122,56 @@ var FlighPlanItem = {
 			Fuel	 	: m._group.getElementById("Fuel"),
 			ETA		: m._group.getElementById("ETA"),
 		};
+		m.checkColor();
+		
+		m._group.setVisible(1);
+		
 		m._active = 0;
 		m._selection = 0;
 
 		return m;
 	},
+	setType : func(type){
+		me._type = type;
+	},
+	checkColor : func(){
+		if(contains(TYPE_COLOR,me._type)){
+			me._can.Back.setColorFill(TYPE_COLOR[me._type].back);
+			me._can.BackInner.setColorFill(TYPE_COLOR[me._type].inner);
+		}else{
+			me._can.Back.setColorFill(TYPE_COLOR.basic.back);
+			me._can.BackInner.setColorFill(TYPE_COLOR.basic.inner);
+		}
+	},
+	setHeadline : func(value){ me._can.Headline.setText(value);},
+	setName : func(value){me._can.Name.setText(value);},
+	setRestriction : func(value){me._can.Ristriction.setText(value);},
+	setETE : func(value){me._can.ETE.setText(value);},
+	setETA : func(value){me._can.ETA.setText(value);},
+	setDistance : func(value){me._can.Distance.setText(value);},
+	setFuel : func(value){me._can.Fuel.setText(value);},
+	
 	setActive   :func(value){
 		me._active = value;
-		me._checkSelection();
+		if (me._active == 1){
+			me._can.Back.setColorFill(TYPE_COLOR.bug.back);
+			me._can.BackInner.setColorFill(TYPE_COLOR.bug.inner);
+		}else{
+			me.checkColor();
+		}
 	},
 	setSelection   :func(value){
 		me._selection = value;
-		me._checkSelection();
-	},
-	_checkSelection : func(){
-		if(me._active == 1){
-			me._drawActive();
+		if (me._selection == 1){
+			me._can.Back.set("stroke",COLOR["Turquoise"]);
+			me._can.Back.set("stroke-width",5);
 		}else{
-			if(me._selection == 1 ){
-				me._drawSelect();
-			}else{
-				me._drawNormal();
-			}
+			me._can.Back.set("stroke","none");
 		}
 	},
-	_drawActive : func(){
-		me._can.Back.set("stroke",COLOR["Magenta"]);
-		me._can.Back.set("stroke-width",3);
-	},
-	_drawSelect : func(){
-		me._can.Back.set("stroke",COLOR["Turquoise"]);
-		me._can.Back.set("stroke-width",3);
-	},
-	_drawNormal : func(){
-		me._can.Back.set("stroke","none");
-	}
 };
+
+
 
 
 var FlightPlanListWidget = {
@@ -135,7 +183,9 @@ var FlightPlanListWidget = {
 		m._fplItem	= {};
 		m._can = {
 			#Pattern_Waypoint	: m._group.getElementById("FPL_Pattern_Waypoint").setVisible(0),
-			list			: m._group.getElementById("FPL_List"),
+			list			: m._group.getElementById("FPL_List")
+							.set("clip","rect(70px, 2048px, 1424px, 0px)")
+							,
 			ScrollCursorView	: m._group.getElementById("FPL_ScrollCursorView"),
 			ScrollCursorCurrent	: m._group.getElementById("FPL_ScrollCursorCurrent"),
 			
@@ -150,6 +200,10 @@ var FlightPlanListWidget = {
 		m._planSize = 0;
 		m._maxScroll = 6;
 		
+		m._x = 400;
+		m._y = 70;
+		
+		m._listTransform = m._can.list.createTransform();
 		
 		return m;
 	},
@@ -160,37 +214,53 @@ var FlightPlanListWidget = {
 	},
 	init : func(instance=me){
 		#print("FlightPlanListWidget.init() ... ");
-		
-		me.setListeners(instance);
-		
-		me._Page.IFD.nLedR5.setValue(1);
-		me._Page.keys["R5 <"] 	= func(){me._deleteWaypoint();};
-		me._Page.keys["R5 >"] 	= func(){me._deleteWaypoint();};
-		
-		me._Page.IFD.nLedRK.setValue(1);
-		me._Page.keys["RK >>"] 	= func(){me._adjustSelection(-2);};
-		me._Page.keys["RK <<"] 	= func(){me._adjustSelection(2);};
-		me._Page.keys["RK"] 	= func(){extra500.fms.jumpTo()};
-		me._Page.keys["RK >"] 	= func(){me._adjustSelection(-1);};
-		me._Page.keys["RK <"] 	= func(){me._adjustSelection(1);};
-		
-		
+		me.setListeners(instance);	
 	},
 	deinit : func(){
 		me.removeListeners();
+				
+	},
+	setVisible : func(visible){
+		if(visible == 1){
+			me._Page.IFD.nLedR5.setValue(1);
+			me._Page.keys["R5 <"] 	= func(){me._deleteWaypoint();};
+			me._Page.keys["R5 >"] 	= func(){me._deleteWaypoint();};
+			
+			me._Page.IFD.nLedRK.setValue(1);
+			me._Page.keys["RK >>"] 	= func(){me._adjustSelection(-2);};
+			me._Page.keys["RK <<"] 	= func(){me._adjustSelection(2);};
+			me._Page.keys["RK"] 	= func(){extra500.fms.jumpTo()};
+			me._Page.keys["RK >"] 	= func(){me._adjustSelection(-1);};
+			me._Page.keys["RK <"] 	= func(){me._adjustSelection(1);};
+		}else{
+			me._Page.IFD.nLedR5.setValue(0);
+			me._Page.keys["R5 <"] 	= nil;
+			me._Page.keys["R5 >"] 	= nil;
+			
+			me._Page.IFD.nLedRK.setValue(0);
+			me._Page.keys["RK >>"] 	= nil;
+			me._Page.keys["RK <<"] 	= nil;
+			me._Page.keys["RK"] 	= nil;
+			me._Page.keys["RK >"] 	= nil;
+			me._Page.keys["RK <"] 	= nil;
+		}
+		me._can.list.setVisible(visible);
+	},
+	setLayout : func(layout){
+		if(layout == "FPL"){
+			me._x = 400;
+			me._y = 70;
 		
-		me._Page.IFD.nLedR5.setValue(0);
-		me._Page.keys["R5 <"] 	= nil;
-		me._Page.keys["R5 >"] 	= nil;
-		
-		me._Page.IFD.nLedRK.setValue(0);
-		me._Page.keys["RK >>"] 	= nil;
-		me._Page.keys["RK <<"] 	= nil;
-		me._Page.keys["RK"] 	= nil;
-		me._Page.keys["RK >"] 	= nil;
-		me._Page.keys["RK <"] 	= nil;
-		
-		
+			me._listTransform.setScale(1.0,1.0);
+			me._listTransform.setTranslation(0,0);
+		}elsif(layout == "split-right"){
+			me._x = 400;
+			me._y = 70;
+			me._listTransform.setScale(0.75,0.75);
+			me._listTransform.setTranslation(770,80);
+		}else{
+			me._can.list.setVisible(0);
+		}
 	},
 	_clearList : func(){
 		me._scrollY = 0;
@@ -205,10 +275,11 @@ var FlightPlanListWidget = {
 		for( var i=0; i < me._planSize; i+=1 ){
 			var fmsWP = fp.getWP(i);
 			
-			me._fplItem[i] = FlighPlanItem.new(me._can.list,i);
-			me._fplItem[i]._group.setTranslation(400,70+i*224);
-			me._fplItem[i]._can.Headline.setText(sprintf("%s %03.0f - %s",fmsWP.fly_type,fmsWP.leg_bearing,fmsWP.wp_role));
-			me._fplItem[i]._can.Name.setText(sprintf("%s - %s",fmsWP.wp_name,fmsWP.wp_type));
+			me._fplItem[i] = FlighPlanItem_old.new(me._can.list,i,fmsWP.wp_type);
+			me._fplItem[i]._group.setTranslation(me._x,me._y+i*224);
+			
+			me._fplItem[i].setHeadline(sprintf("%s %03.0f - %s",fmsWP.fly_type,fmsWP.leg_bearing,fmsWP.wp_role));
+			me._fplItem[i].setName(sprintf("%s - %s",fmsWP.wp_name,fmsWP.wp_type));
 			
 			var restriction = "";
 			if (fmsWP.alt_cstr_type != nil) {
@@ -217,15 +288,12 @@ var FlightPlanListWidget = {
 			if (fmsWP.speed_cstr_type != nil) {
 				restriction ~= "IAS : " ~ fmsWP.speed_cstr ~"kts ";
 			}
-			me._fplItem[i]._can.Ristriction.setText(restriction);
+			me._fplItem[i].setRestriction(restriction);
 			if(me._planSize > 1){
-				#debug.dump("fmsWP.leg_distance = ",fmsWP.leg_distance);
-# 				if(is_num(fmsWP.leg_distance)){
-					distSum += fmsWP.leg_distance;
-# 				}
+				distSum += fmsWP.leg_distance;
+
 			}
-			me._fplItem[i]._can.Distance.setText(sprintf("%0.1f",distSum));
-			
+			me._fplItem[i].setDistance(sprintf("%0.1f",distSum));
 			if( i == me._currentIndex){
 				me._fplItem[i].setActive(1);
 			}
@@ -248,10 +316,10 @@ var FlightPlanListWidget = {
 		}
 		me._can.ScrollCursorCurrent.set("coord[1]",0);
 		me._can.ScrollCursorCurrent.set("coord[3]",me._scrollSize);
+		me._can.ScrollCursorCurrent.setTranslation(0,me._y+me._currentIndex*me._scrollSize);
 		me._can.ScrollCursorView.set("coord[1]",0);
 		me._can.ScrollCursorView.set("coord[3]",me._scrollSize*6);
-		me._can.ScrollCursorCurrent.setTranslation(0,70+me._currentIndex*me._scrollSize);
-		me._can.ScrollCursorView.setTranslation(0,70+me._scrollY*me._scrollSize);
+		me._can.ScrollCursorView.setTranslation(0,me._y+me._scrollY*me._scrollSize);
 	},
 	_scrollToCurrentIndex : func(index){
 		
@@ -260,7 +328,7 @@ var FlightPlanListWidget = {
 		me._scrollY = global.clamp(me._scrollY,0,me._maxScroll);
 		
 		me._can.list.setTranslation(0,me._scrollY*-224);
-		me._can.ScrollCursorView.setTranslation(0,70+me._scrollY*me._scrollSize);
+		me._can.ScrollCursorView.setTranslation(0,me._y+me._scrollY*me._scrollSize);
 		
 	},
 	_scrollToSelectedIndex : func(index){
@@ -273,7 +341,7 @@ var FlightPlanListWidget = {
 		me._scrollY = global.clamp(me._scrollY,0,me._maxScroll);
 		
 		me._can.list.setTranslation(0,me._scrollY*-224);
-		me._can.ScrollCursorView.setTranslation(0,70+me._scrollY*me._scrollSize);
+		me._can.ScrollCursorView.setTranslation(0,me._y+me._scrollY*me._scrollSize);
 		
 	},
 	_deleteWaypoint : func(){
@@ -313,7 +381,7 @@ var FlightPlanListWidget = {
 		}
 
 		
-		me._can.ScrollCursorCurrent.setTranslation(0,70+me._currentIndex*me._scrollSize);
+		me._can.ScrollCursorCurrent.setTranslation(0,me._y+me._currentIndex*me._scrollSize);
 		me._setSelection(me._currentIndex);
 		me._scrollToCurrentIndex(me._currentIndex);
 		me._lastCurrentIndex = me._currentIndex;
@@ -355,16 +423,26 @@ var FlightPlanListWidget = {
 					distSum += getprop("/autopilot/route-manager/wp/dist");
 					var ete = distSum / gs * 3600 ;
 					var eta = time + ete;
-					me._fplItem[i]._can.Distance.setText(sprintf("%0.1f",distSum));
-					me._fplItem[i]._can.ETE.setText(global.formatTime(ete,"i:s"));
-					me._fplItem[i]._can.ETA.setText(global.formatTime(eta));
+# 					me._fplItem[i]._can.Distance.setText(sprintf("%0.1f",distSum));
+# 					me._fplItem[i]._can.ETE.setText(global.formatTime(ete,"i:s"));
+# 					me._fplItem[i]._can.ETA.setText(global.formatTime(eta));
+# 					
+					me._fplItem[i].setDistance(sprintf("%0.1f",distSum));
+					me._fplItem[i].setETE(global.formatTime(ete,"i:s"));
+					me._fplItem[i].setETA(global.formatTime(eta));
+					
 				}elsif (i > me._currentIndex){
 					distSum += fmsWP.leg_distance;
 					var ete = distSum / gs * 3600 ;
 					var eta = time + ete;
-					me._fplItem[i]._can.Distance.setText(sprintf("%0.1f",distSum));
-					me._fplItem[i]._can.ETE.setText(global.formatTime(ete,"i:s"));
-					me._fplItem[i]._can.ETA.setText(global.formatTime(eta));
+# 					me._fplItem[i]._can.Distance.setText(sprintf("%0.1f",distSum));
+# 					me._fplItem[i]._can.ETE.setText(global.formatTime(ete,"i:s"));
+# 					me._fplItem[i]._can.ETA.setText(global.formatTime(eta));
+					
+					me._fplItem[i].setDistance(sprintf("%0.1f",distSum));
+					me._fplItem[i].setETE(global.formatTime(ete,"i:s"));
+					me._fplItem[i].setETA(global.formatTime(eta));
+					
 				}else{
 					me._fplItem[i]._can.Distance.setText("---");
 					me._fplItem[i]._can.ETE.setText("---");
@@ -418,13 +496,11 @@ var AvidynePageFMS = {
 # 		}
 		
 
-		me.IFD._widget.Headline.setVisible(1);
+		
 # 		me.IFD._widget.PlusData.setVisible(0);
 		me._widget.Tab.init();
-		
-		me.registerKeys();
-		
-		me.page.setVisible(1);
+		me._widget.FPL.init();
+	
 	},
 	deinit : func(){
 		me.page.setVisible(0);
@@ -437,38 +513,56 @@ var AvidynePageFMS = {
 			}
 		}
 	},
+	setVisible : func(visible){
+		if(visible == 1){
+			me.IFD._widget.Headline.setVisible(1);
+			me.registerKeys();
+		}else{
+			
+		}
+		me._widget.Tab.setVisible(visible);
+		me.page.setVisible(visible);
+	},
 	_initWidgetsForTab : func(index){
-		me._widget.DirectTo.deinit();
-		me._widget.FPL.deinit();
-		me.IFD._widget.PlusData.setVisible(0);
+# 		me._widget.DirectTo.deinit();
+# 		me._widget.FPL.setVisible(0);
+		#me.IFD._widget.PlusData.setVisible(0);
 		
 		if (index == 0){ # FPL
 			me.IFD._widget.PlusData.setVisible(1);
-			me._widget.FPL.init();
+			me._widget.FPL.setLayout("FPL");
+			me._widget.FPL.setVisible(1);
 			me.IFD.movingMap.setLayout("none");
 			me._widget.MovingMapKnob.setVisible(0);
 		}elsif(index == 1){ # MapFPL
 			me.IFD._widget.PlusData.setVisible(0);
 			me.IFD.movingMap.setLayout("split-left");
+			me._widget.FPL.setLayout("split-right");
+			me._widget.FPL.setVisible(1);
 			me._widget.MovingMapKnob.setHand(0);
 			me._widget.MovingMapKnob.setVisible(1);	
 		}elsif(index == 2){ # Info
+			me._widget.FPL.setVisible(0);
 			me.IFD._widget.PlusData.setVisible(1);
 			me.IFD.movingMap.setLayout("none");
 			me._widget.MovingMapKnob.setVisible(0);
 		}elsif(index == 3){ # Routes
+			me._widget.FPL.setVisible(0);
 			me.IFD._widget.PlusData.setVisible(1);
 			me.IFD.movingMap.setLayout("none");
 			me._widget.MovingMapKnob.setVisible(0);
 		}elsif(index == 4){ # UserWypts
+			me._widget.FPL.setVisible(0);
 			me.IFD._widget.PlusData.setVisible(1);
 			me.IFD.movingMap.setLayout("none");
 			me._widget.MovingMapKnob.setVisible(0);
 		}elsif(index == 5){ # Nearest
+			me._widget.FPL.setVisible(0);
 			me.IFD._widget.PlusData.setVisible(1);
 			me.IFD.movingMap.setLayout("none");
 			me._widget.MovingMapKnob.setVisible(0);
 		}elsif(index == 6){ # MapNearest
+			me._widget.FPL.setVisible(0);
 			me.IFD._widget.PlusData.setVisible(0);
 			me.IFD.movingMap.setLayout("split-left");
 			me._widget.MovingMapKnob.setHand(0);

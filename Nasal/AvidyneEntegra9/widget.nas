@@ -43,15 +43,19 @@ var TabWidget = {
 			}
 		}
 		me._max = size(me._tab)-1;
-		me.scroll(0);
-		
-		me._Page.keys[me._Page.name~" >"] = func(){me.scroll(1);};
-		me._Page.keys[me._Page.name~" <"] = func(){me.scroll(-1);};
-		
 	},
 	deinit : func(){
-		me._Page.keys[me._Page.name~" >"] = nil;
-		me._Page.keys[me._Page.name~" <"] = nil;
+		
+	},
+	setVisible : func(visible){
+		if(visible == 1){
+			me._Page.keys[me._Page.name~" >"] = func(){me.scroll(1);};
+			me._Page.keys[me._Page.name~" <"] = func(){me.scroll(-1);};
+			me.scroll(0);
+		}else{
+			me._Page.keys[me._Page.name~" >"] = nil;
+			me._Page.keys[me._Page.name~" <"] = nil;
+		}
 	},
 	scroll : func(amount){
 		me._index += amount;

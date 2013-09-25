@@ -21,18 +21,20 @@
 #
 
 var COLOR = {};
-COLOR["Red"] = "rgb(244,28,33)";
-COLOR["Green"] = "rgb(64,178,80)";
-COLOR["Magenta"] = "rgb(255,14,235)";
-COLOR["Yellow"] = "rgb(241,205,57)";
-COLOR["White"] = "rgb(255,255,255)";
-COLOR["Turquoise"] = "rgb(4,254,252)";
-COLOR["Blue"] = "rgb(51,145,232)";
-COLOR["DarkGreen"] = "#16502d";
-COLOR["TCAS_LEVEL_0"] = "#00ffff";
-COLOR["TCAS_LEVEL_1"] = "#00ffff";
-COLOR["TCAS_LEVEL_2"] = "#ff7f2a";
-COLOR["TCAS_LEVEL_3"] = "#ff0000";
+COLOR["Red"] 		= "rgb(244,28,33)";
+COLOR["Green"] 		= "rgb(64,178,80)";
+COLOR["Magenta"] 	= "rgb(255,14,235)";
+COLOR["Yellow"] 	= "rgb(241,205,57)";
+COLOR["White"] 		= "rgb(255,255,255)";
+COLOR["Turquoise"] 	= "rgb(4,254,252)";
+COLOR["Blue"] 		= "rgb(51,145,232)";
+COLOR["DarkGreen"] 	= "#16502d";
+COLOR["TCAS_LEVEL_0"] 	= "#00ffff";
+COLOR["TCAS_LEVEL_1"] 	= "#00ffff";
+COLOR["TCAS_LEVEL_2"] 	= "#ff7f2a";
+COLOR["TCAS_LEVEL_3"] 	= "#ff0000";
+
+
 
 
 var XPDRMODE 	= ["OFF","SBY","TST","GND","ON","ALT"];
