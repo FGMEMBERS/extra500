@@ -555,7 +555,10 @@ var BatteryClass = {
 	},
 	update : func(now,dt){
 		me._dt = dt;
-		me._volt = math.floor((me._voltMin + (me._voltDelta * me._loadLevel) + 0.05)*10 )/10; ### FIXME : Better Volt Curve depending on Load Level
+# 		me._volt = math.floor((me._voltMin + (me._voltDelta * me._loadLevel) + 0.05)*10 )/10; ### FIXME : Better Volt Curve depending on Load Level
+# 		V = 0.9286 * Ka + 22.457
+		me._volt = 0.000257944444444 * (me._capacityAs - me._usedAs) + 22.457;
+		me._volt = global.clamp(me._volt,me._voltMin,me._voltMax);
 		me._nVolt.setValue(me._volt);
 	},
 	_onVoltChange : func (n){
@@ -576,9 +579,13 @@ var BatteryClass = {
 	},
 	charge : func(electron=nil){
 		if (electron.volt > me._volt){
-			electron.ampere = 48.0 * (1 - ((me._volt - me._voltMin) / (electron.volt - me._voltMin))) * (1-me._loadLevel) ; ### FIXME : Better charge Curve
+# 			electron.ampere = 48.0 * (1 - ((me._volt - me._voltMin) / (electron.volt - me._voltMin))) * (1-me._loadLevel) ; ### FIXME : Better charge Curve
+# 			Ka < 23Ah; I =90A
+# 			Ka >=23Ah; I = 90-18*(Ka-23)
+			electron.ampere =  ( 90 - ( 18 * ( ((me._capacityAs - me._usedAs)/3600) - 23 ) ) ) ; 
+			electron.ampere = global.clamp(electron.ampere,0,90.0);
 			me._nAmpereCharge.setValue(electron.ampere);
-			me._usedAs -= electron.ampere * me._dt;
+			me._usedAs -= electron.ampere * me._dt ;
 			me._usedAs = global.clamp(me._usedAs,0,me._capacityAs);
 			me._loadLevel = (me._capacityAs - me._usedAs) / me._capacityAs;
 			
