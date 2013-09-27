@@ -401,7 +401,8 @@ var AlternatorClass = {
 			}else{
 				me._ampereAvailable = me._N1 * 0.594795539 - 36.0892193309;
 			}
-			me._volt = (me._voltMin) + (8 * me._surplusAmpere);
+			#me._volt = (me._voltMin) + (8 * me._surplusAmpere);
+			me._volt = (me._field) + (2 * me._surplusAmpere);
 			
 			me._volt 		= global.clamp(me._volt,0,me._voltMax);
 			#me._ampereAvailable 	= global.clamp(me._ampereAvailable,0.0,me._ampereMax);
@@ -436,14 +437,14 @@ var AlternatorClass = {
 		
 		if(electron.ampere>0){
 			me._nHasLoad.setValue(1);
-			me._surplusAmpere = me._ampereAvailable / electron.ampere;
-			if (me._surplusAmpere >= 1.0){
+			me._surplusAmpere = (me._ampereAvailable - electron.ampere) / 20;
+			if (me._surplusAmpere >= 0){
 				electron.ampere = 0;
 			}else{
 				electron.ampere -= me._ampereAvailable;
 			}
 		}else{
-			me._surplusAmpere = me._ampereAvailable;
+			me._surplusAmpere = 1.0;
 			me._nHasLoad.setValue(0);
 		}
 		me._nAmpereSurplus.setValue(me._surplusAmpere);
@@ -583,6 +584,8 @@ var BatteryClass = {
 # 			Ka < 23Ah; I =90A
 # 			Ka >=23Ah; I = 90-18*(Ka-23)
 			electron.ampere =  ( 90 - ( 18 * ( ((me._capacityAs - me._usedAs)/3600) - 23 ) ) ) ; 
+			var voltDelta = (electron.volt - me._volt) / 4;
+			electron.ampere *=  voltDelta * voltDelta;
 			electron.ampere = global.clamp(electron.ampere,0,90.0);
 			me._nAmpereCharge.setValue(electron.ampere);
 			me._usedAs -= electron.ampere * me._dt ;
@@ -591,6 +594,8 @@ var BatteryClass = {
 			
 			me._nUsedAs.setValue(me._usedAs);
 			me._nLoadLevel.setValue(me._loadLevel);
+		}else{
+			me._nAmpereCharge.setValue(0);
 		}
 	}
 };
@@ -1374,7 +1379,7 @@ var ESystem = {
 			
 			}else{
 				if( (me.relay.K7._state == 0) ){# Load goes to Alternator
-					if(me.relay.K10._state == 0){
+					if(me.relay.K10._state == 0){ # ALT Charge (Emergency)
 						
 						if(me.relay.K5._state == 1){
 							me._vBatteryBus.ampere += me._vLoadBus.ampere;
