@@ -91,7 +91,7 @@ var GearSystemClass = {
 		m._gearListener = nil;
 		m._gearPosition = 0;
 	
-		m._leds = LedClass.new("/extra500/system/gear/leds","Gear Leds","extra500/system/dimming/Annunciator",0.3);
+		m._leds = LedClass.new("/extra500/system/gear/leds","Gear Leds","extra500/system/dimming/Annunciator",0.6);
 		
 		m._nLEDLeft 		= props.globals.initNode("/extra500/light/GearLeft/state",0.0,"DOUBLE");
 		m._nLEDNose 		= props.globals.initNode("/extra500/light/GearNose/state",0.0,"DOUBLE");
@@ -99,7 +99,7 @@ var GearSystemClass = {
 		
 		m._ledListemer		= nil;
 		
-		m._hydaulicMotor = HydraulicMotorClass.new("/extra500/system/gear/motor","Gear Hydraulic Motor",300.0);
+		m._hydaulicMotor = HydraulicMotorClass.new("/extra500/system/gear/motor","Gear Hydraulic Motor",1148.0);
 		
 		m._wowNose = 0;
 		m._positionNose = 0.0;

@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jun 26 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             26.06.13
+#      Last change:      Eric van den Berg
+#      Date:             27.09.13
 #
 
 # MM Page 580
@@ -92,11 +92,11 @@ var FlapSystemClass = {
 			me._state	= n.getValue();
 			flapSystem.update();
 		};
-		m._motor 	= FlapMotorClass.new("extra500/system/flap/motor","Flap Motor",90.0);
+		m._motor 	= FlapMotorClass.new("extra500/system/flap/motor","Flap Motor",126.0);
 		
-		m._ledTrans = LedClass.new("/extra500/system/flap/leds","Flap Led Trans","extra500/system/dimming/Annunciator",0.1);
-		m._led15 = LedClass.new("/extra500/system/flap/leds","Flap Led 15","extra500/system/dimming/Annunciator",0.1);
-		m._led30 = LedClass.new("/extra500/system/flap/leds","Flap Led 30","extra500/system/dimming/Annunciator",0.1);
+		m._ledTrans = LedClass.new("/extra500/system/flap/leds","Flap Led Trans","extra500/system/dimming/Annunciator",0.6);
+		m._led15 = LedClass.new("/extra500/system/flap/leds","Flap Led 15","extra500/system/dimming/Annunciator",0.6);
+		m._led30 = LedClass.new("/extra500/system/flap/leds","Flap Led 30","extra500/system/dimming/Annunciator",0.6);
 		
 		m._nLEDTrans 		= props.globals.initNode("/extra500/light/FlapTransition/state",0.0,"DOUBLE");
 		m._nLED15 		= props.globals.initNode("/extra500/light/Flap15/state",0.0,"DOUBLE");

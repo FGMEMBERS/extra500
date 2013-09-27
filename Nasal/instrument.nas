@@ -380,23 +380,23 @@ var FuelInstrumentClass = {
 
 };
 
-var engineInstrumentPackage = EngineInstrumentPackageClass.new("extra500/instrumentation/EIP","Engine Instrument Package",24.0);
-var digitalInstrumentPackage = DigitalInstrumentPackageClass.new("extra500/instrumentation/DIP","Digital Instrument Package",12.0);
+var engineInstrumentPackage = EngineInstrumentPackageClass.new("extra500/instrumentation/EIP","Engine Instrument Package",29.0);
+var digitalInstrumentPackage = DigitalInstrumentPackageClass.new("extra500/instrumentation/DIP","Digital Instrument Package",13.0);
 var lumi = LumiClass.new("extra500/light/Lumi","Lumi Switch",42.0);
 
-var stbyHSI 		= InstrumentClass.new("extra500/instrumentation/StbyHSI","Standby Horizontal Sitiuation Indicator","/extra500/system/dimming/Instrument",6.0);
-var stbyIAS		= InstrumentClass.new("extra500/instrumentation/StbyIAS","Standby Indecated Airspeed","/extra500/system/dimming/Instrument",6.0);
-var stbyALT		= InstrumentClass.new("extra500/instrumentation/StbyALT","Standby Altitude","/extra500/system/dimming/Instrument",6.0);
-var cabincontroller 	= InstrumentClass.new("extra500/instrumentation/CabinController","Cabin Controller","/extra500/system/dimming/Instrument",6.0);
+var stbyHSI 		= InstrumentClass.new("extra500/instrumentation/StbyHSI","Standby Horizontal Sitiuation Indicator","/extra500/system/dimming/Instrument",7.0);
+var stbyIAS		= InstrumentClass.new("extra500/instrumentation/StbyIAS","Standby Indecated Airspeed","/extra500/system/dimming/Instrument",0);
+var stbyALT		= InstrumentClass.new("extra500/instrumentation/StbyALT","Standby Altitude","/extra500/system/dimming/Instrument",0);
+var cabincontroller 	= InstrumentClass.new("extra500/instrumentation/CabinController","Cabin Controller","/extra500/system/dimming/Instrument",10.0);
 var cabinaltimeter 	= InstrumentClass.new("extra500/instrumentation/CabinAltimeter","Cabin Altimeter","/extra500/system/dimming/Instrument",0.0);
 var cabinclimb 		= InstrumentClass.new("extra500/instrumentation/CabinClimb","Cabin Climb","/extra500/system/dimming/Instrument",0.0);
-var propellerHeat	= InstrumentClass.new("extra500/instrumentation/PropellerHeat","Propeller Heat Ammeter","/extra500/system/dimming/Instrument",6.0);
-var turnCoordinator	= InstrumentClass.new("extra500/instrumentation/TurnCoordinator","Turn Coordinator","/extra500/system/dimming/Instrument",60.0);
-var xpdr		= InstrumentClass.new("extra500/instrumentation/xpdr","Transponder","/extra500/system/dimming/Instrument",6.0);
+var propellerHeat	= InstrumentClass.new("extra500/instrumentation/PropellerHeat","Propeller Heat Ammeter","/extra500/system/dimming/Instrument",0.0);
+var turnCoordinator	= InstrumentClass.new("extra500/instrumentation/TurnCoordinator","Turn Coordinator","/extra500/system/dimming/Instrument",8.0);
+var xpdr		= InstrumentClass.new("extra500/instrumentation/xpdr","Transponder","/extra500/system/dimming/Instrument",6.0,0);
 
-var fuelQuantity	= FuelInstrumentClass.new("extra500/instrumentation/FuelQuantity","Fuel Quantity","/extra500/system/dimming/Instrument",12.0,6.0);
+var fuelQuantity	= FuelInstrumentClass.new("extra500/instrumentation/FuelQuantity","Fuel Quantity","/extra500/system/dimming/Instrument",3.0);
 var fuelFlow		= DigitalInstrumentClass.new("extra500/instrumentation/FuelFlow","Fuel Flow","/extra500/system/dimming/Instrument",6.0);
-var dmeInd			= DigitalInstrumentClass.new("extra500/instrumentation/dmeInd","DME Indicator","/extra500/system/dimming/Instrument",6.0);
+var dmeInd			= DigitalInstrumentClass.new("extra500/instrumentation/dmeInd","DME Indicator","/extra500/system/dimming/Instrument",21.0);
 var dmeSwitch		= DigitalInstrumentClass.new("extra500/instrumentation/dmeSwitch","DME Switch","/extra500/system/dimming/Instrument",1.0);
 var pcBoard1		= PcBoard1Class.new("extra500/electric/pcBoard1","PC Board 1",1.0);
 

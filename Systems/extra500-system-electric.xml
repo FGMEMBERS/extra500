@@ -20,7 +20,7 @@
       Date: 2013-09-16
 
       Last change:      Eric van den Berg
-      Date:             2013-09-23
+      Date:             2013-09-27
 -->
 
 <system name="electrics">
@@ -33,7 +33,7 @@
 				<sum>
 					<product>
 						<property>/extra500/instrumentation/panelventswitchL/pressed</property>
-						<value>16.8</value>
+						<value>8.0</value>
 						<pow>	
 							<max>			
 								<property>/extra500/panel/CircuitBreaker/BankA/PanelVent/voltOut</property>
@@ -44,7 +44,7 @@
 					</product>
 					<product>
 						<property>/extra500/instrumentation/panelventswitchR/pressed</property>
-						<value>16.8</value>
+						<value>8.0</value>
 						<pow>	
 							<max>			
 								<property>/extra500/panel/CircuitBreaker/BankA/PanelVent/voltOut</property>

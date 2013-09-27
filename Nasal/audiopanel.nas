@@ -17,7 +17,7 @@
 #      Date: Aug 10 2013
 #
 #      Last change:      Eric van den Berg 
-#      Date:             Aug 15 2013
+#      Date:             Sept 27 2013
 #
 
 # /sim/sound/volume
@@ -41,7 +41,7 @@ var AudiopanelClass = {
 	new : func(root,name){
 		var m = {parents:[
 			AudiopanelClass,
-			ConsumerClass.new(root,name,12.0)
+			ConsumerClass.new(root,name,74.0)
 		]};
 		
 		

@@ -19,6 +19,7 @@
 #      Last change:      Dirk Dittmann
 #      Date:             26.06.13
 #
+#FIXME: ignition 24000W and starter 30W??? (Ignition is 45W)
 var IgnitionClass = {
 	new : func(root,name,watt=24000.0){
 		var m = { 

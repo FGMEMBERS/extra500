@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             24.08.13
+#      Date:             27.09.13
 #
 
 # Fuel Flow Gal(US)/sec
@@ -169,10 +169,10 @@ var FuelSystemClass = {
 		#m._nFuelPump1		= m._nRoot.initNode("FuelPump1/state",0,"BOOL");
 		m._nFuelPump2		= m._nRoot.initNode("FuelPump2/state",0,"BOOL");
 		
-		m._FuelPump1		= FuelPumpClass.new("extra500/system/fuel/FuelPump1","Fuel Pump 1",30.0);
-		m._FuelPump2		= FuelPumpClass.new("extra500/system/fuel/FuelPump2","Fuel Pump 2",30.0);
-		m._FuelTransLeft	= FuelPumpClass.new("extra500/system/fuel/FuelPumpTransLeft","Fuel Transfer Pump Left",30.0);
-		m._FuelTransRight	= FuelPumpClass.new("extra500/system/fuel/FuelPumpTransRight","Fuel Transfer Pump Right",30.0);
+		m._FuelPump1		= FuelPumpClass.new("extra500/system/fuel/FuelPump1","Fuel Pump 1",140.0);
+		m._FuelPump2		= FuelPumpClass.new("extra500/system/fuel/FuelPump2","Fuel Pump 2",140.0);
+		m._FuelTransLeft	= FuelPumpClass.new("extra500/system/fuel/FuelPumpTransLeft","Fuel Transfer Pump Left",42.0);
+		m._FuelTransRight	= FuelPumpClass.new("extra500/system/fuel/FuelPumpTransRight","Fuel Transfer Pump Right",42.0);
 		
 		
 		eSystem.circuitBreaker.FUEL_P_1.outputAdd(m._FuelPump1);

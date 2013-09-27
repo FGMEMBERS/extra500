@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg 
-#      Date:             02.09.2013
+#      Date:             27.09.2013
 #
 var FlightManagementSystemClass = {
 	new : func(root,name){
@@ -73,7 +73,7 @@ var AutopilotClass = {
 	new : func(root,name){
 		var m = {parents:[
 			AutopilotClass,
-			ConsumerClass.new(root,name,60.0)
+			ConsumerClass.new(root,name,28.0)
 		]};
 		
 		

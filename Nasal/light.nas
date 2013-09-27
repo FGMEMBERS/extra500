@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jul 04 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             06.09.13
+#      Last change:      Eric van den Berg
+#      Date:             27.09.13
 #
 
 var LightClass = {
@@ -68,14 +68,14 @@ var LightPanelClass = {
 				LightPanelClass
 			]
 		};
-		m.strope	= LightClass.new("/extra500/light/strobe","Strobe Light",25.0);
-		m.nav		= LightClass.new("/extra500/light/nav","Navigation Light",25.0);
-		m.landing	= LightClass.new("/extra500/light/landing","Landing Light",25.0);
-		m.recognition	= LightClass.new("/extra500/light/recognition","Recognition Light",25.0);
-		m.cabin		= LightClass.new("/extra500/light/cabin","Cabin Light",25.0);
-		m.map		= LightClass.new("/extra500/light/map","Map Light",25.0);
-		m.glare		= LedClass.new("/extra500/light/glare","Glare Light","/extra500/system/dimming/Glare",25.0);
-		m.ice		= LightClass.new("/extra500/light/ice","Ice Light",25.0);
+		m.strobe	= LightClass.new("/extra500/light/strobe","Strobe Light",122.0);
+		m.nav		= LightClass.new("/extra500/light/nav","Navigation Light",80.0);
+		m.landing	= LightClass.new("/extra500/light/landing","Landing Light",64.0);
+		m.recognition	= LightClass.new("/extra500/light/recognition","Recognition Light",25.2);
+		m.cabin		= LightClass.new("/extra500/light/cabin","Cabin Light",37.4);
+		m.map		= LightClass.new("/extra500/light/map","Map Light",4.0);
+		m.glare		= LedClass.new("/extra500/light/glare","Glare Light","/extra500/system/dimming/Glare",6.0);
+		m.ice		= LightClass.new("/extra500/light/ice","Ice Light",28.0);
 		m.courtesy	= LightClass.new("/extra500/light/courtesy","Courtesy Light",25.0);
 		
 		
@@ -83,7 +83,7 @@ var LightPanelClass = {
 	},
 	init : func(instance=nil){
 		
-		eSystem.circuitBreaker.STROBE_LT.outputAdd(me.strope);
+		eSystem.circuitBreaker.STROBE_LT.outputAdd(me.strobe);
 		eSystem.circuitBreaker.NAV_LT.outputAdd(me.nav);
 		eSystem.circuitBreaker.LDG_LT.outputAdd(me.landing);
 		eSystem.circuitBreaker.RECO_LT.outputAdd(me.recognition);
@@ -93,7 +93,7 @@ var LightPanelClass = {
 		eSystem.circuitBreaker.ICE_LT.outputAdd(me.ice);
 		eSystem.circuitBreaker.COURTESY_LT.outputAdd(me.courtesy);
 		
-		me.strope.init();
+		me.strobe.init();
 		me.nav.init();
 		me.landing.init();
 		me.recognition.init();
@@ -105,7 +105,7 @@ var LightPanelClass = {
 		
 		eSystem.switch.Strobe.onStateChange = func(n){
 			me._state = n.getValue();
-			light.strope.setState(me._state);
+			light.strobe.setState(me._state);
 		};
 		
 		eSystem.switch.Navigation.onStateChange = func(n){

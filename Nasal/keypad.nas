@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jun 27 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             08.09.13
+#      Last change:      Eric van den Berg
+#      Date:             27.09.13
 #
 
 # var KeypadDisplayClass = {
@@ -621,7 +621,7 @@ var KeypadClass = {
 				
 		var m = {parents:[
 			KeypadClass,
-			ConsumerClass.new(root,name,3.0)
+			ConsumerClass.new(root,name,18.0)
 		]};
 		
 		m.nTungingSource = m._nRoot.initNode("tuningSource",0,"INT");
