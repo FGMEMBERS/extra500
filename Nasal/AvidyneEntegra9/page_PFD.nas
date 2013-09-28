@@ -117,11 +117,6 @@ var AutopilotWidget = {
 	_onHDG : func(n){
 		me._modeHDG = n.getValue();
 		me._can.ModeHDG.setVisible(me._modeHDG);
-		if(me._modeHDG == 1){
-			me._Page._widget.HSI._can.HeadingBug.set("fill",COLOR["Magenta"]);
-		}else{
-			me._Page._widget.HSI._can.HeadingBug.set("fill","none");
-		}
 	},
 	_onNAV : func(n){
 		me._can.ModeNAV.setVisible(n.getValue());
@@ -960,7 +955,7 @@ var NavSourceWidget = {
 		if (me._source > 2){ me._source = 0; }
 		if (me._source < 0){ me._source = 2; }
 		me.setSource(me._source);
-		me._ptree.Source.setValue(me._source);				
+		me._ptree.Source.setValue(me._source);	
 	},
 	_adjustRadial : func(amount){
 		#me._Pointer += amount;
@@ -1282,22 +1277,22 @@ var HeadingSituationIndicatorWidget = {
 		m._class 	= "HeadingSituationIndicatorWidget";
 		m._ptree	= {
 			Heading		: props.globals.initNode("/instrumentation/heading-indicator-IFD-"~m._ifd.name~"/indicated-heading-deg",0.0,"DOUBLE"),
-			HeadingTrue	: props.globals.initNode("/orientation/heading-deg",0.0,"DOUBLE"),
+# 			HeadingTrue	: props.globals.initNode("/orientation/heading-deg",0.0,"DOUBLE"),
 			TrunRate	: props.globals.initNode("/instrumentation/turn-indicator/indicated-turn-rate",0.0,"DOUBLE"),
-			FmsHeading	: props.globals.initNode("/autopilot/fms-channel/course-target-deg",0.0,"DOUBLE"),
+# 			FmsHeading	: props.globals.initNode("/autopilot/fms-channel/course-target-deg",0.0,"DOUBLE"),
 		};
 		m._can		= {
 			CoursePointer	: m._group.getElementById("CoursePointer").updateCenter(),
 			CDI		: m._group.getElementById("CDI").updateCenter(),
 			FromFlag	: m._group.getElementById("CDI_FromFlag"),
 			ToFlag		: m._group.getElementById("CDI_ToFlag"),
-			FMS_Bug		: m._group.getElementById("FMS_BUG").updateCenter(),
-			HeadingBug	: m._group.getElementById("HDG_Bug").updateCenter(),
 			HeadingBug_Text	: m._group.getElementById("HDG_Bug_Value").updateCenter(),
 			Heading_Text	: m._group.getElementById("HDG_Value").updateCenter(),
-			HeadingTrue	: m._group.getElementById("HDG_True").updateCenter(),
-			CompassRose	: m._group.getElementById("CompassRose").updateCenter(),
 			TrunRate	: m._group.getElementById("TrunRate_Needle").updateCenter(),
+# 			FMS_Bug		: m._group.getElementById("FMS_BUG").updateCenter().setVisible(0),
+# 			HeadingBug	: m._group.getElementById("HDG_Bug").updateCenter().setVisible(0),
+# 			HeadingTrue	: m._group.getElementById("HDG_True").updateCenter().setVisible(0),
+# 			CompassRose	: m._group.getElementById("CompassRose").updateCenter().setVisible(0),
 		};
 		
 		m._heading		= 0;
@@ -1308,7 +1303,7 @@ var HeadingSituationIndicatorWidget = {
 		return m;
 	},
 	setListeners : func(instance) {
-		append(me._listeners, setlistener("/autopilot/settings/heading-bug-deg",func(n){me._onBugChange(n)},1,0));	
+# 		append(me._listeners, setlistener("/autopilot/settings/heading-bug-deg",func(n){me._onBugChange(n)},1,0));	
 	},
 	init : func(instance=me){
 # 		me.setListeners(instance);
@@ -1323,24 +1318,20 @@ var HeadingSituationIndicatorWidget = {
 			me.removeListeners();
 		}
 	},
-	_onBugChange : func(n){
-		me._headingBug		= n.getValue();
-		me._can.HeadingBug.setRotation((me._headingBug - me._heading) * global.CONST.DEG2RAD);
-	},
 	update20Hz : func(now,dt){
 		me._heading 		= me._ptree.Heading.getValue();
-		me._headingTrue 	= me._ptree.HeadingTrue.getValue();
+# 		me._headingTrue 	= me._ptree.HeadingTrue.getValue();
 		me._trunRate 		= me._ptree.TrunRate.getValue();
-		me._fmsHeading 		= me._ptree.FmsHeading.getValue();
+# 		me._fmsHeading 		= me._ptree.FmsHeading.getValue();
 		
 		
 		me._can.Heading_Text.setText(sprintf("%03i",math.floor( me._heading + 0.5)));
-		me._can.CompassRose.setRotation(-me._heading * global.CONST.DEG2RAD);
+# 		me._can.CompassRose.setRotation(-me._heading * global.CONST.DEG2RAD);
 		me._can.TrunRate.setRotation(me._trunRate * 30.0 * global.CONST.DEG2RAD);
 		
 		me._can.HeadingBug_Text.setText(sprintf("%03i",me._headingBug));
-		me._can.HeadingBug.setRotation((me._headingBug - me._heading) * global.CONST.DEG2RAD);
-		me._can.HeadingTrue.setRotation((me._headingTrue - me._heading) * global.CONST.DEG2RAD);
+# 		me._can.HeadingBug.setRotation((me._headingBug - me._heading) * global.CONST.DEG2RAD);
+# 		me._can.HeadingTrue.setRotation((me._headingTrue - me._heading) * global.CONST.DEG2RAD);
 		
 		me._can.CoursePointer.setRotation((me._Page._widget.NavSource._Pointer - me._heading) * global.CONST.DEG2RAD);
 		me._can.FromFlag.setVisible(me._Page._widget.NavSource._fromFlag);
@@ -1349,12 +1340,12 @@ var HeadingSituationIndicatorWidget = {
 		me._can.CDI.setTranslation(me._Page._widget.NavSource._horizontalDeviation * 240,0);
 		# CDI visibility/color contolled by DeviationIndicatorWidget
 		
-		if(me._Page._widget.NavSource._source == 2){
-			me._can.FMS_Bug.setRotation((me._fmsHeading - me._heading) * global.CONST.DEG2RAD);
-			me._can.FMS_Bug.setVisible(1);
-		}else{
-			me._can.FMS_Bug.setVisible(0);
-		}
+# 		if(me._Page._widget.NavSource._source == 2){
+# 			me._can.FMS_Bug.setRotation((me._fmsHeading - me._heading) * global.CONST.DEG2RAD);
+# 			me._can.FMS_Bug.setVisible(1);
+# 		}else{
+# 			me._can.FMS_Bug.setVisible(0);
+# 		}
 		
 		
 		# Bearing Pointer visibility/rotation controlled by BearingSourceWidget
@@ -1420,10 +1411,11 @@ var NavSelectWidget = {
 			SynVis		: m._group.getElementById("SynVis_State"),
 			FlightPlan	: m._group.getElementById("FlightPlan_State"),
 			CDI		: m._group.getElementById("CDI_State"),
-			CompassRangeMid	: m._group.getElementById("Compass_Map_Range_Mid"),
-			CompassRangeMax	: m._group.getElementById("Compass_Map_Range_Max"),
-			
 		};
+		m._widget	= {
+			MapKnob		:  MovingMapKnobWidget.new(page,canvasGroup,name~"MapKnob"),
+		};
+		
 		m._synVis = 0;
 		m._flightPlan = 1;
 		m._cdi = 1;
@@ -1432,19 +1424,29 @@ var NavSelectWidget = {
 		return m;
 	},
 	init : func(instance=me){
-		
+		me._widget.MapKnob.setHand(1);
+		me._widget.MapKnob.init();
 	},
 	deinit : func(){
 		me.removeListeners();
+		me._widget.MapKnob.deinit();
 	},
 	setVisible : func(visible){
 		if(visible == 1){
 			me.setListeners(me);
-			me.registerKeys();
+			
+			me._ifd.nLedR3.setValue(1);
+			me._Page.keys["R3 <"] = func(){me.setSynVis();};
+			me._Page.keys["R3 >"] = func(){me.setSynVis();};
+			me._ifd.nLedR4.setValue(1);
+			me._Page.keys["R4 <"] = func(){me.setFlighPlan();};
+			me._Page.keys["R4 >"] = func(){me.setFlighPlan();};
+			me._ifd.nLedR5.setValue(1);
+			me._Page.keys["R5 <"] = func(){me.setCDI();};
+			me._Page.keys["R5 >"] = func(){me.setCDI();};
+		
 			me._ifd.movingMap.setLayerVisible("route",me._flightPlan);
 			me._ifd.movingMap.setRangeNm(me._mapRange);
-			me._can.CompassRangeMax.setText(sprintf("%.0f",me._mapRange));
-			me._can.CompassRangeMid.setText(sprintf("%.0f",me._mapRange/2));
 			me._can.SynVis.setText(LABEL_OFFON[me._synVis]);
 			me._can.FlightPlan.setText(LABEL_OFFON[me._flightPlan]);
 			me._can.CDI.setText(LABEL_OFFON[me._cdi]);
@@ -1470,6 +1472,7 @@ var NavSelectWidget = {
 			
 			me._ifd.movingMap.setLayerVisible("route",1);
 		}
+		me._widget.MapKnob.setVisible(visible);
 	},
 	registerKeys : func(){
 		me._ifd.nLedR3.setValue(1);
@@ -1519,17 +1522,17 @@ var NavSelectWidget = {
 		me._can.CDI.setText(LABEL_OFFON[me._cdi]);
 		me._Page._widget.HSI._can.CoursePointer.setVisible(me._cdi);
 	},
-	adjustMapRange : func(amount){
-		me._mapRange += amount;
-		me._mapRange = global.clamp(me._mapRange,2,300);
-		me._ifd.movingMap.setRangeNm(me._mapRange);
-		me._can.CompassRangeMax.setText(sprintf("%.0f",me._mapRange));
-		me._can.CompassRangeMid.setText(sprintf("%.0f",me._mapRange/2));
-	},
-	adjustMapView : func(amount){
-		me._mapView = global.cycle(me._mapView,0,3,amount);
-		me._ifd.movingMap.setView(me._mapView);
-	}
+# 	adjustMapRange : func(amount){
+# 		me._mapRange += amount;
+# 		me._mapRange = global.clamp(me._mapRange,2,300);
+# 		me._ifd.movingMap.setRangeNm(me._mapRange);
+# 		me._can.CompassRangeMax.setText(sprintf("%.0f",me._mapRange));
+# 		me._can.CompassRangeMid.setText(sprintf("%.0f",me._mapRange/2));
+# 	},
+# 	adjustMapView : func(amount){
+# 		me._mapView = global.cycle(me._mapView,0,3,amount);
+# 		me._ifd.movingMap.setView(me._mapView);
+# 	}
 };
 
 var BugSelectWidget = {

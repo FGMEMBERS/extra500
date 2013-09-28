@@ -163,10 +163,10 @@ var FlighPlanItem_old = {
 	setSelection   :func(value){
 		me._selection = value;
 		if (me._selection == 1){
-			me._can.Back.set("stroke",COLOR["Turquoise"]);
-			me._can.Back.set("stroke-width",5);
+# 			me._can.Back.set("stroke",COLOR["Turquoise"]);
+# 			me._can.Back.set("stroke-width",5);
 		}else{
-			me._can.Back.set("stroke","none");
+# 			me._can.Back.set("stroke","none");
 		}
 	},
 };
@@ -183,11 +183,14 @@ var FlightPlanListWidget = {
 		m._fplItem	= {};
 		m._can = {
 			#Pattern_Waypoint	: m._group.getElementById("FPL_Pattern_Waypoint").setVisible(0),
-			list			: m._group.getElementById("FPL_List")
-							.set("clip","rect(70px, 2048px, 1424px, 0px)")
-							,
+			FlightPlan		: m._group.getElementById("FPL"),
+			ScrollAble		: m._group.getElementById("FPL_ScrollAble"),
+			list			: m._group.getElementById("FPL_List"),
 			ScrollCursorView	: m._group.getElementById("FPL_ScrollCursorView"),
 			ScrollCursorCurrent	: m._group.getElementById("FPL_ScrollCursorCurrent"),
+			Cursor			: m._group.getElementById("FPL_Cursor").setVisible(1),
+			CursorInsert		: m._group.getElementById("FPL_Coursor_Insert").setVisible(0),
+			CursorSelect		: m._group.getElementById("FPL_Coursor_Select").setVisible(0),
 			
 		};
 		
@@ -199,11 +202,14 @@ var FlightPlanListWidget = {
 		m._lastCurrentIndex = 0;
 		m._planSize = 0;
 		m._maxScroll = 6;
+		m._visible = 0;
+		m._layout = "none";
+		m._cursorModeInsert = 1;
 		
 		m._x = 400;
 		m._y = 70;
 		
-		m._listTransform = m._can.list.createTransform();
+		m._listTransform = m._can.FlightPlan.createTransform();
 		
 		return m;
 	},
@@ -221,11 +227,21 @@ var FlightPlanListWidget = {
 				
 	},
 	setVisible : func(visible){
-		if(visible == 1){
-			me._Page.IFD.nLedR5.setValue(1);
-			me._Page.keys["R5 <"] 	= func(){me._deleteWaypoint();};
-			me._Page.keys["R5 >"] 	= func(){me._deleteWaypoint();};
-			
+		me._visible = visible;
+		me._checkKeys();
+		me._can.FlightPlan.setVisible(me._visible);
+	},
+	_checkKeys  : func(){
+		if(me._visible == 1 ){
+				if (me._layout == "FPL"){
+				me._Page.IFD.nLedR5.setValue(1);
+				me._Page.keys["R5 <"] 	= func(){me._deleteWaypoint();};
+				me._Page.keys["R5 >"] 	= func(){me._deleteWaypoint();};
+			}else{
+				me._Page.IFD.nLedR5.setValue(0);
+				me._Page.keys["R5 <"] 	= nil;
+				me._Page.keys["R5 >"] 	= nil;
+			}
 			me._Page.IFD.nLedRK.setValue(1);
 			me._Page.keys["RK >>"] 	= func(){me._adjustSelection(-2);};
 			me._Page.keys["RK <<"] 	= func(){me._adjustSelection(2);};
@@ -244,28 +260,36 @@ var FlightPlanListWidget = {
 			me._Page.keys["RK >"] 	= nil;
 			me._Page.keys["RK <"] 	= nil;
 		}
-		me._can.list.setVisible(visible);
 	},
 	setLayout : func(layout){
-		if(layout == "FPL"){
+		me._layout = layout;
+		if(me._layout == "FPL"){
 			me._x = 400;
 			me._y = 70;
-		
+			
+			me._can.FlightPlan.set("clip","rect(70px, 2048px, 1424px, 0px)");
+							
 			me._listTransform.setScale(1.0,1.0);
 			me._listTransform.setTranslation(0,0);
 		}elsif(layout == "split-right"){
 			me._x = 400;
 			me._y = 70;
+			
+			me._can.FlightPlan.set("clip","rect(205px, 2048px, 1216px, 1024px)");
+						
 			me._listTransform.setScale(0.75,0.75);
-			me._listTransform.setTranslation(770,80);
+			me._listTransform.setTranslation(770,150);
 		}else{
-			me._can.list.setVisible(0);
+			me._visible == 0;
+			me._can.FlightPlan.setVisible(me._visible);
 		}
+		me._checkKeys();
 	},
 	_clearList : func(){
 		me._scrollY = 0;
 		me._can.list.removeAllChildren();
 		me._fplItem = {};
+		me._cursorModeInsert = 1;
 	},
 	_drawList : func(){
 		
@@ -303,8 +327,8 @@ var FlightPlanListWidget = {
 			
 		}
 		me._resizeScroll();
-		me._setSelection(0);
-		me._scrollToCurrentIndex(0);
+		me._setSelection(me._planSize-1,"insert");
+		me._scrollToCurrentIndex(me._planSize-1);
 	},
 	_resizeScroll : func(){
 		if(me._planSize > 6){
@@ -327,7 +351,7 @@ var FlightPlanListWidget = {
 		
 		me._scrollY = global.clamp(me._scrollY,0,me._maxScroll);
 		
-		me._can.list.setTranslation(0,me._scrollY*-224);
+		me._can.ScrollAble.setTranslation(0,me._scrollY*-224);
 		me._can.ScrollCursorView.setTranslation(0,me._y+me._scrollY*me._scrollSize);
 		
 	},
@@ -340,7 +364,8 @@ var FlightPlanListWidget = {
 		}
 		me._scrollY = global.clamp(me._scrollY,0,me._maxScroll);
 		
-		me._can.list.setTranslation(0,me._scrollY*-224);
+		me._can.ScrollAble.setTranslation(0,me._scrollY*-224);
+		
 		me._can.ScrollCursorView.setTranslation(0,me._y+me._scrollY*me._scrollSize);
 		
 	},
@@ -388,16 +413,36 @@ var FlightPlanListWidget = {
 		
 	},
 	_adjustSelection : func(amount){
-		me._selectedIndex += amount;
-		me._selectedIndex = global.clamp(me._selectedIndex,0,me._planSize-1);
-		me._setSelection();
-		me._scrollToSelectedIndex(me._selectedIndex);
 		
+		if(amount > 0){
+			if(me._cursorModeInsert==1){
+				me._selectedIndex += amount;
+				me._selectedIndex = global.clamp(me._selectedIndex,0,me._planSize-1);
+			}
+			me._setSelection(me._selectedIndex,!me._cursorModeInsert);
+		}elsif(amount < 0){
+			if(me._cursorModeInsert==0){
+				me._selectedIndex += amount;
+				me._selectedIndex = global.clamp(me._selectedIndex,0,me._planSize-1);
+			}
+			me._setSelection(me._selectedIndex,!me._cursorModeInsert);
+		}else{
+			
+		}
+		
+		#me._setSelection();
+		me._scrollToSelectedIndex(me._selectedIndex);	
 	},
-	_setSelection : func(index=nil){
+	_setSelection : func(index=nil,mode=nil){
 		if (index!=nil){
 			me._selectedIndex = index;
+			me._cursorModeInsert = 0;
 		}
+		if(mode!=nil){
+			me._cursorModeInsert = mode;
+		}
+
+		
 		#print("FlightPlanWidget._setSelection() ... "~me._selectedIndex);
 		if(me._fplItem[me._lastSelectedIndex] != nil){
 			me._fplItem[me._lastSelectedIndex].setSelection(0);
@@ -405,6 +450,20 @@ var FlightPlanListWidget = {
 		if(me._fplItem[me._selectedIndex] != nil){
 			me._fplItem[me._selectedIndex].setSelection(1);
 		}
+		me._can.Cursor.setTranslation(0,me._selectedIndex*224);
+		if(me._cursorModeInsert == 1){
+			me._can.CursorSelect.setVisible(0);
+			me._can.CursorInsert.setVisible(1);
+			#me._can.CursorInsert.setTranslation(0,me._selectedIndex*224);
+		}else{
+			me._can.CursorInsert.setVisible(0);
+			me._can.CursorSelect.setVisible(1);
+			#me._can.CursorSelect.setTranslation(0,me._selectedIndex*224);
+		}
+		
+
+		
+			
 		
 		extra500.fms.setSelectedWaypoint(me._selectedIndex);
 		me._lastSelectedIndex = me._selectedIndex;

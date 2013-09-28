@@ -25,23 +25,42 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.77729894"
-     inkscape:cx="568.4393"
-     inkscape:cy="57.919314"
+     inkscape:cx="874.33226"
+     inkscape:cy="148.04873"
      inkscape:document-units="px"
      inkscape:current-layer="svg2985"
      showgrid="false"
      inkscape:snap-page="true"
      inkscape:window-width="1920"
      inkscape:window-height="1025"
-     inkscape:window-x="-2"
+     inkscape:window-x="1918"
      inkscape:window-y="-3"
      inkscape:window-maximized="1"
      showguides="true"
-     inkscape:guide-bbox="true">
+     inkscape:guide-bbox="true"
+     inkscape:snap-bbox="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:bbox-paths="true">
     <sodipodi:guide
        orientation="1,0"
        position="1232,295.89645"
        id="guide3857" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="64,171.9328"
+       id="guide3088" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="1216,146.66172"
+       id="guide3090" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="1184.2291,212.00001"
+       id="guide3092" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="1176.51,12.000003"
+       id="guide3094" />
   </sodipodi:namedview>
   <metadata
      id="metadata2990">
@@ -62,15 +81,15 @@
     <rect
        ry="11.240375"
        y="85.658218"
-       x="420.96326"
+       x="440.65192"
        height="143.44165"
-       width="845.52643"
+       width="826.22388"
        id="Back"
        style="color:#000000;fill:#303030;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
     <text
        xml:space="preserve"
        style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:0.97509044;stroke-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-       x="488.51785"
+       x="509.69562"
        y="106.64835"
        id="Headline"
        sodipodi:linespacing="125%"
@@ -78,19 +97,18 @@
        inkscape:label="#text5341-2"><tspan
          style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:0.97509044;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
          sodipodi:role="line"
-         x="488.51785"
+         x="509.69562"
          y="106.64835"
          id="tspan4032-6">Fly Course 326</tspan></text>
     <path
        style="color:#000000;fill:#616660;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       d="m 592.6875,18.3125 c -10.65055,0 -19.21875,8.568205 -19.21875,19.21875 l 0,38.59375 -550.875,0 c -5.89879,0 -10.65625,4.72621 -10.65625,10.625 l 0,50.5 c 0,5.89879 4.75746,10.625 10.65625,10.625 l 570.09375,0 400.5,0 79.3437,0 c 10.6506,0 19.2188,-8.5682 19.2188,-19.21875 l 0,-91.125 c 0,-10.650545 -8.5682,-19.21875 -19.2188,-19.21875 l -479.8437,0 z"
-       transform="matrix(0.71720824,0,0,0.71720824,412.39454,77.051725)"
+       d="m 846.57777,90.185601 c -7.4444,0 -13.4333,6.145187 -13.4333,13.783849 l 0,27.67975 -385.04417,0 c -4.12307,0 -7.44838,3.38968 -7.44838,7.62034 l 0,36.21902 c 0,4.23066 3.32531,7.62033 7.44838,7.62033 l 398.47747,0 279.93673,0 55.4588,0 c 7.4444,0 13.4333,-6.14518 13.4333,-13.78384 l 0,-65.3556 c 0,-7.638662 -5.9889,-13.783849 -13.4333,-13.783849 l -335.39553,0 z"
        id="BackInner"
        inkscape:connector-curvature="0" />
     <text
        xml:space="preserve"
        style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.97509044;stroke-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-       x="534.26855"
+       x="555.44672"
        y="191.15906"
        id="Ristriction"
        sodipodi:linespacing="125%"
@@ -98,7 +116,7 @@
        inkscape:label="#text5341-2"><tspan
          style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke:#ffffff;stroke-width:0.97509044;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
          sodipodi:role="line"
-         x="534.26855"
+         x="555.44672"
          y="191.15906"
          id="tspan4032-6-3">Waypoint restrictions</tspan></text>
     <text
@@ -107,12 +125,12 @@
        sodipodi:linespacing="125%"
        id="Waypoint_Navaid_Name"
        y="147.13364"
-       x="534.26855"
+       x="555.44672"
        style="font-size:32px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.97509044;stroke-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
        xml:space="preserve"><tspan
          id="tspan4459"
          y="147.13364"
-         x="534.26855"
+         x="555.44672"
          sodipodi:role="line"
          style="font-size:32px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke:#ffffff;stroke-width:0.97509044;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold">Waypoint</tspan></text>
     <text

@@ -38,9 +38,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.24748738"
-     inkscape:cx="1444.9952"
-     inkscape:cy="703.80103"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="687.35866"
+     inkscape:cy="1191.7394"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
      showgrid="false"
@@ -48,7 +48,7 @@
      inkscape:guide-bbox="true"
      inkscape:snap-bbox="true"
      inkscape:snap-to-guides="true"
-     inkscape:bbox-nodes="true"
+     inkscape:bbox-nodes="false"
      inkscape:bbox-paths="true"
      inkscape:snap-page="true"
      inkscape:snap-global="true"
@@ -56,7 +56,8 @@
      inkscape:window-height="1025"
      inkscape:window-x="-2"
      inkscape:window-y="-3"
-     inkscape:window-maximized="1">
+     inkscape:window-maximized="1"
+     inkscape:snap-bbox-edge-midpoints="true">
     <sodipodi:guide
        orientation="1,0"
        position="400,617.14286"
@@ -95,7 +96,7 @@
        id="guide6980" />
     <sodipodi:guide
        orientation="0,1"
-       position="713.67277,1466.9552"
+       position="713.67277,1467"
        id="guide3861" />
     <sodipodi:guide
        orientation="0,1"
@@ -113,6 +114,18 @@
        orientation="1,0"
        position="1024,1090.9647"
        id="guide4436" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="1707.1578,1455"
+       id="guide3408" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="464,1617.2542"
+       id="guide3410" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="501.03566,1243"
+       id="guide3475" />
   </sodipodi:namedview>
   <metadata
      id="metadata6210">
@@ -148,22 +161,16 @@
        transform="matrix(0.99935482,0,0,0.92469566,0.783544,4.9443485)"
        id="Tab_MapNearest_Content"
        style="stroke:none">
-      <rect
-         style="fill:none;stroke:#3391e8;stroke-width:3.12077165;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
-         id="rect3713"
-         width="1022.8735"
-         height="1466.407"
-         x="0.0073976531"
-         y="70.942749"
-         ry="0" />
-      <rect
-         ry="0"
-         y="70.942749"
-         x="1025.8843"
-         height="1466.407"
-         width="1022.1628"
-         id="rect4440"
-         style="fill:none;stroke:#3391e8;stroke-width:3.12077165;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path4215"
+         d="m 1024,70.338123 0,1357.868577"
+         style="display:inline;fill:none;stroke:#3391e8;stroke-width:3;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <path
+         style="display:inline;fill:none;stroke:#3391e8;stroke-width:2.44517064000000017;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         d="M 2046.3752,1428 1.4691198,1428"
+         id="path4217"
+         inkscape:connector-curvature="0" />
     </g>
   </g>
   <g
@@ -780,24 +787,17 @@
      inkscape:label="Tab_MapFPL"
      style="display:inline">
     <g
-       id="Tab_MapFPL_Content"
-       transform="matrix(0.49293028,0,0,0.92469566,-0.76060258,4.9443485)">
-      <rect
-         ry="0"
-         y="67.165611"
-         x="0.0073982948"
-         height="1470.1841"
-         width="2076.0466"
-         id="rect3216"
-         style="fill:none;stroke:#3391e8;stroke-width:4.4435401;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline" />
-      <rect
-         style="fill:none;stroke:#3391e8;stroke-width:4.44354057;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
-         id="rect4438"
-         width="2071.6182"
-         height="1470.1841"
-         x="2081.6279"
-         y="67.165611"
-         ry="0" />
+       id="Tab_MapFPL_Content">
+      <path
+         style="fill:none;stroke:#3391e8;stroke-width:3;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         d="m 1024,70.338123 0,1357.868577"
+         id="path3432"
+         inkscape:connector-curvature="0" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path4211"
+         d="M 2046.3752,1428 1.4691198,1428"
+         style="fill:none;stroke:#3391e8;stroke-width:2.44517064;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
     </g>
   </g>
   <g
@@ -816,13 +816,6 @@
          width="1244.9852"
          id="rect4114"
          style="fill:#000000;fill-opacity:1;stroke:#3391e8;stroke-width:3.01113415;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100;display:inline" />
-      <rect
-         style="color:#000000;fill:#000080;fill-opacity:1;fill-rule:nonzero;stroke:#000080;stroke-width:3.00000024;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-         id="rect3966"
-         width="16.955196"
-         height="1354.4801"
-         x="1630.0322"
-         y="70.54483" />
       <g
          id="g3882">
         <rect
@@ -955,23 +948,83 @@
              sodipodi:role="line"
              style="font-size:48px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:80.00000119%;writing-mode:lr-tb;text-anchor:middle;fill:#00ffff;stroke:#00ffff;stroke-width:1.35791647;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold">Waypoint</tspan></text>
       </g>
-      <rect
-         y="70.54483"
-         x="1630.0322"
-         height="1354.4801"
-         width="19.951561"
-         id="FPL_ScrollCursorView"
-         style="color:#000000;fill:#00ffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.00000024;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
-      <rect
-         style="color:#000000;fill:#ff00ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.00000024;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-         id="FPL_ScrollCursorCurrent"
-         width="19.951561"
-         height="1354.4801"
-         x="1630.0322"
-         y="70.54483" />
     </g>
     <g
-       id="FPL_List" />
+       id="FPL">
+      <g
+         id="FPL_ScrollAble">
+        <g
+           id="FPL_List" />
+        <g
+           id="FPL_Cursor">
+          <g
+             id="FPL_Coursor_Insert">
+            <path
+               sodipodi:nodetypes="cc"
+               inkscape:connector-curvature="0"
+               id="path3477"
+               d="m 470.57723,293 1138.49947,0"
+               style="fill:none;stroke:#00ffff;stroke-width:5.00000048;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+            <path
+               sodipodi:nodetypes="ccc"
+               inkscape:connector-curvature="0"
+               id="path4259"
+               d="m 474,293 c -7.58355,0 -13.94215,-3.10978 -14,-11.862 l 0,-15.99112"
+               style="fill:none;stroke:#00ffff;stroke-width:5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+            <path
+               style="fill:none;stroke:#00ffff;stroke-width:5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+               d="m 474,293 c -7.58355,0 -13.94215,3.10978 -14,11.862 l 0,15.99112"
+               id="path4261"
+               inkscape:connector-curvature="0"
+               sodipodi:nodetypes="ccc" />
+            <path
+               style="fill:none;stroke:#00ffff;stroke-width:5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+               d="m 1610,293 c 7.5835,0 13.9421,-3.10978 14,-11.862 l 0,-15.99112"
+               id="path4408"
+               inkscape:connector-curvature="0"
+               sodipodi:nodetypes="ccc" />
+            <path
+               sodipodi:nodetypes="ccc"
+               inkscape:connector-curvature="0"
+               id="path4410"
+               d="m 1610,293 c 7.5835,0 13.9421,3.10978 14,11.862 l 0,15.99112"
+               style="fill:none;stroke:#00ffff;stroke-width:5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+          </g>
+          <rect
+             ry="15.391391"
+             y="82.793022"
+             x="465.793"
+             height="200"
+             width="1152"
+             id="FPL_Coursor_Select"
+             style="color:#000000;fill:none;stroke:#00ffff;stroke-width:5;stroke-miterlimit:4;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        </g>
+      </g>
+      <g
+         id="FPL_ScrollBar">
+        <rect
+           y="70.54483"
+           x="1630.0322"
+           height="1354.4801"
+           width="16.955196"
+           id="rect3966"
+           style="color:#000000;fill:#000080;fill-opacity:1;fill-rule:nonzero;stroke:#000080;stroke-width:3.00000024;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        <rect
+           y="70.54483"
+           x="1630.0322"
+           height="1354.4801"
+           width="19.951561"
+           id="FPL_ScrollCursorView"
+           style="color:#000000;fill:#00ffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.00000024;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        <rect
+           style="color:#000000;fill:#ff00ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.00000024;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="FPL_ScrollCursorCurrent"
+           width="19.951561"
+           height="1354.4801"
+           x="1630.0322"
+           y="70.54483" />
+      </g>
+    </g>
   </g>
   <g
      inkscape:groupmode="layer"
