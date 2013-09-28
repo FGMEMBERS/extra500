@@ -228,6 +228,7 @@ var PlusDataWidget = {
 		me._timer.stop();
 		me.removeListeners();
 		
+		
 	},
 	setVisible : func(visible){
 		if(visible == 1){
