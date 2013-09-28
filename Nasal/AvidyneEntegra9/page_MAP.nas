@@ -35,15 +35,9 @@ var AvidynePageMAP = {
 		}
 		
 		me.registerKeys();
-		me.IFD._widget.Headline.setVisible(1);
-		me.IFD._widget.PlusData.setVisible(0);
 		me._widget.Tab.init();
-		
-		me.page.setVisible(1);
-		
 	},
 	deinit : func(){
-		me.page.setVisible(0);
 		me.keys = {};
 		me.removeListeners();
 		
@@ -52,6 +46,19 @@ var AvidynePageMAP = {
 				me._widget[widget].deinit();
 			}
 		}
+	},
+	setVisible : func(visible){
+		if(visible == 1){
+			me.setListeners(me);
+			me.IFD._widget.Headline.setVisible(1);
+		
+		}else{
+			me.keys = {};
+			me.removeListeners();
+			
+		}
+		me._widget.Tab.setVisible(visible);
+		me.page.setVisible(visible);
 	},
 	_initWidgetsForTab : func(index){
 		me._widget.MovingMapKnob.setVisible(0);

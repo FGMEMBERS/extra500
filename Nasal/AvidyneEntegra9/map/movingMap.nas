@@ -66,50 +66,55 @@ var MovingMap = {
 		var m = {parents:[
 			MovingMap,
 			ListenerClass.new(),
-			Map.new(parent,name)
 		]};
 		#debug.dump(m);
-		m.IFD = ifd;
+		m.IFD 		= ifd;
+		m._group 	= parent;
+		m._name		= name;
 		m._tree	= {
 			Heading		: props.globals.initNode("/instrumentation/heading-indicator-IFD-"~m.IFD.name~"/indicated-heading-deg",0.0,"DOUBLE"),
 			HeadingTrue	: props.globals.initNode("/orientation/heading-deg",0.0,"DOUBLE"),
 			FmsHeading	: props.globals.initNode("/autopilot/fms-channel/course-target-deg",0.0,"DOUBLE"),
 		};
 				
-		canvas.parsesvg(m, "Models/instruments/IFDs/IFD_MovingMap.svg",{
+		canvas.parsesvg(m._group, "Models/instruments/IFDs/IFD_MovingMap.svg",{
 			"font-mapper": global.canvas.FontMapper
 			}
 		);
 		
 		m._can = {
-			plane		: m.createChild("group","plane"),
-			LayerFront	: m.getElementById("layer2").set("z-index",3),
-			compass		: m.getElementById("MovingMap_Compass"),
-			CompassRose	: m.getElementById("MovingMap_Compass_Rose").updateCenter(),
-			CompassRangeMax	: m.getElementById("MovingMap_Range_Max"),
-			CompassRangeMid	: m.getElementById("MovingMap_Range_Mid"),
-			Warning		: m.getElementById("MovingMap_Warning"),
-			warning1	: m.getElementById("MovingMap_Warning1"),
-			warning2	: m.getElementById("MovingMap_Warning2"),
-			HDGValue	: m.getElementById("MovingMap_HDG_Value"),
-			UpHDG		: m.getElementById("MovingMap_Up_HDG"),
-			UpHDGDeg	: m.getElementById("MovingMap_Up_HDG_DEG"),
-			UpNorth		: m.getElementById("MovingMap_Up_North").setVisible(0),
-			BugHDG		: m.getElementById("MovingMap_Bug_HDG"),
-			BugFMS		: m.getElementById("MovingMap_Bug_FMS"),
-			BugTrue		: m.getElementById("MovingMap_Bug_TRUE").updateCenter(),
-			layer1		: m.getElementById("layer1"),
+			plane		: m._group.getElementById("MovingMap_Plane"),
+			LayerMap	: m._group.getElementById("layer5"),
+			LayerFront	: m._group.getElementById("layer2").set("z-index",3),
+			compass		: m._group.getElementById("MovingMap_Compass"),
+			CompassRose	: m._group.getElementById("MovingMap_Compass_Rose").updateCenter(),
+			CompassRangeMax	: m._group.getElementById("MovingMap_Range_Max"),
+			CompassRangeMid	: m._group.getElementById("MovingMap_Range_Mid"),
+			Warning		: m._group.getElementById("MovingMap_Warning").setVisible(0),
+			warning1	: m._group.getElementById("MovingMap_Warning1"),
+			warning2	: m._group.getElementById("MovingMap_Warning2"),
+			HDGValue	: m._group.getElementById("MovingMap_HDG_Value"),
+			UpHDG		: m._group.getElementById("MovingMap_Up_HDG"),
+			UpHDGDeg	: m._group.getElementById("MovingMap_Up_HDG_DEG"),
+			UpNorth		: m._group.getElementById("MovingMap_Up_North").setVisible(0),
+			HDG		: m._group.getElementById("MovingMap_HDG"),
+			BugHDG		: m._group.getElementById("MovingMap_Bug_HDG"),
+			BugFMS		: m._group.getElementById("MovingMap_Bug_FMS"),
+			BugTrue		: m._group.getElementById("MovingMap_Bug_TRUE").updateCenter(),
 		};
 		
-		m._can.plane.createChild("path", "icon")
-		 .setStrokeLineWidth(3)
-                 .setScale(1)
-                 .setColor(0.2,0.2,1.0)
-                 .moveTo(-5, -5)
-                 .line(0, 10)
-                 .line(10, 0)
-                 .line(0, -10)
-                 .line(-10, 0);
+		m._map = Map.new(m._can.LayerMap,name);
+		
+# 		m._can.plane.createChild("path", "icon")
+# 		 .setStrokeLineWidth(3)
+#                  .setScale(1)
+#                  .setColor(0.2,0.2,1.0)
+# 		 .moveTo(-5, -5)
+#                  .line(0, 10)
+#                  .line(10, 0)
+#                  .line(0, -10)
+#                  .line(-10, 0)
+#                  ;
 		 
 # 		m._can.plane.createChild("path", "x-Achis")
 # 		 .setStrokeLineWidth(3)
@@ -125,89 +130,196 @@ var MovingMap = {
 #                  .moveTo(0, -100)
 #                  .line(0, 200);
 
+		m._map.setTranslation(1024,768);
+		#m._can.LayerFront.setTranslation(-1024,-768);
+		#m._can.layer1.setTranslation(-1024,-768);
+		
+# 		m._can.plane.setTranslation(1024,768);
+		
+		m._heading	= 0;
+		m._headingTrue	= 0;
+		m._bugHeading	= 0;
+		m._bugFMS	= 0;
+		m._lat		= 0;
+		m._lon		= 0;
+		m._upHdg	= 0;
+		
+		m._bugFMSactive = 0;
+		m._modeHDG 	= 0;
+		m._routeManagerActive 	= 0;
+		m._fmsServiceable	= 0;
+		
+		m._layer 	= {};
+		m._view 	= 0 ;
 		 
-		 m._heading	= 0;
-		 m._headingTrue	= 0;
-		 m._bugHeading	= 0;
-		 m._bugFMS	= 0;
-		 m._lat		= 0;
-		 m._lon		= 0;
-		 m._upHdg	= 0;
-		 
-		 m._layer 	= {};
-		 m._view 	= 0 ;
+		#m._mapScale	= m._can.LayerMap.createTransform(); 
+		m._mapTransform	= m._can.LayerMap.createTransform(); 
+		
 		return m;
 	},
 	setRefPos : func(lat, lon) {
 	# print("RefPos set");
-		me._node.getNode("ref-lat", 1).setDoubleValue(lat);
-		me._node.getNode("ref-lon", 1).setDoubleValue(lon);
+		me._map._node.getNode("ref-lat", 1).setDoubleValue(lat);
+		me._map._node.getNode("ref-lon", 1).setDoubleValue(lon);
 		me._can.plane.setGeoPosition(lat,lon);
 		me; # chainable
 	},
+	setHdg : func(deg){
+		me._map.setHdg(deg);
+	},
 	setLayout : func(layout){
+		me._group.setVisible(0);
+			
+# 		if(layout == "map"){
+# 			me._screenSize	= 512;
+# 			me.setTranslation(1024,768);
+# 			me.set("clip","rect(70px, 2048px, 1436px, 0px)");
+# 			me._can.Warning.setTranslation(-380,0);
+# 			me._can.UpHDG.setTranslation(400,0);
+# 			me._can.compass.setScale(1.0,1.0);
+# 			me._can.compass.setTranslation(0,0);
+# 			me._can.LayerFront.setTranslation(-1024,-768);
+# 			me._can.layer1.setTranslation(-1024,-768);
+# 			me._can.layer1.setVisible(1);
+# 			me._parent.set("z-index",0);
+# 			me.setVisible(1);
+# 			
+# 		}elsif(layout == "map+"){
+# 			me._screenSize	= 512;
+# 			me.setTranslation(1024,768);
+# 			me.set("clip","rect(70px, 2048px, 1436px, 0px)");
+# 			me._can.Warning.setTranslation(0,0);
+# 			me._can.UpHDG.setTranslation(0,0);
+# 			me._can.compass.setScale(1.0,1.0);
+# 			me._can.compass.setTranslation(0,0);
+# 			me._can.LayerFront.setTranslation(-1024,-768);
+# 			me._can.layer1.setTranslation(-1024,-768);
+# 			me._can.layer1.setVisible(1);
+# 			me._parent.set("z-index",0);
+# 			me.setVisible(1);
+# 			
+# 		}elsif(layout == "split-left"){
+# 			me._screenSize	= 384;
+# 			me.setTranslation(512,768);
+# 			me.set("clip","rect(70px, 1024px, 1436px, 0px)");
+# 			me._can.Warning.setTranslation(112,0);
+# 			me._can.UpHDG.setTranslation(-112,0);
+# 			me._can.compass.setScale(0.75,0.75);
+# 			me._can.compass.setTranslation(255,71);
+# 			me._can.LayerFront.setTranslation(-1024,-768);
+# 			me._can.layer1.setTranslation(-1024,-768);
+# 			me._can.layer1.setVisible(1);
+# 			me._parent.set("z-index",0);
+# 			me.setVisible(1);
+# 			
+# 			
+# 		}elsif(layout == "pfd"){
+# 			me._screenSize	= 291;
+# 			me.setTranslation(1024,1132);
+# 			me._can.LayerFront.setTranslation(-1024,-1132);
+# 			me._can.compass.setScale(0.568359375,0.568359375);
+# 			#me._can.compass.setTranslation(255,71);
+# 			me._can.layer1.setTranslation(-1024,-1132);
+# 			me.set("clip","rect(842px, 1315px, 1429px, 732px)");
+# 			me._parent.set("z-index",1);
+# 			me._can.layer1.setVisible(1);
+# 			me.setVisible(1);
+# 			
+# 		}else{
+# 			
+# 		}
+		
 		if(layout == "map"){
 			me._screenSize	= 512;
-			me.setTranslation(1024,768);
-			me.set("clip","rect(70px, 2048px, 1436px, 0px)");
-			me.setVisible(1);
+			me._group.set("clip","rect(70px, 2048px, 1436px, 0px)");
+			
+			me._mapTransform.setTranslation(0,0);
+			me._mapTransform.setScale(1,1);
+			
+			me._can.HDG.setTranslation(0,0);
 			me._can.Warning.setTranslation(-380,0);
 			me._can.UpHDG.setTranslation(400,0);
-			me._can.compass.setScale(1.0,1.0);
-			me._can.compass.setTranslation(0,0);
-			me._can.LayerFront.setTranslation(-1024,-768);
-			me._can.layer1.setTranslation(-1024,-768);
-			me._can.layer1.setVisible(1);
-			me._parent.set("z-index",0);
+			
+			me._can.LayerFront.setVisible(1);
+			me._group.set("z-index",0);
+			me._group.setVisible(1);
 		}elsif(layout == "map+"){
 			me._screenSize	= 512;
-			me.setTranslation(1024,768);
-			me.set("clip","rect(70px, 2048px, 1436px, 0px)");
-			me.setVisible(1);
+			me._group.set("clip","rect(70px, 2048px, 1436px, 0px)");
+			
+			me._mapTransform.setTranslation(0,0);
+			me._mapTransform.setScale(1,1);
+			
+			me._can.HDG.setTranslation(0,0);
 			me._can.Warning.setTranslation(0,0);
 			me._can.UpHDG.setTranslation(0,0);
-			me._can.compass.setScale(1.0,1.0);
-			me._can.compass.setTranslation(0,0);
-			me._can.LayerFront.setTranslation(-1024,-768);
-			me._can.layer1.setTranslation(-1024,-768);
-			me._can.layer1.setVisible(1);
-			me._parent.set("z-index",0);
 			
+			
+			me._can.LayerFront.setVisible(1);
+			me._group.set("z-index",0);
+			me._group.setVisible(1);
 		}elsif(layout == "split-left"){
-			me._screenSize	= 384;
-			me.setTranslation(512,768);
-			me.set("clip","rect(70px, 1024px, 1436px, 0px)");
-			me.setVisible(1);
-			me._can.Warning.setTranslation(112,0);
-			me._can.UpHDG.setTranslation(-112,0);
-			me._can.compass.setScale(0.75,0.75);
-			me._can.compass.setTranslation(255,71);
-			me._can.LayerFront.setTranslation(-1024,-768);
-			me._can.layer1.setTranslation(-1024,-768);
-			me._can.layer1.setVisible(1);
-			me._parent.set("z-index",0);
+			
+			me._screenSize	= 512;
+			me._mapTransform.setTranslation(-256,192);
+			me._mapTransform.setScale(0.75,0.75);
+			me._group.set("clip","rect(70px, 1024px, 1436px, 0px)");
+			
+			me._can.HDG.setTranslation(-512,0);
+			me._can.Warning.setTranslation(-380,0);
+			me._can.UpHDG.setTranslation(-625,0);
+			
+			me._can.LayerFront.setVisible(1);
+			me._group.set("z-index",0);
+			me._group.setVisible(1);
 		}elsif(layout == "pfd"){
-			me._screenSize	= 291;
-			me.setTranslation(1024,1132);
-			me._can.LayerFront.setTranslation(-1024,-1132);
-			me._can.layer1.setTranslation(-1024,-1132);
-			me.set("clip","rect(842px, 1315px, 1429px, 732px)");
-			me._parent.set("z-index",1);
-			me._can.layer1.setVisible(0);
-			me.setVisible(1);
+			
+# 			me._screenSize	= 291;
+# 			me.setTranslation(1024,1132);
+# 			me._can.LayerFront.setTranslation(-1024,-1132);
+# 			me._can.compass.setScale(0.568359375,0.568359375);
+# 			#me._can.compass.setTranslation(255,71);
+# 			me._can.layer1.setTranslation(-1024,-1132);
+# 			me.set("clip","rect(842px, 1315px, 1429px, 732px)");
+# 			me._parent.set("z-index",1);
+# 			me._can.layer1.setVisible(1);
+# 			me.setVisible(1);
+			
+			me._screenSize	= 512;
+# 			me._mapTransform.setTranslation(1024*0,43359375,768+364);
+			me._mapTransform.setTranslation(1024*(1-0.56640625),696.5);
+			me._mapTransform.setScale(0.56640625,0.56640625);
+			me._group.set("clip","rect(842px, 1345px, 1429px, 702px)");
+# 			me._group.set("clip","rect(70px, 2048px, 1436px, 0px)");
+			
+# 			me._can.HDG.setTranslation(-512,0);
+# 			me._can.Warning.setTranslation(-380,0);
+# 			me._can.UpHDG.setTranslation(-625,0);
+			me._can.LayerFront.setVisible(0);
+			me._group.set("z-index",1);
+			me._group.setVisible(1);
+			
 		}else{
-			me.setVisible(0);
+			
 		}
+		
+		me._can.BugFMS.setVisible(me._bugFMSactive);
+		
 	},
 	setListeners : func(instance=me) {
 		append(me._listeners, setlistener("/autopilot/settings/heading-bug-deg",func(n){me._onHdgBugChange(n)},1,0));	
 		append(me._listeners, setlistener("/autopilot/fms-channel/course-target-deg",func(n){me._onFmsBugChange(n)},1,0));	
+		append(me._listeners, setlistener("/autopilot/mode/heading",func(n){me._onAutopilotModeHDG(n)},1,0));
+		append(me._listeners, setlistener("/autopilot/route-manager/active",func(n){me._onRouteActiveChange(n);},1,0));
+		append(me._listeners, setlistener("/autopilot/fms-channel/serviceable",func(n){me._onFmsServiceChange(n);},1,0));
+	
+		
 	},
 	init : func(){
 		me.setListeners();
-		me._layer.route		= RouteLayer.new(me,me._name~"-Route");
+		me._layer.route		= RouteLayer.new(me._map,me._name~"-Route");
 		me._layer.route.setListeners();
-		me._layer.tcas		 = TcasLayer.new(me,me._name~"-TCAS");
+		me._layer.tcas		 = TcasLayer.new(me._map,me._name~"-TCAS");
 		me._layer.tcas.setModel(me._layer.tcas,tcasModel);
 	},
 	setView : func(view){
@@ -216,7 +328,29 @@ var MovingMap = {
 	setLayerVisible : func(layer,v){
 		me._layer[layer].setVisible(v);
 	},
+	setBugFMS : func(value){
+		me._bugFMSactive = value;
+		me._can.BugFMS.setVisible(me._bugFMSactive);
+	},
 	onModelObserverNotify : func(n){
+		
+	},
+	_onAutopilotModeHDG : func(n){
+		me._modeHDG = n.getValue();
+		if(me._modeHDG == 1){
+			me._can.BugHDG.set("fill",COLOR["Magenta"]);
+		}else{
+			me._can.BugHDG.set("fill","none");
+			
+		}
+	},
+	_onRouteActiveChange : func(n){
+		me._routeManagerActive = n.getValue();
+		me._can.BugFMS.setVisible((me._fmsServiceable == 1) and (me._routeManagerActive == 1));
+	},
+	_onFmsServiceChange : func(n){
+		me._fmsServiceable = n.getValue();
+		me._can.BugFMS.setVisible((me._fmsServiceable == 1) and (me._routeManagerActive == 1));
 		
 	},
 	_onHdgBugChange : func(n){
@@ -229,7 +363,7 @@ var MovingMap = {
 	},
 	setRangeNm : func(nm){
 		var range = 200 / (me._screenSize / nm);
-		me._node.getNode("range", 1).setDoubleValue(range);
+		me._map._node.getNode("range", 1).setDoubleValue(range);
 		me._can.CompassRangeMax.setText(sprintf("%.0f",nm));
 		me._can.CompassRangeMid.setText(sprintf("%.0f",nm/2));
 	
@@ -249,11 +383,16 @@ var MovingMap = {
 		me._can.HDGValue.setText(sprintf("%03i",me._heading));
 		me._can.UpHDGDeg.setText(sprintf("%5.1f",me._upHdg));
 		
+		me._can.CompassRose.setRotation(-me._heading * global.CONST.DEG2RAD);
 		me._can.BugTrue.setRotation((me._headingTrue - me._heading) * global.CONST.DEG2RAD);
 		me._can.BugHDG.setRotation((me._bugHeading - me._heading) * global.CONST.DEG2RAD);
-		me._can.BugFMS.setRotation((me._bugFMS - me._heading) * global.CONST.DEG2RAD);
-		me._can.CompassRose.setRotation(-me._heading * global.CONST.DEG2RAD);
 		
+		if(me._bugFMSactive == 1){
+			me._can.BugFMS.setRotation((me._bugFMS - me._heading) * global.CONST.DEG2RAD);
+		}
+		
+		
+
 	},
 	
 };
@@ -266,9 +405,10 @@ var MovingMapKnobWidget = {
 		m._can		= {
 		
 		};
-		m._range	= 30;
+		m._range	= 4;
 		m._view		= 0;
 		m._hand 	= 0;
+		m._RANGE 	= [2,4,10,20,30,40,50,80,160,240]; 
 		return m;
 	},
 	init : func(instance=me){
@@ -284,20 +424,20 @@ var MovingMapKnobWidget = {
 		if(v == 1){
 			if(me._hand == 0){
 				me._Page.IFD.nLedLK.setValue(1);
-				me._Page.keys["LK >>"] 	= func(){me.adjustMapRange(5);};
-				me._Page.keys["LK <<"] 	= func(){me.adjustMapRange(-5);};
+				me._Page.keys["LK >>"] 	= func(){me.adjustMapRange(2);};
+				me._Page.keys["LK <<"] 	= func(){me.adjustMapRange(-2);};
 				me._Page.keys["LK"] 	= func(){me.adjustMapView(1);};
 				me._Page.keys["LK >"] 	= func(){me.adjustMapRange(1);};
 				me._Page.keys["LK <"] 	= func(){me.adjustMapRange(-1);};
 			}else{
 				me._Page.IFD.nLedRK.setValue(1);
-				me._Page.keys["RK >>"] 	= func(){me.adjustMapRange(5);};
-				me._Page.keys["RK <<"] 	= func(){me.adjustMapRange(-5);};
+				me._Page.keys["RK >>"] 	= func(){me.adjustMapRange(2);};
+				me._Page.keys["RK <<"] 	= func(){me.adjustMapRange(-2);};
 				me._Page.keys["RK"] 	= func(){me.adjustMapView(1);};
 				me._Page.keys["RK >"] 	= func(){me.adjustMapRange(1);};
 				me._Page.keys["RK <"] 	= func(){me.adjustMapRange(-1);};
 			}
-			me._Page.IFD.movingMap.setRangeNm(me._range);	
+			me._Page.IFD.movingMap.setRangeNm(me._RANGE[me._range]);	
 		}else{
 			if(me._hand == 0){
 				me._Page.IFD.nLedLK.setValue(0);
@@ -318,8 +458,8 @@ var MovingMapKnobWidget = {
 	},
 	adjustMapRange : func(amount){
 		me._range += amount;
-		me._range = global.clamp(me._range,2,300);
-		me._Page.IFD.movingMap.setRangeNm(me._range);
+		me._range = global.clamp(me._range,0,9);
+		me._Page.IFD.movingMap.setRangeNm(me._RANGE[me._range]);
 	},
 	adjustMapView : func(amount){
 		me._view = global.cycle(me._view,0,3,amount);

@@ -43,15 +43,19 @@ var TabWidget = {
 			}
 		}
 		me._max = size(me._tab)-1;
-		me.scroll(0);
-		
-		me._Page.keys[me._Page.name~" >"] = func(){me.scroll(1);};
-		me._Page.keys[me._Page.name~" <"] = func(){me.scroll(-1);};
-		
 	},
 	deinit : func(){
-		me._Page.keys[me._Page.name~" >"] = nil;
-		me._Page.keys[me._Page.name~" <"] = nil;
+		
+	},
+	setVisible : func(visible){
+		if(visible == 1){
+			me._Page.keys[me._Page.name~" >"] = func(){me.scroll(1);};
+			me._Page.keys[me._Page.name~" <"] = func(){me.scroll(-1);};
+			me.scroll(0);
+		}else{
+			me._Page.keys[me._Page.name~" >"] = nil;
+			me._Page.keys[me._Page.name~" <"] = nil;
+		}
 	},
 	scroll : func(amount){
 		me._index += amount;
@@ -85,6 +89,7 @@ var HeadlineWidget = {
 		m._tab		= [];
 		m._can		= {};
 		m._timer	= maketimer(1.0,m,HeadlineWidget.update);
+		m._visible 	= 0;
 		return m;
 	},
 	setListeners : func(instance) {
@@ -110,8 +115,20 @@ var HeadlineWidget = {
 			ETA		: me._group.getElementById("Head_eta"),
 			Time		: me._group.getElementById("Head_time"),
 		};
-		me.setListeners(instance);
-		
+		#me.setListeners(instance);
+	},
+	setVisible : func(visible){
+		if(me._visible != visible){
+			me._visible = visible;
+			if(me._visible == 1){
+				me.setListeners(me);
+				me._timer.start();
+			}else{
+				me.removeListeners();
+				me._timer.stop();
+			}
+		}
+		me._group.setVisible(me._visible);
 	},
 	_onCom1SelectedChange : func(n){
 		me._can.com1selected.setText(sprintf("%.3f",n.getValue()));
@@ -137,7 +154,7 @@ var HeadlineWidget = {
 	update : func(){
 		var gs = getprop("/velocities/groundspeed-kt");
 		if(gs > 50){
-		var eta = getprop("/autopilot/route-manager/ete") + systime();
+			var eta = getprop("/autopilot/route-manager/ete") + systime();
 			me._can.ETA.setText(global.formatTime(eta));
 		}else{
 			me._can.ETA.setText("--:--");
