@@ -179,7 +179,7 @@ var MyWindow = {
       .setColorFill(0.25,0.24,0.22)
       .setStrokeLineWidth(0);
 
-    var style_dir = "gui/styles/AmbianceClassic/";
+    var style_dir = "gui/styles/AmbianceClassic/decoration/";
 
     # close icon
     var x = 10;
