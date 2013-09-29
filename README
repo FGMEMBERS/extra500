@@ -16,7 +16,7 @@
       Author: Eric van den Berg
       Date: 2013-05-12
 
-      Last change:      2013-09-21
+      Last change:      2013-09-29
       Date:             Eric van den Berg
 
 ========================================================================
@@ -114,8 +114,8 @@ Just type in the frequency and switch active/standby with the button just left o
 not-active-COM and NAV standby frequencies are similar, just press the NAV1 / NAV2 button first. 
 
 FMS, Nav 1 or Nav 2 may be selected on the IFD or in the NAV dialog (F12)
-The DME will source can be set using the AUX button on the keypad. Select with the FMS knob. The DME hold switch next to the DME
-indicator overrides all NAV frequency switching and holds the frequency to which the DMe was tuned when the HOLD button is pressed.
+The DME source can be set using the AUX button on the keypad. Select with the FMS knob. The DME hold switch next to the DME
+indicator overrides all NAV frequency switching and holds the frequency to which the DME was tuned when the HOLD button is pressed.
 
 The FMS (Flight Management System) can be used with or without the autopilot. You can put your flightplan in the 
 autopilot - route manager (dont forget to press "activate"). The autopilot will intercept the active leg.
@@ -134,7 +134,7 @@ Pressurization system
 The extra500 is certified to 25000ft, where the air is pretty thin. So there is pressurization system that keeps the cabin altitude 
 below 8000ft which corresponds to a cabin differential pressure of 5.5psid at 25000ft. So if you are planning to fly above 10000ft, 
 you need to make sure that the ENV AIR and PRESS switches (left lower corner) on the side switch panel are on. 
-In addition, before take-off you should set the cabin controller (centre console) to the airport altitude 
+In addition, before take-off you should set the cabin controller (center console) to the airport altitude 
 and just after take-off to your target altitude.
 Before descending from cruise, set the controller to your target airport altitude. You can monitor the cabin altitude, 
 differential pressure and cabin climb rate on the instruments next to the controller.

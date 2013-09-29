@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jul 02 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             02.07.13
+#      Last change:      Eric van den Berg
+#      Date:             29.09.13
 #
 
 
@@ -66,4 +66,6 @@ var DoorClass = {
 };
 
 
-var mainDoor = DoorClass.new("/extra500/door/main","Main Door");
+var upperPassDoor = DoorClass.new("/extra500/door/upperpass","Upper Pass Door");
+var lowerPassDoor = DoorClass.new("/extra500/door/lowerpass","Lower Pass Door");
+var emergencyExit  = DoorClass.new("/extra500/door/emergencyexit","Emergency Exit");

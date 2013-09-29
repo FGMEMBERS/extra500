@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             28.09.2013
+      Date:             29.09.2013
 
 
 ************************************************************************
@@ -1288,9 +1288,15 @@ JSBSim Extra Aircraft - Extra 500.
 		</Master>
 	</panel>
 	<door>
-		<main>
-			<IsOpen>0</IsOpen>
-		</main>
+		<upperpass>
+			<isOpen>0</isOpen>
+		</upperpass>
+		<lowerpass>
+			<isOpen>0</isOpen>
+		</lowerpass>
+		<emergencyexit>
+			<isOpen>0</isOpen>
+		</emergencyexit>
 	</door>
 	<system>
 		<fuel>
