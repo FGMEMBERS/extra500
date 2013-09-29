@@ -20,7 +20,7 @@
       Date: 2013-09-16
 
       Last change:      Eric van den Berg
-      Date:             2013-09-27
+      Date:             2013-09-29
 -->
 
 <system name="electrics">
@@ -28,6 +28,74 @@
 <!-- some electrical consumers -->
 	<channel name="consumers">
 
+<!-- airco -->
+		<fcs_function name="ampereVents1">
+			<function>
+				<product>
+					<sum>
+						<property>/extra500/panel/Side/Cabin/Vent/state</property>
+						<value>1</value>
+					</sum>
+					<value>280.0</value>
+					<pow>	
+						<max>			
+							<property>/extra500/panel/CircuitBreaker/BankA/Vent/voltOut</property>
+							<value>1</value>
+						</max>
+						<value>-1</value>
+					</pow>				
+				</product>
+			</function>
+			<output>/extra500/consumers/airco/vent/ampere</output>
+		</fcs_function>
+
+		<switch name="ampereVents2">
+			<default value="0"/>
+			<test logic="AND" value="/extra500/consumers/airco/vent/ampere">
+				/extra500/panel/CircuitBreaker/BankA/Vent/voltOut gt 10
+			</test>
+			<output>/extra500/panel/CircuitBreaker/BankA/Vent/ampere</output>
+		</switch>
+
+		<fcs_function name="amperevaporcycle1">
+			<function>
+				<product>
+					<property>/extra500/panel/Side/Cabin/AirCondition/state</property>
+					<value>2072</value>
+					<pow>	
+						<max>			
+							<property>/extra500/panel/CircuitBreaker/BankA/AirCondition/voltOut</property>
+							<value>1</value>
+						</max>
+						<value>-1</value>
+					</pow>				
+				</product>
+			</function>
+			<output>/extra500/consumers/airco/vaporcycle/ampere</output>
+		</fcs_function>
+
+		<switch name="amperevaporcycle2">
+			<default value="0"/>
+			<test logic="AND" value="/extra500/consumers/airco/vaporcycle/ampere">
+				<test logic="AND" value="1">
+					/extra500/panel/CircuitBreaker/BankA/AirCondition/voltOut gt 20
+					/extra500/consumers/airco/vent/ampere gt 0
+				</test>
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/extra500/panel/Side/Main/ExternalPower/state eq 1
+						/extra500/panel/Side/Main/Battery/state eq 0
+						/extra500/panel/Side/Main/Generator/state eq 0
+					</test>
+					<test logic="AND" value="1">
+						/extra500/panel/Side/Main/Generator/state eq 1
+					</test>
+				</test>
+			</test>
+			<output>/extra500/panel/CircuitBreaker/BankA/AirCondition/ampere</output>
+		</switch>
+
+<!-- Panel vents -->
 		<fcs_function>
 			<function>
 				<sum>
@@ -58,7 +126,7 @@
 			<output>/extra500/consumers/panelvent/ampere</output>
 		</fcs_function>
 
-		<switch>
+		<switch name="amperePanelVent">
 			<default value="0"/>
 			<test logic="AND" value="/extra500/consumers/panelvent/ampere">
 				/extra500/panel/CircuitBreaker/BankA/PanelVent/voltOut gt 10

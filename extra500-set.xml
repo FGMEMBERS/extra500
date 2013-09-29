@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             23.09.2013
+      Date:             28.09.2013
 
 
 ************************************************************************
@@ -634,9 +634,9 @@ JSBSim Extra Aircraft - Extra 500.
 		<gpss>
 			<gpss-turn-rate-p type="double">9.424581</gpss-turn-rate-p>		<!-- rad/h/deg (standard turn at 20 deg course change) -->
 			<time-lead-in-p type="double">0.000011</time-lead-in-p>			<!-- lead in time proportional to turn rate [h/ (rad/h)] -->
-			<next-bearing-deg type="double">0</next-bearing-deg>
-			<turn-timer type="double">0</turn-timer>
-			<turn-time-s type="double">0</turn-time-s>
+			<next-bearing-deg type="double">0.0</next-bearing-deg>
+			<turn-timer type="double">0.0</turn-timer>
+			<turn-time-s type="double">0.0</turn-time-s>
 			<in-turn2>0</in-turn2>
 		</gpss>
 		<dto>
@@ -1237,6 +1237,12 @@ JSBSim Extra Aircraft - Extra 500.
 				<PanelVent>
 					<voltOut>0</voltOut>
 				</PanelVent>
+				<Vent>
+					<voltOut>0</voltOut>
+				</Vent>
+				<AirCondition>
+					<voltOut>0</voltOut>
+				</AirCondition>
 			</BankA>
 			<BankC>
 				<EnvironmentalBleed>
@@ -1253,6 +1259,17 @@ JSBSim Extra Aircraft - Extra 500.
 			</BankD>
 		</CircuitBreaker>
 		<Side>
+			<Main>
+				<ExternalPower>
+					<state></state>
+				</ExternalPower>
+				<Battery>
+					<state></state>
+				</Battery>
+				<Generator>
+					<state></state>
+				</Generator>
+			</Main>
 			<Cabin>
 				<EnvironmentalAir>
 					<state>0</state>

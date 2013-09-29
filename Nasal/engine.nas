@@ -19,9 +19,8 @@
 #      Last change:      Dirk Dittmann
 #      Date:             26.06.13
 #
-#FIXME: ignition 24000W and starter 30W??? (Ignition is 45W)
 var IgnitionClass = {
-	new : func(root,name,watt=24000.0){
+	new : func(root,name,watt=45.0){
 		var m = { 
 			parents : [
 				IgnitionClass,
@@ -59,7 +58,7 @@ var IgnitionClass = {
 };
 
 var StarterClass = {
-	new : func(root,name,watt=30.0){
+	new : func(root,name,watt=24000.0){
 		var m = { 
 			parents : [
 				StarterClass,
@@ -151,7 +150,7 @@ var EngineClass = {
 		
 		m._cutoffState = m.nCutOffState.getValue();
 		
-		m.ignition = IgnitionClass.new("/extra500/engine/ignition","Ignition",30.0);
+		m.ignition = IgnitionClass.new("/extra500/engine/ignition","Ignition",45.0);
 		m.starter  = StarterClass.new("/extra500/engine/starter","Starter",24000.0);
 		
 		
