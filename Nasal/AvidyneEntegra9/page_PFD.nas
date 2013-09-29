@@ -949,6 +949,8 @@ var NavSourceWidget = {
 		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].hasGS,func(n){me._onHasGSChange(n);},1,0));
 		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].Frequency,func(n){me._onFrequencyChange(n);},1,0));
 		
+		me._Page._widget.NavSelect.registerKeyCDI(me._source == 2);
+		
 	},
 	_scroll : func(amount){
 		me._source += amount;
@@ -1050,6 +1052,7 @@ var BearingSourceWidget = {
 		m._PATH	=	{
 			FMS 	: {
 				isLOC			: "/instrumentation/fms[0]/frequencies/is-localizer-frequency",
+				isInRange		: "/instrumentation/fms[0]/in-range",
 				Frequency		: "/autopilot/route-manager/wp/id",
 				Pointer			: "/autopilot/route-manager/wp/bearing-deg",
 				hasGS			: "/instrumentation/fms[0]/has-gs",
@@ -1057,17 +1060,19 @@ var BearingSourceWidget = {
 			},
 			Nav1 	: {
 				isLOC			: "/instrumentation/nav[0]/frequencies/is-localizer-frequency",
+				isInRange		: "/instrumentation/nav[0]/in-range",
 				Frequency		: "/instrumentation/nav[0]/frequencies/selected-mhz-fmt",
 				Pointer			: "/instrumentation/nav[0]/radials/reciprocal-radial-deg",
 				hasGS			: "/instrumentation/nav[0]/has-gs",
-				distance		: "/autopilot/radionav-channel/nav-distance-nm",
+				distance		: "/instrumentation/nav[0]/nav-distance",
 			},
 			Nav2 	: {
 				isLOC			: "/instrumentation/nav[1]/frequencies/is-localizer-frequency",
+				isInRange		: "/instrumentation/nav[1]/in-range",
 				Frequency		: "/instrumentation/nav[1]/frequencies/selected-mhz-fmt",
 				Pointer			: "/instrumentation/nav[1]/radials/reciprocal-radial-deg",
 				hasGS			: "/instrumentation/nav[1]/has-gs",
-				distance		: "/autopilot/radionav-channel/nav-distance-nm",
+				distance		: "/instrumentation/nav[1]/nav-distance",
 			},
 			
 		};
@@ -1091,6 +1096,8 @@ var BearingSourceWidget = {
 		m._Pointer		= 0;
 		m._stationType		= "";
 		m._distance		= 0;
+		m._isInRange		= 0;
+		
 		return m;
 	},
 	setListeners : func(instance) {
@@ -1101,6 +1108,7 @@ var BearingSourceWidget = {
 			append(me._listeners, setlistener(me._PATH[me._SOURCE[me._source]].Frequency,func(n){me._onFrequencyChange(n);},1,0));
 			append(me._listeners, setlistener(me._PATH[me._SOURCE[me._source]].isLOC,func(n){me._onIsLocChange(n);},1,0));
 			append(me._listeners, setlistener(me._PATH[me._SOURCE[me._source]].hasGS,func(n){me._onHasGSChange(n);},1,0));
+			append(me._listeners, setlistener(me._PATH[me._SOURCE[me._source]].isInRange,func(n){me._onInRangeChange(n);},1,0));
 			
 		}
 	},
@@ -1143,7 +1151,7 @@ var BearingSourceWidget = {
 		
 		me._can.Off.setVisible (!me._source);
 		me._can.On.setVisible (me._source);
-		me._can.Pointer.setVisible(me._source);	
+		me._can.Pointer.setVisible(me._isInRange and me._source!=0);	
 		
 		
 	},
@@ -1155,16 +1163,21 @@ var BearingSourceWidget = {
 		me._isLOC = n.getValue();
 		me._checkStationType();
 	},
+	_onInRangeChange : func(n){
+		me._isInRange = n.getValue();
+		me._can.Pointer.setVisible(me._isInRange);
+	},
 	_onHasGSChange : func(n){
 		me._hasGS = n.getValue();
 		me._checkStationType();
 	},
 	_checkStationType : func(){
 		me._distance	= me._ptree.Distance.getValue();
-		me._can.Distance.setText(sprintf("%.1f",me._distance));
 		if (me._source == 3){
 			me._can.ID.setText(sprintf("%s",me._frequency));
 		}else{
+			me._distance *= global.CONST.METER2NM;
+		
 			if (me._isLOC == 1){
 				if (me._hasGS == 1){
 					me._stationType = "ILS";
@@ -1176,11 +1189,15 @@ var BearingSourceWidget = {
 			}
 			me._can.ID.setText(sprintf("%.2f (%s)",me._frequency,me._stationType));
 		}
+		me._can.Distance.setText(sprintf("%.1f",me._distance));
 		
 	},
 	update2Hz : func(now,dt){
 		if (me._source > 0){
 			me._distance	= me._ptree.Distance.getValue();
+			if (me._source != 3){
+				me._distance *= global.CONST.METER2NM;
+			}
 			me._can.Distance.setText(sprintf("%.1f",me._distance));
 		}
 	},
@@ -1303,7 +1320,11 @@ var HeadingSituationIndicatorWidget = {
 		return m;
 	},
 	setListeners : func(instance) {
-# 		append(me._listeners, setlistener("/autopilot/settings/heading-bug-deg",func(n){me._onBugChange(n)},1,0));	
+		append(me._listeners, setlistener("/autopilot/settings/heading-bug-deg",func(n){me._onHdgBugChange(n)},1,0));	
+	},
+	_onHdgBugChange : func(n){
+		me._headingBug		= n.getValue();
+		me._can.HeadingBug_Text.setText(sprintf("%03i",me._headingBug));
 	},
 	init : func(instance=me){
 # 		me.setListeners(instance);
@@ -1329,7 +1350,7 @@ var HeadingSituationIndicatorWidget = {
 # 		me._can.CompassRose.setRotation(-me._heading * global.CONST.DEG2RAD);
 		me._can.TrunRate.setRotation(me._trunRate * 30.0 * global.CONST.DEG2RAD);
 		
-		me._can.HeadingBug_Text.setText(sprintf("%03i",me._headingBug));
+		
 # 		me._can.HeadingBug.setRotation((me._headingBug - me._heading) * global.CONST.DEG2RAD);
 # 		me._can.HeadingTrue.setRotation((me._headingTrue - me._heading) * global.CONST.DEG2RAD);
 		
@@ -1419,6 +1440,7 @@ var NavSelectWidget = {
 		m._synVis = 0;
 		m._flightPlan = 1;
 		m._cdi = 1;
+		m._keyCDI = 0;
 		m._mapRange 	= 30;
 		m._mapView 	= 0;
 		return m;
@@ -1441,9 +1463,8 @@ var NavSelectWidget = {
 			me._ifd.nLedR4.setValue(1);
 			me._Page.keys["R4 <"] = func(){me.setFlighPlan();};
 			me._Page.keys["R4 >"] = func(){me.setFlighPlan();};
-			me._ifd.nLedR5.setValue(1);
-			me._Page.keys["R5 <"] = func(){me.setCDI();};
-			me._Page.keys["R5 >"] = func(){me.setCDI();};
+			
+			me.registerKeyCDI(me._Page._widget.NavSource._source == 2) ;
 		
 			me._ifd.movingMap.setLayerVisible("route",me._flightPlan);
 			me._ifd.movingMap.setRangeNm(me._mapRange);
@@ -1459,9 +1480,8 @@ var NavSelectWidget = {
 			me._ifd.nLedR4.setValue(0);
 			me._Page.keys["R4 <"] 	= nil;
 			me._Page.keys["R4 >"] 	= nil;
-			me._ifd.nLedR5.setValue(0);
-			me._Page.keys["R5 <"] 	= nil;
-			me._Page.keys["R5 >"] 	= nil;
+			
+			me.registerKeyCDI(0);
 			
 			me._ifd.nLedRK.setValue(0);
 			me._Page.keys["RK >>"] 	= nil;
@@ -1484,15 +1504,19 @@ var NavSelectWidget = {
 		me._ifd.nLedR5.setValue(1);
 		me._Page.keys["R5 <"] = func(){me.setCDI();};
 		me._Page.keys["R5 >"] = func(){me.setCDI();};
-		
-		me._ifd.nLedRK.setValue(1);
-		me._Page.keys["RK >>"] 	= func(){me.adjustMapRange(5);};
-		me._Page.keys["RK <<"] 	= func(){me.adjustMapRange(-5);};
-		me._Page.keys["RK"] 	= func(){me.adjustMapView(1);};;
-		me._Page.keys["RK >"] 	= func(){me.adjustMapRange(1);};
-		me._Page.keys["RK <"] 	= func(){me.adjustMapRange(-1);};
-		
-		
+	},
+	registerKeyCDI : func(v){
+		me._keyCDI = v;
+		if(me._keyCDI == 0){
+			me._ifd.nLedR5.setValue(0);
+			me._Page.keys["R5 <"] 	= nil;
+			me._Page.keys["R5 >"] 	= nil;
+			me.setCDI(1);
+		}else{
+			me._ifd.nLedR5.setValue(1);
+			me._Page.keys["R5 <"] = func(){me.setCDI();};
+			me._Page.keys["R5 >"] = func(){me.setCDI();};
+		}
 	},
 	setSynVis : func(value=nil){
 		if (value == nil){
@@ -1728,9 +1752,11 @@ var ActiveComWidget = {
 		m._class 	= "ActiveComWidget";
 		m._tab		= [];
 		m._can		= {};
+		m._activeChannelListener = nil;
 		return m;
 	},
 	setListeners : func(instance) {
+		#append(me._listeners, setlistener("/extra500/instrumentation/Keypad/tuningSource",func(n){me._onComSelectedChange(n)},1,0));	
 		append(me._listeners, setlistener("/instrumentation/comm-selected-index",func(n){me._onComSelectedChange(n)},1,0));	
 	},
 	init : func(instance=me){
@@ -1748,17 +1774,33 @@ var ActiveComWidget = {
 			me.removeListeners();
 		}
 	},
+	_setActiveListener : func(index=nil){
+		if(index == nil){
+			if(me._activeChannelListener != nil){
+				removelistener(me._activeChannelListener);
+				me._activeChannelListener = nil;
+			}
+		}else{
+			if(me._activeChannelListener != nil){
+				removelistener(me._activeChannelListener);
+				me._activeChannelListener = nil;
+			}
+			me._activeChannelListener = setlistener("/instrumentation/comm["~index~"]/frequencies/selected-mhz",func(n){me._onFreqencyChange(n)},1,0);
+		}
+	},
 	_onComSelectedChange : func(n){
 		var index = n.getValue();
-		me._can.freqency.setText(sprintf("%.3f",getprop("/instrumentation/comm["~index~"]/frequencies/selected-mhz")));
+		me._setActiveListener(index);
 		if(index==0){
 			me._can.airport.setText("Com 1");
 		}else{
 			me._can.airport.setText("Com 2");
 		}
 	},
-	
-	
+	_onFreqencyChange : func(n){
+		var freqency = n.getValue();
+		me._can.freqency.setText(sprintf("%.3f",freqency));
+	},
 };
 
 var AvidynePagePFD = {
