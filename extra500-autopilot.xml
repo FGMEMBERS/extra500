@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-09-28
+      Date:             2013-09-30
 -->
 
 <autopilot name="STEC55X">
@@ -1591,6 +1591,44 @@
 				/autopilot/fms-channel/course-error-nm gt -3.0
 			</test>
 			<output>/autopilot/mode/heading</output>
+		</switch>
+
+<!-- indication: course-->
+
+		<!--fcs_function name="/autopilot/fms-channel/gpss/course">
+			<function>
+				<sum>
+					<property>/autopilot/fms-channel/leg-true-course-deg</property>	
+					<product>
+                                  	<property>/autopilot/fms-channel/gpss/gpss-turn-rate</property>
+						<property>/autopilot/fms-channel/gpss/turn-timer</property>
+						<pow>
+							<value>60</value>
+							<value>-1.0</value>
+						</pow>
+					</product>
+				</sum>
+			</function>
+			<output>/autopilot/fms-channel/gpss/inturn-course</output>
+		</fcs_function-->
+
+		<switch name="indcourse">
+			<default value="/autopilot/fms-channel/leg-true-course-deg"/>
+			<test logic="AND" value="/autopilot/fms-channel/indicated-track-true-deg">
+				/autopilot/mode/gpss eq 1
+				/autopilot/fms-channel/gpss/in-turn eq 1
+			</test>
+			<output>/autopilot/fms-channel/indicated-course-deg</output>
+		</switch>
+
+<!-- indication: cdi-->
+		<switch name="inderror">
+			<default value="/autopilot/fms-channel/course-error-norm"/>
+			<test logic="AND" value="0">
+				/autopilot/mode/gpss eq 1
+				/autopilot/fms-channel/gpss/in-turn eq 1
+			</test>
+			<output>/autopilot/fms-channel/indicated-course-error-norm</output>
 		</switch>
 
 

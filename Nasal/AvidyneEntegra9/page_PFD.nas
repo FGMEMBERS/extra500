@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jul 20 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             20.07.13
+#      Last change:      Eric van den Berg
+#      Date:             30.09.13
 #
 
 
@@ -765,8 +765,8 @@ var NavSourceWidget = {
 		m._NAME 	= ["Nav 1","Nav 2","FMS"];
 		m._PATH	=	{
 			FMS 	: {
-				Pointer			: "/autopilot/route-manager/wp/bearing-deg",
-				horizontalDeviation 	: "/autopilot/fms-channel/course-error-norm",
+				Pointer			: "/autopilot/fms-channel/indicated-course-deg",
+				horizontalDeviation 	: "/autopilot/fms-channel/indicated-course-error-norm",
 				verticalDeviation	: "/instrumentation/fms[0]/gs-needle-deflection-norm",
 				Frequency		: "/autopilot/route-manager/wp/id",
 				isInRange		: "/instrumentation/fms[0]/in-range",
