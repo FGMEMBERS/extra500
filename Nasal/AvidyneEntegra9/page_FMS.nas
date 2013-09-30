@@ -302,7 +302,7 @@ var FlightPlanListWidget = {
 			me._fplItem[i] = FlighPlanItem_old.new(me._can.list,i,fmsWP.wp_type);
 			me._fplItem[i]._group.setTranslation(me._x,me._y+i*224);
 			
-			me._fplItem[i].setHeadline(sprintf("%s %03.0f - %s [%s]",fmsWP.fly_type,fmsWP.leg_bearing,fmsWP.wp_role));
+			me._fplItem[i].setHeadline(sprintf("%s %03.0f - %s",fmsWP.fly_type,fmsWP.leg_bearing,fmsWP.wp_role));
 			me._fplItem[i].setName(sprintf("%s - %s",fmsWP.wp_name,fmsWP.wp_type));
 			
 			var restriction = "";
