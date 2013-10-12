@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jul 05 2013
 #
-#      Last change:      Thomas Grossberger
-#      Date:             19.07.13
+#      Last change:      Eric van den Berg
+#      Date:             12.10.13
 #
 
 var CenterConsole = {
@@ -46,8 +46,6 @@ var CenterConsole = {
 		m._nDeice 			= m._nRoot.initNode("Deice/state",0,"BOOL");
 		m._nGearClearHorn 		= m._nRoot.initNode("GearClearHorn/state",0,"BOOL");
 		m._nPitchTrim 			= m._nRoot.initNode("PitchTrim/state",0.0,"DOUBLE");
-		m._nCabinAltSetting		= m._nRoot.initNode("/systems/pressurization/airport-alt",0.0,"DOUBLE");
-		m._nCabinRate			= m._nRoot.initNode("/systems/pressurization/cabin-climb-rate-fpm",0.0,"DOUBLE");
 		
 		return m;
 	},
@@ -134,21 +132,21 @@ var CenterConsole = {
 	},
 	onCabinAltitude : func(value = nil){
 		if (value == nil){
-			me._CabinAltSetting = 0;
+			me._CabinAltSetting = getprop("/systems/pressurization/airport-alt");
 		}else{
-			me._CabinAltSetting += value;
+			me._CabinAltSetting = getprop("/systems/pressurization/airport-alt") + value;
 		}
 		me._CabinAltSetting = global.clamp(me._CabinAltSetting,0.0,9500);
-		me._nCabinAltSetting.setValue(me._CabinAltSetting);	
+		setprop("/systems/pressurization/airport-alt",me._CabinAltSetting);	
 	},
 	onCabinRate : func(value = nil){
 		if (value == nil){
-			me._CabinRate = 0;
+			me._CabinRate = getprop("/systems/pressurization/cabin-climb-rate-fpm");
 		}else{
-			me._CabinRate += value;
+			me._CabinRate = getprop("/systems/pressurization/cabin-climb-rate-fpm") + value;
 		}
 		me._CabinRate = global.clamp(me._CabinRate,250,1250);
-		me._nCabinRate.setValue(me._CabinRate);	
+		setprop("/systems/pressurization/cabin-climb-rate-fpm",me._CabinRate);	
 	},
 	
 	initUI : func(){

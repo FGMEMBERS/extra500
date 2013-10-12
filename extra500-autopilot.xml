@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-09-30
+      Date:             2013-10-09
 -->
 
 <autopilot name="STEC55X">
@@ -1122,7 +1122,7 @@
 		<switch name="gpssangle">
 			<default value="/autopilot/fms-channel/gpss/angle/d-psi-deg-1"/>
 			<test value="/autopilot/fms-channel/gpss/angle/d-psi-deg-2">
-				/autopilot/fms-channel/gpss/angle/d-psi-deg-1 lt -180
+				/autopilot/fms-channel/gpss/angle/d-psi-deg-1 le -180
 			</test>
 			<output>/autopilot/fms-channel/gpss/angle/d-psi-deg-4</output>
 		</switch>
@@ -1130,7 +1130,7 @@
 		<switch name="gpssangle2">
 			<default value="/autopilot/fms-channel/gpss/angle/d-psi-deg-4"/>
 			<test value="/autopilot/fms-channel/gpss/angle/d-psi-deg-3">
-				/autopilot/fms-channel/gpss/angle/d-psi-deg-1 gt 180
+				/autopilot/fms-channel/gpss/angle/d-psi-deg-1 ge 180
 			</test>
 			<output>/autopilot/fms-channel/gpss/angle/d-psi-deg</output>
 		</switch>
