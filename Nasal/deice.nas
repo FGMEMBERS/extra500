@@ -17,7 +17,7 @@
 #      Date: Jul 03 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             27.08.13
+#      Date:             13.10.13
 #
 
 # MM page 
@@ -61,57 +61,57 @@ var HeatClass = {
 	
 };
 
-var BootsClass = {
-	new : func(root,name,watt){
-		var m = { 
-			parents : [
-				BootsClass, 
-				ConsumerClass.new(root,name,watt)
-			]
-		};
-		m._PneumaticPressure	= 1.0;
-		m._nPneumaticPressure 	= m._nRoot.initNode("PneumaticPressure",m._PneumaticPressure,"DOUBLE");
-		m._nPneumaticLow	= m._nRoot.initNode("PneumaticLow",0,"BOOL");
-		m._nBootsPosition	= m._nRoot.initNode("position-norm",0.0,"DOUBLE");
-		m._value = 0;
+#var BootsClass = {
+#	new : func(root,name,watt){
+#		var m = { 
+#			parents : [
+#				BootsClass, 
+#				ConsumerClass.new(root,name,watt)
+#			]
+#		};
+#		m._PneumaticPressure	= 1.0;
+#		m._nPneumaticPressure 	= m._nRoot.initNode("PneumaticPressure",m._PneumaticPressure,"DOUBLE");
+#		m._nPneumaticLow	= m._nRoot.initNode("PneumaticLow",0,"BOOL");
+#		m._nBootsPosition	= m._nRoot.initNode("position-norm",0.0,"DOUBLE");
+#		m._value = 0;
 		
-		return m;
-	},
-	init : func(instance=nil){
-		if (instance==nil){instance=me;}
-		me.parents[1].init(instance);
-		me.setListeners(instance);
-	},
-	setListeners : func(instance){
-		append(me._listeners, setlistener(me._nPneumaticPressure,func(n){instance._onPneumaticPressureChange(n);},1,0) );
+#		return m;
+#	},
+#	init : func(instance=nil){
+#		if (instance==nil){instance=me;}
+#		me.parents[1].init(instance);
+#		me.setListeners(instance);
+#	},
+#	setListeners : func(instance){
+#		append(me._listeners, setlistener(me._nPneumaticPressure,func(n){instance._onPneumaticPressureChange(n);},1,0) );
 		
-	},
-	electricWork : func(){
+#	},
+#	electricWork : func(){
 		
-		if ((me._value == 1 ) and (me._volt >= me._voltMin) ){
-			me._ampere = me._watt / me._volt;
-			me._state  = 1;
-		}else{
-			me._state  = 0;
-			me._ampere = 0;
-		}
-		interpolate(me._nBootsPosition,me._PneumaticPressure * me._state,10.0);
-		me._nState.setValue(me._state);
-		me._nAmpere.setValue(me._ampere);
-	},
-	_onPneumaticPressureChange : func(n){
-		me._PneumaticPressure = n.getValue();	
-		if(me._PneumaticPressure <= 0.5){
-			me._nPneumaticLow.setValue(1);
-		}else{
-			me._nPneumaticLow.setValue(0);
-		}
-	},
-	setOn : func(value){
-		me._value = value;
-		me.electricWork();
-	}
-};
+#		if ((me._value == 1 ) and (me._volt >= me._voltMin) ){
+#			me._ampere = me._watt / me._volt;
+#			me._state  = 1;
+#		}else{
+#			me._state  = 0;
+#			me._ampere = 0;
+#		}
+#		interpolate(me._nBootsPosition,me._PneumaticPressure * me._state,10.0);
+#		me._nState.setValue(me._state);
+#		me._nAmpere.setValue(me._ampere);
+#	},
+#	_onPneumaticPressureChange : func(n){
+#		me._PneumaticPressure = n.getValue();	
+#		if(me._PneumaticPressure <= 0.5){
+#			me._nPneumaticLow.setValue(1);
+#		}else{
+#			me._nPneumaticLow.setValue(0);
+#		}
+#	},
+#	setOn : func(value){
+#		me._value = value;
+#		me.electricWork();
+#	}
+#};
 
 var DeicingSystemClass = {
 	new : func(root,name){
@@ -170,10 +170,10 @@ var DeicingSystemClass = {
 		m._StallHeat 		= HeatClass.new("/extra500/system/deice/StallHeat","Stall Heat",140.0);
 		eSystem.circuitBreaker.PITOT_R.outputAdd(m._StallHeat);
 		
-# this does not include the ejector valves (6 sec 14W, 6sec 14W, 48s 0W)
-		m._Boots 		= BootsClass.new("/extra500/system/deice/Boots","Boots",0.4);
-		eSystem.circuitBreaker.BOOTS.outputAdd(m._Boots);
-		m._bootsTimer = 0;
+# this does not include the ejector valves (6 sec 14W, 6sec 14W, 48s 0W): added in /systems/extra500-electrical-system.xml
+#		m._Boots 		= BootsClass.new("/extra500/system/deice/Boots","Boots",0.4);
+#		eSystem.circuitBreaker.BOOTS.outputAdd(m._Boots);
+#		m._bootsTimer = 0;
 		
 # uhm, below some other calc is made? 
 		m._PropellerHeat 	= HeatClass.new("/extra500/system/deice/Propeller","Propeller Heat",0.0);
@@ -209,7 +209,7 @@ var DeicingSystemClass = {
 		me._StaticHeatLeft.init();
 		me._StaticHeatRight.init();
 		me._StallHeat.init();
-		me._Boots.init();
+#		me._Boots.init();
 		me._PropellerHeat.init();
 		me._StallWarner.init();
 		
@@ -234,17 +234,17 @@ var DeicingSystemClass = {
 			deiceSystem._checkWindshieldHeat();
 		};
 
-		eSystem.switch.Boots.onStateChange = func(n){
-			me._state = n.getValue();
-			deiceSystem._Boots.setOn(me._state);
-			deiceSystem._bootsTimer = 60.0;
-			deiceSystem.update();
-		};
+#		eSystem.switch.Boots.onStateChange = func(n){
+#			me._state = n.getValue();
+#			deiceSystem._Boots.setOn(me._state);
+#			deiceSystem._bootsTimer = 60.0;
+#			deiceSystem.update();
+#		};
 
 		
 		
-		me._timerLoop = maketimer(5.0,me,DeicingSystemClass.update);
-		me._timerLoop.start();
+#		me._timerLoop = maketimer(5.0,me,DeicingSystemClass.update);
+#		me._timerLoop.start();
 	},
 	_onStallWarning : func(n){
 # 		var warning = n.getBoolValue();
@@ -309,14 +309,14 @@ var DeicingSystemClass = {
 		
 		me._checkIce(me._dt);
 	#Boots
-		
-		if (eSystem.switch.Boots._state == 1){
-			if (me._bootsTimer <= 0.0){
-				me._Boots.setOn( (!me._Boots._state) );
-				me._bootsTimer = 60.0;
-			}
-			me._bootsTimer -= me._dt;
-		}
+	# boots timer implemented in systems/extra500-pneumatic.xml: pls remove!	
+#		if (eSystem.switch.Boots._state == 1){
+#			if (me._bootsTimer <= 0.0){
+#				me._Boots.setOn( (!me._Boots._state) );
+#				me._bootsTimer = 60.0;
+#			}
+#			me._bootsTimer -= me._dt;
+#		}
 		
 	# Propeller heat
 		# RPM		A	Watt

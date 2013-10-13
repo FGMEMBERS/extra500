@@ -17,7 +17,7 @@
 #      Date: Jun 30 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             29.09.13
+#      Date:             13.10.13
 #
 
 # MM Page 590
@@ -174,9 +174,9 @@ var AnnunciatorClass = {
 		append(me._listeners, setlistener("/extra500/system/deice/IntakeHeat/state",	func(n){instance._leds["IntakeHeat"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/panel/Side/Light/Recognition/state",func(n){instance._leds["RecognLight"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/fuel/FuelFilterByPass",	func(n){instance._leds["FuelFilterByPass"].setState(n.getValue());},1,0) );
-		append(me._listeners, setlistener("/extra500/system/deice/Boots/PneumaticLow",	func(n){instance._leds["PneumaticLow"].setState(n.getValue());},1,0) );
+		append(me._listeners, setlistener("/systems/pneumatic/low-pressure-caution",	func(n){instance._leds["PneumaticLow"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/electric/pcBoard1/lowVoltage",	func(n){instance._leds["LowVoltage"].setState(n.getValue());},1,0) );
-		append(me._listeners, setlistener("/extra500/system/deice/Boots/state",		func(n){instance._leds["DeiceBoots"].setState(n.getValue());},1,0) );
+		append(me._listeners, setlistener("/systems/pneumatic/boots-safe-oper",		func(n){instance._leds["DeiceBoots"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/panel/Side/Light/Landing/state",	func(n){instance._leds["LandingLight"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/fuel/FuelLowLeft",		func(n){instance._leds["FuelLowLeft"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/fuel/FuelLowRight",		func(n){instance._leds["FuelLowRight"].setState(n.getValue());},1,0) );

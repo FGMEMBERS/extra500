@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             29.09.2013
+      Date:             13.10.2013
 
 
 ************************************************************************
@@ -711,6 +711,10 @@ JSBSim Extra Aircraft - Extra 500.
 		<serviceable>1</serviceable>
 		<sideslip-error-factor>0.1</sideslip-error-factor>
 	</staticAP>
+	<pneumatic>
+		<boots-timer-sec>0</boots-timer-sec>
+		<c1-boots-filter>1</c1-boots-filter>
+	</pneumatic>
 	<pressurization>
 		<cabin-climb-rate-fpm type="double">500</cabin-climb-rate-fpm>
 		<c1-dp-filter type="double">0.1</c1-dp-filter>
@@ -1245,6 +1249,9 @@ JSBSim Extra Aircraft - Extra 500.
 				</AirCondition>
 			</BankA>
 			<BankC>
+				<Boots>
+					<voltOut>0</voltOut>
+				</Boots>
 				<EnvironmentalBleed>
 					<voltOut>0</voltOut>
 				</EnvironmentalBleed>
@@ -1259,6 +1266,11 @@ JSBSim Extra Aircraft - Extra 500.
 			</BankD>
 		</CircuitBreaker>
 		<Side>
+			<Deicing>
+				<Boots>
+					<state></state>
+				</Boots>
+			</Deicing>
 			<Main>
 				<ExternalPower>
 					<state></state>

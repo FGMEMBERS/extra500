@@ -20,7 +20,7 @@
       Date: 2013-09-16
 
       Last change:      Eric van den Berg
-      Date:             2013-09-29
+      Date:             2013-10-13
 -->
 
 <system name="electrics">
@@ -133,6 +133,57 @@
 			</test>
 			<output>/extra500/panel/CircuitBreaker/BankA/PanelVent/ampere</output>
 		</switch>
+
+<!--boots timer + ejector valves -->
+		<fcs_function name="boots-raw">
+			<function>
+				<sum>
+					<product>
+						<property>/systems/pneumatic/boots-timer-active</property>
+						<value>0.4</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/BankC/Boots/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+					<product>
+						<property>/systems/pneumatic/switches/ejectorvalve1-active</property>
+						<value>14.0</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/BankC/Boots/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+					<product>
+						<property>/systems/pneumatic/switches/ejectorvalve2-active</property>
+						<value>14.0</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/BankC/Boots/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+				</sum>
+			</function>
+			<output>/extra500/consumers/boots/ampere</output>
+		</fcs_function>
+
+		<switch name="boots">
+			<default value="0"/>
+			<test logic="AND" value="/extra500/consumers/boots/ampere">
+				/extra500/panel/CircuitBreaker/BankC/Boots/voltOut gt 10
+			</test>
+			<output>/extra500/panel/CircuitBreaker/BankC/Boots/ampere</output>
+		</switch>
+
 
 	</channel>
 
