@@ -130,7 +130,7 @@ var GearSystemClass = {
 	setListeners : func(instance) {
 #		append(me._listeners, setlistener(me._nPositionNose,func(n){instance._onGearChange(n);},1,0) );
 		append(me._listeners, setlistener(extra500.dimmingSystem._nTest,func(n){instance._onDimTestChange(n);},1,0) );
-		append(me._listeners, setlistener("/extra500/light/GearNose/state",func(n){me._updateNoseGearLight;},1,0) );
+		append(me._listeners, setlistener("/systems/gear/switches/nosegeardown/state",func(n){me._updateNoseGearLight(n);},1,0) );
 	},
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}

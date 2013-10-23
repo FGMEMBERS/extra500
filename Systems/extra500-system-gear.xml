@@ -193,7 +193,7 @@ for lights:
 
 		<switch name="/systems/gear/actuators/NG-pos-raw2">
 			<default value="/fdm/jsbsim/gear/unit/pos-norm"/>
-			<test logic="OR" value="/systems/gear/actuators/NG-pos-raw">
+			<test logic="AND" value="/systems/gear/actuators/NG-pos-raw">
 				/systems/gear/pressure-bar gt 100
 				/extra500/system/gear/MainGearSwitch/state eq 1
 			</test>
@@ -528,7 +528,7 @@ for lights:
 
 	</channel>
 
-	<channel name="lights">
+	<!--channel name="lights">
 
 		<fcs_function name="/systems/gear/lights/NG-LED">
 			<function>
@@ -558,15 +558,16 @@ for lights:
 				</product>
 			</function>
 			<output>/extra500/light/GearRight/state</output>
-		</fcs_function>
+		</fcs_function-->
 
 
 <!--/systems/gear/switches/nosegeardown/state 
 /systems/gear/switches/Lgeardown/state
 /systems/gear/switches/Rgeardown/state
--->
+
 
 	</channel>
+-->
 
 	<channel name="gearswitches">
 
@@ -593,12 +594,14 @@ for lights:
 				/systems/gear/switches/nosegearup/serviceable eq 1
 			</test>
 		</switch>
-		<switch name="/systems/gear/switches/nosegeardown/state">
+
+		<switch name="/systems/gear/switches/nosegeardown/test">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/fdm/jsbsim/gear/unit/pos-norm eq 1
 				/systems/gear/switches/nosegeardown/serviceable eq 1
 			</test>
+			<output>/systems/gear/switches/nosegeardown/state</output>
 		</switch>
 
 		<switch name="/systems/gear/switches/Lgearup/state">
