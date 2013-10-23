@@ -78,22 +78,22 @@ var GearSystemClass = {
 #		m._nWarning 		= m._nRoot.initNode("hasWarning",0,"BOOL");
 		
 		m._nGearControl = props.globals.getNode("/controls/gear/gear-down",1);
-		m._nWowNose = props.globals.getNode("/gear/gear[0]/wow",1);
-		m._nPositionNose = props.globals.getNode("/gear/gear[0]/position-norm",1);
-		m._nPositionLeft = props.globals.getNode("/gear/gear[1]/position-norm",1);
-		m._nPositionRight = props.globals.getNode("/gear/gear[2]/position-norm",1);
+#		m._nWowNose = props.globals.getNode("/gear/gear[0]/wow",1);
+#		m._nPositionNose = props.globals.getNode("/gear/gear[0]/position-norm",1);
+#		m._nPositionLeft = props.globals.getNode("/gear/gear[1]/position-norm",1);
+#		m._nPositionRight = props.globals.getNode("/gear/gear[2]/position-norm",1);
 #		m._nLeftGearMassLocationX = props.globals.getNode("/fdm/jsbsim/inertia/pointmass-location-X-inches[7]",1);
 #		m._nLeftGearMassLocationZ = props.globals.getNode("/fdm/jsbsim/inertia/pointmass-location-Z-inches[7]",1);
 #		m._nRightGearMassLocationX = props.globals.getNode("/fdm/jsbsim/inertia/pointmass-location-X-inches[8]",1);
 #		m._nRightGearMassLocationZ = props.globals.getNode("/fdm/jsbsim/inertia/pointmass-location-Z-inches[8]",1);
 
-		m._testListener = nil;
-		m._gearListener = nil;
-		m._gearPosition = 0;
+#		m._testListener = nil;
+#		m._gearListener = nil;
+#		m._gearPosition = 0;
 	
-		m._lednosegear = LedClass.new("/extra500/light/GearNose/state","Nose Gear Led","extra500/system/dimming/Annunciator",0.2);
-		m._ledlmaingear = LedClass.new("/extra500/light/GearLeft/state","LMain Gear Led","extra500/system/dimming/Annunciator",0.2);
-		m._ledrmaingear = LedClass.new("/extra500/light/GearRight/state","RMain Gear Led","extra500/system/dimming/Annunciator",0.2);
+		m._lednosegear = LedClass.new("/extra500/light/GearNose","Nose Gear Led","extra500/system/dimming/Annunciator",0.2);
+		m._ledlmaingear = LedClass.new("/extra500/light/GearLeft","LMain Gear Led","extra500/system/dimming/Annunciator",0.2);
+		m._ledrmaingear = LedClass.new("/extra500/light/GearRight","RMain Gear Led","extra500/system/dimming/Annunciator",0.2);
 		
 #		m._nLEDLeft 		= props.globals.initNode("/extra500/light/GearLeft/state",0.0,"DOUBLE");
 #		m._nLEDNose 		= props.globals.initNode("/extra500/light/GearNose/state",0.0,"DOUBLE");
@@ -103,10 +103,10 @@ var GearSystemClass = {
 		
 #		m._hydaulicMotor = HydraulicMotorClass.new("/extra500/system/gear/motor","Gear Hydraulic Motor",1148.0);
 		
-		m._wowNose = 0;
-		m._positionNose = 0.0;
-		m._positionLeft = 0.0;
-		m._positionRight = 0.0;
+#		m._wowNose = 0;
+#		m._positionNose = 0.0;
+#		m._positionLeft = 0.0;
+#		m._positionRight = 0.0;
 		
 #		m._MassLeftLocationX = m._nLeftGearMassLocationX.getValue();
 #		m._MassLeftLocationZ = m._nLeftGearMassLocationZ.getValue();
@@ -116,14 +116,14 @@ var GearSystemClass = {
 				
 		
 		m._swtGear = SwitchBoolClass.new("/extra500/system/gear/MainGearSwitch","Gear",1);
-		m._swtGear.onStateChange = func(n){
-			me._state	= n.getValue();
+#		m._swtGear.onStateChange = func(n){
+#			me._state	= n.getValue();
 #			gearSystem.update();
-		};
-		m._dt = 0;
-		m._now = systime();
-		m._lastTime = m._now;
-		m._timerLoop = nil;
+#		};
+#		m._dt = 0;
+#		m._now = systime();
+#		m._lastTime = m._now;
+#		m._timerLoop = nil;
 	
 		return m;
 	},
@@ -131,6 +131,8 @@ var GearSystemClass = {
 #		append(me._listeners, setlistener(me._nPositionNose,func(n){instance._onGearChange(n);},1,0) );
 		append(me._listeners, setlistener(extra500.dimmingSystem._nTest,func(n){instance._onDimTestChange(n);},1,0) );
 		append(me._listeners, setlistener("/systems/gear/switches/nosegeardown/state",func(n){me._updateNoseGearLight(n);},1,0) );
+		append(me._listeners, setlistener("/systems/gear/switches/Lgeardown/state",func(n){me._updateLeftGearLight(n);},1,0) );
+		append(me._listeners, setlistener("/systems/gear/switches/Rgeardown/state",func(n){me._updateRightGearLight(n);},1,0) );
 	},
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
@@ -197,6 +199,24 @@ var GearSystemClass = {
 			me._lednosegear.off();
 		}else{
 			me._lednosegear.off();
+		}
+	},
+	_updateLeftGearLight: func(n){
+		if (n.getValue() == 1){
+			me._ledlmaingear.on();
+		}elsif (n.getValue() == 0){
+			me._ledlmaingear.off();
+		}else{
+			me._ledlmaingear.off();
+		}
+	},
+	_updateRightGearLight: func(n){
+		if (n.getValue() == 1){
+			me._ledrmaingear.on();
+		}elsif (n.getValue() == 0){
+			me._ledrmaingear.off();
+		}else{
+			me._ledrmaingear.off();
 		}
 	},
 #	update : func(){
