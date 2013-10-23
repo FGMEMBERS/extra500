@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2013-09-14
+      Date:             2013-10-23
 -->
  
 <PropertyList>
@@ -189,14 +189,16 @@
 	</tire-rumble>
     
 <!-- stho-TEST: fahrwerk und klappen -->	
-	        <gear>
+	   <gear>
             <name>gear</name>
-            <mode>in-transit</mode>
+            <mode>looped</mode>
             <path>Sounds/gear.wav</path>
-            <property>gear/gear[0]/position-norm</property>
+            <property>/systems/gear/motor/state</property>
             <volume>
-              <max>0.25</max>
+              <max>1.0</max>
             </volume>
+            <reference-dist>10.0</reference-dist>
+            <max-dist>20.0</max-dist>
         </gear>
         <gear-lock>
             <name>gear-lock</name>

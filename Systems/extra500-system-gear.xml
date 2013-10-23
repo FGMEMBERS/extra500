@@ -86,13 +86,14 @@ for lights:
 			</test>
 		</switch>
 
-		<switch name="/systems/gear/motor/state">
+		<switch name="/systems/gear/motor/running">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/gear/motor/serviceable eq 1
 				/systems/gear/relays/hydpump/state eq 1
 				/extra500/panel/CircuitBreaker/BankC/Hydraulic/voltOut gt 12
 			</test>
+			<output>/systems/gear/motor/state</output>
 		</switch>
 
 <!--signal for hydraulic caution in annunciator panel -->
@@ -527,47 +528,6 @@ for lights:
 
 
 	</channel>
-
-	<!--channel name="lights">
-
-		<fcs_function name="/systems/gear/lights/NG-LED">
-			<function>
-				<product>
-					<property>/extra500/system/dimming/Annunciator</property>
-					<property>/systems/gear/switches/nosegeardown/state</property>
-				</product>
-			</function>
-			<output>/extra500/light/GearNose/state</output>
-		</fcs_function>
-
-		<fcs_function name="/systems/gear/lights/LMG-LED">
-			<function>
-				<product>
-					<property>/extra500/system/dimming/Annunciator</property>
-					<property>/systems/gear/switches/Lgeardown/state</property>
-				</product>
-			</function>
-			<output>/extra500/light/GearLeft/state</output>
-		</fcs_function>
-
-		<fcs_function name="/systems/gear/lights/RMG-LED">
-			<function>
-				<product>
-					<property>/extra500/system/dimming/Annunciator</property>
-					<property>/systems/gear/switches/Rgeardown/state</property>
-				</product>
-			</function>
-			<output>/extra500/light/GearRight/state</output>
-		</fcs_function-->
-
-
-<!--/systems/gear/switches/nosegeardown/state 
-/systems/gear/switches/Lgeardown/state
-/systems/gear/switches/Rgeardown/state
-
-
-	</channel>
--->
 
 	<channel name="gearswitches">
 
