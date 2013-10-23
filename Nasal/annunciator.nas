@@ -17,7 +17,7 @@
 #      Date: Jun 30 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             13.10.13
+#      Date:             21.10.13
 #
 
 # MM Page 590
@@ -154,9 +154,9 @@ var AnnunciatorClass = {
 		append(me._listeners, setlistener("/extra500/system/deice/StallHeat/state",	func(n){instance._leds["StallHeat"].setState(!n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/engine/lowOilPressure",		func(n){instance._leds["OilPress"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/electric/relay/K3/state",		func(n){instance._leds["GeneratorFail"].setState(!n.getValue());},1,0) );
-		append(me._listeners, setlistener("/extra500/engine/defectChip",		func(n){instance._leds["ChipDetection"].setState(n.getValue());},1,0) );
-		append(me._listeners, setlistener("/extra500/system/gear/motor/isMotoring",	func(n){instance._leds["HydraulicPump"].setState(n.getValue());},1,0) );
-		append(me._listeners, setlistener("/extra500/system/gear/hasWarning",		func(n){instance._leds["GearWarn"].setState(n.getValue());},1,0) );
+		append(me._listeners, setlistener("/extra500/engine/defectChip",			func(n){instance._leds["ChipDetection"].setState(n.getValue());},1,0) );
+		append(me._listeners, setlistener("/systems/gear/annunciators/hydcaution/warn",	func(n){instance._leds["HydraulicPump"].setState(n.getValue());},1,0) );
+		append(me._listeners, setlistener("/systems/gear/annunciators/gearwarn",		func(n){instance._leds["GearWarn"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/pitot/StallWarn/state",	func(n){instance._leds["StallWarn"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/deice/WindshieldHeat/Fail",	func(n){instance._leds["WindshieldHeatFail"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/engine/lowFuelPressure",		func(n){instance._leds["FuelPress"].setState(n.getValue());},1,0) );

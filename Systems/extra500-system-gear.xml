@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="utf-8" ?>
+	
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY AND FITNESS FAND A PARTICULAR PURPOSE.  See the
+    GNU General Public License fAND more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.ANDg/licenses/>.
+
+      Author: Eric van den Berg
+      Date: 2013-10-16
+
+      Last change:      Eric van den Berg
+      Date:             2013-10-23
+-->
+
+<!--
+doors open / gear extended = 1
+
+/gear/gear/wow
+
+/extra500/panel/CircuitBreaker/GearAux2
+/extra500/panel/CircuitBreaker/BankC/GearControl
+/extra500/panel/CircuitBreaker/BankD/GearAux1
+
+/extra500/panel/CircuitBreaker/BankC/Hydraulic
+
+control switch: /extra500/system/gear/MainGearSwitch/state (true = down)
+
+output: 
+/fdm/jsbsim/gear/unit/pos-norm
+/fdm/jsbsim/gear/unit[1]/pos-norm
+/fdm/jsbsim/gear/unit[2]/pos-norm
+
+for lights:
+/systems/gear/switches/nosegeardown/state 
+/systems/gear/switches/Lgeardown/state
+/systems/gear/switches/Rgeardown/state
+
+-->
+<system name="gear">
+
+	<channel name="hydraulic">
+
+		<switch name="/systems/gear/pressureswitch/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="AND" value="1">
+					/systems/gear/pressureswitch/serviceable eq 1
+				</test>
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/systems/gear/pressure-bar lt 100
+					</test>
+					<test logic="AND" value="1">
+						/systems/gear/pressure-bar lt 120
+						/systems/gear/pressureswitch/state eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/relays/hydpump/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/gear/relays/hydpump/serviceable eq 1
+				/systems/gear/power/tocontrolswitch gt 15
+				/systems/gear/pressureswitch/state eq 1
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/relays/hydcaution/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/gear/relays/hydcaution/serviceable eq 1
+				/extra500/panel/CircuitBreaker/BankC/Hydraulic/voltOut gt 8
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/motor/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/gear/motor/serviceable eq 1
+				/systems/gear/relays/hydpump/state eq 1
+				/extra500/panel/CircuitBreaker/BankC/Hydraulic/voltOut gt 12
+			</test>
+		</switch>
+
+<!--signal for hydraulic caution in annunciator panel -->
+		<switch name="/systems/gear/annunciators/hydcaution">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/gear/relays/hydcaution/state eq 1
+				/systems/gear/relays/hydpump/state eq 1
+			</test>
+			<output>/systems/gear/annunciators/hydcaution/warn</output>
+		</switch>
+
+		<fcs_function name="/systems/gear/pressure/leakrate-bar">
+			<function>
+				<product>
+					<property>/systems/gear/pressure/leakrate-p-press</property>
+					<property>/systems/gear/pressure-bar</property>
+					<property>sim-dt-sec</property> 
+				</product>
+			</function>
+		</fcs_function>
+
+		<switch name="/systems/gear/main-gear-moving">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/gear/actuators/LMG-moving eq 1
+				/systems/gear/actuators/RMG-moving eq 1
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/doors-moving">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/gear/actuators/Rupperdoor-moving eq 1	
+				/systems/gear/actuators/Lupperdoor-moving eq 1	
+				/systems/gear/actuators/Lowerdoor-moving eq 1
+				/systems/gear/actuators/NG-moving eq 1
+			</test>
+		</switch>
+
+		<fcs_function name="/systems/gear/pressure/dpress-mov-bar">
+			<function>
+				<product>
+					<sum>
+						<product>
+							<property>/systems/gear/motor/state</property>
+							<property>/systems/gear/pressure/dpress-p-sec</property>
+						</product>
+						<product>
+							<property>/systems/gear/main-gear-moving</property>
+							<property>/systems/gear/pressure/dpress-mov-p-sec</property>
+						</product>
+						<product>
+							<property>/systems/gear/doors-moving</property>
+							<property>/systems/gear/pressure/dpress-mov2-p-sec</property>
+						</product>
+					</sum>					
+					<property>sim-dt-sec</property> 
+				</product>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/systems/gear/pressure/pressure-bar-raw">
+			<function>
+				<sum>
+					<property>/systems/gear/pressure-bar</property>
+					<property>/systems/gear/pressure/leakrate-bar</property>
+					<property>/systems/gear/pressure/dpress-mov-bar</property>
+				</sum>
+			</function>
+		</fcs_function>
+
+		<switch name="/systems/gear/pressure-bar">
+			<default value="/systems/gear/pressure/pressure-bar-raw"/>
+			<test logic="OR" value="50">
+				/systems/gear/main-gear-moving eq 1
+			</test>
+		</switch>
+
+	</channel>
+
+<!-- actuators -->
+	<channel name="actuators">
+
+		<fcs_function name="/systems/gear/actuators/NG-pos-raw">
+			<function>
+				<sum>
+					<property>/fdm/jsbsim/gear/unit/pos-norm</property>
+					<product>
+						<property>/systems/gear/solenoids/mainvalve/state</property>
+						<property>/systems/gear/actuators/nosegearspeed</property>
+						<property>/systems/gear/pressure-bar</property>
+						<property>sim-dt-sec</property> 
+					</product>
+				</sum>
+			</function>
+		</fcs_function>
+
+		<switch name="/systems/gear/actuators/NG-pos-raw2">
+			<default value="/fdm/jsbsim/gear/unit/pos-norm"/>
+			<test logic="OR" value="/systems/gear/actuators/NG-pos-raw">
+				/systems/gear/pressure-bar gt 100
+				/extra500/system/gear/MainGearSwitch/state eq 1
+			</test>
+		</switch>
+
+		<pure_gain name="/systems/gear/actuators/NG-pos">
+			<input>/systems/gear/actuators/NG-pos-raw2</input>
+			<gain>1</gain>
+			<clipto>
+				<min>0</min>
+				<max>1</max>
+			</clipto>
+			<output>/fdm/jsbsim/gear/unit/pos-norm</output>
+		</pure_gain>
+
+		<fcs_function name="/systems/gear/nosegeardoor-pos">
+			<function>
+					<table>
+					<independentVar lookup="row">/fdm/jsbsim/gear/unit/pos-norm</independentVar>
+                  			<tableData>
+							0	0
+							0.15	1
+						</tableData>
+					</table>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/systems/gear/actuators/LMG-pos-raw">
+			<function>
+				<sum>
+					<property>/fdm/jsbsim/gear/unit[1]/pos-norm</property>
+					<product>
+						<property>/systems/gear/solenoids/mainvalve/state</property>
+						<property>/systems/gear/actuators/maingearspeed</property>
+						<property>/systems/gear/pressure-bar</property>
+						<property>sim-dt-sec</property> 
+					</product>
+				</sum>
+			</function>
+		</fcs_function>
+
+		<pure_gain name="/systems/gear/actuators/LMG-pos">
+			<input>/systems/gear/actuators/LMG-pos-raw</input>
+			<gain>1</gain>
+			<clipto>
+				<min>0</min>
+				<max>1</max>
+			</clipto>
+			<output>/fdm/jsbsim/gear/unit[1]/pos-norm</output>
+		</pure_gain>
+
+		<fcs_function name="/systems/gear/actuators/RMG-pos-raw">
+			<function>
+				<sum>
+					<property>/fdm/jsbsim/gear/unit[2]/pos-norm</property>
+					<product>
+						<property>/systems/gear/solenoids/mainvalve/state</property>
+						<property>/systems/gear/actuators/maingearspeed</property>
+						<property>/systems/gear/pressure-bar</property>
+						<property>sim-dt-sec</property> 
+					</product>
+				</sum>
+			</function>
+		</fcs_function>
+
+		<pure_gain name="/systems/gear/actuators/RMG-pos">
+			<input>/systems/gear/actuators/RMG-pos-raw</input>
+			<gain>1</gain>
+			<clipto>
+				<min>0</min>
+				<max>1</max>
+			</clipto>
+			<output>/fdm/jsbsim/gear/unit[2]/pos-norm</output>
+		</pure_gain>
+
+		<fcs_function name="/systems/gear/actuators/Rupperdoor-pos-raw">
+			<function>
+				<sum>
+					<property>/systems/gear/Rupperdoor-pos</property>
+					<product>
+						<property>/systems/gear/solenoids/upperdoorvalve/state</property>
+						<property>/systems/gear/actuators/upperdoorspeed</property>
+						<property>/systems/gear/pressure-bar</property>
+						<property>sim-dt-sec</property> 
+					</product>
+				</sum>
+			</function>
+		</fcs_function>
+
+		<pure_gain name="/systems/gear/Rupperdoor-pos">
+			<input>/systems/gear/actuators/Rupperdoor-pos-raw</input>
+			<gain>1</gain>
+			<clipto>
+				<min>0</min>
+				<max>1</max>
+			</clipto>
+		</pure_gain>
+
+		<fcs_function name="/systems/gear/actuators/Lupperdoor-pos-raw">
+			<function>
+				<sum>
+					<property>/systems/gear/Lupperdoor-pos</property>
+					<product>
+						<property>/systems/gear/solenoids/upperdoorvalve/state</property>
+						<property>/systems/gear/actuators/upperdoorspeed</property>
+						<property>/systems/gear/pressure-bar</property>
+						<property>sim-dt-sec</property> 
+					</product>
+				</sum>
+			</function>
+		</fcs_function>
+
+		<pure_gain name="/systems/gear/Lupperdoor-pos">
+			<input>/systems/gear/actuators/Lupperdoor-pos-raw</input>
+			<gain>1</gain>
+			<clipto>
+				<min>0</min>
+				<max>1</max>
+			</clipto>
+		</pure_gain>
+
+		<fcs_function name="/systems/gear/actuators/Lowerdoor-pos-raw">
+			<function>
+				<sum>
+					<property>/systems/gear/Lowerdoor-pos</property>
+					<product>
+						<property>/systems/gear/solenoids/lowerdoorvalve/state</property>
+						<property>/systems/gear/actuators/lowerdoorspeed</property>
+						<property>/systems/gear/pressure-bar</property>
+						<property>sim-dt-sec</property> 
+					</product>
+				</sum>
+			</function>
+		</fcs_function>
+
+		<pure_gain name="/systems/gear/Lowerdoor-pos">
+			<input>/systems/gear/actuators/Lowerdoor-pos-raw</input>
+			<gain>1</gain>
+			<clipto>
+				<min>0</min>
+				<max>1</max>
+			</clipto>
+		</pure_gain>
+
+
+<!--determining if moving -->
+
+		<switch name="/systems/gear/actuators/Rupperdoor-moving">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/gear/actuators/Rupperdoor-pos-old ne /systems/gear/Rupperdoor-pos
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/actuators/Lupperdoor-moving">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/gear/actuators/Lupperdoor-pos-old ne /systems/gear/Lupperdoor-pos
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/actuators/Lowerdoor-moving">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/gear/actuators/Lowerdoor-pos-old ne /systems/gear/Lowerdoor-pos
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/actuators/LMG-moving">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/gear/actuators/LMG-pos-old ne /fdm/jsbsim/gear/unit[1]/pos-norm
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/actuators/RMG-moving">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/gear/actuators/RMG-pos-old ne /fdm/jsbsim/gear/unit[2]/pos-norm
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/actuators/NG-moving">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/gear/actuators/NG-pos-old ne /fdm/jsbsim/gear/unit/pos-norm
+			</test>
+		</switch>
+
+<!-- saving old positions -->
+		<fcs_function name="/systems/gear/actuators/Rupperdoor-pos-old">
+			<function>
+				<property>/systems/gear/Rupperdoor-pos</property>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/systems/gear/actuators/Lupperdoor-pos-old">
+			<function>
+				<property>/systems/gear/Lupperdoor-pos</property>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/systems/gear/actuators/Lowerdoor-pos-old">
+			<function>
+				<property>/systems/gear/Lowerdoor-pos</property>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/systems/gear/actuators/LMG-pos-old">
+			<function>
+				<property>/fdm/jsbsim/gear/unit[1]/pos-norm</property>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/systems/gear/actuators/RMG-pos-old">
+			<function>
+				<property>/fdm/jsbsim/gear/unit[2]/pos-norm</property>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/systems/gear/actuators/NG-pos-old">
+			<function>
+				<property>/fdm/jsbsim/gear/unit/pos-norm</property>
+			</function>
+		</fcs_function>
+
+	</channel>
+
+	<channel name="gearelectric">
+
+		<switch name="/systems/gear/power/tocontrolswitch">
+			<default value="0"/>
+			<test logic="AND" value="/extra500/panel/CircuitBreaker/GearAux2/voltOut">
+				<test logic="OR" value="1">
+					/extra500/panel/CircuitBreaker/BankC/GearControl/state eq 1
+				</test>
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+<!-- fixme: should only be if /extra500/panel/CircuitBreaker/BankD/GearAux1/voltOut gt 0, 
+      however logic for GearAux1 is not implemented yet, but this works just as well -->
+						/extra500/panel/CircuitBreaker/GearAux2/voltOut gt 0
+						/systems/gear/switches/nosegeardown/state eq 0
+						/extra500/panel/CircuitBreaker/BankD/GearAux1/state eq 1
+					</test>
+					<test logic="AND" value="1">
+						/extra500/electric/bus/battery/volt gt 0
+					</test>
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/power/tomodul32C">
+			<default value="0"/>
+			<test logic="AND" value="/extra500/panel/CircuitBreaker/GearAux2/voltOut">
+				<test logic="AND" value="1">
+					/systems/gear/power/tocontrolswitch gt 0
+					/extra500/system/gear/MainGearSwitch/state eq 0
+				</test>
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/systems/gear/switches/Lgearup/state eq 1
+						/systems/gear/switches/Rgearup/state eq 1
+					</test>
+					<test logic="AND" value="1">
+						/systems/gear/relays/relay14GA/state eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/relays/relay14GA/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/gear/relays/relay14GA/serviceable eq 1
+				/systems/gear/power/tomodul32C gt 10
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/solenoids/mainvalve/state">
+			<default value="1"/>
+			<test logic="AND" value="-1">
+				<test logic="AND" value="1">
+					/systems/gear/solenoids/mainvalve/serviceable eq 1
+					/systems/gear/power/tocontrolswitch gt 10
+				</test>
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/extra500/system/gear/MainGearSwitch/state eq 0
+						/systems/gear/switches/Lupperdooropen/state eq 1
+						/systems/gear/switches/Rupperdooropen/state eq 1
+						/systems/gear/switches/dump/state eq 1
+					</test>
+					<test logic="AND" value="1">
+						/extra500/system/gear/MainGearSwitch/state eq 0
+						/systems/gear/relays/relay14GA/state eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/solenoids/upperdoorvalve/state">
+			<default value="1"/>
+			<test logic="AND" value="-1">
+				<test logic="AND" value="1">
+					/systems/gear/solenoids/upperdoorvalve/serviceable eq 1
+					/systems/gear/power/tocontrolswitch gt 10
+				</test>
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/extra500/system/gear/MainGearSwitch/state eq 1
+						/systems/gear/switches/Rgeardown/state eq 1
+						/systems/gear/switches/Lgeardown/state eq 1
+					</test>
+					<test logic="AND" value="1">
+						/systems/gear/power/tomodul32C gt 10
+					</test>
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/solenoids/lowerdoorvalve/state">
+			<default value="1"/>
+			<test logic="AND" value="-1">
+				/systems/gear/solenoids/lowerdoorvalve/serviceable eq 1
+				/extra500/system/gear/MainGearSwitch/state eq 0
+				/systems/gear/power/tocontrolswitch gt 10
+				/systems/gear/switches/Lupperdoorclosed/state eq 1
+				/systems/gear/switches/Rupperdoorclosed/state eq 1
+			</test>
+		</switch>
+
+
+	</channel>
+
+	<channel name="lights">
+
+		<fcs_function name="/systems/gear/lights/NG-LED">
+			<function>
+				<product>
+					<property>/extra500/system/dimming/Annunciator</property>
+					<property>/systems/gear/switches/nosegeardown/state</property>
+				</product>
+			</function>
+			<output>/extra500/light/GearNose/state</output>
+		</fcs_function>
+
+		<fcs_function name="/systems/gear/lights/LMG-LED">
+			<function>
+				<product>
+					<property>/extra500/system/dimming/Annunciator</property>
+					<property>/systems/gear/switches/Lgeardown/state</property>
+				</product>
+			</function>
+			<output>/extra500/light/GearLeft/state</output>
+		</fcs_function>
+
+		<fcs_function name="/systems/gear/lights/RMG-LED">
+			<function>
+				<product>
+					<property>/extra500/system/dimming/Annunciator</property>
+					<property>/systems/gear/switches/Rgeardown/state</property>
+				</product>
+			</function>
+			<output>/extra500/light/GearRight/state</output>
+		</fcs_function>
+
+
+<!--/systems/gear/switches/nosegeardown/state 
+/systems/gear/switches/Lgeardown/state
+/systems/gear/switches/Rgeardown/state
+-->
+
+	</channel>
+
+	<channel name="gearswitches">
+
+		<switch name="/systems/gear/switches/squat/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/gear/gear/wow eq 0
+				/systems/gear/switches/squat/serviceable eq 1
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/switches/dump/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/gear/gear/wow eq 0
+				/systems/gear/switches/dump/serviceable eq 1
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/switches/nosegearup/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/fdm/jsbsim/gear/unit/pos-norm eq 0
+				/systems/gear/switches/nosegearup/serviceable eq 1
+			</test>
+		</switch>
+		<switch name="/systems/gear/switches/nosegeardown/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/fdm/jsbsim/gear/unit/pos-norm eq 1
+				/systems/gear/switches/nosegeardown/serviceable eq 1
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/switches/Lgearup/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/fdm/jsbsim/gear/unit[1]/pos-norm eq 0
+				/systems/gear/switches/Lgearup/serviceable eq 1
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/switches/Lgeardown/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/fdm/jsbsim/gear/unit[1]/pos-norm eq 1
+				/systems/gear/switches/Lgeardown/serviceable eq 1
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/switches/Rgearup/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/fdm/jsbsim/gear/unit[2]/pos-norm eq 0
+				/systems/gear/switches/Rgearup/serviceable eq 1
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/switches/Rgeardown/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/fdm/jsbsim/gear/unit[2]/pos-norm eq 1
+				/systems/gear/switches/Rgeardown/serviceable eq 1
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/switches/Rupperdoorclosed/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/gear/Rupperdoor-pos eq 0
+				/systems/gear/switches/Rupperdoorclosed/serviceable eq 1
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/switches/Rupperdooropen/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/gear/Rupperdoor-pos eq 1
+				/systems/gear/switches/Rupperdooropen/serviceable eq 1
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/switches/Lupperdoorclosed/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/gear/Lupperdoor-pos eq 0
+				/systems/gear/switches/Lupperdoorclosed/serviceable eq 1
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/switches/Lupperdooropen/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/gear/Lupperdoor-pos eq 1
+				/systems/gear/switches/Lupperdooropen/serviceable eq 1
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/switches/Lowerdoorclosed/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/gear/Lowerdoor-pos eq 0
+				/systems/gear/switches/Lowerdoorclosed/serviceable eq 1
+			</test>
+		</switch>
+
+	</channel>
+
+	<channel name="moving-mass">
+
+		<fcs_function name="/systems/gear/mass/x-LMG">
+			<function>
+					<table>
+					<independentVar lookup="row">/fdm/jsbsim/gear/unit[1]/pos-norm</independentVar>
+                  			<tableData>
+							0	146.967
+							1	166.654
+						</tableData>
+					</table>
+			</function>
+			<output>/fdm/jsbsim/inertia/pointmass-location-X-inches[7]</output>
+		</fcs_function>
+
+		<fcs_function name="/systems/gear/mass/z-LMG">
+			<function>
+					<table>
+					<independentVar lookup="row">/fdm/jsbsim/gear/unit[1]/pos-norm</independentVar>
+                  			<tableData>
+							0	35.4333
+							1	23.6220
+						</tableData>
+					</table>
+			</function>
+			<output>/fdm/jsbsim/inertia/pointmass-location-Z-inches[7]</output>
+		</fcs_function>
+
+		<fcs_function name="/systems/gear/mass/x-RMG">
+			<function>
+					<table>
+					<independentVar lookup="row">/fdm/jsbsim/gear/unit[2]/pos-norm</independentVar>
+                  			<tableData>
+							0	146.967
+							1	166.654
+						</tableData>
+					</table>
+			</function>
+			<output>/fdm/jsbsim/inertia/pointmass-location-X-inches[8]</output>
+		</fcs_function>
+
+		<fcs_function name="/systems/gear/mass/z-RMG">
+			<function>
+					<table>
+					<independentVar lookup="row">/fdm/jsbsim/gear/unit[2]/pos-norm</independentVar>
+                  			<tableData>
+							0	35.4333
+							1	23.6220
+						</tableData>
+					</table>
+			</function>
+			<output>/fdm/jsbsim/inertia/pointmass-location-Z-inches[8]</output>
+		</fcs_function>
+
+	</channel>
+</system>

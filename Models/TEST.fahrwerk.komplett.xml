@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
-      Date:             17.06.13
+      Last change:      Eric van den Berg
+      Date:             23.10.13
 
 -->
 <PropertyList>
@@ -56,7 +56,7 @@
 <animation>
   <type>rotate</type>
   <object-name>BugFahrwerkKomplett</object-name>
-<property>gear/gear[0]/position-norm</property>
+<property>/fdm/jsbsim/gear/unit/pos-norm</property>
   <interpolation>
             <entry>
                 <ind>0.0</ind>
@@ -83,7 +83,7 @@
   <object-name>BugFahrwerkKomplett</object-name>
   <condition>
     <equals>
-      <property>gear/gear[0]/position-norm</property>
+      <property>/fdm/jsbsim/gear/unit/pos-norm</property>
       <value>1</value>
     </equals>
   </condition>
@@ -181,7 +181,7 @@
   <object-name>Bugrad</object-name>
   <condition>
     <equals>
-      <property>gear/gear[0]/position-norm</property>
+      <property>/fdm/jsbsim/gear/unit/pos-norm</property>
       <value>1</value>
     </equals>
   </condition>
@@ -205,7 +205,7 @@
   <type>rotate</type>
   <object-name>Radlinks</object-name>
   <object-name>RadStangelinks.001</object-name>
-  <property>gear/gear[1]/position-norm</property>
+  <property>/fdm/jsbsim/gear/unit[1]/pos-norm</property>
   <interpolation>
             <entry>
                 <ind>0.4</ind>
@@ -229,7 +229,7 @@
 <animation>
   <type>rotate</type>
   <object-name>LinksFahrwerkKomplett</object-name>
- <property>gear/gear[0]/position-norm</property> 
+ <property>/fdm/jsbsim/gear/unit[1]/pos-norm</property> 
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -256,7 +256,7 @@
   
   <condition>
     <equals>
-      <property>gear/gear[1]/position-norm</property>
+      <property>/fdm/jsbsim/gear/unit[1]/pos-norm</property>
       <value>1</value>
     </equals>
   </condition>
@@ -281,7 +281,7 @@
   <type>rotate</type>
   <object-name>Radrechts</object-name>
   <object-name>RadStangerechts.001</object-name>
-  <property>gear/gear[1]/position-norm</property>
+  <property>/fdm/jsbsim/gear/unit[2]/pos-norm</property>
   <interpolation>
             <entry>
                 <ind>0.4</ind>
@@ -305,7 +305,7 @@
 <animation>
   <type>rotate</type>
   <object-name>RechtsFahrwerkKomplett</object-name>
- <property>gear/gear[0]/position-norm</property> 
+ <property>/fdm/jsbsim/gear/unit[2]/pos-norm</property> 
   <interpolation>
             <entry>
                 <ind>0</ind>
@@ -332,7 +332,7 @@
   
   <condition>
     <equals>
-      <property>gear/gear[1]/position-norm</property>
+      <property>/fdm/jsbsim/gear/unit[2]/pos-norm</property>
       <value>1</value>
     </equals>
   </condition>

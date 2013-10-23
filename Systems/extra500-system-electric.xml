@@ -20,7 +20,7 @@
       Date: 2013-09-16
 
       Last change:      Eric van den Berg
-      Date:             2013-10-13
+      Date:             2013-10-22
 -->
 
 <system name="electrics">
@@ -184,6 +184,64 @@
 			<output>/extra500/panel/CircuitBreaker/BankC/Boots/ampere</output>
 		</switch>
 
+<!-- gear -->
+		<fcs_function name="gear-pump">
+			<function>
+				<product>
+					<property>/systems/gear/motor/state</property>
+					<value>1148.0</value>
+					<pow>	
+						<max>			
+							<property>/extra500/panel/CircuitBreaker/BankC/Hydraulic/voltOut</property>
+							<value>1</value>
+						</max>
+						<value>-1</value>
+					</pow>				
+				</product>
+			</function>
+			<output>/extra500/panel/CircuitBreaker/BankC/Hydraulic/ampere</output>
+		</fcs_function>
+
+		<fcs_function name="gear-valves">
+			<function>
+				<sum>
+					<product>
+						<property>/systems/gear/solenoids/mainvalve/state</property>
+						<value>10.0</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/GearAux2/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+					<product>
+						<property>/systems/gear/solenoids/upperdoorvalve/state</property>
+						<value>10.0</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/GearAux2/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+					<product>
+						<property>/systems/gear/solenoids/lowerdoorvalve/state</property>
+						<value>10.0</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/GearAux2/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+				</sum>
+			</function>
+			<output>/extra500/panel/CircuitBreaker/GearAux2/ampere</output>
+		</fcs_function>
 
 	</channel>
 

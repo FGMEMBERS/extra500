@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             13.10.2013
+      Date:             22.10.2013
 
 
 ************************************************************************
@@ -721,6 +721,138 @@ JSBSim Extra Aircraft - Extra 500.
 		<airport-alt type="double">0</airport-alt>
 		<cabin-pressure-inhg type="double">29.92</cabin-pressure-inhg>
 	</pressurization>
+	<gear>
+		<LMG-pos>1</LMG-pos>
+		<RMG-pos>1</RMG-pos>
+		<NG-pos>1</NG-pos>
+		<Lupperdoor-pos>0.8</Lupperdoor-pos>
+		<Rupperdoor-pos>0.8</Rupperdoor-pos>
+		<Lowerdoor-pos>1</Lowerdoor-pos>
+		<Nosegeardoor-pos>1</Nosegeardoor-pos>
+		<pressure-bar>0</pressure-bar>
+		<pressure>
+			<dpress-p-sec>50</dpress-p-sec>
+			<dpress-mov-p-sec>-60</dpress-mov-p-sec>
+			<dpress-mov2-p-sec>-30</dpress-mov2-p-sec>
+			<leakrate-p-press>-0.000833333333333</leakrate-p-press>
+		</pressure>
+		<actuators>
+			<upperdoorspeed>0.00833333333333</upperdoorspeed>
+			<lowerdoorspeed>0.00833333333333</lowerdoorspeed>
+			<nosegearspeed>0.012</nosegearspeed>
+			<maingearspeed>0.00222222222222</maingearspeed>
+			<Rupperdoor-pos-old></Rupperdoor-pos-old>
+			<Lupperdoor-pos-old></Lupperdoor-pos-old>
+			<Lowerdoor-pos-old></Lowerdoor-pos-old>
+			<Rupperdoor-moving>0</Rupperdoor-moving>
+			<Lupperdoor-moving>0</Lupperdoor-moving>
+			<Lowerdoor-moving>0</Lowerdoor-moving>
+			<LMG-pos-old>0</LMG-pos-old>
+			<RMG-pos-old>0</RMG-pos-old>
+			<NG-pos-old>0</NG-pos-old>
+			<LMG-moving>0</LMG-moving>
+			<RMG-moving>0</RMG-moving>
+			<NG-moving>0</NG-moving>
+		</actuators>
+		<annunciators>
+			<hydcaution>0</hydcaution>
+			<gearwarn>0</gearwarn>
+			<gearwarnaural>0</gearwarnaural>
+		</annunciators>
+		<switches>
+			<squat>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</squat>
+			<dump>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</dump>
+			<nosegearup>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</nosegearup>
+			<nosegeardown>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</nosegeardown>
+			<Lgearup>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</Lgearup>
+			<Lgeardown>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</Lgeardown>
+			<Rgearup>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</Rgearup>
+			<Rgeardown>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</Rgeardown>
+			<Rupperdoorclosed>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</Rupperdoorclosed>
+			<Rupperdooropen>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</Rupperdooropen>
+			<Lupperdoorclosed>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</Lupperdoorclosed>
+			<Lupperdooropen>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</Lupperdooropen>
+			<Lowerdoorclosed>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</Lowerdoorclosed>
+		</switches>
+		<relays>
+			<relay14GA>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</relay14GA>
+			<hydpump>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</hydpump>
+			<hydcaution>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</hydcaution>
+		</relays>
+		<solenoids>
+			<mainvalve>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</mainvalve>
+			<upperdoorvalve>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</upperdoorvalve>
+			<lowerdoorvalve>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</lowerdoorvalve>
+		</solenoids>
+		<power>
+			<tocontrolswitch></tocontrolswitch>
+		</power>
+		<pressureswitch>
+			<state>0</state>
+        		<serviceable type="bool">true</serviceable>
+		</pressureswitch>
+		<motor>
+			<state>0</state>
+        		<serviceable type="bool">true</serviceable>
+		</motor>
+	</gear>
  </systems>
 
  <instrumentation>
@@ -1235,6 +1367,13 @@ JSBSim Extra Aircraft - Extra 500.
 			<leftright>0</leftright>
 		</panelventswitchR>
 	</instrumentation>
+	<electric>
+		<bus>
+			<battery>
+				<volt>0</volt>
+			</battery>
+		</bus>
+	</electric>
 	<panel>
 		<CircuitBreaker>
 			<BankA>
@@ -1255,6 +1394,12 @@ JSBSim Extra Aircraft - Extra 500.
 				<EnvironmentalBleed>
 					<voltOut>0</voltOut>
 				</EnvironmentalBleed>
+				<GearControl>
+					<state>0</state>
+				</GearControl>
+				<Hydraulic>
+					<voltOut>0</voltOut>
+				</Hydraulic>
 			</BankC>
 			<BankD>
 				<CabinPressure>
@@ -1263,7 +1408,13 @@ JSBSim Extra Aircraft - Extra 500.
 				<Dump>
 					<voltOut>0</voltOut>
 				</Dump>
+				<GearAux1>
+					<state></state>
+				</GearAux1>
 			</BankD>
+			<GearAux2>
+				<voltOut>0</voltOut>
+			</GearAux2>
 		</CircuitBreaker>
 		<Side>
 			<Deicing>
@@ -1314,6 +1465,11 @@ JSBSim Extra Aircraft - Extra 500.
 		<fuel>
 			<SelectValve>2</SelectValve>
 		</fuel>
+		<gear>
+			<MainGearSwitch>
+				<state></state>
+			</MainGearSwitch>
+		</gear>
 	</system>
 	<!--<light>
 		<strobe>

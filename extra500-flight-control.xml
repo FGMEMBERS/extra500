@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-07-29
+      Date:             2013-10-23
 -->
 
 <flight_control name="FCS: extra500">
@@ -559,22 +559,4 @@
 
 		</channel>
 		
-		<channel name="Landing Gear">
-			<kinematic name="Gear Control">
-				<input>gear/gear-cmd-norm</input>
-				<traverse>
-					<setting>
-						<position> 0 </position>
-						<time>     0 </time>
-					</setting>
-					<setting>
-						<position> 1 </position>
-						<time>     13 </time>
-					</setting>
-				</traverse>
-				<output>gear/gear-pos-norm</output>
-			</kinematic>
-			
-		</channel>
-
 </flight_control>
