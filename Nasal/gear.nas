@@ -91,13 +91,15 @@ var GearSystemClass = {
 		m._gearListener = nil;
 		m._gearPosition = 0;
 	
-		m._leds = LedClass.new("/extra500/system/gear/leds","Gear Leds","extra500/system/dimming/Annunciator",0.6);
+		m._lednosegear = LedClass.new("/extra500/light/GearNose/state","Nose Gear Led","extra500/system/dimming/Annunciator",0.2);
+		m._ledlmaingear = LedClass.new("/extra500/light/GearLeft/state","LMain Gear Led","extra500/system/dimming/Annunciator",0.2);
+		m._ledrmaingear = LedClass.new("/extra500/light/GearRight/state","RMain Gear Led","extra500/system/dimming/Annunciator",0.2);
 		
-		m._nLEDLeft 		= props.globals.initNode("/extra500/light/GearLeft/state",0.0,"DOUBLE");
-		m._nLEDNose 		= props.globals.initNode("/extra500/light/GearNose/state",0.0,"DOUBLE");
-		m._nLEDRight 		= props.globals.initNode("/extra500/light/GearRight/state",0.0,"DOUBLE");
+#		m._nLEDLeft 		= props.globals.initNode("/extra500/light/GearLeft/state",0.0,"DOUBLE");
+#		m._nLEDNose 		= props.globals.initNode("/extra500/light/GearNose/state",0.0,"DOUBLE");
+#		m._nLEDRight 		= props.globals.initNode("/extra500/light/GearRight/state",0.0,"DOUBLE");
 		
-		m._ledListemer		= nil;
+#		m._ledListener		= nil;
 		
 #		m._hydaulicMotor = HydraulicMotorClass.new("/extra500/system/gear/motor","Gear Hydraulic Motor",1148.0);
 		
@@ -128,6 +130,7 @@ var GearSystemClass = {
 	setListeners : func(instance) {
 #		append(me._listeners, setlistener(me._nPositionNose,func(n){instance._onGearChange(n);},1,0) );
 		append(me._listeners, setlistener(extra500.dimmingSystem._nTest,func(n){instance._onDimTestChange(n);},1,0) );
+		append(me._listeners, setlistener("/extra500/light/GearNose/state",func(n){me._updateNoseGearLight;},1,0) );
 	},
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
@@ -137,17 +140,21 @@ var GearSystemClass = {
 		
 		
 		
-		me._leds.shine = func(light){
-			gearSystem._nLEDLeft.setValue(light);
-			gearSystem._nLEDNose.setValue(light);
-			gearSystem._nLEDRight.setValue(light);
-		};
+#		me._leds.shine = func(light){
+#			gearSystem._nLEDLeft.setValue(light);
+#			gearSystem._nLEDNose.setValue(light);
+#			gearSystem._nLEDRight.setValue(light);
+#		};
 		
 		me._swtGear.init();
-		me._leds.init();
+		me._lednosegear.init();
+		me._ledlmaingear.init();
+		me._ledrmaingear.init();
 #		me._hydaulicMotor.init();
 		
-		eSystem.circuitBreaker.WARN_LT.outputAdd(me._leds);
+		eSystem.circuitBreaker.WARN_LT.outputAdd(me._lednosegear);
+		eSystem.circuitBreaker.WARN_LT.outputAdd(me._ledlmaingear);
+		eSystem.circuitBreaker.WARN_LT.outputAdd(me._ledrmaingear);
 #		eSystem.circuitBreaker.HYDR.outputAdd(me._hydaulicMotor);
 		
 		UI.register("Gear up", 		func{me._swtGear.onClick(0); } 	);
@@ -160,9 +167,13 @@ var GearSystemClass = {
 	},
 	_onDimTestChange : func(n){
 		if (n.getValue() == 1){
-			me._leds.testOn();
+			me._lednosegear.testOn();
+			me._ledlmaingear.testOn();
+			me._ledrmaingear.testOn();
 		}else{
-			me._leds.testOff();
+			me._lednosegear.testOff();
+			me._ledlmaingear.testOff();
+			me._ledrmaingear.testOff();
 		}
 	},
 #	_onGearChange : func(n){
@@ -179,6 +190,15 @@ var GearSystemClass = {
 		
 		
 #	},
+	_updateNoseGearLight: func(n){
+		if (n.getValue() == 1){
+			me._lednosegear.on();
+		}elsif (n.getValue() == 0){
+			me._lednosegear.off();
+		}else{
+			me._lednosegear.off();
+		}
+	},
 #	update : func(){
 #		me._now 	= systime();
 #		me._dt 		= me._now - me._lastTime;
