@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2013-10-23
+      Date:             2013-10-24
 -->
  
 <PropertyList>
@@ -322,7 +322,7 @@
 	       <path>Aircraft/extra500/Sounds/gearwarn.wav</path>
 	       <condition>
 		       <or>
-			       <property>/extra500/sound/gearWarning</property>
+			       <property>/systems/gear/gearwarn/horn/state</property>
 	<!-- FIXME: the property for day/night/test must be here -->
 		       </or>
 	       </condition>

@@ -17,7 +17,7 @@
 #      Date: Jul 05 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             12.10.13
+#      Date:             24.10.13
 #
 
 var CenterConsole = {
@@ -29,7 +29,6 @@ var CenterConsole = {
 		m._Parkingbrake		= 0;
 		m._Defrost		= 0;
 		m._Deice		= 0;
-		m._GearClearHorn	= 0;
 		m._PitchTrim		= 0;
 		m._ParkingbrakePressure = 0;
 		m._BrakePressure 	= 0;
@@ -44,7 +43,6 @@ var CenterConsole = {
 		m._nParkingbrakePressure 	= m._nRoot.initNode("Parkingbrake/Pressure",0.0,"DOUBLE");
 		m._nDefrost 			= m._nRoot.initNode("Defrost/state",0,"BOOL");
 		m._nDeice 			= m._nRoot.initNode("Deice/state",0,"BOOL");
-		m._nGearClearHorn 		= m._nRoot.initNode("GearClearHorn/state",0,"BOOL");
 		m._nPitchTrim 			= m._nRoot.initNode("PitchTrim/state",0.0,"DOUBLE");
 		
 		return m;
@@ -112,15 +110,6 @@ var CenterConsole = {
 		me._Deice = n.getValue();
 		deiceSystem.setIntakeHeat(me._Deice);
 	},
-	onGearClearHornClick : func(value = nil){
-		if (value == nil){
-			me._GearClearHorn = me._GearClearHorn == 1 ? 0 : 1;
-		}else{
-			me._GearClearHorn = value;
-		}
-		me._nGearClearHorn.setValue(me._GearClearHorn);
-		
-	},
 	onPitchTrimClick : func(value = nil){
 		if (value == nil){
 			me._PitchTrim = 0;
@@ -162,10 +151,6 @@ var CenterConsole = {
 		UI.register("Deice", 		func{me.onDeiceClick(); } 	);
 		UI.register("Deice on", 	func{me.onDeiceClick(1); } 	);
 		UI.register("Deice off", 	func{me.onDeiceClick(0); } );
-		
-		UI.register("Gear Clear Horn", 		func{me.onGearClearHornClick(); } );
-		UI.register("Gear Clear Horn on", 	func{me.onGearClearHornClick(1); } );
-		UI.register("Gear Clear Horn off",	func{me.onGearClearHornClick(0); } );
 		
 		UI.register("PitchTrim", 	func{me.onPitchTrimClick(); } );
 		UI.register("PitchTrim >", 	func{me.onPitchTrimClick(0.05); } );

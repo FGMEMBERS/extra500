@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             22.10.2013
+      Date:             24.10.2013
 
 
 ************************************************************************
@@ -468,6 +468,22 @@ JSBSim Extra Aircraft - Extra 500.
 		<path>/consumables/fuel/tank[4]/level-gal_us</path>
 		<path>/consumables/fuel/tank[5]/level-gal_us</path>
 		<path>/consumables/fuel/tank[6]/level-gal_us</path>
+		<path>/extra500/instrumentation/panelventswitchL</path>
+		<path>/extra500/instrumentation/panelventswitchR</path>
+		<path>/extra500/instrumentation/Audiopanel/knobs</path>
+		<path>/extra500/instrumentation/Audiopanel/volsettings</path>
+		<path>/extra500/instrumentation/dmeSwitch/pressed</path>
+		<path>/extra500/door</path>
+		<path>/systems/pressurization/airport-alt</path>
+		<path>/systems/pressurization/airport-alt-valve</path>
+		<path>/systems/pressurization/cabin-climb-rate-fpm</path>
+		<path>/instrumentation/altimeter-backup/setting-inhg</path>
+		<path>/instrumentation/altimeter-IFD-LH/setting-inhg</path>
+		<path>/instrumentation/comm/frequencies</path>
+		<path>/instrumentation/comm[1]/frequencies</path>
+		<path>/instrumentation/nav/frequencies</path>
+		<path>/instrumentation/nav[1]/frequencies</path>
+
 		<!---->
 		<path>/extra500/log/fuel</path>
 		<path>/extra500/dialog/fuel</path>
@@ -759,7 +775,41 @@ JSBSim Extra Aircraft - Extra 500.
 			<gearwarn>0</gearwarn>
 			<gearwarnaural>0</gearwarnaural>
 		</annunciators>
+		<gearwarn>
+			<relayK1>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</relayK1>
+			<relayK2>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</relayK2>
+			<relayK3>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</relayK3>
+			<relayK4>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</relayK4>
+			<relayK5>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</relayK5>
+			<relayK6>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</relayK6>
+			<relayK7>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</relayK7>
+		</gearwarn>
 		<switches>
+			<GearClearHorn>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</GearClearHorn>
 			<squat>
 				<state>0</state>
         			<serviceable type="bool">true</serviceable>
@@ -1302,41 +1352,41 @@ JSBSim Extra Aircraft - Extra 500.
 	<instrumentation>
 		<Audiopanel>
 			<knobs>
-				<state>1</state>
-				<crewVol>0.5</crewVol>
-				<passVol>0.5</passVol>
-				<mkrconfig>1</mkrconfig>
-				<icsconfig>1</icsconfig>
-				<com1rcv>1</com1rcv>
-				<com1xmt>1</com1xmt>
-				<com2rcv>0</com2rcv>
-				<com2xmt>0</com2xmt>
-				<nav1>0</nav1>
-				<nav2>0</nav2>
-				<mkr>0</mkr>
-				<tel>0</tel>
-				<mon1>0</mon1>
-				<mon2>0</mon2>
-				<mute>0</mute>
-				<spk>0</spk>
+				<state type="int">1</state>
+				<crewVol type="double">0.5</crewVol>
+				<passVol type="double">0.5</passVol>
+				<mkrconfig type="int">1</mkrconfig>
+				<icsconfig type="int">1</icsconfig>
+				<com1rcv type="int">1</com1rcv>
+				<com1xmt type="int">1</com1xmt>
+				<com2rcv type="int">0</com2rcv>
+				<com2xmt type="int">0</com2xmt>
+				<nav1 type="int">0</nav1>
+				<nav2 type="int">0</nav2>
+				<mkr type="int">0</mkr>
+				<tel type="int">0</tel>
+				<mon1 type="int">0</mon1>
+				<mon2 type="int">0</mon2>
+				<mute type="int">0</mute>
+				<spk type="int">0</spk>
 			</knobs>
 			<volsetting>
-				<effects>1</effects>
-				<apdis>1</apdis>
-				<gearwarn>1</gearwarn>
-				<stallwarn>1</stallwarn>
-				<overspeed>1</overspeed>
-				<nav1>0.2</nav1>
-				<nav2>0.2</nav2>
-				<mkr>0.2</mkr>
-				<tel>0.2</tel>
-				<mon1>0.2</mon1>
-				<mon2>0.2</mon2>
-				<spk>0.2</spk>
+				<effects type="double">1</effects>
+				<apdis type="double">1</apdis>
+				<gearwarn type="double">1</gearwarn>
+				<stallwarn type="double">1</stallwarn>
+				<overspeed type="double">1</overspeed>
+				<nav1 type="double">0.2</nav1>
+				<nav2 type="double">0.2</nav2>
+				<mkr type="double">0.2</mkr>
+				<tel type="double">0.2</tel>
+				<mon1 type="double">0.2</mon1>
+				<mon2 type="double">0.2</mon2>
+				<spk type="double">0.2</spk>
 			</volsetting>
 		</Audiopanel>
 		<dmeSwitch>
-			<pressed>0</pressed>
+			<pressed type="int">0</pressed>
 		</dmeSwitch>
 		<TurnCoordinator>
 			<volt>0</volt>
@@ -1411,6 +1461,9 @@ JSBSim Extra Aircraft - Extra 500.
 				<GearAux1>
 					<state></state>
 				</GearAux1>
+				<GearWarn>
+					<voltOut>0</voltOut>
+				</GearWarn>
 			</BankD>
 			<GearAux2>
 				<voltOut>0</voltOut>

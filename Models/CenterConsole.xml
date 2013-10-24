@@ -182,7 +182,7 @@
 <animation>
   <type>translate</type>
   <object-name>OverSpeed</object-name>
-  <property>/extra500/panel/CenterConsole/GearClearHorn/state</property>
+  <property>/systems/gear/switches/GearClearHorn/state</property>
   <factor>0.005</factor>
   <axis>
    <x>0</x>

@@ -31,6 +31,7 @@ doors open / gear extended = 1
 /extra500/panel/CircuitBreaker/GearAux2
 /extra500/panel/CircuitBreaker/BankC/GearControl
 /extra500/panel/CircuitBreaker/BankD/GearAux1
+/extra500/panel/CircuitBreaker/BankD/GearWarn
 
 /extra500/panel/CircuitBreaker/BankC/Hydraulic
 
@@ -693,6 +694,135 @@ for lights:
 			</function>
 			<output>/fdm/jsbsim/inertia/pointmass-location-Z-inches[8]</output>
 		</fcs_function>
+	</channel>
+
+
+
+	<channel name="gear-warning">
+
+		<switch name="/systems/gear/gearwarn/relayK1/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/gear/gearwarn/relayK1/serviceable eq 1
+				/extra500/panel/CircuitBreaker/BankD/GearWarn/voltOut gt 12
+				/systems/gear/switches/Rgeardown/state eq 1
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/gearwarn/relayK2/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/gear/gearwarn/relayK2/serviceable eq 1
+				/extra500/panel/CircuitBreaker/BankD/GearWarn/voltOut gt 12
+				/systems/gear/switches/nosegeardown/state eq 1
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/gearwarn/relayK3/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/gear/gearwarn/relayK3/serviceable eq 1
+				/extra500/panel/CircuitBreaker/BankD/GearWarn/voltOut gt 12
+				/systems/gear/switches/Lgeardown/state eq 1
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/gearwarn/relayK4/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/gear/gearwarn/relayK4/serviceable eq 1
+				/extra500/panel/CircuitBreaker/BankD/GearWarn/voltOut gt 12
+				/systems/gear/switches/Lgearup/state eq 1
+				/systems/gear/switches/Rupperdoorclosed/state eq 1
+				/systems/gear/switches/Lupperdoorclosed/state eq 1
+				/systems/gear/switches/Lowerdoorclosed/state eq 1
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/gearwarn/relayK5/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="AND" value="1">
+					/systems/gear/gearwarn/relayK4/serviceable eq 1
+					/extra500/panel/CircuitBreaker/BankD/GearWarn/voltOut gt 12
+				</test>
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/systems/gear/switches/GearClearHorn/serviceable eq 1
+						/systems/gear/switches/GearClearHorn/state eq 1
+					</test>
+					<test logic="AND" value="1">
+						/systems/gear/gearwarn/relayK5/state eq 1
+						/systems/gear/gearwarn/relayK6/state eq 1
+					</test>
+				</test>
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/gearwarn/relayK6/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/gear/gearwarn/relayK6/serviceable eq 1
+				/extra500/panel/CircuitBreaker/BankD/GearWarn/voltOut gt 12
+				/fdm/jsbsim/aircraft/engine/TRQ-perc lt 35
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/gearwarn/relayK7/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/gear/gearwarn/relayK7/serviceable eq 1
+				/extra500/panel/CircuitBreaker/BankD/GearWarn/voltOut gt 12
+				/fdm/jsbsim/fcs/flap-pos-norm gt 0.51
+			</test>
+		</switch>
+
+		<switch name="/systems/gear/gearwarn/light/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/systems/gear/gearwarn/relayK1/state eq 0
+					/systems/gear/gearwarn/relayK1/state eq 0
+					/systems/gear/gearwarn/relayK1/state eq 0
+				</test>
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/systems/gear/gearwarn/relayK4/state eq 0
+					</test>
+					<test logic="AND" value="1">
+						<test logic="OR" value="1">
+							/systems/gear/gearwarn/relayK6/state eq 1
+						</test>
+						<test logic="OR" value="1">
+							/systems/gear/gearwarn/relayK7/state eq 1
+							/systems/gear/gearwarn/relayK5/state eq 0
+						</test>
+					</test>
+				</test>
+			</test>
+			<output>/systems/gear/annunciators/gearwarn</output>
+		</switch>
+
+		<switch name="/systems/gear/gearwarn/horn/test">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/systems/gear/gearwarn/relayK1/state eq 0
+					/systems/gear/gearwarn/relayK1/state eq 0
+					/systems/gear/gearwarn/relayK1/state eq 0
+				</test>
+				<test logic="AND" value="1">
+					<test logic="OR" value="1">
+						/systems/gear/gearwarn/relayK6/state eq 1
+					</test>
+					<test logic="OR" value="1">
+						/systems/gear/gearwarn/relayK7/state eq 1
+						/systems/gear/gearwarn/relayK5/state eq 0
+					</test>
+				</test>
+			</test>
+			<output>/systems/gear/gearwarn/horn/state</output>
+		</switch>
 
 	</channel>
 </system>
