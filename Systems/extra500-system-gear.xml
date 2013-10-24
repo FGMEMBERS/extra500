@@ -748,7 +748,7 @@ for lights:
 				</test>
 				<test logic="OR" value="1">
 					<test logic="AND" value="1">
-						/systems/gear/switches/GearClearHorn/serviceable eq 1
+					<!--	/systems/gear/switches/GearClearHorn/serviceable eq 1 -->
 						/systems/gear/switches/GearClearHorn/state eq 1
 					</test>
 					<test logic="AND" value="1">

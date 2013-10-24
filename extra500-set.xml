@@ -1389,7 +1389,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<pressed type="int">0</pressed>
 		</dmeSwitch>
 		<TurnCoordinator>
-			<volt>0</volt>
+			<volt type="double">0</volt>
 		</TurnCoordinator>
 		<IFD-LH>
 			<state type="bool">false</state>
@@ -1398,10 +1398,10 @@ JSBSim Extra Aircraft - Extra 500.
 			<state type="bool">false</state>
 		</IFD-RH>
 		<dmeInd>
-			<volt>0</volt>
+			<volt type="double">0</volt>
 		</dmeInd>
 		<xpdr>
-			<volt>0</volt>
+			<volt type="double">0</volt>
 		</xpdr>
 		<EIP>
 			<state type="bool">false</state>
@@ -1420,7 +1420,7 @@ JSBSim Extra Aircraft - Extra 500.
 	<electric>
 		<bus>
 			<battery>
-				<volt>0</volt>
+				<volt type="double">0</volt>
 			</battery>
 		</bus>
 	</electric>
@@ -1428,99 +1428,99 @@ JSBSim Extra Aircraft - Extra 500.
 		<CircuitBreaker>
 			<BankA>
 				<PanelVent>
-					<voltOut>0</voltOut>
+					<voltOut type="double">0</voltOut>
 				</PanelVent>
 				<Vent>
-					<voltOut>0</voltOut>
+					<voltOut type="double">0</voltOut>
 				</Vent>
 				<AirCondition>
-					<voltOut>0</voltOut>
+					<voltOut type="double">0</voltOut>
 				</AirCondition>
 			</BankA>
 			<BankC>
 				<Boots>
-					<voltOut>0</voltOut>
+					<voltOut type="double">0</voltOut>
 				</Boots>
 				<EnvironmentalBleed>
-					<voltOut>0</voltOut>
+					<voltOut type="double">0</voltOut>
 				</EnvironmentalBleed>
 				<GearControl>
-					<state>0</state>
+					<state type="int">0</state>
 				</GearControl>
 				<Hydraulic>
-					<voltOut>0</voltOut>
+					<voltOut type="double">0</voltOut>
 				</Hydraulic>
 			</BankC>
 			<BankD>
 				<CabinPressure>
-					<voltOut>0</voltOut>
+					<voltOut type="double">0</voltOut>
 				</CabinPressure>
 				<Dump>
-					<voltOut>0</voltOut>
+					<voltOut type="double">0</voltOut>
 				</Dump>
 				<GearAux1>
-					<state></state>
+					<state type="int"></state>
 				</GearAux1>
 				<GearWarn>
-					<voltOut>0</voltOut>
+					<voltOut type="double">0</voltOut>
 				</GearWarn>
 			</BankD>
 			<GearAux2>
-				<voltOut>0</voltOut>
+				<voltOut type="double">0</voltOut>
 			</GearAux2>
 		</CircuitBreaker>
 		<Side>
 			<Deicing>
 				<Boots>
-					<state></state>
+					<state type="int"></state>
 				</Boots>
 			</Deicing>
 			<Main>
 				<ExternalPower>
-					<state></state>
+					<state type="int"></state>
 				</ExternalPower>
 				<Battery>
-					<state></state>
+					<state type="int"></state>
 				</Battery>
 				<Generator>
-					<state></state>
+					<state type="int"></state>
 				</Generator>
 			</Main>
 			<Cabin>
 				<EnvironmentalAir>
-					<state>0</state>
+					<state type="int">0</state>
 				</EnvironmentalAir>
 				<Pressure>
-					<state>0</state>
+					<state type="int">0</state>
 				</Pressure>
 			</Cabin>
 		</Side>
 		<Master>
 			<Autopilot>
 				<YawTrim>
-					<state>0.0</state>
+					<state type="int">0.0</state>
 				</YawTrim>
 			</Autopilot>
 		</Master>
 	</panel>
 	<door>
 		<upperpass>
-			<isOpen>0</isOpen>
+			<isOpen type="int">0</isOpen>
 		</upperpass>
 		<lowerpass>
-			<isOpen>0</isOpen>
+			<isOpen type="int">0</isOpen>
 		</lowerpass>
 		<emergencyexit>
-			<isOpen>0</isOpen>
+			<isOpen type="int">0</isOpen>
 		</emergencyexit>
 	</door>
 	<system>
 		<fuel>
-			<SelectValve>2</SelectValve>
+			<SelectValve type="int">2</SelectValve>
 		</fuel>
 		<gear>
 			<MainGearSwitch>
-				<state></state>
+				<state type="int"></state>
 			</MainGearSwitch>
 		</gear>
 	</system>

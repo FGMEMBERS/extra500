@@ -107,7 +107,7 @@ var GearSystemClass = {
 		if (value == nil){
 			me._GearClearHorn = me._GearClearHorn == 1 ? 0 : 1;
 		}else{
-				me._GearClearHorn = value;
+			me._GearClearHorn = value;
 		}
 		setprop("/systems/gear/switches/GearClearHorn/state",me._GearClearHorn);
 	},
