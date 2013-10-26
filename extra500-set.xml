@@ -1136,7 +1136,7 @@ JSBSim Extra Aircraft - Extra 500.
 			</wp>
 		</wp>
 		<config>
-			<over-flight-arm-distance-nm>0</over-flight-arm-distance-nm>
+			<over-flight-arm-distance-nm>1</over-flight-arm-distance-nm>
 		</config>
 		<gpss>
 			<in-turn type="bool">0</in-turn>
@@ -1144,7 +1144,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<target-turn-rate-degps type="double">0</target-turn-rate-degps>
 			<config>
 				<enabled>1</enabled>
-				<turn-lookahead-sec>0</turn-lookahead-sec>
+				<turn-look-ahead-sec>0</turn-lookahead-sec>
 				<turn-rate-degps>2.8</turn-rate-degps>
 				<turn-rate-dynamic>0</turn-rate-dynamic>
 			</config>
@@ -1166,7 +1166,7 @@ JSBSim Extra Aircraft - Extra 500.
 			</wp>
 		</wp>
 		<config>
-			<over-flight-arm-distance-nm>0</over-flight-arm-distance-nm>
+			<over-flight-arm-distance-nm>1</over-flight-arm-distance-nm>
 		</config>
 		<gpss>
 			<in-turn type="bool">0</in-turn>

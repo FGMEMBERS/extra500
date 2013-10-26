@@ -80,7 +80,7 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		
 		
 	},1);
-
+	setprop("/instrumentation/gps[1]/serviceable",0);
 		
 });
 
