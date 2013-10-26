@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             24.10.2013
+      Date:             26.10.2013
 
 
 ************************************************************************
@@ -647,14 +647,14 @@ JSBSim Extra Aircraft - Extra 500.
 		<course-error-nm type="double">0</course-error-nm>
 		<cdi-deflection type="double">0</cdi-deflection>
 		<indicated-track-true-deg type="double">0</indicated-track-true-deg>
-		<gpss>
-			<gpss-turn-rate-p type="double">9.424581</gpss-turn-rate-p>		<!-- rad/h/deg (standard turn at 20 deg course change) -->
-			<time-lead-in-p type="double">0.000011</time-lead-in-p>			<!-- lead in time proportional to turn rate [h/ (rad/h)] -->
+		<!--gpss>
+			<gpss-turn-rate-p type="double">9.424581</gpss-turn-rate-p>		< rad/h/deg (standard turn at 20 deg course change) >
+			<time-lead-in-p type="double">0.000011</time-lead-in-p>			<!lead in time proportional to turn rate [h/ (rad/h)] >
 			<next-bearing-deg type="double">0.0</next-bearing-deg>
 			<turn-timer type="double">0.0</turn-timer>
 			<turn-time-s type="double">0.0</turn-time-s>
 			<in-turn2>0</in-turn2>
-		</gpss>
+		</gpss-->
 		<dto>
 			<true-course-deg type="double">0</true-course-deg>
 		</dto>
@@ -1138,9 +1138,20 @@ JSBSim Extra Aircraft - Extra 500.
 		<config>
 			<over-flight-arm-distance-nm>0</over-flight-arm-distance-nm>
 		</config>
+		<gpss>
+			<in-turn type="bool">0</in-turn>
+			<target-course-true-deg type="double">0</target-course-true-deg>
+			<target-turn-rate-degps type="double">0</target-turn-rate-degps>
+			<config>
+				<enabled>1</enabled>
+				<turn-lookahead-sec>0</turn-lookahead-sec>
+				<turn-rate-degps>2.8</turn-rate-degps>
+				<turn-rate-dynamic>0</turn-rate-dynamic>
+			</config>
+		</gpss>
 	</gps>
 	<gps n="1">
-	       	<serviceable type="bool">true</serviceable>
+	       	<serviceable type="bool">false</serviceable>
 		<cdi-deflection>0</cdi-deflection>
 		<indicated-track-true-deg>0</indicated-track-true-deg>
 		<indicated-ground-speed-kt>0</indicated-ground-speed-kt>
@@ -1157,6 +1168,17 @@ JSBSim Extra Aircraft - Extra 500.
 		<config>
 			<over-flight-arm-distance-nm>0</over-flight-arm-distance-nm>
 		</config>
+		<gpss>
+			<in-turn type="bool">0</in-turn>
+			<target-course-true-deg type="double">0</target-course-true-deg>
+			<target-turn-rate-degps type="double">0</target-turn-rate-degps>
+			<config>
+				<enabled>1</enabled>
+				<turn-lookahead-sec>0</turn-lookahead-sec>
+				<turn-rate-degps>2.8</turn-rate-degps>
+				<turn-rate-dynamic>0</turn-rate-dynamic>
+			</config>
+		</gpss>
 	</gps>
 
 
