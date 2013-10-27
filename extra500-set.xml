@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             24.10.2013
+      Date:             27.10.2013
 
 
 ************************************************************************
@@ -1520,7 +1520,7 @@ JSBSim Extra Aircraft - Extra 500.
 		</fuel>
 		<gear>
 			<MainGearSwitch>
-				<state type="int"></state>
+				<state type="int">1</state>
 			</MainGearSwitch>
 		</gear>
 	</system>
