@@ -1016,6 +1016,25 @@
 			<output>/autopilot/fms-channel/inturn</output>
 		</switch>
 
+<!-- setting gpss-enabled as a function of /autopilot/mode/gpss (autopilot.nas) -->
+
+		<switch name="gpssenable1">
+			<default value="0"/>
+			<test value="1">
+				/autopilot/mode/gpss eq 1
+			</test>
+			<output>/instrumentation/gps/gpss/config/enabled</output>
+		</switch>
+
+		<switch name="gpssenable2">
+			<default value="0"/>
+			<test value="1">
+				/autopilot/mode/gpss eq 1
+			</test>
+			<output>/instrumentation/gps[1]/gpss/config/enabled</output>
+		</switch>
+
+<!-- course -->
 		<switch name="gpsselect1a">
 			<default value="/instrumentation/gps/wp/leg-true-course-deg"/>
 			<test value="/instrumentation/gps[1]/wp/leg-true-course-deg">
@@ -1024,7 +1043,6 @@
 			<output>/autopilot/fms-channel/normal/leg-true-course-deg</output>
 		</switch>
 
-<!-- course -->
 		<switch name="gpsselect1b">
 			<default value="/instrumentation/gps/gpss/target-course-true-deg"/>
 			<test value="/instrumentation/gps[1]/gpss/target-course-true-deg">

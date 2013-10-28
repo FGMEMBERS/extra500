@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg 
-#      Date:             27.09.2013
+#      Date:             26.10.2013
 #
 var FlightManagementSystemClass = {
 	new : func(root,name){
@@ -30,28 +30,28 @@ var FlightManagementSystemClass = {
 		
 		return m;
 	},
-	setListeners : func(instance) {
-		append(me._listeners, setlistener("/autopilot/route-manager/current-wp",func(n){me._onCurrentWaypointChange(n);},1,0) );
-	},
+#	setListeners : func(instance) {
+#		append(me._listeners, setlistener("/autopilot/route-manager/current-wp",func(n){me._onCurrentWaypointChange(n);},1,0) );
+#	},
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
-		me.setListeners(instance);
+#		me.setListeners(instance);
 	
 	},
 #IFD & route Manager selection, called from IFD page_FMS.nas
 	setSelectedWaypoint : func(index){
 		me._selectedWaypointIndex = index;
 	},
-	_onCurrentWaypointChange : func(n){
-		me._currentWaypointIndex = n.getValue();
-		if ( me._currentWaypointIndex >= 0 ) {
+#	_onCurrentWaypointChange : func(n){
+#		me._currentWaypointIndex = n.getValue();
+#		if ( me._currentWaypointIndex >= 0 ) {
 #			settimer(func(){me._nextGpssBearing()},1);
-		me._nextGpssBearing();
-		}
-	},
-	_nextGpssBearing : func(){
-		setprop("/autopilot/fms-channel/gpss/next-bearing-deg",getprop("/autopilot/route-manager/route/wp["~me._currentWaypointIndex~"]/leg-bearing-true-deg"));
-	},
+#		me._nextGpssBearing();
+#		}
+#	},
+#	_nextGpssBearing : func(){
+#		setprop("/autopilot/fms-channel/gpss/next-bearing-deg",getprop("/autopilot/route-manager/route/wp["~me._currentWaypointIndex~"]/leg-bearing-true-deg"));
+#	},
 # Operation functions of Avidyne FMS 
 	jumpTo : func(){
 		setprop("/autopilot/route-manager/current-wp",me._selectedWaypointIndex);
