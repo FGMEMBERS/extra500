@@ -1144,7 +1144,8 @@ JSBSim Extra Aircraft - Extra 500.
 			<target-course-true-deg type="double">0</target-course-true-deg>
 			<target-turn-rate-degps type="double">0</target-turn-rate-degps>
 			<config>
-				<enabled>1</enabled>
+				<enabled>0</enabled>
+				<look-ahead-sec>0</look-ahead-sec>
 				<turn-look-ahead-sec>0</turn-look-ahead-sec>
 				<turn-rate-degps>2.8</turn-rate-degps>
 				<turn-rate-dynamic>0</turn-rate-dynamic>
@@ -1174,7 +1175,8 @@ JSBSim Extra Aircraft - Extra 500.
 			<target-course-true-deg type="double">0</target-course-true-deg>
 			<target-turn-rate-degps type="double">0</target-turn-rate-degps>
 			<config>
-				<enabled>1</enabled>
+				<enabled>0</enabled>
+				<look-ahead-sec>0</look-ahead-sec>
 				<turn-lookahead-sec>0</turn-lookahead-sec>
 				<turn-rate-degps>2.8</turn-rate-degps>
 				<turn-rate-dynamic>0</turn-rate-dynamic>
