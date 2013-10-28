@@ -106,11 +106,12 @@
     <name>gps</name>
     <number>0</number>
   </gps>
-
+<!--
   <gps>                                                                      
     <name>gps</name>
     <number>1</number>
   </gps>
+  -->
 
   <heading-indicator-fg>
     <name>heading-indicator-IFD-LH</name>
