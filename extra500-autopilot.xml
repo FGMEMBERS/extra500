@@ -1282,12 +1282,21 @@
 			<output>/autopilot/fms-channel/target-turn-rate-n</output>
 		</pid>
 
+		<switch name="turndirection">
+			<default value="1"/>
+			<test logic="OR" value="-1">
+				/autopilot/fms-channel/crs-error/course-error-deg lt 0		
+			</test>
+			<output>/autopilot/fms-channel/turndirection</output>
+		</switch>
+
 <!-- target turn rate including gpss nominal turn rate -->
 		<fcs_function name="/autopilot/fms-channel/target-turn-rate-g">
 			<function>
 				<sum>
 					<product>
 						<property>/autopilot/fms-channel/target-gpss-turn-rate</property> 
+						<property>/autopilot/fms-channel/turndirection</property>
 						<value>180.0</value>
 						<property>/autopilot/fms-channel/inturn</property> 
 						<property>/autopilot/mode/gpss</property> 
