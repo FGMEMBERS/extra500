@@ -21,7 +21,7 @@
 
       Last change:      Eric van den Berg
 
-      Date:             27.10.2013
+      Date:             03.11.2013
 
 
 ************************************************************************
@@ -1131,28 +1131,24 @@ JSBSim Extra Aircraft - Extra 500.
 			<leg-true-course-deg>0</leg-true-course-deg>
 			<leg-distance-nm>0</leg-distance-nm>
 			<wp n="1">
-				<course-error-nm>0</course-error-nm>
 				<distance-nm>0</distance-nm>
 				<bearing-true-deg type="double">0</bearing-true-deg>
 			</wp>
 		</wp>
 		<config>
 			<over-flight-arm-distance-nm>1</over-flight-arm-distance-nm>
+			<turn-anticipation>0</turn-anticipation>
+			<turn-look-ahead-sec>5</turn-look-ahead-sec>
+			<turn-rate-deg-sec>2.8</turn-rate-deg-sec>
+			<turn-rate-dynamic>0</turn-rate-dynamic>
 		</config>
-		<gpss>
-			<in-turn type="bool">0</in-turn>
-			<target-course-true-deg type="double">0</target-course-true-deg>
-			<target-turn-rate-degps type="double">0</target-turn-rate-degps>
-			<config>
-				<enabled>0</enabled>
-				<turn-look-ahead-sec>5</turn-look-ahead-sec>
-				<turn-rate-degps>2.8</turn-rate-degps>
-				<turn-rate-dynamic>0</turn-rate-dynamic>
-			</config>
-		</gpss>
+		<gpss-in-turn type="bool">0</gpss-in-turn>
+		<cross-track-error-nm type="double">0</cross-track-error-nm>
+		<desired-course-deg type="double">0</desired-course-deg>
+		<desired-turn-rate-deg-sec type="double">0</desired-turn-rate-deg-sec>
 	</gps>
 	<gps n="1">
-	       	<serviceable type="bool">false</serviceable>
+	      <serviceable type="bool">false</serviceable>
 		<cdi-deflection>0</cdi-deflection>
 		<indicated-track-true-deg>0</indicated-track-true-deg>
 		<indicated-ground-speed-kt>0</indicated-ground-speed-kt>
@@ -1161,25 +1157,21 @@ JSBSim Extra Aircraft - Extra 500.
 			<leg-true-course-deg>0</leg-true-course-deg>
 			<leg-distance-nm>0</leg-distance-nm>
 			<wp n="1">
-				<course-error-nm>0</course-error-nm>
 				<distance-nm>0</distance-nm>
 				<bearing-true-deg type="double">0</bearing-true-deg>
 			</wp>
 		</wp>
 		<config>
 			<over-flight-arm-distance-nm>1</over-flight-arm-distance-nm>
+			<turn-anticipation>0</turn-anticipation>
+			<turn-look-ahead-sec>5</turn-look-ahead-sec>
+			<turn-rate-deg-sec>2.8</turn-rate-deg-sec>
+			<turn-rate-dynamic>0</turn-rate-dynamic>
 		</config>
-		<gpss>
-			<in-turn type="bool">0</in-turn>
-			<target-course-true-deg type="double">0</target-course-true-deg>
-			<target-turn-rate-degps type="double">0</target-turn-rate-degps>
-			<config>
-				<enabled>0</enabled>
-				<turn-lookahead-sec>0</turn-lookahead-sec>
-				<turn-rate-degps>2.8</turn-rate-degps>
-				<turn-rate-dynamic>0</turn-rate-dynamic>
-			</config>
-		</gpss>
+		<gpss-in-turn type="bool">0</gpss-in-turn>
+		<cross-track-error-nm type="double">0</cross-track-error-nm>
+		<desired-course-deg type="double">0</desired-course-deg>
+		<desired-turn-rate-deg-sec type="double">0</desired-turn-rate-deg-sec>
 	</gps>
 
 

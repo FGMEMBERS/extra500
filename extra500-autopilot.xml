@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-10-28
+      Date:             2013-11-03
 -->
 
 <autopilot name="STEC55X">
@@ -1009,8 +1009,8 @@
 
 <!-- selecting GPS properties from gps1 or 2 depending on "servicable" -->
 		<switch name="gpsselect0">
-			<default value="/instrumentation/gps/gpss/in-turn"/>
-			<test value="/instrumentation/gps[1]/gpss/in-turn">
+			<default value="/instrumentation/gps/gpss-in-turn"/>
+			<test value="/instrumentation/gps[1]/gpss-in-turn">
 				/instrumentation/gps/serviceable eq 0
 			</test>
 			<output>/autopilot/fms-channel/inturn</output>
@@ -1023,7 +1023,7 @@
 			<test value="1">
 				/autopilot/mode/gpss eq 1
 			</test>
-			<output>/instrumentation/gps/gpss/config/enabled</output>
+			<output>/instrumentation/gps/config/turn-anticipation</output>
 		</switch>
 
 		<switch name="gpssenable2">
@@ -1031,19 +1031,19 @@
 			<test value="1">
 				/autopilot/mode/gpss eq 1
 			</test>
-			<output>/instrumentation/gps[1]/gpss/config/enabled</output>
+			<output>/instrumentation/gps[1]/config/turn-anticipation</output>
 		</switch>
 
 <!-- course -->
 		<switch name="gpsselect1a">
-			<default value="/instrumentation/gps/wp/leg-true-course-deg"/>
-			<test value="/instrumentation/gps[1]/wp/leg-true-course-deg">
+			<default value="/instrumentation/gps/desired-course-deg"/>
+			<test value="/instrumentation/gps[1]/desired-course-deg">
 				/instrumentation/gps/serviceable eq 0
 			</test>
-			<output>/autopilot/fms-channel/normal/leg-true-course-deg</output>
+			<output>/autopilot/fms-channel/leg-true-course-deg</output>
 		</switch>
 
-		<switch name="gpsselect1b">
+		<!--switch name="gpsselect1b">
 			<default value="/instrumentation/gps/gpss/target-course-true-deg"/>
 			<test value="/instrumentation/gps[1]/gpss/target-course-true-deg">
 				/instrumentation/gps/serviceable eq 0
@@ -1057,7 +1057,7 @@
 				/autopilot/fms-channel/inturn eq 1
 			</test>
 			<output>/autopilot/fms-channel/leg-true-course-deg</output>
-		</switch>
+		</switch-->
 
 		<switch name="gpsselect2">
 			<default value="/instrumentation/gps/wp/wp[1]/bearing-true-deg"/>
@@ -1069,14 +1069,14 @@
 
 <!-- x-track error -->
 		<switch name="gpsselect3a">
-			<default value="/instrumentation/gps/wp/wp[1]/course-error-nm"/>
-			<test value="/instrumentation/gps[1]/wp/wp[1]/course-error-nm">
+			<default value="/instrumentation/gps/cross-track-error-nm"/>
+			<test value="/instrumentation/gps[1]/cross-track-error-nm">
 				/instrumentation/gps/serviceable eq 0
 			</test>
-			<output>/autopilot/fms-channel/normal/course-error-nm</output>
+			<output>/autopilot/fms-channel/course-error-nm</output>
 		</switch>
 
-		<switch name="gpsselect3b">
+		<!--switch name="gpsselect3b">
 			<default value="/instrumentation/gps/wp/wp[1]/course-error-nm"/>
 			<test value="/instrumentation/gps[1]/wp/wp[1]/course-error-nm">
 				/instrumentation/gps/serviceable eq 0
@@ -1089,7 +1089,7 @@
 				/autopilot/fms-channel/inturn eq 1
 			</test>
 			<output>/autopilot/fms-channel/course-error-nm</output>
-		</switch>
+		</switch-->
 
  		<switch name="gpsselect4">
 			<default value="/instrumentation/gps/wp/leg-distance-nm"/>
@@ -1125,15 +1125,12 @@
 		</switch>
 
 		<switch name="gpsselect7">
-			<default value="/instrumentation/gps/gpss/target-turn-rate-degps"/>
-			<test value="/instrumentation/gps[1]/gpss/target-turn-rate-degps">
+			<default value="/instrumentation/gps/desired-turn-rate-deg-sec"/>
+			<test value="/instrumentation/gps[1]/desired-turn-rate-deg-sec">
 				/instrumentation/gps/serviceable eq 0
 			</test>
 			<output>/autopilot/fms-channel/target-gpss-turn-rate</output>
 		</switch>
-
-
-
 
 <!-- setting the course of nav1 automatically when fms active and selected -->
 		<switch name="courseNav1set">
