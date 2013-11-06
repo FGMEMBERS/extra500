@@ -27,11 +27,13 @@
   <pitot>
     <name>pitotL</name>
     <number>0</number>
+    <stalldeg>60</stalldeg>
   </pitot>
 
   <pitot>
     <name>pitotR</name>
     <number>0</number>
+    <stalldeg>60</stalldeg>
   </pitot>
 
   <static>
