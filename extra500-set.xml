@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             27.10.2013
+      Date:             09.11.2013
 
 
 ************************************************************************
@@ -717,15 +717,12 @@ JSBSim Extra Aircraft - Extra 500.
 	</pitotR>
 	<staticL>
 		<serviceable>1</serviceable>
-		<sideslip-error-factor>1</sideslip-error-factor>
 	</staticL>
 	<staticR>
 		<serviceable>1</serviceable>
-		<sideslip-error-factor>1</sideslip-error-factor>
 	</staticR>
 	<staticAP>
 		<serviceable>1</serviceable>
-		<sideslip-error-factor>0.1</sideslip-error-factor>
 	</staticAP>
 	<pneumatic>
 		<boots-timer-sec>0</boots-timer-sec>

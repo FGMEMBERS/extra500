@@ -19,7 +19,7 @@
       Date: 21.04.13
 
       Last change:      Eric van den Berg
-      Date:             01.10.13
+      Date:             09.11.13
 -->
 
 <PropertyList>
@@ -38,12 +38,16 @@
     <name>staticL</name>
     <number>0</number>
     <tau>0.1</tau>
+    <type>1</type>
+    <error-factor>1.0</error-factor>
   </static>
 
   <static>
     <name>staticR</name>
     <number>0</number>
     <tau>0.1</tau>
+    <type>1</type>
+    <error-factor>1.0</error-factor>
   </static>
 
   <static>
