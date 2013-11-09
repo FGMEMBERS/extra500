@@ -1293,7 +1293,7 @@
 				<sum>
 					<product>
 						<property>/autopilot/fms-channel/target-gpss-turn-rate</property> 
-						<property>/autopilot/fms-channel/turndirection</property>
+						<!--property>/autopilot/fms-channel/turndirection</property-->
 						<value>180.0</value>
 						<property>/autopilot/fms-channel/inturn</property> 
 						<property>/autopilot/mode/gpss</property> 
