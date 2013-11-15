@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-11-03
+      Date:             2013-11-15
 -->
 
 <autopilot name="STEC55X">
@@ -1294,7 +1294,7 @@
 					<product>
 						<property>/autopilot/fms-channel/target-gpss-turn-rate</property> 
 						<!--property>/autopilot/fms-channel/turndirection</property-->
-						<value>180.0</value>
+						<value>60.0</value>
 						<property>/autopilot/fms-channel/inturn</property> 
 						<property>/autopilot/mode/gpss</property> 
 					</product> 
