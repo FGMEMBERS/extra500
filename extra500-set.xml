@@ -21,7 +21,7 @@
 
       Last change:      Eric van den Berg
 
-      Date:             03.11.2013
+      Date:             15.11.2013
 
 
 ************************************************************************
@@ -1141,6 +1141,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<turn-look-ahead-sec>5</turn-look-ahead-sec>
 			<turn-rate-deg-sec>2.8</turn-rate-deg-sec>
 			<turn-rate-dynamic>0</turn-rate-dynamic>
+			<turn-lead-out-factor>0.14</turn-lead-out-factor>
 		</config>
 		<gpss-in-turn type="bool">0</gpss-in-turn>
 		<cross-track-error-nm type="double">0</cross-track-error-nm>
@@ -1167,6 +1168,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<turn-look-ahead-sec>5</turn-look-ahead-sec>
 			<turn-rate-deg-sec>2.8</turn-rate-deg-sec>
 			<turn-rate-dynamic>0</turn-rate-dynamic>
+			<turn-lead-out-factor>0.14</turn-lead-out-factor>
 		</config>
 		<gpss-in-turn type="bool">0</gpss-in-turn>
 		<cross-track-error-nm type="double">0</cross-track-error-nm>
