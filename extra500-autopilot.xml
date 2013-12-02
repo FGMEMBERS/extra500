@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-11-01
+      Date:             2013-12-02
 -->
 
 <autopilot name="STEC55X">
@@ -172,7 +172,7 @@
 				<sum>
 					<property>fcs/aileron-cmd-tot</property>	
 					<product>
-                                  		<property>/autopilot/mode/heading</property>
+                                  	<property>/autopilot/mode/heading</property>
 						<value>1.0</value>
 						<property>/autopilot/hdg-channel/cmd-ail-change</property>
 						<property>sim-dt-sec</property>
@@ -196,8 +196,9 @@
 <!--this makes the aileron pilot input to move along, so when the hdg mode is disconnected, the ailerons are in the correct position-->
 		<switch name="headingon">
 			<default value="/controls/flight/aileron"/>
-			<test value="/autopilot/hdg-channel/cmd-ap-ail-pos-norm">
+			<test logic="AND" value="/autopilot/hdg-channel/cmd-ap-ail-pos-norm">
 				/autopilot/mode/heading eq 1
+				/autopilot/settings/ap eq 1
 			</test>
 			<output>/controls/flight/aileron</output>
 		</switch>
@@ -808,8 +809,9 @@
 		<switch name="radionavon">
 			<default value="/controls/flight/aileron"/>
 			<test logic="AND" value="/autopilot/radionav-channel/cmd-ap-ail-pos-norm">
-				<test value="1">
+				<test logic="AND" value="1">
 					/autopilot/mode/nav eq 1
+					/autopilot/settings/ap eq 1
 				</test>
 				<test logic="OR" value="1">
 					/instrumentation/nav-source eq 0
@@ -979,7 +981,7 @@
 				<sum>
 					<property>fcs/elevator-cmd-tot</property>	
 					<product>
-                                  		<property>/autopilot/mode/gs-follow</property>
+                                  	<property>/autopilot/mode/gs-follow</property>
 						<value>1.0</value>
 						<property>/autopilot/gs-channel/pitch-error</property>
 						<property>sim-dt-sec</property>
@@ -1003,8 +1005,9 @@
 <!--this makes the elevator pilot input to move along, so when the gs mode is disconnected, the elevator is in the correct position-->
 		<switch name="gson">
 			<default value="/controls/flight/elevator"/>
-			<test value="/autopilot/gs-channel/cmd-ap-elev-pos-norm">
+			<test logic="AND" value="/autopilot/gs-channel/cmd-ap-elev-pos-norm">
 				/autopilot/mode/gs-follow eq 1
+				/autopilot/settings/ap eq 1
 			</test>
 			<output>/controls/flight/elevator</output>
 		</switch>
@@ -1621,6 +1624,7 @@
 			<test logic="AND" value="/autopilot/fms-channel/cmd-ap-ail-pos-norm">
 				/autopilot/mode/nav eq 1
 				/instrumentation/nav-source eq 2
+				/autopilot/settings/ap eq 1
 			</test>
 			<output>/controls/flight/aileron</output>
 		</switch>
@@ -1812,8 +1816,9 @@
 <!--this makes the elevator pilot input to move along, so when the vs mode is disconnected, the elevator is in the correct position-->
 		<switch name="vson">
 			<default value="/controls/flight/elevator"/>
-			<test value="/autopilot/vs-channel/cmd-ap-elev-pos-norm">
+			<test logic="AND" value="/autopilot/vs-channel/cmd-ap-elev-pos-norm">
 				/autopilot/mode/vs eq 1
+				/autopilot/settings/ap eq 1
 			</test>
 			<output>/controls/flight/elevator</output>
 		</switch>
@@ -2063,6 +2068,7 @@
 			<test logic="AND" value="/autopilot/alt-channel/cmd-ap-elev-pos-norm">
 				/autopilot/mode/vs eq 0
 				/autopilot/mode/alt eq 1
+				/autopilot/settings/ap eq 1
 			</test>
 			<output>/controls/flight/elevator</output>
 		</switch>
@@ -2186,6 +2192,7 @@
 			<test logic="AND" value="/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm">
 				/autopilot/mode/trim eq 1
 				/autopilot/settings/trim eq 1
+				/autopilot/settings/ap eq 1
 			</test>
 			<output>/controls/flight/elevator-trim</output>
 		</switch>
@@ -2202,6 +2209,7 @@
 			<test logic="AND" value="1">
 				<test value="1">
 					/autopilot/settings/yawdamper eq 1
+					/autopilot/settings/ap eq 1
 				</test>
 				<test logic="OR" value="1">
 					/autopilot/mode/heading eq 1

@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             01.12.2013
+      Date:             02.12.2013
 
 
 ************************************************************************
@@ -560,6 +560,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<trim type="bool">false</trim>
 		<yawdamper type="int">0</yawdamper>
 		<dto-leg type="int">0</dto-leg>
+		<ap type="bool">false</ap>
 	</settings>
 	<route-manager>
 		<current-wp>-1</current-wp>
