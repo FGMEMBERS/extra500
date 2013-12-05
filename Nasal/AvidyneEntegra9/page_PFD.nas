@@ -17,7 +17,7 @@
 #      Date: Jul 20 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             30.09.13
+#      Date:             05.12.13
 #
 
 
@@ -97,11 +97,9 @@ var AutopilotWidget = {
 				me._can.State.setText("AP RDY");
 				me._can.State.setColor(COLOR["Green"]);
 				me._can.State.setVisible(1);
-				me._can.ModeFD.setVisible(1);
+				me._can.ModeFD.setVisible(0);
 			}else{
-				me._can.State.setText("AP");
-				me._can.State.setColor(COLOR["Green"]);
-				me._can.State.setVisible(1);
+				me._can.State.setVisible(0);
 				me._can.ModeFD.setVisible(1);
 			}
 		}
@@ -166,13 +164,17 @@ var AutopilotWidget = {
 	_onAP : func(n){
 		if(n.getValue()){
 			me._can.ModeFD.setText("AP");
-			me._Page._widget.Attitude._can.FDBug.setVisible(0);
+#			me._Page._widget.Attitude._can.FDBug.set("fill",COLOR["Magenta"]);
+			me._Page._widget.Attitude._can.FDBug.setVisible(1);
 		}
 	},
 	_onFP : func(n){
 		if(n.getValue()){
 			me._can.ModeFD.setText("FD");
+			me._Page._widget.Attitude._can.FDBug.set("fill",COLOR["Green"]);
 			me._Page._widget.Attitude._can.FDBug.setVisible(1);
+#		} else {
+#			me._Page._widget.Attitude._can.FDBug.setVisible(0);
 		}
 	},
 	init : func(instance=me){
@@ -596,7 +598,8 @@ var AttitudeIndicatorWidget = {
 			pitch	: props.globals.initNode("/orientation/pitch-deg",0.0,"DOUBLE"),
 			roll	: props.globals.initNode("/orientation/roll-deg",0.0,"DOUBLE"),
 			SlipSkid: props.globals.initNode("/instrumentation/slip-skid-ball/indicated-slip-skid",0.0,"DOUBLE"),
-			
+			fdroll: props.globals.initNode("/autopilot/hdg-channel/fld-bank-deg",0.0,"DOUBLE"),
+			fdpitch: props.globals.initNode("/autopilot/vs-channel/fld-pitch-deg",0.0,"DOUBLE"),
 		};
 		m._can		= {
 			PitchLadder	: m._group.getElementById("PitchLadder").updateCenter().set("clip","rect(144px, 1293px, 671px, 750px)"),
@@ -610,6 +613,8 @@ var AttitudeIndicatorWidget = {
 		m._pitch	= 0;
 		m._roll		= 0;
 		m._slipskid	= 0;
+		m._fdroll = 0;
+		m._fdpitch = 0;
 		return m;
 	},
 	setListeners : func(instance) {
@@ -634,7 +639,9 @@ var AttitudeIndicatorWidget = {
 		me._pitch	= me._ptree.pitch.getValue();
 		me._roll	= me._ptree.roll.getValue();
 		me._slipskid	= me._ptree.SlipSkid.getValue();
-		
+		me._fdroll	= me._ptree.fdroll.getValue();
+		me._fdpitch	= me._ptree.fdpitch.getValue();
+
 		me._can.PitchLadder.setRotation(-me._roll * global.CONST.DEG2RAD);
 		me._can.PitchLadder.setTranslation(0,me._pitch * 10);
 		me._can.SlipSkid.setTranslation(-me._slipskid * 50,0);
@@ -642,6 +649,9 @@ var AttitudeIndicatorWidget = {
 		
 		me._can.Horizon.setTranslation(0,me._pitch * 10);
 		me._can.Horizon.setRotation(-me._roll * global.CONST.DEG2RAD);
+
+#		me._can.FDBug.setTranslation(0,-me._fdpitch * 10);
+		me._can.FDBug.setRotation(me._fdroll * global.CONST.DEG2RAD);
 		
 	},
 	
