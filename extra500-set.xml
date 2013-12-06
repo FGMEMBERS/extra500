@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             02.12.2013
+      Date:             06.12.2013
 
 
 ************************************************************************
@@ -683,6 +683,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<gs-ndefl-gain-kd type="double">15.0</gs-ndefl-gain-kd>
 		<accel-rate-gain type="double">20.0</accel-rate-gain> 
 		<pitch-error-gain type="double">-0.65</pitch-error-gain>
+		<fd-gain type="double">10</fd-gain>
 	</gs-channel>
 	<alt-channel>	
 		<turnrate-gain type="double">10.0</turnrate-gain>

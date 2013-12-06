@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-12-02
+      Date:             2013-12-06
 -->
 
 <autopilot name="STEC55X">
@@ -974,6 +974,17 @@
 				</product>
 			</function>
 		</fcs_function>
+
+		<fcs_function name="/autopilot/gs-channel/fld-pitch-deg">
+			<function>
+				<product>
+					<property>/autopilot/gs-channel/gs-needle-deflection-norm</property>
+					<property>/autopilot/gs-channel/fd-gain</property>
+				</product>
+			</function>
+		</fcs_function>
+
+
 
 <!-- moving the elevator -->
 		<fcs_function name="/autopilot/gs-channel/cmd-ap-elev-pos-norm-raw">
@@ -2319,6 +2330,77 @@
 				/autopilot/mode/yawtrim eq 1
 			</test>
 			<output>/controls/flight/rudder</output>
+		</switch>
+
+	</channel>
+
+<!--****************************FLIGHT DIRECTOR***************************************************************************-->
+
+	<channel name="flightdirector">
+<!--
+/autopilot/hdg-channel/fld-bank-deg
+/autopilot/radionav-channel/fld-bank-deg
+/autopilot/fms-channel/fld-bank-deg
+
+/autopilot/flight-director/fld-bank-deg
+
+
+/autopilot/alt-channel/fld-pitch-deg
+/autopilot/vs-channel/fld-pitch-deg
+
+/autopilot/flight-director/fld-pitch-deg
+-->
+
+		<switch name="fldbank1">
+			<default value="0"/>
+			<test value="/autopilot/hdg-channel/fld-bank-deg">
+				/autopilot/mode/heading eq 1
+			</test>
+			<output>/autopilot/flight-director/fld-bank-deg</output>
+		</switch>
+
+		<switch name="fldbank2">
+			<default value="/autopilot/flight-director/fld-bank-deg"/>
+			<test logic="AND" value="/autopilot/radionav-channel/fld-bank-deg">
+          			/autopilot/mode/heading eq 0
+          			/autopilot/mode/nav eq 1
+			</test>
+			<output>/autopilot/flight-director/fld-bank-deg</output>
+		</switch>
+
+		<switch name="fldbank3">
+			<default value="/autopilot/flight-director/fld-bank-deg"/>
+			<test logic="AND" value="/autopilot/fms-channel/fld-bank-deg">
+				/autopilot/mode/nav eq 1
+				/instrumentation/nav-source eq 2
+			</test>
+			<output>/autopilot/flight-director/fld-bank-deg</output>
+		</switch>
+
+
+		<switch name="fldpitch1">
+			<default value="0"/>
+			<test value="/autopilot/vs-channel/fld-pitch-deg">
+          			/autopilot/mode/vs eq 1
+			</test>
+			<output>/autopilot/flight-director/fld-pitch-deg</output>
+		</switch>
+
+		<switch name="fldpitch2">
+			<default value="/autopilot/flight-director/fld-pitch-deg"/>
+			<test logic="AND" value="/autopilot/alt-channel/fld-pitch-deg">
+          			/autopilot/mode/vs eq 0
+          			/autopilot/mode/alt eq 1
+			</test>
+			<output>/autopilot/flight-director/fld-pitch-deg</output>
+		</switch>
+
+		<switch name="fldpitch3">
+			<default value="/autopilot/flight-director/fld-pitch-deg"/>
+			<test logic="AND" value="/autopilot/gs-channel/fld-pitch-deg">
+          			/autopilot/mode/gs-follow eq 1
+			</test>
+			<output>/autopilot/flight-director/fld-pitch-deg</output>
 		</switch>
 
 	</channel>
