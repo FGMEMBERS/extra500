@@ -611,7 +611,7 @@ var AttitudeIndicatorWidget = {
 			BankAngle	: m._group.getElementById("BankAngleIndicator").updateCenter(),
 			SlipSkid	: m._group.getElementById("SlipSkidIndicator").updateCenter(),
 			Horizon		: m._group.getElementById("Horizon"),
-			FDBug		: m._group.getElementById("FD_Bug").setVisible(0),
+			FDBug		: m._group.getElementById("FD_Bug").setVisible(0).updateCenter(),
 			FDBugColor	: m._group.getElementById("path5241"),
 			
 		};
