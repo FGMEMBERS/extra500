@@ -657,7 +657,7 @@ var AttitudeIndicatorWidget = {
 		me._can.Horizon.setRotation(-me._roll * global.CONST.DEG2RAD);
 
 		me._can.FDBug.setTranslation(0,-me._fdpitch * 10);
-#		me._can.FDBug.setRotation(me._fdroll * global.CONST.DEG2RAD);
+		me._can.FDBug.setRotation(me._fdroll * global.CONST.DEG2RAD);
 		
 	},
 	
