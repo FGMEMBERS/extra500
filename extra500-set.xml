@@ -879,15 +879,15 @@ JSBSim Extra Aircraft - Extra 500.
 		</relays>
 		<solenoids>
 			<mainvalve>
-				<state>0</state>
+				<state type="double">0</state>
         			<serviceable type="bool">true</serviceable>
 			</mainvalve>
 			<upperdoorvalve>
-				<state>0</state>
+				<state type="double">0</state>
         			<serviceable type="bool">true</serviceable>
 			</upperdoorvalve>
 			<lowerdoorvalve>
-				<state>0</state>
+				<state type="double">0</state>
         			<serviceable type="bool">true</serviceable>
 			</lowerdoorvalve>
 		</solenoids>
@@ -1446,7 +1446,7 @@ JSBSim Extra Aircraft - Extra 500.
 					<voltOut type="double">0</voltOut>
 				</EnvironmentalBleed>
 				<GearControl>
-					<state type="int">0</state>
+					<state type="bool">1</state>
 				</GearControl>
 				<Hydraulic>
 					<voltOut type="double">0</voltOut>
@@ -1460,14 +1460,15 @@ JSBSim Extra Aircraft - Extra 500.
 					<voltOut type="double">0</voltOut>
 				</Dump>
 				<GearAux1>
-					<state type="int"></state>
+					<state type="bool">1</state>
 				</GearAux1>
 				<GearWarn>
 					<voltOut type="double">0</voltOut>
 				</GearWarn>
 			</BankD>
 			<GearAux2>
-				<voltOut type="double">0</voltOut>
+				<state type="bool">1</state>
+				<voltOut type="double">24</voltOut>
 			</GearAux2>
 		</CircuitBreaker>
 		<Side>
