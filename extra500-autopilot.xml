@@ -1183,6 +1183,14 @@
 			<output>/autopilot/fms-channel/target-gpss-turn-rate</output>
 		</switch>
 
+		<switch name="gpsselect8">
+			<default value="/instrumentation/gps/indicated-ground-speed-kt"/>
+			<test value="/instrumentation/gps[1]/indicated-ground-speed-kt">
+				/instrumentation/gps/serviceable eq 0
+			</test>
+			<output>/autopilot/fms-channel/indicated-ground-speed-kt</output>
+		</switch>
+
 <!-- setting the course of nav1 automatically when fms active and selected -->
 		<switch name="courseNav1set">
 			<default value="/instrumentation/nav/radials/selected-deg"/>
