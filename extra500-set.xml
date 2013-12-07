@@ -20,8 +20,8 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-
       Date:             15.11.2013
+
 
 
 ************************************************************************
@@ -561,6 +561,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<trim type="bool">false</trim>
 		<yawdamper type="int">0</yawdamper>
 		<dto-leg type="int">0</dto-leg>
+		<ap type="bool">false</ap>
 	</settings>
 	<route-manager>
 		<current-wp>-1</current-wp>
@@ -648,14 +649,15 @@ JSBSim Extra Aircraft - Extra 500.
 		<course-error-nm type="double">0</course-error-nm>
 		<cdi-deflection type="double">0</cdi-deflection>
 		<indicated-track-true-deg type="double">0</indicated-track-true-deg>
-		<!--gpss>
-			<gpss-turn-rate-p type="double">9.424581</gpss-turn-rate-p>		< rad/h/deg (standard turn at 20 deg course change) >
-			<time-lead-in-p type="double">0.000011</time-lead-in-p>			<!lead in time proportional to turn rate [h/ (rad/h)] >
+		<gpss>
+			<gpss-turn-rate-p type="double">9.424581</gpss-turn-rate-p>		<!-- rad/h/deg (standard turn at 20 deg course change) -->
+			<time-lead-in-p type="double">0.000011</time-lead-in-p>			<!-- lead in time proportional to turn rate [h/ (rad/h)] -->
+			<indicated-ground-speed-kt type="double">0</indicated-ground-speed-kt>
 			<next-bearing-deg type="double">0.0</next-bearing-deg>
 			<turn-timer type="double">0.0</turn-timer>
 			<turn-time-s type="double">0.0</turn-time-s>
 			<in-turn2>0</in-turn2>
-		</gpss-->
+		</gpss>
 		<dto>
 			<true-course-deg type="double">0</true-course-deg>
 		</dto>
@@ -682,6 +684,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<gs-ndefl-gain-kd type="double">15.0</gs-ndefl-gain-kd>
 		<accel-rate-gain type="double">20.0</accel-rate-gain> 
 		<pitch-error-gain type="double">-0.65</pitch-error-gain>
+		<fd-gain type="double">10</fd-gain>
 	</gs-channel>
 	<alt-channel>	
 		<turnrate-gain type="double">10.0</turnrate-gain>
@@ -718,15 +721,12 @@ JSBSim Extra Aircraft - Extra 500.
 	</pitotR>
 	<staticL>
 		<serviceable>1</serviceable>
-		<sideslip-error-factor>1</sideslip-error-factor>
 	</staticL>
 	<staticR>
 		<serviceable>1</serviceable>
-		<sideslip-error-factor>1</sideslip-error-factor>
 	</staticR>
 	<staticAP>
 		<serviceable>1</serviceable>
-		<sideslip-error-factor>0.1</sideslip-error-factor>
 	</staticAP>
 	<pneumatic>
 		<boots-timer-sec>0</boots-timer-sec>
@@ -880,15 +880,15 @@ JSBSim Extra Aircraft - Extra 500.
 		</relays>
 		<solenoids>
 			<mainvalve>
-				<state>0</state>
+				<state type="double">0</state>
         			<serviceable type="bool">true</serviceable>
 			</mainvalve>
 			<upperdoorvalve>
-				<state>0</state>
+				<state type="double">0</state>
         			<serviceable type="bool">true</serviceable>
 			</upperdoorvalve>
 			<lowerdoorvalve>
-				<state>0</state>
+				<state type="double">0</state>
         			<serviceable type="bool">true</serviceable>
 			</lowerdoorvalve>
 		</solenoids>
@@ -1364,7 +1364,8 @@ JSBSim Extra Aircraft - Extra 500.
 		<JETA_LBGAL type="double">6.7898</JETA_LBGAL>
 		<JETA_LB2L type="double">0.557518</JETA_LB2L>	
 		<PSI2INHG type="double">2.03602</PSI2INHG>
-		<SEC2MIN type="double">0.0166666666667</SEC2MIN>		
+		<SEC2MIN type="double">0.0166666666667</SEC2MIN>
+		<G0 type="double">9.80665</G0>		
 	</const>
 	<instrumentation>
 		<Audiopanel>
@@ -1462,7 +1463,7 @@ JSBSim Extra Aircraft - Extra 500.
 					<voltOut type="double">0</voltOut>
 				</EnvironmentalBleed>
 				<GearControl>
-					<state type="int">0</state>
+					<state type="bool">1</state>
 				</GearControl>
 				<Hydraulic>
 					<voltOut type="double">0</voltOut>
@@ -1476,14 +1477,15 @@ JSBSim Extra Aircraft - Extra 500.
 					<voltOut type="double">0</voltOut>
 				</Dump>
 				<GearAux1>
-					<state type="int"></state>
+					<state type="bool">1</state>
 				</GearAux1>
 				<GearWarn>
 					<voltOut type="double">0</voltOut>
 				</GearWarn>
 			</BankD>
 			<GearAux2>
-				<voltOut type="double">0</voltOut>
+				<state type="bool">1</state>
+				<voltOut type="double">24</voltOut>
 			</GearAux2>
 		</CircuitBreaker>
 		<Side>

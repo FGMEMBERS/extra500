@@ -26,11 +26,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.50980392"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.57131407"
-     inkscape:cx="861.6132"
-     inkscape:cy="348.27937"
+     inkscape:zoom="1.6159202"
+     inkscape:cx="1082.8164"
+     inkscape:cy="974.00386"
      inkscape:document-units="px"
-     inkscape:current-layer="layer15"
+     inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1025"
@@ -65,7 +65,7 @@
        id="guide5270" />
     <sodipodi:guide
        orientation="1,0"
-       position="1024,738.92659"
+       position="1024,1118.2483"
        id="guide5272" />
     <sodipodi:guide
        orientation="0,1"
@@ -2894,14 +2894,18 @@
          style="fill:#ffc215;fill-opacity:1;stroke:#000000;stroke-width:1.12498665;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0" />
     </g>
     <g
-       id="FD_Bug">
+       id="FD_Bug"
+       style="display:inline"
+       transform="translate(-7.7971924e-7,-1.5785809e-5)"
+       inkscape:transform-center-y="28.945242"
+       inkscape:transform-center-x="0.19144461">
       <path
          sodipodi:nodetypes="ccccccccc"
          inkscape:connector-curvature="0"
          id="path5241"
-         transform="translate(0,274)"
-         d="m 803.125,474.3125 -23.40625,0 0.0625,-30.21875 L 1024,416.875 l 220.875,57.4375 23.4062,0 -0.062,-30.21875 L 1024,416.875 z"
-         style="fill:#ff0eeb;fill-opacity:1;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+         d="m 802.48911,748.67847 -23.40625,0 0.0625,-30.21875 244.21884,-27.21872 220.875,57.43747 23.4062,0 -0.062,-30.21875 -244.2192,-27.21872 z"
+         style="fill:#ff00ff;fill-opacity:1;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         inkscape:transform-center-y="29.218765" />
       <path
          inkscape:connector-curvature="0"
          id="path5245"

@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-11-15
+      Date:             2013-12-06
 -->
 
 <autopilot name="STEC55X">
@@ -120,7 +120,7 @@
 			<kd>/autopilot/hdg-channel/lmd-hdg-error-kd</kd>
 		</pid>
 		
-<!-- the turn rate (inverted) as measured by the turn coordinator in deg/s (RH panel) -->
+<!-- the turn rate (inverted) as measured by the turn coordinator in deg/min (RH panel) -->
 		<fcs_function name="/autopilot/hdg-channel/turn-rate-inv">
 			<function>
 				<product>
@@ -140,6 +140,24 @@
 			</function>
 		</fcs_function>
 
+<!-- the flight director bank angle (relative to AC position/turnrate) -->
+		<fcs_function name="/autopilot/hdg-channel/fld-bank-deg">
+			<function>
+				<product>
+					<property>/autopilot/hdg-channel/turn-rate-error</property>	
+					<property>/autopilot/fms-channel/indicated-ground-speed-kt</property>
+					<property>/extra500/const/NM2METER</property>
+					<property>/extra500/const/SEC2MIN</property>
+					<property>/extra500/const/SEC2MIN</property>
+					<property>/extra500/const/SEC2MIN</property>
+					<pow>	
+						<property>/extra500/const/G0</property>
+						<value>-1</value>
+					</pow>
+				</product>
+			</function>
+		</fcs_function>
+
 <!-- the commanded aileron position change using the turn rate error -->
 		<pid name="/autopilot/hdg-channel/cmd-ail-change">
 			<input>/autopilot/hdg-channel/turn-rate-error</input>
@@ -154,7 +172,7 @@
 				<sum>
 					<property>fcs/aileron-cmd-tot</property>	
 					<product>
-                                  		<property>/autopilot/mode/heading</property>
+                                  	<property>/autopilot/mode/heading</property>
 						<value>1.0</value>
 						<property>/autopilot/hdg-channel/cmd-ail-change</property>
 						<property>sim-dt-sec</property>
@@ -178,8 +196,9 @@
 <!--this makes the aileron pilot input to move along, so when the hdg mode is disconnected, the ailerons are in the correct position-->
 		<switch name="headingon">
 			<default value="/controls/flight/aileron"/>
-			<test value="/autopilot/hdg-channel/cmd-ap-ail-pos-norm">
+			<test logic="AND" value="/autopilot/hdg-channel/cmd-ap-ail-pos-norm">
 				/autopilot/mode/heading eq 1
+				/autopilot/settings/ap eq 1
 			</test>
 			<output>/controls/flight/aileron</output>
 		</switch>
@@ -732,6 +751,25 @@
 			</function>
 		</fcs_function>
 
+<!-- the flight director bank angle (relative to AC position/turnrate) -->
+		<fcs_function name="/autopilot/radionav-channel/fld-bank-deg">
+			<function>
+				<product>
+					<property>/autopilot/radionav-channel/turn-rate-error</property>	
+					<property>/autopilot/fms-channel/indicated-ground-speed-kt</property>
+					<property>/extra500/const/NM2METER</property>
+					<property>/extra500/const/SEC2MIN</property>
+					<property>/extra500/const/SEC2MIN</property>
+					<property>/extra500/const/SEC2MIN</property>
+					<pow>	
+						<property>/extra500/const/G0</property>
+						<value>-1</value>
+					</pow>
+				</product>
+			</function>
+		</fcs_function>
+
+
 <!-- the commanded aileron position change using the turn rate error -->
 		<pid name="/autopilot/radionav-channel/cmd-ail-change">
 			<input>/autopilot/radionav-channel/turn-rate-error</input>
@@ -771,8 +809,9 @@
 		<switch name="radionavon">
 			<default value="/controls/flight/aileron"/>
 			<test logic="AND" value="/autopilot/radionav-channel/cmd-ap-ail-pos-norm">
-				<test value="1">
+				<test logic="AND" value="1">
 					/autopilot/mode/nav eq 1
+					/autopilot/settings/ap eq 1
 				</test>
 				<test logic="OR" value="1">
 					/instrumentation/nav-source eq 0
@@ -936,13 +975,24 @@
 			</function>
 		</fcs_function>
 
+		<fcs_function name="/autopilot/gs-channel/fld-pitch-deg">
+			<function>
+				<product>
+					<property>/autopilot/gs-channel/gs-needle-deflection-norm</property>
+					<property>/autopilot/gs-channel/fd-gain</property>
+				</product>
+			</function>
+		</fcs_function>
+
+
+
 <!-- moving the elevator -->
 		<fcs_function name="/autopilot/gs-channel/cmd-ap-elev-pos-norm-raw">
 			<function>
 				<sum>
 					<property>fcs/elevator-cmd-tot</property>	
 					<product>
-                                  		<property>/autopilot/mode/gs-follow</property>
+                                  	<property>/autopilot/mode/gs-follow</property>
 						<value>1.0</value>
 						<property>/autopilot/gs-channel/pitch-error</property>
 						<property>sim-dt-sec</property>
@@ -966,8 +1016,9 @@
 <!--this makes the elevator pilot input to move along, so when the gs mode is disconnected, the elevator is in the correct position-->
 		<switch name="gson">
 			<default value="/controls/flight/elevator"/>
-			<test value="/autopilot/gs-channel/cmd-ap-elev-pos-norm">
+			<test logic="AND" value="/autopilot/gs-channel/cmd-ap-elev-pos-norm">
 				/autopilot/mode/gs-follow eq 1
+				/autopilot/settings/ap eq 1
 			</test>
 			<output>/controls/flight/elevator</output>
 		</switch>
@@ -1342,6 +1393,24 @@
 			</function>
 		</fcs_function>
 
+<!-- the flight director bank angle (relative to AC position/turnrate) -->
+		<fcs_function name="/autopilot/fms-channel/fld-bank-deg">
+			<function>
+				<product>
+					<property>/autopilot/fms-channel/turn-rate-error</property>	
+					<property>/autopilot/fms-channel/indicated-ground-speed-kt</property>
+					<property>/extra500/const/NM2METER</property>
+					<property>/extra500/const/SEC2MIN</property>
+					<property>/extra500/const/SEC2MIN</property>
+					<property>/extra500/const/SEC2MIN</property>
+					<pow>	
+						<property>/extra500/const/G0</property>
+						<value>-1</value>
+					</pow>
+				</product>
+			</function>
+		</fcs_function>
+
 <!-- the commanded aileron position change using the turn rate error -->
 		<pid name="/autopilot/fms-channel/cmd-ail-change">
 			<input>/autopilot/fms-channel/turn-rate-error</input>
@@ -1383,6 +1452,7 @@
 			<test logic="AND" value="/autopilot/fms-channel/cmd-ap-ail-pos-norm">
 				/autopilot/mode/nav eq 1
 				/instrumentation/nav-source eq 2
+				/autopilot/settings/ap eq 1
 			</test>
 			<output>/controls/flight/aileron</output>
 		</switch>
@@ -1448,6 +1518,28 @@
 						<property>/autopilot/altsensor/vs-fpm</property>
 					</product>	
 				</sum>
+			</function>
+		</fcs_function>
+
+<!-- Flight director indication in deg relative to AC current VS-->
+		<fcs_function name="/autopilot/vs-channel/fld-pitch-deg">
+			<function>
+				<product>
+					<property>/extra500/const/RAD2DEG</property>
+					<property>/autopilot/vs-channel/vs-error-fpm</property>
+					<property>/extra500/const/FEET2METER</property>	
+					<pow>	
+						<max>
+							<product>
+								<property>/autopilot/fms-channel/indicated-ground-speed-kt</property>
+								<property>/extra500/const/NM2METER</property>
+								<property>/extra500/const/SEC2MIN</property>
+							</product>
+							<value>1</value>
+						</max>
+						<value>-1</value>
+					</pow>
+				</product>
 			</function>
 		</fcs_function>
 
@@ -1533,8 +1625,9 @@
 <!--this makes the elevator pilot input to move along, so when the vs mode is disconnected, the elevator is in the correct position-->
 		<switch name="vson">
 			<default value="/controls/flight/elevator"/>
-			<test value="/autopilot/vs-channel/cmd-ap-elev-pos-norm">
+			<test logic="AND" value="/autopilot/vs-channel/cmd-ap-elev-pos-norm">
 				/autopilot/mode/vs eq 1
+				/autopilot/settings/ap eq 1
 			</test>
 			<output>/controls/flight/elevator</output>
 		</switch>
@@ -1610,6 +1703,28 @@
 						<property>/autopilot/altsensor/vs-fpm</property>
 					</product>	
 				</sum>
+			</function>
+		</fcs_function>
+
+<!-- Flight director indication in deg relative to AC current VS-->
+		<fcs_function name="/autopilot/alt-channel/fld-pitch-deg">
+			<function>
+				<product>
+					<property>/extra500/const/RAD2DEG</property>
+					<property>/autopilot/alt-channel/vs-error-fpm</property>
+					<property>/extra500/const/FEET2METER</property>	
+					<pow>	
+						<max>
+							<product>
+								<property>/autopilot/fms-channel/indicated-ground-speed-kt</property>
+								<property>/extra500/const/NM2METER</property>
+								<property>/extra500/const/SEC2MIN</property>
+							</product>
+							<value>1</value>
+						</max>
+						<value>-1</value>
+					</pow>
+				</product>
 			</function>
 		</fcs_function>
 
@@ -1762,6 +1877,7 @@
 			<test logic="AND" value="/autopilot/alt-channel/cmd-ap-elev-pos-norm">
 				/autopilot/mode/vs eq 0
 				/autopilot/mode/alt eq 1
+				/autopilot/settings/ap eq 1
 			</test>
 			<output>/controls/flight/elevator</output>
 		</switch>
@@ -1885,6 +2001,7 @@
 			<test logic="AND" value="/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm">
 				/autopilot/mode/trim eq 1
 				/autopilot/settings/trim eq 1
+				/autopilot/settings/ap eq 1
 			</test>
 			<output>/controls/flight/elevator-trim</output>
 		</switch>
@@ -1901,6 +2018,7 @@
 			<test logic="AND" value="1">
 				<test value="1">
 					/autopilot/settings/yawdamper eq 1
+					/autopilot/settings/ap eq 1
 				</test>
 				<test logic="OR" value="1">
 					/autopilot/mode/heading eq 1
@@ -2010,6 +2128,77 @@
 				/autopilot/mode/yawtrim eq 1
 			</test>
 			<output>/controls/flight/rudder</output>
+		</switch>
+
+	</channel>
+
+<!--****************************FLIGHT DIRECTOR***************************************************************************-->
+
+	<channel name="flightdirector">
+<!--
+/autopilot/hdg-channel/fld-bank-deg
+/autopilot/radionav-channel/fld-bank-deg
+/autopilot/fms-channel/fld-bank-deg
+
+/autopilot/flight-director/fld-bank-deg
+
+
+/autopilot/alt-channel/fld-pitch-deg
+/autopilot/vs-channel/fld-pitch-deg
+
+/autopilot/flight-director/fld-pitch-deg
+-->
+
+		<switch name="fldbank1">
+			<default value="0"/>
+			<test value="/autopilot/hdg-channel/fld-bank-deg">
+				/autopilot/mode/heading eq 1
+			</test>
+			<output>/autopilot/flight-director/fld-bank-deg</output>
+		</switch>
+
+		<switch name="fldbank2">
+			<default value="/autopilot/flight-director/fld-bank-deg"/>
+			<test logic="AND" value="/autopilot/radionav-channel/fld-bank-deg">
+          			/autopilot/mode/heading eq 0
+          			/autopilot/mode/nav eq 1
+			</test>
+			<output>/autopilot/flight-director/fld-bank-deg</output>
+		</switch>
+
+		<switch name="fldbank3">
+			<default value="/autopilot/flight-director/fld-bank-deg"/>
+			<test logic="AND" value="/autopilot/fms-channel/fld-bank-deg">
+				/autopilot/mode/nav eq 1
+				/instrumentation/nav-source eq 2
+			</test>
+			<output>/autopilot/flight-director/fld-bank-deg</output>
+		</switch>
+
+
+		<switch name="fldpitch1">
+			<default value="0"/>
+			<test value="/autopilot/vs-channel/fld-pitch-deg">
+          			/autopilot/mode/vs eq 1
+			</test>
+			<output>/autopilot/flight-director/fld-pitch-deg</output>
+		</switch>
+
+		<switch name="fldpitch2">
+			<default value="/autopilot/flight-director/fld-pitch-deg"/>
+			<test logic="AND" value="/autopilot/alt-channel/fld-pitch-deg">
+          			/autopilot/mode/vs eq 0
+          			/autopilot/mode/alt eq 1
+			</test>
+			<output>/autopilot/flight-director/fld-pitch-deg</output>
+		</switch>
+
+		<switch name="fldpitch3">
+			<default value="/autopilot/flight-director/fld-pitch-deg"/>
+			<test logic="AND" value="/autopilot/gs-channel/fld-pitch-deg">
+          			/autopilot/mode/gs-follow eq 1
+			</test>
+			<output>/autopilot/flight-director/fld-pitch-deg</output>
 		</switch>
 
 	</channel>

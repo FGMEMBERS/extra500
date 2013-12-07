@@ -17,7 +17,7 @@
 #      Date: Jul 20 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             30.09.13
+#      Date:             05.12.13
 #
 
 
@@ -92,16 +92,16 @@ var AutopilotWidget = {
 			me._can.State.setColor(COLOR["Yellow"]);
 			me._can.State.setVisible(1);
 			me._can.ModeFD.setVisible(0);
+			me._Page._widget.Attitude._can.FDBug.setVisible(0);
 		}else{
 			if( me._ready == 1 ){
 				me._can.State.setText("AP RDY");
 				me._can.State.setColor(COLOR["Green"]);
 				me._can.State.setVisible(1);
-				me._can.ModeFD.setVisible(1);
+				me._can.ModeFD.setVisible(0);
+				me._Page._widget.Attitude._can.FDBug.setVisible(0);
 			}else{
-				me._can.State.setText("AP");
-				me._can.State.setColor(COLOR["Green"]);
-				me._can.State.setVisible(1);
+				me._can.State.setVisible(0);
 				me._can.ModeFD.setVisible(1);
 			}
 		}
@@ -144,6 +144,7 @@ var AutopilotWidget = {
 		me._can.ModeALT.setVisible(me._modeALT);
 		if(me._modeALT == 1){
 			me._Page._widget.Altitude._can.Bug.set("fill",COLOR["Magenta"]);
+			me._Page._widget.Attitude._can.FDBug.setVisible(1);
 		}else{
 			me._Page._widget.Altitude._can.Bug.set("fill","none");
 		}
@@ -153,12 +154,18 @@ var AutopilotWidget = {
 		me._can.ModeVS.setVisible(me._modeVS);
 		if(me._modeVS == 1){
 			me._Page._widget.VerticalSpeed._can.Bug.set("fill",COLOR["Magenta"]);
+			me._Page._widget.Attitude._can.FDBug.setVisible(1);
 		}else{
 			me._Page._widget.VerticalSpeed._can.Bug.set("fill","none");
 		}
 	},
 	_onGS : func(n){
-		me._can.ModeGS.setVisible(n.getValue());
+		if(n.getValue() == 1){
+			me._can.ModeGS.setVisible(1);
+			me._Page._widget.Attitude._can.FDBug.setVisible(1);
+		} else {
+			me._can.ModeGS.setVisible(0);
+		}
 	},
 	_onDSBL : func(n){
 		me._can.ModeDSBL.setVisible(n.getValue());
@@ -166,13 +173,13 @@ var AutopilotWidget = {
 	_onAP : func(n){
 		if(n.getValue()){
 			me._can.ModeFD.setText("AP");
-			me._Page._widget.Attitude._can.FDBug.setVisible(0);
+			me._Page._widget.Attitude._can.FDBugColor.set("fill",COLOR["Magenta"]);
 		}
 	},
 	_onFP : func(n){
 		if(n.getValue()){
 			me._can.ModeFD.setText("FD");
-			me._Page._widget.Attitude._can.FDBug.setVisible(1);
+			me._Page._widget.Attitude._can.FDBugColor.set("fill",COLOR["Green"]);
 		}
 	},
 	init : func(instance=me){
@@ -596,20 +603,24 @@ var AttitudeIndicatorWidget = {
 			pitch	: props.globals.initNode("/orientation/pitch-deg",0.0,"DOUBLE"),
 			roll	: props.globals.initNode("/orientation/roll-deg",0.0,"DOUBLE"),
 			SlipSkid: props.globals.initNode("/instrumentation/slip-skid-ball/indicated-slip-skid",0.0,"DOUBLE"),
-			
+			fdroll: props.globals.initNode("/autopilot/flight-director/fld-bank-deg",0.0,"DOUBLE"),
+			fdpitch: props.globals.initNode("/autopilot/flight-director/fld-pitch-deg",0.0,"DOUBLE"),
 		};
 		m._can		= {
 			PitchLadder	: m._group.getElementById("PitchLadder").updateCenter().set("clip","rect(144px, 1293px, 671px, 750px)"),
 			BankAngle	: m._group.getElementById("BankAngleIndicator").updateCenter(),
 			SlipSkid	: m._group.getElementById("SlipSkidIndicator").updateCenter(),
 			Horizon		: m._group.getElementById("Horizon"),
-			FDBug		: m._group.getElementById("FD_Bug").setVisible(0),
+			FDBug		: m._group.getElementById("FD_Bug").setVisible(0).updateCenter(),
+			FDBugColor	: m._group.getElementById("path5241"),
 			
 		};
 		
 		m._pitch	= 0;
 		m._roll		= 0;
 		m._slipskid	= 0;
+		m._fdroll = 0;
+		m._fdpitch = 0;
 		return m;
 	},
 	setListeners : func(instance) {
@@ -634,7 +645,9 @@ var AttitudeIndicatorWidget = {
 		me._pitch	= me._ptree.pitch.getValue();
 		me._roll	= me._ptree.roll.getValue();
 		me._slipskid	= me._ptree.SlipSkid.getValue();
-		
+		me._fdroll	= me._ptree.fdroll.getValue();
+		me._fdpitch	= me._ptree.fdpitch.getValue();
+
 		me._can.PitchLadder.setRotation(-me._roll * global.CONST.DEG2RAD);
 		me._can.PitchLadder.setTranslation(0,me._pitch * 10);
 		me._can.SlipSkid.setTranslation(-me._slipskid * 50,0);
@@ -642,6 +655,9 @@ var AttitudeIndicatorWidget = {
 		
 		me._can.Horizon.setTranslation(0,me._pitch * 10);
 		me._can.Horizon.setRotation(-me._roll * global.CONST.DEG2RAD);
+
+		me._can.FDBug.setTranslation(0,-me._fdpitch * 10);
+		me._can.FDBug.setRotation(me._fdroll * global.CONST.DEG2RAD);
 		
 	},
 	
