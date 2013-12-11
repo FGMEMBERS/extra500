@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             15.11.2013
+      Date:             13.12.2013
 
 
 
@@ -1138,12 +1138,13 @@ JSBSim Extra Aircraft - Extra 500.
 		<config>
 			<over-flight-arm-distance-nm>1</over-flight-arm-distance-nm>
 			<turn-anticipation>0</turn-anticipation>
-			<turn-look-ahead-sec>7</turn-look-ahead-sec>
+			<turn-look-ahead-sec>5</turn-look-ahead-sec>
 			<turn-rate-deg-sec>2.8</turn-rate-deg-sec>
 			<turn-rate-dynamic>0</turn-rate-dynamic>
 			<turn-lead-out-factor>0.3</turn-lead-out-factor>
 		</config>
 		<gpss-in-turn type="bool">0</gpss-in-turn>
+		<gpss-is-driving type="bool">0</gpss-is-driving>
 		<cross-track-error-nm type="double">0</cross-track-error-nm>
 		<desired-course-deg type="double">0</desired-course-deg>
 		<desired-turn-rate-deg-sec type="double">0</desired-turn-rate-deg-sec>
@@ -1165,12 +1166,13 @@ JSBSim Extra Aircraft - Extra 500.
 		<config>
 			<over-flight-arm-distance-nm>1</over-flight-arm-distance-nm>
 			<turn-anticipation>0</turn-anticipation>
-			<turn-look-ahead-sec>7</turn-look-ahead-sec>
+			<turn-look-ahead-sec>5</turn-look-ahead-sec>
 			<turn-rate-deg-sec>2.8</turn-rate-deg-sec>
 			<turn-rate-dynamic>0</turn-rate-dynamic>
 			<turn-lead-out-factor>0.3</turn-lead-out-factor>
 		</config>
 		<gpss-in-turn type="bool">0</gpss-in-turn>
+		<gpss-is-driving type="bool">0</gpss-is-driving>
 		<cross-track-error-nm type="double">0</cross-track-error-nm>
 		<desired-course-deg type="double">0</desired-course-deg>
 		<desired-turn-rate-deg-sec type="double">0</desired-turn-rate-deg-sec>

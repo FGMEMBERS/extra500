@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-12-06
+      Date:             2013-12-13
 -->
 
 <autopilot name="STEC55X">
@@ -1059,12 +1059,20 @@
 
 
 <!-- selecting GPS properties from gps1 or 2 depending on "servicable" -->
-		<switch name="gpsselect0">
+		<switch name="gpsselect0a">
 			<default value="/instrumentation/gps/gpss-in-turn"/>
 			<test value="/instrumentation/gps[1]/gpss-in-turn">
 				/instrumentation/gps/serviceable eq 0
 			</test>
 			<output>/autopilot/fms-channel/inturn</output>
+		</switch>
+
+		<switch name="gpsselect0b">
+			<default value="/instrumentation/gps/gpss-is-driving"/>
+			<test value="/instrumentation/gps[1]/gpss-is-driving">
+				/instrumentation/gps/serviceable eq 0
+			</test>
+			<output>/autopilot/fms-channel/isdriving</output>
 		</switch>
 
 <!-- setting gpss-enabled as a function of /autopilot/mode/gpss (autopilot.nas) -->
@@ -1335,15 +1343,16 @@
 			<kp>/autopilot/fms-channel/lmd-hdg-error-kp</kp>							<!--180deg/min devided by 20deg -->
 			<ki>/autopilot/fms-channel/lmd-hdg-error-ki</ki>
 			<kd>/autopilot/fms-channel/lmd-hdg-error-kd</kd>
-			<output>/autopilot/fms-channel/target-turn-rate-n</output>
+			<output>/autopilot/fms-channel/target-turn-rate-n0</output>
 		</pid>
 
-		<switch name="turndirection">
-			<default value="1"/>
-			<test logic="OR" value="-1">
-				/autopilot/fms-channel/crs-error/course-error-deg lt 0		
+		<switch name="leadin">
+			<default value="/autopilot/fms-channel/target-turn-rate-n0"/>
+			<test logic="AND" value="0">
+				/autopilot/fms-channel/isdriving eq 0
+				/autopilot/fms-channel/inturn eq 1
 			</test>
-			<output>/autopilot/fms-channel/turndirection</output>
+			<output>/autopilot/fms-channel/target-turn-rate-n</output>
 		</switch>
 
 <!-- target turn rate including gpss nominal turn rate -->
@@ -1352,7 +1361,6 @@
 				<sum>
 					<product>
 						<property>/autopilot/fms-channel/target-gpss-turn-rate</property> 
-						<!--property>/autopilot/fms-channel/turndirection</property-->
 						<value>60.0</value>
 						<property>/autopilot/fms-channel/inturn</property> 
 						<property>/autopilot/mode/gpss</property> 
