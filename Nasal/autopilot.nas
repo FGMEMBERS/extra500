@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg 
-#      Date:             26.10.2013
+#      Date:             17.12.2013
 #
 var FlightManagementSystemClass = {
 	new : func(root,name){
@@ -240,6 +240,8 @@ var AutopilotClass = {
 		me.nModeDiseng.setValue(1);
 		me.nModeGSArmed.setValue(0);
 		me.nModeGSFollow.setValue(0);
+		setprop("/autopilot/mode/cws-armed",0);
+		setprop("/autopilot/mode/cws",0);
 	},
 # checks is a roll mode (HDG or NAV) is active. Must be active to engage any pitch mode or yaw damper
 	_CheckRollModeActive : func(){
@@ -269,26 +271,30 @@ var AutopilotClass = {
 	},
 # Events from the UI
 	onClickHDG : func(){
-		if ( ( me.nModeRdy.getValue() == 1 ) or (me.nModeNav.getValue() == 1) or (me.nModeHeading.getValue() == 1) ){
+		if ( ( me.nModeRdy.getValue() == 1 ) or (me.nModeNav.getValue() == 1) or (me.nModeHeading.getValue() == 1) or (getprop("/autopilot/mode/cws") == 1) ){
 			me.nModeRdy.setValue(0);
 			me.nModeHeading.setValue(1);
 			me.nModeNav.setValue(0);
 			me.nModeNavGpss.setValue(0);
 			me.nModeGSArmed.setValue(0);
 			me.nModeGSFollow.setValue(0);
+			setprop("/autopilot/mode/cws-armed",0);
+			setprop("/autopilot/mode/cws",0);
 			me.ndisengSound.setValue(0);
 		} else {
 			me.nModeFail.setValue(1);
 		}
 	},
 	onClickHDGNAV : func(){
-		if ( (me.nModeRdy.getValue() == 1) or (me.nModeHeading.getValue() == 1) or (me.nModeNav.getValue() == 1) ) {
+		if ( (me.nModeRdy.getValue() == 1) or (me.nModeHeading.getValue() == 1) or (me.nModeNav.getValue() == 1) or (getprop("/autopilot/mode/cws") == 1) ) {
 			me.nModeRdy.setValue(0);
 			me.nModeNav.setValue(1);
 			me.nModeHeading.setValue(1);
 			me.nModeNavGpss.setValue(0);
 			me.nModeGSArmed.setValue(0);
 			me.nModeGSFollow.setValue(0);
+			setprop("/autopilot/mode/cws-armed",0);
+			setprop("/autopilot/mode/cws",0);
 			me.ndisengSound.setValue(0);
 		} else {
 			me.nModeFail.setValue(1);
@@ -297,11 +303,13 @@ var AutopilotClass = {
 #
 	onClickNAV : func(){
 		if ( (me.nModeNav.getValue() == 0) or ( (me.nModeNav.getValue() == 1) and (me.nModeHeading.getValue() == 1) ) ){
-			if ( (( me.nModeRdy.getValue() == 1 ) or (me.nModeHeading.getValue() == 1)) and ( (me.nNavsource.getValue() != 2) or ( (me.nNavsource.getValue() == 2) and (me.nRouteActive.getValue() == 1) ) ) ){
+			if ( (( me.nModeRdy.getValue() == 1 ) or (me.nModeHeading.getValue() == 1) or (getprop("/autopilot/mode/cws") == 1) ) and ( (me.nNavsource.getValue() != 2) or ( (me.nNavsource.getValue() == 2) and (me.nRouteActive.getValue() == 1) ) ) ){
 				me.nModeRdy.setValue(0);
 				me.nModeNav.setValue(1);
 				me.nModeHeading.setValue(0);
 				me.ndisengSound.setValue(0);
+				setprop("/autopilot/mode/cws-armed",0);
+				setprop("/autopilot/mode/cws",0);
 			} else {
 				me.nModeFail.setValue(1);
 			} 
@@ -443,7 +451,24 @@ var AutopilotClass = {
 	
 ########
 	onClickCWS : func(){
-					
+		if ( (getprop("/autopilot/mode/cws-armed") ==0) and ( ( me.nModeAlt.getValue() == 1 ) or ( me.nModeVs.getValue() == 1 ) or (me.nModeGSFollow.getValue() ==1) ) ){
+			setprop("/autopilot/mode/cws-armed",1);
+			setprop("/autopilot/mode/cws",1);
+			setprop("/autopilot/settings/ap",0);
+			me.nModeHeading.setValue(0);
+			me.nModeNav.setValue(0);
+			me.nModeNavGpss.setValue(0);
+			me.nModeApr.setValue(0);
+			me.nModeRev.setValue(0);
+			me.nModeAlt.setValue(0);
+			me.nModeVs.setValue(1);
+			me.nModeGSArmed.setValue(0);
+			me.nModeGSFollow.setValue(0);
+		} else if ( getprop("/autopilot/mode/cws-armed")==1 ) {
+			setprop("/autopilot/mode/cws-armed",0);
+			setprop("/autopilot/mode/cws",1);
+			setprop("/autopilot/settings/ap",1);
+		}			
 	},
 	onClickPitchCommand : func(){
 					
@@ -468,7 +493,7 @@ var AutopilotClass = {
 		UI.register("Autopilot disengage off",	func{extra500.autopilot.onClickDisengage(); } 	);
 		
 		UI.register("Autopilot CWS",		func{extra500.autopilot.onClickCWS(); } 	);
-		UI.register("Autopilot CWS on",		func{extra500.autopilot.onClickCWS(1); } 	);
+		UI.register("Autopilot CWS on",	func{extra500.autopilot.onClickCWS(1); } 	);
 		UI.register("Autopilot CWS off",	func{extra500.autopilot.onClickCWS(0); } 	);
 		
 		UI.register("Autopilot Pitch Command down",	func{extra500.autopilot.onClickPitchCommand(1); } 	);

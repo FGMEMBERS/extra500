@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-12-02
+      Date:             2013-12-16
 -->
 
 <flight_control name="FCS: extra500">
@@ -359,28 +359,37 @@
 			</function>
 		</fcs_function>
 
-		<switch name="ailradionavmode">
+		<switch name="ailcwsmode">
 			<default value="fcs/aileron-cmd-rdr-ail"/>
-			<test logic="AND" value="/autopilot/radionav-channel/cmd-ap-ail-pos-norm">
-				/autopilot/mode/nav eq 1
+			<test logic="AND" value="/autopilot/cws-channel/cmd-ap-ail-pos-norm">
+				/autopilot/mode/cws eq 1
 				/autopilot/settings/ap eq 1
 			</test>
 			<output>fcs/aileron-cmd-1</output>
 		</switch>
 
-		<switch name="ailfmsmode">
+		<switch name="ailradionavmode">
 			<default value="fcs/aileron-cmd-1"/>
-			<test logic="AND" value="/autopilot/fms-channel/cmd-ap-ail-pos-norm">
+			<test logic="AND" value="/autopilot/radionav-channel/cmd-ap-ail-pos-norm">
 				/autopilot/mode/nav eq 1
-				/instrumentation/nav-source eq 2
 				/autopilot/settings/ap eq 1
 			</test>
 			<output>fcs/aileron-cmd-2</output>
 		</switch>
 
+		<switch name="ailfmsmode">
+			<default value="fcs/aileron-cmd-2"/>
+			<test logic="AND" value="/autopilot/fms-channel/cmd-ap-ail-pos-norm">
+				/autopilot/mode/nav eq 1
+				/instrumentation/nav-source eq 2
+				/autopilot/settings/ap eq 1
+			</test>
+			<output>fcs/aileron-cmd-3</output>
+		</switch>
+
 	<!--hdg goes over nav (hdg+nav mode). hdg is switched off in radionav-channel (extra500-autopilot.xml). --> 
 		<switch name="ailhdgmode">
-			<default value="fcs/aileron-cmd-2"/>
+			<default value="fcs/aileron-cmd-3"/>
 			<test logic="AND" value="/autopilot/hdg-channel/cmd-ap-ail-pos-norm">
 				/autopilot/mode/heading eq 1
 				/autopilot/settings/ap eq 1

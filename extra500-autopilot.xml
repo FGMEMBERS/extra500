@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-12-13
+      Date:             2013-12-17
 -->
 
 <autopilot name="STEC55X">
@@ -125,7 +125,7 @@
 			<function>
 				<product>
 					<value>-180.0</value>
-					<property>/instrumentation/turn-indicator/indicated-turn-rate</property>  <!--pos right-->
+					<property>/instrumentation/turn-indicator/indicated-turn-rate</property>  <!--pos right (1 corresponds to 3deg/sec)-->
 				</product>
 			</function>
 		</fcs_function>
@@ -2148,6 +2148,139 @@
 
 	</channel>
 
+<!--****************************Control Wheel Steering (CWS)****************************************************************-->
+
+	<channel name="CWS">
+
+<!-- target turn rate setting () -->
+		<switch name="cwshdg">
+			<default value="/autopilot/cws-channel/target-turn-rate"/>
+			<test value="/instrumentation/turn-indicator/indicated-turn-rate">
+				/autopilot/mode/cws-armed eq 1
+			</test>
+			<output>/autopilot/cws-channel/target-turn-rate-nc</output>
+		</switch>
+
+<!-- clipping to 3deg/sec-->	
+		<pure_gain name="/autopilot/cws-channel/target-turn-rate">
+			<input>/autopilot/cws-channel/target-turn-rate-nc</input>
+			<gain>1.0</gain>
+			<clipto>
+				<min>-1</min>
+				<max>1</max>
+			</clipto>
+			<output>/autopilot/cws-channel/target-turn-rate</output>
+		</pure_gain>
+
+<!-- clipping measured vs to to 1600fpm-->	
+		<pure_gain name="/autopilot/cws-channel/target-vertical-speed">
+			<input>/autopilot/altsensor/vs-fpm</input>
+			<gain>1.0</gain>
+			<clipto>
+				<min>-1600</min>
+				<max>1600</max>
+			</clipto>
+			<output>/autopilot/cws-channel/vs-fpm-clipped</output>
+		</pure_gain>
+
+<!-- target climb rate setting (feet per minute) -->
+		<switch name="cwsclimb">
+			<default value="/autopilot/settings/vertical-speed-fpm"/>
+			<test value="/autopilot/cws-channel/vs-fpm-clipped">
+				/autopilot/mode/cws-armed eq 1
+			</test>
+			<output>/autopilot/settings/vertical-speed-fpm</output>
+		</switch>
+
+<!-- the turn rate (inverted) as measured by the turn coordinator in deg/min (RH panel) -->
+		<fcs_function name="/autopilot/cws-channel/turn-rate-inv">
+			<function>
+				<product>
+					<value>-1</value>
+					<property>/instrumentation/turn-indicator/indicated-turn-rate</property>  <!--pos right (1 corresponds to 3deg/sec)-->
+				</product>
+			</function>
+		</fcs_function>
+
+<!-- the turn rate error -->
+		<fcs_function name="/autopilot/cws-channel/turn-rate-error">
+			<function>
+				<product>
+					<value>180</value>
+					<sum>
+						<property>/autopilot/cws-channel/target-turn-rate</property>	
+						<property>/autopilot/cws-channel/turn-rate-inv</property>
+					</sum>
+				</product>
+			</function>
+		</fcs_function>
+
+<!-- the flight director bank angle (relative to AC position/turnrate) -->
+		<fcs_function name="/autopilot/cws-channel/fld-bank-deg">
+			<function>
+				<product>
+					<property>/autopilot/cws-channel/turn-rate-error</property>	
+					<property>/autopilot/fms-channel/indicated-ground-speed-kt</property>
+					<property>/extra500/const/NM2METER</property>
+					<property>/extra500/const/SEC2MIN</property>
+					<property>/extra500/const/SEC2MIN</property>
+					<property>/extra500/const/SEC2MIN</property>
+					<pow>	
+						<property>/extra500/const/G0</property>
+						<value>-1</value>
+					</pow>
+				</product>
+			</function>
+		</fcs_function>
+
+<!-- the commanded aileron position change using the turn rate error -->
+		<pid name="/autopilot/cws-channel/cmd-ail-change">
+			<input>/autopilot/cws-channel/turn-rate-error</input>
+			<kp>/autopilot/cws-channel/turn-rate-error-kp</kp>							
+			<ki>/autopilot/cws-channel/turn-rate-error-ki</ki>
+			<kd>/autopilot/cws-channel/turn-rate-error-kd</kd>
+		</pid>
+
+<!-- calculating the new aileron position-->
+		<fcs_function name="/autopilot/cws-channel/cmd-ap-ail-pos-norm-raw">
+			<function>
+				<sum>
+					<property>fcs/aileron-cmd-tot</property>	
+					<product>
+                                  	<property>/autopilot/mode/cws</property>
+						<value>1.0</value>
+						<property>/autopilot/cws-channel/cmd-ail-change</property>
+						<property>sim-dt-sec</property>
+					</product>
+				</sum>
+			</function>
+			<output>/autopilot/cws-channel/cmd-ap-ail-pos-norm-raw</output>
+		</fcs_function>
+
+<!-- making sure the aileron servo is not going to fast-->	
+		<actuator name="/autopilot/cws-channel/ail-servo">
+			<input>/autopilot/cws-channel/cmd-ap-ail-pos-norm-raw</input>
+			<rate_limit>0.2</rate_limit>
+			<clipto>
+				<min>-1</min>
+				<max>1</max>
+			</clipto>
+			<output>/autopilot/cws-channel/cmd-ap-ail-pos-norm</output>
+		</actuator>
+
+<!--this makes the aileron pilot input to move along, so when the cws mode is disconnected, the ailerons are in the correct position-->
+		<switch name="cwson1">
+			<default value="/controls/flight/aileron"/>
+			<test logic="AND" value="/autopilot/cws-channel/cmd-ap-ail-pos-norm">
+				/autopilot/mode/cws eq 1
+				/autopilot/settings/ap eq 1
+			</test>
+			<output>/controls/flight/aileron</output>
+		</switch>
+
+	</channel>
+
+
 <!--****************************FLIGHT DIRECTOR***************************************************************************-->
 
 	<channel name="flightdirector">
@@ -2167,13 +2300,21 @@
 
 		<switch name="fldbank1">
 			<default value="0"/>
+			<test value="/autopilot/cws-channel/fld-bank-deg">
+				/autopilot/mode/cws eq 1
+			</test>
+			<output>/autopilot/flight-director/fld-bank-deg</output>
+		</switch>
+
+		<switch name="fldbank2">
+			<default value="/autopilot/flight-director/fld-bank-deg"/>
 			<test value="/autopilot/hdg-channel/fld-bank-deg">
 				/autopilot/mode/heading eq 1
 			</test>
 			<output>/autopilot/flight-director/fld-bank-deg</output>
 		</switch>
 
-		<switch name="fldbank2">
+		<switch name="fldbank3">
 			<default value="/autopilot/flight-director/fld-bank-deg"/>
 			<test logic="AND" value="/autopilot/radionav-channel/fld-bank-deg">
           			/autopilot/mode/heading eq 0
@@ -2182,7 +2323,7 @@
 			<output>/autopilot/flight-director/fld-bank-deg</output>
 		</switch>
 
-		<switch name="fldbank3">
+		<switch name="fldbank4">
 			<default value="/autopilot/flight-director/fld-bank-deg"/>
 			<test logic="AND" value="/autopilot/fms-channel/fld-bank-deg">
 				/autopilot/mode/nav eq 1

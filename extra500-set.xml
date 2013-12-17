@@ -20,8 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             15.12.2013
-
+      Date:             17.12.2013
 
 
 ************************************************************************
@@ -591,6 +590,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<apr type="int">0</apr>
 		<rdy type="int">0</rdy>
 		<cws type="int">0</cws>
+		<cws-armed type="int">0</cws-armed>
 		<fail type="int">0</fail>
 		<trim type="int">0</trim>
 		<trim-up type="int">0</trim-up>
@@ -703,6 +703,13 @@ JSBSim Extra Aircraft - Extra 500.
 		<accel-min type="double">-0.001</accel-min>
 		<accel-max type="double">0.001</accel-max>
 	</yawtrim-channel>
+	<cws-channel>
+		<target-turn-rate type="double">0</target-turn-rate>
+		<target-climb-rate type="double">0</target-climb-rate>
+		<turn-rate-error-kp type="double">0.0003</turn-rate-error-kp>
+		<turn-rate-error-ki type="double">0.00</turn-rate-error-ki>
+		<turn-rate-error-kd type="double">0.0025</turn-rate-error-kd>
+	</cws-channel>
 	<altsensor>
 		<c1>0.0</c1>
 		<c2>1.0</c2>
@@ -1229,6 +1236,9 @@ JSBSim Extra Aircraft - Extra 500.
        </engines>
 
 <nasal>
+      <canvas>
+      	<enabled type="bool">true</enabled>
+    	</canvas>
 	<global>
 		<file>Aircraft/extra500/Nasal/global.nas</file>
 		<file>Aircraft/extra500/Nasal/global.constant.nas</file>

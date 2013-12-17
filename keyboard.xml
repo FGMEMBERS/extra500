@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2013.06.23
+      Date:             2013.12.16
 -->
 <PropertyList>
 
@@ -33,6 +33,17 @@
 			 <binding n="0">
 				 <command>nasal</command>
 				 <script>e1.bitswap("fdm/jsbsim/state/controls-fixed")</script>                        
+			 </binding>
+		 </key>
+
+		 <key n="99">
+			 <name>c</name>
+			 <desc>CWS</desc>
+			 <binding n="0">
+				 <command>nasal</command>
+				 <script><![CDATA[
+					UI.click("Autopilot CWS");
+				]]></script> 
 			 </binding>
 		 </key>
 
