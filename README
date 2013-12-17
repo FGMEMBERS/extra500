@@ -16,7 +16,7 @@
       Author: Eric van den Berg
       Date: 2013-05-12
 
-      Last change:      2013-09-29
+      Last change:      2013-12-17
       Date:             Eric van den Berg
 
 ========================================================================
@@ -86,6 +86,7 @@ Principle Autopilot functionality (currently in place)
 - ALT 	Holds the current altitude (rounded to 100ft)
 - ALT+VS	Brings and holds the aircraft to the selected altitude (set ALT bug using the keypad, press to sync)
 		with the selected vertical speed.
+- CWS		Control Wheel Steering. Follows the turn rate and vertical speed set by controlling the aircraft. 
 
 To disconnect press: d
 
@@ -93,6 +94,9 @@ General remarks to autopilot operation:
 A roll mode (HDG, NAV/GPSS, APR/REV) must be engaged for a pitch mode (ALT, VS, GS) can engage.
 A roll mode (HDG, NAV/GPSS, APR/REV) must be engaged for the yaw trim to work
 If pitch trim is switched off, autotrim is not available, but the AP will indicate where to (manually) trim to.
+
+For CWS, a roll and pitch mode must be engaged. Press c (caution: AP servos will disengage!) and with your controls 
+bring the aircraft at your wished turn and climb rate. Press c again and the AP will engage and keep those rates.
 
 The AP will disengage when:
 - the disconnect switch is pressed (d)
