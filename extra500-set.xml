@@ -97,6 +97,10 @@ JSBSim Extra Aircraft - Extra 500.
 			<name>D</name>
 			<desc>Disconnect Autopilot</desc>
 		</key>
+     	      <key>
+			<name>C</name>
+			<desc>Arm and engage CWS</desc>
+		</key>
 	</help>
 	
 	<!-- position the pilot viewpoint and angle -->

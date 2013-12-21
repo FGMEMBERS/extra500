@@ -17,7 +17,7 @@
 #      Date: Jul 20 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             05.12.13
+#      Date:             21.12.13
 #
 
 
@@ -1397,12 +1397,6 @@ var EnvironmentWidget = {
 	new: func(page,canvasGroup,name){
 		var m = {parents:[EnvironmentWidget,IfdWidget.new(page,canvasGroup,name)]};
 		m._class 	= "EnvironmentWidget";
-		m._ptree	= {
-			OAT		: props.globals.initNode("/environment/temperature-degc",0.0,"DOUBLE"),
-			WindDirection	: props.globals.initNode("/environment/wind-from-heading-deg",0.0,"DOUBLE"),
-			WindSpeed	: props.globals.initNode("/environment/wind-speed-kt",0.0,"DOUBLE"),
-			GroundSpeed	: props.globals.initNode("/velocities/groundspeed-kt",0.0,"DOUBLE"),
-		};
 		m._can		= {
 			WindVector	: m._group.getElementById("WindVector"),
 			WindArrow	: m._group.getElementById("WindArrow").updateCenter(),
@@ -1410,32 +1404,28 @@ var EnvironmentWidget = {
 			GroundSpeed	: m._group.getElementById("GroundSpeed"),
 			IceWarning	: m._group.getElementById("ICE_Warning").setVisible(0),	
 		};
-		m._windSpeed 		= 0;
-		m._windDirection 	= 0;
-		m._oat			= 0;
-		m._groundSpeed		= 0;
 		return m;
 	},
 	update2Hz : func(now,dt){
 		me._can.IceWarning.setVisible(getprop("/extra500/system/deice/iceWarning"));
 	},
 	update20Hz : func(now,dt){
-		me._OAT			= me._ptree.OAT.getValue();
-		me._windDirection	= me._ptree.WindDirection.getValue();
-		me._windSpeed		= me._ptree.WindSpeed.getValue();
-		me._groundSpeed		= me._ptree.GroundSpeed.getValue();
+		var OAT			= getprop("/fdm/jsbsim/aircraft/engine/OAT-degC");
+		var windDirection		= getprop("/environment/wind-from-heading-deg");
+		var windSpeed		= getprop("/environment/wind-speed-kt");
+		var groundSpeed		= getprop("/velocities/groundspeed-kt");
 				
-		if (me._windSpeed > 2){
-			me._can.WindVector.setText(sprintf("%03i / %3i",me._windDirection,me._windSpeed));
-			me._can.WindArrow.setRotation((180 + me._windDirection - me._Page._widget.HSI._heading) * global.CONST.DEG2RAD);
+		if (windSpeed > 2){
+			me._can.WindVector.setText(sprintf("%03i / %3i",windDirection,windSpeed));
+			me._can.WindArrow.setRotation((180 + windDirection - me._Page._widget.HSI._heading) * global.CONST.DEG2RAD);
 			me._can.WindArrow.setVisible(1);
 		}else{
 			me._can.WindVector.setText("Wind Calm");
 			me._can.WindArrow.setVisible(0);
 		}
 		
-		me._can.OAT.setText(sprintf("%2i",me._OAT));
-		me._can.GroundSpeed.setText(sprintf("%2i",me._groundSpeed));
+		me._can.OAT.setText(sprintf("%2i",OAT+ 0.5* math.sgn(OAT)));
+		me._can.GroundSpeed.setText(sprintf("%2i",groundSpeed));
 		
 	},
 };
