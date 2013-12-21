@@ -362,6 +362,56 @@
 			<output>aircraft/engine/FT-degC</output>
 		</switch>
 
+<!-- IAT TEMP (engine instrument) -->
+		<fcs_function name="aircraft/engine/IAT-degC">
+    			<function>
+       			<description>Indicated Outside Air Temperature</description>
+			<difference>
+				<product>
+					<sum>
+						<property>/environment/temperature-degc</property>
+						<value>273.15</value>
+					</sum>
+					<sum>
+						<value>1</value>
+						<product>
+							<value>0.5</value> <!--k-factor -->
+							<value>0.2</value> 
+							<property>velocities/mach</property>
+							<property>velocities/mach</property>
+						</product>
+					</sum>
+				</product>
+				<value>273.15</value>
+			</difference>
+    			</function>
+		</fcs_function>
+
+<!-- OAT TEMP (IFD-s) -->
+		<fcs_function name="aircraft/engine/OAT-degC">
+    			<function>
+       			<description>Indicated Outside Air Temperature</description>
+			<difference>
+				<product>
+					<sum>
+						<property>/environment/temperature-degc</property>
+						<value>273.15</value>
+					</sum>
+					<sum>
+						<value>1</value>
+						<product>
+							<value>0.8</value> <!--k-factor -->
+							<value>0.2</value> 
+							<property>velocities/mach</property>
+							<property>velocities/mach</property>
+						</product>
+					</sum>
+				</product>
+				<value>273.15</value>
+			</difference>
+    			</function>
+		</fcs_function>
+
 <!--OIL TEMP -->
 		<fcs_function name="aircraft/engine/Delta-OT-degC">
     			<function>

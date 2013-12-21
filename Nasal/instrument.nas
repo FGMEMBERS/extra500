@@ -17,7 +17,7 @@
 #      Date: Jun 27 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             23.09.13
+#      Date:             21.12.13
 #
 
 var DigitalInstrumentPackageClass = {
@@ -35,7 +35,7 @@ var DigitalInstrumentPackageClass = {
 		m._backlight = LedClass.new("extra500/instrumentation/DIP/Backlight","DIP Backlight","extra500/system/dimming/Instrument",0.2);
 		
 				
-		m.nIAT = props.globals.initNode("/environment/temperature-degc",0.0,"DOUBLE");
+		m.nIAT = props.globals.initNode("/fdm/jsbsim/aircraft/engine/IAT-degC",0.0,"DOUBLE");
 		m.nFuelTemp = props.globals.initNode("/fdm/jsbsim/aircraft/engine/FT-degC",0.0,"DOUBLE");
 		m.nFuelPress = props.globals.initNode("/fdm/jsbsim/aircraft/engine/FP-psi",0.0,"DOUBLE");
 		
@@ -98,9 +98,9 @@ var DigitalInstrumentPackageClass = {
 # 		me.nIndicatedFuelPress.setValue(me.nFuelPress.getValue() + 0.5);
 # 		me.nIndicatedFuelTemp.setValue(me.nFuelTemp.getValue() + 0.5);
 		interpolate(me.nIndicatedFuelPress ,me.nFuelPress.getValue()+ 0.5,me._dt);
-		interpolate(me.nIndicatedFuelTemp ,math.abs(me.nFuelTemp.getValue()+ 0.5),me._dt);
+		interpolate(me.nIndicatedFuelTemp ,math.abs(me.nFuelTemp.getValue()+ 0.5* math.sgn(me.nIAT.getValue())),me._dt);
 		
-		me.nIndicatedIAT.setValue(math.abs(me.nIAT.getValue() + 0.5));
+		me.nIndicatedIAT.setValue(math.abs(me.nIAT.getValue() + 0.5 * math.sgn(me.nIAT.getValue())));
 		
 		
 	}

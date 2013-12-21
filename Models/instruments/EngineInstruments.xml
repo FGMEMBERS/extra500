@@ -810,7 +810,7 @@
 		<object-name>EngineInstruments.IAT.minus</object-name>
 		<condition>
 			<less-than>
-				<property>environment/temperature-degc</property>
+				<property>/fdm/jsbsim/aircraft/engine/IAT-degC</property>
 				<value>0</value>
 			</less-than>
 		</condition>
