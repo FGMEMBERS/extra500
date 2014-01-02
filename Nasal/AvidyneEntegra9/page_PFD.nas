@@ -17,7 +17,7 @@
 #      Date: Jul 20 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             21.12.13
+#      Date:             02.01.14
 #
 
 
@@ -70,6 +70,7 @@ var AutopilotWidget = {
 		append(me._listeners, setlistener("/autopilot/mode/apr",func(n){me._onAPR(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/mode/gpss",func(n){me._onGPSS(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/mode/cws",func(n){me._onCWS(n)},1,0));
+		append(me._listeners, setlistener("/autopilot/mode/cws-armed",func(n){me._onCWSarmed(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/mode/cap",func(n){me._onCAP(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/mode/soft",func(n){me._onSOFT(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/mode/trim",func(n){me._onTRIM(n)},1,0));
@@ -130,6 +131,18 @@ var AutopilotWidget = {
 	_onCWS : func(n){
 		me._can.ModeCWS.setVisible(n.getValue());
 	},
+	_onCWSarmed : func(n){
+		var cwsarmed = n.getValue();
+		var cws = getprop("/autopilot/mode/cws");
+		if (cwsarmed == 1) {
+			me._Page._widget.Attitude._can.FDBug.setVisible(0);
+			me._can.ModeFD.setVisible(0);
+		}
+		if ( (cws == 1) and (cwsarmed == 0) ) {
+			me._can.ModeFD.setVisible(1);
+			me._Page._widget.Attitude._can.FDBug.setVisible(1);
+		}
+	},
 	_onCAP : func(n){
 		me._can.ModeCAP.setVisible(n.getValue());
 	},
@@ -154,7 +167,9 @@ var AutopilotWidget = {
 		me._can.ModeVS.setVisible(me._modeVS);
 		if(me._modeVS == 1){
 			me._Page._widget.VerticalSpeed._can.Bug.set("fill",COLOR["Magenta"]);
-			me._Page._widget.Attitude._can.FDBug.setVisible(1);
+			if ( getprop("/autopilot/mode/cws-armed") == 0) {
+				me._Page._widget.Attitude._can.FDBug.setVisible(1);
+			}	
 		}else{
 			me._Page._widget.VerticalSpeed._can.Bug.set("fill","none");
 		}
