@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg 
-#      Date:             17.12.2013
+#      Date:             02.01.2014
 #
 var FlightManagementSystemClass = {
 	new : func(root,name){
