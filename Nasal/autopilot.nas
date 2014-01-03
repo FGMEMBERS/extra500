@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg 
-#      Date:             02.01.2014
+#      Date:             03.01.2014
 #
 var FlightManagementSystemClass = {
 	new : func(root,name){
@@ -454,7 +454,6 @@ var AutopilotClass = {
 		if ( (getprop("/autopilot/mode/cws-armed") ==0) and ( ( me.nModeAlt.getValue() == 1 ) or ( me.nModeVs.getValue() == 1 ) or (me.nModeGSFollow.getValue() ==1) ) ){
 			setprop("/autopilot/mode/cws-armed",1);
 			setprop("/autopilot/mode/cws",1);
-			setprop("/autopilot/settings/ap",0);
 			me.nModeHeading.setValue(0);
 			me.nModeNav.setValue(0);
 			me.nModeNavGpss.setValue(0);
@@ -467,7 +466,6 @@ var AutopilotClass = {
 		} else if ( getprop("/autopilot/mode/cws-armed")==1 ) {
 			setprop("/autopilot/mode/cws-armed",0);
 			setprop("/autopilot/mode/cws",1);
-			setprop("/autopilot/settings/ap",1);
 		}			
 	},
 	onClickPitchCommand : func(){
