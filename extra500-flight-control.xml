@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-12-16
+      Date:             2014-01-03
 -->
 
 <flight_control name="FCS: extra500">
@@ -225,6 +225,7 @@
 			<test logic="AND" value="/autopilot/alt-channel/cmd-ap-elev-pos-norm">
 				/autopilot/mode/alt eq 1
 				/autopilot/settings/ap eq 1
+				/autopilot/mode/cws-armed eq 0
 			</test>
 			<output>fcs/elevator-cmd-tot-nc2</output>
 		</switch>
@@ -234,6 +235,7 @@
 			<test logic="AND" value="/autopilot/vs-channel/cmd-ap-elev-pos-norm">
 				/autopilot/mode/vs eq 1
 				/autopilot/settings/ap eq 1
+				/autopilot/mode/cws-armed eq 0
 			</test>
 			<output>fcs/elevator-cmd-tot-nc3</output>
 		</switch>
@@ -243,6 +245,7 @@
 			<test logic="AND" value="/autopilot/gs-channel/cmd-ap-elev-pos-norm">
 				/autopilot/mode/gs eq 1
 				/autopilot/settings/ap eq 1
+				/autopilot/mode/cws-armed eq 0
 			</test>
 			<output>fcs/elevator-cmd-tot-nc</output>
 		</switch>
@@ -317,6 +320,7 @@
 				<test logic="AND" value="1">
 					/autopilot/settings/trim eq 1
 					/autopilot/settings/ap eq 1
+					/autopilot/mode/cws-armed eq 0
 				</test>
 				<test logic="OR" value="1">
 					/autopilot/mode/alt eq 1
@@ -364,6 +368,7 @@
 			<test logic="AND" value="/autopilot/cws-channel/cmd-ap-ail-pos-norm">
 				/autopilot/mode/cws eq 1
 				/autopilot/settings/ap eq 1
+				/autopilot/mode/cws-armed eq 0
 			</test>
 			<output>fcs/aileron-cmd-1</output>
 		</switch>
