@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: 05.01.14
+
+      Last change: Eric van den Berg     
+      Date: 07.01.14            
+
+-->
+
+<PropertyList>
+
+<path>wing.ac</path>
+
+<!-- Submodels -->
+
+
+<!-- Ailerons -->
+
+<animation>
+  <type>rotate</type>
+  <object-name>AilRH</object-name>
+  <property>surface-positions/left-aileron-pos-norm</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>19</dep></entry>
+   <entry><ind> 0</ind><dep>  0</dep></entry>
+   <entry><ind> 1</ind><dep>-27</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>0.615</x1-m>
+    <y1-m>-0.16</y1-m>
+    <z1-m>-4.4</z1-m>
+    <x2-m>0.653</x2-m>
+    <y2-m>-0.16</y2-m>
+    <z2-m>-5.5</z2-m>
+  </axis>
+</animation>
+
+<!-- Flaps -->
+
+ <animation>
+  <type>translate</type>
+  <object-name>FlapRH</object-name>
+  <property>surface-positions/flap-pos-norm</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>0.5</ind><dep>0.05</dep></entry>
+   <entry><ind>1</ind><dep>0.122</dep></entry>
+  </interpolation>  
+  <axis>
+   <x>1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+<animation>
+  <type>rotate</type>
+  <object-name>FlapRH</object-name>
+  <property>surface-positions/flap-pos-norm</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep> 30</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>0.48919</x1-m>
+    <y1-m>-0.14702</y1-m>
+    <z1-m>-0.55</z1-m>
+    <x2-m>0.63302</x2-m>
+    <y2-m>-0.14702</y2-m>
+    <z2-m>-4.4</z2-m>
+  </axis>
+</animation>
+
+<!-- lights -->
+
+  <effect>
+    <inherits-from>Effects/model-transparent</inherits-from>
+    <object-name>recolight.window.RH</object-name>
+  </effect>
+
+  <effect>
+    <inherits-from>Effects/model-transparent</inherits-from>
+    <object-name>strobe.window.RH</object-name>
+  </effect>
+
+  <animation>
+    <type>material</type>
+    <object-name>navlight.RH</object-name>
+    <condition>
+        <property>/extra500/light/nav/state</property>
+    </condition>
+    <emission>
+      <red>   0.0 </red>
+      <green> 1.0 </green>
+      <blue>  0.0 </blue>
+    </emission>
+  </animation>
+
+  <animation>
+    <type>material</type>
+    <object-name>strobe.RH</object-name>
+    <condition>
+        <property>/extra500/light/strobe/state</property>
+    </condition>
+    <emission>
+      <red>   1.0 </red>
+      <green> 1.0 </green>
+      <blue>  1.0 </blue>
+    </emission>
+  </animation>
+
+  <animation>
+    <type>material</type>
+    <object-name>recolight.RH</object-name>
+    <condition>
+        <property>/extra500/light/recognition/state</property>
+    </condition>
+    <emission>
+      <red>   1.0 </red>
+      <green> 1.0 </green>
+      <blue>  1.0 </blue>
+    </emission>
+  </animation>
+
+</PropertyList>
