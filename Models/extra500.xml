@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             07.01.2014
+      Date:             10.01.2014
 
 -->
 
@@ -164,6 +164,28 @@
 	</offsets>
 </model>
 
+<!--lights-->
+<model>
+  <name>Aftstrobe</name>
+  <path>Aircraft/extra500/Models/wing/strobe.xml</path>
+	<offsets>
+		<x-m>6.6</x-m>
+		<y-m>0</y-m>	
+		<z-m>1.2</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>aftnav</name>
+  <path>Aircraft/extra500/Models/wing/Aftnav.xml</path>
+	<offsets>
+		<x-m>6.6</x-m>
+		<y-m>0</y-m>	
+		<z-m>1.2</z-m>
+	</offsets>
+</model>
+
+<!--gear-->
 <model>
   <path>Aircraft/extra500/Models/TEST.fahrwerk.komplett.xml</path>	
 </model>
