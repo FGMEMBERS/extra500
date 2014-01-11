@@ -19,8 +19,8 @@
       Author: Eric van den Berg
       Date: 2014-01-08
 
-      Last change:      -
-      Date:             -
+      Last change:      2014-01-11
+      Date:             Eric van den Berg
 -->
 
 <!--
@@ -57,15 +57,15 @@
 			<test logic="OR" value="1">
 				<test logic="AND">
 					/extra500/light/strobe/timer-sec gt 0.0
-					/extra500/light/strobe/timer-sec lt 0.2
+					/extra500/light/strobe/timer-sec lt 0.1
 				</test>
 				<test logic="AND">
 					/extra500/light/strobe/timer-sec gt 0.4
-					/extra500/light/strobe/timer-sec lt 0.6
+					/extra500/light/strobe/timer-sec lt 0.5
 				</test>
 				<test logic="AND">
 					/extra500/light/strobe/timer-sec gt 0.8
-					/extra500/light/strobe/timer-sec lt 1.0
+					/extra500/light/strobe/timer-sec lt 0.9
 				</test>
 			</test>
 		</switch>
