@@ -236,38 +236,38 @@
     <object-name>strobe.window.LH</object-name>
   </effect>
 
-      <!--animation>
+      <animation>
             <type>light</type>
             <light-type>spot</light-type>
-            <name>LightSrc</name>
-            <object-name>nav.LH.cone</object-name>
+            <name>LightSrc1</name>
+            <object-name>reco.LH.cone</object-name>
             <nopreview/>
             <position>
-                  <x>0.26219</x>
-                  <y>-0.24348</y>
-                  <z>5.50149</z>
+                  <x>-0.22467</x>
+                  <y>-0.14608</y>
+                  <z>3.53991</z>
             </position>
             <direction>
-                  <x>-0.707</x>
-                  <y>0</y>
-                  <z>0.707</z>
+                  <x>-0.8</x>
+                  <y>-0.2</y>
+                  <z>-0.15</z>
             </direction>
             <ambient>
                   <r>0.9</r>
-                  <g>0.1</g>
-                  <b>0.1</b>
+                  <g>0.9</g>
+                  <b>0.9</b>
                   <a>1.0</a>
             </ambient>
             <diffuse>
                   <r>0.9</r>
-                  <g>0.1</g>
-                  <b>0.1</b>
+                  <g>0.9</g>
+                  <b>0.9</b>
                   <a>1.0</a>
             </diffuse>
             <specular>
                   <r>0.9</r>
-                  <g>0.1</g>
-                  <b>0.1</b>
+                  <g>0.9</g>
+                  <b>0.9</b>
                   <a>1.0</a>
             </specular>
             <attenuation>
@@ -275,15 +275,62 @@
                   <l>0.002</l>
                   <q>0.00005</q>
             </attenuation>
-            <exponent>7.0</exponent>
+            <exponent>30.0</exponent>
             <cutoff>80</cutoff>
             <near-m>0.1</near-m>
-            <far-m>3</far-m>
+            <far-m>100</far-m>
       </animation>
 
       <animation>
+            <type>light</type>
+            <light-type>spot</light-type>
+            <name>LightSrc2</name>
+            <object-name>reco.RH.cone</object-name>
+            <nopreview/>
+            <position>
+                  <x>-0.22467</x>
+                  <y>-0.14608</y>
+                  <z>-3.53991</z>
+            </position>
+            <direction>
+                  <x>-0.8</x>
+                  <y>-0.2</y>
+                  <z>0.15</z>
+            </direction>
+            <ambient>
+                  <r>0.9</r>
+                  <g>0.9</g>
+                  <b>0.9</b>
+                  <a>1.0</a>
+            </ambient>
+            <diffuse>
+                  <r>0.9</r>
+                  <g>0.9</g>
+                  <b>0.9</b>
+                  <a>1.0</a>
+            </diffuse>
+            <specular>
+                  <r>0.9</r>
+                  <g>0.9</g>
+                  <b>0.9</b>
+                  <a>1.0</a>
+            </specular>
+            <attenuation>
+                  <c>1.0</c>
+                  <l>0.002</l>
+                  <q>0.00005</q>
+            </attenuation>
+            <exponent>30.0</exponent>
+            <cutoff>80</cutoff>
+            <near-m>0.1</near-m>
+            <far-m>100</far-m>
+      </animation>
+
+
+      <animation>
             <type>select</type>
-            <object-name>LightSrc</object-name>
+            <object-name>LightSrc1</object-name>
+            <object-name>LightSrc2</object-name>
             <condition>
                   <and>
                         <property>/sim/rendering/rembrandt/enabled</property>
@@ -291,10 +338,10 @@
                               <property>/sim/rendering/shaders/lights</property>
                               <value>0</value>
                         </greater-than>
-       			 <property>/extra500/light/nav/state</property>
+       			 <property>/extra500/light/recognition/state</property>
                   </and>
             </condition>
-      </animation-->
+      </animation>
 
   <animation>
     <type>material</type>
