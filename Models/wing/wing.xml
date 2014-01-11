@@ -19,7 +19,7 @@
       Date: 05.01.14
 
       Last change: Eric van den Berg     
-      Date: 10.01.14            
+      Date: 11.01.14            
 
 -->
 
@@ -30,7 +30,7 @@
 <!-- Submodels -->
 <model>
   <name>LHstrobe</name>
-  <path>Aircraft/extra500/Models/wing/strobe.xml</path>
+  <path>Aircraft/extra500/Models/lights/strobe.xml</path>
 	<offsets>
 		<x-m>0.21613</x-m>
 		<y-m>-0.15048</y-m>	
@@ -40,7 +40,7 @@
 
 <model>
   <name>RHstrobe</name>
-  <path>Aircraft/extra500/Models/wing/strobe.xml</path>
+  <path>Aircraft/extra500/Models/lights/strobe.xml</path>
 	<offsets>
 		<x-m>0.21613</x-m>
 		<y-m>-0.15048</y-m>	
@@ -50,7 +50,7 @@
 
 <model>
   <name>LHnav</name>
-  <path>Aircraft/extra500/Models/wing/LHnav.xml</path>
+  <path>Aircraft/extra500/Models/lights/LHnav.xml</path>
 	<offsets>
 		<x-m>0.17</x-m>
 		<y-m>-0.15048</y-m>	
@@ -60,7 +60,7 @@
 
 <model>
   <name>RHnav</name>
-  <path>Aircraft/extra500/Models/wing/RHnav.xml</path>
+  <path>Aircraft/extra500/Models/lights/RHnav.xml</path>
 	<offsets>
 		<x-m>0.17</x-m>
 		<y-m>-0.15048</y-m>	
