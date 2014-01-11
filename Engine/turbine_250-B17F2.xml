@@ -48,7 +48,7 @@
 	
 	<maxpower unit="HP">          600  </maxpower>
 	<psfc unit="LBS/HR/HP">         0.613 </psfc>
-	<idlefuelflow>                 75.0   </idlefuelflow>
+	<!--idlefuelflow>                 75.0   </idlefuelflow-->
 	<n1idle_max_delay>              1     </n1idle_max_delay>
 	<maxstartingtime>              30     </maxstartingtime>
 	<startern1>                    20     </startern1>
@@ -80,7 +80,8 @@
 			2100	0	35	233	325	390	393	466	490	495
 		</tableData>
 	</table>
-	
+
+
 		
   <table name="ITT_N1" type="internal">
     <description> Inter-Turbine Temperature ITT [deg C] depending on N1 and engine run (0=off / 1=running) </description>
