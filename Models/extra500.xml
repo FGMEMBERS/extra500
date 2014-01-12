@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             11.01.2014
+      Date:             12.01.2014
 
 -->
 
@@ -28,7 +28,7 @@
 <path>extra500_frame.ac</path>
 
 <!-- TEST: wechseln des rumpfes per menu -->
-<animation>
+<!--animation>
   <type>select</type>
   <object-name>FrameTrans</object-name>
   <condition>
@@ -48,7 +48,7 @@
       <value>1</value>
     </equals>
   </condition>
-</animation>
+</animation-->
 
 
 
@@ -197,7 +197,7 @@
       <offsets>
 		<x-m>-0.30</x-m>
 		<y-m>-0.32</y-m>	
-		<z-m>-0.50</z-m>
+		<z-m>-0.37</z-m>
          <pitch-deg>0</pitch-deg>
       </offsets>
 <!--
@@ -213,7 +213,7 @@
       <offsets>
 		<x-m>-0.4</x-m>
 		<y-m>0.32</y-m>	
-		<z-m>-0.55</z-m>
+		<z-m>-0.4</z-m>
          <pitch-deg>0</pitch-deg>
       </offsets>
 <!--
