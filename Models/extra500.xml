@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             12.01.2014
+      Date:             17.01.2014
 
 -->
 
@@ -185,10 +185,222 @@
 	</offsets>
 </model>
 
+<!--doors-->
+
+<!--pick animations-->
+<animation>
+  <type>pick</type>
+  <object-name>door.upper</object-name>
+  <visible>true</visible>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("upper door toggle");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>door.lower</object-name>
+  <visible>true</visible>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("lower door toggle");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>emergency.exit</object-name>
+  <visible>true</visible>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("emergency exit");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>door.upper</object-name>
+  <object-name>window.pass.middle.LH</object-name>
+  <property>/extra500/door/upperpass/state</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>-80</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>1.12560</x1-m>
+    <y1-m>-0.54382</y1-m>
+    <z1-m>0.18990</z1-m>
+    <x2-m>1.60932</x2-m>
+    <y2-m>-0.49167</y2-m>
+    <z2-m>0.19002</z2-m>
+  </axis>
+</animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>door.lower</object-name>
+  <property>/extra500/door/lowerpass/state</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>100</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>1.12973</x1-m>
+    <y1-m>-0.46505</y1-m>
+    <z1-m>-1.00034</z1-m>
+    <x2-m>1.61088</x2-m>
+    <y2-m>-0.40880</y2-m>
+    <z2-m>-1.00043</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>translate</type>
+  <object-name>emergency.exit</object-name>
+  <object-name>window.pass.middle.RH</object-name>
+  <property>/extra500/door/emergencyexit/state</property>
+  <factor>.5</factor>
+  <offset-m>0.0</offset-m>
+  <axis>
+   <x>0</x>
+   <y>-0.4</y>
+   <z>-1</z>
+  </axis>
+ </animation>
+
 <!--gear-->
 <model>
   <path>Aircraft/extra500/Models/TEST.fahrwerk.komplett.xml</path>	
 </model>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>gear.doors.upper.left</object-name>
+  <property>/systems/gear/Lupperdoor-pos</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>-95</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>0.04491</x1-m>
+    <y1-m>-0.6285</y1-m>
+    <z1-m>-0.84579</z1-m>
+    <x2-m>0.62011</x2-m>
+    <y2-m>-0.62389</y2-m>
+    <z2-m>-0.84234</z2-m>
+  </axis>
+</animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>gear.doors.upper.right</object-name>
+  <property>/systems/gear/Rupperdoor-pos</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>95</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>0.04491</x1-m>
+    <y1-m>0.6285</y1-m>
+    <z1-m>-0.84579</z1-m>
+    <x2-m>0.62011</x2-m>
+    <y2-m>0.62389</y2-m>
+    <z2-m>-0.84234</z2-m>
+  </axis>
+</animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>gear.doors.lower.left</object-name>
+  <property>/systems/gear/Lowerdoor-pos</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>-90</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>0.77000</x1-m>
+    <y1-m>-0.08363</y1-m>
+    <z1-m>-1.17020</z1-m>
+    <x2-m>0.14568</x2-m>
+    <y2-m>-0.08365</y2-m>
+    <z2-m>-1.18121</z2-m>
+  </axis>
+</animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>gear.doors.lower.right</object-name>
+  <property>/systems/gear/Lowerdoor-pos</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>90</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>0.77000</x1-m>
+    <y1-m>0.08363</y1-m>
+    <z1-m>-1.17020</z1-m>
+    <x2-m>0.14568</x2-m>
+    <y2-m>0.08365</y2-m>
+    <z2-m>-1.18121</z2-m>
+  </axis>
+</animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>gear.doors.nose.left</object-name>
+  <property>/systems/gear/nosegeardoor-pos</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>0.9</ind><dep>95</dep></entry>
+   <entry><ind>1</ind><dep>85</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>-0.90165</x1-m>
+    <y1-m>-0.14416</y1-m>
+    <z1-m>-1.13464</z1-m>
+    <x2-m>-1.50068</x2-m>
+    <y2-m>-0.14366</y2-m>
+    <z2-m>-1.07908</z2-m>
+  </axis>
+</animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>gear.doors.nose.right</object-name>
+  <property>/systems/gear/nosegeardoor-pos</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>0.9</ind><dep>-95</dep></entry>
+   <entry><ind>1</ind><dep>-85</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>-0.90165</x1-m>
+    <y1-m>0.14416</y1-m>
+    <z1-m>-1.13464</z1-m>
+    <x2-m>-1.50068</x2-m>
+    <y2-m>0.14366</y2-m>
+    <z2-m>-1.07908</z2-m>
+  </axis>
+</animation>
 
 <!--test-->
 
