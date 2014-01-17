@@ -20,52 +20,34 @@
 #      Date:             29.09.13
 #
 
-
-var DoorClass = {
-	new : func(root,name,watt=42.0){
-		var m = { 
-			parents : [
-				DoorClass,
-				ServiceClass.new(root,name)
-			]
-		};
-		m._state 	= 0;
-		m._nState	= m._nRoot.initNode("state",0.0,"DOUBLE");
-		m._nOpen	= m._nRoot.initNode("isOpen",0,"BOOL");
-		
-		return m;
-	},
-	init : func(instance=nil){
-		if (instance==nil){instance=me;}
-		me.parents[1].init(instance);
-		me.setListeners(instance);
-	},
-	setListeners : func(instance) {
-		append(me._listeners, setlistener(me._nState,func(n){instance._onStateChange(n);},1,0) );
-	},
-	_onStateChange : func(n){
-		me._state = n.getValue();
-		me.checkState();
-	},
-	checkState : func(){
-		me._nOpen.setValue(me._state);
-	},
-	onClick : func(value = nil){
-		if (value == nil){
-			me._state 	= me._state == 1 ? 0 : 1;
-		}else{
-			me._state	= value;
+	var onClickupperdoor = func(){
+		var doorstate = getprop("/extra500/door/upperpass/state");
+		if (doorstate == 0) {
+			setprop("/extra500/door/upperpass/state",1);
+		} else if (doorstate == 1) {
+			setprop("/extra500/door/upperpass/state",0);
 		}
-		me._nState.setValue(me._state);
-	},
-	registerUI : func(){
-		UI.register(""~me._name~"", 		func{me.onClick(); } 	);
-		UI.register(""~me._name~" open", 	func{me.onClick(1); }	);
-		UI.register(""~me._name~" close", 	func{me.onClick(0); }	);
 	}
-};
 
+	var onClicklowerdoor = func(){
+		var doorstatelower = getprop("/extra500/door/lowerpass/state");
+		var doorstateupper = getprop("/extra500/door/upperpass/state");
+		if ( (doorstatelower == 0) and (doorstateupper !=0) ) {
+			setprop("/extra500/door/lowerpass/state",1);
+		} else if ( (doorstatelower == 1) and (doorstateupper != 0) ) {
+			setprop("/extra500/door/lowerpass/state",0);
+		}
+	}
 
-var upperPassDoor = DoorClass.new("/extra500/door/upperpass","Upper Pass Door");
-var lowerPassDoor = DoorClass.new("/extra500/door/lowerpass","Lower Pass Door");
-var emergencyExit  = DoorClass.new("/extra500/door/emergencyexit","Emergency Exit");
+	var onClickemergencyexit = func(){
+		var doorstate = getprop("/extra500/door/emergencyexit/state");
+		if (doorstate == 0) {
+			setprop("/extra500/door/emergencyexit/state",1);
+		} else if (doorstate == 1)  {
+			setprop("/extra500/door/emergencyexit/state",0);
+		}
+	}
+
+UI.register("upper door toggle", 		func{extra500.onClickupperdoor(); } 	);
+UI.register("lower door toggle", 		func{extra500.onClicklowerdoor(); } 	);
+UI.register("emergency exit", 		func{extra500.onClickemergencyexit(); } 	);

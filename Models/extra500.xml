@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             14.01.2014
+      Date:             17.01.2014
 
 -->
 
@@ -184,6 +184,108 @@
 		<z-m>1.2</z-m>
 	</offsets>
 </model>
+
+<!--doors-->
+
+<!--pick animations-->
+<animation>
+  <type>pick</type>
+  <object-name>door.upper</object-name>
+  <visible>true</visible>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("upper door toggle");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>door.lower</object-name>
+  <visible>true</visible>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("lower door toggle");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>emergency.exit</object-name>
+  <visible>true</visible>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("emergency exit");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>door.upper</object-name>
+  <object-name>window.pass.middle.LH</object-name>
+  <property>/extra500/door/upperpass/state</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>-80</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>1.12560</x1-m>
+    <y1-m>-0.54382</y1-m>
+    <z1-m>0.18990</z1-m>
+    <x2-m>1.60932</x2-m>
+    <y2-m>-0.49167</y2-m>
+    <z2-m>0.19002</z2-m>
+  </axis>
+</animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>door.lower</object-name>
+  <property>/extra500/door/lowerpass/state</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>100</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>1.12973</x1-m>
+    <y1-m>-0.46505</y1-m>
+    <z1-m>-1.00034</z1-m>
+    <x2-m>1.61088</x2-m>
+    <y2-m>-0.40880</y2-m>
+    <z2-m>-1.00043</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>translate</type>
+  <object-name>emergency.exit</object-name>
+  <object-name>window.pass.middle.RH</object-name>
+  <property>/extra500/door/emergencyexit/state</property>
+  <factor>.5</factor>
+  <offset-m>0.0</offset-m>
+  <axis>
+   <x>0</x>
+   <y>-0.4</y>
+   <z>-1</z>
+  </axis>
+ </animation>
 
 <!--gear-->
 <model>

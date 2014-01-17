@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             14.01.2014
+      Date:             17.01.2014
 
 
 ************************************************************************
@@ -1368,6 +1368,17 @@ JSBSim Extra Aircraft - Extra 500.
 		<SEC2MIN type="double">0.0166666666667</SEC2MIN>
 		<G0 type="double">9.80665</G0>		
 	</const>
+	<door>
+		<upperpass>
+			<state type="int">0</state>
+		</upperpass>
+		<lowerpass>
+			<state type="int">0</state>
+		</lowerpass>
+		<emergencyexit>
+			<state type="int">0</state>
+		</emergencyexit>
+	</door>
 	<instrumentation>
 		<Audiopanel>
 			<knobs>
@@ -1523,17 +1534,6 @@ JSBSim Extra Aircraft - Extra 500.
 			</Autopilot>
 		</Master>
 	</panel>
-	<door>
-		<upperpass>
-			<isOpen type="int">0</isOpen>
-		</upperpass>
-		<lowerpass>
-			<isOpen type="int">0</isOpen>
-		</lowerpass>
-		<emergencyexit>
-			<isOpen type="int">0</isOpen>
-		</emergencyexit>
-	</door>
 	<system>
 		<fuel>
 			<SelectValve type="int">2</SelectValve>
@@ -1544,15 +1544,6 @@ JSBSim Extra Aircraft - Extra 500.
 			</MainGearSwitch>
 		</gear>
 	</system>
-	<!--<light>
-		<strobe>
-			<output type="double">0</output>
-		</strobe>
-		<nav>
-			<output type="double">0</output>
-		</nav>
-		
-	</light>-->
  </extra500>
 
  <fdm>

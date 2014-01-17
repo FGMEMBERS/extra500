@@ -17,7 +17,7 @@
 #      Date: Jun 30 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             21.10.13
+#      Date:             17.01.14
 #
 
 # MM Page 590
@@ -150,7 +150,7 @@ var AnnunciatorClass = {
 		append(me._listeners, setlistener("/extra500/system/dimming/Test",func(n){instance._onDimTestChange(n);},1,0) );
 		append(me._listeners, setlistener("/extra500/system/dimming/Annunciator",func(n){instance._onBrightnessChange(n);},1,0) );
 		
-		append(me._listeners, setlistener("/extra500/door/upperpass/isOpen",			func(n){instance._leds["AFTDoor"].setState(n.getValue());},1,0) );
+		append(me._listeners, setlistener("/extra500/door/upperpass/state",		func(n){instance._leds["AFTDoor"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/deice/StallHeat/state",	func(n){instance._leds["StallHeat"].setState(!n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/engine/lowOilPressure",		func(n){instance._leds["OilPress"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/electric/relay/K3/state",		func(n){instance._leds["GeneratorFail"].setState(!n.getValue());},1,0) );

@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             29.09.13
+#      Date:             17.01.14
 #
 
 var init_listener = setlistener("/sim/signals/fdm-initialized", func {
@@ -43,9 +43,6 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		IFD.tcasModel.init();
 		
 		extra500.keypad.init(global.INIT_START);
-		extra500.upperPassDoor.init();
-		extra500.lowerPassDoor.init();
-		extra500.emergencyExit.init();
 		extra500.cabin.init();
 		extra500.deiceSystem.init();
 		
