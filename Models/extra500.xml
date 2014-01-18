@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             17.01.2014
+      Date:             18.01.2014
 
 -->
 
@@ -69,7 +69,6 @@
 		<roll-deg>90</roll-deg>
 	</offsets>
 </model>
-
 
 <model>
   <name>CenterConsole</name>
