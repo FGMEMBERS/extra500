@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             18.01.2014
+      Date:             19.01.2014
 
 -->
 
@@ -257,10 +257,11 @@
  <animation>
   <type>rotate</type>
   <object-name>door.lower</object-name>
+  <object-name>interior.door</object-name>
   <property>/extra500/door/lowerpass/state</property>
   <interpolation>
    <entry><ind>0</ind><dep>0</dep></entry>
-   <entry><ind>1</ind><dep>100</dep></entry>
+   <entry><ind>1</ind><dep>110</dep></entry>
   </interpolation>   
   <axis>
     <x1-m>1.12973</x1-m>
@@ -404,26 +405,10 @@
 <!--test-->
 
 <model>
-      <path>Aircraft/Generic/Pilot/Airliner/pilot.xml</path>
-      <offsets>
-		<x-m>-0.30</x-m>
-		<y-m>-0.32</y-m>	
-		<z-m>-0.37</z-m>
-         <pitch-deg>0</pitch-deg>
-      </offsets>
-<!--
-      <condition>
-         <not>
-            <property>/sim/current-view/internal</property>
-         </not>
-      </condition>
--->
-</model>
-<model>
       <path>Aircraft/Generic/Pilot/General/pilot.xml</path>
       <offsets>
 		<x-m>-0.4</x-m>
-		<y-m>0.32</y-m>	
+		<y-m>-0.32</y-m>	
 		<z-m>-0.4</z-m>
          <pitch-deg>0</pitch-deg>
       </offsets>
