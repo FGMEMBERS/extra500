@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
-      Date:             21.05.13
+      Last change:      Eric van den Berg
+      Date:             19.01.14
 -->
 
 <PropertyList>
@@ -81,14 +81,14 @@
 			</item>
 
 <!-- nur bis der rumpf fertig modelliert ist -->
-		<item>
+		<!--item>
 			<name>frametest</name>
 			<label>Toggle Frame</label>
 			<binding>
 			<command>property-toggle</command>
 			<property>extra500/debug/framechange</property>
 			</binding>
-		</item>
+		</item-->
 		
 		</menu>
   </default>
