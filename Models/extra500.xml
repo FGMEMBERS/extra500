@@ -19,13 +19,42 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             19.01.2014
+      Date:             20.01.2014
 
 -->
 
 <PropertyList>
 
 <path>extra500_frame.ac</path>
+
+<!-- Rembrand transparency -->
+
+
+  <effect>
+    <inherits-from>Effects/model-transparent</inherits-from>
+    <object-name>window.pilot</object-name>
+  </effect>
+
+  <effect>
+    <inherits-from>Effects/model-transparent</inherits-from>
+    <object-name>window.pass.front</object-name>
+  </effect>
+
+  <effect>
+    <inherits-from>Effects/model-transparent</inherits-from>
+    <object-name>window.pass.middle.LH</object-name>
+  </effect>
+
+  <effect>
+    <inherits-from>Effects/model-transparent</inherits-from>
+    <object-name>window.pass.middle.RH</object-name>
+  </effect>
+
+  <effect>
+    <inherits-from>Effects/model-transparent</inherits-from>
+    <object-name>window.pass.aft</object-name>
+  </effect>
+
 
 <!-- TEST: wechseln des rumpfes per menu -->
 <!--animation>
@@ -184,6 +213,21 @@
 	</offsets>
 </model>
 
+  <effect>
+    <inherits-from>Effects/model-transparent</inherits-from>
+    <object-name>landing.light.glass</object-name>
+  </effect>
+
+<model>
+  <name>landinglight</name>
+  <path>Aircraft/extra500/Models/lights/landinglight.xml</path>
+	<offsets>
+		<x-m>0</x-m>
+		<y-m>0</y-m>	
+		<z-m>0</z-m>
+	</offsets>
+</model>
+
 <!--doors-->
 
 <!--pick animations-->
@@ -261,7 +305,7 @@
   <property>/extra500/door/lowerpass/state</property>
   <interpolation>
    <entry><ind>0</ind><dep>0</dep></entry>
-   <entry><ind>1</ind><dep>110</dep></entry>
+   <entry><ind>1</ind><dep>120</dep></entry>
   </interpolation>   
   <axis>
     <x1-m>1.12973</x1-m>

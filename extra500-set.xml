@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             17.01.2014
+      Date:             19.01.2014
 
 
 ************************************************************************
@@ -50,15 +50,13 @@ JSBSim Extra Aircraft - Extra 500.
 	</tags>
 
 	<author>Dirk Dittmann, Eric van den Berg, Thomas Grossberger</author>
-	<status>alpha production 0.1.0</status>
-	<!--
+	<status>early production</status>
 	<rating>
-		<FDM type="int">0</FDM>
-		<systems type="int">0</systems>
-		<model type="int">0</model>
-		<cockpit type="int">0</cockpit>
+		<FDM type="int">4</FDM>
+		<systems type="int">4</systems>
+		<model type="int">3</model>
+		<cockpit type="int">2</cockpit>
 	</rating>
-	-->
 
 	<flight-model archive="y">jsb</flight-model>
 	<aero archive="y">extra500</aero>
@@ -81,6 +79,10 @@ JSBSim Extra Aircraft - Extra 500.
 
 	<help>
 		<title>The Extra500 very special keys</title>
+     	      <key>
+			<name>Ctrl-E</name>
+			<desc>Connect/Disconnect external power cart</desc>
+		</key>
      	      <key>
 			<name>Ctrl-F</name>
 			<desc>Pitch control by pitch trim only</desc>
