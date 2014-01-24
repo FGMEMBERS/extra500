@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             20.01.2014
+      Date:             24.01.2014
 
 -->
 
@@ -227,6 +227,22 @@
 		<z-m>0</z-m>
 	</offsets>
 </model>
+
+  <effect>
+    <inherits-from>Effects/model-transparent</inherits-from>
+    <object-name>ice.light.window</object-name>
+  </effect>
+
+<model>
+  <name>icelight</name>
+  <path>Aircraft/extra500/Models/lights/icelight.xml</path>
+	<offsets>
+		<x-m>0</x-m>
+		<y-m>0</y-m>	
+		<z-m>0</z-m>
+	</offsets>
+</model>
+
 
 <!--doors-->
 

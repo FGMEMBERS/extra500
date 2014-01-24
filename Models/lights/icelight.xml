@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: 24.01.14
+
+      Last change:     
+      Date:             
+
+-->
+
+<PropertyList>
+
+<path>icelight.ac</path>
+
+    <animation>
+	  <type>range</type>
+	  <min-m>0</min-m>
+	  <max-m>50</max-m>
+    </animation>
+
+      <animation>
+            <type>light</type>
+            <light-type>spot</light-type>
+            <name>LightSrc1</name>
+            <object-name>ice.light.cone</object-name>
+            <nopreview/>
+            <position>
+                  <x>-1.45406</x>
+                  <y>-0.60582</y>
+                  <z>-0.41106</z>
+            </position>
+            <direction>
+                  <x>0.7</x>
+                  <y>-0.20</y>
+                  <z>0.15</z>
+            </direction>
+            <ambient>
+                  <r>0.9</r>
+                  <g>0.9</g>
+                  <b>0.9</b>
+                  <a>1.0</a>
+            </ambient>
+            <diffuse>
+                  <r>0.9</r>
+                  <g>0.9</g>
+                  <b>0.9</b>
+                  <a>1.0</a>
+            </diffuse>
+            <specular>
+                  <r>0.9</r>
+                  <g>0.9</g>
+                  <b>0.9</b>
+                  <a>1.0</a>
+            </specular>
+            <attenuation>
+                  <c>1.0</c>
+                  <l>0.002</l>
+                  <q>0.00005</q>
+            </attenuation>
+            <exponent>30.0</exponent>
+            <cutoff>80</cutoff>
+            <near-m>0.1</near-m>
+            <far-m>100</far-m>
+      </animation>
+
+      <animation>
+            <type>select</type>
+            <object-name>LightSrc1</object-name>
+            <condition>
+                  <and>
+                        <property>/sim/rendering/rembrandt/enabled</property>
+                        <greater-than>
+                              <property>/sim/rendering/shaders/lights</property>
+                              <value>0</value>
+                        </greater-than>
+       			 <property>/extra500/light/ice/state</property>
+                  </and>
+            </condition>
+      </animation>
+
+  <animation>
+    <type>material</type>
+    <object-name>light.ice.face</object-name>
+    <condition>
+        <property>/extra500/light/ice/state</property>
+    </condition>
+    <emission>
+      <red>   1.0 </red>
+      <green> 1.0 </green>
+      <blue>  1.0 </blue>
+    </emission>
+  </animation>
+
+
+</PropertyList>
