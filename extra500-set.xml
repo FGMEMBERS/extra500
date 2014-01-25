@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             19.01.2014
+      Date:             25.01.2014
 
 
 ************************************************************************
@@ -124,7 +124,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<config>
 			<x-offset-m archive="y" type="double">-0.34</x-offset-m>
 			<y-offset-m archive="y" type="double">0.13</y-offset-m>
-			<z-offset-m archive="y" type="double">-0.05</z-offset-m>
+			<z-offset-m archive="y" type="double">-0.1</z-offset-m>
 			<pitch-offset-deg type="double">-17</pitch-offset-deg>
 			<default-field-of-view-deg type="double">75.0</default-field-of-view-deg>  <!--this somehow does not work, why??? does not work on other aircraft either: flightgear bug? yes bugs 1110 and 1111-->
 		</config>
@@ -138,10 +138,10 @@ JSBSim Extra Aircraft - Extra 500.
 		<internal archive="y">true</internal>
 		<config>
 		  <from-model type="bool">true</from-model>
-			<x-offset-m archive="y">0.37</x-offset-m>
-			<y-offset-m archive="y">0.1</y-offset-m>
-			<z-offset-m archive="y">-0.05</z-offset-m>
-			<pitch-offset-deg type="double">-15</pitch-offset-deg>
+			<x-offset-m archive="y">0.34</x-offset-m>
+			<y-offset-m archive="y">0.13</y-offset-m>
+			<z-offset-m archive="y">-0.1</z-offset-m>
+			<pitch-offset-deg type="double">-17</pitch-offset-deg>
 			<default-field-of-view-deg type="double">75.0</default-field-of-view-deg>
 		</config>
 	</view>	
@@ -772,7 +772,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<actuators>
 			<upperdoorspeed>0.00833333333333</upperdoorspeed>
 			<lowerdoorspeed>0.00833333333333</lowerdoorspeed>
-			<nosegearspeed>0.012</nosegearspeed>
+			<nosegearspeed>0.010</nosegearspeed>
 			<maingearspeed>0.00222222222222</maingearspeed>
 			<Rupperdoor-pos-old></Rupperdoor-pos-old>
 			<Lupperdoor-pos-old></Lupperdoor-pos-old>

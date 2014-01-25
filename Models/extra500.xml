@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             24.01.2014
+      Date:             25.01.2014
 
 -->
 
@@ -469,7 +469,7 @@
       <offsets>
 		<x-m>-0.4</x-m>
 		<y-m>-0.32</y-m>	
-		<z-m>-0.4</z-m>
+		<z-m>-0.39</z-m>
          <pitch-deg>0</pitch-deg>
       </offsets>
 <!--
