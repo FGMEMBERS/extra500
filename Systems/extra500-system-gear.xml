@@ -20,7 +20,7 @@
       Date: 2013-10-16
 
       Last change:      Eric van den Berg
-      Date:             2013-10-23
+      Date:             2014-01-25
 -->
 
 <!--
@@ -184,9 +184,14 @@ for lights:
 				<sum>
 					<property>/fdm/jsbsim/gear/unit/pos-norm</property>
 					<product>
-						<property>/systems/gear/solenoids/mainvalve/state</property>
-						<property>/systems/gear/actuators/nosegearspeed</property>
-						<property>/systems/gear/pressure-bar</property>
+						<sum>
+							<product>
+								<property>/systems/gear/solenoids/mainvalve/state</property>
+								<property>/systems/gear/actuators/nosegearspeed</property>
+								<property>/systems/gear/pressure-bar</property>
+							</product>
+							<value>0.5</value> <!--gas springs for emergency extension -->
+						</sum>
 						<property>sim-dt-sec</property> 
 					</product>
 				</sum>
@@ -194,10 +199,10 @@ for lights:
 		</fcs_function>
 
 		<switch name="/systems/gear/actuators/NG-pos-raw2">
-			<default value="/fdm/jsbsim/gear/unit/pos-norm"/>
-			<test logic="OR" value="/systems/gear/actuators/NG-pos-raw">
-				/systems/gear/pressure-bar gt 100
-				/extra500/system/gear/MainGearSwitch/state eq 1
+			<default value="/systems/gear/actuators/NG-pos-raw"/>
+			<test logic="AND" value="/fdm/jsbsim/gear/unit/pos-norm">
+				/systems/gear/pressure-bar lt 100
+				/systems/gear/solenoids/mainvalve/state eq -1
 			</test>
 		</switch>
 
