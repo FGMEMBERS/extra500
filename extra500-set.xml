@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             25.01.2014
+      Date:             31.01.2014
 
 
 ************************************************************************
@@ -513,17 +513,18 @@ JSBSim Extra Aircraft - Extra 500.
 	       <chat_display>1</chat_display>
 	       <generic>
 		       <float n="0" alias="/engines/engine[0]/thruster/rpm"/>
-		       <float n="1" alias="/sim/model/door-positions/leftDoor/position-norm"/>
-		       <float n="2" alias="/sim/model/door-positions/baggageDoor/position-norm"/>
-		       <float n="3" alias="/systems/gear/Lupperdoor-pos"/>
-		       <float n="4" alias="/systems/gear/Rupperdoor-pos"/>
-		       <float n="5" alias="/systems/gear/lowerdoor-pos"/>
-		       <float n="6" alias="/systems/gear/nosegeardoor-pos"/>
-		       <int type="int">0</int>
-		       <int type="int">0</int>
-		       <int type="int">0</int>
-		       <int type="int">0</int>
-		       <int type="int">0</int>
+		       <float n="1" alias="/systems/gear/Lupperdoor-pos"/>
+		       <float n="2" alias="/systems/gear/Rupperdoor-pos"/>
+		       <float n="3" alias="/systems/gear/Lowerdoor-pos"/>
+		       <float n="4" alias="/systems/gear/nosegeardoor-pos"/>
+		       <int n="0" alias="/extra500/door/upperpass/state">0</int>
+		       <int n="1" alias="/extra500/door/lowerpass/state">0</int>
+		       <int n="2" alias="/extra500/door/emergencyexit/state">0</int>
+		       <int n="3" alias="/extra500/light/nav/state">0</int>
+		       <int n="4" alias="/extra500/light/ice/state">0</int>
+		       <int n="5" alias="/extra500/light/landing/state">0</int>
+		       <int n="6" alias="/extra500/light/strobe/on">0</int>
+		       <int n="7" alias="/extra500/light/recognition/state">0</int>
 	       </generic>
        </multiplay>
 

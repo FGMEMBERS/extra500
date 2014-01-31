@@ -80,7 +80,7 @@
     	<object-name>strobe</object-name>
   	<type>select</type>
     	<condition>
-        	<property>/extra500/light/strobe/on</property>
+        	<property>sim/multiplay/generic/int[6]</property>
     	</condition>
   </animation>
 
@@ -88,7 +88,7 @@
     <type>material</type>
     <object-name>strobe</object-name>
     <condition>
-        <property>/extra500/light/strobe/on</property>
+        <property>sim/multiplay/generic/int[6]</property>
     </condition>
     <emission>
       <red>   1.0 </red>

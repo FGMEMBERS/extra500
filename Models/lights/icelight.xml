@@ -16,7 +16,7 @@
     along with extra500.  If not, see <http://www.gnu.org/licenses/>.
 
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
-      Date: 24.01.14
+      Date: 31.01.14
 
       Last change:     
       Date:             
@@ -88,7 +88,7 @@
                               <property>/sim/rendering/shaders/lights</property>
                               <value>0</value>
                         </greater-than>
-       			 <property>/extra500/light/ice/state</property>
+       			 <property>sim/multiplay/generic/int[4]</property>
                   </and>
             </condition>
       </animation>
@@ -97,7 +97,7 @@
     <type>material</type>
     <object-name>light.ice.face</object-name>
     <condition>
-        <property>/extra500/light/ice/state</property>
+        <property>sim/multiplay/generic/int[4]</property>
     </condition>
     <emission>
       <red>   1.0 </red>

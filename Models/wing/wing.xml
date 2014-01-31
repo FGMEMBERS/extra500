@@ -19,7 +19,7 @@
       Date: 05.01.14
 
       Last change: Eric van den Berg     
-      Date: 28.01.14            
+      Date: 31.01.14            
 
 -->
 
@@ -358,7 +358,7 @@
                               <property>/sim/rendering/shaders/lights</property>
                               <value>0</value>
                         </greater-than>
-       			 <property>/extra500/light/recognition/state</property>
+       			 <property>sim/multiplay/generic/int[7]</property>
                   </and>
             </condition>
       </animation>
@@ -368,7 +368,7 @@
     <object-name>recolight.RH</object-name>
     <object-name>recolight.LH</object-name>
     <condition>
-        <property>/extra500/light/recognition/state</property>
+        <property>sim/multiplay/generic/int[7]</property>
     </condition>
     <emission>
       <red>   1.0 </red>
