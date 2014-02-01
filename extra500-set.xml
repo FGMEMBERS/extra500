@@ -525,6 +525,7 @@ JSBSim Extra Aircraft - Extra 500.
 		       <int n="5" alias="/extra500/light/landing/state">0</int>
 		       <int n="6" alias="/extra500/light/strobe/on">0</int>
 		       <int n="7" alias="/extra500/light/recognition/state">0</int>
+		       <string n="0" alias="/sim/multiplay/callsign">callsign</string>
 	       </generic>
        </multiplay>
 

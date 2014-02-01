@@ -87,11 +87,11 @@
       <value>1</value>
     </equals>
   </condition>
-  <property>/fdm/jsbsim/fcs/rudder-pos-norm</property>
+  <property>surface-positions/rudder-pos-norm</property>
   <interpolation>
-   <entry><ind>-1</ind><dep> 30</dep></entry>
+   <entry><ind>-1</ind><dep>-30</dep></entry>
    <entry><ind> 0</ind><dep>  0</dep></entry>
-   <entry><ind> 1</ind><dep>-30</dep></entry>
+   <entry><ind> 1</ind><dep> 30</dep></entry>
   </interpolation>   
   <axis>
     <x1-m>-1.63609</x1-m>
