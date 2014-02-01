@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             31.01.2014
+      Date:             01.02.2014
 
 
 ************************************************************************
@@ -163,21 +163,21 @@ JSBSim Extra Aircraft - Extra 500.
 		</config>
 	</view>
 
-<!--	<view n="103">
-	# x=rechts y=hoch z=zurueck #
-		<name>CenterConsole 2</name>
+	<view n="103">
+	<!-- x=rechts y=hoch z=zurueck -->
+		<name>switches</name>
 		<type>lookfrom</type>
 		<enabled type="bool">true</enabled>
 		<internal archive="y">true</internal>
 		<config>
 			<from-model type="bool">true</from-model>
 			<x-offset-m archive="y">0</x-offset-m>
-			<y-offset-m archive="y">-0.05</y-offset-m>
-			<z-offset-m archive="y">-0.1</z-offset-m>
-			<pitch-offset-deg archive="y">-43</pitch-offset-deg>
+			<y-offset-m archive="y">-0.1</y-offset-m>
+			<z-offset-m archive="y">-0.65</z-offset-m>
+			<pitch-offset-deg archive="y">-70</pitch-offset-deg>
 			<default-field-of-view-deg type="double">75.0</default-field-of-view-deg>
 		</config>
-	      </view> -->
+	</view>	
 
 	<view n="104">
 	<!-- x=rechts y=hoch z=zurueck -->
