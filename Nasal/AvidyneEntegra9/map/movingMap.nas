@@ -315,6 +315,7 @@ var MovingMap = {
 		append(me._listeners, setlistener("/autopilot/mode/heading",func(n){me._onAutopilotModeHDG(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/route-manager/active",func(n){me._onRouteActiveChange(n);},1,0));
 		append(me._listeners, setlistener("/autopilot/fms-channel/serviceable",func(n){me._onFmsServiceChange(n);},1,0));
+		append(me._listeners, setlistener(tcasModel._nObserver,func(n){me.onModelObserverNotify(n)},1,1));	
 	
 		
 	},
@@ -336,7 +337,8 @@ var MovingMap = {
 		me._can.BugFMS.setVisible(me._bugFMSactive);
 	},
 	onModelObserverNotify : func(n){
-		
+		me.setRefPos(tcasModel._lat,tcasModel._lon);
+		me.setHdg(tcasModel._hdg);
 	},
 	_onAutopilotModeHDG : func(n){
 		me._modeHDG = n.getValue();
@@ -380,8 +382,8 @@ var MovingMap = {
 		
 		me._upHdg	= me._heading;
 		
-		me.setRefPos(me._lat,me._lon);
-		me.setHdg(me._upHdg);
+		#me.setRefPos(me._lat,me._lon);
+		#me.setHdg(me._upHdg);
 				
 		me._can.HDGValue.setText(sprintf("%03i",me._heading));
 		me._can.UpHDGDeg.setText(sprintf("%5.1f",me._upHdg));
