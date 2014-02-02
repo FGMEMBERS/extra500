@@ -19,14 +19,626 @@
       Authors: Dirk Dittmann 
       Date: Jul 20 2013
 
-      Last change:      Dirk Dittmann
-      Date:             20.07.13
+      Last change:      Eric van den Berg
+      Date:             02.02.14
 
 -->
 
 <PropertyList>
 
 <path>Keypad.ac</path>
+
+<!--dimming-->
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.Frame</object-name>
+        	<object-name>Keypad.Display</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>1</red>
+            	<green>1</green>
+            	<blue>1</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+        	</emission>
+</animation>
+
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.Com1</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+			<equals>
+				<property>extra500/instrumentation/Keypad/Backlight/COM1</property>
+				<value>0</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>1</red>
+            	<green>1</green>
+            	<blue>1</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+        	</emission>
+</animation>
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.Com1</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.1</red>
+            	<green>1</green>
+            	<blue>0.2</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/COM1</factor-prop>
+        	</emission>
+</animation>
+
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.Com2</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+			<equals>
+				<property>extra500/instrumentation/Keypad/Backlight/COM2</property>
+				<value>0</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>1</red>
+            	<green>1</green>
+            	<blue>1</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+        	</emission>
+</animation>
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.Com2</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.1</red>
+            	<green>1</green>
+            	<blue>0.2</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/COM2</factor-prop>
+        	</emission>
+</animation>
+
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.Aux</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+			<equals>
+				<property>extra500/instrumentation/Keypad/Backlight/AUX</property>
+				<value>0</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>1</red>
+            	<green>1</green>
+            	<blue>1</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+        	</emission>
+</animation>
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.Aux</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.1</red>
+            	<green>1</green>
+            	<blue>0.2</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/AUX</factor-prop>
+        	</emission>
+</animation>
+
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.FreqList</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+			<equals>
+				<property>extra500/instrumentation/Keypad/Backlight/FREQLIST</property>
+				<value>0</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>1</red>
+            	<green>1</green>
+            	<blue>1</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+        	</emission>
+</animation>
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.FreqList</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.1</red>
+            	<green>1</green>
+            	<blue>0.2</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/FREQLIST</factor-prop>
+        	</emission>
+</animation>
+
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.Nav1</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+			<equals>
+				<property>extra500/instrumentation/Keypad/Backlight/NAV1</property>
+				<value>0</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>1</red>
+            	<green>1</green>
+            	<blue>1</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+        	</emission>
+</animation>
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.Nav1</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.1</red>
+            	<green>1</green>
+            	<blue>0.2</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/NAV1</factor-prop>
+        	</emission>
+</animation>
+
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.Nav2</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+			<equals>
+				<property>extra500/instrumentation/Keypad/Backlight/NAV2</property>
+				<value>0</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>1</red>
+            	<green>1</green>
+            	<blue>1</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+        	</emission>
+</animation>
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.Nav2</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.1</red>
+            	<green>1</green>
+            	<blue>0.2</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/NAV2</factor-prop>
+        	</emission>
+</animation>
+
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.XPDR</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+			<equals>
+				<property>extra500/instrumentation/Keypad/Backlight/XPDR</property>
+				<value>0</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>1</red>
+            	<green>1</green>
+            	<blue>1</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+        	</emission>
+</animation>
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.XPDR</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.1</red>
+            	<green>1</green>
+            	<blue>0.2</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/XPDR</factor-prop>
+        	</emission>
+</animation>
+
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.VFR</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+			<equals>
+				<property>extra500/instrumentation/Keypad/Backlight/VFR</property>
+				<value>0</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>1</red>
+            	<green>1</green>
+            	<blue>1</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+        	</emission>
+</animation>
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.VFR</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.1</red>
+            	<green>1</green>
+            	<blue>0.2</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/VFR</factor-prop>
+        	</emission>
+</animation>
+
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.Ident</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+			<equals>
+				<property>extra500/instrumentation/Keypad/Backlight/IDENT</property>
+				<value>0</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>1</red>
+            	<green>1</green>
+            	<blue>1</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+        	</emission>
+</animation>
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.Ident</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.1</red>
+            	<green>1</green>
+            	<blue>0.2</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/IDENT</factor-prop>
+        	</emission>
+</animation>
+
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.Mode</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+			<equals>
+				<property>extra500/instrumentation/Keypad/Backlight/MODE</property>
+				<value>0</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>1</red>
+            	<green>1</green>
+            	<blue>1</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+        	</emission>
+</animation>
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.Mode</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.1</red>
+            	<green>1</green>
+            	<blue>0.2</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/MODE</factor-prop>
+        	</emission>
+</animation>
+
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.Phone</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+			<!--equals>
+				<property>extra500/instrumentation/Keypad/Backlight/PHONE</property>
+				<value>0</value>
+			</equals-->
+		</condition>
+        	<emission>
+            	<red>1</red>
+            	<green>1</green>
+            	<blue>1</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+        	</emission>
+</animation>
+<!--animation>
+        	<type>material</type>
+        	<object-name>Keypad.Phone</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.1</red>
+            	<green>1</green>
+            	<blue>0.2</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/PHONE</factor-prop>
+        	</emission>
+</animation-->
+
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.Sound</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+			<!--equals>
+				<property>extra500/instrumentation/Keypad/Backlight/SOUND</property>
+				<value>0</value>
+			</equals-->
+		</condition>
+        	<emission>
+            	<red>1</red>
+            	<green>1</green>
+            	<blue>1</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+        	</emission>
+</animation>
+<!--animation>
+        	<type>material</type>
+        	<object-name>Keypad.Sound</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.1</red>
+            	<green>1</green>
+            	<blue>0.2</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/SOUND</factor-prop>
+        	</emission>
+</animation-->
+
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.Proc</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+			<!--equals>
+				<property>extra500/instrumentation/Keypad/Backlight/PROC</property>
+				<value>0</value>
+			</equals-->
+		</condition>
+        	<emission>
+            	<red>1</red>
+            	<green>1</green>
+            	<blue>1</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+        	</emission>
+</animation>
+<!--animation>
+        	<type>material</type>
+        	<object-name>Keypad.Proc</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.1</red>
+            	<green>1</green>
+            	<blue>0.2</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/PROC</factor-prop>
+        	</emission>
+</animation-->
+
+<animation>
+        	<type>material</type>
+       	<object-name>Keypad.D</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+			<!--equals>
+				<property>extra500/instrumentation/Keypad/Backlight/DIRECT</property>
+				<value>0</value>
+			</equals-->
+		</condition>
+        	<emission>
+            	<red>1</red>
+            	<green>1</green>
+            	<blue>1</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+        	</emission>
+</animation>
+<!--animation>
+        	<type>material</type>
+       	<object-name>Keypad.D</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.1</red>
+            	<green>1</green>
+            	<blue>0.2</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/DIRECT</factor-prop>
+        	</emission>
+</animation-->
+
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.V</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+			<!--equals>
+				<property>extra500/instrumentation/Keypad/Backlight/VECTORS</property>
+				<value>0</value>
+			</equals-->
+		</condition>
+        	<emission>
+            	<red>1</red>
+            	<green>1</green>
+            	<blue>1</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+        	</emission>
+</animation>
+<!--animation>
+        	<type>material</type>
+        	<object-name>Keypad.V</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.1</red>
+            	<green>1</green>
+            	<blue>0.2</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/VECTORS</factor-prop>
+        	</emission>
+</animation-->
+
+<animation>
+        	<type>material</type>
+        	<object-name>Keypad.NRST</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+			<!--equals>
+				<property>extra500/instrumentation/Keypad/Backlight/NRST</property>
+				<value>0</value>
+			</equals-->
+		</condition>
+        	<emission>
+            	<red>1</red>
+            	<green>1</green>
+            	<blue>1</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+        	</emission>
+</animation>
+<!--animation>
+        	<type>material</type>
+        	<object-name>Keypad.NRST</object-name>
+		<condition>
+			<equals>
+				<property>extra500/instrumentation/Keypad/state</property>
+				<value>1</value>
+			</equals>
+		</condition>
+        	<emission>
+            	<red>0.1</red>
+            	<green>1</green>
+            	<blue>0.2</blue>
+	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/NRST</factor-prop>
+        	</emission>
+</animation-->
+
 
 	<animation>
 		<type>pick</type>
