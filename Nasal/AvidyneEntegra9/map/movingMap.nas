@@ -385,7 +385,7 @@ var MovingMap = {
 		#me.setRefPos(me._lat,me._lon);
 		#me.setHdg(me._upHdg);
 				
-		me._can.HDGValue.setText(sprintf("%03i",me._heading));
+		me._can.HDGValue.setText(sprintf("%03i",global.roundInt(me._heading)));
 		me._can.UpHDGDeg.setText(sprintf("%5.1f",me._upHdg));
 		
 		me._can.CompassRose.setRotation(-me._heading * global.CONST.DEG2RAD);
