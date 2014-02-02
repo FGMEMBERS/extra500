@@ -167,6 +167,9 @@ var MovingMap = {
 	setHdg : func(deg){
 		me._map.setHdg(deg);
 	},
+	setVisible : func(visibility){
+		me._group.setVisible(visibility);
+	},
 	setLayout : func(layout){
 		me._group.setVisible(0);
 			

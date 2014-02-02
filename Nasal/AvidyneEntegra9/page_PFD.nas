@@ -1909,10 +1909,12 @@ var AvidynePagePFD = {
 			#me.IFD.movingMap.setLayout("pfd");
 			me.registerKeys();
 		}else{
+			me.IFD.movingMap.setVisible(0);
 			me.keys = {};
 			me.removeListeners();
 			
 		}
+			
 		foreach(widget;keys(me._widget)){
 			if(me._widget[widget] != nil){
 				me._widget[widget].setVisible(visible);
