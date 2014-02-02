@@ -81,5 +81,9 @@ var formatTime = func(daysec,format="H:i"){
 	return timeString;
 }
 
+var roundInt = func(value){
+	return math.floor(value + 0.5);
+}
+
 
 
