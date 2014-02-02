@@ -47,18 +47,19 @@ var AvidynePageMAP = {
 			}
 		}
 	},
-	setVisible : func(visible){
-		if(visible == 1){
-			me.setListeners(me);
-			me.IFD._widget.Headline.setVisible(1);
+	setVisible : func(visibility){
+		me.IFD._widget.Headline.setVisible(visibility);
+		me.IFD._widget.PlusData.setVisible(visibility);
+		me.IFD.movingMap.setVisible(visibility);
 		
+		if(visibility == 1){
+			me.setListeners(me);
 		}else{
 			me.keys = {};
 			me.removeListeners();
-			
 		}
-		me._widget.Tab.setVisible(visible);
-		me.page.setVisible(visible);
+		me._widget.Tab.setVisible(visibility);
+		me.page.setVisible(visibility);
 	},
 	_initWidgetsForTab : func(index){
 		me._widget.MovingMapKnob.setVisible(0);
