@@ -17,7 +17,7 @@
 #      Date: Jun 27 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             27.09.13
+#      Date:             02.02.14
 #
 
 # var KeypadDisplayClass = {
@@ -743,6 +743,7 @@ var KeypadClass = {
 		append(me._listeners, setlistener(me.nTungingChannel,func(n){me._onTuningChannelChange(n)},1,0));	
 		#append(me._listeners, setlistener("/instrumentation/transponder/id-code",func(n){instance._onXPDRChange(n);},1,0) );
 		#append(me._listeners, setlistener("/instrumentation/transponder/inputs/knob-mode",func(n){instance._onXPDRmodeChange(n);},1,0) );
+		append(me._listeners, setlistener("/instrumentation/transponder/ident",func(n){instance._onXPDRidentChange(n);},1,0) );
 		append(me._listeners, setlistener("/autopilot/settings/heading-bug-deg",func(n){instance._onHdgChange(n);},1,0) );
 		append(me._listeners, setlistener("/autopilot/settings/tgt-altitude-ft",func(n){instance._onAltChange(n);},1,0) );
 	
@@ -887,6 +888,13 @@ var KeypadClass = {
 # 		me._can.dataXPDRmode.setText(IFD.XPDRMODE[me._xpdrMode]);
 # 		me._can.XPDRmode.setText(IFD.XPDRMODE[me._xpdrMode]);
 # 	},
+	_onXPDRidentChange : func(n){
+		if (n.getValue() == 1) {
+			me.setKeyBacklight("IDENT",1);
+		} else {
+			me.setKeyBacklight("IDENT",0);
+		}
+ 	},
 	_onHdgChange : func(n){
 		me._can.HDGvalue.setText(sprintf("%03i",n.getValue()));
 	},
@@ -1016,6 +1024,7 @@ var KeypadClass = {
 		me.nTungingChannel.setValue(nr);
 	},
 	onXPDR : func(){
+#FIXME: when the XPDR (widget) is active and this switch is pressed, the widget should disappear
 		#print("KeypadClass.onXPDR() ...");
 		me.selectWidget(1,"XPDR");
 		me._inputIndex = 0;
@@ -1025,16 +1034,20 @@ var KeypadClass = {
 # 		me._inputHandle["Keyboard"] = func(key){me.handleInputXDPR(key);};
 	},
 	onVFR : func(){
-		setprop("/instrumentation/transponder/id-code",getprop("/instrumentation/transponder/vfr-id") );		
+		me.selectWidget(1,"XPDR");
+		setprop("/instrumentation/transponder/id-code",getprop("/instrumentation/transponder/vfr-id") );
+# FIXME: the VFR key backlight should be set to 1 as long as the transponder widget is visible: me.setKeyBacklight("VFR",1);		
 	},
 	onMode : func(){
+		me.selectWidget(1,"XPDR");
 		setprop("/instrumentation/transponder/inputs/auto-select",0 );
 		var mode = getprop("/instrumentation/transponder/inputs/knob-mode")+1;
 		if (mode == 6) {mode = 0;}
 		setprop("/instrumentation/transponder/inputs/knob-mode",mode );		
 	},
 	onIdent : func(){
-		setprop("/instrumentation/transponder/inputs/ident-btn","true");	 #FIXME: should return to "false" after ~2sec	
+		me.selectWidget(1,"XPDR");
+		setprop("/instrumentation/transponder/inputs/ident-btn","true");	 	
 	},
 	onPhone : func(){
 		print("KeypadClass.onPhone() ...");
@@ -1049,7 +1062,7 @@ var KeypadClass = {
 		
 	},
 	onD : func(){
-		
+# FIXME: the Directto button backlight should be on when direct-to is active
 		extra500.fms.directTo();		
 	},
 	onV : func(){
