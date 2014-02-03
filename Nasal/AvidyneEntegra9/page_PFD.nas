@@ -245,7 +245,7 @@ var VerticalSpeedWidget = {
 	},
 	_onBugChange : func(n){
 		me._bug = n.getValue();
-		me._can.BugValue.setText(sprintf("%4i",math.floor( me._bug + 0.5 )));
+		me._can.BugValue.setText(sprintf("%4i",global.roundInt(me._bug)));
 		me._can.Bug.setRotation(me._rotateScale(me._bug));
 		
 	},
@@ -480,7 +480,7 @@ var AltitudeWidget = {
 	_onBugChange : func(n){
 		me._bug = n.getValue();
 				
-		me._can.BugValue.setText(sprintf("%4i",math.floor( me._bug + 0.5 )));
+		me._can.BugValue.setText(sprintf("%4i",global.roundInt( me._bug )));
 		
 		me._bugDiff = (me._alt - me._bug) * me._SCALE_LAD_PX;
 		me._bugDiff = global.clamp(me._bugDiff,-272,254);
@@ -1068,7 +1068,7 @@ var NavSourceWidget = {
 # 		me._fromFlag		= me._ptree.FromFlag.getValue();
 # 		me._toFlag		= me._ptree.FromFlag.getValue();
 		
-		me._can.Crs.setText(sprintf("%i",me._Pointer +0.5));
+		me._can.Crs.setText(sprintf("%i",global.roundInt(me._Pointer)));
 		
 		
 	},
@@ -1236,7 +1236,7 @@ var BearingSourceWidget = {
 		if (me._source > 0){
 			me._Pointer	= me._ptree.Pointer.getValue();
 			me._can.Pointer.setRotation((me._Pointer - me._Page._widget.HSI._heading) * global.CONST.DEG2RAD);
-			me._can.Brg.setText(sprintf("%i",me._Pointer +0.5));
+			me._can.Brg.setText(sprintf("%i",global.roundInt(me._Pointer)));
 		}
 	},
 };
@@ -1377,7 +1377,7 @@ var HeadingSituationIndicatorWidget = {
 # 		me._fmsHeading 		= me._ptree.FmsHeading.getValue();
 		
 		
-		me._can.Heading_Text.setText(sprintf("%03i",math.floor( me._heading + 0.5)));
+		me._can.Heading_Text.setText(sprintf("%03i",global.roundInt( me._heading)));
 # 		me._can.CompassRose.setRotation(-me._heading * global.CONST.DEG2RAD);
 		me._can.TrunRate.setRotation(me._trunRate * 30.0 * global.CONST.DEG2RAD);
 		
@@ -1439,7 +1439,7 @@ var EnvironmentWidget = {
 			me._can.WindArrow.setVisible(0);
 		}
 		
-		me._can.OAT.setText(sprintf("%2i",OAT+ 0.5* math.sgn(OAT)));
+		me._can.OAT.setText(sprintf("%2i",global.roundInt(OAT) * math.sgn(OAT)));
 		me._can.GroundSpeed.setText(sprintf("%2i",groundSpeed));
 		
 	},
@@ -1909,10 +1909,12 @@ var AvidynePagePFD = {
 			#me.IFD.movingMap.setLayout("pfd");
 			me.registerKeys();
 		}else{
+			me.IFD.movingMap.setVisible(0);
 			me.keys = {};
 			me.removeListeners();
 			
 		}
+			
 		foreach(widget;keys(me._widget)){
 			if(me._widget[widget] != nil){
 				me._widget[widget].setVisible(visible);

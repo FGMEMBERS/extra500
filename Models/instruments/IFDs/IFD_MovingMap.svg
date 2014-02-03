@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.70000001"
-     inkscape:cx="694.75845"
-     inkscape:cy="982.4104"
+     inkscape:zoom="0.98994951"
+     inkscape:cx="595.58987"
+     inkscape:cy="615.33412"
      inkscape:document-units="px"
      inkscape:current-layer="layer5"
      showgrid="false"
@@ -698,13 +698,18 @@
       <path
          inkscape:connector-curvature="0"
          id="path3509"
-         d="m 1024,668.33672 0,199.32654"
-         style="fill:#00ff00;stroke:#00ff00;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none" />
+         d="m 1024,751.82975 0,50.17045"
+         style="fill:#00ff00;stroke:#ffffff;stroke-width:10;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
       <path
-         style="fill:#00ff00;stroke:#00ff00;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
-         d="m 1123.6633,767.99999 -199.32657,0"
+         style="fill:#00ff00;stroke:#ffffff;stroke-width:15.00000095;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         d="m 1055.5341,767.99999 -63.06813,0"
          id="path3511"
          inkscape:connector-curvature="0" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path3881"
+         d="m 1034.5114,797.33927 -21.0228,0"
+         style="fill:#00ff00;stroke:#ffffff;stroke-width:10;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
     </g>
   </g>
   <g

@@ -69,7 +69,7 @@ var TcasModel = {
 		#print("TcasModel.update() ...");
 		me._data = [];	
 		me._dataIndex = 0;
-		foreach(aircraft;me._nAIModels.getChildren("aircraft")){
+		foreach(aircraft;me._nAIModels.getChildren("multiplayer")){
 			var range = aircraft.getNode("radar/range-nm").getValue();
 			if(range > 0 and range <= me._range){
 				var nTcasThreat = aircraft.getNode("tcas/threat-level");	

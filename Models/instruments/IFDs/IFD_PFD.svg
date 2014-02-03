@@ -26,11 +26,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.50980392"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.6159202"
-     inkscape:cx="1082.8164"
-     inkscape:cy="974.00386"
+     inkscape:zoom="4.5705125"
+     inkscape:cx="1056.4667"
+     inkscape:cy="382.32831"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer15"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1025"
@@ -6630,19 +6630,6 @@
            id="tspan6248"
            x="686.51953"
            y="922.58148">MM</tspan></text>
-    </g>
-    <g
-       id="g7262">
-      <path
-         inkscape:connector-curvature="0"
-         id="path6678"
-         d="m 978.81896,1131.7924 90.36184,0.2188"
-         style="fill:#ffff00;stroke:#ffff00;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <path
-         style="fill:#ffff00;stroke:#ffff00;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-         d="m 1024.1093,1086.7209 -0.2188,90.3618"
-         id="path7260"
-         inkscape:connector-curvature="0" />
     </g>
   </g>
 </svg>

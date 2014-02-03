@@ -109,6 +109,14 @@ var AvidynePageDummy = {
 		] };
 		return m;
 	},
+	setVisible : func(visibility){
+		me.page.setVisible(0);
+		me.IFD._widget.Headline.setVisible(0);
+		me.IFD._widget.PlusData.setVisible(0);
+		me.IFD.movingMap.setVisible(0);
+		
+	},
+	
 };
 
 
@@ -331,16 +339,17 @@ var AvidyneIFD = {
 	_onStateChange : func(n){
 		me._state = n.getBoolValue();
 		if (me._state == 1){
-			me.gotoPage(me._startPage);
+			
 			if(me._powerA._voltNorm > me._powerB._voltNorm){
 				me._voltNorm = me._powerA._voltNorm;
 			}else{
 				me._voltNorm = me._powerB._voltNorm;
 			}
+			me.gotoPage(me._startPage);
 		}else{
+			me.gotoPage("none");
 			me._voltNorm = 0;
 		}
-		me.page[me.pageSelected].setVisible(me._state);
 	},
 	connectDataBus : func(ifd){
 		me.data.link = ifd;
@@ -389,10 +398,11 @@ var AvidyneIFD = {
 	},
 	gotoPage : func(name,key=nil){
 		#print("IFD "~me.name ~" gotoPage("~name~") .. ");
-		if (me._state == 1){
-			if (!contains(me.page,name)){
+		if (!contains(me.page,name)){
 				name = "none";	
-			}
+		}
+		if (me._state == 1){
+			
 		
 			if (me.pageSelected != name){
 # 				me.page[me.pageSelected].deinit();
@@ -408,6 +418,14 @@ var AvidyneIFD = {
 					me.page[me.pageSelected].onClick(key);
 				}
 			}
+		}else{
+			me.page[me.pageSelected].setVisible(0);
+			me.clearLeds();
+			me.pageSelected = name;
+			me.nPageSelected.setValue(me.pageSelected);
+# 			me.page[me.pageSelected].init();
+			me.page[me.pageSelected].setVisible(1);
+				
 		}
 	},
 	_adjustBrightness : func(amount){
