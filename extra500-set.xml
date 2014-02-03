@@ -1436,6 +1436,11 @@ JSBSim Extra Aircraft - Extra 500.
 				<volt type="double">0</volt>
 			</battery>
 		</bus>
+		<source>
+			<ExternalGenerator>
+				<isPluged type="bool">false</isPluged>
+			</ExternalGenerator>
+		</source>
 	</electric>
 	<panel>
 		<CircuitBreaker>

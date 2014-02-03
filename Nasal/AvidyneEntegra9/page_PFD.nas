@@ -17,7 +17,7 @@
 #      Date: Jul 20 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             02.01.14
+#      Date:             03.02.14
 #
 
 
@@ -1439,9 +1439,8 @@ var EnvironmentWidget = {
 			me._can.WindArrow.setVisible(0);
 		}
 		
-		me._can.OAT.setText(sprintf("%2i",global.roundInt(OAT) * math.sgn(OAT)));
-		me._can.GroundSpeed.setText(sprintf("%2i",groundSpeed));
-		
+		me._can.OAT.setText(sprintf("%2i",global.roundInt(OAT)));
+		me._can.GroundSpeed.setText(sprintf("%2i",groundSpeed));	
 	},
 };
 

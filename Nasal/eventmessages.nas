@@ -16,8 +16,8 @@
 #      Authors: Eric van den Berg
 #      Date: 2013-06-16
 #
-#      Last change:      -
-#      Date:             -
+#      Last change:      Eric van den Berg
+#      Date:             2014-02-03
 #
 
 # NOTE: AP messages are in the autopilot nasal file
@@ -78,5 +78,14 @@ setlistener("/fdm/jsbsim/aircraft/events/FLAPS30", func {
 setlistener("/fdm/jsbsim/aircraft/events/FLAPS15", func {
 	if ( getprop("/fdm/jsbsim/aircraft/events/FLAPS15") == 1 ) {
 		UI.msg.warning("At airspeeds > 120 KIAS, the flaps must be retracted");
+	}
+ }, 1, 0);
+
+
+# Other messages
+
+setlistener("/fdm/jsbsim/aircraft/events/EXTERNALPOWER", func {
+	if ( getprop("/fdm/jsbsim/aircraft/events/EXTERNALPOWER") == 1 ) {
+		UI.msg.warning("You were arrested for steeling an External Power Cart. CRTL-E to disconnect.");
 	}
  }, 1, 0);
