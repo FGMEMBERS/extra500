@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             01.02.2014
+      Date:             03.02.2014
 
 
 ************************************************************************
@@ -108,19 +108,6 @@ JSBSim Extra Aircraft - Extra 500.
 	<!-- position the pilot viewpoint and angle -->
 	<view>
 		<internal type="bool" archive="y">true</internal>
-		<!--config>
-			<x-offset-m archive="y" type="double">-0.21</x-offset-m>
-			<y-offset-m archive="y" type="double">0.235</y-offset-m>
-			<z-offset-m archive="y" type="double">0.36</z-offset-m>
-			<pitch-offset-deg type="double">-12</pitch-offset-deg>
-		</config
-		<config>
-			<x-offset-m archive="y" type="double">-0.32</x-offset-m>
-			<y-offset-m archive="y" type="double">0.1</y-offset-m>
-			<z-offset-m archive="y" type="double">-0.05</z-offset-m>
-			<pitch-offset-deg type="double">-15</pitch-offset-deg>
-			<default-field-of-view-deg type="double">90.0</default-field-of-view-deg>  
-		</config>-->
 		<config>
 			<x-offset-m archive="y" type="double">-0.34</x-offset-m>
 			<y-offset-m archive="y" type="double">0.13</y-offset-m>
@@ -228,20 +215,6 @@ JSBSim Extra Aircraft - Extra 500.
 			<heading-offset-deg type="double">72.0</heading-offset-deg>
 			<pitch-offset-deg type="double">-30.0</pitch-offset-deg>
 			<default-field-of-view-deg type="double">96.0</default-field-of-view-deg>
-			<!--<from-model-idx type="int">0</from-model-idx>-->
-			<!--<ground-level-nearplane-m type="double">0.5f</ground-level-nearplane-m>
-			<default-pitch-deg type="double">-2.0</default-pitch-deg>
-			<default-heading-deg type="double">0</default-heading-deg>
-			
-			<front-direction-deg type="double">0</front-direction-deg>
-			<front-left-direction-deg type="double">45</front-left-direction-deg>
-			<left-direction-deg type="double">90</left-direction-deg>
-			<back-left-direction-deg type="double">135</back-left-direction-deg>
-			<back-direction-deg type="double">180</back-direction-deg>
-			<back-right-direction-deg type="double">225</back-right-direction-deg>
-			<right-direction-deg type="double">270</right-direction-deg>
-			<front-right-direction-deg type="double">315</front-right-direction-deg>
-			<dynamic-view type="bool">true</dynamic-view>-->
 		</config>
 	</view>	
 	
@@ -401,7 +374,6 @@ JSBSim Extra Aircraft - Extra 500.
 			<y-offset-m type="double">2.0</y-offset-m>
 			<z-offset-m type="double">-7.0</z-offset-m>
 			
-			<!--<heading-offset-deg archive="y">90.0</heading-offset-deg>-->
 		</config>
 	</view>
 
@@ -433,7 +405,6 @@ JSBSim Extra Aircraft - Extra 500.
 			<y-offset-m type="double">2.0</y-offset-m>
 			<z-offset-m type="double">-7.0</z-offset-m>
 			
-			<!--<heading-offset-deg archive="y">90.0</heading-offset-deg>-->
 		</config>
 	</view>
 
@@ -540,8 +511,6 @@ JSBSim Extra Aircraft - Extra 500.
  
 </sim>
 
- <!-- trim for level cruise -->
-
        <controls>
 	       <engines>
 		       <engine n="0">
@@ -550,13 +519,6 @@ JSBSim Extra Aircraft - Extra 500.
 				 <condition-lever-norm>0</condition-lever-norm>
 		       </engine>
 	       </engines>
-	       <lighting>
-		       <landing-lights type="bool">false</landing-lights>
-		       <taxi-light type="bool">false</taxi-light>
-		       <strobe alias="/extra500/light/strobe/output"/>
-		       <beacon type="bool">false</beacon>
-		       <nav-lights alias="/extra500/light/nav/output"/>
-	       </lighting>
 	       <switches>
 		       <master-avionics type="bool">true</master-avionics>
 		       <starter type="bool">false</starter>
@@ -990,7 +952,7 @@ JSBSim Extra Aircraft - Extra 500.
 
     <dme>                                                             
       <frequencies>
-            	<source>/instrumentation/dme/frequencies/keypad-selected-mhz</source>	<!--may be set to nav-RH-IFD on keyboard with aux button-->        
+            <source>/instrumentation/dme/frequencies/keypad-selected-mhz</source>	<!--may be set to nav-RH-IFD on keyboard with aux button-->        
 		<!--<nav1-selected type="int">1</nav1-selected>
 		<nav2-selected type="int">0</nav2-selected>-->
       </frequencies>
@@ -1269,7 +1231,6 @@ JSBSim Extra Aircraft - Extra 500.
 		
 	</extra500>
 	<IFD>
-		<!--<file>Aircraft/extra500/system/IFD/IFD_test.nas</file>-->
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/base.class.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/widget.nas</file>
 		
@@ -1565,7 +1526,6 @@ JSBSim Extra Aircraft - Extra 500.
 			<rudder-cmd-tot type="double">0.0</rudder-cmd-tot>
 			<flap-pos-norm type="double">0.0</flap-pos-norm>		<!-- from flaps.nas -->
 			<flap-wp-cmd-norm type="double">0.0</flap-wp-cmd-norm>		<!-- from flaps.nas -->
-			<!--<flap-wp-motor-norm type="double">0.0</flap-wp-motor-norm>	 from flaps.nas -->
 		</fcs>
             	<state>
                   	<controls-fixed type="int">1</controls-fixed>

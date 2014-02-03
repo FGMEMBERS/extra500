@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             01.02.13
+      Date:             03.02.13
 
 -->
 <PropertyList>
@@ -249,6 +249,20 @@
   <z2-m>-0.99401</z2-m>
   </axis>
 </animation>
+
+<animation>
+  <type>translate</type>
+  <object-name>Radlinks</object-name>
+  <property>gear/gear[1]/compression-norm</property>
+  <factor>0.3048</factor>
+  <axis>
+  	<x>0</x>
+  	<y>0</y>
+  	<z>1</z>
+  </axis>
+</animation> 
+
+
 <!-- drehende Raeder -->
 <animation>
   <type>spin</type>
@@ -325,6 +339,19 @@
   <z2-m>-0.99401</z2-m>
   </axis>
 </animation>
+
+<animation>
+  <type>translate</type>
+  <object-name>Radrechts</object-name>
+  <property>gear/gear[2]/compression-norm</property>
+  <factor>0.3048</factor>
+  <axis>
+  	<x>0</x>
+  	<y>0</y>
+  	<z>1</z>
+  </axis>
+</animation> 
+
 <!-- drehende Raeder -->
 <animation>
   <type>spin</type>

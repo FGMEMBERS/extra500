@@ -19,13 +19,16 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             01.02.2014
+      Date:             03.02.2014
 
 -->
 
 <PropertyList>
 
 <path>extra500_frame.ac</path>
+	<offsets>
+		<pitch-deg>1.39</pitch-deg>
+	</offsets>
 
 <!-- Rembrand transparency -->
 
@@ -58,6 +61,7 @@
 <!-- Submodels -->
 
 <!-- registration label-->
+<!-- left on fus-->
     <model>
         <path>registration.xml</path>
         <offsets>
@@ -81,6 +85,7 @@
         </overlay>
     </model>
 
+<!-- right on fus-->
     <model>
         <path>registration.xml</path>
         <offsets>
@@ -104,15 +109,16 @@
         </overlay>
     </model>
 
+<!-- under wing-->
     <model>
         <path>registration.xml</path>
         <offsets>
             <x-m>0.65</x-m>
             <y-m>-2.2</y-m>
-            <z-m>0.263</z-m>
-            <roll-deg>181</roll-deg>
-            <pitch-deg>0.5</pitch-deg>
-            <heading-deg>-90</heading-deg>
+            <z-m>0.266</z-m>
+            <roll-deg>179</roll-deg>
+            <pitch-deg>0.575</pitch-deg>
+            <heading-deg>-86</heading-deg>
         </offsets>
         <overlay>
             <params>
