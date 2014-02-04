@@ -156,8 +156,8 @@
 		</action>
 	</animation>
 
-<!--NAV Button !!!!!UI.clicks and properties only for test, must be replaced!!!!!-->
-<!-- ????? is it ok now? if yes, we can delete this comment ?????-->
+<!--NAV Button -->
+
 <animation>
   <type>pick</type>
   <object-name>Autopilot.Button.NAV</object-name>
@@ -387,8 +387,8 @@
 
 <!--TEST dimming-->
 <animation>
-        <type>material</type>
-        <object-name>Autopilot.Display</object-name>
+      <type>material</type>
+      <object-name>Autopilot.Display</object-name>
 		<object-name>Autopilot.Display.HDG</object-name>
 		<object-name>Autopilot.Display.RDY</object-name>
 		<object-name>Autopilot.Display.NAV</object-name>
@@ -404,6 +404,22 @@
 		<object-name>Autopilot.Display.GS</object-name>
 		<object-name>Autopilot.Display.VS</object-name>
 		<object-name>Autopilot.Display.VSnumbers</object-name>
+	<condition>
+		<equals>
+			<property>extra500/instrumentation/Autopilot/state</property>
+			<value>1</value>
+		</equals>
+	</condition>
+        <emission>
+            <red>1</red>
+            <green>1</green>
+            <blue>1</blue>
+	    <factor-prop>extra500/instrumentation/Autopilot/Backlight/state</factor-prop>
+        </emission>
+</animation>
+
+<animation>
+        <type>material</type>
 		<object-name>Autopilot.Button.HDG</object-name>
 		<object-name>Autopilot.Button.NAV</object-name>
 		<object-name>Autopilot.Button.APR</object-name>
@@ -417,9 +433,9 @@
 		</equals>
 	</condition>
         <emission>
-            <red>1</red>
-            <green>1</green>
-            <blue>1</blue>
+            <red>.5</red>
+            <green>.5</green>
+            <blue>.5</blue>
 	    <factor-prop>extra500/instrumentation/Autopilot/Backlight/state</factor-prop>
         </emission>
 </animation>

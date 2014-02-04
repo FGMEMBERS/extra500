@@ -50,6 +50,17 @@
 	</axis>
 </animation>
 
+<animation>
+	<type>material</type>
+	<object-name>Compassrose</object-name>
+	<emission>	
+		<red>.8</red>	
+		<green>.5</green>	
+		<blue>.5</blue>
+		<factor-prop>/extra500/instrumentation/magCompass/Backlight/state</factor-prop>
+	</emission>
+</animation>
+
 </PropertyList>
 
 

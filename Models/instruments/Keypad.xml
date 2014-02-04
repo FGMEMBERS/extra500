@@ -40,9 +40,9 @@
 			</equals>
 		</condition>
         	<emission>
-            	<red>1</red>
-            	<green>1</green>
-            	<blue>1</blue>
+            	<red>.5</red>
+            	<green>.5</green>
+            	<blue>.5</blue>
 	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
         	</emission>
 </animation>

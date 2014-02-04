@@ -17,7 +17,7 @@
 #      Date: Jun 27 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             21.12.13
+#      Date:             04.02.14
 #
 
 var DigitalInstrumentPackageClass = {
@@ -398,6 +398,7 @@ var fuelQuantity	= FuelInstrumentClass.new("extra500/instrumentation/FuelQuantit
 var fuelFlow		= DigitalInstrumentClass.new("extra500/instrumentation/FuelFlow","Fuel Flow","/extra500/system/dimming/Instrument",6.0);
 var dmeInd			= DigitalInstrumentClass.new("extra500/instrumentation/dmeInd","DME Indicator","/extra500/system/dimming/Instrument",21.0);
 var dmeSwitch		= DigitalInstrumentClass.new("extra500/instrumentation/dmeSwitch","DME Switch","/extra500/system/dimming/Instrument",1.0);
+var magCompass		= DigitalInstrumentClass.new("extra500/instrumentation/magCompass","Mag Compass","/extra500/system/dimming/Instrument",1.0);
 var pcBoard1		= PcBoard1Class.new("extra500/electric/pcBoard1","PC Board 1",1.0);
 
 
@@ -412,6 +413,7 @@ eSystem.circuitBreaker.FUEL_QTY.outputAdd(fuelQuantity);
 eSystem.circuitBreaker.FUEL_FLOW.outputAdd(fuelFlow);
 eSystem.circuitBreaker.DME.outputAdd(dmeInd);
 eSystem.circuitBreaker.INST_LT.outputAdd(dmeSwitch);
+eSystem.circuitBreaker.WARN_LT.outputAdd(magCompass);
 
 
 eSystem.circuitBreaker.INST_LT.outputAdd(stbyIAS._light);

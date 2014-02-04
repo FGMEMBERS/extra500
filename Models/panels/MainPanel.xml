@@ -51,7 +51,7 @@
   <name>PropAmmeter</name>
   <path>Aircraft/extra500/Models/instruments/PropAmmeter.xml</path>
 	<offsets>
-		<x-m>0</x-m>
+		<x-m>0.005</x-m>
 		<y-m>-0.45198</y-m>	
 		<z-m>0.26684</z-m>
 	</offsets>
@@ -91,7 +91,7 @@
   <name>FuelInstruments</name>
   <path>Aircraft/extra500/Models/instruments/FuelInstruments.xml</path>
 	<offsets>
-		<x-m>0</x-m>
+		<x-m>0.001</x-m>
 		<y-m>0.20847</y-m>	
 		<z-m>0.21489</z-m>
 	</offsets>

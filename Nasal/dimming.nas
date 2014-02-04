@@ -17,7 +17,7 @@
 #      Date: Jun 27 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             13.09.13
+#      Date:             04.02.14
 #
 
 # MM Page 607
@@ -61,6 +61,7 @@ var DimmingSystemClass = {
 			cabinclimb.setBacklight(me._state);
 			dmeInd.setBacklight(me._state);
 			dmeSwitch.setBacklight(me._state);
+			magCompass.setBacklight(me._state);
 			audiopanel.setBacklight(me._state);
 		};
 		eSystem.switch.Night.onStateChange = func(n){
