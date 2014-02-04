@@ -73,7 +73,7 @@
                   <q>0.00005</q>
             </attenuation>
             <exponent>30.0</exponent>
-            <cutoff>80</cutoff>
+            <cutoff>100</cutoff>
             <near-m>0.1</near-m>
             <far-m>100</far-m>
       </animation>

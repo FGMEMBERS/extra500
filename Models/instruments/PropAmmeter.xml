@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Dirk Dittmann
-      Date:             03.07.13
+      Last change:      Eric van den Berg
+      Date:             04.02.14
 
 -->
 
@@ -31,7 +31,8 @@
 
 <animation>
   <type>rotate</type>
-  <object-name>PropAmmeter.Needle</object-name>
+  <object-name>needle.base</object-name>
+  <object-name>needle.point</object-name>
   <property>/extra500/panel/CircuitBreaker/BankC/PropellerHeat/ampere</property>
 		<interpolation>
             <entry>
@@ -56,12 +57,13 @@
 <!-- Dimming Instruments -->
 <animation>
 	<type>material</type>
-	<object-name>PropAmmeter.Needle</object-name>
-	<object-name>PropAmmeter.Scheibe</object-name>
+      <object-name>needle.point</object-name>
+	<object-name>face</object-name>
+	<object-name>light</object-name>
 	<emission>	
-		<red>1.0</red>	
-		<green>1.0</green>	
-		<blue>1.0</blue>
+		<red>.7</red>	
+		<green>.7</green>	
+		<blue>.7</blue>
 		<factor-prop>/extra500/instrumentation/PropellerHeat/Backlight/state</factor-prop>
 	</emission>
 </animation>
