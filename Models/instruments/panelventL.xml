@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: August 22 2013
 
-      Last change:      -
-      Date:             -
+      Last change:      Eric van den Berg
+      Date:             2014-02-05
 
 -->
 
@@ -31,6 +31,7 @@
 <animation>
   <type>rotate</type>
   <object-name>ball</object-name>
+  <object-name>ball.inner</object-name>
   <property>/extra500/instrumentation/panelventswitchL/updown</property>
   <axis>
     <x1-m>-0.005709</x1-m>
@@ -45,6 +46,7 @@
 <animation>
   <type>rotate</type>
   <object-name>ball</object-name>
+  <object-name>ball.inner</object-name>
   <property>/extra500/instrumentation/panelventswitchL/leftright</property>
   <axis>
     <x1-m>-0.005709</x1-m>
