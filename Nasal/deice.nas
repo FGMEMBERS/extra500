@@ -17,7 +17,7 @@
 #      Date: Jul 03 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             13.10.13
+#      Date:             05.02.14
 #
 
 # MM page 
@@ -140,7 +140,6 @@ var DeicingSystemClass = {
 		
 		
 		
-		m._nRPM		= props.globals.initNode("/engines/engine[0]/rpm");
 		m._nIceWarning	= m._nRoot.initNode("iceWarning",0,"BOOL");
 		
 		
@@ -324,15 +323,13 @@ var DeicingSystemClass = {
 		# 2030		19	456
 		# 0.03546x + 16
 		
-		
+#FIXME: RPM is not updated		
 		if (eSystem.switch.Propeller._state == 1){
-			#me._PropellerHeat._nWatt.setValue(global.clamp((me.nIAT.getValue()*-5.2+120),120,432)); 
-			var watt = 0;
-			watt = me._nRPM.getValue();
-			#print ("IAT : "~watt);
-			watt =( ( watt * 0.03546) + 384 );
-			watt = global.clamp(watt,384,456);
-			interpolate(me._PropellerHeat._nWatt,watt,me._dt);
+			var volt = getprop("/extra500/panel/CircuitBreaker/BankC/PropellerHeat/voltOut");
+#			var watt =( ( getprop("/engines/engine/rpm") * 0.03547/) + 384 ) / 24 * volt;
+			var watt = 456/24* volt;
+#			interpolate(me._PropellerHeat._nWatt,watt,me._dt);
+			me._PropellerHeat._nWatt.setValue(watt);
 		}
 		
 	}
