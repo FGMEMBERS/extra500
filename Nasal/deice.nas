@@ -323,7 +323,7 @@ var DeicingSystemClass = {
 		# 2030		19	456
 		# 0.03546x + 16
 		
-#FIXME: RPM is not updated		
+#FIXME: RPM is not updated and also not when aircraft is switched on.		
 		if (eSystem.switch.Propeller._state == 1){
 			var volt = getprop("/extra500/panel/CircuitBreaker/BankC/PropellerHeat/voltOut");
 #			var watt =( ( getprop("/engines/engine/rpm") * 0.03547/) + 384 ) / 24 * volt;

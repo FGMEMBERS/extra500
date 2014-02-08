@@ -34,7 +34,7 @@ Engine starting:
 CAUTION: TOT limit for starting is max. 10sec above 810degC and below 927degC 
 - Standby alternator:	Switch ON
 - Generator:		Switch ON
-- Engine start:		IGN OFF
+- Engine start:		IGN OFF (only if N1 >= 65%)
 
 
 Take-off:
