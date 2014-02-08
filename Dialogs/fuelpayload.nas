@@ -564,6 +564,15 @@ var WightWidget = {
 		m._cWeightMaxRamp	 	= m._group.getElementById("Weight_Max_Ramp");
 		m._cWeightMaxTakeoff	 	= m._group.getElementById("Weight_Max_Takeoff");
 		m._cWeightMaxLanding	 	= m._group.getElementById("Weight_Max_Landing");
+		m._cWeightMACPercent	 	= m._group.getElementById("Weight_MAC_Percent");
+		
+		m._cCenterGravityXMax	 	= m._group.getElementById("CenterGravity_X_Max");
+		m._cCenterGravityXMin	 	= m._group.getElementById("CenterGravity_X_Min");
+		m._cCenterGravityYMax	 	= m._group.getElementById("CenterGravity_Y_Max");
+		m._cCenterGravityYMin	 	= m._group.getElementById("CenterGravity_Y_Min");
+		m._cCenterGravityLimits	 	= m._group.getElementById("Weight_CG_Limits");
+		
+		
 		
 		m._nCGx 	= props.globals.initNode("/fdm/jsbsim/inertia/cg-x-in");
 		m._nCGy 	= props.globals.initNode("/fdm/jsbsim/inertia/cg-y-in");
@@ -572,14 +581,33 @@ var WightWidget = {
 		m._nRamp 	= props.globals.initNode("/limits/mass-and-balance/maximum-ramp-mass-lbs");
 		m._nTakeoff 	= props.globals.initNode("/limits/mass-and-balance/maximum-takeoff-mass-lbs");
 		m._nLanding 	= props.globals.initNode("/limits/mass-and-balance/maximum-landing-mass-lbs");
-		m._cgX  = 0;
-		m._cgY  = 0;
-		m._empty = 0;
-		m._payload = 0;
-		m._gross = 0;
-		m._ramp  = 0;
-		m._takeoff  = 0;
-		m._landing = 0;
+		m._nCGxMax 	= props.globals.initNode("/limits/mass-and-balance/cg-x-max-in",120.0,"DOUBLE");
+		m._nCGxMin 	= props.globals.initNode("/limits/mass-and-balance/cg-x-min-in",150.0,"DOUBLE");
+		m._nCGyMax 	= props.globals.initNode("/limits/mass-and-balance/cg-y-max-in",100.0,"DOUBLE");
+		m._nCGyMin 	= props.globals.initNode("/limits/mass-and-balance/cg-y-min-in",-100.0,"DOUBLE");
+		m._nMac 	= props.globals.initNode("/limits/mass-and-balance/mac-mm",1322.0,"DOUBLE");
+		m._nMac0 	= props.globals.initNode("/limits/mass-and-balance/mac-0-mm",3200.0,"DOUBLE");
+		
+		
+		m._cgX  	= 0;
+		m._cgY  	= 0;
+		m._empty 	= 0;
+		m._payload 	= 0;
+		m._gross 	= 0;
+		m._ramp  	= 0;
+		m._takeoff  	= 0;
+		m._landing 	= 0;
+		m._MACPercent 	= 0.0; # %
+		m._MAC 		= m._nMac.getValue(); # mm
+		m._MAC_0 	= m._nMac0.getValue(); # mm
+		m._MAC_Limit_Min	= 0.17; #%
+		m._MAC_Limit_Max	= 0.35; #%
+		
+		m._cgXMax	= m._nCGxMax.getValue();
+		m._cgXMin	= m._nCGxMin.getValue();
+		m._cgYMax	= m._nCGyMax.getValue();
+		m._cgYMin	= m._nCGyMin.getValue();
+		
 		
 		m._ramp = m._nRamp.getValue();
 		m._cWeightMaxRamp.setText(sprintf("%.2f",m._ramp));
@@ -588,6 +616,14 @@ var WightWidget = {
 		m._landing = m._nLanding.getValue();
 		m._cWeightMaxLanding.setText(sprintf("%.2f",m._landing));
 		
+		m._cCenterGravityXMax.setText(sprintf("%.2f",m._cgXMax));
+		m._cCenterGravityXMin.setText(sprintf("%.2f",m._cgXMin));
+		m._cCenterGravityYMax.setText(sprintf("%.2f",m._cgYMax));
+		m._cCenterGravityYMin.setText(sprintf("%.2f",m._cgYMin));
+		
+		#m._cCenterGravityLimits.set("coord[3]",)
+		
+		m._cWeightMACPercent.setText(sprintf("%.2f",m._MACPercent));
 		
 		return m;
 	},
@@ -625,6 +661,10 @@ var WightWidget = {
 		var y = (me._cgX - 135.0) * (64/18);
 		var x = (me._cgY ) * (64/13);
 		me._cCenterGravityBall.setTranslation(x ,y );
+		
+		
+		me._MACPercent = ( (me._cgX * global.CONST.INCH2METER * 1000) - me._MAC_0 ) / me._MAC;
+		me._cWeightMACPercent.setText(sprintf("%.2f",me._MACPercent));
 		
 	},
 	
