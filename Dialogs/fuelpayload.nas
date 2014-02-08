@@ -216,6 +216,7 @@ var MyWindow = {
 var COLOR = {};
 COLOR["Red"] = "rgb(244,28,33)";
 COLOR["Green"] = "#008000";
+COLOR["Black"] = "#000000";
 
 var SvgWidget = {
 	new: func(dialog,canvasGroup,name){
@@ -555,9 +556,9 @@ var WightWidget = {
 		}
 		
 		
-		m._cCenterGravityX	 	= m._group.getElementById("CenterGravity_X");
-		m._cCenterGravityY	 	= m._group.getElementById("CenterGravity_Y");
-		m._cCenterGravityBall	 	= m._group.getElementById("CenterGravity_Ball").updateCenter();
+# 		m._cCenterGravityX	 	= m._group.getElementById("CenterGravity_X");
+# 		m._cCenterGravityY	 	= m._group.getElementById("CenterGravity_Y");
+# 		m._cCenterGravityBall	 	= m._group.getElementById("CenterGravity_Ball").updateCenter();
 		m._cWeightEmpty		 	= m._group.getElementById("Weight_Empty");
 		m._cWeightGross	 		= m._group.getElementById("Weight_Gross");
 		m._cWeightPayload	 	= m._group.getElementById("Weight_Payload");
@@ -566,11 +567,12 @@ var WightWidget = {
 		m._cWeightMaxLanding	 	= m._group.getElementById("Weight_Max_Landing");
 		m._cWeightMACPercent	 	= m._group.getElementById("Weight_MAC_Percent");
 		
-		m._cCenterGravityXMax	 	= m._group.getElementById("CenterGravity_X_Max");
-		m._cCenterGravityXMin	 	= m._group.getElementById("CenterGravity_X_Min");
-		m._cCenterGravityYMax	 	= m._group.getElementById("CenterGravity_Y_Max");
-		m._cCenterGravityYMin	 	= m._group.getElementById("CenterGravity_Y_Min");
-		m._cCenterGravityLimits	 	= m._group.getElementById("Weight_CG_Limits");
+# 		m._cCenterGravityXMax	 	= m._group.getElementById("CenterGravity_X_Max");
+# 		m._cCenterGravityXMin	 	= m._group.getElementById("CenterGravity_X_Min");
+# 		m._cCenterGravityYMax	 	= m._group.getElementById("CenterGravity_Y_Max");
+# 		m._cCenterGravityYMin	 	= m._group.getElementById("CenterGravity_Y_Min");
+		m._cWeight_Limits_lbs	 	= m._group.getElementById("Weight_Limits_lbs");
+		m._cWeight_Limits_in	 	= m._group.getElementById("Weight_Limits_in");
 		
 		
 		
@@ -581,10 +583,10 @@ var WightWidget = {
 		m._nRamp 	= props.globals.initNode("/limits/mass-and-balance/maximum-ramp-mass-lbs");
 		m._nTakeoff 	= props.globals.initNode("/limits/mass-and-balance/maximum-takeoff-mass-lbs");
 		m._nLanding 	= props.globals.initNode("/limits/mass-and-balance/maximum-landing-mass-lbs");
-		m._nCGxMax 	= props.globals.initNode("/limits/mass-and-balance/cg-x-max-in",120.0,"DOUBLE");
-		m._nCGxMin 	= props.globals.initNode("/limits/mass-and-balance/cg-x-min-in",150.0,"DOUBLE");
-		m._nCGyMax 	= props.globals.initNode("/limits/mass-and-balance/cg-y-max-in",100.0,"DOUBLE");
-		m._nCGyMin 	= props.globals.initNode("/limits/mass-and-balance/cg-y-min-in",-100.0,"DOUBLE");
+# 		m._nCGxMax 	= props.globals.initNode("/limits/mass-and-balance/cg-x-max-in",120.0,"DOUBLE");
+# 		m._nCGxMin 	= props.globals.initNode("/limits/mass-and-balance/cg-x-min-in",150.0,"DOUBLE");
+# 		m._nCGyMax 	= props.globals.initNode("/limits/mass-and-balance/cg-y-max-in",100.0,"DOUBLE");
+# 		m._nCGyMin 	= props.globals.initNode("/limits/mass-and-balance/cg-y-min-in",-100.0,"DOUBLE");
 		m._nMac 	= props.globals.initNode("/limits/mass-and-balance/mac-mm",1322.0,"DOUBLE");
 		m._nMac0 	= props.globals.initNode("/limits/mass-and-balance/mac-0-mm",3200.0,"DOUBLE");
 		
@@ -598,15 +600,23 @@ var WightWidget = {
 		m._takeoff  	= 0;
 		m._landing 	= 0;
 		m._MACPercent 	= 0.0; # %
-		m._MAC 		= m._nMac.getValue(); # mm
-		m._MAC_0 	= m._nMac0.getValue(); # mm
+		m._MAC 			= m._nMac.getValue(); # mm
+		m._MAC_0 		= m._nMac0.getValue(); # mm
 		m._MAC_Limit_Min	= 0.17; #%
 		m._MAC_Limit_Max	= 0.35; #%
+		m._WeightLimit_lbs_x0 	= m._cWeight_Limits_lbs.get("coord[2]");
+		m._WeightLimit_lbs_y0 	= m._cWeight_Limits_lbs.get("coord[1]");
+		m._WeightLimit_in_x0 	= m._cWeight_Limits_in.get("coord[0]");
+		m._WeightLimit_in_y0 	= m._cWeight_Limits_in.get("coord[3]");
 		
-		m._cgXMax	= m._nCGxMax.getValue();
-		m._cgXMin	= m._nCGxMin.getValue();
-		m._cgYMax	= m._nCGyMax.getValue();
-		m._cgYMin	= m._nCGyMin.getValue();
+		m._WeightLimit_lbs_pixel 	= 0;
+		m._WeightLimit_in_pixel 	= 0;
+		
+		
+# 		m._cgXMax	= m._nCGxMax.getValue();
+# 		m._cgXMin	= m._nCGxMin.getValue();
+# 		m._cgYMax	= m._nCGyMax.getValue();
+# 		m._cgYMin	= m._nCGyMin.getValue();
 		
 		
 		m._ramp = m._nRamp.getValue();
@@ -616,12 +626,14 @@ var WightWidget = {
 		m._landing = m._nLanding.getValue();
 		m._cWeightMaxLanding.setText(sprintf("%.2f",m._landing));
 		
-		m._cCenterGravityXMax.setText(sprintf("%.2f",m._cgXMax));
-		m._cCenterGravityXMin.setText(sprintf("%.2f",m._cgXMin));
-		m._cCenterGravityYMax.setText(sprintf("%.2f",m._cgYMax));
-		m._cCenterGravityYMin.setText(sprintf("%.2f",m._cgYMin));
+# 		m._cCenterGravityXMax.setText(sprintf("%.2f",m._cgXMax));
+# 		m._cCenterGravityXMin.setText(sprintf("%.2f",m._cgXMin));
+# 		m._cCenterGravityYMax.setText(sprintf("%.2f",m._cgYMax));
+# 		m._cCenterGravityYMin.setText(sprintf("%.2f",m._cgYMin));
 		
-		#m._cCenterGravityLimits.set("coord[3]",)
+		m._empty = m._nEmpty.getValue();
+		m._cWeightEmpty.setText(sprintf("%.2f",m._empty));
+		
 		
 		m._cWeightMACPercent.setText(sprintf("%.2f",m._MACPercent));
 		
@@ -638,14 +650,26 @@ var WightWidget = {
 		me.removeListeners();	
 	},
 	_onNotifyChange : func(n){
+		
+		# TODO: point mass 7 & 8(gear) zu Empty hinzufügen
+		
 		me._cgX = me._nCGx.getValue();
-		me._cCenterGravityX.setText(sprintf("%.2f",me._cgX));
-		me._cgY = me._nCGy.getValue();
-		me._cCenterGravityY.setText(sprintf("%.2f",me._cgY));
+# 		me._cCenterGravityX.setText(sprintf("%.2f",me._cgX));
+# 		me._cgY = me._nCGy.getValue();
+# 		me._cCenterGravityY.setText(sprintf("%.2f",me._cgY));
+		
 		me._gross = me._nGross.getValue();
 		me._cWeightGross.setText(sprintf("%.2f",me._gross));
-		me._empty = me._nEmpty.getValue();
-		me._cWeightEmpty.setText(sprintf("%.2f",me._empty));
+		
+		me._WeightLimit_lbs_pixel 	= ((me._gross - 3000) * (21.0 / 250.0));
+		me._WeightLimit_in_pixel 	= ((me._cgX - 133.7913) * (51.0 / 2.602362205));
+		
+		
+		me._cWeight_Limits_lbs.set("coord[1]",me._WeightLimit_lbs_y0 - me._WeightLimit_lbs_pixel);
+		me._cWeight_Limits_lbs.set("coord[2]",me._WeightLimit_lbs_x0 + me._WeightLimit_in_pixel);
+		
+		me._cWeight_Limits_in.set("coord[0]",me._WeightLimit_in_x0 + me._WeightLimit_in_pixel);
+		me._cWeight_Limits_in.set("coord[3]",me._WeightLimit_in_y0 - me._WeightLimit_lbs_pixel);
 		
 		me._payload = 0;
 		foreach(w;keys(me._widget)){
@@ -660,11 +684,22 @@ var WightWidget = {
 		
 		var y = (me._cgX - 135.0) * (64/18);
 		var x = (me._cgY ) * (64/13);
-		me._cCenterGravityBall.setTranslation(x ,y );
+# 		me._cCenterGravityBall.setTranslation(x ,y );
 		
 		
 		me._MACPercent = ( (me._cgX * global.CONST.INCH2METER * 1000) - me._MAC_0 ) / me._MAC;
-		me._cWeightMACPercent.setText(sprintf("%.2f",me._MACPercent));
+		me._cWeightMACPercent.setText(sprintf("%.2f",me._MACPercent*100));
+		
+		if (me._gross > me._takeoff){
+			me._cWeightGross.setColor(COLOR["Red"]);
+		}else{
+			me._cWeightGross.setColor(COLOR["Black"]);
+		}
+		if (me._MACPercent < me._MAC_Limit_Min or me._MACPercent > me._MAC_Limit_Max){
+			me._cWeightMACPercent.setColor(COLOR["Red"]);
+		}else{
+			me._cWeightMACPercent.setColor(COLOR["Black"]);
+		}
 		
 	},
 	
