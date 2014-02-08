@@ -86,6 +86,6 @@ setlistener("/fdm/jsbsim/aircraft/events/FLAPS15", func {
 
 setlistener("/fdm/jsbsim/aircraft/events/EXTERNALPOWER", func {
 	if ( getprop("/fdm/jsbsim/aircraft/events/EXTERNALPOWER") == 1 ) {
-		UI.msg.warning("You were arrested for steeling an External Power Cart. CRTL-E to disconnect.");
+		UI.msg.warning("You were arrested for stealing an External Power Cart. CRTL-E to disconnect.");
 	}
  }, 1, 0);
