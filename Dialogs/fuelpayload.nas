@@ -570,6 +570,7 @@ var WightWidget = {
 		m._cCenterGravityXMin	 	= m._group.getElementById("CenterGravity_X_Min");
 		m._cCenterGravityYMax	 	= m._group.getElementById("CenterGravity_Y_Max");
 		m._cCenterGravityYMin	 	= m._group.getElementById("CenterGravity_Y_Min");
+		m._cCenterGravityLimits	 	= m._group.getElementById("Weight_CG_Limits");
 		
 		
 		
@@ -599,6 +600,14 @@ var WightWidget = {
 		m._MACPercent 	= 0.0; # %
 		m._MAC 		= m._nMac.getValue(); # mm
 		m._MAC_0 	= m._nMac0.getValue(); # mm
+		m._MAC_Limit_Min	= 0.17; #%
+		m._MAC_Limit_Max	= 0.35; #%
+		
+		m._cgXMax	= m._nCGxMax.getValue();
+		m._cgXMin	= m._nCGxMin.getValue();
+		m._cgYMax	= m._nCGyMax.getValue();
+		m._cgYMin	= m._nCGyMin.getValue();
+		
 		
 		m._ramp = m._nRamp.getValue();
 		m._cWeightMaxRamp.setText(sprintf("%.2f",m._ramp));
@@ -607,10 +616,12 @@ var WightWidget = {
 		m._landing = m._nLanding.getValue();
 		m._cWeightMaxLanding.setText(sprintf("%.2f",m._landing));
 		
-		m._cCenterGravityXMax.setText(sprintf("%.2f",m._nCGxMax.getValue()));
-		m._cCenterGravityXMin.setText(sprintf("%.2f",m._nCGxMin.getValue()));
-		m._cCenterGravityYMax.setText(sprintf("%.2f",m._nCGyMax.getValue()));
-		m._cCenterGravityYMin.setText(sprintf("%.2f",m._nCGyMin.getValue()));
+		m._cCenterGravityXMax.setText(sprintf("%.2f",m._cgXMax));
+		m._cCenterGravityXMin.setText(sprintf("%.2f",m._cgXMin));
+		m._cCenterGravityYMax.setText(sprintf("%.2f",m._cgYMax));
+		m._cCenterGravityYMin.setText(sprintf("%.2f",m._cgYMin));
+		
+		#m._cCenterGravityLimits.set("coord[3]",)
 		
 		m._cWeightMACPercent.setText(sprintf("%.2f",m._MACPercent));
 		
