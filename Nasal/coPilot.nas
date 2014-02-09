@@ -131,11 +131,10 @@ var before_engine_start_battery = func(){
 			CoPilot.say("BATT - ON ... check");
 		}, 26.0 );
 	settimer(func{
-			CoPilot.say("Voltmeter - Check reading > 24VDC ");
 			if (getprop("/extra500/instrumentation/DIP/indicatedVDC") > 24 ) {
-				CoPilot.say("Volt > 24VDC ");
+				CoPilot.say("Voltmeter - Check reading > 24VDC ... OK ");
 			} else {
-				CoPilot.say("Volt < 24VDC ");
+				CoPilot.say("Voltmeter - Check reading > 24VDC ... TOO LOW ");
 			}
 		}, 28.0 );
 	settimer(func{
@@ -173,19 +172,17 @@ var engine_start = func(){
 			CoPilot.say("FUEL PUMP 1 or 2 - ON ... check");
 		}, 12.0 );
 	settimer(func{	
-			CoPilot.say("Fuel Pressure - Check reading > 10 psi ... ");
 			if (getprop("/extra500/instrumentation/DIP/indicatedFuelPress") > 10) {
-				CoPilot.say("Fuel Pressure - OK ");
+				CoPilot.say("Fuel Pressure - Check reading > 10 psi ... OK ");
 			} else {
-				CoPilot.say("Fuel Pressure - TOO LOW ");
+				CoPilot.say("Fuel Pressure - Check reading > 10 psi ... TOO LOW ");
 			}
 		}, 14.0 );
 	settimer(func{
-			CoPilot.say("TOT - Check reading < 100 degC ... ");
 			if (getprop("/fdm/jsbsim/aircraft/engine/TOT-degC") > 10) {
-				CoPilot.say("TOT - OK ");
+				CoPilot.say("TOT - Check reading < 100 degC ... OK ");
 			} else {
-				CoPilot.say("TOT - TOO HIGH ");
+				CoPilot.say("TOT - Check reading < 100 degC ... TOO HIGH ");
 			}
 		}, 16.0 );
 	settimer(func{
@@ -204,30 +201,27 @@ var engine_start = func(){
 			CoPilot.say("TOT - Monitor < 850 degC ... ");
 		}, 28.0 );
 	settimer(func{
-			CoPilot.say("Oil Pressure - Check indication ...");
 			if (getprop("/fdm/jsbsim/aircraft/engine/OP-psi") > 35) {
-				CoPilot.say("OP - OK ");
+				CoPilot.say("Oil Pressure - Check indication ... OK ");
 			} else {
-				CoPilot.say("OP - problem ");
+				CoPilot.say("Oil Pressure - Check indication ... problem ");
 			}
 		}, 30.0 );
 	settimer(func{
-			CoPilot.say("OIL PRESS - Check extinguished ... ");
 			if (getprop("/extra500/panel/Annunciator/OilPress/state") == 0) {
-				CoPilot.say("OP - OK ");
+				CoPilot.say("OIL PRESS - Check extinguished ... OK ");
 			} else {
-				CoPilot.say("OP - TOO LOW ");
+				CoPilot.say("OIL PRESS - Check extinguished ... TOO LOW ");
 			}
 		}, 32.0 );
 	settimer(func{
 			CoPilot.say("Propeller RPM - Check positive indication at 25% N1 ...");
 		}, 34.0 );
 	settimer(func{
-			CoPilot.say("PNEUMATIC LOW - Check extinguished ... ");
 			if (getprop("/extra500/panel/Annunciator/PneumaticLow/state") == 0) {
-				CoPilot.say("Pneumatic Low - OK ");
+				CoPilot.say("PNEUMATIC LOW - Check extinguished ... OK ");
 			} else {
-				CoPilot.say("Pneumatic Low - still ON! ");
+				CoPilot.say("PNEUMATIC LOW - Check extinguished ... still ON! ");
 			}
 		},40.0 );
 	settimer(func{
@@ -307,11 +301,10 @@ var after_starting_engine = func(){
 			CoPilot.say("FUEL PUMP (original) - OFF ... check");
 		}, 8.0 );
 	settimer(func{		
-			CoPilot.say("Fuel Pressure - Check reading > 10 psi ... ");
 			if (getprop("/extra500/instrumentation/DIP/indicatedFuelPress") > 10) {
-				CoPilot.say("Fuel Pressure - OK ");
+				CoPilot.say("Fuel Pressure - Check reading > 10 psi ... OK ");
 			} else {
-				CoPilot.say("Fuel Pressure - TOO LOW ");
+				CoPilot.say("Fuel Pressure - Check reading > 10 psi ... TOO LOW ");
 			}
 		}, 10.0 );
 	settimer(func{
@@ -319,11 +312,10 @@ var after_starting_engine = func(){
 			CoPilot.say("STANDBY ALTERN ON");
 		}, 12.0 );
 	settimer(func{
-			CoPilot.say("STANDBY ALTERN ON - Check illumination ... ");
 			if (getprop("/extra500/panel/Annunciator/StandByAlternOn/state") != 0) {
-				CoPilot.say("STANDBY ALTERN - ON ");
+				CoPilot.say("STANDBY ALTERN ON - Check illumination ... ON ");
 			} else {
-				CoPilot.say("STANDBY ALTERN - OFF!!! ");
+				CoPilot.say("STANDBY ALTERN ON - Check illumination ... OFF!!! ");
 			}
 		}, 14.0 );
 	settimer(func{
@@ -331,35 +323,31 @@ var after_starting_engine = func(){
 			CoPilot.say("GEN - ON ... check");
 		}, 16.0 );
 	settimer(func{		
-			CoPilot.say("STANDBY ALTERN ON - Check extinguished ... ");
 			if (getprop("/extra500/panel/Annunciator/StandByAlternOn/state") == 0) {
-				CoPilot.say("STANDBY ALTERN - OFF ");
+				CoPilot.say("STANDBY ALTERN ON - Check extinguished ... OFF ");
 			} else {
-				CoPilot.say("STANDBY ALTERN - Still ON !!! ");
+				CoPilot.say("STANDBY ALTERN ON - Check extinguished ... Still ON !!! ");
 			}
 		}, 18.0 );
 	settimer(func{
-			CoPilot.say("GENERATOR FAIL - Check extinguished ... ");
 			if (getprop("/extra500/panel/Annunciator/GeneratorFail/state") == 0) {
-				CoPilot.say("GENERATOR FAIL - OFF ");
+				CoPilot.say("GENERATOR FAIL - Check extinguished ... OFF ");
 			} else {
-				CoPilot.say("GENERATOR FAIL - Still ON !!! ");
+				CoPilot.say("GENERATOR FAIL - Check extinguished ... Still ON !!! ");
 			}
 		}, 20.0 );
 	settimer(func{			
-			CoPilot.say("FUEL TRANS LEFT - Check extinguished ... ");
 			if (getprop("/extra500/panel/Annunciator/FuelTransLeft/state") == 0) {
-				CoPilot.say("FUEL TRANS LEFT - OFF ");
+				CoPilot.say("FUEL TRANS LEFT - Check extinguished ... OFF ");
 			} else {
-				CoPilot.say("FUEL TRANS LEFT - Still ON !!! ");
+				CoPilot.say("FUEL TRANS LEFT - Check extinguished ... Still ON !!! ");
 			}
 		}, 22.0 );
 	settimer(func{			
-			CoPilot.say("FUEL TRANS RIGHT - Check extinguished ... ");
 			if (getprop("/extra500/panel/Annunciator/FuelTransRight/state") == 0) {
-				CoPilot.say("FUEL TRANS RIGHT - OFF ");
+				CoPilot.say("FUEL TRANS RIGHT - Check extinguished ... OFF ");
 			} else {
-				CoPilot.say("FUEL TRANS RIGHT - Still ON !!! ");
+				CoPilot.say("FUEL TRANS RIGHT - Check extinguished ... Still ON !!! ");
 			}
 		}, 24.0 );
 	settimer(func{
@@ -367,7 +355,7 @@ var after_starting_engine = func(){
 			CoPilot.say("AVIONICS - ON ... check");
 		}, 26.0 );
 	settimer(func{		
-			CoPilot.say("Altimeter - Set ... ");
+			CoPilot.say("Altimeter - Set");
 			var qnh = getprop("/environment/pressure-sea-level-inhg");
 			setprop("/instrumentation/altimeter-backup/setting-inhg",qnh);
 			setprop("/instrumentation/altimeter-IFD-LH/setting-inhg",qnh);
