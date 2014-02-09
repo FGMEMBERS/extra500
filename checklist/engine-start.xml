@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
-      Date:             21.05.13
+      Last change:      Eric van den Berg
+      Date:             09.02.14
 -->
 
 <PropertyList>
@@ -43,7 +43,7 @@
 	</item> 
 	<item>
 		<name>TOT</name>
-		<value>Check reading &lt; 100 °C</value>
+		<value>Check reading &lt; 100 degC</value>
 	</item> 
 	<item>
 		<name>ENGINE MOTORING</name>

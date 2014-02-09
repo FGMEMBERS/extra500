@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             19.01.14
+      Date:             09.02.14
 -->
 
 <PropertyList>
@@ -35,7 +35,7 @@
 				<binding>
 				       <command>nasal</command>
 				       <script><![CDATA[
-					       CoPilot.performChecklist("Before engine start - battery");
+					       CoPilot.performChecklist("BEFORE ENGINE START - battery");
 				       ]]></script>
 			       </binding>
 			</item>
@@ -45,7 +45,7 @@
 				<binding>
 				       <command>nasal</command>
 				       <script><![CDATA[
-					       CoPilot.performChecklist("Engine start");
+					       CoPilot.performChecklist("ENGINE START");
 				       ]]></script>
 			       </binding>
 			</item>
@@ -55,7 +55,7 @@
 				<binding>
 				       <command>nasal</command>
 				       <script><![CDATA[
-					       CoPilot.performChecklist("After starting engine");
+					       CoPilot.performChecklist("AFTER ENGINE START");
 				       ]]></script>
 			       </binding>
 			</item>
@@ -65,7 +65,7 @@
 				<binding>
 				       <command>nasal</command>
 				       <script><![CDATA[
-					       CoPilot.performChecklist("Engine shutdown");
+					       CoPilot.performChecklist("ENGINE SHUTDOWN");
 				       ]]></script>
 			       </binding>
 			</item>

@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: April 04 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             29.04.13
+#      Last change:      Eric van den Berg
+#      Date:             09.02.14
 #
 var buisy = 0;
 var checklist = "";
@@ -40,7 +40,8 @@ var auto_start = func(){
 
 var auto_engine_start = func(){
 	UI.click("Main Battery on");
-	UI.click("Main Generator on");
+	UI.click("Main Avionics on");
+	UI.click("Main Generator off");
 	UI.click("Fuel Pump 2 on");
 	UI.click("Engine Motoring normal");
 	UI.click("Engine Start on");
@@ -49,14 +50,12 @@ var auto_engine_start = func(){
 };
 
 var auto_engine_shutdown = func(){
-	UI.click("Engine cutoff on");
-	UI.click("Engine Start off");
+	UI.click("Fuel Pump 2 off");
 	UI.click("Main Generator off");
 	UI.click("Main Standby Alternator off");
-	UI.click("Fuel Pump 2 off");
+	UI.click("Engine cutoff on");
+	UI.click("Engine Start off");
 	UI.click("Main Battery off");
-	
-	
 };
 
 
@@ -86,8 +85,8 @@ var before_engine_start_battery = func(){
 			CoPilot.say("GEN - OFF ... check");
 		}, 4.0 );
 	settimer(func{
-			UI.click("Main Avionics off");
-			CoPilot.say("AVIONICS - OFF ... check");
+			UI.click("Main Avionics on");
+			CoPilot.say("AVIONICS - ON ... check");
 		}, 6.0 );
 	settimer(func{
 			UI.click("Cabin Environmental Air off");
@@ -98,12 +97,12 @@ var before_engine_start_battery = func(){
 			CoPilot.say("PRESS - ON ... check");
 		}, 10.0 );
 	settimer(func{
-			
-			CoPilot.say("Pressure Controller - set to field elevation ... ???");
+			setprop("systems/pressurization/airport-alt",getprop("/instrumentation/altimeter/indicated-altitude-ft"));
+			CoPilot.say("Pressure Controller - set to field elevation ... ");
 		}, 12.0 );
 	settimer(func{
-			
-			CoPilot.say("Cabin Rate of Climb - Set ... ???");
+			setprop("systems/pressurization/cabin-climb-rate-fpm",500);
+			CoPilot.say("Cabin Rate of Climb - Set ... ");
 		}, 14.0 );
 	settimer(func{
 			UI.click("Cabin Air Condition off");
@@ -114,36 +113,40 @@ var before_engine_start_battery = func(){
 			CoPilot.say("STROBE - ON ... check");
 		}, 18.0 );
 	settimer(func{
-			
+			UI.click("Parkingbrake on");
+			setprop("/controls/gear/brake-left",1);
+			setprop("/controls/gear/brake-right",1);
 			CoPilot.say("PARKING BRAKE - Re-check set ... check");
 		}, 20.0 );
 	settimer(func{
-			
-			CoPilot.say("Condition Lever - FUEL OFF ... ???");
+			UI.click("Engine cutoff on");
+			CoPilot.say("Condition Lever - FUEL OFF ... ");
 		}, 22.0 );
 	settimer(func{
-			
-			CoPilot.say("Power Lever - GRD IDLE ... ???");
+			setprop("controls/engines/engine/throttle",0);
+			CoPilot.say("Power Lever - GRD IDLE ... ");
 		}, 24.0 );
 	settimer(func{
 			UI.click("Main Battery on");
 			CoPilot.say("BATT - ON ... check");
 		}, 26.0 );
 	settimer(func{
-			
-			CoPilot.say("Voltmeter - Check reading > 24VDC ... ???");
+			CoPilot.say("Voltmeter - Check reading > 24VDC ");
+			if (getprop("/extra500/instrumentation/DIP/indicatedVDC") > 24 ) {
+				CoPilot.say("Volt > 24VDC ");
+			} else {
+				CoPilot.say("Volt < 24VDC ");
+			}
 		}, 28.0 );
 	settimer(func{
-			
-			CoPilot.say("Instrument Lights - As required ... ???");
+			UI.click("Light Instrument on");
+			CoPilot.say("Instrument Lights - As required ... ");
 		}, 30.0 );
-	settimer(func{
-			
-			CoPilot.say("Start Up Clearance - Obtain ... ???");
+	settimer(func{	
+			CoPilot.say("Start Up Clearance - Obtain ... ");
 		}, 32.0 );
 	settimer(func{
-			
-			CoPilot.say("Checklist - Before engine start Battery - performed.");
+			CoPilot.say("Checklist - BEFORE ENGINE START BATTERY - performed.");
 			buisy = 0;
 		}, 36.0 );
 	
@@ -169,12 +172,21 @@ var engine_start = func(){
 			UI.click("Fuel Pump 1 on");
 			CoPilot.say("FUEL PUMP 1 or 2 - ON ... check");
 		}, 12.0 );
-	settimer(func{
-		
-			CoPilot.say("Fuel Pressure - Check reading > 10 psi ... ???");
+	settimer(func{	
+			CoPilot.say("Fuel Pressure - Check reading > 10 psi ... ");
+			if (getprop("/extra500/instrumentation/DIP/indicatedFuelPress") > 10) {
+				CoPilot.say("Fuel Pressure - OK ");
+			} else {
+				CoPilot.say("Fuel Pressure - TOO LOW ");
+			}
 		}, 14.0 );
 	settimer(func{
-			CoPilot.say("TOT - Check reading < 100 °C ... ???");
+			CoPilot.say("TOT - Check reading < 100 degC ... ");
+			if (getprop("/fdm/jsbsim/aircraft/engine/TOT-degC") > 10) {
+				CoPilot.say("TOT - OK ");
+			} else {
+				CoPilot.say("TOT - TOO HIGH ");
+			}
 		}, 16.0 );
 	settimer(func{
 			UI.click("Engine Motoring normal");
@@ -186,27 +198,42 @@ var engine_start = func(){
 		}, 20.0 );
 	settimer(func{
 			UI.click("Engine cutoff off");
-			CoPilot.say("Condition Lever - Fully forward ... ???");
-		}, 22.0 );
+			CoPilot.say("Condition Lever - Fully forward ... ");
+		}, 24.5 );
 	settimer(func{
-			CoPilot.say("TOT - Monitor < 850 °C ... ???");
-		}, 24.0 );
-	settimer(func{
-			CoPilot.say("Oil Pressure - Check indication ... ???");
-		}, 26.0 );
-	settimer(func{
-			CoPilot.say("OIL PRESS - Check extinguished ... ???");
+			CoPilot.say("TOT - Monitor < 850 degC ... ");
 		}, 28.0 );
 	settimer(func{
-			CoPilot.say("Propeller RPM - Check positive indication at 25% N1 ... ???");
+			CoPilot.say("Oil Pressure - Check indication ...");
+			if (getprop("/fdm/jsbsim/aircraft/engine/OP-psi") > 35) {
+				CoPilot.say("OP - OK ");
+			} else {
+				CoPilot.say("OP - problem ");
+			}
 		}, 30.0 );
 	settimer(func{
-			CoPilot.say("PNEUMATIC LOW - Check extinguished ... ???");
-		},32.0 );
+			CoPilot.say("OIL PRESS - Check extinguished ... ");
+			if (getprop("/extra500/panel/Annunciator/OilPress/state") == 0) {
+				CoPilot.say("OP - OK ");
+			} else {
+				CoPilot.say("OP - TOO LOW ");
+			}
+		}, 32.0 );
 	settimer(func{
-			CoPilot.say("Checklist - Engine start - performed.");
+			CoPilot.say("Propeller RPM - Check positive indication at 25% N1 ...");
+		}, 34.0 );
+	settimer(func{
+			CoPilot.say("PNEUMATIC LOW - Check extinguished ... ");
+			if (getprop("/extra500/panel/Annunciator/PneumaticLow/state") == 0) {
+				CoPilot.say("Pneumatic Low - OK ");
+			} else {
+				CoPilot.say("Pneumatic Low - still ON! ");
+			}
+		},40.0 );
+	settimer(func{
+			CoPilot.say("Checklist - ENGINE START - performed.");
 			buisy = 0;
-		}, 36.0 );
+		}, 44.0 );
 	
 };
 
@@ -215,16 +242,12 @@ var engine_shutdown = func(){
 	
 	settimer(func{
 			
-			CoPilot.say("Power Lever - GRD IDLE (at least 2 minutes) ... ???");
+			CoPilot.say("Power Lever - GRD IDLE (at least 2 minutes) ... ");
 		}, 4.0 );
 	settimer(func{
 			UI.click("Cabin Environmental Air off");
 			CoPilot.say("ENV AIR - OFF ... check");
 		}, 6.0 );
-	settimer(func{
-			UI.click("Main Avionics off");
-			CoPilot.say("AVIONICS - OFF ... check");
-		}, 8.0 );
 	settimer(func{
 			UI.click("Light Ice off");
 			UI.click("Light Landing off");
@@ -236,33 +259,35 @@ var engine_shutdown = func(){
 			UI.click("Light Navigation off");
 			
 			CoPilot.say("Lights OFF ... check");
-		}, 10.0 );
+		}, 8.0 );
 	settimer(func{
 			UI.click("Main Standby Alternator off");
 			CoPilot.say("STDBY ALT - OFF ... check");
-		}, 12.0 );
+		}, 10.0 );
 	settimer(func{
 			UI.click("Main Generator off");
 			CoPilot.say("GEN - OFF ... check");
-		}, 14.0 );
+		}, 12.0 );
 	settimer(func{
 			UI.click("Engine cutoff on");
-			CoPilot.say("Condition Lever - FUEL OFF ... ???");
+			CoPilot.say("Condition Lever - FUEL OFF ...");
 			
-		}, 16.0 );
+		}, 14.0 );
 	settimer(func{
 			UI.click("Main Battery off");
 			CoPilot.say("BATT - OFF ... check");
-		}, 18.0 );
+		}, 16.0 );
 	settimer(func{
-			
-			CoPilot.say("PARKING BRAKE - Set as required ... ???");
-		}, 20.0 );
+			CoPilot.say("PARKING BRAKE - Set as required ... ");
+			UI.click("Parkingbrake on");
+			setprop("/controls/gear/brake-left",1);
+			setprop("/controls/gear/brake-right",1);
+		}, 18.0 );
 		
 	settimer(func{
-			CoPilot.say("Checklist - Engine shutdown - performed.");
+			CoPilot.say("Checklist - ENGINE SHUTDOWN - performed.");
 			buisy = 0;
-		}, 24.0 );
+		}, 22.0 );
 	
 };
 
@@ -281,70 +306,99 @@ var after_starting_engine = func(){
 			UI.click("Fuel Pump 1 off");
 			CoPilot.say("FUEL PUMP (original) - OFF ... check");
 		}, 8.0 );
-	settimer(func{
-			
-			CoPilot.say("Fuel Pressure - Check reading > 10 psi ... ???");
+	settimer(func{		
+			CoPilot.say("Fuel Pressure - Check reading > 10 psi ... ");
+			if (getprop("/extra500/instrumentation/DIP/indicatedFuelPress") > 10) {
+				CoPilot.say("Fuel Pressure - OK ");
+			} else {
+				CoPilot.say("Fuel Pressure - TOO LOW ");
+			}
 		}, 10.0 );
 	settimer(func{
-			
-			CoPilot.say("STANDBY ALTERN ON - Check illumination ... ???");
+			UI.click("Main Standby Alternator on");
+			CoPilot.say("STANDBY ALTERN ON");
 		}, 12.0 );
+	settimer(func{
+			CoPilot.say("STANDBY ALTERN ON - Check illumination ... ");
+			if (getprop("/extra500/panel/Annunciator/StandByAlternOn/state") != 0) {
+				CoPilot.say("STANDBY ALTERN - ON ");
+			} else {
+				CoPilot.say("STANDBY ALTERN - OFF!!! ");
+			}
+		}, 14.0 );
 	settimer(func{
 			UI.click("Main Generator on");
 			CoPilot.say("GEN - ON ... check");
-		}, 14.0 );
-	settimer(func{
-			
-			CoPilot.say("STANDBY ALTERN ON - Check extinguished ... ???");
 		}, 16.0 );
-	settimer(func{
-			
-			CoPilot.say("GENERATOR FAIL - Check extinguished ... ???");
+	settimer(func{		
+			CoPilot.say("STANDBY ALTERN ON - Check extinguished ... ");
+			if (getprop("/extra500/panel/Annunciator/StandByAlternOn/state") == 0) {
+				CoPilot.say("STANDBY ALTERN - OFF ");
+			} else {
+				CoPilot.say("STANDBY ALTERN - Still ON !!! ");
+			}
 		}, 18.0 );
 	settimer(func{
-			
-			CoPilot.say("FUEL TRANS LEFT - Check extinguished ... ???");
+			CoPilot.say("GENERATOR FAIL - Check extinguished ... ");
+			if (getprop("/extra500/panel/Annunciator/GeneratorFail/state") == 0) {
+				CoPilot.say("GENERATOR FAIL - OFF ");
+			} else {
+				CoPilot.say("GENERATOR FAIL - Still ON !!! ");
+			}
 		}, 20.0 );
-	settimer(func{
-			
-			CoPilot.say("FUEL TRANS RIGHT - Check extinguished ... ???");
+	settimer(func{			
+			CoPilot.say("FUEL TRANS LEFT - Check extinguished ... ");
+			if (getprop("/extra500/panel/Annunciator/FuelTransLeft/state") == 0) {
+				CoPilot.say("FUEL TRANS LEFT - OFF ");
+			} else {
+				CoPilot.say("FUEL TRANS LEFT - Still ON !!! ");
+			}
 		}, 22.0 );
+	settimer(func{			
+			CoPilot.say("FUEL TRANS RIGHT - Check extinguished ... ");
+			if (getprop("/extra500/panel/Annunciator/FuelTransRight/state") == 0) {
+				CoPilot.say("FUEL TRANS RIGHT - OFF ");
+			} else {
+				CoPilot.say("FUEL TRANS RIGHT - Still ON !!! ");
+			}
+		}, 24.0 );
 	settimer(func{
 			UI.click("Main Avionics on");
 			CoPilot.say("AVIONICS - ON ... check");
-		}, 24.0 );
-	settimer(func{
-			
-			CoPilot.say("Altimeter - Set ... ???");
 		}, 26.0 );
-	settimer(func{
-			
-			CoPilot.say("Radios - Set as required ... ???");
+	settimer(func{		
+			CoPilot.say("Altimeter - Set ... ");
+			var qnh = getprop("/environment/pressure-sea-level-inhg");
+			setprop("/instrumentation/altimeter-backup/setting-inhg",qnh);
+			setprop("/instrumentation/altimeter-IFD-LH/setting-inhg",qnh);
+			setprop("/instrumentation/altimeter-IFD-RH/setting-inhg",qnh);
 		}, 28.0 );
-	settimer(func{
-			
-			CoPilot.say("Navigation Equipment - Set as required ... ???");
+	settimer(func{			
+			CoPilot.say("Radios - Set as required ... ");
 		}, 30.0 );
+	settimer(func{
+			CoPilot.say("Navigation Equipment - Set as required ... ");
+		}, 32.0 );
 	settimer(func{
 			UI.click("Cabin Environmental Air on");
 			CoPilot.say("ENV AIR - ON ... check");
-		}, 32.0 );
-	settimer(func{
-			
-			CoPilot.say("Cabin Pressure - Set as required ... ???");
 		}, 34.0 );
 	settimer(func{
 			
-			CoPilot.say("Air Conditioning - -Set as required ... ???");
+			CoPilot.say("Cabin Pressure - Set as required ... ");
 		}, 36.0 );
 	settimer(func{
-			CoPilot.say("Checklist - After starting engine - performed.");
+			
+			CoPilot.say("Air Conditioning - Set as required ... ");
+		}, 38.0 );
+	settimer(func{
+			CoPilot.say("Checklist - AFTER ENGINE START - performed.");
 			buisy = 0;
-		}, 40.0 );
+		}, 42.0 );
 	
 };
 
-aChecklist["Before engine start - battery"] = before_engine_start_battery;
-aChecklist["Engine start"] = engine_start;
-aChecklist["Engine shutdown"] = engine_shutdown;
-aChecklist["After starting engine"] = after_starting_engine;
+aChecklist["BEFORE ENGINE START - battery"] = before_engine_start_battery;
+aChecklist["ENGINE START"] = engine_start;
+aChecklist["ENGINE SHUTDOWN"] = engine_shutdown;
+aChecklist["AFTER ENGINE START"] = after_starting_engine;

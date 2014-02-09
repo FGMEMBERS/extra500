@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
-      Date:             21.05.13
+      Last change:      Eric van den Berg
+      Date:             09.02.14
 -->
 
 <PropertyList>
@@ -32,7 +32,7 @@
 	</item> 
 	<item>
 		<name>AVIONICS</name>
-		<value>Check OFF</value>
+		<value>Check ON</value>
 	</item> 
 	<item>
 		<name>ENV AIR</name>
