@@ -228,6 +228,18 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<spring_coeff unit="LBS/FT">   1830 </spring_coeff>
 			<damping_coeff unit="LBS/FT/SEC">  183 </damping_coeff>
 		</contact>
+
+		<contact type="STRUCTURE" name="MIDDLE_WING">
+			<location unit="M">
+				<x> 3.15 </x>
+				<y>  0.0 </y>
+				<z>  2.485 </z>
+			</location>
+			<static_friction>  1.00 </static_friction>
+			<dynamic_friction> 1.00 </dynamic_friction>
+			<spring_coeff unit="LBS/FT">18300 </spring_coeff>
+			<damping_coeff unit="LBS/FT/SEC">1830</damping_coeff>
+		</contact>
 		
 		<contact type="STRUCTURE" name="RIGHT_WING">
 			<location unit="M">
@@ -270,6 +282,18 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				<x> 8.795 </x>
 				<y> 0 </y>
 				<z> 1.229 </z>
+			</location>
+			<static_friction>  1.00 </static_friction>
+			<dynamic_friction> 1.00 </dynamic_friction>
+			<spring_coeff unit="LBS/FT">1830</spring_coeff>
+			<damping_coeff unit="LBS/FT/SEC">183</damping_coeff>
+		</contact>
+
+		<contact type="STRUCTURE" name="VERTICAL STABILIZER">
+			<location unit="M">
+				<x> 9.312 </x>
+				<y> 0 </y>
+				<z> 3.724 </z>
 			</location>
 			<static_friction>  1.00 </static_friction>
 			<dynamic_friction> 1.00 </dynamic_friction>

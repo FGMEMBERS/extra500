@@ -20,7 +20,7 @@
       Date: 2013-09-16
 
       Last change:      Eric van den Berg
-      Date:             2013-10-22
+      Date:             2014-02-09
 -->
 
 <system name="electrics">
@@ -189,14 +189,15 @@
 			<function>
 				<product>
 					<property>/systems/gear/motor/state</property>
-					<value>1148.0</value>
-					<pow>	
+					<!--value>1148.0</value-->
+					<value>41.0</value>
+					<!--pow>	
 						<max>			
 							<property>/extra500/panel/CircuitBreaker/BankC/Hydraulic/voltOut</property>
 							<value>1</value>
 						</max>
 						<value>-1</value>
-					</pow>				
+					</pow-->				
 				</product>
 			</function>
 			<output>/extra500/panel/CircuitBreaker/BankC/Hydraulic/ampere</output>
