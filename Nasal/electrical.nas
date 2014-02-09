@@ -1458,6 +1458,8 @@ var ESystem = {
 		me._nLoadBattery.setValue(me._loadBattery);
 		me._nLoadGenerator.setValue(me._loadGenerator);
 		
+		eSystem.relay.K7.checkCondition();
+		
 	},
 	
 	applyAmpere : func(ampere){
