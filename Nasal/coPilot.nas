@@ -114,8 +114,7 @@ var before_engine_start_battery = func(){
 		}, 18.0 );
 	settimer(func{
 			UI.click("Parkingbrake on");
-			setprop("/controls/gear/brake-left",1);
-			setprop("/controls/gear/brake-right",1);
+			setprop("/controls/gear/brake-parking",1);
 			CoPilot.say("PARKING BRAKE - Re-check set ... check");
 		}, 20.0 );
 	settimer(func{
