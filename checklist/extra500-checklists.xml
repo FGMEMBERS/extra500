@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: 09.02.2014
+
+      Last change:      Dirk Dittmann
+      Date:             09.02.2014
+-->
+
+<PropertyList>
+	<checklist>
+		<title>Before Starting Engine (without External Power)</title>
+
+		<item>
+			<name>GEN</name>
+			<value>Check OFF</value>
+			<marker>
+				<x-m>-0.3225</x-m>
+				<y-m>-0.0850</y-m>
+				<z-m>-0.2117</z-m>
+				<scale>2.0500</scale>
+			</marker> 
+			<condition>
+				<equals>
+				<property>extra500/panel/Side/Main/GeneratorTest/state</property>
+				<value>0</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Main Generator Test off");
+					CoPilot.say("GEN - OFF ... check");
+				]]></script>
+			</binding>
+		</item> 
+		<item>
+			<name>AVIONICS</name>
+			<value>Check OFF</value>
+			<condition>
+				<equals>
+				<property>extra500/panel/Side/Main/Avionics/state</property>
+				<value>0</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Main Avionics off");
+					CoPilot.say("AVIONICS - OFF ... check");
+				]]></script>
+			</binding>
+		</item> 
+		<item>
+			<name>ENV AIR</name>
+			<value>Check OFF</value>
+			<condition>
+				<equals>
+				<property>extra500/panel/Side/Cabin/EnvironmentalAir/state</property>
+				<value>0</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Cabin Environmental Air off");
+					CoPilot.say("ENV - OFF ... check");
+				]]></script>
+			</binding>
+		</item> 
+		<item>
+			<name>PRESS</name>
+			<value>ON</value>
+			<condition>
+				<equals>
+				<property>extra500/panel/Side/Cabin/Pressure/state</property>
+				<value>1</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Cabin Pressure Controller on");
+					CoPilot.say("PRESS - ON ... check");
+				]]></script>
+			</binding>
+		</item> 
+		<item>
+			<name>Pressure Controller</name>
+			<value>Set to field elevation </value>
+		</item>
+		<item>
+			<name>Cabin Rate of Climb</name>
+			<value>Set</value>
+		</item> 
+		<item>
+			<name>AIR CON</name>
+			<value>OFF</value>
+			<condition>
+				<equals>
+				<property>extra500/panel/Side/Cabin/AirCondition/state</property>
+				<value>0</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Cabin Air Condition off");
+					CoPilot.say("AIR CON - OFF ... check");
+				]]></script>
+			</binding>
+		</item> 
+		<item>
+			<name>STROBE</name>
+			<value>Check ON</value>
+			<condition>
+				<equals>
+				<property>extra500/panel/Side/Light/Strobe/state</property>
+				<value>1</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Light Strobe on");
+					CoPilot.say("STROBE - ON ... check");
+				]]></script>
+			</binding>
+		</item> 
+		<item>
+			<name>PARKING BRAKE</name>
+			<value>Re-check set</value>
+			<condition>
+				<equals>
+				<property>controls/gear/brake-parking</property>
+				<value>1</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Parkingbrake on");
+					CoPilot.say("PARKING BRAKE - ON ... set");
+				]]></script>
+			</binding>
+		</item> 
+		<item>
+			<name>Condition Lever</name>
+			<value>FUEL OFF </value>
+			<condition>
+				<less-than>
+				<property>controls/engines/engine[0]/condition-lever-norm</property>
+				<value>0.05</value>
+				</less-than>
+			</condition>
+		</item>
+		<item>
+			<name>Power Lever</name>
+			<value>GRD IDLE</value>
+			<condition>
+				<less-than>
+				<property>controls/engines/engine[0]/throttle</property>
+				<value>0.05</value>
+				</less-than>
+			</condition>
+		</item> 
+		<item>
+			<name>BATT</name>
+			<value>ON</value>
+			<condition>
+				<equals>
+				<property>extra500/panel/Side/Main/Battery/state</property>
+				<value>1</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Main Battery on");
+					CoPilot.say("BATT - ON ... check");
+				]]></script>
+			</binding>
+		</item> 
+		<item>
+			<name>Voltmeter</name>
+			<value>Check reading &gt; 24VDC</value>
+			<condition>
+				<greater-than>
+					<property>extra500/instrumentation/DIP/indicatedVDC</property>
+					<value>24.0</value>
+				</greater-than>
+			</condition>
+		</item> 
+		<item>
+			<name>Instrument Lights</name>
+			<value>As required</value>
+		</item> 
+		<item>
+			<name>Start Up Clearance</name>
+			<value>Obtain</value>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					CoPilot.say("Tower: requesting clearance to startup my engine.");
+				]]></script>
+			</binding>
+		</item> 
+	</checklist>
+	
+	<!-- POH Page 154 4.6e -->
+	<checklist>
+		<title>Engine Start</title>
+		<item>
+			<name>NIGHT/DAY</name>
+			<value>TEST</value>
+			<condition>
+				<equals>
+				<property>extra500/panel/Side/Light/Night/state</property>
+				<value>-1</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Night test");
+					CoPilot.say("NIGHT/DAY - TEST ... check");
+					settimer(func{
+						UI.click("Night day");
+					}, 4.0 );
+				]]></script>
+			</binding>
+		</item> 
+		<item>
+			<name>FUEL TRANSFER LEFT and RIGHT</name>
+			<value>Check both ON</value>
+			<condition>
+				<and>
+					<equals>
+					<property>extra500/panel/Master/Fuel/TransferLeft/state</property>
+					<value>1</value>
+					</equals>
+					<equals>
+					<property>extra500/panel/Master/Fuel/TransferRight/state</property>
+					<value>1</value>
+					</equals>
+				</and>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Fuel Transfer Left on");
+					UI.click("Fuel Transfer Right on");
+					CoPilot.say("Fuel Transfer Left Right - both ON ... check");
+				]]></script>
+			</binding>
+		</item> 
+		<item>
+			<name>FUEL PUMP 1 or 2</name>
+			<value>ON</value>
+			<condition>
+				<or>
+					<equals>
+					<property>extra500/panel/Master/Fuel/Pump1/state</property>
+					<value>1</value>
+					</equals>
+					<equals>
+					<property>extra500/panel/Master/Fuel/Pump2/state</property>
+					<value>1</value>
+					</equals>
+				</or>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Fuel Pump 1 on");
+					CoPilot.say("FUEL PUMP 1 or 2 - ON ... check");
+				]]></script>
+			</binding>
+		</item> 
+		<item>
+			<name>Fuel Pressure</name>
+			<value>Check reading &gt; 10 psi</value>
+			<condition>
+				<greater-than>
+					<property>extra500/instrumentation/DIP/indicatedFuelPress</property>
+					<value>10.0</value>
+				</greater-than>
+			</condition>
+		</item> 
+		<item>
+			<name>TOT</name>
+			<value>Check reading &lt; 100 °C</value>
+			<condition>
+				<less-than>
+					<property>/fdm/jsbsim/aircraft/engine/TOT-degC</property>
+					<value>100.0</value>
+				</less-than>
+			</condition>
+		</item> 
+		<item>
+			<name>ENGINE MOTORING</name>
+			<value>Check NORMAL</value>
+			<condition>
+				<less-than>
+					<property>extra500/panel/Master/Engine/Motoring/state</property>
+					<value>-1</value>
+				</less-than>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Engine Motoring normal");
+					CoPilot.say("ENGINE MOTORING - NORMAL ... check");
+				]]></script>
+			</binding>
+		</item> 
+		<item>
+			<name>ENGINE START</name>
+			<value>Momentary START</value>
+			<condition>
+				<less-than>
+					<property>extra500/panel/Master/Engine/Start/state</property>
+					<value>1</value>
+				</less-than>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Engine Start on");
+					CoPilot.say("ENGINE START - Momentary START ... check");
+				]]></script>
+			</binding>
+		</item> 
+		<item>
+			<name>Condition Lever</name>
+			<value>Fully forward </value>
+			<condition>
+				<greater-than>
+				<property>controls/engines/engine[0]/condition-lever-norm</property>
+				<value>0.95</value>
+				</greater-than>
+			</condition>
+			
+		</item>
+		<item>
+			<name>TOT</name>
+			<value>Monitor &lt; 850 °C</value>
+			<condition>
+				<less-than>
+					<property>/fdm/jsbsim/aircraft/engine/TOT-degC</property>
+					<value>850.0</value>
+				</less-than>
+			</condition>
+		</item> 
+		<item>
+			<name>Oil Pressure</name>
+			<value>Check indication</value>
+			<condition>
+				<greater-than>
+					<property>/fdm/jsbsim/aircraft/engine/OP-psi</property>
+					<value>35.0</value>
+				</greater-than>
+			</condition>
+		</item> 
+		<item>
+			<name>OIL PRESS</name>
+			<value>Check extinguished</value>
+			<condition>
+				<greater-than>
+					<property>/fdm/jsbsim/aircraft/engine/OP-psi</property>
+					<value>35.0</value>
+				</greater-than>
+			</condition>
+		</item> 
+		<item>
+			<name>Propeller RPM</name>
+			<value>Check positive indication at 25% N1</value>
+		</item> 
+		<item>
+			<name>PNEUMATIC LOW</name>
+			<value>Check extinguished </value>
+		</item>
+	</checklist>	
+</PropertyList>
