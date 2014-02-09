@@ -49,7 +49,7 @@ var CenterConsole = {
 	},
 	setListeners : func(instance) {
 		append(me._listeners, setlistener(me._nParkingbrake,func(n){instance.onParkBrakeChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nParkingbrakePressure,func(n){instance.onParkingbrakePressureChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nParkingbrakePressure,func(n){instance.onParkingbrakePressureChange(n);},1,1) );
 		append(me._listeners, setlistener(me._nCtrlLeftBrake,func(n){instance.onBrakeChange(n);},1,0) );
 		append(me._listeners, setlistener(me._nCtrlRightBrake,func(n){instance.onBrakeChange(n);},1,0) );
 		append(me._listeners, setlistener(me._nDeice,func(n){instance.onDeiceChange(n);},1,0) );	
@@ -87,7 +87,7 @@ var CenterConsole = {
 		}else{
 			me._Parkingbrake = value;
 		}
-		me._nParkingbrake.setValue(me._Parkingbrake);		
+		me._nParkingbrake.setValue(me._Parkingbrake);
 	},
 	onDefrostClick : func(value = nil){
 		if (value == nil){
