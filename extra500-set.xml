@@ -487,6 +487,8 @@ JSBSim Extra Aircraft - Extra 500.
 		       <float n="2" alias="/systems/gear/Rupperdoor-pos"/>
 		       <float n="3" alias="/systems/gear/Lowerdoor-pos"/>
 		       <float n="4" alias="/systems/gear/nosegeardoor-pos"/>
+		       <float n="5" alias="/engines/engine[0]/thrust_lb">0</float><!-- mp sound-->
+		       
 		       <int n="0" alias="/extra500/door/upperpass/state">0</int>
 		       <int n="1" alias="/extra500/door/lowerpass/state">0</int>
 		       <int n="2" alias="/extra500/door/emergencyexit/state">0</int>
@@ -495,6 +497,13 @@ JSBSim Extra Aircraft - Extra 500.
 		       <int n="5" alias="/extra500/light/landing/state">0</int>
 		       <int n="6" alias="/extra500/light/strobe/on">0</int>
 		       <int n="7" alias="/extra500/light/recognition/state">0</int>
+
+		       <int n="8" alias="/fdm/jsbsim/aircraft/engine/motoring">0</int><!-- mp sound-->
+		       <int n="9" alias="/fdm/jsbsim/aircraft/engine/spooling-up">0</int><!-- mp sound-->
+		       <int n="10" alias="/fdm/jsbsim/propulsion/engine/set-running">0</int><!-- mp sound-->
+		       <int n="11" alias="/fdm/jsbsim/aircraft/engine/spooling-down">0</int><!-- mp sound-->
+		       <int n="12" alias="/systems/gear/motor/state">0</int><!-- mp sound-->
+		       
 		       <string n="0" alias="/sim/multiplay/callsign">callsign</string>
 	       </generic>
        </multiplay>

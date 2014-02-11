@@ -26,6 +26,9 @@
 <PropertyList>
 
 <path>extra500_frame.ac</path>
+
+<sound><path>Aircraft/exta500/Sounds/extra500-sound-mp.xml</path></sound>
+
 	<offsets>
 		<pitch-deg>1.39</pitch-deg>
 	</offsets>
