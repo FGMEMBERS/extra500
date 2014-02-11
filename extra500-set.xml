@@ -65,6 +65,9 @@ JSBSim Extra Aircraft - Extra 500.
 	
 	<model>
 		<path archive="y">Aircraft/extra500/Models/extra500.xml</path>
+		<livery>
+			<file type="string"/>
+		</livery>
 	</model>
 
 	<startup>
@@ -1205,7 +1208,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/UserInterface/ui.nas</file>
 	</UI>
 	<extra500>
-		
+		<file>Aircraft/extra500/Nasal/liveries.nas</file>
 		<file>Aircraft/extra500/Nasal/electrical.nas</file>
 		<file>Aircraft/extra500/Nasal/engine.nas</file>
 		<file>Aircraft/extra500/Nasal/dimming.nas</file>

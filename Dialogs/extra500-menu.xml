@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Eric van den Berg
-      Date:             09.02.14
+      Last change:      Dirk Dittmann
+      Date:             11.02.14
 -->
 
 <PropertyList>
@@ -29,6 +29,18 @@
 	       <menu n="10">
 		       <label>EXTRA 500</label>
 		       <enabled type="bool">true</enabled>
+		       
+		       
+			<item>
+				<name>livery</name>
+				<label>Select Livery</label>
+				<binding>
+					<command>nasal</command>
+					<script><![CDATA[
+						aircraft.livery.dialog.open();
+					]]></script>
+				</binding>
+			</item>
 		       <item>
 			       <name>chklst01</name>
 			       <label>Before engine start - battery</label>
