@@ -69,7 +69,7 @@
 		       <y>0</y>
 		       <z>0</z>
 	       </position> 
-	       <reference-dist>100.0</reference-dist>
+	       <reference-dist>5.0</reference-dist>
 	       <max-dist>1000.0</max-dist>
 	         
        </motoring>
@@ -92,7 +92,7 @@
 		       <y>0</y>
 		       <z>0</z>
 	       </position>
-	       <reference-dist>100.0</reference-dist>
+	       <reference-dist>10.0</reference-dist>
 		<max-dist>100.0</max-dist>
             
        </start>
@@ -130,7 +130,7 @@
 			<min>0.5</min>
 			<max>1.5</max>
 	       </pitch>
-		<reference-dist>400.0</reference-dist>
+		<reference-dist>10.0</reference-dist>
 		<max-dist>4000.0</max-dist>
             
 	       
@@ -157,7 +157,7 @@
 		<min>0.5</min>
 		<max>1.5</max>
             </pitch>
-	    <reference-dist>400.0</reference-dist>
+	    <reference-dist>10.0</reference-dist>
             <max-dist>4000.0</max-dist>
             
         </turbine>
@@ -178,7 +178,7 @@
                 <y>0</y>
                 <z>0</z>
             </position>
-	    <reference-dist>100.0</reference-dist>
+	    <reference-dist>10.0</reference-dist>
             <max-dist>1000.0</max-dist>
             
         </shutdown>
@@ -214,7 +214,7 @@
 		<volume>
 			<max>1.0</max>
 		</volume>
-		<reference-dist>5.0</reference-dist>
+		<reference-dist>2.0</reference-dist>
 		<max-dist>50.0</max-dist>
 	</gear>
 	<gear-lock>
@@ -226,7 +226,7 @@
 			<value>0</value>
 		</equals>
 		</condition>
-		<reference-dist>5.0</reference-dist>
+		<reference-dist>2.0</reference-dist>
 		<max-dist>50.0</max-dist>
 	</gear-lock>
 	<flap>
@@ -237,7 +237,7 @@
 		<volume>
 			<factor>0.45</factor>
 		</volume>
-		<reference-dist>8.0</reference-dist>
+		<reference-dist>2.0</reference-dist>
 		<max-dist>80.0</max-dist>
 	</flap>
 	</fx>
