@@ -30,7 +30,7 @@
 <!-- Engine 1 -->
 
        <ignition>
-	       <name>ignition</name>
+	       <name>mp_ignition</name>
 	       <reference-dist>1.0</reference-dist>
 	       <max-dist>1.0</max-dist>
 	       <mode>looped</mode>
@@ -51,9 +51,9 @@
        </ignition>
 
        <motoring>
-	       <name>motoring</name>
-	       <reference-dist>3.0</reference-dist>
-	       <max-dist>6.0</max-dist>
+	       <name>mp_motoring</name>
+	       <reference-dist>300.0</reference-dist>
+	       <max-dist>6000.0</max-dist>
 	       <mode>once</mode>
 	       <path>Aircraft/extra500/Sounds/motoring.wav</path>
 	       <condition>
@@ -73,7 +73,7 @@
        </motoring>
 
        <start>
-	       <name>engine_start</name>
+	       <name>mp_engine_start</name>
 	       <reference-dist>3.0</reference-dist>
 	       <max-dist>6.0</max-dist>
 	       <mode>once</mode>
@@ -95,7 +95,7 @@
        </start>
 <!---->
        <propeller>
-	       <name>propeller</name>
+	       <name>mp_propeller</name>
 	       <mode>looped</mode>
 	       <path>Aircraft/extra500/Sounds/wasp.wav</path>
 	       <position>
@@ -132,7 +132,7 @@
        </propeller>
        
         <turbine>
-            <name>turbine</name>
+            <name>mp_turbine</name>
             <reference-dist>1.0</reference-dist>
             <max-dist>4.0</max-dist>
             <mode>looped</mode>
@@ -156,7 +156,7 @@
         </turbine>
 
         <shutdown>
-            <name>shutdown</name>
+            <name>mp_shutdown</name>
             <reference-dist>1.0</reference-dist>
             <max-dist>4.0</max-dist>
             <mode>once</mode>
@@ -176,7 +176,7 @@
         </shutdown>
 		
 	<tire-rumble>
-		<name>tire-rumble</name>
+		<name>mp_tire-rumble</name>
 		<mode>looped</mode>
 		<path>Sounds/rumble.wav</path>
 		<condition>
@@ -194,7 +194,7 @@
 	</tire-rumble>
 	
 	<gear>
-		<name>gear</name>
+		<name>mp_gear</name>
 		<mode>looped</mode>
 		<path>Sounds/gear.wav</path>
 		<!--<property>/systems/gear/motor/state</property>-->
@@ -206,7 +206,7 @@
 		<max-dist>100.0</max-dist>
 	</gear>
 	<gear-lock>
-		<name>gear-lock</name>
+		<name>mp_gear-lock</name>
 		<path>Sounds/gear-lck.wav</path>
 		<condition>
 		<equals>
@@ -218,7 +218,7 @@
 		<max-dist>100.0</max-dist>
 	</gear-lock>
 	<flap>
-		<name>flaps</name>
+		<name>mp_flaps</name>
 		<mode>in-transit</mode>
 		<path>Sounds/flaps.wav</path>
 		<property>surface-positions/flap-pos-norm</property>
