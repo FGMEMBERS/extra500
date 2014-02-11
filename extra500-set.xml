@@ -496,7 +496,7 @@ JSBSim Extra Aircraft - Extra 500.
 		       <float n="6" alias="/fdm/jsbsim/aircraft/engine/motoring">0</float><!-- mp sound-->
 		       <float n="7" alias="/fdm/jsbsim/aircraft/engine/spooling-up">0</float><!-- mp sound-->
 		       <float n="8" alias="/fdm/jsbsim/propulsion/engine/set-running">0</float><!-- mp sound-->
-		       <float n="9" alias="/fdm/jsbsim/aircraft/engine/spooling-down">0</int><!-- mp sound-->
+		       <float n="9" alias="/fdm/jsbsim/aircraft/engine/spooling-down">0</float><!-- mp sound-->
 			<float n="10" alias="/systems/gear/motor/state">0</float><!-- mp sound-->
 		       
 		       <int n="0" alias="/extra500/door/upperpass/state">0</int>
