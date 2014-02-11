@@ -59,7 +59,7 @@
 	       <condition>
 		       <or>
 			       <!--<property>/fdm/jsbsim/aircraft/engine/motoring</property>-->
-			       <property>sim/multiplay/generic/int[8]</property>
+			       <property>sim/multiplay/generic/float[6]</property>
 		       </or>
 	       </condition>
 	       <volume>
@@ -81,7 +81,7 @@
 	       <condition>
 		       <or>
 			       <!--<property>/fdm/jsbsim/aircraft/engine/spooling-up</property>-->
-			       <property>sim/multiplay/generic/int[9]</property>
+			       <property>sim/multiplay/generic/float[7]</property>
 		       </or>
 	       </condition>
 	       <volume>
@@ -139,7 +139,7 @@
             <path>Aircraft/extra500/Sounds/extra500turbineLOOP.wav</path>
 	    <condition>
 		    <!--<property>/fdm/jsbsim/propulsion/engine/set-running</property>-->
-			<property>sim/multiplay/generic/int[10]</property>
+			<property>sim/multiplay/generic/float[8]</property>
 	    </condition>
 	    <position>
                  <x>0</x>
@@ -163,7 +163,7 @@
             <path>Aircraft/extra500/Sounds/extra500turbineDOWN.wav</path>
 	    <condition>
 		    <!--<property>/fdm/jsbsim/aircraft/engine/spooling-down</property>-->
-		   <property>sim/multiplay/generic/int[11]</property>
+		   <property>sim/multiplay/generic/float[9]</property>
 	    </condition>
 	    <volume>
 		    <offset>0.9</offset>
@@ -198,7 +198,7 @@
 		<mode>looped</mode>
 		<path>Sounds/gear.wav</path>
 		<!--<property>/systems/gear/motor/state</property>-->
-		<property>sim/multiplay/generic/int[10]</property>
+		<property>sim/multiplay/generic/float[10]</property>
 		<volume>
 			<max>1.0</max>
 		</volume>
