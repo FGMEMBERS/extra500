@@ -31,13 +31,13 @@
 <sound><path>Aircraft/extra500/Sounds/extra500-sound-mp.xml</path></sound>
 
 	<nasal>
-		<load><![CDATA[
+		<load>
 			var livery_update = aircraft.livery_update.new("Aircraft/extra500/Models/Liveries");
-		]]></load>
+		</load>
 
-		<unload><![CDATA[
+		<unload>
 			livery_update.stop();
-		]]></unload>
+		</unload>
 	</nasal>
 	
 	<animation>
