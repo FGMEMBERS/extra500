@@ -185,7 +185,8 @@
       <value>1</value>
     </equals>
   </condition>
-  <property>gear/gear[0]/rollspeed-ms</property>
+  <!--<property>gear/gear[0]/rollspeed-ms</property>-->
+  <property>sim/multiplay/generic/float[11]</property>
   <factor>-20</factor>
   <center>
     <x-m>-1.73131</x-m>
@@ -275,7 +276,9 @@
     </equals>
   </condition>
   
-  <property>gear/gear[1]/rollspeed-ms</property>
+  <!--<property>gear/gear[1]/rollspeed-ms</property>-->
+    <property>sim/multiplay/generic/float[12]</property>
+
   <factor>-20</factor>
   <center>
     <x-m> 0.92380</x-m>
@@ -363,8 +366,9 @@
       <value>1</value>
     </equals>
   </condition>
-  
-  <property>gear/gear[2]/rollspeed-ms</property>
+  <!--<property>gear/gear[2]/rollspeed-ms</property>-->
+    <property>sim/multiplay/generic/float[13]</property>
+
   <factor>-20</factor>
   <center>
     <x-m> 0.92380</x-m>

@@ -31,13 +31,12 @@
 
        <ignition>
 	       <name>mp_ignition</name>
-	       <reference-dist>1.0</reference-dist>
-	       <max-dist>1.0</max-dist>
 	       <mode>looped</mode>
 	       <path>Aircraft/extra500/Sounds/ignition.wav</path>
 	       <condition>
 		       <or>
-			       <property>engines/engine[0]/ignition</property>
+			       <!--<property>engines/engine[0]/ignition</property>-->
+			       <property>sim/multiplay/generic/int[9]</property>
 		       </or>
 	       </condition>
 	       <volume>
@@ -48,12 +47,12 @@
 		       <y>0</y>
 		       <z>0</z>
 	       </position>
+	       <reference-dist>1.0</reference-dist>
+	       <max-dist>10.0</max-dist>
        </ignition>
 
        <motoring>
 	       <name>mp_motoring</name>
-	       <reference-dist>300.0</reference-dist>
-	       <max-dist>6000.0</max-dist>
 	       <mode>once</mode>
 	       <path>Aircraft/extra500/Sounds/motoring.wav</path>
 	       <condition>
@@ -69,14 +68,15 @@
 		       <x>0</x>
 		       <y>0</y>
 		       <z>0</z>
-	       </position>
+	       </position> 
+	       <reference-dist>30.0</reference-dist>
+	       <max-dist>300.0</max-dist>
+	         
        </motoring>
 
        <start>
 	       <name>mp_engine_start</name>
-	       <reference-dist>3.0</reference-dist>
-	       <max-dist>6.0</max-dist>
-	       <mode>once</mode>
+	        <mode>once</mode>
 	       <path>Aircraft/extra500/Sounds/spoolup.wav</path>
 	       <condition>
 		       <or>
@@ -92,12 +92,15 @@
 		       <y>0</y>
 		       <z>0</z>
 	       </position>
+	       <reference-dist>30.0</reference-dist>
+		<max-dist>300.0</max-dist>
+            
        </start>
 <!---->
        <propeller>
 	       <name>mp_propeller</name>
 	       <mode>looped</mode>
-	       <path>Aircraft/extra500/Sounds/wasp.wav</path>
+	       <path>Sounds/wasp.wav</path>
 	       <position>
 		       <x>0</x>
 		       <y>0</y>
@@ -106,7 +109,8 @@
 	       <!---->
 	       <condition>
 		       <or>
-			       <property>engines/engine[0]/running</property>		       
+			       <!--<property>engines/engine[0]/running</property>-->
+			       <property>sim/multiplay/generic/int[8]</property>
 		       </or>
 	       </condition>
 	       <volume>
@@ -126,15 +130,15 @@
 			<min>0.5</min>
 			<max>1.5</max>
 	       </pitch>
-
+		<reference-dist>30.0</reference-dist>
+		<max-dist>300.0</max-dist>
+            
 	       
 	       
        </propeller>
        
         <turbine>
             <name>mp_turbine</name>
-            <reference-dist>1.0</reference-dist>
-            <max-dist>4.0</max-dist>
             <mode>looped</mode>
             <path>Aircraft/extra500/Sounds/extra500turbineLOOP.wav</path>
 	    <condition>
@@ -153,12 +157,13 @@
 		<min>0.5</min>
 		<max>1.5</max>
             </pitch>
+	    <reference-dist>30.0</reference-dist>
+            <max-dist>300.0</max-dist>
+            
         </turbine>
 
         <shutdown>
             <name>mp_shutdown</name>
-            <reference-dist>1.0</reference-dist>
-            <max-dist>4.0</max-dist>
             <mode>once</mode>
             <path>Aircraft/extra500/Sounds/extra500turbineDOWN.wav</path>
 	    <condition>
@@ -173,6 +178,9 @@
                 <y>0</y>
                 <z>0</z>
             </position>
+	    <reference-dist>30.0</reference-dist>
+            <max-dist>300.0</max-dist>
+            
         </shutdown>
 		
 	<tire-rumble>
@@ -181,16 +189,20 @@
 		<path>Sounds/rumble.wav</path>
 		<condition>
 			<or>
-				<property>gear/gear[0]/wow</property>
-				<property>gear/gear[1]/wow</property>
-				<property>gear/gear[2]/wow</property>
+				<property>gear/gear[0]/compression-norm</property>
+				<property>gear/gear[1]/compression-norm</property>
+				<property>gear/gear[2]/compression-norm</property>
 			</or>
 		</condition>
 		<volume>
-			<property>velocities/groundspeed-kt</property>
-			<factor>0.01</factor>
+			<!--<property>velocities/groundspeed-kt</property>-->
+			<property>sim/multiplay/generic/float[13]</property>
+			<factor>0.07</factor>
 			<max>0.9</max>
 		</volume>
+		<reference-dist>10.0</reference-dist>
+		<max-dist>100.0</max-dist>
+            
 	</tire-rumble>
 	
 	<gear>
@@ -202,8 +214,8 @@
 		<volume>
 			<max>1.0</max>
 		</volume>
-		<reference-dist>10.0</reference-dist>
-		<max-dist>100.0</max-dist>
+		<reference-dist>5.0</reference-dist>
+		<max-dist>50.0</max-dist>
 	</gear>
 	<gear-lock>
 		<name>mp_gear-lock</name>
@@ -214,8 +226,8 @@
 			<value>0</value>
 		</equals>
 		</condition>
-		<reference-dist>10.0</reference-dist>
-		<max-dist>100.0</max-dist>
+		<reference-dist>5.0</reference-dist>
+		<max-dist>50.0</max-dist>
 	</gear-lock>
 	<flap>
 		<name>mp_flaps</name>
@@ -225,8 +237,8 @@
 		<volume>
 			<factor>0.45</factor>
 		</volume>
-		<reference-dist>10.0</reference-dist>
-		<max-dist>100.0</max-dist>
+		<reference-dist>8.0</reference-dist>
+		<max-dist>80.0</max-dist>
 	</flap>
 	</fx>
 </PropertyList>
