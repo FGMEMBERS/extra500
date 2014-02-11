@@ -66,7 +66,9 @@ JSBSim Extra Aircraft - Extra 500.
 	<model>
 		<path archive="y">Aircraft/extra500/Models/extra500.xml</path>
 		<livery>
-			<file type="string"/>
+		<file type="string">BlueWhite</file>
+		<name type="string"/>
+		<paintkit type="string"/>
 		</livery>
 	</model>
 
