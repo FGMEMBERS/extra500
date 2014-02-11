@@ -47,8 +47,8 @@
 		       <y>0</y>
 		       <z>0</z>
 	       </position>
-	       <reference-dist>1.0</reference-dist>
-	       <max-dist>10.0</max-dist>
+	       <reference-dist>3.0</reference-dist>
+	       <max-dist>30.0</max-dist>
        </ignition>
 
        <motoring>
@@ -69,8 +69,8 @@
 		       <y>0</y>
 		       <z>0</z>
 	       </position> 
-	       <reference-dist>30.0</reference-dist>
-	       <max-dist>300.0</max-dist>
+	       <reference-dist>100.0</reference-dist>
+	       <max-dist>1000.0</max-dist>
 	         
        </motoring>
 
@@ -92,8 +92,8 @@
 		       <y>0</y>
 		       <z>0</z>
 	       </position>
-	       <reference-dist>30.0</reference-dist>
-		<max-dist>300.0</max-dist>
+	       <reference-dist>100.0</reference-dist>
+		<max-dist>100.0</max-dist>
             
        </start>
 <!---->
@@ -130,8 +130,8 @@
 			<min>0.5</min>
 			<max>1.5</max>
 	       </pitch>
-		<reference-dist>30.0</reference-dist>
-		<max-dist>300.0</max-dist>
+		<reference-dist>400.0</reference-dist>
+		<max-dist>4000.0</max-dist>
             
 	       
 	       
@@ -157,8 +157,8 @@
 		<min>0.5</min>
 		<max>1.5</max>
             </pitch>
-	    <reference-dist>30.0</reference-dist>
-            <max-dist>300.0</max-dist>
+	    <reference-dist>400.0</reference-dist>
+            <max-dist>4000.0</max-dist>
             
         </turbine>
 
@@ -178,8 +178,8 @@
                 <y>0</y>
                 <z>0</z>
             </position>
-	    <reference-dist>30.0</reference-dist>
-            <max-dist>300.0</max-dist>
+	    <reference-dist>100.0</reference-dist>
+            <max-dist>1000.0</max-dist>
             
         </shutdown>
 		
