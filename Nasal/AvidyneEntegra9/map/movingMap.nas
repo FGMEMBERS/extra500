@@ -40,7 +40,7 @@
 # 		if(me._model != nil){
 # 			me._itemIndex	= 0;
 # 					
-# 			foreach(tcas;me._model._data){
+# 			foreach(var tcas;me._model._data){
 # # 				print(sprintf("%s range:%0.2f | lat:%0.3f lon:%0.3f a:%+i vs:%0.1f l:%i",tcas.id,tcas.range,tcas.lat,tcas.lon,tcas.alt,tcas.vs,tcas.level));
 # 						
 # 				if(me._itemIndex >= me._itemCount){

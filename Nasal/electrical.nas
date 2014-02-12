@@ -127,7 +127,7 @@ var ServiceClass = {
 		#print("ServiceClass.setListeners() ... " ~me._name);
 	},
 	removeListeners  :func(){
-		foreach(l;me._listeners){
+		foreach(var l;me._listeners){
 			removelistener(l);
 		}
 		me._listeners = [];
@@ -153,7 +153,7 @@ var OutPutClass = {
 			obj.setVolt(me._volt);
 		}else{
 # 			print("OutPutClass.outputAdd("~obj.getName()~") ... exists at "~me.getName());
-# 			foreach( i;  me._outputIndex ){
+# 			foreach(var i;  me._outputIndex ){
 # 				print (i~" : "~me._outputs[i].getName());
 # 			}
 		}
@@ -335,7 +335,7 @@ var GeneratorClass = {
 	},
 	_onVoltChange : func (n){
 		me._volt = n.getValue();
-		foreach( i;  me._outputIndex ){
+		foreach(var i;  me._outputIndex ){
 			me._outputs[i].setInputVolt(me._volt);
 		}		
 	},
@@ -427,7 +427,7 @@ var AlternatorClass = {
 	},
 	_onVoltChange : func (n){
 		me._volt = n.getValue();
-		foreach( i;  me._outputIndex ){
+		foreach(var  i;  me._outputIndex ){
 			me._outputs[i].setInputVolt(me._volt);
 		}		
 	},
@@ -491,7 +491,7 @@ var ExternalGeneratorClass = {
 	},
 	_onVoltChange : func (n){
 		me._volt = n.getValue();
-		foreach( i;  me._outputIndex ){
+		foreach(var  i;  me._outputIndex ){
 			me._outputs[i].setInputVolt(me._volt);
 		}		
 	},
@@ -564,7 +564,7 @@ var BatteryClass = {
 	},
 	_onVoltChange : func (n){
 		me._volt = n.getValue();
-		foreach( i;  me._outputIndex ){
+		foreach(var  i;  me._outputIndex ){
 			me._outputs[i].setInputVolt(me._volt);
 		}		
 	},
@@ -892,7 +892,7 @@ var SwitchClass = {
 			#debug.dump(me._labels["0"]);
 			var labelIndex = keys(me._labels);
 
-			foreach(i ; labelIndex){
+			foreach(var i ; labelIndex){
 				UI.register(me._name~" "~i, 	func(i){me.onLable(""~i); },i	);
 			}
 		}
@@ -923,7 +923,7 @@ var DcBusClass = {
 		me.outputIndexRebuild();
 	},
 	_deliverVolt : func(){
-		foreach( i;  me._outputIndex ){
+		foreach(var  i;  me._outputIndex ){
 			me._outputs[i].setVolt(me._volt);
 		}
 	},
@@ -978,7 +978,7 @@ var CircuitBrakerClass = {
 			me._voltOut = me._volt;
 		}
 		me._nVoltOut.setValue(me._voltOut);
-		foreach( i;  me._outputIndex ){
+		foreach(var  i;  me._outputIndex ){
 			me._outputs[i].setVolt(me._voltOut);
 		}
 		
@@ -1178,24 +1178,24 @@ var ESystem = {
 		me._PreBatteryBus.init();
 		
 		index =  keys(me.source);
-		foreach (i;index){
+		foreach (var i;index){
 			me.source[i].init();
 		}
 		
 		
 		index =  keys(me.relay);
-		foreach (i;index){
+		foreach (var i;index){
 			me.relay[i].init();
 		}
 		
 		index =  keys(me.circuitBreaker);
-		foreach (i;index){
+		foreach (var i;index){
 			me.circuitBreaker[i].init();
 			#me.outputAdd(me.circuitBreaker[i]);
 		}
 		
 		index =  keys(me.switch);
-		foreach (i;index){
+		foreach (var i;index){
 			me.switch[i].init();
 		}
 
@@ -1224,7 +1224,7 @@ var ESystem = {
 	_onVoltChange : func(n){
 		me._volt = n.getValue();
 		
-# 		foreach( i;  me._outputIndex ){
+# 		foreach(var  i;  me._outputIndex ){
 # 			me._outputs[i].setVolt(me._volt);
 # 		}
 	},

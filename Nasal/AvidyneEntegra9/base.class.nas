@@ -72,7 +72,7 @@ var ListenerClass = {
 		
 	},
 	removeListeners : func(){
-		foreach(l;me._listeners){
+		foreach(var l;me._listeners){
 			removelistener(l);
 		}
 		me._listeners = [];

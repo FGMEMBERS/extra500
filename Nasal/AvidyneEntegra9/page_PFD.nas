@@ -887,11 +887,11 @@ var NavSourceWidget = {
 				
 	},
 	removeListeners : func(){
-		foreach(l;me._listeners){
+		foreach(var l;me._listeners){
 			removelistener(l);
 		}
 		me._listeners = [];
-		foreach(l;me._sourceListeners){
+		foreach(var l;me._sourceListeners){
 			removelistener(l);
 		}
 		me._sourceListeners = [];
@@ -962,7 +962,7 @@ var NavSourceWidget = {
 	},
 	setSource : func(src){
 		me._source = src;
-		foreach(l;me._sourceListeners){
+		foreach(var l;me._sourceListeners){
 			removelistener(l);
 		}
 		me._sourceListeners = [];
@@ -1885,7 +1885,7 @@ var AvidynePagePFD = {
 	},
 	init : func(instance=me){
 		#print("AvidynePagePFD.init() ... ");
-		foreach(widget;keys(me._widget)){
+		foreach(var widget;keys(me._widget)){
 			#print("widget : "~widget);
 			if(me._widget[widget] != nil){
 				
@@ -1894,7 +1894,7 @@ var AvidynePagePFD = {
 		}
 	},
 	deinit : func(){
-		foreach(widget;keys(me._widget)){
+		foreach(var widget;keys(me._widget)){
 			if(me._widget[widget] != nil){
 				me._widget[widget].deinit();
 			}
@@ -1914,7 +1914,7 @@ var AvidynePagePFD = {
 			
 		}
 			
-		foreach(widget;keys(me._widget)){
+		foreach(var widget;keys(me._widget)){
 			if(me._widget[widget] != nil){
 				me._widget[widget].setVisible(visible);
 			}

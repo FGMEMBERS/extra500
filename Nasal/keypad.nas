@@ -152,7 +152,7 @@ var ListenerClass = {
 		
 	},
 	removeListeners : func(){
-		foreach(l;me._listeners){
+		foreach(var l;me._listeners){
 			removelistener(l);
 		}
 		me._listeners = [];
@@ -752,7 +752,7 @@ var KeypadClass = {
 		if (instance==nil){instance=me;}
 		me.parents[1].init(instance); # TODO: replace init fucktion
 		
-		foreach(i;keys(me._widget)){
+		foreach(var i;keys(me._widget)){
 			me._widget[i].init(mode);
 		}
 		
@@ -845,7 +845,7 @@ var KeypadClass = {
 		}
 	},
 	_checkKeyBackLight : func(){
-		foreach(i;keys(me._mem.Backlight.Key)){
+		foreach(var i;keys(me._mem.Backlight.Key)){
 			me._tree.Backlight.Key[i].setValue(me._mem.Backlight.Key[i] * me._mem.Backlight.brightness);
 		}
 	},

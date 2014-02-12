@@ -34,7 +34,7 @@ var TabWidget = {
 	init : func(instance=me){
 		#print("TabWidget.init() ... ");
 			
-		foreach(t;me._tab){
+		foreach(var t;me._tab){
 			me._can[t] = {
 				content	: me._group.getElementById("Tab_"~t~"_Content"),
 				tab	: me._group.getElementById("Tab_"~t~""),
@@ -62,7 +62,7 @@ var TabWidget = {
 		if (me._index > me._max){ me._index = me._max; }
 		if (me._index < 0){ me._index = 0; }
 
-		foreach(t;me._tab){
+		foreach(var t;me._tab){
 # 			print("TabWidget.scroll() ... "~t);
 			me._can[t].content.setVisible(0);
 			me._can[t].tab.set("z-index",1);
@@ -677,7 +677,7 @@ var TcasWidgetOld = {
 		me._itemIndex = 0;
 		var models = props.globals.getNode("/ai/models");
 		print ("### tcas - Screen update ###");
-		foreach(ac;models.getChildren("aircraft")){
+		foreach(var ac;models.getChildren("aircraft")){
 			#me._checkAircraft(ac);
 			var nInRange = ac.getNode("radar/in-range");
 			
