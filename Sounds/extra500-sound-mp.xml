@@ -130,11 +130,10 @@
 			<min>0.5</min>
 			<max>2.0</max>
 	       </pitch>
-		<reference-dist>50.0</reference-dist>
+		<reference-dist>40.0</reference-dist>
 		<max-dist>4000.0</max-dist>
             
-	       
-	       
+ 
        </propeller>
        
         <turbine>
@@ -155,9 +154,9 @@
                 <offset>0.5</offset>
                 <factor>0.02</factor>
 		<min>0.5</min>
-		<max>2.0</max>
+		<max>1.8</max>
             </pitch>
-	    <reference-dist>50.0</reference-dist>
+	    <reference-dist>40.0</reference-dist>
             <max-dist>4000.0</max-dist>
             
         </turbine>
