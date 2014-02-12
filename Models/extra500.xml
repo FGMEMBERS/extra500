@@ -32,7 +32,7 @@
 
 	<nasal>
 		<load>
-			var livery_update = aircraft.livery_update.new("Aircraft/extra500/Models/Liveries");
+			var livery_update = aircraft.livery_update.new("Aircraft/extra500/Models/Liveries",10);
 		</load>
 
 		<unload>

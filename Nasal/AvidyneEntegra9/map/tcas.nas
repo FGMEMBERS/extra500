@@ -69,20 +69,20 @@ var TcasModel = {
 		#print("TcasModel.update() ...");
 		me._data = [];	
 		me._dataIndex = 0;
-		foreach(aircraft;me._nAIModels.getChildren("multiplayer")){
-			var range = aircraft.getNode("radar/range-nm").getValue();
+		foreach(ac;me._nAIModels.getChildren("multiplayer")){
+			var range = ac.getNode("radar/range-nm").getValue();
 			if(range > 0 and range <= me._range){
-				var nTcasThreat = aircraft.getNode("tcas/threat-level");	
+				var nTcasThreat = ac.getNode("tcas/threat-level");	
 				if (nTcasThreat != nil){
 					var level = nTcasThreat.getValue();
 					if(level > me._minLevel){
 						
 						
-						var callsign 	= sprintf("[%i]%s :",aircraft.getIndex(),aircraft.getChild("callsign").getValue());
-						var lat 	= aircraft.getNode("position/latitude-deg").getValue();
-						var lon 	= aircraft.getNode("position/longitude-deg").getValue();
-						var vs		= aircraft.getNode("velocities/vertical-speed-fps").getValue();
-						var aAlt 	= aircraft.getNode("position/altitude-ft").getValue();
+						var callsign 	= sprintf("[%i]%s :",ac.getIndex(),ac.getChild("callsign").getValue());
+						var lat 	= ac.getNode("position/latitude-deg").getValue();
+						var lon 	= ac.getNode("position/longitude-deg").getValue();
+						var vs		= ac.getNode("velocities/vertical-speed-fps").getValue();
+						var aAlt 	= ac.getNode("position/altitude-ft").getValue();
 						var alt 	= math.floor(((aAlt-me._alt)/100)+0.5);
 						#print(sprintf("%s range:%0.2f | lat:%0.3f lon:%0.3f a:%+i vs:%0.1f l:%i",callsign,range,lat,lon,alt,vs,level));
 						append(me._data,TcasData.new(callsign,range,lat,lon,alt,vs,level));

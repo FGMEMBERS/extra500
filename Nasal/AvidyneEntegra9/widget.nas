@@ -677,14 +677,14 @@ var TcasWidgetOld = {
 		me._itemIndex = 0;
 		var models = props.globals.getNode("/ai/models");
 		print ("### tcas - Screen update ###");
-		foreach(aircraft;models.getChildren("aircraft")){
-			#me._checkAircraft(aircraft);
-			var nInRange = aircraft.getNode("radar/in-range");
+		foreach(ac;models.getChildren("aircraft")){
+			#me._checkAircraft(ac);
+			var nInRange = ac.getNode("radar/in-range");
 			
 			if(nInRange.getValue() == 1){
-				var range = aircraft.getNode("radar/range-nm").getValue();
+				var range = ac.getNode("radar/range-nm").getValue();
 				if(range <= me._range){
-					me._checkAircraft(aircraft);
+					me._checkAircraft(ac);
 					
 					
 				}else{
@@ -698,8 +698,8 @@ var TcasWidgetOld = {
 		}
 		
 	},
-	_checkAircraft : func(aircraft){
-		var nTcasThreat = aircraft.getNode("tcas/threat-level");	
+	_checkAircraft : func(ac){
+		var nTcasThreat = ac.getNode("tcas/threat-level");	
 		if (nTcasThreat != nil){
 			var level = nTcasThreat.getValue();
 			if(level > -1){
@@ -712,11 +712,11 @@ var TcasWidgetOld = {
 				
 				var conntact = "";
 			
-				var nRadarRange = aircraft.getNode("radar/range-nm");
-				var lat 	= aircraft.getNode("position/latitude-deg").getValue();
-				var lon 	= aircraft.getNode("position/longitude-deg").getValue();
-				var vs		= aircraft.getNode("velocities/vertical-speed-fps").getValue();
-				var aAlt 	= aircraft.getNode("position/altitude-ft").getValue();
+				var nRadarRange = ac.getNode("radar/range-nm");
+				var lat 	= ac.getNode("position/latitude-deg").getValue();
+				var lon 	= ac.getNode("position/longitude-deg").getValue();
+				var vs		= ac.getNode("velocities/vertical-speed-fps").getValue();
+				var aAlt 	= ac.getNode("position/altitude-ft").getValue();
 				var uAlt 	= getprop("/position/altitude-ft");
 				var alt 	= math.floor(((aAlt-uAlt)/100)+0.5);
 				
@@ -731,7 +731,7 @@ var TcasWidgetOld = {
 				
 			
 				conntact ~= sprintf("%i/%i - ",me._itemIndex+1,me._itemCount);
-				conntact ~= sprintf("[%i]%s : ",aircraft.getIndex(),aircraft.getChild("callsign").getValue());
+				conntact ~= sprintf("[%i]%s : ",ac.getIndex(),ac.getChild("callsign").getValue());
 				conntact ~= sprintf("threat:%i ",level);
 				conntact ~= sprintf("range:%.2f ",nRadarRange.getValue());
 								
