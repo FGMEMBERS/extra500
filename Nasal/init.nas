@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             04.02.14
+#      Date:             12.02.14
 #
 
 var init_listener = setlistener("/sim/signals/fdm-initialized", func {
@@ -86,6 +86,7 @@ var exit_listener = setlistener("/sim/signals/exit", func {
 
 	if (getprop("/extra500/instrumentation/Audiopanel/volsetting/effects") == 0) {
 		setprop("/sim/sound/effects/volume",4.0 * getprop("/sim/sound/effects/volume"));
+		setprop("/sim/sound/aimodels/volume",4.0 * getprop("/sim/sound/aimodels/volume"));
 	}
 
 });

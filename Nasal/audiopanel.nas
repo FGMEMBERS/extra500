@@ -17,11 +17,12 @@
 #      Date: Aug 10 2013
 #
 #      Last change:      Eric van den Berg 
-#      Date:             Sept 27 2013
+#      Date:             Feb 12 2014
 #
 
 # /sim/sound/volume
 # /sim/sound/effects/volume
+# /sim/sound/aimodels/volume
 # /sim/sound/avionics/enabled
 # /sim/sound/avionics/volume
 # /sim/sound/atc/volume
@@ -125,8 +126,10 @@ var AudiopanelClass = {
 		}
 		if (getprop("/extra500/instrumentation/Audiopanel/volsetting/effects") == 1) {
 			setprop("/sim/sound/effects/volume",0.25 * getprop("/sim/sound/effects/volume"));
+			setprop("/sim/sound/aimodels/volume",0.25 * getprop("/sim/sound/aimodels/volume"));
 			setprop("/extra500/instrumentation/Audiopanel/volsetting/effects",0);	
 		}
+
 	},
 	_switchOff : func(){
 		setprop("/instrumentation/comm[0]/volume",1);
@@ -138,6 +141,7 @@ var AudiopanelClass = {
 		setprop("/instrumentation/com2-selected",0);
 		if (getprop("/extra500/instrumentation/Audiopanel/volsetting/effects") == 0) {
 			setprop("/sim/sound/effects/volume",4.0 * getprop("/sim/sound/effects/volume"));
+			setprop("/sim/sound/aimodels/volume",4.0 * getprop("/sim/sound/aimodels/volume"));
 			setprop("/extra500/instrumentation/Audiopanel/volsetting/effects",1);
 		}				
 	},
