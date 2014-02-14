@@ -191,7 +191,7 @@ var AnnunciatorClass = {
 			me._ampere = me._watt / me._volt;
 			me._state = 1;
 			
-# 			foreach(l;me._ledsIndex){
+# 			foreach(var l;me._ledsIndex){
 # 				me._leds[l].setBrightness(me._brightness,me._test);
 # 			}
 			
@@ -235,7 +235,7 @@ var AnnunciatorClass = {
 			me._ampere = 0;
 			me._state = 0;
 			
-# 			foreach(l;me._ledsIndex){
+# 			foreach(var l;me._ledsIndex){
 # 				me._leds[l].setBrightness(0,0);
 # 			}
 			

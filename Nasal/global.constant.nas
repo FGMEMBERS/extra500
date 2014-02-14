@@ -42,14 +42,14 @@ var Constant = {
 		var node = props.globals.getNode(path);
 		if (node != nil){
 			var nChildren = node.getChildren();
-			foreach(child; nChildren) { 
+			foreach(var child; nChildren) { 
 				me[child.getName()] = child.getValue();
 			}
 		}
 		
 	},
 	echo : func(){
-		foreach(i; keys(me)) {
+		foreach(var i; keys(me)) {
 			if (typeof(me[i]) == "scalar"){
 				print(sprintf("%s : %s",i,me[i]));
 			}

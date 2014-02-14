@@ -546,7 +546,7 @@ var AvidynePageFMS = {
 				
 		me.setListeners(instance);
 		
-# 		foreach(widget;keys(me._widget)){
+# 		foreach(var widget;keys(me._widget)){
 # 			#print("widget : "~widget);
 # 			if(me._widget[widget] != nil){
 # 				
@@ -566,7 +566,7 @@ var AvidynePageFMS = {
 		me.keys = {};
 		me.removeListeners();
 		
-		foreach(widget;keys(me._widget)){
+		foreach(var widget;keys(me._widget)){
 			if(me._widget[widget] != nil){
 				me._widget[widget].deinit();
 			}
