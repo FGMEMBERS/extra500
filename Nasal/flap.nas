@@ -144,9 +144,9 @@ var FlapSystemClass = {
 		
 		UI.register("Flaps down", 	func{me._switch.onAdjust(-1); } 	);
 		UI.register("Flaps up",		func{me._switch.onAdjust(1); } 	);
-# 		UI.register("Flaps 0", 		func{me._switch.onSet(1); } 	);
-# 		UI.register("Flaps 15", 	func{me._switch.onSet(0); } 	);
-# 		UI.register("Flaps 30", 	func{me._switch.onSet(-1); } );
+		UI.register("Flaps 0", 		func{me._switch.onSet(1); } 	);
+		UI.register("Flaps 15", 	func{me._switch.onSet(0); } 	);
+		UI.register("Flaps 30", 	func{me._switch.onSet(-1); } );
 				
 		me._timerLoop = maketimer(1.0,me,FlapSystemClass.update);
 		me._timerLoop.start();
