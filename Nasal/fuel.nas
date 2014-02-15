@@ -264,6 +264,11 @@ var FuelSystemClass = {
 		me._selectValve = global.clamp(me._selectValve,0,4);
 		me._nSelectValve.setValue(me._selectValve);
 	},	
+	onValveSet : func(value){
+		me._selectValve = value;
+		me._selectValve = global.clamp(me._selectValve,0,4);
+		me._nSelectValve.setValue(me._selectValve);
+	},	
 	update : func(){
 		me._now 	= systime();
 		me._dt 		= me._now - me._lastTime;
@@ -384,6 +389,10 @@ var FuelSystemClass = {
 	initUI : func(){
 		UI.register("Fuel Select Valve <", 	func{me.onValveClick(-1);} 	);
 		UI.register("Fuel Select Valve >", 	func{me.onValveClick(1);} 	);
+		UI.register("Fuel Select Off", 		func{me.onValveSet(0);} 	);
+		UI.register("Fuel Select Left", 	func{me.onValveSet(1);} 	);
+		UI.register("Fuel Select Both", 	func{me.onValveSet(2);} 	);
+		UI.register("Fuel Select Right", 	func{me.onValveSet(4);} 	);
 	},
 	
 };

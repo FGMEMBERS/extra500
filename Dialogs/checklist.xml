@@ -1,0 +1,317 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<name>checklist</name>
+	<layout>vbox</layout>
+	<x>-5</x>
+	<y>5</y>
+	<default-padding>1</default-padding>
+	<resizable>true</resizable>
+	
+	<color>
+		<red type="float">0.41</red>
+		<green type="float">0.4</green>
+		<blue type="float">0.42</blue>
+		<alpha type="float">1.0</alpha>
+		<alpha type="float">1.0</alpha>
+	</color>
+
+	<nasal>
+		<open><![CDATA[
+			
+			
+			
+			var dlgRoot = cmdarg();
+			
+			#debug.dump(dlgRoot);
+			var nChecklists			= props.globals.getNode("/sim/checklists", 1).getChildren("checklist");
+			
+			var groupConfig 		= gui.findElementByName(dlgRoot, "groupConfig");
+			var groupSelectCheckList	= gui.findElementByName(dlgRoot, "groupSelectCheckList");
+			var groupScreen		 	= gui.findElementByName(dlgRoot, "groupScreen");
+
+			var mapCheckList		= {};
+			var nTransparent	 	= props.globals.initNode("/sim/gui/dialogs/checklist/transparent",0,"BOOL");
+			var nSelectCheckListEnabled 	= props.globals.initNode("/sim/gui/dialogs/checklist/SelectCheckList/enabled",1,"BOOL");
+			var nConfigEnabled 		= props.globals.initNode("/sim/gui/dialogs/checklist/config/enabled",0,"BOOL");
+			var nSelectedCheckList 		= props.globals.initNode("/sim/gui/dialogs/checklist/SelectCheckList/selected","","STRING");
+			
+			props.globals.initNode("/sim/gui/dialogs/checklist/config/view",1,"BOOL");
+			props.globals.initNode("/sim/gui/dialogs/checklist/config/marker",1,"BOOL");
+			props.globals.initNode("/sim/gui/dialogs/checklist/config/say",1,"BOOL");
+			
+			var listeners = [];
+			
+			var setTransparency = func(){
+				var alpha = nTransparent.getValue();
+				
+				dlgRoot.getNode("color/alpha").setValue(1-alpha*0.3);
+				dlgRoot.getNode("color/red").setValue(0.41-alpha*0.2);
+				dlgRoot.getNode("color/green").setValue(0.4-alpha*0.2);
+				dlgRoot.getNode("color/blue").setValue(0.42-alpha*0.2);
+					
+			};
+			
+			var drawSelectCheckList = func(){
+				var enabled = nSelectCheckListEnabled.getValue();
+				groupSelectCheckList.removeChildren("group");
+				if(enabled){
+					
+					var group = groupSelectCheckList.addChild("group");
+					group.addChild("layout").setValue("vbox");
+					group.addChild("pref-width").setValue("350");
+					
+					var list = group.addChild("list");
+					
+					list.addChild("name").setValue("SelectCheckList");
+					list.addChild("pref-width").setValue("300");
+					
+					list.addChild("property").setValue("/sim/gui/dialogs/checklist/SelectCheckList/selected");
+					list.addChild("width").setValue("350");
+					list.addChild("height").setValue("450");
+					list.addChild("pref-width").setValue("350");
+# 					list.addChild("pref-height").setValue("400");
+# 					list.addChild("editable").setValue("false");
+					list.addChild("live").setValue("true");
+					list.addChild("halign").setValue("fill");
+					list.addChild("valign").setValue("fill");
+					
+					var binding = nil;
+					
+					binding = list.addChild("binding");
+					binding.addChild("command").setValue("dialog-apply");
+					binding.addChild("object-name").setValue("SelectCheckList");
+					
+					binding = list.addChild("binding");
+					binding.addChild("command").setValue("nasal");
+					binding.addChild("script").setValue("drawScreen();redraw();");
+			
+					forindex (var idx; nChecklists) {
+						var checklist_name = nChecklists[idx].getNode("title", 1).getValue();
+						list.getChild("value", idx, 1).setValue(checklist_name);
+						mapCheckList[checklist_name] = idx;
+					}
+					
+				}
+
+			};
+			
+			var drawConfig = func(){
+				var enabled = nConfigEnabled.getValue();
+				
+				groupConfig.removeChildren("group");
+				
+				if(enabled){
+															
+					var group = groupConfig.addChild("group");
+					
+					group.addChild("layout").setValue("vbox");
+					group.addChild("hrule");
+					
+					group = groupConfig.addChild("group");
+					group.addChild("layout").setValue("hbox");
+					
+					var c = nil;
+					
+					c = group.addChild("checkbox");
+					c.addChild("label").setValue("view");
+					c.addChild("live").setValue("true");
+					c.addChild("property").setValue("/sim/gui/dialogs/checklist/config/view");
+					c.addChild("binding").addChild("command").setValue("dialog-apply");
+					
+					c = group.addChild("checkbox");
+					c.addChild("label").setValue("marker");
+					c.addChild("live").setValue("true");
+					c.addChild("property").setValue("/sim/gui/dialogs/checklist/config/marker");
+					c.addChild("binding").addChild("command").setValue("dialog-apply");
+					
+					c = group.addChild("checkbox");
+					c.addChild("label").setValue("say");
+					c.addChild("live").setValue("true");
+					c.addChild("property").setValue("/sim/gui/dialogs/checklist/config/say");
+					c.addChild("binding").addChild("command").setValue("dialog-apply");
+					
+					
+					
+				}
+			};
+			
+			var redraw = func(){
+				fgcommand("dialog-close", dlgRoot);
+				fgcommand("dialog-show", dlgRoot);
+			};
+			
+			var drawScreen = func(){
+				print("Dialog Checklist - drawScreen");
+				var strCheckList = nSelectedCheckList.getValue();
+				
+				var idx = mapCheckList[strCheckList];
+					
+				groupScreen.removeChildren("group");
+				
+				var table = groupScreen.addChild("group");
+				table.addChild("layout").setValue("table");
+				
+				var pages = nChecklists[idx].getChildren("page");
+				
+				var row = 0;
+				forindex (var p; pages) {
+					var items = pages[p].getChildren("item");
+					forindex (var i; items) {
+						var td = nil;		
+						var value = nil;
+						
+						value = items[i].getNode("name",1).getValue("");
+						if(value){
+							td = table.addChild("text");
+							td.addChild("label").setValue(value);
+							td.addChild("row").setValue(row);
+							td.addChild("col").setValue(0);
+							td.addChild("halign").setValue("left");
+						}
+						
+						value = items[i].getNode("value",1).getValue("");
+						if(value){
+							td = table.addChild("text");
+							td.addChild("label").setValue(value);
+							td.addChild("row").setValue(row);
+							td.addChild("col").setValue(1);
+							td.addChild("halign").setValue("right");
+						}
+						row += 1;
+					}
+					
+				}
+			};
+			
+			setTransparency();
+			drawConfig();
+			drawSelectCheckList();
+			
+			
+						
+		]]></open>
+    
+		<close><![CDATA[
+			foreach(var l;listeners){
+				removelistener(l);
+			}
+			listeners = [];
+		]]></close>
+	</nasal>
+
+	<group>
+		<layout>hbox</layout>
+		<checkbox>
+			<label>List</label>
+			<pref-width>100</pref-width>
+			<property>/sim/gui/dialogs/checklist/SelectCheckList/enabled</property>
+			<live>true</live>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>drawSelectCheckList();redraw();</script>
+			</binding>
+			
+		</checkbox>
+		<empty><stretch>1</stretch></empty>
+
+		<text>
+			<label>Aircraft Checklists</label>
+		</text>
+		
+		<empty><stretch>1</stretch></empty>
+		<checkbox>
+			<label>Transparent</label>
+			<pref-width>100</pref-width>
+			<property>/sim/gui/dialogs/checklist/transparent</property>
+			<live>true</live>
+			<halign>right</halign>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>setTransparency();redraw();</script>
+			</binding>
+			
+		</checkbox>
+		<button>
+			<pref-height>16</pref-height>
+			<legend>config</legend>
+			<border>2</border>
+			<property>/sim/gui/dialogs/checklist/config/enabled</property>
+			<live>true</live>
+			<binding>
+				<command>property-toggle</command>
+				<property>/sim/gui/dialogs/checklist/config/enabled</property>
+			</binding>
+			<binding>
+				<command>nasal</command>
+				<script>drawConfig();redraw();</script>
+			</binding>
+		</button>
+		
+		<button>
+			<pref-width>16</pref-width>
+			<pref-height>16</pref-height>
+			<legend>_</legend>
+			<keynum>27</keynum>
+			<border>2</border>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+		<button>
+			<pref-width>16</pref-width>
+			<pref-height>16</pref-height>
+			<legend>X</legend>
+			<keynum>27</keynum>
+			<border>2</border>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+	
+	<group>
+		<name>groupConfig</name>
+		<layout>vbox</layout>
+	</group>
+	
+	<hrule/>
+	
+	<group>
+		<layout>hbox</layout>
+		<pref-height>500</pref-height>
+
+		<group>	
+			<layout>hbox</layout>
+			<name>groupSelectCheckList</name>
+			
+		</group>
+		<group>
+			<layout>vbox</layout>
+			<pref-width>450</pref-width>
+			<text>
+				<halign>left</halign>
+				<label>XX/XX</label>
+				<property>/sim/gui/dialogs/checklist/SelectCheckList/selected</property>
+				<live>true</live>
+				<font>
+					<name type="string">SANS_12B</name>
+					<size type="float">14</size>
+				</font>
+			</text>
+			<hrule/>
+			<group>
+				<layout>vbox</layout>
+				<name>groupScreen</name>
+			</group>
+			<empty><stretch>1</stretch></empty>
+		</group>
+
+	</group>
+</PropertyList>

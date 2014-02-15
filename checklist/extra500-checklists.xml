@@ -22,10 +22,543 @@
       Last change:      Dirk Dittmann
       Date:             09.02.2014
 -->
-
-<PropertyList>
+<!-- sample
 	<checklist>
-		<title>Before Starting Engine (without External Power)</title>
+		<title>4.6.</title>
+	</checklist>
+	
+		<item>
+			<name></name>
+			<value></value>
+			<condition>
+				<equals>
+					<property></property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					
+				]]></script>
+			</binding>
+		</item>
+		<item>
+			<name></name>
+			<value></value>
+		</item>
+		
+-->
+				
+<!-- POH Section 4 Normal Procedures -->
+<PropertyList>
+
+	<!-- 4.6.a Preflight Inspection-->	
+	<checklist>
+		<title>4.6.a Preflight Inspection</title>
+		<page>
+		<item>
+			<name>Aircraft Flight Manual and Documents</name>
+			<value> Check available and status</value>
+		</item>
+		<item>
+			<name>Weight and Balance Data </name>
+			<value>Check</value>
+		</item>
+		<item>
+			<name>Control Lock Device</name>
+			<value>Remove</value>
+		</item>
+		<item>
+			<name>PARKING BRAKE</name>
+			<value>Check set</value>
+			<view>
+				<heading-offset-deg>338.0</heading-offset-deg>
+				<pitch-offset-deg>-51.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+			<marker>
+			<x-m>-0.4488</x-m>
+			<y-m>0.0000</y-m>
+			<z-m>-0.6512</z-m>
+			<scale>3.0000</scale>
+			</marker>
+			<condition>
+				<equals>
+				<property>controls/gear/brake-parking</property>
+				<value>1</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Parkingbrake on");
+					CoPilot.say("PARKING BRAKE - set check");
+				]]></script>
+			</binding>
+		</item>
+		<item>
+			<name>LANDING GEAR</name>
+			<value>Check Down</value>
+			<view>
+				<heading-offset-deg>346.0</heading-offset-deg>
+				<pitch-offset-deg>-35.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+
+			<marker>
+				<x-m>-0.7488</x-m>
+				<y-m>-0.1512</y-m>
+				<z-m>-0.3950</z-m>
+				<scale>3.0000</scale>
+			</marker>
+
+			<condition>
+				<equals>
+				<property>/extra500/system/gear/MainGearSwitch/state</property>
+				<value>1</value>
+				</equals>
+			</condition>
+			
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Gear down");
+					CoPilot.say("LANDING GEAR - down check");
+				]]></script>
+			</binding>
+		</item>
+		<item>
+			<name>FLAPS</name>
+			<value>Check UP</value>
+			<view>
+				<heading-offset-deg>322.0</heading-offset-deg>
+				<pitch-offset-deg>-35.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+
+			<marker>
+				<x-m>-0.7727</x-m>
+				<y-m>0.1752</y-m>
+				<z-m>-0.4157</z-m>
+				<scale>3.0000</scale>
+			</marker>
+			
+			<condition>
+				<equals>
+				<property>extra500/system/flap/Switch/state</property>
+				<value>1</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Flaps 0");
+					CoPilot.say("FLAPS - up check");
+				]]></script>
+			</binding>
+		</item>
+		<item>
+			<name>Circuit Breakers</name>
+			<value>Check in</value>
+			<view>
+				<heading-offset-deg>9.5</heading-offset-deg>
+				<pitch-offset-deg>-44.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+
+			<!--
+			<marker>
+				<x-m>-0.5256</x-m>
+				<y-m>-0.5248</y-m>
+				<z-m>-0.4157</z-m>
+				<scale>2.9669</scale>
+			</marker>
+			-->
+
+		</item>
+		</page>
+		<page>
+		<item>
+			<name>BATT</name>
+			<value>ON</value>
+			<view>
+				<heading-offset-deg>25.0</heading-offset-deg>
+				<pitch-offset-deg>-37.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+
+			<marker>
+				<x-m>-0.7140</x-m>
+				<y-m>-0.6281</y-m>
+				<z-m>-0.4091</z-m>
+				<scale>2.9669</scale>
+			</marker>
+
+			<condition>
+				<equals>
+				<property>extra500/panel/Side/Main/Battery/state</property>
+				<value>1</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Main Battery on");
+					CoPilot.say("BATTERY - on check");
+				]]></script>
+			</binding>
+		</item>
+		<item>
+			<name>Note: The upper landing gear doors will close with noise.
+Landing gear doors open slowly, when hydraulic system is
+deactivated.</name>
+		</item>
+		<item>
+			<name>GEAR INDICATION</name>
+			<value>Check three greens</value>
+			<view>
+				<heading-offset-deg>322.0</heading-offset-deg>
+				<pitch-offset-deg>-11.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>50.8</field-of-view>
+			</view>
+
+			<marker>
+				<x-m>-0.8504</x-m>
+				<y-m>0.2661</y-m>
+				<z-m>-0.0678</z-m>
+				<scale>7.0331</scale>
+			</marker>
+		</item>
+		<item>
+			<name>GENERATOR FAIL</name>
+			<value>Check illumination</value>
+			<view>
+				<heading-offset-deg>322.0</heading-offset-deg>
+				<pitch-offset-deg>-11.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>50.8</field-of-view>
+			</view>
+
+			<marker>
+				<x-m>-0.8504</x-m>
+				<y-m>0.2661</y-m>
+				<z-m>-0.0678</z-m>
+				<scale>7.0331</scale>
+			</marker>
+		</item>
+		<item>
+			<name>STALL HEAT</name>
+			<value>Check illumination</value>
+			<view>
+				<heading-offset-deg>322.0</heading-offset-deg>
+				<pitch-offset-deg>-11.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>50.8</field-of-view>
+			</view>
+
+			<marker>
+				<x-m>-0.8504</x-m>
+				<y-m>0.2661</y-m>
+				<z-m>-0.0678</z-m>
+				<scale>7.0331</scale>
+			</marker>
+		</item>
+		<item>
+			<name>OIL PRESS</name>
+			<value>Check illumination</value>
+			<view>
+				<heading-offset-deg>322.0</heading-offset-deg>
+				<pitch-offset-deg>-11.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>50.8</field-of-view>
+			</view>
+
+			<marker>
+				<x-m>-0.8504</x-m>
+				<y-m>0.2661</y-m>
+				<z-m>-0.0678</z-m>
+				<scale>7.0331</scale>
+			</marker>
+		</item>
+		<item>
+			<name>PITOT HEAT LEFT</name>
+			<value>Check illumination</value>
+			<view>
+				<heading-offset-deg>322.0</heading-offset-deg>
+				<pitch-offset-deg>-11.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>50.8</field-of-view>
+			</view>
+
+			<marker>
+				<x-m>-0.8504</x-m>
+				<y-m>0.2661</y-m>
+				<z-m>-0.0678</z-m>
+				<scale>7.0331</scale>
+			</marker>
+		</item>
+		<item>
+			<name>STATIC HEAT RIGHT</name>
+			<value>Check illumination</value>
+			<view>
+				<heading-offset-deg>322.0</heading-offset-deg>
+				<pitch-offset-deg>-11.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>50.8</field-of-view>
+			</view>
+
+			<marker>
+				<x-m>-0.8504</x-m>
+				<y-m>0.2661</y-m>
+				<z-m>-0.0678</z-m>
+				<scale>7.0331</scale>
+			</marker>
+		</item>
+		<item>
+			<name>FUEL TRANS LEFT</name>
+			<value>Check illumination</value>
+			<view>
+				<heading-offset-deg>322.0</heading-offset-deg>
+				<pitch-offset-deg>-11.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>50.8</field-of-view>
+			</view>
+
+			<marker>
+				<x-m>-0.8504</x-m>
+				<y-m>0.2661</y-m>
+				<z-m>-0.0678</z-m>
+				<scale>7.0331</scale>
+			</marker>
+		</item>
+		<item>
+			<name>FUEL TRANS RIGHT</name>
+			<value>Check illumination</value>
+			<view>
+				<heading-offset-deg>322.0</heading-offset-deg>
+				<pitch-offset-deg>-11.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>50.8</field-of-view>
+			</view>
+
+			<marker>
+				<x-m>-0.8504</x-m>
+				<y-m>0.2661</y-m>
+				<z-m>-0.0678</z-m>
+				<scale>7.0331</scale>
+			</marker>
+		</item>
+		<item>
+			<name>PNEUMATIC LOW</name>
+			<value>Check illumination</value>
+			<view>
+				<heading-offset-deg>322.0</heading-offset-deg>
+				<pitch-offset-deg>-11.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>50.8</field-of-view>
+			</view>
+
+			<marker>
+				<x-m>-0.8504</x-m>
+				<y-m>0.2661</y-m>
+				<z-m>-0.0678</z-m>
+				<scale>7.0331</scale>
+			</marker>
+		</item>
+		<item>
+			<name>NIGHT/DAY</name>
+			<value>TEST</value>
+			
+			<view>
+				<heading-offset-deg>357.0</heading-offset-deg>
+				<pitch-offset-deg>-32.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+
+			<marker>
+				<x-m>-0.5620</x-m>
+				<y-m>-0.6413</y-m>
+				<z-m>-0.4157</z-m>
+				<scale>3.0331</scale>
+			</marker>
+
+			<condition>
+				<equals>
+				<property>extra500/panel/Side/Light/Night/state</property>
+				<value>-1</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Night test");
+					CoPilot.say("NIGHT DAY - TEST check");
+					settimer(func{
+						UI.click("Night day");
+					}, 4.0 );
+				]]></script>
+			</binding>
+		</item>
+		<item>
+			<name>Fuel Quantity</name>
+			<value>Check</value>
+			<view>
+				<heading-offset-deg>325.0</heading-offset-deg>
+				<pitch-offset-deg>-17.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>25.6</field-of-view>
+			</view>
+
+			<marker>
+				<x-m>-0.8413</x-m>
+				<y-m>0.2099</y-m>
+				<z-m>-0.1785</z-m>
+				<scale>7.0331</scale>
+			</marker>
+
+		</item>
+		<item>
+			<name>FUEL SELECTOR VALVE</name>
+			<value>BOTH</value>
+			
+			<view>
+				<heading-offset-deg>284.0</heading-offset-deg>
+				<pitch-offset-deg>-74.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>42.1</field-of-view>
+			</view>
+
+			<marker>
+				<x-m>-0.1314</x-m>
+				<y-m>0.0017</y-m>
+				<z-m>-0.9686</z-m>
+				<scale>7.0331</scale>
+			</marker>
+			
+			<condition>
+				<equals>
+				<property>extra500/system/fuel/SelectValve</property>
+				<value>2</value>
+				</equals>
+			</condition>
+			
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Fuel Select Both");
+					CoPilot.say("FUEL SELECTOR VALVE - both check");
+				]]></script>
+			</binding>
+		</item>
+		<item>
+			<name>Pitch Trim</name>
+			<value>Set to N</value>
+			<condition>
+				<equals>
+				<property>/extra500/panel/CenterConsole/PitchTrim/state</property>
+				<value>0</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("PitchTrim");
+					CoPilot.say("Pitch Trim - neutral check");
+				]]></script>
+			</binding>
+		</item>
+		<item>
+			<name>BATT</name>
+			<value>OFF</value>
+			<condition>
+				<equals>
+				<property>extra500/panel/Side/Main/Battery/state</property>
+				<value>0</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Main Battery off");
+					CoPilot.say("BATTERY - off check");
+				]]></script>
+			</binding>
+		</item>
+		</page>
+	</checklist>
+
+	<!-- 4.6.b Interior Check-->	
+	<checklist>
+		<title>4.6.b Interior Check</title>
+	</checklist>
+	
+	<!-- 4.6.c Before Starting Engine (with External Power)-->	
+	<checklist>
+		<title>4.6.c Before Starting Engine (with External Power)</title>
+	</checklist>
+	
+	<!-- 4.6.d Before Starting Engine (without External Power)-->	
+	<checklist>
+		<title>4.6.d Before Starting Engine (without External Power)</title>
 
 		<item>
 			<name>GEN</name>
@@ -223,9 +756,9 @@
 		</item> 
 	</checklist>
 	
-	<!-- POH Page 154 4.6e -->
+	<!-- 4.6.e Engine Start-->	
 	<checklist>
-		<title>Engine Start</title>
+		<title>4.6.e Engine Start</title>
 		<item>
 			<name>NIGHT/DAY</name>
 			<value>TEST</value>
@@ -397,4 +930,143 @@
 			<value>Check extinguished </value>
 		</item>
 	</checklist>	
+	
+	<!-- 4.6.f After Starting Engine-->
+	<checklist>
+		<title>4.6.f After Starting Engine </title>
+			<item>
+		<name>ENGINE START</name>
+		<value>IGN OFF</value>
+		</item> 
+		<item>
+			<name>FUEL PUMP (other)</name>
+			<value>ON</value>
+		</item>
+		<item>
+			<name>FUEL PUMP (original)</name>
+			<value>OFF</value>
+		</item>
+		<item>
+			<name>Fuel Pressure</name>
+			<value>Check reading > 10 psi</value>
+		</item>
+		<item>
+			<name>STDBY ALT</name>
+			<value>ON</value>
+		</item>
+		<item>
+			<name>STANDBY ALTERN ON</name>
+			<value>Check illumination</value>
+		</item>
+		<item>
+			<name>GEN</name>
+			<value>ON</value>
+		</item>
+		<item>
+			<name>STANDBY ALTERN ON</name>
+			<value>Check extinguished</value>
+		</item>
+		<item>
+			<name>GENERATOR FAIL</name>
+			<value>Check extinguished</value>
+		</item>
+		<item>
+			<name>FUEL TRANS LEFT</name>
+			<value>Check extinguished</value>
+		</item>
+		<item>
+			<name>FUEL TRANS RIGHT</name>
+			<value>Check extinguished</value>
+		</item>
+		<item>
+			<name>Altimeter</name>
+			<value>Set</value>
+		</item>
+		<item>
+			<name>Radios</name>
+			<value>Set as required</value>
+		</item>
+		<item>
+			<name>Navigation Equipment</name>
+			<value>Set as required</value>
+		</item>
+		<item>
+			<name>ENV AIR</name>
+			<value>ON</value>
+		</item>
+		<item>
+			<name>Cabin Pressure</name>
+			<value>Set as required</value>
+		</item>
+		<item>
+			<name>Air Conditioning</name>
+			<value>Set as required</value>
+		</item>
+	</checklist>
+	
+	<!-- 4.6.g Taxiing -->
+	<checklist>
+		<title>4.6.g Taxiing</title>
+	</checklist>
+	
+	<!-- 4.6.h Engine Run Up-->
+	<checklist>
+		<title>4.6.h Engine Run Up</title>
+	</checklist>
+	
+	<!-- 4.6.i Before Takeoff-->
+	<checklist>
+		<title>4.6.i Before Takeoff</title>
+	</checklist>
+	
+	<!-- 4.6.j Takeoff -->
+	<checklist>
+		<title>4.6.j Before Takeoff</title>
+	</checklist>
+
+	<!-- 4.6.k After Takeoff Climb -->
+	<checklist>
+		<title>4.6.k After Takeoff Climb</title>
+	</checklist>
+
+	<!-- 4.6.l Cruise -->
+	<checklist>
+		<title>4.6.l Cruise</title>
+	</checklist>
+
+	<!-- 4.6.m Descent/Approach -->
+	<checklist>
+		<title>4.6.m Descent/Approach</title>
+	</checklist>
+
+	<!-- 4.6.n Final -->
+	<checklist>
+		<title>4.6.n Final</title>
+	</checklist>
+
+	<!-- 4.6.o Before Landing/Landing -->
+	<checklist>
+		<title>4.6.o Before Landing/Landing</title>
+	</checklist>
+
+	<!-- 4.6.p Cross Wind Operation-->
+	<checklist>
+		<title>4.6.p Cross Wind Operation</title>
+	</checklist>
+
+	<!-- 4.6.q Balked Landing -->
+	<checklist>
+		<title>4.6.q Balked Landing</title>
+	</checklist>
+	
+	<!-- 4.6.r Engine Shutdown -->
+	<checklist>
+		<title>4.6.r Engine Shutdown</title>
+	</checklist>
+	
+	<!-- 4.6.s Rain -->
+	<checklist>
+		<title>4.6.s Rain</title>
+	</checklist>
+	
 </PropertyList>

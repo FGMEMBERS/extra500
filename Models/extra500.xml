@@ -84,6 +84,9 @@
 		<pitch-deg>1.39</pitch-deg>
 	</offsets>
 
+	<model>
+          <path>Models/Aircraft/marker.xml</path>
+      </model>
 <!-- Rembrand transparency -->
 
 
