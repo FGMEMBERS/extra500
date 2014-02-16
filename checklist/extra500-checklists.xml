@@ -30,6 +30,7 @@
 		<item>
 			<name></name>
 			<value></value>
+			<note></note>
 			<condition>
 				<equals>
 					<property></property>
@@ -42,6 +43,7 @@
 					
 				]]></script>
 			</binding>
+			<announce> ... check</announce>
 		</item>
 		<item>
 			<name></name>
@@ -60,14 +62,17 @@
 		<item>
 			<name>Aircraft Flight Manual and Documents</name>
 			<value> Check available and status</value>
+			<announce>Manual - available Check</announce>
 		</item>
 		<item>
 			<name>Weight and Balance Data </name>
 			<value>Check</value>
+			<announce>Weight and Balance - Check</announce>
 		</item>
 		<item>
 			<name>Control Lock Device</name>
 			<value>Remove</value>
+			<announce>Lock Device - Remove Check</announce>
 		</item>
 		<item>
 			<name>PARKING BRAKE</name>
@@ -97,9 +102,9 @@
 				<command>nasal</command>
 				<script><![CDATA[
 					UI.click("Parkingbrake on");
-					CoPilot.say("PARKING BRAKE - set check");
 				]]></script>
 			</binding>
+			<announce>PARKING BRAKE - set check</announce>
 		</item>
 		<item>
 			<name>LANDING GEAR</name>
@@ -132,9 +137,9 @@
 				<command>nasal</command>
 				<script><![CDATA[
 					UI.click("Gear down");
-					CoPilot.say("LANDING GEAR - down check");
 				]]></script>
 			</binding>
+			<announce>LANDING GEAR - down check</announce>
 		</item>
 		<item>
 			<name>FLAPS</name>
@@ -166,13 +171,14 @@
 				<command>nasal</command>
 				<script><![CDATA[
 					UI.click("Flaps 0");
-					CoPilot.say("FLAPS - up check");
 				]]></script>
 			</binding>
+			<announce>FLAPS - up check</announce>
 		</item>
 		<item>
 			<name>Circuit Breakers</name>
 			<value>Check in</value>
+			
 			<view>
 				<heading-offset-deg>9.5</heading-offset-deg>
 				<pitch-offset-deg>-44.0</pitch-offset-deg>
@@ -191,13 +197,14 @@
 				<scale>2.9669</scale>
 			</marker>
 			-->
-
+			<announce>Circuit Breakers - in check</announce>
 		</item>
 		</page>
 		<page>
 		<item>
 			<name>BATT</name>
 			<value>ON</value>
+			
 			<view>
 				<heading-offset-deg>25.0</heading-offset-deg>
 				<pitch-offset-deg>-37.0</pitch-offset-deg>
@@ -221,38 +228,42 @@
 				<value>1</value>
 				</equals>
 			</condition>
+			
 			<binding>
 				<command>nasal</command>
 				<script><![CDATA[
 					UI.click("Main Battery on");
-					CoPilot.say("BATTERY - on check");
 				]]></script>
 			</binding>
+			
+			<announce>BATTERY - on check</announce>
 		</item>
 		<item>
-			<name>Note: The upper landing gear doors will close with noise.
-Landing gear doors open slowly, when hydraulic system is
-deactivated.</name>
+			<note>Note : The upper landing gear doors will close with noise.</note>
+			<note>Landing gear doors open slowly, when hydraulic system is deactivated.</note>
 		</item>
 		<item>
 			<name>GEAR INDICATION</name>
 			<value>Check three greens</value>
+			
 			<view>
-				<heading-offset-deg>322.0</heading-offset-deg>
-				<pitch-offset-deg>-11.0</pitch-offset-deg>
+				<heading-offset-deg>348.5</heading-offset-deg>
+				<pitch-offset-deg>-34.5</pitch-offset-deg>
 				<roll-offset-deg>0.0</roll-offset-deg>
 				<x-offset-m>-0.3</x-offset-m>
 				<y-offset-m>0.1</y-offset-m>
 				<z-offset-m>-0.1</z-offset-m>
-				<field-of-view>50.8</field-of-view>
+				<field-of-view>45.0</field-of-view>
 			</view>
-
+			
 			<marker>
-				<x-m>-0.8504</x-m>
-				<y-m>0.2661</y-m>
-				<z-m>-0.0678</z-m>
-				<scale>7.0331</scale>
+				<x-m>-0.6256</x-m>
+				<y-m>-0.2248</y-m>
+				<z-m>-0.3000</z-m>
+				<scale>2.1901</scale>
 			</marker>
+
+			<announce>GEAR INDICATION - green check</announce>
 		</item>
 		<item>
 			<name>GENERATOR FAIL</name>
@@ -273,6 +284,8 @@ deactivated.</name>
 				<z-m>-0.0678</z-m>
 				<scale>7.0331</scale>
 			</marker>
+			
+			<announce>GENERATOR FAIL - illumination check</announce>
 		</item>
 		<item>
 			<name>STALL HEAT</name>
@@ -293,6 +306,8 @@ deactivated.</name>
 				<z-m>-0.0678</z-m>
 				<scale>7.0331</scale>
 			</marker>
+			
+			<announce>STALL HEAT - illumination check</announce>
 		</item>
 		<item>
 			<name>OIL PRESS</name>
@@ -313,6 +328,8 @@ deactivated.</name>
 				<z-m>-0.0678</z-m>
 				<scale>7.0331</scale>
 			</marker>
+			
+			<announce>OIL PRESS - illumination check</announce>
 		</item>
 		<item>
 			<name>PITOT HEAT LEFT</name>
@@ -333,6 +350,8 @@ deactivated.</name>
 				<z-m>-0.0678</z-m>
 				<scale>7.0331</scale>
 			</marker>
+			
+			<announce>PITOT HEAT LEFT - illumination check</announce>
 		</item>
 		<item>
 			<name>STATIC HEAT RIGHT</name>
@@ -353,6 +372,8 @@ deactivated.</name>
 				<z-m>-0.0678</z-m>
 				<scale>7.0331</scale>
 			</marker>
+			
+			<announce>STATIC HEAT RIGHT - illumination check</announce>
 		</item>
 		<item>
 			<name>FUEL TRANS LEFT</name>
@@ -373,6 +394,8 @@ deactivated.</name>
 				<z-m>-0.0678</z-m>
 				<scale>7.0331</scale>
 			</marker>
+			
+			<announce>FUEL TRANSFER LEFT - illumination check</announce>
 		</item>
 		<item>
 			<name>FUEL TRANS RIGHT</name>
@@ -393,6 +416,8 @@ deactivated.</name>
 				<z-m>-0.0678</z-m>
 				<scale>7.0331</scale>
 			</marker>
+			
+			<announce>FUEL TRANSFER RIGHT - illumination check</announce>
 		</item>
 		<item>
 			<name>PNEUMATIC LOW</name>
@@ -413,6 +438,8 @@ deactivated.</name>
 				<z-m>-0.0678</z-m>
 				<scale>7.0331</scale>
 			</marker>
+			
+			<announce>PNEUMATIC LOW - illumination check</announce>
 		</item>
 		<item>
 			<name>NIGHT/DAY</name>
@@ -445,12 +472,12 @@ deactivated.</name>
 				<command>nasal</command>
 				<script><![CDATA[
 					UI.click("Night test");
-					CoPilot.say("NIGHT DAY - TEST check");
 					settimer(func{
 						UI.click("Night day");
 					}, 4.0 );
 				]]></script>
 			</binding>
+			<announce>NIGHT DAY - TEST check</announce>
 		</item>
 		<item>
 			<name>Fuel Quantity</name>
@@ -472,6 +499,7 @@ deactivated.</name>
 				<scale>7.0331</scale>
 			</marker>
 
+			<announce>Fuel Quantity - check</announce>
 		</item>
 		<item>
 			<name>FUEL SELECTOR VALVE</name>
@@ -505,43 +533,84 @@ deactivated.</name>
 				<command>nasal</command>
 				<script><![CDATA[
 					UI.click("Fuel Select Both");
-					CoPilot.say("FUEL SELECTOR VALVE - both check");
 				]]></script>
 			</binding>
+			
+			<announce>FUEL SELECTOR VALVE - Both check</announce>
 		</item>
 		<item>
 			<name>Pitch Trim</name>
 			<value>Set to N</value>
+			
+			<view>
+				<heading-offset-deg>333.5</heading-offset-deg>
+				<pitch-offset-deg>-41.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>31.3</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.5083</x-m>
+				<y-m>-0.1174</y-m>
+				<z-m>-0.3000</z-m>
+				<scale>1.0000</scale>
+			</marker>
+			
 			<condition>
 				<equals>
 				<property>/extra500/panel/CenterConsole/PitchTrim/state</property>
 				<value>0</value>
 				</equals>
 			</condition>
+			
 			<binding>
 				<command>nasal</command>
 				<script><![CDATA[
 					UI.click("PitchTrim");
-					CoPilot.say("Pitch Trim - neutral check");
 				]]></script>
 			</binding>
+			
+			<announce>Pitch Trim - neutral check</announce>
 		</item>
 		<item>
 			<name>BATT</name>
 			<value>OFF</value>
+			
+			<view>
+				<heading-offset-deg>25.0</heading-offset-deg>
+				<pitch-offset-deg>-37.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.7140</x-m>
+				<y-m>-0.6281</y-m>
+				<z-m>-0.4091</z-m>
+				<scale>2.9669</scale>
+			</marker>
+			
 			<condition>
 				<equals>
 				<property>extra500/panel/Side/Main/Battery/state</property>
 				<value>0</value>
 				</equals>
 			</condition>
+			
 			<binding>
 				<command>nasal</command>
 				<script><![CDATA[
 					UI.click("Main Battery off");
-					CoPilot.say("BATTERY - off check");
 				]]></script>
 			</binding>
+			
+			<announce>BATTERY - off check</announce>
 		</item>
 		</page>
 	</checklist>
