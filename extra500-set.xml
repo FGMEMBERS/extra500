@@ -35,12 +35,11 @@ JSBSim Extra Aircraft - Extra 500.
 	
 	<description>Extra 500</description>
 	<long-description>
-		Stepping into an EA-500 is stepping into luxury. The impressively large six-seater cabin makes traveling 
-		the ultimate experience in comfort, and an ergonomically arranged cockpit and state-of-the-art avionics 
-		ensure that you have the best at your fingertips. 
-		It’s also one of the smartest investments you’ll ever make. 
-		Our engineers have found that perfect balance of power and weight to make the advanced carbon-fiber 
-		EXTRA 500 the most cost effective single-engine turboprop aircraft available. 
+		The Extra500 is a small business turboprop powered, six seat aircraft.
+		It is a derivative of the piston powered Extra400 and shares the fully
+		carbon fibre structure as well as the landing gear and some other systems.
+		The pressurized cabin allows cruising up to FL250 at which the efficiency
+		of the RR 250-B17F/2 engine is best.
 	</long-description>
 
 	<tags>
