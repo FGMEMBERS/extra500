@@ -158,10 +158,19 @@
 				forindex (var p; pages) {
 					var items = pages[p].getChildren("item");
 					forindex (var i; items) {
+						
+						parseItem(table,items[i],row);
+						row += 1;
+					}
+					
+				}
+			};
+			
+			var parseItem = func(table,item,row){
 						var td = nil;		
 						var value = nil;
 						
-						value = items[i].getNode("name",1).getValue("");
+						value = item.getNode("name",1).getValue("");
 						if(value){
 							td = table.addChild("text");
 							td.addChild("label").setValue(value);
@@ -170,7 +179,7 @@
 							td.addChild("halign").setValue("left");
 						}
 						
-						value = items[i].getNode("value",1).getValue("");
+						value = item.getNode("value",1).getValue("");
 						if(value){
 							td = table.addChild("text");
 							td.addChild("label").setValue(value);
@@ -178,11 +187,48 @@
 							td.addChild("col").setValue(1);
 							td.addChild("halign").setValue("right");
 						}
-						row += 1;
-					}
-					
-				}
+			
+						var condition = item.getNode("condition");
+						
+						if (condition != nil) {
+							
+							var vis = td.getNode("visible", 1);
+							props.copy(condition, vis);
+							var c = td.getNode("color", 1);
+							c.getNode("red", 1).setValue(0.2);
+							c.getNode("green", 1).setValue(1.0);
+							c.getNode("blue", 1).setValue(0.2);
+										
+							td = table.addChild("text");
+							td.addChild("halign").setValue("right");
+							td.addChild("row").setValue(row);
+							td.addChild("col").setValue(1);
+							td.addChild("label").setValue(value);                
+							
+							c = td.addChild("color");
+							c.addChild("red").setValue(1.0);
+							c.addChild("green").setValue(1.0);
+							c.addChild("blue").setValue(0.2);                
+							
+							vis = td.addChild("visible");
+							vis = vis.getNode("not", 1);
+							props.copy(condition, vis);
+							
+						}
+						
+						
+
 			};
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			
 			setTransparency();
 			drawConfig();
