@@ -239,6 +239,9 @@
 			<announce>BATTERY - on check</announce>
 		</item>
 		<item>
+			<name>Note</name>
+			<loop-wait-pre>0.1</loop-wait-pre>
+			<loop-wait-post>0.1</loop-wait-post>
 			<note>Note : The upper landing gear doors will close with noise.</note>
 			<note>Landing gear doors open slowly, when hydraulic system is deactivated.</note>
 		</item>
@@ -613,11 +616,13 @@
 			<announce>BATTERY - off check</announce>
 		</item>
 		</page>
+		<continue>4.6.b Interior Check</continue>
 	</checklist>
 
 	<!-- 4.6.b Interior Check-->	
 	<checklist>
 		<title>4.6.b Interior Check</title>
+		<continue>4.6.d Before Starting Engine (without External Power)</continue>
 	</checklist>
 	
 	<!-- 4.6.c Before Starting Engine (with External Power)-->	
