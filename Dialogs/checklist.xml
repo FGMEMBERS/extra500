@@ -30,7 +30,6 @@
 			var groupSelectCheckList	= gui.findElementByName(dlgRoot, "groupSelectCheckList");
 			var groupScreen		 	= gui.findElementByName(dlgRoot, "groupScreen");
 
-			var mapCheckList		= {};
 			var nSelectCheckListPerform 	= props.globals.initNode("/sim/gui/dialogs/checklist/SelectCheckList/perform",0,"BOOL");
 			var nSelectCheckListEnabled 	= props.globals.initNode("/sim/gui/dialogs/checklist/SelectCheckList/enabled",1,"BOOL");
 			var nSelectedCheckList 		= props.globals.initNode("/sim/gui/dialogs/checklist/SelectCheckList/selected","","STRING");
@@ -48,9 +47,11 @@
 			props.globals.initNode("/sim/gui/dialogs/checklist/config/announce",1,"BOOL");
 			
 			
-			var indexItem = [];
-			var activeMarkerIndex = -1;
-			var listeners = [];
+			var mapCheckList		= {};
+			var mapCheckListIndex 		= []; 
+			var indexItem 			= [];
+			var activeMarkerIndex 		= -1;
+			var listeners 			= [];
 			
 			var loop_wait_pre = 2;
 			var loop_wait_post = 3;
@@ -65,7 +66,9 @@
 					var checklist_name = nChecklists[idx].getNode("title", 1).getValue();
 					mapCheckList[checklist_name] = idx;
 				}
-			
+				#debug.dump(mapCheckList);
+				mapCheckListIndex = sort(keys(mapCheckList),func (a,b) cmp (a, b));
+				
 				var strCheckList = nSelectedCheckList.getValue();	
 				if(contains(mapCheckList,strCheckList)){
 					idx = mapCheckList[strCheckList];
@@ -207,7 +210,7 @@
 					binding.addChild("command").setValue("nasal");
 					binding.addChild("script").setValue("redraw();");
 			
-					foreach (var name; keys(mapCheckList)) {
+					foreach (var name; mapCheckListIndex) {
 						list.addChild("value").setValue(name);
 					}
 					
@@ -241,7 +244,7 @@
 				binding.addChild("command").setValue("nasal");
 				binding.addChild("script").setValue("redraw();");
 				
-				foreach (var name; keys(mapCheckList)) {
+				foreach (var name; mapCheckListIndex) {
 					list.addChild("value").setValue(name);
 				}
 				
@@ -348,7 +351,9 @@
 				table = vbox.addChild("group");
 				table.addChild("layout").setValue("table");
 				table.addChild("default-padding").setValue(4);
+				table.addChild("padding").setValue(4);
 				table.addChild("valign").setValue("fill");
+				
 				var row = 0;
 				foreach (var item; indexItem){
 					parseItem(table,item,row);
@@ -684,7 +689,7 @@
 							var loop_wait = nil;
 							var item = indexItem[loop_item_index];
 							
-							if(item.getNode("loop-wait-pre") != nil){
+							if(item.getNode("loop-wait-post") != nil){
 								loop_wait = item.getNode("loop-wait-post").getValue();
 							}
 							
@@ -791,7 +796,6 @@
 		</group>
 		<group>
 			<layout>vbox</layout>
-			<pref-width>450</pref-width>
 			<name>groupScreen</name>
 		</group>
 

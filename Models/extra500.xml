@@ -359,7 +359,7 @@
     <binding>
       <command>nasal</command>
       <script><![CDATA[
-		UI.click("upper door toggle");
+		UI.click("door upper");
 	]]></script>
     </binding>
   </action>
@@ -375,7 +375,7 @@
     <binding>
       <command>nasal</command>
       <script><![CDATA[
-		UI.click("lower door toggle");
+		UI.click("door lower");
 	]]></script>
     </binding>
   </action>

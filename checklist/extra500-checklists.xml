@@ -25,12 +25,12 @@
 <!-- sample
 	<checklist>
 		<title>4.6.</title>
-	</checklist>
-	
+		<continue></continue>
+			
 		<item>
+			<title></title>
 			<name></name>
 			<value></value>
-			<note></note>
 			<condition>
 				<equals>
 					<property></property>
@@ -43,13 +43,20 @@
 					
 				]]></script>
 			</binding>
+			<loop-wait-pre>0.1</loop-wait-pre>
+			<loop-wait-post>0.1</loop-wait-post>
 			<announce> ... check</announce>
 		</item>
 		<item>
 			<name></name>
 			<value></value>
+			<announce> - check</announce>
 		</item>
-		
+		<item>
+			<name>note</name>
+			<note></note>
+		</item>
+	</checklist>	
 -->
 				
 <!-- POH Section 4 Normal Procedures -->
@@ -87,10 +94,10 @@
 				<field-of-view>90.0</field-of-view>
 			</view>
 			<marker>
-			<x-m>-0.4488</x-m>
-			<y-m>0.0000</y-m>
-			<z-m>-0.6512</z-m>
-			<scale>3.0000</scale>
+				<x-m>-0.4488</x-m>
+				<y-m>0.0000</y-m>
+				<z-m>-0.6512</z-m>
+				<scale>3.0000</scale>
 			</marker>
 			<condition>
 				<equals>
@@ -449,20 +456,20 @@
 			<value>TEST</value>
 			
 			<view>
-				<heading-offset-deg>357.0</heading-offset-deg>
-				<pitch-offset-deg>-32.0</pitch-offset-deg>
+				<heading-offset-deg>36.5</heading-offset-deg>
+				<pitch-offset-deg>-40.0</pitch-offset-deg>
 				<roll-offset-deg>0.0</roll-offset-deg>
 				<x-offset-m>-0.3</x-offset-m>
 				<y-offset-m>0.1</y-offset-m>
 				<z-offset-m>-0.1</z-offset-m>
-				<field-of-view>90.0</field-of-view>
+				<field-of-view>38.1</field-of-view>
 			</view>
-
+			
 			<marker>
-				<x-m>-0.5620</x-m>
-				<y-m>-0.6413</y-m>
-				<z-m>-0.4157</z-m>
-				<scale>3.0331</scale>
+				<x-m>-0.5595</x-m>
+				<y-m>-0.6397</y-m>
+				<z-m>-0.4050</z-m>
+				<scale>1.9587</scale>
 			</marker>
 
 			<condition>
@@ -623,6 +630,264 @@
 	<checklist>
 		<title>4.6.b Interior Check</title>
 		<continue>4.6.d Before Starting Engine (without External Power)</continue>
+		<item>
+			<name>Entrance Door</name>
+			<value>Re-check closed and secured</value>
+			<view>
+				<heading-offset-deg>140.0</heading-offset-deg>
+				<pitch-offset-deg>-17.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.5</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+
+			<condition>
+				<and>
+					<equals>
+						<property>/extra500/door/upperpass/state</property>
+						<value>0</value>
+					</equals>
+					<equals>
+						<property>/extra500/door/lowerpass/state</property>
+						<value>0</value>
+					</equals>
+				</and>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("door upper close");
+					UI.click("door lower close");
+					UI.click("emergency exit close");
+					
+				]]></script>
+			</binding>
+			<announce>Entrance Door - closed check</announce>
+		</item>
+		<item>
+			<name>Seat Belts and Shoulder Harness</name>
+			<value>Adjust and locked</value>
+			
+			<view>
+				<heading-offset-deg>0.0</heading-offset-deg>
+				<pitch-offset-deg>-71.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+
+			<announce>Seat Belts - locked check</announce>
+		</item>
+		<item>
+			<name>Passengers</name>
+			<value>Seated and strapped</value>
+			<view>
+				<heading-offset-deg>220.0</heading-offset-deg>
+				<pitch-offset-deg>-17.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.1</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+
+			<announce>Passengers - Seated and strapped check</announce>
+		</item>
+		<item>
+			<name>Flight Controls</name>
+			<value>Check free movement</value>
+			<view>
+				<heading-offset-deg>0.0</heading-offset-deg>
+				<pitch-offset-deg>-38.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+
+			<announce>Flight Controls - movement check</announce>
+		</item>
+		<item>
+			<name>Note</name>
+			<note>BUS TIE circuit breaker must be out!</note>
+		</item>
+		<item>
+			<name>Circuit Breaker BUS TIE</name>
+			<value>check out</value>
+
+			
+			<view>
+				<heading-offset-deg>43.5</heading-offset-deg>
+				<pitch-offset-deg>-55.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>27.4</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.3901</x-m>
+				<y-m>-0.5744</y-m>
+				<z-m>-0.5000</z-m>
+				<scale>2.0744</scale>
+			</marker>
+			<condition>
+				<equals>
+					<property>extra500/panel/CircuitBreaker/BankB/BusTie/state</property>
+					<value>0</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Circuit Breaker Bus Tie open");
+				]]></script>
+			</binding>
+			<announce>BUS TIE - out check</announce>
+		</item>
+		<item>
+			<name>Circuit Breaker (others)</name>
+			<value>Re-check in</value>
+			<view>
+			<heading-offset-deg>22.0</heading-offset-deg>
+			<pitch-offset-deg>-51.0</pitch-offset-deg>
+			<roll-offset-deg>0.0</roll-offset-deg>
+			<x-offset-m>-0.3</x-offset-m>
+			<y-offset-m>0.1</y-offset-m>
+			<z-offset-m>-0.1</z-offset-m>
+			<field-of-view>43.5</field-of-view>
+			</view>
+
+			<condition>
+				<equals>
+					<property>extra500/panel/CircuitBreaker/BankB/BusTie/state</property>
+					<value>0</value>
+				</equals>
+			</condition>
+			
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Circuit Breaker Bus Tie open");
+				]]></script>
+			</binding>
+			<announce>Circuit Breaker - in check</announce>
+		</item>
+		<item>
+			<name>BATT</name>
+			<value>ON</value>
+			
+			<view>
+				<heading-offset-deg>25.0</heading-offset-deg>
+				<pitch-offset-deg>-37.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+
+			<marker>
+				<x-m>-0.7140</x-m>
+				<y-m>-0.6281</y-m>
+				<z-m>-0.4091</z-m>
+				<scale>2.9669</scale>
+			</marker>
+
+			<condition>
+				<equals>
+				<property>extra500/panel/Side/Main/Battery/state</property>
+				<value>1</value>
+				</equals>
+			</condition>
+			
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Main Battery on");
+				]]></script>
+			</binding>
+			
+			<announce>BATTERY - on check</announce>
+		</item>
+		<item>
+			<name>Stall Warning System</name>
+			<value>Check function</value>
+			<view>
+				<heading-offset-deg>36.5</heading-offset-deg>
+				<pitch-offset-deg>-40.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>38.1</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.5595</x-m>
+				<y-m>-0.6397</y-m>
+				<z-m>-0.4050</z-m>
+				<scale>1.9587</scale>
+			</marker>
+			<condition>
+				<equals>
+				<property>extra500/panel/Side/Light/Night/state</property>
+				<value>-1</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Night test");
+					settimer(func{
+						UI.click("Night day");
+					}, 4.0 );
+				]]></script>
+			</binding>
+			<announce>Stall Warning System - check</announce>
+		</item>
+		<item>
+			<name>L - PITOT - R</name>
+			<value>TEST (Max. 10 secounds)</value>
+			<view>
+				<heading-offset-deg>33.0</heading-offset-deg>
+				<pitch-offset-deg>-45.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>31.3</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.5215</x-m>
+				<y-m>-0.6314</y-m>
+				<z-m>-0.4074</z-m>
+				<scale>2.1736</scale>
+			</marker>
+
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Deicing Pitot Left test");
+					UI.click("Deicing Pitot Right test");
+					settimer(func{
+						UI.click("Deicing Pitot Left off");
+						UI.click("Deicing Pitot Right off");
+					}, 5.0 );
+				]]></script>
+			</binding>
+			
+			<announce>PITOT LEFT RIGHT - test check</announce>
+			
+		</item>
+		
 	</checklist>
 	
 	<!-- 4.6.c Before Starting Engine (with External Power)-->	
@@ -637,46 +902,91 @@
 		<item>
 			<name>GEN</name>
 			<value>Check OFF</value>
+			<view>
+				<heading-offset-deg>24.5</heading-offset-deg>
+				<pitch-offset-deg>-33.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>39.4</field-of-view>
+			</view>
+			
 			<marker>
-				<x-m>-0.3225</x-m>
-				<y-m>-0.0850</y-m>
-				<z-m>-0.2117</z-m>
-				<scale>2.0500</scale>
-			</marker> 
+				<x-m>-0.7058</x-m>
+				<y-m>-0.5769</y-m>
+				<z-m>-0.4000</z-m>
+				<scale>1.8099</scale>
+			</marker>
+
 			<condition>
 				<equals>
-				<property>extra500/panel/Side/Main/GeneratorTest/state</property>
+				<property>extra500/panel/Side/Main/Generator/state</property>
 				<value>0</value>
 				</equals>
 			</condition>
 			<binding>
 				<command>nasal</command>
 				<script><![CDATA[
-					UI.click("Main Generator Test off");
-					CoPilot.say("GEN - OFF ... check");
+					UI.click("Main Generator off");
 				]]></script>
 			</binding>
+			<announce>GEN - OFF check</announce>
 		</item> 
 		<item>
 			<name>AVIONICS</name>
-			<value>Check OFF</value>
+			<value>Check ON</value>
+			<view>
+				<heading-offset-deg>24.5</heading-offset-deg>
+				<pitch-offset-deg>-33.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>39.4</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.6628</x-m>
+				<y-m>-0.5769</y-m>
+				<z-m>-0.4000</z-m>
+				<scale>1.8099</scale>
+			</marker>
 			<condition>
 				<equals>
 				<property>extra500/panel/Side/Main/Avionics/state</property>
-				<value>0</value>
+				<value>1</value>
 				</equals>
 			</condition>
 			<binding>
 				<command>nasal</command>
 				<script><![CDATA[
-					UI.click("Main Avionics off");
-					CoPilot.say("AVIONICS - OFF ... check");
+					UI.click("Main Avionics on");
 				]]></script>
 			</binding>
+			<announce>AVIONICS - ON check</announce>
 		</item> 
 		<item>
 			<name>ENV AIR</name>
 			<value>Check OFF</value>
+
+			
+			<view>
+				<heading-offset-deg>43.5</heading-offset-deg>
+				<pitch-offset-deg>-46.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>39.4</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.4446</x-m>
+				<y-m>-0.6430</y-m>
+				<z-m>-0.4091</z-m>
+				<scale>1.8099</scale>
+			</marker>
 			<condition>
 				<equals>
 				<property>extra500/panel/Side/Cabin/EnvironmentalAir/state</property>
@@ -687,13 +997,29 @@
 				<command>nasal</command>
 				<script><![CDATA[
 					UI.click("Cabin Environmental Air off");
-					CoPilot.say("ENV - OFF ... check");
 				]]></script>
 			</binding>
+			<announce>ENV AIR - OFF check</announce>
 		</item> 
 		<item>
 			<name>PRESS</name>
 			<value>ON</value>
+			<view>
+				<heading-offset-deg>39.5</heading-offset-deg>
+				<pitch-offset-deg>-44.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>39.4</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.4826</x-m>
+				<y-m>-0.6430</y-m>
+				<z-m>-0.4091</z-m>
+				<scale>1.8099</scale>
+			</marker>
 			<condition>
 				<equals>
 				<property>extra500/panel/Side/Cabin/Pressure/state</property>
@@ -704,21 +1030,97 @@
 				<command>nasal</command>
 				<script><![CDATA[
 					UI.click("Cabin Pressure Controller on");
-					CoPilot.say("PRESS - ON ... check");
 				]]></script>
 			</binding>
+			<announce>PRESS - ON check</announce>
 		</item> 
 		<item>
 			<name>Pressure Controller</name>
 			<value>Set to field elevation </value>
+			<view>
+				<heading-offset-deg>336.0</heading-offset-deg>
+				<pitch-offset-deg>-34.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>21.7</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.7455</x-m>
+				<y-m>0.0016</y-m>
+				<z-m>-0.4050</z-m>
+				<scale>3.4298</scale>
+			</marker>
+			<condition>
+				<equals>
+					<property>systems/pressurization/airport-alt</property>
+					<property>/instrumentation/altimeter/indicated-altitude-ft</property>
+				</equals>
+			</condition>
+			
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					setprop("systems/pressurization/airport-alt",getprop("/instrumentation/altimeter/indicated-altitude-ft"));
+				]]></script>
+			</binding>
+			
+			<announce>Pressure Controller - field elevation set</announce>
 		</item>
 		<item>
 			<name>Cabin Rate of Climb</name>
 			<value>Set</value>
+			<view>
+				<heading-offset-deg>336.0</heading-offset-deg>
+				<pitch-offset-deg>-34.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>21.7</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.7231</x-m>
+				<y-m>-0.0240</y-m>
+				<z-m>-0.4174</z-m>
+				<scale>1.9917</scale>
+			</marker>
+			<condition>
+				<equals>
+					<property>systems/pressurization/cabin-climb-rate-fpm</property>
+					<value>500</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					setprop("systems/pressurization/cabin-climb-rate-fpm",500);
+				]]></script>
+			</binding>
+			<announce>Cabin Rate of Climb - set</announce>
 		</item> 
 		<item>
 			<name>AIR CON</name>
 			<value>OFF</value>
+			<view>
+				<heading-offset-deg>40.0</heading-offset-deg>
+				<pitch-offset-deg>-45.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>36.9</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.4810</x-m>
+				<y-m>-0.6232</y-m>
+				<z-m>-0.4099</z-m>
+				<scale>1.9917</scale>
+			</marker>
 			<condition>
 				<equals>
 				<property>extra500/panel/Side/Cabin/AirCondition/state</property>
@@ -729,13 +1131,29 @@
 				<command>nasal</command>
 				<script><![CDATA[
 					UI.click("Cabin Air Condition off");
-					CoPilot.say("AIR CON - OFF ... check");
 				]]></script>
 			</binding>
+			<announce>AIR CON - OFF check</announce>
 		</item> 
 		<item>
 			<name>STROBE</name>
 			<value>Check ON</value>
+			<view>
+				<heading-offset-deg>32.0</heading-offset-deg>
+				<pitch-offset-deg>-35.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>36.9</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.6331</x-m>
+				<y-m>-0.6347</y-m>
+				<z-m>-0.4025</z-m>
+				<scale>1.9917</scale>
+			</marker>
 			<condition>
 				<equals>
 				<property>extra500/panel/Side/Light/Strobe/state</property>
@@ -746,13 +1164,28 @@
 				<command>nasal</command>
 				<script><![CDATA[
 					UI.click("Light Strobe on");
-					CoPilot.say("STROBE - ON ... check");
 				]]></script>
 			</binding>
+			<announce>STROBE - ON check</announce>
 		</item> 
 		<item>
 			<name>PARKING BRAKE</name>
 			<value>Re-check set</value>
+			<view>
+				<heading-offset-deg>338.0</heading-offset-deg>
+				<pitch-offset-deg>-51.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+			<marker>
+				<x-m>-0.4488</x-m>
+				<y-m>0.0000</y-m>
+				<z-m>-0.6512</z-m>
+				<scale>3.0000</scale>
+			</marker>
 			<condition>
 				<equals>
 				<property>controls/gear/brake-parking</property>
@@ -763,79 +1196,206 @@
 				<command>nasal</command>
 				<script><![CDATA[
 					UI.click("Parkingbrake on");
-					CoPilot.say("PARKING BRAKE - ON ... set");
 				]]></script>
 			</binding>
+			<announce>PARKING BRAKE - set check</announce>
 		</item> 
 		<item>
 			<name>Condition Lever</name>
 			<value>FUEL OFF </value>
+			<view>
+				<heading-offset-deg>328.5</heading-offset-deg>
+				<pitch-offset-deg>-36.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>43.5</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.5918</x-m>
+				<y-m>0.0438</y-m>
+				<z-m>-0.4050</z-m>
+				<scale>3.3306</scale>
+			</marker>
+
 			<condition>
 				<less-than>
 				<property>controls/engines/engine[0]/condition-lever-norm</property>
 				<value>0.05</value>
 				</less-than>
 			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Engine cutoff on");
+				]]></script>
+			</binding>
+			<announce>Condition Lever - FUEL OFF check</announce>
 		</item>
 		<item>
 			<name>Power Lever</name>
 			<value>GRD IDLE</value>
+			<view>
+				<heading-offset-deg>331.0</heading-offset-deg>
+				<pitch-offset-deg>-39.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>56.7</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.6132</x-m>
+				<y-m>-0.0083</y-m>
+				<z-m>-0.3975</z-m>
+				<scale>4.5041</scale>
+			</marker>
+
 			<condition>
 				<less-than>
 				<property>controls/engines/engine[0]/throttle</property>
 				<value>0.05</value>
 				</less-than>
 			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					setprop("controls/engines/engine/throttle",0);
+				]]></script>
+			</binding>
+			<announce>Power Lever - Ground IDLE check</announce>
 		</item> 
 		<item>
 			<name>BATT</name>
 			<value>ON</value>
+			
+			<view>
+				<heading-offset-deg>25.0</heading-offset-deg>
+				<pitch-offset-deg>-37.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+
+			<marker>
+				<x-m>-0.7140</x-m>
+				<y-m>-0.6281</y-m>
+				<z-m>-0.4091</z-m>
+				<scale>2.9669</scale>
+			</marker>
+
 			<condition>
 				<equals>
 				<property>extra500/panel/Side/Main/Battery/state</property>
 				<value>1</value>
 				</equals>
 			</condition>
+			
 			<binding>
 				<command>nasal</command>
 				<script><![CDATA[
 					UI.click("Main Battery on");
-					CoPilot.say("BATT - ON ... check");
 				]]></script>
 			</binding>
-		</item> 
+			
+			<announce>BATTERY - on check</announce>
+		</item>
 		<item>
 			<name>Voltmeter</name>
 			<value>Check reading &gt; 24VDC</value>
+			<view>
+				<heading-offset-deg>16.0</heading-offset-deg>
+				<pitch-offset-deg>-28.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>33.4</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8132</x-m>
+				<y-m>-0.5075</y-m>
+				<z-m>-0.3339</z-m>
+				<scale>1.6942</scale>
+			</marker>
 			<condition>
 				<greater-than>
 					<property>extra500/instrumentation/DIP/indicatedVDC</property>
 					<value>24.0</value>
 				</greater-than>
 			</condition>
+			<announce>Voltmeter - 24 Volt check</announce>
 		</item> 
 		<item>
 			<name>Instrument Lights</name>
 			<value>As required</value>
+			<view>
+				<heading-offset-deg>29.5</heading-offset-deg>
+				<pitch-offset-deg>-39.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>29.3</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.6322</x-m>
+				<y-m>-0.6149</y-m>
+				<z-m>-0.4025</z-m>
+				<scale>2.0909</scale>
+			</marker>
+
+			<announce>Instrument Lights - As required check</announce>
 		</item> 
 		<item>
 			<name>Start Up Clearance</name>
 			<value>Obtain</value>
-			<binding>
-				<command>nasal</command>
-				<script><![CDATA[
-					CoPilot.say("Tower: requesting clearance to startup my engine.");
-				]]></script>
-			</binding>
+			<view>
+				<heading-offset-deg>322.5</heading-offset-deg>
+				<pitch-offset-deg>-47.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>39.4</field-of-view>
+			</view>
+			<announce>Start Up Clearance - obtained check</announce>
 		</item> 
 	</checklist>
 	
 	<!-- 4.6.e Engine Start-->	
 	<checklist>
 		<title>4.6.e Engine Start</title>
+		<continue>4.6.f After Starting Engine</continue>
+		
 		<item>
 			<name>NIGHT/DAY</name>
 			<value>TEST</value>
+			
+			<view>
+				<heading-offset-deg>36.5</heading-offset-deg>
+				<pitch-offset-deg>-40.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>38.1</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.5595</x-m>
+				<y-m>-0.6397</y-m>
+				<z-m>-0.4050</z-m>
+				<scale>1.9587</scale>
+			</marker>
+
 			<condition>
 				<equals>
 				<property>extra500/panel/Side/Light/Night/state</property>
@@ -846,16 +1406,33 @@
 				<command>nasal</command>
 				<script><![CDATA[
 					UI.click("Night test");
-					CoPilot.say("NIGHT/DAY - TEST ... check");
 					settimer(func{
 						UI.click("Night day");
 					}, 4.0 );
 				]]></script>
 			</binding>
+			<announce>NIGHT DAY - TEST check</announce>
 		</item> 
 		<item>
 			<name>FUEL TRANSFER LEFT and RIGHT</name>
 			<value>Check both ON</value>
+			<view>
+				<heading-offset-deg>341.5</heading-offset-deg>
+				<pitch-offset-deg>-30.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>35.7</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8091</x-m>
+				<y-m>-0.0752</y-m>
+				<z-m>-0.3455</z-m>
+				<scale>2.5868</scale>
+			</marker>
+
 			<condition>
 				<and>
 					<equals>
@@ -873,13 +1450,29 @@
 				<script><![CDATA[
 					UI.click("Fuel Transfer Left on");
 					UI.click("Fuel Transfer Right on");
-					CoPilot.say("Fuel Transfer Left Right - both ON ... check");
 				]]></script>
 			</binding>
+			<announce>Fuel Transfer Left Right - both ON check</announce>
 		</item> 
 		<item>
 			<name>FUEL PUMP 1 or 2</name>
 			<value>ON</value>
+			<view>
+				<heading-offset-deg>338.5</heading-offset-deg>
+				<pitch-offset-deg>-30.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>35.7</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8091</x-m>
+				<y-m>-0.0248</y-m>
+				<z-m>-0.3455</z-m>
+				<scale>2.5868</scale>
+			</marker>
 			<condition>
 				<or>
 					<equals>
@@ -896,50 +1489,117 @@
 				<command>nasal</command>
 				<script><![CDATA[
 					UI.click("Fuel Pump 1 on");
-					CoPilot.say("FUEL PUMP 1 or 2 - ON ... check");
 				]]></script>
 			</binding>
+			<announce>FUEL PUMP 1 or 2 - ON check</announce>
 		</item> 
 		<item>
 			<name>Fuel Pressure</name>
 			<value>Check reading &gt; 10 psi</value>
+			<view>
+				<heading-offset-deg>11.0</heading-offset-deg>
+				<pitch-offset-deg>-30.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>35.7</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8091</x-m>
+				<y-m>-0.4512</y-m>
+				<z-m>-0.3529</z-m>
+				<scale>1.3636</scale>
+			</marker>
 			<condition>
 				<greater-than>
 					<property>extra500/instrumentation/DIP/indicatedFuelPress</property>
 					<value>10.0</value>
 				</greater-than>
 			</condition>
+			<announce>Fuel Pressure - check</announce>
 		</item> 
 		<item>
 			<name>TOT</name>
 			<value>Check reading &lt; 100 °C</value>
+			<view>
+				<heading-offset-deg>11.0</heading-offset-deg>
+				<pitch-offset-deg>-21.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>35.7</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8331</x-m>
+				<y-m>-0.4587</y-m>
+				<z-m>-0.1892</z-m>
+				<scale>2.4545</scale>
+			</marker>
 			<condition>
 				<less-than>
 					<property>/fdm/jsbsim/aircraft/engine/TOT-degC</property>
 					<value>100.0</value>
 				</less-than>
 			</condition>
+			<announce>TOT - check</announce>
 		</item> 
 		<item>
 			<name>ENGINE MOTORING</name>
 			<value>Check NORMAL</value>
+			<view>
+				<heading-offset-deg>334.0</heading-offset-deg>
+				<pitch-offset-deg>-29.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>25.6</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8108</x-m>
+				<y-m>0.0380</y-m>
+				<z-m>-0.3504</z-m>
+				<scale>2.8017</scale>
+			</marker>
 			<condition>
-				<less-than>
+				<equals>
 					<property>extra500/panel/Master/Engine/Motoring/state</property>
 					<value>-1</value>
-				</less-than>
+				</equals>
 			</condition>
 			<binding>
 				<command>nasal</command>
 				<script><![CDATA[
 					UI.click("Engine Motoring normal");
-					CoPilot.say("ENGINE MOTORING - NORMAL ... check");
 				]]></script>
 			</binding>
+			<announce>ENGINE MOTORING - NORMAL check</announce>
 		</item> 
 		<item>
 			<name>ENGINE START</name>
 			<value>Momentary START</value>
+			<view>
+				<heading-offset-deg>330.0</heading-offset-deg>
+				<pitch-offset-deg>-29.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>25.6</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8108</x-m>
+				<y-m>0.0628</y-m>
+				<z-m>-0.3504</z-m>
+				<scale>2.8017</scale>
+			</marker>
+
 			<condition>
 				<less-than>
 					<property>extra500/panel/Master/Engine/Start/state</property>
@@ -950,162 +1610,1560 @@
 				<command>nasal</command>
 				<script><![CDATA[
 					UI.click("Engine Start on");
-					CoPilot.say("ENGINE START - Momentary START ... check");
 				]]></script>
 			</binding>
+			<announce>ENGINE START - check</announce>
 		</item> 
 		<item>
 			<name>Condition Lever</name>
 			<value>Fully forward </value>
+			<view>
+				<heading-offset-deg>328.5</heading-offset-deg>
+				<pitch-offset-deg>-36.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>43.5</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.5918</x-m>
+				<y-m>0.0438</y-m>
+				<z-m>-0.4050</z-m>
+				<scale>3.3306</scale>
+			</marker>
 			<condition>
 				<greater-than>
 				<property>controls/engines/engine[0]/condition-lever-norm</property>
 				<value>0.95</value>
 				</greater-than>
 			</condition>
-			
+			<loop-wait-pre>4.5</loop-wait-pre>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Engine cutoff off");
+				]]></script>
+			</binding>
+			<announce>Condition Lever - forward check</announce>
 		</item>
 		<item>
 			<name>TOT</name>
 			<value>Monitor &lt; 850 °C</value>
+			<view>
+				<heading-offset-deg>11.0</heading-offset-deg>
+				<pitch-offset-deg>-21.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>35.7</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8331</x-m>
+				<y-m>-0.4587</y-m>
+				<z-m>-0.1892</z-m>
+				<scale>2.4545</scale>
+			</marker>
+			
 			<condition>
 				<less-than>
 					<property>/fdm/jsbsim/aircraft/engine/TOT-degC</property>
 					<value>850.0</value>
 				</less-than>
 			</condition>
+			<announce>TOT - check</announce>
 		</item> 
 		<item>
 			<name>Oil Pressure</name>
 			<value>Check indication</value>
+			<view>
+				<heading-offset-deg>13.0</heading-offset-deg>
+				<pitch-offset-deg>-26.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>24.0</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8190</x-m>
+				<y-m>-0.5017</y-m>
+				<z-m>-0.2851</z-m>
+				<scale>2.8017</scale>
+			</marker>
+
 			<condition>
 				<greater-than>
 					<property>/fdm/jsbsim/aircraft/engine/OP-psi</property>
 					<value>35.0</value>
 				</greater-than>
 			</condition>
+			<announce>Oil Pressure - check</announce>
 		</item> 
 		<item>
 			<name>OIL PRESS</name>
 			<value>Check extinguished</value>
+			<view>
+				<heading-offset-deg>323.0</heading-offset-deg>
+				<pitch-offset-deg>-8.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>17.2</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8529</x-m>
+				<y-m>0.2744</y-m>
+				<z-m>-0.0397</z-m>
+				<scale>1.3967</scale>
+			</marker>
 			<condition>
 				<greater-than>
 					<property>/fdm/jsbsim/aircraft/engine/OP-psi</property>
 					<value>35.0</value>
 				</greater-than>
 			</condition>
+			<announce>OIL PRESS - extinguished check</announce>
 		</item> 
 		<item>
 			<name>Propeller RPM</name>
 			<value>Check positive indication at 25% N1</value>
+			<view>
+				<heading-offset-deg>12.5</heading-offset-deg>
+				<pitch-offset-deg>-23.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>40.7</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8240</x-m>
+				<y-m>-0.4587</y-m>
+				<z-m>-0.2364</z-m>
+				<scale>2.3223</scale>
+			</marker>
+			<announce>Propeller RPM - at 25% N1 check</announce>
 		</item> 
 		<item>
 			<name>PNEUMATIC LOW</name>
 			<value>Check extinguished </value>
+			<view>
+				<heading-offset-deg>322.5</heading-offset-deg>
+				<pitch-offset-deg>-11.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>17.2</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8496</x-m>
+				<y-m>0.2248</y-m>
+				<z-m>-0.0785</z-m>
+				<scale>1.0000</scale>
+			</marker>
+
+			<announce>PNEUMATIC LOW - extinguished check</announce>
 		</item>
 	</checklist>	
 	
 	<!-- 4.6.f After Starting Engine-->
 	<checklist>
-		<title>4.6.f After Starting Engine </title>
-			<item>
-		<name>ENGINE START</name>
-		<value>IGN OFF</value>
-		</item> 
+		<title>4.6.f After Starting Engine</title>
+		<item>
+			<name>ENGINE START</name>
+			<value>IGN OFF</value>
+			<view>
+				<heading-offset-deg>330.0</heading-offset-deg>
+				<pitch-offset-deg>-29.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>25.6</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8108</x-m>
+				<y-m>0.0628</y-m>
+				<z-m>-0.3504</z-m>
+				<scale>2.8017</scale>
+			</marker>
+
+			<condition>
+				<equals>
+					<property>extra500/panel/Master/Engine/Start/state</property>
+					<value>-1</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Engine Start off");
+				]]></script>
+			</binding>
+			<announce>ENGINE START - Ignition OFF check</announce>
+		</item>  
 		<item>
 			<name>FUEL PUMP (other)</name>
 			<value>ON</value>
+			<view>
+				<heading-offset-deg>338.5</heading-offset-deg>
+				<pitch-offset-deg>-30.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>35.7</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8091</x-m>
+				<y-m>-0.0248</y-m>
+				<z-m>-0.3455</z-m>
+				<scale>2.5868</scale>
+			</marker>
+			<condition>
+				<or>
+					<equals>
+						<property>extra500/panel/Master/Fuel/Pump1/state</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>extra500/panel/Master/Fuel/Pump2/state</property>
+						<value>1</value>
+					</equals>
+				</or>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Fuel Pump 2 on");
+				]]></script>
+			</binding>
+			<announce>FUEL PUMP (other) - ON check</announce>
 		</item>
 		<item>
 			<name>FUEL PUMP (original)</name>
 			<value>OFF</value>
+			<view>
+				<heading-offset-deg>338.5</heading-offset-deg>
+				<pitch-offset-deg>-30.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>35.7</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8091</x-m>
+				<y-m>-0.0248</y-m>
+				<z-m>-0.3455</z-m>
+				<scale>2.5868</scale>
+			</marker>
+			<condition>
+				<or>
+					<equals>
+						<property>extra500/panel/Master/Fuel/Pump1/state</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>extra500/panel/Master/Fuel/Pump2/state</property>
+						<value>1</value>
+					</equals>
+				</or>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Fuel Pump 1 off");
+				]]></script>
+			</binding>
+			<announce>FUEL PUMP (original) - OFF check</announce>
 		</item>
 		<item>
 			<name>Fuel Pressure</name>
-			<value>Check reading > 10 psi</value>
+			<value>Check reading &gt; 10 psi</value>
+			<view>
+				<heading-offset-deg>11.0</heading-offset-deg>
+				<pitch-offset-deg>-30.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>35.7</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8091</x-m>
+				<y-m>-0.4512</y-m>
+				<z-m>-0.3529</z-m>
+				<scale>1.3636</scale>
+			</marker>
+			<condition>
+				<greater-than>
+					<property>extra500/instrumentation/DIP/indicatedFuelPress</property>
+					<value>10.0</value>
+				</greater-than>
+			</condition>
+			<announce>Fuel Pressure - check</announce>
 		</item>
 		<item>
 			<name>STDBY ALT</name>
 			<value>ON</value>
+			<view>
+				<heading-offset-deg>24.0</heading-offset-deg>
+				<pitch-offset-deg>-35.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>64.7</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.7083</x-m>
+				<y-m>-0.6025</y-m>
+				<z-m>-0.4000</z-m>
+				<scale>1.5785</scale>
+			</marker>
+
+			<condition>
+				<equals>
+					<property>extra500/panel/Side/Main/Alternator/state</property>
+					<value>1</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Main Standby Alternator on");
+				]]></script>
+			</binding>
+			
+			<announce>Standby Alternator - ON check</announce>
 		</item>
 		<item>
 			<name>STANDBY ALTERN ON</name>
 			<value>Check illumination</value>
+			<view>
+				<heading-offset-deg>322.0</heading-offset-deg>
+				<pitch-offset-deg>-11.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>18.4</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8512</x-m>
+				<y-m>0.2504</y-m>
+				<z-m>-0.0694</z-m>
+				<scale>1.0496</scale>
+			</marker>
+			<announce>Standby Alternator - illumination check</announce>
 		</item>
 		<item>
 			<name>GEN</name>
 			<value>ON</value>
+			<view>
+				<heading-offset-deg>24.5</heading-offset-deg>
+				<pitch-offset-deg>-33.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>39.4</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.7058</x-m>
+				<y-m>-0.5769</y-m>
+				<z-m>-0.4000</z-m>
+				<scale>1.8099</scale>
+			</marker>
+
+			<condition>
+				<equals>
+				<property>extra500/panel/Side/Main/Generator/state</property>
+				<value>1</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Main Generator on");
+				]]></script>
+			</binding>
+			<announce>GEN - ON check</announce>
 		</item>
 		<item>
 			<name>STANDBY ALTERN ON</name>
 			<value>Check extinguished</value>
+			<view>
+				<heading-offset-deg>322.0</heading-offset-deg>
+				<pitch-offset-deg>-11.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>18.4</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8512</x-m>
+				<y-m>0.2504</y-m>
+				<z-m>-0.0694</z-m>
+				<scale>1.0496</scale>
+			</marker>
+			<announce>Standby Alternator - extinguished check</announce>
 		</item>
 		<item>
 			<name>GENERATOR FAIL</name>
 			<value>Check extinguished</value>
+			<view>
+				<heading-offset-deg>322.0</heading-offset-deg>
+				<pitch-offset-deg>-11.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>18.4</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8545</x-m>
+				<y-m>0.1983</y-m>
+				<z-m>-0.0397</z-m>
+				<scale>1.0496</scale>
+			</marker>
+			<announce>GENERATOR FAIL - extinguished check</announce>
 		</item>
 		<item>
 			<name>FUEL TRANS LEFT</name>
 			<value>Check extinguished</value>
+			<view>
+				<heading-offset-deg>322.0</heading-offset-deg>
+				<pitch-offset-deg>-11.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>18.4</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8504</x-m>
+				<y-m>0.1983</y-m>
+				<z-m>-0.0678</z-m>
+				<scale>1.0496</scale>
+			</marker>
+			<announce>FUEL TRANS LEFT - extinguished check</announce>
 		</item>
 		<item>
 			<name>FUEL TRANS RIGHT</name>
 			<value>Check extinguished</value>
+			<view>
+				<heading-offset-deg>322.0</heading-offset-deg>
+				<pitch-offset-deg>-11.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>18.4</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8504</x-m>
+				<y-m>0.2248</y-m>
+				<z-m>-0.0678</z-m>
+				<scale>1.0496</scale>
+			</marker>
+			<announce>FUEL TRANS RIGHT - extinguished check</announce>
 		</item>
+		<item>
+			<name>Ice Protection</name>
+			<value>ON, if required</value>
+		</item>
+		<item>
+			<name>L - PITOT - R</name>
+			<value>ON</value>
+			<view>
+				<heading-offset-deg>33.0</heading-offset-deg>
+				<pitch-offset-deg>-45.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>31.3</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.5215</x-m>
+				<y-m>-0.6314</y-m>
+				<z-m>-0.4074</z-m>
+				<scale>2.1736</scale>
+			</marker>
+
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Deicing Pitot Left on");
+					UI.click("Deicing Pitot Right on");
+				]]></script>
+			</binding>
+			
+			<announce>PITOT LEFT RIGHT - ON check</announce>
+		</item>
+		<item>
+			<name>AVIONICS</name>
+			<value>Check ON</value>
+			<view>
+				<heading-offset-deg>24.5</heading-offset-deg>
+				<pitch-offset-deg>-33.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>39.4</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.6628</x-m>
+				<y-m>-0.5769</y-m>
+				<z-m>-0.4000</z-m>
+				<scale>1.8099</scale>
+			</marker>
+			<condition>
+				<equals>
+				<property>extra500/panel/Side/Main/Avionics/state</property>
+				<value>1</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Main Avionics on");
+				]]></script>
+			</binding>
+			<announce>AVIONICS - ON check</announce>
+		</item> 
 		<item>
 			<name>Altimeter</name>
 			<value>Set</value>
+			<view>
+				<heading-offset-deg>345.5</heading-offset-deg>
+				<pitch-offset-deg>-19.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>45.0</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8215</x-m>
+				<y-m>-0.1587</y-m>
+				<z-m>-0.1421</z-m>
+				<scale>1.3140</scale>
+			</marker>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					var qnh = getprop("/environment/pressure-sea-level-inhg");
+					setprop("/instrumentation/altimeter-backup/setting-inhg",qnh);
+					setprop("/instrumentation/altimeter-IFD-LH/setting-inhg",qnh);
+					setprop("/instrumentation/altimeter-IFD-RH/setting-inhg",qnh);
+				]]></script>
+			</binding>
+			<announce>Altimeter - Set</announce>
+
 		</item>
 		<item>
 			<name>Radios</name>
 			<value>Set as required</value>
+			<view>
+				<heading-offset-deg>318.5</heading-offset-deg>
+				<pitch-offset-deg>-50.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>45.0</field-of-view>
+			</view>
+			<announce>Radios - check</announce>
 		</item>
 		<item>
 			<name>Navigation Equipment</name>
 			<value>Set as required</value>
+			<view>
+				<heading-offset-deg>318.5</heading-offset-deg>
+				<pitch-offset-deg>-50.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>45.0</field-of-view>
+			</view>
+			<announce>Navigation Equipment - check</announce>
 		</item>
 		<item>
 			<name>ENV AIR</name>
 			<value>ON</value>
+			<view>
+				<heading-offset-deg>43.5</heading-offset-deg>
+				<pitch-offset-deg>-46.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>39.4</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.4446</x-m>
+				<y-m>-0.6430</y-m>
+				<z-m>-0.4091</z-m>
+				<scale>1.8099</scale>
+			</marker>
+			<condition>
+				<equals>
+				<property>extra500/panel/Side/Cabin/EnvironmentalAir/state</property>
+				<value>1</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Cabin Environmental Air on");
+				]]></script>
+			</binding>
+			<announce>ENV AIR - ON check</announce>
 		</item>
 		<item>
 			<name>Cabin Pressure</name>
 			<value>Set as required</value>
+			<view>
+				<heading-offset-deg>336.0</heading-offset-deg>
+				<pitch-offset-deg>-34.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>21.7</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.7455</x-m>
+				<y-m>0.0016</y-m>
+				<z-m>-0.4050</z-m>
+				<scale>3.4298</scale>
+			</marker>
+			
+			<announce>Pressure Controller - set cruise alt check</announce>
 		</item>
 		<item>
 			<name>Air Conditioning</name>
 			<value>Set as required</value>
+			<view>
+				<heading-offset-deg>36.0</heading-offset-deg>
+				<pitch-offset-deg>-49.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>31.3</field-of-view>
+			</view>
+			<marker>
+				<x-m>-0.4612</x-m>
+				<y-m>-0.6066</y-m>
+				<z-m>-0.4116</z-m>
+				<scale>3.1322</scale>
+			</marker>
+			<announce>Air Conditioning - Set as required check</announce>
 		</item>
 	</checklist>
 	
 	<!-- 4.6.g Taxiing -->
 	<checklist>
 		<title>4.6.g Taxiing</title>
+		<item>
+			<name>PARKING BRAKE</name>
+			<value>Release</value>
+			<view>
+				<heading-offset-deg>338.0</heading-offset-deg>
+				<pitch-offset-deg>-51.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+			<marker>
+				<x-m>-0.4488</x-m>
+				<y-m>0.0000</y-m>
+				<z-m>-0.6512</z-m>
+				<scale>3.0000</scale>
+			</marker>
+			<condition>
+				<equals>
+				<property>controls/gear/brake-parking</property>
+				<value>0</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Parkingbrake off");
+				]]></script>
+			</binding>
+			<announce>PARKING BRAKE - Release check</announce>
+		</item>
+		<item>
+			<name>Brakes</name>
+			<value>Check functioning</value>
+			<view>
+				<heading-offset-deg>0.0</heading-offset-deg>
+				<pitch-offset-deg>-17.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+
+			<announce>Brakes - function check</announce>
+		</item>
+		<item>
+			<name>Nose Wheel Steering</name>
+			<value>Check functioning</value>
+			<view>
+				<heading-offset-deg>0.0</heading-offset-deg>
+				<pitch-offset-deg>-17.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+
+			<announce>Steering - function check</announce>
+		</item>
+		<item>
+			<name>Flight Instruments</name>
+			<value>Check function</value>
+			<view>
+				<heading-offset-deg>0.0</heading-offset-deg>
+				<pitch-offset-deg>-17.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+
+			<announce>Flight Instruments - function check</announce>
+		</item>
+		<item>
+			<name>FLAPS</name>
+			<value>15 deg</value>
+			<view>
+				<heading-offset-deg>322.0</heading-offset-deg>
+				<pitch-offset-deg>-35.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+
+			<marker>
+				<x-m>-0.7727</x-m>
+				<y-m>0.1752</y-m>
+				<z-m>-0.4157</z-m>
+				<scale>3.0000</scale>
+			</marker>
+			
+			<condition>
+				<equals>
+				<property>extra500/system/flap/Switch/state</property>
+				<value>0</value>
+				</equals>
+			</condition>
+			
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Flaps 15");
+				]]></script>
+			</binding>
+			
+			<announce>FLAPS - 15 check</announce>
+		</item>
+		
 	</checklist>
 	
 	<!-- 4.6.h Engine Run Up-->
 	<checklist>
 		<title>4.6.h Engine Run Up</title>
+		<item>
+			<name>PARKING BRAKE</name>
+			<value>Check set</value>
+			<view>
+				<heading-offset-deg>338.0</heading-offset-deg>
+				<pitch-offset-deg>-51.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+			<marker>
+				<x-m>-0.4488</x-m>
+				<y-m>0.0000</y-m>
+				<z-m>-0.6512</z-m>
+				<scale>3.0000</scale>
+			</marker>
+			<condition>
+				<equals>
+				<property>controls/gear/brake-parking</property>
+				<value>1</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Parkingbrake on");
+				]]></script>
+			</binding>
+			<announce>PARKING BRAKE - set check</announce>
+		</item>
+		<item>
+			<name>Engine Oil Temperature</name>
+			<value>Check indication</value>
+			<view>
+				<heading-offset-deg>9.0</heading-offset-deg>
+				<pitch-offset-deg>-27.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>35.7</field-of-view>
+			</view>
+			<marker>
+				<x-m>-0.8207</x-m>
+				<y-m>-0.4587</y-m>
+				<z-m>-0.2876</z-m>
+				<scale>2.4545</scale>
+			</marker>
+			<announce>Engine Oil Temperature - indication check</announce>
+		</item>
+		<item>
+			<name>Power Lever</name>
+			<value>Set 1800 engine RPM</value>
+			<view>
+				<heading-offset-deg>0.0</heading-offset-deg>
+				<pitch-offset-deg>-17.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+			<announce>Power Lever - check</announce>
+		</item>
+		<item>
+			<name>Caution</name>
+			<note>Do not press ENGINE OVSPD TEST for more than 20 sec..</note>
+		</item>
+		<item>
+			<name>ENGINE OVSPD TEST</name>
+			<value>Press and hold</value>
+			<view>
+				<heading-offset-deg>333.0</heading-offset-deg>
+				<pitch-offset-deg>-30.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>39.4</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8074</x-m>
+				<y-m>0.0132</y-m>
+				<z-m>-0.3455</z-m>
+				<scale>1.8430</scale>
+			</marker>
+			
+			<announce>ENGINE OVSPD TEST - hold check</announce>
+		</item>
+		<item>
+			<name>Propeller rpm</name>
+			<value>Check decrease</value>
+			<view>
+				<heading-offset-deg>11.5</heading-offset-deg>
+				<pitch-offset-deg>-24.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>56.7</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8273</x-m>
+				<y-m>-0.4587</y-m>
+				<z-m>-0.2380</z-m>
+				<scale>2.3388</scale>
+			</marker>
+			<announce>Propeller rpm - decrease check</announce>
+		</item>
+		<item>
+			<name>ENGINE OVSPD TEST</name>
+			<value>Release</value>
+			<view>
+				<heading-offset-deg>333.0</heading-offset-deg>
+				<pitch-offset-deg>-30.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>39.4</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8074</x-m>
+				<y-m>0.0132</y-m>
+				<z-m>-0.3455</z-m>
+				<scale>1.8430</scale>
+			</marker>
+			<announce>ENGINE OVSPD TEST - release check</announce>
+		</item>
+		<item>
+			<name>Propeller rpm</name>
+			<value>Check return to original value</value>
+			<view>
+				<heading-offset-deg>11.5</heading-offset-deg>
+				<pitch-offset-deg>-24.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>56.7</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8273</x-m>
+				<y-m>-0.4587</y-m>
+				<z-m>-0.2380</z-m>
+				<scale>2.3388</scale>
+			</marker>
+			<announce>Propeller rpm - original value check</announce>
+		</item>
+		<item>
+			<name>Ammeter</name>
+			<value>Check reading</value>
+			<view>
+				<heading-offset-deg>7.0</heading-offset-deg>
+				<pitch-offset-deg>-31.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>33.4</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8099</x-m>
+				<y-m>-0.4645</y-m>
+				<z-m>-0.3289</z-m>
+				<scale>2.3388</scale>
+			</marker>
+			<announce>Ammeter - reading check</announce>
+		</item>
+		<item>
+			<name>Fuel Flow</name>
+			<value>Check indication</value>
+			<view>
+				<heading-offset-deg>323.0</heading-offset-deg>
+				<pitch-offset-deg>-23.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>24.8</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8099</x-m>
+				<y-m>0.2000</y-m>
+				<z-m>-0.2694</z-m>
+				<scale>4.0083</scale>
+			</marker>
+			<announce>Fuel Flow - indication check</announce>
+		</item>
+		<item>
+			<name>Engine Oil Pressure</name>
+			<value>Check indication</value>
+			<view>
+				<heading-offset-deg>13.0</heading-offset-deg>
+				<pitch-offset-deg>-28.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>33.4</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8190</x-m>
+				<y-m>-0.5000</y-m>
+				<z-m>-0.2868</z-m>
+				<scale>2.6198</scale>
+			</marker>
+			<announce>Engine Oil Pressure - indication check</announce>
+		</item>
+		<item>
+			<name>note</name>
+			<note>After completion:</note>
+		</item>
+		<item>
+			<name>Power Lever</name>
+			<value>GRD IDLE</value>
+			<view>
+				<heading-offset-deg>0.0</heading-offset-deg>
+				<pitch-offset-deg>-17.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+			<announce>Power Lever - ground idle check</announce>
+		</item>
+		<item>
+			<name>note</name>
+			<note>In prolonged idle operation in freezing fog conditions:</note>
+		</item>
+		<item>
+			<name>Power Lever</name>
+			<value>Increase power periodically</value>
+		</item>
+
 	</checklist>
 	
 	<!-- 4.6.i Before Takeoff-->
 	<checklist>
 		<title>4.6.i Before Takeoff</title>
+		<item>
+			<name>note</name>
+			<note>Before takeoff, takeoff and emergency briefing shall be</note>
+			<note>given to crew members and passengers.</note>
+		</item>
+		<item>
+			<name>AIR CON</name>
+			<value>OFF</value>
+			<view>
+				<heading-offset-deg>40.0</heading-offset-deg>
+				<pitch-offset-deg>-45.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>36.9</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.4810</x-m>
+				<y-m>-0.6232</y-m>
+				<z-m>-0.4099</z-m>
+				<scale>1.9917</scale>
+			</marker>
+			<condition>
+				<equals>
+				<property>extra500/panel/Side/Cabin/AirCondition/state</property>
+				<value>0</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Cabin Air Condition off");
+				]]></script>
+			</binding>
+			<announce>AIR CON - OFF check</announce>
+		</item> 
+		<item>
+			<name>Pitch Trim</name>
+			<value>Set to N</value>
+			
+			<view>
+				<heading-offset-deg>333.5</heading-offset-deg>
+				<pitch-offset-deg>-41.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>31.3</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.5083</x-m>
+				<y-m>-0.1174</y-m>
+				<z-m>-0.3000</z-m>
+				<scale>1.0000</scale>
+			</marker>
+			
+			<condition>
+				<equals>
+				<property>/extra500/panel/CenterConsole/PitchTrim/state</property>
+				<value>0</value>
+				</equals>
+			</condition>
+			
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("PitchTrim");
+				]]></script>
+			</binding>
+			
+			<announce>Pitch Trim - neutral check</announce>
+		</item>
+		<item>
+			<name>Transponder</name>
+			<value>Set as required</value>
+			<view>
+				<heading-offset-deg>323.5</heading-offset-deg>
+				<pitch-offset-deg>-48.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>36.9</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.5521</x-m>
+				<y-m>-0.0157</y-m>
+				<z-m>-0.4769</z-m>
+				<scale>1.3140</scale>
+			</marker>
+			<announce>Transponder - set check</announce>
+		</item>
+		<item>
+			<name>ADAHRS (2) / gyro</name>
+			<value>Check aligned</value>
+			<view>
+				<heading-offset-deg>354.5</heading-offset-deg>
+				<pitch-offset-deg>-19.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>36.9</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.5521</x-m>
+				<y-m>-0.2926</y-m>
+				<z-m>-0.0512</z-m>
+				<scale>3.1983</scale>
+			</marker>
+
+			<announce>ADAHRS gyro - aligned check</announce>
+		</item>
+		<item>
+			<name>Condition Lever</name>
+			<value>Fully forward </value>
+			<view>
+				<heading-offset-deg>328.5</heading-offset-deg>
+				<pitch-offset-deg>-36.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>43.5</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.5918</x-m>
+				<y-m>0.0438</y-m>
+				<z-m>-0.4050</z-m>
+				<scale>3.3306</scale>
+			</marker>
+			<condition>
+				<greater-than>
+				<property>controls/engines/engine[0]/condition-lever-norm</property>
+				<value>0.95</value>
+				</greater-than>
+			</condition>
+			<loop-wait-pre>4.5</loop-wait-pre>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Engine cutoff off");
+				]]></script>
+			</binding>
+			<announce>Condition Lever - forward check</announce>
+		</item>
+		<item>
+			<name>FUEL PUMP 1 and 2</name>
+			<value>Both ON</value>
+			<view>
+				<heading-offset-deg>338.5</heading-offset-deg>
+				<pitch-offset-deg>-30.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>35.7</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8091</x-m>
+				<y-m>-0.0248</y-m>
+				<z-m>-0.3455</z-m>
+				<scale>2.5868</scale>
+			</marker>
+			<condition>
+				<and>
+					<equals>
+						<property>extra500/panel/Master/Fuel/Pump1/state</property>
+						<value>1</value>
+					</equals>
+					<equals>
+						<property>extra500/panel/Master/Fuel/Pump2/state</property>
+						<value>1</value>
+					</equals>
+				</and>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Fuel Pump 1 on");
+					UI.click("Fuel Pump 2 on");
+				]]></script>
+			</binding>
+			<announce>FUEL PUMPS - Both ON check</announce>
+		</item>
+		<item>
+			<name>ENGINE START</name>
+			<value>IGN ON</value>
+			<view>
+				<heading-offset-deg>330.0</heading-offset-deg>
+				<pitch-offset-deg>-29.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>25.6</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8108</x-m>
+				<y-m>0.0628</y-m>
+				<z-m>-0.3504</z-m>
+				<scale>2.8017</scale>
+			</marker>
+
+			<condition>
+				<equals>
+					<property>extra500/panel/Master/Engine/Start/state</property>
+					<value>0</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Engine Start on");
+				]]></script>
+			</binding>
+			<announce>ENGINE START - Ignition ON check</announce>
+		</item>
+		<item>
+			<name>RECO</name>
+			<value>Check ON</value>
+			<view>
+				<heading-offset-deg>23.5</heading-offset-deg>
+				<pitch-offset-deg>-40.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>64.7</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.6364</x-m>
+				<y-m>-0.5777</y-m>
+				<z-m>-0.4083</z-m>
+				<scale>1.4463</scale>
+			</marker>
+
+			<condition>
+				<equals>
+				<property>extra500/panel/Side/Light/Recognition/state</property>
+				<value>1</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Light Recognition on");
+				]]></script>
+			</binding>
+			<announce>RECO - ON check</announce>
+		</item>
+		<item>
+			<name>Engine Instruments</name>
+			<value> Check normal</value>
+			<view>
+				<heading-offset-deg>13.0</heading-offset-deg>
+				<pitch-offset-deg>-27.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8124</x-m>
+				<y-m>-0.4802</y-m>
+				<z-m>-0.2298</z-m>
+				<scale>6.8843</scale>
+			</marker>
+
+			<announce>Engine Instruments - normal check</announce>
+		</item>
+		<item>
+			<name>note</name>
+			<note>PITOT HEAT, STATIC HEAT and STALL HEAT will</note>
+			<note>extinguish on annunciator panel, when pitot heat is</note>
+			<note>activated and as soon as aircraft is airborne.</note>
+		</item>
+		
+		<item>
+			<name>Annunciator Panel Lights (others)</name>
+			<value>Off</value>
+			<view>
+				<heading-offset-deg>319.0</heading-offset-deg>
+				<pitch-offset-deg>-17.0</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+			
+			<marker>
+				<x-m>-0.8463</x-m>
+				<y-m>0.2620</y-m>
+				<z-m>-0.0628</z-m>
+				<scale>6.8843</scale>
+			</marker>
+			<announce>Annunciator Lights - off check</announce>
+		</item>
+
 	</checklist>
 	
 	<!-- 4.6.j Takeoff -->
 	<checklist>
-		<title>4.6.j Before Takeoff</title>
+		<title>4.6.j Takeoff</title>
+		<item>
+			<name>Power Lever</name>
+			<value>MAX POWER (111 % Torque)</value>
+			<announce>Power Lever - MAX POWER check</announce>
+		</item>
+		<item>
+			<name>TOT</name>
+			<value>Monitor &lt; 810 degC</value>
+			<announce>TOT - less 810 check</announce>
+		</item>
+		<item>
+			<name>PARKING BRAKE</name>
+			<value>Release</value>
+			<view>
+				<heading-offset-deg>338.0</heading-offset-deg>
+				<pitch-offset-deg>-51.5</pitch-offset-deg>
+				<roll-offset-deg>0.0</roll-offset-deg>
+				<x-offset-m>-0.3</x-offset-m>
+				<y-offset-m>0.1</y-offset-m>
+				<z-offset-m>-0.1</z-offset-m>
+				<field-of-view>90.0</field-of-view>
+			</view>
+			<marker>
+				<x-m>-0.4488</x-m>
+				<y-m>0.0000</y-m>
+				<z-m>-0.6512</z-m>
+				<scale>3.0000</scale>
+			</marker>
+			<condition>
+				<equals>
+				<property>controls/gear/brake-parking</property>
+				<value>0</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Parkingbrake off");
+				]]></script>
+			</binding>
+			<announce>PARKING BRAKE - Release check</announce>
+		</item>
+		<item>
+			<name>note</name>
+			<note>Rotation speed should be reduced linearly to 69 KIAS at</note>
+			<note>1900 kg (4190 lbs) and 66 KIAS at 1600 kg (3530 lbs) takeoff weight.</note>
+		</item>
+		<item>
+			<name>Aircraft</name>
+			<value> Under MTOW conditions rotate at 71 KIAS</value>
+			<announce>Aircraft - rotate check</announce>
+		</item>
 	</checklist>
 
 	<!-- 4.6.k After Takeoff Climb -->
 	<checklist>
 		<title>4.6.k After Takeoff Climb</title>
+		<item>
+			<name>LANDING GEAR</name>
+			<value>Check UP</value>
+			<condition>
+				<equals>
+				<property>/extra500/system/gear/MainGearSwitch/state</property>
+				<value>0</value>
+				</equals>
+			</condition>
+			
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Gear up");
+				]]></script>
+			</binding>
+			<announce>LANDING GEAR - up check</announce>
+		</item>
+		<item>
+			<name>FLAPS</name>
+			<value>Before reaching 120 KIAS UP</value>
+			<condition>
+				<equals>
+				<property>extra500/system/flap/Switch/state</property>
+				<value>1</value>
+				</equals>
+			</condition>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Flaps 0");
+				]]></script>
+			</binding>
+			<announce>FLAPS - up check</announce>
+		</item>
+		<item>
+			<name>Power Lever</name>
+			<value> Max Continuous Power (92 % Torque)</value>
+			<announce>Power Lever - Continuous Power check</announce>
+		</item>
+		<item>
+			<name>All Annunciator Panel Lights</name>
+			<value>Check extinguished</value>
+			<announce>Annunciator Lights - extinguished check</announce>
+		</item>
+		<item>
+			<name>note</name>
+			<note>Recommended cruise climb speed is 120 KIAS while</note>
+			<note>maximum climb speed is 110 KIAS.</note>
+		</item>
+		<item>
+			<name>Engine Instruments</name>
+			<value>Check continuously</value>
+			<announce>Engine Instruments - continuously check</announce>
+		</item>
+		<item>
+			<name>Pressure Controller</name>
+			<value>Set to cruise level</value>
+			<announce>Pressure Controller - cruise level check</announce>
+		</item>
+		<item>
+			<name>FUEL PUMP 1 or 2</name>
+			<value>OFF (Leave one ON)</value>
+			<announce>FUEL PUMP - check</announce>
+		</item>
+		<item>
+			<name>ENGINE START</name>
+			<value> Set as required</value>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Engine Start off");
+				]]></script>
+			</binding>
+			
+			<announce>ENGINE START - required check</announce>
+		</item>
+		<item>
+			<name>RECO</name>
+			<value>OFF</value>
+			<binding>
+				<command>nasal</command>
+				<script><![CDATA[
+					UI.click("Light Recognition off");
+				]]></script>
+			</binding>
+			<announce>RECO - OFF check</announce>
+		</item>
+		<item>
+			<name>Air Conditioning</name>
+			<value> As required</value>
+			<announce>Air Conditioning - required check</announce>
+		</item>
+		
 	</checklist>
 
 	<!-- 4.6.l Cruise -->
 	<checklist>
 		<title>4.6.l Cruise</title>
+		<item>
+			<name>Cruising Speed</name>
+			<value>Set as required</value>
+			<announce>Cruising Speed - required check</announce>
+		</item>
+		<item>
+			<name>Engine Instruments</name>
+			<value>Monitor</value>
+			<announce>Engine Instruments - Monitor check</announce>
+		</item>
+		<item>
+			<name>Flight Instruments</name>
+			<value>Monitor</value>
+			<announce>Flight Instruments - Monitor check</announce>
+		</item>
+		<item>
+			<name>note</name>
+			<note>Maximum allowed fuel unbalance is 106 l(28 U.S. Gallons).</note>
+		</item>
+		<item>
+			<name>Fuel Tank Feedings</name>
+			<value> Monitor, set as required</value>
+			<announce>Fuel Tank Feedings - check</announce>
+		</item>
+
 	</checklist>
 
 	<!-- 4.6.m Descent/Approach -->

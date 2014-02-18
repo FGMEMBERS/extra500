@@ -16,38 +16,58 @@
 #      Authors: Dirk Dittmann
 #      Date: Jul 02 2013
 #
-#      Last change:      Eric van den Berg
+#      Last change:      Dirk Dittmann
 #      Date:             29.09.13
 #
 
-	var onClickupperdoor = func(){
-		var doorstate = getprop("/extra500/door/upperpass/state");
-		if (doorstate == 0) {
-			setprop("/extra500/door/upperpass/state",1);
-		} else if (doorstate == 1) {
-			setprop("/extra500/door/upperpass/state",0);
+	var onClickUpperDoor = func(value = nil){
+		var doorState = getprop("/extra500/door/upperpass/state");
+		if (value == nil) {
+			setprop("/extra500/door/upperpass/state",!doorState);
+		} else if (doorState == 1) {
+			setprop("/extra500/door/upperpass/state",value);
 		}
 	}
 
-	var onClicklowerdoor = func(){
-		var doorstatelower = getprop("/extra500/door/lowerpass/state");
-		var doorstateupper = getprop("/extra500/door/upperpass/state");
-		if ( (doorstatelower == 0) and (doorstateupper !=0) ) {
-			setprop("/extra500/door/lowerpass/state",1);
-		} else if ( (doorstatelower == 1) and (doorstateupper != 0) ) {
-			setprop("/extra500/door/lowerpass/state",0);
+	var onClickLowerDoor = func(value = nil){
+		var doorStateLower = getprop("/extra500/door/lowerpass/state");
+		var doorStateUpper = getprop("/extra500/door/upperpass/state");
+		
+		var state = 0;
+		
+		if ( (doorStateLower == 0) and (doorStateUpper !=0) ) {
+# 			setprop("/extra500/door/lowerpass/state",1);
+			state = 1;
+		} else if ( (doorStateLower == 1) and (doorStateUpper != 0) ) {
+# 			setprop("/extra500/door/lowerpass/state",0);
+			state = 0;
+		}
+		
+		if (value == nil) {
+			setprop("/extra500/door/lowerpass/state",!doorStateLower and doorStateUpper);
+		}else{
+			setprop("/extra500/door/lowerpass/state",value and doorStateUpper  );
 		}
 	}
 
-	var onClickemergencyexit = func(){
-		var doorstate = getprop("/extra500/door/emergencyexit/state");
-		if (doorstate == 0) {
-			setprop("/extra500/door/emergencyexit/state",1);
-		} else if (doorstate == 1)  {
-			setprop("/extra500/door/emergencyexit/state",0);
+	var onClickEmergencyExit = func(value = nil){
+		var doorState = getprop("/extra500/door/emergencyexit/state");
+		
+		if (value == nil){
+			setprop("/extra500/door/emergencyexit/state",!doorState);
+		}else{
+			setprop("/extra500/door/emergencyexit/state",value);
 		}
 	}
 
-UI.register("upper door toggle", 		func{extra500.onClickupperdoor(); } 	);
-UI.register("lower door toggle", 		func{extra500.onClicklowerdoor(); } 	);
-UI.register("emergency exit", 		func{extra500.onClickemergencyexit(); } 	);
+UI.register("door upper", 		func{extra500.onClickUpperDoor(); } 	);
+UI.register("door upper open", 		func{extra500.onClickUpperDoor(1); } 	);
+UI.register("door upper close", 	func{extra500.onClickUpperDoor(0); } 	);
+
+UI.register("door lower", 		func{extra500.onClickLowerDoor(); } 	);
+UI.register("door lower open", 		func{extra500.onClickLowerDoor(1); } 	);
+UI.register("door lower close", 	func{extra500.onClickLowerDoor(0); } 	);
+
+UI.register("emergency exit", 		func{extra500.onClickEmergencyExit(); } );
+UI.register("emergency exit open", 	func{extra500.onClickEmergencyExit(1); });
+UI.register("emergency exit close", 	func{extra500.onClickEmergencyExit(0); });
