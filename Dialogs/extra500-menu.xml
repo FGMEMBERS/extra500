@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Dirk Dittmann
-      Date:             11.02.14
+      Last change:      Eric van den Berg
+      Date:             25.02.14
 -->
 
 <PropertyList>
@@ -39,6 +39,14 @@
 					<script><![CDATA[
 						aircraft.livery.dialog.open();
 					]]></script>
+				</binding>
+			</item>
+			<item>
+				<name>events-toggle</name>
+				<label>Toggle Messages</label>
+				<binding>
+					<command>property-toggle</command>
+					<property>/fdm/jsbsim/aircraft/events/show-events</property>
 				</binding>
 			</item>
 		       <item>
@@ -92,16 +100,7 @@
 			       </binding>
 			</item>
 
-<!-- nur bis der rumpf fertig modelliert ist -->
-		<!--item>
-			<name>frametest</name>
-			<label>Toggle Frame</label>
-			<binding>
-			<command>property-toggle</command>
-			<property>extra500/debug/framechange</property>
-			</binding>
-		</item-->
-		
+	
 		</menu>
   </default>
 

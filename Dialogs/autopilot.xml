@@ -753,8 +753,7 @@
 				<checkbox>
 					<label>CWS</label>
 					<halign>center</halign>
-					<property>/extra500/instrumentation/autopilot/CWS/state</property>
-					
+					<property>/extra500/instrumentation/autopilot/CWS/state</property>					
 					<binding>
 						<command>nasal</command>
 						<script>

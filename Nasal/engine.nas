@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jun 26 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             26.06.13
+#      Last change:      Eric van den Berg
+#      Date:             25.02.14
 #
 var IgnitionClass = {
 	new : func(root,name,watt=45.0){
@@ -130,20 +130,12 @@ var EngineClass = {
 		]};
 		
 		m.nIsRunning		= props.globals.initNode("/fdm/jsbsim/propulsion/engine/set-running",0,"BOOL");
-		m.nTRQ			= props.globals.initNode("/fdm/jsbsim/aircraft/engine/TRQ-perc",0.0,"DOUBLE");
-		m.nOilPress		= props.globals.initNode("/fdm/jsbsim/aircraft/engine/OP-psi",0.0,"DOUBLE");
-		m.nFuelPress 		= props.globals.initNode("/fdm/jsbsim/aircraft/engine/FP-psi",0.0,"DOUBLE");
-		
 		m._nN1			= props.globals.initNode("/engines/engine[0]/n1");
 		
 		m.nCutOff		= props.globals.initNode("/controls/engines/engine[0]/cutoff",0,"BOOL");
 		m.nReverser		= props.globals.initNode("/controls/engines/engine[0]/reverser",0,"BOOL");
 		m.nThrottle		= props.globals.initNode("/controls/engines/engine[0]/throttle",0.0,"DOUBLE");
 		
-		m.nLowTorquePress	= m._nRoot.initNode("lowTorquePressure",0,"BOOL");
-		m.nLowOilPress		= m._nRoot.initNode("lowOilPressure",0,"BOOL");
-		m.nLowFuelPress		= m._nRoot.initNode("lowFuelPressure",0,"BOOL");
-		m.nLowPitch		= m._nRoot.initNode("lowPitch",0,"BOOL");
 		m.nChip			= m._nRoot.initNode("defectChip",0,"BOOL"); 
 		
 		m.nCutOffState		= m._nRoot.initNode("cutoff",1,"BOOL");
@@ -189,7 +181,14 @@ var EngineClass = {
 			}else{
 				if (eSystem.switch.EngineStart._state >= 0){
 					me.ignition.on();
-					me.nCutOff.setValue(me._cutoffState);
+					if (getprop("/fdm/jsbsim/aircraft/engine/N1-par") < 15) {
+						me.nCutOff.setValue(me._cutoffState);
+					} else {
+						me.nCutOff.setValue(1);
+						if ( getprop("/fdm/jsbsim/aircraft/events/show-events") == 1 ) {
+							UI.msg.info("If N1 is above 15%, no light-off will take place!");
+						}
+					}
 					if (eSystem.switch.EngineStart._state == 1){
 						me.starter.on();
 					}
@@ -244,6 +243,12 @@ var EngineClass = {
 		};
 		eSystem.switch.EngineOverSpeed.onStateChange = func(n){
 			me._state = n.getValue();
+			if(me._state == 1){
+				setprop("/fdm/jsbsim/propulsion/engine/constant-speed-mode",0);
+				setprop("/fdm/jsbsim/propulsion/engine/blade-angle",5.0);
+			} else {
+				setprop("/fdm/jsbsim/propulsion/engine/constant-speed-mode",1);
+			}
 		};
 		
 		
@@ -263,34 +268,7 @@ var EngineClass = {
 		eSystem._PreBatteryBus.outputAdd(me.starter);
 		
 		me._checkIgnitionCutoff();
-		me._timerLoop = maketimer(1.0,me,EngineClass.update);
-		me._timerLoop.start();
 	},
-	update : func(){
-		if(me.nFuelPress.getValue() < 1.5){
-			me.nLowFuelPress.setValue(1);
-		}else{
-			me.nLowFuelPress.setValue(0);
-		}
-		
-		if (me.nThrottle.getValue() >= 0.05 and me.nReverser.getValue() == 1){
-			me.nLowPitch.setValue(1);
-		}else{
-			me.nLowPitch.setValue(0);
-		}
-				
-		if(me.nTRQ.getValue() < 35.0){
-			me.nLowTorquePress.setValue(1);
-		}else{
-			me.nLowTorquePress.setValue(0);
-		}
-		
-		if (me.nOilPress.getValue() < 35.0){
-			me.nLowOilPress.setValue(1);
-		}else{
-			me.nLowOilPress.setValue(0);
-		}
-	}
 };
 
 var engine = EngineClass.new("/extra500/engine","RR 250-B17F2");

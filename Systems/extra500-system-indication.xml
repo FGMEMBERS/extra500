@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2014-02-09
+      Date:             2014-02-25
 -->
 
 <system name="indication">
@@ -36,6 +36,16 @@
 				/engines/engine[0]/n1 lt 55
 			</test>
 			<output>/controls/engines/engine[0]/propeller-feather</output>
+		</switch>
+
+		<!-- for annunciator panel -->
+		<switch name="lowpitch">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/engines/engine[0]/reverser eq 1
+				/controls/engines/engine[0]/throttle ge 0.05
+			</test>
+			<output>/extra500/engine/lowPitch</output>
 		</switch>
 
 <!-- setting motoring property: starter on, but cutoff also on (no fuel,no ignition)	-->
@@ -298,6 +308,15 @@
     			</function>
 		</fcs_function>
 
+		<!-- for annunciator panel -->
+		<switch name="TRQ35lower">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/engine/TRQ-perc lt 35
+			</test>
+			<output>/extra500/engine/lowTorquePressure</output>
+		</switch>
+
 	<!-- these are properties used for messages -->
 		<switch name="TRQ111limitevent">
 			<default value="0"/>
@@ -500,6 +519,15 @@
     			</function>
 		</fcs_function>
 
+		<!-- for annunciator panel -->
+		<switch name="OP35lower">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/engine/OP-psi lt 35
+			</test>
+			<output>/extra500/engine/lowOilPressure</output>
+		</switch>
+
 		<switch name="OP130limitevent">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -558,7 +586,7 @@
 <!--N2 (prop RPM) -->
 		<fcs_function name="aircraft/engine/n2">
    			 <function>
-     			  <description>Indicated Oil Pressure</description>
+     			  <description>Indicated N2</description>
 				<product>
 					<property>/extra500/instrumentation/EIP/state</property>   <!--to make sure pointer is at 0 when unit is off -->
 					<property>propulsion/engine/propeller-rpm</property>
@@ -851,6 +879,16 @@
  			<input>aircraft/engine/FPtarget-psi</input>
 			<c1>1.0</c1>
 		</lag_filter>
+
+		<!-- for annunciator panel -->
+		<switch name="lowfuelpress">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/engine/FP-psi lt 1.5
+			</test>
+			<output>/extra500/engine/lowFuelPressure</output>
+		</switch>
+
 	</channel>
 
 	<channel name="TOT">
