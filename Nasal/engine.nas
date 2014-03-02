@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             25.02.14
+#      Date:             01.03.14
 #
 var IgnitionClass = {
 	new : func(root,name,watt=45.0){
@@ -145,8 +145,6 @@ var EngineClass = {
 		m.ignition = IgnitionClass.new("/extra500/engine/ignition","Ignition",45.0);
 		m.starter  = StarterClass.new("/extra500/engine/starter","Starter",24000.0);
 		
-		
-		
 		m.dt = 0;
 		m.now = systime();
 		m._lastTime = 0;
@@ -166,7 +164,6 @@ var EngineClass = {
 						
 			if (eSystem.switch.EngineMotoring._state >= 0){
 				me.ignition.off();
-				
 			}
 			
 		}else{
@@ -193,10 +190,8 @@ var EngineClass = {
 						me.starter.on();
 					}
 				}else{
-					
 					me.ignition.off();
 					me.nCutOff.setValue(1);
-					
 				}
 			}
 			
@@ -223,7 +218,6 @@ var EngineClass = {
 			}
 		}
 	},
-
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
 		me.parents[1].init(instance);
@@ -269,6 +263,7 @@ var EngineClass = {
 		
 		me._checkIgnitionCutoff();
 	},
+
 };
 
 var engine = EngineClass.new("/extra500/engine","RR 250-B17F2");

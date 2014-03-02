@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             16.02.2014
+      Date:             02.03.2014
 
 
 ************************************************************************
@@ -1346,6 +1346,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<JETA_LBGAL type="double">6.7898</JETA_LBGAL>
 		<JETA_LB2L type="double">0.557518</JETA_LB2L>	
 		<PSI2INHG type="double">2.03602</PSI2INHG>
+		<PA2PSI type="double">0.0001450377</PA2PSI>
 		<SEC2MIN type="double">0.0166666666667</SEC2MIN>
 		<G0 type="double">9.80665</G0>		
 	</const>
@@ -1613,7 +1614,8 @@ JSBSim Extra Aircraft - Extra 500.
 				<spooling-down type="double">0</spooling-down>
 				<N1-old type="double">0.0</N1-old>					<!--dummy value -->
 				<N1-par type="double">0.0</N1-par>					<!--dummy value -->
-				<TOT-target-degC>0.0</TOT-target-degC>					<!--dummy value -->
+				<TOT-target-degC>0.0</TOT-target-degC>				<!--dummy value -->
+				<Fpress-too-low>0</Fpress-too-low>					<!--dummy value -->
 		 	</engine>
 			<events>
 				<show-events type="bool">1</show-events>				<!--set to 0 if you are fed up with those stupid messages -->

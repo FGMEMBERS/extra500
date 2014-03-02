@@ -17,7 +17,7 @@
 #      Date: Jun 27 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             04.02.14
+#      Date:             01.03.14
 #
 
 var DigitalInstrumentPackageClass = {
@@ -91,14 +91,8 @@ var DigitalInstrumentPackageClass = {
 		me._dt 		= me._now - me._lastTime;
 		me._lastTime	= me._now;
 		
-		
-		#me.nIndicatedGEN.setValue(eSystem._ampere + 0.5);
-		#me.nIndicatedBAT.setValue(eSystem._ampere + 0.5);
-		
-# 		me.nIndicatedFuelPress.setValue(me.nFuelPress.getValue() + 0.5);
-# 		me.nIndicatedFuelTemp.setValue(me.nFuelTemp.getValue() + 0.5);
-		interpolate(me.nIndicatedFuelPress ,me.nFuelPress.getValue()+ 0.5,me._dt);
-		interpolate(me.nIndicatedFuelTemp ,math.abs(me.nFuelTemp.getValue()+ 0.5* math.sgn(me.nIAT.getValue())),me._dt);
+		interpolate(me.nIndicatedFuelPress ,global.clamp(me.nFuelPress.getValue(),0,50)+ 0.5,me._dt);
+		interpolate(me.nIndicatedFuelTemp ,math.abs(me.nFuelTemp.getValue()+ 0.5* math.sgn(me.nFuelTemp.getValue())),me._dt);
 		
 		me.nIndicatedIAT.setValue(math.abs(me.nIAT.getValue() + 0.5 * math.sgn(me.nIAT.getValue())));
 		

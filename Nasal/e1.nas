@@ -53,14 +53,14 @@ var bitadd = func (bit_name1,bit_name2,bit_name3)
 	}
 
 # for manual engine start and shutdown. Called in keyboard.xml, Ctrl-C
-var cutoff = func()
-	{
-		var isRunning = getprop("/fdm/jsbsim/propulsion/engine/set-running");
-		if (isRunning){
-			setprop("controls/engines/engine[0]/cutoff", 1);
-			setprop("/controls/engines/engine[0]/propeller-feather",1);		# FIXME: should be set to 1 when N1 drops below ~55%
-		}else{
-			e1.bitswap("controls/engines/engine[0]/cutoff");
-			setprop("/controls/engines/engine[0]/propeller-feather",0);		# set to true in -set file for initial condition, FIXME: should be set to 0 when N1>~55%
-		}
-	}
+#var cutoff = func()
+#	{
+#		var isRunning = getprop("/fdm/jsbsim/propulsion/engine/set-running");
+#		if (isRunning){
+#			setprop("controls/engines/engine[0]/cutoff", 1);
+#			setprop("/controls/engines/engine[0]/propeller-feather",1);		# FIXME: should be set to 1 when N1 drops below ~55%
+#		}else{
+#			e1.bitswap("controls/engines/engine[0]/cutoff");
+#			setprop("/controls/engines/engine[0]/propeller-feather",0);		# set to true in -set file for initial condition, FIXME: should be set to 0 when N1>~55%
+#		}
+#	}

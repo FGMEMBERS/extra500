@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             27.09.13
+#      Date:             02.03.14
 #
 
 # Fuel Flow Gal(US)/sec
@@ -315,7 +315,7 @@ var FuelSystemClass = {
 		
 		me._fuelFlowAmount = me._fuelFlowGalUsPerSec * me._dt;
 		
-		if ((me._selectValve == 0) or (me._selectValve == 4)){	#none
+		if ((me._selectValve == 0) or (me._selectValve == 4) or (getprop("/fdm/jsbsim/aircraft/engine/Fpress-too-low") == 1) or (getprop("/accelerations/n-z-cg-fps_sec") > 0)){	#none
 			me._empty = 1;
 		}elsif(me._selectValve == 1){ # Left
 			if (me._tank.LeftCollector.flow(me._fuelFlowAmount) >  0){

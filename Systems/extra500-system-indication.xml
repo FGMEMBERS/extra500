@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2014-02-25
+      Date:             2014-03-02
 -->
 
 <system name="indication">
@@ -270,6 +270,7 @@
 				/extra500/system/fuel/SelectValve eq 0
 				/extra500/system/fuel/SelectValve eq 4
 				/controls/engines/engine[0]/condition-lever-norm lt 0.1
+				aircraft/engine/Fpress-too-low eq 1
 			</test>
 			<output>aircraft/engine/FF-lbs_h</output>
 		</switch>
@@ -844,39 +845,145 @@
 		</switch>
 
 <!--FUEL PRESS -->
-		<fcs_function name="aircraft/engine/FPtarget-psi">
+
+		<fcs_function name="aircraft/engine/Fdensity-kgm3">
    			 <function>
-      			 <description>Indicated Fuel Pressure</description>
+      			 <description>Fuel Density</description>
+					<table>
+            				<independentVar lookup="row">aircraft/engine/FT-degC</independentVar>
+            					<tableData>
+								-40	841
+								90	750	
+            					</tableData>
+      				</table>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/Fvis-m2ps">
+   			 <function>
+      			 <description>Fuel kinematic visc</description>
+					<table>
+            				<independentVar lookup="row">aircraft/engine/FT-degC</independentVar>
+            					<tableData>
+								-50	0.0000125
+								150	0.000000406
+            					</tableData>
+      				</table>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/F-RE">
+   			 <function>
+      			 <description>Fuel Reynolds number</description>
+	 				<product>
+						<value>0.00223864522485714</value>
+						<pow>
+							<property>aircraft/engine/Fvis-m2ps</property>
+							<value>-1</value>
+						</pow>
+					</product>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/F-lambda">
+   			 <function>
+      			 <description>Fuel lambda laminar</description>
+	 				<product>
+						<value>64</value>
+						<pow>
+							<property>aircraft/engine/F-RE</property>
+							<value>-1</value>
+						</pow>
+					</product>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/F-pressloss-psid">
+   			 <function>
+      			 <description>Fuel pressure loss</description>
+	 				<product>
+						<property>/extra500/const/PA2PSI</property>
+						<value>-0.00372</value>
+						<property>aircraft/engine/F-lambda</property>
+						<property>aircraft/engine/Fdensity-kgm3</property>
+						<property>aircraft/engine/FF-l_h</property>
+						<property>aircraft/engine/FF-l_h</property>
+					</product>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/F-pumppress-psid">
+   			 <function>
+      			 <description>fuel pump Fuel Pressure</description>
 	 				<product>
 						<max>	
 							<property>/extra500/system/fuel/FuelPump1/state</property>
 							<property>/extra500/system/fuel/FuelPump2/state</property>
 						</max>
 						<table>
-            						<independentVar lookup="row">atmosphere/pressure-altitude</independentVar>
-							<independentVar lookup="column">aircraft/engine/FT-degC</independentVar>	
-            						<tableData>
-						-18	0	38	
-					-1000	22	21.5	21
-					9000	21	21	20.5
-					17500	21	20.5	20
-					20100	20.5	20	19.5
-					22000	20.5	19.5	19
-					22500	20.5	19	18.5
-					23100	20	18.5	18
-					23500	19	18	17.5
-					25000	18	16	15.5
-            						</tableData>
-      						</table>
+            					<independentVar lookup="row">atmosphere/pressure-altitude</independentVar>
+            					<tableData>
+								-1000	21.5	
+								9000	21	
+								17500	20.5	
+								20100	20	
+								22000	19.5	
+								22500	19	
+								23100	18.5	
+								23500	18	
+								25000	16	
+            					</tableData>
+      					</table>
 					</product>
    			 </function>
 		</fcs_function>
+
+		<fcs_function name="aircraft/engine/F-press-psig">
+   			 <function>
+      			 <description>Fuel pressure loss</description>
+	 				<sum>
+						<property>aircraft/engine/F-pumppress-psid</property>
+						<property>aircraft/engine/F-pressloss-psid</property>
+					</sum>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/FPmin-psig">
+   			 <function>
+      			 <description>minimum Fuel Pressure</description>
+					<table>
+            				<independentVar lookup="row">atmosphere/pressure-altitude</independentVar>
+            					<tableData>
+								0	-4.42
+								6000	-2.7
+								10000	-1.62
+								15000	-0.392
+								20000	0.737
+								25000	1.47
+            					</tableData>
+      				</table>
+   			 </function>
+		</fcs_function>
+
+		<switch name="toolowfuelpress">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND" value="1">
+					aircraft/engine/FPmin-psig gt aircraft/engine/F-press-psig
+				</test>
+				<test logic="AND" value="1">
+					aircraft/engine/Fpress-too-low eq 1
+					aircraft/engine/N1-par gt 10
+				</test>
+			</test>
+			<output>aircraft/engine/Fpress-too-low</output>
+		</switch>
 
 	</channel>
 
 	<channel name="fuel pressure">
 		<lag_filter name ="aircraft/engine/FP-psi">
- 			<input>aircraft/engine/FPtarget-psi</input>
+ 			<input>aircraft/engine/F-press-psig</input>
 			<c1>1.0</c1>
 		</lag_filter>
 
