@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2013-05-30
+      Date:             2014-03-03
 -->
 
 <aerodynamics>
@@ -78,7 +78,7 @@
 
     <function name="aircraft/vstab/u-local-fps">
      	<sum>
-             	<property>velocities/u-aero-fps</property>
+            <property>velocities/u-aero-fps</property>
 		<product>					<!-- induced speed due to propeller thrust -->
 			<value>0.4</value>
 			<property>propulsion/engine/prop-induced-velocity_fps</property>
@@ -147,10 +147,24 @@
       </table>
     </function>
 
+    <function name="aero/coefficients/cd_df">
+       <description>CD0 increment due to flap deflection</description>
+       <table>
+            <independentVar lookup="row">aero/coefficients/cl_ac-h</independentVar>
+            <independentVar lookup="column">fcs/flap-aero-pos-deg</independentVar>
+            <tableData>
+                        0 	15 		30
+                  -0.6	0	0.0151	0.05	
+			2.8	0	0.001		0.019		
+            </tableData>
+      </table>
+    </function>
+
     <function name="aero/coefficients/cd_ac-h">
        <description>CD of aircraft less tail</description>
 		<sum>
 			<property>aircraft/wing/cd0</property>
+			<property>aero/coefficients/cd_df</property>
             	<table>
                   	<independentVar lookup="row">aero/coefficients/cl_ac-h</independentVar>
                   	<tableData>
@@ -162,19 +176,19 @@
                   	-1.6   0.181
                   	-1.4   0.118
                   	-1.2   0.086
-			-1.0	 0.05
+				-1.0	 0.05
                   	-0.8   0.026
                   	-0.6   0.0155
-			-0.5	 0.0105
+				-0.5	 0.0105
                   	-0.4   0.008
                   	-0.2   0.0015
                   	0     0
                   	0.2   0.0015
                   	0.4   0.008
-			0.5	0.0105
+				0.5	0.0105
                   	0.6   0.0155
                   	0.8   0.026
-			1.0	0.05
+				1.0	0.05
                   	1.2   0.086
                   	1.4   0.118
                   	1.6   0.181
@@ -194,7 +208,10 @@
             <property>aero/coefficients/cd_ac-h</property>
 		<product>
             	<value>-1</value>
-			<property>aircraft/wing/cd0</property>
+			<sum>
+				<property>aircraft/wing/cd0</property>
+				<property>aero/coefficients/cd_df</property>
+			</sum>
 		</product>
       </sum>
     </function>
