@@ -17,13 +17,13 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             02.03.14
+#      Date:             03.03.14
 #
 
 # Fuel Flow Gal(US)/sec
 var FLOW_JETPUMP	= 0.503 / 60.0;		# 0.503 Gal/min
 var FLOW_COl2MAIN	= 1.585 / 3600.0;	# 6 L/Std
-var FLOW_MAIN2COL	= FLOW_JETPUMP * 4;
+var FLOW_MAIN2COL	= FLOW_JETPUMP * 50;
 
 var FuelTankClass = {
 	new : func(position,name,index,refuelable=1){
