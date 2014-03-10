@@ -397,7 +397,7 @@
     <function name="aircraft/wing/etha-deg">
       <description>downwash angle due to wing lift</description>
       <product>
-            <value>0.00574</value> 
+            <value>0.00637</value> 
             <property>aircraft/wing/alpha-deg</property> 
       </product>
       </function>
