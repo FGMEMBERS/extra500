@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2014-03-02
+      Date:             2014-03-10
 -->
 
 <system name="indication">
@@ -599,6 +599,7 @@
 		<fcs_function name="aircraft/engine/TOTr-degC">
     			<function>
        			<description>Indicated TOT when eng running</description>
+				<sum>
        				<table>
             				<independentVar lookup="row">atmosphere/rho-slugs_ft3</independentVar>
             				<independentVar lookup="column">aircraft/engine/TRQ-perc</independentVar>
@@ -610,6 +611,11 @@
 		0.0025224	550	570	590	600	605	610	640	710	795
             				</tableData>
       				</table>
+					<product>
+						<value>12</value>
+						<property>/extra500/panel/CenterConsole/Deice/state</property>
+					</product>
+				</sum>
     			</function>
 		</fcs_function>
 
@@ -799,7 +805,7 @@
 		<switch name="TOTinit">
 			<default value="atmosphere/T-degC"/>
 			<test value="aircraft/engine/TOT-targetsum-degC">
-				simulation/sim-time-sec gt 1
+				simulation/sim-time-sec gt 5
 			</test>
 			<output>aircraft/engine/TOT-target-degC</output>
 		</switch>
