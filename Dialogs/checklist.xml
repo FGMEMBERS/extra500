@@ -1,0 +1,803 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<name>checklist</name>
+	<layout>vbox</layout>
+	<x>-5</x>
+	<y>5</y>
+	<default-padding>1</default-padding>
+	<resizable>false</resizable>
+	
+	<color>
+		<red type="float">0.41</red>
+		<green type="float">0.4</green>
+		<blue type="float">0.42</blue>
+		<alpha type="float">1.0</alpha>
+		<alpha type="float">1.0</alpha>
+	</color>
+	<nasal>
+		<open><![CDATA[
+						
+						
+						
+			
+			var dlgRoot = cmdarg();
+			
+			var nChecklists			= props.globals.getNode("/sim/checklists", 1).getChildren("checklist");
+			
+			var groupMenu	 		= gui.findElementByName(dlgRoot, "groupMenu");
+			var groupConfig 		= gui.findElementByName(dlgRoot, "groupConfig");
+			var groupSelectCheckList	= gui.findElementByName(dlgRoot, "groupSelectCheckList");
+			var groupScreen		 	= gui.findElementByName(dlgRoot, "groupScreen");
+
+			var nSelectCheckListPerform 	= props.globals.initNode("/sim/gui/dialogs/checklist/SelectCheckList/perform",0,"BOOL");
+			var nSelectCheckListEnabled 	= props.globals.initNode("/sim/gui/dialogs/checklist/SelectCheckList/enabled",1,"BOOL");
+			var nSelectedCheckList 		= props.globals.initNode("/sim/gui/dialogs/checklist/SelectCheckList/selected","","STRING");
+			var nSelectedItemName 		= props.globals.initNode("/sim/gui/dialogs/checklist/SelectCheckList/selectedItemName","","STRING");
+			var nSelectedItemValue 		= props.globals.initNode("/sim/gui/dialogs/checklist/SelectCheckList/selectedItemValue","","STRING");
+			var nSelectedItemIndex	 	= props.globals.initNode("/sim/gui/dialogs/checklist/SelectCheckList/selectedItemIndex",-1,"INT");
+			var nSelectedString 		= props.globals.initNode("/sim/gui/dialogs/checklist/SelectCheckList/selectedString","","STRING");
+			var nConfigTransparent	 	= props.globals.initNode("/sim/gui/dialogs/checklist/config/transparent",0,"BOOL");
+			var nConfigEnabled 		= props.globals.initNode("/sim/gui/dialogs/checklist/config/enabled",0,"BOOL");
+			var nConfigMinimised 		= props.globals.initNode("/sim/gui/dialogs/checklist/config/minimised",0,"BOOL");
+			var nConfigImpatient 		= props.globals.initNode("/sim/gui/dialogs/checklist/config/impatient",0,"BOOL");
+			
+			props.globals.initNode("/sim/gui/dialogs/checklist/config/view",1,"BOOL");
+			props.globals.initNode("/sim/gui/dialogs/checklist/config/marker",1,"BOOL");
+			props.globals.initNode("/sim/gui/dialogs/checklist/config/announce",1,"BOOL");
+			
+			
+			var mapCheckList		= {};
+			var mapCheckListIndex 		= []; 
+			var indexItem 			= [];
+			var activeMarkerIndex 		= -1;
+			var listeners 			= [];
+			
+			var loop_wait_pre = 2;
+			var loop_wait_post = 3;
+			var loop_item_index = -1;
+			var loop_state = 0; # 0:begin, 1:pre, 2:call 3:next
+			var loop_running = 0;
+			
+			
+			var buildIndex = func(){
+				var idx = 0;
+				forindex (var idx; nChecklists) {
+					var checklist_name = nChecklists[idx].getNode("title", 1).getValue();
+					mapCheckList[checklist_name] = idx;
+				}
+				#debug.dump(mapCheckList);
+				mapCheckListIndex = sort(keys(mapCheckList),func (a,b) cmp (a, b));
+				
+				var strCheckList = nSelectedCheckList.getValue();	
+				if(contains(mapCheckList,strCheckList)){
+					idx = mapCheckList[strCheckList];
+				}else{
+					idx = 0;
+					nSelectedCheckList.setValue(nChecklists[idx].getNode("title", 1).getValue());
+				}
+				
+				var pages = nChecklists[idx].getChildren("page");
+				indexItem =     [];
+				var row = 0;
+				if(size(pages) > 0){
+					foreach (var page; pages) {
+						var items = page.getChildren("item");
+						foreach (var item ; items){
+							append(indexItem,item);
+						}
+					}
+				}else{
+					var items = nChecklists[idx].getChildren("item");
+					foreach (var item ; items){
+						append(indexItem,item);
+					}
+				}
+			};
+			
+			var drawTransparency = func(){
+				var alpha = nConfigTransparent.getValue();
+				
+				dlgRoot.getNode("color/alpha").setValue(1-alpha*0.3);
+				dlgRoot.getNode("color/red").setValue(0.41-alpha*0.2);
+				dlgRoot.getNode("color/green").setValue(0.4-alpha*0.2);
+				dlgRoot.getNode("color/blue").setValue(0.42-alpha*0.2);
+					
+			};
+			var drawMenu = func(){
+				groupMenu.removeChildren("group");
+				
+				var i 		= nil; 
+				var binding 	= nil;
+				var font 	= nil;
+				var group 	= groupMenu.addChild("group");
+				group.addChild("layout").setValue("hbox");
+				
+				if (!nConfigMinimised.getValue()){
+					i = group.addChild("checkbox");
+					i.addChild("label").setValue("List");
+					i.addChild("pref-width").setValue(100);
+					i.addChild("property").setValue("/sim/gui/dialogs/checklist/SelectCheckList/enabled");
+					i.addChild("live").setValue(1);
+					binding = i.addChild("binding");
+					binding.addChild("command").setValue("dialog-apply");
+					binding = i.addChild("binding");
+					binding.addChild("command").setValue("nasal");
+					binding.addChild("script").setValue("redraw();");
+				}
+								
+				i = group.addChild("text");
+				i.addChild("label").setValue("Aircraft Checklists");
+				
+				i = group.addChild("empty");
+				i.addChild("stretch").setValue(1);
+				
+				i = group.addChild("button");
+				i.addChild("pref-height").setValue(16);
+				font = i.addChild("font");
+				font.addChild("name").setValue("FIXED_9x15");
+				font.addChild("size").setValue(10);
+				i.addChild("legend").setValue("config");
+				i.addChild("property").setValue("/sim/gui/dialogs/checklist/config/enabled");
+				i.addChild("live").setValue("true");
+				binding = i.addChild("binding");
+				binding.addChild("command").setValue("property-toggle");
+				binding.addChild("property").setValue("/sim/gui/dialogs/checklist/config/enabled");
+				binding = i.addChild("binding");
+				binding.addChild("command").setValue("nasal");
+				binding.addChild("script").setValue("redraw();");
+				
+				i = group.addChild("button");
+				i.addChild("pref-height").setValue(16);
+				i.addChild("pref-width").setValue(16);
+				font = i.addChild("font");
+				font.addChild("name").setValue("FIXED_9x15");
+				font.addChild("size").setValue(10);
+				i.addChild("legend").setValue("_");
+				i.addChild("property").setValue("/sim/gui/dialogs/checklist/config/minimised");
+				i.addChild("live").setValue("true");
+				binding = i.addChild("binding");
+				binding.addChild("command").setValue("dialog-apply");
+				binding = i.addChild("binding");
+				binding.addChild("command").setValue("nasal");
+				binding.addChild("script").setValue("redraw();");
+				
+				
+				i = group.addChild("button");
+				i.addChild("pref-height").setValue(16);
+				i.addChild("pref-width").setValue(16);
+				font = i.addChild("font");
+				font.addChild("name").setValue("FIXED_9x15");
+				font.addChild("size").setValue(10);
+				i.addChild("legend").setValue("X");
+				i.addChild("keynum").setValue(27);
+				binding = i.addChild("binding");
+				binding.addChild("command").setValue("nasal");
+				binding.addChild("script").setValue("resetAll();");
+				binding = i.addChild("binding");
+				binding.addChild("command").setValue("dialog-close");
+				
+				
+				
+			};
+			
+			var drawSelectCheckList = func(){
+				var enabled = nSelectCheckListEnabled.getValue();
+				groupSelectCheckList.removeChildren("group");
+				if(enabled){
+					
+					var group = groupSelectCheckList.addChild("group");
+					group.addChild("layout").setValue("vbox");
+					group.addChild("pref-width").setValue("350");
+					
+					var list = group.addChild("list");
+					
+					list.addChild("name").setValue("SelectCheckList");
+					list.addChild("property").setValue("/sim/gui/dialogs/checklist/SelectCheckList/selected");
+					list.addChild("pref-height").setValue(400);
+# 					list.addChild("editable").setValue("false");
+					list.addChild("live").setValue("true");
+					list.addChild("halign").setValue("fill");
+					list.addChild("valign").setValue("fill");
+					
+					var binding = nil;
+					
+					binding = list.addChild("binding");
+					binding.addChild("command").setValue("dialog-apply");
+					binding.addChild("object-name").setValue("SelectCheckList");
+					
+					binding = list.addChild("binding");
+					binding.addChild("command").setValue("nasal");
+					binding.addChild("script").setValue("redraw();");
+			
+					foreach (var name; mapCheckListIndex) {
+						list.addChild("value").setValue(name);
+					}
+					
+				}
+			};
+						
+			var drawComboCheckList = func(){
+			
+				groupSelectCheckList.removeChildren("group");
+				
+				var group = groupSelectCheckList.addChild("group");
+				group.addChild("layout").setValue("vbox");
+				group.addChild("pref-width").setValue("350");
+				
+				var list = group.addChild("combo");
+				
+				list.addChild("name").setValue("SelectCheckList");
+				list.addChild("property").setValue("/sim/gui/dialogs/checklist/SelectCheckList/selected");
+# 				list.addChild("editable").setValue("false");
+				list.addChild("live").setValue("true");
+				list.addChild("halign").setValue("fill");
+				list.addChild("valign").setValue("fill");
+				
+				var binding = nil;
+				
+				binding = list.addChild("binding");
+				binding.addChild("command").setValue("dialog-apply");
+				binding.addChild("object-name").setValue("SelectCheckList");
+				
+				binding = list.addChild("binding");
+				binding.addChild("command").setValue("nasal");
+				binding.addChild("script").setValue("redraw();");
+				
+				foreach (var name; mapCheckListIndex) {
+					list.addChild("value").setValue(name);
+				}
+				
+			};
+			
+			var drawConfig = func(){
+				var enabled = nConfigEnabled.getValue();
+				
+				groupConfig.removeChildren("group");
+				
+				if(enabled){
+															
+					var vbox = groupConfig.addChild("group");
+					
+					vbox.addChild("layout").setValue("vbox");
+					
+					
+					var group = vbox.addChild("group");
+					group.addChild("layout").setValue("hbox");
+					
+					var c = nil;
+					
+					c = group.addChild("checkbox");
+					c.addChild("label").setValue("move view");
+					c.addChild("live").setValue("true");
+					c.addChild("property").setValue("/sim/gui/dialogs/checklist/config/view");
+					c.addChild("binding").addChild("command").setValue("dialog-apply");
+					
+					c = group.addChild("checkbox");
+					c.addChild("label").setValue("show marker");
+					c.addChild("live").setValue("true");
+					c.addChild("property").setValue("/sim/gui/dialogs/checklist/config/marker");
+					c.addChild("binding").addChild("command").setValue("dialog-apply");
+					
+					c = group.addChild("checkbox");
+					c.addChild("label").setValue("announce");
+					c.addChild("live").setValue("true");
+					c.addChild("property").setValue("/sim/gui/dialogs/checklist/config/announce");
+					c.addChild("binding").addChild("command").setValue("dialog-apply");
+					
+					c = group.addChild("checkbox");
+					c.addChild("label").setValue("transparent");
+					c.addChild("live").setValue("true");
+					c.addChild("property").setValue("/sim/gui/dialogs/checklist/config/transparent");
+					c.addChild("binding").addChild("command").setValue("dialog-apply");
+					
+					var binding = c.addChild("binding");
+					binding.addChild("command").setValue("nasal");
+					binding.addChild("script").setValue("redraw();");
+					
+					c = group.addChild("checkbox");
+					c.addChild("label").setValue("impatient");
+					c.addChild("live").setValue("true");
+					c.addChild("property").setValue("/sim/gui/dialogs/checklist/config/impatient");
+					c.addChild("binding").addChild("command").setValue("dialog-apply");
+					
+					vbox.addChild("hrule");
+					
+				}
+			};
+			
+			var drawScreen = func(){
+				
+				groupScreen.removeChildren("group");
+				
+				var vbox = groupScreen.addChild("group");
+				vbox.addChild("layout").setValue("vbox");
+				
+				var table = vbox.addChild("group");
+				table.addChild("layout").setValue("table");
+				
+				var td = table.addChild("text");
+				td.addChild("row").setValue(0);
+				td.addChild("col").setValue(0);
+				td.addChild("colspan").setValue(3);
+				td.addChild("halign").setValue("left");
+				td.addChild("property").setValue("/sim/gui/dialogs/checklist/SelectCheckList/selected");
+				td.addChild("live").setValue(1);
+				var font = td.addChild("font");
+				font.addChild("name").setValue("SANS_12B");
+				font.addChild("size").setValue(12);
+				
+				var td = table.addChild("button");
+				td.addChild("row").setValue(0);
+				td.addChild("col").setValue(3);
+				td.addChild("pref-height").setValue(24);
+				td.addChild("pref-width").setValue(24);
+				td.addChild("halign").setValue("right");
+				td.addChild("legend").setValue(">");
+				td.addChild("property").setValue("/sim/gui/dialogs/checklist/SelectCheckList/perform");
+				td.addChild("live").setValue("true");
+				var font = td.addChild("font");
+				font.addChild("name").setValue("FIXED_9x15");
+				font.addChild("size").setValue(12);
+				var binding = td.addChild("binding");
+				binding.addChild("command").setValue("property-toggle");
+				binding.addChild("property").setValue("/sim/gui/dialogs/checklist/SelectCheckList/perform");
+				binding = td.addChild("binding");
+				binding.addChild("command").setValue("nasal");
+				binding.addChild("script").setValue("loopStartStop();");
+				
+				vbox.addChild("hrule");
+				
+				table = vbox.addChild("group");
+				table.addChild("layout").setValue("table");
+				table.addChild("default-padding").setValue(4);
+				table.addChild("padding").setValue(4);
+				table.addChild("valign").setValue("fill");
+				
+				var row = 0;
+				foreach (var item; indexItem){
+					parseItem(table,item,row);
+					row += 1;
+				}
+				
+				
+				vbox.addChild("empty").addChild("stretch").setValue(1);
+			};
+			
+			var drawScreenMinimised = func(){
+				groupScreen.removeChildren("group");
+				
+				var vbox = groupScreen.addChild("group");
+				vbox.addChild("layout").setValue("vbox");
+				
+				var table = vbox.addChild("group");
+				table.addChild("layout").setValue("table");
+				table.addChild("halign").setValue("fill");
+				table.addChild("valign").setValue("fill");
+					
+				var td = table.addChild("button");
+				td.addChild("row").setValue(0);
+				td.addChild("col").setValue(0);
+				td.addChild("halign").setValue("left");
+				td.addChild("pref-height").setValue(24);
+				td.addChild("pref-width").setValue(24);
+				td.addChild("legend").setValue(">");
+				td.addChild("property").setValue("/sim/gui/dialogs/checklist/SelectCheckList/perform");
+				td.addChild("live").setValue(1);
+				td.addChild("default").setValue(1);
+				var font = td.addChild("font");
+				font.addChild("name").setValue("FIXED_9x15");
+				font.addChild("size").setValue(12);
+				var binding = td.addChild("binding");
+				binding.addChild("command").setValue("property-toggle");
+				binding.addChild("property").setValue("/sim/gui/dialogs/checklist/SelectCheckList/perform");
+				binding = td.addChild("binding");
+				binding.addChild("command").setValue("nasal");
+				binding.addChild("script").setValue("loopStartStop();");
+				
+				var td = table.addChild("text");
+				td.addChild("row").setValue(0);
+				td.addChild("col").setValue(1);
+				td.addChild("colspan").setValue(3);
+				td.addChild("pref-width").setValue(350);
+				td.addChild("halign").setValue("left");
+				td.addChild("property").setValue("/sim/gui/dialogs/checklist/SelectCheckList/selectedString");
+				td.addChild("live").setValue(1);
+
+		
+				
+			};
+			
+			var parseItem = func(table,item,row){
+				var td 		= nil;		
+				var value 	= nil;
+				var tag 	= nil;
+				
+				td = table.addChild("text");
+				td.addChild("label").setValue(">");
+				td.addChild("row").setValue(row);
+				td.addChild("col").setValue(0);
+				td.addChild("halign").setValue("left");
+				td.addChild("live").setValue("true");
+				
+				var vis = td.addChild("visible");
+# 				vis = vis.addChild("condition");
+				vis = vis.addChild("equals");
+				vis.addChild("property").setValue("sim/gui/dialogs/checklist/SelectCheckList/selectedItemIndex");
+				vis.addChild("value").setIntValue(row);
+				
+				
+				
+				tag = item.getChildren("note");
+				if(size(tag) > 0){
+					td = table.addChild("frame");
+					td.addChild("layout").setValue("vbox");
+					td.addChild("border").setValue(5);
+					
+					td.addChild("row").setValue(row);
+					td.addChild("col").setValue(1);
+					td.addChild("colspan").setValue(4);
+					td.addChild("halign").setValue("fill");
+					td.addChild("valign").setValue("fill");
+					td.addChild("padding").setValue(4);
+					
+					foreach(var note ;tag){
+						value = note.getValue("");
+						var tb = td.addChild("text");
+						tb.addChild("label").setValue(value);
+						tb.addChild("halign").setValue("center");
+						tb.addChild("padding").setValue(4);
+				
+					}
+
+				}else{
+					tag = item.getNode("name");
+					if(tag!=nil){
+						value = tag.getValue();
+						if(value){
+							td = table.addChild("text");
+							td.addChild("label").setValue(value);
+							td.addChild("row").setValue(row);
+							td.addChild("col").setValue(1);
+							td.addChild("halign").setValue("left");
+						}
+					}
+					
+					tag = item.getNode("value");
+					if(tag!=nil){
+						value = tag.getValue();
+						if(value){
+							td = table.addChild("text");
+							td.addChild("label").setValue(value);
+							td.addChild("row").setValue(row);
+							td.addChild("col").setValue(2);
+							td.addChild("halign").setValue("right");
+						}
+					}
+		
+					tag = item.getNode("condition");
+					if (tag!=nil) {
+						
+						var vis = td.getNode("visible", 1);
+						props.copy(tag, vis);
+						var c = td.getNode("color", 1);
+						c.getNode("red", 1).setValue(0.2);
+						c.getNode("green", 1).setValue(1.0);
+						c.getNode("blue", 1).setValue(0.2);
+									
+						td = table.addChild("text");
+						td.addChild("halign").setValue("right");
+						td.addChild("row").setValue(row);
+						td.addChild("col").setValue(2);
+						td.addChild("label").setValue(value);                
+						
+						c = td.addChild("color");
+						c.addChild("red").setValue(1.0);
+						c.addChild("green").setValue(1.0);
+						c.addChild("blue").setValue(0.2);                
+						
+						vis = td.addChild("visible");
+						vis = vis.getNode("not", 1);
+						props.copy(tag, vis);
+						
+					}
+					
+					tag = item.getNode("marker");
+					var view = item.getNode("view");
+					if( (tag!=nil) or (view!=nil) ) {
+						var btn = table.addChild("button");
+						btn.addChild("row").setValue(row);
+						btn.addChild("col").setValue(3);
+						btn.addChild("pref-width").setValue(20);
+						btn.addChild("pref-height").setValue(20);
+						btn.addChild("padding").setValue(0);
+						btn.addChild("legend").setValue("?");
+						var binding = btn.addChild("binding");
+						binding.addChild("command").setValue("nasal");
+						binding.addChild("script").setValue("showMarker("~row~");");
+					}
+					
+					
+					tag = item.getNode("binding");
+									
+					if (tag!=nil) {
+						var btn = table.addChild("button");
+						btn.addChild("row").setValue(row);
+						btn.addChild("col").setValue(4);
+						btn.addChild("pref-width").setValue(20);
+						btn.addChild("pref-height").setValue(20);
+						btn.addChild("padding").setValue(1);
+						btn.addChild("legend").setValue(">");
+						var binding = btn.addChild("binding");
+						binding.addChild("command").setValue("nasal");
+						binding.addChild("script").setValue("callBinding("~row~");");
+					}
+				}
+
+			};
+				
+			var showMarker = func(index){
+				var item = indexItem[index];
+				var enabled = getprop("/sim/model/marker/arrow-enabled");
+				var makerEnabled = getprop("/sim/gui/dialogs/checklist/config/marker");
+				var viewEnabled = getprop("/sim/gui/dialogs/checklist/config/view");
+				
+				if (item != nil){
+					var tag = item.getNode("marker");
+					if(tag != nil){
+						var nMarker = props.globals.getNode("/sim/model/marker", 1);
+						var enabled = ((!enabled) or (activeMarkerIndex != index)) and (makerEnabled);
+						nMarker.setValues({
+							"x/value": tag.getNode("x-m", 1).getValue(),
+							"y/value": tag.getNode("y-m", 1).getValue(),
+							"z/value": tag.getNode("z-m", 1).getValue(),
+							"scale/value": tag.getNode("scale",1).getValue(1.0),
+							"arrow-enabled": enabled,
+						});
+						
+					}
+					
+					if(viewEnabled){
+						set_view(item);
+					}else{
+						view.resetView();
+					}
+				}
+				activeMarkerIndex = index;
+			};
+			
+			var callBinding = func(index){
+				var item = indexItem[index];
+				if (item != nil){
+				
+					var announceEnable = getprop("/sim/gui/dialogs/checklist/config/announce");
+					if(announceEnable){
+						var announces = item.getChildren("announce");
+						foreach (var announce ; announces) {
+							var msg = announce.getValue();
+							CoPilot.say(msg);
+						}
+					}
+					
+					var bindings = item.getChildren("binding");
+					foreach (var binding ; bindings) {
+						props.runBinding(binding);
+					}
+					
+					
+				}
+				
+			};
+			
+			var set_view = func(node = nil) {
+				node != nil or return;
+				var v = node.getChild("view");
+				if (v != nil) {
+					# when changing view direction, switch to view 0 (captain's view),
+					# unless another view is explicitly specified
+					v.initNode("view-number", 0, "INT", 0);
+					view.point.move(v);
+					return 1;
+				}
+				return 0;
+			}
+			
+			var resetAll = func() {
+				setprop("/sim/model/marker/arrow-enabled",0);
+				nSelectedItemName.setValue("");
+				nSelectedItemValue.setValue("");
+				nSelectedString.setValue("");
+				nSelectedItemIndex.setValue(-1);
+				nSelectCheckListPerform.setBoolValue(0);
+				view.resetView();
+				loop_running = 0;
+			}
+			
+			var loopStartStop = func(){
+				if(nSelectCheckListPerform.getValue()){
+					loop_running = 1;
+					loopItems(0);
+				}else{
+					loop_running = 0;
+					
+				}
+			}
+			
+			var loopItems = func(state = nil){
+				if(state != nil){
+					#print("loopItems ... "~state);
+					if(state == 0){
+						loop_item_index = 0;
+						nSelectedItemIndex.setValue(loop_item_index);
+						if((loop_item_index < size(indexItem)) and loop_running){
+							loopItems(1);
+						}else{
+							loopItems(3);
+						}
+					}elsif (state == 1){
+						if((loop_item_index < size(indexItem)) and loop_running){
+							var item = indexItem[loop_item_index];
+							if(item != nil){
+								#print("loopItems 1 name ... ");
+								
+								var name = "";
+								var value = "";
+								if(item.getNode("name") != nil ){
+									name = item.getNode("name").getValue();
+									if(name!=nil){
+										nSelectedItemName.setValue(name);
+									}
+																	
+								}
+								
+								#print("loopItems 1 value ... ");
+								
+								if(item.getNode("value") != nil ){
+									value = item.getNode("value").getValue();
+									nSelectedItemValue.setValue(value);
+								}
+								if((name!=nil) and (value!=nil)){
+									nSelectedString.setValue(name ~ " - " ~ value);
+								}
+								
+								#print("loopItems 1 wait ... ");
+																																
+								var loop_wait = nil;
+								if(item.getNode("loop-wait-pre") != nil ){
+									loop_wait = item.getNode("loop-wait-pre").getValue();
+								}
+								
+								if(loop_wait == nil){
+									loop_wait = loop_wait_pre;
+								}
+								
+								if(nConfigImpatient.getBoolValue() and (loop_wait > 0.1) ){
+									loop_wait = 0.1;
+								}
+								
+								#print("loopItems 1 settimer ... ");
+								
+								settimer(func(){loopItems(2);},loop_wait * 1.0);
+								
+								#print("loopItems 1 showMarker ... ");
+								
+								showMarker(loop_item_index);
+							}
+						}
+					}elsif (state == 2){
+						if((loop_item_index < size(indexItem)) and loop_running){
+							var loop_wait = nil;
+							var item = indexItem[loop_item_index];
+							
+							if(item.getNode("loop-wait-post") != nil){
+								loop_wait = item.getNode("loop-wait-post").getValue();
+							}
+							
+							if(loop_wait == nil){
+								loop_wait = loop_wait_pre;
+							}
+							
+							if(nConfigImpatient.getValue() and loop_wait > 0.5){
+								loop_wait = 0.5;
+							}
+							
+							callBinding(loop_item_index);
+							settimer(func(){loopItems(3);},loop_wait * 1.0);
+						}
+					}elsif (state == 3){
+						loop_item_index += 1;
+						if((loop_item_index < size(indexItem)) and loop_running){
+							nSelectedItemIndex.setValue(loop_item_index);
+							loopItems(1);
+						}else{
+							# we are finished 
+							resetAll();
+							var strCheckList = nSelectedCheckList.getValue();
+							var idx = mapCheckList[strCheckList];
+							var nContinue = nChecklists[idx].getNode("continue");
+							var nextString = "";
+							if(nContinue != nil){
+								nextString = nContinue.getValue();
+							
+								if (contains(mapCheckList,nextString)){
+									nSelectedCheckList.setValue(nextString);
+								}
+							
+							}else{
+								idx += 1;
+								#print("loopItems 3 count index ... "~idx);
+								if((idx < size(nChecklists))){
+									var item = nChecklists[idx];
+									if(item != nil){
+										nextString = item.getNode("title").getValue();
+									}
+								}
+								
+							}
+							#print("loopItems 3 next List ... "~nextString);
+								
+							if(nextString != ""){
+								nSelectedCheckList.setValue(nextString);
+								redraw();
+							}
+							
+							
+						}
+					}
+				}
+			};
+			
+			var draw = func(){
+				buildIndex();
+				drawTransparency();
+				drawMenu();
+				drawConfig();
+				if (!nConfigMinimised.getValue()){
+					drawSelectCheckList();
+					drawScreen();
+				}else{
+					drawComboCheckList();
+					drawScreenMinimised();
+				}
+			};
+			
+			var redraw = func(){
+				fgcommand("dialog-close", dlgRoot);
+				fgcommand("dialog-show", dlgRoot);
+			};
+			
+			draw();
+						
+		]]></open>
+    
+		<close><![CDATA[
+			foreach(var l;listeners){
+				removelistener(l);
+			}
+			listeners = [];
+		]]></close>
+	</nasal>
+
+	<group>
+		<name>groupMenu</name>
+		<layout>vbox</layout>
+	</group>
+	<hrule/>
+	<group>
+		<name>groupConfig</name>
+		<layout>vbox</layout>
+	</group>
+	<group>
+		<layout>hbox</layout>
+		<group>	
+			<layout>hbox</layout>
+			<name>groupSelectCheckList</name>
+			<empty><stretch>1</stretch></empty>
+		</group>
+		<group>
+			<layout>vbox</layout>
+			<name>groupScreen</name>
+		</group>
+
+	</group>
+</PropertyList>

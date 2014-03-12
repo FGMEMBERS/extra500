@@ -471,14 +471,13 @@ JSBSim Extra Aircraft - Extra 500.
 	
   <!-- <help include="extra500-help.xml"/> -->
   
-  <!-- <checklists include="extra500-checklists.xml"/> -->
-	  <checklists>
+   <checklists include="checklist/extra500-checklists.xml"/>
+<!--	  <checklists>
 		  <checklist include="checklist/engine-start.xml"/>
 		  <checklist include="checklist/before-starting-engine-batt.xml"/>
 		  <checklist include="checklist/engine-shutdown.xml"/>
 		  <checklist include="checklist/after-starting-engine.xml"/>
-		  
-	  </checklists>
+	  </checklists> -->
   <!-- <tutorials include="Tutorials/extra500-tutorials.xml"/> -->
 
 
