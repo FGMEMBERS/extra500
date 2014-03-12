@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2014-03-10
+      Date:             2014-03-12
 -->
 
 <system name="indication">
@@ -434,6 +434,46 @@
 		</fcs_function>
 
 <!--OIL TEMP -->
+
+		<fcs_function name="aircraft/engine/cowling-Temp-degC">
+    			<function>
+       			<description>cowling temperature</description>
+				<value>80</value>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/Heat-rejection-W">
+    			<function>
+       			<description>engine oil heat rejection</description>
+				<sum>
+					<table>
+            				<independentVar lookup="row">aircraft/engine/TOT-target-degC</independentVar>
+            				<independentVar lookup="column">aircraft/engine/cowling-Temp-degC</independentVar> 	
+            				<tableData>
+								-51.1	121.1
+							-51.1	0	0
+							121.1	2016	0
+							482	6242	14507
+							537.8	7210	16793
+							593.3	7913	19167
+							648.9	8968	21365
+							721.1	10199	24618
+							751.7	10550	25585
+							776.7	10902	26640
+							810	11430	28135
+            				</tableData>
+      				</table>
+					<table>
+            				<independentVar lookup="row">propulsion/engine/power-hp</independentVar>
+            				<tableData>
+							0	0
+							450	3552
+            				</tableData>
+      				</table>
+				</sum>
+    			</function>
+		</fcs_function>
+
 		<fcs_function name="aircraft/engine/Delta-OT-degC">
     			<function>
        			<description>Oil temp change</description>
