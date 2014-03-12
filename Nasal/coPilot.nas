@@ -17,7 +17,7 @@
 #      Date: April 04 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             09.02.14
+#      Date:             12.03.14
 #
 var buisy = 0;
 var checklist = "";
@@ -195,7 +195,7 @@ var engine_start = func(){
 	settimer(func{
 			UI.click("Engine cutoff off");
 			CoPilot.say("Condition Lever - Fully forward ... ");
-		}, 24.5 );
+		}, 24.0 );
 	settimer(func{
 			CoPilot.say("TOT - Monitor < 850 degC ... ");
 		}, 28.0 );
