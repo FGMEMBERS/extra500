@@ -467,6 +467,8 @@ JSBSim Extra Aircraft - Extra 500.
 		<!---->
 		<path>/extra500/log/fuel</path>
 		<path>/extra500/dialog/fuel</path>
+		<path>/extra500/config</path>
+		
 	</aircraft-data> 
 	
   <!-- <help include="extra500-help.xml"/> -->
@@ -1353,6 +1355,26 @@ JSBSim Extra Aircraft - Extra 500.
 		<SEC2MIN type="double">0.0166666666667</SEC2MIN>
 		<G0 type="double">9.80665</G0>		
 	</const>
+	<config>
+		<ui>
+			<failure type="bool">1</failure>
+			<warning type="bool">1</warning>
+			<caution type="bool">1</caution>
+			<info type="bool">1</info>
+		</ui>
+		<handling>
+			<realTrim type="bool">1</realTrim>
+		</handling>
+		<failure>
+			<engine type="bool">1</engine>
+			<hydraulic type="bool">1</hydraulic>
+			<electric type="bool">1</electric>
+			<structure type="bool">1</structure>
+			<fuel type="bool">1</fuel>
+			<avionic type="bool">1</avionic>
+			<pressure type="bool">1</pressure>
+		</failure>	
+	</config>
 	<door>
 		<upperpass>
 			<state type="int">0</state>

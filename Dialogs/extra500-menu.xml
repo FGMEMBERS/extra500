@@ -42,6 +42,17 @@
 				</binding>
 			</item>
 			<item>
+				<name>extra500config</name>
+				<label>Configuration</label>
+				<binding>
+					<command>nasal</command>
+					<script><![CDATA[
+						gui.showDialog("extra500_Config");
+					]]></script>
+				</binding>
+			</item>
+			<!--
+			<item>
 				<name>events-toggle</name>
 				<label>Toggle Messages</label>
 				<binding>
@@ -89,6 +100,21 @@
 				       ]]></script>
 			       </binding>
 			</item>
+			-->
+			<item>
+				<label>------------------</label>
+				<enabled>false</enabled>
+			</item>
+			
+			<item>
+				<name>aircraft-checklists</name>
+				<label>Checklists</label>
+				<binding>
+					<command>dialog-show</command>
+					<dialog-name>checklist</dialog-name>
+				</binding>
+			</item>
+
 			<item>
 			       <name>auto_start</name>
 			       <label>Autostart</label>

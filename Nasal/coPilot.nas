@@ -41,7 +41,8 @@ var auto_start = func(){
 var auto_engine_start = func(){
 	UI.click("Main Battery on");
 	UI.click("Main Avionics on");
-	UI.click("Main Generator off");
+	UI.click("Main Generator on");
+	UI.click("Main Standby Alternator on");
 	UI.click("Fuel Pump 2 on");
 	UI.click("Engine Motoring normal");
 	UI.click("Engine Start on");

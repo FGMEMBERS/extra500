@@ -133,19 +133,31 @@ var MessageSystem = {
 		m.color["Caution"]	= [0.8,0.8,0.0,1.0];
 		m.color["Info"]		= [0.0,0.0,0.8,1.0];
 		
+		m._nFailure	= props.globals.initNode("/extra500/config/ui/failure",1,"BOOL");
+		m._nWarning	= props.globals.initNode("/extra500/config/ui/warning",1,"BOOL");
+		m._nCaution	= props.globals.initNode("/extra500/config/ui/caution",1,"BOOL");
+		m._nInfo	= props.globals.initNode("/extra500/config/ui/info",1,"BOOL");
 		return m;
 	},
 	failure : func(msg){
-		screen.log.write(msg,me.color["Failure"][0],me.color["Failure"][1],me.color["Failure"][2],me.color["Failure"][3]);
+		if(me._nFailure.getValue()){
+			screen.log.write(msg,me.color["Failure"][0],me.color["Failure"][1],me.color["Failure"][2],me.color["Failure"][3]);
+		}
 	},
 	warning : func(msg){
-		screen.log.write(msg,me.color["Warning"][0],me.color["Warning"][1],me.color["Warning"][2],me.color["Warning"][3]);
+		if(me._nWarning.getValue()){
+			screen.log.write(msg,me.color["Warning"][0],me.color["Warning"][1],me.color["Warning"][2],me.color["Warning"][3]);
+		}
 	},
 	caution : func(msg){
-		screen.log.write(msg,me.color["Caution"][0],me.color["Caution"][1],me.color["Caution"][2],me.color["Caution"][3]);
+		if(me._nCaution.getValue()){
+			screen.log.write(msg,me.color["Caution"][0],me.color["Caution"][1],me.color["Caution"][2],me.color["Caution"][3]);
+		}
 	},
 	info : func(msg){
-		screen.log.write(msg,me.color["Info"][0],me.color["Info"][1],me.color["Info"][2],me.color["Info"][3]);
+		if(me._nInfo.getValue()){
+			screen.log.write(msg,me.color["Info"][0],me.color["Info"][1],me.color["Info"][2],me.color["Info"][3]);
+		}
 	},
 	
 };

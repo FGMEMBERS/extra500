@@ -16,15 +16,11 @@
 #      Authors: Dirk Dittmann
 #      Date: April 23 2013
 #
-#      Last change:      Eric van den Berg
-#      Date:             23.06.13
+#      Last change:      Dirk Dittmann
+#      Date:             14.03.2014
 #
 
 
-var debug_electric = gui.Dialog.new(
-			"sim/gui/dialogs/ground_services/dialog",
-			"Aircraft/extra500/Dialogs/debug_electric.xml"
-		);
 
 var autopilot = gui.Dialog.new("/sim/gui/dialogs/autopilot/dialog",
         "Aircraft/extra500/Dialogs/autopilot.xml");
@@ -34,6 +30,10 @@ var radios = gui.Dialog.new("/sim/gui/dialogs/radios/dialog",
 
 var checklist = gui.Dialog.new("/sim/gui/dialogs/checklist/dialog",
         "Aircraft/extra500/Dialogs/checklist.xml");
+
+var extra500config = gui.Dialog.new("/sim/gui/dialogs/extra500config/dialog",
+        "Aircraft/extra500/Dialogs/Config.xml");
+
 
 
 gui.menuBind("fuel-and-payload", "Dialogs.fuelPayload.toggle();");
