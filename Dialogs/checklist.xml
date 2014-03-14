@@ -23,6 +23,8 @@
 			
 			var groupMenu	 		= gui.findElementByName(Checklist.dlgRoot, "groupMenu");
 			var groupConfig 		= gui.findElementByName(Checklist.dlgRoot, "groupConfig");
+			var groupContent		= gui.findElementByName(Checklist.dlgRoot, "groupContent");
+			
 			var groupSelectChecklist	= gui.findElementByName(Checklist.dlgRoot, "groupSelectChecklist");
 			var groupScreen		 	= gui.findElementByName(Checklist.dlgRoot, "groupScreen");
 			var groupPageSelector		= gui.findElementByName(Checklist.dlgRoot, "groupPageSelector");
@@ -232,12 +234,18 @@
 				}
 			};
 			
-			var drawSelectChecklist = func(){
+			var drawSelectChecklist = func(group){
 				var enabled = Checklist.nSelectChecklistEnabled.getValue();
-				groupSelectChecklist.removeChildren("group");
+				
+				
 				if(enabled){
+				
+					var box = group.addChild("group");
+					box.addChild("layout").setValue("hbox");
+					box.addChild("empty").addChild("stretch").setValue(1);
+				
 					
-					var group = groupSelectChecklist.addChild("group");
+					var group = box.addChild("group");
 					group.addChild("layout").setValue("vbox");
 					group.addChild("pref-width").setValue("350");
 					
@@ -268,11 +276,13 @@
 				}
 			};
 						
-			var drawComboChecklist = func(){
+			var drawComboChecklist = func(group){
 			
-				groupSelectChecklist.removeChildren("group");
+				var box = group.addChild("group");
+				box.addChild("layout").setValue("hbox");
+				box.addChild("empty").addChild("stretch").setValue(1);
 				
-				var group = groupSelectChecklist.addChild("group");
+				var group = box.addChild("group");
 				group.addChild("layout").setValue("vbox");
 				group.addChild("pref-width").setValue("350");
 				
@@ -356,11 +366,13 @@
 				}
 			};
 			
-			var drawScreen = func(){
+			var drawScreen = func(group){
 				
-				groupScreen.removeChildren("group");
 				
-				var vbox = groupScreen.addChild("group");
+				var box = group.addChild("group");
+				box.addChild("layout").setValue("vbox");
+				
+				var vbox = box.addChild("group");
 				vbox.addChild("layout").setValue("vbox");
 				
 				var table = vbox.addChild("group");
@@ -590,12 +602,13 @@
 				drawTransparency();
 				drawMenu();
 				drawConfig();
+				groupContent.removeChildren("group");
 				if (!Checklist.nConfigMinimised.getValue()){
-					drawSelectChecklist();
-					drawScreen();
+					drawSelectChecklist(groupContent);
+					drawScreen(groupContent);
 				}else{
-					drawComboChecklist();
-					drawScreenMinimised();
+					drawComboChecklist(groupContent);
+					drawScreenMinimised(groupContent);
 				}
 				
 			};
@@ -626,6 +639,8 @@
 	</group>
 	<group>
 		<layout>hbox</layout>
+		<name>groupContent</name>
+<!--		
 		<group>	
 			<layout>hbox</layout>
 			<name>groupSelectChecklist</name>
@@ -635,5 +650,6 @@
 			<layout>vbox</layout>
 			<name>groupScreen</name>
 		</group>
+		-->
 	</group>
 </PropertyList>

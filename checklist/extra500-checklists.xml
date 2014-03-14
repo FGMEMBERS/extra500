@@ -629,7 +629,7 @@
 	<!-- 4.6.b Interior Check-->	
 	<checklist>
 		<title>4.6.b Interior Check</title>
-		<continue>4.6.d Before Starting Engine (without External Power)</continue>
+		<continue>4.6.d Before Starting Engine (Battery)</continue>
 		<item>
 			<name>Entrance Door</name>
 			<value>Re-check closed and secured</value>
@@ -892,12 +892,12 @@
 	
 	<!-- 4.6.c Before Starting Engine (with External Power)-->	
 	<checklist>
-		<title>4.6.c Before Starting Engine (with External Power)</title>
+		<title>4.6.c Before Starting Engine (External)</title>
 	</checklist>
 	
 	<!-- 4.6.d Before Starting Engine (without External Power)-->	
 	<checklist>
-		<title>4.6.d Before Starting Engine (without External Power)</title>
+		<title>4.6.d Before Starting Engine (Battery)</title>
 
 		<item>
 			<name>GEN</name>
