@@ -293,7 +293,7 @@
 				
 				binding = list.addChild("binding");
 				binding.addChild("command").setValue("nasal");
-				binding.addChild("script").setValue("Checklist.redraw();");
+				binding.addChild("script").setValue("Checklist.setChecklistFromProp();Checklist.redraw();");
 				
 				foreach (var name; Checklist.mapIndexChecklist) {
 					list.addChild("value").setValue(name);

@@ -3169,36 +3169,359 @@
 	<!-- 4.6.m Descent/Approach -->
 	<checklist>
 		<title>4.6.m Descent/Approach</title>
+		<item>
+			<name>Approach Briefing</name>
+			<value>Perform</value>
+			<announce>Approach Briefing - Performed</announce>
+		</item>
+		<item>
+			<name>Landing Information</name>
+			<value>Obtain with ATIS</value>
+			<announce>Landing Information - ATIS obtained</announce>
+		</item>
+		<item>
+			<name>Navigation Equipment</name>
+			<value>Check</value>
+			<announce>Navigation Equipment - Check</announce>
+		</item>
+		<item>
+			<name>FUEL SELECTOR VALVE</name>
+			<value>Check BOTH</value>
+			<announce>FUEL SELECTOR VALVE - BOTH check </announce>
+		</item>
+		<item>
+			<name>Altimeter</name>
+			<value>Set and check QNH</value>
+			<announce>Altimeter - QNH set</announce>
+		</item>
+		<item>
+			<name>Pressure Controller</name>
+			<value>Set airport elevation</value>
+			<announce>Pressure Controller - Airport elevation set</announce>
+		</item>
+		<item>
+			<name>Rate of Descent</name>
+			<value>Adjust</value>
+			<announce>Rate of Descent - Adjusted</announce>
+		</item>
 	</checklist>
 
 	<!-- 4.6.n Final -->
 	<checklist>
 		<title>4.6.n Final</title>
+		<item>
+			<name>LANDING GEAR</name>
+			<value> Below 140 KIAS DN</value>
+			<announce>LANDING GEAR - Down check</announce>
+		</item>
+		<item>
+			<name>note</name>
+			<note>Flap selection airspeed must be below 120 KIAS for flaps</note>
+			<note>setting to 15 degC and below 109 KIAS for flap setting to 30 degC.</note>
+		</item>
+		<item>
+			<name>FLAPS</name>
+			<value>Set as required</value>
+			<announce>FLAPS - Check</announce>
+		</item>
+		<item>
+			<name>Condition Lever</name>
+			<value>MAX PROP RPM</value>
+			<announce>Condition Lever - Check</announce>
+		</item>
+		<item>
+			<name>RECO</name>
+			<value>ON</value>
+			<announce>RECO - ON check</announce>
+		</item>
+		<item>
+			<name>LDG</name>
+			<value>ON</value>
+			<announce>LDG - ON check</announce>
+		</item>
+		<item>
+			<name>FUEL PUMP 1 and 2</name>
+			<value>Both ON</value>
+			<announce>FUEL PUMP 1 and 2 - ON check</announce>
+		</item>
+		<item>
+			<name>AIR CON</name>
+			<value>OFF</value>
+			<announce>AIR CON - OFF check</announce>
+		</item>
+		<item>
+			<name>Pitch Trim</name>
+			<value>Set as required</value>
+			<announce>Pitch Trim - Check</announce>
+		</item>
 	</checklist>
 
 	<!-- 4.6.o Before Landing/Landing -->
 	<checklist>
 		<title>4.6.o Before Landing/Landing</title>
+		<continue>4.6.r Engine Shutdown</continue>
+		<page>
+			<item>
+				<name>Seat, Seat Belts and Harnesses</name>
+				<value>Adjust and locked</value>
+				<announce>Seat Belts - Locked check</announce>
+			</item>
+			<item>
+				<name>GEAR IND.</name>
+				<value>Re-check three greens</value>
+				<announce>GEAR - Green check</announce>
+			</item>
+			<item>
+				<name>FLAPS</name>
+				<value>Below 109 KIAS 30 degC</value>
+				<announce>FLAPS - Check</announce>
+			</item>
+			<item>
+				<name>Cabin Differential Pressure Indicator</name>
+				<value>Check zero indication</value>
+				<announce>Cabin Differential Pressure - Check</announce>
+			</item>
+			<item>
+				<name>note</name>
+				<note>If differential pressure still is indicated:</note>
+			</item>
+			<item>
+				<name>PRESS</name>
+				<value>DUMP</value>
+				<announce>PRESS - DUMP check</announce>
+			</item>
+			<item>
+				<name>Final Approach Speed</name>
+				<value>Adjust 80 KIAS</value>
+				<announce>Final Approach Speed - 80 KIAS check</announce>
+			</item>
+			<item>
+				<name>Landing</name>
+				<value>Perform</value>
+				<announce>Landing - Performed</announce>
+			</item>
+			<item>
+				<name>note</name>
+				<note>After touchdown, wheels on ground:</note>
+			</item>
+			<item>
+				<name>Brakes, Propeller Reverse Thrust</name>
+				<value>Apply as required</value>
+				<announce>Brake - as required</announce>
+			</item>
+		</page>
+		<page>
+			<item>
+				<name>note</name>
+				<note>When clear of runway:</note>
+			</item>
+			<item>
+				<name>FLAPS</name>
+				<value>UP</value>
+				<announce>FLAPS - UP check</announce>
+			</item>
+			<item>
+				<name>Transponder</name>
+				<value>Check Standby</value>
+				<announce>Transponder - Standby check</announce>
+			</item>
+			<item>
+				<name>FUEL PUMP 1 and 2</name>
+				<value>Both OFF</value>
+				<announce>FUEL PUMP 1 and 2 - OFF check</announce>
+			</item>
+			<item>
+				<name>ENGINE START</name>
+				<value>IGN OFF</value>
+				<announce>ENGINE START - Ignition OFF check</announce>
+			</item>
+			<item>
+				<name>RECO</name>
+				<value>OFF</value>
+				<announce>RECO - OFF check</announce>
+			</item>
+			<item>
+				<name>LDG</name>
+				<value>If not required OFF</value>
+				<announce>LDG - OFF check</announce>
+			</item>
+			<item>
+				<name>Ice Protection</name>
+				<value>OFF</value>
+				<announce>Ice Protection - OFF check</announce>
+			</item>
+			<item>
+				<name>L - PITOT - R</name>
+				<value>OFF</value>
+				<announce>PITOT - OFF check</announce>
+			</item>
+			<item>
+				<name>Pitch Trim</name>
+				<value>N</value>
+				<announce>Pitch Trim - Neutral check</announce>
+			</item>
+		</page>
 	</checklist>
 
 	<!-- 4.6.p Cross Wind Operation-->
 	<checklist>
 		<title>4.6.p Cross Wind Operation</title>
+		<item>
+			<name>note</name>
+			<note>Approach:</note>
+		</item>
+		<item>
+			<name>Approach Speed</name>
+			<value>Adjust 80 KIAS</value>
+			<announce>Approach Speed - 80 KIAS</announce>
+		</item>
+		<item>
+			<name>note</name>
+			<note>Crosswind should be compensated by a combination of</note>
+			<note>heading the nose into the wind and banking the aircraft</note>
+			<note>slightly into the wind.</note>
+		</item>
+		<item>
+			<name>Crosswind Component</name>
+			<value>Compensate</value>
+			<announce>Crosswind Component - Compensate</announce>
+		</item>
+		<item>
+			<name>note</name>
+			<note>Prior to touchdown:</note>
+		</item>
+		<item>
+			<name>Aircraft</name>
+			<value>Adjust to center line of runway</value>
+			<announce>Aircraft - Adjust runway</announce>
+		</item>
+		<item>
+			<name>Bank Angle</name>
+			<value>Maintain small angle into wind</value>
+			<announce>Bank Angle - into wind</announce>
+		</item>
+		<item>
+			<name>note</name>
+			<note>After touchdown:</note>
+		</item>
+		<item>
+			<name>Nose Wheel</name>
+			<value>Lower immediately</value>
+			<announce>Nose Wheel - Lower immediately</announce>
+		</item>
+		<item>
+			<name>Straight Path</name>
+			<value>Control with rudder</value>
+			<announce>Straight Path - Control with rudder</announce>
+		</item>
+		<item>
+			<name>Aileron</name>
+			<value>Keep deflected into wind</value>
+			<announce>Aileron - into wind</announce>
+		</item>
+		
 	</checklist>
 
 	<!-- 4.6.q Balked Landing -->
 	<checklist>
 		<title>4.6.q Balked Landing</title>
+		<item>
+			<name>Power Lever</name>
+			<value>MAX POWER (111 % Torque)</value>
+			<announce>Power Lever - MAX POWER</announce>
+		</item>
+		<item>
+			<name>TOT</name>
+			<value>Monitor &lt; 810 degC</value>
+			<announce>TOT - Monitor &lt; 810 degC</announce>
+		</item>
+		<item>
+			<name>Condition Lever</name>
+			<value>MAX PROP RPM</value>
+			<announce>Condition Lever - MAX PROP RPM</announce>
+		</item>
+		<item>
+			<name>Aircraft</name>
+			<value>Check positive climb</value>
+			<announce>Aircraft - Check positive climb</announce>
+		</item>
+		<item>
+			<name>LANDING GEAR</name>
+			<value>UP</value>
+			<announce>LANDING GEAR - UP check</announce>
+		</item>
+		<item>
+			<name>FLAPS</name>
+			<value>Above 74 KIAS 15 degC</value>
+			<announce>FLAPS - 15 degC check</announce>
+		</item>
+		<item>
+			<name>FLAPS</name>
+			<value>Above 90 KIAS UP</value>
+			<announce>FLAPS - UP check</announce>
+		</item>
 	</checklist>
 	
 	<!-- 4.6.r Engine Shutdown -->
 	<checklist>
 		<title>4.6.r Engine Shutdown</title>
+		<item>
+			<name>Power Lever</name>
+			<value>GRD IDLE (at least 2 minutes)</value>
+			<announce>Power Lever - Ground idle</announce>
+		</item>
+		<item>
+			<name>ENV AIR</name>
+			<value>OFF</value>
+			<announce>ENV AIR - OFF check</announce>
+		</item>
+		<item>
+			<name>AVIONICS</name>
+			<value>OFF</value>
+			<announce>AVIONICS - OFF check</announce>
+		</item>
+		<item>
+			<name>Lights</name>
+			<value>OFF</value>
+			<announce>Lights - OFF check</announce>
+		</item>
+		<item>
+			<name>STDBY ALT</name>
+			<value>OFF</value>
+			<announce>STDBY ALT - OFF check</announce>
+		</item>
+		<item>
+			<name>GEN</name>
+			<value>OFF</value>
+			<announce>GEN - OFF check</announce>
+		</item>
+		<item>
+			<name>Condition Lever</name>
+			<value>FUEL OFF</value>
+			<announce>Condition Lever - FUEL OFF check</announce>
+		</item>
+		<item>
+			<name>BATT</name>
+			<value>OFF</value>
+			<announce>BATT - OFF check</announce>
+		</item>
+		<item>
+			<name>PARKING BRAKE</name>
+			<value>Set as required</value>
+			<announce>PARKING BRAKE - Set check</announce>
+		</item>
 	</checklist>
 	
 	<!-- 4.6.s Rain -->
 	<checklist>
 		<title>4.6.s Rain</title>
+		<item>
+			<name>note</name>
+			<note>Aircraft flight characteristics do not change when flying in</note>
+			<note>rain. However, the stall speeds will be 3 to 5 knots higher</note>
+			<note>than the given ones.</note>
+		</item>
+		
 	</checklist>
 	
 </PropertyList>
