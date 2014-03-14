@@ -25,10 +25,6 @@
 			var groupConfig 		= gui.findElementByName(Checklist.dlgRoot, "groupConfig");
 			var groupContent		= gui.findElementByName(Checklist.dlgRoot, "groupContent");
 			
-			var groupSelectChecklist	= gui.findElementByName(Checklist.dlgRoot, "groupSelectChecklist");
-			var groupScreen		 	= gui.findElementByName(Checklist.dlgRoot, "groupScreen");
-			var groupPageSelector		= gui.findElementByName(Checklist.dlgRoot, "groupPageSelector");
-			
 			var drawTransparency = func(){
 				var alpha = Checklist.nConfigTransparent.getValue();
 				
@@ -428,10 +424,12 @@
 				drawNextChecklist(vbox);
 			};
 			
-			var drawScreenMinimised = func(){
-				groupScreen.removeChildren("group");
+			var drawScreenMinimised = func(group){
 				
-				var vbox = groupScreen.addChild("group");
+				var box = group.addChild("group");
+				box.addChild("layout").setValue("vbox");
+				
+				var vbox = box.addChild("group");
 				vbox.addChild("layout").setValue("vbox");
 				
 				var table = vbox.addChild("group");
