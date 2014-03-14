@@ -84,7 +84,7 @@ var buildItemList = func(){
 	if(size(listPage) > 0){
 		foreach (var page; listPage) {
 			if(page.getIndex() == currentPageIndex){
-				print("buildIndex() ... page:"~page.getIndex());
+# 				print("buildIndex() ... page:"~page.getIndex());
 				var items = page.getChildren("item");
 				foreach (var item ; items){
 				
@@ -186,10 +186,11 @@ var getNextChecklistName = func(){
 	if(nContinue != nil){
 		nextChecklist = nContinue.getValue();
 	}else{
-		currentChecklistIndex += 1;
+		var index = currentChecklistIndex + 1;
+		
 		#print("loopItems 3 count index ... "~idx);
-		if((currentChecklistIndex < size(nChecklists))){
-			var item = nChecklists[currentChecklistIndex];
+		if((index < size(nChecklists))){
+			var item = nChecklists[index];
 			if(item != nil){
 				nextChecklist = item.getNode("title").getValue();
 			}
@@ -405,7 +406,7 @@ var loopItems = func(){
 			}else{
 			
 				# we are finished 
-				resetAll();
+				#resetAll();
 				setChecklistByName(getNextChecklistName());
 				redraw();
 				
