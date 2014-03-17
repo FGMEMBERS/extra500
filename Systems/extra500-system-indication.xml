@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2014-03-12
+      Date:             2014-03-17
 -->
 
 <system name="indication">
@@ -89,7 +89,7 @@
 		</fcs_function>
 
 <!-- FUEL FLOW -->
-		<fcs_function name="aircraft/engine/fuelflow-3rd">
+		<fcs_function name="aircraft/engine/FF/fuelflow-3rd">
     			<function>
        			<description>engine fuel flow 3rd order coeff</description>
        				<table>
@@ -126,7 +126,7 @@
     			</function>
 		</fcs_function>
 
-		<fcs_function name="aircraft/engine/fuelflow-2rd">
+		<fcs_function name="aircraft/engine/FF/fuelflow-2rd">
     			<function>
        			<description>engine fuel flow 2rd order coeff</description>
        				<table>
@@ -163,7 +163,7 @@
     			</function>
 		</fcs_function>
 
-		<fcs_function name="aircraft/engine/fuelflow-1rd">
+		<fcs_function name="aircraft/engine/FF/fuelflow-1rd">
     			<function>
        			<description>engine fuel flow 1rd order coeff</description>
        				<table>
@@ -200,7 +200,7 @@
     			</function>
 		</fcs_function>
 
-		<fcs_function name="aircraft/engine/fuelflow-0rd">
+		<fcs_function name="aircraft/engine/FF/fuelflow-0rd">
     			<function>
        			<description>engine fuel flow 0rd order coeff</description>
        				<table>
@@ -244,21 +244,21 @@
 				<property>propulsion/engine/power-hp</property>   
 				<sum>
 					<product>
-						<property>aircraft/engine/fuelflow-3rd</property>
+						<property>aircraft/engine/FF/fuelflow-3rd</property>
 						<property>propulsion/engine/power-hp</property>   
 						<property>propulsion/engine/power-hp</property>   
 						<property>propulsion/engine/power-hp</property>   
 					</product>
 					<product>
-						<property>aircraft/engine/fuelflow-2rd</property>
+						<property>aircraft/engine/FF/fuelflow-2rd</property>
 						<property>propulsion/engine/power-hp</property>   
 						<property>propulsion/engine/power-hp</property>   
 					</product>
 					<product>
-						<property>aircraft/engine/fuelflow-1rd</property>
+						<property>aircraft/engine/FF/fuelflow-1rd</property>
 						<property>propulsion/engine/power-hp</property>   
 					</product>
-					<property>aircraft/engine/fuelflow-0rd</property>
+					<property>aircraft/engine/FF/fuelflow-0rd</property>
 				</sum>
 			</product>
     			</function>
@@ -378,7 +378,7 @@
 		<switch name="FTinit">
 			<default value="atmosphere/T-degC"/>
 			<test value="aircraft/engine/FT-1-degC">
-				simulation/sim-time-sec gt 1
+				simulation/sim-time-sec gt 15
 			</test>
 			<output>aircraft/engine/FT-degC</output>
 		</switch>
@@ -435,23 +435,55 @@
 
 <!--OIL TEMP -->
 
-		<fcs_function name="aircraft/engine/cowling-Temp-degC">
+		<fcs_function name="aircraft/engine/OT/cowling-deltaTemp-degC">
     			<function>
-       			<description>cowling temperature</description>
-				<value>80</value>
+       		<description>cowling temperature change</description>
+				<product>
+					<property>sim-dt-sec</property>
+					<difference>
+						<property>aircraft/engine/OT/eng-cowling-W</property>
+						<property>aircraft/engine/OT/cowl-air-W</property>
+					</difference>
+					<pow>
+						<product>
+							<value>810208.8</value>
+            					<property>atmosphere/rho-slugs_ft3</property>
+						</product>
+						<value>-1</value>
+					</pow>
+				</product>
     			</function>
 		</fcs_function>
 
-		<fcs_function name="aircraft/engine/Heat-rejection-W">
+		<fcs_function name="aircraft/engine/OT/cowling-Temp1-degC">
+    			<function>
+       		<description>cowling temperature</description>
+				<sum>
+					<property>aircraft/engine/OT/cowling-Temp-degC</property>
+					<property>aircraft/engine/OT/cowling-deltaTemp-degC</property>
+				</sum>
+    			</function>
+		</fcs_function>
+
+		<switch name="cowling-Temp-init">
+			<default value="atmosphere/T-degC"/>
+			<test value="aircraft/engine/OT/cowling-Temp1-degC">
+				simulation/sim-time-sec gt 15
+			</test>
+			<output>aircraft/engine/OT/cowling-Temp-degC</output>
+		</switch>
+
+		<fcs_function name="aircraft/engine/OT/Heat-rejection-W">
     			<function>
        			<description>engine oil heat rejection</description>
 				<sum>
 					<table>
             				<independentVar lookup="row">aircraft/engine/TOT-target-degC</independentVar>
-            				<independentVar lookup="column">aircraft/engine/cowling-Temp-degC</independentVar> 	
+            				<independentVar lookup="column">aircraft/engine/OT/cowling-Temp-degC</independentVar> 	
             				<tableData>
 								-51.1	121.1
 							-51.1	0	0
+							121.0	0	0
 							121.1	2016	0
 							482	6242	14507
 							537.8	7210	16793
@@ -474,35 +506,113 @@
     			</function>
 		</fcs_function>
 
-		<fcs_function name="aircraft/engine/Delta-OT-degC">
+		<fcs_function name="aircraft/engine/OT/eng-cowling-W">
     			<function>
-       			<description>Oil temp change</description>
-	 			<product>
-					<!--property>aircraft/engine/dt-indication</property-->
-					<property>sim-dt-sec</property>
-					<table>
-            					<independentVar lookup="row">propulsion/engine/power-hp</independentVar>
-            					<independentVar lookup="column">aircraft/engine/OT-true-degC</independentVar> 	<!-- to simulate the thermostat in the oil cooler-->
-            					<tableData>
-				-54		50		60		70	76	82
-			0	-0.01		-0.01		-0.015		-0.02	-0.02	-0.02
-			35	1.242		1.242		0.9		0.2	0.05	0
-			380	1.8417		1.8417		0.6		0.3	0.07	0
-			458	2.0707		2.0707		1.0		0.5	0.08	0
-            					</tableData>
-      					</table>
+       		<description>engine to cowling heat rejection</description>
+				<product>
+					<value>20</value>
+     					<difference>
+						<property>aircraft/engine/OT-true-degC</property>
+            				<property>aircraft/engine/OT/cowling-Temp-degC</property>
+					</difference>
 				</product>
     			</function>
 		</fcs_function>
 
-		<fcs_function name="aircraft/engine/OT-true1-degC">
+		<fcs_function name="aircraft/engine/u-cooler-fps">
+    			<function>
+     				<sum>
+            			<property>velocities/u-aero-fps</property>
+					<property>propulsion/engine/prop-induced-velocity_fps</property>
+				</sum>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/OT/cowl-air-W">
+    			<function>
+       		<description>cowling to air heat rejection</description>
+				<product>
+					<table>
+            				<independentVar lookup="row">aircraft/engine/u-cooler-fps</independentVar>
+            				<tableData>
+							0	5
+							30	20
+            				</tableData>
+      				</table>
+     					<difference>
+            				<property>aircraft/engine/OT/cowling-Temp-degC</property>
+						<property>/environment/temperature-degc</property>
+					</difference>
+				</product>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/OT/oil-thermostat-pos">
+    			<function>
+       			<description>position of oil thermostat</description>
+				<table>
+            			<independentVar lookup="row">aircraft/engine/OT-true-degC</independentVar>
+            			<tableData>
+						65	0
+						80	1
+            			</tableData>
+      			</table>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/OT/oil-cooler-W">
+    			<function>
+       			<description>oil cooler heat exchange</description>
+				<product>
+					<property>aircraft/engine/OT/oil-thermostat-pos</property>
+					<table>
+            				<independentVar lookup="row">aircraft/engine/N1-par</independentVar> <!--lower eff due to lower oil flow-->
+            				<tableData>
+							0	0
+							70	1
+            				</tableData>
+      				</table>
+					<table>
+            				<independentVar lookup="row">aircraft/engine/u-cooler-fps</independentVar> <!--lower eff due to lack of airflow -->
+            				<tableData>
+							0	0
+							60	1
+            				</tableData>
+      				</table>
+					<difference>
+						<property>aircraft/engine/OT-true-degC</property>
+						<property>/environment/temperature-degc</property>
+					</difference>
+					<property>aircraft/engine/OT/oil-cooler-factor</property>
+				</product>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/OT/Delta-OT-degC">
+    			<function>
+       			<description>Oil temp change</description>
+	 			<product>
+					<property>sim-dt-sec</property>
+					<difference>
+						<property>aircraft/engine/OT/Heat-rejection-W</property>
+						<sum>
+							<property>aircraft/engine/OT/oil-cooler-W</property>
+							<property>aircraft/engine/OT/eng-cowling-W</property>
+						</sum>
+					</difference>
+					<value>0.00004</value>
+				</product>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/OT/OT-true1-degC">
     			<function>
        			<description>Oil temperature before filter</description>
 				<max>
 					<property>atmosphere/T-degC</property>
 					<sum>
 						<property>aircraft/engine/OT-true-degC</property>
-						<property>aircraft/engine/Delta-OT-degC</property>
+						<property>aircraft/engine/OT/Delta-OT-degC</property>
 					</sum>
 				</max>
     			</function>
@@ -510,8 +620,8 @@
 
 		<switch name="OTinit">
 			<default value="0"/>
-			<test value="aircraft/engine/OT-true1-degC">
-				simulation/sim-time-sec gt 1
+			<test value="aircraft/engine/OT/OT-true1-degC">
+				simulation/sim-time-sec gt 15
 			</test>
 			<output>aircraft/engine/OT-true-degC</output>
 		</switch>
@@ -693,7 +803,7 @@
     			</function>
 		</fcs_function>
 
-		<fcs_function name="aircraft/engine/dTOT20-degC">
+		<fcs_function name="aircraft/engine/TOT/dTOT20-degC">
     			<function>
        			<description>TOT change when spooling up n1 smaller 20</description>
 				<product>
@@ -705,13 +815,13 @@
 
 		<switch name="dTOT20">
 			<default value="0"/>
-			<test value="aircraft/engine/dTOT20-degC">
+			<test value="aircraft/engine/TOT/dTOT20-degC">
 				aircraft/engine/N1-par lt 20
 			</test>
-			<output>aircraft/engine/dTOT20-l-degC</output>
+			<output>aircraft/engine/TOT/dTOT20-l-degC</output>
 		</switch>
 
-		<fcs_function name="aircraft/engine/dTOT25-degC">
+		<fcs_function name="aircraft/engine/TOT/dTOT25-degC">
     			<function>
        			<description>TOT change when spooling up n1 smaller 25</description>
 				<product>
@@ -723,14 +833,14 @@
 
 		<switch name="dTOT25">
 			<default value="0"/>
-			<test logic="AND" value="aircraft/engine/dTOT25-degC">
+			<test logic="AND" value="aircraft/engine/TOT/dTOT25-degC">
 				aircraft/engine/N1-par ge 20
 				aircraft/engine/N1-par lt 25
 			</test>
-			<output>aircraft/engine/dTOT25-l-degC</output>
+			<output>aircraft/engine/TOT/dTOT25-l-degC</output>
 		</switch>
 
-		<fcs_function name="aircraft/engine/dTOT30-degC">
+		<fcs_function name="aircraft/engine/TOT/dTOT30-degC">
     			<function>
        			<description>TOT change when spooling up n1 smaller 30</description>
 				<product>
@@ -742,14 +852,14 @@
 
 		<switch name="dTOT30">
 			<default value="0"/>
-			<test logic="AND" value="aircraft/engine/dTOT30-degC">
+			<test logic="AND" value="aircraft/engine/TOT/dTOT30-degC">
 				aircraft/engine/N1-par ge 25
 				aircraft/engine/N1-par lt 30
 			</test>
-			<output>aircraft/engine/dTOT30-l-degC</output>
+			<output>aircraft/engine/TOT/dTOT30-l-degC</output>
 		</switch>
 
-		<fcs_function name="aircraft/engine/dTOT35-degC">
+		<fcs_function name="aircraft/engine/TOT/dTOT35-degC">
     			<function>
        			<description>TOT change when spooling up n1 smaller 35</description>
 				<product>
@@ -761,14 +871,14 @@
 
 		<switch name="dTOT35">
 			<default value="0"/>
-			<test logic="AND" value="aircraft/engine/dTOT35-degC">
+			<test logic="AND" value="aircraft/engine/TOT/dTOT35-degC">
 				aircraft/engine/N1-par ge 30
 				aircraft/engine/N1-par lt 35
 			</test>
-			<output>aircraft/engine/dTOT35-l-degC</output>
+			<output>aircraft/engine/TOT/dTOT35-l-degC</output>
 		</switch>
 
-		<fcs_function name="aircraft/engine/dTOT65-degC">
+		<fcs_function name="aircraft/engine/TOT/dTOT65-degC">
     			<function>
        			<description>TOT change when spooling up n1 smaller 65</description>
 				<product>
@@ -784,11 +894,11 @@
 
 		<switch name="dTOT65">
 			<default value="0"/>
-			<test logic="AND" value="aircraft/engine/dTOT65-degC">
+			<test logic="AND" value="aircraft/engine/TOT/dTOT65-degC">
 				aircraft/engine/N1-par ge 35
 				aircraft/engine/N1-par lt 65
 			</test>
-			<output>aircraft/engine/dTOT65-l-degC</output>
+			<output>aircraft/engine/TOT/dTOT65-l-degC</output>
 		</switch>
 
 		<fcs_function name="aircraft/engine/TOTsu-degC">
@@ -796,11 +906,11 @@
        			<description>TOT when spooling up </description>
 				<sum>
 					<property>aircraft/engine/TOT-target-degC</property>
-					<property>aircraft/engine/dTOT20-l-degC</property>
-					<property>aircraft/engine/dTOT25-l-degC</property>
-					<property>aircraft/engine/dTOT30-l-degC</property>
-					<property>aircraft/engine/dTOT35-l-degC</property>
-					<property>aircraft/engine/dTOT65-l-degC</property>
+					<property>aircraft/engine/TOT/dTOT20-l-degC</property>
+					<property>aircraft/engine/TOT/dTOT25-l-degC</property>
+					<property>aircraft/engine/TOT/dTOT30-l-degC</property>
+					<property>aircraft/engine/TOT/dTOT35-l-degC</property>
+					<property>aircraft/engine/TOT/dTOT65-l-degC</property>
 				</sum>	
     			</function>
 		</fcs_function>
@@ -810,7 +920,7 @@
 			<test value="aircraft/engine/TOTr-degC">
 				propulsion/engine/set-running eq 1
 			</test>
-			<output>aircraft/engine/TOT-target1-degC</output>
+			<output>aircraft/engine/TOT/TOT-target1-degC</output>
 		</switch>
 
 		<switch name="notrunningTOT">
@@ -820,7 +930,7 @@
 				/engines/engine[0]/n1 le 0.1
 				aircraft/engine/motoring eq 1
 			</test>
-			<output>aircraft/engine/TOT-target2-degC</output>
+			<output>aircraft/engine/TOT/TOT-target2-degC</output>
 		</switch>
 
 		<switch name="spoolupTOT">
@@ -828,16 +938,16 @@
 			<test logic="OR" value="aircraft/engine/TOTsu-degC">
 				aircraft/engine/spooling-up eq 1
 			</test>
-			<output>aircraft/engine/TOT-target3-degC</output>
+			<output>aircraft/engine/TOT/TOT-target3-degC</output>
 		</switch>
 
 		<fcs_function name="aircraft/engine/TOT-targetsum-degC">
     			<function>
        			<description>TOT</description>
 				<sum>
-					<property>aircraft/engine/TOT-target1-degC</property>
-					<property>aircraft/engine/TOT-target2-degC</property>
-					<property>aircraft/engine/TOT-target3-degC</property>
+					<property>aircraft/engine/TOT/TOT-target1-degC</property>
+					<property>aircraft/engine/TOT/TOT-target2-degC</property>
+					<property>aircraft/engine/TOT/TOT-target3-degC</property>
 				</sum>	
     			</function>
 		</fcs_function>
@@ -845,7 +955,7 @@
 		<switch name="TOTinit">
 			<default value="atmosphere/T-degC"/>
 			<test value="aircraft/engine/TOT-targetsum-degC">
-				simulation/sim-time-sec gt 5
+				simulation/sim-time-sec gt 15
 			</test>
 			<output>aircraft/engine/TOT-target-degC</output>
 		</switch>
@@ -855,7 +965,7 @@
 			<test value="0">
 				/extra500/instrumentation/EIP/state eq 0
 			</test>
-			<output>aircraft/engine/TOT-target1-degC</output>
+			<output>aircraft/engine/TOT/TOT-target1-degC</output>
 		</switch>
 
 		<switch name="TOT927limitevent">
@@ -918,7 +1028,7 @@
    			 </function>
 		</fcs_function>
 
-		<fcs_function name="aircraft/engine/F-RE">
+		<fcs_function name="aircraft/engine/Fuel/F-RE">
    			 <function>
       			 <description>Fuel Reynolds number</description>
 	 				<product>
@@ -931,26 +1041,26 @@
    			 </function>
 		</fcs_function>
 
-		<fcs_function name="aircraft/engine/F-lambda">
+		<fcs_function name="aircraft/engine/Fuel/F-lambda">
    			 <function>
       			 <description>Fuel lambda laminar</description>
 	 				<product>
 						<value>64</value>
 						<pow>
-							<property>aircraft/engine/F-RE</property>
+							<property>aircraft/engine/Fuel/F-RE</property>
 							<value>-1</value>
 						</pow>
 					</product>
    			 </function>
 		</fcs_function>
 
-		<fcs_function name="aircraft/engine/F-pressloss-psid">
+		<fcs_function name="aircraft/engine/Fuel/F-pressloss-psid">
    			 <function>
       			 <description>Fuel pressure loss</description>
 	 				<product>
 						<property>/extra500/const/PA2PSI</property>
 						<value>-0.00372</value>
-						<property>aircraft/engine/F-lambda</property>
+						<property>aircraft/engine/Fuel/F-lambda</property>
 						<property>aircraft/engine/Fdensity-kgm3</property>
 						<property>aircraft/engine/FF-l_h</property>
 						<property>aircraft/engine/FF-l_h</property>
@@ -958,7 +1068,7 @@
    			 </function>
 		</fcs_function>
 
-		<fcs_function name="aircraft/engine/F-pumppress-psid">
+		<fcs_function name="aircraft/engine/Fuel/F-pumppress-psid">
    			 <function>
       			 <description>fuel pump Fuel Pressure</description>
 	 				<product>
@@ -988,8 +1098,8 @@
    			 <function>
       			 <description>Fuel pressure loss</description>
 	 				<sum>
-						<property>aircraft/engine/F-pumppress-psid</property>
-						<property>aircraft/engine/F-pressloss-psid</property>
+						<property>aircraft/engine/Fuel/F-pumppress-psid</property>
+						<property>aircraft/engine/Fuel/F-pressloss-psid</property>
 					</sum>
    			 </function>
 		</fcs_function>
@@ -1046,7 +1156,7 @@
 
 	<channel name="TOT">
 		<lag_filter name ="aircraft/engine/TOT-degC">
- 			<input>aircraft/engine/TOT-target1-degC</input>
+ 			<input>aircraft/engine/TOT/TOT-target1-degC</input>
 			<c1>1.0</c1>
 		</lag_filter>
 	</channel>
