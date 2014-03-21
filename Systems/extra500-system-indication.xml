@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2014-03-17
+      Date:             2014-03-21
 -->
 
 <system name="indication">
@@ -473,17 +473,30 @@
 			<output>aircraft/engine/OT/cowling-Temp-degC</output>
 		</switch>
 
-		<fcs_function name="aircraft/engine/OT/Heat-rejection-W">
+		<fcs_function name="aircraft/engine/OT/Heat-rejection1-W">
     			<function>
        			<description>engine oil heat rejection</description>
 				<sum>
 					<table>
             				<independentVar lookup="row">aircraft/engine/TOT-target-degC</independentVar>
-            				<independentVar lookup="column">aircraft/engine/OT/cowling-Temp-degC</independentVar> 	
-            				<tableData>
+            				<independentVar lookup="column">aircraft/engine/OT/cowling-Temp-degC</independentVar> 
+            				<independentVar lookup="table">propulsion/engine/power-hp</independentVar>	
+            				<tableData breakPoint="0">
 								-51.1	121.1
-							-51.1	0	0
-							121.0	0	0
+							-51.1	0	0							
+							121.1	800	0
+							482	2400	6700
+							537.8	721	1679
+							593.3	791	1916
+							648.9	896	2136
+							721.1	1019	2461
+							751.7	1055	2558
+							776.7	1090	2664
+							810	1143	2813
+            				</tableData>
+            				<tableData breakPoint="10">
+								-51.1	121.1
+							-51.1	0	0							
 							121.1	2016	0
 							482	6242	14507
 							537.8	7210	16793
@@ -505,6 +518,14 @@
 				</sum>
     			</function>
 		</fcs_function>
+
+		<switch name="heatrejection">
+			<default value="0"/>
+			<test value="aircraft/engine/OT/Heat-rejection1-W">
+				aircraft/engine/TOT-target-degC gt aircraft/engine/OT-true-degC
+			</test>
+			<output>aircraft/engine/OT/Heat-rejection-W</output>
+		</switch>
 
 		<fcs_function name="aircraft/engine/OT/eng-cowling-W">
     			<function>
@@ -536,7 +557,7 @@
             				<independentVar lookup="row">aircraft/engine/u-cooler-fps</independentVar>
             				<tableData>
 							0	5
-							30	20
+							30	15
             				</tableData>
       				</table>
      					<difference>
@@ -553,8 +574,10 @@
 				<table>
             			<independentVar lookup="row">aircraft/engine/OT-true-degC</independentVar>
             			<tableData>
-						65	0
-						80	1
+						55	0
+						70	0.3
+						75	0.5
+						78	1
             			</tableData>
       			</table>
     			</function>
@@ -619,7 +642,7 @@
 		</fcs_function>
 
 		<switch name="OTinit">
-			<default value="0"/>
+			<default value="atmosphere/T-degC"/>
 			<test value="aircraft/engine/OT/OT-true1-degC">
 				simulation/sim-time-sec gt 15
 			</test>
@@ -746,7 +769,7 @@
 		</fcs_function>
 
 <!-- Turbine Outlet Temperature -->
-		<fcs_function name="aircraft/engine/TOTr-degC">
+		<fcs_function name="aircraft/engine/TOT/TOTr-degC">
     			<function>
        			<description>Indicated TOT when eng running</description>
 				<sum>
@@ -769,7 +792,7 @@
     			</function>
 		</fcs_function>
 
-		<fcs_function name="aircraft/engine/Delta-TOTsd-degC">
+		<fcs_function name="aircraft/engine/TOT/Delta-TOTsd-degC">
     			<function>
        			<description>TOT change when spooling down</description>
 				<product>
@@ -777,28 +800,25 @@
 					<value>0.00015</value>
 					<pow>
 						<max>
-							<value>0.1</value>
+							<value>0.5</value>
 							<property>propulsion/engine/n1</property>
 						</max>
 						<value>2</value>
 					</pow>
-					<sum>
+					<difference>
 						<property>aircraft/engine/TOT-target-degC</property>
-						<product>
-							<value>-1</value>
-							<property>aircraft/engine/OT-true-degC</property>
-						</product>
-					</sum>
+						<property>aircraft/engine/OT-true-degC</property>
+					</difference>
 				</product>
     			</function>
 		</fcs_function>
 
-		<fcs_function name="aircraft/engine/TOTnr-degC">
+		<fcs_function name="aircraft/engine/TOT/TOTnr-degC">
     			<function>
        			<description>TOT when spooling down or not running or motoring</description>
 				<difference>
 					<property>aircraft/engine/TOT-target-degC</property>
-					<property>aircraft/engine/Delta-TOTsd-degC</property>
+					<property>aircraft/engine/TOT/Delta-TOTsd-degC</property>
 				</difference>
     			</function>
 		</fcs_function>
@@ -885,7 +905,7 @@
 					<value>-0.25</value>
 					<difference>
 						<property>aircraft/engine/TOT-target-degC</property>
-						<property>aircraft/engine/TOTr-degC</property>
+						<property>aircraft/engine/TOT/TOTr-degC</property>
 					</difference>
 					<property>sim-dt-sec</property>
 				</product>
@@ -901,7 +921,7 @@
 			<output>aircraft/engine/TOT/dTOT65-l-degC</output>
 		</switch>
 
-		<fcs_function name="aircraft/engine/TOTsu-degC">
+		<fcs_function name="aircraft/engine/TOT/TOTsu-degC">
     			<function>
        			<description>TOT when spooling up </description>
 				<sum>
@@ -917,7 +937,7 @@
 
 		<switch name="engrunningTOT">
 			<default value="0"/>
-			<test value="aircraft/engine/TOTr-degC">
+			<test value="aircraft/engine/TOT/TOTr-degC">
 				propulsion/engine/set-running eq 1
 			</test>
 			<output>aircraft/engine/TOT/TOT-target1-degC</output>
@@ -925,7 +945,7 @@
 
 		<switch name="notrunningTOT">
 			<default value="0"/>
-			<test logic="OR" value="aircraft/engine/TOTnr-degC">
+			<test logic="OR" value="aircraft/engine/TOT/TOTnr-degC">
 				aircraft/engine/spooling-down eq 1
 				/engines/engine[0]/n1 le 0.1
 				aircraft/engine/motoring eq 1
@@ -935,13 +955,13 @@
 
 		<switch name="spoolupTOT">
 			<default value="0"/>
-			<test logic="OR" value="aircraft/engine/TOTsu-degC">
+			<test logic="OR" value="aircraft/engine/TOT/TOTsu-degC">
 				aircraft/engine/spooling-up eq 1
 			</test>
 			<output>aircraft/engine/TOT/TOT-target3-degC</output>
 		</switch>
 
-		<fcs_function name="aircraft/engine/TOT-targetsum-degC">
+		<fcs_function name="aircraft/engine/TOT/TOT-targetsum-degC">
     			<function>
        			<description>TOT</description>
 				<sum>
@@ -954,7 +974,7 @@
 
 		<switch name="TOTinit">
 			<default value="atmosphere/T-degC"/>
-			<test value="aircraft/engine/TOT-targetsum-degC">
+			<test value="aircraft/engine/TOT/TOT-targetsum-degC">
 				simulation/sim-time-sec gt 15
 			</test>
 			<output>aircraft/engine/TOT-target-degC</output>

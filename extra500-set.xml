@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             02.03.2014
+      Date:             18.03.2014
 
 
 ************************************************************************
@@ -1632,7 +1632,7 @@ JSBSim Extra Aircraft - Extra 500.
 		  	<engine>
 				<OP-maxsetting-psi type="double">125</OP-maxsetting-psi>
 				<OT>
-					<oil-cooler-factor type="double">400</oil-cooler-factor>
+					<oil-cooler-factor type="double">350</oil-cooler-factor>
 					<cowling-Temp-degC>0</cowling-Temp-degC>			<!--dummy value -->
 					<cowling-deltaTemp-degC>0</cowling-deltaTemp-degC>	<!--dummy value -->
 				</OT>
