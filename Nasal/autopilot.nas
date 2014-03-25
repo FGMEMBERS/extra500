@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg 
-#      Date:             03.01.2014
+#      Date:             25.03.2014
 #
 var FlightManagementSystemClass = {
 	new : func(root,name){
@@ -114,9 +114,6 @@ var AutopilotClass = {
 		m.nIsLocalizer		= props.globals.initNode("/autopilot/radionav-channel/is-localizer-frequency",0,"BOOL");
 		m.nInRange		= props.globals.initNode("/autopilot/radionav-channel/in-range",0,"DOUBLE");	
 		
-		m.nAPState 	= props.globals.getNode("/extra500/instrumentation/Autopilot/state");		
-		m.nTCSpin 	= props.globals.getNode("/instrumentation/turn-indicator/spin");			
-		m.nAPacc 	= props.globals.getNode("/autopilot/accsens-channel/ap-z-accel");
 		m.nCurrentAlt 	= props.globals.getNode("/instrumentation/altimeter-IFD-LH/indicated-altitude-ft");	
 		m.nAlterror 	= props.globals.getNode("/autopilot/alt-channel/alt-error-ft");	
 		m.nNavsource	= props.globals.getNode("/instrumentation/nav-source");	
@@ -127,7 +124,6 @@ var AutopilotClass = {
 		m._brightness		= 0;
 		m._brightnessListener   = nil;
 		m._nBacklight 		= m._nRoot.initNode("Backlight/state",0.0,"DOUBLE");
-		m.nStallWarnerOn 	= props.globals.getNode("/extra500/panel/Annunciator/StallWarn/state");																																																												
 		
 		
 		m.dt = 0;
@@ -213,10 +209,10 @@ var AutopilotClass = {
 			me._watt = me._nWatt.getValue();
 			me._ampere = me._watt / me._volt;
 			me._ampere += (0.3 * me._brightness) / me._volt;
-			me.nAPState.setValue(1);
+			setprop("/extra500/instrumentation/Autopilot/state",1);
 		}else{
 			me._ampere = 0;
-			me.nAPState.setValue(0);
+			setprop("/extra500/instrumentation/Autopilot/state",0);
 		}
 		me._nBacklight.setValue(me._brightness * me._qos * me._voltNorm);
 		me._nAmpere.setValue(me._ampere);
@@ -227,9 +223,15 @@ var AutopilotClass = {
 	},
 # disengages the autopilot
 	_APDisengage : func(){
+# press d twice to shut off the disengage sound
+		if ( me.ndisengSound.getValue() == 1 ) {
+			me.ndisengSound.setValue(0);
+		}
+# if AP is engaged sound the disengage sound!
 		if ( me._CheckRollModeActive() == 1)  {
 			me.ndisengSound.setValue(1);
 		}
+# set all modes to off
 		me.nModeHeading.setValue(0);
 		me.nModeNav.setValue(0);
 		me.nModeNavGpss.setValue(0);
@@ -245,7 +247,7 @@ var AutopilotClass = {
 	},
 # checks is a roll mode (HDG or NAV) is active. Must be active to engage any pitch mode or yaw damper
 	_CheckRollModeActive : func(){
-		if ( (me.nModeHeading.getValue() == 1) or (me.nModeNav.getValue() == 1) ){
+		if ( (me.nModeHeading.getValue() == 1) or (me.nModeNav.getValue() == 1) or (getprop("/autopilot/mode/cws") == 1) ){
 			return 1
 		}else{
 			return 0
@@ -257,7 +259,7 @@ var AutopilotClass = {
 # 3 g-forces not to high (above 0.6, disregarding 1g of earth)
 # 4 aircraft stall warner not ON
 	_CheckRollModeAble : func(){
-		if ( (me.nAPState.getValue() == 1) and (me.nTCSpin.getValue() > 0.9) and ( math.abs(me.nAPacc.getValue()) < 0.6 ) and ( me.nStallWarnerOn.getValue() == 0) ){
+		if ( ( getprop("/extra500/instrumentation/Autopilot/state") == 1) and ( getprop("/instrumentation/turn-indicator/spin") > 0.9) and ( math.abs( getprop("/autopilot/accsens-channel/ap-z-accel")) < 0.6 ) and ( getprop("/fdm/jsbsim/aircraft/stallwarner/state") == 0) ){
 			if ( ( me.nModeFail.getValue() == 1 ) or ( me.nModeDiseng.getValue() == 1 ) ) {
 				me.nModeFail.setValue(0);
 				me.nModeRdy.setValue(1);

@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2013-10-24
+      Date:             2014-03-25
 -->
  
 <PropertyList>
@@ -313,6 +313,31 @@
 	       </position>
        </apdis>
 
+<!--CWS disconnect-->
+       <cwsdis>
+	       <name>cws disconnect</name>
+	       <reference-dist>1</reference-dist>
+	       <max-dist>100.0</max-dist>
+	       <mode>once</mode>
+	       <path>Aircraft/extra500/Sounds/CWSdisconnect.wav</path>
+	       <condition>
+		       <or>
+			       <property>/autopilot/mode/cws-armed</property>
+		       </or>
+	       </condition>
+	       <volume>
+		       <property>/extra500/instrumentation/Audiopanel/volsetting/apdis</property>
+		       <factor>1.0</factor>
+		       <offset>0.5</offset>
+		       <min>0.0</min>
+	       </volume>
+	       <position>
+		       <x>0.2</x>
+		       <y>0</y>
+		       <z>0</z>
+	       </position>
+       </cwsdis>
+
 <!--gear warn-->
        <gearwarn>
 	       <name>gear warning</name>
@@ -323,7 +348,6 @@
 	       <condition>
 		       <or>
 			       <property>/systems/gear/gearwarn/horn/state</property>
-	<!-- FIXME: the property for day/night/test must be here -->
 		       </or>
 	       </condition>
 	       <volume>
@@ -349,7 +373,17 @@
 	       <condition>
 		       <or>
 			       <property>/extra500/system/pitot/StallWarn/state</property>
-	<!-- FIXME: the property for day/night/test must be here -->
+				 <and>
+				 	<property>/extra500/system/dimming/Test</property>
+					<greater-than>
+				 		<property>/extra500/panel/CircuitBreaker/BankC/InstrumentLight/voltOut</property>
+						<value>10</value>
+					</greater-than>
+					<greater-than>
+				 		<property>/extra500/panel/CircuitBreaker/BankD/StallWarning/voltOut</property>
+						<value>10</value>
+					</greater-than>
+				 </and>
 		       </or>
 	       </condition>
 	       <volume>
@@ -375,7 +409,13 @@
 	       <condition>
 		       <or>
 			       <property>/extra500/sound/overspeedWarning</property>
-	<!-- FIXME: the property for day/night/test must be here -->
+				 <and>
+				 	<property>/extra500/system/dimming/Test</property>
+					<greater-than>
+				 		<property>/extra500/panel/CircuitBreaker/BankC/VneWarn/voltOut</property>
+						<value>10</value>
+					</greater-than>
+				 </and>
 		       </or>
 	       </condition>
 	       <volume>
