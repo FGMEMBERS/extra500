@@ -25,10 +25,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="3.90625"
-     inkscape:cx="13.056"
-     inkscape:cy="71.761831"
+     inkscape:cx="201.728"
+     inkscape:cy="52.561831"
      inkscape:document-units="px"
-     inkscape:current-layer="layer6"
+     inkscape:current-layer="layer3"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -387,35 +387,35 @@
        sodipodi:linespacing="125%"
        id="text4098"
        y="114.60262"
-       x="197.88686"
+       x="213.99831"
        style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
        xml:space="preserve"><tspan
          y="114.60262"
-         x="197.88686"
+         x="213.99831"
          id="tspan4100"
-         sodipodi:role="line">PRES ALT:</tspan></text>
+         sodipodi:role="line">ALT:</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
-       x="296.56976"
+       style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
+       x="330.80685"
        y="114.60262"
        id="XPDR_ALT"
        sodipodi:linespacing="125%"
        transform="scale(0.99307963,1.0069686)"><tspan
          sodipodi:role="line"
          id="tspan4104"
-         x="296.56976"
+         x="330.80685"
          y="114.60262">-30</tspan></text>
     <text
        transform="scale(0.99307963,1.0069686)"
        sodipodi:linespacing="125%"
        id="text4106"
        y="114.60262"
-       x="354.97421"
+       x="338.86264"
        style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
        xml:space="preserve"><tspan
          y="114.60262"
-         x="354.97421"
+         x="338.86264"
          id="tspan4108"
          sodipodi:role="line">FT</tspan></text>
     <text

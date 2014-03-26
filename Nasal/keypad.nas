@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jun 27 2013
 #
-#      Last change:      Eric van den Berg
-#      Date:             02.02.14
+#      Last change:      Dirk Dittmann
+#      Date:             29.03.14
 #
 
 # var KeypadDisplayClass = {
@@ -350,12 +350,17 @@ var KeypadXPDRWidget = {
 		m._tree = {
 			code	: props.globals.initNode("/instrumentation/transponder/id-code",0,"INT"),
 			mode 	: props.globals.initNode("/instrumentation/transponder/inputs/knob-mode",0,"INT"),
+			alt	: props.globals.initNode("/instrumentation/transponder/altitude",0,"INT"),
+			altValid: props.globals.initNode("/instrumentation/transponder/altitude-valid",0,"BOOL"),
+			
 		};
 		m._can = {
 			value 	: m._group.getElementById("XPDR_Value"),
 			mode 	: m._group.getElementById("XPDR_MODE"),
+			alt 	: m._group.getElementById("XPDR_ALT"),
 		};
 		m._xpdr = 0;
+		m._alt = 0;
 		m._xpdrMode = 0;
 		m._inputIndex = 0;
 		m._input = ["-","-","-","-"];
@@ -378,6 +383,7 @@ var KeypadXPDRWidget = {
 	setListeners : func(instance) {
 		append(me._listeners, setlistener(me._tree.code,func(n){instance._onXPDRChange(n);},1,0) );
 		append(me._listeners, setlistener(me._tree.mode,func(n){instance._onXPDRmodeChange(n);},1,0) );
+		append(me._listeners, setlistener(me._tree.alt,func(n){instance._onXPDRaltChange(n);},1,0) );
 	},
 	setVisible : func(visibility){
 		me._group.setVisible(visibility);
@@ -394,6 +400,14 @@ var KeypadXPDRWidget = {
 	_onXPDRChange : func(n){
 		me._xpdr = n.getValue(); 
 		me._can.value.setText(sprintf("%i",me._xpdr));
+	},
+	_onXPDRaltChange : func(n){
+		me._alt = n.getValue();
+		if(me._tree.altValid.getBoolValue()){
+			me._can.alt.setText(sprintf("%i",me._alt));
+		}else{
+			me._can.alt.setText("---");
+		}
 	},
 	_onXPDRmodeChange : func(n){
 		me._xpdrMode = n.getValue(); 
