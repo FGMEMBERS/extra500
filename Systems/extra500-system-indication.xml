@@ -745,20 +745,20 @@
             						<independentVar lookup="row">propulsion/engine/n1</independentVar>
 							<independentVar lookup="column">aircraft/engine/OT-degC</independentVar>	<!-- oil pressure dependence on oil temperature-->
             						<tableData>
-						0	25	82
-					0	0	0	0
-					12	0	0	0
-					21	30	20	15
-					26	63	46	40	
-					42	135	123	48
-					60	139	135	60
-					70	143	140	100
-					72.5	147	145	116
-					75	149	147	119
-					80	151	150	122
-					90	154	153	124
-					100	155	154	125
-					110	156	155	125
+						0	15	60	82
+					0	0	0	0	0
+					12	0	0	0	0
+					21	30	20	15	14
+					26	63	61	40	20
+					42	135	123	48	42
+					60	139	135	60	55
+					70	143	140	100	95
+					72.5	147	145	116	111
+					75	149	147	119	114
+					80	151	150	122	117
+					90	154	153	124	119
+					100	155	154	125	121
+					110	156	155	125	121
             						</tableData>
       						</table>
 					</sum>

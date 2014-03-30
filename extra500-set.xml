@@ -1630,7 +1630,7 @@ JSBSim Extra Aircraft - Extra 500.
 				<cd0>0.021</cd0>				
 		  		</vstab>
 		  	<engine>
-				<OP-maxsetting-psi type="double">125</OP-maxsetting-psi>
+				<OP-maxsetting-psi type="double">128</OP-maxsetting-psi>
 				<OT>
 					<oil-cooler-factor type="double">450</oil-cooler-factor>
 					<cowling-Temp-degC>0</cowling-Temp-degC>			<!--dummy value -->
