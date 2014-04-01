@@ -387,35 +387,35 @@
        sodipodi:linespacing="125%"
        id="text4098"
        y="114.60262"
-       x="213.99831"
+       x="183.78934"
        style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
        xml:space="preserve"><tspan
          y="114.60262"
-         x="213.99831"
+         x="183.78934"
          id="tspan4100"
-         sodipodi:role="line">ALT:</tspan></text>
+         sodipodi:role="line">PRES ALT:</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
-       x="330.80685"
+       x="346.91843"
        y="114.60262"
        id="XPDR_ALT"
        sodipodi:linespacing="125%"
        transform="scale(0.99307963,1.0069686)"><tspan
          sodipodi:role="line"
          id="tspan4104"
-         x="330.80685"
-         y="114.60262">-30</tspan></text>
+         x="346.91843"
+         y="114.60262">30000</tspan></text>
     <text
        transform="scale(0.99307963,1.0069686)"
        sodipodi:linespacing="125%"
        id="text4106"
        y="114.60262"
-       x="338.86264"
+       x="352.96027"
        style="font-size:18.74264336px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Mono;-inkscape-font-specification:Liberation Mono"
        xml:space="preserve"><tspan
          y="114.60262"
-         x="338.86264"
+         x="352.96027"
          id="tspan4108"
          sodipodi:role="line">FT</tspan></text>
     <text
