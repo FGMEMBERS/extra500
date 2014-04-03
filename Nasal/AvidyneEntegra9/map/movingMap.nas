@@ -101,6 +101,20 @@ var MovingMap = {
 			BugHDG		: m._group.getElementById("MovingMap_Bug_HDG"),
 			BugFMS		: m._group.getElementById("MovingMap_Bug_FMS"),
 			BugTrue		: m._group.getElementById("MovingMap_Bug_TRUE").updateCenter(),
+			
+			CompassN	: m._group.getElementById("MovingMap_Compass_N"),
+			Compass030	: m._group.getElementById("MovingMap_Compass_030"),
+			Compass060	: m._group.getElementById("MovingMap_Compass_060"),
+			CompassE	: m._group.getElementById("MovingMap_Compass_E"),
+			Compass120	: m._group.getElementById("MovingMap_Compass_120"),
+			Compass150	: m._group.getElementById("MovingMap_Compass_150"),
+			CompassS	: m._group.getElementById("MovingMap_Compass_S"),
+			Compass210	: m._group.getElementById("MovingMap_Compass_210"),
+			Compass240	: m._group.getElementById("MovingMap_Compass_240"),
+			CompassW	: m._group.getElementById("MovingMap_Compass_W"),
+			Compass300	: m._group.getElementById("MovingMap_Compass_300"),
+			Compass330	: m._group.getElementById("MovingMap_Compass_330"),
+			
 		};
 		
 		m._map = Map.new(m._can.LayerMap,name);
@@ -379,18 +393,35 @@ var MovingMap = {
 		
 		me._headingTrue 	= me._tree.HeadingTrue.getValue();
 		me._heading 		= me._tree.Heading.getValue();
+		me._headingRAD		= me._heading * global.CONST.DEG2RAD;
 		
 		me._upHdg	= me._heading;
 		
 		#me.setRefPos(me._lat,me._lon);
 		#me.setHdg(me._upHdg);
-				
+		
+		
+		
 		me._can.HDGValue.setText(sprintf("%03i",global.roundInt(me._heading)));
 		me._can.UpHDGDeg.setText(sprintf("%5.1f",me._upHdg));
 		
 		me._can.CompassRose.setRotation(-me._heading * global.CONST.DEG2RAD);
 		me._can.BugTrue.setRotation((me._headingTrue - me._heading) * global.CONST.DEG2RAD);
 		me._can.BugHDG.setRotation((me._bugHeading - me._heading) * global.CONST.DEG2RAD);
+		
+		me._can.CompassN.setRotation(me._headingRAD);
+		me._can.Compass030.setRotation(me._headingRAD);
+		me._can.Compass060.setRotation(me._headingRAD);
+		me._can.CompassE.setRotation(me._headingRAD);
+		me._can.Compass120.setRotation(me._headingRAD);
+		me._can.Compass150.setRotation(me._headingRAD);
+		me._can.CompassS.setRotation(me._headingRAD);
+		me._can.Compass210.setRotation(me._headingRAD);
+		me._can.Compass240.setRotation(me._headingRAD);
+		me._can.CompassW.setRotation(me._headingRAD);
+		me._can.Compass300.setRotation(me._headingRAD);
+		me._can.Compass330.setRotation(me._headingRAD);
+		
 		
 		if(me._bugFMSactive == 1){
 			me._can.BugFMS.setRotation((me._bugFMS - me._heading) * global.CONST.DEG2RAD);

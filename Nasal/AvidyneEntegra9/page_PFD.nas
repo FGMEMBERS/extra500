@@ -225,6 +225,7 @@ var VerticalSpeedWidget = {
 			Needle		: m._group.getElementById("VS_Needle").updateCenter(),
 			Bug		: m._group.getElementById("VS_Bug").updateCenter(),
 			BugValue	: m._group.getElementById("VS_Indicated"),
+			
 		};
 		m._ap		= 0;
 		m._bug		= 0;
@@ -290,13 +291,13 @@ var AirspeedSpeedWidget = {
 			tas	: props.globals.initNode("/instrumentation/airspeed-IFD-"~m._ifd.name~"/true-speed-kt",0.0,"DOUBLE"),
 		};
 		m._can		= {
-			IAS_Ladder	: m._group.getElementById("IAS_Ladder").set("clip","rect(82px, 639px, 671px, 320px)"),
+			IAS_Ladder	: m._group.getElementById("IAS_Ladder").set("clip","rect(84px, 639px, 688px, 320px)"),
 			IAS_001		: m._group.getElementById("IAS_001").set("clip","rect(327px, 639px, 506px, 320px)"),
 			IAS_010		: m._group.getElementById("IAS_010").set("clip","rect(385px, 639px, 449px, 320px)"),
 			IAS_100		: m._group.getElementById("IAS_100").set("clip","rect(385px, 639px, 449px, 320px)"),
 			Plade		: m._group.getElementById("IAS_BlackPlade"),
 			Zero		: m._group.getElementById("IAS_Zero").setVisible(1),
-			Rate		: m._group.getElementById("IAS_Rate").set("clip","rect(82px, 639px, 671px, 320px)"),
+			Rate		: m._group.getElementById("IAS_Rate").set("clip","rect(84px, 639px, 688px, 320px)"),
 			TAS		: m._group.getElementById("IAS_TAS"),
 		};
 		m._ias		= 0;
@@ -421,7 +422,7 @@ var AltitudeWidget = {
 			alt	: props.globals.initNode("/instrumentation/altimeter-IFD-"~m._ifd.name~"/indicated-altitude-ft",0.0,"DOUBLE"),
 		};
 		m._can		= {
-			Ladder		: m._group.getElementById("ALT_Ladder").set("clip","rect(100px, 1718px, 650px, 1410px)"),
+			Ladder		: m._group.getElementById("ALT_Ladder").set("clip","rect(145px, 1718px, 688px, 1410px)"),
 			U300T		: m._group.getElementById("ALT_LAD_U300T"),
 			U300H		: m._group.getElementById("ALT_LAD_U300H"),
 			U200T		: m._group.getElementById("ALT_LAD_U200T"),
@@ -440,7 +441,7 @@ var AltitudeWidget = {
 			Bar100		: m._group.getElementById("AltBar100").set("clip","rect(385px, 1718px, 449px, 1478px)"),
 			Bar1000		: m._group.getElementById("AltBar1000").set("clip","rect(385px, 1718px, 449px, 1478px)"),
 			Bar10000	: m._group.getElementById("AltBar10000").set("clip","rect(385px, 1718px, 449px, 1478px)"),
-			Bug		: m._group.getElementById("ALT_Bug"),
+			Bug		: m._group.getElementById("ALT_Bug").set("clip","rect(145px, 1718px, 688px, 1410px)"),
 			BugValue	: m._group.getElementById("ALT_Selected"),
 			HPA		: m._group.getElementById("hPa"),
 		};
