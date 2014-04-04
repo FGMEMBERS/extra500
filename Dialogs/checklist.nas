@@ -400,8 +400,9 @@ var loopItems = func(){
 				scrollPage(1);
 				loop_item_index = 0;
 				nSelectedItemIndex.setValue(loop_item_index);
-				loop_state = 1;
-				loopItems();
+				#loop_state = 1;
+				#loopItems();
+				resetAll();
 				redraw();
 			}else{
 			
