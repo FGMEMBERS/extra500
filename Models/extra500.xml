@@ -62,8 +62,10 @@
 		<object-name>HRrechts</object-name>
 		<object-name>NACA.inlets</object-name>
 		<object-name>SR</object-name>
-		<object-name>Vstab.left</object-name>
-		<object-name>Vstab.right</object-name>
+		<object-name>horstab</object-name>
+		<object-name>HRlinks</object-name>
+		<object-name>HRrechts</object-name>
+		<object-name>HRtrim</object-name>
 		
 		<!-- wing objects using paintkit.png -->
 		<object-name>AilLH</object-name>
