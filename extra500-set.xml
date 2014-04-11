@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             29.03.2014
+      Date:             11.04.2014
 
 
 ************************************************************************
@@ -121,109 +121,7 @@ JSBSim Extra Aircraft - Extra 500.
 		</config>
 	</view>
 	
-	
 	<view n="101">
-	<!-- x=rechts y=hoch z=zurueck -->
-		<name>Copilot</name>
-		<type>lookfrom</type>
-		<enabled type="bool">true</enabled>
-		<internal archive="y">true</internal>
-		<config>
-		  <from-model type="bool">true</from-model>
-			<x-offset-m archive="y">0.34</x-offset-m>
-			<y-offset-m archive="y">0.13</y-offset-m>
-			<z-offset-m archive="y">-0.1</z-offset-m>
-			<pitch-offset-deg type="double">-17</pitch-offset-deg>
-			<default-field-of-view-deg type="double">75.0</default-field-of-view-deg>
-		</config>
-	</view>	
-	
-	<view n="102">
-	<!-- x=rechts y=hoch z=zurueck -->
-		<name>CenterConsole</name>
-		<type>lookfrom</type>
-		<enabled type="bool">true</enabled>
-		<internal archive="y">true</internal>
-		<config>
-			<from-model type="bool">true</from-model>
-			<x-offset-m archive="y">-0.25</x-offset-m>
-			<y-offset-m archive="y">-0.1</y-offset-m>
-			<z-offset-m archive="y">-0.1</z-offset-m>
-			<pitch-offset-deg archive="y">-35</pitch-offset-deg>
-			<heading-offset-deg archive="y">-25</heading-offset-deg>
-			<default-field-of-view-deg type="double">60.4</default-field-of-view-deg>
-		</config>
-	</view>
-
-	<view n="103">
-	<!-- x=rechts y=hoch z=zurueck -->
-		<name>switches</name>
-		<type>lookfrom</type>
-		<enabled type="bool">true</enabled>
-		<internal archive="y">true</internal>
-		<config>
-			<from-model type="bool">true</from-model>
-			<x-offset-m archive="y">0</x-offset-m>
-			<y-offset-m archive="y">-0.1</y-offset-m>
-			<z-offset-m archive="y">-0.65</z-offset-m>
-			<pitch-offset-deg archive="y">-70</pitch-offset-deg>
-			<default-field-of-view-deg type="double">75.0</default-field-of-view-deg>
-		</config>
-	</view>	
-
-	<view n="104">
-	<!-- x=rechts y=hoch z=zurueck -->
-		<name>Keypad</name>
-		<type>lookfrom</type>
-		<enabled type="bool">true</enabled>
-		<internal archive="y">true</internal>
-		<config>
-			<from-model type="bool">true</from-model>
-			<x-offset-m archive="y">0</x-offset-m>
-			<y-offset-m archive="y">-0.25</y-offset-m>
-			<z-offset-m archive="y">-0.30</z-offset-m>
-			<pitch-offset-deg archive="y">-50</pitch-offset-deg>
-			<default-field-of-view-deg type="double">75.0</default-field-of-view-deg>
-		</config>
-	</view>	
-
-	<view n="105">
-	<!-- x=rechts y=hoch z=zurueck -->
-		<name>SidePanel</name>
-		<type>lookfrom</type>
-		<enabled type="bool">true</enabled>
-		<internal archive="y">true</internal>
-		<config>
-			<from-model type="bool">true</from-model>
-			<x-offset-m archive="y" type="double">-0.37</x-offset-m>
-			<y-offset-m archive="y" type="double">0.1</y-offset-m>
-			<z-offset-m archive="y" type="double">-0.15</z-offset-m>
-			<pitch-offset-deg archive="y">-48</pitch-offset-deg>
-			<heading-offset-deg archive="y">30</heading-offset-deg>
-			<default-field-of-view-deg type="double">37.0</default-field-of-view-deg>
-		</config>
-	</view>	
-
-	<view n="106">
-		<name>Cuircuit Breaker Panel</name>
-		<enabled type="bool">true</enabled>
-		<type>lookfrom</type>
-		<internal type="bool">true</internal>
-		<config>
-			<from-model type="bool">true</from-model>
-			<from-model-idx type="int">true</from-model-idx>
-			<!-- x/y/z == right/up/back -->
-			<x-offset-m archive="y" type="double">-0.37</x-offset-m>
-			<y-offset-m archive="y" type="double">-0.3</y-offset-m>
-			<z-offset-m archive="y" type="double">-0.45</z-offset-m>
-			
-			<heading-offset-deg type="double">72.0</heading-offset-deg>
-			<pitch-offset-deg type="double">-30.0</pitch-offset-deg>
-			<default-field-of-view-deg type="double">96.0</default-field-of-view-deg>
-		</config>
-	</view>	
-	
-	<view n="107">
 		<name>Model Front View</name>
 		<enabled type="bool">true</enabled>
 		<type>lookfrom</type>
@@ -240,7 +138,7 @@ JSBSim Extra Aircraft - Extra 500.
 		</config>
 	</view>
 
-	<view n="108">
+	<view n="102">
 		<name>Model Right View</name>
 		<enabled type="bool">true</enabled>
 		<type>lookfrom</type>
@@ -257,7 +155,7 @@ JSBSim Extra Aircraft - Extra 500.
 		</config>
 	</view>
 
-	<view n="109">
+	<view n="103">
 		<name>Model Left View</name>
 		<enabled type="bool">true</enabled>
 		<type>lookfrom</type>
@@ -276,7 +174,7 @@ JSBSim Extra Aircraft - Extra 500.
 		</config>
 	</view>
 
-	<view n="110">
+	<view n="104">
 		<name>Model Back View</name>
 		<enabled type="bool">true</enabled>
 		<type>lookfrom</type>
@@ -293,7 +191,7 @@ JSBSim Extra Aircraft - Extra 500.
 		</config>
 	</view>
 
-	<view n="111">
+	<view n="105">
 		<name>Model Heli Back View</name>
 		<enabled type="bool">true</enabled>
 		<type>lookat</type>
@@ -322,7 +220,7 @@ JSBSim Extra Aircraft - Extra 500.
 		</config>
 	</view>
 
-	<view n="112">
+	<view n="106">
 		<name>Model Heli Nose View</name>
 		<enabled type="bool">true</enabled>
 		<type>lookat</type>
@@ -351,7 +249,7 @@ JSBSim Extra Aircraft - Extra 500.
 		</config>
 	</view>
 
-	<view n="113">
+	<view n="107">
 		<name>Model Heli Right Wing View</name>
 		<enabled type="bool">true</enabled>
 		<type>lookat</type>
@@ -382,7 +280,7 @@ JSBSim Extra Aircraft - Extra 500.
 		</config>
 	</view>
 
-	<view n="114">
+	<view n="108">
 		<name>Model Heli Left Wing View</name>
 		<enabled type="bool">true</enabled>
 		<type>lookat</type>
@@ -413,8 +311,8 @@ JSBSim Extra Aircraft - Extra 500.
 		</config>
 	</view>
 <!-- Passenger Seat 5 view-->
-	<view n="115">
-          <name>Seat 6</name>
+	<view n="109">
+          <name>Seat 5</name>
           <type>lookfrom</type>
           <internal archive="y">true</internal>
           <config>
@@ -431,7 +329,7 @@ JSBSim Extra Aircraft - Extra 500.
        </view>
 
 <!-- Passenger Seat 6 view-->
-	<view n="116">
+	<view n="110">
           <name>Seat 6</name>
           <type>lookfrom</type>
           <internal archive="y">true</internal>
@@ -447,6 +345,107 @@ JSBSim Extra Aircraft - Extra 500.
             <z-offset-m archive="y"> 2.10 </z-offset-m> <!--Fdw/Back -->
           </config>
        </view>
+
+	<view n="111">
+	<!-- x=rechts y=hoch z=zurueck -->
+		<name>Copilot</name>
+		<type>lookfrom</type>
+		<enabled type="bool">true</enabled>
+		<internal archive="y">true</internal>
+		<config>
+		  <from-model type="bool">true</from-model>
+			<x-offset-m archive="y">0.34</x-offset-m>
+			<y-offset-m archive="y">0.13</y-offset-m>
+			<z-offset-m archive="y">-0.1</z-offset-m>
+			<pitch-offset-deg type="double">-17</pitch-offset-deg>
+			<default-field-of-view-deg type="double">75.0</default-field-of-view-deg>
+		</config>
+	</view>
+
+	<view n="112">
+		<name>Circuit Breaker Panel</name>
+		<enabled type="bool">true</enabled>
+		<type>lookfrom</type>
+		<internal type="bool">true</internal>
+		<config>
+			<from-model type="bool">true</from-model>
+			<from-model-idx type="int">true</from-model-idx>
+			<!-- x/y/z == right/up/back -->
+			<x-offset-m archive="y" type="double">-0.37</x-offset-m>
+			<y-offset-m archive="y" type="double">-0.3</y-offset-m>
+			<z-offset-m archive="y" type="double">-0.45</z-offset-m>
+			
+			<heading-offset-deg type="double">72.0</heading-offset-deg>
+			<pitch-offset-deg type="double">-30.0</pitch-offset-deg>
+			<default-field-of-view-deg type="double">96.0</default-field-of-view-deg>
+		</config>
+	</view>	
+
+	<view n="113">
+	<!-- x=rechts y=hoch z=zurueck -->
+		<name>CenterConsole</name>
+		<type>lookfrom</type>
+		<enabled type="bool">true</enabled>
+		<internal archive="y">true</internal>
+		<config>
+			<from-model type="bool">true</from-model>
+			<x-offset-m archive="y">-0.25</x-offset-m>
+			<y-offset-m archive="y">-0.1</y-offset-m>
+			<z-offset-m archive="y">-0.1</z-offset-m>
+			<pitch-offset-deg archive="y">-35</pitch-offset-deg>
+			<heading-offset-deg archive="y">-25</heading-offset-deg>
+			<default-field-of-view-deg type="double">60.4</default-field-of-view-deg>
+		</config>
+	</view>
+
+	<view n="114">
+	<!-- x=rechts y=hoch z=zurueck -->
+		<name>Keypad</name>
+		<type>lookfrom</type>
+		<enabled type="bool">true</enabled>
+		<internal archive="y">true</internal>
+		<config>
+			<from-model type="bool">true</from-model>
+			<x-offset-m archive="y">0</x-offset-m>
+			<y-offset-m archive="y">-0.25</y-offset-m>
+			<z-offset-m archive="y">-0.30</z-offset-m>
+			<pitch-offset-deg archive="y">-50</pitch-offset-deg>
+			<default-field-of-view-deg type="double">75.0</default-field-of-view-deg>
+		</config>
+	</view>	
+
+	<view n="115">
+	<!-- x=rechts y=hoch z=zurueck -->
+		<name>switches</name>
+		<type>lookfrom</type>
+		<enabled type="bool">true</enabled>
+		<internal archive="y">true</internal>
+		<config>
+			<from-model type="bool">true</from-model>
+			<x-offset-m archive="y">0</x-offset-m>
+			<y-offset-m archive="y">-0.1</y-offset-m>
+			<z-offset-m archive="y">-0.65</z-offset-m>
+			<pitch-offset-deg archive="y">-70</pitch-offset-deg>
+			<default-field-of-view-deg type="double">75.0</default-field-of-view-deg>
+		</config>
+	</view>	
+
+	<view n="116">
+	<!-- x=rechts y=hoch z=zurueck -->
+		<name>SidePanel</name>
+		<type>lookfrom</type>
+		<enabled type="bool">true</enabled>
+		<internal archive="y">true</internal>
+		<config>
+			<from-model type="bool">true</from-model>
+			<x-offset-m archive="y" type="double">-0.37</x-offset-m>
+			<y-offset-m archive="y" type="double">0.1</y-offset-m>
+			<z-offset-m archive="y" type="double">-0.15</z-offset-m>
+			<pitch-offset-deg archive="y">-48</pitch-offset-deg>
+			<heading-offset-deg archive="y">30</heading-offset-deg>
+			<default-field-of-view-deg type="double">37.0</default-field-of-view-deg>
+		</config>
+	</view>	
 
 
 	<systems>
