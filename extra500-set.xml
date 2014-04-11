@@ -121,6 +121,7 @@ JSBSim Extra Aircraft - Extra 500.
 		</config>
 	</view>
 	
+	
 	<view n="101">
 	<!-- x=rechts y=hoch z=zurueck -->
 		<name>Copilot</name>
@@ -411,7 +412,41 @@ JSBSim Extra Aircraft - Extra 500.
 			
 		</config>
 	</view>
+<!-- Passenger Seat 5 view-->
+	<view n="115">
+          <name>Seat 6</name>
+          <type>lookfrom</type>
+          <internal archive="y">true</internal>
+          <config>
+            <from-model type="bool">true</from-model>
+            <from-model-idx type="int">0</from-model-idx>
+            <ground-level-nearplane-m type="double">0.01f</ground-level-nearplane-m>
+            <default-field-of-view-deg type="double">90</default-field-of-view-deg>
+            <pitch-offset-deg>-8.0</pitch-offset-deg>
+            <heading-offset-deg type="double">0</heading-offset-deg> <!-- parallel to the panel -->
+            <x-offset-m archive="y"> -0.25 </x-offset-m> <!--Left/Right -->
+            <y-offset-m archive="y"> 0.0 </y-offset-m> <!--Up/Down -->
+            <z-offset-m archive="y"> 2.10 </z-offset-m> <!--Fdw/Back -->
+          </config>
+       </view>
 
+<!-- Passenger Seat 6 view-->
+	<view n="116">
+          <name>Seat 6</name>
+          <type>lookfrom</type>
+          <internal archive="y">true</internal>
+          <config>
+            <from-model type="bool">true</from-model>
+            <from-model-idx type="int">0</from-model-idx>
+            <ground-level-nearplane-m type="double">0.01f</ground-level-nearplane-m>
+            <default-field-of-view-deg type="double">90</default-field-of-view-deg>
+            <pitch-offset-deg>-8.0</pitch-offset-deg>
+            <heading-offset-deg type="double">0</heading-offset-deg> <!-- parallel to the panel -->
+            <x-offset-m archive="y"> 0.25 </x-offset-m> <!--Left/Right -->
+            <y-offset-m archive="y"> 0.0 </y-offset-m> <!--Up/Down -->
+            <z-offset-m archive="y"> 2.10 </z-offset-m> <!--Fdw/Back -->
+          </config>
+       </view>
 
 
 	<systems>
