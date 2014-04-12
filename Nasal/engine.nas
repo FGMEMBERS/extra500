@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             01.03.14
+#      Date:             12.04.14
 #
 var IgnitionClass = {
 	new : func(root,name,watt=45.0){
@@ -237,7 +237,7 @@ var EngineClass = {
 		};
 		eSystem.switch.EngineOverSpeed.onStateChange = func(n){
 			me._state = n.getValue();
-			if(me._state == 1){
+			if((me._state == 1) and (getprop("/extra500/panel/CircuitBreaker/BankB/OverSpeed/voltOut") > 10)){
 				setprop("/fdm/jsbsim/propulsion/engine/constant-speed-mode",0);
 				setprop("/fdm/jsbsim/propulsion/engine/blade-angle",5.0);
 			} else {
