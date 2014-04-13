@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             03.02.2014
+      Date:             13.04.2014
 
 -->
 
@@ -598,6 +598,44 @@
 
 <sound><path>Aircraft/extra500/Sounds/mp-sound.xml</path></sound>
 -->
+
+<!--interior-->
+
+<!--pick animations-->
+<animation>
+  <type>pick</type>
+  <object-name>interior.Tisch</object-name>
+  <visible>true</visible>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Tisch");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>interior.Tisch</object-name>
+  <property>sim/multiplay/generic/int[10]</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>-90</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>1.21380</x1-m>
+    <y1-m>0.55913</y1-m>
+    <z1-m>-0.50970</z1-m>
+    <x2-m>1.54601</x2-m>
+    <y2-m>0.53169</y2-m>
+    <z2-m>-0.50970</z2-m>
+  </axis>
+</animation>
+
 
 <!-- Seitenruder -->  
  <animation>

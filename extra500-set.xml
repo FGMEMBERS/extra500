@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             11.04.2014
+      Date:             13.04.2014
 
 
 ************************************************************************
@@ -546,6 +546,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<int n="7" alias="/extra500/light/recognition/state">0</int>
 			<int n="8" alias="/engines/engine[0]/running">0</int><!-- mp sound-->
 			<int n="9" alias="/engines/engine[0]/ignition">0</int><!-- mp sound-->
+			<int n="10" alias="/extra500/interior/tisch/state">0</int><!-- pass tisch-->
 
 			<string n="0" alias="/sim/multiplay/callsign">callsign</string>
 		</generic>
@@ -1277,6 +1278,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/log.nas</file>
 		<file>Aircraft/extra500/Nasal/dmeswitch.nas</file>
 		<file>Aircraft/extra500/Nasal/panelventswitch.nas</file>
+		<file>Aircraft/extra500/Nasal/interior.nas</file>
 		
 		<file>Aircraft/extra500/Nasal/route_manager.nas</file>
 		
