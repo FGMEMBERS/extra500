@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             15.04.2014
+      Date:             16.04.2014
 
 -->
 
@@ -63,6 +63,8 @@
 		<object-name>NACA.inlets</object-name>
 		<object-name>SR</object-name>
 		<object-name>horstab</object-name>
+		<object-name>Vstab.left</object-name>
+		<object-name>Vstab.right</object-name>
 		<object-name>HRlinks</object-name>
 		<object-name>HRrechts</object-name>
 		<object-name>HRtrim</object-name>
@@ -191,6 +193,16 @@
             </params>
         </overlay>
     </model>
+
+<model>
+  <name>Interior</name>
+  <path>Aircraft/extra500/Models/interior.ac</path>
+	<offsets>
+		<x-m>0.0</x-m>
+		<y-m>0</y-m>	
+		<z-m>0.0</z-m>
+	</offsets>
+</model>
 
 <model>
   <name>Wing</name>
@@ -407,6 +419,7 @@
  <animation>
   <type>rotate</type>
   <object-name>door.upper</object-name>
+  <object-name>interior.doorUpper</object-name>
   <object-name>window.pass.middle.LH</object-name>
   <property>sim/multiplay/generic/int[0]</property>
   <interpolation>
@@ -445,6 +458,7 @@
 <animation>
   <type>translate</type>
   <object-name>emergency.exit</object-name>
+  <object-name>interior.emergency.exit</object-name>
   <object-name>window.pass.middle.RH</object-name>
   <property>sim/multiplay/generic/int[2]</property>
   <factor>.5</factor>
