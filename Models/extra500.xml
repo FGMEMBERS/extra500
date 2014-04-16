@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             13.04.2014
+      Date:             15.04.2014
 
 -->
 
@@ -354,6 +354,8 @@
 <animation>
   <type>pick</type>
   <object-name>door.upper</object-name>
+  <object-name>interior.doorUpper</object-name>
+  <object-name>window.pass.middle.LH</object-name>
   <visible>true</visible>
   <action>
     <button>0</button>
@@ -370,6 +372,7 @@
 <animation>
   <type>pick</type>
   <object-name>door.lower</object-name>
+  <object-name>interior.door</object-name>
   <visible>true</visible>
   <action>
     <button>0</button>
@@ -386,6 +389,8 @@
 <animation>
   <type>pick</type>
   <object-name>emergency.exit</object-name>
+  <object-name>window.pass.middle.RH</object-name>
+  <object-name>interior.emergency.exit</object-name>
   <visible>true</visible>
   <action>
     <button>0</button>
