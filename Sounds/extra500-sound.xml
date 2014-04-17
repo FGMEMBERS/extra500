@@ -1,435 +1,456 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-    This file is part of extra500
+This file is part of extra500
 
-    The extra500 is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 2 of the License, or
-    (at your option) any later version.
+The extra500 is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
 
-    The extra500 is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+The extra500 is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with extra500.  If not, see <http://www.gnu.org/licenses/>.
 
-      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
-      Date: March 13 2013
+Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+Date: March 13 2013
 
-      Last change:      Eric van den Berg
-      Date:             2014-03-25
+Last change:      Eric van den Berg
+Date:             2014-03-25
 -->
- 
+
 <PropertyList>
-
-    <fx>
-
-<!-- Engine 1 -->
-
-       <ignition>
-	       <name>ignition</name>
-	       <reference-dist>1.0</reference-dist>
-	       <max-dist>1.0</max-dist>
-	       <mode>looped</mode>
-	       <path>Aircraft/extra500/Sounds/ignition.wav</path>
-	       <condition>
-		       <or>
-			       <property>/engines/engine[0]/ignition</property>
-		       </or>
-	       </condition>
-	       <volume>
-		       <offset>1.0</offset>
-	       </volume>
-	       <position>
-		       <x>0</x>
-		       <y>0</y>
-		       <z>0</z>
-	       </position>
-       </ignition>
-
-       <motoring>
-	       <name>motoring</name>
-	       <reference-dist>3.0</reference-dist>
-	       <max-dist>6.0</max-dist>
-	       <mode>once</mode>
-	       <path>Aircraft/extra500/Sounds/motoring.wav</path>
-	       <condition>
-		       <or>
-			       <property>/fdm/jsbsim/aircraft/engine/motoring</property>
-		       </or>
-	       </condition>
-	       <volume>
-		       <offset>0.4</offset>
-	       </volume>
-	       <position>
-		       <x>0</x>
-		       <y>0</y>
-		       <z>0</z>
-	       </position>
-       </motoring>
-
-       <start>
-	       <name>engine_start</name>
-	       <reference-dist>3.0</reference-dist>
-	       <max-dist>6.0</max-dist>
-	       <mode>once</mode>
-	       <path>Aircraft/extra500/Sounds/spoolup.wav</path>
-	       <condition>
-		       <or>
-			       <property>/fdm/jsbsim/aircraft/engine/spooling-up</property>
-		       </or>
-	       </condition>
-	       <volume>
-		       <offset>0.9</offset>
-	       </volume>
-	       <position>
-		       <x>0</x>
-		       <y>0</y>
-		       <z>0</z>
-	       </position>
-       </start>
-<!---->
-       <propeller>
-	       <name>propeller</name>
-	       <mode>looped</mode>
-	       <path>Sounds/wasp.wav</path>
-	       <position>
-		       <x>0</x>
-		       <y>0</y>
-		       <z>0</z>
-	       </position>
-	       <!---->
-	       <condition>
-		       <or>
-			       <property>/engines/engine[0]/running</property>		       
-		       </or>
-	       </condition>
-	       <volume>
-		       <property>/engines/engine[0]/thrust_lb</property>
-		       <type>abs</type>
-		       <factor>0.0005</factor>
-		       <offset>-0</offset>
-		       <min>0.15</min>
-		       <max>0.35</max>
-	       </volume>
-	       <pitch>
-		       <property>/engines/engine[0]/thruster/rpm</property>
-		       <offset>0.5</offset>
-			<factor>0.0005</factor>
-			<min>0.5</min>
-			<max>1.5</max>
-	       </pitch>
-
-	       
-	       
-       </propeller>
-       
-        <turbine>
-            <name>turbine</name>
-            <reference-dist>1.0</reference-dist>
-            <max-dist>4.0</max-dist>
-            <mode>looped</mode>
-            <path>Aircraft/extra500/Sounds/extra500turbineLOOP.wav</path>
-	    <condition>
-			<property>/fdm/jsbsim/propulsion/engine/set-running</property>
-	    </condition>
-	    <position>
-                 <x>0</x>
-                <y>0</y>
-                <z>0</z>
-            </position>
-            <pitch>
-                <property>engines/engine[0]/n1</property>
-                <offset>0.5</offset>
-                <factor>0.01</factor>
-		<min>0.5</min>
-		<max>1.5</max>
-            </pitch>
-        </turbine>
-
-        <shutdown>
-            <name>shutdown</name>
-            <reference-dist>1.0</reference-dist>
-            <max-dist>4.0</max-dist>
-            <mode>once</mode>
-            <path>Aircraft/extra500/Sounds/extra500turbineDOWN.wav</path>
-	    <condition>
-		   <property>/fdm/jsbsim/aircraft/engine/spooling-down</property>
-	    </condition>
-	    <volume>
-		    <offset>0.9</offset>
-	    </volume>
-            <position>
-                 <x>0</x>
-                <y>0</y>
-                <z>0</z>
-            </position>
-        </shutdown>
 	
-	
-	<tire-rumble>
-		<name>tire-rumble</name>
-		<mode>looped</mode>
-		<path>Sounds/rumble.wav</path>
-		<condition>
-			<or>
-				<property>/gear/gear[0]/wow</property>
-				<property>/gear/gear[1]/wow</property>
-				<property>/gear/gear[2]/wow</property>
-			</or>
-		</condition>
-		<volume>
-			<property>/velocities/groundspeed-kt</property>
-			<factor>0.01</factor>
-			<max>0.9</max>
-		</volume>
-	</tire-rumble>
-    
-<!-- stho-TEST: fahrwerk und klappen -->	
-	   <gear>
-            <name>gear</name>
-            <mode>looped</mode>
-            <path>Sounds/gear.wav</path>
-            <property>/systems/gear/motor/state</property>
-            <volume>
-              <max>1.0</max>
-            </volume>
-            <reference-dist>10.0</reference-dist>
-            <max-dist>20.0</max-dist>
-        </gear>
-        <gear-lock>
-            <name>gear-lock</name>
-            <path>Sounds/gear-lck.wav</path>
-            <condition>
-                <equals>
-                    <property>gear/gear[0]/position-norm</property>
-                    <value>0</value>
-                </equals>
-            </condition>
-            <reference-dist>10.0</reference-dist>
-            <max-dist>20.0</max-dist>
-        </gear-lock>
-	        <flap>
-            <name>flaps</name>
-            <mode>in-transit</mode>
-            <path>Sounds/flaps.wav</path>
-            <property>surface-positions/flap-pos-norm</property>
-            <volume>
-                <factor>0.45</factor>
-            </volume>
-            <reference-dist>10.0</reference-dist>
-            <max-dist>20.0</max-dist>
-        </flap>
-	
-<!--
-	Sounds for the Switches
-	
--->
-	<switch>
-		<name>switch0</name>
-		<mode>once</mode>
-		<path>Aircraft/extra500/Sounds/click0.wav</path>
-		<condition>
-			<property>sim/sound/click[0]</property>
-		</condition>
-		<volume>
-			<factor>1</factor>
-		</volume>
-	</switch>
-	
-	<switch>
-		<name>switch1</name>
-		<mode>once</mode>
-		<path>Aircraft/extra500/Sounds/click1.wav</path>
-		<condition>
-			<property>sim/sound/click[1]</property>
-		</condition>
-		<volume>
-			<factor>1</factor>
-		</volume>
-	</switch>
-	
-	<switch>
-		<name>switch2</name>
-		<mode>once</mode>
-		<path>Aircraft/extra500/Sounds/click2.wav</path>
-		<condition>
-			<property>sim/sound/click[2]</property>
-		</condition>
-		<volume>
-			<factor>1</factor>
-		</volume>
-	</switch>
-	
-	<switch>
-		<name>switch3</name>
-		<mode>once</mode>
-		<path>Aircraft/extra500/Sounds/click3.wav</path>
-		<condition>
-			<property>sim/sound/click[3]</property>
-		</condition>
-		<volume>
-			<factor>1</factor>
-		</volume>
-	</switch>
-	
-	<switch>
-		<name>switch4</name>
-		<mode>once</mode>
-		<path>Aircraft/extra500/Sounds/click4.wav</path>
-		<condition>
-			<property>sim/sound/click[4]</property>
-		</condition>
-		<volume>
-			<factor>1</factor>
-		</volume>
-	</switch>
-
-<!--AP disconnect-->
-       <apdis>
-	       <name>ap disconnect</name>
-	       <reference-dist>1</reference-dist>
-	       <max-dist>100.0</max-dist>
-	       <mode>once</mode>
-	       <path>Aircraft/extra500/Sounds/APdisconnect.wav</path>
-	       <condition>
-		       <or>
-			       <property>/autopilot/mode/disengsound</property>
-		       </or>
-	       </condition>
-	       <volume>
-		       <property>/extra500/instrumentation/Audiopanel/volsetting/apdis</property>
-		       <factor>1.0</factor>
-		       <offset>0.5</offset>
-		       <min>0.0</min>
-	       </volume>
-	       <position>
-		       <x>0.2</x>
-		       <y>0</y>
-		       <z>0</z>
-	       </position>
-       </apdis>
-
-<!--CWS disconnect-->
-       <cwsdis>
-	       <name>cws disconnect</name>
-	       <reference-dist>1</reference-dist>
-	       <max-dist>100.0</max-dist>
-	       <mode>once</mode>
-	       <path>Aircraft/extra500/Sounds/CWSdisconnect.wav</path>
-	       <condition>
-		       <or>
-			       <property>/autopilot/mode/cws-armed</property>
-		       </or>
-	       </condition>
-	       <volume>
-		       <property>/extra500/instrumentation/Audiopanel/volsetting/apdis</property>
-		       <factor>1.0</factor>
-		       <offset>0.5</offset>
-		       <min>0.0</min>
-	       </volume>
-	       <position>
-		       <x>0.2</x>
-		       <y>0</y>
-		       <z>0</z>
-	       </position>
-       </cwsdis>
-
-<!--gear warn-->
-       <gearwarn>
-	       <name>gear warning</name>
-	       <reference-dist>1</reference-dist>
-	       <max-dist>100.0</max-dist>
-	       <mode>looped</mode>
-	       <path>Aircraft/extra500/Sounds/gearwarn.wav</path>
-	       <condition>
-		       <or>
-			       <property>/systems/gear/gearwarn/horn/state</property>
-		       </or>
-	       </condition>
-	       <volume>
-		       <property>/extra500/instrumentation/Audiopanel/volsetting/gearwarn</property>
-		       <factor>1.0</factor>
-		       <offset>0.0</offset>
-		       <min>0.0</min>
-	       </volume>
-	       <position>
-		       <x>0</x>
-		       <y>0</y>
-		       <z>0</z>
-	       </position>
-       </gearwarn>
-
-<!--stall warn-->
-       <stallwarn>
-	       <name>stall warning</name>
-	       <reference-dist>1</reference-dist>
-	       <max-dist>100.0</max-dist>
-	       <mode>looped</mode>
-	       <path>Aircraft/extra500/Sounds/stallwarning.wav</path>
-	       <condition>
-		       <or>
-			       <property>/extra500/system/pitot/StallWarn/state</property>
-				 <and>
-				 	<property>/extra500/system/dimming/Test</property>
-					<greater-than>
-				 		<property>/extra500/panel/CircuitBreaker/BankC/InstrumentLight/voltOut</property>
-						<value>10</value>
-					</greater-than>
-					<greater-than>
-				 		<property>/extra500/panel/CircuitBreaker/BankD/StallWarning/voltOut</property>
-						<value>10</value>
-					</greater-than>
-				 </and>
-		       </or>
-	       </condition>
-	       <volume>
-		       <property>/extra500/instrumentation/Audiopanel/volsetting/stallwarn</property>
-		       <factor>1.0</factor>
-		       <offset>0.0</offset>
-		       <min>0.0</min>
-	       </volume>
-	       <position>
-		       <x>0</x>
-		       <y>0</y>
-		       <z>0</z>
-	       </position>
-       </stallwarn>
-
-<!--overspeed-->
-       <overspeed>
-	       <name>over speed</name>
-	       <reference-dist>1</reference-dist>
-	       <max-dist>100.0</max-dist>
-	       <mode>looped</mode>
-	       <path>Aircraft/extra500/Sounds/overspeed.wav</path>
-	       <condition>
-		       <or>
-			       <property>/extra500/sound/overspeedWarning</property>
-				 <and>
-				 	<property>/extra500/system/dimming/Test</property>
-					<greater-than>
-				 		<property>/extra500/panel/CircuitBreaker/BankC/VneWarn/voltOut</property>
-						<value>10</value>
-					</greater-than>
-				 </and>
-		       </or>
-	       </condition>
-	       <volume>
-		       <property>/extra500/instrumentation/Audiopanel/volsetting/overspeed</property>
-		       <factor>1.0</factor>
-		       <offset>0.0</offset>
-		       <min>0.0</min>
-	       </volume>
-	       <position>
-		       <x>0</x>
-		       <y>0</y>
-		       <z>0</z>
-	       </position>
-       </overspeed>
-        
-	</fx>
-</PropertyList>
+	<fx>
+		
+		<!-- Engine 1 -->
+		
+		<ignition>
+			<name>ignition</name>
+			<reference-dist>1.0</reference-dist>
+			<max-dist>1.0</max-dist>
+			<mode>looped</mode>
+			<path>Aircraft/extra500/Sounds/ignition.wav</path>
+			<condition>
+				<or>
+					<property>/engines/engine[0]/ignition</property>
+				</or>
+			</condition>
+			<volume>
+				<offset>1.0</offset>
+			</volume>
+			<position>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</position>
+		</ignition>
+		
+		<motoring>
+			<name>motoring</name>
+			<reference-dist>3.0</reference-dist>
+			<max-dist>6.0</max-dist>
+			<mode>once</mode>
+			<path>Aircraft/extra500/Sounds/motoringStart.wav</path>
+			<condition>
+				<or>
+					<property>/fdm/jsbsim/aircraft/engine/motoring</property>
+				</or>
+			</condition>
+			<volume>
+				<offset>0.4</offset>
+			</volume>
+			<position>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</position>
+		</motoring>
+		
+		<motoring_loop>
+			<name>motoring_loop</name>
+			<reference-dist>3.0</reference-dist>
+			<max-dist>6.0</max-dist>
+			<delay-sec>10.0</delay-sec>
+			<mode>looped</mode>
+			<path>Aircraft/extra500/Sounds/motoringLoop.wav</path>
+			<condition>
+				<property>/fdm/jsbsim/aircraft/engine/motoring</property>
+			</condition>
+			<position>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</position>
+			<pitch>
+				<property>engines/engine[0]/n1</property>
+				<offset>0.5</offset>
+				<factor>0.01</factor>
+				<min>0.5</min>
+				<max>1.5</max>
+			</pitch>
+		</motoring_loop>
+		
+		<start>
+			<name>engine_start</name>
+			<reference-dist>3.0</reference-dist>
+			<max-dist>6.0</max-dist>
+			<mode>once</mode>
+			<path>Aircraft/extra500/Sounds/spoolup.wav</path>
+			<condition>
+				<or>
+					<property>/fdm/jsbsim/aircraft/engine/spooling-up</property>
+				</or>
+			</condition>
+			<volume>
+				<offset>0.9</offset>
+			</volume>
+			<position>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</position>
+		</start>
+		<!---->
+		<propeller>
+			<name>propeller</name>
+			<mode>looped</mode>
+			<path>Sounds/wasp.wav</path>
+			<position>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</position>
+			<condition>
+				<or>
+					<property>/engines/engine[0]/running</property>		       
+				</or>
+			</condition>
+			<volume>
+				<property>/engines/engine[0]/thrust_lb</property>
+				<type>abs</type>
+				<factor>0.0005</factor>
+				<offset>-0</offset>
+				<min>0.15</min>
+				<max>0.35</max>
+			</volume>
+			<pitch>
+				<property>/engines/engine[0]/thruster/rpm</property>
+				<offset>0.5</offset>
+				<factor>0.0005</factor>
+				<min>0.5</min>
+				<max>1.5</max>
+			</pitch>
+			
+			
+			
+		</propeller>
+		
+		<turbine>
+			<name>turbine</name>
+			<reference-dist>1.0</reference-dist>
+			<max-dist>4.0</max-dist>
+			<mode>looped</mode>
+			<path>Aircraft/extra500/Sounds/extra500turbineLOOP.wav</path>
+			<condition>
+				<property>/fdm/jsbsim/propulsion/engine/set-running</property>
+			</condition>
+			<position>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</position>
+			<pitch>
+				<property>engines/engine[0]/n1</property>
+				<offset>0.5</offset>
+				<factor>0.01</factor>
+				<min>0.5</min>
+				<max>1.5</max>
+			</pitch>
+		</turbine>
+		
+		<shutdown>
+			<name>shutdown</name>
+			<reference-dist>1.0</reference-dist>
+			<max-dist>4.0</max-dist>
+			<mode>once</mode>
+			<path>Aircraft/extra500/Sounds/extra500turbineDOWN.wav</path>
+			<condition>
+				<property>/fdm/jsbsim/aircraft/engine/spooling-down</property>
+			</condition>
+			<volume>
+				<offset>0.9</offset>
+			</volume>
+			<position>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</position>
+		</shutdown>
+		
+		<tire-rumble>
+			<name>tire-rumble</name>
+			<mode>looped</mode>
+			<path>Sounds/rumble.wav</path>
+			<condition>
+				<or>
+					<property>/gear/gear[0]/wow</property>
+					<property>/gear/gear[1]/wow</property>
+					<property>/gear/gear[2]/wow</property>
+				</or>
+			</condition>
+			<volume>
+				<property>/velocities/groundspeed-kt</property>
+				<factor>0.01</factor>
+				<max>0.9</max>
+			</volume>
+		</tire-rumble>
+		
+		<gear>
+			<name>gear</name>
+			<mode>looped</mode>
+			<path>Sounds/gear.wav</path>
+			<property>/systems/gear/motor/state</property>
+			<volume>
+				<max>1.0</max>
+			</volume>
+			<reference-dist>10.0</reference-dist>
+			<max-dist>20.0</max-dist>
+		</gear>
+		<gear-lock>
+			<name>gear-lock</name>
+			<path>Sounds/gear-lck.wav</path>
+			<condition>
+				<equals>
+					<property>gear/gear[0]/position-norm</property>
+					<value>0</value>
+				</equals>
+			</condition>
+			<reference-dist>10.0</reference-dist>
+			<max-dist>20.0</max-dist>
+		</gear-lock>
+		<flap>
+			<name>flaps</name>
+			<mode>in-transit</mode>
+			<path>Sounds/flaps.wav</path>
+			<property>surface-positions/flap-pos-norm</property>
+			<volume>
+				<factor>0.45</factor>
+			</volume>
+			<reference-dist>10.0</reference-dist>
+			<max-dist>20.0</max-dist>
+		</flap>
+			
+			<!-- Sounds for the Switches
+			
+			-->
+			<switch>
+				<name>switch0</name>
+				<mode>once</mode>
+				<path>Aircraft/extra500/Sounds/click0.wav</path>
+				<condition>
+					<property>sim/sound/click[0]</property>
+				</condition>
+				<volume>
+					<factor>1</factor>
+				</volume>
+			</switch>
+			
+			<switch>
+				<name>switch1</name>
+				<mode>once</mode>
+				<path>Aircraft/extra500/Sounds/click1.wav</path>
+				<condition>
+					<property>sim/sound/click[1]</property>
+				</condition>
+				<volume>
+					<factor>1</factor>
+				</volume>
+			</switch>
+			
+			<switch>
+				<name>switch2</name>
+				<mode>once</mode>
+				<path>Aircraft/extra500/Sounds/click2.wav</path>
+				<condition>
+					<property>sim/sound/click[2]</property>
+				</condition>
+				<volume>
+					<factor>1</factor>
+				</volume>
+			</switch>
+			
+			<switch>
+				<name>switch3</name>
+				<mode>once</mode>
+				<path>Aircraft/extra500/Sounds/click3.wav</path>
+				<condition>
+					<property>sim/sound/click[3]</property>
+				</condition>
+				<volume>
+					<factor>1</factor>
+				</volume>
+			</switch>
+			
+			<switch>
+				<name>switch4</name>
+				<mode>once</mode>
+				<path>Aircraft/extra500/Sounds/click4.wav</path>
+				<condition>
+					<property>sim/sound/click[4]</property>
+				</condition>
+				<volume>
+					<factor>1</factor>
+				</volume>
+			</switch>
+			
+			<!--AP disconnect-->
+			<apdis>
+				<name>ap disconnect</name>
+				<reference-dist>1</reference-dist>
+				<max-dist>100.0</max-dist>
+				<mode>once</mode>
+				<path>Aircraft/extra500/Sounds/APdisconnect.wav</path>
+				<condition>
+					<or>
+						<property>/autopilot/mode/disengsound</property>
+					</or>
+				</condition>
+				<volume>
+					<property>/extra500/instrumentation/Audiopanel/volsetting/apdis</property>
+					<factor>1.0</factor>
+					<offset>0.5</offset>
+					<min>0.0</min>
+				</volume>
+				<position>
+					<x>0.2</x>
+					<y>0</y>
+					<z>0</z>
+				</position>
+			</apdis>
+			
+			<!--CWS disconnect-->
+			<cwsdis>
+				<name>cws disconnect</name>
+				<reference-dist>1</reference-dist>
+				<max-dist>100.0</max-dist>
+				<mode>once</mode>
+				<path>Aircraft/extra500/Sounds/CWSdisconnect.wav</path>
+				<condition>
+					<or>
+						<property>/autopilot/mode/cws-armed</property>
+					</or>
+				</condition>
+				<volume>
+					<property>/extra500/instrumentation/Audiopanel/volsetting/apdis</property>
+					<factor>1.0</factor>
+					<offset>0.5</offset>
+					<min>0.0</min>
+				</volume>
+				<position>
+					<x>0.2</x>
+					<y>0</y>
+					<z>0</z>
+				</position>
+			</cwsdis>
+			
+			<!--gear warn-->
+			<gearwarn>
+				<name>gear warning</name>
+				<reference-dist>1</reference-dist>
+				<max-dist>100.0</max-dist>
+				<mode>looped</mode>
+				<path>Aircraft/extra500/Sounds/gearwarn.wav</path>
+				<condition>
+					<or>
+						<property>/systems/gear/gearwarn/horn/state</property>
+					</or>
+				</condition>
+				<volume>
+					<property>/extra500/instrumentation/Audiopanel/volsetting/gearwarn</property>
+					<factor>1.0</factor>
+					<offset>0.0</offset>
+					<min>0.0</min>
+				</volume>
+				<position>
+					<x>0</x>
+					<y>0</y>
+					<z>0</z>
+				</position>
+			</gearwarn>
+			
+			<!--stall warn-->
+			<stallwarn>
+				<name>stall warning</name>
+				<reference-dist>1</reference-dist>
+				<max-dist>100.0</max-dist>
+				<mode>looped</mode>
+				<path>Aircraft/extra500/Sounds/stallwarning.wav</path>
+				<condition>
+					<or>
+						<property>/extra500/system/pitot/StallWarn/state</property>
+						<and>
+							<property>/extra500/system/dimming/Test</property>
+							<greater-than>
+								<property>/extra500/panel/CircuitBreaker/BankC/InstrumentLight/voltOut</property>
+								<value>10</value>
+							</greater-than>
+							<greater-than>
+								<property>/extra500/panel/CircuitBreaker/BankD/StallWarning/voltOut</property>
+								<value>10</value>
+							</greater-than>
+						</and>
+					</or>
+				</condition>
+				<volume>
+					<property>/extra500/instrumentation/Audiopanel/volsetting/stallwarn</property>
+					<factor>1.0</factor>
+					<offset>0.0</offset>
+					<min>0.0</min>
+				</volume>
+				<position>
+					<x>0</x>
+					<y>0</y>
+					<z>0</z>
+				</position>
+			</stallwarn>
+			
+			<!--overspeed-->
+			<overspeed>
+				<name>over speed</name>
+				<reference-dist>1</reference-dist>
+				<max-dist>100.0</max-dist>
+				<mode>looped</mode>
+				<path>Aircraft/extra500/Sounds/overspeed.wav</path>
+				<condition>
+					<or>
+						<property>/extra500/sound/overspeedWarning</property>
+						<and>
+							<property>/extra500/system/dimming/Test</property>
+							<greater-than>
+								<property>/extra500/panel/CircuitBreaker/BankC/VneWarn/voltOut</property>
+								<value>10</value>
+							</greater-than>
+						</and>
+					</or>
+				</condition>
+				<volume>
+					<property>/extra500/instrumentation/Audiopanel/volsetting/overspeed</property>
+					<factor>1.0</factor>
+					<offset>0.0</offset>
+					<min>0.0</min>
+				</volume>
+				<position>
+					<x>0</x>
+					<y>0</y>
+					<z>0</z>
+				</position>
+			</overspeed>
+			
+			</fx>
+		</PropertyList>
+		
