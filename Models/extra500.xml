@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             16.04.2014
+      Date:             18.04.2014
 
 -->
 
@@ -196,7 +196,7 @@
 
 <model>
   <name>Interior</name>
-  <path>Aircraft/extra500/Models/interior.ac</path>
+  <path>Aircraft/extra500/Models/interior/interior.xml</path>
 	<offsets>
 		<x-m>0.0</x-m>
 		<y-m>0</y-m>	

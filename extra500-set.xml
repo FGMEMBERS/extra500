@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             13.04.2014
+      Date:             18.04.2014
 
 
 ************************************************************************
@@ -488,6 +488,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<path>/extra500/instrumentation/Audiopanel/volsettings</path>
 		<path>/extra500/instrumentation/dmeSwitch/pressed</path>
 		<path>/extra500/door</path>
+		<path>/extra500/interior</path>
 		<path>/systems/pressurization/airport-alt</path>
 		<path>/systems/pressurization/airport-alt-valve</path>
 		<path>/systems/pressurization/cabin-climb-rate-fpm</path>
@@ -1279,6 +1280,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/dmeswitch.nas</file>
 		<file>Aircraft/extra500/Nasal/panelventswitch.nas</file>
 		<file>Aircraft/extra500/Nasal/interior.nas</file>
+		<file>Aircraft/extra500/Nasal/readinglightswitch.nas</file>
 		
 		<file>Aircraft/extra500/Nasal/route_manager.nas</file>
 		
@@ -1592,6 +1594,26 @@ JSBSim Extra Aircraft - Extra 500.
 			</MainGearSwitch>
 		</gear>
 	</system>
+	<interior>
+		<readinglightpic>
+			<pressed>0</pressed>
+		</readinglightpic>
+		<readinglightcop>
+			<pressed>0</pressed>
+		</readinglightcop>
+		<readinglightLF>
+			<pressed>0</pressed>
+		</readinglightLF>
+		<readinglightLA>
+			<pressed>0</pressed>
+		</readinglightLA>
+		<readinglightRF>
+			<pressed>0</pressed>
+		</readinglightRF>
+		<readinglightRA>
+			<pressed>0</pressed>
+		</readinglightRA>
+	</interior>
  </extra500>
 
  <fdm>

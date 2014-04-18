@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: 18.04.2014
+
+      Last change:      
+      Date:             
+
+-->
+
+<PropertyList>
+
+<path>interior.ac</path>
+
+<!-- Submodels -->
+
+<model>
+  <name>reading light switch LF</name>
+  <path>Aircraft/extra500/Models/interior/readinglightLFswitch.xml</path>
+	<offsets>
+		<x-m>0.82430</x-m>
+		<y-m>-0.65431</y-m>	
+		<z-m>-0.46784</z-m>
+            <pitch-deg>-90</pitch-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>reading light switch RF</name>
+  <path>Aircraft/extra500/Models/interior/readinglightRFswitch.xml</path>
+	<offsets>
+		<x-m>0.82430</x-m>
+		<y-m>0.65431</y-m>	
+		<z-m>-0.46784</z-m>
+            <pitch-deg>-90</pitch-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>reading light switch LA</name>
+  <path>Aircraft/extra500/Models/interior/readinglightLAswitch.xml</path>
+	<offsets>
+		<x-m>1.92273</x-m>
+		<y-m>-0.60300</y-m>	
+		<z-m>-0.47289</z-m>
+            <pitch-deg>-90</pitch-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>reading light switch RA</name>
+  <path>Aircraft/extra500/Models/interior/readinglightRAswitch.xml</path>
+	<offsets>
+		<x-m>1.92273</x-m>
+		<y-m>0.60300</y-m>	
+		<z-m>-0.47289</z-m>
+            <pitch-deg>-90</pitch-deg>
+	</offsets>
+</model>
+
+</PropertyList>
