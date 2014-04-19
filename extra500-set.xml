@@ -1596,22 +1596,22 @@ JSBSim Extra Aircraft - Extra 500.
 	</system>
 	<interior>
 		<readinglightpic>
-			<pressed>0</pressed>
+			<pressed type="int">0</pressed>
 		</readinglightpic>
 		<readinglightcop>
-			<pressed>0</pressed>
+			<pressed type="int">0</pressed>
 		</readinglightcop>
 		<readinglightLF>
-			<pressed>0</pressed>
+			<pressed type="int">0</pressed>
 		</readinglightLF>
 		<readinglightLA>
-			<pressed>0</pressed>
+			<pressed type="int">0</pressed>
 		</readinglightLA>
 		<readinglightRF>
-			<pressed>0</pressed>
+			<pressed type="int">0</pressed>
 		</readinglightRF>
 		<readinglightRA>
-			<pressed>0</pressed>
+			<pressed type="int">0</pressed>
 		</readinglightRA>
 	</interior>
  </extra500>
