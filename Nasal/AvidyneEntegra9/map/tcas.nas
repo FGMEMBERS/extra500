@@ -49,7 +49,7 @@ var TcasModel = {
 		m._range = 0;
 		m._nRange = m._nRoot.initNode("range",6.0,"DOUBLE");
 		m._range = m._nRange.getValue();
-		m._timer = maketimer(1.0,m,TcasModel.update);
+		m._timer = maketimer(0.05,m,TcasModel.update);
 		return m;
 	},
 	setListeners : func(instance=me) {

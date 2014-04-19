@@ -38,11 +38,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.49497475"
-     inkscape:cx="1157.3288"
-     inkscape:cy="879.47244"
+     inkscape:zoom="0.7"
+     inkscape:cx="1109.6091"
+     inkscape:cy="1400.2407"
      inkscape:document-units="px"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer1"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -403,11 +403,11 @@
            sodipodi:cy="593.5"
            sodipodi:rx="103.21429"
            sodipodi:ry="103.21429"
-           d="m 305.00001,593.5 a 103.21429,103.21429 0 1 1 -206.428576,0 103.21429,103.21429 0 1 1 206.428576,0 z"
+           d="m 305.00001,593.5 c 0,57.00368 -46.21061,103.21429 -103.21429,103.21429 -57.00368,0 -103.214286,-46.21061 -103.214286,-103.21429 0,-57.00368 46.210606,-103.21429 103.214286,-103.21429 57.00368,0 103.21429,46.21061 103.21429,103.21429 z"
            transform="matrix(0.58519406,0,0,0.54084964,131.89112,405.45719)" />
         <path
            transform="matrix(1.7971537,0,0,1.6609702,-112.66503,-259.33437)"
-           d="m 305.00001,593.5 a 103.21429,103.21429 0 1 1 -206.428576,0 103.21429,103.21429 0 1 1 206.428576,0 z"
+           d="m 305.00001,593.5 c 0,57.00368 -46.21061,103.21429 -103.21429,103.21429 -57.00368,0 -103.214286,-46.21061 -103.214286,-103.21429 0,-57.00368 46.210606,-103.21429 103.214286,-103.21429 57.00368,0 103.21429,46.21061 103.21429,103.21429 z"
            sodipodi:ry="103.21429"
            sodipodi:rx="103.21429"
            sodipodi:cy="593.5"
@@ -825,24 +825,24 @@
       <text
          xml:space="preserve"
          style="font-size:36px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-         x="982.85791"
+         x="970.85791"
          y="48.220516"
          id="text4787"
          sodipodi:linespacing="125%"><tspan
            sodipodi:role="line"
            id="tspan4789"
-           x="982.85791"
+           x="970.85791"
            y="48.220516">At</tspan></text>
       <text
          xml:space="preserve"
-         style="font-size:48px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-         x="1031.9788"
+         style="font-size:48px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="1107.9788"
          y="48.220516"
          id="Head_gal"
          sodipodi:linespacing="125%"><tspan
            sodipodi:role="line"
            id="tspan4793"
-           x="1031.9788"
+           x="1107.9788"
            y="48.220516">---</tspan></text>
       <text
          sodipodi:linespacing="125%"
