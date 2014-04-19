@@ -60,7 +60,7 @@
 # 	}
 # 	
 # };
-
+var MAP_RANGE = [2,4,10,20,30,40,50,80,160,240];
 var MovingMap = {
 	new : func(ifd,parent,name){
 		var m = {parents:[
@@ -83,10 +83,10 @@ var MovingMap = {
 		);
 		
 		m._can = {
-			plane		: m._group.getElementById("MovingMap_Plane"),
+			plane		: m._group.getElementById("MovingMap_Plane").set("z-index",1),
 			LayerMap	: m._group.getElementById("layer5"),
 			LayerFront	: m._group.getElementById("layer2").set("z-index",3),
-			compass		: m._group.getElementById("MovingMap_Compass"),
+			compass		: m._group.getElementById("MovingMap_Compass").set("z-index",1),
 			CompassRose	: m._group.getElementById("MovingMap_Compass_Rose").updateCenter(),
 			CompassRangeMax	: m._group.getElementById("MovingMap_Range_Max"),
 			CompassRangeMid	: m._group.getElementById("MovingMap_Range_Mid"),
@@ -168,9 +168,31 @@ var MovingMap = {
 		 
 		#m._mapScale	= m._can.LayerMap.createTransform(); 
 		m._mapTransform	= m._can.LayerMap.createTransform(); 
+		#m._mapTransform	= m._group.createTransform(); 
 		
 		return m;
 	},
+	init : func(){
+		me.setListeners();
+		me._layer.positioned	= PositionedLayer.new(me._map,me._name~"-Positioned");
+		me._layer.route		= RouteLayer.new(me._map,me._name~"-Route");
+		me._layer.route.setListeners();
+		me._layer.tcas		= TcasLayer.new(me._map,me._name~"-TCAS");
+		me._layer.tcas.setModel(me._layer.tcas,tcasModel);
+		
+	},
+	setListeners : func(instance=me) {
+		append(me._listeners, setlistener("/autopilot/settings/heading-bug-deg",func(n){me._onHdgBugChange(n)},1,0));	
+		append(me._listeners, setlistener("/autopilot/fms-channel/course-target-deg",func(n){me._onFmsBugChange(n)},1,0));	
+		append(me._listeners, setlistener("/autopilot/mode/heading",func(n){me._onAutopilotModeHDG(n)},1,0));
+		append(me._listeners, setlistener("/autopilot/route-manager/active",func(n){me._onRouteActiveChange(n);},1,0));
+		append(me._listeners, setlistener("/autopilot/fms-channel/serviceable",func(n){me._onFmsServiceChange(n);},1,0));
+		append(me._listeners, setlistener(tcasModel._nObserver,func(n){me.onModelObserverNotify(n)},1,1));	
+	
+		
+	},
+	
+	
 	setRefPos : func(lat, lon) {
 	# print("RefPos set");
 		me._map._node.getNode("ref-lat", 1).setDoubleValue(lat);
@@ -262,7 +284,7 @@ var MovingMap = {
 			me._group.setVisible(1);
 		}elsif(layout == "map+"){
 			me._screenSize	= 512;
-			me._group.set("clip","rect(70px, 2048px, 1436px, 0px)");
+			me._group.set("clip","rect(70px, 1648px, 1436px, 400px)");
 			
 			me._mapTransform.setTranslation(0,0);
 			me._mapTransform.setScale(1,1);
@@ -323,23 +345,6 @@ var MovingMap = {
 		me._can.BugFMS.setVisible(me._bugFMSactive);
 		
 	},
-	setListeners : func(instance=me) {
-		append(me._listeners, setlistener("/autopilot/settings/heading-bug-deg",func(n){me._onHdgBugChange(n)},1,0));	
-		append(me._listeners, setlistener("/autopilot/fms-channel/course-target-deg",func(n){me._onFmsBugChange(n)},1,0));	
-		append(me._listeners, setlistener("/autopilot/mode/heading",func(n){me._onAutopilotModeHDG(n)},1,0));
-		append(me._listeners, setlistener("/autopilot/route-manager/active",func(n){me._onRouteActiveChange(n);},1,0));
-		append(me._listeners, setlistener("/autopilot/fms-channel/serviceable",func(n){me._onFmsServiceChange(n);},1,0));
-		append(me._listeners, setlistener(tcasModel._nObserver,func(n){me.onModelObserverNotify(n)},1,1));	
-	
-		
-	},
-	init : func(){
-		me.setListeners();
-		me._layer.route		= RouteLayer.new(me._map,me._name~"-Route");
-		me._layer.route.setListeners();
-		me._layer.tcas		 = TcasLayer.new(me._map,me._name~"-TCAS");
-		me._layer.tcas.setModel(me._layer.tcas,tcasModel);
-	},
 	setView : func(view){
 		me._view = view;
 	},
@@ -385,7 +390,7 @@ var MovingMap = {
 		me._map._node.getNode("range", 1).setDoubleValue(range);
 		me._can.CompassRangeMax.setText(sprintf("%.0f",nm));
 		me._can.CompassRangeMid.setText(sprintf("%.0f",nm/2));
-	
+		me._layer.positioned.setRange(nm);
 	},
 	update20Hz : func(now,dt){
 		me._lat = getprop("/position/latitude-deg");
@@ -444,7 +449,6 @@ var MovingMapKnobWidget = {
 		m._range	= 4;
 		m._view		= 0;
 		m._hand 	= 0;
-		m._RANGE 	= [2,4,10,20,30,40,50,80,160,240]; 
 		return m;
 	},
 	init : func(instance=me){
@@ -473,7 +477,7 @@ var MovingMapKnobWidget = {
 				me._Page.keys["RK >"] 	= func(){me.adjustMapRange(1);};
 				me._Page.keys["RK <"] 	= func(){me.adjustMapRange(-1);};
 			}
-			me._Page.IFD.movingMap.setRangeNm(me._RANGE[me._range]);	
+			me._Page.IFD.movingMap.setRangeNm(MAP_RANGE[me._range]);	
 		}else{
 			if(me._hand == 0){
 				me._Page.IFD.nLedLK.setValue(0);
@@ -495,7 +499,7 @@ var MovingMapKnobWidget = {
 	adjustMapRange : func(amount){
 		me._range += amount;
 		me._range = global.clamp(me._range,0,9);
-		me._Page.IFD.movingMap.setRangeNm(me._RANGE[me._range]);
+		me._Page.IFD.movingMap.setRangeNm(MAP_RANGE[me._range]);
 	},
 	adjustMapView : func(amount){
 		me._view = global.cycle(me._view,0,3,amount);

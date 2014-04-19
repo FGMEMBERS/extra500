@@ -302,8 +302,11 @@ var FlightPlanListWidget = {
 			me._fplItem[i] = FlighPlanItem_old.new(me._can.list,i,fmsWP.wp_type);
 			me._fplItem[i]._group.setTranslation(me._x,me._y+i*224);
 			
-			me._fplItem[i].setHeadline(sprintf("%s %03.0f - %s",fmsWP.fly_type,fmsWP.leg_bearing,fmsWP.wp_role));
-			me._fplItem[i].setName(sprintf("%s - %s",fmsWP.wp_name,fmsWP.wp_type));
+			#me._fplItem[i].setHeadline(sprintf("%s %03.0f - %s",fmsWP.fly_type,fmsWP.leg_bearing,fmsWP.wp_role));
+			#me._fplItem[i].setName(sprintf("%s - %s",fmsWP.wp_name,fmsWP.wp_type));
+			
+			me._fplItem[i].setHeadline(sprintf("%s %03.0f",fmsWP.fly_type,fmsWP.leg_bearing));
+			me._fplItem[i].setName(sprintf("%s",fmsWP.wp_name));
 			
 			var restriction = "";
 			if (fmsWP.alt_cstr_type != nil) {
@@ -317,7 +320,7 @@ var FlightPlanListWidget = {
 				distSum += fmsWP.leg_distance;
 
 			}
-			me._fplItem[i].setDistance(sprintf("%0.1f",distSum));
+			me._fplItem[i].setDistance(sprintf("%0.1f",fmsWP.leg_distance));
 			if( i == me._currentIndex){
 				me._fplItem[i].setActive(1);
 			}
@@ -471,36 +474,46 @@ var FlightPlanListWidget = {
 	update : func(){
 		fp = flightplan();
 		var gs = getprop("/velocities/groundspeed-kt");
+		var fuelGalUs = getprop("/consumables/fuel/total-fuel-gal_us");
 		var time = systime();
 		var eteSum = 0;
 		var distSum = 0;
+		var dist = 0;
 		if(gs > 50){
 			for( var i=0; i < me._planSize; i+=1 ){
 				var fmsWP = fp.getWP(i);
 				if (i == me._currentIndex){
 					#distSum += fmsWP.leg_distance;
-					distSum += getprop("/autopilot/route-manager/wp/dist");
-					var ete = distSum / gs * 3600 ;
+					dist = getprop("/autopilot/route-manager/wp/dist");
+					distSum += dist;
+					var ete = dist / gs * 3600 ;
 					var eta = time + ete;
 # 					me._fplItem[i]._can.Distance.setText(sprintf("%0.1f",distSum));
 # 					me._fplItem[i]._can.ETE.setText(global.formatTime(ete,"i:s"));
 # 					me._fplItem[i]._can.ETA.setText(global.formatTime(eta));
 # 					
-					me._fplItem[i].setDistance(sprintf("%0.1f",distSum));
+					me._fplItem[i].setDistance(sprintf("%0.1f",dist));
 					me._fplItem[i].setETE(global.formatTime(ete,"i:s"));
 					me._fplItem[i].setETA(global.formatTime(eta));
 					
+					fuelGalUs -= extra500.fuelSystem._nFuelFlowGalUSpSec.getValue() * ete;
+					me._fplItem[i].setFuel(sprintf("%.0f",fuelGalUs));
+					
 				}elsif (i > me._currentIndex){
+					
 					distSum += fmsWP.leg_distance;
-					var ete = distSum / gs * 3600 ;
-					var eta = time + ete;
+					var ete = fmsWP.leg_distance / gs * 3600 ;
+					var eta = time + (distSum / gs * 3600);
 # 					me._fplItem[i]._can.Distance.setText(sprintf("%0.1f",distSum));
 # 					me._fplItem[i]._can.ETE.setText(global.formatTime(ete,"i:s"));
 # 					me._fplItem[i]._can.ETA.setText(global.formatTime(eta));
 					
-					me._fplItem[i].setDistance(sprintf("%0.1f",distSum));
+					me._fplItem[i].setDistance(sprintf("%0.1f",fmsWP.leg_distance));
 					me._fplItem[i].setETE(global.formatTime(ete,"i:s"));
 					me._fplItem[i].setETA(global.formatTime(eta));
+					
+					fuelGalUs -= extra500.fuelSystem._nFuelFlowGalUSpSec.getValue() * ete;
+					me._fplItem[i].setFuel(sprintf("%.0f",fuelGalUs));
 					
 				}else{
 					me._fplItem[i]._can.Distance.setText("---");
@@ -510,7 +523,9 @@ var FlightPlanListWidget = {
 				}
 				
 			}
+			setprop("/autopilot/route-manager/fuelAtDestinationGalUs",fuelGalUs);
 		}
+		
 	}
 	
 };

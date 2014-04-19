@@ -1293,6 +1293,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/movingMap.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/tcas.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/route.nas</file>
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/positioned.nas</file>
 		
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/page_PFD.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/page_FMS.nas</file>
