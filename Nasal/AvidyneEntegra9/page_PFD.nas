@@ -369,7 +369,7 @@ var AirspeedSpeedWidget = {
 				me._can.IAS_010.setTranslation(0,((me._speed+me._speedAdd) * me._LADER_PX));
 				me._can.IAS_010.setVisible(1);
 				
-				if (me._ias > 100){
+				if (me._ias > 99){
 					
 					if (me._speed < 9){
 						me._speedAdd = 0;
@@ -574,7 +574,7 @@ var AltitudeWidget = {
 			me._tmpAlt = math.floor(math.mod(me._absAlt,1000)/100);
 			me._can.Bar100.setTranslation(0,(me._tmpAlt * me._SCALE_BAR_PX_100) + ( me._tmpAltAdd * me._SCALE_BAR_PX_10 ));
 			me._can.Bar100.setVisible(1);
-			if(me._absAlt>=1000){
+			if(me._absAlt>=980){
 				if (me._tmpAlt == 9) {
 # 					me._tmpAltAdd = me._tmpAlt - 9;
 				}else{
@@ -585,7 +585,7 @@ var AltitudeWidget = {
 				me._tmpAlt = math.floor(math.mod(me._absAlt,10000)/1000);
 				me._can.Bar1000.setTranslation(0,me._tmpAlt * me._SCALE_BAR_PX_100 + ( me._tmpAltAdd * me._SCALE_BAR_PX_10 ));
 				me._can.Bar1000.setVisible(1);
-				if (me._absAlt>=10000){
+				if (me._absAlt>=9980){
 					if (me._tmpAlt == 9) {
 						#me._tmpAltAdd = me._tmpAlt - 9;
 					}else{
