@@ -51,8 +51,8 @@ var clamp = func(value,min=0.0,max=0.0){
 
 var cycle = func(value=0,min=0,max=1,step=1){
 	value += step;
-	if(value > max) {value = max;}
-	if(value < min) {value = min;}
+	if(value > max) {value = min;}
+	if(value < min) {value = max;}
 	return value;
 }
 

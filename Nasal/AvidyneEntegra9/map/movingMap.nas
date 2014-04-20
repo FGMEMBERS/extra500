@@ -84,9 +84,12 @@ var MovingMap = {
 		
 		m._can = {
 			plane		: m._group.getElementById("MovingMap_Plane").set("z-index",1),
+			#plane		: m._group.getElementById("MovingMap_Plane"),
 			LayerMap	: m._group.getElementById("layer5"),
 			LayerFront	: m._group.getElementById("layer2").set("z-index",3),
+			#LayerFront	: m._group.getElementById("layer2"),
 			compass		: m._group.getElementById("MovingMap_Compass").set("z-index",1),
+			#compass		: m._group.getElementById("MovingMap_Compass"),
 			CompassRose	: m._group.getElementById("MovingMap_Compass_Rose").updateCenter(),
 			CompassRangeMax	: m._group.getElementById("MovingMap_Range_Max"),
 			CompassRangeMid	: m._group.getElementById("MovingMap_Range_Mid"),
@@ -149,7 +152,7 @@ var MovingMap = {
 		#m._can.layer1.setTranslation(-1024,-768);
 		
 # 		m._can.plane.setTranslation(1024,768);
-		
+		m._orientation	= 0;
 		m._heading	= 0;
 		m._headingTrue	= 0;
 		m._bugHeading	= 0;
@@ -167,7 +170,8 @@ var MovingMap = {
 		m._view 	= 0 ;
 		 
 		#m._mapScale	= m._can.LayerMap.createTransform(); 
-		m._mapTransform	= m._can.LayerMap.createTransform(); 
+		m._mapTransform		= m._can.LayerMap.createTransform(); 
+		m._mapTransformView	= m._can.LayerMap.createTransform(); 
 		#m._mapTransform	= m._group.createTransform(); 
 		
 		return m;
@@ -179,7 +183,7 @@ var MovingMap = {
 		me._layer.route.setListeners();
 		me._layer.tcas		= TcasLayer.new(me._map,me._name~"-TCAS");
 		me._layer.tcas.setModel(me._layer.tcas,tcasModel);
-		
+		me.setView(0);
 	},
 	setListeners : func(instance=me) {
 		append(me._listeners, setlistener("/autopilot/settings/heading-bug-deg",func(n){me._onHdgBugChange(n)},1,0));	
@@ -201,15 +205,22 @@ var MovingMap = {
 		me; # chainable
 	},
 	setHdg : func(deg){
-		me._map.setHdg(deg);
+		me._heading = deg;
+		if(me._view == 1){
+			me._orientation = 0;
+		}else{
+			me._orientation = me._heading;
+		}
+		me._map.setHdg(me._orientation);
 	},
 	setVisible : func(visibility){
 		me._group.setVisible(visibility);
 	},
 	setLayout : func(layout){
+		me._layout = layout;
 		me._group.setVisible(0);
 			
-# 		if(layout == "map"){
+# 		if(me._layout == "map"){
 # 			me._screenSize	= 512;
 # 			me.setTranslation(1024,768);
 # 			me.set("clip","rect(70px, 2048px, 1436px, 0px)");
@@ -223,7 +234,7 @@ var MovingMap = {
 # 			me._parent.set("z-index",0);
 # 			me.setVisible(1);
 # 			
-# 		}elsif(layout == "map+"){
+# 		}elsif(me._layout == "map+"){
 # 			me._screenSize	= 512;
 # 			me.setTranslation(1024,768);
 # 			me.set("clip","rect(70px, 2048px, 1436px, 0px)");
@@ -237,7 +248,7 @@ var MovingMap = {
 # 			me._parent.set("z-index",0);
 # 			me.setVisible(1);
 # 			
-# 		}elsif(layout == "split-left"){
+# 		}elsif(me._layout == "split-left"){
 # 			me._screenSize	= 384;
 # 			me.setTranslation(512,768);
 # 			me.set("clip","rect(70px, 1024px, 1436px, 0px)");
@@ -252,7 +263,7 @@ var MovingMap = {
 # 			me.setVisible(1);
 # 			
 # 			
-# 		}elsif(layout == "pfd"){
+# 		}elsif(me._layout == "pfd"){
 # 			me._screenSize	= 291;
 # 			me.setTranslation(1024,1132);
 # 			me._can.LayerFront.setTranslation(-1024,-1132);
@@ -268,7 +279,7 @@ var MovingMap = {
 # 			
 # 		}
 		
-		if(layout == "map"){
+		if(me._layout == "map"){
 			me._screenSize	= 512;
 			me._group.set("clip","rect(70px, 2048px, 1436px, 0px)");
 			
@@ -280,9 +291,9 @@ var MovingMap = {
 			me._can.UpHDG.setTranslation(400,0);
 			
 			me._can.LayerFront.setVisible(1);
-			me._group.set("z-index",0);
+			me._group.set("z-index",-1);
 			me._group.setVisible(1);
-		}elsif(layout == "map+"){
+		}elsif(me._layout == "map+"){
 			me._screenSize	= 512;
 			me._group.set("clip","rect(70px, 1648px, 1436px, 400px)");
 			
@@ -297,7 +308,7 @@ var MovingMap = {
 			me._can.LayerFront.setVisible(1);
 			me._group.set("z-index",0);
 			me._group.setVisible(1);
-		}elsif(layout == "split-left"){
+		}elsif(me._layout == "split-left"){
 			
 			me._screenSize	= 512;
 			me._mapTransform.setTranslation(-256,192);
@@ -311,7 +322,7 @@ var MovingMap = {
 			me._can.LayerFront.setVisible(1);
 			me._group.set("z-index",0);
 			me._group.setVisible(1);
-		}elsif(layout == "pfd"){
+		}elsif(me._layout == "pfd"){
 			
 # 			me._screenSize	= 291;
 # 			me.setTranslation(1024,1132);
@@ -323,7 +334,7 @@ var MovingMap = {
 # 			me._parent.set("z-index",1);
 # 			me._can.layer1.setVisible(1);
 # 			me.setVisible(1);
-			
+			me._layer.positioned.setNav(0);
 			me._screenSize	= 512;
 # 			me._mapTransform.setTranslation(1024*0,43359375,768+364);
 			me._mapTransform.setTranslation(1024*(1-0.56640625),696.5);
@@ -341,12 +352,22 @@ var MovingMap = {
 		}else{
 			
 		}
-		
+		me._update();
+			
 		me._can.BugFMS.setVisible(me._bugFMSactive);
 		
 	},
 	setView : func(view){
 		me._view = view;
+		me._update();
+	},
+	_update : func(){
+		me._can.UpNorth.setVisible(me._view);
+		if(me._view == 0){
+			me._mapTransformView.setTranslation(0,500 * (me._layout != "pfd"));
+		}else{
+			me._mapTransformView.setTranslation(0,0);
+		}
 	},
 	setLayerVisible : func(layer,v){
 		me._layer[layer].setVisible(v);
@@ -379,11 +400,11 @@ var MovingMap = {
 	},
 	_onHdgBugChange : func(n){
 		me._bugHeading		= n.getValue();
-		me._can.BugHDG.setRotation((me._bugHeading - me._heading) * global.CONST.DEG2RAD);
+		me._can.BugHDG.setRotation((me._bugHeading - me._orientation) * global.CONST.DEG2RAD);
 	},
 	_onFmsBugChange : func(n){
 		me._bugFMS		= n.getValue();
-		me._can.BugFMS.setRotation((me._bugFMS - me._heading) * global.CONST.DEG2RAD);
+		me._can.BugFMS.setRotation((me._bugFMS - me._orientation) * global.CONST.DEG2RAD);
 	},
 	setRangeNm : func(nm){
 		var range = 200 / (me._screenSize / nm);
@@ -397,44 +418,50 @@ var MovingMap = {
 		me._lon = getprop("/position/longitude-deg");
 		
 		me._headingTrue 	= me._tree.HeadingTrue.getValue();
-		me._heading 		= me._tree.Heading.getValue();
-		me._headingRAD		= me._heading * global.CONST.DEG2RAD;
+		#me._orientation 		= me._tree.Heading.getValue();
+		me._orientationRAD		= me._orientation * global.CONST.DEG2RAD;
 		
-		me._upHdg	= me._heading;
+		me._upHdg	= me._orientation;
 		
 		#me.setRefPos(me._lat,me._lon);
 		#me.setHdg(me._upHdg);
 		
-		
+		me._can.plane.setRotation(me._heading * me._view * global.CONST.DEG2RAD);
 		
 		me._can.HDGValue.setText(sprintf("%03i",global.roundInt(me._heading)));
 		me._can.UpHDGDeg.setText(sprintf("%5.1f",me._upHdg));
 		
-		me._can.CompassRose.setRotation(-me._heading * global.CONST.DEG2RAD);
-		me._can.BugTrue.setRotation((me._headingTrue - me._heading) * global.CONST.DEG2RAD);
-		me._can.BugHDG.setRotation((me._bugHeading - me._heading) * global.CONST.DEG2RAD);
+		me._can.CompassRose.setRotation(-me._orientation * global.CONST.DEG2RAD);
+		me._can.BugTrue.setRotation((me._headingTrue - me._orientation) * global.CONST.DEG2RAD);
+		me._can.BugHDG.setRotation((me._bugHeading - me._orientation) * global.CONST.DEG2RAD);
 		
-		me._can.CompassN.setRotation(me._headingRAD);
-		me._can.Compass030.setRotation(me._headingRAD);
-		me._can.Compass060.setRotation(me._headingRAD);
-		me._can.CompassE.setRotation(me._headingRAD);
-		me._can.Compass120.setRotation(me._headingRAD);
-		me._can.Compass150.setRotation(me._headingRAD);
-		me._can.CompassS.setRotation(me._headingRAD);
-		me._can.Compass210.setRotation(me._headingRAD);
-		me._can.Compass240.setRotation(me._headingRAD);
-		me._can.CompassW.setRotation(me._headingRAD);
-		me._can.Compass300.setRotation(me._headingRAD);
-		me._can.Compass330.setRotation(me._headingRAD);
+		me._can.CompassN.setRotation(me._orientationRAD);
+		me._can.Compass030.setRotation(me._orientationRAD);
+		me._can.Compass060.setRotation(me._orientationRAD);
+		me._can.CompassE.setRotation(me._orientationRAD);
+		me._can.Compass120.setRotation(me._orientationRAD);
+		me._can.Compass150.setRotation(me._orientationRAD);
+		me._can.CompassS.setRotation(me._orientationRAD);
+		me._can.Compass210.setRotation(me._orientationRAD);
+		me._can.Compass240.setRotation(me._orientationRAD);
+		me._can.CompassW.setRotation(me._orientationRAD);
+		me._can.Compass300.setRotation(me._orientationRAD);
+		me._can.Compass330.setRotation(me._orientationRAD);
 		
 		
 		if(me._bugFMSactive == 1){
-			me._can.BugFMS.setRotation((me._bugFMS - me._heading) * global.CONST.DEG2RAD);
+			me._can.BugFMS.setRotation((me._bugFMS - me._orientation) * global.CONST.DEG2RAD);
 		}
 		
 		
 
 	},
+	
+	setLand : func(value){me._layer.positioned.setLand(value);},
+	setNav : func(value){me._layer.positioned.setNav(value);},
+	setLightning : func(value){me._layer.positioned.setLightning(value);},
+	setWxReports : func(value){me._layer.positioned.setWxReports(value);},
+	setWxOverlay : func(value){me._layer.positioned.setWxOverlay(value);},
 	
 };
 
@@ -502,7 +529,7 @@ var MovingMapKnobWidget = {
 		me._Page.IFD.movingMap.setRangeNm(MAP_RANGE[me._range]);
 	},
 	adjustMapView : func(amount){
-		me._view = global.cycle(me._view,0,3,amount);
+		me._view = global.cycle(me._view,0,1,amount);
 		me._Page.IFD.movingMap.setView(me._view);
 	}
 };

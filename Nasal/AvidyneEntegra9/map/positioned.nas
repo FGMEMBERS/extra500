@@ -148,6 +148,14 @@ var PositionedLayer = {
 			"airport" : {"data":[],"index":0},
 			"vor"	  : {"data":[],"index":0},
 		};
+		m._var = {
+			land 		: 3,
+			nav 		: 3,
+			lightning 	: 0,
+			reports		: 0,
+			overlay		: 0,
+		};
+		
 		m._range = 100;
 		m._results = nil;
 		m._timer = maketimer(600,m,PositionedLayer.update);
@@ -163,52 +171,81 @@ var PositionedLayer = {
 		me.loadAirport();
 		me.loadVor();
 	},
+	
+	setLand : func(value){
+# 		print("PositionedLayer.setLand("~value~")");
+	},
+	setNav : func(value){
+		me._var.nav = value; me.update();
+	},
+	setLightning : func(value){
+# 		print("PositionedLayer.setLightning("~value~")");
+	},
+	setWxReports : func(value){
+# 		print("PositionedLayer.setWxReports("~value~")");
+	},
+	setWxOverlay : func(value){
+# 		print("PositionedLayer.setOverlay("~value~")");
+	},
+	
 	loadAirport : func(){
 		me._cache.airport.index = 0;
-		var results = positioned.findWithinRange(me._range*2.0,"airport");
+		var results = positioned.findWithinRange(me._range*2.5,"airport");
 		var item = nil;
-		foreach(var apt; results) {
-			#debug.dump(apt);
-			
-			if (me._cache.airport.index >= 100 ){
-				break;
-			}
-			
-			var displayed = 0;
-			var type = 0;
-			
-			if( apt.id == getprop("autopilot/route-manager/destination/airport") 
-			    or apt.id == getprop("autopilot/route-manager/departure/airport")){
-				displayed = 1;
-			}else{
-				var aptInfo = airportinfo(apt.id);
-				foreach(var rwy; keys(aptInfo.runways)){
-					if (aptInfo.runways[rwy].length > MAP_RUNWAY_AT_RANGE[me._range]){
-						displayed = 1;
-						type = aptInfo.runways[rwy].length >= 3000 ? 1 : 0; 
-						break;
-					}
-						
-				} 
-			}
-			
-			if (displayed){
+		var runwayLength = 0;
+		
+		if(me._var.nav >= 3){
+			runwayLength = MAP_RUNWAY_AT_RANGE[me._range];
+		}elsif (me._var.nav >= 2){
+			runwayLength = 3000;
+		}else{
+			runwayLength = -1;
+		}
+		if(runwayLength >= 0){
+			foreach(var apt; results) {
+				#debug.dump(apt);
 				
-				if (size(me._cache.airport.data) > me._cache.airport.index){
-					item = me._cache.airport.data[me._cache.airport.index];
-					item.setData(apt,type);
-				}else{
-					item = AirportItem.new(me._cache.airport.index);
-					item.create(me._can.airport);
-					item.setData(apt,type);
-					append(me._cache.airport.data,item);
+				if (me._cache.airport.index >= 100 ){
+					break;
 				}
-				item.setVisible(1);
-				me._cache.airport.index += 1;
 				
+				var displayed = 0;
+				var type = 0;
+				
+				if( apt.id == getprop("autopilot/route-manager/destination/airport") 
+				or apt.id == getprop("autopilot/route-manager/departure/airport")){
+					displayed = 0;
+				}else{
+					
+					
+					var aptInfo = airportinfo(apt.id);
+					foreach(var rwy; keys(aptInfo.runways)){
+						if (aptInfo.runways[rwy].length > runwayLength){
+							displayed = 1;
+							type = aptInfo.runways[rwy].length >= 3000 ? 1 : 0; 
+							break;
+						}
+					} 
+					
+				}
+				
+				if (displayed){
+					
+					if (size(me._cache.airport.data) > me._cache.airport.index){
+						item = me._cache.airport.data[me._cache.airport.index];
+						item.setData(apt,type);
+					}else{
+						item = AirportItem.new(me._cache.airport.index);
+						item.create(me._can.airport);
+						item.setData(apt,type);
+						append(me._cache.airport.data,item);
+					}
+					item.setVisible(1);
+					me._cache.airport.index += 1;
+					
+				}
 			}
 		}
-		
 		for (var i = me._cache.airport.index ; i < size(me._cache.airport.data) ; i +=1){
 			item = me._cache.airport.data[i];
 			item.setVisible(0);
@@ -216,25 +253,27 @@ var PositionedLayer = {
 	},
 	loadVor : func(){
 		me._cache.vor.index = 0;
-		var range = me._range*2.0 <= 100 ? me._range*2.0 : 100 ;
-		var results = positioned.findWithinRange(range,"vor");
-		var item = nil;
-		foreach(var vor; results) {
-			if (me._cache.vor.index >= 100 ){
-				break;
+		if(me._var.nav >= 1){
+			var range = me._range*2.0 <= 100 ? me._range*2.5 : 100 ;
+			var results = positioned.findWithinRange(range,"vor");
+			var item = nil;
+			foreach(var vor; results) {
+				if (me._cache.vor.index >= 100 ){
+					break;
+				}
+				
+				if (size(me._cache.vor.data) > me._cache.vor.index){
+					item = me._cache.vor.data[me._cache.vor.index];
+					item.setData(vor);
+				}else{
+					item = VorItem.new(me._cache.vor.index);
+					item.create(me._can.vor);
+					item.setData(vor);
+					append(me._cache.vor.data,item);
+				}
+				item.setVisible(1);
+				me._cache.vor.index += 1;
 			}
-			
-			if (size(me._cache.vor.data) > me._cache.vor.index){
-				item = me._cache.vor.data[me._cache.vor.index];
-				item.setData(vor);
-			}else{
-				item = VorItem.new(me._cache.vor.index);
-				item.create(me._can.vor);
-				item.setData(vor);
-				append(me._cache.vor.data,item);
-			}
-			item.setVisible(1);
-			me._cache.vor.index += 1;
 		}
 		for (var i = me._cache.vor.index ; i < size(me._cache.vor.data) ; i +=1){
 			item = me._cache.vor.data[i];
