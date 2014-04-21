@@ -18,14 +18,20 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: 18.04.2014
 
-      Last change:      
-      Date:             
+      Last change: Eric van den Berg     
+      Date: 20.04.2014            
 
 -->
 
 <PropertyList>
 
-<path>interior.ac</path>
+	<path>interior.ac</path>
+
+   	<animation>
+	  	<type>range</type>
+	  	<min-m>0</min-m>
+	  	<max-m>50</max-m>
+    	</animation>
 
 <!-- Submodels -->
 
@@ -41,6 +47,17 @@
 </model>
 
 <model>
+  <name>reading light LF</name>
+  <path>Aircraft/extra500/Models/interior/readinglightLF.xml</path>
+	<offsets>
+		<x-m>0.76006</x-m>
+		<y-m>-0.52456</y-m>	
+		<z-m>0.14436</z-m>
+            <roll-deg>-125.537</roll-deg>
+	</offsets>
+</model>
+
+<model>
   <name>reading light switch RF</name>
   <path>Aircraft/extra500/Models/interior/readinglightRFswitch.xml</path>
 	<offsets>
@@ -48,6 +65,17 @@
 		<y-m>0.65431</y-m>	
 		<z-m>-0.46784</z-m>
             <pitch-deg>-90</pitch-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>reading light RF</name>
+  <path>Aircraft/extra500/Models/interior/readinglightRF.xml</path>
+	<offsets>
+		<x-m>0.76006</x-m>
+		<y-m>0.52456</y-m>	
+		<z-m>0.14436</z-m>
+            <roll-deg>125.537</roll-deg>
 	</offsets>
 </model>
 
@@ -63,6 +91,18 @@
 </model>
 
 <model>
+  <name>reading light LA</name>
+  <path>Aircraft/extra500/Models/interior/readinglightLA.xml</path>
+	<offsets>
+		<x-m>1.82270</x-m>
+		<y-m>-0.41532</y-m>	
+		<z-m>0.15074</z-m>
+            <roll-deg>-139.896</roll-deg>
+            <heading-deg>10</heading-deg>
+	</offsets>
+</model>
+
+<model>
   <name>reading light switch RA</name>
   <path>Aircraft/extra500/Models/interior/readinglightRAswitch.xml</path>
 	<offsets>
@@ -70,6 +110,18 @@
 		<y-m>0.60300</y-m>	
 		<z-m>-0.47289</z-m>
             <pitch-deg>-90</pitch-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>reading light RA</name>
+  <path>Aircraft/extra500/Models/interior/readinglightRA.xml</path>
+	<offsets>
+		<x-m>1.82270</x-m>
+		<y-m>0.41532</y-m>	
+		<z-m>0.15074</z-m>
+            <roll-deg>139.896</roll-deg>
+            <heading-deg>-10</heading-deg>
 	</offsets>
 </model>
 

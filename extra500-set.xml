@@ -1598,21 +1598,33 @@ JSBSim Extra Aircraft - Extra 500.
 	<interior>
 		<readinglightpic>
 			<pressed type="int">0</pressed>
+			<updown>0</updown>
+			<leftright>0</leftright>
 		</readinglightpic>
 		<readinglightcop>
 			<pressed type="int">0</pressed>
+			<updown>0</updown>
+			<leftright>0</leftright>
 		</readinglightcop>
 		<readinglightLF>
 			<pressed type="int">0</pressed>
+			<updown>0</updown>
+			<leftright>0</leftright>
 		</readinglightLF>
 		<readinglightLA>
 			<pressed type="int">0</pressed>
+			<updown>0</updown>
+			<leftright>0</leftright>
 		</readinglightLA>
 		<readinglightRF>
 			<pressed type="int">0</pressed>
+			<updown>0</updown>
+			<leftright>0</leftright>
 		</readinglightRF>
 		<readinglightRA>
 			<pressed type="int">0</pressed>
+			<updown>0</updown>
+			<leftright>0</leftright>
 		</readinglightRA>
 	</interior>
  </extra500>

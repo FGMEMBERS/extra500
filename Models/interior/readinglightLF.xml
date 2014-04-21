@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: 20.04.2014
+
+      Last change:      
+      Date:             
+
+-->
+
+<PropertyList>
+
+<path>readinglight.ac</path>
+
+      <animation>
+            <type>light</type>
+            <light-type>spot</light-type>
+            <name>LightSrc100</name>
+            <object-name>light.cone</object-name>
+            <nopreview/>
+            <position>
+			<x>0.82430</x>
+			<y>-0.65431</y>	
+			<z>-0.46784</z>
+            </position>
+            <direction>
+                  <x>0</x>
+                  <y>0.707</y>
+                  <z>0.707</z>
+            </direction>
+            <ambient>
+                  <r>0.9</r>
+                  <g>0.9</g>
+                  <b>0.9</b>
+                  <a>1.0</a>
+            </ambient>
+            <diffuse>
+                  <r>0.9</r>
+                  <g>0.9</g>
+                  <b>0.9</b>
+                  <a>1.0</a>
+            </diffuse>
+            <specular>
+                  <r>0.9</r>
+                  <g>0.9</g>
+                  <b>0.9</b>
+                  <a>1.0</a>
+            </specular>
+            <attenuation>
+                  <c>1.0</c>
+                  <l>0.002</l>
+                  <q>0.00005</q>
+            </attenuation>
+            <exponent>30.0</exponent>
+            <cutoff>80</cutoff>
+            <near-m>0.1</near-m>
+            <far-m>100</far-m>
+      </animation>
+
+      <animation>
+            <type>select</type>
+            <object-name>LightSrc100</object-name>
+            <condition>
+                  <and>
+                        <property>/sim/rendering/rembrandt/enabled</property>
+                        <greater-than>
+                              <property>/sim/rendering/shaders/lights</property>
+                              <value>0</value>
+                        </greater-than>
+       			 <property>sim/multiplay/generic/int[4]</property>
+                  </and>
+            </condition>
+      </animation>
+
+  <animation>
+    <type>material</type>
+    <object-name>light.face</object-name>
+    <condition>
+        <property>sim/multiplay/generic/int[4]</property>
+    </condition>
+    <emission>
+      <red>   1.0 </red>
+      <green> 1.0 </green>
+      <blue>  1.0 </blue>
+    </emission>
+  </animation>
+
+
+<animation>
+  <type>rotate</type>
+  <object-name>eyeball</object-name>
+  <object-name>light.face</object-name>
+  <object-name>light.cone</object-name>
+  <property>/extra500/interior/readinglightLF/updown</property>
+  <axis>
+    <x1-m>0</x1-m>
+    <y1-m>0</y1-m>
+    <z1-m>0.006086</z1-m>
+    <x2-m>1</x2-m>
+    <y2-m>0</y2-m>
+    <z2-m>0.006086</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>rotate</type>
+  <object-name>eyeball</object-name>
+  <object-name>light.face</object-name>
+  <object-name>light.cone</object-name>
+  <property>/extra500/interior/readinglightLF/leftright</property>
+  <axis>
+    <x1-m>0</x1-m>
+    <y1-m>0</y1-m>
+    <z1-m>0.006086</z1-m>
+    <x2-m>0</x2-m>
+    <y2-m>1</y2-m>
+    <z2-m>0.006086</z2-m>
+  </axis>
+</animation>
+
+<!--pick animations-->
+<animation>
+  <type>pick</type>
+  <object-name>base.upper</object-name>
+  <visible>true</visible>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("readinglightLF up");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>base.lower</object-name>
+  <visible>true</visible>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("readinglightLF down");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>base.left</object-name>
+  <visible>true</visible>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("readinglightLF left");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>base.right</object-name>
+  <visible>true</visible>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("readinglightLF right");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+</PropertyList>
+
