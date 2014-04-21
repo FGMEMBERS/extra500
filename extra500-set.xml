@@ -1518,6 +1518,11 @@ JSBSim Extra Aircraft - Extra 500.
 					<voltOut type="double">0</voltOut>
 				</AirCondition>
 			</BankA>
+			<BankB>
+				<CabinLight>
+					<voltOut type="double">0</voltOut>
+				</CabinLight>
+			</BankB>
 			<BankC>
 				<Boots>
 					<voltOut type="double">0</voltOut>
@@ -1576,6 +1581,11 @@ JSBSim Extra Aircraft - Extra 500.
 					<state type="int">0</state>
 				</Pressure>
 			</Cabin>
+			<Light>
+				<Cabin>
+					<state type="int">0</state>
+				</Cabin>
+			</Light>
 		</Side>
 		<Master>
 			<Autopilot>

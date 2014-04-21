@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: 20.04.2014
 
-      Last change:      
-      Date:             
+      Last change:  21.04.2014    
+      Date:   Eric van den Berg                  
 
 -->
 
@@ -30,7 +30,7 @@
 
       <animation>
             <type>light</type>
-            <light-type>spot</light-type>
+            <light-type>point</light-type>
             <name>LightSrc100</name>
             <object-name>light.cone</object-name>
             <nopreview/>
@@ -39,11 +39,6 @@
 			<y>-0.65431</y>	
 			<z>-0.46784</z>
             </position>
-            <direction>
-                  <x>0</x>
-                  <y>0.707</y>
-                  <z>0.707</z>
-            </direction>
             <ambient>
                   <r>0.9</r>
                   <g>0.9</g>
@@ -63,14 +58,12 @@
                   <a>1.0</a>
             </specular>
             <attenuation>
-                  <c>1.0</c>
-                  <l>0.002</l>
-                  <q>0.00005</q>
+                  <c>5.0</c>
+                  <l>0.2</l>
+                  <q>0.005</q>
             </attenuation>
-            <exponent>30.0</exponent>
-            <cutoff>80</cutoff>
             <near-m>0.1</near-m>
-            <far-m>100</far-m>
+            <far-m>5</far-m>
       </animation>
 
       <animation>
@@ -83,7 +76,12 @@
                               <property>/sim/rendering/shaders/lights</property>
                               <value>0</value>
                         </greater-than>
-       			 <property>sim/multiplay/generic/int[4]</property>
+           			<greater-than>
+            			<property>/extra500/panel/CircuitBreaker/BankB/CabinLight/voltOut</property>
+                  		<value>10</value>
+            		</greater-than>
+       			<property>/extra500/interior/readinglightLF/pressed</property>
+       			<property>/extra500/panel/Side/Light/Cabin/state</property>
                   </and>
             </condition>
       </animation>
@@ -92,7 +90,12 @@
     <type>material</type>
     <object-name>light.face</object-name>
     <condition>
-        <property>sim/multiplay/generic/int[4]</property>
+            <greater-than>
+            	<property>/extra500/panel/CircuitBreaker/BankB/CabinLight/voltOut</property>
+                  <value>10</value>
+            </greater-than>
+       	<property>/extra500/interior/readinglightLF/pressed</property>
+       	<property>/extra500/panel/Side/Light/Cabin/state</property>
     </condition>
     <emission>
       <red>   1.0 </red>

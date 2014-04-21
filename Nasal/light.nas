@@ -17,7 +17,7 @@
 #      Date: Jul 04 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             27.09.13
+#      Date:             21.04.14
 #
 
 var LightClass = {
@@ -72,7 +72,7 @@ var LightPanelClass = {
 		m.nav		= LightClass.new("/extra500/light/nav","Navigation Light",80.0);
 		m.landing	= LightClass.new("/extra500/light/landing","Landing Light",64.0);
 		m.recognition	= LightClass.new("/extra500/light/recognition","Recognition Light",25.2);
-		m.cabin		= LightClass.new("/extra500/light/cabin","Cabin Light",37.4);
+#		m.cabin		= LightClass.new("/extra500/light/cabin","Cabin Light",37.4);
 		m.map		= LightClass.new("/extra500/light/map","Map Light",4.0);
 		m.glare		= LedClass.new("/extra500/light/glare","Glare Light","/extra500/system/dimming/Glare",6.0);
 		m.ice		= LightClass.new("/extra500/light/ice","Ice Light",28.0);
@@ -87,7 +87,7 @@ var LightPanelClass = {
 		eSystem.circuitBreaker.NAV_LT.outputAdd(me.nav);
 		eSystem.circuitBreaker.LDG_LT.outputAdd(me.landing);
 		eSystem.circuitBreaker.RECO_LT.outputAdd(me.recognition);
-		eSystem.circuitBreaker.CABIN_LT.outputAdd(me.cabin);
+#		eSystem.circuitBreaker.CABIN_LT.outputAdd(me.cabin);
 		eSystem.circuitBreaker.CABIN_LT.outputAdd(me.map);
 		eSystem.circuitBreaker.GLARE_LT.outputAdd(me.glare);
 		eSystem.circuitBreaker.ICE_LT.outputAdd(me.ice);
@@ -97,7 +97,7 @@ var LightPanelClass = {
 		me.nav.init();
 		me.landing.init();
 		me.recognition.init();
-		me.cabin.init();
+#		me.cabin.init();
 		me.map.init();
 		me.glare.init();
 		me.ice.init();
@@ -123,10 +123,10 @@ var LightPanelClass = {
 			light.recognition.setState(me._state);
 		};
 		
-		eSystem.switch.Cabin.onStateChange = func(n){
-			me._state = n.getValue();
-			light.cabin.setState(me._state);
-		};
+#		eSystem.switch.Cabin.onStateChange = func(n){
+#			me._state = n.getValue();
+#			light.cabin.setState(me._state);
+#		};
 		
 		eSystem.switch.Map.onStateChange = func(n){
 			me._state = n.getValue();

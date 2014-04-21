@@ -20,7 +20,7 @@
       Date: 2013-09-16
 
       Last change:      Eric van den Berg
-      Date:             2014-02-09
+      Date:             2014-04-21
 -->
 
 <system name="electrics">
@@ -95,8 +95,92 @@
 			<output>/extra500/panel/CircuitBreaker/BankA/AirCondition/ampere</output>
 		</switch>
 
+<!-- Cabin lights -->
+		<fcs_function name="cabinlights">
+			<function>
+				<sum>
+					<product>
+						<property>/extra500/interior/readinglightpic/pressed</property>
+						<value>1.0</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/BankB/CabinLight/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+					<product>
+						<property>/extra500/interior/readinglightcop/pressed</property>
+						<value>1.0</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/BankB/CabinLight/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+					<product>
+						<property>/extra500/interior/readinglightLF/pressed</property>
+						<value>1.0</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/BankB/CabinLight/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+					<product>
+						<property>/extra500/interior/readinglightLA/pressed</property>
+						<value>1.0</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/BankB/CabinLight/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+					<product>
+						<property>/extra500/interior/readinglightRF/pressed</property>
+						<value>1.0</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/BankB/CabinLight/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+					<product>
+						<property>/extra500/interior/readinglightRA/pressed</property>
+						<value>1.0</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/BankB/CabinLight/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+				</sum>
+			</function>
+			<output>/extra500/consumers/cabinlights/ampere</output>
+		</fcs_function>
+
+		<switch name="amperecabinlights">
+			<default value="0"/>
+			<test logic="AND" value="/extra500/consumers/cabinlights/ampere">
+				/extra500/panel/CircuitBreaker/BankB/CabinLight/voltOut gt 10
+				/extra500/panel/Side/Light/Cabin/state eq 1
+			</test>
+			<output>/extra500/panel/CircuitBreaker/BankB/CabinLight/ampere</output>
+		</switch>
+
 <!-- Panel vents -->
-		<fcs_function>
+		<fcs_function name="panelVents">
 			<function>
 				<sum>
 					<product>
