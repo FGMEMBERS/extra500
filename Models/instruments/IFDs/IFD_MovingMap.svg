@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.70000001"
-     inkscape:cx="625.12092"
-     inkscape:cy="883.07194"
+     inkscape:zoom="0.35000001"
+     inkscape:cx="530.90417"
+     inkscape:cy="1050.025"
      inkscape:document-units="px"
      inkscape:current-layer="layer5"
      showgrid="false"
@@ -352,7 +352,8 @@
     </g>
     <g
        id="MovingMap_Plane"
-       style="display:inline;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none">
+       style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none;display:inline"
+       inkscape:transform-center-y="8.914975">
       <path
          inkscape:connector-curvature="0"
          id="path3509"
