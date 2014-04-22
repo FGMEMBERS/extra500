@@ -92,7 +92,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -110,7 +110,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -129,7 +129,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -147,7 +147,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -165,7 +165,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -183,7 +183,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -201,7 +201,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -219,7 +219,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -237,7 +237,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -255,7 +255,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -273,7 +273,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -291,7 +291,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -309,7 +309,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -327,7 +327,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -346,7 +346,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -364,7 +364,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -382,7 +382,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -400,7 +400,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -418,7 +418,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -436,7 +436,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -454,7 +454,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -472,7 +472,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -490,7 +490,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -508,7 +508,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -526,7 +526,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -544,7 +544,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -934,7 +934,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -952,7 +952,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -970,7 +970,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -988,7 +988,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -1006,7 +1006,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -1024,7 +1024,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -1042,7 +1042,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -1060,7 +1060,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -1078,7 +1078,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -1096,7 +1096,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>true</repeatable>
+        <repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -1217,7 +1217,7 @@
 	</action>
 	<action>
 		<button>1</button>
-		<repeatable>true</repeatable>
+		<repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -1297,7 +1297,7 @@
 		
 		<action>
 		<button>1</button>
-		<repeatable>true</repeatable>
+		<repeatable>false</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -1778,7 +1778,7 @@
         <object-name>BaroKnob</object-name>
         <action>
             <button>3</button>
-            <repeatable>true</repeatable>
+            <repeatable>false</repeatable>
             <interval-sec>0.15</interval-sec>
             <binding>
 			<command>nasal</command>
