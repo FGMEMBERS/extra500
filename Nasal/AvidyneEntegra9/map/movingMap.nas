@@ -61,6 +61,7 @@
 # 	
 # };
 var MAP_RANGE = [2,4,10,20,30,40,50,80,160,240];
+var MAP_VIEW = {"NORTH_UP":0,"HDG_UP_CENTER":1,"HDG_UP_FRONT":2};
 var MovingMap = {
 	new : func(ifd,parent,name){
 		var m = {parents:[
@@ -167,7 +168,7 @@ var MovingMap = {
 		m._fmsServiceable	= 0;
 		
 		m._layer 	= {};
-		m._view 	= 0 ;
+		m._view 	= MAP_VIEW.HDG_UP_CENTER ;
 		 
 		#m._mapScale	= m._can.LayerMap.createTransform(); 
 		m._mapTransform		= m._can.LayerMap.createTransform(); 
@@ -206,7 +207,7 @@ var MovingMap = {
 	},
 	setHdg : func(deg){
 		me._heading = deg;
-		if(me._view == 1){
+		if(me._view == MAP_VIEW.NORTH_UP){ # North up
 			me._orientation = 0;
 		}else{
 			me._orientation = me._heading;
@@ -323,6 +324,7 @@ var MovingMap = {
 			me._group.set("z-index",0);
 			me._group.setVisible(1);
 		}elsif(me._layout == "pfd"){
+			me._view = MAP_VIEW.HDG_UP_CENTER;
 			
 # 			me._screenSize	= 291;
 # 			me.setTranslation(1024,1132);
@@ -352,21 +354,31 @@ var MovingMap = {
 		}else{
 			
 		}
-		me._update();
+		me._updateView();
 			
 		me._can.BugFMS.setVisible(me._bugFMSactive);
 		
 	},
 	setView : func(view){
-		me._view = view;
-		me._update();
+		if(me._layout != "pfd"){
+			me._view = view;
+			me._updateView();
+		}
 	},
-	_update : func(){
-		me._can.UpNorth.setVisible(me._view);
-		if(me._view == 0){
-			me._mapTransformView.setTranslation(0,500 * (me._layout != "pfd"));
+	_updateView : func(){
+		if(me._view == MAP_VIEW.HDG_UP_CENTER){ # HDG up centered
+			me._mapTransformView.setTranslation(0,0);
+			me._can.UpNorth.setVisible(0);
+		}elsif(me._view == MAP_VIEW.HDG_UP_FRONT){ # HDG up 
+# 			me._mapTransformView.setTranslation(0,500 * (me._layout != "pfd"));
+			me._mapTransformView.setTranslation(0,500);
+			me._can.UpNorth.setVisible(0);
+		}elsif(me._view == MAP_VIEW.NORTH_UP){ # North up
+			me._mapTransformView.setTranslation(0,0);
+			me._can.UpNorth.setVisible(1);
 		}else{
 			me._mapTransformView.setTranslation(0,0);
+			me._can.UpNorth.setVisible(0);
 		}
 	},
 	setLayerVisible : func(layer,v){
@@ -426,7 +438,7 @@ var MovingMap = {
 		#me.setRefPos(me._lat,me._lon);
 		#me.setHdg(me._upHdg);
 		
-		me._can.plane.setRotation(me._heading * me._view * global.CONST.DEG2RAD);
+		me._can.plane.setRotation(me._heading * (me._view==MAP_VIEW.NORTH_UP) * global.CONST.DEG2RAD);
 		
 		me._can.HDGValue.setText(sprintf("%03i",global.roundInt(me._heading)));
 		me._can.UpHDGDeg.setText(sprintf("%5.1f",me._upHdg));
@@ -474,7 +486,7 @@ var MovingMapKnobWidget = {
 		
 		};
 		m._range	= 4;
-		m._view		= 0;
+		m._view		= MAP_VIEW.HDG_UP_CENTER;
 		m._hand 	= 0;
 		return m;
 	},
@@ -529,7 +541,7 @@ var MovingMapKnobWidget = {
 		me._Page.IFD.movingMap.setRangeNm(MAP_RANGE[me._range]);
 	},
 	adjustMapView : func(amount){
-		me._view = global.cycle(me._view,0,1,amount);
+		me._view = global.cycle(me._view,0,2,amount);
 		me._Page.IFD.movingMap.setView(me._view);
 	}
 };

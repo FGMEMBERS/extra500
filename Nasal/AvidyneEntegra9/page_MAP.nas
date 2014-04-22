@@ -6,7 +6,8 @@ var MapWidget = {
 		m._can = {
 			
 			
-			Map_Declutter 		: m._group.getElementById("Map_Declutter").setVisible(0),
+			Map_Options 		: m._group.getElementById("Map_Options").setVisible(0),
+# 			Map_Declutter 		: m._group.getElementById("Map_Declutter").setVisible(0),
 			Map_Declutter_Land_1 	: m._group.getElementById("Map_Declutter_Land_1"),
 			Map_Declutter_Land_2 	: m._group.getElementById("Map_Declutter_Land_2"),
 			Map_Declutter_Land_3 	: m._group.getElementById("Map_Declutter_Land_3"),
@@ -14,11 +15,11 @@ var MapWidget = {
 			Map_Declutter_Nav_2 	: m._group.getElementById("Map_Declutter_Nav_2"),
 			Map_Declutter_Nav_3 	: m._group.getElementById("Map_Declutter_Nav_3"),
 			
-			Map_Lightning 		: m._group.getElementById("Map_Lightning").setVisible(0),
+# 			Map_Lightning 		: m._group.getElementById("Map_Lightning").setVisible(0),
 			Map_Lightning_Value	: m._group.getElementById("Map_Lightning_Value"),
-			Map_WxReports 		: m._group.getElementById("Map_WxReports").setVisible(0),
+# 			Map_WxReports 		: m._group.getElementById("Map_WxReports").setVisible(0),
 			Map_WxReports_Value	: m._group.getElementById("Map_WxReports_Value"),
-			Map_WxOverlay 		: m._group.getElementById("Map_WxOverlay").setVisible(0),
+# 			Map_WxOverlay 		: m._group.getElementById("Map_WxOverlay").setVisible(0),
 			Map_WxOverlay_Value	: m._group.getElementById("Map_WxOverlay_Value"),
 			
 		};
@@ -34,7 +35,10 @@ var MapWidget = {
 			reports		: ["AIR/SIGMENT","Test R"],
 			overlay		: ["NOWrad","Test O"],
 		};
-		
+		m._optionsVisible = 0;
+		m._timeOutHot = 0;
+		m._timeOut = maketimer(10.0,m,MapWidget._onTimeOut);
+		m._timeOut.singleShot = 1;
 		return m;
 	},
 	setListeners : func(instance) {
@@ -48,62 +52,93 @@ var MapWidget = {
 		#me.removeListeners();
 	},
 	setVisible : func(visibility){
+		me.setTimeOutHot(0);
 		if(visibility == 1){
-			me._can.Map_Declutter.setVisible(1);
+			me._can.Map_Options.setVisible(1);
+# 			me._can.Map_Declutter.setVisible(1);
 			me._Page.IFD.nLedR1.setValue(1);
-			me._Page.keys["R1 <"] 	= func(){me._onLand(1)};
-			me._Page.keys["R1 >"] 	= func(){me._onNav(1)};
+			me._Page.keys["R1 <"] 	= func(){me._onLand(-1)};
+			me._Page.keys["R1 >"] 	= func(){me._onNav(-1)};
 			me._onLand(0);
 			me._onNav(0);
 						
-			me._can.Map_Lightning.setVisible(1);
+# 			me._can.Map_Lightning.setVisible(1);
 			me._Page.IFD.nLedR2.setValue(1);
 			me._Page.keys["R2 <"] 	= func(){me._onLightning(-1)};
 			me._Page.keys["R2 >"] 	= func(){me._onLightning(1)};
 			me._onLightning(0);
 			
-			me._can.Map_WxReports.setVisible(1);
+# 			me._can.Map_WxReports.setVisible(1);
 			me._Page.IFD.nLedR3.setValue(1);
 			me._Page.keys["R3 <"] 	= func(){me._onReports(-1)};
 			me._Page.keys["R3 >"] 	= func(){me._onReports(1)};
 			me._onReports(0);
 			
-			me._can.Map_WxOverlay.setVisible(1);
+# 			me._can.Map_WxOverlay.setVisible(1);
 			me._Page.IFD.nLedR4.setValue(1);
 			me._Page.keys["R4 <"] 	= func(){me._onOverlay(-1)};
 			me._Page.keys["R4 >"] 	= func(){me._onOverlay(1)};
 			me._onOverlay(0);
 			
 		}else{
-			me._can.Map_Declutter.setVisible(0);
+			me._can.Map_Options.setVisible(0);
+# 			me._can.Map_Declutter.setVisible(0);
 			me._Page.IFD.nLedR1.setValue(0);
 			me._Page.keys["R1 <"] 	= nil;
 			me._Page.keys["R1 >"] 	= nil;
 			
-			me._can.Map_Lightning.setVisible(0);
+# 			me._can.Map_Lightning.setVisible(0);
 			me._Page.IFD.nLedR2.setValue(0);
 			me._Page.keys["R2 <"] 	= nil;
 			me._Page.keys["R2 >"] 	= nil;
 			
-			me._can.Map_WxReports.setVisible(0);
+# 			me._can.Map_WxReports.setVisible(0);
 			me._Page.IFD.nLedR3.setValue(0);
 			me._Page.keys["R3 <"] 	= nil;
 			me._Page.keys["R3 >"] 	= nil;
 			
-			me._can.Map_WxOverlay.setVisible(0);
+# 			me._can.Map_WxOverlay.setVisible(0);
 			me._Page.IFD.nLedR4.setValue(0);
 			me._Page.keys["R4 <"] 	= nil;
 			me._Page.keys["R4 >"] 	= nil;
 		}
 	},
+	_startTimeOut :func(){
+		if(me._timeOutHot){
+			me._timeOut.restart(10.0);
+		}
+	},
+	setTimeOutHot : func(value){
+		me._timeOutHot = value;
+		me._startTimeOut();
+	},
+	_onTimeOut : func(){
+		me.setOptionsVisible(0);
+	},
+	setOptionsVisible : func(value){
+		me._optionsVisible = value;
+		me._can.Map_Options.setVisible(me._optionsVisible);
+	},
+	_checkOptions :func(){
+		me._startTimeOut();
+		if( me._optionsVisible == 0 ){
+			me.setOptionsVisible(1);
+			return 1;
+		}
+		return 0;
+	},
 	_onLand : func(step){
+		if (me._checkOptions()) return 0;
+		me._can.Map_Options.setVisible(1);
 		me._var.land.value = global.cycle(me._var.land.value,me._var.land.min,me._var.land.max,step);
 		me._can.Map_Declutter_Land_1.setVisible(me._var.land.value >= 1);
 		me._can.Map_Declutter_Land_2.setVisible(me._var.land.value >= 2);
 		me._can.Map_Declutter_Land_3.setVisible(me._var.land.value >= 3);
 		me._Page.IFD.movingMap.setLand(me._var.land.value);
+		
 	},
 	_onNav : func(step){
+		if (me._checkOptions()) return 0;
 		me._var.nav.value = global.cycle(me._var.nav.value,me._var.nav.min,me._var.nav.max,step);
 		me._can.Map_Declutter_Nav_1.setVisible(me._var.nav.value >= 1);
 		me._can.Map_Declutter_Nav_2.setVisible(me._var.nav.value >= 2);
@@ -111,17 +146,20 @@ var MapWidget = {
 		me._Page.IFD.movingMap.setNav(me._var.nav.value);
 	},
 	_onLightning : func(step){
+		if (me._checkOptions()) return 0;
 		me._var.lightning.value = global.cycle(me._var.lightning.value,me._var.lightning.min,me._var.lightning.max,step);
 		me._can.Map_Lightning_Value.setText(me._lable.lightning[me._var.lightning.value]);
 		me._Page.IFD.movingMap.setLightning(me._var.lightning.value);
 	},
 	_onReports : func(step){
+		if (me._checkOptions()) return 0;
 		me._var.reports.value += step;
 		me._var.reports.value = global.clamp(me._var.reports.value,me._var.reports.min,me._var.reports.max);
 		me._can.Map_WxReports_Value.setText(me._lable.reports[me._var.reports.value]);
 		me._Page.IFD.movingMap.setWxReports(me._var.reports.value);
 	},
 	_onOverlay : func(step){
+		if (me._checkOptions()) return 0;
 		me._var.overlay.value += step;
 		me._var.overlay.value = global.clamp(me._var.overlay.value,me._var.overlay.min,me._var.overlay.max);
 		me._can.Map_WxOverlay_Value.setText(me._lable.overlay[me._var.overlay.value]);
@@ -213,12 +251,14 @@ var AvidynePageMAP = {
 			me.IFD._widget.PlusData.setVisible(1);
 			me._widget.MapWidget.setVisible(1);
 			
+			
 		}elsif(index == 1){ # MAP
 			me.IFD.movingMap.setLayout("map");
 			me._widget.MovingMapKnob.setHand(1);
 			me._widget.MovingMapKnob.setVisible(1);
 			me._widget.MapWidget.setVisible(1);
-		
+			me._widget.MapWidget.setTimeOutHot(1);
+			
 			
 		}elsif(index == 2){ # Split
 			me.IFD.movingMap.setLayout("split-left");
