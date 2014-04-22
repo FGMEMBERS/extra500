@@ -154,7 +154,7 @@ var AvidyneIFD = {
 		});
 		
 
-		m.canvas.addPlacement({"node": acPlace});
+		m.canvas.addPlacement({"parent": acPlace,"node": "IFD.Screen"});
 		m.canvas.setColorBackground(0,0,0);
 		# .. and place it on the object called PFD-Screen
 
@@ -517,8 +517,8 @@ var AvidyneIFD = {
 };
 
 
-var LH = AvidyneIFD.new("extra500/instrumentation/IFD-LH","LH","LH-IFD.Screen","PFD");
-var RH = AvidyneIFD.new("extra500/instrumentation/IFD-RH","RH","RH-IFD.Screen","FMS");
+var LH = AvidyneIFD.new("extra500/instrumentation/IFD-LH","LH","LH_IFD","PFD");
+var RH = AvidyneIFD.new("extra500/instrumentation/IFD-RH","RH","RH_IFD","FMS");
 
 extra500.eSystem.circuitBreaker.IFD_LH_A.outputAdd(LH._powerA);
 extra500.eSystem.circuitBreaker.IFD_LH_B.outputAdd(LH._powerB);

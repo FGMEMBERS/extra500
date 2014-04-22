@@ -26,12 +26,12 @@
 
 <PropertyList>
 
-<path>LH-IFD.ac</path>
+<path>IFD.ac</path>
 
 <!--Dimming Test -->
 <animation>
         <type>material</type>
-        <object-name>LH-IFD.Screen</object-name>
+        <object-name>IFD.Screen</object-name>
         <emission>
             <red>0.7</red>
             <green>0.7</green>
