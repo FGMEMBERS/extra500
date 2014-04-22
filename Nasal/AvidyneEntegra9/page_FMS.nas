@@ -498,7 +498,7 @@ var FlightPlanListWidget = {
 					
 					fuelGalUs -= extra500.fuelSystem._nFuelFlowGalUSpSec.getValue() * ete;
 					me._fplItem[i].setFuel(sprintf("%.0f",fuelGalUs));
-					
+					setprop("/autopilot/route-manager/wp/fuelAtDestinationGalUs",fuelGalUs);
 				}elsif (i > me._currentIndex){
 					
 					distSum += fmsWP.leg_distance;

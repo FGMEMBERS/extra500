@@ -20,6 +20,7 @@
 #      Date:             28.08.2013
 #
 
+var FREQENCY_SOURCE = ["Com","Nav"];
 
 var TabWidget = {
 	new : func(page,canvasGroup,name){
@@ -90,13 +91,23 @@ var HeadlineWidget = {
 		m._can		= {};
 		m._timer	= maketimer(1.0,m,HeadlineWidget.update);
 		m._visible 	= 0;
+		m._source = 0;
+		m._freqencyListeners = [];
 		return m;
 	},
+	_removeFreqencyListeners : func(){
+		foreach(var l;me._freqencyListeners){
+			removelistener(l);
+		}
+		me._freqencyListeners = [];
+	},
 	setListeners : func(instance) {
-		append(me._listeners, setlistener("/instrumentation/comm[0]/frequencies/selected-mhz",func(n){me._onCom1SelectedChange(n)},1,0));	
-		append(me._listeners, setlistener("/instrumentation/comm[0]/frequencies/standby-mhz",func(n){me._onCom1StandbyChange(n)},1,0));	
-		append(me._listeners, setlistener("/instrumentation/comm[1]/frequencies/selected-mhz",func(n){me._onCom2SelectedChange(n)},1,0));	
-		append(me._listeners, setlistener("/instrumentation/comm[1]/frequencies/standby-mhz",func(n){me._onCom2StandbyChange(n)},1,0));	
+		append(me._listeners, setlistener("/extra500/instrumentation/Keypad/tuningSource",func(n){me._onTuningSourceChange(n)},1,0));	
+		
+# 		append(me._listeners, setlistener("/instrumentation/comm[0]/frequencies/selected-mhz",func(n){me._onFreqency1ActiveChange(n)},1,0));	
+# 		append(me._listeners, setlistener("/instrumentation/comm[0]/frequencies/standby-mhz",func(n){me._onFreqency1StandbyChange(n)},1,0));	
+# 		append(me._listeners, setlistener("/instrumentation/comm[1]/frequencies/selected-mhz",func(n){me._onFreqency2ActiveChange(n)},1,0));	
+# 		append(me._listeners, setlistener("/instrumentation/comm[1]/frequencies/standby-mhz",func(n){me._onFreqency2StandbyChange(n)},1,0));	
 		append(me._listeners, setlistener("/instrumentation/transponder/id-code",func(n){me._onXPDRChange(n);},1,0) );
 		append(me._listeners, setlistener("/instrumentation/transponder/inputs/knob-mode",func(n){me._onXPDRmodeChange(n);},1,0) );
 		append(me._listeners, setlistener("/autopilot/route-manager/signals/waypoint-changed",func(n){me._onWaypointChange(n)},1,0));	
@@ -104,16 +115,22 @@ var HeadlineWidget = {
 	init : func(instance=me){
 		#print("HeadlineWidget.init() ... ");
 		me._can = {
-			com1selected	: me._group.getElementById("Com1_selected"),
-			com1standby	: me._group.getElementById("Com1_standby"),
-			com2selected	: me._group.getElementById("Com2_selected"),
-			com2standby	: me._group.getElementById("Com2_standby"),
-			Xpdr		: me._group.getElementById("Head_xpdr"),
-			XpdrMode	: me._group.getElementById("Head_xpdr_mode"),
-			Dest		: me._group.getElementById("Head_Dest"),
-			Fuel		: me._group.getElementById("Head_gal"),
-			ETA		: me._group.getElementById("Head_eta"),
-			Time		: me._group.getElementById("Head_time"),
+			freqency1LabelActive	: me._group.getElementById("Freqency1_label_active"),
+			freqency1LabelStandby	: me._group.getElementById("Freqency1_label_standby"),
+			freqency2LabelActive	: me._group.getElementById("Freqency2_label_active"),
+			freqency2LabelStandby	: me._group.getElementById("Freqency2_label_standby"),
+			
+			freqency1Active		: me._group.getElementById("Freqency1_active"),
+			freqency1Standby	: me._group.getElementById("Freqency1_standby"),
+			freqency2Active		: me._group.getElementById("Freqency2_active"),
+			freqency2Standby	: me._group.getElementById("Freqency2_standby"),
+			
+			Xpdr			: me._group.getElementById("Head_xpdr"),
+			XpdrMode		: me._group.getElementById("Head_xpdr_mode"),
+			Dest			: me._group.getElementById("Head_Dest"),
+			Fuel			: me._group.getElementById("Head_gal"),
+			ETA			: me._group.getElementById("Head_eta"),
+			Time			: me._group.getElementById("Head_time"),
 		};
 		#me.setListeners(instance);
 	},
@@ -125,22 +142,42 @@ var HeadlineWidget = {
 				me._timer.start();
 			}else{
 				me.removeListeners();
+				me._removeFreqencyListeners();
 				me._timer.stop();
 			}
 		}
 		me._group.setVisible(me._visible);
 	},
-	_onCom1SelectedChange : func(n){
-		me._can.com1selected.setText(sprintf("%.3f",n.getValue()));
+	_onTuningSourceChange: func(n){
+		me._source = n.getValue();
+		me._removeFreqencyListeners();
+		if(me._source == 0){
+			me._can.freqency1LabelActive.setText("Com1");
+			me._can.freqency2LabelActive.setText("Com2");
+			append(me._freqencyListeners, setlistener("/instrumentation/comm[0]/frequencies/selected-mhz",func(n){me._onFreqency1ActiveChange(n)},1,0));	
+			append(me._freqencyListeners, setlistener("/instrumentation/comm[0]/frequencies/standby-mhz",func(n){me._onFreqency1StandbyChange(n)},1,0));	
+			append(me._freqencyListeners, setlistener("/instrumentation/comm[1]/frequencies/selected-mhz",func(n){me._onFreqency2ActiveChange(n)},1,0));	
+			append(me._freqencyListeners, setlistener("/instrumentation/comm[1]/frequencies/standby-mhz",func(n){me._onFreqency2StandbyChange(n)},1,0));	
+		}else{
+			me._can.freqency1LabelActive.setText("Nav1");
+			me._can.freqency2LabelActive.setText("Nav2");
+			append(me._freqencyListeners, setlistener("/instrumentation/nav[0]/frequencies/selected-mhz",func(n){me._onFreqency1ActiveChange(n)},1,0));	
+			append(me._freqencyListeners, setlistener("/instrumentation/nav[0]/frequencies/standby-mhz",func(n){me._onFreqency1StandbyChange(n)},1,0));	
+			append(me._freqencyListeners, setlistener("/instrumentation/nav[1]/frequencies/selected-mhz",func(n){me._onFreqency2ActiveChange(n)},1,0));	
+			append(me._freqencyListeners, setlistener("/instrumentation/nav[1]/frequencies/standby-mhz",func(n){me._onFreqency2StandbyChange(n)},1,0));	
+		}
 	},
-	_onCom1StandbyChange : func(n){
-		me._can.com1standby.setText(sprintf("%.3f",n.getValue()));
+	_onFreqency1ActiveChange : func(n){
+		me._can.freqency1Active.setText(sprintf("%.3f",n.getValue()));
 	},
-	_onCom2SelectedChange : func(n){
-		me._can.com2selected.setText(sprintf("%.3f",n.getValue()));
+	_onFreqency1StandbyChange : func(n){
+		me._can.freqency1Standby.setText(sprintf("%.3f",n.getValue()));
 	},
-	_onCom2StandbyChange : func(n){
-		me._can.com2standby.setText(sprintf("%.3f",n.getValue()));
+	_onFreqency2ActiveChange : func(n){
+		me._can.freqency2Active.setText(sprintf("%.3f",n.getValue()));
+	},
+	_onFreqency2StandbyChange : func(n){
+		me._can.freqency2Standby.setText(sprintf("%.3f",n.getValue()));
 	},
 	_onXPDRChange : func(n){
 		me._can.Xpdr.setText(sprintf("%4i",n.getValue()));	
@@ -337,7 +374,7 @@ var PlusDataWidget = {
 		me._can.ETA.setText(getprop("/autopilot/route-manager/wp/eta"));
 		me._can.Distance.setText(sprintf("%.1f",getprop("/autopilot/route-manager/wp/dist")));
 		me._can.Course.setText(sprintf("%03.0f",getprop("/autopilot/route-manager/wp/bearing-deg")));
-		me._can.Fuel.setText(sprintf("%.0f",getprop("/autopilot/route-manager/fuelAtDestinationGalUs")));
+		me._can.Fuel.setText(sprintf("%.0f",getprop("/autopilot/route-manager/wp/fuelAtDestinationGalUs")));
 	},
 	
 };
@@ -419,7 +456,7 @@ var TuningWidget_old = {
 		m._class 	= "TuningWidget_old";
 		m._tab		= [];
 		m._can		= {};
-		m.SOURCE	= ["Com","Nav"];
+		#m.SOURCE	= ["Com","Nav"];
 		
 
 		m._source = 0;
@@ -490,9 +527,9 @@ var TuningWidget_old = {
 	},
 	_onTuningSourceChange : func(n){
 		me._source = n.getValue();
-		me._can.source.setText(me.SOURCE[me._source]);
-		me._can.channel[0].setText(me.SOURCE[me._source]~" 1");
-		me._can.channel[1].setText(me.SOURCE[me._source]~" 2");
+		me._can.source.setText(FREQENCY_SOURCE[me._source]);
+		me._can.channel[0].setText(FREQENCY_SOURCE[me._source]~" 1");
+		me._can.channel[1].setText(FREQENCY_SOURCE[me._source]~" 2");
 
 	},
 	_onTuningChannelChange : func(n){

@@ -40,7 +40,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
      inkscape:cx="1109.6091"
-     inkscape:cy="1400.2407"
+     inkscape:cy="1171.6693"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -647,7 +647,7 @@
          style="color:#000000;fill:#000000;stroke:#3391e8;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
       <text
          sodipodi:linespacing="125%"
-         id="text7827"
+         id="Freqency1_label_active"
          y="41.714283"
          x="17.857141"
          style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
@@ -661,7 +661,7 @@
          style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
          x="17.857141"
          y="87.714279"
-         id="text7831"
+         id="Freqency1_label_standby"
          sodipodi:linespacing="125%"><tspan
            sodipodi:role="line"
            id="tspan7833"
@@ -672,7 +672,7 @@
          style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
          x="159.85715"
          y="41.714283"
-         id="Com1_selected"
+         id="Freqency1_active"
          sodipodi:linespacing="125%"><tspan
            sodipodi:role="line"
            id="tspan7837"
@@ -680,7 +680,7 @@
            y="41.714283">132.575</tspan></text>
       <text
          sodipodi:linespacing="125%"
-         id="Com1_standby"
+         id="Freqency1_standby"
          y="87.714279"
          x="159.85715"
          style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
@@ -702,7 +702,7 @@
          style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
          x="17.857141"
          y="41.714283"
-         id="text7860"
+         id="Freqency2_label_active"
          sodipodi:linespacing="125%"
          transform="translate(1649.5,0)"><tspan
            sodipodi:role="line"
@@ -711,7 +711,7 @@
            y="41.714283">Com2</tspan></text>
       <text
          sodipodi:linespacing="125%"
-         id="text7864"
+         id="Freqency2_label_standby"
          y="87.714279"
          x="17.857141"
          style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
@@ -723,7 +723,7 @@
            sodipodi:role="line">Stby</tspan></text>
       <text
          sodipodi:linespacing="125%"
-         id="Com2_selected"
+         id="Freqency2_active"
          y="41.714283"
          x="159.85715"
          style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
@@ -738,7 +738,7 @@
          style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
          x="159.85715"
          y="87.714279"
-         id="Com2_standby"
+         id="Freqency2_standby"
          sodipodi:linespacing="125%"
          transform="translate(1649.5,0)"><tspan
            sodipodi:role="line"
