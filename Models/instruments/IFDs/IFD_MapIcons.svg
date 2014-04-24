@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="512"
+   height="512"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="IFD_MapIcons.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="40.035434"
+     inkscape:cy="297.00057"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:snap-object-midpoints="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1025"
+     inkscape:window-x="-2"
+     inkscape:window-y="-3"
+     inkscape:window-maximized="1"
+     inkscape:snap-page="true"
+     inkscape:snap-bbox="true"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:bbox-nodes="true">
+    <sodipodi:guide
+       orientation="1,0"
+       position="86,444.06306"
+       id="guide4221" />
+    <inkscape:grid
+       type="xygrid"
+       id="grid4225"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="53,444"
+       id="guide3103" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ff00ff;fill-opacity:1;stroke:none;stroke-width:9.54473877;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+       d="m 46.891171,27 c -6.825897,0 -12.509335,5.582757 -12.509335,12.5 0,6.917262 5.683438,12.5 12.509335,12.5 6.825903,0 12.490665,-5.582738 12.490665,-12.5 0,-6.917243 -5.664762,-12.5 -12.490665,-12.5 z m 0,5.848616 c 3.840293,0 6.796117,2.990873 6.796117,6.651384 0,3.660511 -2.955824,6.651384 -6.796117,6.651384 -3.840292,0 -6.814786,-2.990873 -6.814786,-6.651384 0,-3.660511 2.974494,-6.651384 6.814786,-6.651384 z"
+       id="Airport_0000"
+       inkscape:connector-curvature="0" />
+    <path
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ff00ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:9.54473877;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+       d="m 46.891171,82 c -6.825898,0 -12.509335,5.582757 -12.509335,12.5 0,6.91726 5.683437,12.5 12.509335,12.5 6.825903,0 12.490665,-5.58274 12.490665,-12.5 0,-6.917243 -5.664762,-12.5 -12.490663,-12.5 z"
+       id="Airport_0001"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssss" />
+    <path
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ff00ff;fill-opacity:1;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+       d="m 35.035203,152.65848 c -0.897516,1.10818 -0.799437,2.89404 0.214032,3.89717 l 9.588695,9.59299 c 1.075927,1.0762 3.033512,1.0762 4.109439,0 l 9.588693,-9.59299 c 1.075713,-1.07641 1.075713,-3.03488 0,-4.11129 l -9.588693,-9.59301 c -1.075927,-1.0762 -3.033512,-1.0762 -4.109439,0 -3.25865,3.26009 -6.560976,6.56394 -9.802727,9.80713 z m 6.378193,1.84152 5.479253,-5.48172 5.479254,5.48172 -5.479254,5.48171 z"
+       id="Airport_0100"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccccccccccc" />
+    <path
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ff00ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+       d="m 34.998128,217.65194 c -0.900314,1.11211 -0.801929,2.90429 0.214702,3.91098 l 9.618701,9.62706 c 1.079294,1.08002 3.043004,1.08002 4.122299,0 l 9.618699,-9.62706 c 1.079076,-1.08023 1.079076,-3.04564 0,-4.12587 l -9.618699,-9.62704 c -1.079294,-1.08002 -3.043004,-1.08002 -4.122298,0 -3.268842,3.27167 -6.581528,6.58722 -9.833403,9.84193 z"
+       id="Airport_0101"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccccc" />
+    <path
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#00ffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+       d="m 34.998134,282.65194 c -0.900323,1.11211 -0.801937,2.90431 0.214703,3.911 l 9.618694,9.62704 c 1.079295,1.08002 3.043003,1.08002 4.122297,0 l 9.618692,-9.62704 c 1.079088,-1.08022 1.079088,-3.04567 0,-4.1259 l -9.618692,-9.62703 c -1.079294,-1.08002 -3.043004,-1.08002 -4.122298,0 -3.268839,3.27167 -6.581524,6.58723 -9.833397,9.84193 z"
+       id="Airport_0111"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccccc" />
+    <path
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ff00ff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+       d="M 125,20 C 114.31281,20 105.5,28.716272 105.5,39.50001 105.5,50.283728 114.31281,59 125,59 135.68718,59 144.5,50.283728 144.5,39.50001 144.5,28.716272 135.68718,20 125,20 z m 0,5.939095 c 7.66535,0 13.71747,6.084301 13.71747,13.560915 0,7.476614 -6.05212,13.560895 -13.71747,13.560895 -7.66535,0 -13.74959,-6.084281 -13.74959,-13.560895 0,-7.476614 6.08424,-13.560915 13.74959,-13.560915 z"
+       id="Airport_1000"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:connector-curvature="0"
+       id="Airport_1001"
+       d="m 125,75 c -10.68718,0 -19.5,8.71628 -19.5,19.5 0,10.78372 8.81282,19.5 19.5,19.5 10.68718,0 19.5,-8.71628 19.5,-19.5 C 144.5,83.71628 135.68718,75 125,75 z"
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ff00ff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+       sodipodi:nodetypes="sssss" />
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="202.16602"
+       y="158.87402"
+       id="text3916"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3918"
+         x="202.16602"
+         y="158.87402">IAP</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="38.488281"
+       y="11.830078"
+       id="text3920"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3922"
+         x="38.488281"
+         y="11.830078">far</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="323.60059"
+       y="158.97363"
+       id="text3924"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3926"
+         x="323.60059"
+         y="158.97363">soft</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="321.27148"
+       y="223.97363"
+       id="text3928"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="321.27148"
+         y="223.97363"
+         id="tspan3932">hard</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="256.62695"
+       y="223.97363"
+       id="text3936"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3938"
+         x="256.62695"
+         y="223.97363">small</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="256.91992"
+       y="287.81055"
+       id="text3944"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="256.91992"
+         y="287.81055"
+         id="tspan3948">large</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="112.70703"
+       y="13.720703"
+       id="text3952"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3954"
+         x="112.70703"
+         y="13.720703">near</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="202.16602"
+       y="223.87402"
+       id="text3916-7"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3918-1"
+         x="202.16602"
+         y="223.87402">IAP</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="202.16602"
+       y="288.87402"
+       id="text3916-5"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3918-8"
+         x="202.16602"
+         y="288.87402">IAP</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="256.62695"
+       y="158.97363"
+       id="text3936-2"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3938-2"
+         x="256.62695"
+         y="158.97363">small</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="321.27148"
+       y="98.973633"
+       id="text3928-0"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="321.27148"
+         y="98.973633"
+         id="tspan3932-1">hard</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="323.60059"
+       y="43.973633"
+       id="text3924-6"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3926-1"
+         x="323.60059"
+         y="43.973633">soft</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="321.27148"
+       y="288.97363"
+       id="text3928-3"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="321.27148"
+         y="288.97363"
+         id="tspan3932-7">hard</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="256.62695"
+       y="98.973633"
+       id="text3936-2-9"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3938-2-3"
+         x="256.62695"
+         y="98.973633">small</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="256.62695"
+       y="43.973633"
+       id="text3936-2-9-6"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3938-2-3-0"
+         x="256.62695"
+         y="43.973633">small</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="200.7627"
+       y="98.874023"
+       id="text3916-3"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3918-11"
+         x="200.7627"
+         y="98.874023">VAP</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="200.7627"
+       y="43.874023"
+       id="text3916-3-4"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3918-11-9"
+         x="200.7627"
+         y="43.874023">VAP</tspan></text>
+    <g
+       id="Icon_Test"
+       transform="matrix(2,0,0,1.9047619,335,-1111.7851)">
+      <path
+         id="rect3105"
+         d="m 65,587.36218 20,0 0,10.5 -20,0 z"
+         style="color:#000000;fill:#00ff00;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:connector-curvature="0" />
+      <path
+         id="rect3107"
+         d="m 65,597.86218 10,0 0,10.5 -10,0 z"
+         style="color:#000000;fill:#0000ff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:connector-curvature="0" />
+      <path
+         id="rect3109"
+         d="m 75,597.86218 10,0 0,10.5 -10,0 z"
+         style="color:#000000;fill:#800000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:connector-curvature="0" />
+    </g>
+    <path
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ff00ff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+       d="m 122,129.5 0,5.75 c -8.31001,1.30149 -14.98006,7.88525 -16.28125,16.25 l -5.71875,0 0,6 5.71875,0 c 1.30119,8.36473 7.97124,14.9485 16.28125,16.25 l 0,5.75 6,0 0,-5.75 c 8.31002,-1.3015 14.98006,-7.88527 16.28125,-16.25 l 5.71875,0 0,-6 -5.71875,0 C 142.98006,143.13525 136.31002,136.55149 128,135.25 l 0,-5.75 -6,0 z m 3,11.4375 c 7.66536,0 13.71875,6.08589 13.71875,13.5625 0,7.4766 -6.05339,13.5625 -13.71875,13.5625 -7.66534,0 -13.75,-6.0859 -13.75,-13.5625 0,-7.47661 6.08466,-13.5625 13.75,-13.5625 z"
+       id="Airport_1100"
+       inkscape:connector-curvature="0" />
+    <path
+       inkscape:connector-curvature="0"
+       id="Airport_1101"
+       d="m 122,194.5 0,5.75 c -8.31001,1.30149 -14.98006,7.88525 -16.28125,16.25 l -5.71875,0 0,6 5.71875,0 c 1.30119,8.36473 7.97124,14.9485 16.28125,16.25 l 0,5.75 6,0 0,-5.75 c 8.31002,-1.3015 14.98006,-7.88527 16.28125,-16.25 l 5.71875,0 0,-6 -5.71875,0 C 142.98006,208.13525 136.31002,201.55149 128,200.25 l 0,-5.75 z"
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ff00ff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+       sodipodi:nodetypes="ccccccccccccccccc" />
+    <path
+       sodipodi:nodetypes="ccccccccccccccccc"
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#00ffff;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+       d="m 122,259.5 0,5.75 c -8.31001,1.30149 -14.98006,7.88525 -16.28125,16.25 l -5.71875,0 0,6 5.71875,0 c 1.30119,8.36473 7.97124,14.94851 16.28125,16.25 l 0,5.75 6,0 0,-5.75 c 8.31002,-1.30149 14.98006,-7.88527 16.28125,-16.25 l 5.71875,0 0,-6 -5.71875,0 C 142.98006,273.13525 136.31002,266.55149 128,265.25 l 0,-5.75 z"
+       id="Airport_1111"
+       inkscape:connector-curvature="0" />
+    <path
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+       d="m 35.631836,412 -11.25,20 11.25,20 22.5,0 11.25,-20 -11.25,-20 -22.5,0 z m 2.82787,5.04732 16.84426,0 8.42213,14.95268 -8.42213,14.95268 -16.84426,0 L 30.037576,432 l 8.42213,-14.95268 z m 8.42213,9.90536 c -2.71615,0 -4.91803,2.25977 -4.91803,5.04732 0,2.78755 2.20188,5.04732 4.91803,5.04732 2.71615,0 4.91803,-2.25977 4.91803,-5.04732 0,-2.78755 -2.20188,-5.04732 -4.91803,-5.04732 z"
+       id="Navaid_VOR"
+       inkscape:connector-curvature="0" />
+    <path
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+       d="m 100,407 0,50 50,0 0,-50 -50,0 z m 3,3 44,0 0,21.125 L 136.25,412 113.75,412 103,431.125 103,410 z m 13.5625,7.0625 16.875,0 8.40625,14.9375 -8.40625,14.9375 -16.875,0 L 108.15625,432 116.5625,417.0625 z m 8.4375,9.875 c -2.71615,0 -4.90625,2.27495 -4.90625,5.0625 0,2.78755 2.1901,5.0625 4.90625,5.0625 2.71615,0 4.90625,-2.27495 4.90625,-5.0625 0,-2.78755 -2.1901,-5.0625 -4.90625,-5.0625 z m -22,5.9375 10.75,19.125 22.5,0 10.75,-19.125 0,21.125 -44,0 0,-21.125 z"
+       id="Navaid_DME"
+       inkscape:connector-curvature="0" />
+    <path
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#00ffff;fill-opacity:1;fill-rule:nonzero;stroke:#00ffff;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+       d="m 29.350585,501.96833 17.53125,-30.35156 17.53125,30.35156 2.92969,0.5625 -19.47656,-33.75 c -0.20902,-0.36436 -0.63568,-0.5919 -1.05469,-0.5625 -0.37238,0.0203 -0.72813,0.23922 -0.91406,0.5625 l -19.476568,33.75 z"
+       id="Navaid_Height"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccccc" />
+    <path
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#00ffff;fill-opacity:1;fill-rule:nonzero;stroke:#00ffff;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+       d="m 114.9375,468.1875 c -0.37238,0.0203 -0.72032,0.23922 -0.90625,0.5625 l -19.5,33.75 2.9375,-0.5625 L 115,471.59375 l 8.6875,15.0625 -9.15625,15.84375 2.9375,-0.5625 L 125,488.90625 132.53125,501.9375 135.46875,502.5 126.3125,486.625 135,471.59375 152.53125,501.9375 155.46875,502.5 136,468.75 c -0.20902,-0.36436 -0.64349,-0.5919 -1.0625,-0.5625 -0.37238,0.0203 -0.72032,0.23922 -0.90625,0.5625 L 125,484.375 116,468.75 c -0.20902,-0.36436 -0.64349,-0.5919 -1.0625,-0.5625 z"
+       id="Navaid_Height2"
+       inkscape:connector-curvature="0" />
+    <text
+       sodipodi:linespacing="125%"
+       id="text3984"
+       y="19.503906"
+       x="183.98438"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"><tspan
+         y="19.503906"
+         x="183.98438"
+         sodipodi:role="line"
+         id="tspan3988">Approach</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="259.98438"
+       y="19.503906"
+       id="text3992"
+       sodipodi:linespacing="125%"><tspan
+         id="tspan3994"
+         sodipodi:role="line"
+         x="259.98438"
+         y="19.503906">Size</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3996"
+       y="19.503906"
+       x="311.98438"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       xml:space="preserve"><tspan
+         y="19.503906"
+         x="311.98438"
+         sodipodi:role="line"
+         id="tspan3998">Surface</tspan></text>
+  </g>
+</svg>
