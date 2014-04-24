@@ -76,7 +76,13 @@
 		<object-name>xMAPgreen</object-name>
 		<object-name>xSYSgreen</object-name>
 		<object-name>xCHKLgreen</object-name>
-	
+		<object-name>RK.backlight</object-name>
+		<object-name>LK.backlight</object-name>
+		<object-name>Baro.backlight</object-name>
+		<object-name>Baro.backlight.BARO</object-name>
+		<object-name>Dim.backlight.DIM</object-name>
+		<object-name>Dim.backlight.BRT</object-name>
+		
         <emission>
             <red>0.7</red>
             <green>0.7</green>
