@@ -19,7 +19,7 @@
       Date: 18.04.2014
 
       Last change: Eric van den Berg     
-      Date: 20.04.2014            
+      Date: 24.04.2014            
 
 -->
 
@@ -34,6 +34,85 @@
     	</animation>
 
 <!-- Submodels -->
+
+<model>
+  <name>speaker</name>
+  <path>Aircraft/extra500/Models/interior/speaker.ac</path>
+	<offsets>
+		<x-m>-0.09953</x-m>
+		<y-m>0.0</y-m>	
+		<z-m>0.372</z-m>
+            <pitch-deg>4</pitch-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>map light cop</name>
+  <path>Aircraft/extra500/Models/interior/maplightpic.xml</path>
+	<offsets>
+		<x-m>-0.25338</x-m>
+		<y-m>0.07490</y-m>	
+		<z-m>0.29566</z-m>
+            <roll-deg>15</roll-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>map light pic</name>
+  <path>Aircraft/extra500/Models/interior/maplightcop.xml</path>
+	<offsets>
+		<x-m>-0.25338</x-m>
+		<y-m>-0.07490</y-m>	
+		<z-m>0.29566</z-m>
+            <roll-deg>-15</roll-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>reading light switch cop</name>
+  <path>Aircraft/extra500/Models/interior/readinglightcopswitch.xml</path>
+	<offsets>
+		<x-m>-0.21137</x-m>
+		<y-m>0.14517</y-m>	
+		<z-m>0.28823</z-m>
+            <pitch-deg>94</pitch-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>reading light cop</name>
+  <path>Aircraft/extra500/Models/interior/readinglightcop.xml</path>
+	<offsets>
+		<x-m>-0.16962</x-m>
+		<y-m>0.18990</y-m>	
+		<z-m>0.28577</z-m>
+            <pitch-deg>184</pitch-deg>
+            <roll-deg>0</roll-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>reading light switch pic</name>
+  <path>Aircraft/extra500/Models/interior/readinglightpicswitch.xml</path>
+	<offsets>
+		<x-m>-0.21137</x-m>
+		<y-m>-0.14517</y-m>	
+		<z-m>0.28823</z-m>
+            <pitch-deg>94</pitch-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>reading light pic</name>
+  <path>Aircraft/extra500/Models/interior/readinglightpic.xml</path>
+	<offsets>
+		<x-m>-0.16962</x-m>
+		<y-m>-0.18990</y-m>	
+		<z-m>0.28577</z-m>
+            <pitch-deg>184</pitch-deg>
+            <roll-deg>0</roll-deg>
+	</offsets>
+</model>
 
 <model>
   <name>reading light switch LF</name>
