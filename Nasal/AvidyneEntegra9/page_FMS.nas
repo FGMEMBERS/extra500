@@ -124,7 +124,7 @@ var FlighPlanItem_old = {
 		};
 		m.checkColor();
 		
-		m._group.setVisible(1);
+		m._group.setVisible(0);
 		
 		m._active = 0;
 		m._selection = 0;
@@ -133,6 +133,7 @@ var FlighPlanItem_old = {
 	},
 	setType : func(type){
 		me._type = type;
+		me.checkColor();
 	},
 	checkColor : func(){
 		if(contains(TYPE_COLOR,me._type)){
@@ -169,6 +170,9 @@ var FlighPlanItem_old = {
 # 			me._can.Back.set("stroke","none");
 		}
 	},
+	setVisible : func(visibility){
+		me._group.setVisible(visibility);
+	},
 };
 
 
@@ -180,7 +184,7 @@ var FlightPlanListWidget = {
 		m._class 	= "FlightPlanListWidget";
 		m._tab		= [];
 		m._can		= {};
-		m._fplItem	= {};
+		m._fplItemCache	= {};
 		m._can = {
 			#Pattern_Waypoint	: m._group.getElementById("FPL_Pattern_Waypoint").setVisible(0),
 			FlightPlan		: m._group.getElementById("FPL"),
@@ -205,17 +209,21 @@ var FlightPlanListWidget = {
 		m._visible = 0;
 		m._layout = "none";
 		m._cursorModeInsert = 1;
+		m._cacheSize = 0;
 		
 		m._x = 400;
 		m._y = 70;
 		
 		m._listTransform = m._can.FlightPlan.createTransform();
 		
+		#m._fplItemCache[0] = FlighPlanItem_old.new(e._can.list,0,0);
+		#m._cacheSize = 1;
+		
 		return m;
 	},
 	setListeners : func(instance) {
 		append(me._listeners, setlistener("/autopilot/route-manager/signals/waypoint-changed",func(n){me._onWaypointChange(n)},1,0));	
-		append(me._listeners, setlistener("/sim/gui/dialogs/route-manager/selection",func(n){me._onSelectionChange(n)},1,0));	
+		append(me._listeners, setlistener("/sim/gui/dialogs/route-manager/selection",func(n){me._onSelectionChange(n)},1,1));	
 		append(me._listeners, setlistener("/autopilot/route-manager/current-wp",func(n){me._onCurrentChange(n)},1,0));	
 	},
 	init : func(instance=me){
@@ -287,26 +295,36 @@ var FlightPlanListWidget = {
 	},
 	_clearList : func(){
 		me._scrollY = 0;
-		me._can.list.removeAllChildren();
-		me._fplItem = {};
+		#me._can.list.removeAllChildren();
+		#me._fplItemCache = [];
 		me._cursorModeInsert = 1;
+		for( var i=0; i < me._cacheSize; i+=1 ){
+			 me._fplItemCache[i].setVisible(0);
+		}
 	},
 	_drawList : func(){
 		
 		fp = flightplan();
 		me._planSize = fp.getPlanSize();
+		
 		var distSum = 0;
 		for( var i=0; i < me._planSize; i+=1 ){
 			var fmsWP = fp.getWP(i);
 			
-			me._fplItem[i] = FlighPlanItem_old.new(me._can.list,i,fmsWP.wp_type);
-			me._fplItem[i]._group.setTranslation(me._x,me._y+i*224);
+			if ( i >= me._cacheSize ){
+				#append(me._fplItemCache , FlighPlanItem_old.new(me._can.list,i,fmsWP.wp_type));
+				me._fplItemCache[i] = FlighPlanItem_old.new(me._can.list,i,fmsWP.wp_type);
+				me._cacheSize = size(me._fplItemCache);
+			}
+			me._fplItemCache[i].setType(fmsWP.wp_type);
+			me._fplItemCache[i]._group.setTranslation(me._x,me._y+i*224);
+			me._fplItemCache[i].setVisible(1);
 			
-			#me._fplItem[i].setHeadline(sprintf("%s %03.0f - %s",fmsWP.fly_type,fmsWP.leg_bearing,fmsWP.wp_role));
-			#me._fplItem[i].setName(sprintf("%s - %s",fmsWP.wp_name,fmsWP.wp_type));
+			#me._fplItemCache[i].setHeadline(sprintf("%s %03.0f - %s",fmsWP.fly_type,fmsWP.leg_bearing,fmsWP.wp_role));
+			#me._fplItemCache[i].setName(sprintf("%s - %s",fmsWP.wp_name,fmsWP.wp_type));
 			
-			me._fplItem[i].setHeadline(sprintf("%s %03.0f",fmsWP.fly_type,fmsWP.leg_bearing));
-			me._fplItem[i].setName(sprintf("%s",fmsWP.wp_name));
+			me._fplItemCache[i].setHeadline(sprintf("%s %03.0f",fmsWP.fly_type,fmsWP.leg_bearing));
+			me._fplItemCache[i].setName(sprintf("%s",fmsWP.wp_name));
 			
 			var restriction = "";
 			if (fmsWP.alt_cstr_type != nil) {
@@ -315,23 +333,25 @@ var FlightPlanListWidget = {
 			if (fmsWP.speed_cstr_type != nil) {
 				restriction ~= "IAS : " ~ fmsWP.speed_cstr ~"kts ";
 			}
-			me._fplItem[i].setRestriction(restriction);
+			me._fplItemCache[i].setRestriction(restriction);
 			if(me._planSize > 1){
 				distSum += fmsWP.leg_distance;
 
 			}
-			me._fplItem[i].setDistance(sprintf("%0.1f",fmsWP.leg_distance));
+			me._fplItemCache[i].setDistance(sprintf("%0.1f",fmsWP.leg_distance));
 			if( i == me._currentIndex){
-				me._fplItem[i].setActive(1);
+				me._fplItemCache[i].setActive(1);
 			}
 			if( i == me._selectedIndex){
-				me._fplItem[i].setSelection(1);
+				me._fplItemCache[i].setSelection(1);
 			}
 			
 		}
 		me._resizeScroll();
-		me._setSelection(me._planSize-1,"insert");
-		me._scrollToCurrentIndex(me._planSize-1);
+		#me._setSelection(me._planSize-1,"insert");
+		#me._scrollToCurrentIndex(me._planSize-1);
+		me._scrollToCurrentIndex(me._selectedIndex);
+		
 	},
 	_resizeScroll : func(){
 		if(me._planSize > 6){
@@ -401,11 +421,11 @@ var FlightPlanListWidget = {
 		#print("FlightPlanWidget._onCurrentChange() ... "~me._currentIndex);
 		
 		
-		if(me._fplItem[me._lastCurrentIndex] != nil){
-			me._fplItem[me._lastCurrentIndex].setActive(0);
+		if(me._fplItemCache[me._lastCurrentIndex] != nil){
+			me._fplItemCache[me._lastCurrentIndex].setActive(0);
 		}
-		if(me._fplItem[me._currentIndex] != nil){
-			me._fplItem[me._currentIndex].setActive(1);
+		if(me._fplItemCache[me._currentIndex] != nil){
+			me._fplItemCache[me._currentIndex].setActive(1);
 		}
 
 		
@@ -447,22 +467,25 @@ var FlightPlanListWidget = {
 
 		
 		#print("FlightPlanWidget._setSelection() ... "~me._selectedIndex);
-		if(me._fplItem[me._lastSelectedIndex] != nil){
-			me._fplItem[me._lastSelectedIndex].setSelection(0);
+		if(me._fplItemCache[me._lastSelectedIndex] != nil){
+			me._fplItemCache[me._lastSelectedIndex].setSelection(0);
 		}
-		if(me._fplItem[me._selectedIndex] != nil){
-			me._fplItem[me._selectedIndex].setSelection(1);
+		if(me._fplItemCache[me._selectedIndex] != nil){
+			me._fplItemCache[me._selectedIndex].setSelection(1);
 		}
 		me._can.Cursor.setTranslation(0,me._selectedIndex*224);
-		if(me._cursorModeInsert == 1){
-			me._can.CursorSelect.setVisible(0);
-			me._can.CursorInsert.setVisible(1);
-			#me._can.CursorInsert.setTranslation(0,me._selectedIndex*224);
-		}else{
-			me._can.CursorInsert.setVisible(0);
-			me._can.CursorSelect.setVisible(1);
-			#me._can.CursorSelect.setTranslation(0,me._selectedIndex*224);
-		}
+		
+		me._can.CursorSelect.setVisible(!me._cursorModeInsert);
+		me._can.CursorInsert.setVisible(me._cursorModeInsert);
+		
+# 		if(me._cursorModeInsert == 1){
+# 			me._can.CursorSelect.setVisible(0);
+# 			me._can.CursorInsert.setVisible(1ndex*224);
+# 		}else{
+# 			me._can.CursorInsert.setVisible(0);
+# 			me._can.CursorSelect.setVisible(1);
+# 			#me._can.CursorSelect.setTranslation(0,me._selectedIndex*224);
+# 		}
 		
 
 		
@@ -473,6 +496,8 @@ var FlightPlanListWidget = {
 	},
 	update : func(){
 		fp = flightplan();
+		me._planSize = fp.getPlanSize();
+		
 		var gs = getprop("/velocities/groundspeed-kt");
 		var fuelGalUs = getprop("/consumables/fuel/total-fuel-gal_us");
 		var time = systime();
@@ -488,37 +513,37 @@ var FlightPlanListWidget = {
 					distSum += dist;
 					var ete = dist / gs * 3600 ;
 					var eta = time + ete;
-# 					me._fplItem[i]._can.Distance.setText(sprintf("%0.1f",distSum));
-# 					me._fplItem[i]._can.ETE.setText(global.formatTime(ete,"i:s"));
-# 					me._fplItem[i]._can.ETA.setText(global.formatTime(eta));
+# 					me._fplItemCache[i]._can.Distance.setText(sprintf("%0.1f",distSum));
+# 					me._fplItemCache[i]._can.ETE.setText(global.formatTime(ete,"i:s"));
+# 					me._fplItemCache[i]._can.ETA.setText(global.formatTime(eta));
 # 					
-					me._fplItem[i].setDistance(sprintf("%0.1f",dist));
-					me._fplItem[i].setETE(global.formatTime(ete,"i:s"));
-					me._fplItem[i].setETA(global.formatTime(eta));
+					me._fplItemCache[i].setDistance(sprintf("%0.1f",dist));
+					me._fplItemCache[i].setETE(global.formatTime(ete,"i:s"));
+					me._fplItemCache[i].setETA(global.formatTime(eta));
 					
 					fuelGalUs -= extra500.fuelSystem._nFuelFlowGalUSpSec.getValue() * ete;
-					me._fplItem[i].setFuel(sprintf("%.0f",fuelGalUs));
+					me._fplItemCache[i].setFuel(sprintf("%.0f",fuelGalUs));
 					setprop("/autopilot/route-manager/wp/fuelAtDestinationGalUs",fuelGalUs);
 				}elsif (i > me._currentIndex){
 					
 					distSum += fmsWP.leg_distance;
 					var ete = fmsWP.leg_distance / gs * 3600 ;
 					var eta = time + (distSum / gs * 3600);
-# 					me._fplItem[i]._can.Distance.setText(sprintf("%0.1f",distSum));
-# 					me._fplItem[i]._can.ETE.setText(global.formatTime(ete,"i:s"));
-# 					me._fplItem[i]._can.ETA.setText(global.formatTime(eta));
+# 					me._fplItemCache[i]._can.Distance.setText(sprintf("%0.1f",distSum));
+# 					me._fplItemCache[i]._can.ETE.setText(global.formatTime(ete,"i:s"));
+# 					me._fplItemCache[i]._can.ETA.setText(global.formatTime(eta));
 					
-					me._fplItem[i].setDistance(sprintf("%0.1f",fmsWP.leg_distance));
-					me._fplItem[i].setETE(global.formatTime(ete,"i:s"));
-					me._fplItem[i].setETA(global.formatTime(eta));
+					me._fplItemCache[i].setDistance(sprintf("%0.1f",fmsWP.leg_distance));
+					me._fplItemCache[i].setETE(global.formatTime(ete,"i:s"));
+					me._fplItemCache[i].setETA(global.formatTime(eta));
 					
 					fuelGalUs -= extra500.fuelSystem._nFuelFlowGalUSpSec.getValue() * ete;
-					me._fplItem[i].setFuel(sprintf("%.0f",fuelGalUs));
+					me._fplItemCache[i].setFuel(sprintf("%.0f",fuelGalUs));
 					
 				}else{
-					me._fplItem[i]._can.Distance.setText("---");
-					me._fplItem[i]._can.ETE.setText("---");
-					me._fplItem[i]._can.ETA.setText("---");
+					me._fplItemCache[i]._can.Distance.setText("---");
+					me._fplItemCache[i]._can.ETE.setText("---");
+					me._fplItemCache[i]._can.ETA.setText("---");
 					
 				}
 				
