@@ -123,30 +123,7 @@ var MovingMap = {
 		
 		m._map = Map.new(m._can.LayerMap,name);
 		
-# 		m._can.plane.createChild("path", "icon")
-# 		 .setStrokeLineWidth(3)
-#                  .setScale(1)
-#                  .setColor(0.2,0.2,1.0)
-# 		 .moveTo(-5, -5)
-#                  .line(0, 10)
-#                  .line(10, 0)
-#                  .line(0, -10)
-#                  .line(-10, 0)
-#                  ;
-		 
-# 		m._can.plane.createChild("path", "x-Achis")
-# 		 .setStrokeLineWidth(3)
-#                  .setScale(1)
-#                  .setColor("#40B250")
-#                  .moveTo(-100, 0)
-#                  .line(200, 0);
-# 		 
-# 		m._can.plane.createChild("path", "Y-Achis")
-# 		 .setStrokeLineWidth(3)
-#                  .setScale(1)
-#                  .setColor("#40B250")
-#                  .moveTo(0, -100)
-#                  .line(0, 200);
+
 
 		m._map.setTranslation(1024,768);
 		#m._can.LayerFront.setTranslation(-1024,-768);
@@ -184,7 +161,7 @@ var MovingMap = {
 		me._layer.route.setListeners();
 		me._layer.tcas		= TcasLayer.new(me._map,me._name~"-TCAS");
 		me._layer.tcas.setModel(me._layer.tcas,tcasModel);
-		me.setView(0);
+		me._updateView();
 	},
 	setListeners : func(instance=me) {
 		append(me._listeners, setlistener("/autopilot/settings/heading-bug-deg",func(n){me._onHdgBugChange(n)},1,0));	
@@ -220,66 +197,7 @@ var MovingMap = {
 	setLayout : func(layout){
 		me._layout = layout;
 		me._group.setVisible(0);
-			
-# 		if(me._layout == "map"){
-# 			me._screenSize	= 512;
-# 			me.setTranslation(1024,768);
-# 			me.set("clip","rect(70px, 2048px, 1436px, 0px)");
-# 			me._can.Warning.setTranslation(-380,0);
-# 			me._can.UpHDG.setTranslation(400,0);
-# 			me._can.compass.setScale(1.0,1.0);
-# 			me._can.compass.setTranslation(0,0);
-# 			me._can.LayerFront.setTranslation(-1024,-768);
-# 			me._can.layer1.setTranslation(-1024,-768);
-# 			me._can.layer1.setVisible(1);
-# 			me._parent.set("z-index",0);
-# 			me.setVisible(1);
-# 			
-# 		}elsif(me._layout == "map+"){
-# 			me._screenSize	= 512;
-# 			me.setTranslation(1024,768);
-# 			me.set("clip","rect(70px, 2048px, 1436px, 0px)");
-# 			me._can.Warning.setTranslation(0,0);
-# 			me._can.UpHDG.setTranslation(0,0);
-# 			me._can.compass.setScale(1.0,1.0);
-# 			me._can.compass.setTranslation(0,0);
-# 			me._can.LayerFront.setTranslation(-1024,-768);
-# 			me._can.layer1.setTranslation(-1024,-768);
-# 			me._can.layer1.setVisible(1);
-# 			me._parent.set("z-index",0);
-# 			me.setVisible(1);
-# 			
-# 		}elsif(me._layout == "split-left"){
-# 			me._screenSize	= 384;
-# 			me.setTranslation(512,768);
-# 			me.set("clip","rect(70px, 1024px, 1436px, 0px)");
-# 			me._can.Warning.setTranslation(112,0);
-# 			me._can.UpHDG.setTranslation(-112,0);
-# 			me._can.compass.setScale(0.75,0.75);
-# 			me._can.compass.setTranslation(255,71);
-# 			me._can.LayerFront.setTranslation(-1024,-768);
-# 			me._can.layer1.setTranslation(-1024,-768);
-# 			me._can.layer1.setVisible(1);
-# 			me._parent.set("z-index",0);
-# 			me.setVisible(1);
-# 			
-# 			
-# 		}elsif(me._layout == "pfd"){
-# 			me._screenSize	= 291;
-# 			me.setTranslation(1024,1132);
-# 			me._can.LayerFront.setTranslation(-1024,-1132);
-# 			me._can.compass.setScale(0.568359375,0.568359375);
-# 			#me._can.compass.setTranslation(255,71);
-# 			me._can.layer1.setTranslation(-1024,-1132);
-# 			me.set("clip","rect(842px, 1315px, 1429px, 732px)");
-# 			me._parent.set("z-index",1);
-# 			me._can.layer1.setVisible(1);
-# 			me.setVisible(1);
-# 			
-# 		}else{
-# 			
-# 		}
-		
+	
 		if(me._layout == "map"){
 			me._screenSize	= 512;
 			me._group.set("clip","rect(70px, 2048px, 1436px, 0px)");
@@ -361,11 +279,14 @@ var MovingMap = {
 	},
 	setView : func(view){
 		if(me._layout != "pfd"){
+			#print("MovingMap.setView("~view~") ... "~me._view);
 			me._view = view;
 			me._updateView();
 		}
 	},
 	_updateView : func(){
+		#print("MovingMap._updateView() ... ");
+			
 		if(me._view == MAP_VIEW.HDG_UP_CENTER){ # HDG up centered
 			me._mapTransformView.setTranslation(0,0);
 			me._can.UpNorth.setVisible(0);
