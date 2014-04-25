@@ -251,6 +251,8 @@ var FlightPlanListWidget = {
 				me._Page.keys["R5 >"] 	= nil;
 			}
 			me._Page.IFD.nLedRK.setValue(1);
+			me._Page.IFD.setKnobLabel("RK","Scroll","Select");
+				
 			me._Page.keys["RK >>"] 	= func(){me._adjustSelection(-2);};
 			me._Page.keys["RK <<"] 	= func(){me._adjustSelection(2);};
 			me._Page.keys["RK"] 	= func(){extra500.fms.jumpTo()};
@@ -262,6 +264,7 @@ var FlightPlanListWidget = {
 			me._Page.keys["R5 >"] 	= nil;
 			
 			me._Page.IFD.nLedRK.setValue(0);
+			me._Page.IFD.setKnobLabel("RK");
 			me._Page.keys["RK >>"] 	= nil;
 			me._Page.keys["RK <<"] 	= nil;
 			me._Page.keys["RK"] 	= nil;
@@ -608,6 +611,7 @@ var AvidynePageFMS = {
 		
 		foreach(var widget;keys(me._widget)){
 			if(me._widget[widget] != nil){
+				me._widget[widget].setVisible(0);
 				me._widget[widget].deinit();
 			}
 		}
@@ -620,7 +624,8 @@ var AvidynePageFMS = {
 		if(visibility == 1){
 			me.registerKeys();
 		}else{
-			
+			me._widget.MovingMapKnob.setVisible(visibility);
+			me._widget.FPL.setVisible(visibility);
 		}
 		me._widget.Tab.setVisible(visibility);
 		me.page.setVisible(visibility);

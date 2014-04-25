@@ -222,6 +222,7 @@ var AvidynePageMAP = {
 		
 		foreach(var widget;keys(me._widget)){
 			if(me._widget[widget] != nil){
+				me._widget[widget].setVisible(0);
 				me._widget[widget].deinit();
 			}
 		}
@@ -236,6 +237,7 @@ var AvidynePageMAP = {
 		}else{
 			me.keys = {};
 			me.removeListeners();
+			me._widget.MovingMapKnob.setVisible(visibility);
 		}
 		me._widget.Tab.setVisible(visibility);
 		me.page.setVisible(visibility);

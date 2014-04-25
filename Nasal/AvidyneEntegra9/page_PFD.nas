@@ -931,6 +931,8 @@ var NavSourceWidget = {
 		if(visible == 1){
 			me.setListeners(me);
 			me._ifd.nLedL1.setValue(1);
+			me._Page.IFD.setKnobLabel("LK","Course");
+			
 			me._Page.keys["L1 >"] = func(){me._scroll(1);};
 			me._Page.keys["L1 <"] = func(){me._scroll(-1);};
 			
@@ -950,6 +952,7 @@ var NavSourceWidget = {
 			me._Page.keys["L1 <"] = nil;
 			
 			me._ifd.nLedLK.setValue(0);
+			me._Page.IFD.setKnobLabel("LK");
 			me._Page.keys["LK <<"] 	= nil;
 			me._Page.keys["LK <"] 	= nil;
 			me._Page.keys["LK >"] 	= nil;
@@ -1505,6 +1508,8 @@ var NavSelectWidget = {
 			me.registerKeyCDI(0);
 			
 			me._ifd.nLedRK.setValue(0);
+			me._Page.IFD.setKnobLabel("RK");
+				
 			me._Page.keys["RK >>"] 	= nil;
 			me._Page.keys["RK <<"] 	= nil;
 			me._Page.keys["RK"] 	= nil;
@@ -1629,6 +1634,7 @@ var BugSelectWidget = {
 			me._Page.keys["R5 >"] 	= nil;
 			
 			me._ifd.nLedRK.setValue(0);
+			me._Page.IFD.setKnobLabel("RK");
 			me._Page.keys["RK >>"] 	= nil;
 			me._Page.keys["RK <<"] 	= nil;
 			me._Page.keys["RK"] 	= nil;
@@ -1658,6 +1664,7 @@ var BugSelectWidget = {
 			me._can.Heading.set("z-index",2);
 		
 			me._ifd.nLedRK.setValue(1);
+			me._Page.IFD.setKnobLabel("RK","Heading","Sync");
 			me._Page.keys["RK >>"] 	= func(){extra500.keypad.onAdjustHeading(10);};
 			me._Page.keys["RK <<"] 	= func(){extra500.keypad.onAdjustHeading(-10);};
 			me._Page.keys["RK"] 	= func(){extra500.keypad.onHeadingSync();};
@@ -1669,9 +1676,10 @@ var BugSelectWidget = {
 			me._can.Altitude.set("z-index",2);
 						
 			me._ifd.nLedRK.setValue(1);
+			me._Page.IFD.setKnobLabel("RK","Altitude","Sync");
 			me._Page.keys["RK >>"] 	= func(){extra500.keypad.onAdjustAltitude(500);};
 			me._Page.keys["RK <<"] 	= func(){extra500.keypad.onAdjustAltitude(-500);};
-			me._Page.keys["RK"] 	= func(){extra500.keypad.onHeadingSync();};
+			me._Page.keys["RK"] 	= func(){extra500.keypad.onAltitudeSync();};
 			me._Page.keys["RK >"] 	= func(){extra500.keypad.onAdjustAltitude(100);};
 			me._Page.keys["RK <"] 	= func(){extra500.keypad.onAdjustAltitude(-100);};
 		}elsif (me._modeRK == "VS"){
@@ -1680,6 +1688,7 @@ var BugSelectWidget = {
 			me._can.VS.set("z-index",2);
 			
 			me._ifd.nLedRK.setValue(1);
+			me._Page.IFD.setKnobLabel("RK","VS","Sync");
 			me._Page.keys["RK >>"] 	= func(){extra500.autopilot.onAdjustVS(-100);};
 			me._Page.keys["RK <<"] 	= func(){extra500.autopilot.onAdjustVS(100);};
 			me._Page.keys["RK"] 	= func(){extra500.autopilot.onSetVS(0);};
@@ -1688,11 +1697,12 @@ var BugSelectWidget = {
 		}else{
 							
 			me._ifd.nLedRK.setValue(0);
-			delete(me.keys,"RK >>");
-			delete(me.keys,"RK <<");
-			delete(me.keys,"RK");
-			delete(me.keys,"RK >");
-			delete(me.keys,"RK <");
+			me._Page.IFD.setKnobLabel("RK");
+			me._Page.keys["RK >>"] 	= nil;
+			me._Page.keys["RK <<"] 	= nil;
+			me._Page.keys["RK"] 	= nil;
+			me._Page.keys["RK >"] 	= nil;
+			me._Page.keys["RK <"] 	= nil;
 		}
 	}
 };
@@ -1930,6 +1940,7 @@ var AvidynePagePFD = {
 	deinit : func(){
 		foreach(var widget;keys(me._widget)){
 			if(me._widget[widget] != nil){
+				me._widget[widget].setVisible(0);
 				me._widget[widget].deinit();
 			}
 		}

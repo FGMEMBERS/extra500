@@ -424,6 +424,8 @@ var MovingMapKnobWidget = {
 		if(v == 1){
 			if(me._hand == 0){
 				me._Page.IFD.nLedLK.setValue(1);
+				me._Page.IFD.setKnobLabel("LK","Range","View");
+				
 				me._Page.keys["LK >>"] 	= func(){me.adjustMapRange(2);};
 				me._Page.keys["LK <<"] 	= func(){me.adjustMapRange(-2);};
 				me._Page.keys["LK"] 	= func(){me.adjustMapView(1);};
@@ -431,6 +433,8 @@ var MovingMapKnobWidget = {
 				me._Page.keys["LK <"] 	= func(){me.adjustMapRange(-1);};
 			}else{
 				me._Page.IFD.nLedRK.setValue(1);
+				me._Page.IFD.setKnobLabel("RK","Range","View");
+				
 				me._Page.keys["RK >>"] 	= func(){me.adjustMapRange(2);};
 				me._Page.keys["RK <<"] 	= func(){me.adjustMapRange(-2);};
 				me._Page.keys["RK"] 	= func(){me.adjustMapView(1);};
@@ -441,6 +445,8 @@ var MovingMapKnobWidget = {
 		}else{
 			if(me._hand == 0){
 				me._Page.IFD.nLedLK.setValue(0);
+				me._Page.IFD.setKnobLabel("LK");
+				
 				me._Page.keys["LK >>"] 	= nil;
 				me._Page.keys["LK <<"] 	= nil;
 				me._Page.keys["LK"] 	= nil;
@@ -448,6 +454,8 @@ var MovingMapKnobWidget = {
 				me._Page.keys["LK <"] 	= nil;
 			}else{
 				me._Page.IFD.nLedRK.setValue(0);
+				me._Page.IFD.setKnobLabel("RK");
+				
 				me._Page.keys["RK >>"] 	= nil;
 				me._Page.keys["RK <<"] 	= nil;
 				me._Page.keys["RK"] 	= nil;

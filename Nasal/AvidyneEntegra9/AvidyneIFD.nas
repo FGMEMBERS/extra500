@@ -178,6 +178,20 @@ var AvidyneIFD = {
 			PlusData	: PlusDataWidget.new(m,m._group.getElementById("layer2"),"PlusData"),
 		};
 		
+		m._can = {
+			LK : {
+				Label		: m._group.getElementById("LKLabel").setVisible(0),
+				OuterLabel	: m._group.getElementById("LKOuterLabel").setText(""),
+				InnerLabel	: m._group.getElementById("LKInnerLabel").setText(""),
+			},
+			RK : {
+				Label		: m._group.getElementById("RKLabel").setVisible(0),
+				OuterLabel	: m._group.getElementById("RKOuterLabel").setText(""),
+				InnerLabel	: m._group.getElementById("RKInnerLabel").setText(""),
+			},
+			
+		};
+		
 		
 		m.data = AvidyneData.new(m.name);
 		
@@ -395,6 +409,23 @@ var AvidyneIFD = {
 		me.nLedRK.setValue(0);	
 		
 		
+	},
+	setKnobLabel :func(knob,outer=nil,inner=nil){
+		me._can[knob].Label.setVisible(0);
+		if(outer!=nil){
+			me._can[knob].Label.setVisible(1);
+			me._can[knob].OuterLabel.setText(outer);
+		}else{
+			me._can[knob].OuterLabel.setText("");
+		}
+		
+		if(inner!=nil){
+			me._can[knob].Label.setVisible(1);
+			me._can[knob].InnerLabel.setText(inner);
+		}else{
+			me._can[knob].InnerLabel.setText("");
+		}
+			
 	},
 	gotoPage : func(name,key=nil){
 		#print("IFD "~me.name ~" gotoPage("~name~") .. ");
