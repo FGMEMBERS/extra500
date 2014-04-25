@@ -428,4 +428,4 @@ var redraw = func(nessesary=1){
 var loop_timer = maketimer(1,loopItems);
 buildMap();
 setChecklistByIndex(0);
-print("Checklist:: NASAL loaded.");
+#print("Checklist:: NASAL loaded.");

@@ -27,7 +27,7 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 	
 	settimer(func(){
 		
-		print("Extra500 init");
+		#print("Extra500 init");
 		extra500.eSystem.checkSource();
 		
 		extra500.engine.init();

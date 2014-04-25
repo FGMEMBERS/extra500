@@ -98,7 +98,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>false</repeatable>
+        <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>
@@ -116,7 +116,7 @@
       <visible>false</visible>
       <action>
         <button>0</button>
-        <repeatable>false</repeatable>
+        <repeatable>true</repeatable>
 		<binding>
 			<command>nasal</command>
 			<script>

@@ -102,19 +102,31 @@ var AvidyneData = {
 
 
 var AvidynePageDummy = {
-	new: func(myCanvas,name,data){
+	new: func(ifd,name,data){
 		var m = { parents: [
 			AvidynePageDummy,
-			PageClass.new(myCanvas,name,data)
+			PageClass.new(ifd,name,data)
 		] };
+		m._can= {
+			back : m.page.createChild("path")
+			.moveTo(0,0)
+			.line(2048,0)
+			.line(0,1536)
+			.line(-2048,0)
+			.close()
+			.set("fill","#000000")
+			.set("stroke","#000000")
+			,
+			
+		};
 		return m;
 	},
 	setVisible : func(visibility){
-		me.page.setVisible(0);
+		me.page.setVisible(visibility);
 		me.IFD._widget.Headline.setVisible(0);
 		me.IFD._widget.PlusData.setVisible(0);
 		me.IFD.movingMap.setVisible(0);
-		
+		me.IFD.setLayout("");
 	},
 	
 };
@@ -131,7 +143,94 @@ var IFD_LAYOUT = {
 
 
 var IFDUserInterface = {};
-var IFDNavigator = {};
+
+
+
+var IFDPageNavigator = {
+	
+	new : func(ifd){
+		var m = { parents: [IFDNavigator]};
+		
+		m._IFD = ifd;
+		m._can = {};
+		m._active = "none";
+		return m;
+	},
+	init : func(){
+		foreach (var page ; me._IFD.page){
+			me._can[page] = {};
+			forindex(var i ; me._IFD.page[page]._tab){
+				var tab = me._IFD.page[page]._tab[i];
+				
+				var item = {
+					"tab" 	: group.getElementById(page~"_"~tab),
+					"text"	: group.getElementById(page~"_"~tab~"_Text"),
+					"back"	: group.getElementById(page~"_"~tab~"_Back"),
+				};
+				
+				me._can[page][tab] =  item;
+			}
+		}
+	},
+	
+	scroll : func(amount){
+		me._index += amount;
+		if (me._index > me._max){ me._index = me._max; }
+		if (me._index < 0){ me._index = 0; }
+
+		
+		
+		foreach(var t;me._tab){
+# 			print("TabWidget.scroll() ... "~t);
+			me._can[t].content.setVisible(0);
+			me._can[t].tab.set("z-index",1);
+			me._can[t].back.set("stroke",COLOR["Blue"]);
+			me._can[t].back.set("stroke-width",10);
+			me._can[t].text.set("fill",COLOR["Blue"]);
+		}
+		
+		me._can[me._tab[me._index]].content.setVisible(1);
+		me._can[me._tab[me._index]].tab.set("z-index",2);
+		me._can[me._tab[me._index]].back.set("stroke",COLOR["Turquoise"]);
+		me._can[me._tab[me._index]].back.set("stroke-width",12);
+		me._can[me._tab[me._index]].text.set("fill",COLOR["Turquoise"]);
+	
+		me._Page._initWidgetsForTab(me._index);
+	},
+	
+	gotoPage : func(name,key=nil){
+		
+		if (!contains(me._can,name)){
+				me._active = "none";
+		}
+		
+		if (me._IFD._state == 1){
+			
+		
+			if (me._active != name){
+# 				me.page[me.pageSelected].deinit();
+				me._IFD.page[me._active].setVisible(0);
+				me._IFD.clearLeds();
+				me._active = name;
+				me._IFD.nPageSelected.setValue(me._active);
+# 				me.page[me.pageSelected].init();
+				me._IFD.page[me._active].setVisible(1);
+				
+			}else{
+				if(key!=nil){
+					me._IFD.page[me._active].onClick(key);
+				}
+			}
+		}else{
+			me._IFD.page[me._active].setVisible(0);
+			me._IFD.clearLeds();
+			me._active = name;
+			me._IFD.nPageSelected.setValue(me._active);
+# 			me.page[me.pageSelected].init();
+			me._IFD.page[me._active].setVisible(1);
+		}
+	},
+};
 
 
 
@@ -173,7 +272,7 @@ var AvidyneIFD = {
 		# .. and place it on the object called PFD-Screen
 
 		#m.nHeadingBug = props.globals.initNode("/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg",0.0,"DOUBLE");
-		m._group = m.canvas.createGroup();
+		m._group = m.canvas.createGroup("Global");
 		#m._group.set("z-index",3);
 		
 		canvas.parsesvg(m._group, "Models/instruments/IFDs/IFD_Global.svg",{
@@ -243,14 +342,24 @@ var AvidyneIFD = {
 		m.nLedBaro = m._nRoot.initNode("led/Baro",0,"BOOL");
 		m.nLedDim = m._nRoot.initNode("led/Dim",0,"BOOL");
 		
+		
 		m._startPage = startPage;
 		
 		m.page = {};
 		m.page["none"] = AvidynePageDummy.new(m,"none",m.data);
+		
 		m.page["PFD"] = AvidynePagePFD.new(m,"PFD",m.data);
+		m.page["PFD"]._tab = ["Nav","Bug"];
+		
 		m.page["FMS"] = AvidynePageFMS.new(m,"FMS",m.data);
+		m.page["FMS"]._tab = ["FPL","MapFPL","Info","Routes","UserWypts","Nearest","MapNearest"];
+		
 		m.page["MAP"] = AvidynePageMAP.new(m,"MAP",m.data);
+		m.page["MAP"]._tab = ["Map+","Map","Split","Chart","Chart+"];
+		
 		#m.page["CHKL"] = AvidynePageTest.new(m,"Test",m.data);
+		
+		
 		
 		m._dt20Hz = 0;
 		m._now20Hz = systime();
@@ -368,12 +477,17 @@ var AvidyneIFD = {
 			me._can.Layout.Full.setVisible(0);
 			me._can.Layout.Split.setVisible(0);
 		}else{
-			
+			me._can.Layout.PFD.setVisible(0);
+			me._can.Layout.Plus.setVisible(0);
+			me._can.Layout.Full.setVisible(0);
+			me._can.Layout.Split.setVisible(0);
 		}
 	},
 	
 	_onPowerVoltNormChange : func(n){
-		me._voltNorm = n.getValue();
+		var voltNormA = me._powerA._nVoltNorm.getValue();
+		var voltNormB = me._powerB._nVoltNorm.getValue();
+		me._voltNorm = voltNormA > voltNormB ? voltNormA : voltNormB;
 		me.nBacklight.setValue(me._brightness * me._voltNorm);
 	},
 

@@ -106,6 +106,8 @@ var MapWidget = {
 	_startTimeOut :func(){
 		if(me._timeOutHot){
 			me._timeOut.restart(10.0);
+		}else{
+			me._timeOut.stop();
 		}
 	},
 	setTimeOutHot : func(value){
@@ -252,7 +254,7 @@ var AvidynePageMAP = {
 			me._widget.MovingMapKnob.setHand(1);
 			me._widget.MovingMapKnob.setVisible(1);
 			me._widget.MapWidget.setVisible(1);
-			
+			me._widget.MapWidget.setTimeOutHot(0);
 			
 		}elsif(index == 1){ # MAP
 			me.IFD.setLayout(IFD_LAYOUT.FULL);
@@ -269,7 +271,7 @@ var AvidynePageMAP = {
 			me._widget.MovingMapKnob.setHand(0);
 			me._widget.MovingMapKnob.setVisible(1);
 			me._widget.MapWidget.setVisible(0);
-		
+			me._widget.MapWidget.setTimeOutHot(0);
 		}elsif(index == 3){ # Chart
 			me.IFD.setLayout(IFD_LAYOUT.FULL);
 			me.IFD.movingMap.setLayout("none");

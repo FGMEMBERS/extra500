@@ -38,11 +38,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.49497475"
-     inkscape:cx="1034.7542"
-     inkscape:cy="631.22177"
+     inkscape:zoom="0.35"
+     inkscape:cx="832.34607"
+     inkscape:cy="831.71495"
      inkscape:document-units="px"
-     inkscape:current-layer="Layout"
+     inkscape:current-layer="svg6205"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -1034,7 +1034,7 @@
      inkscape:groupmode="layer"
      id="Tab_MAP"
      inkscape:label="Tab_MAP"
-     style="display:none">
+     style="display:inline">
     <g
        id="MAP_Chart+"
        transform="matrix(1.1426601,0,0,1.1426601,-674.93689,-525.64798)">
@@ -1160,9 +1160,9 @@
      inkscape:groupmode="layer"
      id="Tab_FMS"
      inkscape:label="Tab_FMS"
-     style="display:none">
+     style="display:inline">
     <g
-       id="Tab_MapNearest"
+       id="FMS_MapNearest"
        transform="matrix(1.1426601,0,0,1.1426601,-890.89491,-525.64798)">
       <path
          style="fill:#000000;fill-opacity:1;stroke:#3391e8;stroke-width:10.28206348;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0"
@@ -1354,7 +1354,7 @@
      inkscape:groupmode="layer"
      id="Tab_PFD"
      inkscape:label="Tab_PFD"
-     style="display:none">
+     style="display:inline">
     <g
        id="PFD_Bug"
        transform="matrix(1.1426601,0,0,1.1426601,-358.21291,-525.77299)">

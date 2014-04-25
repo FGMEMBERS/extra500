@@ -84,13 +84,13 @@ var MovingMap = {
 		);
 		
 		m._can = {
-			plane		: m._group.getElementById("MovingMap_Plane").set("z-index",1),
-			#plane		: m._group.getElementById("MovingMap_Plane"),
+			#plane		: m._group.getElementById("MovingMap_Plane").set("z-index",1),
+			plane		: m._group.getElementById("MovingMap_Plane"),
 			LayerMap	: m._group.getElementById("layer5"),
-			LayerFront	: m._group.getElementById("layer2").set("z-index",3),
-			#LayerFront	: m._group.getElementById("layer2"),
-			compass		: m._group.getElementById("MovingMap_Compass").set("z-index",1),
-			#compass		: m._group.getElementById("MovingMap_Compass"),
+			#LayerFront	: m._group.getElementById("layer2").set("z-index",3),
+			LayerFront	: m._group.getElementById("layer2"),
+			#compass		: m._group.getElementById("MovingMap_Compass").set("z-index",1),
+			compass		: m._group.getElementById("MovingMap_Compass"),
 			CompassRose	: m._group.getElementById("MovingMap_Compass_Rose").updateCenter(),
 			CompassRangeMax	: m._group.getElementById("MovingMap_Range_Max"),
 			CompassRangeMid	: m._group.getElementById("MovingMap_Range_Mid"),
@@ -225,7 +225,7 @@ var MovingMap = {
 			
 			
 			me._can.LayerFront.setVisible(1);
-			me._group.set("z-index",0);
+# 			me._group.set("z-index",0);
 			me._group.setVisible(1);
 		}elsif(me._layout == "split-left"){
 			
@@ -239,7 +239,7 @@ var MovingMap = {
 			me._can.UpHDG.setTranslation(-625,0);
 			
 			me._can.LayerFront.setVisible(1);
-			me._group.set("z-index",0);
+# 			me._group.set("z-index",0);
 			me._group.setVisible(1);
 		}elsif(me._layout == "pfd"){
 			me._view = MAP_VIEW.HDG_UP_CENTER;
@@ -266,7 +266,7 @@ var MovingMap = {
 # 			me._can.Warning.setTranslation(-380,0);
 # 			me._can.UpHDG.setTranslation(-625,0);
 			me._can.LayerFront.setVisible(0);
-			me._group.set("z-index",1);
+# 			me._group.set("z-index",1);
 			me._group.setVisible(1);
 			
 		}else{

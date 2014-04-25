@@ -196,6 +196,9 @@ var FlightPlanListWidget = {
 			CursorInsert		: m._group.getElementById("FPL_Coursor_Insert").setVisible(0),
 			CursorSelect		: m._group.getElementById("FPL_Coursor_Select").setVisible(0),
 			
+			
+			
+			
 		};
 		
 		m._canList = {};
@@ -577,7 +580,19 @@ var AvidynePageFMS = {
 			FPL	 	: FlightPlanListWidget.new(m,m.page,"FPL-List"),
 			MovingMapKnob	: MovingMapKnobWidget.new(m,m.page,"MovingMapKnob"),
 			
+			
+			
+			
 		};
+		
+		m._can = {
+			
+			RoutesContent		: m.page.getElementById("FMS_Routes_Content").setVisible(0),
+			UserWyptsContent	: m.page.getElementById("FMS_UserWypts_Content").setVisible(0),
+			InfoContent		: m.page.getElementById("FMS_Info_Content").setVisible(0),
+			FPLContent		: m.page.getElementById("FMS_FPL_Content").setVisible(0),
+		};
+		
 		
 		m._widget.Tab._tab = ["FPL","MapFPL","Info","Routes","UserWypts","Nearest","MapNearest"];
 		
@@ -634,44 +649,54 @@ var AvidynePageFMS = {
 # 		me._widget.DirectTo.deinit();
 # 		me._widget.FPL.setVisible(0);
 		#me.IFD._widget.PlusData.setVisible(0);
+		me._can.RoutesContent.setVisible(0);
+		me._can.FPLContent.setVisible(0);
+		me._can.InfoContent.setVisible(0);
+		me._can.UserWyptsContent.setVisible(0);
 		
 		if (index == 0){ # FPL
-			me.IFD.setLayout(IFD_LAYOUT.PLUS);
+			me._widget.MovingMapKnob.setVisible(0);
 			me.IFD.movingMap.setLayout("none");
+			me.IFD.setLayout(IFD_LAYOUT.PLUS);
 			me._widget.FPL.setLayout("FPL");
 			me._widget.FPL.setVisible(1);
-			me._widget.MovingMapKnob.setVisible(0);
+			me._can.FPLContent.setVisible(1);
 		}elsif(index == 1){ # MapFPL
+			me._widget.MovingMapKnob.setHand(0);
 			me.IFD.setLayout(IFD_LAYOUT.SPLIT);
 			me.IFD.movingMap.setLayout("split-left");
 			me._widget.FPL.setLayout("split-right");
 			me._widget.FPL.setVisible(1);
-			me._widget.MovingMapKnob.setHand(0);
 			me._widget.MovingMapKnob.setVisible(1);	
 		}elsif(index == 2){ # Info
-			me.IFD.setLayout(IFD_LAYOUT.PLUS);
-			me.IFD.movingMap.setLayout("none");
-			me._widget.FPL.setVisible(0);
 			me._widget.MovingMapKnob.setVisible(0);
+			me._widget.FPL.setVisible(0);
+			me.IFD.movingMap.setLayout("none");
+			me.IFD.setLayout(IFD_LAYOUT.PLUS);
+			me._can.InfoContent.setVisible(1);
 		}elsif(index == 3){ # Routes
-			me.IFD.setLayout(IFD_LAYOUT.PLUS);
-			me.IFD.movingMap.setLayout("none");
 			me._widget.FPL.setVisible(0);
 			me._widget.MovingMapKnob.setVisible(0);
+			me.IFD.setLayout(IFD_LAYOUT.PLUS);
+			me.IFD.movingMap.setLayout("none");
+			me._can.RoutesContent.setVisible(1);
 		}elsif(index == 4){ # UserWypts
+			me._widget.MovingMapKnob.setVisible(0);
+			me._widget.FPL.setVisible(0);
 			me.IFD.setLayout(IFD_LAYOUT.PLUS);
 			me.IFD.movingMap.setLayout("none");
-			me._widget.FPL.setVisible(0);
-			me._widget.MovingMapKnob.setVisible(0);
+			me._can.UserWyptsContent.setVisible(1);
+		
 		}elsif(index == 5){ # Nearest
-			me.IFD.setLayout(IFD_LAYOUT.PLUS);
-			me.IFD.movingMap.setLayout("none");
-			me._widget.FPL.setVisible(0);
 			me._widget.MovingMapKnob.setVisible(0);
+			me._widget.FPL.setVisible(0);
+			me.IFD.movingMap.setLayout("none");
+			me.IFD.setLayout(IFD_LAYOUT.PLUS);
+			
 		}elsif(index == 6){ # MapNearest
+			me._widget.FPL.setVisible(0);
 			me.IFD.setLayout(IFD_LAYOUT.SPLIT);
 			me.IFD.movingMap.setLayout("split-left");
-			me._widget.FPL.setVisible(0);
 			me._widget.MovingMapKnob.setHand(0);
 			me._widget.MovingMapKnob.setVisible(1);
 		}else{

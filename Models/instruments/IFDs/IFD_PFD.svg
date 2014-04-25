@@ -30,7 +30,7 @@
      inkscape:cx="1021.9414"
      inkscape:cy="965.41976"
      inkscape:document-units="px"
-     inkscape:current-layer="layer15"
+     inkscape:current-layer="Tab_Nav_Content"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1025"
@@ -4648,66 +4648,62 @@
   </g>
   <g
      inkscape:groupmode="layer"
-     id="layer12"
+     id="Tab_Nav_Content"
      inkscape:label="TAB_NavDisplay"
      style="display:inline"
      transform="translate(0,-274)">
     <g
-       id="Tab_Nav_Content"
-       transform="matrix(0.80230117,0,0,0.84977755,114.4159,271.90425)">
-      <g
-         transform="matrix(0.99672852,0,0,1,7.7485211,47.940662)"
-         id="FlightPlan"
-         style="display:inline">
-        <rect
-           style="fill:#000000;fill-opacity:1;stroke:#3391e8;stroke-width:11.129035;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100"
-           id="rect4139-0-1-7-8"
-           width="489.00732"
-           height="138.88919"
-           x="1915.5554"
-           y="1312.6147"
-           ry="6.291379" />
-        <text
-           inkscape:label="#text5341-2"
-           transform="scale(0.91589761,1.0918251)"
-           sodipodi:linespacing="125%"
-           id="text11123-3"
-           y="1254.4003"
+       style="display:inline"
+       id="FlightPlan"
+       transform="matrix(0.79967646,0,0,0.84977755,120.63255,312.64315)">
+      <rect
+         ry="6.291379"
+         y="1312.6147"
+         x="1915.5554"
+         height="138.88919"
+         width="489.00732"
+         id="rect4139-0-1-7-8"
+         style="fill:#000000;fill-opacity:1;stroke:#3391e8;stroke-width:11.129035;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100" />
+      <text
+         xml:space="preserve"
+         style="font-size:50.89516068px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1.65039742;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
+         x="2356.6797"
+         y="1254.4003"
+         id="text11123-3"
+         sodipodi:linespacing="125%"
+         transform="scale(0.91589761,1.0918251)"
+         inkscape:label="#text5341-2"><tspan
+           style="stroke-width:1.65039742"
+           sodipodi:role="line"
            x="2356.6797"
-           style="font-size:50.89516068px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1.65039742;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
-           xml:space="preserve"><tspan
-             id="tspan11125-2"
-             y="1254.4003"
-             x="2356.6797"
-             sodipodi:role="line"
-             style="stroke-width:1.65039742">Flight Plan</tspan></text>
-        <text
-           xml:space="preserve"
-           style="font-size:50.89516068px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.65039742;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
-           x="2358.3943"
+           y="1254.4003"
+           id="tspan11125-2">Flight Plan</tspan></text>
+      <text
+         inkscape:label="#text5341-2"
+         transform="scale(0.91589761,1.0918251)"
+         sodipodi:linespacing="125%"
+         id="FlightPlan_State"
+         y="1307.1289"
+         x="2358.3943"
+         style="font-size:50.89516068px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.65039742;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"><tspan
+           id="tspan11053-1-1-4"
            y="1307.1289"
-           id="FlightPlan_State"
-           sodipodi:linespacing="125%"
-           transform="scale(0.91589761,1.0918251)"
-           inkscape:label="#text5341-2"><tspan
-             style="fill:#ffffff;stroke:#ffffff;stroke-width:1.65039742"
-             sodipodi:role="line"
-             x="2358.3943"
-             y="1307.1289"
-             id="tspan11053-1-1-4">Off</tspan></text>
-        <path
-           sodipodi:nodetypes="cccc"
-           inkscape:connector-curvature="0"
-           id="path10943-8-3"
-           d="m 1922.5893,1382.2053 46.1175,-17.8752 0,35.4584 z"
-           style="fill:none;stroke:#60ffb8;stroke-width:10.01639748;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-        <path
-           sodipodi:nodetypes="cccc"
-           inkscape:connector-curvature="0"
-           id="path10943-8-3-7"
-           d="m 2397.3005,1382.2053 -46.1175,-17.8752 0,35.4584 z"
-           style="fill:none;stroke:#60ffb8;stroke-width:10.01639748;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      </g>
+           x="2358.3943"
+           sodipodi:role="line"
+           style="fill:#ffffff;stroke:#ffffff;stroke-width:1.65039742">Off</tspan></text>
+      <path
+         style="fill:none;stroke:#60ffb8;stroke-width:10.01639748;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         d="m 1922.5893,1382.2053 46.1175,-17.8752 0,35.4584 z"
+         id="path10943-8-3"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccc" />
+      <path
+         style="fill:none;stroke:#60ffb8;stroke-width:10.01639748;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         d="m 2397.3005,1382.2053 -46.1175,-17.8752 0,35.4584 z"
+         id="path10943-8-3-7"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccc" />
     </g>
     <g
        transform="matrix(0.80230117,0,0,0.84977755,114.4159,143.90425)"
@@ -4767,215 +4763,141 @@
       </g>
     </g>
     <g
-       id="g6098"
+       id="PFD_CDI_Button"
        transform="matrix(0.80230117,0,0,0.84977755,114.4159,399.90425)">
-      <g
-         transform="matrix(0.99672852,0,0,1,7.7485211,47.940662)"
-         id="g6100"
-         style="display:inline">
-        <rect
-           style="fill:#000000;fill-opacity:1;stroke:#3391e8;stroke-width:11.129035;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100"
-           id="rect6102"
-           width="489.00732"
-           height="138.88919"
-           x="1915.5554"
-           y="1312.6147"
-           ry="6.291379" />
-        <text
-           inkscape:label="#text5341-2"
-           transform="scale(0.91589761,1.0918251)"
-           sodipodi:linespacing="125%"
-           id="text6104"
-           y="1254.4003"
-           x="2356.6797"
-           style="font-size:50.89516068px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1.65039742;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
-           xml:space="preserve"><tspan
-             id="tspan6106"
-             y="1254.4003"
-             x="2356.6797"
-             sodipodi:role="line"
-             style="stroke-width:1.65039742">CDI</tspan></text>
-        <text
-           xml:space="preserve"
-           style="font-size:50.89516068px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.65039742;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
-           x="2358.3943"
-           y="1307.1289"
-           id="CDI_State"
-           sodipodi:linespacing="125%"
-           transform="scale(0.91589761,1.0918251)"
-           inkscape:label="#text5341-2"><tspan
-             style="fill:#ffffff;stroke:#ffffff;stroke-width:1.65039742"
-             sodipodi:role="line"
-             x="2358.3943"
-             y="1307.1289"
-             id="tspan6110">Off</tspan></text>
-        <path
-           sodipodi:nodetypes="cccc"
-           inkscape:connector-curvature="0"
-           id="path6112"
-           d="m 1922.5893,1382.2053 46.1175,-17.8752 0,35.4584 z"
-           style="fill:none;stroke:#60ffb8;stroke-width:10.01639748;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-        <path
-           sodipodi:nodetypes="cccc"
-           inkscape:connector-curvature="0"
-           id="path6114"
-           d="m 2397.3005,1382.2053 -46.1175,-17.8752 0,35.4584 z"
-           style="fill:none;stroke:#60ffb8;stroke-width:10.01639748;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      </g>
+      <rect
+         ry="6.291379"
+         y="1360.5554"
+         x="1917.0372"
+         height="138.88919"
+         width="487.40753"
+         id="rect6102"
+         style="fill:#000000;fill-opacity:1;stroke:#3391e8;stroke-width:11.110816;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100" />
+      <text
+         xml:space="preserve"
+         style="font-size:50.81184006px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1.64769554;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
+         x="2361.2954"
+         y="1296.1836"
+         id="text6104"
+         sodipodi:linespacing="125%"
+         transform="scale(0.91439821,1.0936154)"
+         inkscape:label="#text5341-2"><tspan
+           style="stroke-width:1.64769554"
+           sodipodi:role="line"
+           x="2361.2954"
+           y="1296.1836"
+           id="tspan6106">CDI</tspan></text>
+      <text
+         inkscape:label="#text5341-2"
+         transform="scale(0.91439821,1.0936154)"
+         sodipodi:linespacing="125%"
+         id="CDI_State"
+         y="1348.8259"
+         x="2363.0073"
+         style="font-size:50.81184006px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.64769554;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"><tspan
+           id="tspan6110"
+           y="1348.8259"
+           x="2363.0073"
+           sodipodi:role="line"
+           style="fill:#ffffff;stroke:#ffffff;stroke-width:1.64769554">Off</tspan></text>
+      <path
+         style="fill:none;stroke:#60ffb8;stroke-width:10;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         d="m 1924.0481,1430.146 45.9666,-17.8752 0,35.4584 z"
+         id="path6112"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccc" />
+      <path
+         style="fill:none;stroke:#60ffb8;stroke-width:10;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+         d="m 2397.2063,1430.146 -45.9666,-17.8752 0,35.4584 z"
+         id="path6114"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccc" />
     </g>
   </g>
   <g
      inkscape:groupmode="layer"
-     id="layer11"
+     id="Tab_Bug_Content"
      inkscape:label="TAB_BugSelect"
      style="display:inline"
      transform="translate(0,-274)">
     <g
-       id="Tab_Bug_Content"
+       id="Set_Heading"
        transform="matrix(0.79673653,0,0,0.84977755,127.82666,271.90425)">
-      <g
-         id="Set_Heading">
-        <rect
-           style="fill:#000000;fill-opacity:1;stroke:#3391e8;stroke-width:11.11024666;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100;display:inline"
-           id="Set_Heading_Border"
-           width="490.88968"
-           height="138.88969"
-           x="1913.5552"
-           y="1210.5552"
-           ry="6.2914023" />
-        <text
-           xml:space="preserve"
-           style="font-size:64.95462799px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1.64769554;stroke-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
-           x="2540.3584"
+      <rect
+         ry="6.2914023"
+         y="1210.5552"
+         x="1913.5552"
+         height="138.88969"
+         width="490.88968"
+         id="Set_Heading_Border"
+         style="fill:#000000;fill-opacity:1;stroke:#3391e8;stroke-width:11.11024666;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100;display:inline" />
+      <text
+         inkscape:label="#text5341-2"
+         transform="scale(0.85029942,1.1760563)"
+         sodipodi:linespacing="125%"
+         id="Set_Heading_Text"
+         y="1105.0342"
+         x="2540.3584"
+         style="font-size:64.95462799px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1.64769554;stroke-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"><tspan
+           id="tspan11053-1-1-5"
            y="1105.0342"
-           id="Set_Heading_Text"
-           sodipodi:linespacing="125%"
-           transform="scale(0.85029942,1.1760563)"
-           inkscape:label="#text5341-2"><tspan
-             style="fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1.64769554;stroke-opacity:1"
-             sodipodi:role="line"
-             x="2540.3584"
-             y="1105.0342"
-             id="tspan11053-1-1-5">Set Heading</tspan></text>
-      </g>
-      <g
-         id="Set_Altitude">
-        <rect
-           style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#3391e8;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-           id="Set_Altitude_Border"
-           width="490.88968"
-           height="138.88969"
-           x="1913.5552"
-           y="1360.5552"
-           ry="6.2914023" />
-        <text
-           xml:space="preserve"
-           style="font-size:64.95462799px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1.64769554;stroke-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
-           x="2539.2959"
-           y="1239.1444"
-           id="Set_Altitude_Text"
-           sodipodi:linespacing="125%"
-           transform="scale(0.85029942,1.1760563)"
-           inkscape:label="#text5341-2"><tspan
-             style="fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1.64769554;stroke-opacity:1"
-             sodipodi:role="line"
-             x="2539.2959"
-             y="1239.1444"
-             id="tspan11053-1-1-5-2">Set Altitude</tspan></text>
-      </g>
-      <g
-         id="Set_VS">
-        <rect
-           style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#3391e8;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-           id="Set_VS_Border"
-           width="490.88968"
-           height="138.88969"
-           x="1913.5552"
-           y="1510.5552"
-           ry="6.2914023" />
-        <text
-           xml:space="preserve"
-           style="font-size:64.95462799px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1.64769554;stroke-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
-           x="2539.4702"
-           y="1365.833"
-           id="Set_VS_Text"
-           sodipodi:linespacing="125%"
-           transform="scale(0.85029942,1.1760563)"
-           inkscape:label="#text5341-2"><tspan
-             style="fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1.64769554;stroke-opacity:1"
-             sodipodi:role="line"
-             x="2539.4702"
-             y="1365.833"
-             id="tspan11053-1-1-5-2-4">Set VS</tspan></text>
-      </g>
+           x="2540.3584"
+           sodipodi:role="line"
+           style="fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1.64769554;stroke-opacity:1">Set Heading</tspan></text>
     </g>
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer13"
-     inkscape:label="TAB_Navigator"
-     style="display:inline"
-     transform="translate(0,-274)">
     <g
-       id="Tab_NavDisplay"
-       style="display:inline"
-       transform="matrix(1.1426601,0,0,1.1426601,-355.51871,-259.8)">
-      <g
-         id="Tab_Bug">
-        <path
-           sodipodi:nodetypes="sssccss"
-           inkscape:connector-curvature="0"
-           id="Tab_Bug_Back"
-           d="m 1237.2616,1721.879 95.0491,0 c 14.917,0 22.1578,11.9646 26.9261,25.1852 l 22.6452,85.2461 -189.0484,-0.066 17.5019,-85.1801 c 2.8211,-13.7302 12.009,-25.1852 26.9261,-25.1852 z"
-           style="fill:#000000;fill-opacity:1;stroke:#3391e8;stroke-width:10.28206348;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0" />
-        <text
-           inkscape:label="#text5341-2"
-           transform="scale(1.0106485,0.9894637)"
-           sodipodi:linespacing="125%"
-           id="Tab_Bug_Text"
-           y="1775.4849"
-           x="1268.826"
-           style="font-size:30.88868904px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#e5f5a3;fill-opacity:1;stroke:#e5f5a3;stroke-width:1;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
-           xml:space="preserve"><tspan
-             id="tspan11047"
-             y="1775.4849"
-             x="1268.826"
-             sodipodi:role="line"
-             style="stroke-width:1">Bug</tspan><tspan
-             id="tspan11053"
-             y="1814.0957"
-             x="1268.826"
-             sodipodi:role="line"
-             style="stroke-width:1">Select</tspan></text>
-      </g>
-      <g
-         id="Tab_Nav">
-        <path
-           sodipodi:nodetypes="sssccss"
-           inkscape:connector-curvature="0"
-           id="Tab_Nav_Back"
-           d="m 1077.0489,1722.2883 95.0491,0 c 14.917,0 22.1578,11.9645 26.9261,25.1851 l 22.6179,85.0274 -189.0211,-0.5037 17.5019,-84.5237 c 2.8422,-13.726 12.0091,-25.1851 26.9261,-25.1851 z"
-           style="fill:#000000;fill-opacity:1;stroke:#60ffb8;stroke-width:10.28206253;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0" />
-        <text
-           inkscape:label="#text5341-2"
-           transform="scale(1.0106485,0.9894637)"
-           sodipodi:linespacing="125%"
-           id="Tab_Nav_Text"
-           y="1775.4849"
-           x="1110.5179"
-           style="font-size:30.88868904px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
-           xml:space="preserve"><tspan
-             id="tspan11053-4"
-             y="1775.4849"
-             x="1110.5179"
-             sodipodi:role="line"
-             style="stroke-width:1">Nav</tspan><tspan
-             id="tspan11083"
-             y="1814.0957"
-             x="1110.5179"
-             sodipodi:role="line"
-             style="stroke-width:1">Display</tspan></text>
-      </g>
+       id="Set_Altitude"
+       transform="matrix(0.79673653,0,0,0.84977755,127.82666,271.90425)">
+      <rect
+         ry="6.2914023"
+         y="1360.5552"
+         x="1913.5552"
+         height="138.88969"
+         width="490.88968"
+         id="Set_Altitude_Border"
+         style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#3391e8;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         inkscape:label="#text5341-2"
+         transform="scale(0.85029942,1.1760563)"
+         sodipodi:linespacing="125%"
+         id="Set_Altitude_Text"
+         y="1239.1444"
+         x="2539.2959"
+         style="font-size:64.95462799px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1.64769554;stroke-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"><tspan
+           id="tspan11053-1-1-5-2"
+           y="1239.1444"
+           x="2539.2959"
+           sodipodi:role="line"
+           style="fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1.64769554;stroke-opacity:1">Set Altitude</tspan></text>
+    </g>
+    <g
+       id="Set_VS"
+       transform="matrix(0.79673653,0,0,0.84977755,127.82666,271.90425)">
+      <rect
+         ry="6.2914023"
+         y="1510.5552"
+         x="1913.5552"
+         height="138.88969"
+         width="490.88968"
+         id="Set_VS_Border"
+         style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#3391e8;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         inkscape:label="#text5341-2"
+         transform="scale(0.85029942,1.1760563)"
+         sodipodi:linespacing="125%"
+         id="Set_VS_Text"
+         y="1365.833"
+         x="2539.4702"
+         style="font-size:64.95462799px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1.64769554;stroke-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"><tspan
+           id="tspan11053-1-1-5-2-4"
+           y="1365.833"
+           x="2539.4702"
+           sodipodi:role="line"
+           style="fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1.64769554;stroke-opacity:1">Set VS</tspan></text>
     </g>
   </g>
   <g

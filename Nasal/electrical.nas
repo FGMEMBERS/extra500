@@ -987,7 +987,7 @@ var CircuitBrakerClass = {
 		me._state = n.getValue();
 		me._deliverVolt();
 		if (me._state == 0){
-			print("CircuitBrakerClass._onStateChange() ... "~me._name~" break.");
+			#print("CircuitBrakerClass._onStateChange() ... "~me._name~" break.");
 		}
 	},
 	_onAmpereChange : func(n){
@@ -1066,12 +1066,12 @@ var ESystem = {
 		m._electron = ElectronClass.new();
 		
 		m.timerLoop = nil;
-		print("ESystem.new() ... created.");
+		#print("ESystem.new() ... created.");
 		
 		return m;
 	},
 	init : func(instance=nil){
-		print("ESystem.init() ...");
+		#print("ESystem.init() ...");
 		
 		if (instance==nil){instance=me;}
 		me.parents[1].init(instance);

@@ -34,13 +34,14 @@ var TabWidget = {
 	},
 	init : func(instance=me){
 		#print("TabWidget.init() ... ");
-			
+		#debug.dump(me._ifd._group);
+		me._can["Tabs"] = me._ifd._group.getElementById("Tab_"~me._Page.name).setVisible(0);
 		foreach(var t;me._tab){
 			me._can[t] = {
-				content	: me._group.getElementById("Tab_"~t~"_Content"),
-				tab	: me._group.getElementById("Tab_"~t~""),
-				text	: me._group.getElementById("Tab_"~t~"_Text"),
-				back	: me._group.getElementById("Tab_"~t~"_Back"),
+				#content	: me._group.getElementById(me._Page.name~"Tab_"~t~"_Content"),
+				tab	: me._ifd._group.getElementById(me._Page.name~"_"~t),
+				text	: me._ifd._group.getElementById(me._Page.name~"_"~t~"_Text"),
+				back	: me._ifd._group.getElementById(me._Page.name~"_"~t~"_Back"),
 			}
 		}
 		me._max = size(me._tab)-1;
@@ -57,22 +58,24 @@ var TabWidget = {
 			me._Page.keys[me._Page.name~" >"] = nil;
 			me._Page.keys[me._Page.name~" <"] = nil;
 		}
+		me._can.Tabs.setVisible(visible);
 	},
 	scroll : func(amount){
 		me._index += amount;
 		if (me._index > me._max){ me._index = me._max; }
 		if (me._index < 0){ me._index = 0; }
-
+		#debug.dump(me._can);
+			
 		foreach(var t;me._tab){
 # 			print("TabWidget.scroll() ... "~t);
-			me._can[t].content.setVisible(0);
+			#me._can[t].content.setVisible(0);
 			me._can[t].tab.set("z-index",1);
 			me._can[t].back.set("stroke",COLOR["Blue"]);
 			me._can[t].back.set("stroke-width",10);
 			me._can[t].text.set("fill",COLOR["Blue"]);
 		}
 		
-		me._can[me._tab[me._index]].content.setVisible(1);
+		#me._can[me._tab[me._index]].content.setVisible(1);
 		me._can[me._tab[me._index]].tab.set("z-index",2);
 		me._can[me._tab[me._index]].back.set("stroke",COLOR["Turquoise"]);
 		me._can[me._tab[me._index]].back.set("stroke-width",12);
@@ -230,7 +233,7 @@ var PlusDataWidget = {
 		append(me._listeners, setlistener("/autopilot/route-manager/signals/waypoint-changed",func(n){me._onWaypointChange(n)},1,0));	
 	},
 	init : func(instance=me){
-		print("PlusDataWidget.init() ... ");
+		#print("PlusDataWidget.init() ... ");
 		me._can = {
 			source	: me._group.getElementById("Tuning_Source_Text"),
 			channel	: [ 
@@ -280,9 +283,11 @@ var PlusDataWidget = {
 			me._Page.keys["L4 <"] 	= func(){extra500.keypad.onCom2Scroll(1);};
 			me._Page.keys["L4 >"] 	= func(){me._selectChannel(1);};
 			me._ifd.nLedLK.setValue(1);
+			me._ifd.setKnobLabel("LK","Tune","Swap");
+		
 			me._Page.keys["LK >>"] 	= func(){me._adjustFreqency(1);};
 			me._Page.keys["LK <<"] 	= func(){me._adjustFreqency(-1);};
-			me._Page.keys["LK"] 	= nil;
+			me._Page.keys["LK"] 	= func(){me._swapFreqency();};
 			me._Page.keys["LK >"] 	= func(){me._adjustFreqency(0.025);};
 			me._Page.keys["LK <"] 	= func(){me._adjustFreqency(-0.025);};
 		}else{
@@ -296,6 +301,8 @@ var PlusDataWidget = {
 			me._Page.keys["L4 <"] 	= nil;
 			me._Page.keys["L4 >"] 	= nil;
 			me._ifd.nLedLK.setValue(0);
+			me._ifd.setKnobLabel("LK");
+		
 			me._Page.keys["LK >>"] 	= nil;
 			me._Page.keys["LK <<"] 	= nil;
 			me._Page.keys["LK"] 	= nil;
@@ -339,6 +346,13 @@ var PlusDataWidget = {
 	},
 	_selectChannel : func(index){
 		setprop("/extra500/instrumentation/Keypad/tuningChannel",index);
+	},
+	_swapFreqency : func(){
+		if(me._channel == 0){
+			extra500.keypad.onCom1Scroll(1);
+		}else{
+			extra500.keypad.onCom2Scroll(1);
+		}
 	},
 	_adjustFreqency : func(amount){
 		var source = ["comm","nav"];
@@ -497,7 +511,9 @@ var TuningWidget_old = {
 		me._ifd.nLedL4.setValue(1);
 		me._Page.keys["L4 <"] 	= func(){extra500.keypad.onCom2Scroll(1);};
 		me._Page.keys["L4 >"] 	= func(){me._selectChannel(1);};
+		
 		me._ifd.nLedLK.setValue(1);
+		me._ifd.setKnobLabel("LK","Tune","Swap");
 		me._Page.keys["LK >>"] 	= func(){me._adjustFreqency(1);};
 		me._Page.keys["LK <<"] 	= func(){me._adjustFreqency(-1);};
 		me._Page.keys["LK"] 	= nil;
@@ -519,6 +535,7 @@ var TuningWidget_old = {
 		me._Page.keys["L4 <"] 	= nil;
 		me._Page.keys["L4 >"] 	= nil;
 		me._ifd.nLedLK.setValue(0);
+		me._ifd.setKnobLabel("LK");
 		me._Page.keys["LK >>"] 	= nil;
 		me._Page.keys["LK <<"] 	= nil;
 		me._Page.keys["LK"] 	= nil;
@@ -568,6 +585,13 @@ var TuningWidget_old = {
 		freq = global.clamp(freq,100.0,199.975);
 		setprop(path,freq);
 		extra500.keypad._inputWatchDog = 0;
+	},
+	_swapFreqency : func(){
+		if(me._channel == 0){
+			extra500.keypad.onCom1Scroll(1);
+		}else{
+			extra500.keypad.onCom2Scroll(1);
+		}
 	},
 	
 	

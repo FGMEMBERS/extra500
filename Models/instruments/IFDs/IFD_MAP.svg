@@ -42,7 +42,7 @@
      inkscape:cx="1566.6149"
      inkscape:cy="571.12729"
      inkscape:document-units="px"
-     inkscape:current-layer="svg6205"
+     inkscape:current-layer="Map_Options"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -131,47 +131,6 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <g
-     inkscape:groupmode="layer"
-     id="layer6"
-     inkscape:label="Tab_Chart+"
-     style="display:inline">
-    <g
-       id="Tab_Chart+_Content"
-       transform="matrix(1,0,0,0.99403763,0,0.41736601)" />
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer5"
-     inkscape:label="Tab_Chart"
-     style="display:inline">
-    <g
-       id="Tab_Chart_Content" />
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer4"
-     inkscape:label="Tab_Split"
-     style="display:inline">
-    <g
-       id="Tab_Split_Content"
-       transform="matrix(0.49831766,0,0,0.92167193,1.9251918,9.5978059)"
-       style="fill:none;stroke-width:4.42669821;stroke-miterlimit:4;stroke-dasharray:none" />
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer3"
-     inkscape:label="Tab_Map"
-     style="display:inline">
-    <g
-       id="Tab_Map_Content" />
-    <g
-       id="g5998"
-       transform="translate(-0.5038954,127.8864)" />
-    <g
-       id="g6040"
-       transform="translate(-1.0077908,255.7728)" />
-  </g>
   <g
      id="Map_Options"
      inkscape:label="Map_Options"
@@ -453,142 +412,6 @@
            x="2097.4553"
            sodipodi:role="line"
            style="fill:#ffffff;stroke:none">NOWrad</tspan></text>
-    </g>
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer2"
-     inkscape:label="Tab_Map+"
-     style="display:inline">
-    <g
-       id="Tab_Map+_Content"
-       transform="matrix(1,0,0,0.99507114,0,0.34752162)" />
-  </g>
-  <g
-     inkscape:label="Tab_Navigator"
-     inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(0,483.63782)"
-     style="display:inline">
-    <g
-       id="Tab_NavDisplay-0"
-       style="display:inline"
-       transform="matrix(1.1426601,0,0,1.1426601,-639.47778,-1017.4378)">
-      <g
-         id="Tab_Chart+">
-        <path
-           sodipodi:nodetypes="sssccss"
-           inkscape:connector-curvature="0"
-           id="Tab_Chart+_Back"
-           d="m 1734.3468,1721.879 95.0491,0 c 14.917,0 22.1578,11.9646 26.9261,25.1852 l 22.6452,85.2461 -189.0484,-0.066 17.5019,-85.1801 c 2.8211,-13.7302 12.009,-25.1852 26.9261,-25.1852 z"
-           style="fill:#000000;fill-opacity:1;stroke:#3391e8;stroke-width:10.28206348;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0" />
-        <text
-           inkscape:label="#text5341-2"
-           transform="scale(1.0106485,0.9894637)"
-           sodipodi:linespacing="125%"
-           id="Tab_Chart+_Text"
-           y="1791.4052"
-           x="1760.6605"
-           style="font-size:30.88868904px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#e5f5a3;fill-opacity:1;stroke:#e5f5a3;stroke-width:1;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
-           xml:space="preserve"><tspan
-             id="tspan6921"
-             y="1791.4052"
-             x="1760.6605"
-             sodipodi:role="line"
-             style="stroke-width:1">Chart +</tspan></text>
-      </g>
-      <g
-         id="Tab_Split">
-        <path
-           sodipodi:nodetypes="sssccss"
-           inkscape:connector-curvature="0"
-           id="Tab_Split_Back"
-           d="m 1401.7898,1721.879 95.0491,0 c 14.917,0 22.1578,11.9646 26.9261,25.1852 l 22.6452,85.2461 -189.0484,-0.066 17.5019,-85.1801 c 2.8211,-13.7302 12.009,-25.1852 26.9261,-25.1852 z"
-           style="fill:#000000;fill-opacity:1;stroke:#3391e8;stroke-width:10.28206348;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0" />
-        <text
-           inkscape:label="#text5341-2"
-           transform="scale(1.0106485,0.9894637)"
-           sodipodi:linespacing="125%"
-           id="Tab_Split_Text"
-           y="1791.4052"
-           x="1431.6163"
-           style="font-size:30.88868904px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#e5f5a3;fill-opacity:1;stroke:#e5f5a3;stroke-width:1;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
-           xml:space="preserve"><tspan
-             id="tspan6905"
-             y="1791.4052"
-             x="1431.6163"
-             sodipodi:role="line"
-             style="stroke-width:1">Split</tspan></text>
-      </g>
-      <g
-         id="Tab_Chart">
-        <path
-           style="fill:#000000;fill-opacity:1;stroke:#3391e8;stroke-width:10.28206348;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0"
-           d="m 1566.318,1721.879 95.0491,0 c 14.917,0 22.1578,11.9646 26.9261,25.1852 l 22.6452,85.2461 -189.0484,-0.066 17.5019,-85.1801 c 2.8211,-13.7302 12.009,-25.1852 26.9261,-25.1852 z"
-           id="Tab_Chart_Back"
-           inkscape:connector-curvature="0"
-           sodipodi:nodetypes="sssccss" />
-        <text
-           xml:space="preserve"
-           style="font-size:30.88868904px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#e5f5a3;fill-opacity:1;stroke:#e5f5a3;stroke-width:1;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
-           x="1594.4066"
-           y="1791.4052"
-           id="Tab_Chart_Text"
-           sodipodi:linespacing="125%"
-           transform="scale(1.0106485,0.9894637)"
-           inkscape:label="#text5341-2"><tspan
-             style="stroke-width:1"
-             sodipodi:role="line"
-             x="1594.4066"
-             y="1791.4052"
-             id="tspan6913">Chart</tspan></text>
-      </g>
-      <g
-         id="Tab_Map">
-        <path
-           style="fill:#000000;fill-opacity:1;stroke:#3391e8;stroke-width:10.28206348;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0"
-           d="m 1237.2616,1721.879 95.0491,0 c 14.917,0 22.1578,11.9646 26.9261,25.1852 l 22.6452,85.2461 -189.0484,-0.066 17.5019,-85.1801 c 2.8211,-13.7302 12.009,-25.1852 26.9261,-25.1852 z"
-           id="Tab_Map_Back"
-           inkscape:connector-curvature="0"
-           sodipodi:nodetypes="sssccss" />
-        <text
-           xml:space="preserve"
-           style="font-size:30.88868904px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#e5f5a3;fill-opacity:1;stroke:#e5f5a3;stroke-width:1;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
-           x="1268.826"
-           y="1791.4052"
-           id="Tab_Map_Text"
-           sodipodi:linespacing="125%"
-           transform="scale(1.0106485,0.9894637)"
-           inkscape:label="#text5341-2"><tspan
-             style="stroke-width:1"
-             sodipodi:role="line"
-             x="1268.826"
-             y="1791.4052"
-             id="tspan11053-7">Map</tspan></text>
-      </g>
-      <g
-         id="Tab_Map+">
-        <path
-           sodipodi:nodetypes="sssccss"
-           inkscape:connector-curvature="0"
-           id="Tab_Map+_Back"
-           d="m 1077.0489,1722.2883 95.0491,0 c 14.917,0 22.1578,11.9645 26.9261,25.1851 l 22.6179,85.0274 -189.0211,-0.5037 17.5019,-84.5237 c 2.8422,-13.726 12.0091,-25.1851 26.9261,-25.1851 z"
-           style="fill:#000000;fill-opacity:1;stroke:#60ffb8;stroke-width:10.28206253;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0" />
-        <text
-           inkscape:label="#text5341-2"
-           transform="scale(1.0106485,0.9894637)"
-           sodipodi:linespacing="125%"
-           id="Tab_Map+_Text"
-           y="1791.4052"
-           x="1110.5179"
-           style="font-size:30.88868904px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1;stroke-opacity:1;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
-           xml:space="preserve"><tspan
-             id="tspan11083-5"
-             y="1791.4052"
-             x="1110.5179"
-             sodipodi:role="line"
-             style="stroke-width:1">Map +</tspan></text>
-      </g>
     </g>
   </g>
 </svg>

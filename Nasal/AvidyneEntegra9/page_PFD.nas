@@ -931,12 +931,13 @@ var NavSourceWidget = {
 		if(visible == 1){
 			me.setListeners(me);
 			me._ifd.nLedL1.setValue(1);
-			me._Page.IFD.setKnobLabel("LK","Course");
+			
 			
 			me._Page.keys["L1 >"] = func(){me._scroll(1);};
 			me._Page.keys["L1 <"] = func(){me._scroll(-1);};
 			
 			me._ifd.nLedLK.setValue(1);
+			me._Page.IFD.setKnobLabel("LK","Course");
 			me._Page.keys["LK <<"]	= func(){me._adjustRadial(-10);};
 			me._Page.keys["LK <"] 	= func(){me._adjustRadial(-1);};
 			me._Page.keys["LK >"] 	= func(){me._adjustRadial(1);};
@@ -984,7 +985,7 @@ var NavSourceWidget = {
 		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].hasGS,func(n){me._onHasGSChange(n);},1,0));
 		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].Frequency,func(n){me._onFrequencyChange(n);},1,0));
 		
-		me._Page._widget.NavSelect.registerKeyCDI(me._source == 2);
+		me._Page._widget.NavSelect.registerKeyCDI();
 		
 	},
 	_scroll : func(amount){
@@ -1453,9 +1454,11 @@ var NavSelectWidget = {
 		var m = {parents:[NavSelectWidget,IfdWidget.new(page,canvasGroup,name)]};
 		m._class 	= "NavSelectWidget";
 		m._can		= {
+			content		: m._group.getElementById("Tab_Nav_Content").setVisible(0),
 			SynVis		: m._group.getElementById("SynVis_State"),
 			FlightPlan	: m._group.getElementById("FlightPlan_State"),
 			CDI		: m._group.getElementById("CDI_State"),
+			CDI_Button	: m._group.getElementById("PFD_CDI_Button"),
 		};
 		m._widget	= {
 			MapKnob		:  MovingMapKnobWidget.new(page,canvasGroup,name~"MapKnob"),
@@ -1464,7 +1467,7 @@ var NavSelectWidget = {
 		m._synVis = 0;
 		m._flightPlan = 1;
 		m._cdi = 1;
-		m._keyCDI = 0;
+		m._userCDI = 0;
 		m._mapRange 	= 30;
 		m._mapView 	= 0;
 		return m;
@@ -1488,10 +1491,12 @@ var NavSelectWidget = {
 			me._Page.keys["R4 <"] = func(){me.setFlighPlan();};
 			me._Page.keys["R4 >"] = func(){me.setFlighPlan();};
 			
-			me.registerKeyCDI(me._Page._widget.NavSource._source == 2) ;
+			me.registerKeyCDI() ;
 		
 			me._ifd.movingMap.setLayerVisible("route",me._flightPlan);
 			me._ifd.movingMap.setRangeNm(me._mapRange);
+			
+			
 			me._can.SynVis.setText(LABEL_OFFON[me._synVis]);
 			me._can.FlightPlan.setText(LABEL_OFFON[me._flightPlan]);
 			me._can.CDI.setText(LABEL_OFFON[me._cdi]);
@@ -1505,7 +1510,7 @@ var NavSelectWidget = {
 			me._Page.keys["R4 <"] 	= nil;
 			me._Page.keys["R4 >"] 	= nil;
 			
-			me.registerKeyCDI(0);
+			me.registerKeyCDI();
 			
 			me._ifd.nLedRK.setValue(0);
 			me._Page.IFD.setKnobLabel("RK");
@@ -1518,6 +1523,7 @@ var NavSelectWidget = {
 			
 			me._ifd.movingMap.setLayerVisible("route",1);
 		}
+		me._can.content.setVisible(visible);
 		me._widget.MapKnob.setVisible(visible);
 	},
 	registerKeys : func(){
@@ -1527,21 +1533,32 @@ var NavSelectWidget = {
 		me._ifd.nLedR4.setValue(1);
 		me._Page.keys["R4 <"] = func(){me.setFlighPlan();};
 		me._Page.keys["R4 >"] = func(){me.setFlighPlan();};
-		me._ifd.nLedR5.setValue(1);
-		me._Page.keys["R5 <"] = func(){me.setCDI();};
-		me._Page.keys["R5 >"] = func(){me.setCDI();};
+# 		me._ifd.nLedR5.setValue(1);
+# 		me._Page.keys["R5 <"] = func(){me.setCDI();};
+# 		me._Page.keys["R5 >"] = func(){me.setCDI();};
+		registerKeyCDI();
 	},
-	registerKeyCDI : func(v){
-		me._keyCDI = v;
-		if(me._keyCDI == 0){
-			me._ifd.nLedR5.setValue(0);
-			me._Page.keys["R5 <"] 	= nil;
-			me._Page.keys["R5 >"] 	= nil;
-			me.setCDI(1);
+	registerKeyCDI : func(){
+		me._can.CDI_Button.setVisible( me._Page._widget.Tab._index == 0 and me._Page._widget.NavSource._source == 2);
+		if(me._Page._widget.Tab._index == 0){
+			if(me._Page._widget.NavSource._source == 2){
+				me.setCDI(me._userCDI);
+				me._ifd.nLedR5.setValue(1);
+				me._Page.keys["R5 <"] = func(){me.setCDI();};
+				me._Page.keys["R5 >"] = func(){me.setCDI();};
+							
+			}else{
+				me._ifd.nLedR5.setValue(0);
+				me._Page.keys["R5 <"] 	= nil;
+				me._Page.keys["R5 >"] 	= nil;
+				me.setCDI(1);
+			}
 		}else{
-			me._ifd.nLedR5.setValue(1);
-			me._Page.keys["R5 <"] = func(){me.setCDI();};
-			me._Page.keys["R5 >"] = func(){me.setCDI();};
+			if(me._Page._widget.NavSource._source == 2){
+				me.setCDI(me._userCDI);
+			}else{
+				me.setCDI(1);
+			}
 		}
 	},
 	setSynVis : func(value=nil){
@@ -1569,6 +1586,10 @@ var NavSelectWidget = {
 		}else{
 			me._cdi = value;
 		}
+		if(me._Page._widget.NavSource._source == 2){
+			me._userCDI = me._cdi;
+		}
+		
 		me._can.CDI.setText(LABEL_OFFON[me._cdi]);
 		me._Page._widget.HSI._can.CoursePointer.setVisible(me._cdi);
 	},
@@ -1590,6 +1611,7 @@ var BugSelectWidget = {
 		var m = {parents:[BugSelectWidget,IfdWidget.new(page,canvasGroup,name)]};
 		m._class 	= "BugSelectWidget";
 		m._can		= {
+			content		: m._group.getElementById("Tab_Bug_Content").setVisible(0),
 			Heading		: m._group.getElementById("Set_Heading"),
 			HeadingBorder	: m._group.getElementById("Set_Heading_Border"),
 			Altitude	: m._group.getElementById("Set_Altitude"),
@@ -1597,7 +1619,7 @@ var BugSelectWidget = {
 			VS		: m._group.getElementById("Set_VS"),
 			VSBorder	: m._group.getElementById("Set_VS_Border"),
 		};
-		m._modeRK = nil;
+		m._modeRK = "HDG";
 		return m;
 	},
 	init : func(instance=me){
@@ -1621,6 +1643,7 @@ var BugSelectWidget = {
 		if(visible == 1){
 			me.setListeners(me);
 			me.registerKeys();
+			me._setModeRK(me._modeRK);
 		}else{
 			me.removeListeners();
 			me._ifd.nLedR3.setValue(0);
@@ -1641,6 +1664,8 @@ var BugSelectWidget = {
 			me._Page.keys["RK >"] 	= nil;
 			me._Page.keys["RK <"] 	= nil;
 		}
+		me._can.content.setVisible(visible);
+		
 	},
 	_setModeRK : func(value=nil){
 		
@@ -1947,10 +1972,11 @@ var AvidynePagePFD = {
 		}
 	},
 	setVisible : func(visible){
+		me.IFD.setLayout(IFD_LAYOUT.PFD);
 		if(visible == 1){
 			me.setListeners(me);
-			me.IFD._widget.Headline.setVisible(0);
-			me.IFD._widget.PlusData.setVisible(0);
+# 			me.IFD._widget.Headline.setVisible(0);
+# 			me.IFD._widget.PlusData.setVisible(0);
 			#me.IFD.movingMap.setLayout("pfd");
 			me.registerKeys();
 		}else{
@@ -1968,7 +1994,6 @@ var AvidynePagePFD = {
 		me.page.setVisible(visible);
 	},
 	_initWidgetsForTab : func(index){
-		me.IFD.setLayout(IFD_LAYOUT.PFD);
 			
 		if (index == 0){ # Page NavDisplay
 			
