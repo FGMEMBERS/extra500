@@ -617,8 +617,8 @@ var AvidynePageFMS = {
 		}
 	},
 	setVisible : func(visibility){
-		me.IFD._widget.Headline.setVisible(visibility);
-		me.IFD._widget.PlusData.setVisible(visibility);
+		#me.IFD._widget.Headline.setVisible(visibility);
+		#me.IFD._widget.PlusData.setVisible(visibility);
 		me.IFD.movingMap.setVisible(visibility);
 		
 		if(visibility == 1){
@@ -636,42 +636,42 @@ var AvidynePageFMS = {
 		#me.IFD._widget.PlusData.setVisible(0);
 		
 		if (index == 0){ # FPL
-			me.IFD._widget.PlusData.setVisible(1);
+			me.IFD.setLayout(IFD_LAYOUT.PLUS);
+			me.IFD.movingMap.setLayout("none");
 			me._widget.FPL.setLayout("FPL");
 			me._widget.FPL.setVisible(1);
-			me.IFD.movingMap.setLayout("none");
 			me._widget.MovingMapKnob.setVisible(0);
 		}elsif(index == 1){ # MapFPL
-			me.IFD._widget.PlusData.setVisible(0);
+			me.IFD.setLayout(IFD_LAYOUT.SPLIT);
 			me.IFD.movingMap.setLayout("split-left");
 			me._widget.FPL.setLayout("split-right");
 			me._widget.FPL.setVisible(1);
 			me._widget.MovingMapKnob.setHand(0);
 			me._widget.MovingMapKnob.setVisible(1);	
 		}elsif(index == 2){ # Info
-			me._widget.FPL.setVisible(0);
-			me.IFD._widget.PlusData.setVisible(1);
+			me.IFD.setLayout(IFD_LAYOUT.PLUS);
 			me.IFD.movingMap.setLayout("none");
+			me._widget.FPL.setVisible(0);
 			me._widget.MovingMapKnob.setVisible(0);
 		}elsif(index == 3){ # Routes
-			me._widget.FPL.setVisible(0);
-			me.IFD._widget.PlusData.setVisible(1);
+			me.IFD.setLayout(IFD_LAYOUT.PLUS);
 			me.IFD.movingMap.setLayout("none");
+			me._widget.FPL.setVisible(0);
 			me._widget.MovingMapKnob.setVisible(0);
 		}elsif(index == 4){ # UserWypts
-			me._widget.FPL.setVisible(0);
-			me.IFD._widget.PlusData.setVisible(1);
+			me.IFD.setLayout(IFD_LAYOUT.PLUS);
 			me.IFD.movingMap.setLayout("none");
+			me._widget.FPL.setVisible(0);
 			me._widget.MovingMapKnob.setVisible(0);
 		}elsif(index == 5){ # Nearest
-			me._widget.FPL.setVisible(0);
-			me.IFD._widget.PlusData.setVisible(1);
+			me.IFD.setLayout(IFD_LAYOUT.PLUS);
 			me.IFD.movingMap.setLayout("none");
+			me._widget.FPL.setVisible(0);
 			me._widget.MovingMapKnob.setVisible(0);
 		}elsif(index == 6){ # MapNearest
-			me._widget.FPL.setVisible(0);
-			me.IFD._widget.PlusData.setVisible(0);
+			me.IFD.setLayout(IFD_LAYOUT.SPLIT);
 			me.IFD.movingMap.setLayout("split-left");
+			me._widget.FPL.setVisible(0);
 			me._widget.MovingMapKnob.setHand(0);
 			me._widget.MovingMapKnob.setVisible(1);
 		}else{

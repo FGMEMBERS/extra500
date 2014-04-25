@@ -1886,6 +1886,7 @@ var AvidynePagePFD = {
 		m.nHorizonTF.setTranslation(-m.IFD.width *1/2,-m.IFD.height*3/4 +80);
 		
 		m.nHorizon.updateCenter();
+		m.nHorizon.set("clip","rect(0px, 2048px,768px, 0px)");
 		
 		
 # 		m.nOatBorder = m.page.createChild("image")
@@ -1967,6 +1968,8 @@ var AvidynePagePFD = {
 		me.page.setVisible(visible);
 	},
 	_initWidgetsForTab : func(index){
+		me.IFD.setLayout(IFD_LAYOUT.PFD);
+			
 		if (index == 0){ # Page NavDisplay
 			
 			me._widget.BugSelect.setVisible(0);

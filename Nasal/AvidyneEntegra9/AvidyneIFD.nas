@@ -121,6 +121,20 @@ var AvidynePageDummy = {
 
 
 
+var IFD_LAYOUT = {
+	"NONE"	:0,
+	"PFD"	:1,
+	"FULL"	:2,
+	"SPLIT"	:3,
+	"PLUS"	:4,
+};
+
+
+var IFDUserInterface = {};
+var IFDNavigator = {};
+
+
+
 var AvidyneIFD = {
 	new: func(root,name,acPlace,startPage="none"){
 		var m = { parents: [
@@ -155,12 +169,12 @@ var AvidyneIFD = {
 		
 
 		m.canvas.addPlacement({"parent": acPlace,"node": "IFD.Screen"});
-		m.canvas.setColorBackground(0,0,0);
+		m.canvas.setColorBackground("#00065A");
 		# .. and place it on the object called PFD-Screen
 
 		#m.nHeadingBug = props.globals.initNode("/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg",0.0,"DOUBLE");
 		m._group = m.canvas.createGroup();
-		m._group.set("z-index",3);
+		#m._group.set("z-index",3);
 		
 		canvas.parsesvg(m._group, "Models/instruments/IFDs/IFD_Global.svg",{
 			"font-mapper": global.canvas.FontMapper
@@ -168,14 +182,14 @@ var AvidyneIFD = {
 		);
 		
 		
-		m.movingMap = MovingMap.new(m,m.canvas.createGroup(),name~"-MovingMap");
+		m.movingMap = MovingMap.new(m,m._group.getElementById("MovingMap"),name~"-MovingMap");
 		m.movingMap.setLayout("map");
 		
 		m._widget = {
 			#COM		: ComWidget.new(m,m._group.getElementById("layer1"),"Com"),
 			#CurrentWaypoint	: CurrentWaypointWidget.new(m,m._group,"CurrentWaypoint"),
-			Headline	: HeadlineWidget.new(m,m._group.getElementById("layer1"),"Headline"),
-			PlusData	: PlusDataWidget.new(m,m._group.getElementById("layer2"),"PlusData"),
+			Headline	: HeadlineWidget.new(m,m._group.getElementById("Headline"),"Headline"),
+			PlusData	: PlusDataWidget.new(m,m._group.getElementById("PlusData"),"PlusData"),
 		};
 		
 		m._can = {
@@ -189,6 +203,14 @@ var AvidyneIFD = {
 				OuterLabel	: m._group.getElementById("RKOuterLabel").setText(""),
 				InnerLabel	: m._group.getElementById("RKInnerLabel").setText(""),
 			},
+			Layout : {
+				#Layout		: m._group.getElementById("Layout").set("z-index",-5),
+				PFD		: m._group.getElementById("Layout_PFD").setVisible(0),
+				Full		: m._group.getElementById("Layout_Full").setVisible(0),
+				Split		: m._group.getElementById("Layout_Split").setVisible(0),
+				Plus		: m._group.getElementById("Layout_Plus").setVisible(0),
+				
+			}
 			
 		};
 		
@@ -307,6 +329,49 @@ var AvidyneIFD = {
 		me._timerLoop2Hz.start();
 		
 	},
+	
+	setLayout : func(layout){
+		me._layout = layout;
+		if ( me._layout == IFD_LAYOUT.PFD ){
+			me._widget.Headline.setVisible(0);
+			me._widget.PlusData.setVisible(0);
+			
+			me._can.Layout.PFD.setVisible(1);
+			me._can.Layout.Plus.setVisible(0);
+			me._can.Layout.Full.setVisible(0);
+			me._can.Layout.Split.setVisible(0);
+			
+		}elsif ( me._layout == IFD_LAYOUT.FULL ){
+			me._widget.Headline.setVisible(1);
+			me._widget.PlusData.setVisible(0);
+			
+			me._can.Layout.PFD.setVisible(0);
+			me._can.Layout.Plus.setVisible(0);
+			me._can.Layout.Full.setVisible(1);
+			me._can.Layout.Split.setVisible(0);
+			
+		}elsif ( me._layout == IFD_LAYOUT.SPLIT ){
+			me._widget.Headline.setVisible(1);
+			me._widget.PlusData.setVisible(0);
+			
+			me._can.Layout.PFD.setVisible(0);
+			me._can.Layout.Plus.setVisible(0);
+			me._can.Layout.Full.setVisible(1);
+			me._can.Layout.Split.setVisible(1);
+			
+		}elsif ( me._layout == IFD_LAYOUT.PLUS ){
+			me._widget.Headline.setVisible(1);
+			me._widget.PlusData.setVisible(1);
+			
+			me._can.Layout.PFD.setVisible(0);
+			me._can.Layout.Plus.setVisible(1);
+			me._can.Layout.Full.setVisible(0);
+			me._can.Layout.Split.setVisible(0);
+		}else{
+			
+		}
+	},
+	
 	_onPowerVoltNormChange : func(n){
 		me._voltNorm = n.getValue();
 		me.nBacklight.setValue(me._brightness * me._voltNorm);

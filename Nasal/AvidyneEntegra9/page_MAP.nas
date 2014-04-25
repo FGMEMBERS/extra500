@@ -228,8 +228,8 @@ var AvidynePageMAP = {
 		}
 	},
 	setVisible : func(visibility){
-		me.IFD._widget.Headline.setVisible(visibility);
-		me.IFD._widget.PlusData.setVisible(visibility);
+		#me.IFD._widget.Headline.setVisible(visibility);
+		#me.IFD._widget.PlusData.setVisible(visibility);
 		me.IFD.movingMap.setVisible(visibility);
 		
 		if(visibility == 1){
@@ -244,17 +244,18 @@ var AvidynePageMAP = {
 	},
 	_initWidgetsForTab : func(index){
 		me._widget.MovingMapKnob.setVisible(0);
-		me.IFD._widget.PlusData.setVisible(0);
+		#me.IFD._widget.PlusData.setVisible(0);
 			
 		if (index == 0){ # MAP+
+			me.IFD.setLayout(IFD_LAYOUT.PLUS);
 			me.IFD.movingMap.setLayout("map+");
 			me._widget.MovingMapKnob.setHand(1);
 			me._widget.MovingMapKnob.setVisible(1);
-			me.IFD._widget.PlusData.setVisible(1);
 			me._widget.MapWidget.setVisible(1);
 			
 			
 		}elsif(index == 1){ # MAP
+			me.IFD.setLayout(IFD_LAYOUT.FULL);
 			me.IFD.movingMap.setLayout("map");
 			me._widget.MovingMapKnob.setHand(1);
 			me._widget.MovingMapKnob.setVisible(1);
@@ -263,20 +264,23 @@ var AvidynePageMAP = {
 			
 			
 		}elsif(index == 2){ # Split
+			me.IFD.setLayout(IFD_LAYOUT.SPLIT);
 			me.IFD.movingMap.setLayout("split-left");
 			me._widget.MovingMapKnob.setHand(0);
 			me._widget.MovingMapKnob.setVisible(1);
 			me._widget.MapWidget.setVisible(0);
 		
 		}elsif(index == 3){ # Chart
+			me.IFD.setLayout(IFD_LAYOUT.FULL);
 			me.IFD.movingMap.setLayout("none");
 			me._widget.MapWidget.setVisible(0);
 		}elsif(index == 4){ # Chart+
+			me.IFD.setLayout(IFD_LAYOUT.PLUS);
 			me.IFD.movingMap.setLayout("none");
-			me.IFD._widget.PlusData.setVisible(1);
 			me._widget.MapWidget.setVisible(0);
 		
 		}elsif(index == 5){ # Radar
+			me.IFD.setLayout(IFD_LAYOUT.FULL);
 			me.IFD.movingMap.setLayout("none");
 			me._widget.MapWidget.setVisible(0);
 		}else{

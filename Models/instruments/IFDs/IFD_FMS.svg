@@ -38,11 +38,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="687.35866"
-     inkscape:cy="1191.7394"
+     inkscape:zoom="0.49497475"
+     inkscape:cx="1257.3239"
+     inkscape:cy="655.97649"
      inkscape:document-units="px"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer4"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -78,10 +78,6 @@
        orientation="0,1"
        position="-445.71429,128"
        id="guide6972" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="-437.14286,256"
-       id="guide6974" />
     <sodipodi:guide
        orientation="0,1"
        position="-334.28571,384"
@@ -160,18 +156,7 @@
     <g
        transform="matrix(0.99935482,0,0,0.92469566,0.783544,4.9443485)"
        id="Tab_MapNearest_Content"
-       style="stroke:none">
-      <path
-         inkscape:connector-curvature="0"
-         id="path4215"
-         d="m 1024,70.338123 0,1357.868577"
-         style="display:inline;fill:none;stroke:#3391e8;stroke-width:3;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <path
-         style="display:inline;fill:none;stroke:#3391e8;stroke-width:2.44517064000000017;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-         d="M 2046.3752,1428 1.4691198,1428"
-         id="path4217"
-         inkscape:connector-curvature="0" />
-    </g>
+       style="stroke:none" />
   </g>
   <g
      style="display:inline"
@@ -180,14 +165,6 @@
      inkscape:groupmode="layer">
     <g
        id="Tab_Nearest_Content">
-      <rect
-         style="fill:#000000;fill-opacity:1;stroke:#3391e8;stroke-width:3.0147872;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100;display:inline"
-         id="rect3705"
-         width="1244.9852"
-         height="1355.9791"
-         x="401.50739"
-         y="70.558472"
-         ry="16.718561" />
       <g
          transform="translate(-2.3841864e-7,255.99998)"
          style="display:inline"
@@ -344,14 +321,6 @@
      style="display:inline">
     <g
        id="Tab_UserWypts_Content">
-      <rect
-         ry="16.710402"
-         y="71.094185"
-         x="401.50739"
-         height="1355.317"
-         width="1244.9852"
-         id="rect3611"
-         style="fill:#000000;fill-opacity:1;stroke:#3391e8;stroke-width:3.0147872;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100;display:inline" />
       <g
          transform="translate(-2.3841866e-7,-384)"
          style="display:inline"
@@ -452,25 +421,10 @@
         <rect
            y="69.04483"
            x="400"
-           height="1359.098"
-           width="1248"
-           id="rect5240"
-           style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
-        <rect
-           y="69.04483"
-           x="400"
            height="70.076042"
            width="1248"
            id="rect4024-8"
            style="color:#000000;fill:#002255;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
-        <rect
-           style="fill:none;stroke:#3391e8;stroke-width:3.0147872;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100;display:inline"
-           id="rect3517"
-           width="1244.9852"
-           height="1355.9628"
-           x="401.50739"
-           y="70.448608"
-           ry="0" />
         <text
            sodipodi:linespacing="125%"
            id="text4916-4"
@@ -739,14 +693,6 @@
            d="m 2037.7517,957.09973 -36.9823,-15.50968 0,30.76599 z"
            style="fill:none;stroke:#00ffff;stroke-width:8.25130463;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline" />
       </g>
-      <rect
-         ry="16.758837"
-         y="67.165611"
-         x="401.50739"
-         height="1359.2456"
-         width="1244.9852"
-         id="rect4306"
-         style="fill:#000000;fill-opacity:1;stroke:#3391e8;stroke-width:3.01478696;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100;display:inline" />
       <g
          transform="translate(-2.3841837e-7,-255.99999)"
          style="display:inline"
@@ -787,18 +733,7 @@
      inkscape:label="Tab_MapFPL"
      style="display:inline">
     <g
-       id="Tab_MapFPL_Content">
-      <path
-         style="fill:none;stroke:#3391e8;stroke-width:3;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-         d="m 1024,70.338123 0,1357.868577"
-         id="path3432"
-         inkscape:connector-curvature="0" />
-      <path
-         inkscape:connector-curvature="0"
-         id="path4211"
-         d="M 2046.3752,1428 1.4691198,1428"
-         style="fill:none;stroke:#3391e8;stroke-width:2.44517064;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-    </g>
+       id="Tab_MapFPL_Content" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -808,14 +743,6 @@
     <g
        id="Tab_FPL_Content"
        transform="matrix(1.0024278,0,0,1,-0.97112445,0)">
-      <rect
-         ry="16.741653"
-         y="67.165611"
-         x="401.50739"
-         height="1357.8519"
-         width="1244.9852"
-         id="rect4114"
-         style="fill:#000000;fill-opacity:1;stroke:#3391e8;stroke-width:3.01113415;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100;display:inline" />
       <g
          id="g3882">
         <rect

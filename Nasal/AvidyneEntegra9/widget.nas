@@ -83,6 +83,7 @@ var TabWidget = {
 	
 };
 
+
 var HeadlineWidget = {
 	new : func(page,canvasGroup,name){
 		var m = {parents:[HeadlineWidget,IfdWidget.new(page,canvasGroup,name)]};

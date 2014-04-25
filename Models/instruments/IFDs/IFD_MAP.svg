@@ -38,9 +38,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.5"
-     inkscape:cx="1050.0972"
-     inkscape:cy="739.21584"
+     inkscape:zoom="0.35355339"
+     inkscape:cx="1566.6149"
+     inkscape:cy="571.12729"
      inkscape:document-units="px"
      inkscape:current-layer="svg6205"
      showgrid="false"
@@ -62,10 +62,6 @@
        orientation="1,0"
        position="400,617.14286"
        id="guide6213" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="620,108"
-       id="guide6215" />
     <sodipodi:guide
        orientation="1,0"
        position="1648,445.71429"
@@ -142,16 +138,7 @@
      style="display:inline">
     <g
        id="Tab_Chart+_Content"
-       transform="matrix(1,0,0,0.99403763,0,0.41736601)">
-      <rect
-         ry="16.805035"
-         y="71.5"
-         x="401.50739"
-         height="1362.9926"
-         width="1244.9852"
-         id="rect4306"
-         style="fill:none;stroke:#3391e8;stroke-width:3.00898385;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100;display:inline" />
-    </g>
+       transform="matrix(1,0,0,0.99403763,0,0.41736601)" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -159,13 +146,7 @@
      inkscape:label="Tab_Chart"
      style="display:inline">
     <g
-       id="Tab_Chart_Content">
-      <path
-         style="fill:none;stroke:#3391e8;stroke-width:3;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
-         d="M 1.5039062,1428 2046.5122,1428"
-         id="path3910"
-         inkscape:connector-curvature="0" />
-    </g>
+       id="Tab_Chart_Content" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -175,24 +156,7 @@
     <g
        id="Tab_Split_Content"
        transform="matrix(0.49831766,0,0,0.92167193,1.9251918,9.5978059)"
-       style="fill:none;stroke-width:4.42669821;stroke-miterlimit:4;stroke-dasharray:none">
-      <rect
-         ry="0"
-         y="67.165611"
-         x="0.0073976507"
-         height="1470.1517"
-         width="2047.9852"
-         id="rect3216"
-         style="fill:none;stroke:#3391e8;stroke-width:4.42669821;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100;display:inline" />
-      <rect
-         style="fill:none;stroke:#3391e8;stroke-width:4.42585039;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100;display:inline"
-         id="rect3362"
-         width="2048.895"
-         height="1470.152"
-         x="2054.0603"
-         y="67.165611"
-         ry="0" />
-    </g>
+       style="fill:none;stroke-width:4.42669821;stroke-miterlimit:4;stroke-dasharray:none" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -200,34 +164,19 @@
      inkscape:label="Tab_Map"
      style="display:inline">
     <g
-       id="Tab_Map_Content">
-      <path
-         style="fill:none;stroke:#3391e8;stroke-width:3;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-         d="M 1.5039062,1428 2046.5122,1428"
-         id="path3134"
-         inkscape:connector-curvature="0" />
-    </g>
+       id="Tab_Map_Content" />
     <g
        id="g5998"
-       transform="translate(-0.5038954,127.8864)">
-      <path
-         inkscape:connector-curvature="0"
-         id="path6000"
-         d="M 1.5039062,1428 2046.5122,1428"
-         style="fill:none;stroke:#3391e8;stroke-width:3;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-    </g>
+       transform="translate(-0.5038954,127.8864)" />
     <g
        id="g6040"
-       transform="translate(-1.0077908,255.7728)">
-      <path
-         inkscape:connector-curvature="0"
-         id="path6042"
-         d="M 1.5039062,1428 2046.5122,1428"
-         style="fill:none;stroke:#3391e8;stroke-width:3;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-    </g>
+       transform="translate(-1.0077908,255.7728)" />
   </g>
   <g
-     id="Map_Options">
+     id="Map_Options"
+     inkscape:label="Map_Options"
+     inkscape:groupmode="layer"
+     style="display:inline">
     <g
        id="Map_Declutter">
       <rect
@@ -513,16 +462,7 @@
      style="display:inline">
     <g
        id="Tab_Map+_Content"
-       transform="matrix(1,0,0,0.99507114,0,0.34752162)">
-      <rect
-         style="fill:none;stroke:#3391e8;stroke-width:3.02224445;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100;display:inline"
-         id="rect4114"
-         width="1244.9852"
-         height="1361.049"
-         x="401.50739"
-         y="72.014931"
-         ry="16.781071" />
-    </g>
+       transform="matrix(1,0,0,0.99507114,0,0.34752162)" />
   </g>
   <g
      inkscape:label="Tab_Navigator"

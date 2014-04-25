@@ -210,7 +210,7 @@ var MovingMap = {
 			me._can.UpHDG.setTranslation(400,0);
 			
 			me._can.LayerFront.setVisible(1);
-			me._group.set("z-index",-1);
+			#me._group.set("z-index",-1);
 			me._group.setVisible(1);
 		}elsif(me._layout == "map+"){
 			me._screenSize	= 512;
