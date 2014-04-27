@@ -17,7 +17,7 @@
 #      Date: 17.04.2014
 #
 #      Last change:      Dirk Dittmann
-#      Date:             17.04.2013
+#      Date:             27.04.2013
 #
 
 var MapIconCache = {
@@ -206,10 +206,11 @@ var PositionedLayer = {
 		};
 		
 		m._cache = {
-			"airport" : {"data":[],"index":0},
-			"vor"	  : {"data":[],"index":0},
+			"airport" : {"data":[],"index":0,"max":100},
+			"vor"	  : {"data":[],"index":0,"max":100},
 		};
-		m._var = {
+		
+		m._mapOptions = {
 			land 		: 3,
 			nav 		: 3,
 			lightning 	: 0,
@@ -222,6 +223,23 @@ var PositionedLayer = {
 		m._timer = maketimer(600,m,PositionedLayer.update);
 		
 		return m;
+	},
+	createCaches : func (){
+		positioned.findWithinRange(600,"airport");
+		for (var i = me._cache.airport.index ; i < me._cache.airport.max ; i +=1){
+			var item = AirportItem.new(me._cache.airport.index);
+			item.create(me._can.airport);
+			item.setVisible(0);
+			append(me._cache.airport.data,item);
+		}
+		
+		positioned.findWithinRange(150,"vor");
+		for (var i = me._cache.vor.index ; i < me._cache.vor.max ; i +=1){
+			var item = VorItem.new(me._cache.vor.index);
+			item.create(me._can.vor);
+			item.setVisible(0);
+			append(me._cache.vor.data,item);
+		}
 	},
 	setRange : func(range=100){
 		me._range = range;
@@ -237,7 +255,7 @@ var PositionedLayer = {
 # 		print("PositionedLayer.setLand("~value~")");
 	},
 	setNav : func(value){
-		me._var.nav = value; me.update();
+		me._mapOptions.nav = value; me.update();
 	},
 	setLightning : func(value){
 # 		print("PositionedLayer.setLightning("~value~")");
@@ -255,9 +273,9 @@ var PositionedLayer = {
 		var item = nil;
 		var runwayLength 	= 0;
 		
-		if(me._var.nav >= 3){
+		if(me._mapOptions.nav >= 3){
 			runwayLength = MAP_RUNWAY_AT_RANGE[me._range];
-		}elsif (me._var.nav >= 2){
+		}elsif (me._mapOptions.nav >= 2){
 			runwayLength = 3000;
 		}else{
 			runwayLength = -1;
@@ -282,7 +300,7 @@ var PositionedLayer = {
 				
 				#debug.dump(apt);
 				
-				if (me._cache.airport.index >= 100 ){
+				if (me._cache.airport.index >= me._cache.airport.max ){
 					break;
 				}
 				
@@ -366,12 +384,12 @@ var PositionedLayer = {
 	},
 	loadVor : func(){
 		me._cache.vor.index = 0;
-		if(me._var.nav >= 1){
+		if(me._mapOptions.nav >= 1 and me._range <= 80){
 			var range = me._range*2.0 <= 100 ? me._range*2.5 : 100 ;
 			var results = positioned.findWithinRange(range,"vor");
 			var item = nil;
 			foreach(var vor; results) {
-				if (me._cache.vor.index >= 100 ){
+				if (me._cache.vor.index >= me._cache.vor.max ){
 					break;
 				}
 				

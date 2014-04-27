@@ -17,7 +17,7 @@
 #      Date: Sep 10 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             14.09.2013
+#      Date:             27.04.2014
 #
 
 # var RouteLayer = {
@@ -156,7 +156,9 @@ var MovingMap = {
 	},
 	init : func(){
 		me.setListeners();
+		
 		me._layer.positioned	= PositionedLayer.new(me._map,me._name~"-Positioned");
+		me._layer.positioned.createCaches();
 		me._layer.route		= RouteLayer.new(me._map,me._name~"-Route");
 		me._layer.route.setListeners();
 		me._layer.tcas		= TcasLayer.new(me._map,me._name~"-TCAS");
