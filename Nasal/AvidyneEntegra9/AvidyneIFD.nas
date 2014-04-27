@@ -569,6 +569,11 @@ var AvidyneIFD = {
 			me.movingMap.update20Hz(me._now20Hz,me._dt20Hz);
 		}
 	},
+	setBacklight : func(value){
+		me.nLedLK.setValue(value);	
+		me.nLedRK.setValue(value);
+		me.nLedBaro.setValue(value);
+	},
 	clearLeds : func(){
 		me.nLedL1.setValue(0);
 		me.nLedL2.setValue(0);
@@ -584,8 +589,7 @@ var AvidyneIFD = {
 		me.nLedR5.setValue(0);
 		me.nLedR6.setValue(0);	
 		
-		me.nLedLK.setValue(0);	
-		me.nLedRK.setValue(0);	
+			
 		
 		
 	},
