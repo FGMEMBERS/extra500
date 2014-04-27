@@ -79,7 +79,7 @@
 		<object-name>RK.backlight</object-name>
 		<object-name>LK.backlight</object-name>
 		<object-name>Baro.backlight</object-name>
-		<object-name>Baro.backlight.Baro</object-name>
+		<object-name>Baro.backlight.BARO</object-name>
 		<object-name>Dim.backlight.DIM</object-name>
 		<object-name>Dim.backlight.BRT</object-name>
         <emission>
@@ -1155,6 +1155,16 @@
 		</binding>
 	</action>
 </animation>
+<animation>
+	<type>select</type>
+	<object-name>Baro.backlight</object-name>
+	<condition>
+		<equals>
+			<property>/extra500/instrumentation/IFD-RH/led/Baro</property>
+			<value>1</value>
+		</equals>
+	</condition>
+</animation>
 
 <!-- LeftKnob -->
 <animation>
@@ -1232,6 +1242,16 @@
 			</script>
 		</binding>
 	</action>
+</animation>
+<animation>
+	<type>select</type>
+	<object-name>LK.backlight</object-name>
+	<condition>
+		<equals>
+			<property>/extra500/instrumentation/IFD-RH/led/LK</property>
+			<value>1</value>
+		</equals>
+	</condition>
 </animation>
 
 <!-- RightKnob -->
@@ -1313,7 +1333,16 @@
 		</binding>
 		</action>
 </animation>
-
+<animation>
+	<type>select</type>
+	<object-name>RK.backlight</object-name>
+	<condition>
+		<equals>
+			<property>/extra500/instrumentation/IFD-RH/led/RK</property>
+			<value>1</value>
+		</equals>
+	</condition>
+</animation>
 <!-- alte NON-Canvas-Technologie -->
 <!-- kuenstlicher horizont -->
 <!--

@@ -63,6 +63,9 @@ var DimmingSystemClass = {
 			dmeSwitch.setBacklight(me._state);
 			magCompass.setBacklight(me._state);
 			audiopanel.setBacklight(me._state);
+			IFD.LH.setBacklight(me._state);
+			IFD.RH.setBacklight(me._state);
+			
 		};
 		eSystem.switch.Night.onStateChange = func(n){
 			me._state = n.getValue();

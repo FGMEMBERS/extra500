@@ -1156,7 +1156,16 @@
 		</binding>
 	</action>
 </animation>
-
+<animation>
+	<type>select</type>
+	<object-name>Baro.backlight</object-name>
+	<condition>
+		<equals>
+			<property>/extra500/instrumentation/IFD-LH/led/Baro</property>
+			<value>1</value>
+		</equals>
+	</condition>
+</animation>
 <!-- LeftKnob -->
 <animation>
         <type>pick</type>
@@ -1233,6 +1242,16 @@
 			</script>
 		</binding>
 	</action>
+</animation>
+<animation>
+	<type>select</type>
+	<object-name>LK.backlight</object-name>
+	<condition>
+		<equals>
+			<property>/extra500/instrumentation/IFD-LH/led/LK</property>
+			<value>1</value>
+		</equals>
+	</condition>
 </animation>
 
 <!-- RightKnob -->
@@ -1314,6 +1333,16 @@
 		</binding>
 		</action>
 </animation>
+<animation>
+	<type>select</type>
+	<object-name>RK.backlight</object-name>
+	<condition>
+		<equals>
+			<property>/extra500/instrumentation/IFD-LH/led/RK</property>
+			<value>1</value>
+		</equals>
+	</condition>
+</animation>		
 
 <!-- alte NON-Canvas-Technologie -->
 <!-- kuenstlicher horizont -->
