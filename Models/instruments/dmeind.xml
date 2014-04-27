@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: August 08 2013
 
-      Last change:      -
-      Date:             -
+      Last change:      Eric van den Berg
+      Date:             27.04.14
 
 -->
 
@@ -32,7 +32,11 @@
 	<type>material</type>
 	<object-name>nm.100</object-name>
 	<object-name>nm.010</object-name>
+	<object-name>point</object-name>
 	<object-name>nm.001</object-name>
+	<object-name>nm.102</object-name>
+	<object-name>nm.012</object-name>
+	<object-name>nm.003</object-name>
 	<object-name>nm</object-name>
 	<object-name>1</object-name>
 	<object-name>H</object-name>
@@ -93,9 +97,22 @@
 <!--NM-->
 
 <!--normal operation-->
+
+
 	<animation>
 		<type>textranslate</type>
 		<object-name>nm.001</object-name>
+		<property>/instrumentation/dme/indicated-distance-nm</property>
+		<factor>1</factor>
+		<step>0.1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>nm.010</object-name>
 		<property>/instrumentation/dme/indicated-distance-nm</property>
 		<factor>0.1</factor>
 		<step>1</step>
@@ -106,7 +123,30 @@
 	</animation>
 	<animation>
 		<type>textranslate</type>
-		<object-name>nm.010</object-name>
+		<object-name>nm.100</object-name>
+		<property>/instrumentation/dme/indicated-distance-nm</property>
+		<factor>0.01</factor>
+		<step>10</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>textranslate</type>
+		<object-name>nm.003</object-name>
+		<property>/instrumentation/dme/indicated-distance-nm</property>
+		<factor>0.1</factor>
+		<step>1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>nm.012</object-name>
 		<property>/instrumentation/dme/indicated-distance-nm</property>
 		<factor>0.01</factor>
 		<step>10</step>
@@ -117,7 +157,7 @@
 	</animation>
 	<animation>
 		<type>textranslate</type>
-		<object-name>nm.100</object-name>
+		<object-name>nm.102</object-name>
 		<property>/instrumentation/dme/indicated-distance-nm</property>
 		<factor>0.001</factor>
 		<step>100</step>
@@ -127,6 +167,26 @@
 		</axis>
 	</animation>
 
+	<animation>
+		<object-name>point</object-name>
+		<type>select</type>
+		<condition>
+			<and>
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>1</value>
+				</equals>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+				<less-than>
+					<property>/instrumentation/dme/indicated-distance-nm</property>
+					<value>99</value>
+				</less-than>
+			</and>
+		</condition>
+	</animation>
 
 	<animation>
 		<object-name>nm.001</object-name>
@@ -141,11 +201,39 @@
 					<property>extra500/instrumentation/dmeInd/state</property>
 					<value>0</value>
 				</greater-than>
+				<less-than>
+					<property>/instrumentation/dme/indicated-distance-nm</property>
+					<value>99</value>
+				</less-than>
 			</and>
 		</condition>
 	</animation>
 	<animation>
 		<object-name>nm.010</object-name>
+		<type>select</type>
+		<condition>
+			<and>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+				<!--greater-than-equals>
+					<property>/instrumentation/dme/indicated-distance-nm</property>
+					<value>10</value>
+				</greater-than-equals-->
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>1</value>
+				</equals>
+				<less-than>
+					<property>/instrumentation/dme/indicated-distance-nm</property>
+					<value>99</value>
+				</less-than>
+			</and>
+		</condition>
+	</animation>
+	<animation>
+		<object-name>nm.100</object-name>
 		<type>select</type>
 		<condition>
 			<and>
@@ -161,11 +249,60 @@
 					<property>/instrumentation/dme/in-range</property>
 					<value>1</value>
 				</equals>
+				<less-than>
+					<property>/instrumentation/dme/indicated-distance-nm</property>
+					<value>99</value>
+				</less-than>
+			</and>
+		</condition>
+	</animation>
+
+	<animation>
+		<object-name>nm.003</object-name>
+		<type>select</type>
+		<condition>
+			<and>
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>1</value>
+				</equals>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+				<greater-than>
+					<property>/instrumentation/dme/indicated-distance-nm</property>
+					<value>99</value>
+				</greater-than>
 			</and>
 		</condition>
 	</animation>
 	<animation>
-		<object-name>nm.100</object-name>
+		<object-name>nm.012</object-name>
+		<type>select</type>
+		<condition>
+			<and>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+				<greater-than-equals>
+					<property>/instrumentation/dme/indicated-distance-nm</property>
+					<value>10</value>
+				</greater-than-equals>
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>1</value>
+				</equals>
+				<greater-than>
+					<property>/instrumentation/dme/indicated-distance-nm</property>
+					<value>99</value>
+				</greater-than>
+			</and>
+		</condition>
+	</animation>
+	<animation>
+		<object-name>nm.102</object-name>
 		<type>select</type>
 		<condition>
 			<and>
@@ -181,6 +318,10 @@
 					<property>/instrumentation/dme/in-range</property>
 					<value>1</value>
 				</equals>
+				<greater-than>
+					<property>/instrumentation/dme/indicated-distance-nm</property>
+					<value>99</value>
+				</greater-than>
 			</and>
 		</condition>
 	</animation>
