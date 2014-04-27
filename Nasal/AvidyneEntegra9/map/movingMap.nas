@@ -155,7 +155,6 @@ var MovingMap = {
 		return m;
 	},
 	init : func(){
-		me.setListeners();
 		
 		me._layer.positioned	= PositionedLayer.new(me._map,me._name~"-Positioned");
 		me._layer.positioned.createCaches();
@@ -163,7 +162,9 @@ var MovingMap = {
 		me._layer.route.setListeners();
 		me._layer.tcas		= TcasLayer.new(me._map,me._name~"-TCAS");
 		me._layer.tcas.setModel(me._layer.tcas,tcasModel);
+		me.setListeners();
 		me._updateView();
+		
 	},
 	setListeners : func(instance=me) {
 		append(me._listeners, setlistener("/autopilot/settings/heading-bug-deg",func(n){me._onHdgBugChange(n)},1,0));	
@@ -191,6 +192,7 @@ var MovingMap = {
 		}else{
 			me._orientation = me._heading;
 		}
+		me._layer.positioned.setOrientation(me._orientation);
 		me._map.setHdg(me._orientation);
 	},
 	setVisible : func(visibility){

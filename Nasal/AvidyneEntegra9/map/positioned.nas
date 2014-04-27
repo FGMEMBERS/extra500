@@ -99,7 +99,7 @@ mapIconCache.registerIcon("Navaid_Height2");
 # var my_canvas = dlg.setCanvas(mapIconCache._canvas);
 
 
-
+var PIXEL_PER_FEET = 50/3000;
 
 var AirportItem = {
 	new : func(id){
@@ -109,25 +109,169 @@ var AirportItem = {
 			"group" : nil,
 			"label" : nil,
 			"image" : nil,
+			"layout": nil,
+			"runway": [],
 			
+		};
+		m._mapAirportIcon = {
+			"range"		: 0,
+			"approach"	: 0,
+			"size"		: 0,
+			"surface"	: 0,
+			"displayed"	: 0,
+			"icon"		: "",
 		};
 		return m;
 	},
 	create : func(group){
 		me._can.group = group.createChild("group", "airport_" ~ me._id);
-		
 		me._can.image = me._can.group.createChild("image", "airport-image_" ~ me._id)
 			.setFile(mapIconCache._canvas.getPath())
 			.setSourceRect(0,0,0,0,0);
-	
 		me._can.label = me._can.group.createChild("text", "airport-label_" ~ me._id)
 		.setDrawMode( canvas.Text.TEXT )
 		.setTranslation(0,37)
 		.setAlignment("center-bottom-baseline")
 		.setFont("LiberationFonts/LiberationSans-Regular.ttf")
 		.setFontSize(32);
+		
+		me._can.layout = group.createChild("group","airport_layout" ~ me._id);
 				
 		return me._can.group;
+	},
+	draw : func(apt,mapOptions){
+
+		me._mapAirportIcon.range = mapOptions.range > 30 ? 0 : 1;
+		me._mapAirportIcon.approach 	= 0;
+		me._mapAirportIcon.size		= 0;
+		me._mapAirportIcon.surface		= 0;
+		me._mapAirportIcon.displayed 	= 0;
+		
+		
+		if( apt.id == getprop("autopilot/route-manager/destination/airport") or apt.id == getprop("autopilot/route-manager/departure/airport")){
+					
+		}else{
+			var aptInfo = airportinfo(apt.id);
+					
+			me._can.layout.removeAllChildren();
+			me._can.runway = [];
+			foreach(var rwy; keys(aptInfo.runways)){
+				var runway = aptInfo.runways[rwy];
+				
+# 						print ("id : "~runway.id);
+# 						print ("lat : "~runway.lat);
+# 						print ("lon : "~runway.lon);
+# 						print ("heading : "~runway.heading);
+# 						print ("length : "~runway.length);
+# 						print ("width : "~runway.width);
+# 						print ("surface : "~runway.surface);
+# 						print ("threshold : "~runway.threshold);
+# 						print ("stopway : "~runway.stopway);
+# 						if (runway.reciprocal){
+# 							print ("reciprocal : "~runway.reciprocal);
+# 						}
+# 						if(runway.ils){
+# 							print ("ils : "~runway.ils);
+# 						}
+				
+				me._mapAirportIcon.approach 	= runway.ils_frequency_mhz ? 1 : me._mapAirportIcon.approach;
+				me._mapAirportIcon.size	 	= runway.length >= 3000 ? 1 : me._mapAirportIcon.size;
+				me._mapAirportIcon.surface	= MAP_RUNWAY_SURFACE[runway.surface] ? 1 : me._mapAirportIcon.surface;
+				me._mapAirportIcon.displayed 	= runway.length > mapOptions.runwayLength ? 1 : me._mapAirportIcon.displayed;
+						
+				
+				
+				
+				if (mapOptions.range <= 10){	# drawing real runways 
+					#print("AirportItem.draw() real runways " ~ runway.id);
+					var canRwy = {"heading":0,"can":nil};
+					canRwy.heading = runway.heading;
+					canRwy.can = me._can.layout.createChild("path", "airport-runway-" ~ me._id ~"-"~runway.id)
+						.setStrokeLineWidth(7)
+						.setColor(1.0,1.0,1.0)
+						.setColorFill(1.0, 1.0, 1.0);
+						
+					canRwy.can.setDataGeo(
+						[ 	
+							canvas.Path.VG_MOVE_TO,
+							canvas.Path.VG_LINE_TO,
+							canvas.Path.VG_CLOSE_PATH 
+						],
+						[
+							"N" ~ runway.lat, "E" ~ runway.lon,
+							"N" ~ runway.reciprocal.lat, "E" ~ runway.reciprocal.lon,
+						]
+						);
+					append(me._can.runway,canRwy);
+					
+				}elsif(mapOptions.range <= 30){		#draw icon runways
+					var canRwy = {"heading":0,"can":nil};
+					canRwy.heading = runway.heading;
+					canRwy.can = me._can.layout.createChild("path", "airport-runway-" ~ me._id ~"-"~runway.id)
+						.setStrokeLineWidth(7)
+						.setColor(1.0,1.0,1.0)
+						.setColorFill(1.0, 1.0, 1.0);
+					canRwy.can.setData(
+						[ 	
+							canvas.Path.VG_MOVE_TO,
+							canvas.Path.VG_LINE_TO,
+							canvas.Path.VG_CLOSE_PATH 
+						],
+						[
+							0,-20,
+							0,20
+						]
+						);
+					canRwy.can.setGeoPosition(apt.lat, apt.lon);
+					canRwy.can.setRotation((canRwy.heading - mapOptions.orientation )* global.CONST.DEG2RAD);
+					append(me._can.runway,canRwy);
+				}
+					
+			}
+			
+			me._mapAirportIcon.icon = "Airport_"~me._mapAirportIcon.range~me._mapAirportIcon.approach~me._mapAirportIcon.size~me._mapAirportIcon.surface;
+					
+			
+			if (me._mapAirportIcon.displayed){
+				me._can.label.setText(apt.id);
+				me._can.group.setGeoPosition(apt.lat, apt.lon);
+				if(mapOptions.range <= 10){
+					me._can.image.setVisible(0);
+					me._can.layout.setVisible(1);
+				}elsif(mapOptions.range <= 30){
+					mapIconCache.boundIconToImage(me._mapAirportIcon.icon,me._can.image);
+					me._can.image.setVisible(1);
+					me._can.layout.setVisible(1);
+				}else{
+					mapIconCache.boundIconToImage(me._mapAirportIcon.icon,me._can.image);
+					me._can.layout.setVisible(0);
+					me._can.image.setVisible(1);
+					
+					
+				}
+				me._can.group.setVisible(1);
+				
+				
+			}
+				
+			
+			
+		}
+			
+		
+	},
+	update : func(mapOptions){
+			
+		if(mapOptions.range <= 10){
+			
+		}elsif(mapOptions.range <= 30){
+			forindex(var i ; me._can.runway){
+				me._can.runway[i].can.setRotation((me._can.runway[i].heading - mapOptions.orientation )* global.CONST.DEG2RAD);
+			}
+		}else{
+							
+		}
+			
 	},
 	setData : func(apt,data=0){
 		me._can.label.setText(apt.id);
@@ -137,6 +281,7 @@ var AirportItem = {
 	},
 	setVisible : func(visibility){
 		me._can.group.setVisible(visibility);
+					
 	},
 	getGroup : func(){
 		return me._can.group;
@@ -209,14 +354,17 @@ var PositionedLayer = {
 			"airport" : {"data":[],"index":0,"max":100},
 			"vor"	  : {"data":[],"index":0,"max":100},
 		};
-		
 		m._mapOptions = {
-			land 		: 3,
-			nav 		: 3,
+			declutterLand 	: 3,
+			declutterNAV 	: 3,
 			lightning 	: 0,
 			reports		: 0,
 			overlay		: 0,
+			range		: 30,
+			runwayLength    : -1,
+			orientation	: 0,
 		};
+
 		
 		m._range = 100;
 		m._results = nil;
@@ -225,24 +373,27 @@ var PositionedLayer = {
 		return m;
 	},
 	createCaches : func (){
-		positioned.findWithinRange(600,"airport");
-		for (var i = me._cache.airport.index ; i < me._cache.airport.max ; i +=1){
-			var item = AirportItem.new(me._cache.airport.index);
-			item.create(me._can.airport);
-			item.setVisible(0);
-			append(me._cache.airport.data,item);
-		}
+# 		positioned.findWithinRange(600,"airport");
+# 		for (var i = me._cache.airport.index ; i < me._cache.airport.max ; i +=1){
+# 			var item = AirportItem.new(me._cache.airport.index);
+# 			item.create(me._can.airport);
+# 			item.setVisible(0);
+# 			append(me._cache.airport.data,item);
+# 			me._cache.airport.index += 1;
+# 		}
 		
-		positioned.findWithinRange(150,"vor");
-		for (var i = me._cache.vor.index ; i < me._cache.vor.max ; i +=1){
-			var item = VorItem.new(me._cache.vor.index);
-			item.create(me._can.vor);
-			item.setVisible(0);
-			append(me._cache.vor.data,item);
-		}
+# 		positioned.findWithinRange(150,"vor");
+# 		for (var i = me._cache.vor.index ; i < me._cache.vor.max ; i +=1){
+# 			var item = VorItem.new(me._cache.vor.index);
+# 			item.create(me._can.vor);
+# 			item.setVisible(0);
+# 			append(me._cache.vor.data,item);
+# 			me._cache.vor.index += 1;
+# 		}
 	},
 	setRange : func(range=100){
 		me._range = range;
+		me._mapOptions.range = me._range;
 		me._timer.restart(me._range/(200/3600));
 		me.update();
 	},
@@ -250,12 +401,19 @@ var PositionedLayer = {
 		me.loadAirport();
 		me.loadVor();
 	},
-	
+	setOrientation : func(value){
+		me._mapOptions.orientation = value;
+		for (var i = 0 ; i < me._cache.airport.index ; i +=1){
+			item = me._cache.airport.data[i];
+			item.update(me._mapOptions);
+		}
+	},
 	setLand : func(value){
 # 		print("PositionedLayer.setLand("~value~")");
 	},
 	setNav : func(value){
-		me._mapOptions.nav = value; me.update();
+		me._mapOptions.declutterNAV = value; 
+		me.update();
 	},
 	setLightning : func(value){
 # 		print("PositionedLayer.setLightning("~value~")");
@@ -271,111 +429,37 @@ var PositionedLayer = {
 		me._cache.airport.index = 0;
 		var results = positioned.findWithinRange(me._range*2.5,"airport");
 		var item = nil;
-		var runwayLength 	= 0;
 		
-		if(me._mapOptions.nav >= 3){
-			runwayLength = MAP_RUNWAY_AT_RANGE[me._range];
-		}elsif (me._mapOptions.nav >= 2){
-			runwayLength = 3000;
+		if(me._mapOptions.declutterNAV >= 3){
+			me._mapOptions.runwayLength = MAP_RUNWAY_AT_RANGE[me._range];
+		}elsif (me._mapOptions.declutterNAV >= 2){
+			me._mapOptions.runwayLength = 3000;
 		}else{
-			runwayLength = -1;
+			me._mapOptions.runwayLength = -1;
 		}
 		
-		var airportData = {
-			"range"		: me._range > 30 ? 0 : 1,
-			"approach"	:0,
-			"size"		:0,
-			"surface"	:0,
-			"displayed"	:0,
-			"icon"		:"",
-		};
-		
-		if(runwayLength >= 0){
+				
+		if(me._mapOptions.runwayLength >= 0){
 			foreach(var apt; results) {
-				
-				airportData.approach 	= 0;
-				airportData.size	= 0;
-				airportData.surface	= 0;
-				airportData.displayed 	= 0;
-				
-				#debug.dump(apt);
 				
 				if (me._cache.airport.index >= me._cache.airport.max ){
 					break;
 				}
-				
-				var displayed = 0;
-				var iconName 		= "";
-				 
-				
-				if( apt.id == getprop("autopilot/route-manager/destination/airport") or apt.id == getprop("autopilot/route-manager/departure/airport")){
-					
+								
+				if (size(me._cache.airport.data) > me._cache.airport.index){
+					item = me._cache.airport.data[me._cache.airport.index];
 				}else{
-					
-					
-					var aptInfo = airportinfo(apt.id);
-					
-					foreach(var rwy; keys(aptInfo.runways)){
-						var runway = aptInfo.runways[rwy];
-# 						print ("id : "~runway.id);
-# 						print ("lat : "~runway.lat);
-# 						print ("lon : "~runway.lon);
-# 						print ("heading : "~runway.heading);
-# 						print ("length : "~runway.length);
-# 						print ("width : "~runway.width);
-# 						print ("surface : "~runway.surface);
-# 						print ("threshold : "~runway.threshold);
-# 						print ("stopway : "~runway.stopway);
-# 						if (runway.reciprocal){
-# 							print ("reciprocal : "~runway.reciprocal);
-# 						}
-# 						if(runway.ils){
-# 							print ("ils : "~runway.ils);
-# 						}
-						
-						airportData.approach 	= runway.ils_frequency_mhz ? 1 : airportData.approach;
-						airportData.size	 	= runway.length >= 3000 ? 1 : airportData.size;
-						airportData.surface	 	= MAP_RUNWAY_SURFACE[runway.surface] ? 1 : airportData.surface;
-						airportData.displayed 	= runway.length > runwayLength ? 1 : airportData.displayed;
-						
-# 						if (runway.length > runwayLength){
-# 							airportData.displayed = 1;
-# 							iconlength = runway.length >= 3000 ? 1 : 0; 
-# 							
-# 							if(runway.ils_frequency_mhz){
-# 								#print ("ils_frequency_mhz : "~runway.ils_frequency_mhz);
-# 								iconName ~= "Airport_"~ iconRange ~ "_IAP_" ~iconType~ MAP_RUNWAY_SURFACE[runway.surface];
-# 							}else{
-# 								iconName ~= "Airport_"~ iconRange ~ "_VAP_" ~iconType~ MAP_RUNWAY_SURFACE[runway.surface];
-# 							}
-# 							break;
-# 						}
-						
-						
-					}
-					
-					
-					airportData.icon = "Airport_"~airportData.range~airportData.approach~airportData.size~airportData.surface;
-					
+					item = AirportItem.new(me._cache.airport.index);
+					item.create(me._can.airport);
+					append(me._cache.airport.data,item);
 				}
 				
-				if (airportData.displayed){
-# 					print (apt.id ~ " "~ airportData.icon);
-					if (size(me._cache.airport.data) > me._cache.airport.index){
-						item = me._cache.airport.data[me._cache.airport.index];
-						item.setData(apt,airportData);
-					}else{
-						item = AirportItem.new(me._cache.airport.index);
-						item.create(me._can.airport);
-						item.setData(apt,airportData);
-						append(me._cache.airport.data,item);
-					}
-					item.setVisible(1);
-					me._cache.airport.index += 1;
-					
-				}
+				item.draw(apt,me._mapOptions);
+									
+				me._cache.airport.index += 1;
 			}
 		}
+		
 		for (var i = me._cache.airport.index ; i < size(me._cache.airport.data) ; i +=1){
 			item = me._cache.airport.data[i];
 			item.setVisible(0);
@@ -384,7 +468,7 @@ var PositionedLayer = {
 	},
 	loadVor : func(){
 		me._cache.vor.index = 0;
-		if(me._mapOptions.nav >= 1 and me._range <= 80){
+		if(me._mapOptions.declutterNAV >= 1 and me._range <= 80){
 			var range = me._range*2.0 <= 100 ? me._range*2.5 : 100 ;
 			var results = positioned.findWithinRange(range,"vor");
 			var item = nil;
