@@ -79,9 +79,6 @@
 		<object-name>RK.backlight</object-name>
 		<object-name>LK.backlight</object-name>
 		<object-name>Baro.backlight</object-name>
-		<object-name>Baro.backlight.BARO</object-name>
-		<object-name>Dim.backlight.DIM</object-name>
-		<object-name>Dim.backlight.BRT</object-name>
         <emission>
             <red>0.7</red>
             <green>0.7</green>
@@ -126,6 +123,24 @@
 		</binding>
       </action>
 </animation>
+<animation>
+        <type>material</type>
+		<object-name>Dim.backlight.DIM</object-name>
+		<object-name>Dim.backlight.BRT</object-name>
+        <emission>
+            <red>0.7</red>
+            <green>0.7</green>
+            <blue>0.7</blue>
+            <factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+        </emission>
+	<condition>
+		<equals>
+			<property>/extra500/instrumentation/IFD-RH/led/Baro</property>
+			<value>1</value>
+		</equals>
+	</condition>
+</animation>
+
 
 <!-- buttons L1-L6 -->
 <animation>
@@ -1165,7 +1180,22 @@
 		</equals>
 	</condition>
 </animation>
-
+<animation>
+        <type>material</type>
+		<object-name>Baro.backlight.BARO</object-name>
+        <emission>
+            <red>0.7</red>
+            <green>0.7</green>
+            <blue>0.7</blue>
+            <factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+        </emission>
+	<condition>
+		<equals>
+			<property>/extra500/instrumentation/IFD-RH/led/Baro</property>
+			<value>1</value>
+		</equals>
+	</condition>
+</animation>
 <!-- LeftKnob -->
 <animation>
         <type>pick</type>

@@ -69,6 +69,8 @@ var DimmingSystemClass = {
 		};
 		eSystem.switch.Night.onStateChange = func(n){
 			me._state = n.getValue();
+			IFD.LH.setBacklightMode(me._state);
+			IFD.RH.setBacklightMode(me._state);
 			m.checkDimming();
 		};
 		eSystem.switch.DimmingKeypad.onStateChange = func(n){

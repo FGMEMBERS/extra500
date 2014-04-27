@@ -130,6 +130,11 @@ var AvidyneIFD = {
 		m.name = name;
 		m.keys = {};
 		m.nBacklight  	= m._nRoot.initNode("Backlight/state",1.0,"DOUBLE");
+		m.nBacklightMode= m._nRoot.initNode("Backlight/mode",0,"BOOL");
+		m._backlight	=0;
+		m._backlightMode=0;
+		
+		
 		m._nState  	= m._nRoot.initNode("state",0,"BOOL");
 		m._brightness	= 1;
 		
@@ -377,9 +382,15 @@ var AvidyneIFD = {
 		}
 	},
 	setBacklight : func(value){
+		me._backlight = (value==1);
 		me.nLedLK.setValue(value);	
 		me.nLedRK.setValue(value);
 		me.nLedBaro.setValue(value);
+		me.nBacklightMode.setValue(me._backlightMode and me._backlight);
+	},
+	setBacklightMode : func(value){
+		me._backlightMode = (value==1);
+		me.nBacklightMode.setValue(me._backlightMode and me._backlight);	
 	},
 	clearLeds : func(){
 		me.nLedL1.setValue(0);

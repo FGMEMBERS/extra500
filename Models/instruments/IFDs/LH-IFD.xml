@@ -42,6 +42,83 @@
 
 <animation>
         <type>material</type>
+		<object-name>RK.backlight</object-name>
+		<object-name>LK.backlight</object-name>
+		<object-name>Baro.backlight</object-name>
+        <emission>
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+        </emission>
+	<condition>
+		<equals>
+			<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+			<value>0</value>
+		</equals>
+	</condition>
+</animation>
+
+<animation>
+        <type>material</type>
+		<object-name>xL1white</object-name>
+		<object-name>xL2white</object-name>
+		<object-name>xL3white</object-name>
+		<object-name>xL4white</object-name>
+		<object-name>xL5white</object-name>
+		<object-name>xL6white</object-name>
+		<object-name>xR1white</object-name>
+		<object-name>xR2white</object-name>
+		<object-name>xR3white</object-name>
+		<object-name>xR4white</object-name>
+		<object-name>xR5white</object-name>
+		<object-name>xR6white</object-name>
+		<object-name>xPFDwhite</object-name>
+		<object-name>xFMSwhite</object-name>
+		<object-name>xMAPwhite</object-name>
+		<object-name>xSYSwhite</object-name>
+		<object-name>xCHKLwhite</object-name>
+        <emission>
+            <red>0.7</red>
+            <green>0.7</green>
+            <blue>0.7</blue>
+        </emission>
+	<condition>
+		<equals>
+			<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+			<value>0</value>
+		</equals>
+	</condition>
+</animation>
+
+<animation>
+        <type>material</type>
+		<object-name>xL1green</object-name>
+		<object-name>xL2green</object-name>
+		<object-name>xL3green</object-name>
+		<object-name>xL4green</object-name>
+		<object-name>xL5green</object-name>
+		<object-name>xL6green</object-name>
+		<object-name>xR1green</object-name>
+		<object-name>xR2green</object-name>
+		<object-name>xR3green</object-name>
+		<object-name>xR4green</object-name>
+		<object-name>xR5green</object-name>
+		<object-name>xR6green</object-name>
+		<object-name>xPFDgreen</object-name>
+		<object-name>xFMSgreen</object-name>
+		<object-name>xMAPgreen</object-name>
+		<object-name>xSYSgreen</object-name>
+		<object-name>xCHKLgreen</object-name>
+        <emission>
+            <red>0.7</red>
+            <green>0.7</green>
+            <blue>0.7</blue>
+        </emission>
+</animation>
+
+
+<animation>
+        <type>material</type>
 <!--		<object-name>xL1white</object-name>
 		<object-name>xL2white</object-name>
 		<object-name>xL3white</object-name>
@@ -53,7 +130,7 @@
 		<object-name>xR3white</object-name>
 		<object-name>xR4white</object-name>
 		<object-name>xR5white</object-name>
-		<object-name>xR6white</object-name> -->
+		<object-name>xR6white</object-name>
 		<object-name>xPFDwhite</object-name>
 		<object-name>xFMSwhite</object-name>
 		<object-name>xMAPwhite</object-name>
@@ -75,21 +152,20 @@
 		<object-name>xFMSgreen</object-name>
 		<object-name>xMAPgreen</object-name>
 		<object-name>xSYSgreen</object-name>
-		<object-name>xCHKLgreen</object-name>
+		<object-name>xCHKLgreen</object-name>-->
 		<object-name>RK.backlight</object-name>
 		<object-name>LK.backlight</object-name>
 		<object-name>Baro.backlight</object-name>
-		<object-name>Baro.backlight.BARO</object-name>
-		<object-name>Dim.backlight.DIM</object-name>
-		<object-name>Dim.backlight.BRT</object-name>
-		
         <emission>
             <red>0.7</red>
             <green>0.7</green>
             <blue>0.7</blue>
             <factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
         </emission>
+	
 </animation>
+
+
 
 <!-- dimming button -->
 <animation>
@@ -126,6 +202,23 @@
 			</script>
 		</binding>
       </action>
+</animation>
+<animation>
+        <type>material</type>
+		<object-name>Dim.backlight.DIM</object-name>
+		<object-name>Dim.backlight.BRT</object-name>
+        <emission>
+            <red>0.7</red>
+            <green>0.7</green>
+            <blue>0.7</blue>
+            <factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+        </emission>
+	<condition>
+		<equals>
+			<property>/extra500/instrumentation/IFD-LH/led/Baro</property>
+			<value>1</value>
+		</equals>
+	</condition>
 </animation>
 
 <!-- buttons L1-L6 -->
@@ -568,45 +661,137 @@
 		<type>select</type>
 		<object-name>xPFDgreen</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/PageSelected</property>
-		    <value>PFD</value>
-		  </equals>
+			<and>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+					<value>PFD</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>0</value>
+				</equals>
+			</and>
 		</condition>
 	</animation>
 	<animation>
 		<type>select</type>
 		<object-name>xPFDwhite</object-name>
 		<condition>
-		  <not>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/PageSelected</property>
-		    <value>PFD</value>
-		  </equals>
-		</not>
+			<or>
+				<not>
+					<equals>
+						<property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+						<value>PFD</value>
+					</equals>
+				</not>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xPFDwhite</object-name>
+		<emission>
+			<red>0.7</red>
+			<green>0.7</green>
+			<blue>0.7</blue>
+			<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+				<value>PFD</value>
+			</equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xPFDwhite</object-name>
+		<emission>
+			<red>0.1</red>
+			<green>0.1</green>
+			<blue>0.1</blue>
+		</emission>
+		
+		<condition>
+			<not>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+					<value>PFD</value>
+				</equals>
+			</not>
 		</condition>
 	</animation>
 	
-	<animation>
+<animation>
 		<type>select</type>
 		<object-name>xFMSgreen</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/PageSelected</property>
-		    <value>FMS</value>
-		  </equals>
+			<and>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+					<value>FMS</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>0</value>
+				</equals>
+			</and>
 		</condition>
 	</animation>
 	<animation>
 		<type>select</type>
 		<object-name>xFMSwhite</object-name>
 		<condition>
-		  <not>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/PageSelected</property>
-		    <value>FMS</value>
-		  </equals>
-		</not>
+			<or>
+				<not>
+					<equals>
+						<property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+						<value>FMS</value>
+					</equals>
+				</not>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xFMSwhite</object-name>
+		<emission>
+			<red>0.7</red>
+			<green>0.7</green>
+			<blue>0.7</blue>
+			<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+				<value>FMS</value>
+			</equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xFMSwhite</object-name>
+		<emission>
+			<red>0.1</red>
+			<green>0.1</green>
+			<blue>0.1</blue>
+		</emission>
+		
+		<condition>
+			<not>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+					<value>FMS</value>
+				</equals>
+			</not>
 		</condition>
 	</animation>
 
@@ -614,22 +799,68 @@
 		<type>select</type>
 		<object-name>xMAPgreen</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/PageSelected</property>
-		    <value>MAP</value>
-		  </equals>
+			<and>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+					<value>MAP</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>0</value>
+				</equals>
+			</and>
 		</condition>
 	</animation>
 	<animation>
 		<type>select</type>
 		<object-name>xMAPwhite</object-name>
 		<condition>
-		  <not>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/PageSelected</property>
-		    <value>MAP</value>
-		  </equals>
-		</not>
+			<or>
+				<not>
+					<equals>
+						<property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+						<value>MAP</value>
+					</equals>
+				</not>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xMAPwhite</object-name>
+		<emission>
+			<red>0.7</red>
+			<green>0.7</green>
+			<blue>0.7</blue>
+			<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+				<value>MAP</value>
+			</equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xMAPwhite</object-name>
+		<emission>
+			<red>0.1</red>
+			<green>0.1</green>
+			<blue>0.1</blue>
+		</emission>
+		
+		<condition>
+			<not>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+					<value>MAP</value>
+				</equals>
+			</not>
 		</condition>
 	</animation>
 	
@@ -637,22 +868,68 @@
 		<type>select</type>
 		<object-name>xSYSgreen</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/PageSelected</property>
-		    <value>SYS</value>
-		  </equals>
+			<and>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+					<value>SYS</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>0</value>
+				</equals>
+			</and>
 		</condition>
 	</animation>
 	<animation>
 		<type>select</type>
 		<object-name>xSYSwhite</object-name>
 		<condition>
-		  <not>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/PageSelected</property>
-		    <value>SYS</value>
-		  </equals>
-		</not>
+			<or>
+				<not>
+					<equals>
+						<property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+						<value>SYS</value>
+					</equals>
+				</not>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xSYSwhite</object-name>
+		<emission>
+			<red>0.7</red>
+			<green>0.7</green>
+			<blue>0.7</blue>
+			<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+				<value>SYS</value>
+			</equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xSYSwhite</object-name>
+		<emission>
+			<red>0.1</red>
+			<green>0.1</green>
+			<blue>0.1</blue>
+		</emission>
+		
+		<condition>
+			<not>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+					<value>SYS</value>
+				</equals>
+			</not>
 		</condition>
 	</animation>
 	
@@ -660,22 +937,68 @@
 		<type>select</type>
 		<object-name>xCHKLgreen</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/PageSelected</property>
-		    <value>CHKL</value>
-		  </equals>
+			<and>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+					<value>CHKL</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>0</value>
+				</equals>
+			</and>
 		</condition>
 	</animation>
 	<animation>
 		<type>select</type>
 		<object-name>xCHKLwhite</object-name>
 		<condition>
-		  <not>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/PageSelected</property>
-		    <value>CHKL</value>
-		  </equals>
-		</not>
+			<or>
+				<not>
+					<equals>
+						<property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+						<value>CHKL</value>
+					</equals>
+				</not>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xCHKLwhite</object-name>
+		<emission>
+			<red>0.7</red>
+			<green>0.7</green>
+			<blue>0.7</blue>
+			<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+				<value>CHKL</value>
+			</equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xCHKLwhite</object-name>
+		<emission>
+			<red>0.1</red>
+			<green>0.1</green>
+			<blue>0.1</blue>
+		</emission>
+		
+		<condition>
+			<not>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/PageSelected</property>
+					<value>CHKL</value>
+				</equals>
+			</not>
 		</condition>
 	</animation>
 
@@ -685,62 +1008,191 @@
 		<type>select</type>
 		<object-name>xL1green</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/led/L1</property>
-		    <value>1</value>
-		  </equals>
+			<and>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/led/L1</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>0</value>
+				</equals>
+			</and>
 		</condition>
 	</animation>
 	<animation>
 		<type>select</type>
 		<object-name>xL1white</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/led/L1</property>
-		    <value>0</value>
-		  </equals>
+			<or>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/led/L1</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xL1white</object-name>
+		<emission>
+			<red>0.7</red>
+			<green>0.7</green>
+			<blue>0.7</blue>
+			<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/led/L1</property>
+				<value>1</value>
+			</equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xL1white</object-name>
+		<emission>
+			<red>0.1</red>
+			<green>0.1</green>
+			<blue>0.1</blue>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/led/L1</property>
+				<value>0</value>
+			</equals>
 		</condition>
 	</animation>	
-
+	
 	<animation>
 		<type>select</type>
 		<object-name>xL2green</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/led/L2</property>
-		    <value>1</value>
-		  </equals>
+			<and>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/led/L2</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>0</value>
+				</equals>
+			</and>
 		</condition>
 	</animation>
 	<animation>
 		<type>select</type>
 		<object-name>xL2white</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/led/L2</property>
-		    <value>0</value>
-		  </equals>
+			<or>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/led/L2</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xL2white</object-name>
+		<emission>
+			<red>0.7</red>
+			<green>0.7</green>
+			<blue>0.7</blue>
+			<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/led/L2</property>
+				<value>1</value>
+			</equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xL2white</object-name>
+		<emission>
+			<red>0.1</red>
+			<green>0.1</green>
+			<blue>0.1</blue>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/led/L2</property>
+				<value>0</value>
+			</equals>
 		</condition>
 	</animation>	
 
-	<animation>
+<animation>
 		<type>select</type>
 		<object-name>xL3green</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/led/L3</property>
-		    <value>1</value>
-		  </equals>
+			<and>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/led/L3</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>0</value>
+				</equals>
+			</and>
 		</condition>
 	</animation>
 	<animation>
 		<type>select</type>
 		<object-name>xL3white</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/led/L3</property>
-		    <value>0</value>
-		  </equals>
+			<or>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/led/L3</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xL3white</object-name>
+		<emission>
+			<red>0.7</red>
+			<green>0.7</green>
+			<blue>0.7</blue>
+			<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/led/L3</property>
+				<value>1</value>
+			</equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xL3white</object-name>
+		<emission>
+			<red>0.1</red>
+			<green>0.1</green>
+			<blue>0.1</blue>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/led/L3</property>
+				<value>0</value>
+			</equals>
 		</condition>
 	</animation>	
 	
@@ -748,20 +1200,63 @@
 		<type>select</type>
 		<object-name>xL4green</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/led/L4</property>
-		    <value>1</value>
-		  </equals>
+			<and>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/led/L4</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>0</value>
+				</equals>
+			</and>
 		</condition>
 	</animation>
 	<animation>
 		<type>select</type>
 		<object-name>xL4white</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/led/L4</property>
-		    <value>0</value>
-		  </equals>
+			<or>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/led/L4</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xL4white</object-name>
+		<emission>
+			<red>0.7</red>
+			<green>0.7</green>
+			<blue>0.7</blue>
+			<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/led/L4</property>
+				<value>1</value>
+			</equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xL4white</object-name>
+		<emission>
+			<red>0.1</red>
+			<green>0.1</green>
+			<blue>0.1</blue>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/led/L4</property>
+				<value>0</value>
+			</equals>
 		</condition>
 	</animation>	
 	
@@ -769,20 +1264,63 @@
 		<type>select</type>
 		<object-name>xL5green</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/led/L5</property>
-		    <value>1</value>
-		  </equals>
+			<and>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/led/L5</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>0</value>
+				</equals>
+			</and>
 		</condition>
 	</animation>
 	<animation>
 		<type>select</type>
 		<object-name>xL5white</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/led/L5</property>
-		    <value>0</value>
-		  </equals>
+			<or>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/led/L5</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xL5white</object-name>
+		<emission>
+			<red>0.7</red>
+			<green>0.7</green>
+			<blue>0.7</blue>
+			<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/led/L5</property>
+				<value>1</value>
+			</equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xL5white</object-name>
+		<emission>
+			<red>0.1</red>
+			<green>0.1</green>
+			<blue>0.1</blue>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/led/L5</property>
+				<value>0</value>
+			</equals>
 		</condition>
 	</animation>	
 	
@@ -790,20 +1328,63 @@
 		<type>select</type>
 		<object-name>xL6green</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/led/L6</property>
-		    <value>1</value>
-		  </equals>
+			<and>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/led/L6</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>0</value>
+				</equals>
+			</and>
 		</condition>
 	</animation>
 	<animation>
 		<type>select</type>
 		<object-name>xL6white</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/led/L6</property>
-		    <value>0</value>
-		  </equals>
+			<or>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/led/L6</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xL6white</object-name>
+		<emission>
+			<red>0.7</red>
+			<green>0.7</green>
+			<blue>0.7</blue>
+			<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/led/L6</property>
+				<value>1</value>
+			</equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xL6white</object-name>
+		<emission>
+			<red>0.1</red>
+			<green>0.1</green>
+			<blue>0.1</blue>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/led/L6</property>
+				<value>0</value>
+			</equals>
 		</condition>
 	</animation>	
 	
@@ -812,20 +1393,63 @@
 		<type>select</type>
 		<object-name>xR1green</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/led/R1</property>
-		    <value>1</value>
-		  </equals>
+			<and>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/led/R1</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>0</value>
+				</equals>
+			</and>
 		</condition>
 	</animation>
 	<animation>
 		<type>select</type>
 		<object-name>xR1white</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/led/R1</property>
-		    <value>0</value>
-		  </equals>
+			<or>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/led/R1</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xR1white</object-name>
+		<emission>
+			<red>0.7</red>
+			<green>0.7</green>
+			<blue>0.7</blue>
+			<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/led/R1</property>
+				<value>1</value>
+			</equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xR1white</object-name>
+		<emission>
+			<red>0.1</red>
+			<green>0.1</green>
+			<blue>0.1</blue>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/led/R1</property>
+				<value>0</value>
+			</equals>
 		</condition>
 	</animation>
 
@@ -833,20 +1457,63 @@
 		<type>select</type>
 		<object-name>xR2green</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/led/R2</property>
-		    <value>1</value>
-		  </equals>
+			<and>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/led/R2</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>0</value>
+				</equals>
+			</and>
 		</condition>
 	</animation>
 	<animation>
 		<type>select</type>
 		<object-name>xR2white</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/led/R2</property>
-		    <value>0</value>
-		  </equals>
+			<or>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/led/R2</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xR2white</object-name>
+		<emission>
+			<red>0.7</red>
+			<green>0.7</green>
+			<blue>0.7</blue>
+			<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/led/R2</property>
+				<value>1</value>
+			</equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xR2white</object-name>
+		<emission>
+			<red>0.1</red>
+			<green>0.1</green>
+			<blue>0.1</blue>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/led/R2</property>
+				<value>0</value>
+			</equals>
 		</condition>
 	</animation>
 
@@ -854,20 +1521,63 @@
 		<type>select</type>
 		<object-name>xR3green</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/led/R3</property>
-		    <value>1</value>
-		  </equals>
+			<and>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/led/R3</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>0</value>
+				</equals>
+			</and>
 		</condition>
 	</animation>
 	<animation>
 		<type>select</type>
 		<object-name>xR3white</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/led/R3</property>
-		    <value>0</value>
-		  </equals>
+			<or>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/led/R3</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xR3white</object-name>
+		<emission>
+			<red>0.7</red>
+			<green>0.7</green>
+			<blue>0.7</blue>
+			<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/led/R3</property>
+				<value>1</value>
+			</equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xR3white</object-name>
+		<emission>
+			<red>0.1</red>
+			<green>0.1</green>
+			<blue>0.1</blue>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/led/R3</property>
+				<value>0</value>
+			</equals>
 		</condition>
 	</animation>
 
@@ -875,20 +1585,63 @@
 		<type>select</type>
 		<object-name>xR4green</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/led/R4</property>
-		    <value>1</value>
-		  </equals>
+			<and>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/led/R4</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>0</value>
+				</equals>
+			</and>
 		</condition>
 	</animation>
 	<animation>
 		<type>select</type>
 		<object-name>xR4white</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/led/R4</property>
-		    <value>0</value>
-		  </equals>
+			<or>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/led/R4</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xR4white</object-name>
+		<emission>
+			<red>0.7</red>
+			<green>0.7</green>
+			<blue>0.7</blue>
+			<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/led/R4</property>
+				<value>1</value>
+			</equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xR4white</object-name>
+		<emission>
+			<red>0.1</red>
+			<green>0.1</green>
+			<blue>0.1</blue>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/led/R4</property>
+				<value>0</value>
+			</equals>
 		</condition>
 	</animation>
 
@@ -896,20 +1649,63 @@
 		<type>select</type>
 		<object-name>xR5green</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/led/R5</property>
-		    <value>1</value>
-		  </equals>
+			<and>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/led/R5</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>0</value>
+				</equals>
+			</and>
 		</condition>
 	</animation>
 	<animation>
 		<type>select</type>
 		<object-name>xR5white</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/led/R5</property>
-		    <value>0</value>
-		  </equals>
+			<or>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/led/R5</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xR5white</object-name>
+		<emission>
+			<red>0.7</red>
+			<green>0.7</green>
+			<blue>0.7</blue>
+			<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/led/R5</property>
+				<value>1</value>
+			</equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xR5white</object-name>
+		<emission>
+			<red>0.1</red>
+			<green>0.1</green>
+			<blue>0.1</blue>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/led/R5</property>
+				<value>0</value>
+			</equals>
 		</condition>
 	</animation>
 
@@ -917,20 +1713,63 @@
 		<type>select</type>
 		<object-name>xR6green</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/led/R6</property>
-		    <value>1</value>
-		  </equals>
+			<and>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/led/R6</property>
+					<value>1</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>0</value>
+				</equals>
+			</and>
 		</condition>
 	</animation>
 	<animation>
 		<type>select</type>
 		<object-name>xR6white</object-name>
 		<condition>
-		  <equals>
-		    <property>/extra500/instrumentation/IFD-LH/led/R6</property>
-		    <value>0</value>
-		  </equals>
+			<or>
+				<equals>
+					<property>/extra500/instrumentation/IFD-LH/led/R6</property>
+					<value>0</value>
+				</equals>
+				<equals>
+					<property>extra500/instrumentation/IFD-LH/Backlight/mode</property>
+					<value>1</value>
+				</equals>
+			</or>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xR6white</object-name>
+		<emission>
+			<red>0.7</red>
+			<green>0.7</green>
+			<blue>0.7</blue>
+			<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/led/R6</property>
+				<value>1</value>
+			</equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>material</type>
+		<object-name>xR6white</object-name>
+		<emission>
+			<red>0.1</red>
+			<green>0.1</green>
+			<blue>0.1</blue>
+		</emission>
+		<condition>
+			<equals>
+				<property>/extra500/instrumentation/IFD-LH/led/R6</property>
+				<value>0</value>
+			</equals>
 		</condition>
 	</animation>
 
@@ -1159,6 +1998,22 @@
 <animation>
 	<type>select</type>
 	<object-name>Baro.backlight</object-name>
+	<condition>
+		<equals>
+			<property>/extra500/instrumentation/IFD-LH/led/Baro</property>
+			<value>1</value>
+		</equals>
+	</condition>
+</animation>
+<animation>
+        <type>material</type>
+		<object-name>Baro.backlight.BARO</object-name>
+        <emission>
+            <red>0.7</red>
+            <green>0.7</green>
+            <blue>0.7</blue>
+            <factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+        </emission>
 	<condition>
 		<equals>
 			<property>/extra500/instrumentation/IFD-LH/led/Baro</property>
