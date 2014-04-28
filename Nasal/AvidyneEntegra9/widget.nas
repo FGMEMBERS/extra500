@@ -201,7 +201,7 @@ var HeadlineWidget = {
 			me._can.ETA.setText("--:--");
 		}
 		me._can.Time.setText(getprop("/sim/time/gmt-string"));
-		me._can.Fuel.setText(sprintf("%.0f",getprop("/autopilot/route-manager/fuelAtDestinationGalUs")));
+		me._can.Fuel.setText(sprintf("%.0f",getprop("/autopilot/route-manager/fuelAt_GalUs")));
 	},
 };
 
@@ -389,7 +389,7 @@ var PlusDataWidget = {
 		me._can.ETA.setText(getprop("/autopilot/route-manager/wp/eta"));
 		me._can.Distance.setText(sprintf("%.1f",getprop("/autopilot/route-manager/wp/dist")));
 		me._can.Course.setText(sprintf("%03.0f",getprop("/autopilot/route-manager/wp/bearing-deg")));
-		me._can.Fuel.setText(sprintf("%.0f",getprop("/autopilot/route-manager/wp/fuelAtDestinationGalUs")));
+		me._can.Fuel.setText(sprintf("%.0f",getprop("/autopilot/route-manager/wp/fuelAt_GalUs")));
 	},
 	
 };

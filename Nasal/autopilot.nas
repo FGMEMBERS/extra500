@@ -19,6 +19,10 @@
 #      Last change:      Eric van den Berg 
 #      Date:             25.03.2014
 #
+
+
+
+
 var FlightManagementSystemClass = {
 	new : func(root,name){
 		var m = {parents:[
@@ -27,11 +31,15 @@ var FlightManagementSystemClass = {
 		]};
 		m._currentWaypointIndex = 0;
 		m._selectedWaypointIndex = 0;
-		
+		m._fplActive = 0;
+		m._nRoute = props.globals.getNode("/autopilot/route-manager/route",1);
+		m._isFPLready = 0;
 		return m;
 	},
 	setListeners : func(instance) {
 		append(me._listeners, setlistener("/autopilot/route-manager/current-wp",func(n){me._onCurrentWaypointChange(n);},1,0) );
+		append(me._listeners, setlistener("/autopilot/route-manager/active",func(n){me._onFPLActiveChange(n);},1,0) );
+		
 	},
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
@@ -46,7 +54,7 @@ var FlightManagementSystemClass = {
 		me._currentWaypointIndex = n.getValue();
 		if ( me._currentWaypointIndex >= 0 ) {
 #			settimer(func(){me._nextGpssBearing()},1);
-		me._nextGpssBearing();
+			me._nextGpssBearing();
 		}
 	},
 	_nextGpssBearing : func(){
@@ -65,8 +73,58 @@ var FlightManagementSystemClass = {
 		}
 	
 	},
-	
-
+	_onFPLActiveChange : func(n){
+		me._fplActive = n.getValue();
+	},
+	calcRoute : func(){
+		if(me._fplActive){
+			var gs = getprop("/velocities/groundspeed-kt");
+			if(gs > 50){
+# 				print("FlightManagementSystemClass.calcRoute() ... ");
+				var gsSec = gs / 3600;
+				var time = systime() + getprop("/sim/time/warp");
+				var fuelGalUs = getprop("/consumables/fuel/total-fuel-gal_us");
+				var fuelFlowGalUSpSec = extra500.fuelSystem._nFuelFlowGalUSpSec.getValue();
+				
+				var distance =  getprop("/autopilot/route-manager/wp/dist");
+				var distanceToGo = distance;
+				var ete = distance / gsSec ;
+				var eta = time + ete;
+				var fuelAt = fuelGalUs -= fuelFlowGalUSpSec * ete;
+				
+				setprop("/autopilot/route-manager/wp/ete_sec",ete);
+				setprop("/autopilot/route-manager/wp/eta_sec",eta);
+				setprop("/autopilot/route-manager/wp/fuelAt_GalUs",fuelGalUs);
+				
+				var numWaypt = getprop("/autopilot/route-manager/route/num");
+				for (var i = 0 ; i < numWaypt-1 ; i+=1){
+						distance = getprop("/autopilot/route-manager/route/wp["~i~"]/leg-distance-nm");
+						
+						if (i >= me._currentWaypointIndex){
+							distanceToGo += distance;
+							ete = distance / gsSec ;
+							eta = time + (distanceToGo / gsSec);
+							fuelAt = fuelGalUs -= fuelFlowGalUSpSec * ete;
+						}else{
+							ete = 0;
+							eta = 0;
+							fuelAt = 0;
+						}
+						
+						setprop("/autopilot/route-manager/route/wp["~(i+1)~"]/distanceTo-nm",distance);
+						setprop("/autopilot/route-manager/route/wp["~(i+1)~"]/ete_sec",ete);
+						setprop("/autopilot/route-manager/route/wp["~(i+1)~"]/eta_sec",eta);
+						setprop("/autopilot/route-manager/route/wp["~(i+1)~"]/fuelAt_GalUs",fuelAt);
+						
+				}
+				
+				setprop("/autopilot/route-manager/fuelAt_GalUs",fuelGalUs);
+				me._isFPLready = 1;
+			}else{
+				me._isFPLready = 0;
+			}
+		}
+	},
 };
 
 var AutopilotClass = {
@@ -220,6 +278,7 @@ var AutopilotClass = {
 	update : func(){
 		me._CheckRollModeAble();
 		
+		fms.calcRoute();
 	},
 # disengages the autopilot
 	_APDisengage : func(){

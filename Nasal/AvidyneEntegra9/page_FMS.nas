@@ -344,7 +344,9 @@ var FlightPlanListWidget = {
 				distSum += fmsWP.leg_distance;
 
 			}
-			me._fplItemCache[i].setDistance(sprintf("%0.1f",fmsWP.leg_distance));
+			if(i > 0){
+				me._fplItemCache[i].setDistance(sprintf("%0.1f",fp.getWP(i-1).leg_distance));
+			}
 			if( i == me._currentIndex){
 				me._fplItemCache[i].setActive(1);
 			}
@@ -501,62 +503,44 @@ var FlightPlanListWidget = {
 		me._lastSelectedIndex = me._selectedIndex;
 	},
 	update : func(){
-		fp = flightplan();
-		me._planSize = fp.getPlanSize();
-		
-		var gs = getprop("/velocities/groundspeed-kt");
-		var fuelGalUs = getprop("/consumables/fuel/total-fuel-gal_us");
-		var time = systime();
-		var eteSum = 0;
-		var distSum = 0;
-		var dist = 0;
-		if(gs > 50){
+		if(extra500.fms._isFPLready){
+			var fuelAt = 0;
+			var eta = 0;
+			var ete = 0;
+			var dist = 0;
+
 			for( var i=0; i < me._planSize; i+=1 ){
-				var fmsWP = fp.getWP(i);
 				if (i == me._currentIndex){
-					#distSum += fmsWP.leg_distance;
 					dist = getprop("/autopilot/route-manager/wp/dist");
-					distSum += dist;
-					var ete = dist / gs * 3600 ;
-					var eta = time + ete;
-# 					me._fplItemCache[i]._can.Distance.setText(sprintf("%0.1f",distSum));
-# 					me._fplItemCache[i]._can.ETE.setText(global.formatTime(ete,"i:s"));
-# 					me._fplItemCache[i]._can.ETA.setText(global.formatTime(eta));
-# 					
+					eta = getprop("/autopilot/route-manager/wp/eta_sec");
+					ete = getprop("/autopilot/route-manager/wp/ete_sec");
+					fuelAt= getprop("/autopilot/route-manager/wp/fuelAt_GalUs");
+	# 					
 					me._fplItemCache[i].setDistance(sprintf("%0.1f",dist));
 					me._fplItemCache[i].setETE(global.formatTime(ete,"i:s"));
 					me._fplItemCache[i].setETA(global.formatTime(eta));
-					
-					fuelGalUs -= extra500.fuelSystem._nFuelFlowGalUSpSec.getValue() * ete;
-					me._fplItemCache[i].setFuel(sprintf("%.0f",fuelGalUs));
-					setprop("/autopilot/route-manager/wp/fuelAtDestinationGalUs",fuelGalUs);
+					me._fplItemCache[i].setFuel(sprintf("%.0f",fuelAt));
+									
 				}elsif (i > me._currentIndex){
-					
-					distSum += fmsWP.leg_distance;
-					var ete = fmsWP.leg_distance / gs * 3600 ;
-					var eta = time + (distSum / gs * 3600);
-# 					me._fplItemCache[i]._can.Distance.setText(sprintf("%0.1f",distSum));
-# 					me._fplItemCache[i]._can.ETE.setText(global.formatTime(ete,"i:s"));
-# 					me._fplItemCache[i]._can.ETA.setText(global.formatTime(eta));
-					
-					me._fplItemCache[i].setDistance(sprintf("%0.1f",fmsWP.leg_distance));
+					dist = getprop("/autopilot/route-manager/route/wp["~(i)~"]/distanceTo-nm");
+					eta = getprop("/autopilot/route-manager/route/wp["~(i)~"]/eta_sec");
+					ete = getprop("/autopilot/route-manager/route/wp["~(i)~"]/ete_sec");
+					fuelAt= getprop("/autopilot/route-manager/route/wp["~(i)~"]/fuelAt_GalUs");
+
+					me._fplItemCache[i].setDistance(sprintf("%0.1f",dist));
 					me._fplItemCache[i].setETE(global.formatTime(ete,"i:s"));
 					me._fplItemCache[i].setETA(global.formatTime(eta));
-					
-					fuelGalUs -= extra500.fuelSystem._nFuelFlowGalUSpSec.getValue() * ete;
-					me._fplItemCache[i].setFuel(sprintf("%.0f",fuelGalUs));
+					me._fplItemCache[i].setFuel(sprintf("%.0f",fuelAt));
 					
 				}else{
-					me._fplItemCache[i]._can.Distance.setText("---");
-					me._fplItemCache[i]._can.ETE.setText("---");
-					me._fplItemCache[i]._can.ETA.setText("---");
-					
+					me._fplItemCache[i].setDistance("---");
+					me._fplItemCache[i].setETE("---");
+					me._fplItemCache[i].setETA("---");
+					me._fplItemCache[i].setFuel("---");
 				}
 				
 			}
-			setprop("/autopilot/route-manager/fuelAtDestinationGalUs",fuelGalUs);
 		}
-		
 	}
 	
 };
@@ -668,6 +652,7 @@ var AvidynePageFMS = {
 			me._widget.FPL.setLayout("split-right");
 			me._widget.FPL.setVisible(1);
 			me._widget.MovingMapKnob.setVisible(1);	
+			me._can.FPLContent.setVisible(1);
 		}elsif(index == 2){ # Info
 			me._widget.MovingMapKnob.setVisible(0);
 			me._widget.FPL.setVisible(0);
