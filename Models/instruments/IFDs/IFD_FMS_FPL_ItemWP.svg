@@ -25,10 +25,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.0992667"
-     inkscape:cx="305.65483"
+     inkscape:cx="160.10325"
      inkscape:cy="161.5699"
      inkscape:document-units="px"
-     inkscape:current-layer="svg2985"
+     inkscape:current-layer="FPL_Pattern_Waypoint"
      showgrid="false"
      inkscape:snap-page="true"
      inkscape:window-width="1920"
@@ -99,7 +99,7 @@
          sodipodi:role="line"
          x="510.01767"
          y="104.44906"
-         id="tspan4032-6">Fly Course 326</tspan></text>
+         id="tspan4032-6">Course</tspan></text>
     <path
        style="color:#000000;fill:#616660;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        d="m 846.57777,90.185601 c -7.4444,0 -13.4333,6.145187 -13.4333,13.783849 l 0,27.67975 -385.04417,0 c -4.12307,0 -7.44838,3.38968 -7.44838,7.62034 l 0,36.21902 c 0,4.23066 3.32531,7.62033 7.44838,7.62033 l 398.47747,0 279.93673,0 55.4588,0 c 7.4444,0 13.4333,-6.14518 13.4333,-13.78384 l 0,-65.3556 c 0,-7.638662 -5.9889,-13.783849 -13.4333,-13.783849 l -335.39553,0 z"
