@@ -253,12 +253,8 @@ var AirportItem = {
 				
 				
 			}
-				
-			
-			
 		}
-			
-		
+		return me._mapAirportIcon.displayed;
 	},
 	update : func(mapOptions){
 			
@@ -281,7 +277,7 @@ var AirportItem = {
 	},
 	setVisible : func(visibility){
 		me._can.group.setVisible(visibility);
-					
+		me._can.layout.setVisible(visibility);
 	},
 	getGroup : func(){
 		return me._can.group;
@@ -328,6 +324,7 @@ var VorItem = {
 	},
 	setVisible : func(visibility){
 		me._can.group.setVisible(visibility);
+		
 	},
 	getGroup : func(){
 		return me._can.group;
@@ -366,7 +363,6 @@ var PositionedLayer = {
 		};
 
 		
-		m._range = 100;
 		m._results = nil;
 		m._timer = maketimer(600,m,PositionedLayer.update);
 		
@@ -391,22 +387,30 @@ var PositionedLayer = {
 # 			me._cache.vor.index += 1;
 # 		}
 	},
-	setRange : func(range=100){
-		me._range = range;
-		me._mapOptions.range = me._range;
-		me._timer.restart(me._range/(200/3600));
-		me.update();
-	},
 	update : func(){
+		print ("PositionedLayer.update() ...") ;
 		me.loadAirport();
 		me.loadVor();
 	},
-	setOrientation : func(value){
+	setVisible : func(visibility){
+		me._group.setVisible(visibility);
+	},
+	setMapOptions : func(mapOptions){
+		me._mapOptions = mapOptions;
+		me.update();
+	},
+	
+	updateOrientation : func(value){
 		me._mapOptions.orientation = value;
 		for (var i = 0 ; i < me._cache.airport.index ; i +=1){
 			item = me._cache.airport.data[i];
 			item.update(me._mapOptions);
 		}
+	},
+	setRange : func(range=100){
+		me._mapOptions.range = range;
+		me._timer.restart(me._mapOptions.range/(200/3600));
+		me.update();
 	},
 	setLand : func(value){
 # 		print("PositionedLayer.setLand("~value~")");
@@ -427,11 +431,11 @@ var PositionedLayer = {
 	
 	loadAirport : func(){
 		me._cache.airport.index = 0;
-		var results = positioned.findWithinRange(me._range*2.5,"airport");
+		var results = positioned.findWithinRange(me._mapOptions.range*2.5,"airport");
 		var item = nil;
 		
 		if(me._mapOptions.declutterNAV >= 3){
-			me._mapOptions.runwayLength = MAP_RUNWAY_AT_RANGE[me._range];
+			me._mapOptions.runwayLength = MAP_RUNWAY_AT_RANGE[me._mapOptions.range];
 		}elsif (me._mapOptions.declutterNAV >= 2){
 			me._mapOptions.runwayLength = 3000;
 		}else{
@@ -454,9 +458,9 @@ var PositionedLayer = {
 					append(me._cache.airport.data,item);
 				}
 				
-				item.draw(apt,me._mapOptions);
-									
-				me._cache.airport.index += 1;
+				if(item.draw(apt,me._mapOptions)){
+					me._cache.airport.index += 1;
+				}
 			}
 		}
 		
@@ -468,9 +472,9 @@ var PositionedLayer = {
 	},
 	loadVor : func(){
 		me._cache.vor.index = 0;
-		if(me._mapOptions.declutterNAV >= 1 and me._range <= 80){
-			var range = me._range*2.0 <= 100 ? me._range*2.5 : 100 ;
-			var results = positioned.findWithinRange(range,"vor");
+		if(me._mapOptions.declutterNAV >= 1){
+			var range = me._mapOptions.range*2.0 <= 100 ? me._mapOptions.range*2.5 : 100 ;
+			var results = positioned.findWithinRange(me._mapOptions.range*2.5,"vor");
 			var item = nil;
 			foreach(var vor; results) {
 				if (me._cache.vor.index >= me._cache.vor.max ){

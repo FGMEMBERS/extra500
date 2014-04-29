@@ -985,7 +985,7 @@ var NavSourceWidget = {
 		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].hasGS,func(n){me._onHasGSChange(n);},1,0));
 		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].Frequency,func(n){me._onFrequencyChange(n);},1,0));
 		
-		me._Page._widget.NavSelect.registerKeyCDI();
+		me._Page._widgetTab.NavSelect.registerKeyCDI();
 		
 	},
 	_scroll : func(amount){
@@ -1468,7 +1468,6 @@ var NavSelectWidget = {
 		m._flightPlan = 1;
 		m._cdi = 1;
 		m._userCDI = 0;
-		m._mapRange 	= 30;
 		m._mapView 	= 0;
 		return m;
 	},
@@ -1481,6 +1480,7 @@ var NavSelectWidget = {
 		me._widget.MapKnob.deinit();
 	},
 	setVisible : func(visible){
+		print("NavSelectWidget.setVisible("~visible~")");
 		if(visible == 1){
 			me.setListeners(me);
 			
@@ -1494,7 +1494,7 @@ var NavSelectWidget = {
 			me.registerKeyCDI() ;
 		
 			me._ifd.movingMap.setLayerVisible("route",me._flightPlan);
-			me._ifd.movingMap.setRangeNm(me._mapRange);
+			
 			
 			
 			me._can.SynVis.setText(LABEL_OFFON[me._synVis]);
@@ -1512,15 +1512,7 @@ var NavSelectWidget = {
 			
 			me.registerKeyCDI();
 			
-			me._ifd.nLedRK.setValue(0);
-			me._Page.IFD.setKnobLabel("RK");
-				
-			me._Page.keys["RK >>"] 	= nil;
-			me._Page.keys["RK <<"] 	= nil;
-			me._Page.keys["RK"] 	= nil;
-			me._Page.keys["RK >"] 	= nil;
-			me._Page.keys["RK <"] 	= nil;
-			
+						
 			me._ifd.movingMap.setLayerVisible("route",1);
 		}
 		me._can.content.setVisible(visible);
@@ -1593,17 +1585,6 @@ var NavSelectWidget = {
 		me._can.CDI.setText(LABEL_OFFON[me._cdi]);
 		me._Page._widget.HSI._can.CoursePointer.setVisible(me._cdi);
 	},
-# 	adjustMapRange : func(amount){
-# 		me._mapRange += amount;
-# 		me._mapRange = global.clamp(me._mapRange,2,300);
-# 		me._ifd.movingMap.setRangeNm(me._mapRange);
-# 		me._can.CompassRangeMax.setText(sprintf("%.0f",me._mapRange));
-# 		me._can.CompassRangeMid.setText(sprintf("%.0f",me._mapRange/2));
-# 	},
-# 	adjustMapView : func(amount){
-# 		me._mapView = global.cycle(me._mapView,0,3,amount);
-# 		me._ifd.movingMap.setView(me._mapView);
-# 	}
 };
 
 var BugSelectWidget = {
@@ -1901,17 +1882,19 @@ var AvidynePagePFD = {
 			VerticalSpeed		: VerticalSpeedWidget.new(m,m.page,"Vertical Speed"),
 			AirSpeed		: AirspeedSpeedWidget.new(m,m.page,"Airspeed Speed"),
 			Altitude		: AltitudeWidget.new(m,m.page,"Altitude"),
-			NavSource 		: NavSourceWidget.new(m,m.page,"Nav Source"),
-			BearingSource 		: BearingSourceWidget.new(m,m.page,"Bearing Source"),
 			DI			: DeviationIndicatorWidget.new(m,m.page,"Deviation Indicator"),
-			HSI	 		: HeadingSituationIndicatorWidget.new(m,m.page,"Deviation Indicator"),
-			Environment 		: EnvironmentWidget.new(m,m.page,"Environment"),
+			Environment 		: EnvironmentWidget.new(m,m.page,"Environment"),NavSource 		: NavSourceWidget.new(m,m.page,"Nav Source"),
+			BearingSource 		: BearingSourceWidget.new(m,m.page,"Bearing Source"),
+			HSI	 		: HeadingSituationIndicatorWidget.new(m,m.page,"Heading Situation Indicator"),
 			Timer	 		: TimerWidget.new(m,m.page,"Timer"),
-			BugSelect 		: BugSelectWidget.new(m,m.page,"BugSelect"),
-			NavSelect 		: NavSelectWidget.new(m,m.page,"NavSelectWidget"),
 			Tab	 		: TabWidget.new(m,m.page,"TabSelectPFD"),
 			Marker	 		: MarkerWidget.new(m,m.page,"Marker"),
 			ActiveCom	 	: ActiveComWidget.new(m,m.page,"ActiveCom"),
+		};
+		m._widgetTab = {
+			BugSelect 		: BugSelectWidget.new(m,m.page,"BugSelect"),
+			NavSelect 		: NavSelectWidget.new(m,m.page,"NavSelectWidget"),
+			
 		};
 		
 		m._widget.Tab._tab = ["Nav","Bug"];
@@ -1962,14 +1945,15 @@ var AvidynePagePFD = {
 	},
 	_initWidgetsForTab : func(index){
 			
-		if (index == 0){ # Page NavDisplay
+		if (index == 0){ # Tab NavDisplay
 			
-			me._widget.BugSelect.setVisible(0);
-			me._widget.NavSelect.setVisible(1);
+			me._widgetTab.BugSelect.setVisible(0);
+			me._widgetTab.NavSelect.setVisible(1);
 			
-		}elsif(index == 1){ # Page BugSelect
-			me._widget.NavSelect.setVisible(0);
-			me._widget.BugSelect.setVisible(1);
+		}elsif(index == 1){ # Tab BugSelect
+			
+			me._widgetTab.NavSelect.setVisible(0);
+			me._widgetTab.BugSelect.setVisible(1);
 			
 		}else{
 			print("_scrollToTab() ... mist");

@@ -39,6 +39,7 @@ var MapWidget = {
 		m._timeOutHot = 0;
 		m._timeOut = maketimer(10.0,m,MapWidget._onTimeOut);
 		m._timeOut.singleShot = 1;
+		m._timeOut.stop();
 		return m;
 	},
 	setListeners : func(instance) {
@@ -59,26 +60,26 @@ var MapWidget = {
 			me._Page.IFD.nLedR1.setValue(1);
 			me._Page.keys["R1 <"] 	= func(){me._onLand(-1)};
 			me._Page.keys["R1 >"] 	= func(){me._onNav(-1)};
-			me._onLand(0);
-			me._onNav(0);
+# 			me._onLand(0);
+# 			me._onNav(0);
 						
 # 			me._can.Map_Lightning.setVisible(1);
 			me._Page.IFD.nLedR2.setValue(1);
 			me._Page.keys["R2 <"] 	= func(){me._onLightning(-1)};
 			me._Page.keys["R2 >"] 	= func(){me._onLightning(1)};
-			me._onLightning(0);
+# 			me._onLightning(0);
 			
 # 			me._can.Map_WxReports.setVisible(1);
 			me._Page.IFD.nLedR3.setValue(1);
 			me._Page.keys["R3 <"] 	= func(){me._onReports(-1)};
 			me._Page.keys["R3 >"] 	= func(){me._onReports(1)};
-			me._onReports(0);
+# 			me._onReports(0);
 			
 # 			me._can.Map_WxOverlay.setVisible(1);
 			me._Page.IFD.nLedR4.setValue(1);
 			me._Page.keys["R4 <"] 	= func(){me._onOverlay(-1)};
 			me._Page.keys["R4 >"] 	= func(){me._onOverlay(1)};
-			me._onOverlay(0);
+# 			me._onOverlay(0);
 			
 		}else{
 			me._can.Map_Options.setVisible(0);

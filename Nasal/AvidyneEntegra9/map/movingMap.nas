@@ -130,7 +130,6 @@ var MovingMap = {
 		#m._can.layer1.setTranslation(-1024,-768);
 		
 # 		m._can.plane.setTranslation(1024,768);
-		m._orientation	= 0;
 		m._heading	= 0;
 		m._headingTrue	= 0;
 		m._bugHeading	= 0;
@@ -146,11 +145,23 @@ var MovingMap = {
 		
 		m._layer 	= {};
 		m._view 	= MAP_VIEW.HDG_UP_CENTER ;
-		 
+		m._layout 	= "";
+		
 		#m._mapScale	= m._can.LayerMap.createTransform(); 
 		m._mapTransform		= m._can.LayerMap.createTransform(); 
 		m._mapTransformView	= m._can.LayerMap.createTransform(); 
 		#m._mapTransform	= m._group.createTransform(); 
+		
+		m._mapOptions = {
+			declutterLand 	: 3,
+			declutterNAV 	: 3,
+			lightning 	: 0,
+			reports		: 0,
+			overlay		: 0,
+			range		: 30,
+			runwayLength    : -1,
+			orientation	: 0,
+		};
 		
 		return m;
 	},
@@ -188,12 +199,12 @@ var MovingMap = {
 	setHdg : func(deg){
 		me._heading = deg;
 		if(me._view == MAP_VIEW.NORTH_UP){ # North up
-			me._orientation = 0;
+			me._mapOptions.orientation = 0;
 		}else{
-			me._orientation = me._heading;
+			me._mapOptions.orientation = me._heading;
 		}
-		me._layer.positioned.setOrientation(me._orientation);
-		me._map.setHdg(me._orientation);
+		me._layer.positioned.updateOrientation(me._mapOptions.orientation);
+		me._map.setHdg(me._mapOptions.orientation);
 	},
 	setVisible : func(visibility){
 		me._group.setVisible(visibility);
@@ -203,6 +214,7 @@ var MovingMap = {
 		me._group.setVisible(0);
 	
 		if(me._layout == "map"){
+			me._layer.positioned.setVisible(1);
 			me._screenSize	= 512;
 			me._group.set("clip","rect(70px, 2048px, 1436px, 0px)");
 			
@@ -217,6 +229,7 @@ var MovingMap = {
 			#me._group.set("z-index",-1);
 			me._group.setVisible(1);
 		}elsif(me._layout == "map+"){
+			me._layer.positioned.setVisible(1);
 			me._screenSize	= 512;
 			me._group.set("clip","rect(70px, 1648px, 1436px, 400px)");
 			
@@ -232,7 +245,7 @@ var MovingMap = {
 # 			me._group.set("z-index",0);
 			me._group.setVisible(1);
 		}elsif(me._layout == "split-left"){
-			
+			me._layer.positioned.setVisible(1);
 			me._screenSize	= 512;
 			me._mapTransform.setTranslation(-256,192);
 			me._mapTransform.setScale(0.75,0.75);
@@ -258,7 +271,7 @@ var MovingMap = {
 # 			me._parent.set("z-index",1);
 # 			me._can.layer1.setVisible(1);
 # 			me.setVisible(1);
-			me._layer.positioned.setNav(0);
+			me._layer.positioned.setVisible(0);
 			me._screenSize	= 512;
 # 			me._mapTransform.setTranslation(1024*0,43359375,768+364);
 			me._mapTransform.setTranslation(1024*(1-0.56640625),696.5);
@@ -337,28 +350,21 @@ var MovingMap = {
 	},
 	_onHdgBugChange : func(n){
 		me._bugHeading		= n.getValue();
-		me._can.BugHDG.setRotation((me._bugHeading - me._orientation) * global.CONST.DEG2RAD);
+		me._can.BugHDG.setRotation((me._bugHeading - me._mapOptions.orientation) * global.CONST.DEG2RAD);
 	},
 	_onFmsBugChange : func(n){
 		me._bugFMS		= n.getValue();
-		me._can.BugFMS.setRotation((me._bugFMS - me._orientation) * global.CONST.DEG2RAD);
-	},
-	setRangeNm : func(nm){
-		var range = 200 / (me._screenSize / nm);
-		me._map._node.getNode("range", 1).setDoubleValue(range);
-		me._can.CompassRangeMax.setText(sprintf("%.0f",nm));
-		me._can.CompassRangeMid.setText(sprintf("%.0f",nm/2));
-		me._layer.positioned.setRange(nm);
+		me._can.BugFMS.setRotation((me._bugFMS - me._mapOptions.orientation) * global.CONST.DEG2RAD);
 	},
 	update20Hz : func(now,dt){
 		me._lat = getprop("/position/latitude-deg");
 		me._lon = getprop("/position/longitude-deg");
 		
 		me._headingTrue 	= me._tree.HeadingTrue.getValue();
-		#me._orientation 		= me._tree.Heading.getValue();
-		me._orientationRAD		= me._orientation * global.CONST.DEG2RAD;
+		#me._mapOptions.orientation 		= me._tree.Heading.getValue();
+		me._orientationRAD		= me._mapOptions.orientation * global.CONST.DEG2RAD;
 		
-		me._upHdg	= me._orientation;
+		me._upHdg	= me._mapOptions.orientation;
 		
 		#me.setRefPos(me._lat,me._lon);
 		#me.setHdg(me._upHdg);
@@ -368,9 +374,9 @@ var MovingMap = {
 		me._can.HDGValue.setText(sprintf("%03i",global.roundInt(me._heading)));
 		me._can.UpHDGDeg.setText(sprintf("%5.1f",me._upHdg));
 		
-		me._can.CompassRose.setRotation(-me._orientation * global.CONST.DEG2RAD);
-		me._can.BugTrue.setRotation((me._headingTrue - me._orientation) * global.CONST.DEG2RAD);
-		me._can.BugHDG.setRotation((me._bugHeading - me._orientation) * global.CONST.DEG2RAD);
+		me._can.CompassRose.setRotation(-me._mapOptions.orientation * global.CONST.DEG2RAD);
+		me._can.BugTrue.setRotation((me._headingTrue - me._mapOptions.orientation) * global.CONST.DEG2RAD);
+		me._can.BugHDG.setRotation((me._bugHeading - me._mapOptions.orientation) * global.CONST.DEG2RAD);
 		
 		me._can.CompassN.setRotation(me._orientationRAD);
 		me._can.Compass030.setRotation(me._orientationRAD);
@@ -387,18 +393,52 @@ var MovingMap = {
 		
 		
 		if(me._bugFMSactive == 1){
-			me._can.BugFMS.setRotation((me._bugFMS - me._orientation) * global.CONST.DEG2RAD);
+			me._can.BugFMS.setRotation((me._bugFMS - me._mapOptions.orientation) * global.CONST.DEG2RAD);
 		}
 		
 		
 
 	},
 	
-	setLand : func(value){me._layer.positioned.setLand(value);},
-	setNav : func(value){me._layer.positioned.setNav(value);},
-	setLightning : func(value){me._layer.positioned.setLightning(value);},
-	setWxReports : func(value){me._layer.positioned.setWxReports(value);},
-	setWxOverlay : func(value){me._layer.positioned.setWxOverlay(value);},
+	setRangeNm : func(nm){
+		print("MovingMap.setRangeNm("~nm~") ...");
+		var range = 200 / (me._screenSize / nm);
+		me._map._node.getNode("range", 1).setDoubleValue(range);
+		me._can.CompassRangeMax.setText(sprintf("%.0f",nm));
+		me._can.CompassRangeMid.setText(sprintf("%.0f",nm/2));
+		me._mapOptions.range = nm;
+		me._layer.positioned.setMapOptions(me._mapOptions);
+	},
+	
+	setLand : func(value){
+		print("MovingMap.setLand("~value~") ...");
+		me._mapOptions.declutterLand = value;
+		me._layer.positioned.setMapOptions(me._mapOptions);
+	},
+	setNav : func(value){
+		print("MovingMap.setNav("~value~") ...");
+		me._mapOptions.declutterNAV = value;
+		me._layer.positioned.setMapOptions(me._mapOptions);
+		
+	},
+	setLightning : func(value){
+		print("MovingMap.setLightning("~value~") ...");
+		me._mapOptions.lightning = value;
+		me._layer.positioned.setMapOptions(me._mapOptions);
+		
+	},
+	setWxReports : func(value){
+		print("MovingMap.setWxReports("~value~") ...");
+		me._mapOptions.reports = value;
+		me._layer.positioned.setMapOptions(me._mapOptions);
+		
+	},
+	setWxOverlay : func(value){
+		print("MovingMap.setWxOverlay("~value~") ...");
+		me._mapOptions.overlay = value;
+		me._layer.positioned.setMapOptions(me._mapOptions);
+		
+	},
 	
 };
 
@@ -425,6 +465,7 @@ var MovingMapKnobWidget = {
 		me._hand = hand;
 	},
 	setVisible : func(v){
+		print("MovingMapKnobWidget.setVisible("~v~") ...");
 		if(v == 1){
 			if(me._hand == 0){
 				me._Page.IFD.nLedLK.setValue(1);
@@ -445,6 +486,7 @@ var MovingMapKnobWidget = {
 				me._Page.keys["RK >"] 	= func(){me.adjustMapRange(1);};
 				me._Page.keys["RK <"] 	= func(){me.adjustMapRange(-1);};
 			}
+			
 			me._Page.IFD.movingMap.setRangeNm(MAP_RANGE[me._range]);	
 		}else{
 			if(me._hand == 0){

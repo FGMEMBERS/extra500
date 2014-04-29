@@ -187,7 +187,7 @@ var FlightPlanListWidget = {
 		m._fplItemCache	= {};
 		m._can = {
 			#Pattern_Waypoint	: m._group.getElementById("FPL_Pattern_Waypoint").setVisible(0),
-			FlightPlan		: m._group.getElementById("FPL"),
+			FlightPlan		: m._group.getElementById("FPL_Flightplan"),
 			ScrollAble		: m._group.getElementById("FPL_ScrollAble"),
 			list			: m._group.getElementById("FPL_List"),
 			ScrollCursorView	: m._group.getElementById("FPL_ScrollCursorView"),
@@ -618,7 +618,7 @@ var AvidynePageFMS = {
 	setVisible : func(visibility){
 		#me.IFD._widget.Headline.setVisible(visibility);
 		#me.IFD._widget.PlusData.setVisible(visibility);
-		me.IFD.movingMap.setVisible(visibility);
+		#me.IFD.movingMap.setVisible(visibility);
 		
 		if(visibility == 1){
 			me.registerKeys();
@@ -652,7 +652,6 @@ var AvidynePageFMS = {
 			me._widget.FPL.setLayout("split-right");
 			me._widget.FPL.setVisible(1);
 			me._widget.MovingMapKnob.setVisible(1);	
-			me._can.FPLContent.setVisible(1);
 		}elsif(index == 2){ # Info
 			me._widget.MovingMapKnob.setVisible(0);
 			me._widget.FPL.setVisible(0);

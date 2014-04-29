@@ -287,7 +287,7 @@ var AvidyneIFD = {
 		
 		
 		m.movingMap = MovingMap.new(m,m._group.getElementById("MovingMap"),name~"-MovingMap");
-		m.movingMap.setLayout("map");
+#		m.movingMap.setLayout("map");
 		
 		m._widget = {
 			#COM		: ComWidget.new(m,m._group.getElementById("layer1"),"Com"),
