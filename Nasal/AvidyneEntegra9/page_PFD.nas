@@ -205,13 +205,13 @@ var AutopilotWidget = {
 		#print("AutopilotWidget.deinit() ... ");
 		me.removeListeners();	
 	},
-	setVisible : func(visible){
-		if(visible == 1){
+	_onVisibiltyChange : func(){
+		if(me._visibility == 1){
 			me.setListeners(me);
 		}else{
 			me.removeListeners();
 		}
-	},
+	}
 };
 
 var VerticalSpeedWidget = {
@@ -267,8 +267,8 @@ var VerticalSpeedWidget = {
 	deinit : func(){
 		me.removeListeners();	
 	},
-	setVisible : func(visible){
-		if(visible == 1){
+	_onVisibiltyChange : func(){
+		if(me._visibility == 1){
 			me.setListeners(me);
 		}else{
 			me.removeListeners();
@@ -323,13 +323,14 @@ var AirspeedSpeedWidget = {
 	deinit : func(){
 		me.removeListeners();
 	},
-	setVisible : func(visible){
-		if(visible == 1){
+	_onVisibiltyChange : func(){
+		if(me._visibility == 1){
 			me.setListeners(me);
 		}else{
 			me.removeListeners();
 		}
 	},
+	
 	update20Hz : func(now,dt){
 		me._ias		= me._ptree.ias.getValue();
 		me._rate	= me._ptree.iasRate.getValue();;
@@ -467,13 +468,14 @@ var AltitudeWidget = {
 	deinit : func(){
 		me.removeListeners();	
 	},
-	setVisible : func(visible){
-		if(visible == 1){
+	_onVisibiltyChange : func(){
+		if(me._visibility == 1){
 			me.setListeners(me);
 		}else{
 			me.removeListeners();
 		}
 	},
+	
 	_onHpaChange : func(n){
 		me._hpa		= n.getValue();
 		me._can.HPA.setText(sprintf("%4i",me._hpa));
@@ -649,13 +651,14 @@ var AttitudeIndicatorWidget = {
 	deinit : func(){
 		me.removeListeners();
 	},
-	setVisible : func(visible){
-		if(visible == 1){
+	_onVisibiltyChange : func(){
+		if(me._visibility == 1){
 			me.setListeners(me);
 		}else{
 			me.removeListeners();
 		}
 	},
+	
 	update20Hz : func(now,dt){
 		
 		me._pitch	= me._ptree.pitch.getValue();
@@ -722,13 +725,14 @@ var MarkerWidget = {
 	deinit : func(){
 		me.removeListeners();	
 	},
-	setVisible : func(visible){
-		if(visible == 1){
+	_onVisibiltyChange : func(){
+		if(me._visibility == 1){
 			me.setListeners(me);
 		}else{
 			me.removeListeners();
 		}
 	},
+	
 	_onMarkerInnerChange : func(n){
 		me._inner = n.getValue();
 		print("MarkerWidget._onMarkerInnerChange() ... IM " ~ me._inner);
@@ -927,8 +931,8 @@ var NavSourceWidget = {
 # 		me._Page.keys["LK >>"] 	= nil;
 		
 	},
-	setVisible : func(visible){
-		if(visible == 1){
+	_onVisibiltyChange : func(){
+		if(me._visibility == 1){
 			me.setListeners(me);
 			me._ifd.nLedL1.setValue(1);
 			
@@ -960,6 +964,7 @@ var NavSourceWidget = {
 			me._Page.keys["LK >>"] 	= nil;
 		}
 	},
+	
 	_onSourceChange : func(n){
 		me._source = n.getValue();
 		me.setSource(me._source);
@@ -1155,8 +1160,8 @@ var BearingSourceWidget = {
 	deinit : func(){
 		me.removeListeners();
 	},
-	setVisible : func(visible){
-		if(visible == 1){
+	_onVisibiltyChange : func(){
+		if(me._visibility == 1){
 			me.setListeners(me);
 			me._ifd.nLedL3.setValue(1);
 			me._Page.keys["L3 >"] = func(){me._scroll(1);};
@@ -1169,6 +1174,7 @@ var BearingSourceWidget = {
 			me._Page.keys["L3 <"] = nil;
 		}
 	},
+	
 	setSource : func(src){
 		me._source = src;
 		me.removeListeners();
@@ -1367,8 +1373,8 @@ var HeadingSituationIndicatorWidget = {
 		#me._movingMap.init();
 		
 	},
-	setVisible : func(visible){
-		if(visible == 1){
+	_onVisibiltyChange : func(){
+		if(me._visibility == 1){
 			me.setListeners(me);
 			me._ifd.movingMap.setLayout("pfd");
 		}else{
@@ -1461,7 +1467,7 @@ var NavSelectWidget = {
 			CDI_Button	: m._group.getElementById("PFD_CDI_Button"),
 		};
 		m._widget	= {
-			MapKnob		:  MovingMapKnobWidget.new(page,canvasGroup,name~"MapKnob"),
+			
 		};
 		
 		m._synVis = 0;
@@ -1472,16 +1478,13 @@ var NavSelectWidget = {
 		return m;
 	},
 	init : func(instance=me){
-		me._widget.MapKnob.setHand(1);
-		me._widget.MapKnob.init();
+		
 	},
 	deinit : func(){
 		me.removeListeners();
-		me._widget.MapKnob.deinit();
 	},
-	setVisible : func(visible){
-		print("NavSelectWidget.setVisible("~visible~")");
-		if(visible == 1){
+	_onVisibiltyChange : func(){
+		if(me._visibility == 1){
 			me.setListeners(me);
 			
 			me._ifd.nLedR3.setValue(1);
@@ -1515,8 +1518,8 @@ var NavSelectWidget = {
 						
 			me._ifd.movingMap.setLayerVisible("route",1);
 		}
-		me._can.content.setVisible(visible);
-		me._widget.MapKnob.setVisible(visible);
+		me._can.content.setVisible(me._visibility);
+		
 	},
 	registerKeys : func(){
 		me._ifd.nLedR3.setValue(1);
@@ -1620,8 +1623,8 @@ var BugSelectWidget = {
 		me._Page.keys["R5 <"] = func(){me._setModeRK("VS");};
 		me._Page.keys["R5 >"] = func(){me._setModeRK("VS");};
 	},
-	setVisible : func(visible){
-		if(visible == 1){
+	_onVisibiltyChange : func(){
+		if(me._visibility == 1){
 			me.setListeners(me);
 			me.registerKeys();
 			me._setModeRK(me._modeRK);
@@ -1645,8 +1648,7 @@ var BugSelectWidget = {
 			me._Page.keys["RK >"] 	= nil;
 			me._Page.keys["RK <"] 	= nil;
 		}
-		me._can.content.setVisible(visible);
-		
+		me._can.content.setVisible(me._visibility);
 	},
 	_setModeRK : func(value=nil){
 		
@@ -1742,8 +1744,8 @@ var TimerWidget = {
 	deinit : func(){
 		me.removeListeners();
 	},
-	setVisible : func(visible){
-		if(visible == 1){
+	_onVisibiltyChange : func(){
+		if(me._visibility == 1){
 			me.setListeners(me);
 			me.registerKeys();
 		}else{
@@ -1804,8 +1806,8 @@ var ActiveComWidget = {
 			airport		: me._group.getElementById("Com_active_Channel_Airport").setText(""),
 		};
 	},
-	setVisible : func(visible){
-		if(visible == 1){
+	_onVisibiltyChange : func(){
+		if(me._visibility == 1){
 			me.setListeners(me);
 		}else{
 			me.removeListeners();
@@ -1890,11 +1892,15 @@ var AvidynePagePFD = {
 			Tab	 		: TabWidget.new(m,m.page,"TabSelectPFD"),
 			Marker	 		: MarkerWidget.new(m,m.page,"Marker"),
 			ActiveCom	 	: ActiveComWidget.new(m,m.page,"ActiveCom"),
+			
+			
+			
+			
 		};
 		m._widgetTab = {
 			BugSelect 		: BugSelectWidget.new(m,m.page,"BugSelect"),
 			NavSelect 		: NavSelectWidget.new(m,m.page,"NavSelectWidget"),
-			
+			MapKnob			: MovingMapKnobWidget.new(m,m.page,"MovingMapKnob")
 		};
 		
 		m._widget.Tab._tab = ["Nav","Bug"];
@@ -1921,27 +1927,37 @@ var AvidynePagePFD = {
 			}
 		}
 	},
-	setVisible : func(visible){
+	_onVisibiltyChange : func(){
 		me.IFD.setLayout(IFD_LAYOUT.PFD);
-		if(visible == 1){
+		if(me._visibility == 1){
 			me.setListeners(me);
 # 			me.IFD._widget.Headline.setVisible(0);
 # 			me.IFD._widget.PlusData.setVisible(0);
 			#me.IFD.movingMap.setLayout("pfd");
+			#me._widget.Tab.initActiveTab();
 			me.registerKeys();
+			
 		}else{
 			me.IFD.movingMap.setVisible(0);
 			me.keys = {};
 			me.removeListeners();
 			
+			foreach(var widget;keys(me._widgetTab)){
+				if(me._widgetTab[widget] != nil){
+					me._widgetTab[widget].setVisible(me._visibility);
+				}
+			}
+			
 		}
 			
 		foreach(var widget;keys(me._widget)){
 			if(me._widget[widget] != nil){
-				me._widget[widget].setVisible(visible);
+				me._widget[widget].setVisible(me._visibility);
 			}
 		}
-		me.page.setVisible(visible);
+		
+		
+		me.page.setVisible(me._visibility);
 	},
 	_initWidgetsForTab : func(index){
 			
@@ -1949,11 +1965,14 @@ var AvidynePagePFD = {
 			
 			me._widgetTab.BugSelect.setVisible(0);
 			me._widgetTab.NavSelect.setVisible(1);
+			me._widgetTab.MapKnob.setHand(1);
+			me._widgetTab.MapKnob.setVisible(1);
 			
 		}elsif(index == 1){ # Tab BugSelect
-			
+			me._widgetTab.MapKnob.setVisible(0);
 			me._widgetTab.NavSelect.setVisible(0);
 			me._widgetTab.BugSelect.setVisible(1);
+			
 			
 		}else{
 			print("_scrollToTab() ... mist");

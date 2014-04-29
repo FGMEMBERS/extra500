@@ -273,7 +273,7 @@ var AvidyneIFD = {
 		
 
 		m.canvas.addPlacement({"parent": acPlace,"node": "IFD.Screen"});
-		m.canvas.setColorBackground("#00065A");
+		m.canvas.setColorBackground("#000337");
 		# .. and place it on the object called PFD-Screen
 
 		#m.nHeadingBug = props.globals.initNode("/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg",0.0,"DOUBLE");
@@ -622,7 +622,7 @@ var AvidyneIFD = {
 			
 	},
 	gotoPage : func(name,key=nil){
-		#print("IFD "~me.name ~" gotoPage("~name~") .. ");
+# 		print("IFD "~me.name ~" gotoPage("~name~") .. ");
 		if (!contains(me.page,name)){
 				name = "none";	
 		}

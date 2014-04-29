@@ -119,6 +119,8 @@ var FlightManagementSystemClass = {
 				}
 				
 				setprop("/autopilot/route-manager/fuelAt_GalUs",fuelGalUs);
+				setprop("/autopilot/route-manager/eta_sec",eta);
+# 				setprop("/autopilot/route-manager/ete_sec",eta);
 				me._isFPLready = 1;
 			}else{
 				me._isFPLready = 0;

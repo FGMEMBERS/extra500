@@ -401,7 +401,7 @@ var MovingMap = {
 	},
 	
 	setRangeNm : func(nm){
-		print("MovingMap.setRangeNm("~nm~") ...");
+# 		print("MovingMap.setRangeNm("~nm~") ...");
 		var range = 200 / (me._screenSize / nm);
 		me._map._node.getNode("range", 1).setDoubleValue(range);
 		me._can.CompassRangeMax.setText(sprintf("%.0f",nm));
@@ -411,30 +411,30 @@ var MovingMap = {
 	},
 	
 	setLand : func(value){
-		print("MovingMap.setLand("~value~") ...");
+# 		print("MovingMap.setLand("~value~") ...");
 		me._mapOptions.declutterLand = value;
 		me._layer.positioned.setMapOptions(me._mapOptions);
 	},
 	setNav : func(value){
-		print("MovingMap.setNav("~value~") ...");
+# 		print("MovingMap.setNav("~value~") ...");
 		me._mapOptions.declutterNAV = value;
 		me._layer.positioned.setMapOptions(me._mapOptions);
 		
 	},
 	setLightning : func(value){
-		print("MovingMap.setLightning("~value~") ...");
+# 		print("MovingMap.setLightning("~value~") ...");
 		me._mapOptions.lightning = value;
 		me._layer.positioned.setMapOptions(me._mapOptions);
 		
 	},
 	setWxReports : func(value){
-		print("MovingMap.setWxReports("~value~") ...");
+# 		print("MovingMap.setWxReports("~value~") ...");
 		me._mapOptions.reports = value;
 		me._layer.positioned.setMapOptions(me._mapOptions);
 		
 	},
 	setWxOverlay : func(value){
-		print("MovingMap.setWxOverlay("~value~") ...");
+# 		print("MovingMap.setWxOverlay("~value~") ...");
 		me._mapOptions.overlay = value;
 		me._layer.positioned.setMapOptions(me._mapOptions);
 		
@@ -464,9 +464,9 @@ var MovingMapKnobWidget = {
 	setHand : func(hand){
 		me._hand = hand;
 	},
-	setVisible : func(v){
-		print("MovingMapKnobWidget.setVisible("~v~") ...");
-		if(v == 1){
+	_onVisibiltyChange : func(){
+# 		print("MovingMapKnobWidget.setVisible() ... visibility: "~me._visibility ~ ", hand: "~me._hand);
+		if(me._visibility == 1){
 			if(me._hand == 0){
 				me._Page.IFD.nLedLK.setValue(1);
 				me._Page.IFD.setKnobLabel("LK","Range","View");

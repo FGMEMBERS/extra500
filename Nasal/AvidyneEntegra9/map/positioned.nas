@@ -67,7 +67,7 @@ var MapIconCache = {
 	},
 	boundIconToImage : func(id,image){
 		if(!contains(me._sourceRectMap,id)){
-			print("MapIconCache.boundIconToImage("~id~") ... no available.");
+# 			print("MapIconCache.boundIconToImage("~id~") ... no available.");
 			id = "Airport_0001";
 		}
 		image.setSourceRect(me._sourceRectMap[id].bound[0],me._sourceRectMap[id].bound[1],me._sourceRectMap[id].bound[2],me._sourceRectMap[id].bound[3],0);
@@ -148,9 +148,9 @@ var AirportItem = {
 		me._mapAirportIcon.displayed 	= 0;
 		
 		
-		if( apt.id == getprop("autopilot/route-manager/destination/airport") or apt.id == getprop("autopilot/route-manager/departure/airport")){
-					
-		}else{
+# 		if( apt.id == getprop("autopilot/route-manager/destination/airport") or apt.id == getprop("autopilot/route-manager/departure/airport")){
+# 					
+# 		}else{
 			var aptInfo = airportinfo(apt.id);
 					
 			me._can.layout.removeAllChildren();
@@ -253,7 +253,7 @@ var AirportItem = {
 				
 				
 			}
-		}
+# 		}
 		return me._mapAirportIcon.displayed;
 	},
 	update : func(mapOptions){
@@ -388,12 +388,14 @@ var PositionedLayer = {
 # 		}
 	},
 	update : func(){
-		print ("PositionedLayer.update() ...") ;
-		me.loadAirport();
-		me.loadVor();
+		if(me._visibility == 1){
+# 			print ("PositionedLayer.update() ...") ;
+			me.loadAirport();
+			me.loadVor();
+		}
 	},
-	setVisible : func(visibility){
-		me._group.setVisible(visibility);
+	_onVisibilityChange : func(){
+		me._group.setVisible(me._visibility);
 	},
 	setMapOptions : func(mapOptions){
 		me._mapOptions = mapOptions;

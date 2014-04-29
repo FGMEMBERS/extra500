@@ -86,7 +86,8 @@ var PageClass = {
 		var m = { parents: [PageClass,ListenerClass.new()] };
 		m.IFD = ifd;	# parent pointer to IFD
 		m.page = m.IFD.canvas.createGroup(name);
-		m.page.setVisible(0);
+		m._visibility	= 0;
+		m.page.setVisible(m._visibility);
 		m.name = name;
 		m.data = data;
 		m.keys = {};
@@ -103,8 +104,15 @@ var PageClass = {
 	registerKeys : func(){
 		
 	},
-	setVisible : func(value){
-		me.page.setVisible(value);
+	setVisible : func(visibility){
+		if(me._visibility!=visibility){
+			me._visibility = visibility;
+# 			print("["~me.name ~ "]._onVisibiltyChange() ... " ~ me._visibility);
+			me._onVisibiltyChange();
+		}
+	},
+	_onVisibiltyChange : func(){
+		me.page.setVisible(me._visibility);
 	},
 	hide : func(){
 		me.page.setVisible(0);
@@ -113,6 +121,7 @@ var PageClass = {
 		me.page.setVisible(1);
 	},
 	onClick : func(key){
+# 		print("PageClass.onClick("~key~")");
 		if (contains(me.keys,key)){
 			if(me.keys[key]!=nil){
 				me.keys[key]();
@@ -132,9 +141,10 @@ var IfdWidget = {
 		m._Page 	= page;	# parent pointer to parent Page
 		m._ifd		= page.getIFD();
 		m._group	= canvasGroup;
+		m._visibility	= 0;
 		m._name 	= name;
 		m._can		= {};
-		m._group.setVisible(0);
+		m._group.setVisible(m._visibility);
 		return m;
 	},
 	getIFD : func(){ return m._Page.getIFD() ;},
@@ -144,8 +154,15 @@ var IfdWidget = {
 	deinit : func(){
 		me.removeListeners();	
 	},
-	setVisible : func(visible){
-		me._group.setVisible(visible);
+	setVisible : func(visibility){
+		if(me._visibility!=visibility){
+			me._visibility = visibility;
+# 			print("["~me._name ~ "]._onVisibiltyChange() ... " ~ me._visibility);
+			me._onVisibiltyChange();
+		}
+	},
+	_onVisibiltyChange : func(){
+		me._group.setVisible(me._visibility);
 	},
 # 	update20Hz : func(now,dt){},
 # 	update2Hz  : func(now,dt){},

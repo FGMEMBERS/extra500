@@ -49,8 +49,8 @@ var TabWidget = {
 	deinit : func(){
 		
 	},
-	setVisible : func(visible){
-		if(visible == 1){
+	_onVisibiltyChange : func(){
+		if(me._visibility == 1){
 			me._Page.keys[me._Page.name~" >"] = func(){me.scroll(1);};
 			me._Page.keys[me._Page.name~" <"] = func(){me.scroll(-1);};
 			me.scroll(0);
@@ -58,9 +58,10 @@ var TabWidget = {
 			me._Page.keys[me._Page.name~" >"] = nil;
 			me._Page.keys[me._Page.name~" <"] = nil;
 		}
-		me._can.Tabs.setVisible(visible);
+		me._can.Tabs.setVisible(me._visibility);
 	},
 	scroll : func(amount){
+# 		print("TabWidget.scroll("~amount~")");
 		me._index += amount;
 		if (me._index > me._max){ me._index = me._max; }
 		if (me._index < 0){ me._index = 0; }
@@ -82,8 +83,7 @@ var TabWidget = {
 		me._can[me._tab[me._index]].text.set("fill",COLOR["Turquoise"]);
 	
 		me._Page._initWidgetsForTab(me._index);
-	}
-	
+	},
 };
 
 
@@ -94,7 +94,6 @@ var HeadlineWidget = {
 		m._tab		= [];
 		m._can		= {};
 		m._timer	= maketimer(1.0,m,HeadlineWidget.update);
-		m._visible 	= 0;
 		m._source = 0;
 		m._freqencyListeners = [];
 		return m;
@@ -138,19 +137,16 @@ var HeadlineWidget = {
 		};
 		#me.setListeners(instance);
 	},
-	setVisible : func(visible){
-		if(me._visible != visible){
-			me._visible = visible;
-			if(me._visible == 1){
-				me.setListeners(me);
-				me._timer.start();
-			}else{
-				me.removeListeners();
-				me._removeFreqencyListeners();
-				me._timer.stop();
-			}
+	_onVisibiltyChange : func(){
+		if(me._visibility == 1){
+			me.setListeners(me);
+			me._timer.start();
+		}else{
+			me.removeListeners();
+			me._removeFreqencyListeners();
+			me._timer.stop();
 		}
-		me._group.setVisible(me._visible);
+		me._group.setVisible(me._visibility);
 	},
 	_onTuningSourceChange: func(n){
 		me._source = n.getValue();
@@ -195,7 +191,7 @@ var HeadlineWidget = {
 	update : func(){
 		var gs = getprop("/velocities/groundspeed-kt");
 		if(gs > 50){
-			var eta = getprop("/autopilot/route-manager/ete") + systime();
+			var eta = getprop("/autopilot/route-manager/eta_sec");
 			me._can.ETA.setText(global.formatTime(eta));
 		}else{
 			me._can.ETA.setText("--:--");
@@ -271,8 +267,8 @@ var PlusDataWidget = {
 		
 		
 	},
-	setVisible : func(visible){
-		if(visible == 1){
+	_onVisibiltyChange : func(){
+		if(me._visibility == 1){
 			me._ifd.nLedL2.setValue(1);
 			me._Page.keys["L2 <"] 	= func(){me._scrollSource(-1);};
 			me._Page.keys["L2 >"] 	= func(){me._scrollSource(1);};
@@ -309,8 +305,8 @@ var PlusDataWidget = {
 			me._Page.keys["LK >"] 	= nil;
 			me._Page.keys["LK <"] 	= nil;
 		}
-		me._group.setVisible(visible);
-		me._widget.TCAS.setVisible(visible);
+		me._group.setVisible(me._visibility);
+		me._widget.TCAS.setVisible(me._visibility);
 		
 	},
 	_onTuningSourceChange : func(n){

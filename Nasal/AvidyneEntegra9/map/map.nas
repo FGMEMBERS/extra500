@@ -93,6 +93,7 @@ var Layer = {
 		m._group 		= group.createChild("group",id);
 		m._lModelObserver 	= nil;
 		m._modelNotification 	= "";
+		m._visibility		= 0;
 		return m;
 	},
 	setModel : func(instance=nil,model=nil){
@@ -115,8 +116,15 @@ var Layer = {
 		me._modelNotification = n.getValue();
 	},
 	setVisible : func(v){
-		me._group.setVisible(v);
+		if(me._visibility != v){
+			me._visibility = v;
+			me._onVisibilityChange();
+		}
+		
 	},
+	_onVisibilityChange : func(){
+		me._group.setVisible(me._visibility);
+	}
 	
 };
 

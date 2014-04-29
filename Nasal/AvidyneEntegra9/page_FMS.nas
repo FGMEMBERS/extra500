@@ -40,20 +40,10 @@ var DirectToWidget = {
 		append(me._listeners, setlistener("/autopilot/settings/dto-leg",func(n){me._onChange(n)},1,0));	
 	},
 	init : func(instance=me){
-		#print("ActiveComWidget.init() ... ");
-		me.setListeners(instance);
 		
-		me._Page.IFD.nLedR4.setValue(1);
-		me._Page.keys["R4 <"] 	= func(){extra500.keypad.onD()};
-		me._Page.keys["R4 >"] 	= func(){extra500.keypad.onD()};
-		me._can.button.setVisible(1);
 	},
 	deinit : func(){
-		me._can.button.setVisible(0);
-		me._Page.IFD.nLedR4.setValue(0);
-		me._Page.keys["R4 <"] 	= nil;
-		me._Page.keys["R4 >"] 	= nil;
-		me.removeListeners();
+		
 		
 	},
 	_onChange : func(n){
@@ -67,7 +57,21 @@ var DirectToWidget = {
 			me._can.border.set("stroke-width",10);
 		}
 	},
-	
+	_onVisibiltyChange : func(){
+		if(me._visibility == 1){
+			me.setListeners(me);
+			me._Page.IFD.nLedR4.setValue(1);
+			me._Page.keys["R4 <"] 	= func(){extra500.keypad.onD()};
+			me._Page.keys["R4 >"] 	= func(){extra500.keypad.onD()};
+			me._can.button.setVisible(1);
+		}else{
+			me._can.button.setVisible(0);
+			me._Page.IFD.nLedR4.setValue(0);
+			me._Page.keys["R4 <"] 	= nil;
+			me._Page.keys["R4 >"] 	= nil;
+			me.removeListeners();
+		}
+	},
 	
 };
 
@@ -237,13 +241,12 @@ var FlightPlanListWidget = {
 		me.removeListeners();
 				
 	},
-	setVisible : func(visible){
-		me._visible = visible;
+	_onVisibiltyChange : func(){
 		me._checkKeys();
-		me._can.FlightPlan.setVisible(me._visible);
+		me._can.FlightPlan.setVisible(me._visibility);
 	},
 	_checkKeys  : func(){
-		if(me._visible == 1 ){
+		if(me._visibility == 1 ){
 				if (me._layout == "FPL"){
 				me._Page.IFD.nLedR5.setValue(1);
 				me._Page.keys["R5 <"] 	= func(){me._deleteWaypoint();};
@@ -615,20 +618,21 @@ var AvidynePageFMS = {
 			}
 		}
 	},
-	setVisible : func(visibility){
+	_onVisibiltyChange : func(){
 		#me.IFD._widget.Headline.setVisible(visibility);
 		#me.IFD._widget.PlusData.setVisible(visibility);
 		#me.IFD.movingMap.setVisible(visibility);
 		
-		if(visibility == 1){
+		if(me._visibility == 1){
 			me.registerKeys();
 		}else{
-			me._widget.MovingMapKnob.setVisible(visibility);
-			me._widget.FPL.setVisible(visibility);
+			me._widget.MovingMapKnob.setVisible(me._visibility);
+			me._widget.FPL.setVisible(me._visibility);
 		}
-		me._widget.Tab.setVisible(visibility);
-		me.page.setVisible(visibility);
+		me._widget.Tab.setVisible(me._visibility);
+		me.page.setVisible(me._visibility);
 	},
+	
 	_initWidgetsForTab : func(index){
 # 		me._widget.DirectTo.deinit();
 # 		me._widget.FPL.setVisible(0);

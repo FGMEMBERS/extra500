@@ -175,8 +175,11 @@ var RouteLayer = {
 				me._currentLeg.coords[2] = me._track.coords[(me._currentWaypoint)*2];
 				me._currentLeg.coords[3] = me._track.coords[(me._currentWaypoint)*2+1];
 				me._can.currentLeg.setDataGeo(me._currentLeg.cmds,me._currentLeg.coords);
-				
+				me._can.currentLeg.setVisible(1);
+			}else{
+				me._can.currentLeg.setVisible(0);
 			}
+			
 			if(me._currentWaypoint >= 0 and me._currentWaypoint < me._planSize-1){
 				me._nextLeg.coords[0] = me._track.coords[(me._currentWaypoint)*2];
 				me._nextLeg.coords[1] = me._track.coords[(me._currentWaypoint)*2+1];
@@ -184,7 +187,9 @@ var RouteLayer = {
 				me._nextLeg.coords[3] = me._track.coords[(me._currentWaypoint+1)*2+1
 				];
 				me._can.nextLeg.setDataGeo(me._nextLeg.cmds,me._nextLeg.coords);
-				
+				me._can.nextLeg.setVisible(1);
+			}else{
+				me._can.nextLeg.setVisible(0);
 			}
 			
 			

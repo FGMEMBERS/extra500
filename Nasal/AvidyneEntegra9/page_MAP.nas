@@ -1,7 +1,7 @@
-var MapWidget = {
+var MapOptionWidget = {
 	new : func(page,canvasGroup,name){
-		var m = {parents:[MapWidget,IfdWidget.new(page,canvasGroup,name)]};
-		m._class 	= "MapWidget";
+		var m = {parents:[MapOptionWidget,IfdWidget.new(page,canvasGroup,name)]};
+		m._class 	= "MapOptionWidget";
 		m._tab		= [];
 		m._can = {
 			
@@ -37,7 +37,7 @@ var MapWidget = {
 		};
 		m._optionsVisible = 0;
 		m._timeOutHot = 0;
-		m._timeOut = maketimer(10.0,m,MapWidget._onTimeOut);
+		m._timeOut = maketimer(10.0,m,MapOptionWidget._onTimeOut);
 		m._timeOut.singleShot = 1;
 		m._timeOut.stop();
 		return m;
@@ -52,10 +52,10 @@ var MapWidget = {
 	deinit : func(){
 		#me.removeListeners();
 	},
-	setVisible : func(visibility){
+	_onVisibiltyChange : func(){
 		me.setTimeOutHot(0);
-		if(visibility == 1){
-			me._can.Map_Options.setVisible(1);
+		if(me._visibility == 1){
+			me.setOptionsVisible(1);
 # 			me._can.Map_Declutter.setVisible(1);
 			me._Page.IFD.nLedR1.setValue(1);
 			me._Page.keys["R1 <"] 	= func(){me._onLand(-1)};
@@ -82,7 +82,7 @@ var MapWidget = {
 # 			me._onOverlay(0);
 			
 		}else{
-			me._can.Map_Options.setVisible(0);
+			me.setOptionsVisible(0);
 # 			me._can.Map_Declutter.setVisible(0);
 			me._Page.IFD.nLedR1.setValue(0);
 			me._Page.keys["R1 <"] 	= nil;
@@ -189,7 +189,7 @@ var AvidynePageMAP = {
 		m._widget	= {
 			Tab	 	: TabWidget.new(m,m.page,"TabSelectMAP"),
 			MovingMapKnob	: MovingMapKnobWidget.new(m,m.page,"MovingMapKnob"),
-			MapWidget	: MapWidget.new(m,m.page,"MapWidget"),
+			MapOptionWidget	: MapOptionWidget.new(m,m.page,"MapOptionWidget"),
 			
 		};
 		m._can = {
@@ -230,20 +230,21 @@ var AvidynePageMAP = {
 			}
 		}
 	},
-	setVisible : func(visibility){
+	_onVisibiltyChange : func(){
 		#me.IFD._widget.Headline.setVisible(visibility);
 		#me.IFD._widget.PlusData.setVisible(visibility);
-		me.IFD.movingMap.setVisible(visibility);
+		me.IFD.movingMap.setVisible(me._visibility);
 		
-		if(visibility == 1){
+		if(me._visibility == 1){
 			me.setListeners(me);
+			
 		}else{
 			me.keys = {};
 			me.removeListeners();
-			me._widget.MovingMapKnob.setVisible(visibility);
+			me._widget.MovingMapKnob.setVisible(me._visibility);
 		}
-		me._widget.Tab.setVisible(visibility);
-		me.page.setVisible(visibility);
+		me._widget.Tab.setVisible(me._visibility);
+		me.page.setVisible(me._visibility);
 	},
 	_initWidgetsForTab : func(index){
 		me._widget.MovingMapKnob.setVisible(0);
@@ -254,16 +255,16 @@ var AvidynePageMAP = {
 			me.IFD.movingMap.setLayout("map+");
 			me._widget.MovingMapKnob.setHand(1);
 			me._widget.MovingMapKnob.setVisible(1);
-			me._widget.MapWidget.setVisible(1);
-			me._widget.MapWidget.setTimeOutHot(0);
+			me._widget.MapOptionWidget.setVisible(1);
+			me._widget.MapOptionWidget.setTimeOutHot(0);
 			
 		}elsif(index == 1){ # MAP
 			me.IFD.setLayout(IFD_LAYOUT.FULL);
 			me.IFD.movingMap.setLayout("map");
 			me._widget.MovingMapKnob.setHand(1);
 			me._widget.MovingMapKnob.setVisible(1);
-			me._widget.MapWidget.setVisible(1);
-			me._widget.MapWidget.setTimeOutHot(1);
+			me._widget.MapOptionWidget.setVisible(1);
+			me._widget.MapOptionWidget.setTimeOutHot(1);
 			
 			
 		}elsif(index == 2){ # Split
@@ -271,21 +272,21 @@ var AvidynePageMAP = {
 			me.IFD.movingMap.setLayout("split-left");
 			me._widget.MovingMapKnob.setHand(0);
 			me._widget.MovingMapKnob.setVisible(1);
-			me._widget.MapWidget.setVisible(0);
-			me._widget.MapWidget.setTimeOutHot(0);
+			me._widget.MapOptionWidget.setVisible(0);
+			me._widget.MapOptionWidget.setTimeOutHot(0);
 		}elsif(index == 3){ # Chart
 			me.IFD.setLayout(IFD_LAYOUT.FULL);
 			me.IFD.movingMap.setLayout("none");
-			me._widget.MapWidget.setVisible(0);
+			me._widget.MapOptionWidget.setVisible(0);
 		}elsif(index == 4){ # Chart+
 			me.IFD.setLayout(IFD_LAYOUT.PLUS);
 			me.IFD.movingMap.setLayout("none");
-			me._widget.MapWidget.setVisible(0);
+			me._widget.MapOptionWidget.setVisible(0);
 		
 		}elsif(index == 5){ # Radar
 			me.IFD.setLayout(IFD_LAYOUT.FULL);
 			me.IFD.movingMap.setLayout("none");
-			me._widget.MapWidget.setVisible(0);
+			me._widget.MapOptionWidget.setVisible(0);
 		}else{
 			
 		}
