@@ -190,14 +190,16 @@ var HeadlineWidget = {
 	},
 	update : func(){
 		var gs = getprop("/velocities/groundspeed-kt");
-		if(gs > 50){
+		if(extra500.fms._isFPLready){
 			var eta = getprop("/autopilot/route-manager/eta_sec");
 			me._can.ETA.setText(global.formatTime(eta));
+			me._can.Fuel.setText(sprintf("%.0f",getprop("/autopilot/route-manager/fuelAt_GalUs")));
 		}else{
 			me._can.ETA.setText("--:--");
+			me._can.Fuel.setText("---");
 		}
 		me._can.Time.setText(getprop("/sim/time/gmt-string"));
-		me._can.Fuel.setText(sprintf("%.0f",getprop("/autopilot/route-manager/fuelAt_GalUs")));
+		
 	},
 };
 

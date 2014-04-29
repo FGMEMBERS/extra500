@@ -332,7 +332,6 @@ var FlightPlanListWidget = {
 			#me._fplItemCache[i].setHeadline(sprintf("%s %03.0f - %s",fmsWP.fly_type,fmsWP.leg_bearing,fmsWP.wp_role));
 			#me._fplItemCache[i].setName(sprintf("%s - %s",fmsWP.wp_name,fmsWP.wp_type));
 			
-			me._fplItemCache[i].setHeadline(sprintf("%s %03.0f",fmsWP.fly_type,fmsWP.leg_bearing));
 			me._fplItemCache[i].setName(sprintf("%s",fmsWP.wp_name));
 			
 			var restriction = "";
@@ -348,7 +347,11 @@ var FlightPlanListWidget = {
 
 			}
 			if(i > 0){
+				me._fplItemCache[i].setHeadline(sprintf("%s %03.0f",fmsWP.fly_type,fp.getWP(i-1).leg_bearing));
 				me._fplItemCache[i].setDistance(sprintf("%0.1f",fp.getWP(i-1).leg_distance));
+			}else{
+				me._fplItemCache[i].setHeadline("");
+				me._fplItemCache[i].setDistance("---");
 			}
 			if( i == me._currentIndex){
 				me._fplItemCache[i].setActive(1);
