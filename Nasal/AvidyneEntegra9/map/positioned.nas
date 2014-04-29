@@ -44,19 +44,24 @@ var MapIconCache = {
 	},
 	registerIcon : func(id){
 		me._sourceRectMap[id] = {"bound":[],"size":[]};
-		me._sourceRectMap[id].bound = me._group.getElementById(id).getTransformedBounds();
-		
-		# TODO ugly hack ? check for reason!
-		var top 	= 512 - me._sourceRectMap[id].bound[3];
-		var bottom 	= 512 - me._sourceRectMap[id].bound[1];
-		
-		me._sourceRectMap[id].bound[1] = top;
-		me._sourceRectMap[id].bound[3] = bottom;
-		
-		me._sourceRectMap[id].size = [me._sourceRectMap[id].bound[2]-me._sourceRectMap[id].bound[0],me._sourceRectMap[id].bound[3]-me._sourceRectMap[id].bound[1]];
-# 		debug.dump(me._sourceRectMap[id].bound);
-# 		debug.dump(me._sourceRectMap[id].size);
-		
+		var element = me._group.getElementById(id);
+		if(element != nil){
+			me._sourceRectMap[id].bound = element.getTransformedBounds();
+			
+			
+			# TODO ugly hack ? check for reason!
+			var top 	= 512 - me._sourceRectMap[id].bound[3];
+			var bottom 	= 512 - me._sourceRectMap[id].bound[1];
+			
+			me._sourceRectMap[id].bound[1] = top;
+			me._sourceRectMap[id].bound[3] = bottom;
+			
+			me._sourceRectMap[id].size = [me._sourceRectMap[id].bound[2]-me._sourceRectMap[id].bound[0],me._sourceRectMap[id].bound[3]-me._sourceRectMap[id].bound[1]];
+	# 		debug.dump(me._sourceRectMap[id].bound);
+	# 		debug.dump(me._sourceRectMap[id].size);
+		}else{
+				print("MapIconCache.registerIcon("~id~") fail");
+		}
 		
 	},
 	getBounds : func(id){
@@ -81,14 +86,17 @@ var mapIconCache = MapIconCache.new("Models/instruments/IFDs/IFD_MapIcons.svg");
 
 mapIconCache.registerIcon("Icon_Test");
 mapIconCache.registerIcon("Airport_0000");
-mapIconCache.registerIcon("Airport_0001");
 mapIconCache.registerIcon("Airport_0100");
-mapIconCache.registerIcon("Airport_0101");
+mapIconCache.registerIcon("Airport_0010");
+mapIconCache.registerIcon("Airport_0110");
+mapIconCache.registerIcon("Airport_0011");
 mapIconCache.registerIcon("Airport_0111");
+
 mapIconCache.registerIcon("Airport_1000");
-mapIconCache.registerIcon("Airport_1001");
 mapIconCache.registerIcon("Airport_1100");
-mapIconCache.registerIcon("Airport_1101");
+mapIconCache.registerIcon("Airport_1010");
+mapIconCache.registerIcon("Airport_1110");
+mapIconCache.registerIcon("Airport_1011");
 mapIconCache.registerIcon("Airport_1111");
 mapIconCache.registerIcon("Navaid_VOR");
 mapIconCache.registerIcon("Navaid_DME");
@@ -114,10 +122,10 @@ var AirportItem = {
 			
 		};
 		m._mapAirportIcon = {
-			"range"		: 0,
-			"approach"	: 0,
-			"size"		: 0,
+			"near"		: 0,
 			"surface"	: 0,
+			"tower"		: 0,
+			"center"	: 0,
 			"displayed"	: 0,
 			"icon"		: "",
 		};
@@ -141,10 +149,10 @@ var AirportItem = {
 	},
 	draw : func(apt,mapOptions){
 
-		me._mapAirportIcon.range = mapOptions.range > 30 ? 0 : 1;
-		me._mapAirportIcon.approach 	= 0;
-		me._mapAirportIcon.size		= 0;
-		me._mapAirportIcon.surface		= 0;
+		me._mapAirportIcon.near = mapOptions.range > 30 ? 0 : 1;
+		me._mapAirportIcon.surface	= 0;
+		me._mapAirportIcon.tower 	= 0;
+		me._mapAirportIcon.center	= 0;
 		me._mapAirportIcon.displayed 	= 0;
 		
 		
@@ -155,6 +163,12 @@ var AirportItem = {
 					
 			me._can.layout.removeAllChildren();
 			me._can.runway = [];
+			
+			me._mapAirportIcon.tower = (size(aptInfo.comms("tower")) > 0);
+			me._mapAirportIcon.center = me._mapAirportIcon.tower and (size(aptInfo.comms("approach")) > 0);
+			
+			
+			
 			foreach(var rwy; keys(aptInfo.runways)){
 				var runway = aptInfo.runways[rwy];
 				
@@ -174,8 +188,6 @@ var AirportItem = {
 # 							print ("ils : "~runway.ils);
 # 						}
 				
-				me._mapAirportIcon.approach 	= runway.ils_frequency_mhz ? 1 : me._mapAirportIcon.approach;
-				me._mapAirportIcon.size	 	= runway.length >= 3000 ? 1 : me._mapAirportIcon.size;
 				me._mapAirportIcon.surface	= MAP_RUNWAY_SURFACE[runway.surface] ? 1 : me._mapAirportIcon.surface;
 				me._mapAirportIcon.displayed 	= runway.length > mapOptions.runwayLength ? 1 : me._mapAirportIcon.displayed;
 						
@@ -229,7 +241,7 @@ var AirportItem = {
 					
 			}
 			
-			me._mapAirportIcon.icon = "Airport_"~me._mapAirportIcon.range~me._mapAirportIcon.approach~me._mapAirportIcon.size~me._mapAirportIcon.surface;
+			me._mapAirportIcon.icon = "Airport_"~me._mapAirportIcon.near~me._mapAirportIcon.surface~me._mapAirportIcon.tower~me._mapAirportIcon.center;
 					
 			
 			if (me._mapAirportIcon.displayed){
