@@ -19,7 +19,7 @@
       Date: 18.04.2014
 
       Last change: Eric van den Berg     
-      Date: 24.04.2014            
+      Date: 30.04.2014            
 
 -->
 
@@ -203,5 +203,111 @@
             <heading-deg>-10</heading-deg>
 	</offsets>
 </model>
+
+<!--pick animations-->
+<animation>
+  <type>pick</type>
+  <object-name>storage.right.door</object-name>
+  <visible>true</visible>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("storagedoorright open/close");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>storage.right.door</object-name>
+  <property>/extra500/interior/storageright/doorstate</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>180</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>0.16348</x1-m>
+    <y1-m>0.19678</y1-m>
+    <z1-m>-0.82936</z1-m>
+    <x2-m>0.42076</x2-m>
+    <y2-m>0.19678</y2-m>
+    <z2-m>-0.82939</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>storage.left.lower.door</object-name>
+  <visible>true</visible>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("storagedoorlowerleft open/close");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>storage.left.lower.door</object-name>
+  <property>/extra500/interior/storagelowerleft/doorstate</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>180</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>0.42070</x1-m>
+    <y1-m>-0.21849</y1-m>
+    <z1-m>-0.74657</z1-m>
+    <x2-m>0.16409</x2-m>
+    <y2-m>-0.21849</y2-m>
+    <z2-m>-0.74642</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>storage.left.upper.door</object-name>
+  <visible>true</visible>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("storagedoorupperleft open/close");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>storage.left.upper.door</object-name>
+  <property>/extra500/interior/storageupperleft/doorstate</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>180</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>0.39522</x1-m>
+    <y1-m>-0.21849</y1-m>
+    <z1-m>-0.64550</z1-m>
+    <x2-m>0.19282</x2-m>
+    <y2-m>-0.21849</y2-m>
+    <z2-m>-0.64550</z2-m>
+  </axis>
+</animation>
+
+
+
 
 </PropertyList>
