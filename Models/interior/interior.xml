@@ -19,7 +19,7 @@
       Date: 18.04.2014
 
       Last change: Eric van den Berg     
-      Date: 01.05.2014            
+      Date: 02.05.2014            
 
 -->
 
@@ -34,6 +34,17 @@
     	</animation>
 
 <!-- Submodels -->
+
+<model>
+  <name>CenterConsole</name>
+  <path>Aircraft/extra500/Models/interior/CenterConsole.xml</path>
+	<offsets>
+		<x-m>-0.80979</x-m>
+		<y-m>0</y-m>	
+		<z-m>-0.39665</z-m>
+	<pitch-deg>17</pitch-deg>
+	</offsets>
+</model>
 
 <model>
   <name>speaker</name>

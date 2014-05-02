@@ -20,7 +20,7 @@
       Date: July 04 2013
 
       Last change:      Eric van den Berg
-      Date:             22.09.13
+      Date:             02.05.14
 -->
 <PropertyList>
 
@@ -444,6 +444,18 @@ in Systems/extra500-system-indication.xml-->
     <y2-m>-1</y2-m>
     <z2-m>-0.03982</z2-m>
   </axis>
+</animation>
+
+<!--Dimming Lumi Folie -->
+<animation>
+        <type>material</type>
+        <object-name>label</object-name>
+        <emission>
+	    <red>0.14</red>
+            <green>0.72</green>
+	    <blue>0.90</blue>
+	    <factor-prop>/extra500/light/Lumi/Backlight/state</factor-prop>
+        </emission>
 </animation>
 
 </PropertyList>

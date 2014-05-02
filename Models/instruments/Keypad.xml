@@ -20,7 +20,7 @@
       Date: Jul 20 2013
 
       Last change:      Eric van den Berg
-      Date:             02.02.14
+      Date:             02.05.14
 
 -->
 
@@ -35,7 +35,7 @@
         	<object-name>Keypad.Display</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 		</condition>
@@ -43,7 +43,7 @@
             	<red>.5</red>
             	<green>.5</green>
             	<blue>.5</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/state</factor-prop>
         	</emission>
 </animation>
 
@@ -52,11 +52,11 @@
         	<object-name>Keypad.Com1</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 			<equals>
-				<property>extra500/instrumentation/Keypad/Backlight/COM1</property>
+				<property>/extra500/instrumentation/Keypad/Backlight/COM1</property>
 				<value>0</value>
 			</equals>
 		</condition>
@@ -64,7 +64,7 @@
             	<red>1</red>
             	<green>1</green>
             	<blue>1</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/state</factor-prop>
         	</emission>
 </animation>
 <animation>
@@ -72,7 +72,7 @@
         	<object-name>Keypad.Com1</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 		</condition>
@@ -80,7 +80,7 @@
             	<red>0.1</red>
             	<green>1</green>
             	<blue>0.2</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/COM1</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/COM1</factor-prop>
         	</emission>
 </animation>
 
@@ -89,11 +89,11 @@
         	<object-name>Keypad.Com2</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 			<equals>
-				<property>extra500/instrumentation/Keypad/Backlight/COM2</property>
+				<property>/extra500/instrumentation/Keypad/Backlight/COM2</property>
 				<value>0</value>
 			</equals>
 		</condition>
@@ -101,7 +101,7 @@
             	<red>1</red>
             	<green>1</green>
             	<blue>1</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/state</factor-prop>
         	</emission>
 </animation>
 <animation>
@@ -109,7 +109,7 @@
         	<object-name>Keypad.Com2</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 		</condition>
@@ -117,7 +117,7 @@
             	<red>0.1</red>
             	<green>1</green>
             	<blue>0.2</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/COM2</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/COM2</factor-prop>
         	</emission>
 </animation>
 
@@ -126,11 +126,11 @@
         	<object-name>Keypad.Aux</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 			<equals>
-				<property>extra500/instrumentation/Keypad/Backlight/AUX</property>
+				<property>/extra500/instrumentation/Keypad/Backlight/AUX</property>
 				<value>0</value>
 			</equals>
 		</condition>
@@ -138,7 +138,7 @@
             	<red>1</red>
             	<green>1</green>
             	<blue>1</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/state</factor-prop>
         	</emission>
 </animation>
 <animation>
@@ -146,7 +146,7 @@
         	<object-name>Keypad.Aux</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 		</condition>
@@ -154,7 +154,7 @@
             	<red>0.1</red>
             	<green>1</green>
             	<blue>0.2</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/AUX</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/AUX</factor-prop>
         	</emission>
 </animation>
 
@@ -163,11 +163,11 @@
         	<object-name>Keypad.FreqList</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 			<equals>
-				<property>extra500/instrumentation/Keypad/Backlight/FREQLIST</property>
+				<property>/extra500/instrumentation/Keypad/Backlight/FREQLIST</property>
 				<value>0</value>
 			</equals>
 		</condition>
@@ -175,7 +175,7 @@
             	<red>1</red>
             	<green>1</green>
             	<blue>1</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/state</factor-prop>
         	</emission>
 </animation>
 <animation>
@@ -183,7 +183,7 @@
         	<object-name>Keypad.FreqList</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 		</condition>
@@ -191,7 +191,7 @@
             	<red>0.1</red>
             	<green>1</green>
             	<blue>0.2</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/FREQLIST</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/FREQLIST</factor-prop>
         	</emission>
 </animation>
 
@@ -200,11 +200,11 @@
         	<object-name>Keypad.Nav1</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 			<equals>
-				<property>extra500/instrumentation/Keypad/Backlight/NAV1</property>
+				<property>/extra500/instrumentation/Keypad/Backlight/NAV1</property>
 				<value>0</value>
 			</equals>
 		</condition>
@@ -212,7 +212,7 @@
             	<red>1</red>
             	<green>1</green>
             	<blue>1</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/state</factor-prop>
         	</emission>
 </animation>
 <animation>
@@ -220,7 +220,7 @@
         	<object-name>Keypad.Nav1</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 		</condition>
@@ -228,7 +228,7 @@
             	<red>0.1</red>
             	<green>1</green>
             	<blue>0.2</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/NAV1</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/NAV1</factor-prop>
         	</emission>
 </animation>
 
@@ -237,11 +237,11 @@
         	<object-name>Keypad.Nav2</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 			<equals>
-				<property>extra500/instrumentation/Keypad/Backlight/NAV2</property>
+				<property>/extra500/instrumentation/Keypad/Backlight/NAV2</property>
 				<value>0</value>
 			</equals>
 		</condition>
@@ -249,7 +249,7 @@
             	<red>1</red>
             	<green>1</green>
             	<blue>1</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/state</factor-prop>
         	</emission>
 </animation>
 <animation>
@@ -257,7 +257,7 @@
         	<object-name>Keypad.Nav2</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 		</condition>
@@ -265,7 +265,7 @@
             	<red>0.1</red>
             	<green>1</green>
             	<blue>0.2</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/NAV2</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/NAV2</factor-prop>
         	</emission>
 </animation>
 
@@ -274,11 +274,11 @@
         	<object-name>Keypad.XPDR</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 			<equals>
-				<property>extra500/instrumentation/Keypad/Backlight/XPDR</property>
+				<property>/extra500/instrumentation/Keypad/Backlight/XPDR</property>
 				<value>0</value>
 			</equals>
 		</condition>
@@ -286,7 +286,7 @@
             	<red>1</red>
             	<green>1</green>
             	<blue>1</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/state</factor-prop>
         	</emission>
 </animation>
 <animation>
@@ -294,7 +294,7 @@
         	<object-name>Keypad.XPDR</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 		</condition>
@@ -302,7 +302,7 @@
             	<red>0.1</red>
             	<green>1</green>
             	<blue>0.2</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/XPDR</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/XPDR</factor-prop>
         	</emission>
 </animation>
 
@@ -311,11 +311,11 @@
         	<object-name>Keypad.VFR</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 			<equals>
-				<property>extra500/instrumentation/Keypad/Backlight/VFR</property>
+				<property>/extra500/instrumentation/Keypad/Backlight/VFR</property>
 				<value>0</value>
 			</equals>
 		</condition>
@@ -323,7 +323,7 @@
             	<red>1</red>
             	<green>1</green>
             	<blue>1</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/state</factor-prop>
         	</emission>
 </animation>
 <animation>
@@ -331,7 +331,7 @@
         	<object-name>Keypad.VFR</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 		</condition>
@@ -339,7 +339,7 @@
             	<red>0.1</red>
             	<green>1</green>
             	<blue>0.2</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/VFR</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/VFR</factor-prop>
         	</emission>
 </animation>
 
@@ -348,11 +348,11 @@
         	<object-name>Keypad.Ident</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 			<equals>
-				<property>extra500/instrumentation/Keypad/Backlight/IDENT</property>
+				<property>/extra500/instrumentation/Keypad/Backlight/IDENT</property>
 				<value>0</value>
 			</equals>
 		</condition>
@@ -360,7 +360,7 @@
             	<red>1</red>
             	<green>1</green>
             	<blue>1</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/state</factor-prop>
         	</emission>
 </animation>
 <animation>
@@ -368,7 +368,7 @@
         	<object-name>Keypad.Ident</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 		</condition>
@@ -376,7 +376,7 @@
             	<red>0.1</red>
             	<green>1</green>
             	<blue>0.2</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/IDENT</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/IDENT</factor-prop>
         	</emission>
 </animation>
 
@@ -385,11 +385,11 @@
         	<object-name>Keypad.Mode</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 			<equals>
-				<property>extra500/instrumentation/Keypad/Backlight/MODE</property>
+				<property>/extra500/instrumentation/Keypad/Backlight/MODE</property>
 				<value>0</value>
 			</equals>
 		</condition>
@@ -397,7 +397,7 @@
             	<red>1</red>
             	<green>1</green>
             	<blue>1</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/state</factor-prop>
         	</emission>
 </animation>
 <animation>
@@ -405,7 +405,7 @@
         	<object-name>Keypad.Mode</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 		</condition>
@@ -413,7 +413,7 @@
             	<red>0.1</red>
             	<green>1</green>
             	<blue>0.2</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/MODE</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/MODE</factor-prop>
         	</emission>
 </animation>
 
@@ -422,11 +422,11 @@
         	<object-name>Keypad.Phone</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 			<!--equals>
-				<property>extra500/instrumentation/Keypad/Backlight/PHONE</property>
+				<property>/extra500/instrumentation/Keypad/Backlight/PHONE</property>
 				<value>0</value>
 			</equals-->
 		</condition>
@@ -434,7 +434,7 @@
             	<red>1</red>
             	<green>1</green>
             	<blue>1</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/state</factor-prop>
         	</emission>
 </animation>
 <!--animation>
@@ -442,7 +442,7 @@
         	<object-name>Keypad.Phone</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 		</condition>
@@ -450,7 +450,7 @@
             	<red>0.1</red>
             	<green>1</green>
             	<blue>0.2</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/PHONE</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/PHONE</factor-prop>
         	</emission>
 </animation-->
 
@@ -459,11 +459,11 @@
         	<object-name>Keypad.Sound</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 			<!--equals>
-				<property>extra500/instrumentation/Keypad/Backlight/SOUND</property>
+				<property>/extra500/instrumentation/Keypad/Backlight/SOUND</property>
 				<value>0</value>
 			</equals-->
 		</condition>
@@ -471,7 +471,7 @@
             	<red>1</red>
             	<green>1</green>
             	<blue>1</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/state</factor-prop>
         	</emission>
 </animation>
 <!--animation>
@@ -479,7 +479,7 @@
         	<object-name>Keypad.Sound</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 		</condition>
@@ -487,7 +487,7 @@
             	<red>0.1</red>
             	<green>1</green>
             	<blue>0.2</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/SOUND</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/SOUND</factor-prop>
         	</emission>
 </animation-->
 
@@ -496,11 +496,11 @@
         	<object-name>Keypad.Proc</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 			<!--equals>
-				<property>extra500/instrumentation/Keypad/Backlight/PROC</property>
+				<property>/extra500/instrumentation/Keypad/Backlight/PROC</property>
 				<value>0</value>
 			</equals-->
 		</condition>
@@ -508,7 +508,7 @@
             	<red>1</red>
             	<green>1</green>
             	<blue>1</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/state</factor-prop>
         	</emission>
 </animation>
 <!--animation>
@@ -516,7 +516,7 @@
         	<object-name>Keypad.Proc</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 		</condition>
@@ -524,7 +524,7 @@
             	<red>0.1</red>
             	<green>1</green>
             	<blue>0.2</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/PROC</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/PROC</factor-prop>
         	</emission>
 </animation-->
 
@@ -533,11 +533,11 @@
        	<object-name>Keypad.D</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 			<!--equals>
-				<property>extra500/instrumentation/Keypad/Backlight/DIRECT</property>
+				<property>/extra500/instrumentation/Keypad/Backlight/DIRECT</property>
 				<value>0</value>
 			</equals-->
 		</condition>
@@ -545,7 +545,7 @@
             	<red>1</red>
             	<green>1</green>
             	<blue>1</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/state</factor-prop>
         	</emission>
 </animation>
 <!--animation>
@@ -553,7 +553,7 @@
        	<object-name>Keypad.D</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 		</condition>
@@ -561,7 +561,7 @@
             	<red>0.1</red>
             	<green>1</green>
             	<blue>0.2</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/DIRECT</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/DIRECT</factor-prop>
         	</emission>
 </animation-->
 
@@ -570,11 +570,11 @@
         	<object-name>Keypad.V</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 			<!--equals>
-				<property>extra500/instrumentation/Keypad/Backlight/VECTORS</property>
+				<property>/extra500/instrumentation/Keypad/Backlight/VECTORS</property>
 				<value>0</value>
 			</equals-->
 		</condition>
@@ -582,7 +582,7 @@
             	<red>1</red>
             	<green>1</green>
             	<blue>1</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/state</factor-prop>
         	</emission>
 </animation>
 <!--animation>
@@ -590,7 +590,7 @@
         	<object-name>Keypad.V</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 		</condition>
@@ -598,7 +598,7 @@
             	<red>0.1</red>
             	<green>1</green>
             	<blue>0.2</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/VECTORS</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/VECTORS</factor-prop>
         	</emission>
 </animation-->
 
@@ -607,11 +607,11 @@
         	<object-name>Keypad.NRST</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 			<!--equals>
-				<property>extra500/instrumentation/Keypad/Backlight/NRST</property>
+				<property>/extra500/instrumentation/Keypad/Backlight/NRST</property>
 				<value>0</value>
 			</equals-->
 		</condition>
@@ -619,7 +619,7 @@
             	<red>1</red>
             	<green>1</green>
             	<blue>1</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/state</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/state</factor-prop>
         	</emission>
 </animation>
 <!--animation>
@@ -627,7 +627,7 @@
         	<object-name>Keypad.NRST</object-name>
 		<condition>
 			<equals>
-				<property>extra500/instrumentation/Keypad/state</property>
+				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
 		</condition>
@@ -635,7 +635,7 @@
             	<red>0.1</red>
             	<green>1</green>
             	<blue>0.2</blue>
-	    		<factor-prop>extra500/instrumentation/Keypad/Backlight/NRST</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/NRST</factor-prop>
         	</emission>
 </animation-->
 
@@ -1251,7 +1251,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>Keypad.FMS</object-name>
-		<property>extra500/instrumentation/Keypad/cursorPush</property>
+		<property>/extra500/instrumentation/Keypad/cursorPush</property>
 		<factor>-0.003</factor>
 		<axis>
 			<x>0</x>
@@ -1264,7 +1264,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>Keypad.FMS</object-name>
-		<property>extra500/instrumentation/Keypad/cursorScroll</property>
+		<property>/extra500/instrumentation/Keypad/cursorScroll</property>
 		<factor>15</factor>
 		<axis>
 			<x1-m>0.05614</x1-m>
@@ -2245,7 +2245,7 @@
 		<type>rotate</type>
 		<object-name>Keypad.Cursor</object-name>
 		<object-name>Keypad.Cursor.Picks</object-name>
-		<property>extra500/instrumentation/Keypad/cursorX</property>
+		<property>/extra500/instrumentation/Keypad/cursorX</property>
 		<interpolation>
 			<entry>
 				<ind>-1</ind>
@@ -2273,7 +2273,7 @@
 		<type>rotate</type>
 		<object-name>Keypad.Cursor</object-name>
 		<object-name>Keypad.Cursor.Picks</object-name>
-		<property>extra500/instrumentation/Keypad/cursorY</property>
+		<property>/extra500/instrumentation/Keypad/cursorY</property>
 		<interpolation>
 			<entry>
 				<ind>-1</ind>
@@ -2300,7 +2300,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>Keypad.Cursor</object-name>
-		<property>extra500/instrumentation/Keypad/cursorScroll</property>
+		<property>/extra500/instrumentation/Keypad/cursorScroll</property>
 		<factor>15</factor>
 		<axis>
 			<x1-m>-0.05760</x1-m>
@@ -2315,7 +2315,7 @@
 		<type>translate</type>
 		<object-name>Keypad.Cursor</object-name>
 		<object-name>Keypad.Cursor.Picks</object-name>
-		<property>extra500/instrumentation/Keypad/cursorPush</property>
+		<property>/extra500/instrumentation/Keypad/cursorPush</property>
 		<factor>-0.003</factor>
 		<axis>
 			<x>0</x>
@@ -2327,7 +2327,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>Keypad.Com1.Volume</object-name>
-		<property>extra500/instrumentation/Keypad/com1VolumeSQ</property>
+		<property>/extra500/instrumentation/Keypad/com1VolumeSQ</property>
 		<factor>-0.003</factor>
 		<axis>
 			<x>0</x>
@@ -2340,7 +2340,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>Keypad.Com1.Volume</object-name>
-		<property>extra500/instrumentation/Keypad/cursorScroll</property>
+		<property>/extra500/instrumentation/Keypad/cursorScroll</property>
 		<factor>15</factor>
 		<axis>
 			<x1-m>-0.03307</x1-m>
@@ -2355,7 +2355,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>Keypad.Com2.Volume</object-name>
-		<property>extra500/instrumentation/Keypad/com2VolumeSQ</property>
+		<property>/extra500/instrumentation/Keypad/com2VolumeSQ</property>
 		<factor>-0.003</factor>
 		<axis>
 			<x>0</x>
@@ -2368,7 +2368,7 @@
 	<animation>
 		<type>rotate</type>
 		<object-name>Keypad.Com2.Volume</object-name>
-		<property>extra500/instrumentation/Keypad/cursorScroll</property>
+		<property>/extra500/instrumentation/Keypad/cursorScroll</property>
 		<factor>15</factor>
 		<axis>
 			<x1-m>-0.01175</x1-m>
