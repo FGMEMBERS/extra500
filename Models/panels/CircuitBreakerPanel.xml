@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             21.09.13
+      Date:             06.05.14
 -->
 
 <PropertyList>
@@ -2293,30 +2293,13 @@
 <!--Dimming Lumi Folie -->
 <animation>
         <type>material</type>
-        <object-name>blende.000</object-name>
-	<object-name>blende.001</object-name>
-	<object-name>blende.003</object-name>
-	<object-name>blende.004</object-name>
-	<emission>
+        <object-name>blende</object-name>
+	  <emission>
 	    <red>0.14</red>
-            <green>0.72</green>
+          <green>0.72</green>
 	    <blue>0.90</blue>
 	    <factor-prop>/extra500/light/Lumi/Backlight/state</factor-prop>
         </emission>
-</animation>
-
-<!-- little emission until cockpit-development is finished -->
-<animation>
-	<type>material</type>
-	<object-name>blende.000</object-name>
-	<object-name>blende.001</object-name>
-	<object-name>blende.003</object-name>
-	<object-name>blende.004</object-name>
-	<emission>	
-		<red>0.2</red>	
-		<green>0.2</green>	
-		<blue>0.2</blue>
-	</emission>
 </animation>
 
 </PropertyList>
