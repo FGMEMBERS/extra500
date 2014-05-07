@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             22.09.13
+      Date:             07.05.14
 -->
 <PropertyList>
 
@@ -31,6 +31,66 @@
     <min-m>0</min-m>
     <max-m>50</max-m>
   </animation>
+
+<!-- yoke movement -->
+
+<animation>
+  <type>translate</type>
+  <object-name>yoke.tube.pilot</object-name>
+  <object-name>yoke.tube.copilot</object-name>
+  <object-name>yoke.pilot</object-name>
+  <object-name>yoke.copilot</object-name>
+  <property>surface-positions/elevator-pos-norm</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>.3</dep></entry>
+   <entry><ind>0</ind><dep>.125</dep></entry>
+   <entry><ind> 1</ind><dep>0</dep></entry>
+  </interpolation>
+  <axis>
+   <x>1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+<animation>
+  <type>rotate</type>
+  <object-name>yoke.tube.pilot</object-name>
+  <object-name>yoke.pilot</object-name>
+  <property>surface-positions/left-aileron-pos-norm</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>75</dep></entry>
+   <entry><ind> 1</ind><dep>-75</dep></entry>
+  </interpolation> 
+  <axis>
+    <x1-m>0</x1-m>
+    <y1-m>-0.33500</y1-m>
+    <z1-m>0.02693</z1-m>
+    <x2-m>1</x2-m>
+    <y2-m>-0.33500</y2-m>
+    <z2-m>0.02693</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>rotate</type>
+  <object-name>yoke.tube.copilot</object-name>
+  <object-name>yoke.copilot</object-name>
+  <property>surface-positions/left-aileron-pos-norm</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>75</dep></entry>
+   <entry><ind> 1</ind><dep>-75</dep></entry>
+  </interpolation> 
+  <axis>
+    <x1-m>0</x1-m>
+    <y1-m>0.33500</y1-m>
+    <z1-m>0.02693</z1-m>
+    <x2-m>1</x2-m>
+    <y2-m>0.33500</y2-m>
+    <z2-m>0.02693</z2-m>
+  </axis>
+</animation>
+
 
 <!-- Submodels -->
 
