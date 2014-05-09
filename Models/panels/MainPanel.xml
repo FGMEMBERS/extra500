@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             07.05.14
+      Date:             09.05.14
 -->
 <PropertyList>
 
@@ -40,6 +40,8 @@
   <object-name>yoke.tube.copilot</object-name>
   <object-name>yoke.pilot</object-name>
   <object-name>yoke.copilot</object-name>
+  <object-name>yoke.pilot.plate</object-name>
+  <object-name>yoke.copilot.plate</object-name>
   <property>surface-positions/elevator-pos-norm</property>
   <interpolation>
    <entry><ind>-1</ind><dep>.3</dep></entry>
@@ -57,6 +59,7 @@
   <type>rotate</type>
   <object-name>yoke.tube.pilot</object-name>
   <object-name>yoke.pilot</object-name>
+  <object-name>yoke.pilot.plate</object-name>
   <property>surface-positions/left-aileron-pos-norm</property>
   <interpolation>
    <entry><ind>-1</ind><dep>75</dep></entry>
@@ -76,6 +79,7 @@
   <type>rotate</type>
   <object-name>yoke.tube.copilot</object-name>
   <object-name>yoke.copilot</object-name>
+  <object-name>yoke.copilot.plate</object-name>
   <property>surface-positions/left-aileron-pos-norm</property>
   <interpolation>
    <entry><ind>-1</ind><dep>75</dep></entry>
