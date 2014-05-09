@@ -1281,6 +1281,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/panelventswitch.nas</file>
 		<file>Aircraft/extra500/Nasal/interior.nas</file>
 		<file>Aircraft/extra500/Nasal/readinglightswitch.nas</file>
+		<file>Aircraft/extra500/Nasal/yokes.nas</file>
 		
 		<file>Aircraft/extra500/Nasal/route_manager.nas</file>
 		
@@ -1637,6 +1638,14 @@ JSBSim Extra Aircraft - Extra 500.
 			<leftright>0</leftright>
 		</readinglightRA>
 	</interior>
+	<yokes>
+		<ptt-copilot>
+			<pressed type="int">0</pressed>
+		</ptt-copilot>
+		<ptt-pilot>
+			<pressed type="int">0</pressed>
+		</ptt-pilot>
+	</yokes>
  </extra500>
 
  <fdm>

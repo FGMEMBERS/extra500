@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Eric van den Berg 
+      Date: 09.05.14
+
+      Last change:      
+      Date:             
+-->
+<PropertyList>
+
+<path>yokes.ac</path>
+
+<!-- yoke movement -->
+
+<animation>
+  <type>translate</type>
+  <object-name>yoke.tube.pilot</object-name>
+  <object-name>yoke.tube.copilot</object-name>
+  <object-name>yoke.pilot</object-name>
+  <object-name>yoke.copilot</object-name>
+  <object-name>yoke.pilot.plate</object-name>
+  <object-name>yoke.copilot.plate</object-name>
+  <object-name>copilot ppt</object-name>  <!-- WOW THIS WORKS everything is relative-->
+  <object-name>pilot ppt</object-name>
+  <object-name>pilot cws</object-name>      
+  <property>surface-positions/elevator-pos-norm</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>.3</dep></entry>
+   <entry><ind>0</ind><dep>.125</dep></entry>
+   <entry><ind> 1</ind><dep>0</dep></entry>
+  </interpolation>
+  <axis>
+   <x>1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+<animation>
+  <type>rotate</type>
+  <object-name>yoke.tube.pilot</object-name>
+  <object-name>yoke.pilot</object-name>
+  <object-name>yoke.pilot.plate</object-name>
+  <object-name>pilot ppt</object-name>
+  <object-name>pilot cws</object-name>    
+  <property>surface-positions/left-aileron-pos-norm</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>75</dep></entry>
+   <entry><ind> 1</ind><dep>-75</dep></entry>
+  </interpolation> 
+  <axis>
+    <x1-m>0</x1-m>
+    <y1-m>-0.33500</y1-m>
+    <z1-m>0.02693</z1-m>
+    <x2-m>1</x2-m>
+    <y2-m>-0.33500</y2-m>
+    <z2-m>0.02693</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>rotate</type>
+  <object-name>yoke.tube.copilot</object-name>
+  <object-name>yoke.copilot</object-name>
+  <object-name>yoke.copilot.plate</object-name>
+  <object-name>copilot ppt</object-name>
+  <property>surface-positions/left-aileron-pos-norm</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>75</dep></entry>
+   <entry><ind> 1</ind><dep>-75</dep></entry>
+  </interpolation> 
+  <axis>
+    <x1-m>0</x1-m>
+    <y1-m>0.33500</y1-m>
+    <z1-m>0.02693</z1-m>
+    <x2-m>1</x2-m>
+    <y2-m>0.33500</y2-m>
+    <z2-m>0.02693</z2-m>
+  </axis>
+</animation>
+
+<!-- Submodels -->
+
+<!-- switches -->
+
+<model>
+  <name>copilot ppt</name>
+  <path>Aircraft/extra500/Models/panels/PTTswitchco.xml</path>
+	<offsets>
+		<x-m>0.07037</x-m>
+		<y-m>0.44328</y-m>	
+		<z-m>0.15615</z-m>
+		<roll-deg>28.059</roll-deg>
+		<pitch-deg>-52.095</pitch-deg>
+		<yaw-deg>-19.261</yaw-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>pilot ppt</name>
+  <path>Aircraft/extra500/Models/panels/PTTswitchpi.xml</path>
+	<offsets>
+		<x-m>0.07037</x-m>
+		<y-m>-0.44328</y-m>	
+		<z-m>0.15615</z-m>
+		<roll-deg>-28.059</roll-deg>
+		<pitch-deg>-52.095</pitch-deg>
+		<yaw-deg>19.261</yaw-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>pilot cws</name>
+  <path>Aircraft/extra500/Models/panels/PTTswitch.ac</path>
+	<offsets>
+		<x-m>0.08542</x-m>
+		<y-m>-0.22961</y-m>	
+		<z-m>0.16914</z-m>
+		<roll-deg>18.401</roll-deg>
+		<pitch-deg>-16.871</pitch-deg>
+		<yaw-deg>0.422</yaw-deg>
+	</offsets>
+</model>
+
+</PropertyList>
