@@ -569,9 +569,9 @@ var AutopilotClass = {
 		UI.register("Autopilot CWS on",	func{extra500.autopilot.onClickCWS(1); } 	);
 		UI.register("Autopilot CWS off",	func{extra500.autopilot.onClickCWS(0); } 	);
 		
-		UI.register("Autopilot Pitch Command down",	func{extra500.autopilot.onClickPitchCommand(-1); } 	);
+		UI.register("Autopilot Pitch Command down",	func{extra500.autopilot.onClickPitchCommand(1); } 	);
 		UI.register("Autopilot Pitch Command off",	func{extra500.autopilot.onClickPitchCommand(0); } 	);
-		UI.register("Autopilot Pitch Command up",	func{extra500.autopilot.onClickPitchCommand(1); } 	);
+		UI.register("Autopilot Pitch Command up",	func{extra500.autopilot.onClickPitchCommand(-1); } 	);
 		
 	},
 	

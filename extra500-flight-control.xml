@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2014-01-03
+      Date:             2014-05-10
 -->
 
 <flight_control name="FCS: extra500">
@@ -316,16 +316,22 @@
 
 		<switch name="autotrim">
 			<default value="fcs/pitch-trim-cmd-norm"/>
-			<test logic="AND" value="/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm">
+			<test logic="OR" value="/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm">
+				<test logic="AND" value="1">
+					<test logic="AND" value="1">
+						/autopilot/settings/trim eq 1
+						/autopilot/settings/ap eq 1
+						/autopilot/mode/cws-armed eq 0
+					</test>
+					<test logic="OR" value="1">
+						/autopilot/mode/alt eq 1
+						/autopilot/mode/vs eq 1
+						/autopilot/mode/gs-follow eq 1
+					</test>
+				</test>
 				<test logic="AND" value="1">
 					/autopilot/settings/trim eq 1
-					/autopilot/settings/ap eq 1
-					/autopilot/mode/cws-armed eq 0
-				</test>
-				<test logic="OR" value="1">
-					/autopilot/mode/alt eq 1
-					/autopilot/mode/vs eq 1
-					/autopilot/mode/gs-follow eq 1
+					/autopilot/mode/electrim ne 0
 				</test>
 			</test>
 			<output>fcs/pitch-trim-cmd-tot-norm</output>

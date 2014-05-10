@@ -39,7 +39,8 @@
   <object-name>copilot ppt</object-name>  <!-- WOW THIS WORKS everything is relative-->
   <object-name>pilot ppt</object-name>
   <object-name>pilot cws</object-name>   
-  <object-name>pilot apdisc</object-name>         
+  <object-name>pilot apdisc</object-name>  
+  <object-name>pilot trimswitch</object-name>                
   <property>surface-positions/elevator-pos-norm</property>
   <interpolation>
    <entry><ind>-1</ind><dep>.3</dep></entry>
@@ -60,7 +61,8 @@
   <object-name>yoke.pilot.plate</object-name>
   <object-name>pilot ppt</object-name>
   <object-name>pilot cws</object-name>  
-  <object-name>pilot apdisc</object-name>           
+  <object-name>pilot apdisc</object-name> 
+  <object-name>pilot trimswitch</object-name>                          
   <property>surface-positions/left-aileron-pos-norm</property>
   <interpolation>
    <entry><ind>-1</ind><dep>75</dep></entry>
@@ -150,6 +152,19 @@
 		<roll-deg>-18.725</roll-deg>
 		<pitch-deg>-15.434</pitch-deg>
 		<yaw-deg>0.0</yaw-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>pilot trimswitch</name>
+  <path>Aircraft/extra500/Models/panels/trimswitch.xml</path>
+	<offsets>
+		<x-m>0.10990</x-m>
+		<y-m>-0.44357</y-m>	
+		<z-m>0.16109</z-m>
+		<roll-deg>-21.463</roll-deg>
+		<pitch-deg>27.625</pitch-deg>
+		<yaw-deg>-10.1</yaw-deg>
 	</offsets>
 </model>
 

@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             18.04.2014
+      Date:             10.05.2014
 
 
 ************************************************************************
@@ -621,6 +621,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<trim type="int">0</trim>
 		<trim-up type="int">0</trim-up>
 		<trim-down type="int">0</trim-down>
+		<electrim type="int">0</electrim>
 		<cap type="int">0</cap>
 		<soft type="int">0</soft>
 	</mode>
@@ -721,6 +722,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<pitch-error-gain type="double">-0.000015</pitch-error-gain>
 	</alt-channel>
 	<pitchtrim-channel>
+		<servo-gain2 type="double">-0.05</servo-gain2>
 		<servo-gain type="double">-0.05</servo-gain>			
 	</pitchtrim-channel>
 	<yawtrim-channel>
@@ -1651,6 +1653,9 @@ JSBSim Extra Aircraft - Extra 500.
 		<apdisc>
 			<pressed type="int">0</pressed>
 		</apdisc>
+		<trim>
+			<pressed type="int">0</pressed>
+		</trim>
 	</yokes>
  </extra500>
 

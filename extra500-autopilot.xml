@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2014-01-03
+      Date:             2014-05-10
 -->
 
 <autopilot name="STEC55X">
@@ -2169,17 +2169,26 @@
 				<sum>
 					<property>fcs/pitch-trim-cmd-tot-norm</property>	
 					<product>
-						<property>/autopilot/settings/trim</property>
-						<property>/autopilot/mode/trim</property>
-						<property>/autopilot/pitchtrim-channel/servo-gain</property>
-						<property>aircraft/hstab/elevator/H-total-lbsft</property>
-						<pow>
-							<max>
-								<property>/autopilot/pitchtrim-channel/trimmoment-abs</property>
-								<value>0.1</value>
-							</max>
-							<value>-1</value>
-						</pow>
+						<sum>
+							<product>
+								<property>/autopilot/settings/trim</property>
+								<property>/autopilot/mode/trim</property>
+								<property>/autopilot/pitchtrim-channel/servo-gain</property>
+								<property>aircraft/hstab/elevator/H-total-lbsft</property>
+								<pow>
+									<max>
+										<property>/autopilot/pitchtrim-channel/trimmoment-abs</property>
+										<value>0.1</value>
+									</max>
+									<value>-1</value>
+								</pow>
+							</product>
+							<product>
+								<property>/autopilot/settings/trim</property>
+								<property>/autopilot/pitchtrim-channel/servo-gain2</property>
+								<property>/autopilot/mode/electrim</property>
+							</product>
+						</sum>
 						<property>sim-dt-sec</property>
 					</product>
 				</sum>
@@ -2201,11 +2210,17 @@
 <!--this makes the pitch trim pilot input to move along, so when the vs/alt mode is disconnected, the elevator trim is in the correct position-->
 		<switch name="vsalton">
 			<default value="/controls/flight/elevator-trim"/>
-			<test logic="AND" value="/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm">
-				/autopilot/mode/trim eq 1
-				/autopilot/settings/trim eq 1
-				/autopilot/settings/ap eq 1
-				/autopilot/mode/cws-armed eq 0
+			<test logic="OR" value="/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm">
+				<test logic="AND" value="1">
+					/autopilot/mode/trim eq 1
+					/autopilot/settings/trim eq 1
+					/autopilot/settings/ap eq 1
+					/autopilot/mode/cws-armed eq 0
+				</test>
+				<test logic="AND" value="1">
+					/autopilot/mode/electrim ne 0
+					/autopilot/settings/trim eq 1
+				</test>
 			</test>
 			<output>/controls/flight/elevator-trim</output>
 		</switch>
