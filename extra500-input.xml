@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2014.02.24
+      Date:             2014.05.10
 -->
 <PropertyList>
 
@@ -51,23 +51,45 @@
 		 <key n="99">
 			 <name>c</name>
 			 <desc>CWS</desc>
-			 <binding n="0">
-				 <command>nasal</command>
-				 <script><![CDATA[
-					UI.click("Autopilot CWS");
-				]]></script> 
-			 </binding>
+    				<binding>
+      				<command>nasal</command>
+      				<script><![CDATA[
+						UI.click("Autopilot CWS on");
+					]]></script>
+    				</binding>
+				<mod-up>
+    				<binding>
+      				<command>nasal</command>
+      				<script><![CDATA[
+						UI.click("Autopilot CWS off");
+					]]></script>
+    				</binding>
+				</mod-up>
 		 </key>
 
 		 <key n="100">
 			 <name>d</name>
 			 <desc>disconnect AP</desc>
-			 <binding n="0">
+    				<binding>
+      				<command>nasal</command>
+      				<script><![CDATA[
+						UI.click("Autopilot disengage on");
+					]]></script>
+    				</binding>
+				<mod-up>
+    				<binding>
+      				<command>nasal</command>
+      				<script><![CDATA[
+						UI.click("Autopilot disengage off");
+					]]></script>
+    				</binding>
+				</mod-up>
+			 <!--binding n="0">
 				 <command>nasal</command>
 				 <script><![CDATA[
 					UI.click("Autopilot disengage");
 				]]></script> 
-			 </binding>
+			 </binding-->
 		 </key>
 
 		 <key n="114">

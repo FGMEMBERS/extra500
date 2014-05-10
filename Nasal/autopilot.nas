@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg 
-#      Date:             25.03.2014
+#      Date:             10.05.2014
 #
 
 
@@ -508,12 +508,16 @@ var AutopilotClass = {
 			me.nSetVerticalSpeedFpm.setValue(0);
 		}
 	},
-	onClickDisengage : func(){
-		me._APDisengage();			
+	onClickDisengage : func(value){
+		setprop("/extra500/yokes/apdisc/pressed",value);
+		if (value == 1 ) {
+			me._APDisengage();
+		}			
 	},
 	
 ########
-	onClickCWS : func(){
+	onClickCWS : func(value){
+		setprop("/extra500/yokes/cws/pressed",value);
 		if ( (getprop("/autopilot/mode/cws-armed") ==0) and ( ( me.nModeAlt.getValue() == 1 ) or ( me.nModeVs.getValue() == 1 ) or (me.nModeGSFollow.getValue() ==1) ) ){
 			setprop("/autopilot/mode/cws-armed",1);
 			setprop("/autopilot/mode/cws",1);
@@ -550,8 +554,8 @@ var AutopilotClass = {
 		UI.register("Autopilot VS =",		func(v){extra500.autopilot.onSetVS(v); } 	);
 				
 		UI.register("Autopilot disengage",	func{extra500.autopilot.onClickDisengage(); } 	);
-		UI.register("Autopilot disengage on",	func{extra500.autopilot.onClickDisengage(); } 	);
-		UI.register("Autopilot disengage off",	func{extra500.autopilot.onClickDisengage(); } 	);
+		UI.register("Autopilot disengage on",	func{extra500.autopilot.onClickDisengage(1); } 	);
+		UI.register("Autopilot disengage off",	func{extra500.autopilot.onClickDisengage(0); } 	);
 		
 		UI.register("Autopilot CWS",		func{extra500.autopilot.onClickCWS(); } 	);
 		UI.register("Autopilot CWS on",	func{extra500.autopilot.onClickCWS(1); } 	);

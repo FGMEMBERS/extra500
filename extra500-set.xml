@@ -1645,6 +1645,12 @@ JSBSim Extra Aircraft - Extra 500.
 		<ptt-pilot>
 			<pressed type="int">0</pressed>
 		</ptt-pilot>
+		<cws>
+			<pressed type="int">0</pressed>
+		</cws>
+		<apdisc>
+			<pressed type="int">0</pressed>
+		</apdisc>
 	</yokes>
  </extra500>
 

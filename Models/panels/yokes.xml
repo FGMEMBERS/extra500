@@ -19,8 +19,8 @@
       Authors: Eric van den Berg 
       Date: 09.05.14
 
-      Last change:      
-      Date:             
+      Last change: Eric van den Berg     
+      Date: 10.05.14            
 -->
 <PropertyList>
 
@@ -38,7 +38,8 @@
   <object-name>yoke.copilot.plate</object-name>
   <object-name>copilot ppt</object-name>  <!-- WOW THIS WORKS everything is relative-->
   <object-name>pilot ppt</object-name>
-  <object-name>pilot cws</object-name>      
+  <object-name>pilot cws</object-name>   
+  <object-name>pilot apdisc</object-name>         
   <property>surface-positions/elevator-pos-norm</property>
   <interpolation>
    <entry><ind>-1</ind><dep>.3</dep></entry>
@@ -58,7 +59,8 @@
   <object-name>yoke.pilot</object-name>
   <object-name>yoke.pilot.plate</object-name>
   <object-name>pilot ppt</object-name>
-  <object-name>pilot cws</object-name>    
+  <object-name>pilot cws</object-name>  
+  <object-name>pilot apdisc</object-name>           
   <property>surface-positions/left-aileron-pos-norm</property>
   <interpolation>
    <entry><ind>-1</ind><dep>75</dep></entry>
@@ -127,7 +129,7 @@
 
 <model>
   <name>pilot cws</name>
-  <path>Aircraft/extra500/Models/panels/PTTswitch.ac</path>
+  <path>Aircraft/extra500/Models/panels/CWSswitch.xml</path>
 	<offsets>
 		<x-m>0.08542</x-m>
 		<y-m>-0.22961</y-m>	
@@ -135,6 +137,19 @@
 		<roll-deg>18.401</roll-deg>
 		<pitch-deg>-16.871</pitch-deg>
 		<yaw-deg>0.422</yaw-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>pilot apdisc</name>
+  <path>Aircraft/extra500/Models/panels/APDiscswitch.xml</path>
+	<offsets>
+		<x-m>0.08593</x-m>
+		<y-m>-0.44009</y-m>	
+		<z-m>0.16905</z-m>
+		<roll-deg>-18.725</roll-deg>
+		<pitch-deg>-15.434</pitch-deg>
+		<yaw-deg>0.0</yaw-deg>
 	</offsets>
 </model>
 
