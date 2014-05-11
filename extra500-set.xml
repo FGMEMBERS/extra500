@@ -52,9 +52,9 @@ JSBSim Extra Aircraft - Extra 500.
 	<status>early production</status>
 	<rating>
 		<FDM type="int">4</FDM>
-		<systems type="int">4</systems>
+		<systems type="int">5</systems>
 		<model type="int">4</model>
-		<cockpit type="int">3</cockpit>
+		<cockpit type="int">4</cockpit>
 	</rating>
 
 	<flight-model archive="y">jsb</flight-model>
