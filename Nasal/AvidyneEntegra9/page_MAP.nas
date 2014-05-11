@@ -56,52 +56,35 @@ var MapOptionWidget = {
 		me.setTimeOutHot(0);
 		if(me._visibility == 1){
 			me.setOptionsVisible(1);
-# 			me._can.Map_Declutter.setVisible(1);
-			me._Page.IFD.nLedR1.setValue(1);
-			me._Page.keys["R1 <"] 	= func(){me._onLand(-1)};
-			me._Page.keys["R1 >"] 	= func(){me._onNav(-1)};
-# 			me._onLand(0);
-# 			me._onNav(0);
+			
+			me._ifd.ui.bindKey("R1",{
+				"<"	: func(){me._onLand(-1);},
+				">"	: func(){me._onNav(-1);},
+			});
 						
-# 			me._can.Map_Lightning.setVisible(1);
-			me._Page.IFD.nLedR2.setValue(1);
-			me._Page.keys["R2 <"] 	= func(){me._onLightning(-1)};
-			me._Page.keys["R2 >"] 	= func(){me._onLightning(1)};
-# 			me._onLightning(0);
+			me._ifd.ui.bindKey("R2",{
+				"<"	: func(){me._onLightning(-1);},
+				">"	: func(){me._onLightning(1);},
+			});
 			
-# 			me._can.Map_WxReports.setVisible(1);
-			me._Page.IFD.nLedR3.setValue(1);
-			me._Page.keys["R3 <"] 	= func(){me._onReports(-1)};
-			me._Page.keys["R3 >"] 	= func(){me._onReports(1)};
-# 			me._onReports(0);
+			me._ifd.ui.bindKey("R3",{
+				"<"	: func(){me._onReports(-1);},
+				">"	: func(){me._onReports(1);},
+			});
 			
-# 			me._can.Map_WxOverlay.setVisible(1);
-			me._Page.IFD.nLedR4.setValue(1);
-			me._Page.keys["R4 <"] 	= func(){me._onOverlay(-1)};
-			me._Page.keys["R4 >"] 	= func(){me._onOverlay(1)};
-# 			me._onOverlay(0);
+			me._ifd.ui.bindKey("R4",{
+				"<"	: func(){me._onOverlay(-1);},
+				">"	: func(){me._onOverlay(1);},
+			});
 			
 		}else{
 			me.setOptionsVisible(0);
-# 			me._can.Map_Declutter.setVisible(0);
-			me._Page.IFD.nLedR1.setValue(0);
-			me._Page.keys["R1 <"] 	= nil;
-			me._Page.keys["R1 >"] 	= nil;
+		
+			me._ifd.ui.bindKey("R1");
+			me._ifd.ui.bindKey("R2");
+			me._ifd.ui.bindKey("R3");
+			me._ifd.ui.bindKey("R4");
 			
-# 			me._can.Map_Lightning.setVisible(0);
-			me._Page.IFD.nLedR2.setValue(0);
-			me._Page.keys["R2 <"] 	= nil;
-			me._Page.keys["R2 >"] 	= nil;
-			
-# 			me._can.Map_WxReports.setVisible(0);
-			me._Page.IFD.nLedR3.setValue(0);
-			me._Page.keys["R3 <"] 	= nil;
-			me._Page.keys["R3 >"] 	= nil;
-			
-# 			me._can.Map_WxOverlay.setVisible(0);
-			me._Page.IFD.nLedR4.setValue(0);
-			me._Page.keys["R4 <"] 	= nil;
-			me._Page.keys["R4 >"] 	= nil;
 		}
 	},
 	_startTimeOut :func(){
@@ -137,7 +120,7 @@ var MapOptionWidget = {
 		me._can.Map_Declutter_Land_1.setVisible(me._var.land.value >= 1);
 		me._can.Map_Declutter_Land_2.setVisible(me._var.land.value >= 2);
 		me._can.Map_Declutter_Land_3.setVisible(me._var.land.value >= 3);
-		me._Page.IFD.movingMap.setLand(me._var.land.value);
+		me._ifd.movingMap.setLand(me._var.land.value);
 		
 	},
 	_onNav : func(step){
@@ -146,27 +129,27 @@ var MapOptionWidget = {
 		me._can.Map_Declutter_Nav_1.setVisible(me._var.nav.value >= 1);
 		me._can.Map_Declutter_Nav_2.setVisible(me._var.nav.value >= 2);
 		me._can.Map_Declutter_Nav_3.setVisible(me._var.nav.value >= 3);
-		me._Page.IFD.movingMap.setNav(me._var.nav.value);
+		me._ifd.movingMap.setNav(me._var.nav.value);
 	},
 	_onLightning : func(step){
 		if (me._checkOptions()) return 0;
 		me._var.lightning.value = global.cycle(me._var.lightning.value,me._var.lightning.min,me._var.lightning.max,step);
 		me._can.Map_Lightning_Value.setText(me._lable.lightning[me._var.lightning.value]);
-		me._Page.IFD.movingMap.setLightning(me._var.lightning.value);
+		me._ifd.movingMap.setLightning(me._var.lightning.value);
 	},
 	_onReports : func(step){
 		if (me._checkOptions()) return 0;
 		me._var.reports.value += step;
 		me._var.reports.value = global.clamp(me._var.reports.value,me._var.reports.min,me._var.reports.max);
 		me._can.Map_WxReports_Value.setText(me._lable.reports[me._var.reports.value]);
-		me._Page.IFD.movingMap.setWxReports(me._var.reports.value);
+		me._ifd.movingMap.setWxReports(me._var.reports.value);
 	},
 	_onOverlay : func(step){
 		if (me._checkOptions()) return 0;
 		me._var.overlay.value += step;
 		me._var.overlay.value = global.clamp(me._var.overlay.value,me._var.overlay.min,me._var.overlay.max);
 		me._can.Map_WxOverlay_Value.setText(me._lable.overlay[me._var.overlay.value]);
-		me._Page.IFD.movingMap.setWxOverlay(me._var.overlay.value);
+		me._ifd.movingMap.setWxOverlay(me._var.overlay.value);
 	},	
 	
 };
@@ -233,7 +216,6 @@ var AvidynePageMAP = {
 	_onVisibiltyChange : func(){
 		#me.IFD._widget.Headline.setVisible(visibility);
 		#me.IFD._widget.PlusData.setVisible(visibility);
-		me.IFD.movingMap.setVisible(me._visibility);
 		
 		if(me._visibility == 1){
 			me.setListeners(me);
@@ -241,9 +223,14 @@ var AvidynePageMAP = {
 		}else{
 			me.keys = {};
 			me.removeListeners();
-			me._widget.MovingMapKnob.setVisible(me._visibility);
+			
 		}
+		
+		me.IFD.movingMap.setVisible(me._visibility);
 		me._widget.Tab.setVisible(me._visibility);
+		me._widget.MapOptionWidget.setVisible(me._visibility);
+		me._widget.MovingMapKnob.setVisible(me._visibility);
+		
 		me.page.setVisible(me._visibility);
 	},
 	_initWidgetsForTab : func(index){

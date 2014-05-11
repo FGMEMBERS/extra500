@@ -51,12 +51,17 @@ var TabWidget = {
 	},
 	_onVisibiltyChange : func(){
 		if(me._visibility == 1){
-			me._Page.keys[me._Page.name~" >"] = func(){me.scroll(1);};
-			me._Page.keys[me._Page.name~" <"] = func(){me.scroll(-1);};
+# 			me._Page.keys[me._Page.name~" >"] = func(){me.scroll(1);};
+# 			me._Page.keys[me._Page.name~" <"] = func(){me.scroll(-1);};
+			me._ifd.ui.bindKey(me._Page.name,{
+				"<"	: func(){me.scroll(-1);},
+				">"	: func(){me.scroll(1);},
+			});
 			me.scroll(0);
 		}else{
-			me._Page.keys[me._Page.name~" >"] = nil;
-			me._Page.keys[me._Page.name~" <"] = nil;
+# 			me._Page.keys[me._Page.name~" >"] = nil;
+# 			me._Page.keys[me._Page.name~" <"] = nil;
+			me._ifd.ui.bindKey(me._Page.name);
 		}
 		me._can.Tabs.setVisible(me._visibility);
 	},
@@ -271,41 +276,40 @@ var PlusDataWidget = {
 	},
 	_onVisibiltyChange : func(){
 		if(me._visibility == 1){
-			me._ifd.nLedL2.setValue(1);
-			me._Page.keys["L2 <"] 	= func(){me._scrollSource(-1);};
-			me._Page.keys["L2 >"] 	= func(){me._scrollSource(1);};
-			me._ifd.nLedL3.setValue(1);
-			me._Page.keys["L3 <"] 	= func(){extra500.keypad.onCom1Scroll(1);};
-			me._Page.keys["L3 >"] 	= func(){me._selectChannel(0);};
-			me._ifd.nLedL4.setValue(1);
-			me._Page.keys["L4 <"] 	= func(){extra500.keypad.onCom2Scroll(1);};
-			me._Page.keys["L4 >"] 	= func(){me._selectChannel(1);};
-			me._ifd.nLedLK.setValue(1);
-			me._ifd.setKnobLabel("LK","Tune","Swap");
-		
-			me._Page.keys["LK >>"] 	= func(){me._adjustFreqency(1);};
-			me._Page.keys["LK <<"] 	= func(){me._adjustFreqency(-1);};
-			me._Page.keys["LK"] 	= func(){me._swapFreqency();};
-			me._Page.keys["LK >"] 	= func(){me._adjustFreqency(0.025);};
-			me._Page.keys["LK <"] 	= func(){me._adjustFreqency(-0.025);};
+
+			me._ifd.ui.bindKey("L2",{
+				"<"	: func(){me._scrollSource(-1);},
+				">"	: func(){me._scrollSource(1);},
+			});
+
+			me._ifd.ui.bindKey("L3",{
+				"<"	: func(){extra500.keypad.onCom1Scroll(1);},
+				">"	: func(){me._selectChannel(0);},
+			});
+
+			me._ifd.ui.bindKey("L4",{
+				"<"	: func(){extra500.keypad.onCom2Scroll(1);},
+				">"	: func(){me._selectChannel(1);},
+			});
+			
+			
+			me._ifd.ui.bindKnob("LK",{
+				"<<"	: func(){me._adjustFreqency(-1);},
+				"<"	: func(){me._adjustFreqency(-0.025);},
+				"push"	: func(){me._swapFreqency();},
+				">"	: func(){me._adjustFreqency(0.025);},
+				">>"	: func(){me._adjustFreqency(1);},
+			},{
+				"scroll"	: "Tune",
+				"push"		: "Swap",
+			});
+			
 		}else{
-			me._ifd.nLedL2.setValue(0);
-			me._Page.keys["L2 <"] 	= nil;
-			me._Page.keys["L2 >"] 	= nil;
-			me._ifd.nLedL3.setValue(0);
-			me._Page.keys["L3 <"] 	= nil;
-			me._Page.keys["L3 >"] 	= nil;
-			me._ifd.nLedL4.setValue(0);
-			me._Page.keys["L4 <"] 	= nil;
-			me._Page.keys["L4 >"] 	= nil;
-			me._ifd.nLedLK.setValue(0);
-			me._ifd.setKnobLabel("LK");
-		
-			me._Page.keys["LK >>"] 	= nil;
-			me._Page.keys["LK <<"] 	= nil;
-			me._Page.keys["LK"] 	= nil;
-			me._Page.keys["LK >"] 	= nil;
-			me._Page.keys["LK <"] 	= nil;
+			me._ifd.ui.bindKey("L2");
+			me._ifd.ui.bindKey("L3");
+			me._ifd.ui.bindKey("L4");
+			me._ifd.ui.bindKnob("LK");
+			
 		}
 		me._group.setVisible(me._visibility);
 		me._widget.TCAS.setVisible(me._visibility);
@@ -395,6 +399,18 @@ var PlusDataWidget = {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+### TODO : check depredicated and delete !!!
 
 
 

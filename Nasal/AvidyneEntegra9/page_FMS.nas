@@ -60,15 +60,16 @@ var DirectToWidget = {
 	_onVisibiltyChange : func(){
 		if(me._visibility == 1){
 			me.setListeners(me);
-			me._Page.IFD.nLedR4.setValue(1);
-			me._Page.keys["R4 <"] 	= func(){extra500.keypad.onD()};
-			me._Page.keys["R4 >"] 	= func(){extra500.keypad.onD()};
+			
+			me._ifd.ui.bindKey("R4",{
+				"<"	: func(){extra500.keypad.onD()},
+				">"	: func(){extra500.keypad.onD()},
+			});
+			
 			me._can.button.setVisible(1);
 		}else{
 			me._can.button.setVisible(0);
-			me._Page.IFD.nLedR4.setValue(0);
-			me._Page.keys["R4 <"] 	= nil;
-			me._Page.keys["R4 >"] 	= nil;
+			me._ifd.ui.bindKey("R4");
 			me.removeListeners();
 		}
 	},
@@ -247,35 +248,32 @@ var FlightPlanListWidget = {
 	},
 	_checkKeys  : func(){
 		if(me._visibility == 1 ){
-				if (me._layout == "FPL"){
-				me._Page.IFD.nLedR5.setValue(1);
-				me._Page.keys["R5 <"] 	= func(){me._deleteWaypoint();};
-				me._Page.keys["R5 >"] 	= func(){me._deleteWaypoint();};
-			}else{
-				me._Page.IFD.nLedR5.setValue(0);
-				me._Page.keys["R5 <"] 	= nil;
-				me._Page.keys["R5 >"] 	= nil;
-			}
-			me._Page.IFD.nLedRK.setValue(1);
-			me._Page.IFD.setKnobLabel("RK","Scroll","Select");
+			if (me._layout == "FPL"){
 				
-			me._Page.keys["RK >>"] 	= func(){me._adjustSelection(-2);};
-			me._Page.keys["RK <<"] 	= func(){me._adjustSelection(2);};
-			me._Page.keys["RK"] 	= func(){extra500.fms.jumpTo()};
-			me._Page.keys["RK >"] 	= func(){me._adjustSelection(-1);};
-			me._Page.keys["RK <"] 	= func(){me._adjustSelection(1);};
-		}else{
-			me._Page.IFD.nLedR5.setValue(0);
-			me._Page.keys["R5 <"] 	= nil;
-			me._Page.keys["R5 >"] 	= nil;
+				me._ifd.ui.bindKey("R5",{
+					"<"	: func(){me._deleteWaypoint();},
+					">"	: func(){me._deleteWaypoint();},
+				});
+				
+			}else{
+				me._ifd.ui.bindKey("R5");
+			}
 			
-			me._Page.IFD.nLedRK.setValue(0);
-			me._Page.IFD.setKnobLabel("RK");
-			me._Page.keys["RK >>"] 	= nil;
-			me._Page.keys["RK <<"] 	= nil;
-			me._Page.keys["RK"] 	= nil;
-			me._Page.keys["RK >"] 	= nil;
-			me._Page.keys["RK <"] 	= nil;
+			me._ifd.ui.bindKnob("RK",{
+				"<<"	: func(){me._adjustSelection(2);},
+				"<"	: func(){me._adjustSelection(1);},
+				"push"	: func(){extra500.fms.jumpTo();},
+				">"	: func(){me._adjustSelection(-1);},
+				">>"	: func(){me._adjustSelection(-2);},
+			},{
+				"scroll"	: "Scroll",
+				"push"		: "Select",
+				
+			});
+			
+		}else{
+			me._ifd.ui.bindKey("R5");
+			me._ifd.ui.bindKnob("RK");
 		}
 	},
 	setLayout : func(layout){

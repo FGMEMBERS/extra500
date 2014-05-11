@@ -313,25 +313,25 @@ var TcasWidget = {
 		
 		
 	},	
-	setVisible : func(visibility){
+	_onVisibiltyChange : func(){
 		#print("TcasWidget.setVisible("~visibility~") ... "~me._ifd.name);
-		if(visibility == 1){
+		if(me._visibility == 1){
 			me.setListeners();
 		
 			me._adjustMode(0);
 			me._adjustRange(0);
 			
-			me._ifd.nLedL1.setValue(1);
-			me._Page.keys["L1 <"] 	= func(){me._adjustMode(1);};
-			me._Page.keys["L1 >"] 	= func(){me._adjustRange(4);};
+			me._ifd.ui.bindKey("L1",{
+				"<"	: func(){me._adjustMode(1);},
+				">"	: func(){me._adjustRange(4);},
+			});
 
 		}else{
 			me.removeListeners();
-			me._ifd.nLedL1.setValue(0);
-			me._Page.keys["L1 <"] 	= nil;
-			me._Page.keys["L1 >"] 	= nil;
+			
+			me._ifd.ui.bindKey("L1");
 		}
-		me._group.setVisible(visibility);
+		me._group.setVisible(me._visibility);
 	},
 	onModelObserverNotify : func(n){
 		me._map.setRefPos(tcasModel._lat,tcasModel._lon);
@@ -344,13 +344,13 @@ var TcasWidget = {
 		me._can.offline.setVisible(!me._service);
 		me._can.online.setVisible(me._service);
 		if (me._service==1){
-			me._ifd.nLedL1.setValue(1);
-			me._Page.keys["L1 <"] 	= func(){me._adjustRange(4);};
-			me._Page.keys["L1 >"] 	= func(){me._adjustMode(1);};
+			me._ifd.ui.bindKey("L1",{
+				"<"	: func(){me._adjustMode(1);},
+				">"	: func(){me._adjustRange(4);},
+			});
+			
 		}else{
-			me._ifd.nLedL1.setValue(0);
-			me._Page.keys["L1 <"] 	= nil;
-			me._Page.keys["L1 >"] 	= nil;
+			me._ifd.ui.bindKey("L1");
 		}
 	},
 	_adjustMode : func(amount){

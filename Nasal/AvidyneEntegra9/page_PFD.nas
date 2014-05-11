@@ -882,6 +882,9 @@ var NavSourceWidget = {
 		m._distance		= 0;
 		m._frequency		= "";
 		
+		m._modeFMSmaualRadial 	= 0;
+		
+		
 		return m;
 	},
 	setListeners : func(instance) {
@@ -902,66 +905,37 @@ var NavSourceWidget = {
 		me._sourceListeners = [];
 	},
 	init : func(instance=me){
-# 		me.setListeners(instance);
-# 		
-# 		me._ifd.nLedL1.setValue(1);
-# 		me._Page.keys["L1 >"] = func(){me._scroll(1);};
-# 		me._Page.keys["L1 <"] = func(){me._scroll(-1);};
-# 		
-# 		me._ifd.nLedLK.setValue(1);
-# 		me._Page.keys["LK <<"]	= func(){me._adjustRadial(-10);};
-# 		me._Page.keys["LK <"] 	= func(){me._adjustRadial(-1);};
-# 		me._Page.keys["LK >"] 	= func(){me._adjustRadial(1);};
-# 		me._Page.keys["LK >>"] 	= func(){me._adjustRadial(10);};
-# 		
-# 		
-# 		me._scroll(0);
+
 	},
 	deinit : func(){
 		me.removeListeners();
-# 		
-# 		me._ifd.nLedL1.setValue(0);
-# 		me._Page.keys["L1 >"] = nil;
-# 		me._Page.keys["L1 <"] = nil;
-# 		
-# 		me._ifd.nLedLK.setValue(0);
-# 		me._Page.keys["LK <<"] 	= nil;
-# 		me._Page.keys["LK <"] 	= nil;
-# 		me._Page.keys["LK >"] 	= nil;
-# 		me._Page.keys["LK >>"] 	= nil;
-		
+
 	},
 	_onVisibiltyChange : func(){
 		if(me._visibility == 1){
 			me.setListeners(me);
-			me._ifd.nLedL1.setValue(1);
 			
+			me._ifd.ui.bindKey("L1",{
+				"<"	: func(){me._scroll(-1);},
+				">"	: func(){me._scroll(1);},
+			});
 			
-			me._Page.keys["L1 >"] = func(){me._scroll(1);};
-			me._Page.keys["L1 <"] = func(){me._scroll(-1);};
-			
-			me._ifd.nLedLK.setValue(1);
-			me._Page.IFD.setKnobLabel("LK","Course");
-			me._Page.keys["LK <<"]	= func(){me._adjustRadial(-10);};
-			me._Page.keys["LK <"] 	= func(){me._adjustRadial(-1);};
-			me._Page.keys["LK >"] 	= func(){me._adjustRadial(1);};
-			me._Page.keys["LK >>"] 	= func(){me._adjustRadial(10);};
-			
+			me._ifd.ui.bindKnob("LK",{
+				"<<"	: func(){me._adjustRadial(-10);},
+				"<"	: func(){me._adjustRadial(-1);},
+				"push"	: nil,
+				">"	: func(){me._adjustRadial(1);},
+				">>"	: func(){me._adjustRadial(10);},
+			},{
+				"scroll"	: "Course",
+			});
 			
 			me._scroll(0);
 		}else{
 			me.removeListeners();
 			
-			me._ifd.nLedL1.setValue(0);
-			me._Page.keys["L1 >"] = nil;
-			me._Page.keys["L1 <"] = nil;
-			
-			me._ifd.nLedLK.setValue(0);
-			me._Page.IFD.setKnobLabel("LK");
-			me._Page.keys["LK <<"] 	= nil;
-			me._Page.keys["LK <"] 	= nil;
-			me._Page.keys["LK >"] 	= nil;
-			me._Page.keys["LK >>"] 	= nil;
+			me._ifd.ui.bindKey("L1");
+			me._ifd.ui.bindKnob("LK");
 		}
 	},
 	
@@ -1163,15 +1137,14 @@ var BearingSourceWidget = {
 	_onVisibiltyChange : func(){
 		if(me._visibility == 1){
 			me.setListeners(me);
-			me._ifd.nLedL3.setValue(1);
-			me._Page.keys["L3 >"] = func(){me._scroll(1);};
-			me._Page.keys["L3 <"] = func(){me._scroll(-1);};
+			me._ifd.ui.bindKey("L3",{
+				"<"	: func(){me._scroll(-1);},
+				">"	: func(){me._scroll(1);},
+			});
 			me._scroll(0);
 		}else{
 			me.removeListeners();
-			me._ifd.nLedL3.setValue(0);
-			me._Page.keys["L3 >"] = nil;
-			me._Page.keys["L3 <"] = nil;
+			me._ifd.ui.bindKey("L3");
 		}
 	},
 	
@@ -1486,13 +1459,14 @@ var NavSelectWidget = {
 	_onVisibiltyChange : func(){
 		if(me._visibility == 1){
 			me.setListeners(me);
-			
-			me._ifd.nLedR3.setValue(1);
-			me._Page.keys["R3 <"] = func(){me.setSynVis();};
-			me._Page.keys["R3 >"] = func(){me.setSynVis();};
-			me._ifd.nLedR4.setValue(1);
-			me._Page.keys["R4 <"] = func(){me.setFlighPlan();};
-			me._Page.keys["R4 >"] = func(){me.setFlighPlan();};
+			me._ifd.ui.bindKey("R3",{
+				"<"	: func(){me.setSynVis();},
+				">"	: func(){me.setSynVis();},
+			});
+			me._ifd.ui.bindKey("R4",{
+				"<"	: func(){me.setFlighPlan();},
+				">"	: func(){me.setFlighPlan();},
+			});
 			
 			me.registerKeyCDI() ;
 		
@@ -1506,14 +1480,11 @@ var NavSelectWidget = {
 			
 		}else{
 			me.removeListeners();
-			me._ifd.nLedR3.setValue(0);
-			me._Page.keys["R3 <"] 	= nil;
-			me._Page.keys["R3 >"] 	= nil;
-			me._ifd.nLedR4.setValue(0);
-			me._Page.keys["R4 <"] 	= nil;
-			me._Page.keys["R4 >"] 	= nil;
+			me._ifd.ui.bindKey("R3");
+			me._ifd.ui.bindKey("R4");
+			me._ifd.ui.bindKey("R5");
 			
-			me.registerKeyCDI();
+			#me.registerKeyCDI();
 			
 						
 			me._ifd.movingMap.setLayerVisible("route",1);
@@ -1521,31 +1492,19 @@ var NavSelectWidget = {
 		me._can.content.setVisible(me._visibility);
 		
 	},
-	registerKeys : func(){
-		me._ifd.nLedR3.setValue(1);
-		me._Page.keys["R3 <"] = func(){me.setSynVis();};
-		me._Page.keys["R3 >"] = func(){me.setSynVis();};
-		me._ifd.nLedR4.setValue(1);
-		me._Page.keys["R4 <"] = func(){me.setFlighPlan();};
-		me._Page.keys["R4 >"] = func(){me.setFlighPlan();};
-# 		me._ifd.nLedR5.setValue(1);
-# 		me._Page.keys["R5 <"] = func(){me.setCDI();};
-# 		me._Page.keys["R5 >"] = func(){me.setCDI();};
-		registerKeyCDI();
-	},
 	registerKeyCDI : func(){
 		me._can.CDI_Button.setVisible( me._Page._widget.Tab._index == 0 and me._Page._widget.NavSource._source == 2);
 		if(me._Page._widget.Tab._index == 0){
 			if(me._Page._widget.NavSource._source == 2){
 				me.setCDI(me._userCDI);
-				me._ifd.nLedR5.setValue(1);
-				me._Page.keys["R5 <"] = func(){me.setCDI();};
-				me._Page.keys["R5 >"] = func(){me.setCDI();};
+				me._ifd.ui.bindKey("R5",{
+					"<"	: func(){me.setCDI();},
+					">"	: func(){me.setCDI();},
+				});
+			
 							
 			}else{
-				me._ifd.nLedR5.setValue(0);
-				me._Page.keys["R5 <"] 	= nil;
-				me._Page.keys["R5 >"] 	= nil;
+				me._ifd.ui.bindKey("R5");
 				me.setCDI(1);
 			}
 		}else{
@@ -1613,15 +1572,21 @@ var BugSelectWidget = {
 		me.removeListeners();
 	},
 	registerKeys : func(){
-		me._ifd.nLedR3.setValue(1);
-		me._Page.keys["R3 <"] = func(){me._setModeRK("HDG");};
-		me._Page.keys["R3 >"] = func(){me._setModeRK("HDG");};
-		me._ifd.nLedR4.setValue(1);
-		me._Page.keys["R4 <"] = func(){me._setModeRK("ALT");};
-		me._Page.keys["R4 >"] = func(){me._setModeRK("ALT");};
-		me._ifd.nLedR5.setValue(1);
-		me._Page.keys["R5 <"] = func(){me._setModeRK("VS");};
-		me._Page.keys["R5 >"] = func(){me._setModeRK("VS");};
+
+		me._ifd.ui.bindKey("R3",{
+			"<"	: func(){me._setModeRK("HDG");},
+			">"	: func(){me._setModeRK("HDG");},
+		});
+		me._ifd.ui.bindKey("R4",{
+			"<"	: func(){me._setModeRK("ALT");},
+			">"	: func(){me._setModeRK("ALT");},
+		});
+		me._ifd.ui.bindKey("R5",{
+			"<"	: func(){me._setModeRK("VS");},
+			">"	: func(){me._setModeRK("VS");},
+		});
+			
+		
 	},
 	_onVisibiltyChange : func(){
 		if(me._visibility == 1){
@@ -1630,23 +1595,12 @@ var BugSelectWidget = {
 			me._setModeRK(me._modeRK);
 		}else{
 			me.removeListeners();
-			me._ifd.nLedR3.setValue(0);
-			me._Page.keys["R3 <"] 	= nil;
-			me._Page.keys["R3 >"] 	= nil;
-			me._ifd.nLedR4.setValue(0);
-			me._Page.keys["R4 <"] 	= nil;
-			me._Page.keys["R4 >"] 	= nil;
-			me._ifd.nLedR5.setValue(0);
-			me._Page.keys["R5 <"] 	= nil;
-			me._Page.keys["R5 >"] 	= nil;
+
+			me._ifd.ui.bindKey("R3");
+			me._ifd.ui.bindKey("R4");
+			me._ifd.ui.bindKey("R5");
 			
-			me._ifd.nLedRK.setValue(0);
-			me._Page.IFD.setKnobLabel("RK");
-			me._Page.keys["RK >>"] 	= nil;
-			me._Page.keys["RK <<"] 	= nil;
-			me._Page.keys["RK"] 	= nil;
-			me._Page.keys["RK >"] 	= nil;
-			me._Page.keys["RK <"] 	= nil;
+			me._ifd.ui.bindKnob("RK");
 		}
 		me._can.content.setVisible(me._visibility);
 	},
@@ -1671,46 +1625,52 @@ var BugSelectWidget = {
 			me._can.HeadingBorder.set("stroke-width",20);
 			me._can.Heading.set("z-index",2);
 		
-			me._ifd.nLedRK.setValue(1);
-			me._Page.IFD.setKnobLabel("RK","Heading","Sync");
-			me._Page.keys["RK >>"] 	= func(){extra500.keypad.onAdjustHeading(10);};
-			me._Page.keys["RK <<"] 	= func(){extra500.keypad.onAdjustHeading(-10);};
-			me._Page.keys["RK"] 	= func(){extra500.keypad.onHeadingSync();};
-			me._Page.keys["RK >"] 	= func(){extra500.keypad.onAdjustHeading(1);};
-			me._Page.keys["RK <"] 	= func(){extra500.keypad.onAdjustHeading(-1);};
+			me._ifd.ui.bindKnob("RK",{
+				"<<"	: func(){extra500.keypad.onAdjustHeading(-10);},
+				"<"	: func(){extra500.keypad.onAdjustHeading(-1);},
+				"push"	: func(){extra500.keypad.onHeadingSync();},
+				">"	: func(){extra500.keypad.onAdjustHeading(1);},
+				">>"	: func(){extra500.keypad.onAdjustHeading(10);},
+			},{
+				"scroll"	: "Heading",
+				"push"		: "Sync",
+			});
+			
+			
 		}elsif (me._modeRK == "ALT"){
 			me._can.AltitudeBorder.set("stroke",COLOR["Turquoise"]);
 			me._can.AltitudeBorder.set("stroke-width",20);
 			me._can.Altitude.set("z-index",2);
 						
-			me._ifd.nLedRK.setValue(1);
-			me._Page.IFD.setKnobLabel("RK","Altitude","Sync");
-			me._Page.keys["RK >>"] 	= func(){extra500.keypad.onAdjustAltitude(500);};
-			me._Page.keys["RK <<"] 	= func(){extra500.keypad.onAdjustAltitude(-500);};
-			me._Page.keys["RK"] 	= func(){extra500.keypad.onAltitudeSync();};
-			me._Page.keys["RK >"] 	= func(){extra500.keypad.onAdjustAltitude(100);};
-			me._Page.keys["RK <"] 	= func(){extra500.keypad.onAdjustAltitude(-100);};
+			me._ifd.ui.bindKnob("RK",{
+				"<<"	: func(){extra500.keypad.onAdjustAltitude(-500);},
+				"<"	: func(){extra500.keypad.onAdjustAltitude(-100);},
+				"push"	: func(){extra500.keypad.onAltitudeSync();},
+				">"	: func(){extra500.keypad.onAdjustAltitude(100);},
+				">>"	: func(){extra500.keypad.onAdjustAltitude(500);},
+			},{
+				"scroll"	: "Altitude",
+				"push"		: "Sync",
+			});
+			
 		}elsif (me._modeRK == "VS"){
 			me._can.VSBorder.set("stroke",COLOR["Turquoise"]);
 			me._can.VSBorder.set("stroke-width",20);
 			me._can.VS.set("z-index",2);
 			
-			me._ifd.nLedRK.setValue(1);
-			me._Page.IFD.setKnobLabel("RK","VS","Sync");
-			me._Page.keys["RK >>"] 	= func(){extra500.autopilot.onAdjustVS(-100);};
-			me._Page.keys["RK <<"] 	= func(){extra500.autopilot.onAdjustVS(100);};
-			me._Page.keys["RK"] 	= func(){extra500.autopilot.onSetVS(0);};
-			me._Page.keys["RK >"] 	= func(){extra500.autopilot.onAdjustVS(-100);};
-			me._Page.keys["RK <"] 	= func(){extra500.autopilot.onAdjustVS(100);};
+			me._ifd.ui.bindKnob("RK",{
+				"<<"	: func(){extra500.autopilot.onAdjustVS(-500);},
+				"<"	: func(){extra500.autopilot.onAdjustVS(-100);},
+				"push"	: func(){extra500.autopilot.onSetVS(0);},
+				">"	: func(){extra500.autopilot.onAdjustVS(100);},
+				">>"	: func(){extra500.autopilot.onAdjustVS(500);},
+			},{
+				"scroll"	: "VS",
+				"push"		: "Sync",
+			});
 		}else{
 							
-			me._ifd.nLedRK.setValue(0);
-			me._Page.IFD.setKnobLabel("RK");
-			me._Page.keys["RK >>"] 	= nil;
-			me._Page.keys["RK <<"] 	= nil;
-			me._Page.keys["RK"] 	= nil;
-			me._Page.keys["RK >"] 	= nil;
-			me._Page.keys["RK <"] 	= nil;
+			me._ifd.ui.bindKnob("RK");
 		}
 	}
 };
@@ -1750,30 +1710,39 @@ var TimerWidget = {
 			me.registerKeys();
 		}else{
 			me.removeListeners();
-			me._ifd.nLedR2.setValue(0);
-			me._Page.keys["R2 <"] = nil;
-			me._Page.keys["R2 >"] = nil;
+			me._ifd.ui.bindKey("R2");
 		}
 	},
 	registerKeys : func(){
 		if ((me._Page.data.timerState == 0)){
-			me._ifd.nLedR2.setValue(1);
-			me._Page.keys["R2 <"] = func(){me._Page.data.timerStart();me.registerKeys();};
-			me._Page.keys["R2 >"] = func(){me._Page.data.timerStart();me.registerKeys();};
+
+			me._ifd.ui.bindKey("R2",{
+				"<"	: func(){me._Page.data.timerStart();me.registerKeys();},
+				">"	: func(){me._Page.data.timerStart();me.registerKeys();},
+			});
+						
 			me._can.On.setVisible(0);
 			me._can.Center.setVisible(1);
 			
 		}elsif ((me._Page.data.timerState == 1)){
-			me._ifd.nLedR2.setValue(1);
-			me._Page.keys["R2 <"] = func(){me._Page.data.timerStart();me.registerKeys();};
-			me._Page.keys["R2 >"] = func(){me._Page.data.timerReset();me.registerKeys();};
+
+			me._ifd.ui.bindKey("R2",{
+				"<"	: func(){me._Page.data.timerStart();me.registerKeys();},
+				">"	: func(){me._Page.data.timerReset();me.registerKeys();},
+			});
+						
+			
 			me._can.Left.setText("Start");
 			me._can.On.setVisible(1);
 			me._can.Center.setVisible(0);
 		}elsif ((me._Page.data.timerState == 2)){
-			me._ifd.nLedR2.setValue(1);
-			me._Page.keys["R2 <"] = func(){me._Page.data.timerStop();me.registerKeys();};
-			me._Page.keys["R2 >"] = func(){me._Page.data.timerReset();me.registerKeys();};
+
+			me._ifd.ui.bindKey("R2",{
+				"<"	: func(){me._Page.data.timerStop();me.registerKeys();},
+				">"	: func(){me._Page.data.timerReset();me.registerKeys();},
+			});
+			
+			
 			me._can.Left.setText("Stop");
 			me._can.On.setVisible(1);
 			me._can.Center.setVisible(0);

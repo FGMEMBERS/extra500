@@ -142,7 +142,170 @@ var IFD_LAYOUT = {
 };
 
 
-var IFDUserInterface = {};
+var IFDUserInterface = {
+	new : func(ifd){
+		var m = { parents: [IFDUserInterface] };
+		m._IFD = ifd;
+		
+		m._can = {
+			LK : {
+				Label		: m._IFD._group.getElementById("LKLabel").setVisible(0),
+				scroll		: m._IFD._group.getElementById("LKOuterLabel").setText(""),
+				push		: m._IFD._group.getElementById("LKInnerLabel").setText(""),
+			},
+			RK : {
+				Label		: m._IFD._group.getElementById("RKLabel").setVisible(0),
+				scroll		: m._IFD._group.getElementById("RKOuterLabel").setText(""),
+				push		: m._IFD._group.getElementById("RKInnerLabel").setText(""),
+			},
+		};
+		
+		
+		
+		m._nLed = {
+			L1 	: m._IFD._nRoot.initNode("led/L1",0,"BOOL"),
+			L2 	: m._IFD._nRoot.initNode("led/L2",0,"BOOL"),
+			L3 	: m._IFD._nRoot.initNode("led/L3",0,"BOOL"),
+			L4 	: m._IFD._nRoot.initNode("led/L4",0,"BOOL"),
+			L5 	: m._IFD._nRoot.initNode("led/L5",0,"BOOL"),
+			L6 	: m._IFD._nRoot.initNode("led/L6",0,"BOOL"),
+			
+			R1 	: m._IFD._nRoot.initNode("led/R1",0,"BOOL"),
+			R2 	: m._IFD._nRoot.initNode("led/R2",0,"BOOL"),
+			R3 	: m._IFD._nRoot.initNode("led/R3",0,"BOOL"),
+			R4 	: m._IFD._nRoot.initNode("led/R4",0,"BOOL"),
+			R5 	: m._IFD._nRoot.initNode("led/R5",0,"BOOL"),
+			R6 	: m._IFD._nRoot.initNode("led/R6",0,"BOOL"),
+			
+			LK 	: m._IFD._nRoot.initNode("led/LK",1,"BOOL"),
+			RK 	: m._IFD._nRoot.initNode("led/RK",1,"BOOL"),
+			
+			Baro 	: m._IFD._nRoot.initNode("led/Baro",1,"BOOL"),
+			Dim 	: m._IFD._nRoot.initNode("led/Dim",1,"BOOL"),
+		
+		};
+		m._keyCallbacks	 = ["<",">"];
+		m._keys		 = ["L1","L2","L3","L4","L5","L6","R1","R2","R3","R4","R5","R6","DIM","PFD","FMS","MAP","SYS","CHKL"];
+		m._keyMap	 = {};
+		
+		foreach (var key ; m._keys){
+			foreach (var cb ; m._keyCallbacks){
+				m._keyMap[key~" "~cb] = nil;
+			}
+		}
+		
+		m._knobCallbacks = ["<<","<","push",">",">>"];
+		m._KnobLabels	 = ["scroll","push"];
+		m._knobs	 = ["LK","RK","BARO"];
+		
+		foreach (var key ; m._knobs){
+			foreach (var cb ; m._knobCallbacks){
+				m._keyMap[key~" "~cb] = nil;
+			}
+		}
+		
+		return m;
+	},
+	setBacklight : func(value){
+		me._nLed.LK.setValue(value);	
+		me._nLed.RK.setValue(value);
+		me._nLed.Baro.setValue(value);
+		me._nLed.Dim.setValue(value);
+	},
+	bindKey : func(name=nil,callback=nil){
+		if(name != nil){
+			var active = 0;
+			
+			if(callback!=nil){
+				foreach (var cb ; me._keyCallbacks){
+					var callbackName = name ~" "~cb;
+										
+					if(contains(me._keyMap,callbackName)){
+						if(contains(callback,cb)){
+							me._keyMap[callbackName] = callback[cb];
+							active = 1;
+						}else{
+							me._keyMap[callbackName] = nil;
+						}
+						
+					}else{
+# 						print("IFDUserInterface.bindKey() ... no such Key("~callbackName~").");
+					}
+				}	
+			}else{
+				foreach (var cb ; me._keyCallbacks){
+					var callbackName = name ~" "~cb;
+					me._keyMap[callbackName] = nil;				
+				}
+			}
+		
+			if(contains(me._nLed,name)){
+				me._nLed[name].setValue(active);
+			}
+		}
+	},
+	
+	bindKnob : func(name=nil,callback=nil,label=nil){
+		if(name != nil){
+			var active = 0;
+			if(callback!=nil){
+				foreach (var cb ; me._knobCallbacks){
+					var callbackName = name ~" "~cb;
+					if(contains(me._keyMap,callbackName)){
+						if(contains(callback,cb)){
+							me._keyMap[callbackName] = callback[cb];
+							active = 1;
+# 							print("IFDUserInterface.bindKey() ... "~callbackName~" : active.");
+						}else{
+							me._keyMap[callbackName] = nil;
+# 							print("IFDUserInterface.bindKey() ... "~callbackName~" : nil.");
+						}
+					}else{
+# 						print("IFDUserInterface.bindKey() ... no such Knob("~callbackName~").");
+					}
+				}
+			}else{
+				foreach (var cb ; me._knobCallbacks){
+					var callbackName = name ~" "~cb;
+					me._keyMap[callbackName] = nil;				
+				}
+			}
+			
+			if(label!=nil){
+				foreach (var l ; me._KnobLabels){
+					if(contains(label,l)){
+						me._can[name][l].setText(label[l]);
+					}else{
+						me._can[name][l].setText("");
+					}
+				}
+			}else{
+				if(contains(me._can,name)){
+					foreach (var l ; me._KnobLabels){
+						me._can[name][l].setText("");
+					}
+				}
+			}
+			
+			if(contains(me._can,name)){
+				me._can[name].Label.setVisible(active);
+			}
+			
+		}
+	},
+	
+	onClick : func(key){
+		if (contains(me._keyMap,key)){
+			if(me._keyMap[key] != nil){
+				me._keyMap[key]();
+				return 1;
+			}
+		}
+	},
+	clearLeds : func(){
+		
+	},
+};
 
 
 
@@ -240,12 +403,12 @@ var AvidyneIFD = {
 			AvidyneIFD,
 			extra500.ServiceClass.new(root,name)
 		] };
-		m.name = name;
-		m.keys = {};
-		m.nBacklight  	= m._nRoot.initNode("Backlight/state",1.0,"DOUBLE");
-		m.nBacklightMode= m._nRoot.initNode("Backlight/mode",0,"BOOL");
-		m._backlight	=0;
-		m._backlightMode=0;
+		m.name 			= name;
+		m.keys 			= {};
+		m.nBacklight  		= m._nRoot.initNode("Backlight/state",1.0,"DOUBLE");
+		m.nBacklightMode	= m._nRoot.initNode("Backlight/mode",0,"BOOL");
+		m._backlight		= 0;
+		m._backlightMode	= 0;
 		
 		
 		m._nState  	= m._nRoot.initNode("state",0,"BOOL");
@@ -274,11 +437,9 @@ var AvidyneIFD = {
 
 		m.canvas.addPlacement({"parent": acPlace,"node": "IFD.Screen"});
 		m.canvas.setColorBackground("#000337");
-		# .. and place it on the object called PFD-Screen
 
-		#m.nHeadingBug = props.globals.initNode("/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg",0.0,"DOUBLE");
 		m._group = m.canvas.createGroup("Global");
-		#m._group.set("z-index",3);
+
 		
 		canvas.parsesvg(m._group, "Models/instruments/IFDs/IFD_Global.svg",{
 			"font-mapper": global.canvas.FontMapper
@@ -287,26 +448,13 @@ var AvidyneIFD = {
 		
 		
 		m.movingMap = MovingMap.new(m,m._group.getElementById("MovingMap"),name~"-MovingMap");
-#		m.movingMap.setLayout("map");
 		
 		m._widget = {
-			#COM		: ComWidget.new(m,m._group.getElementById("layer1"),"Com"),
-			#CurrentWaypoint	: CurrentWaypointWidget.new(m,m._group,"CurrentWaypoint"),
 			Headline	: HeadlineWidget.new(m,m._group.getElementById("Headline"),"Headline"),
 			PlusData	: PlusDataWidget.new(m,m._group.getElementById("PlusData"),"PlusData"),
 		};
 		
 		m._can = {
-			LK : {
-				Label		: m._group.getElementById("LKLabel").setVisible(0),
-				OuterLabel	: m._group.getElementById("LKOuterLabel").setText(""),
-				InnerLabel	: m._group.getElementById("LKInnerLabel").setText(""),
-			},
-			RK : {
-				Label		: m._group.getElementById("RKLabel").setVisible(0),
-				OuterLabel	: m._group.getElementById("RKOuterLabel").setText(""),
-				InnerLabel	: m._group.getElementById("RKInnerLabel").setText(""),
-			},
 			Layout : {
 				#Layout		: m._group.getElementById("Layout").set("z-index",-5),
 				PFD		: m._group.getElementById("Layout_PFD").setVisible(0),
@@ -319,34 +467,12 @@ var AvidyneIFD = {
 		};
 		
 		
-		m.data = AvidyneData.new(m.name);
+		m.data 	= AvidyneData.new(m.name);
+		m.ui 	= IFDUserInterface.new(m);
 		
 		
 		m.pageSelected = "none";
-			
-		
 		m.nPageSelected = m._nRoot.initNode("PageSelected","","STRING");
-		
-		m.nLedL1 = m._nRoot.initNode("led/L1",0,"BOOL");
-		m.nLedL2 = m._nRoot.initNode("led/L2",0,"BOOL");
-		m.nLedL3 = m._nRoot.initNode("led/L3",0,"BOOL");
-		m.nLedL4 = m._nRoot.initNode("led/L4",0,"BOOL");
-		m.nLedL5 = m._nRoot.initNode("led/L5",0,"BOOL");
-		m.nLedL6 = m._nRoot.initNode("led/L6",0,"BOOL");
-		
-		m.nLedR1 = m._nRoot.initNode("led/R1",0,"BOOL");
-		m.nLedR2 = m._nRoot.initNode("led/R2",0,"BOOL");
-		m.nLedR3 = m._nRoot.initNode("led/R3",0,"BOOL");
-		m.nLedR4 = m._nRoot.initNode("led/R4",0,"BOOL");
-		m.nLedR5 = m._nRoot.initNode("led/R5",0,"BOOL");
-		m.nLedR6 = m._nRoot.initNode("led/R6",0,"BOOL");
-		
-		m.nLedLK = m._nRoot.initNode("led/LK",0,"BOOL");
-		m.nLedRK = m._nRoot.initNode("led/RK",0,"BOOL");
-		
-		m.nLedBaro = m._nRoot.initNode("led/Baro",0,"BOOL");
-		m.nLedDim = m._nRoot.initNode("led/Dim",0,"BOOL");
-		
 		
 		m._startPage = startPage;
 		
@@ -363,9 +489,7 @@ var AvidyneIFD = {
 		m.page["MAP"]._tab = ["Map+","Map","Split","Chart","Chart+"];
 		
 		#m.page["CHKL"] = AvidynePageTest.new(m,"Test",m.data);
-		
-		
-		
+				
 		m._dt20Hz = 0;
 		m._now20Hz = systime();
 		m._last20Hz = systime();
@@ -396,31 +520,38 @@ var AvidyneIFD = {
 		append(me._listeners, setlistener(me._powerB._nVoltNorm,func(n){instance._onPowerVoltNormChange(n);},1,0) );
 		append(me._listeners, setlistener(me._nState,func(n){instance._onStateChange(n);},1,0) );
 		
-		me.nLedDim.setValue(1);
-		me.keys["DIM >"] = func(){me._adjustBrightness(0.05);};
-		me.keys["DIM <"] = func(){me._adjustBrightness(-0.05);};
 		
+		me.ui.bindKey("DIM",{
+			"<" : func(){me._adjustBrightness(0.05);},
+			">" : func(){me._adjustBrightness(-0.05);},
+		});
 		
+		me.ui.bindKnob("BARO",{
+			"<"	: func(){me.data.adjustBaro(1);},
+			">"	: func(){me.data.adjustBaro(-1);},
+			"push"	: func(){me.data.adjustBaro();},
+		});
 		
-		
-		me.nLedBaro.setValue(1);
-		me.keys["BARO >"] = func(){me.data.adjustBaro(1);};
-		me.keys["BARO <"] = func(){me.data.adjustBaro(-1);};
-		me.keys["BARO STD"] = func(){me.data.adjustBaro();};
-		
-		
-		
-		me.keys["PFD >"] = func(){me.gotoPage("PFD","PFD >");};
-		me.keys["PFD <"] = func(){me.gotoPage("PFD","PFD <");};
-		me.keys["FMS >"] = func(){me.gotoPage("FMS","FMS >");};
-		me.keys["FMS <"] = func(){me.gotoPage("FMS","FMS <");};
-		me.keys["MAP >"] = func(){me.gotoPage("MAP","MAP >");};
-		me.keys["MAP <"] = func(){me.gotoPage("MAP","MAP <");};
-		me.keys["SYS >"] = func(){me.gotoPage("SYS","SYS >");};
-		me.keys["SYS <"] = func(){me.gotoPage("SYS","SYS <");};
-		me.keys["CHKL >"] = func(){me.gotoPage("CHKL","CHKL >");};
-		me.keys["CHKL <"] = func(){me.gotoPage("CHKL","CHKL <");};
-		
+		me.ui.bindKey("PFD",{
+			"<"	: func(){me.gotoPage("PFD");},
+			">"	: func(){me.gotoPage("PFD");},
+		});
+		me.ui.bindKey("FMS",{
+			"<"	: func(){me.gotoPage("FMS");},
+			">"	: func(){me.gotoPage("FMS");},
+		});
+		me.ui.bindKey("MAP",{
+			"<"	: func(){me.gotoPage("MAP");},
+			">"	: func(){me.gotoPage("MAP");},
+		});
+		me.ui.bindKey("SYS",{
+			"<"	: func(){me.gotoPage("SYS");},
+			">"	: func(){me.gotoPage("SYS");},
+		});
+		me.ui.bindKey("CHKL",{
+			"<"	: func(){me.gotoPage("CHKL");},
+			">"	: func(){me.gotoPage("CHKL");},
+		});
 				
 		
 		#me.gotoPage(me._startPage);
@@ -576,81 +707,51 @@ var AvidyneIFD = {
 	},
 	setBacklight : func(value){
 		me._backlight = (value==1);
-		me.nLedLK.setValue(value);	
-		me.nLedRK.setValue(value);
-		me.nLedBaro.setValue(value);
+		me.ui.setBacklight(value);
 		me.nBacklightMode.setValue(me._backlightMode and me._backlight);
 	},
 	setBacklightMode : func(value){
 		me._backlightMode = (value==1);
 		me.nBacklightMode.setValue(me._backlightMode and me._backlight);	
 	},
-	clearLeds : func(){
-		me.nLedL1.setValue(0);
-		me.nLedL2.setValue(0);
-		me.nLedL3.setValue(0);
-		me.nLedL4.setValue(0);
-		me.nLedL5.setValue(0);
-		me.nLedL6.setValue(0);
-		
-		me.nLedR1.setValue(0);
-		me.nLedR2.setValue(0);
-		me.nLedR3.setValue(0);
-		me.nLedR4.setValue(0);
-		me.nLedR5.setValue(0);
-		me.nLedR6.setValue(0);	
-		
-			
-		
-		
-	},
-	setKnobLabel :func(knob,outer=nil,inner=nil){
-		me._can[knob].Label.setVisible(0);
-		if(outer!=nil){
-			me._can[knob].Label.setVisible(1);
-			me._can[knob].OuterLabel.setText(outer);
-		}else{
-			me._can[knob].OuterLabel.setText("");
-		}
-		
-		if(inner!=nil){
-			me._can[knob].Label.setVisible(1);
-			me._can[knob].InnerLabel.setText(inner);
-		}else{
-			me._can[knob].InnerLabel.setText("");
-		}
-			
-	},
-	gotoPage : func(name,key=nil){
+	gotoPage : func(name){
 # 		print("IFD "~me.name ~" gotoPage("~name~") .. ");
 		if (!contains(me.page,name)){
 				name = "none";	
 		}
+		var activePage = me.pageSelected;
+				
 		if (me._state == 1){
 			
 		
 			if (me.pageSelected != name){
 # 				me.page[me.pageSelected].deinit();
 				me.page[me.pageSelected].setVisible(0);
-				me.clearLeds();
+				me.ui.bindKey(me.pageSelected,{
+					"<"	: func(){me.gotoPage(activePage);},
+					">"	: func(){me.gotoPage(activePage);},
+				});
+				
 				me.pageSelected = name;
 				me.nPageSelected.setValue(me.pageSelected);
-# 				me.page[me.pageSelected].init();
 				me.page[me.pageSelected].setVisible(1);
 				
 			}else{
-				if(key!=nil){
-					me.page[me.pageSelected].onClick(key);
-				}
+# 				print("IFD["~me.name ~"].gotoPage("~name~") ...  ERROR active Page call.");
 			}
 		}else{
+			### no power Going to page "none" a black screen.
+			name = "none";
 			me.page[me.pageSelected].setVisible(0);
-			me.clearLeds();
+			me.ui.bindKey(me.pageSelected,{
+				"<"	: func(){me.gotoPage(activePage);},
+				">"	: func(){me.gotoPage(activePage);},
+			});
+				
 			me.pageSelected = name;
 			me.nPageSelected.setValue(me.pageSelected);
-# 			me.page[me.pageSelected].init();
 			me.page[me.pageSelected].setVisible(1);
-				
+			
 		}
 	},
 	_adjustBrightness : func(amount){
@@ -662,14 +763,16 @@ var AvidyneIFD = {
 	onClick: func(key){
 		#print ("AvidyneIFD.onClick("~key~")");
 		if (me._state == 1){
-			if (contains(me.keys,key)){
-				if(me.keys[key] != nil){
-					me.keys[key]();
-					return 1;
-				}
-			}
+# 			if (contains(me.keys,key)){
+# 				if(me.keys[key] != nil){
+# 					me.keys[key]();
+# 					return 1;
+# 				}
+# 			}
+# 			
+# 			me.page[me.pageSelected].onClick(key);
 			
-			me.page[me.pageSelected].onClick(key);
+			me.ui.onClick(key);
 		}
 	},
 	initUI : func(){
@@ -717,17 +820,17 @@ var AvidyneIFD = {
 		
 		UI.register("IFD "~me.name~" BARO >",func{me.onClick("BARO >"); } );
 		UI.register("IFD "~me.name~" BARO <",func{me.onClick("BARO <"); } );
-		UI.register("IFD "~me.name~" BARO STD",func{me.onClick("BARO STD"); } );
+		UI.register("IFD "~me.name~" BARO STD",func{me.onClick("BARO push"); } );
 		
 		UI.register("IFD "~me.name~" RK >>",func{me.onClick("RK >>"); } );
 		UI.register("IFD "~me.name~" RK <<",func{me.onClick("RK <<"); } );
-		UI.register("IFD "~me.name~" RK",func{me.onClick("RK"); } );
+		UI.register("IFD "~me.name~" RK",func{me.onClick("RK push"); } );
 		UI.register("IFD "~me.name~" RK >",func{me.onClick("RK >"); } );
 		UI.register("IFD "~me.name~" RK <",func{me.onClick("RK <"); } );
 		
 		UI.register("IFD "~me.name~" LK >>",func{me.onClick("LK >>"); } );
 		UI.register("IFD "~me.name~" LK <<",func{me.onClick("LK <<"); } );
-		UI.register("IFD "~me.name~" LK",func{me.onClick("LK"); } );
+		UI.register("IFD "~me.name~" LK",func{me.onClick("LK push"); } );
 		UI.register("IFD "~me.name~" LK >",func{me.onClick("LK >"); } );
 		UI.register("IFD "~me.name~" LK <",func{me.onClick("LK <"); } );
 		

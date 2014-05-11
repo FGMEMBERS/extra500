@@ -468,55 +468,45 @@ var MovingMapKnobWidget = {
 # 		print("MovingMapKnobWidget.setVisible() ... visibility: "~me._visibility ~ ", hand: "~me._hand);
 		if(me._visibility == 1){
 			if(me._hand == 0){
-				me._Page.IFD.nLedLK.setValue(1);
-				me._Page.IFD.setKnobLabel("LK","Range","View");
-				
-				me._Page.keys["LK >>"] 	= func(){me.adjustMapRange(2);};
-				me._Page.keys["LK <<"] 	= func(){me.adjustMapRange(-2);};
-				me._Page.keys["LK"] 	= func(){me.adjustMapView(1);};
-				me._Page.keys["LK >"] 	= func(){me.adjustMapRange(1);};
-				me._Page.keys["LK <"] 	= func(){me.adjustMapRange(-1);};
+				me._ifd.ui.bindKnob("LK",{
+					"<<"	: func(){me.adjustMapRange(-2);},
+					"<"	: func(){me.adjustMapRange(-1);},
+					"push"	: func(){me.adjustMapView(1);},
+					">"	: func(){me.adjustMapRange(1);},
+					">>"	: func(){me.adjustMapRange(2);},
+				},{
+					"scroll"	: "Range",
+					"push"		: "View"
+				});
 			}else{
-				me._Page.IFD.nLedRK.setValue(1);
-				me._Page.IFD.setKnobLabel("RK","Range","View");
-				
-				me._Page.keys["RK >>"] 	= func(){me.adjustMapRange(2);};
-				me._Page.keys["RK <<"] 	= func(){me.adjustMapRange(-2);};
-				me._Page.keys["RK"] 	= func(){me.adjustMapView(1);};
-				me._Page.keys["RK >"] 	= func(){me.adjustMapRange(1);};
-				me._Page.keys["RK <"] 	= func(){me.adjustMapRange(-1);};
+				me._ifd.ui.bindKnob("RK",{
+					"<<"	: func(){me.adjustMapRange(-2);},
+					"<"	: func(){me.adjustMapRange(-1);},
+					"push"	: func(){me.adjustMapView(1);},
+					">"	: func(){me.adjustMapRange(1);},
+					">>"	: func(){me.adjustMapRange(2);},
+				},{
+					"scroll"	: "Range",
+					"push"		: "View"
+				});
 			}
 			
-			me._Page.IFD.movingMap.setRangeNm(MAP_RANGE[me._range]);	
+			me._ifd.movingMap.setRangeNm(MAP_RANGE[me._range]);	
 		}else{
 			if(me._hand == 0){
-				me._Page.IFD.nLedLK.setValue(0);
-				me._Page.IFD.setKnobLabel("LK");
-				
-				me._Page.keys["LK >>"] 	= nil;
-				me._Page.keys["LK <<"] 	= nil;
-				me._Page.keys["LK"] 	= nil;
-				me._Page.keys["LK >"] 	= nil;
-				me._Page.keys["LK <"] 	= nil;
+				me._ifd.ui.bindKnob("LK");
 			}else{
-				me._Page.IFD.nLedRK.setValue(0);
-				me._Page.IFD.setKnobLabel("RK");
-				
-				me._Page.keys["RK >>"] 	= nil;
-				me._Page.keys["RK <<"] 	= nil;
-				me._Page.keys["RK"] 	= nil;
-				me._Page.keys["RK >"] 	= nil;
-				me._Page.keys["RK <"] 	= nil;
+				me._ifd.ui.bindKnob("RK");
 			}
 		}
 	},
 	adjustMapRange : func(amount){
 		me._range += amount;
 		me._range = global.clamp(me._range,0,9);
-		me._Page.IFD.movingMap.setRangeNm(MAP_RANGE[me._range]);
+		me._ifd.movingMap.setRangeNm(MAP_RANGE[me._range]);
 	},
 	adjustMapView : func(amount){
 		me._view = global.cycle(me._view,0,2,amount);
-		me._Page.IFD.movingMap.setView(me._view);
+		me._ifd.movingMap.setView(me._view);
 	}
 };
