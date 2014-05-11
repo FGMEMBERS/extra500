@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             10.05.2014
+      Date:             11.05.2014
 
 
 ************************************************************************
@@ -1539,6 +1539,9 @@ JSBSim Extra Aircraft - Extra 500.
 				<Hydraulic>
 					<voltOut type="double">0</voltOut>
 				</Hydraulic>
+				<AutopilotServo>
+					<voltOut type="double">0</voltOut>
+				</AutopilotServo>
 			</BankC>
 			<BankD>
 				<CabinPressure>

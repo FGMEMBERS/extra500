@@ -475,8 +475,8 @@
 
     <function name="aero/coefficients/cl_hstab">
        <description>Stabilizer liftcoeff</description>
-       <sum>
-            <value>0.0</value>            
+       <product>
+            <value>1.0</value>            
             <table>
                   <independentVar lookup="row">aircraft/hstab/alpha-deg</independentVar>
                   <independentVar lookup="column">fcs/elevator-pos-deg</independentVar>
@@ -509,7 +509,7 @@
 
                   </tableData>
             </table>
-      </sum>
+      </product>
     </function>
 
     <function name="aero/coefficients/cd_hstab">

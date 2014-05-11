@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
-      Date:             17.06.13
+      Last change:      Eric van den Berg
+      Date:             11.05.14
 -->
 <PropertyList>
 
@@ -567,41 +567,6 @@
   </action>
 </animation>
 
-<!-- MasterPanel.Engine.OverSpeed -->
-<animation>
-  <type>translate</type>
-  <object-name>MasterPanel.Engine.OverSpeed</object-name>
-  <property>extra500/panel/Master/Engine/OverSpeed/state</property>
-  <factor>-0.007</factor>
-  <axis>
-   <x>1</x>
-   <y>0</y>
-   <z>0</z>
-  </axis>
-</animation>
-<animation>
-  <type>pick</type>
-  <object-name>MasterPanel.Engine.OverSpeed</object-name>
-  
-  <action>
-    <button>0</button>
-    <repeatable>false</repeatable>
-    <binding>
-      <command>nasal</command>
-      <script><![CDATA[
-		UI.click("Engine OverSpeed on");
-	]]></script>
-    </binding>
-	<mod-up>
-    <binding>
-      <command>nasal</command>
-      <script><![CDATA[
-		UI.click("Engine OverSpeed off");
-	]]></script>
-    </binding>
-	</mod-up>
-  </action>
-</animation>
 
 <!-- MasterPanel.Engine.Motoring -->
 <animation>
@@ -1092,5 +1057,22 @@
 		<blue>0.2</blue>
 	</emission>
 </animation>
+
+<!-- Submodels -->
+
+<!-- switches -->
+
+<model>
+  <name>overspeed switch</name>
+  <path>Aircraft/extra500/Models/panels/overspeed.xml</path>
+	<offsets>
+		<x-m>0.007</x-m>
+		<y-m>0.01250</y-m>	
+		<z-m>-0.002002</z-m>
+		<roll-deg>0</roll-deg>
+		<pitch-deg>90</pitch-deg>
+		<yaw-deg>0</yaw-deg>
+	</offsets>
+</model>
 
 </PropertyList>

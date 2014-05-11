@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2014-05-10
+      Date:             2014-05-11
 -->
 
 <autopilot name="STEC55X">
@@ -2218,6 +2218,7 @@
 					/autopilot/mode/cws-armed eq 0
 				</test>
 				<test logic="AND" value="1">
+					/extra500/panel/CircuitBreaker/BankC/AutopilotServo/voltOut > 10
 					/autopilot/mode/electrim ne 0
 					/autopilot/settings/trim eq 1
 				</test>

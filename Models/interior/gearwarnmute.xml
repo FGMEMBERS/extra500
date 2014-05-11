@@ -17,22 +17,22 @@
     along with extra500.  If not, see <http://www.gnu.org/licenses/>.
 
       Authors: Eric van den Berg 
-      Date: 10.05.14
+      Date: 11.05.14
 
-      Last change: Eric van den Berg     
-      Date: 11.05.14            
+      Last change:      
+      Date:             
 -->
 <PropertyList>
 
-<path>APDiscswitch.ac</path>
+<path>../panels/PTTswitch.ac</path>
 
 <!-- switch push -->
 
+
 <animation>
   <type>translate</type>
-  <object-name>switch.apdisc.button</object-name>
-  <object-name>switch.apdisc.button.red</object-name>
-  <property>/extra500/yokes/apdisc/pressed</property>
+  <object-name>switch.knob</object-name>
+  <property>/systems/gear/switches/GearClearHorn/state</property>
   <interpolation>
    <entry><ind>0</ind><dep>0</dep></entry>
    <entry><ind>1</ind><dep>-.003</dep></entry>
@@ -45,28 +45,28 @@
  </animation>
 
 <!--pick animations-->
+
 <animation>
   <type>pick</type>
-  <object-name>switch.apdisc.button</object-name>  
+  <object-name>switch.knob</object-name>
   <action>
     <button>0</button>
     <repeatable>false</repeatable>
     <binding>
       <command>nasal</command>
       <script><![CDATA[
-		UI.click("Autopilot disengage on");
+		UI.click("Gear Clear Horn on");
 	]]></script>
     </binding>
 	<mod-up>
     <binding>
       <command>nasal</command>
       <script><![CDATA[
-		UI.click("Autopilot disengage off");
+		UI.click("Gear Clear Horn off");
 	]]></script>
     </binding>
 	</mod-up>
   </action>
 </animation>
-
 
 </PropertyList>

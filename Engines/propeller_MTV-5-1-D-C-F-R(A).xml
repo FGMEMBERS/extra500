@@ -39,7 +39,7 @@
   <minrpm> 1850 </minrpm>
   <maxrpm> 2030 </maxrpm>
   <constspeed> 1 </constspeed>
-  <p_factor> 6.53 </p_factor>
+  <p_factor> 3 </p_factor>
  <ct_factor> 1.0 </ct_factor>
   <cp_factor> 1.0 </cp_factor>
   
