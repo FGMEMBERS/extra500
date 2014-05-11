@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2014-03-03
+      Date:             2014-05-11
 -->
 
 <aerodynamics>
@@ -398,6 +398,7 @@
       <description>downwash angle due to wing lift</description>
       <product>
             <value>0.00637</value> 
+            <property>/extra500/const/RAD2DEG</property>
             <property>aircraft/wing/alpha-deg</property> 
       </product>
       </function>

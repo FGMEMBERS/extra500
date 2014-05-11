@@ -1722,7 +1722,7 @@ JSBSim Extra Aircraft - Extra 500.
                               	<trim>
                                     	<S-ft2>1.114</S-ft2>
                                     	<c_aero-ft>0.4019</c_aero-ft>
-                                    	<coeff-norm>5.0</coeff-norm>        <!--this is multiplied with normalized trim position to get hinge moment of elevator -->
+                                    	<coeff-norm>6.0</coeff-norm>        <!--this is multiplied with normalized trim position to get hinge moment of elevator -->
                               	</trim>
                         	</elevator>
 				<alpha-deg>0.0</alpha-deg>					<!--dummy value -->	
