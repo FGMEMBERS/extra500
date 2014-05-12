@@ -1635,6 +1635,8 @@ var BugSelectWidget = {
 			VSBorder	: m._group.getElementById("Set_VS_Border"),
 		};
 		m._modeRK = "HDG";
+		m._ResetTimer = maketimer(10.0,m,BugSelectWidget._resetMode);
+		m._ResetTimer.singleShot = 1;
 		return m;
 	},
 	init : func(instance=me){
@@ -1642,6 +1644,10 @@ var BugSelectWidget = {
 	},
 	deinit : func(){
 		me.removeListeners();
+	},
+	_resetMode : func(){
+		print("BugSelectWidget._resetMode() ... ");
+		me._setModeRK("HDG");
 	},
 	registerKeys : func(){
 
@@ -1664,7 +1670,9 @@ var BugSelectWidget = {
 		if(me._visibility == 1){
 			me.setListeners(me);
 			me.registerKeys();
-			me._setModeRK(me._modeRK);
+			#me._setModeRK(me._modeRK);
+			me._setModeRK("HDG");
+			
 		}else{
 			me.removeListeners();
 
@@ -1673,13 +1681,14 @@ var BugSelectWidget = {
 			me._ifd.ui.bindKey("R5");
 			
 			me._ifd.ui.bindKnob("RK");
+			
+			me._ResetTimer.stop();
 		}
 		me._can.content.setVisible(me._visibility);
 	},
 	_setModeRK : func(value=nil){
 		
 		me._modeRK = value;
-		
 		
 		me._can.HeadingBorder.set("stroke",COLOR["Blue"]);
 		me._can.HeadingBorder.set("stroke-width",10);
@@ -1724,7 +1733,7 @@ var BugSelectWidget = {
 				"scroll"	: "Altitude",
 				"push"		: "Sync",
 			});
-			
+			me._ResetTimer.restart(10);
 		}elsif (me._modeRK == "VS"){
 			me._can.VSBorder.set("stroke",COLOR["Turquoise"]);
 			me._can.VSBorder.set("stroke-width",20);
@@ -1740,10 +1749,14 @@ var BugSelectWidget = {
 				"scroll"	: "VS",
 				"push"		: "Sync",
 			});
+			me._ResetTimer.restart(10);
 		}else{
 							
 			me._ifd.ui.bindKnob("RK");
 		}
+		
+		
+		
 	}
 };
 
