@@ -1020,12 +1020,12 @@ var NavSourceWidget = {
 	},
 	_adjustRadial : func(amount){
 		#me._Pointer += amount;
-		me._Pointer = tool.adjustStep(me._Pointer,amount,10);
-		me._Pointer = math.mod(me._Pointer,360.0);
-		setprop("/instrumentation/nav[0]/radials/selected-deg",me._Pointer);
-		setprop("/instrumentation/nav[1]/radials/selected-deg",me._Pointer);
+		var course = tool.adjustStep(me._Pointer,amount,10);
+		course = math.mod(course,360.0);
+		setprop("/instrumentation/nav[0]/radials/selected-deg",course);
+		setprop("/instrumentation/nav[1]/radials/selected-deg",course);
 		if(me._modeFMSCourse == 1){
-			me._ptree.FMSCourse.setValue(me._Pointer);
+			me._ptree.FMSCourse.setValue(course);
 		}
 	},
 	_onSyncCourse : func(){
@@ -1104,7 +1104,7 @@ var NavSourceWidget = {
 		}
 	},
 	_onCourseChange : func(n){
-		me._Pointer		= n.getValue();
+		me._Pointer		= math.mod(n.getValue(),360);
 		me._can.Crs.setText(sprintf("%i",global.roundInt(me._Pointer)));
 		
 	},
