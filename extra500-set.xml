@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             11.05.2014
+      Date:             12.05.2014
 
 
 ************************************************************************
@@ -90,6 +90,10 @@ JSBSim Extra Aircraft - Extra 500.
      	      <key>
 			<name>Ctrl-F</name>
 			<desc>Pitch control by pitch trim only</desc>
+		</key>
+     	      <key>
+			<name>W</name>
+			<desc>Gear warn mute</desc>
 		</key>
      	      <key>
 			<name>R</name>
