@@ -812,6 +812,10 @@ var NavSourceWidget = {
 				fromFlag		: "/instrumentation/fms[0]/from-flag",
 				toFlag			: "/instrumentation/fms[0]/to-flag",
 				distance		: "/autopilot/route-manager/wp/dist",
+				bearing			: "/autopilot/route-manager/wp/bearing-deg",
+				targetCourse		: "/autopilot/fms-channel/indicated-course-deg",
+				
+				
 			},
 			Nav1 	: {
 				Pointer			: "/instrumentation/nav[0]/radials/selected-deg",
@@ -825,6 +829,9 @@ var NavSourceWidget = {
 				fromFlag		: "/instrumentation/nav[0]/from-flag",
 				toFlag			: "/instrumentation/nav[0]/to-flag",
 				distance		: "/autopilot/radionav-channel/nav-distance-nm",
+				bearing			: "/instrumentation/nav[0]/radials/reciprocal-radial-deg",
+				targetCourse		: "/instrumentation/nav[0]/radials/target-radial-deg",
+				
 			},
 			Nav2 	: {
 				Pointer			: "/instrumentation/nav[1]/radials/selected-deg",
@@ -838,6 +845,9 @@ var NavSourceWidget = {
 				fromFlag		: "/instrumentation/nav[1]/from-flag",
 				toFlag			: "/instrumentation/nav[1]/to-flag",
 				distance		: "/autopilot/radionav-channel/nav-distance-nm",
+				bearing			: "/instrumentation/nav[1]/radials/reciprocal-radial-deg",
+				targetCourse		: "/instrumentation/nav[1]/radials/target-radial-deg",
+				
 			},
 			
 			
@@ -855,6 +865,9 @@ var NavSourceWidget = {
 			Pointer		: nil,
 			Distance	: nil,
 			Source		: props.globals.initNode("/instrumentation/nav-source",0,"INT"),
+			FMSCourse	: props.globals.initNode("/instrumentation/fms[0]/selected-course-deg",0,"DOUBLE"),
+			FMSCourseMode	: props.globals.initNode("/instrumentation/fms[0]/mode-course",0,"BOOL"),
+			
 		};
 		
 		m._can		= {
@@ -882,7 +895,7 @@ var NavSourceWidget = {
 		m._distance		= 0;
 		m._frequency		= "";
 		
-		m._modeFMSmaualRadial 	= 0;
+		m._modeFMSCourse 	= 0;
 		
 		
 		return m;
@@ -920,15 +933,7 @@ var NavSourceWidget = {
 				">"	: func(){me._scroll(1);},
 			});
 			
-			me._ifd.ui.bindKnob("LK",{
-				"<<"	: func(){me._adjustRadial(-10);},
-				"<"	: func(){me._adjustRadial(-1);},
-				"push"	: nil,
-				">"	: func(){me._adjustRadial(1);},
-				">>"	: func(){me._adjustRadial(10);},
-			},{
-				"scroll"	: "Course",
-			});
+			me._checkKnob();
 			
 			me._scroll(0);
 		}else{
@@ -938,11 +943,49 @@ var NavSourceWidget = {
 			me._ifd.ui.bindKnob("LK");
 		}
 	},
-	
+	_checkKnob : func(){
+			if(me._source == 2){
+				if(me._modeFMSCourse == 1){
+					me._ifd.ui.bindKnob("LK",{
+						"<<"	: func(){me._adjustRadial(-10);},
+						"<"	: func(){me._adjustRadial(-1);},
+						"push"	: func(){me._onCancelFMSCourse();},
+						">"	: func(){me._adjustRadial(1);},
+						">>"	: func(){me._adjustRadial(10);},
+					},{
+						"scroll"	: "Course",
+						"push"		: "Cancel",
+					});
+				}else{
+					me._ifd.ui.bindKnob("LK",{
+						"<<"	: func(){me._setFMSRadial();me._adjustRadial(-10);},
+						"<"	: func(){me._setFMSRadial();me._adjustRadial(-1);},
+						"push"	: nil,
+						">"	: func(){me._setFMSRadial();me._adjustRadial(1);},
+						">>"	: func(){me._setFMSRadial();me._adjustRadial(10);},
+					},{
+						"scroll"	: "Course",
+						"push"		: "",
+					});
+				}
+			}else{
+				me._ifd.ui.bindKnob("LK",{
+					"<<"	: func(){me._adjustRadial(-10);},
+					"<"	: func(){me._adjustRadial(-1);},
+					"push"	: func(){me._onSyncCourse();},
+					">"	: func(){me._adjustRadial(1);},
+					">>"	: func(){me._adjustRadial(10);},
+				},{
+					"scroll"	: "Course",
+					"push"		: "Sync",
+				});
+			}
+	},
 	_onSourceChange : func(n){
 		me._source = n.getValue();
 		me.setSource(me._source);
 		me._checkStationType();
+		me._checkKnob();
 	},
 	setSource : func(src){
 		me._source = src;
@@ -963,6 +1006,7 @@ var NavSourceWidget = {
 		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].toFlag,func(n){me._onToFlagChange(n);},1,0));
 		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].hasGS,func(n){me._onHasGSChange(n);},1,0));
 		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].Frequency,func(n){me._onFrequencyChange(n);},1,0));
+		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].Pointer,func(n){me._onCourseChange(n);},1,0));
 		
 		me._Page._widgetTab.NavSelect.registerKeyCDI();
 		
@@ -980,6 +1024,31 @@ var NavSourceWidget = {
 		me._Pointer = math.mod(me._Pointer,360.0);
 		setprop("/instrumentation/nav[0]/radials/selected-deg",me._Pointer);
 		setprop("/instrumentation/nav[1]/radials/selected-deg",me._Pointer);
+		if(me._modeFMSCourse == 1){
+			me._ptree.FMSCourse.setValue(me._Pointer);
+		}
+	},
+	_onSyncCourse : func(){
+		var bearing = 0;
+		if(me._isLOC == 1){
+			# localizer target course
+			bearing = getprop(me._PATH[me._SOURCE[me._source]].targetCourse);
+		}else{
+			# direct
+			bearing = getprop(me._PATH[me._SOURCE[me._source]].bearing);
+		}
+		setprop("/instrumentation/nav[0]/radials/selected-deg",bearing);
+		setprop("/instrumentation/nav[1]/radials/selected-deg",bearing);
+	},
+	_onCancelFMSCourse : func(){
+		me._modeFMSCourse = 0;
+		me._ptree.FMSCourseMode.setValue(me._modeFMSCourse);
+		me._checkKnob();
+	},
+	_setFMSRadial : func(){
+		me._modeFMSCourse = 1;
+		me._ptree.FMSCourseMode.setValue(me._modeFMSCourse);
+		me._checkKnob();
 	},
 	_onRouteActiveChange : func(n){
 		me._routeManagerActive = n.getValue();
@@ -1034,6 +1103,11 @@ var NavSourceWidget = {
 			
 		}
 	},
+	_onCourseChange : func(n){
+		me._Pointer		= n.getValue();
+		me._can.Crs.setText(sprintf("%i",global.roundInt(me._Pointer)));
+		
+	},
 	update2Hz : func(now,dt){
 		
 		me._distance	= me._ptree.Distance.getValue();
@@ -1042,7 +1116,7 @@ var NavSourceWidget = {
 	},
 	
 	update20Hz : func(now,dt){
-		me._Pointer		= me._ptree.Pointer.getValue();
+# 		me._Pointer		= me._ptree.Pointer.getValue();
 		me._horizontalDeviation	= me._ptree.hDev.getValue();
 		me._verticalDeviation	= -me._ptree.vDev.getValue();
 		
@@ -1051,9 +1125,7 @@ var NavSourceWidget = {
 # 		me._isLOC		= me._ptree.LOC.getValue();
 # 		me._fromFlag		= me._ptree.FromFlag.getValue();
 # 		me._toFlag		= me._ptree.FromFlag.getValue();
-		
-		me._can.Crs.setText(sprintf("%i",global.roundInt(me._Pointer)));
-		
+				
 		
 	},
 };
