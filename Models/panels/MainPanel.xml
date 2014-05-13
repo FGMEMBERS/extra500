@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             09.05.14
+      Date:             13.05.14
 -->
 <PropertyList>
 
@@ -30,6 +30,17 @@
     <type>range</type>
     <min-m>0</min-m>
     <max-m>50</max-m>
+  </animation>
+
+  <animation>
+  	<object-name>yokes</object-name>
+  	<type>select</type>
+  	<condition>
+   		<equals>
+    			<property>/extra500/yokes/visible</property>
+    			<value>1</value>
+   		</equals>
+  	</condition>
   </animation>
 
 <!-- Submodels -->

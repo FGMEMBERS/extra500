@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             25.02.14
+      Date:             13.05.14
 -->
 
 <PropertyList>
@@ -49,6 +49,14 @@
 					<script><![CDATA[
 						gui.showDialog("extra500_Config");
 					]]></script>
+				</binding>
+			</item>
+			<item>
+				<name>yokes-toggle</name>
+				<label>Toggle Yokes Visible</label>
+				<binding>
+					<command>property-toggle</command>
+					<property>/extra500/yokes/visible</property>
 				</binding>
 			</item>
 			<!--

@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             12.05.2014
+      Date:             13.05.2014
 
 
 ************************************************************************
@@ -1648,6 +1648,7 @@ JSBSim Extra Aircraft - Extra 500.
 		</readinglightRA>
 	</interior>
 	<yokes>
+		<visible type="int">1</visible>
 		<ptt-copilot>
 			<pressed type="int">0</pressed>
 		</ptt-copilot>
