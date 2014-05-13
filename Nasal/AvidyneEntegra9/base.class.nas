@@ -33,7 +33,8 @@ COLOR["TCAS_LEVEL_0"] 	= "#00ffff";
 COLOR["TCAS_LEVEL_1"] 	= "#00ffff";
 COLOR["TCAS_LEVEL_2"] 	= "#ff7f2a";
 COLOR["TCAS_LEVEL_3"] 	= "#ff0000";
-
+COLOR["Keypad_Front"] 	= "#000000";
+COLOR["Keypad_Back"] 	= "#ffffff";
 
 
 

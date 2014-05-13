@@ -283,12 +283,12 @@ var PlusDataWidget = {
 			});
 
 			me._ifd.ui.bindKey("L3",{
-				"<"	: func(){extra500.keypad.onCom1Scroll(1);},
+				"<"	: func(){keypad.onCom1Scroll(1);},
 				">"	: func(){me._selectChannel(0);},
 			});
 
 			me._ifd.ui.bindKey("L4",{
-				"<"	: func(){extra500.keypad.onCom2Scroll(1);},
+				"<"	: func(){keypad.onCom2Scroll(1);},
 				">"	: func(){me._selectChannel(1);},
 			});
 			
@@ -351,9 +351,9 @@ var PlusDataWidget = {
 	},
 	_swapFreqency : func(){
 		if(me._channel == 0){
-			extra500.keypad.onCom1Scroll(1);
+			keypad.onCom1Scroll(1);
 		}else{
-			extra500.keypad.onCom2Scroll(1);
+			keypad.onCom2Scroll(1);
 		}
 	},
 	_adjustFreqency : func(amount){
@@ -363,7 +363,7 @@ var PlusDataWidget = {
 		freq+=amount;
 		freq = global.clamp(freq,100.0,199.975);
 		setprop(path,freq);
-		extra500.keypad._inputWatchDog = 0;
+		keypad._inputWatchDog = 0;
 	},
 	_onCurrentWaypointChange : func(n){
 		me._index = n.getValue();
@@ -520,10 +520,10 @@ var TuningWidget_old = {
 		me._Page.keys["L2 <"] 	= func(){me._scrollSource(-1);};
 		me._Page.keys["L2 >"] 	= func(){me._scrollSource(1);};
 		me._ifd.nLedL3.setValue(1);
-		me._Page.keys["L3 <"] 	= func(){extra500.keypad.onCom1Scroll(1);};
+		me._Page.keys["L3 <"] 	= func(){keypad.onCom1Scroll(1);};
 		me._Page.keys["L3 >"] 	= func(){me._selectChannel(0);};
 		me._ifd.nLedL4.setValue(1);
-		me._Page.keys["L4 <"] 	= func(){extra500.keypad.onCom2Scroll(1);};
+		me._Page.keys["L4 <"] 	= func(){keypad.onCom2Scroll(1);};
 		me._Page.keys["L4 >"] 	= func(){me._selectChannel(1);};
 		
 		me._ifd.nLedLK.setValue(1);
@@ -598,13 +598,13 @@ var TuningWidget_old = {
 		freq+=amount;
 		freq = global.clamp(freq,100.0,199.975);
 		setprop(path,freq);
-		extra500.keypad._inputWatchDog = 0;
+		keypad._inputWatchDog = 0;
 	},
 	_swapFreqency : func(){
 		if(me._channel == 0){
-			extra500.keypad.onCom1Scroll(1);
+			keypad.onCom1Scroll(1);
 		}else{
-			extra500.keypad.onCom2Scroll(1);
+			keypad.onCom2Scroll(1);
 		}
 	},
 	

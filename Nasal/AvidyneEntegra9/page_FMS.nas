@@ -62,8 +62,8 @@ var DirectToWidget = {
 			me.setListeners(me);
 			
 			me._ifd.ui.bindKey("R4",{
-				"<"	: func(){extra500.keypad.onD()},
-				">"	: func(){extra500.keypad.onD()},
+				"<"	: func(){keypad.onD()},
+				">"	: func(){keypad.onD()},
 			});
 			
 			me._can.button.setVisible(1);

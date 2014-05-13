@@ -1275,7 +1275,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/autopilot.nas</file>
 		<file>Aircraft/extra500/Nasal/audiopanel.nas</file>
 		<file>Aircraft/extra500/Nasal/instrument.nas</file>
-		<file>Aircraft/extra500/Nasal/keypad.nas</file>
+		
 		<file>Aircraft/extra500/Nasal/annunciator.nas</file>
 		<file>Aircraft/extra500/Nasal/door.nas</file>
 		<file>Aircraft/extra500/Nasal/cabin.nas</file>
@@ -1301,6 +1301,8 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/tcas.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/route.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/positioned.nas</file>
+		
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/keypad.nas</file>
 		
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/page_PFD.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/page_FMS.nas</file>

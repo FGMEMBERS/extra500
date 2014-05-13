@@ -44,8 +44,8 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		IFD.LH.init();
 		IFD.RH.init();
 		IFD.tcasModel.init();
+		IFD.keypad.init(global.INIT_START);
 		
-		extra500.keypad.init(global.INIT_START);
 		extra500.cabin.init();
 		extra500.deiceSystem.init();
 		

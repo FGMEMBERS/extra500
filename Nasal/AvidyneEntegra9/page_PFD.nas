@@ -1707,11 +1707,11 @@ var BugSelectWidget = {
 			me._can.Heading.set("z-index",2);
 		
 			me._ifd.ui.bindKnob("RK",{
-				"<<"	: func(){extra500.keypad.onAdjustHeading(-10);},
-				"<"	: func(){extra500.keypad.onAdjustHeading(-1);},
-				"push"	: func(){extra500.keypad.onHeadingSync();},
-				">"	: func(){extra500.keypad.onAdjustHeading(1);},
-				">>"	: func(){extra500.keypad.onAdjustHeading(10);},
+				"<<"	: func(){keypad.onAdjustHeading(-10);},
+				"<"	: func(){keypad.onAdjustHeading(-1);},
+				"push"	: func(){keypad.onHeadingSync();},
+				">"	: func(){keypad.onAdjustHeading(1);},
+				">>"	: func(){keypad.onAdjustHeading(10);},
 			},{
 				"scroll"	: "Heading",
 				"push"		: "Sync",
@@ -1724,11 +1724,11 @@ var BugSelectWidget = {
 			me._can.Altitude.set("z-index",2);
 						
 			me._ifd.ui.bindKnob("RK",{
-				"<<"	: func(){extra500.keypad.onAdjustAltitude(-500);},
-				"<"	: func(){extra500.keypad.onAdjustAltitude(-100);},
-				"push"	: func(){extra500.keypad.onAltitudeSync();},
-				">"	: func(){extra500.keypad.onAdjustAltitude(100);},
-				">>"	: func(){extra500.keypad.onAdjustAltitude(500);},
+				"<<"	: func(){keypad.onAdjustAltitude(-500);},
+				"<"	: func(){keypad.onAdjustAltitude(-100);},
+				"push"	: func(){keypad.onAltitudeSync();},
+				">"	: func(){keypad.onAdjustAltitude(100);},
+				">>"	: func(){keypad.onAdjustAltitude(500);},
 			},{
 				"scroll"	: "Altitude",
 				"push"		: "Sync",
