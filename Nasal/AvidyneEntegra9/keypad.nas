@@ -20,171 +20,15 @@
 #      Date:             29.03.14
 #
 
-# var KeypadDisplayClass = {
-# 	new: func(root,name,canvasPlace){
-# 		var m = { parents: [
-# 			KeypadDisplayClass,
-# 			extra500.ServiceClass.new(root,name)
-# 		] };
-# 		m.svgFile	= "Keypad.svg";
-# 		m.width 	= 384;
-# 		m.height	= 128;
-# 		
-# 		
-# 		m.canvas = canvas.new({
-# 		"name": "Keypad",
-# 		"size": [m.width*2, m.height*2],
-# 		"view": [m.width, m.height],
-# 		"mipmapping": 1,
-# 		});
-# 		
-# 		m.canvas.addPlacement({"node": canvasPlace});
-# 		m.canvas.setColorBackground(0,0,0);
-# 		m.page = m.canvas.createGroup(name);
-# 		
-# 		canvas.parsesvg(m.page, "Models/instruments/IFDs/"~m.svgFile,{
-# 			"font-mapper": global.canvas.FontMapper
-# 			}
-# 		);
-# 		
-# 		
-# 		m._widget = {
-# 			COM	 : KeypadRadioWidget.new(m,m.page,"Com","comm","layer1"),
-# 			NAV	 : KeypadRadioWidget.new(m,m.page,"Nav","nav","layer6"),
-# 			DME	 : AuxWidget.new(m,m.page,"layer9"),
-# 			FMS	 : KeypadWidget.new(m,m.page,"layer2"),
-# 			XPDR	 : KeypadWidget.new(m,m.page,"layer3"),
-# 			HDG	 : KeypadWidget.new(m,m.page,"layer4"),
-# 			ALT	 : KeypadWidget.new(m,m.page,"layer5"),
-# 		};
-# 		
-# 		m._can = {
-# 			dataXPDR 	: m.page.getElementById("FMS_XPDR"),
-# 			dataXPDRmode 	: m.page.getElementById("FMS_XPDR_MODE"),
-# 			XPDRvalue 	: m.page.getElementById("XPDR_Value"),
-# 			XPDRmode 	: m.page.getElementById("XPDR_MODE"),
-# 			ALTvalue 	: m.page.getElementById("ALT_Value"),
-# 			HDGvalue 	: m.page.getElementById("HDG_Value"),
-# 		};
-# 		
-# 		m._fmsKnobCallback = nil;
-# 		m._xpdr = 0;
-# 		m._xpdrMode = 0;
-# 		m._activeWidget = [nil,nil];
-# 		return m;
-# 	},
-# 	setListeners : func(instance) {
-# 		append(me._listeners, setlistener("/instrumentation/transponder/id-code",func(n){instance._onXPDRChange(n);},1,0) );
-# 		append(me._listeners, setlistener("/instrumentation/transponder/inputs/knob-mode",func(n){instance._onXPDRmodeChange(n);},1,0) );
-# 		append(me._listeners, setlistener("/autopilot/settings/heading-bug-deg",func(n){instance._onHdgChange(n);},1,0) );
-# 		append(me._listeners, setlistener("/autopilot/settings/tgt-altitude-ft",func(n){instance._onAltChange(n);},1,0) );
-# 	},
-# 	init : func(instance=nil){
-# 		if (instance==nil){instance=me;}
-# 		me.parents[1].init(instance);
-# 		me.setListeners(instance);
-# 		
-# 		me._widget.COM.init();
-# 		me._widget.NAV.init();
-# 		me._widget.DME.init();
-# 		
-# 		me._activeWidget[0] = me._widget.COM;
-# 		me._activeWidget[0].setVisible(1);
-# 		
-# 		me._activeWidget[1] = me._widget.FMS;
-# 		me._activeWidget[1].setVisible(1);
-# 		
-# 	},
-# 	invertBacklight : func(){
-# 		
-# 	},
-# 	setPower : func(state){
-# 		me.page.setVisible(state);
-# 	},
-# 	_onXPDRChange : func(n){
-# 		me._xpdr = n.getValue(); 
-# 		me._can.dataXPDR.setText(sprintf("%i",me._xpdr));
-# 		me._can.XPDRvalue.setText(sprintf("%i",me._xpdr));
-# 	},
-# 	_onXPDRmodeChange : func(n){
-# 		me._xpdrMode = n.getValue(); 
-# 		me._can.dataXPDRmode.setText(IFD.XPDRMODE[me._xpdrMode]);
-# 		me._can.XPDRmode.setText(IFD.XPDRMODE[me._xpdrMode]);
-# 	},
-# 	_onHdgChange : func(n){
-# 		me._can.HDGvalue.setText(sprintf("%03i",n.getValue()));
-# 	},
-# 	_onAltChange : func(n){
-# 		me._can.ALTvalue.setText(sprintf("%i",n.getValue()));
-# 	},
-# 	selectCom : func(nr){
-# 		me._widget.COM.select(nr);
-# 	},
-# 	selectNav : func(nr){
-# 		me._widget.NAV.select(nr);
-# 	},
-# 	resetInput : func(){
-# 		me._widget.COM.resetInput();
-# 		me._widget.NAV.resetInput();
-# 	},
-# 	selectWidget : func(index,widget){
-# 		if(me._activeWidget[index] != nil){
-# 			me._activeWidget[index].setVisible(0);
-# 		}
-# 		me._activeWidget[index] = me._widget[widget];
-# 		me._activeWidget[index].setVisible(1);
-# 	}
-# };
 
-var COLOR = {};
-COLOR["Keypad_Front"] 	= "#000000";
-COLOR["Keypad_Back"] 	= "#ffffff";
-
-
-
-var ListenerClass = {
-	new: func(){
-		var m = { parents: [ListenerClass] };
-		m._listeners = [];
-		return m;
-	},
-	setListeners : func(instance=me){
-		
-	},
-	removeListeners : func(){
-		foreach(var l;me._listeners){
-			removelistener(l);
-		}
-		me._listeners = [];
-	},
-	
-};
-var KeypadWidget = {
-	new: func(page,canvasGroup){
+var KeypadWidgetInterface = {
+	new: func(page,canvasGroup,name){
 		var m = { parents: [
-			KeypadWidget,
-			ListenerClass.new()
+			KeypadWidgetInterface,
+			IfdWidget.new(page,canvasGroup,name)
 		] };
-		m._parent 	= page;		# pointer to parent instance
-		m._group	= canvasGroup.setVisible(0);	
-		m._can = {};
-		
 		return m;
 	},
-	init : func(mode,instance=nil){
-		if(mode == global.INIT_START){
-			
-		}elsif (mode == global.INIT_PAUSE){
-			
-		}elsif (mode == global.INIT_RUN){
-			
-		}elsif (mode == global.INIT_STOP){
-			
-		}else{
-			print("KeypadWidget.init() ... unsupported init mode");
-		}
-	},
-	setVisible : func(visibility){	me._group.setVisible(visibility); },
 	invertBacklight : func(){},
 	resetInput : func(){},
 };
@@ -194,7 +38,7 @@ var KeypadDisplayFreqencyWidget = {
 	new: func(page,canvasGroup,name,path){
 		var m = { parents: [
 			KeypadDisplayFreqencyWidget,
-			KeypadWidget.new(page,canvasGroup)
+			KeypadWidgetInterface.new(page,canvasGroup,name)
 		] };
 		m._tree = {
 			selected	: props.globals.initNode("/instrumentation/"~path~"/frequencies/selected-mhz",0,"DOUBLE"),
@@ -227,11 +71,11 @@ var KeypadDisplayFreqencyWidget = {
 		}elsif (mode == global.INIT_STOP or mode == global.INIT_PAUSE){
 			me.removeListeners();
 		}else{
-			print("KeypadWidget.init() ... unsupported init mode");
+			print("KeypadDisplayFreqencyWidget.init() ... unsupported init mode");
 		}
 	},
-	setVisible : func(visibility){
-		if(visibility==1){
+	_onVisibiltyChange : func(){
+		if(me._visibility==1){
 			me.init(global.INIT_RUN);
 		}else{
 			me.init(global.INIT_PAUSE);
@@ -277,24 +121,50 @@ var KeypadDisplayFreqencyWidget = {
 	},
 	handleInput : func (key){
 		if (num(key) != nil){
+			
 			print ("KeypadClass.handleInputCom("~key~") ... "~me._standby);
-			me._inputIndex +=1;
-			if (me._inputIndex == 3){me._inputIndex = 4}
-			if (me._inputIndex >= 7){me._inputIndex = 1}
+			if (me._inputIndex == 3){ # step over "."
+				me._inputIndex = 4
+			}else{
+				me._inputIndex = global.clamp(me._inputIndex,1,6);
+			}
 			me._input[me._inputIndex] = key;
+			me._inputIndex +=1;
+			
 			me._inputUpdate();
+			
+		}elsif (key == "CLR"){ # Backspace
+			me._inputIndex -=1;
+			if (me._inputIndex == 3){# step over "."
+				me._inputIndex = 2
+			}else{
+				me._inputIndex = global.clamp(me._inputIndex,1,6);
+			}
+			
+			me._input[me._inputIndex] = "-";
+			me._inputUpdate();
+			
+		}elsif (key == "CNCL"){ # Cancel
+			
+			me._inputIndex = 0;
+			me._input		= ["1","-","-",".","-","-","-"];
+			
+			me._standby = sprintf("%.3f",me._tree.standby.getValue());
+			me._can.standbyFrequency.setText(me._standby);
+			
+		}elsif (key == "Enter"){ # confirm
+			me.resetInput();
 		}
 	},
 	
 };
 
-var KeypadRadioWidget = {
+var RadioKeypadWidget = {
 	new: func(page,canvasGroup,name,path){
 		var m = { parents: [
-			KeypadRadioWidget,
-			KeypadWidget.new(page,canvasGroup)
+			RadioKeypadWidget,
+			KeypadWidgetInterface.new(page,canvasGroup,name)
 		] };
-		m._name 	= name;
 		m._channel = [
 			KeypadDisplayFreqencyWidget.new(m,m._group,name~"1",path~"[0]"),
 			KeypadDisplayFreqencyWidget.new(m,m._group,name~"2",path~"[1]"),
@@ -311,41 +181,41 @@ var KeypadRadioWidget = {
 		me._channel[0].resetInput();
 		me._channel[1].resetInput();
 	},
-	setVisible : func(visibility){
-		me._group.setVisible(visibility);
-		me._channel[0].setVisible(visibility);
-		me._channel[1].setVisible(visibility);
-		me._parent.setKeyBacklight(me._name~"0",(visibility and (me._selectedChannel == 0)));
-		me._parent.setKeyBacklight(me._name~"1",(visibility and (me._selectedChannel == 1)));
+	_onVisibiltyChange : func(){
+		me._group.setVisible(me._visibility);
+		me._channel[0].setVisible(me._visibility);
+		me._channel[1].setVisible(me._visibility);
+		me._ifd.setKeyBacklight(me._name~"0",(me._visibility and (me._selectedChannel == 0)));
+		me._ifd.setKeyBacklight(me._name~"1",(me._visibility and (me._selectedChannel == 1)));
 		
 	},
 	select : func(value){
 		me._selectedChannel = value;
 		if(me._selectedChannel == 0){
 			
-			me._parent.setKeyBacklight(me._name~"1",0);
+			me._ifd.setKeyBacklight(me._name~"1",0);
 			me._channel[1].select(0);
-			me._parent.setKeyBacklight(me._name~"0",1);
+			me._ifd.setKeyBacklight(me._name~"0",1);
 			me._channel[0].select(1);
-			me._parent._inputHandle["Keyboard"] = func(key){me._channel[0].handleInput(key);};
+			me._ifd._inputHandle["Keyboard"] = func(key){me._channel[0].handleInput(key);};
 			
 		}else{
-			me._parent.setKeyBacklight(me._name~"0",0);
+			me._ifd.setKeyBacklight(me._name~"0",0);
 			me._channel[0].select(0);
-			me._parent.setKeyBacklight(me._name~"1",1);
+			me._ifd.setKeyBacklight(me._name~"1",1);
 			me._channel[1].select(1);
-			me._parent._inputHandle["Keyboard"] = func(key){me._channel[1].handleInput(key);};
+			me._ifd._inputHandle["Keyboard"] = func(key){me._channel[1].handleInput(key);};
 			
 		}
 	},
 };
 
 
-var KeypadXPDRWidget = {
-	new: func(page,canvasGroup){
+var XPDRKeypadWidget = {
+	new: func(page,canvasGroup,name){
 		var m = { parents: [
-			KeypadXPDRWidget,
-			KeypadWidget.new(page,canvasGroup)
+			XPDRKeypadWidget,
+			KeypadWidgetInterface.new(page,canvasGroup,name)
 		] };
 		m._tree = {
 			code	: props.globals.initNode("/instrumentation/transponder/id-code",0,"INT"),
@@ -355,7 +225,7 @@ var KeypadXPDRWidget = {
 			
 		};
 		m._can = {
-			value 	: m._group.getElementById("XPDR_Value"),
+			code 	: m._group.getElementById("XPDR_Value"),
 			mode 	: m._group.getElementById("XPDR_MODE"),
 			alt 	: m._group.getElementById("XPDR_ALT"),
 		};
@@ -377,7 +247,7 @@ var KeypadXPDRWidget = {
 		}elsif (mode == global.INIT_STOP or mode == global.INIT_PAUSE){
 			me.removeListeners();
 		}else{
-			print("KeypadWidget.init() ... unsupported init mode");
+			print("XPDRKeypadWidget.init() ... unsupported init mode");
 		}
 	},
 	setListeners : func(instance) {
@@ -385,21 +255,21 @@ var KeypadXPDRWidget = {
 		append(me._listeners, setlistener(me._tree.mode,func(n){instance._onXPDRmodeChange(n);},1,0) );
 		append(me._listeners, setlistener(me._tree.alt,func(n){instance._onXPDRaltChange(n);},1,0) );
 	},
-	setVisible : func(visibility){
-		me._group.setVisible(visibility);
-		if(visibility == 1){
+	_onVisibiltyChange : func(){
+		me._group.setVisible(me._visibility);
+		if(me._visibility == 1){
 			me.init(global.INIT_RUN);
-			me._parent.setKeyBacklight("XPDR",1);
-			me._parent._inputHandle["Keyboard"] = func(key){me.handleInput(key);};
+			me._ifd.setKeyBacklight("XPDR",1);
+			me._ifd._inputHandle["Keyboard"] = func(key){me.handleInput(key);};
 		}else{
 			me.init(global.INIT_PAUSE);
-			me._parent.setKeyBacklight("XPDR",0);
-			me._parent._inputHandle["Keyboard"] = nil;
+			me._ifd.setKeyBacklight("XPDR",0);
+			me._ifd._inputHandle["Keyboard"] = nil;
 		}
 	},
 	_onXPDRChange : func(n){
 		me._xpdr = n.getValue(); 
-		me._can.value.setText(sprintf("%i",me._xpdr));
+		me._can.code.setText(sprintf("%i",me._xpdr));
 	},
 	_onXPDRaltChange : func(n){
 		me._alt = n.getValue();
@@ -423,26 +293,44 @@ var KeypadXPDRWidget = {
 	},
 	_inputUpdate : func(){
 		me._xpdr = sprintf("%s%s%s%s",me._input[0],me._input[1],me._input[2],me._input[3]);
-		me._can.value.setText(me._xpdr);
+		me._can.code.setText(me._xpdr);
 	},
 	handleInput : func (key){
 		if (num(key) != nil){
 			#print ("KeypadClass.handleInputXDPR("~key~") ... "~me._inputValue);
-			if (me._inputIndex >= 4){me._inputIndex = 0}
+			me._inputIndex = global.clamp(me._inputIndex,0,3);
 			me._input[me._inputIndex] = key;
 			me._inputIndex +=1;
 			me._inputUpdate();
+		}elsif (key == "CLR"){ # Backspace
+			me._inputIndex -=1;
+			me._inputIndex = global.clamp(me._inputIndex,0,3);
+			
+			me._input[me._inputIndex] = "-";
+			
+			me._inputUpdate();
+			
+		}elsif (key == "CNCL"){ # Cancel
+			
+			me._inputIndex = 0;
+			me._input		= ["-","-","-","-"];
+			
+			me._xpdr = me._tree.code.getValue();
+			me._can.code.setText(sprintf("%i",me._xpdr));
+			
+		}elsif (key == "Enter"){ # confirm
+			me.resetInput();
 		}
 	},
 	
 	
 };
 
-var AuxWidget = {
-	new: func(page,canvasGroup){
+var AuxKeypadWidget = {
+	new: func(page,canvasGroup,name){
 		var m = { parents: [
-			AuxWidget,
-			KeypadWidget.new(page,canvasGroup)
+			AuxKeypadWidget,
+			KeypadWidgetInterface.new(page,canvasGroup,name)
 		] };
 		m._tree = {
 			nav1	: props.globals.initNode("/instrumentation/nav[0]/frequencies/selected-mhz",0,"DOUBLE"),
@@ -502,17 +390,17 @@ var AuxWidget = {
 		}elsif (mode == global.INIT_STOP or mode == global.INIT_PAUSE){
 			me.removeListeners();
 		}else{
-			print("KeypadWidget.init() ... unsupported init mode");
+			print("AuxKeypadWidget.init() ... unsupported init mode");
 		}
 	},
-	setVisible : func(visibility){
-		me._group.setVisible(visibility);
-		if(visibility == 1){
-			me._parent.setKeyBacklight("AUX",1);
-			me._parent._inputHandle["FmsKnob"] = func(key){me._adjustSelection(key);};
+	_onVisibiltyChange : func(){
+		me._group.setVisible(me._visibility);
+		if(me._visibility == 1){
+			me._ifd.setKeyBacklight("AUX",1);
+			me._ifd._inputHandle["FmsKnob"] = func(key){me._adjustSelection(key);};
 		}else{
-			me._parent.setKeyBacklight("AUX",0);
-			me._parent._inputHandle["FmsKnob"] = nil;
+			me._ifd.setKeyBacklight("AUX",0);
+			me._ifd._inputHandle["FmsKnob"] = nil;
 		}
 	},
 	_onNav1Change : func(n){
@@ -563,19 +451,25 @@ var AuxWidget = {
 	
 };
 
-var FmsWidget = {
-	new: func(page,canvasGroup){
+var FMSDATAKeypadWidget = {
+	new: func(page,canvasGroup,name){
 		var m = { parents: [
-			FmsWidget,
-			KeypadWidget.new(page,canvasGroup)
+			FMSDATAKeypadWidget,
+			KeypadWidgetInterface.new(page,canvasGroup,name)
 		] };
 		m._tree = {
 			code	: props.globals.initNode("/instrumentation/transponder/id-code",0,"INT"),
 			mode 	: props.globals.initNode("/instrumentation/transponder/inputs/knob-mode",0,"INT"),
+			nearest	: props.globals.initNode("/sim/airport/closest-airport-id","----","STRING"),
 		};
 		m._can = {
-			value 	: m._group.getElementById("FMS_XPDR"),
-			mode 	: m._group.getElementById("FMS_XPDR_MODE"),
+			code 		: m._group.getElementById("FMS_XPDR"),
+			mode 		: m._group.getElementById("FMS_XPDR_MODE"),
+			ETE 		: m._group.getElementById("FMS_ETE"),
+			destETE 	: m._group.getElementById("FMS_DEST_ETE"),
+			VSR 		: m._group.getElementById("FMS_VSR"),
+			NRST 		: m._group.getElementById("FMS_NRST"),
+			
 		};
 		
 		return m;
@@ -590,32 +484,36 @@ var FmsWidget = {
 		}elsif (mode == global.INIT_STOP or mode == global.INIT_PAUSE){
 			me.removeListeners();
 		}else{
-			print("KeypadWidget.init() ... unsupported init mode");
+			print("FMSDATAKeypadWidget.init() ... unsupported init mode");
 		}
 	},
 	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._tree.nearest,func(n){instance._onNRSTChange(n);},1,0) );
 		append(me._listeners, setlistener(me._tree.code,func(n){instance._onXPDRChange(n);},1,0) );
 		append(me._listeners, setlistener(me._tree.mode,func(n){instance._onXPDRmodeChange(n);},1,0) );
 	},
 	
-	setVisible : func(visibility){	
-		me._group.setVisible(visibility);
-		if(visibility == 1){
+	_onVisibiltyChange : func(){	
+		me._group.setVisible(me._visibility);
+		if(me._visibility == 1){
 			me.init(global.INIT_RUN);
-			#me._parent.setKeyBacklight("FMS",1);
-			#me._parent._inputHandle["Keyboard"] = func(key){me.handleKeyboardInput(key);};
-			#me._parent._inputHandle["FmsKnob"] = func(key){me.handleFmsKnobInput(key);};
+			#me._ifd.setKeyBacklight("FMS",1);
+			#me._ifd._inputHandle["Keyboard"] = func(key){me.handleKeyboardInput(key);};
+			#me._ifd._inputHandle["FmsKnob"] = func(key){me.handleFmsKnobInput(key);};
 		}else{
 			me.init(global.INIT_PAUSE);
-			#me._parent.setKeyBacklight("FMS",0);
-			#me._parent._inputHandle["Keyboard"] 	= nil;
-			#me._parent._inputHandle["FmsKnob"]	= nil;
+			#me._ifd.setKeyBacklight("FMS",0);
+			#me._ifd._inputHandle["Keyboard"] 	= nil;
+			#me._ifd._inputHandle["FmsKnob"]	= nil;
 		} 
 	},
 	invertBacklight : func(){},
+	_onNRSTChange : func(n){
+		me._can.NRST.setText(n.getValue());
+	},
 	_onXPDRChange : func(n){
 		me._xpdr = n.getValue(); 
-		me._can.value.setText(sprintf("%i",me._xpdr));
+		me._can.code.setText(sprintf("%i",me._xpdr));
 	},
 	_onXPDRmodeChange : func(n){
 		me._xpdrMode = n.getValue(); 
@@ -626,16 +524,115 @@ var FmsWidget = {
 	},
 	handleFmsKnobInput : func (key){
 		
-	}
+	},
+	update  : func(){
+		if(me._visibility == 1){
+			if(extra500.fms._isFPLready){
+				me._can.ETE.setText(global.formatTime(getprop("/autopilot/route-manager/wp/ete_sec"),"H:i:s"));
+				me._can.destETE.setText(global.formatTime(getprop("/autopilot/route-manager/ete"),"H:i:s"));
+				me._can.VSR.setText("---");
+			}else{
+				me._can.ETE.setText("--:--:--");
+				me._can.destETE.setText("--:--:--");
+				me._can.VSR.setText("---");
+			}
+		}
+	},
 	
 };
+
+var HDGKeypadWidget = {
+	new: func(page,canvasGroup,name){
+		var m = { parents: [
+			HDGKeypadWidget,
+			KeypadWidgetInterface.new(page,canvasGroup,name)
+		] };
+		m._can = {
+			HDGvalue 	: m._group.getElementById("HDG_Value"),
+		};
+		
+		return m;
+	},
+	init : func(mode,instance=nil){
+		if (instance==nil){instance=me;}
+				
+		if(mode == global.INIT_START){
+			
+		}elsif (mode == global.INIT_RUN){
+			me.setListeners(instance);
+		}elsif (mode == global.INIT_STOP or mode == global.INIT_PAUSE){
+			me.removeListeners();
+		}else{
+			print("HDGKeypadWidget.init() ... unsupported init mode");
+		}
+	},
+	setListeners : func(instance) {
+		append(me._listeners, setlistener("/autopilot/settings/heading-bug-deg",func(n){instance._onHdgChange(n);},1,0) );
+	},
+	_onHdgChange : func(n){
+		me._can.HDGvalue.setText(sprintf("%03i",n.getValue()));
+	},
+	_onVisibiltyChange : func(){	
+		me._group.setVisible(me._visibility);
+		if(me._visibility == 1){
+			me.init(global.INIT_RUN);
+		}else{
+			me.init(global.INIT_PAUSE);
+		} 
+	},
+	
+};
+
+var AltKeypadWidget = {
+	new: func(page,canvasGroup,name){
+		var m = { parents: [
+			AltKeypadWidget,
+			KeypadWidgetInterface.new(page,canvasGroup,name)
+		] };
+		m._can = {
+			ALTvalue 	: m._group.getElementById("ALT_Value"),
+		};
+		
+		return m;
+	},
+	init : func(mode,instance=nil){
+		if (instance==nil){instance=me;}
+				
+		if(mode == global.INIT_START){
+			
+		}elsif (mode == global.INIT_RUN){
+			me.setListeners(instance);
+		}elsif (mode == global.INIT_STOP or mode == global.INIT_PAUSE){
+			me.removeListeners();
+		}else{
+			print("AltKeypadWidget.init() ... unsupported init mode");
+		}
+	},
+	setListeners : func(instance) {
+		append(me._listeners, setlistener("/autopilot/settings/tgt-altitude-ft",func(n){instance._onAltChange(n);},1,0) );
+	},
+	_onAltChange : func(n){
+		me._can.ALTvalue.setText(sprintf("%i",n.getValue()));
+	},
+	_onVisibiltyChange : func(){	
+		me._group.setVisible(me._visibility);
+		if(me._visibility == 1){
+			me.init(global.INIT_RUN);
+		}else{
+			me.init(global.INIT_PAUSE);
+		} 
+	},
+	
+};
+
 
 var KeypadClass = {
 	new : func(root,name){
 				
 		var m = {parents:[
 			KeypadClass,
-			ConsumerClass.new(root,name,18.0)
+			IFDClass.new(root,name),
+			extra500.ConsumerClass.new(root,name,18.0)
 		]};
 		
 		m.nTungingSource = m._nRoot.initNode("tuningSource",0,"INT");
@@ -662,7 +659,12 @@ var KeypadClass = {
 		m._inputPath = "";
 		m._inputHandle = {"Keyboard":nil,"FmsKnob":nil};
 		
-		m._timerLoop = nil;
+		m._timerLoop = maketimer(1,m,KeypadClass._update);
+		
+		m._timerResetInput 	= maketimer(10,m,KeypadClass._resetInput);
+		m._timerResetInput.singleShot = 1;
+		m._timerResetSelection 	= maketimer(10,m,KeypadClass._resetSelection);
+		m._timerResetSelection.singleShot = 1;
 		
 		
 		m._tuningChannel = 0;
@@ -691,19 +693,16 @@ var KeypadClass = {
 		
 		
 		m._widget = {
-			COM	 : KeypadRadioWidget.new(m,m.page.getElementById("layer1"),"Com","comm"),
-			NAV	 : KeypadRadioWidget.new(m,m.page.getElementById("layer6"),"Nav","nav"),
-			DME	 : AuxWidget.new(m,m.page.getElementById("layer9")),
-			FMS	 : FmsWidget.new(m,m.page.getElementById("layer2")),
-			XPDR	 : KeypadXPDRWidget.new(m,m.page.getElementById("layer3")),
-			HDG	 : KeypadWidget.new(m,m.page.getElementById("layer4")),
-			ALT	 : KeypadWidget.new(m,m.page.getElementById("layer5")),
+			COM	 : RadioKeypadWidget.new(m,m.page.getElementById("COM"),"Com","comm"),
+			NAV	 : RadioKeypadWidget.new(m,m.page.getElementById("NAV"),"Nav","nav"),
+			DME	 : AuxKeypadWidget.new(m,m.page.getElementById("DME"),"DME"),
+			FMS	 : FMSDATAKeypadWidget.new(m,m.page.getElementById("FMS"),"FMS"),
+			XPDR	 : XPDRKeypadWidget.new(m,m.page.getElementById("XPDR"),"XPDR"),
+			HDG	 : HDGKeypadWidget.new(m,m.page.getElementById("HDG"),"HDG"),
+			ALT	 : AltKeypadWidget.new(m,m.page.getElementById("ALT"),"ALT"),
 		};
 		
-		m._can = {
-			ALTvalue 	: m.page.getElementById("ALT_Value"),
-			HDGvalue 	: m.page.getElementById("HDG_Value"),
-		};
+		m._can = {};
 		
 		m._fmsKnobCallback = nil;
 # 		m._xpdr = 0;
@@ -755,16 +754,13 @@ var KeypadClass = {
 		append(me._listeners, setlistener("/instrumentation/comm-selected-index",func(n){me._onComSelectedChange(n)},1,0));	
 		append(me._listeners, setlistener(me.nTungingSource,func(n){me._onTuningSourceChange(n)},1,0));	
 		append(me._listeners, setlistener(me.nTungingChannel,func(n){me._onTuningChannelChange(n)},1,0));	
-		#append(me._listeners, setlistener("/instrumentation/transponder/id-code",func(n){instance._onXPDRChange(n);},1,0) );
-		#append(me._listeners, setlistener("/instrumentation/transponder/inputs/knob-mode",func(n){instance._onXPDRmodeChange(n);},1,0) );
 		append(me._listeners, setlistener("/instrumentation/transponder/ident",func(n){instance._onXPDRidentChange(n);},1,0) );
-		append(me._listeners, setlistener("/autopilot/settings/heading-bug-deg",func(n){instance._onHdgChange(n);},1,0) );
-		append(me._listeners, setlistener("/autopilot/settings/tgt-altitude-ft",func(n){instance._onAltChange(n);},1,0) );
 	
 	},
 	init : func(mode,instance=nil){
 		if (instance==nil){instance=me;}
-		me.parents[1].init(instance); # TODO: replace init fucktion
+		# TODO: replace init fucktion
+		me.parents[2].init(instance); # ConsumerClass 
 		
 		foreach(var i;keys(me._widget)){
 			me._widget[i].init(mode);
@@ -777,14 +773,11 @@ var KeypadClass = {
 			
 			me.initUI();
 						
-			eSystem.circuitBreaker.KEYPAD.outputAdd(me);
+			extra500.eSystem.circuitBreaker.KEYPAD.outputAdd(me);
 			
-						
-			me._timerLoop = maketimer(1,me,KeypadClass.update);
+			me._resetSelection();		
+			
 			me._timerLoop.start();
-			
-			me.resetSelection();		
-			
 			
 		}elsif (mode == global.INIT_PAUSE){
 			me.removeListeners();
@@ -828,21 +821,17 @@ var KeypadClass = {
 		me._activeWidget[index].setVisible(1);
 	},
 
-	update : func(){
-		me._inputWatchDog += 1;
-		if(me._inputWatchDog == 15){
-			me.resetSelection();
-		}elsif(me._inputWatchDog == 5){
-			me.resetInput();
-		}
-		
+	_update : func(){
+		me._widget.FMS.update();
 	},
-	resetInput : func(){
+	
+
+	_resetInput : func(){
 		#me._inputIndex = 0;
 		if(me._activeWidget[0]!=nil) {me._activeWidget[0].resetInput();}
 		if(me._activeWidget[1]!=nil) {me._activeWidget[1].resetInput();}
 	},
-	resetSelection : func(){
+	_resetSelection : func(){
 		#print("KeypadClass.resetSelection() ...");
 		#me._inputWatchDog = 0;
 		me.selectWidget(0,"COM");
@@ -864,7 +853,7 @@ var KeypadClass = {
 		}
 	},
 	_checkTuning : func(){
-		me.resetInput();
+		me._resetInput();
 		if (me._tuningSource == 0){ # COM
 			me.selectWidget(0,"COM");
 			me._widget.COM.select(me._tuningChannel);
@@ -872,8 +861,9 @@ var KeypadClass = {
 			me.selectWidget(0,"NAV");
 			me._widget.NAV.select(me._tuningChannel);
 		}
-		me._inputIndex = 0;
-		me._inputWatchDog = 0;
+		me._timerResetInput.restart(5);
+		me._timerResetSelection.restart(15);
+		
 	},	
 	
 ### Event onChange ###
@@ -909,12 +899,12 @@ var KeypadClass = {
 			me.setKeyBacklight("IDENT",0);
 		}
  	},
-	_onHdgChange : func(n){
-		me._can.HDGvalue.setText(sprintf("%03i",n.getValue()));
-	},
-	_onAltChange : func(n){
-		me._can.ALTvalue.setText(sprintf("%i",n.getValue()));
-	},
+# 	_onHdgChange : func(n){
+# 		me._can.HDGvalue.setText(sprintf("%03i",n.getValue()));
+# 	},
+# 	_onAltChange : func(n){
+# 		me._can.ALTvalue.setText(sprintf("%i",n.getValue()));
+# 	},
 	
 
 	
@@ -925,7 +915,7 @@ var KeypadClass = {
 ### Buttons
 	onSetHeading : func(hdg){
 		hdg = int( math.mod(hdg,360) );
-		autopilot.nSetHeadingBugDeg.setValue(hdg);
+		extra500.autopilot.nSetHeadingBugDeg.setValue(hdg);
 		
 		me.selectWidget(1,"HDG");
 		me._inputWatchDog = 0;
@@ -933,76 +923,85 @@ var KeypadClass = {
 	},
 	onAdjustHeading : func(amount=nil){
 		if (amount!=nil){
-			var value = autopilot.nSetHeadingBugDeg.getValue();
+			var value = extra500.autopilot.nSetHeadingBugDeg.getValue();
 			
 			value = IFD.tool.adjustStep(value,amount,10);
 						
 			value = int( math.mod(value,360) );
-			autopilot.nSetHeadingBugDeg.setValue(value);
+			extra500.autopilot.nSetHeadingBugDeg.setValue(value);
 		}else{
 			me.onHeadingSync();
 		}
 		
 		me.selectWidget(1,"HDG");
-		me._inputWatchDog = 0;
+		me._timerResetInput.restart(5);
+		me._timerResetSelection.restart(15);
 		me._inputHandle["Keyboard"] = nil;
 	},
 	onHeadingSync : func(){
 		var hdg = me.nHeading.getValue();
 		hdg = int( math.mod(hdg,360) );
-		autopilot.nSetHeadingBugDeg.setValue(hdg);
+		extra500.autopilot.nSetHeadingBugDeg.setValue(hdg);
 		
 		me.selectWidget(1,"HDG");
-		me._inputWatchDog = 0;
+		me._timerResetInput.restart(5);
+		me._timerResetSelection.restart(15);
 		me._inputHandle["Keyboard"] = nil;
 	},
 	onSetAltitude : func(alt){
 		alt = global.clamp(alt,0,50000);
-		autopilot.nSetAltitudeBugFt.setValue(100*int( alt/100) );
+		extra500.autopilot.nSetAltitudeBugFt.setValue(100*int( alt/100) );
 		
 		me.selectWidget(1,"ALT");
-		me._inputWatchDog = 0;
+		me._timerResetInput.restart(5);
+		me._timerResetSelection.restart(15);
 		me._inputHandle["Keyboard"] = nil;
 	},
 	onAdjustAltitude : func(amount=nil){
 		if (amount!=nil){
-			var alt = autopilot.nSetAltitudeBugFt.getValue();
+			var alt = extra500.autopilot.nSetAltitudeBugFt.getValue();
 			
 			alt = IFD.tool.adjustStep(alt,amount,500);
 			alt = global.clamp(alt,0,50000);
 
-			autopilot.nSetAltitudeBugFt.setValue(alt);
+			extra500.autopilot.nSetAltitudeBugFt.setValue(alt);
 		}else{
 			me.onAltitudeSync();
 		}
 		
 		me.selectWidget(1,"ALT");
-		me._inputWatchDog = 0;
+		me._timerResetInput.restart(5);
+		me._timerResetSelection.restart(15);
 		me._inputHandle["Keyboard"] = nil;
 	},
 	onAltitudeSync : func(){
 		var alt = me.nAltitude.getValue();
 		alt = global.clamp(alt,0,50000);
-		autopilot.nSetAltitudeBugFt.setValue( 100*int( alt/100 ) );
+		extra500.autopilot.nSetAltitudeBugFt.setValue( 100*int( alt/100 ) );
 		
 		me.selectWidget(1,"ALT");
-		me._inputWatchDog = 0;
+		me._timerResetInput.restart(5);
+		me._timerResetSelection.restart(15);
 		me._inputHandle["Keyboard"] = nil;
 	},
 	onFMS : func(amount=0){
 		print("KeypadClass.onFMS() ... "~amount);
-		me._inputWatchDog = 0;
+		me._timerResetInput.restart(5);
+		me._timerResetSelection.restart(15);
 		if (me._inputHandle["FmsKnob"] != nil){
 			me._inputHandle["FmsKnob"](amount);
 		}
 	},
 	onFMSpush : func(){
 		print("KeypadClass.onFMSpush() ... ");
-		me._inputWatchDog = 0;
+		me._timerResetInput.restart(5);
+		me._timerResetSelection.restart(15);
+		
 	},
 	onKey : func(key){
 		print("KeypadClass.onKey() ... "~key);
-		me._inputWatchDog = 0;
+		me._timerResetInput.restart(5);
+		me._timerResetSelection.restart(15);
 		if (me._inputHandle["Keyboard"] != nil){
 			me._inputHandle["Keyboard"](key);
 		}
@@ -1041,8 +1040,9 @@ var KeypadClass = {
 #FIXME: when the XPDR (widget) is active and this switch is pressed, the widget should disappear
 		#print("KeypadClass.onXPDR() ...");
 		me.selectWidget(1,"XPDR");
-		me._inputIndex = 0;
-		me._inputWatchDog = 0;
+		me._timerResetInput.restart(5);
+		me._timerResetSelection.restart(15);
+		
 # 		me._inputPath = "/instrumentation/transponder/id-code";
 # 		me._inputValue = sprintf("%i",getprop(me._inputPath));
 # 		me._inputHandle["Keyboard"] = func(key){me.handleInputXDPR(key);};
@@ -1131,12 +1131,12 @@ var KeypadClass = {
 	},
 	onCom1Scroll : func(amount=nil){
 		#print("KeypadClass.onCom1Scroll() ... " ~amount);
-		me.resetInput();
+		me._resetInput();
 		me._activeWidget[0]._channel[0].swap();
 	},
 	onCom2Scroll : func(amount=nil){
 		#print("KeypadClass.onCom2Scroll() ... "~amount);
-		me.resetInput();
+		me._resetInput();
 		me._activeWidget[0]._channel[1].swap();
 	},
 	onCursorPush : func(value) {
@@ -1156,114 +1156,114 @@ var KeypadClass = {
 	
 	
 	initUI : func(){
-		UI.register("Keypad Heading sync", 	func{extra500.keypad.onHeadingSync(); } 	);
-		UI.register("Keypad Heading >", 	func{extra500.keypad.onAdjustHeading(1); } 	);
-		UI.register("Keypad Heading <", 	func{extra500.keypad.onAdjustHeading(-1); } 	);
-		UI.register("Keypad Heading >>", 	func{extra500.keypad.onAdjustHeading(10); } 	);
-		UI.register("Keypad Heading <<", 	func{extra500.keypad.onAdjustHeading(-10); } 	);
-		UI.register("Keypad Heading =", 	func(v=0){extra500.keypad.onSetHeading(v); } 	);
-		UI.register("Keypad Heading +=", 	func(v=0){extra500.keypad.onAdjustHeading(v); } );
+		UI.register("Keypad Heading sync", 	func{IFD.keypad.onHeadingSync(); } 	);
+		UI.register("Keypad Heading >", 	func{IFD.keypad.onAdjustHeading(1); } 	);
+		UI.register("Keypad Heading <", 	func{IFD.keypad.onAdjustHeading(-1); } 	);
+		UI.register("Keypad Heading >>", 	func{IFD.keypad.onAdjustHeading(10); } 	);
+		UI.register("Keypad Heading <<", 	func{IFD.keypad.onAdjustHeading(-10); } 	);
+		UI.register("Keypad Heading =", 	func(v=0){IFD.keypad.onSetHeading(v); } 	);
+		UI.register("Keypad Heading +=", 	func(v=0){IFD.keypad.onAdjustHeading(v); } );
 		
-		UI.register("Keypad Altitude sync", 	func{extra500.keypad.onAltitudeSync(); } 	);
-		UI.register("Keypad Altitude >", 	func{extra500.keypad.onAdjustAltitude(100); } 	);
-		UI.register("Keypad Altitude <", 	func{extra500.keypad.onAdjustAltitude(-100); } 	);
-		UI.register("Keypad Altitude >>", 	func{extra500.keypad.onAdjustAltitude(500); } 	);
-		UI.register("Keypad Altitude <<", 	func{extra500.keypad.onAdjustAltitude(-500); } 	);
-		UI.register("Keypad Altitude =", 	func(v=0){extra500.keypad.onSetAltitude(v); } 	);
-		UI.register("Keypad Altitude +=", 	func(v=0){extra500.keypad.onAdjustAltitude(v); });
+		UI.register("Keypad Altitude sync", 	func{IFD.keypad.onAltitudeSync(); } 	);
+		UI.register("Keypad Altitude >", 	func{IFD.keypad.onAdjustAltitude(100); } 	);
+		UI.register("Keypad Altitude <", 	func{IFD.keypad.onAdjustAltitude(-100); } 	);
+		UI.register("Keypad Altitude >>", 	func{IFD.keypad.onAdjustAltitude(500); } 	);
+		UI.register("Keypad Altitude <<", 	func{IFD.keypad.onAdjustAltitude(-500); } 	);
+		UI.register("Keypad Altitude =", 	func(v=0){IFD.keypad.onSetAltitude(v); } 	);
+		UI.register("Keypad Altitude +=", 	func(v=0){IFD.keypad.onAdjustAltitude(v); });
 		
-		UI.register("Keypad FMS push", 		func{extra500.keypad.onFMS(0); } 	);
-		UI.register("Keypad FMS >", 		func{extra500.keypad.onFMS(1); } 	);
-		UI.register("Keypad FMS <", 		func{extra500.keypad.onFMS(-1); } 	);
+		UI.register("Keypad FMS push", 		func{IFD.keypad.onFMS(0); } 	);
+		UI.register("Keypad FMS >", 		func{IFD.keypad.onFMS(1); } 	);
+		UI.register("Keypad FMS <", 		func{IFD.keypad.onFMS(-1); } 	);
 		
-		UI.register("Keypad Key 0", 	func{extra500.keypad.onKey("0"); } 	);
-		UI.register("Keypad Key 1", 	func{extra500.keypad.onKey("1"); } 	);
-		UI.register("Keypad Key 2", 	func{extra500.keypad.onKey("2"); } 	);
-		UI.register("Keypad Key 3", 	func{extra500.keypad.onKey("3"); } 	);
-		UI.register("Keypad Key 4", 	func{extra500.keypad.onKey("4"); } 	);
-		UI.register("Keypad Key 5", 	func{extra500.keypad.onKey("5"); } 	);
-		UI.register("Keypad Key 6", 	func{extra500.keypad.onKey("6"); } 	);
-		UI.register("Keypad Key 7", 	func{extra500.keypad.onKey("7"); } 	);
-		UI.register("Keypad Key 8", 	func{extra500.keypad.onKey("8"); } 	);
-		UI.register("Keypad Key 9", 	func{extra500.keypad.onKey("9"); } 	);
-		UI.register("Keypad Key Q", 	func{extra500.keypad.onKey("Q"); } 	);
-		UI.register("Keypad Key W", 	func{extra500.keypad.onKey("W"); } 	);
-		UI.register("Keypad Key E", 	func{extra500.keypad.onKey("E"); } 	);
-		UI.register("Keypad Key R", 	func{extra500.keypad.onKey("R"); } 	);
-		UI.register("Keypad Key T", 	func{extra500.keypad.onKey("T"); } 	);
-		UI.register("Keypad Key Y", 	func{extra500.keypad.onKey("Y"); } 	);
-		UI.register("Keypad Key U", 	func{extra500.keypad.onKey("U"); } 	);
-		UI.register("Keypad Key I", 	func{extra500.keypad.onKey("I"); } 	);
-		UI.register("Keypad Key O", 	func{extra500.keypad.onKey("O"); } 	);
-		UI.register("Keypad Key P", 	func{extra500.keypad.onKey("P"); } 	);
-		UI.register("Keypad Key A", 	func{extra500.keypad.onKey("A"); } 	);
-		UI.register("Keypad Key S", 	func{extra500.keypad.onKey("S"); } 	);
-		UI.register("Keypad Key D", 	func{extra500.keypad.onKey("D"); } 	);
-		UI.register("Keypad Key F", 	func{extra500.keypad.onKey("F"); } 	);
-		UI.register("Keypad Key G", 	func{extra500.keypad.onKey("G"); } 	);
-		UI.register("Keypad Key H", 	func{extra500.keypad.onKey("H"); } 	);
-		UI.register("Keypad Key J", 	func{extra500.keypad.onKey("J"); } 	);
-		UI.register("Keypad Key K", 	func{extra500.keypad.onKey("K"); } 	);
-		UI.register("Keypad Key L", 	func{extra500.keypad.onKey("L"); } 	);
-		UI.register("Keypad Key .", 	func{extra500.keypad.onKey("."); } 	);
-		UI.register("Keypad Key Z", 	func{extra500.keypad.onKey("Z"); } 	);
-		UI.register("Keypad Key X", 	func{extra500.keypad.onKey("X"); } 	);
-		UI.register("Keypad Key C", 	func{extra500.keypad.onKey("C"); } 	);
-		UI.register("Keypad Key V", 	func{extra500.keypad.onKey("V"); } 	);
-		UI.register("Keypad Key B", 	func{extra500.keypad.onKey("B"); } 	);
-		UI.register("Keypad Key N", 	func{extra500.keypad.onKey("N"); } 	);
-		UI.register("Keypad Key M", 	func{extra500.keypad.onKey("M"); } 	);
-		UI.register("Keypad Key At", 	func{extra500.keypad.onKey("@"); } 	);
-		UI.register("Keypad Key Space", func{extra500.keypad.onKey(" "); } 	);
-		UI.register("Keypad Key CLR", 	func{extra500.keypad.onCLR(); } 	);
-		UI.register("Keypad Key CNCL", 	func{extra500.keypad.onCNCL(); } 	);
-		UI.register("Keypad Key SYB", 	func{extra500.keypad.onSYB(); } 	);
-		UI.register("Keypad Key Enter", func{extra500.keypad.onEnter(); } 	);
+		UI.register("Keypad Key 0", 	func{IFD.keypad.onKey("0"); } 	);
+		UI.register("Keypad Key 1", 	func{IFD.keypad.onKey("1"); } 	);
+		UI.register("Keypad Key 2", 	func{IFD.keypad.onKey("2"); } 	);
+		UI.register("Keypad Key 3", 	func{IFD.keypad.onKey("3"); } 	);
+		UI.register("Keypad Key 4", 	func{IFD.keypad.onKey("4"); } 	);
+		UI.register("Keypad Key 5", 	func{IFD.keypad.onKey("5"); } 	);
+		UI.register("Keypad Key 6", 	func{IFD.keypad.onKey("6"); } 	);
+		UI.register("Keypad Key 7", 	func{IFD.keypad.onKey("7"); } 	);
+		UI.register("Keypad Key 8", 	func{IFD.keypad.onKey("8"); } 	);
+		UI.register("Keypad Key 9", 	func{IFD.keypad.onKey("9"); } 	);
+		UI.register("Keypad Key Q", 	func{IFD.keypad.onKey("Q"); } 	);
+		UI.register("Keypad Key W", 	func{IFD.keypad.onKey("W"); } 	);
+		UI.register("Keypad Key E", 	func{IFD.keypad.onKey("E"); } 	);
+		UI.register("Keypad Key R", 	func{IFD.keypad.onKey("R"); } 	);
+		UI.register("Keypad Key T", 	func{IFD.keypad.onKey("T"); } 	);
+		UI.register("Keypad Key Y", 	func{IFD.keypad.onKey("Y"); } 	);
+		UI.register("Keypad Key U", 	func{IFD.keypad.onKey("U"); } 	);
+		UI.register("Keypad Key I", 	func{IFD.keypad.onKey("I"); } 	);
+		UI.register("Keypad Key O", 	func{IFD.keypad.onKey("O"); } 	);
+		UI.register("Keypad Key P", 	func{IFD.keypad.onKey("P"); } 	);
+		UI.register("Keypad Key A", 	func{IFD.keypad.onKey("A"); } 	);
+		UI.register("Keypad Key S", 	func{IFD.keypad.onKey("S"); } 	);
+		UI.register("Keypad Key D", 	func{IFD.keypad.onKey("D"); } 	);
+		UI.register("Keypad Key F", 	func{IFD.keypad.onKey("F"); } 	);
+		UI.register("Keypad Key G", 	func{IFD.keypad.onKey("G"); } 	);
+		UI.register("Keypad Key H", 	func{IFD.keypad.onKey("H"); } 	);
+		UI.register("Keypad Key J", 	func{IFD.keypad.onKey("J"); } 	);
+		UI.register("Keypad Key K", 	func{IFD.keypad.onKey("K"); } 	);
+		UI.register("Keypad Key L", 	func{IFD.keypad.onKey("L"); } 	);
+		UI.register("Keypad Key .", 	func{IFD.keypad.onKey("."); } 	);
+		UI.register("Keypad Key Z", 	func{IFD.keypad.onKey("Z"); } 	);
+		UI.register("Keypad Key X", 	func{IFD.keypad.onKey("X"); } 	);
+		UI.register("Keypad Key C", 	func{IFD.keypad.onKey("C"); } 	);
+		UI.register("Keypad Key V", 	func{IFD.keypad.onKey("V"); } 	);
+		UI.register("Keypad Key B", 	func{IFD.keypad.onKey("B"); } 	);
+		UI.register("Keypad Key N", 	func{IFD.keypad.onKey("N"); } 	);
+		UI.register("Keypad Key M", 	func{IFD.keypad.onKey("M"); } 	);
+		UI.register("Keypad Key At", 	func{IFD.keypad.onKey("@"); } 	);
+		UI.register("Keypad Key Space", func{IFD.keypad.onKey("Space"); });
+		UI.register("Keypad Key CLR", 	func{IFD.keypad.onKey("CLR"); }	);
+		UI.register("Keypad Key CNCL", 	func{IFD.keypad.onKey("CNCL"); });
+		UI.register("Keypad Key SYB", 	func{IFD.keypad.onKey("SYB"); }	);
+		UI.register("Keypad Key Enter", func{IFD.keypad.onKey("Enter"); });
 		
-		UI.register("Keypad Com1", 	func{extra500.keypad.onComSelect(0); } 	);
-		UI.register("Keypad Com2", 	func{extra500.keypad.onComSelect(1); } 	);
-		UI.register("Keypad FreqList", 	func{extra500.keypad.onFreqList(); } 	);
-		UI.register("Keypad Aux", 	func{extra500.keypad.onAux(); } 	);
-		UI.register("Keypad Nav1", 	func{extra500.keypad.onNavSelect(0); } 	);
-		UI.register("Keypad Nav2", 	func{extra500.keypad.onNavSelect(1); } 	);
-		UI.register("Keypad XPDR", 	func{extra500.keypad.onXPDR(); } 	);
-		UI.register("Keypad VFR", 	func{extra500.keypad.onVFR(); } 	);
-		UI.register("Keypad Mode", 	func{extra500.keypad.onMode(); } 	);
-		UI.register("Keypad Ident", 	func{extra500.keypad.onIdent(); } 	);
-		UI.register("Keypad Phone", 	func{extra500.keypad.onPhone(); } 	);
-		UI.register("Keypad Sound", 	func{extra500.keypad.onSound(); } 	);
-		UI.register("Keypad Proc", 	func{extra500.keypad.onProc(); } 	);
-		UI.register("Keypad D", 	func{extra500.keypad.onD(); } 	);
-		UI.register("Keypad V", 	func{extra500.keypad.onV(); } 	);
-		UI.register("Keypad NRST", 	func{extra500.keypad.onNRST(); } 	);
-		UI.register("Keypad Map", 	func{extra500.keypad.onMap(); } 	);
+		UI.register("Keypad Com1", 	func{IFD.keypad.onComSelect(0); } 	);
+		UI.register("Keypad Com2", 	func{IFD.keypad.onComSelect(1); } 	);
+		UI.register("Keypad FreqList", 	func{IFD.keypad.onFreqList(); } 	);
+		UI.register("Keypad Aux", 	func{IFD.keypad.onAux(); } 	);
+		UI.register("Keypad Nav1", 	func{IFD.keypad.onNavSelect(0); } 	);
+		UI.register("Keypad Nav2", 	func{IFD.keypad.onNavSelect(1); } 	);
+		UI.register("Keypad XPDR", 	func{IFD.keypad.onXPDR(); } 	);
+		UI.register("Keypad VFR", 	func{IFD.keypad.onVFR(); } 	);
+		UI.register("Keypad Mode", 	func{IFD.keypad.onMode(); } 	);
+		UI.register("Keypad Ident", 	func{IFD.keypad.onIdent(); } 	);
+		UI.register("Keypad Phone", 	func{IFD.keypad.onPhone(); } 	);
+		UI.register("Keypad Sound", 	func{IFD.keypad.onSound(); } 	);
+		UI.register("Keypad Proc", 	func{IFD.keypad.onProc(); } 	);
+		UI.register("Keypad D", 	func{IFD.keypad.onD(); } 	);
+		UI.register("Keypad V", 	func{IFD.keypad.onV(); } 	);
+		UI.register("Keypad NRST", 	func{IFD.keypad.onNRST(); } 	);
+		UI.register("Keypad Map", 	func{IFD.keypad.onMap(); } 	);
 		
-		UI.register("Keypad Com1 Volume >", 	func{extra500.keypad.onCom1Volume(1); } 	);
-		UI.register("Keypad Com1 Volume <", 	func{extra500.keypad.onCom1Volume(-1); } 	);
-		UI.register("Keypad Com2 Volume >", 	func{extra500.keypad.onCom2Volume(1); } 	);
-		UI.register("Keypad Com2 Volume <", 	func{extra500.keypad.onCom2Volume(-1); } 	);
-		UI.register("Keypad Com1 SQ down", 	func{extra500.keypad.onCom1SQ(1); } 	);
-		UI.register("Keypad Com1 SQ up", 	func{extra500.keypad.onCom1SQ(0); } 	);
-		UI.register("Keypad Com2 SQ down", 	func{extra500.keypad.onCom2SQ(1); } 	);
-		UI.register("Keypad Com2 SQ up", 	func{extra500.keypad.onCom2SQ(0); } 	);
-		UI.register("Keypad Com1 Scroll >", 	func{extra500.keypad.onCom1Scroll(1); } 	);
-		UI.register("Keypad Com1 Scroll <", 	func{extra500.keypad.onCom1Scroll(-1); } 	);
-		UI.register("Keypad Com2 Scroll >", 	func{extra500.keypad.onCom2Scroll(1); } 	);
-		UI.register("Keypad Com2 Scroll <", 	func{extra500.keypad.onCom2Scroll(-1); } 	);
+		UI.register("Keypad Com1 Volume >", 	func{IFD.keypad.onCom1Volume(1); } 	);
+		UI.register("Keypad Com1 Volume <", 	func{IFD.keypad.onCom1Volume(-1); } 	);
+		UI.register("Keypad Com2 Volume >", 	func{IFD.keypad.onCom2Volume(1); } 	);
+		UI.register("Keypad Com2 Volume <", 	func{IFD.keypad.onCom2Volume(-1); } 	);
+		UI.register("Keypad Com1 SQ down", 	func{IFD.keypad.onCom1SQ(1); } 	);
+		UI.register("Keypad Com1 SQ up", 	func{IFD.keypad.onCom1SQ(0); } 	);
+		UI.register("Keypad Com2 SQ down", 	func{IFD.keypad.onCom2SQ(1); } 	);
+		UI.register("Keypad Com2 SQ up", 	func{IFD.keypad.onCom2SQ(0); } 	);
+		UI.register("Keypad Com1 Scroll >", 	func{IFD.keypad.onCom1Scroll(1); } 	);
+		UI.register("Keypad Com1 Scroll <", 	func{IFD.keypad.onCom1Scroll(-1); } 	);
+		UI.register("Keypad Com2 Scroll >", 	func{IFD.keypad.onCom2Scroll(1); } 	);
+		UI.register("Keypad Com2 Scroll <", 	func{IFD.keypad.onCom2Scroll(-1); } 	);
 		
-		UI.register("Keypad Cursor center", 	func{extra500.keypad.onCursor(0,0); } 	);
-		UI.register("Keypad Cursor N", 		func{extra500.keypad.onCursor(0,1); } 	);
-		UI.register("Keypad Cursor NE", 	func{extra500.keypad.onCursor(1,1); } 	);
-		UI.register("Keypad Cursor E", 		func{extra500.keypad.onCursor(1,0); } 	);
-		UI.register("Keypad Cursor SE", 	func{extra500.keypad.onCursor(1,-1); } 	);
-		UI.register("Keypad Cursor S", 		func{extra500.keypad.onCursor(0,-1); } 	);
-		UI.register("Keypad Cursor SW", 	func{extra500.keypad.onCursor(-1,-1); }	);
-		UI.register("Keypad Cursor W", 		func{extra500.keypad.onCursor(-1,0); } 	);
-		UI.register("Keypad Cursor NW", 	func{extra500.keypad.onCursor(-1,1); } 	);
-		UI.register("Keypad Cursor push down", 	func{extra500.keypad.onCursorPush(1); } 	);
-		UI.register("Keypad Cursor push up", 	func{extra500.keypad.onCursorPush(0); } 	);
-		UI.register("Keypad Cursor >", 		func{extra500.keypad.onCursorScroll(1); } 	);
-		UI.register("Keypad Cursor <", 		func{extra500.keypad.onCursorScroll(-1); } 	);
+		UI.register("Keypad Cursor center", 	func{IFD.keypad.onCursor(0,0); } 	);
+		UI.register("Keypad Cursor N", 		func{IFD.keypad.onCursor(0,1); } 	);
+		UI.register("Keypad Cursor NE", 	func{IFD.keypad.onCursor(1,1); } 	);
+		UI.register("Keypad Cursor E", 		func{IFD.keypad.onCursor(1,0); } 	);
+		UI.register("Keypad Cursor SE", 	func{IFD.keypad.onCursor(1,-1); } 	);
+		UI.register("Keypad Cursor S", 		func{IFD.keypad.onCursor(0,-1); } 	);
+		UI.register("Keypad Cursor SW", 	func{IFD.keypad.onCursor(-1,-1); }	);
+		UI.register("Keypad Cursor W", 		func{IFD.keypad.onCursor(-1,0); } 	);
+		UI.register("Keypad Cursor NW", 	func{IFD.keypad.onCursor(-1,1); } 	);
+		UI.register("Keypad Cursor push down", 	func{IFD.keypad.onCursorPush(1); } 	);
+		UI.register("Keypad Cursor push up", 	func{IFD.keypad.onCursorPush(0); } 	);
+		UI.register("Keypad Cursor >", 		func{IFD.keypad.onCursorScroll(1); } 	);
+		UI.register("Keypad Cursor <", 		func{IFD.keypad.onCursorScroll(-1); } 	);
 		
 	}
 	

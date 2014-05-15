@@ -33,7 +33,8 @@ COLOR["TCAS_LEVEL_0"] 	= "#00ffff";
 COLOR["TCAS_LEVEL_1"] 	= "#00ffff";
 COLOR["TCAS_LEVEL_2"] 	= "#ff7f2a";
 COLOR["TCAS_LEVEL_3"] 	= "#ff0000";
-
+COLOR["Keypad_Front"] 	= "#000000";
+COLOR["Keypad_Back"] 	= "#ffffff";
 
 
 
@@ -80,6 +81,20 @@ var ListenerClass = {
 	
 };
 
+var IFDClass = {
+	new: func(root,name){
+		var m = { parents: [IFDClass] };
+		m._name = name;
+		return m;
+	},
+	init : func(instance=me){
+		
+	},
+	deinit : func(){
+		
+	},
+	getIFD : func(){ return me ;},
+};
 
 var PageClass = {
 	new: func(ifd,name,data){
@@ -147,7 +162,7 @@ var IfdWidget = {
 		m._group.setVisible(m._visibility);
 		return m;
 	},
-	getIFD : func(){ return m._Page.getIFD() ;},
+	getIFD : func(){ return me._Page.getIFD() ;},
 	init : func(instance=me){
 		
 	},
@@ -157,7 +172,7 @@ var IfdWidget = {
 	setVisible : func(visibility){
 		if(me._visibility!=visibility){
 			me._visibility = visibility;
-# 			print("["~me._name ~ "]._onVisibiltyChange() ... " ~ me._visibility);
+#  			print("["~me._name ~ "]._onVisibiltyChange() ... " ~ me._visibility);
 			me._onVisibiltyChange();
 		}
 	},

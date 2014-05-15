@@ -28,7 +28,7 @@
      inkscape:cx="201.728"
      inkscape:cy="52.561831"
      inkscape:document-units="px"
-     inkscape:current-layer="layer3"
+     inkscape:current-layer="FMS"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -84,7 +84,7 @@
   </g>
   <g
      inkscape:groupmode="layer"
-     id="layer9"
+     id="DME"
      inkscape:label="DME"
      style="display:inline">
     <text
@@ -239,7 +239,7 @@
   <g
      inkscape:label="Com"
      inkscape:groupmode="layer"
-     id="layer1"
+     id="COM"
      transform="translate(0,-924.36218)"
      style="display:inline">
     <text
@@ -355,7 +355,7 @@
   </g>
   <g
      inkscape:groupmode="layer"
-     id="layer3"
+     id="XPDR"
      inkscape:label="XPDR"
      style="display:inline">
     <text
@@ -445,7 +445,7 @@
   </g>
   <g
      inkscape:groupmode="layer"
-     id="layer4"
+     id="HDG"
      inkscape:label="HDG"
      style="display:inline">
     <text
@@ -487,7 +487,7 @@
   </g>
   <g
      inkscape:groupmode="layer"
-     id="layer6"
+     id="NAV"
      inkscape:label="NAV"
      style="display:inline">
     <text
@@ -603,12 +603,12 @@
   </g>
   <g
      inkscape:groupmode="layer"
-     id="layer7"
+     id="AUX"
      inkscape:label="AUX"
      style="display:inline" />
   <g
      inkscape:groupmode="layer"
-     id="layer5"
+     id="ALT"
      inkscape:label="ALT"
      style="display:inline">
     <text
@@ -650,8 +650,8 @@
   </g>
   <g
      inkscape:groupmode="layer"
-     id="layer2"
-     inkscape:label="Data"
+     id="FMS"
+     inkscape:label="FMS"
      style="display:inline">
     <text
        xml:space="preserve"
