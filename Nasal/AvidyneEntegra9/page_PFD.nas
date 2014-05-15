@@ -969,16 +969,31 @@ var NavSourceWidget = {
 					});
 				}
 			}else{
-				me._ifd.ui.bindKnob("LK",{
-					"<<"	: func(){me._adjustRadial(-10);},
-					"<"	: func(){me._adjustRadial(-1);},
-					"push"	: func(){me._onSyncCourse();},
-					">"	: func(){me._adjustRadial(1);},
-					">>"	: func(){me._adjustRadial(10);},
-				},{
-					"scroll"	: "Course",
-					"push"		: "Sync",
-				});
+				
+				if( me._isInRange ){
+					me._ifd.ui.bindKnob("LK",{
+						"<<"	: func(){me._adjustRadial(-10);},
+						"<"	: func(){me._adjustRadial(-1);},
+						"push"	: func(){me._onSyncCourse();},
+						">"	: func(){me._adjustRadial(1);},
+						">>"	: func(){me._adjustRadial(10);},
+					},{
+						"scroll"	: "Course",
+						"push"		: "Sync",
+					});
+				
+				}else{
+					me._ifd.ui.bindKnob("LK",{
+						"<<"	: func(){me._adjustRadial(-10);},
+						"<"	: func(){me._adjustRadial(-1);},
+						"push"	: nil,
+						">"	: func(){me._adjustRadial(1);},
+						">>"	: func(){me._adjustRadial(10);},
+					},{
+						"scroll"	: "Course",
+						"push"		: "",
+					});
+				}
 			}
 	},
 	_onSourceChange : func(n){
@@ -1060,13 +1075,16 @@ var NavSourceWidget = {
 	},
 	_onInRangeChange : func(n){
 		me._isInRange = n.getValue();
+		me._checkKnob();
 	},
 	_onGsInRangeChange : func(n){
 		me._isGSinRange = n.getValue();
+		me._checkKnob();
 	},
 	_onIsLocChange : func(n){
 		me._isLOC = n.getValue();
 		me._checkStationType();
+		me._checkKnob();
 	},
 	_onFromFlagChange : func(n){
 		me._fromFlag = n.getValue();
