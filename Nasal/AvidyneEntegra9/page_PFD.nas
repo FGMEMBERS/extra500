@@ -949,7 +949,7 @@ var NavSourceWidget = {
 					me._ifd.ui.bindKnob("LK",{
 						"<<"	: func(){me._adjustRadial(-10);},
 						"<"	: func(){me._adjustRadial(-1);},
-						"push"	: func(){me._onCancelFMSCourse();},
+						"push"	: func(){me._setOBSCourse(0);},
 						">"	: func(){me._adjustRadial(1);},
 						">>"	: func(){me._adjustRadial(10);},
 					},{
@@ -958,11 +958,11 @@ var NavSourceWidget = {
 					});
 				}else{
 					me._ifd.ui.bindKnob("LK",{
-						"<<"	: func(){me._setFMSRadial();me._adjustRadial(-10);},
-						"<"	: func(){me._setFMSRadial();me._adjustRadial(-1);},
+						"<<"	: func(){me._setOBSCourse(1);me._adjustRadial(-10);},
+						"<"	: func(){me._setOBSCourse(1);me._adjustRadial(-1);},
 						"push"	: nil,
-						">"	: func(){me._setFMSRadial();me._adjustRadial(1);},
-						">>"	: func(){me._setFMSRadial();me._adjustRadial(10);},
+						">"	: func(){me._setOBSCourse(1);me._adjustRadial(1);},
+						">>"	: func(){me._setOBSCourse(1);me._adjustRadial(10);},
 					},{
 						"scroll"	: "Course",
 						"push"		: "",
@@ -998,12 +998,11 @@ var NavSourceWidget = {
 	},
 	_onSourceChange : func(n){
 		me._source = n.getValue();
-		me.setSource(me._source);
-		me._checkStationType();
-		me._checkKnob();
+		me._modeFMSCourse = me._modeFMSCourse and (me._source == 2);
+		me.checkSource();
 	},
-	setSource : func(src){
-		me._source = src;
+	checkSource : func(){
+		
 		foreach(var l;me._sourceListeners){
 			removelistener(l);
 		}
@@ -1021,16 +1020,27 @@ var NavSourceWidget = {
 		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].toFlag,func(n){me._onToFlagChange(n);},1,0));
 		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].hasGS,func(n){me._onHasGSChange(n);},1,0));
 		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].Frequency,func(n){me._onFrequencyChange(n);},1,0));
-		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].Pointer,func(n){me._onCourseChange(n);},1,0));
-		
+		if(me._modeFMSCourse == 1){
+			if(getprop("/instrumentation/gps[0]/serviceable")){
+				append(me._sourceListeners, setlistener("/instrumentation/gps[0]/desired-course-deg",func(n){me._onCourseChange(n);},1,0));
+			}elsif(getprop("/instrumentation/gps[1]/serviceable")){
+				append(me._sourceListeners, setlistener("/instrumentation/gps[1]/desired-course-deg",func(n){me._onCourseChange(n);},1,0));
+			}else{
+				
+			}
+		}else{
+			append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].Pointer,func(n){me._onCourseChange(n);},1,0));
+		}
 		me._Page._widgetTab.NavSelect.registerKeyCDI();
 		
+		me._checkStationType();
+		me._checkKnob();
+		extra500.fms.checkOBSCourse();
 	},
 	_scroll : func(amount){
 		me._source += amount;
 		if (me._source > 2){ me._source = 0; }
 		if (me._source < 0){ me._source = 2; }
-		me.setSource(me._source);
 		me._ptree.Source.setValue(me._source);	
 	},
 	_adjustRadial : func(amount){
@@ -1041,6 +1051,8 @@ var NavSourceWidget = {
 		setprop("/instrumentation/nav[1]/radials/selected-deg",course);
 		if(me._modeFMSCourse == 1){
 			me._ptree.FMSCourse.setValue(course);
+			setprop("/instrumentation/gps[0]/selected-course-deg",course);
+			setprop("/instrumentation/gps[1]/selected-course-deg",course);
 		}
 	},
 	_onSyncCourse : func(){
@@ -1055,15 +1067,14 @@ var NavSourceWidget = {
 		setprop("/instrumentation/nav[0]/radials/selected-deg",bearing);
 		setprop("/instrumentation/nav[1]/radials/selected-deg",bearing);
 	},
-	_onCancelFMSCourse : func(){
-		me._modeFMSCourse = 0;
-		me._ptree.FMSCourseMode.setValue(me._modeFMSCourse);
-		me._checkKnob();
-	},
-	_setFMSRadial : func(){
-		me._modeFMSCourse = 1;
-		me._ptree.FMSCourseMode.setValue(me._modeFMSCourse);
-		me._checkKnob();
+	_setOBSCourse : func(active=0){
+		if(me._modeFMSCourse != active){
+			me._modeFMSCourse = active;
+			me._ptree.FMSCourseMode.setValue(me._modeFMSCourse);
+			setprop("/instrumentation/gps[0]/selected-course-deg",me._Pointer);
+			setprop("/instrumentation/gps[1]/selected-course-deg",me._Pointer);
+			me.checkSource();
+		}
 	},
 	_onRouteActiveChange : func(n){
 		me._routeManagerActive = n.getValue();
@@ -1079,12 +1090,12 @@ var NavSourceWidget = {
 	},
 	_onGsInRangeChange : func(n){
 		me._isGSinRange = n.getValue();
-		me._checkKnob();
+		
 	},
 	_onIsLocChange : func(n){
 		me._isLOC = n.getValue();
 		me._checkStationType();
-		me._checkKnob();
+		
 	},
 	_onFromFlagChange : func(n){
 		me._fromFlag = n.getValue();

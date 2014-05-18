@@ -73,8 +73,50 @@ var FlightManagementSystemClass = {
 		}
 	
 	},
+	checkOBSCourse : func(){
+		
+		if(	me._fplActive 
+			and getprop("/instrumentation/fms[0]/mode-course") 
+# 			and autopilot.nModeNavGpss.getValue()
+# 			and (getprop("/autopilot/fms-channel/gpss/in-turn") == 0)
+		){
+			setprop("/autopilot/settings/obs-mode",1);
+			setprop("/autopilot/settings/dto-leg",0);
+# 			setprop("",1);
+			var fp = flightplan();
+			var wypt = fp.getWP(fp.current);
+			
+			var nGPS0 = props.globals.getNode("/instrumentation/gps[0]/scratch", 1);
+			var nGPS1 = props.globals.getNode("/instrumentation/gps[1]/scratch", 1);
+			
+			nGPS0.setValues({
+				"latitude-deg"	: wypt.lat,
+				"longitude-deg"	: wypt.lon,
+				"ident"		: wypt.id,
+				"type"		: 'WPT',
+			});
+			
+			nGPS1.setValues({
+				"latitude-deg"	: wypt.lat,
+				"longitude-deg"	: wypt.lon,
+				"ident"		: wypt.id,
+				"type"		: 'WPT',
+			});
+			
+			setprop("/instrumentation/gps[0]/command","obs");
+			setprop("/instrumentation/gps[1]/command","obs");
+		}else{
+			setprop("/instrumentation/gps[0]/command","leg");
+			setprop("/instrumentation/gps[1]/command","leg");
+			
+			setprop("/autopilot/settings/obs-mode",0);
+			setprop("/autopilot/settings/dto-leg",1);
+		}
+		
+	},
 	_onFPLActiveChange : func(n){
 		me._fplActive = n.getValue();
+		me.checkOBSCourse();
 	},
 	calcRoute : func(){
 		if(me._fplActive){
