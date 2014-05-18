@@ -20,7 +20,7 @@
       Date: 09.05.14
 
       Last change: Eric van den Berg     
-      Date: 10.05.14            
+      Date: 16.05.14            
 -->
 <PropertyList>
 
@@ -107,12 +107,12 @@
   <name>copilot ppt</name>
   <path>Aircraft/extra500/Models/panels/PTTswitchco.xml</path>
 	<offsets>
-		<x-m>0.07037</x-m>
-		<y-m>0.44328</y-m>	
-		<z-m>0.15615</z-m>
-		<roll-deg>28.059</roll-deg>
-		<pitch-deg>-52.095</pitch-deg>
-		<yaw-deg>-19.261</yaw-deg>
+		<x-m>0.08592</x-m>
+		<y-m>0.43998</y-m>	
+		<z-m>0.16935</z-m>
+		<roll-deg>19.544</roll-deg>
+		<pitch-deg>-15.112</pitch-deg>
+		<yaw-deg>-0.221</yaw-deg>
 	</offsets>
 </model>
 

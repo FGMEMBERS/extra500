@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             14.05.2014
+      Date:             18.05.2014
 
 
 ************************************************************************
@@ -591,6 +591,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<yawdamper type="int">0</yawdamper>
 		<dto-leg type="int">0</dto-leg>
 		<ap type="bool">false</ap>
+		<obs-mode type="bool">false</obs-mode>
 	</settings>
 	<route-manager>
 		<current-wp>-1</current-wp>
@@ -1178,6 +1179,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<config>
 			<over-flight-arm-distance-nm>0</over-flight-arm-distance-nm>
 		</config>
+		<desired-course-deg type="double">0</desired-course-deg>
 	</gps>
 	<gps n="1">
 	       	<serviceable type="bool">true</serviceable>
@@ -1197,6 +1199,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<config>
 			<over-flight-arm-distance-nm>0</over-flight-arm-distance-nm>
 		</config>
+		<desired-course-deg type="double">0</desired-course-deg>
 	</gps>
 
 

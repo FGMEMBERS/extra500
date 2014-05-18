@@ -20,7 +20,7 @@
       Date: July 04 2013
 
       Last change:      Eric van den Berg
-      Date:             11.05.14
+      Date:             16.05.14
 -->
 <PropertyList>
 
@@ -269,6 +269,26 @@
 			</script>
 		</binding>
 	</action>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		setprop("/controls/engines/engine/throttle",getprop("/controls/engines/engine/throttle")+.0025);
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		setprop("/controls/engines/engine/throttle",getprop("/controls/engines/engine/throttle")-.0025);
+	]]></script>
+    </binding>
+  </action>
 </animation>
 
 <animation>
