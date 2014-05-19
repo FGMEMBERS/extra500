@@ -866,7 +866,7 @@ var NavSourceWidget = {
 			Distance	: nil,
 			Source		: props.globals.initNode("/instrumentation/nav-source",0,"INT"),
 			FMSCourse	: props.globals.initNode("/instrumentation/fms[0]/selected-course-deg",0,"DOUBLE"),
-			FMSCourseMode	: props.globals.initNode("/instrumentation/fms[0]/mode-course",0,"BOOL"),
+			btnObsMode		: props.globals.initNode("/instrumentation/fms[0]/btn-obs-mode",0,"BOOL"),
 			
 		};
 		
@@ -895,7 +895,7 @@ var NavSourceWidget = {
 		m._distance		= 0;
 		m._frequency		= "";
 		
-		m._modeFMSCourse 	= 0;
+		m._btnObsMode 	= 0;
 		
 		
 		return m;
@@ -903,6 +903,7 @@ var NavSourceWidget = {
 	setListeners : func(instance) {
 		
 		append(me._listeners, setlistener(me._ptree.Source,func(n){me._onSourceChange(n);},1,0));
+		append(me._listeners, setlistener(me._ptree.btnObsMode,func(n){me._onObsModeChange(n);},1,0));
 		append(me._listeners, setlistener("/autopilot/route-manager/active",func(n){me._onRouteActiveChange(n);},1,0));
 		append(me._listeners, setlistener("/autopilot/fms-channel/serviceable",func(n){me._onFmsServiceChange(n);},1,0));
 				
@@ -945,11 +946,11 @@ var NavSourceWidget = {
 	},
 	_checkKnob : func(){
 			if(me._source == 2){
-				if(me._modeFMSCourse == 1){
+				if(me._btnObsMode == 1){
 					me._ifd.ui.bindKnob("LK",{
 						"<<"	: func(){me._adjustRadial(-10);},
 						"<"	: func(){me._adjustRadial(-1);},
-						"push"	: func(){me._setOBSCourse(0);},
+						"push"	: func(){me._setObsMode(0);},
 						">"	: func(){me._adjustRadial(1);},
 						">>"	: func(){me._adjustRadial(10);},
 					},{
@@ -958,11 +959,11 @@ var NavSourceWidget = {
 					});
 				}else{
 					me._ifd.ui.bindKnob("LK",{
-						"<<"	: func(){me._setOBSCourse(1);me._adjustRadial(-10);},
-						"<"	: func(){me._setOBSCourse(1);me._adjustRadial(-1);},
+						"<<"	: func(){me._setObsMode(1);me._adjustRadial(-10);},
+						"<"	: func(){me._setObsMode(1);me._adjustRadial(-1);},
 						"push"	: nil,
-						">"	: func(){me._setOBSCourse(1);me._adjustRadial(1);},
-						">>"	: func(){me._setOBSCourse(1);me._adjustRadial(10);},
+						">"	: func(){me._setObsMode(1);me._adjustRadial(1);},
+						">>"	: func(){me._setObsMode(1);me._adjustRadial(10);},
 					},{
 						"scroll"	: "Course",
 						"push"		: "",
@@ -996,9 +997,13 @@ var NavSourceWidget = {
 				}
 			}
 	},
+	_onObsModeChange :func(n){
+		me._btnObsMode = n.getValue();
+		me.checkSource();
+	},
 	_onSourceChange : func(n){
 		me._source = n.getValue();
-		me._modeFMSCourse = me._modeFMSCourse and (me._source == 2);
+		me._setObsMode(me._btnObsMode and (me._source == 2));
 		me.checkSource();
 	},
 	checkSource : func(){
@@ -1020,7 +1025,8 @@ var NavSourceWidget = {
 		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].toFlag,func(n){me._onToFlagChange(n);},1,0));
 		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].hasGS,func(n){me._onHasGSChange(n);},1,0));
 		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].Frequency,func(n){me._onFrequencyChange(n);},1,0));
-		if(me._modeFMSCourse == 1){
+				
+		if(me._btnObsMode == 1){
 			if(getprop("/instrumentation/gps[0]/serviceable")){
 				append(me._sourceListeners, setlistener("/instrumentation/gps[0]/desired-course-deg",func(n){me._onCourseChange(n);},1,0));
 			}elsif(getprop("/instrumentation/gps[1]/serviceable")){
@@ -1035,7 +1041,7 @@ var NavSourceWidget = {
 		
 		me._checkStationType();
 		me._checkKnob();
-		extra500.fms.checkOBSCourse();
+		
 	},
 	_scroll : func(amount){
 		me._source += amount;
@@ -1049,7 +1055,7 @@ var NavSourceWidget = {
 		course = math.mod(course,360.0);
 		setprop("/instrumentation/nav[0]/radials/selected-deg",course);
 		setprop("/instrumentation/nav[1]/radials/selected-deg",course);
-		if(me._modeFMSCourse == 1){
+		if(me._btnObsMode == 1){
 			me._ptree.FMSCourse.setValue(course);
 			setprop("/instrumentation/gps[0]/selected-course-deg",course);
 			setprop("/instrumentation/gps[1]/selected-course-deg",course);
@@ -1067,13 +1073,13 @@ var NavSourceWidget = {
 		setprop("/instrumentation/nav[0]/radials/selected-deg",bearing);
 		setprop("/instrumentation/nav[1]/radials/selected-deg",bearing);
 	},
-	_setOBSCourse : func(active=0){
-		if(me._modeFMSCourse != active){
-			me._modeFMSCourse = active;
-			me._ptree.FMSCourseMode.setValue(me._modeFMSCourse);
+	_setObsMode : func(active=0){
+		if(me._btnObsMode != active){
+			
 			setprop("/instrumentation/gps[0]/selected-course-deg",me._Pointer);
 			setprop("/instrumentation/gps[1]/selected-course-deg",me._Pointer);
-			me.checkSource();
+				
+			me._ptree.btnObsMode.setValue(active);
 		}
 	},
 	_onRouteActiveChange : func(n){

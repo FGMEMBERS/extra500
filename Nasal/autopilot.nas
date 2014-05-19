@@ -34,11 +34,21 @@ var FlightManagementSystemClass = {
 		m._fplActive = 0;
 		m._nRoute = props.globals.getNode("/autopilot/route-manager/route",1);
 		m._isFPLready = 0;
+		m._obsMode = 0;
+		m._btnObsMode = 0;
+		m._gpssMode = 0;
+		m._gpssInTurn = 0;
+		m._node = {
+			btnObsMode	: props.globals.initNode("/instrumentation/fms[0]/btn-obs-mode",m._btnObsMode,"BOOL"),
+		};
 		return m;
 	},
 	setListeners : func(instance) {
 		append(me._listeners, setlistener("/autopilot/route-manager/current-wp",func(n){me._onCurrentWaypointChange(n);},1,0) );
 		append(me._listeners, setlistener("/autopilot/route-manager/active",func(n){me._onFPLActiveChange(n);},1,0) );
+		append(me._listeners, setlistener(me._node.btnObsMode,func(n){me._onObsModeChange(n);},1,0) );
+		append(me._listeners, setlistener(autopilot.nModeNavGpss,func(n){me._onGPSSChange(n);},1,0) );
+		append(me._listeners, setlistener("/autopilot/fms-channel/gpss/in-turn",func(n){me._onGPSSInTurnChange(n);},1,0) );
 		
 	},
 	init : func(instance=nil){
@@ -56,16 +66,20 @@ var FlightManagementSystemClass = {
 #			settimer(func(){me._nextGpssBearing()},1);
 			me._nextGpssBearing();
 		}
+		me._node.btnObsMode.setValue(0);
 	},
 	_nextGpssBearing : func(){
 		setprop("/autopilot/fms-channel/gpss/next-bearing-deg",getprop("/autopilot/route-manager/route/wp["~me._currentWaypointIndex~"]/leg-bearing-true-deg"));
 	},
 # Operation functions of Avidyne FMS 
 	jumpTo : func(){
+		me.checkOBSMode(0);
 		setprop("/autopilot/route-manager/current-wp",me._selectedWaypointIndex);
 	},
 	directTo : func(){# called from keypad.nas
 		if ( getprop("/autopilot/settings/dto-leg") == 0) {
+			me.checkOBSMode(0);
+			
 			setprop("/autopilot/route-manager/current-wp",me._selectedWaypointIndex);
 			setprop("/autopilot/settings/dto-leg",1);
 		} else {
@@ -73,50 +87,69 @@ var FlightManagementSystemClass = {
 		}
 	
 	},
-	checkOBSCourse : func(){
+	checkOBSMode : func(active=1){
 		
-		if(	me._fplActive 
-			and getprop("/instrumentation/fms[0]/mode-course") 
-# 			and autopilot.nModeNavGpss.getValue()
-# 			and (getprop("/autopilot/fms-channel/gpss/in-turn") == 0)
-		){
-			setprop("/autopilot/settings/obs-mode",1);
-			setprop("/autopilot/settings/dto-leg",0);
-# 			setprop("",1);
-			var fp = flightplan();
-			var wypt = fp.getWP(fp.current);
-			
-			var nGPS0 = props.globals.getNode("/instrumentation/gps[0]/scratch", 1);
-			var nGPS1 = props.globals.getNode("/instrumentation/gps[1]/scratch", 1);
-			
-			nGPS0.setValues({
-				"latitude-deg"	: wypt.lat,
-				"longitude-deg"	: wypt.lon,
-				"ident"		: wypt.id,
-				"type"		: 'WPT',
-			});
-			
-			nGPS1.setValues({
-				"latitude-deg"	: wypt.lat,
-				"longitude-deg"	: wypt.lon,
-				"ident"		: wypt.id,
-				"type"		: 'WPT',
-			});
-			
-			setprop("/instrumentation/gps[0]/command","obs");
-			setprop("/instrumentation/gps[1]/command","obs");
-		}else{
-			setprop("/instrumentation/gps[0]/command","leg");
-			setprop("/instrumentation/gps[1]/command","leg");
-			
-			setprop("/autopilot/settings/obs-mode",0);
-			setprop("/autopilot/settings/dto-leg",1);
+		var nextMode = 	me._btnObsMode 
+				and me._fplActive
+				and active
+				;
+		
+		if(me._obsMode != nextMode){
+			me._obsMode = nextMode;
+			if(me._obsMode){
+				var fp = flightplan();
+				var wypt = fp.getWP(fp.current);
+				
+				var nGPS0 = props.globals.getNode("/instrumentation/gps[0]/scratch", 1);
+				var nGPS1 = props.globals.getNode("/instrumentation/gps[1]/scratch", 1);
+				
+				nGPS0.setValues({
+					"latitude-deg"	: wypt.lat,
+					"longitude-deg"	: wypt.lon,
+					"ident"		: wypt.id,
+					"type"		: 'WPT',
+				});
+				
+				nGPS1.setValues({
+					"latitude-deg"	: wypt.lat,
+					"longitude-deg"	: wypt.lon,
+					"ident"		: wypt.id,
+					"type"		: 'WPT',
+				});
+				
+				setprop("/autopilot/settings/obs-mode",1);
+				setprop("/autopilot/settings/dto-leg",0);
+	# 			
+				setprop("/instrumentation/gps[0]/command","obs");
+				setprop("/instrumentation/gps[1]/command","obs");
+			}else{
+				setprop("/instrumentation/gps[0]/command","leg");
+				setprop("/instrumentation/gps[1]/command","leg");
+				
+				setprop("/autopilot/settings/obs-mode",0);
+				setprop("/autopilot/settings/dto-leg",1);
+			}
 		}
 		
 	},
+	_onGPSSInTurnChange : func(n){
+		me._gpssInTurn = n.getValue();
+		if(me._gpssInTurn == 1){
+			#me._node.btnObsMode.setValue(0);
+		}
+		
+	},
+	_onGPSSChange : func(n){
+		me._gpssMode = n.getValue();
+		#me.checkOBSMode();
+	},
+	_onObsModeChange : func(n){
+		me._btnObsMode = n.getValue();
+		me.checkOBSMode();
+	},
 	_onFPLActiveChange : func(n){
 		me._fplActive = n.getValue();
-		me.checkOBSCourse();
+		me.checkOBSMode();
 	},
 	calcRoute : func(){
 		if(me._fplActive){
