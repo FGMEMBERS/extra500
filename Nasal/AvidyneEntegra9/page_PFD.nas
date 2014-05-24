@@ -1542,7 +1542,7 @@ var NavSelectWidget = {
 		m._class 	= "NavSelectWidget";
 		m._can		= {
 			content		: m._group.getElementById("Tab_Nav_Content").setVisible(0),
-			SynVis		: m._group.getElementById("SynVis_State"),
+# 			SynVis		: m._group.getElementById("SynVis_State"),
 			FlightPlan	: m._group.getElementById("FlightPlan_State"),
 			CDI		: m._group.getElementById("CDI_State"),
 			CDI_Button	: m._group.getElementById("PFD_CDI_Button"),
@@ -1567,10 +1567,10 @@ var NavSelectWidget = {
 	_onVisibiltyChange : func(){
 		if(me._visibility == 1){
 			me.setListeners(me);
-			me._ifd.ui.bindKey("R3",{
-				"<"	: func(){me.setSynVis();},
-				">"	: func(){me.setSynVis();},
-			});
+# 			me._ifd.ui.bindKey("R3",{
+# 				"<"	: func(){me.setSynVis();},
+# 				">"	: func(){me.setSynVis();},
+# 			});
 			me._ifd.ui.bindKey("R4",{
 				"<"	: func(){me.setFlighPlan();},
 				">"	: func(){me.setFlighPlan();},
@@ -1582,13 +1582,13 @@ var NavSelectWidget = {
 			
 			
 			
-			me._can.SynVis.setText(LABEL_OFFON[me._synVis]);
+# 			me._can.SynVis.setText(LABEL_OFFON[me._synVis]);
 			me._can.FlightPlan.setText(LABEL_OFFON[me._flightPlan]);
 			me._can.CDI.setText(LABEL_OFFON[me._cdi]);
 			
 		}else{
 			me.removeListeners();
-			me._ifd.ui.bindKey("R3");
+# 			me._ifd.ui.bindKey("R3");
 			me._ifd.ui.bindKey("R4");
 			me._ifd.ui.bindKey("R5");
 			

@@ -26,9 +26,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.50980392"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35355339"
-     inkscape:cx="1021.9414"
-     inkscape:cy="965.41976"
+     inkscape:zoom="0.5"
+     inkscape:cx="1297.034"
+     inkscape:cy="701.93235"
      inkscape:document-units="px"
      inkscape:current-layer="Tab_Nav_Content"
      showgrid="false"
@@ -4707,7 +4707,8 @@
     </g>
     <g
        transform="matrix(0.80230117,0,0,0.84977755,114.4159,143.90425)"
-       id="g6080">
+       id="SynVis"
+       style="display:none">
       <g
          style="display:inline"
          id="g6082"
