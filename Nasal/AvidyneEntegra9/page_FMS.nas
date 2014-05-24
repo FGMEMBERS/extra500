@@ -37,7 +37,7 @@ var DirectToWidget = {
 		return m;
 	},
 	setListeners : func(instance) {
-		append(me._listeners, setlistener("/autopilot/settings/dto-leg",func(n){me._onChange(n)},1,0));	
+		append(me._listeners, setlistener(extra500.fms._node.DirectTo,func(n){me._onChange(n)},1,0));	
 	},
 	init : func(instance=me){
 		
@@ -649,6 +649,7 @@ var AvidynePageFMS = {
 			me.IFD.setLayout(IFD_LAYOUT.PLUS);
 			me._widget.FPL.setLayout("FPL");
 			me._widget.FPL.setVisible(1);
+			me._widget.DirectTo.setVisible(1);
 			me._can.FPLContent.setVisible(1);
 		}elsif(index == 1){ # MapFPL
 			me._widget.MovingMapKnob.setHand(0);
@@ -656,30 +657,35 @@ var AvidynePageFMS = {
 			me.IFD.movingMap.setLayout("split-left");
 			me._widget.FPL.setLayout("split-right");
 			me._widget.FPL.setVisible(1);
+			me._widget.DirectTo.setVisible(0);
 			me._widget.MovingMapKnob.setVisible(1);	
 		}elsif(index == 2){ # Info
 			me._widget.MovingMapKnob.setVisible(0);
 			me._widget.FPL.setVisible(0);
 			me.IFD.movingMap.setLayout("none");
 			me.IFD.setLayout(IFD_LAYOUT.PLUS);
+			me._widget.DirectTo.setVisible(1);
 			me._can.InfoContent.setVisible(1);
 		}elsif(index == 3){ # Routes
 			me._widget.FPL.setVisible(0);
 			me._widget.MovingMapKnob.setVisible(0);
 			me.IFD.setLayout(IFD_LAYOUT.PLUS);
 			me.IFD.movingMap.setLayout("none");
+			me._widget.DirectTo.setVisible(0);
 			me._can.RoutesContent.setVisible(1);
 		}elsif(index == 4){ # UserWypts
 			me._widget.MovingMapKnob.setVisible(0);
 			me._widget.FPL.setVisible(0);
 			me.IFD.setLayout(IFD_LAYOUT.PLUS);
 			me.IFD.movingMap.setLayout("none");
+			me._widget.DirectTo.setVisible(1);
 			me._can.UserWyptsContent.setVisible(1);
 		
 		}elsif(index == 5){ # Nearest
 			me._widget.MovingMapKnob.setVisible(0);
 			me._widget.FPL.setVisible(0);
 			me.IFD.movingMap.setLayout("none");
+			me._widget.DirectTo.setVisible(1);
 			me.IFD.setLayout(IFD_LAYOUT.PLUS);
 			
 		}elsif(index == 6){ # MapNearest
@@ -688,6 +694,8 @@ var AvidynePageFMS = {
 			me.IFD.movingMap.setLayout("split-left");
 			me._widget.MovingMapKnob.setHand(0);
 			me._widget.MovingMapKnob.setVisible(1);
+			me._widget.DirectTo.setVisible(0);
+			
 		}else{
 			
 		}

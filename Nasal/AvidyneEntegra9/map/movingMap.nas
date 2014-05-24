@@ -103,6 +103,7 @@ var MovingMap = {
 			UpNorth		: m._group.getElementById("MovingMap_Up_North").setVisible(0),
 			HDG		: m._group.getElementById("MovingMap_HDG"),
 			BugHDG		: m._group.getElementById("MovingMap_Bug_HDG"),
+			BugHDGVector	: m._group.getElementById("MovingMap_Bug_HDG_Vector").setVisible(0),
 			BugFMS		: m._group.getElementById("MovingMap_Bug_FMS"),
 			BugTrue		: m._group.getElementById("MovingMap_Bug_TRUE").updateCenter(),
 			
@@ -142,6 +143,7 @@ var MovingMap = {
 		m._modeHDG 	= 0;
 		m._routeManagerActive 	= 0;
 		m._fmsServiceable	= 0;
+		m._flyVectors		= 0;
 		
 		m._layer 	= {};
 		m._view 	= MAP_VIEW.HDG_UP_CENTER ;
@@ -178,13 +180,14 @@ var MovingMap = {
 		
 	},
 	setListeners : func(instance=me) {
+		
 		append(me._listeners, setlistener("/autopilot/settings/heading-bug-deg",func(n){me._onHdgBugChange(n)},1,0));	
 		append(me._listeners, setlistener("/autopilot/fms-channel/course-target-deg",func(n){me._onFmsBugChange(n)},1,0));	
 		append(me._listeners, setlistener("/autopilot/mode/heading",func(n){me._onAutopilotModeHDG(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/route-manager/active",func(n){me._onRouteActiveChange(n);},1,0));
 		append(me._listeners, setlistener("/autopilot/fms-channel/serviceable",func(n){me._onFmsServiceChange(n);},1,0));
 		append(me._listeners, setlistener(tcasModel._nObserver,func(n){me.onModelObserverNotify(n)},1,1));	
-	
+		append(me._listeners, setlistener(extra500.fms._node.FlyVector,func(n){me._onFlyVectorsChange(n);},1,0) );
 		
 	},
 	
@@ -370,6 +373,10 @@ var MovingMap = {
 	_onFmsBugChange : func(n){
 		me._bugFMS		= n.getValue();
 		me._can.BugFMS.setRotation((me._bugFMS - me._mapOptions.orientation) * global.CONST.DEG2RAD);
+	},
+	_onFlyVectorsChange : func(n){
+		me._flyVectors = n.getValue();
+		me._can.BugHDGVector.setVisible(me._flyVectors);
 	},
 	update20Hz : func(now,dt){
 # 		me._lat = getprop("/position/latitude-deg");

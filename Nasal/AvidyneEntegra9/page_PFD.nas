@@ -903,7 +903,7 @@ var NavSourceWidget = {
 	setListeners : func(instance) {
 		
 		append(me._listeners, setlistener(me._ptree.Source,func(n){me._onSourceChange(n);},1,0));
-		append(me._listeners, setlistener(me._ptree.btnObsMode,func(n){me._onObsModeChange(n);},1,0));
+		append(me._listeners, setlistener(extra500.fms._node.btnObsMode,func(n){me._onObsModeChange(n);},1,0));
 		append(me._listeners, setlistener("/autopilot/route-manager/active",func(n){me._onRouteActiveChange(n);},1,0));
 		append(me._listeners, setlistener("/autopilot/fms-channel/serviceable",func(n){me._onFmsServiceChange(n);},1,0));
 				
@@ -1079,7 +1079,7 @@ var NavSourceWidget = {
 			setprop("/instrumentation/gps[0]/selected-course-deg",me._Pointer);
 			setprop("/instrumentation/gps[1]/selected-course-deg",me._Pointer);
 				
-			me._ptree.btnObsMode.setValue(active);
+			extra500.fms._node.btnObsMode.setValue(active);
 		}
 	},
 	_onRouteActiveChange : func(n){
@@ -1536,6 +1536,66 @@ var EnvironmentWidget = {
 	},
 };
 
+
+var FlyVectorsWidget = {
+	new: func(page,canvasGroup,name){
+		var m = {parents:[FlyVectorsWidget,IfdWidget.new(page,canvasGroup,name)]};
+		m._class 	= "FlyVectorsWidget";
+		m._can		= {
+			FlyVector		: m._group.getElementById("FlyVector"),
+			FlyVector_label_up	: m._group.getElementById("FlyVector_label_up"),
+			FlyVector_label_down	: m._group.getElementById("FlyVector_label_down"),
+			FlyVector_border	: m._group.getElementById("FlyVector_border"),
+		};
+		m._flyVectors = 0;
+		return m;
+	},
+	init : func(instance=me){
+		
+	},
+	deinit : func(){
+		me.removeListeners();
+	},
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(extra500.fms._node.FlyVector,func(n){me._onFlyVectorsChange(n);},1,0) );
+	},
+	_onVisibiltyChange : func(){
+		if(me._visibility == 1){
+			me.setListeners(me);
+			me._ifd.ui.bindKey("L5",{
+				"<"	: func(){keypad.onV();},
+				">"	: func(){keypad.onV();},
+			});
+			me._can.FlyVector.setVisible(1);
+		}else{
+			me.removeListeners();
+
+			me._ifd.ui.bindKey("L5");
+			
+			#me.registerKeyCDI();
+			
+						
+			
+		}
+	},
+	_onFlyVectorsChange : func(n){
+		me._flyVectors = n.getValue();
+		if(me._flyVectors){
+# 			me._can.FlyVector_label_up.setText("Cancel");
+			me._can.FlyVector_label_up.set("fill",COLOR["White"]);
+			me._can.FlyVector_label_down.set("fill",COLOR["White"]);
+			me._can.FlyVector_border.set("stroke",COLOR["Turquoise"]);
+			me._can.FlyVector_border.set("stroke-width",20);
+		}else{
+# 			me._can.FlyVector_label_up.setText("Fly");
+			me._can.FlyVector_label_up.set("fill",COLOR["Turquoise"]);
+			me._can.FlyVector_label_down.set("fill",COLOR["Turquoise"]);
+			me._can.FlyVector_border.set("stroke",COLOR["Blue"]);
+			me._can.FlyVector_border.set("stroke-width",10);
+		}
+	},
+};
+
 var NavSelectWidget = {
 	new: func(page,canvasGroup,name){
 		var m = {parents:[NavSelectWidget,IfdWidget.new(page,canvasGroup,name)]};
@@ -1590,7 +1650,7 @@ var NavSelectWidget = {
 			me.removeListeners();
 # 			me._ifd.ui.bindKey("R3");
 			me._ifd.ui.bindKey("R4");
-			me._ifd.ui.bindKey("R5");
+			
 			
 			#me.registerKeyCDI();
 			
@@ -1982,6 +2042,7 @@ var AvidynePagePFD = {
 			Tab	 		: TabWidget.new(m,m.page,"TabSelectPFD"),
 			Marker	 		: MarkerWidget.new(m,m.page,"Marker"),
 			ActiveCom	 	: ActiveComWidget.new(m,m.page,"ActiveCom"),
+			FlyVectors	 	: FlyVectorsWidget.new(m,m.page,"FlyVectors"),
 			
 			
 			

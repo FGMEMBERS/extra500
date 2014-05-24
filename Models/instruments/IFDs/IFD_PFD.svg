@@ -26,11 +26,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.50980392"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.5"
-     inkscape:cx="1297.034"
-     inkscape:cy="701.93235"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="214.48213"
+     inkscape:cy="407.5957"
      inkscape:document-units="px"
-     inkscape:current-layer="Tab_Nav_Content"
+     inkscape:current-layer="layer3"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1025"
@@ -173,7 +173,7 @@
        id="guide4096" />
     <sodipodi:guide
        orientation="0,1"
-       position="1028.9464,553.5621"
+       position="-96.873629,514"
        id="guide4098" />
     <sodipodi:guide
        orientation="1,0"
@@ -2733,6 +2733,46 @@
          id="path4999"
          inkscape:connector-curvature="0"
          sodipodi:nodetypes="cccc" />
+    </g>
+    <g
+       style="display:inline"
+       id="FlyVector">
+      <rect
+         y="1551.8287"
+         x="4.1256528"
+         style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#3391e8;stroke-width:8.25130558;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="FlyVector_border"
+         width="391.22461"
+         height="117.43764"
+         ry="5.3196702" />
+      <text
+         xml:space="preserve"
+         style="font-size:41.99515152px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1.35956383;stroke-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
+         x="224.59303"
+         y="1423.4194"
+         id="FlyVector_label_up"
+         sodipodi:linespacing="125%"
+         transform="scale(0.88933284,1.1244384)"
+         inkscape:label="#text5341-2"><tspan
+           style="stroke-width:1.35956383"
+           sodipodi:role="line"
+           x="224.59303"
+           y="1423.4194"
+           id="tspan3930">Fly</tspan></text>
+      <text
+         inkscape:label="#text5341-2"
+         transform="scale(0.88933284,1.1244384)"
+         sodipodi:linespacing="125%"
+         id="FlyVector_label_down"
+         y="1465.5521"
+         x="225.32097"
+         style="font-size:41.99515152px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:1.35956383;stroke-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
+         xml:space="preserve"><tspan
+           id="tspan3936"
+           y="1465.5521"
+           x="225.32097"
+           sodipodi:role="line"
+           style="stroke-width:1.35956383">Vectors</tspan></text>
     </g>
   </g>
   <g

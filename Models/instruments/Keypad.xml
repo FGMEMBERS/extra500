@@ -536,10 +536,10 @@
 				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
-			<!--equals>
-				<property>/extra500/instrumentation/Keypad/Backlight/DIRECT</property>
+			<equals>
+				<property>/extra500/instrumentation/Keypad/Backlight/FlyD</property>
 				<value>0</value>
-			</equals-->
+			</equals>
 		</condition>
         	<emission>
             	<red>1</red>
@@ -548,7 +548,7 @@
 	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/state</factor-prop>
         	</emission>
 </animation>
-<!--animation>
+<animation>
         	<type>material</type>
        	<object-name>Keypad.D</object-name>
 		<condition>
@@ -561,9 +561,9 @@
             	<red>0.1</red>
             	<green>1</green>
             	<blue>0.2</blue>
-	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/DIRECT</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/FlyD</factor-prop>
         	</emission>
-</animation-->
+	</animation>
 
 <animation>
         	<type>material</type>
@@ -573,10 +573,10 @@
 				<property>/extra500/instrumentation/Keypad/state</property>
 				<value>1</value>
 			</equals>
-			<!--equals>
-				<property>/extra500/instrumentation/Keypad/Backlight/VECTORS</property>
+			<equals>
+				<property>/extra500/instrumentation/Keypad/Backlight/FlyV</property>
 				<value>0</value>
-			</equals-->
+			</equals>
 		</condition>
         	<emission>
             	<red>1</red>
@@ -585,7 +585,7 @@
 	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/state</factor-prop>
         	</emission>
 </animation>
-<!--animation>
+<animation>
         	<type>material</type>
         	<object-name>Keypad.V</object-name>
 		<condition>
@@ -598,9 +598,9 @@
             	<red>0.1</red>
             	<green>1</green>
             	<blue>0.2</blue>
-	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/VECTORS</factor-prop>
+	    		<factor-prop>/extra500/instrumentation/Keypad/Backlight/FlyV</factor-prop>
         	</emission>
-</animation-->
+</animation>
 
 <animation>
         	<type>material</type>

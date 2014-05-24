@@ -119,7 +119,7 @@ var RouteLayer = {
 			append(me._listeners, setlistener("/autopilot/route-manager/signals/waypoint-changed",func(n){me.onFlightPlanChange(n);},0,1));
 			append(me._listeners, setlistener("/autopilot/route-manager/current-wp",func(n){me._onCurrentChange(n)},1,0));	
 			
-			append(me._listeners, setlistener("/autopilot/settings/obs-mode",func(n){me._onObsModeChange(n);},1,0) );
+			append(me._listeners, setlistener(extra500.fms._node.ObsMode,func(n){me._onObsModeChange(n);},1,0) );
 			append(me._listeners, setlistener("/instrumentation/fms[0]/selected-course-deg",func(n){me._onObsCourseChange(n);},1,0) );
 		
 	

@@ -708,7 +708,9 @@ var KeypadClass = {
 # 		m._xpdr = 0;
 # 		m._xpdrMode = 0;
 		m._activeWidget = [nil,nil];
-				
+		m._flyVectors = 0;
+		m._directTo = 0;
+		
 		m._tree = {
 			Backlight : {
 				brightness	: props.globals.initNode("/extra500/system/dimming/Keypad",0.0,"DOUBLE"),
@@ -724,6 +726,8 @@ var KeypadClass = {
 					VFR	: m._nRoot.initNode("Backlight/VFR",0.0,"DOUBLE"),
 					MODE	: m._nRoot.initNode("Backlight/MODE",0.0,"DOUBLE"),
 					IDENT	: m._nRoot.initNode("Backlight/IDENT",0.0,"DOUBLE"),
+					FlyD	: m._nRoot.initNode("Backlight/FlyD",0.0,"DOUBLE"),
+					FlyV	: m._nRoot.initNode("Backlight/FlyV",0.0,"DOUBLE"),
 				},
 			}
 		};
@@ -742,6 +746,8 @@ var KeypadClass = {
 					VFR	: 0,
 					MODE	: 0,
 					IDENT	: 0,
+					FlyD	: 0,
+					FlyV	: 0,
 				},
 			}
 		};
@@ -755,7 +761,9 @@ var KeypadClass = {
 		append(me._listeners, setlistener(me.nTungingSource,func(n){me._onTuningSourceChange(n)},1,0));	
 		append(me._listeners, setlistener(me.nTungingChannel,func(n){me._onTuningChannelChange(n)},1,0));	
 		append(me._listeners, setlistener("/instrumentation/transponder/ident",func(n){instance._onXPDRidentChange(n);},1,0) );
-	
+		append(me._listeners, setlistener(extra500.fms._node.FlyVector,func(n){me._onFlyVectorsChange(n);},1,0) );
+		append(me._listeners, setlistener(extra500.fms._node.DirectTo,func(n){me._onDirectToChange(n);},1,0) );
+		
 	},
 	init : func(mode,instance=nil){
 		if (instance==nil){instance=me;}
@@ -905,6 +913,16 @@ var KeypadClass = {
 # 	_onAltChange : func(n){
 # 		me._can.ALTvalue.setText(sprintf("%i",n.getValue()));
 # 	},
+	_onFlyVectorsChange : func(n){
+		me._flyVectors = n.getValue();
+		me._mem.Backlight.Key.FlyV = me._flyVectors;
+		me._tree.Backlight.Key.FlyV.setValue(me._flyVectors);
+	},
+	_onDirectToChange : func(n){
+		me._directTo = n.getValue();
+		me._mem.Backlight.Key.FlyD = me._directTo;
+		me._tree.Backlight.Key.FlyD.setValue(me._directTo);
+	},
 	
 
 	
@@ -1075,13 +1093,13 @@ var KeypadClass = {
 		print("KeypadClass.onProc() ...");
 		
 	},
-	onD : func(){
+	onD : func(value=nil){
 # FIXME: the Directto button backlight should be on when direct-to is active
-		extra500.fms.directTo();		
+		extra500.fms.directTo();
 	},
-	onV : func(){
-		print("KeypadClass.onV() ...");
-		
+	onV : func(value=nil){
+# 		print("KeypadClass.onV() ...");
+		extra500.fms.flyVectors();
 	},
 	onNRST : func(){
 		print("KeypadClass.onNRST() ...");

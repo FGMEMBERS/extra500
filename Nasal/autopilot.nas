@@ -39,18 +39,32 @@ var FlightManagementSystemClass = {
 		m._btnObsMode = 0;
 		m._gpssMode = 0;
 		m._gpssInTurn = 0;
+		
+		m._flyVectors = 0;
+		m._flyVectorsBtn = 0;
+		m._directTo = 0;
+		m._directToBtn = 0;
+		
 		m._node = {
 			btnObsMode	: props.globals.initNode("/instrumentation/fms[0]/btn-obs-mode",m._btnObsMode,"BOOL"),
+			btnFlyVectors	: props.globals.initNode("/instrumentation/fms[0]/btn-FlyVectors",m._flyVectors,"BOOL"),
+			btnDirectTo	: props.globals.initNode("/instrumentation/fms[0]/btn-DirectTo",m._flyVectors,"BOOL"),
+			DirectTo	: props.globals.initNode("/autopilot/settings/dto-leg",0,"BOOL"),
+			ObsMode		: props.globals.initNode("/autopilot/settings/obs-mode",0,"BOOL"),
+			FlyVector	: props.globals.initNode("/autopilot/settings/fly-vector",0,"BOOL"),
+			CurrentWp	: props.globals.initNode("/autopilot/route-manager/current-wp",0,"INT"),
 		};
 		return m;
 	},
 	setListeners : func(instance) {
-		append(me._listeners, setlistener("/autopilot/route-manager/current-wp",func(n){me._onCurrentWaypointChange(n);},1,0) );
+		append(me._listeners, setlistener(me._node.CurrentWp,func(n){me._onCurrentWaypointChange(n);},1,0) );
 		append(me._listeners, setlistener("/autopilot/route-manager/active",func(n){me._onFPLActiveChange(n);},1,0) );
-		append(me._listeners, setlistener(me._node.btnObsMode,func(n){me._onObsModeChange(n);},1,0) );
+		append(me._listeners, setlistener(me._node.btnObsMode,func(n){me._onObsModeBtnChange(n);},1,0) );
+		append(me._listeners, setlistener(me._node.ObsMode,func(n){me._onObsModeChange(n);},1,0) );
+		append(me._listeners, setlistener(me._node.FlyVector,func(n){me._onFlyVectorsChange(n);},1,0) );
+		append(me._listeners, setlistener(me._node.DirectTo,func(n){me._onDirectToChange(n);},1,0) );
 		append(me._listeners, setlistener(autopilot.nModeNavGpss,func(n){me._onGPSSChange(n);},1,0) );
 		append(me._listeners, setlistener("/autopilot/fms-channel/gpss/in-turn",func(n){me._onGPSSInTurnChange(n);},1,0) );
-		
 	},
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
@@ -75,18 +89,19 @@ var FlightManagementSystemClass = {
 # Operation functions of Avidyne FMS 
 	jumpTo : func(){
 		me.checkOBSMode(0);
-		setprop("/autopilot/route-manager/current-wp",me._selectedWaypointIndex);
+		me._node.CurrentWp.setValue(me._selectedWaypointIndex);
 	},
 	directTo : func(){# called from keypad.nas
-		if ( getprop("/autopilot/settings/dto-leg") == 0) {
-			me.checkOBSMode(0);
-			
-			setprop("/autopilot/route-manager/current-wp",me._selectedWaypointIndex);
-			setprop("/autopilot/settings/dto-leg",1);
-		} else {
-				setprop("/autopilot/settings/dto-leg",0);
+		if(me._fplActive){
+			if ( me._directTo ) {
+				me._node.DirectTo.setValue(0);
+			} else {
+				me.checkOBSMode(0);
+				
+				me._node.CurrentWp.setValue(me._selectedWaypointIndex);
+				me._node.DirectTo.setValue(1);
+			}
 		}
-	
 	},
 	checkOBSMode : func(active=1){
 		
@@ -121,25 +136,42 @@ var FlightManagementSystemClass = {
 				setprop("/instrumentation/gps[0]/command","obs");
 				setprop("/instrumentation/gps[1]/command","obs");
 				
-				me._dtoModeLast = getprop("/autopilot/settings/dto-leg");
-				setprop("/autopilot/settings/dto-leg",0);
-				setprop("/autopilot/settings/obs-mode",1);
+				me._dtoModeLast = me._directTo;
 				
-	# 			
-				
+				me._node.DirectTo.setValue(0);
+				me._node.ObsMode.setValue(1);
+
 			}else{
-				setprop("/autopilot/settings/obs-mode",0);
-				setprop("/autopilot/settings/dto-leg",me._dtoModeLast);
+				me._node.ObsMode.setValue(0);
+				me._node.DirectTo.setValue(me._dtoModeLast);
 				
 				setprop("/instrumentation/gps[0]/command","leg");
 				setprop("/instrumentation/gps[1]/command","leg");
-				
-				
 				
 			}
 		}
 		
 	},
+	flyVectors : func(){
+		me._node.FlyVector.setValue(me._flyVectors==0);
+	},
+	
+	
+	_onDirectToChange : func(n){
+		me._directTo = n.getValue();
+	},
+	_onFlyVectorsChange : func(n){
+		me._flyVectors = n.getValue();
+	},
+	_onObsModeBtnChange : func(n){
+		me._btnObsMode = n.getValue();
+		me.checkOBSMode();
+	},
+	_onObsModeChange : func(n){
+		me._obsMode = n.getValue();
+	},
+		
+	
 	_onGPSSInTurnChange : func(n){
 		me._gpssInTurn = n.getValue();
 		if(me._gpssInTurn == 1){
@@ -150,10 +182,6 @@ var FlightManagementSystemClass = {
 	_onGPSSChange : func(n){
 		me._gpssMode = n.getValue();
 		#me.checkOBSMode();
-	},
-	_onObsModeChange : func(n){
-		me._btnObsMode = n.getValue();
-		me.checkOBSMode();
 	},
 	_onFPLActiveChange : func(n){
 		me._fplActive = n.getValue();
