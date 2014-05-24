@@ -204,6 +204,8 @@ var MovingMap = {
 			me._mapOptions.orientation = me._heading;
 		}
 		me._layer.positioned.updateOrientation(me._mapOptions.orientation);
+		me._layer.route.updateOrientation(me._mapOptions.orientation);
+		
 		me._map.setHdg(me._mapOptions.orientation);
 	},
 	setVisible : func(visibility){
@@ -215,6 +217,7 @@ var MovingMap = {
 	
 		if(me._layout == "map"){
 			me._layer.positioned.setVisible(1);
+			me._layer.route.setVisible(1);
 			me._screenSize	= 512;
 			me._group.set("clip","rect(70px, 2048px, 1436px, 0px)");
 			
@@ -226,10 +229,13 @@ var MovingMap = {
 			me._can.UpHDG.setTranslation(400,0);
 			
 			me._can.LayerFront.setVisible(1);
+			
+# 			
 			#me._group.set("z-index",-1);
 			me._group.setVisible(1);
 		}elsif(me._layout == "map+"){
 			me._layer.positioned.setVisible(1);
+			me._layer.route.setVisible(1);
 			me._screenSize	= 512;
 			me._group.set("clip","rect(70px, 1648px, 1436px, 400px)");
 			
@@ -242,10 +248,12 @@ var MovingMap = {
 			
 			
 			me._can.LayerFront.setVisible(1);
+			
 # 			me._group.set("z-index",0);
 			me._group.setVisible(1);
 		}elsif(me._layout == "split-left"){
 			me._layer.positioned.setVisible(1);
+			me._layer.route.setVisible(1);
 			me._screenSize	= 512;
 			me._mapTransform.setTranslation(-256,192);
 			me._mapTransform.setScale(0.75,0.75);
@@ -256,6 +264,7 @@ var MovingMap = {
 			me._can.UpHDG.setTranslation(-625,0);
 			
 			me._can.LayerFront.setVisible(1);
+			
 # 			me._group.set("z-index",0);
 			me._group.setVisible(1);
 		}elsif(me._layout == "pfd"){

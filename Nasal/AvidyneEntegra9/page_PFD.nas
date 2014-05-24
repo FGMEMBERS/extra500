@@ -1056,7 +1056,7 @@ var NavSourceWidget = {
 		setprop("/instrumentation/nav[0]/radials/selected-deg",course);
 		setprop("/instrumentation/nav[1]/radials/selected-deg",course);
 		if(me._btnObsMode == 1){
-			me._ptree.FMSCourse.setValue(course);
+			
 			setprop("/instrumentation/gps[0]/selected-course-deg",course);
 			setprop("/instrumentation/gps[1]/selected-course-deg",course);
 		}
@@ -1140,6 +1140,7 @@ var NavSourceWidget = {
 	},
 	_onCourseChange : func(n){
 		me._Pointer		= n.getValue();
+		me._ptree.FMSCourse.setValue(me._Pointer);
 		me._can.Crs.setText(sprintf("%i",tool.course(me._Pointer)));
 		
 	},

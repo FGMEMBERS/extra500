@@ -35,6 +35,7 @@ var FlightManagementSystemClass = {
 		m._nRoute = props.globals.getNode("/autopilot/route-manager/route",1);
 		m._isFPLready = 0;
 		m._obsMode = 0;
+		m._dtoModeLast = 0;
 		m._btnObsMode = 0;
 		m._gpssMode = 0;
 		m._gpssInTurn = 0;
@@ -117,17 +118,24 @@ var FlightManagementSystemClass = {
 					"type"		: 'WPT',
 				});
 				
-				setprop("/autopilot/settings/obs-mode",1);
-				setprop("/autopilot/settings/dto-leg",0);
-	# 			
 				setprop("/instrumentation/gps[0]/command","obs");
 				setprop("/instrumentation/gps[1]/command","obs");
+				
+				me._dtoModeLast = getprop("/autopilot/settings/dto-leg");
+				setprop("/autopilot/settings/dto-leg",0);
+				setprop("/autopilot/settings/obs-mode",1);
+				
+	# 			
+				
 			}else{
+				setprop("/autopilot/settings/obs-mode",0);
+				setprop("/autopilot/settings/dto-leg",me._dtoModeLast);
+				
 				setprop("/instrumentation/gps[0]/command","leg");
 				setprop("/instrumentation/gps[1]/command","leg");
 				
-				setprop("/autopilot/settings/obs-mode",0);
-				setprop("/autopilot/settings/dto-leg",1);
+				
+				
 			}
 		}
 		

@@ -74,6 +74,8 @@ var RouteLayer = {
 		m._item 	= [];
 		m._itemIndex	= 0;
 		m._itemCount	= 0;
+		m._groupOBS	= group.createChild("group",id~"_OBS").setVisible(0);
+		
 		m._can = {
 			track : m._group.createChild("path","track")
 				.setStrokeLineWidth(3)
@@ -88,20 +90,45 @@ var RouteLayer = {
 				.setScale(1)
 				.setStrokeDashArray([25,25])
 				.setColor("#FF0EEB"),
+			obsCourse : m._groupOBS.createChild("path","obsCourse")
+				.setStrokeLineWidth(5)
+				.setScale(1)
+				.setColor("#FF0EEB"),
 		};
+		
 
 		m._track = {cmds:[],coords:[]};
 		m._currentLeg = {cmds:[canvas.Path.VG_MOVE_TO,canvas.Path.VG_LINE_TO],coords:[0,0,0,0]};
 		m._nextLeg = {cmds:[canvas.Path.VG_MOVE_TO,canvas.Path.VG_LINE_TO],coords:[0,0,0,0]};
 		m._planSize = 0;
+		
+		
+		m._mapOptions = {
+			orientation	: 0,
+		};
+		
+		
+		m._obsMode = 0;
+		m._obsCourse = 0;
+		m._obsWaypoint = RouteItemClass.new(m._groupOBS,"obs_wp");
+		m._obsCourseData = {cmds:[canvas.Path.VG_MOVE_TO,canvas.Path.VG_LINE_TO],coords:[0,0,0,0]};
 		#m._flightPlan = flightplan();
 		return m;
 	},
 	setListeners : func(){
 			append(me._listeners, setlistener("/autopilot/route-manager/signals/waypoint-changed",func(n){me.onFlightPlanChange(n);},0,1));
 			append(me._listeners, setlistener("/autopilot/route-manager/current-wp",func(n){me._onCurrentChange(n)},1,0));	
+			
+			append(me._listeners, setlistener("/autopilot/settings/obs-mode",func(n){me._onObsModeChange(n);},1,0) );
+			append(me._listeners, setlistener("/instrumentation/fms[0]/selected-course-deg",func(n){me._onObsCourseChange(n);},1,0) );
+		
 	
 	},
+	updateOrientation : func(value){
+		me._mapOptions.orientation = value;
+		me._can.obsCourse.setRotation((me._obsCourse - me._mapOptions.orientation) * global.CONST.DEG2RAD);
+	},
+	
 	onFlightPlanChange : func(n){
 		me._drawWaypoints();
 		me._drawLegs();
@@ -109,6 +136,66 @@ var RouteLayer = {
 	_onCurrentChange : func(n){
 		me._currentWaypoint = n.getValue();
 		me._drawLegs();
+	},
+	_onVisibilityChange : func(){
+		me._group.setVisible(me._visibility and (me._obsMode == 0));
+		me._groupOBS.setVisible(me._visibility and (me._obsMode == 1));
+	},
+	_onObsModeChange : func(n){
+		me._obsMode = n.getValue();
+		
+		
+		if(me._obsMode==1){
+			var wp = {
+				wp_lat : getprop("/instrumentation/gps[0]/scratch/latitude-deg"),
+				wp_lon : getprop("/instrumentation/gps[0]/scratch/longitude-deg"),
+				wp_name : getprop("/instrumentation/gps[0]/scratch/ident"),
+			};
+			var acLat = getprop("/position/latitude-deg");
+			var acLon = getprop("/position/longitude-deg");
+			
+			
+# 		me._groupOBS._node.getNode("ref-lat", 1).setDoubleValue(wp.wp_lat);
+# 		me._groupOBS._node.getNode("ref-lon", 1).setDoubleValue(wp.wp_lon);
+			me._groupOBS.setGeoPosition(wp.wp_lat,wp.wp_lon);
+			
+# 			me._obsCourseData.coords = [
+# 				"N"~wp.wp_lat,
+# 				"E"~wp.wp_lon,
+# 				"N"~acLat,
+# 				"E"~acLon,
+# 			];
+			
+			me._obsCourseData.coords = [
+				0,
+				0,
+				0,
+				5000,
+			];
+			
+# 			me._obsWaypoint.draw(wp);
+			me._obsWaypoint._can.Label.setText(wp.wp_name);
+			me._obsWaypoint.setColor("#FF0EEB");
+			me._obsWaypoint._group.setVisible(1);
+			
+			me._can.obsCourse.setData(me._obsCourseData.cmds,me._obsCourseData.coords);
+# 			me._can.obsCourse.setDataGeo(me._obsCourseData.cmds,me._obsCourseData.coords);
+# 			me._can.obsCourse.updateCenter();
+# 			me._can.obsCourse._node.getNode("center[0]",1).setDoubleValue(0);
+# 			me._can.obsCourse._node.getNode("center[1]",1).setDoubleValue(0);
+# 			
+# 			me._can.obsCourse.setCenter(me._can.obsCourse.get("coord[2]"),me._can.obsCourse.get("coord[3]"));
+			#me._can.obsCourse.setCenter(149,-268);
+			
+		}
+		
+		me._group.setVisible(me._visibility and (me._obsMode == 0));
+		me._groupOBS.setVisible(me._visibility and (me._obsMode == 1));
+	},
+	_onObsCourseChange : func(n){
+		me._obsCourse = n.getValue();
+		
+		me._can.obsCourse.setRotation((me._obsCourse - me._mapOptions.orientation) * global.CONST.DEG2RAD);
 	},
 	_drawWaypoints : func(){
 # 		print("TcasLayer._draw() ... ");
