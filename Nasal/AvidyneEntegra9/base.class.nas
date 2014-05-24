@@ -58,6 +58,19 @@ var tool = {
 		}
 		return value;
 	},
+	course : func(course=nil){
+		if(course!=nil){
+			course = math.mod(course,360.0);
+			course = math.floor(course + 0.5);
+			if(course == 0){
+				course = 360;	
+			}
+		}else{
+			course = "---" ;
+		}
+		return course;
+		
+	},
 };
 
 

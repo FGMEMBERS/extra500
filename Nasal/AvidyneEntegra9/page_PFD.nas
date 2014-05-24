@@ -1052,7 +1052,7 @@ var NavSourceWidget = {
 	_adjustRadial : func(amount){
 		#me._Pointer += amount;
 		var course = tool.adjustStep(me._Pointer,amount,10);
-		course = math.mod(course,360.0);
+		course = tool.course(course);
 		setprop("/instrumentation/nav[0]/radials/selected-deg",course);
 		setprop("/instrumentation/nav[1]/radials/selected-deg",course);
 		if(me._btnObsMode == 1){
@@ -1139,8 +1139,8 @@ var NavSourceWidget = {
 		}
 	},
 	_onCourseChange : func(n){
-		me._Pointer		= math.mod(n.getValue(),360);
-		me._can.Crs.setText(sprintf("%i",global.roundInt(me._Pointer)));
+		me._Pointer		= n.getValue();
+		me._can.Crs.setText(sprintf("%i",tool.course(me._Pointer)));
 		
 	},
 	update2Hz : func(now,dt){
@@ -1327,7 +1327,7 @@ var BearingSourceWidget = {
 		if (me._source > 0){
 			me._Pointer	= me._ptree.Pointer.getValue();
 			me._can.Pointer.setRotation((me._Pointer - me._Page._widget.HSI._heading) * global.CONST.DEG2RAD);
-			me._can.Brg.setText(sprintf("%i",global.roundInt(me._Pointer)));
+			me._can.Brg.setText(sprintf("%i",tool.course(me._Pointer)));
 		}
 	},
 };
@@ -1446,7 +1446,7 @@ var HeadingSituationIndicatorWidget = {
 	},
 	_onHdgBugChange : func(n){
 		me._headingBug		= n.getValue();
-		me._can.HeadingBug_Text.setText(sprintf("%03i",me._headingBug));
+		me._can.HeadingBug_Text.setText(sprintf("%03i",tool.course(me._headingBug)));
 	},
 	init : func(instance=me){
 # 		me.setListeners(instance);
@@ -1468,7 +1468,7 @@ var HeadingSituationIndicatorWidget = {
 # 		me._fmsHeading 		= me._ptree.FmsHeading.getValue();
 		
 		
-		me._can.Heading_Text.setText(sprintf("%03i",global.roundInt( me._heading)));
+		me._can.Heading_Text.setText(sprintf("%03i",tool.course( me._heading)));
 # 		me._can.CompassRose.setRotation(-me._heading * global.CONST.DEG2RAD);
 		me._can.TrunRate.setRotation(me._trunRate * 30.0 * global.CONST.DEG2RAD);
 		

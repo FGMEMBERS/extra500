@@ -327,8 +327,14 @@ var MovingMap = {
 		me._can.BugFMS.setVisible(me._bugFMSactive);
 	},
 	onModelObserverNotify : func(n){
-		me.setRefPos(tcasModel._lat,tcasModel._lon);
-		me.setHdg(tcasModel._hdg);
+# 		me.setRefPos(tcasModel._lat,tcasModel._lon);
+# 		me.setHdg(tcasModel._hdg);
+		
+		me._lat = getprop("/position/latitude-deg");
+		me._lon = getprop("/position/longitude-deg");
+		
+		me.setRefPos(me._lat,me._lon);
+		me.setHdg(me._tree.Heading.getValue());
 	},
 	_onAutopilotModeHDG : func(n){
 		me._modeHDG = n.getValue();
@@ -357,8 +363,8 @@ var MovingMap = {
 		me._can.BugFMS.setRotation((me._bugFMS - me._mapOptions.orientation) * global.CONST.DEG2RAD);
 	},
 	update20Hz : func(now,dt){
-		me._lat = getprop("/position/latitude-deg");
-		me._lon = getprop("/position/longitude-deg");
+# 		me._lat = getprop("/position/latitude-deg");
+# 		me._lon = getprop("/position/longitude-deg");
 		
 		me._headingTrue 	= me._tree.HeadingTrue.getValue();
 		#me._mapOptions.orientation 		= me._tree.Heading.getValue();
@@ -371,8 +377,8 @@ var MovingMap = {
 		
 		me._can.plane.setRotation(me._heading * (me._view==MAP_VIEW.NORTH_UP) * global.CONST.DEG2RAD);
 		
-		me._can.HDGValue.setText(sprintf("%03i",global.roundInt(me._heading)));
-		me._can.UpHDGDeg.setText(sprintf("%5.1f",me._upHdg));
+		me._can.HDGValue.setText(sprintf("%03i",tool.course(me._heading)));
+		me._can.UpHDGDeg.setText(sprintf("%5.1f",tool.course(me._upHdg)));
 		
 		me._can.CompassRose.setRotation(-me._mapOptions.orientation * global.CONST.DEG2RAD);
 		me._can.BugTrue.setRotation((me._headingTrue - me._mapOptions.orientation) * global.CONST.DEG2RAD);
