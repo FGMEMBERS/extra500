@@ -629,6 +629,7 @@ var AvidynePageFMS = {
 		}else{
 			me._widget.MovingMapKnob.setVisible(me._visibility);
 			me._widget.FPL.setVisible(me._visibility);
+			me._widget.DirectTo.setVisible(me._visibility);
 		}
 		me._widget.Tab.setVisible(me._visibility);
 		me.page.setVisible(me._visibility);

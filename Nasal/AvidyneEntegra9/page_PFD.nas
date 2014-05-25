@@ -1820,11 +1820,11 @@ var BugSelectWidget = {
 			me._can.Altitude.set("z-index",2);
 						
 			me._ifd.ui.bindKnob("RK",{
-				"<<"	: func(){keypad.onAdjustAltitude(-500);},
-				"<"	: func(){keypad.onAdjustAltitude(-100);},
-				"push"	: func(){keypad.onAltitudeSync();},
-				">"	: func(){keypad.onAdjustAltitude(100);},
-				">>"	: func(){keypad.onAdjustAltitude(500);},
+				"<<"	: func(){keypad.onAdjustAltitude(-500);me._ResetTimer.restart(10);},
+				"<"	: func(){keypad.onAdjustAltitude(-100);me._ResetTimer.restart(10);},
+				"push"	: func(){keypad.onAltitudeSync();me._ResetTimer.restart(10);},
+				">"	: func(){keypad.onAdjustAltitude(100);me._ResetTimer.restart(10);},
+				">>"	: func(){keypad.onAdjustAltitude(500);me._ResetTimer.restart(10);},
 			},{
 				"scroll"	: "Altitude",
 				"push"		: "Sync",
@@ -1836,11 +1836,11 @@ var BugSelectWidget = {
 			me._can.VS.set("z-index",2);
 			
 			me._ifd.ui.bindKnob("RK",{
-				"<<"	: func(){extra500.autopilot.onAdjustVS(-500);},
-				"<"	: func(){extra500.autopilot.onAdjustVS(-100);},
-				"push"	: func(){extra500.autopilot.onSetVS(0);},
-				">"	: func(){extra500.autopilot.onAdjustVS(100);},
-				">>"	: func(){extra500.autopilot.onAdjustVS(500);},
+				"<<"	: func(){extra500.autopilot.onAdjustVS(-500);me._ResetTimer.restart(10);},
+				"<"	: func(){extra500.autopilot.onAdjustVS(-100);me._ResetTimer.restart(10);},
+				"push"	: func(){extra500.autopilot.onSetVS(0);me._ResetTimer.restart(10);},
+				">"	: func(){extra500.autopilot.onAdjustVS(100);me._ResetTimer.restart(10);},
+				">>"	: func(){extra500.autopilot.onAdjustVS(500);me._ResetTimer.restart(10);},
 			},{
 				"scroll"	: "VS",
 				"push"		: "Sync",
