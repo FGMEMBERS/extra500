@@ -1655,6 +1655,7 @@ JSBSim Extra Aircraft - Extra 500.
 	</interior>
 	<yokes>
 		<visible type="int">1</visible>
+		<transparency type="double">1.0</transparency>
 		<ptt-copilot>
 			<pressed type="int">0</pressed>
 		</ptt-copilot>

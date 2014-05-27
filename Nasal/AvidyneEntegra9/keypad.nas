@@ -461,6 +461,8 @@ var FMSDATAKeypadWidget = {
 			code	: props.globals.initNode("/instrumentation/transponder/id-code",0,"INT"),
 			mode 	: props.globals.initNode("/instrumentation/transponder/inputs/knob-mode",0,"INT"),
 			nearest	: props.globals.initNode("/sim/airport/closest-airport-id","----","STRING"),
+			vsr	: props.globals.initNode("/instrumentation/fms/vsr",0,"INT"),
+			
 		};
 		m._can = {
 			code 		: m._group.getElementById("FMS_XPDR"),
@@ -491,6 +493,8 @@ var FMSDATAKeypadWidget = {
 		append(me._listeners, setlistener(me._tree.nearest,func(n){instance._onNRSTChange(n);},1,0) );
 		append(me._listeners, setlistener(me._tree.code,func(n){instance._onXPDRChange(n);},1,0) );
 		append(me._listeners, setlistener(me._tree.mode,func(n){instance._onXPDRmodeChange(n);},1,0) );
+		append(me._listeners, setlistener(me._tree.vsr,func(n){instance._onVsrChange(n);},1,0) );
+		
 	},
 	
 	_onVisibiltyChange : func(){	
@@ -519,6 +523,10 @@ var FMSDATAKeypadWidget = {
 		me._xpdrMode = n.getValue(); 
 		me._can.mode.setText(IFD.XPDRMODE[me._xpdrMode]);
 	},
+	_onVsrChange : func(n){
+		me._vsr = n.getValue();
+		me._can.VSR.setText(sprintf("%i",me._vsr));
+	},
 	handleKeyboardInput : func (key){
 		
 	},
@@ -530,11 +538,11 @@ var FMSDATAKeypadWidget = {
 			if(extra500.fms._isFPLready){
 				me._can.ETE.setText(global.formatTime(getprop("/autopilot/route-manager/wp/ete_sec"),"H:i:s"));
 				me._can.destETE.setText(global.formatTime(getprop("/autopilot/route-manager/ete"),"H:i:s"));
-				me._can.VSR.setText("---");
+# 				me._can.VSR.setText("---");
 			}else{
 				me._can.ETE.setText("--:--:--");
 				me._can.destETE.setText("--:--:--");
-				me._can.VSR.setText("---");
+# 				me._can.VSR.setText("---");
 			}
 		}
 	},
@@ -570,7 +578,7 @@ var HDGKeypadWidget = {
 		append(me._listeners, setlistener("/autopilot/settings/heading-bug-deg",func(n){instance._onHdgChange(n);},1,0) );
 	},
 	_onHdgChange : func(n){
-		me._can.HDGvalue.setText(sprintf("%03i",n.getValue()));
+		me._can.HDGvalue.setText(sprintf("%03i",tool.course(n.getValue())));
 	},
 	_onVisibiltyChange : func(){	
 		me._group.setVisible(me._visibility);
