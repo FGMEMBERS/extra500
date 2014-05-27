@@ -26,11 +26,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.50980392"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.70710678"
-     inkscape:cx="214.48213"
-     inkscape:cy="407.5957"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="1812.107"
+     inkscape:cy="1086.6738"
      inkscape:document-units="px"
-     inkscape:current-layer="layer3"
+     inkscape:current-layer="layer4"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1025"
@@ -44,14 +44,15 @@
      inkscape:bbox-paths="true"
      inkscape:snap-bbox-midpoints="false"
      inkscape:snap-grids="false"
-     inkscape:snap-page="true"
+     inkscape:snap-page="false"
      inkscape:snap-object-midpoints="true"
      inkscape:snap-global="true"
      inkscape:bbox-nodes="false"
      inkscape:snap-center="true"
      inkscape:snap-bbox-edge-midpoints="true"
      inkscape:showpageshadow="false"
-     inkscape:snap-to-guides="true">
+     inkscape:snap-to-guides="true"
+     inkscape:snap-nodes="true">
     <inkscape:grid
        type="xygrid"
        id="grid5230"
@@ -109,7 +110,7 @@
        id="guide5306" />
     <sodipodi:guide
        orientation="1,0"
-       position="2399.9204,1134.9064"
+       position="2367.9219,1118.8359"
        id="guide5308" />
     <sodipodi:guide
        orientation="1,0"
@@ -2862,24 +2863,29 @@
      inkscape:label="VerticalSpeed"
      style="display:inline"
      transform="translate(0,-274)">
-    <g
-       style="display:inline"
-       id="g8357"
-       transform="matrix(0.84977755,0,0,0.84977755,-31.471868,290.44801)" />
+    <rect
+       style="color:#000000;fill:#00ff00;stroke:#000000;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="VS_Bug_FMS"
+       width="24.770723"
+       height="24.770723"
+       x="815.07843"
+       y="1792.3002"
+       transform="matrix(0.70710678,-0.70710678,0.70710678,0.70710678,0,0)"
+       inkscape:transform-center-x="506.71127" />
+    <path
+       sodipodi:nodetypes="cccccccc"
+       inkscape:connector-curvature="0"
+       d="m 1849.5489,665.63651 0.084,10.25645 -14.3305,15.10703 14.3305,15.00877 -0.084,10.35472 -22.4815,0 0,-50.72697 z"
+       style="fill:none;stroke:#ff0eeb;stroke-width:8.49777508;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       inkscape:transform-center-x="529.57025"
+       id="VS_Bug" />
     <path
        sodipodi:nodetypes="cccccc"
        inkscape:connector-curvature="0"
        id="VS_Needle"
        d="m 1867.5532,686.85081 105.9871,0 0,8.29838 -105.9871,0 -32.8531,-4.07276 z"
-       style="fill:#ffc215;fill-opacity:1;stroke:none"
+       style="fill:#ffc215;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
        inkscape:transform-center-x="463.8002" />
-    <path
-       sodipodi:nodetypes="cccccccc"
-       inkscape:connector-curvature="0"
-       id="VS_Bug"
-       d="m 1849.5489,665.63651 0.084,8.25645 -14.3305,17.10703 14.3305,17.00877 -0.084,8.35472 -22.4815,0 0,-50.72697 z"
-       style="fill:none;stroke:#ff0eeb;stroke-width:8.49777508;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       inkscape:transform-center-x="529.57025" />
     <text
        xml:space="preserve"
        style="font-size:55.85789871px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ff0eeb;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"

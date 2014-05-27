@@ -220,21 +220,26 @@ var VerticalSpeedWidget = {
 		m._class 	= "VerticalSpeedWidget";
 		m._ptree	= {
 			vs	: props.globals.initNode("/instrumentation/ivsi-IFD-"~m._ifd.name~"/indicated-speed-fpm",0.0,"DOUBLE"),
+			vsr	: props.globals.initNode("/instrumentation/fms/vsr",0,"INT"),
 		};
 		m._can		= {
 			Needle		: m._group.getElementById("VS_Needle").updateCenter(),
 			Bug		: m._group.getElementById("VS_Bug").updateCenter(),
+			BugFMS		: m._group.getElementById("VS_Bug_FMS").updateCenter(),
 			BugValue	: m._group.getElementById("VS_Indicated"),
 			
 		};
 		m._ap		= 0;
 		m._bug		= 0;
 		m._vs		= 0;
+		m._vsr		= 0;
 		return m;
 	},
 	setListeners : func(instance) {
 		append(me._listeners, setlistener("/autopilot/mode/vs",func(n){me._onApChange(n)},1,0));	
 		append(me._listeners, setlistener("/autopilot/settings/vertical-speed-fpm",func(n){me._onBugChange(n)},1,0));	
+		append(me._listeners, setlistener(me._ptree.vsr,func(n){me._onVsrChange(n)},1,0));	
+		
 	},
 	_onApChange : func(n){
 		me._ap = n.getValue();
@@ -249,6 +254,13 @@ var VerticalSpeedWidget = {
 		me._can.BugValue.setText(sprintf("%4i",global.roundInt(me._bug)));
 		me._can.Bug.setRotation(me._rotateScale(me._bug));
 		
+	},
+	_onVsrChange  : func(n){
+		me._vsr = n.getValue();
+		if(me._vsr != 0){
+			me._can.BugFMS.setRotation(me._rotateScale(me._vsr));
+		}
+		me._can.BugFMS.setVisible(me._vsr != 0);
 	},
 	_rotateScale : func(vs){
 		if (vs >= -1000 ){
@@ -1742,7 +1754,7 @@ var BugSelectWidget = {
 		me.removeListeners();
 	},
 	_resetMode : func(){
-		print("BugSelectWidget._resetMode() ... ");
+# 		print("BugSelectWidget._resetMode() ... ");
 		me._setModeRK("HDG");
 	},
 	registerKeys : func(){

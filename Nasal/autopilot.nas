@@ -188,6 +188,13 @@ var FlightManagementSystemClass = {
 		me.checkOBSMode();
 	},
 	calcRoute : func(){
+		
+		var restriction = {
+			alt 		: 0,
+			altDistance	: 0,
+			vsr		: 0,
+		};
+		
 		if(me._fplActive){
 			var gs = getprop("/velocities/groundspeed-kt");
 			if(gs > 50){
@@ -196,6 +203,7 @@ var FlightManagementSystemClass = {
 				var time = systime() + getprop("/sim/time/warp");
 				var fuelGalUs = getprop("/consumables/fuel/total-fuel-gal_us");
 				var fuelFlowGalUSpSec = extra500.fuelSystem._nFuelFlowGalUSpSec.getValue();
+				var currentAlt = getprop("/instrumentation/altimeter-IFD-LH/indicated-altitude-ft");
 				
 				var distance =  getprop("/autopilot/route-manager/wp/dist");
 				var distanceToGo = distance;
@@ -203,15 +211,28 @@ var FlightManagementSystemClass = {
 				var eta = time + ete;
 				var fuelAt = fuelGalUs -= fuelFlowGalUSpSec * ete;
 				
+				restriction.alt = getprop("/autopilot/route-manager/destination/field-elevation-ft");
+				
 				setprop("/autopilot/route-manager/wp/ete_sec",ete);
 				setprop("/autopilot/route-manager/wp/eta_sec",eta);
 				setprop("/autopilot/route-manager/wp/fuelAt_GalUs",fuelGalUs);
+				fp = flightplan();
 				
-				var numWaypt = getprop("/autopilot/route-manager/route/num");
+				var numWaypt = fp.getPlanSize();
 				for (var i = 0 ; i < numWaypt-1 ; i+=1){
-						distance = getprop("/autopilot/route-manager/route/wp["~i~"]/leg-distance-nm");
+						var fmsWP = fp.getWP(i);
+						distance = fmsWP.leg_distance;
 						
 						if (i >= me._currentWaypointIndex){
+						
+							if ((fmsWP.alt_cstr_type != nil) and ( restriction.altDistance == 0 ) ) {
+								restriction.alt = fmsWP.alt_cstr;
+								restriction.altDistance = distanceToGo;
+								
+								#print(""~fmsWP.wp_name ~" constraint : "~fmsWP.alt_cstr_type~" "~restriction.alt~" in "~restriction.altDistance~" nm");
+								
+							}
+						
 							distanceToGo += distance;
 							ete = distance / gsSec ;
 							eta = time + (distanceToGo / gsSec);
@@ -221,13 +242,27 @@ var FlightManagementSystemClass = {
 							eta = 0;
 							fuelAt = 0;
 						}
-						
+												
 						setprop("/autopilot/route-manager/route/wp["~(i+1)~"]/distanceTo-nm",distance);
 						setprop("/autopilot/route-manager/route/wp["~(i+1)~"]/ete_sec",ete);
 						setprop("/autopilot/route-manager/route/wp["~(i+1)~"]/eta_sec",eta);
 						setprop("/autopilot/route-manager/route/wp["~(i+1)~"]/fuelAt_GalUs",fuelAt);
 						
+						
+						
 				}
+				
+				if(restriction.altDistance == 0){
+					restriction.altDistance = distanceToGo;
+				}
+								
+				#			ft	/	min
+				restriction.vsr = (restriction.alt - currentAlt) / ((restriction.altDistance / gs) * 60 );
+				
+				restriction.vsr = math.floor((restriction.vsr+50)/100) * 100; 
+				
+				restriction.vsr = global.clamp(restriction.vsr,-1600,1600);
+				
 				
 				setprop("/autopilot/route-manager/fuelAt_GalUs",fuelGalUs);
 				setprop("/autopilot/route-manager/eta_sec",eta);
@@ -237,6 +272,9 @@ var FlightManagementSystemClass = {
 				me._isFPLready = 0;
 			}
 		}
+		
+		setprop("/instrumentation/fms/vsr",restriction.vsr);
+		setprop("/instrumentation/fms/vsr-distance",restriction.altDistance);
 	},
 };
 
