@@ -32,16 +32,31 @@
     <max-m>50</max-m>
   </animation>
 
+  <!----> 
   <animation>
-  	<object-name>yokes</object-name>
-  	<type>select</type>
-  	<condition>
-   		<equals>
-    			<property>/extra500/yokes/visible</property>
-    			<value>1</value>
-   		</equals>
-  	</condition>
+	  <object-name>yokes</object-name>
+	  <type>select</type>
+	  <condition>
+		  <equals>
+			  <property>/extra500/yokes/visible</property>
+			  <value>1</value>
+		  </equals>
+	  </condition>
+  </animation> 
+	
+  <animation>
+	  <type>material</type>
+	  <object-name>yokes</object-name>
+	  <transparency>
+		  <alpha-prop>/extra500/yokes/transparency</alpha-prop>
+		  <factor>1</factor>
+	  </transparency>
   </animation>
+  
+  <effect>
+	  <inherits-from>Effects/model-transparent</inherits-from>
+	  <object-name>yokes</object-name>
+  </effect>
 
 <!-- Submodels -->
 
