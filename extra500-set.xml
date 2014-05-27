@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             18.05.2014
+      Date:             27.05.2014
 
 
 ************************************************************************
@@ -592,6 +592,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<dto-leg type="int">0</dto-leg>
 		<ap type="bool">false</ap>
 		<obs-mode type="bool">false</obs-mode>
+		<fly-vector type="bool">false</fly-vector>
 	</settings>
 	<route-manager>
 		<current-wp>-1</current-wp>

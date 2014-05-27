@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg 
-#      Date:             10.05.2014
+#      Date:             27.05.2014
 #
 
 
@@ -153,9 +153,10 @@ var FlightManagementSystemClass = {
 		
 	},
 	flyVectors : func(){
-		me._node.FlyVector.setValue(me._flyVectors==0);
+		if ( ( getprop("/autopilot/route-manager/active") == 1 ) and ( getprop("/instrumentation/nav-source") == 2 ) and ( getprop("/autopilot/mode/nav") == 1 ) ) {
+			me._node.FlyVector.setValue(me._flyVectors==0);
+		}
 	},
-	
 	
 	_onDirectToChange : func(n){
 		me._directTo = n.getValue();
@@ -416,6 +417,7 @@ var AutopilotClass = {
 		me.nModeGSFollow.setValue(0);
 		setprop("/autopilot/mode/cws-armed",0);
 		setprop("/autopilot/mode/cws",0);
+		setprop("/autopilot/settings/fly-vector",0);
 	},
 # checks is a roll mode (HDG or NAV) is active. Must be active to engage any pitch mode or yaw damper
 	_CheckRollModeActive : func(){
@@ -454,6 +456,7 @@ var AutopilotClass = {
 			me.nModeGSFollow.setValue(0);
 			setprop("/autopilot/mode/cws-armed",0);
 			setprop("/autopilot/mode/cws",0);
+			setprop("/autopilot/settings/fly-vector",0);
 			me.ndisengSound.setValue(0);
 		} else {
 			me.nModeFail.setValue(1);
@@ -469,6 +472,7 @@ var AutopilotClass = {
 			me.nModeGSFollow.setValue(0);
 			setprop("/autopilot/mode/cws-armed",0);
 			setprop("/autopilot/mode/cws",0);
+			setprop("/autopilot/settings/fly-vector",0);
 			me.ndisengSound.setValue(0);
 		} else {
 			me.nModeFail.setValue(1);
@@ -632,6 +636,7 @@ var AutopilotClass = {
 		if ( (getprop("/autopilot/mode/cws-armed") ==0) and ( ( me.nModeAlt.getValue() == 1 ) or ( me.nModeVs.getValue() == 1 ) or (me.nModeGSFollow.getValue() ==1) ) ){
 			setprop("/autopilot/mode/cws-armed",1);
 			setprop("/autopilot/mode/cws",1);
+			setprop("/autopilot/settings/fly-vector",0);
 			me.nModeHeading.setValue(0);
 			me.nModeNav.setValue(0);
 			me.nModeNavGpss.setValue(0);

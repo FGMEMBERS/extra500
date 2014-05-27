@@ -17,7 +17,7 @@
 #      Date: Jul 20 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             03.02.14
+#      Date:             27.05.14
 #
 
 
@@ -1047,6 +1047,7 @@ var NavSourceWidget = {
 		me._source += amount;
 		if (me._source > 2){ me._source = 0; }
 		if (me._source < 0){ me._source = 2; }
+		if (me._source != 2){ setprop("/autopilot/settings/fly-vector",0); } 		# to switch off vectors when fms is no longer the nav source
 		me._ptree.Source.setValue(me._source);	
 	},
 	_adjustRadial : func(amount){
