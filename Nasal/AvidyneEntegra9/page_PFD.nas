@@ -843,7 +843,6 @@ var NavSourceWidget = {
 				distance		: "/autopilot/radionav-channel/nav-distance-nm",
 				bearing			: "/instrumentation/nav[0]/radials/reciprocal-radial-deg",
 				targetCourse		: "/instrumentation/nav[0]/radials/target-radial-deg",
-				
 			},
 			Nav2 	: {
 				Pointer			: "/instrumentation/nav[1]/radials/selected-deg",
@@ -859,7 +858,6 @@ var NavSourceWidget = {
 				distance		: "/autopilot/radionav-channel/nav-distance-nm",
 				bearing			: "/instrumentation/nav[1]/radials/reciprocal-radial-deg",
 				targetCourse		: "/instrumentation/nav[1]/radials/target-radial-deg",
-				
 			},
 			
 			
@@ -1075,16 +1073,17 @@ var NavSourceWidget = {
 		}
 	},
 	_onSyncCourse : func(){
-		var bearing = 0;
+		var course = 0;
 		if(me._isLOC == 1){
 			# localizer target course
-			bearing = getprop(me._PATH[me._SOURCE[me._source]].targetCourse);
+			var magVar = getprop("environment/magnetic-variation-deg");
+			course = getprop(me._PATH[me._SOURCE[me._source]].targetCourse) - magVar;
 		}else{
 			# direct
-			bearing = getprop(me._PATH[me._SOURCE[me._source]].bearing);
+			course = getprop(me._PATH[me._SOURCE[me._source]].bearing);
 		}
-		setprop("/instrumentation/nav[0]/radials/selected-deg",bearing);
-		setprop("/instrumentation/nav[1]/radials/selected-deg",bearing);
+		setprop("/instrumentation/nav[0]/radials/selected-deg",course);
+		setprop("/instrumentation/nav[1]/radials/selected-deg",course);
 	},
 	_setObsMode : func(active=0){
 		if(me._btnObsMode != active){
