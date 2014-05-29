@@ -57,6 +57,12 @@ var applyParkingBrake = func(v) {
     UI.click("Parkingbrake");
 }
 
+var startEngine = func(v = 1, which...) {
+	if(v){
+		UI.click("Engine cutoff");
+	}
+}
+
 # GEAR ##
 # prevent retraction of the landing gear when any of the wheels are compressed
 # setlistener("controls/gear/gear-down", func
