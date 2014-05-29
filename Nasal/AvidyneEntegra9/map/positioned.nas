@@ -144,6 +144,7 @@ var AirportItem = {
 		.setFontSize(32);
 		
 		me._can.layout = group.createChild("group","airport_layout" ~ me._id);
+		me._can.layoutIcon = group.createChild("group","airport_layout_Icon" ~ me._id);
 				
 		return me._can.group;
 	},
@@ -162,7 +163,8 @@ var AirportItem = {
 			var aptInfo = airportinfo(apt.id);
 					
 			me._can.layout.removeAllChildren();
-			me._can.runway = [];
+			me._can.layoutIcon.removeAllChildren();
+# 			me._can.runway = [];
 			
 			me._mapAirportIcon.tower = (size(aptInfo.comms("tower")) > 0);
 			me._mapAirportIcon.center = me._mapAirportIcon.tower and (size(aptInfo.comms("approach")) > 0);
@@ -196,47 +198,43 @@ var AirportItem = {
 				
 				if (mapOptions.range <= 10){	# drawing real runways 
 					#print("AirportItem.draw() real runways " ~ runway.id);
-					var canRwy = {"heading":0,"can":nil};
-					canRwy.heading = runway.heading;
-					canRwy.can = me._can.layout.createChild("path", "airport-runway-" ~ me._id ~"-"~runway.id)
+# 					var canRwy = {"heading":0,"can":nil};
+# 					canRwy.heading = runway.heading;
+					me._can.layout.createChild("path", "airport-runway-" ~ me._id ~"-"~runway.id)
 						.setStrokeLineWidth(7)
 						.setColor(1.0,1.0,1.0)
-						.setColorFill(1.0, 1.0, 1.0);
-						
-					canRwy.can.setDataGeo(
-						[ 	
+						.setColorFill(1.0, 1.0, 1.0)
+						.setDataGeo([ 	
 							canvas.Path.VG_MOVE_TO,
 							canvas.Path.VG_LINE_TO,
 							canvas.Path.VG_CLOSE_PATH 
-						],
-						[
+						],[
 							"N" ~ runway.lat, "E" ~ runway.lon,
 							"N" ~ runway.reciprocal.lat, "E" ~ runway.reciprocal.lon,
-						]
-						);
-					append(me._can.runway,canRwy);
+						]);
+# 					append(me._can.runway,canRwy);
 					
 				}elsif(mapOptions.range <= 30){		#draw icon runways
-					var canRwy = {"heading":0,"can":nil};
-					canRwy.heading = runway.heading;
-					canRwy.can = me._can.layout.createChild("path", "airport-runway-" ~ me._id ~"-"~runway.id)
+# 					var canRwy = {"heading":0,"can":nil};
+# 					canRwy.heading = runway.heading;
+					me._can.layoutIcon.setGeoPosition(apt.lat, apt.lon);
+					me._can.layoutIcon.createChild("path", "airport-runway-" ~ me._id ~"-"~runway.id)
 						.setStrokeLineWidth(7)
 						.setColor(1.0,1.0,1.0)
-						.setColorFill(1.0, 1.0, 1.0);
-					canRwy.can.setData(
-						[ 	
+						.setColorFill(1.0, 1.0, 1.0)
+						.setData([ 	
 							canvas.Path.VG_MOVE_TO,
 							canvas.Path.VG_LINE_TO,
 							canvas.Path.VG_CLOSE_PATH 
-						],
-						[
+						],[
 							0,-20,
 							0,20
-						]
-						);
-					canRwy.can.setGeoPosition(apt.lat, apt.lon);
-					canRwy.can.setRotation((canRwy.heading - mapOptions.orientation )* global.CONST.DEG2RAD);
-					append(me._can.runway,canRwy);
+						])
+						.setRotation((runway.heading)* global.CONST.DEG2RAD)
+						;
+					#canRwy.can.setGeoPosition(apt.lat, apt.lon);
+# 					append(me._can.runway,canRwy);
+					#me._can.layout.updateCenter();
 				}
 					
 			}
@@ -273,9 +271,10 @@ var AirportItem = {
 		if(mapOptions.range <= 10){
 			
 		}elsif(mapOptions.range <= 30){
-			forindex(var i ; me._can.runway){
-				me._can.runway[i].can.setRotation((me._can.runway[i].heading - mapOptions.orientation )* global.CONST.DEG2RAD);
-			}
+			me._can.layoutIcon.setRotation(-mapOptions.orientation * global.CONST.DEG2RAD);
+# 			forindex(var i ; me._can.runway){
+# 				me._can.runway[i].can.setRotation((me._can.runway[i].heading - mapOptions.orientation )* global.CONST.DEG2RAD);
+# 			}
 		}else{
 							
 		}
