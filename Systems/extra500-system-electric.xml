@@ -20,7 +20,7 @@
       Date: 2013-09-16
 
       Last change:      Eric van den Berg
-      Date:             2014-04-21
+      Date:             2014-05-29
 -->
 
 <system name="electrics">
@@ -291,33 +291,48 @@
 			<function>
 				<sum>
 					<product>
-						<property>/systems/gear/solenoids/mainvalve/state</property>
-						<value>10.0</value>
+						<max>
+							<product>
+								<property>/systems/gear/solenoids/mainvalve/state</property>
+								<value>-10.0</value>
+							</product>
+							<value>0</value>
+						</max>
 						<pow>	
 							<max>			
-								<property>/extra500/panel/CircuitBreaker/GearAux2/voltOut</property>
+								<property>/extra500/electric/bus/hot/volt</property>
 								<value>1</value>
 							</max>
 							<value>-1</value>
 						</pow>				
 					</product>
 					<product>
-						<property>/systems/gear/solenoids/upperdoorvalve/state</property>
-						<value>10.0</value>
+						<max>
+							<product>
+								<property>/systems/gear/solenoids/upperdoorvalve/state</property>
+								<value>-10.0</value>
+							</product>
+							<value>0</value>
+						</max>
 						<pow>	
 							<max>			
-								<property>/extra500/panel/CircuitBreaker/GearAux2/voltOut</property>
+								<property>/extra500/electric/bus/hot/volt</property>
 								<value>1</value>
 							</max>
 							<value>-1</value>
 						</pow>				
 					</product>
 					<product>
-						<property>/systems/gear/solenoids/lowerdoorvalve/state</property>
-						<value>10.0</value>
+						<max>
+							<product>
+								<property>/systems/gear/solenoids/lowerdoorvalve/state</property>
+								<value>-10.0</value>
+							</product>
+							<value>0</value>
+						</max>
 						<pow>	
 							<max>			
-								<property>/extra500/panel/CircuitBreaker/GearAux2/voltOut</property>
+								<property>/extra500/electric/bus/hot/volt</property>
 								<value>1</value>
 							</max>
 							<value>-1</value>

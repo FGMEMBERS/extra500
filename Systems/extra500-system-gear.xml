@@ -20,7 +20,7 @@
       Date: 2013-10-16
 
       Last change:      Eric van den Berg
-      Date:             2014-01-25
+      Date:             2014-05-29
 -->
 
 <!--
@@ -433,15 +433,14 @@ for lights:
 
 		<switch name="/systems/gear/power/tocontrolswitch">
 			<default value="0"/>
-			<test logic="AND" value="/extra500/panel/CircuitBreaker/GearAux2/voltOut">
+			<test logic="AND" value="/extra500/electric/bus/hot/volt">
 				<test logic="OR" value="1">
 					/extra500/panel/CircuitBreaker/BankC/GearControl/state eq 1
 				</test>
 				<test logic="OR" value="1">
 					<test logic="AND" value="1">
-<!-- fixme: should only be if /extra500/panel/CircuitBreaker/BankD/GearAux1/voltOut gt 0, 
-      however logic for GearAux1 is not implemented yet, but this works just as well -->
-						/extra500/panel/CircuitBreaker/GearAux2/voltOut gt 0
+						/extra500/electric/bus/hot/volt gt 0
+						/extra500/panel/CircuitBreaker/GearAux2/state eq 1
 						/systems/gear/switches/nosegeardown/state eq 0
 						/extra500/panel/CircuitBreaker/BankD/GearAux1/state eq 1
 					</test>
@@ -454,7 +453,7 @@ for lights:
 
 		<switch name="/systems/gear/power/tomodul32C">
 			<default value="0"/>
-			<test logic="AND" value="/extra500/panel/CircuitBreaker/GearAux2/voltOut">
+			<test logic="AND" value="/extra500/electric/bus/hot/volt">
 				<test logic="AND" value="1">
 					/systems/gear/power/tocontrolswitch gt 0
 					/extra500/system/gear/MainGearSwitch/state eq 0
