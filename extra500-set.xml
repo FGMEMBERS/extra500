@@ -49,7 +49,7 @@ JSBSim Extra Aircraft - Extra 500.
 	</tags>
 
 	<author>Dirk Dittmann, Eric van den Berg, Thomas Grossberger</author>
-	<status>early production</status>
+	<status>production</status>
 	<rating>
 		<FDM type="int">4</FDM>
 		<systems type="int">5</systems>
