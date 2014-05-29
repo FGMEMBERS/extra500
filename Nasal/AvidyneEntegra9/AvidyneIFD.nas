@@ -522,8 +522,8 @@ var AvidyneIFD = {
 		
 		
 		me.ui.bindKey("DIM",{
-			"<" : func(){me._adjustBrightness(0.05);},
-			">" : func(){me._adjustBrightness(-0.05);},
+			"<" : func(){me._adjustBrightness(-0.05);},
+			">" : func(){me._adjustBrightness(0.05);},
 		});
 		
 		me.ui.bindKnob("BARO",{
