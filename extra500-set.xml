@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             27.05.2014
+      Date:             29.05.2014
 
 
 ************************************************************************
@@ -1511,6 +1511,9 @@ JSBSim Extra Aircraft - Extra 500.
 			<battery>
 				<volt type="double">0</volt>
 			</battery>
+			<hot>
+				<volt type="double">0</volt>
+			</hot>
 		</bus>
 		<source>
 			<ExternalGenerator>
