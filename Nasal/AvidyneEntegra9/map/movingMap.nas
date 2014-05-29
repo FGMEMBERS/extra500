@@ -102,7 +102,7 @@ var MovingMap = {
 			UpHDGDeg	: m._group.getElementById("MovingMap_Up_HDG_DEG"),
 			UpNorth		: m._group.getElementById("MovingMap_Up_North").setVisible(0),
 			HDG		: m._group.getElementById("MovingMap_HDG"),
-			BugHDG		: m._group.getElementById("MovingMap_Bug_HDG"),
+			BugHDG		: m._group.getElementById("MovingMap_Bug_HDG_HDG"),
 			BugHDGVector	: m._group.getElementById("MovingMap_Bug_HDG_Vector").setVisible(0),
 			BugFMS		: m._group.getElementById("MovingMap_Bug_FMS"),
 			BugTrue		: m._group.getElementById("MovingMap_Bug_TRUE").updateCenter(),
