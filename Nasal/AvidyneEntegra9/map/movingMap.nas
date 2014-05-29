@@ -73,6 +73,7 @@ var MovingMap = {
 		m._group 	= parent;
 		m._name		= name;
 		m._tree	= {
+			MagVar		: props.globals.initNode("/environment/magnetic-variation-deg",0.0,"DOUBLE"),
 			Heading		: props.globals.initNode("/instrumentation/heading-indicator-IFD-"~m.IFD.name~"/indicated-heading-deg",0.0,"DOUBLE"),
 			HeadingTrue	: props.globals.initNode("/orientation/heading-deg",0.0,"DOUBLE"),
 			FmsHeading	: props.globals.initNode("/autopilot/fms-channel/course-target-deg",0.0,"DOUBLE"),
@@ -206,10 +207,12 @@ var MovingMap = {
 		}else{
 			me._mapOptions.orientation = me._heading;
 		}
+		var magVar = me._tree.MagVar.getValue();
 		me._layer.positioned.updateOrientation(me._mapOptions.orientation);
 		me._layer.route.updateOrientation(me._mapOptions.orientation);
 		
-		me._map.setHdg(me._mapOptions.orientation);
+		me._map.setHdg(me._mapOptions.orientation+magVar);
+
 	},
 	setVisible : func(visibility){
 		me._group.setVisible(visibility);

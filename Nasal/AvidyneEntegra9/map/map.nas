@@ -124,7 +124,10 @@ var Layer = {
 	},
 	_onVisibilityChange : func(){
 		me._group.setVisible(me._visibility);
-	}
+	},
+	setRotation : func(deg){
+			me._group.setRotation(deg * global.CONST.DEG2RAD);
+	},
 	
 };
 
