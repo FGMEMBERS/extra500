@@ -97,18 +97,19 @@
 			 </binding>
 		 </key>
 
+<!-- toggle engine cutoff
 		 <key n="115"> 
-			 <!-- toggle engine cutoff-->
 			 <name>s</name>
 			 <desc>Toggle engine cutoff</desc>
 			 <binding n="0">
 				 <command>nasal</command>
 				 <script><![CDATA[
-					UI.click("Engine cutoff");
-				]]></script>
+					 UI.click("Engine cutoff");
+					 ]]></script>
 			 </binding>
 		 </key>
-
+-->
+		 
 		 <key n="119">
 			 <name>w</name>
 			 <desc>gear warn mute</desc>
@@ -157,116 +158,7 @@
 		 </key>
             
 		 
-		 <!-- keys only for development -->
-
-		 <!--key n="32">
-			 <name>space</name>
-			 <desc>reload-model</desc>
-			 <repeatable type="bool">false</repeatable>
-			 <binding>
-				 <command>reinit</command>
-				 <subsystem>aircraft-model</subsystem>
-			 </binding>
-		 </key>
-		 <key n="119">
-			 <name>w</name>
-			 <desc>run simulation cycle once</desc>
-			 <repeatable type="bool">false</repeatable>
-			 <binding>
-				 <command>nasal</command>
-				 <script><![CDATA[
-					run.simulationLoop.step();
-				]]></script>
-			 </binding>
-		 </key-->
-		 <key n="87">
-			 <name>W</name>
-			 <desc>run simulation cycle continous</desc>
-			 <repeatable type="bool">false</repeatable>
-			 <binding>
-				 <command>nasal</command>
-				 <script><![CDATA[
-					run.simulationLoop.start();
-				]]></script>
-			 </binding>
-		 </key>
-		 <key n="113">
-			 <name>q</name>
-			 <desc>Debug output on</desc>
-			 <repeatable type="bool">false</repeatable>
-			 <binding>
-				 <command>nasal</command>
-				 <script><![CDATA[
-					Part.etd.on = 1;
-					Dialogs.debug_electric.open();
-				]]></script>
-			 </binding>
-		 </key>
-		 <key n="81">
-			 <name>Q</name>
-			 <desc>Debug output off</desc>
-			 <repeatable type="bool">false</repeatable>
-			 <binding>
-				 <command>nasal</command>
-				 <script><![CDATA[
-					Part.etd.on = 0;
-					Dialogs.debug_electric.close();
-				]]></script>
-			 </binding>
-		 </key>
-		 <!--key n="357">
-			 <name>up</name>
-			 <desc>Engineer Screen on</desc>
-			 <repeatable type="bool">false</repeatable>
-			 <binding>
-				 <command>nasal</command>
-				 <script><![CDATA[
-					if (getprop("/extra500/debug/EngineerScreen/enabled") == 1){
-						Dev.engineerScreen.open();
-					}
-				]]></script>
-			 </binding>
-		 </key>
-		 <key n="359">
-			 <name>down</name>
-			 <desc>Engineer Screen off</desc>
-			 <repeatable type="bool">false</repeatable>
-			 <binding>
-				 <command>nasal</command>
-				 <script><![CDATA[
-					if (getprop("/extra500/debug/EngineerScreen/enabled") == 1){
-						Dev.engineerScreen.close();
-					}
-				]]></script>
-			 </binding>
-		 </key>
-		 <key n="358">
-			 <name>right</name>
-			 <desc>Engineer Screen next page</desc>
-			 <repeatable type="bool">false</repeatable>
-			 <binding>
-				 <command>nasal</command>
-				 <script><![CDATA[
-					if (getprop("/extra500/debug/EngineerScreen/enabled") == 1){
-						Dev.engineerScreen.browse(1);
-					}
-				]]></script>
-			 </binding>
-		 </key>
-		 <key n="356">
-			 <name>left</name>
-			 <desc>Engineer Screen previous page</desc>
-			 <repeatable type="bool">false</repeatable>
-			 <binding>
-				 <command>nasal</command>
-				 <script><![CDATA[
-					if (getprop("/extra500/debug/EngineerScreen/enabled") == 1){
-						Dev.engineerScreen.browse(-1);
-					}
-					
-				]]></script>
-			 </binding>
-		 </key-->
+		 
 	 </keyboard> 
 
 </PropertyList>
