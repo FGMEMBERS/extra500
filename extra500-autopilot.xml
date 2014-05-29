@@ -1342,6 +1342,7 @@
 			<function>
 				<sum>
 					<property>/autopilot/fms-channel/obs/desired-course-deg</property> 
+					<property>/environment/magnetic-variation-deg</property> 
 					<property>/autopilot/fms-channel/relative-course-target-deg</property> 
 				</sum>
 			</function>
