@@ -103,7 +103,8 @@ var MovingMap = {
 			UpHDGDeg	: m._group.getElementById("MovingMap_Up_HDG_DEG"),
 			UpNorth		: m._group.getElementById("MovingMap_Up_North").setVisible(0),
 			HDG		: m._group.getElementById("MovingMap_HDG"),
-			BugHDG		: m._group.getElementById("MovingMap_Bug_HDG_HDG"),
+			BugHDG		: m._group.getElementById("MovingMap_Bug_HDG"),
+			BugHDGHDG	: m._group.getElementById("MovingMap_Bug_HDG_HDG"),
 			BugHDGVector	: m._group.getElementById("MovingMap_Bug_HDG_Vector").setVisible(0),
 			BugFMS		: m._group.getElementById("MovingMap_Bug_FMS"),
 			BugTrue		: m._group.getElementById("MovingMap_Bug_TRUE").updateCenter(),
@@ -354,9 +355,9 @@ var MovingMap = {
 	_onAutopilotModeHDG : func(n){
 		me._modeHDG = n.getValue();
 		if(me._modeHDG == 1){
-			me._can.BugHDG.set("fill",COLOR["Magenta"]);
+			me._can.BugHDGHDG.set("fill",COLOR["Magenta"]);
 		}else{
-			me._can.BugHDG.set("fill","none");
+			me._can.BugHDGHDG.set("fill","none");
 			
 		}
 	},
