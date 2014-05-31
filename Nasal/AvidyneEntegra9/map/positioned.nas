@@ -70,14 +70,16 @@ var MapIconCache = {
 	getSize : func(id){
 		return me._sourceRectMap[id].size;
 	},
-	boundIconToImage : func(id,image){
+	boundIconToImage : func(id,image,center=1){
 		if(!contains(me._sourceRectMap,id)){
 # 			print("MapIconCache.boundIconToImage("~id~") ... no available.");
 			id = "Airport_0001";
 		}
 		image.setSourceRect(me._sourceRectMap[id].bound[0],me._sourceRectMap[id].bound[1],me._sourceRectMap[id].bound[2],me._sourceRectMap[id].bound[3],0);
 		image.setSize(me._sourceRectMap[id].size[0],me._sourceRectMap[id].size[1]);
-		image.setTranslation(-me._sourceRectMap[id].size[0]/2,-me._sourceRectMap[id].size[1]/2);
+		if(center){
+			image.setTranslation(-me._sourceRectMap[id].size[0]/2,-me._sourceRectMap[id].size[1]/2);
+		}
 	},
 };
 

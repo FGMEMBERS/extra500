@@ -33,7 +33,13 @@ var FlightManagementSystemClass = {
 		m._selectedWaypointIndex = 0;
 		m._fplActive = 0;
 		m._nRoute = props.globals.getNode("/autopilot/route-manager/route",1);
+		#signals
 		m._isFPLready = 0;
+		m._fplUpdated = 0;
+		m._TODvisible = 0;
+		m._TOCvisible = 0;
+		m._RTAvisible = 0;
+		
 		m._obsMode = 0;
 		m._dtoModeLast = 0;
 		m._btnObsMode = 0;
@@ -46,6 +52,8 @@ var FlightManagementSystemClass = {
 		m._directToBtn = 0;
 		
 		m._node = {
+			sigFplReady	: props.globals.initNode("/instrumentation/fms[0]/signal/fpl-ready",0,"BOOL"),
+			sigFplUpdated	: props.globals.initNode("/instrumentation/fms[0]/signal/fpl-updated",0,"BOOL"),
 			btnObsMode	: props.globals.initNode("/instrumentation/fms[0]/btn-obs-mode",m._btnObsMode,"BOOL"),
 			btnFlyVectors	: props.globals.initNode("/instrumentation/fms[0]/btn-FlyVectors",m._flyVectors,"BOOL"),
 			btnDirectTo	: props.globals.initNode("/instrumentation/fms[0]/btn-DirectTo",m._flyVectors,"BOOL"),
@@ -53,7 +61,15 @@ var FlightManagementSystemClass = {
 			ObsMode		: props.globals.initNode("/autopilot/settings/obs-mode",0,"BOOL"),
 			FlyVector	: props.globals.initNode("/autopilot/settings/fly-vector",0,"BOOL"),
 			CurrentWp	: props.globals.initNode("/autopilot/route-manager/current-wp",0,"INT"),
+			
+			
 		};
+		m._waypoint = {
+			TOD : {lat:0,lon:0},
+			TOC : {lat:0,lon:0},
+			RTA : {lat:0,lon:0},
+		};
+		
 		return m;
 	},
 	setListeners : func(instance) {
@@ -189,22 +205,49 @@ var FlightManagementSystemClass = {
 		me.checkOBSMode();
 	},
 	calcRoute : func(){
+		me._fplUpdated = 0;
+		me._isFPLready = 0;
+		me._TODvisible = 0;
+		me._TOCvisible = 0;
+		me._RTAvisible = 0;
 		
-		var restriction = {
+		var VSR = {
 			alt 		: 0,
-			altDistance	: 0,
-			vsr		: 0,
+			distance	: 0,
+			rate		: 0,
+			wptIndex	: 0,
 		};
+				
 		
 		if(me._fplActive){
+			me._isFPLready = 1;
+				
 			var gs = getprop("/velocities/groundspeed-kt");
-			if(gs > 50){
+			if(gs > 15){
+				
+				var TOD = {
+					distance	: 0,
+					rate		: -1600,
+				};
+				var TOC = {
+					distance	: 0,
+					rate		: getprop("/instrumentation/ivsi-IFD-LH/indicated-speed-fpm"),
+				};
+				var RTA = {
+					distance	: 0,
+					rate		: TOC.rate,
+				};
+				
+				
+				
 # 				print("FlightManagementSystemClass.calcRoute() ... ");
 				var gsSec = gs / 3600;
+				var gsMin = gs / 60;
 				var time = systime() + getprop("/sim/time/warp");
 				var fuelGalUs = getprop("/consumables/fuel/total-fuel-gal_us");
 				var fuelFlowGalUSpSec = extra500.fuelSystem._nFuelFlowGalUSpSec.getValue();
 				var currentAlt = getprop("/instrumentation/altimeter-IFD-LH/indicated-altitude-ft");
+				var altBug = getprop("/autopilot/settings/tgt-altitude-ft");
 				
 				var distance =  getprop("/autopilot/route-manager/wp/dist");
 				var distanceToGo = distance;
@@ -212,7 +255,7 @@ var FlightManagementSystemClass = {
 				var eta = time + ete;
 				var fuelAt = fuelGalUs -= fuelFlowGalUSpSec * ete;
 				
-				restriction.alt = getprop("/autopilot/route-manager/destination/field-elevation-ft");
+				VSR.alt = getprop("/autopilot/route-manager/destination/field-elevation-ft");
 				
 				setprop("/autopilot/route-manager/wp/ete_sec",ete);
 				setprop("/autopilot/route-manager/wp/eta_sec",eta);
@@ -226,11 +269,11 @@ var FlightManagementSystemClass = {
 						
 						if (i >= me._currentWaypointIndex){
 						
-							if ((fmsWP.alt_cstr_type != nil) and ( restriction.altDistance == 0 ) ) {
-								restriction.alt = fmsWP.alt_cstr;
-								restriction.altDistance = distanceToGo;
-								
-								#print(""~fmsWP.wp_name ~" constraint : "~fmsWP.alt_cstr_type~" "~restriction.alt~" in "~restriction.altDistance~" nm");
+							if ((fmsWP.alt_cstr_type != nil) and ( VSR.distance == 0 ) ) {
+								VSR.alt = fmsWP.alt_cstr;
+								VSR.distance = distanceToGo;
+								VSR.wptIndex = i;
+								#print(""~fmsWP.wp_name ~" constraint : "~fmsWP.alt_cstr_type~" "~VSR.alt~" in "~VSR.distance~" nm");
 								
 							}
 						
@@ -253,29 +296,57 @@ var FlightManagementSystemClass = {
 						
 				}
 				
-				if(restriction.altDistance == 0){
-					restriction.altDistance = distanceToGo;
+				if(VSR.distance == 0){
+					VSR.wptIndex = numWaypt-1;
+					VSR.distance = distanceToGo;
 				}
-								
+				var altToGo = (VSR.alt - currentAlt);
+				
 				#			ft	/	min
-				restriction.vsr = (restriction.alt - currentAlt) / ((restriction.altDistance / gs) * 60 );
+				VSR.rate =  altToGo / ((VSR.distance / gs) * 60 );
 				
-				restriction.vsr = math.floor((restriction.vsr+50)/100) * 100; 
+				VSR.rate = math.floor((VSR.rate+50)/100) * 100; 
 				
-				restriction.vsr = global.clamp(restriction.vsr,-1600,1600);
+				VSR.rate = global.clamp(VSR.rate,-1600,1600);
 				
+				# TOD 
+				if(altToGo <= -150){
+					TOD.distance = (altToGo / TOD.rate) * gsMin ;
+					me._waypoint.TOD = fp.pathGeod(VSR.wptIndex, -TOD.distance);
+					me._TODvisible = 1;
+				}
+				
+				# TOC 
+				if (TOC.rate > 0 and altToGo >= 150){
+					TOC.distance = VSR.distance - (altToGo / TOC.rate) * gsMin ;
+					me._waypoint.TOC = fp.pathGeod(VSR.wptIndex, -TOC.distance);
+					me._TOCvisible = 1;
+				}
+				
+				# RTA Range to Altitude
+				var difAltBug = altBug - currentAlt;
+				if (RTA.rate != 0 and (difAltBug >= 150 or difAltBug <= -150)){
+					RTA.distance = distanceToGo - math.abs((difAltBug / RTA.rate) * gsMin) ;
+					me._waypoint.RTA = fp.pathGeod(-1, -RTA.distance);
+					me._RTAvisible = 1;
+				}
 				
 				setprop("/autopilot/route-manager/fuelAt_GalUs",fuelGalUs);
 				setprop("/autopilot/route-manager/eta_sec",eta);
 # 				setprop("/autopilot/route-manager/ete_sec",eta);
-				me._isFPLready = 1;
+				
+				me._fplUpdated = 1;
 			}else{
-				me._isFPLready = 0;
+				
 			}
+			
 		}
 		
-		setprop("/instrumentation/fms/vsr",restriction.vsr);
-		setprop("/instrumentation/fms/vsr-distance",restriction.altDistance);
+		setprop("/instrumentation/fms/vsr",VSR.rate);
+		setprop("/instrumentation/fms/vsr-distance",VSR.distance);
+				
+		me._node.sigFplReady.setValue(me._isFPLready);
+		me._node.sigFplUpdated.setValue(me._fplUpdated);
 	},
 };
 

@@ -195,7 +195,7 @@ var HeadlineWidget = {
 	},
 	update : func(){
 		var gs = getprop("/velocities/groundspeed-kt");
-		if(extra500.fms._isFPLready){
+		if(extra500.fms._isFPLready and extra500.fms._fplUpdated){
 			var eta = getprop("/autopilot/route-manager/eta_sec");
 			me._can.ETA.setText(global.formatTime(eta));
 			me._can.Fuel.setText(sprintf("%.0f",getprop("/autopilot/route-manager/fuelAt_GalUs")));

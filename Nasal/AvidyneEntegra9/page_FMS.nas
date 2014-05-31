@@ -232,7 +232,9 @@ var FlightPlanListWidget = {
 	setListeners : func(instance) {
 		append(me._listeners, setlistener("/autopilot/route-manager/signals/waypoint-changed",func(n){me._onWaypointChange(n)},1,0));	
 		append(me._listeners, setlistener("/sim/gui/dialogs/route-manager/selection",func(n){me._onSelectionChange(n)},1,1));	
-		append(me._listeners, setlistener("/autopilot/route-manager/current-wp",func(n){me._onCurrentChange(n)},1,0));	
+		append(me._listeners, setlistener("/autopilot/route-manager/current-wp",func(n){me._onCurrentChange(n)},1,0));
+		append(me._listeners, setlistener("/instrumentation/fms[0]/signal/fpl-updated",func(n){me._onFplUpdatedChange(n);},1,1) );
+		
 	},
 	init : func(instance=me){
 		#print("FlightPlanListWidget.init() ... ");
@@ -506,8 +508,8 @@ var FlightPlanListWidget = {
 		extra500.fms.setSelectedWaypoint(me._selectedIndex);
 		me._lastSelectedIndex = me._selectedIndex;
 	},
-	update : func(){
-		if(extra500.fms._isFPLready){
+	_onFplUpdatedChange : func(){
+		if(extra500.fms._isFPLready and extra500.fms._fplUpdated){
 			var fuelAt = 0;
 			var eta = 0;
 			var ete = 0;
@@ -545,6 +547,9 @@ var FlightPlanListWidget = {
 				
 			}
 		}
+	},
+	update : func(){
+		
 	}
 	
 };
