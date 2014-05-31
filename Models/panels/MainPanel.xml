@@ -270,4 +270,18 @@
 	</offsets>
 </model>
 
+<!-- glarelights -->
+
+<animation>
+        <type>material</type>
+        <object-name>glare.face.middle</object-name>
+        <object-name>glare.face.outer</object-name>
+	  <emission>
+	    	<red>1</red>
+            <green>1</green>
+	    	<blue>1</blue>
+	    	<factor-prop>/extra500/light/glare/state</factor-prop>
+        </emission>
+</animation>
+
 </PropertyList>
