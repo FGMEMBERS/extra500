@@ -494,6 +494,7 @@ var FMSDATAKeypadWidget = {
 		append(me._listeners, setlistener(me._tree.code,func(n){instance._onXPDRChange(n);},1,0) );
 		append(me._listeners, setlistener(me._tree.mode,func(n){instance._onXPDRmodeChange(n);},1,0) );
 		append(me._listeners, setlistener(me._tree.vsr,func(n){instance._onVsrChange(n);},1,0) );
+		append(me._listeners, setlistener(extra500.fms._node.sigFplUpdated,func(n){instance._onFplUpdatedChange(n);},1,1) );
 		
 	},
 	
@@ -533,18 +534,21 @@ var FMSDATAKeypadWidget = {
 	handleFmsKnobInput : func (key){
 		
 	},
-	update  : func(){
-		if(me._visibility == 1){
-			if(extra500.fms._isFPLready){
-				me._can.ETE.setText(global.formatTime(getprop("/autopilot/route-manager/wp/ete_sec"),"H:i:s"));
-				me._can.destETE.setText(global.formatTime(getprop("/autopilot/route-manager/ete"),"H:i:s"));
+	_onFplUpdatedChange : func(n){
+		if(extra500.fms._isFPLready and extra500.fms._fplUpdated){
+			me._can.ETE.setText(global.formatTime(getprop("/autopilot/route-manager/wp/ete_sec"),"H:i:s"));
+			me._can.destETE.setText(global.formatTime(getprop("/autopilot/route-manager/ete"),"H:i:s"));
 # 				me._can.VSR.setText("---");
-			}else{
-				me._can.ETE.setText("--:--:--");
-				me._can.destETE.setText("--:--:--");
+		}else{
+			me._can.ETE.setText("--:--:--");
+			me._can.destETE.setText("--:--:--");
 # 				me._can.VSR.setText("---");
-			}
 		}
+	},
+	
+	
+	update  : func(){
+
 	},
 	
 };

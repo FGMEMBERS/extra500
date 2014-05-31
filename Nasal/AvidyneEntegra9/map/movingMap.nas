@@ -368,7 +368,6 @@ var MovingMap = {
 	_onFmsServiceChange : func(n){
 		me._fmsServiceable = n.getValue();
 		me._can.BugFMS.setVisible((me._fmsServiceable == 1) and (me._routeManagerActive == 1));
-		
 	},
 	_onHdgBugChange : func(n){
 		me._bugHeading		= n.getValue();

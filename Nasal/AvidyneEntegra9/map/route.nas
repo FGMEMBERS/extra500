@@ -64,6 +64,66 @@ var RouteItemClass = {
 	
 };
 
+var FMSIcon = {
+	new : func(canvasGroup,text){
+		var m = {parents:[FMSIcon]};
+		m._group = canvasGroup.createChild("group", "FMS-"~text).setVisible(0);	
+		m._can = {
+			icon : m._group.createChild("path","FMS-icon" ~ text)
+				.setStrokeLineWidth(3)
+				.setScale(1)
+				.setColor("#00FF00")
+				.setColorFill("#00FF00")
+				.moveTo(-15, 0)
+				.lineTo(0, 15)
+				.lineTo(15, 0)
+				.lineTo(0, -15)
+				.close()
+			,
+			label : m._group.createChild("text", "FMS-label-" ~ text)
+				.setFont("LiberationFonts/LiberationMono-Bold.ttf")
+				.setTranslation(20,12)
+				.setFontSize(32, 1)
+				.setColor("#00FF00")
+				.setColorFill("#00FF00")
+				.setText(text)
+			,
+		};
+		return m;
+	},
+	setVisible : func(v){me._group.setVisible(v);},
+	setGeoPosition : func(lat,lon){me._group.setGeoPosition(lat,lon);},
+};
+var FMSIconRTA = {
+	new : func(canvasGroup,text){
+		var m = {parents:[FMSIconRTA]};
+		m._group = canvasGroup.createChild("group", "FMS-"~text).setVisible(0);	
+		m._can = {
+			icon : m._group.createChild("path","FMS-icon" ~ text)
+				.setStrokeLineWidth(3)
+				.setScale(1)
+				.setColor("#00FF00")
+				.setColorFill("#00FF00")
+				.moveTo(-15, 0)
+				.lineTo(0, 15)
+				.lineTo(15, 0)
+				.lineTo(0, -15)
+				.close()
+			,
+			label : m._group.createChild("text", "FMS-label-" ~ text)
+				.setFont("LiberationFonts/LiberationMono-Bold.ttf")
+				.setTranslation(-80,12)
+				.setFontSize(32, 1)
+				.setColor("#00FF00")
+				.setColorFill("#00FF00")
+				.setText(text)
+			,
+		};
+		return m;
+	},
+	setVisible : func(v){me._group.setVisible(v);},
+	setGeoPosition : func(lat,lon){me._group.setGeoPosition(lat,lon);},
+};
 var RouteLayer = {
 	new : func(group,id="none"){
 		var m = {parents:[
@@ -75,6 +135,7 @@ var RouteLayer = {
 		m._itemIndex	= 0;
 		m._itemCount	= 0;
 		m._groupOBS	= group.createChild("group",id~"_OBS").setVisible(0);
+		m._groupFMS	= group.createChild("group",id~"_FMS");
 		
 		m._can = {
 			track : m._group.createChild("path","track")
@@ -94,9 +155,35 @@ var RouteLayer = {
 				.setStrokeLineWidth(5)
 				.setScale(1)
 				.setColor("#FF0EEB"),
+				
+# 			"TOD" : m._groupFMS.createChild("image", "imgTOD")
+# 				.setFile(mapIconCache._canvas.getPath())
+# 				.setSourceRect(0,0,0,0,0)
+# 				.setTranslation(-15,-15),
+# 			"TOC" : m._groupFMS.createChild("image", "imgTOC")
+# 				.setFile(mapIconCache._canvas.getPath())
+# 				.setSourceRect(0,0,0,0,0)
+# 				.setTranslation(-15,-15),
+			
 		};
 		
-
+# 			var imgTOD = m._can.TOD.createChild("image", "imgTOD")
+# 				.setFile(mapIconCache._canvas.getPath())
+# 				.setSourceRect(0,0,0,0,0)
+# 				.setTranslation(-15,-15);
+# 			
+# 			var imgTOC = m._can.TOD.createChild("image", "imgTOC")
+# 				.setFile(mapIconCache._canvas.getPath())
+# 				.setSourceRect(0,0,0,0,0)
+# 				.setTranslation(-15,-15);
+				
+# 			mapIconCache.boundIconToImage("FMS_TOD",m._can.TOD,0);
+# 			mapIconCache.boundIconToImage("FMS_TOC",m._can.TOC,0);
+# 		
+		m._TOD = FMSIcon.new(m._groupFMS,"TOD");
+		m._TOC = FMSIcon.new(m._groupFMS,"TOC");
+		m._RTA = FMSIconRTA.new(m._groupFMS,"RTA");
+		
 		m._track = {cmds:[],coords:[]};
 		m._currentLeg = {cmds:[canvas.Path.VG_MOVE_TO,canvas.Path.VG_LINE_TO],coords:[0,0,0,0]};
 		m._nextLeg = {cmds:[canvas.Path.VG_MOVE_TO,canvas.Path.VG_LINE_TO],coords:[0,0,0,0]};
@@ -121,8 +208,9 @@ var RouteLayer = {
 			
 			append(me._listeners, setlistener(extra500.fms._node.ObsMode,func(n){me._onObsModeChange(n);},1,0) );
 			append(me._listeners, setlistener("/instrumentation/fms[0]/selected-course-deg",func(n){me._onObsCourseChange(n);},1,0) );
-		
-	
+			append(me._listeners, setlistener("/instrumentation/fms[0]/signal/fpl-ready",func(n){me._onFplReadyChange(n);},1,0) );
+			append(me._listeners, setlistener("/instrumentation/fms[0]/signal/fpl-updated",func(n){me._onFplUpdatedChange(n);},1,1) );
+			
 	},
 	updateOrientation : func(value){
 		me._mapOptions.orientation = value;
@@ -140,6 +228,36 @@ var RouteLayer = {
 	_onVisibilityChange : func(){
 		me._group.setVisible(me._visibility and (me._obsMode == 0));
 		me._groupOBS.setVisible(me._visibility and (me._obsMode == 1));
+	},
+	
+	_onFplReadyChange : func(n){
+# 		if(extra500.fms._isFPLready){
+# 			me._can.TOD.setVisible(1);
+# 			me._can.TOC.setVisible(1);
+# 		}else{
+# 			me._can.TOD.setVisible(0);
+# 			me._can.TOC.setVisible(0);
+# 		}
+	},
+	_onFplUpdatedChange : func(n){
+		if(extra500.fms._isFPLready and extra500.fms._fplUpdated){
+# 			print("_onFplUpdatedChange() lat:"~extra500.fms._waypoint.TOD.lat~" lon:"~extra500.fms._waypoint.TOD.lon);
+# 			me._can.TOD.setGeoPosition(extra500.fms._waypoint.TOD.lat,extra500.fms._waypoint.TOD.lon);
+# 			me._can.TOC.setGeoPosition(extra500.fms._waypoint.TOC.lat,extra500.fms._waypoint.TOC.lon);
+			if(extra500.fms._TODvisible){
+				me._TOD.setGeoPosition(extra500.fms._waypoint.TOD.lat,extra500.fms._waypoint.TOD.lon);
+			}
+			if(extra500.fms._TOCvisible){
+				me._TOC.setGeoPosition(extra500.fms._waypoint.TOC.lat,extra500.fms._waypoint.TOC.lon);
+			}
+			if(extra500.fms._RTAvisible){
+				me._RTA.setGeoPosition(extra500.fms._waypoint.RTA.lat,extra500.fms._waypoint.RTA.lon);	
+			}
+			
+			me._TOD.setVisible(extra500.fms._TODvisible);
+			me._TOC.setVisible(extra500.fms._TOCvisible);
+			me._RTA.setVisible(extra500.fms._RTAvisible);
+		}		
 	},
 	_onObsModeChange : func(n){
 		me._obsMode = n.getValue();
