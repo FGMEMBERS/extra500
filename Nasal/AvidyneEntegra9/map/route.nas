@@ -228,6 +228,9 @@ var RouteLayer = {
 	_onVisibilityChange : func(){
 		me._group.setVisible(me._visibility and (me._obsMode == 0));
 		me._groupOBS.setVisible(me._visibility and (me._obsMode == 1));
+		me._TOD.setVisible(extra500.fms._TODvisible and me._visibility);
+		me._TOC.setVisible(extra500.fms._TOCvisible and me._visibility);
+		me._RTA.setVisible(extra500.fms._RTAvisible and me._visibility);
 	},
 	
 	_onFplReadyChange : func(n){
@@ -254,9 +257,9 @@ var RouteLayer = {
 				me._RTA.setGeoPosition(extra500.fms._waypoint.RTA.lat,extra500.fms._waypoint.RTA.lon);	
 			}
 			
-			me._TOD.setVisible(extra500.fms._TODvisible);
-			me._TOC.setVisible(extra500.fms._TOCvisible);
-			me._RTA.setVisible(extra500.fms._RTAvisible);
+			me._TOD.setVisible(extra500.fms._TODvisible and me._visibility);
+			me._TOC.setVisible(extra500.fms._TOCvisible and me._visibility);
+			me._RTA.setVisible(extra500.fms._RTAvisible and me._visibility);
 		}		
 	},
 	_onObsModeChange : func(n){

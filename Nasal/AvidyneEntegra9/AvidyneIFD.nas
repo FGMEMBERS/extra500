@@ -527,8 +527,8 @@ var AvidyneIFD = {
 		});
 		
 		me.ui.bindKnob("BARO",{
-			"<"	: func(){me.data.adjustBaro(1);},
-			">"	: func(){me.data.adjustBaro(-1);},
+			"<"	: func(){me.data.adjustBaro(-1);},
+			">"	: func(){me.data.adjustBaro(1);},
 			"push"	: func(){me.data.adjustBaro();},
 		});
 		
