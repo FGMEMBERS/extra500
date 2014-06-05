@@ -75,8 +75,9 @@ var MovingMap = {
 		m._tree	= {
 			MagVar		: props.globals.initNode("/environment/magnetic-variation-deg",0.0,"DOUBLE"),
 			Heading		: props.globals.initNode("/instrumentation/heading-indicator-IFD-"~m.IFD.name~"/indicated-heading-deg",0.0,"DOUBLE"),
-			HeadingTrue	: props.globals.initNode("/orientation/heading-deg",0.0,"DOUBLE"),
+			TrackTrue	: props.globals.initNode("/autopilot/fms-channel/indicated-track-true-deg",0.0,"DOUBLE"),
 			FmsHeading	: props.globals.initNode("/autopilot/fms-channel/course-target-deg",0.0,"DOUBLE"),
+			groundSpeed	: props.globals.initNode("/autopilot/fms-channel/indicated-ground-speed-kt",0.0,"DOUBLE"),
 		};
 				
 		canvas.parsesvg(m._group, "Models/instruments/IFDs/IFD_MovingMap.svg",{
@@ -107,7 +108,7 @@ var MovingMap = {
 			BugHDGHDG	: m._group.getElementById("MovingMap_Bug_HDG_HDG"),
 			BugHDGVector	: m._group.getElementById("MovingMap_Bug_HDG_Vector").setVisible(0),
 			BugFMS		: m._group.getElementById("MovingMap_Bug_FMS"),
-			BugTrue		: m._group.getElementById("MovingMap_Bug_TRUE").updateCenter(),
+			trackTrueMagnetic		: m._group.getElementById("MovingMap_Bug_TRUE").updateCenter(),
 			
 			CompassN	: m._group.getElementById("MovingMap_Compass_N"),
 			Compass030	: m._group.getElementById("MovingMap_Compass_030"),
@@ -134,7 +135,8 @@ var MovingMap = {
 		
 # 		m._can.plane.setTranslation(1024,768);
 		m._heading	= 0;
-		m._headingTrue	= 0;
+		m._magVar	= 0;
+		m._trackTrueMagnetic	= 0;
 		m._bugHeading	= 0;
 		m._bugFMS	= 0;
 		m._lat		= 0;
@@ -190,7 +192,7 @@ var MovingMap = {
 		append(me._listeners, setlistener("/autopilot/fms-channel/serviceable",func(n){me._onFmsServiceChange(n);},1,0));
 		append(me._listeners, setlistener(tcasModel._nObserver,func(n){me.onModelObserverNotify(n)},1,1));	
 		append(me._listeners, setlistener(extra500.fms._node.FlyVector,func(n){me._onFlyVectorsChange(n);},1,0) );
-		
+			
 	},
 	
 	
@@ -208,11 +210,11 @@ var MovingMap = {
 		}else{
 			me._mapOptions.orientation = me._heading;
 		}
-		var magVar = me._tree.MagVar.getValue();
+		me._magVar = me._tree.MagVar.getValue();
 		me._layer.positioned.updateOrientation(me._mapOptions.orientation);
 		me._layer.route.updateOrientation(me._mapOptions.orientation);
 		
-		me._map.setHdg(me._mapOptions.orientation+magVar);
+		me._map.setHdg(me._mapOptions.orientation+me._magVar);
 
 	},
 	setVisible : func(visibility){
@@ -384,8 +386,8 @@ var MovingMap = {
 	update20Hz : func(now,dt){
 # 		me._lat = getprop("/position/latitude-deg");
 # 		me._lon = getprop("/position/longitude-deg");
-		
-		me._headingTrue 	= me._tree.HeadingTrue.getValue();
+		me._groundspeed = me._tree.groundSpeed.getValue();
+		me._trackTrueMagnetic 	= me._tree.TrackTrue.getValue() - me._magVar;
 		#me._mapOptions.orientation 		= me._tree.Heading.getValue();
 		me._orientationRAD		= me._mapOptions.orientation * global.CONST.DEG2RAD;
 		
@@ -400,7 +402,10 @@ var MovingMap = {
 		me._can.UpHDGDeg.setText(sprintf("%5.1f",tool.course(me._upHdg)));
 		
 		me._can.CompassRose.setRotation(-me._mapOptions.orientation * global.CONST.DEG2RAD);
-		me._can.BugTrue.setRotation((me._headingTrue - me._mapOptions.orientation) * global.CONST.DEG2RAD);
+		
+		me._can.trackTrueMagnetic.setRotation((me._trackTrueMagnetic - me._mapOptions.orientation) * global.CONST.DEG2RAD);
+		me._can.trackTrueMagnetic.setVisible(me._groundspeed >= 15);
+		
 		me._can.BugHDG.setRotation((me._bugHeading - me._mapOptions.orientation) * global.CONST.DEG2RAD);
 		
 		me._can.CompassN.setRotation(me._orientationRAD);
