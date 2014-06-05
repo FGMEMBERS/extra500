@@ -309,18 +309,19 @@ var FlightManagementSystemClass = {
 				
 				VSR.rate = global.clamp(VSR.rate,-1600,1600);
 				
+				var legMode = (me._obsMode == 0) and (me._directTo == 0) and (me._flyVectors == 0);
 				# TOD 
 				if(altToGo <= -150){
 					TOD.distance = (altToGo / TOD.rate) * gsMin ;
 					me._waypoint.TOD = fp.pathGeod(VSR.wptIndex, -TOD.distance);
-					me._TODvisible = 1;
+					me._TODvisible = legMode;
 				}
 				
 				# TOC 
 				if (TOC.rate > 0 and altToGo >= 150){
 					TOC.distance = VSR.distance - (altToGo / TOC.rate) * gsMin ;
 					me._waypoint.TOC = fp.pathGeod(VSR.wptIndex, -TOC.distance);
-					me._TOCvisible = 1;
+					me._TOCvisible = legMode;
 				}
 				
 				# RTA Range to Altitude
@@ -328,7 +329,7 @@ var FlightManagementSystemClass = {
 				if (RTA.rate != 0 and (difAltBug >= 150 or difAltBug <= -150)){
 					RTA.distance = distanceToGo - math.abs((difAltBug / RTA.rate) * gsMin) ;
 					me._waypoint.RTA = fp.pathGeod(-1, -RTA.distance);
-					me._RTAvisible = 1;
+					me._RTAvisible = legMode;
 				}
 				
 				setprop("/autopilot/route-manager/fuelAt_GalUs",fuelGalUs);
