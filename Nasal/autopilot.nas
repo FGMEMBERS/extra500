@@ -326,7 +326,7 @@ var FlightManagementSystemClass = {
 				
 				# RTA Range to Altitude
 				var difAltBug = altBug - currentAlt;
-				if (RTA.rate != 0 and (difAltBug >= 150 or difAltBug <= -150)){
+				if ((RTA.rate <= -100 or RTA.rate >= 100) and (difAltBug >= 150 or difAltBug <= -150)){
 					RTA.distance = distanceToGo - math.abs((difAltBug / RTA.rate) * gsMin) ;
 					me._waypoint.RTA = fp.pathGeod(-1, -RTA.distance);
 					me._RTAvisible = legMode;
