@@ -16,12 +16,27 @@
       Author: Eric van den Berg
       Date: 2013-05-12
 
-      Last change:      2014-02-03
+      Last change:      2014-06-04
       Date:             Eric van den Berg
 
 ========================================================================
 
 See the Extra500 POH for full procedures! Below are just quickstart.
+
+
+General Remarks:
+
+All switches are thrown by rotating the mouse wheel in the appropriate direction. Push buttons are pressed by clicking with the LH Mouse button. Rotary knobs are turned by the mouse wheel as well. Hold {{key press|SHIFT}} for large steps.
+The IFD buttons on the left, right and lower bezel are always double buttons. Meaning they always have a left and right side. The lower buttons (PFD - FMS - MAP - SYS - CHKL) navigate between the main pages. Once on the selected page the same button will let you navigate through the tabs. The side knobs do not always have a function, but if they have, they are lighted and the function is shown next to them. 
+There are a few special Extra500 shortcuts:
+
+CTRL+E  Connect / disconnect External power cart
+CTRL+F  Control pitch with pitch trim only
+W       Gear Warn Mute (you'll need it, alternatively press the switch on the throttle lever)
+R       Put the propeller in reverse (beta range)
+S       Condition lever fuel on/cut-off (alternatively click on the condition lever)
+D       Autopilot disconnect (alternatively click on the red button on the yoke)
+C       Engage Control Wheel Steering (CWS, see below)
 
 
 Engine starting:
@@ -121,10 +136,21 @@ FMS, Nav 1 or Nav 2 may be selected on the IFD or in the NAV dialog (F12)
 The DME source can be set using the AUX button on the keypad. Select with the FMS knob. The DME hold switch next to the DME
 indicator overrides all NAV frequency switching and holds the frequency to which the DME was tuned when the HOLD button is pressed.
 
+FMS, Nav 1 or Nav 2 may be selected on the IFD or in the NAV dialog (F12)
+The DME source can be set using the AUX button on the keypad. Select with the FMS knob. The DME hold switch next to the DME
+indicator overrides all NAV frequency switching and holds the frequency to which the DME was tuned when the HOLD button is pressed.
+
 The FMS (Flight Management System) can be used with or without the autopilot. You can put your flightplan in the 
-autopilot - route manager (dont forget to press "activate"). The autopilot will intercept the active leg.
-Direct-To functionality is also included: In the route manager select the waypoint and on the keypad press the "D with arrow" button.
-Close to the waypoint direct-to mode will be de-selected automatically or you can do that manually by pressing the same button again.  
+autopilot - route manager (dont forget to press "activate". The autopilot will intercept the active leg.
+
+While flying a flightplan (FMS is the Nav source and NAV is selected on the autopilot), you can do some special stuff without touching the autopilot:
+
+1. Vectors mode: Press "V with arrow" or "Fly Vectors" knob on IFD to follow the heading bug while still in nav mode. Deselecting will return normal FMS functionality. Handy for making a brief excursion from the flightplan for weather or ATC.
+
+2. Direct-To mode: In the route manager select the waypoint and on the keypad press the "D with arrow" button.
+Close to the waypoint direct-to mode will be de-selected automatically or you can do that manually by pressing the same button again.
+
+3. FMS-OBS: Rotate the LH lower knob on the IFD. Press to cancel. Very similar to VOR functionality, except it will work on all waypoints of your flightplan. Very handy for making an approach on an airport without ILS.  
 
 XPDR squawk can be set on the keypad (press XPDR and squawk code) and in the NAV dialog (F12). Default is 7000 (Europe VFR).
 XPDR modes are selected automatically (GND or ALT), but automatic selection may be switched off
