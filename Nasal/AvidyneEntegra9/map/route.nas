@@ -234,13 +234,9 @@ var RouteLayer = {
 	},
 	
 	_onFplReadyChange : func(n){
-# 		if(extra500.fms._isFPLready){
-# 			me._can.TOD.setVisible(1);
-# 			me._can.TOC.setVisible(1);
-# 		}else{
-# 			me._can.TOD.setVisible(0);
-# 			me._can.TOC.setVisible(0);
-# 		}
+		me._TOD.setVisible(extra500.fms._TODvisible and me._visibility);
+		me._TOC.setVisible(extra500.fms._TOCvisible and me._visibility);
+		me._RTA.setVisible(extra500.fms._RTAvisible and me._visibility);
 	},
 	_onFplUpdatedChange : func(n){
 		if(extra500.fms._isFPLready and extra500.fms._fplUpdated){
