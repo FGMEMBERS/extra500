@@ -1024,14 +1024,14 @@ var KeypadClass = {
 	},
 	onFMSpush : func(){
 		print("KeypadClass.onFMSpush() ... ");
-		me._timerResetInput.restart(1);
-		me._timerResetSelection.restart(3);
+		me._timerResetInput.restart(5);
+		me._timerResetSelection.restart(15);
 		
 	},
 	onKey : func(key){
 		print("KeypadClass.onKey() ... "~key);
-		me._timerResetInput.restart(1);
-		me._timerResetSelection.restart(3);
+		me._timerResetInput.restart(5);
+		me._timerResetSelection.restart(15);
 		if (me._inputHandle["Keyboard"] != nil){
 			me._inputHandle["Keyboard"](key);
 		}
