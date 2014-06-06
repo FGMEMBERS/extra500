@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jun 27 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             29.03.14
+#      Last change:      Eric van den Berg
+#      Date:             06.06.14
 #
 
 
@@ -964,8 +964,8 @@ var KeypadClass = {
 		}
 		
 		me.selectWidget(1,"HDG");
-		me._timerResetInput.restart(5);
-		me._timerResetSelection.restart(15);
+		me._timerResetInput.restart(1);
+		me._timerResetSelection.restart(3);
 		me._inputHandle["Keyboard"] = nil;
 	},
 	onHeadingSync : func(){
@@ -974,8 +974,8 @@ var KeypadClass = {
 		extra500.autopilot.nSetHeadingBugDeg.setValue(hdg);
 		
 		me.selectWidget(1,"HDG");
-		me._timerResetInput.restart(5);
-		me._timerResetSelection.restart(15);
+		me._timerResetInput.restart(1);
+		me._timerResetSelection.restart(3);
 		me._inputHandle["Keyboard"] = nil;
 	},
 	onSetAltitude : func(alt){
@@ -983,8 +983,8 @@ var KeypadClass = {
 		extra500.autopilot.nSetAltitudeBugFt.setValue(100*int( alt/100) );
 		
 		me.selectWidget(1,"ALT");
-		me._timerResetInput.restart(5);
-		me._timerResetSelection.restart(15);
+		me._timerResetInput.restart(1);
+		me._timerResetSelection.restart(3);
 		me._inputHandle["Keyboard"] = nil;
 	},
 	onAdjustAltitude : func(amount=nil){
@@ -1000,8 +1000,8 @@ var KeypadClass = {
 		}
 		
 		me.selectWidget(1,"ALT");
-		me._timerResetInput.restart(5);
-		me._timerResetSelection.restart(15);
+		me._timerResetInput.restart(1);
+		me._timerResetSelection.restart(3);
 		me._inputHandle["Keyboard"] = nil;
 	},
 	onAltitudeSync : func(){
@@ -1010,8 +1010,8 @@ var KeypadClass = {
 		extra500.autopilot.nSetAltitudeBugFt.setValue( 100*int( alt/100 ) );
 		
 		me.selectWidget(1,"ALT");
-		me._timerResetInput.restart(5);
-		me._timerResetSelection.restart(15);
+		me._timerResetInput.restart(1);
+		me._timerResetSelection.restart(3);
 		me._inputHandle["Keyboard"] = nil;
 	},
 	onFMS : func(amount=0){
