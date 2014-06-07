@@ -51,6 +51,16 @@ var FlightManagementSystemClass = {
 		m._directTo = 0;
 		m._directToBtn = 0;
 		
+		m._destinationCourseDistance = [0,0];
+		m._fightPlan = {
+			isActive 	: 0,
+			isReady 	: 0,
+			destination : {
+				course : 0,
+				distance : 0,
+			},
+		};
+		
 		m._node = {
 			sigFplReady	: props.globals.initNode("/instrumentation/fms[0]/signal/fpl-ready",0,"BOOL"),
 			sigFplUpdated	: props.globals.initNode("/instrumentation/fms[0]/signal/fpl-updated",0,"BOOL"),
@@ -70,6 +80,7 @@ var FlightManagementSystemClass = {
 			RTA : {lat:0,lon:0},
 		};
 		
+		m._updateTimer = maketimer(1.0,m,FlightManagementSystemClass.update);
 		return m;
 	},
 	setListeners : func(instance) {
@@ -85,7 +96,7 @@ var FlightManagementSystemClass = {
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
 		me.setListeners(instance);
-	
+		me._updateTimer.start();
 	},
 #IFD & route Manager selection, called from IFD page_FMS.nas
 	setSelectedWaypoint : func(index){
@@ -204,7 +215,7 @@ var FlightManagementSystemClass = {
 		me._fplActive = n.getValue();
 		me.checkOBSMode();
 	},
-	calcRoute : func(){
+	update : func(){
 		me._fplUpdated = 0;
 		me._isFPLready = 0;
 		me._TODvisible = 0;
@@ -220,6 +231,11 @@ var FlightManagementSystemClass = {
 				
 		
 		if(me._fplActive){
+			var fp = flightplan();
+			var result= courseAndDistance(fp.destination.lat,fp.destination.lon);
+			me._fightPlan.destination.course = result[0];
+			me._fightPlan.destination.distanceTo = result[1];
+			
 			me._isFPLready = 1;
 				
 			var gs = getprop("/velocities/groundspeed-kt");
@@ -260,7 +276,7 @@ var FlightManagementSystemClass = {
 				setprop("/autopilot/route-manager/wp/ete_sec",ete);
 				setprop("/autopilot/route-manager/wp/eta_sec",eta);
 				setprop("/autopilot/route-manager/wp/fuelAt_GalUs",fuelGalUs);
-				fp = flightplan();
+				
 				
 				var numWaypt = fp.getPlanSize();
 				for (var i = 0 ; i < numWaypt-1 ; i+=1){
@@ -501,8 +517,6 @@ var AutopilotClass = {
 	},
 	update : func(){
 		me._CheckRollModeAble();
-		
-		fms.calcRoute();
 	},
 # disengages the autopilot
 	_APDisengage : func(){

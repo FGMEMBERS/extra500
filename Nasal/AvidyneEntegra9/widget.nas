@@ -382,16 +382,25 @@ var PlusDataWidget = {
 		}
 	},
 	_onWaypointChange : func(n){
-		me._can.DestName.setText(getprop("/autopilot/route-manager/destination/airport"));	
-		me._can.DestBearing.setText("---");
-		me._can.DestDistance.setText("---");
-			
+		me._can.DestName.setText(getprop("/autopilot/route-manager/destination/airport"));
 	},
 	update : func(){
-		me._can.ETA.setText(getprop("/autopilot/route-manager/wp/eta"));
-		me._can.Distance.setText(sprintf("%.1f",getprop("/autopilot/route-manager/wp/dist")));
-		me._can.Course.setText(sprintf("%03.0f",tool.course(getprop("/autopilot/route-manager/wp/bearing-deg"))));
-		me._can.Fuel.setText(sprintf("%.0f",getprop("/autopilot/route-manager/wp/fuelAt_GalUs")));
+		if(extra500.fms._isFPLready and extra500.fms._fplUpdated){
+		
+			me._can.ETA.setText(getprop("/autopilot/route-manager/wp/eta"));
+			me._can.Distance.setText(sprintf("%.1f",getprop("/autopilot/route-manager/wp/dist")));
+			me._can.Course.setText(sprintf("%03.0f",tool.course(getprop("/autopilot/route-manager/wp/bearing-deg"))));
+			me._can.Fuel.setText(sprintf("%.0f",getprop("/autopilot/route-manager/wp/fuelAt_GalUs")));
+			me._can.DestBearing.setText(sprintf("%03.0f",(tool.course(extra500.fms._fightPlan.destination.course - getprop("/environment/magnetic-variation-deg")))));
+			me._can.DestDistance.setText(sprintf("%.0f",extra500.fms._fightPlan.destination.distanceTo));
+		}else{
+			me._can.ETA.setText("--:--");
+			me._can.Distance.setText("---");
+			me._can.Course.setText("---");
+			me._can.Fuel.setText("--");
+			me._can.DestBearing.setText("---");
+			me._can.DestDistance.setText("---");
+		}
 	},
 	
 };
