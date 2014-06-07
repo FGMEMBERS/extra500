@@ -1314,6 +1314,8 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/page_Test.nas</file>
 		
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/AvidyneIFD.nas</file>
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/fms.nas</file>
+		
 	</IFD>
 	<Checklist>
 		<file>Aircraft/extra500/Dialogs/checklist.nas</file>

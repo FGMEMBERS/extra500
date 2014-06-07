@@ -237,7 +237,7 @@ var VerticalSpeedWidget = {
 	setListeners : func(instance) {
 		append(me._listeners, setlistener("/autopilot/mode/vs",func(n){me._onApChange(n)},1,0));	
 		append(me._listeners, setlistener("/autopilot/settings/vertical-speed-fpm",func(n){me._onBugChange(n)},1,0));	
-		append(me._listeners, setlistener(extra500.fms._node.vsrRate,func(n){me._onVsrChange(n)},1,0));
+		append(me._listeners, setlistener(fms._node.vsrRate,func(n){me._onVsrChange(n)},1,0));
 	},
 	_onApChange : func(n){
 		me._ap = n.getValue();
@@ -254,13 +254,13 @@ var VerticalSpeedWidget = {
 		
 	},
 	_onVsrChange : func(n){
-		if(extra500.fms._constraint.VSR.rate != 0){
-			me._can.BugFMS.setRotation(me._rotateScale(extra500.fms._constraint.VSR.rate));
+		if(fms._constraint.VSR.rate != 0){
+			me._can.BugFMS.setRotation(me._rotateScale(fms._constraint.VSR.rate));
 		}
-		me._can.BugFMS.setVisible(extra500.fms._constraint.VSR.visible);
+		me._can.BugFMS.setVisible(fms._constraint.VSR.visible);
 	},
 	_onFplReadyChange : func(n){
-		if(extra500.fms._fightPlan.isReady){
+		if(fms._fightPlan.isReady){
 			
 		}else{
 			me._can.BugFMS.setVisible(0);
@@ -916,7 +916,7 @@ var NavSourceWidget = {
 	setListeners : func(instance) {
 		
 		append(me._listeners, setlistener(me._ptree.Source,func(n){me._onSourceChange(n);},1,0));
-		append(me._listeners, setlistener(extra500.fms._node.btnObsMode,func(n){me._onObsModeChange(n);},1,0));
+		append(me._listeners, setlistener(fms._node.btnObsMode,func(n){me._onObsModeChange(n);},1,0));
 		append(me._listeners, setlistener("/autopilot/route-manager/active",func(n){me._onRouteActiveChange(n);},1,0));
 		append(me._listeners, setlistener("/autopilot/fms-channel/serviceable",func(n){me._onFmsServiceChange(n);},1,0));
 				
@@ -1094,7 +1094,7 @@ var NavSourceWidget = {
 			setprop("/instrumentation/gps[0]/selected-course-deg",me._Pointer);
 			setprop("/instrumentation/gps[1]/selected-course-deg",me._Pointer);
 				
-			extra500.fms._node.btnObsMode.setValue(active);
+			fms._node.btnObsMode.setValue(active);
 		}
 	},
 	_onRouteActiveChange : func(n){
@@ -1572,7 +1572,7 @@ var FlyVectorsWidget = {
 		me.removeListeners();
 	},
 	setListeners : func(instance) {
-		append(me._listeners, setlistener(extra500.fms._node.FlyVector,func(n){me._onFlyVectorsChange(n);},1,0) );
+		append(me._listeners, setlistener(fms._node.FlyVector,func(n){me._onFlyVectorsChange(n);},1,0) );
 	},
 	_onVisibiltyChange : func(){
 		if(me._visibility == 1){

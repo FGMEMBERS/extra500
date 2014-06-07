@@ -202,13 +202,13 @@ var RouteLayer = {
 		return m;
 	},
 	setListeners : func(){
-			append(me._listeners, setlistener(extra500.fms._signal.fplChange,func(n){me._onFlightPlanChange(n)},1,1));	
-			append(me._listeners, setlistener(extra500.fms._signal.currentWpChange,func(n){me._onCurrentWaypointChange(n)},1,1));
+			append(me._listeners, setlistener(fms._signal.fplChange,func(n){me._onFlightPlanChange(n)},1,1));	
+			append(me._listeners, setlistener(fms._signal.currentWpChange,func(n){me._onCurrentWaypointChange(n)},1,1));
 		
-			append(me._listeners, setlistener(extra500.fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,0));	
-			append(me._listeners, setlistener(extra500.fms._signal.fplUpdated,func(n){me._onFplUpdatedChange(n)},0,1));	
+			append(me._listeners, setlistener(fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,0));	
+			append(me._listeners, setlistener(fms._signal.fplUpdated,func(n){me._onFplUpdatedChange(n)},0,1));	
 			
-			append(me._listeners, setlistener(extra500.fms._node.ObsMode,func(n){me._onObsModeChange(n);},1,0) );
+			append(me._listeners, setlistener(fms._node.ObsMode,func(n){me._onObsModeChange(n);},1,0) );
 			append(me._listeners, setlistener("/instrumentation/fms[0]/selected-course-deg",func(n){me._onObsCourseChange(n);},1,0) );
 			
 			
@@ -229,29 +229,29 @@ var RouteLayer = {
 	_onVisibilityChange : func(){
 		me._group.setVisible(me._visibility and (me._obsMode == 0));
 		me._groupOBS.setVisible(me._visibility and (me._obsMode == 1));
-		me._TOD.setVisible(extra500.fms._dynamicPoint.TOD.visible and me._visibility);
-		me._TOC.setVisible(extra500.fms._dynamicPoint.TOC.visible and me._visibility);
-		me._RTA.setVisible(extra500.fms._dynamicPoint.RTA.visible and me._visibility);
+		me._TOD.setVisible(fms._dynamicPoint.TOD.visible and me._visibility);
+		me._TOC.setVisible(fms._dynamicPoint.TOC.visible and me._visibility);
+		me._RTA.setVisible(fms._dynamicPoint.RTA.visible and me._visibility);
 	},
 	_onFplReadyChange : func(n){
-		me._TOD.setVisible(extra500.fms._dynamicPoint.TOD.visible and me._visibility);
-		me._TOC.setVisible(extra500.fms._dynamicPoint.TOC.visible and me._visibility);
-		me._RTA.setVisible(extra500.fms._dynamicPoint.RTA.visible and me._visibility);
+		me._TOD.setVisible(fms._dynamicPoint.TOD.visible and me._visibility);
+		me._TOC.setVisible(fms._dynamicPoint.TOC.visible and me._visibility);
+		me._RTA.setVisible(fms._dynamicPoint.RTA.visible and me._visibility);
 	},
 	_onFplUpdatedChange : func(n){
-		if(extra500.fms._dynamicPoint.TOD.visible){
-			me._TOD.setGeoPosition(extra500.fms._dynamicPoint.TOD.position.lat,extra500.fms._dynamicPoint.TOD.position.lon);
+		if(fms._dynamicPoint.TOD.visible){
+			me._TOD.setGeoPosition(fms._dynamicPoint.TOD.position.lat,fms._dynamicPoint.TOD.position.lon);
 		}
-		if(extra500.fms._dynamicPoint.TOC.visible){
-			me._TOC.setGeoPosition(extra500.fms._dynamicPoint.TOC.position.lat,extra500.fms._dynamicPoint.TOC.position.lon);
+		if(fms._dynamicPoint.TOC.visible){
+			me._TOC.setGeoPosition(fms._dynamicPoint.TOC.position.lat,fms._dynamicPoint.TOC.position.lon);
 		}
-		if(extra500.fms._dynamicPoint.RTA.visible){
-			me._RTA.setGeoPosition(extra500.fms._dynamicPoint.RTA.position.lat,extra500.fms._dynamicPoint.RTA.position.lon);	
+		if(fms._dynamicPoint.RTA.visible){
+			me._RTA.setGeoPosition(fms._dynamicPoint.RTA.position.lat,fms._dynamicPoint.RTA.position.lon);	
 		}
 		
-		me._TOD.setVisible(extra500.fms._dynamicPoint.TOD.visible and me._visibility);
-		me._TOC.setVisible(extra500.fms._dynamicPoint.TOC.visible and me._visibility);
-		me._RTA.setVisible(extra500.fms._dynamicPoint.RTA.visible and me._visibility);
+		me._TOD.setVisible(fms._dynamicPoint.TOD.visible and me._visibility);
+		me._TOC.setVisible(fms._dynamicPoint.TOC.visible and me._visibility);
+		me._RTA.setVisible(fms._dynamicPoint.RTA.visible and me._visibility);
 	
 	},
 	_onObsModeChange : func(n){
@@ -315,8 +315,8 @@ var RouteLayer = {
 		me._track.cmds = [];
 		me._track.coords = [];
 		me._itemIndex	= 0;
-		for( var i=0; i < extra500.fms._fightPlan.planSize; i+=1 ){
-			var fmsWP = extra500.fms._fpl.getWP(i);
+		for( var i=0; i < fms._fightPlan.planSize; i+=1 ){
+			var fmsWP = fms._fpl.getWP(i);
 # 				print(sprintf("%s range:%0.2f | lat:%0.3f lon:%0.3f a:%+i vs:%0.1f l:%i",tcas.id,tcas.range,tcas.lat,tcas.lon,tcas.alt,tcas.vs,tcas.level));
 					
 			if(me._itemIndex >= me._itemCount){
@@ -345,9 +345,9 @@ var RouteLayer = {
 	_drawLegs : func(){
 # 		var cmds 	= [];
 # 		var coords	= [];
-# 		extra500.fms._fightPlan.planSize = extra500.fms._fpl.getPlanSize();
-# 		for( var i=0; i < extra500.fms._fightPlan.planSize; i+=1 ){
-# 			var fmsWP = extra500.fms._fpl.getWP(i);
+# 		fms._fightPlan.planSize = fms._fpl.getPlanSize();
+# 		for( var i=0; i < fms._fightPlan.planSize; i+=1 ){
+# 			var fmsWP = fms._fpl.getWP(i);
 # 			if(i <= me._currentWaypoint){
 # 				
 # 			}elsif(i > me._currentWaypoint+1){
@@ -357,8 +357,8 @@ var RouteLayer = {
 # 			}
 # 		}
 		
-		if(extra500.fms._fightPlan.planSize > 1){
-			for( var i=0; i < extra500.fms._fightPlan.planSize; i+=1 ){
+		if(fms._fightPlan.planSize > 1){
+			for( var i=0; i < fms._fightPlan.planSize; i+=1 ){
 			
 				if(i != me._currentWaypoint  ){
 					me._item[i].setColor("#FFFFFF");
@@ -367,7 +367,7 @@ var RouteLayer = {
 				}
 			}	
 			
-			if(me._currentWaypoint >= 1 and me._currentWaypoint < extra500.fms._fightPlan.planSize){
+			if(me._currentWaypoint >= 1 and me._currentWaypoint < fms._fightPlan.planSize){
 				me._currentLeg.coords[0] = me._track.coords[(me._currentWaypoint-1)*2];
 				me._currentLeg.coords[1] = me._track.coords[(me._currentWaypoint-1)*2+1];
 				me._currentLeg.coords[2] = me._track.coords[(me._currentWaypoint)*2];
@@ -378,7 +378,7 @@ var RouteLayer = {
 				me._can.currentLeg.setVisible(0);
 			}
 			
-			if(me._currentWaypoint >= 0 and me._currentWaypoint < extra500.fms._fightPlan.planSize-1){
+			if(me._currentWaypoint >= 0 and me._currentWaypoint < fms._fightPlan.planSize-1){
 				me._nextLeg.coords[0] = me._track.coords[(me._currentWaypoint)*2];
 				me._nextLeg.coords[1] = me._track.coords[(me._currentWaypoint)*2+1];
 				me._nextLeg.coords[2] = me._track.coords[(me._currentWaypoint+1)*2];

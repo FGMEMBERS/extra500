@@ -491,9 +491,9 @@ var FMSDATAKeypadWidget = {
 		append(me._listeners, setlistener(me._tree.nearest,func(n){instance._onNRSTChange(n);},1,0) );
 		append(me._listeners, setlistener(me._tree.code,func(n){instance._onXPDRChange(n);},1,0) );
 		append(me._listeners, setlistener(me._tree.mode,func(n){instance._onXPDRmodeChange(n);},1,0) );
-		append(me._listeners, setlistener(extra500.fms._node.vsrRate,func(n){instance._onVsrChange(n);},1,0) );
-		append(me._listeners, setlistener(extra500.fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,0));	
-		append(me._listeners, setlistener(extra500.fms._signal.fplUpdated,func(n){me._onFplUpdatedChange(n)},0,1));	
+		append(me._listeners, setlistener(fms._node.vsrRate,func(n){instance._onVsrChange(n);},1,0) );
+		append(me._listeners, setlistener(fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,0));	
+		append(me._listeners, setlistener(fms._signal.fplUpdated,func(n){me._onFplUpdatedChange(n)},0,1));	
 		
 	},
 	
@@ -533,7 +533,7 @@ var FMSDATAKeypadWidget = {
 		
 	},
 	_onFplReadyChange: func(n){
-		if(extra500.fms._fightPlan.isReady){
+		if(fms._fightPlan.isReady){
 
 		}else{
 				me._can.destETE.setText("--:--:--");
@@ -542,8 +542,8 @@ var FMSDATAKeypadWidget = {
 	},
 	
 	_onFplUpdatedChange : func(n){
-		me._can.destETE.setText(global.formatTime(extra500.fms._fightPlan.ete,"H:i:s"));
-		me._can.ETE.setText(global.formatTime(extra500.fms._fightPlan.wp[extra500.fms._fightPlan.currentWp].ete,"H:i:s"));
+		me._can.destETE.setText(global.formatTime(fms._fightPlan.ete,"H:i:s"));
+		me._can.ETE.setText(global.formatTime(fms._fightPlan.wp[fms._fightPlan.currentWp].ete,"H:i:s"));
 	},
 	
 	
@@ -773,8 +773,8 @@ var KeypadClass = {
 		append(me._listeners, setlistener(me.nTungingSource,func(n){me._onTuningSourceChange(n)},1,0));	
 		append(me._listeners, setlistener(me.nTungingChannel,func(n){me._onTuningChannelChange(n)},1,0));	
 		append(me._listeners, setlistener("/instrumentation/transponder/ident",func(n){instance._onXPDRidentChange(n);},1,0) );
-		append(me._listeners, setlistener(extra500.fms._node.FlyVector,func(n){me._onFlyVectorsChange(n);},1,0) );
-		append(me._listeners, setlistener(extra500.fms._node.DirectTo,func(n){me._onDirectToChange(n);},1,0) );
+		append(me._listeners, setlistener(fms._node.FlyVector,func(n){me._onFlyVectorsChange(n);},1,0) );
+		append(me._listeners, setlistener(fms._node.DirectTo,func(n){me._onDirectToChange(n);},1,0) );
 		
 	},
 	init : func(mode,instance=nil){
@@ -1107,11 +1107,11 @@ var KeypadClass = {
 	},
 	onD : func(value=nil){
 # FIXME: the Directto button backlight should be on when direct-to is active
-		extra500.fms.directTo();
+		fms.directTo();
 	},
 	onV : func(value=nil){
 # 		print("KeypadClass.onV() ...");
-		extra500.fms.flyVectors();
+		fms.flyVectors();
 	},
 	onNRST : func(){
 		print("KeypadClass.onNRST() ...");

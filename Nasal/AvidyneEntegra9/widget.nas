@@ -138,8 +138,8 @@ var HeadlineWidget = {
 		append(me._listeners, setlistener("/instrumentation/transponder/id-code",func(n){me._onXPDRChange(n);},1,0) );
 		append(me._listeners, setlistener("/instrumentation/transponder/inputs/knob-mode",func(n){me._onXPDRmodeChange(n);},1,0) );
 		append(me._listeners, setlistener("/autopilot/route-manager/signals/waypoint-changed",func(n){me._onWaypointChange(n)},1,0));	
-		append(me._listeners, setlistener(extra500.fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,0));	
-		append(me._listeners, setlistener(extra500.fms._signal.fplUpdated,func(n){me._onFplUpdatedChange(n)},0,1));	
+		append(me._listeners, setlistener(fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,0));	
+		append(me._listeners, setlistener(fms._signal.fplUpdated,func(n){me._onFplUpdatedChange(n)},0,1));	
 		
 	},
 	init : func(instance=me){
@@ -205,7 +205,7 @@ var HeadlineWidget = {
 		me._can.Dest.setText(getprop("/autopilot/route-manager/destination/airport"));		
 	},
 	_onFplReadyChange: func(n){
-		if(extra500.fms._fightPlan.isReady){
+		if(fms._fightPlan.isReady){
 			
 		}else{
 			me._can.ETA.setText("--:--");
@@ -213,8 +213,8 @@ var HeadlineWidget = {
 		}
 	},
 	_onFplUpdatedChange: func(n){
-			me._can.ETA.setText(global.formatTime(extra500.fms._fightPlan.eta));
-			me._can.Fuel.setText(sprintf("%.0f",extra500.fms._fightPlan.fuelAt));
+			me._can.ETA.setText(global.formatTime(fms._fightPlan.eta));
+			me._can.Fuel.setText(sprintf("%.0f",fms._fightPlan.fuelAt));
 	},
 	update : func(){
 		me._can.Time.setText(getprop("/sim/time/gmt-string"));
@@ -247,8 +247,8 @@ var PlusDataWidget = {
 		append(me._listeners, setlistener("/extra500/instrumentation/Keypad/tuningChannel",func(n){me._onTuningChannelChange(n)},1,0));	
 		append(me._listeners, setlistener("/autopilot/route-manager/current-wp",func(n){me._onCurrentWaypointChange(n)},1,0));	
 		append(me._listeners, setlistener("/autopilot/route-manager/signals/waypoint-changed",func(n){me._onWaypointChange(n)},1,0));	
-		append(me._listeners, setlistener(extra500.fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,0));	
-		append(me._listeners, setlistener(extra500.fms._signal.fplUpdated,func(n){me._onFplUpdatedChange(n)},0,1));	
+		append(me._listeners, setlistener(fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,0));	
+		append(me._listeners, setlistener(fms._signal.fplUpdated,func(n){me._onFplUpdatedChange(n)},0,1));	
 		
 	},
 	init : func(instance=me){
@@ -400,12 +400,12 @@ var PlusDataWidget = {
 		me._can.DestName.setText(getprop("/autopilot/route-manager/destination/airport"));
 	},
 	_onFplReadyChange: func(n){
-		if(extra500.fms._fightPlan.isReady){
+		if(fms._fightPlan.isReady){
 			me._can.ETA.setText(getprop("/autopilot/route-manager/wp/eta"));
 			me._can.Distance.setText(sprintf("%.1f",getprop("/autopilot/route-manager/wp/dist")));
 			me._can.Course.setText(sprintf("%03.0f",tool.course(getprop("/autopilot/route-manager/wp/bearing-deg"))));
-			me._can.DestBearing.setText(sprintf("%03.0f",(tool.course(extra500.fms._fightPlan.destination.bearingCourse - getprop("/environment/magnetic-variation-deg")))));
-			me._can.DestDistance.setText(sprintf("%.0f",extra500.fms._fightPlan.destination.bearingDistance));
+			me._can.DestBearing.setText(sprintf("%03.0f",(tool.course(fms._fightPlan.destination.bearingCourse - getprop("/environment/magnetic-variation-deg")))));
+			me._can.DestDistance.setText(sprintf("%.0f",fms._fightPlan.destination.bearingDistance));
 		}else{
 			me._can.ETA.setText("--:--");
 			me._can.Distance.setText("---");
@@ -419,19 +419,19 @@ var PlusDataWidget = {
 			me._can.ETA.setText(getprop("/autopilot/route-manager/wp/eta"));
 			me._can.Distance.setText(sprintf("%.1f",getprop("/autopilot/route-manager/wp/dist")));
 			me._can.Course.setText(sprintf("%03.0f",tool.course(getprop("/autopilot/route-manager/wp/bearing-deg"))));
-			me._can.Fuel.setText(sprintf("%.0f",extra500.fms._fightPlan.wp[extra500.fms._fightPlan.currentWp].fuelAt));
-			me._can.DestBearing.setText(sprintf("%03.0f",(tool.course(extra500.fms._fightPlan.destination.bearingCourse - getprop("/environment/magnetic-variation-deg")))));
-			me._can.DestDistance.setText(sprintf("%.0f",extra500.fms._fightPlan.destination.bearingDistance));
+			me._can.Fuel.setText(sprintf("%.0f",fms._fightPlan.wp[fms._fightPlan.currentWp].fuelAt));
+			me._can.DestBearing.setText(sprintf("%03.0f",(tool.course(fms._fightPlan.destination.bearingCourse - getprop("/environment/magnetic-variation-deg")))));
+			me._can.DestDistance.setText(sprintf("%.0f",fms._fightPlan.destination.bearingDistance));
 	},
 	update : func(){
-# 		if(extra500.fms._isFPLready and extra500.fms._fplUpdated){
+# 		if(fms._isFPLready and fms._fplUpdated){
 # 		
 # 			me._can.ETA.setText(getprop("/autopilot/route-manager/wp/eta"));
 # 			me._can.Distance.setText(sprintf("%.1f",getprop("/autopilot/route-manager/wp/dist")));
 # 			me._can.Course.setText(sprintf("%03.0f",tool.course(getprop("/autopilot/route-manager/wp/bearing-deg"))));
 # 			me._can.Fuel.setText(sprintf("%.0f",getprop("/autopilot/route-manager/wp/fuelAt_GalUs")));
-# 			me._can.DestBearing.setText(sprintf("%03.0f",(tool.course(extra500.fms._fightPlan.destination.course - getprop("/environment/magnetic-variation-deg")))));
-# 			me._can.DestDistance.setText(sprintf("%.0f",extra500.fms._fightPlan.destination.distanceTo));
+# 			me._can.DestBearing.setText(sprintf("%03.0f",(tool.course(fms._fightPlan.destination.course - getprop("/environment/magnetic-variation-deg")))));
+# 			me._can.DestDistance.setText(sprintf("%.0f",fms._fightPlan.destination.distanceTo));
 # 		}else{
 # 			me._can.ETA.setText("--:--");
 # 			me._can.Distance.setText("---");

@@ -37,7 +37,7 @@ var DirectToWidget = {
 		return m;
 	},
 	setListeners : func(instance) {
-		append(me._listeners, setlistener(extra500.fms._node.DirectTo,func(n){me._onChange(n)},1,0));	
+		append(me._listeners, setlistener(fms._node.DirectTo,func(n){me._onChange(n)},1,0));	
 	},
 	init : func(instance=me){
 		
@@ -233,10 +233,10 @@ var FlightPlanListWidget = {
 	setListeners : func(instance) {
 # 		append(me._listeners, setlistener("/autopilot/route-manager/signals/waypoint-changed",func(n){me._onFlightPlanChange(n)},1,0));	
 # 		append(me._listeners, setlistener("/autopilot/route-manager/current-wp",func(n){me._onCurrentWaypointChange(n)},1,0));
-		append(me._listeners, setlistener(extra500.fms._signal.fplChange,func(n){me._onFlightPlanChange(n)},1,1));	
-		append(me._listeners, setlistener(extra500.fms._signal.currentWpChange,func(n){me._onCurrentWaypointChange(n)},1,1));
-		append(me._listeners, setlistener(extra500.fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,0));	
-		append(me._listeners, setlistener(extra500.fms._signal.fplUpdated,func(n){me._onFplUpdatedChange(n)},0,1));	
+		append(me._listeners, setlistener(fms._signal.fplChange,func(n){me._onFlightPlanChange(n)},1,1));	
+		append(me._listeners, setlistener(fms._signal.currentWpChange,func(n){me._onCurrentWaypointChange(n)},1,1));
+		append(me._listeners, setlistener(fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,0));	
+		append(me._listeners, setlistener(fms._signal.fplUpdated,func(n){me._onFplUpdatedChange(n)},0,1));	
 		
 		append(me._listeners, setlistener("/sim/gui/dialogs/route-manager/selection",func(n){me._onSelectionChange(n)},1,1));	
 		
@@ -270,7 +270,7 @@ var FlightPlanListWidget = {
 			me._ifd.ui.bindKnob("RK",{
 				"<<"	: func(){me._adjustSelection(2);},
 				"<"	: func(){me._adjustSelection(1);},
-				"push"	: func(){extra500.fms.jumpTo();},
+				"push"	: func(){fms.jumpTo();},
 				">"	: func(){me._adjustSelection(-1);},
 				">>"	: func(){me._adjustSelection(-2);},
 			},{
@@ -319,8 +319,8 @@ var FlightPlanListWidget = {
 	},
 	_drawList : func(){
 		var distSum = 0;
-		for( var i=0; i < extra500.fms._fightPlan.planSize; i+=1 ){
-			var fmsWP = extra500.fms._fpl.getWP(i);
+		for( var i=0; i < fms._fightPlan.planSize; i+=1 ){
+			var fmsWP = fms._fpl.getWP(i);
 			
 			if ( i >= me._cacheSize ){
 				#append(me._fplItemCache , FlighPlanItem_old.new(me._can.list,i,fmsWP.wp_type));
@@ -344,13 +344,13 @@ var FlightPlanListWidget = {
 				restriction ~= "IAS : " ~ fmsWP.speed_cstr ~"kts ";
 			}
 			me._fplItemCache[i].setRestriction(restriction);
-			if(extra500.fms._fightPlan.planSize > 1){
+			if(fms._fightPlan.planSize > 1){
 				distSum += fmsWP.leg_distance;
 
 			}
 			if(i > 0){
-				me._fplItemCache[i].setHeadline(sprintf("%s %03.0f",fmsWP.fly_type,extra500.fms._fpl.getWP(i-1).leg_bearing));
-				me._fplItemCache[i].setDistance(sprintf("%0.1f",extra500.fms._fpl.getWP(i-1).leg_distance));
+				me._fplItemCache[i].setHeadline(sprintf("%s %03.0f",fmsWP.fly_type,fms._fpl.getWP(i-1).leg_bearing));
+				me._fplItemCache[i].setDistance(sprintf("%0.1f",fms._fpl.getWP(i-1).leg_distance));
 			}else{
 				me._fplItemCache[i].setHeadline("");
 				me._fplItemCache[i].setDistance("---");
@@ -364,15 +364,15 @@ var FlightPlanListWidget = {
 			
 		}
 		me._resizeScroll();
-		#me._setSelection(extra500.fms._fightPlan.planSize-1,"insert");
-		#me._scrollToCurrentIndex(extra500.fms._fightPlan.planSize-1);
+		#me._setSelection(fms._fightPlan.planSize-1,"insert");
+		#me._scrollToCurrentIndex(fms._fightPlan.planSize-1);
 		me._scrollToCurrentIndex(me._selectedIndex);
 		
 	},
 	_resizeScroll : func(){
-		if(extra500.fms._fightPlan.planSize > 6){
-			me._scrollSize = 1356 / extra500.fms._fightPlan.planSize;
-			me._maxScroll = extra500.fms._fightPlan.planSize -6;
+		if(fms._fightPlan.planSize > 6){
+			me._scrollSize = 1356 / fms._fightPlan.planSize;
+			me._maxScroll = fms._fightPlan.planSize -6;
 		}else{
 			me._scrollSize = 1356 / 6;
 			me._maxScroll = 6;
@@ -409,7 +409,7 @@ var FlightPlanListWidget = {
 		
 	},
 	_deleteWaypoint : func(){
-		extra500.fms._fpl.deleteWP(me._selectedIndex);
+		fms._fpl.deleteWP(me._selectedIndex);
 	},
 	_onFlightPlanChange : func(n){
 # 		print("FlightPlanListWidget._onFlightPlanChange() ... ");
@@ -458,13 +458,13 @@ var FlightPlanListWidget = {
 		if(amount > 0){
 			if(me._cursorModeInsert==1){
 				me._selectedIndex += amount;
-				me._selectedIndex = global.clamp(me._selectedIndex,0,extra500.fms._fightPlan.planSize-1);
+				me._selectedIndex = global.clamp(me._selectedIndex,0,fms._fightPlan.planSize-1);
 			}
 			me._setSelection(me._selectedIndex,!me._cursorModeInsert);
 		}elsif(amount < 0){
 			if(me._cursorModeInsert==0){
 				me._selectedIndex += amount;
-				me._selectedIndex = global.clamp(me._selectedIndex,0,extra500.fms._fightPlan.planSize-1);
+				me._selectedIndex = global.clamp(me._selectedIndex,0,fms._fightPlan.planSize-1);
 			}
 			me._setSelection(me._selectedIndex,!me._cursorModeInsert);
 		}else{
@@ -509,14 +509,14 @@ var FlightPlanListWidget = {
 		
 			
 		
-		extra500.fms.setSelectedWaypoint(me._selectedIndex);
+		fms.setSelectedWaypoint(me._selectedIndex);
 		me._lastSelectedIndex = me._selectedIndex;
 	},
 	_onFplReadyChange : func(n){
-		if(extra500.fms._fightPlan.isReady){
+		if(fms._fightPlan.isReady){
 			
 		}else{
-			for( var i=0; i < extra500.fms._fightPlan.planSize; i+=1 ){
+			for( var i=0; i < fms._fightPlan.planSize; i+=1 ){
 				me._fplItemCache[i].setDistance("---");
 				me._fplItemCache[i].setETE("---");
 				me._fplItemCache[i].setETA("---");
@@ -525,12 +525,12 @@ var FlightPlanListWidget = {
 		}
 	},
 	_onFplUpdatedChange : func(n){
-		for( var i=0; i < extra500.fms._fightPlan.planSize; i+=1 ){
-			if (i >= extra500.fms._fightPlan.currentWp){
-				me._fplItemCache[i].setDistance(sprintf("%0.1f",extra500.fms._fightPlan.wp[i].distanceTo));
-				me._fplItemCache[i].setETE(global.formatTime(extra500.fms._fightPlan.wp[i].ete,"i:s"));
-				me._fplItemCache[i].setETA(global.formatTime(extra500.fms._fightPlan.wp[i].eta));
-				me._fplItemCache[i].setFuel(sprintf("%.0f",extra500.fms._fightPlan.wp[i].fuelAt));
+		for( var i=0; i < fms._fightPlan.planSize; i+=1 ){
+			if (i >= fms._fightPlan.currentWp){
+				me._fplItemCache[i].setDistance(sprintf("%0.1f",fms._fightPlan.wp[i].distanceTo));
+				me._fplItemCache[i].setETE(global.formatTime(fms._fightPlan.wp[i].ete,"i:s"));
+				me._fplItemCache[i].setETA(global.formatTime(fms._fightPlan.wp[i].eta));
+				me._fplItemCache[i].setFuel(sprintf("%.0f",fms._fightPlan.wp[i].fuelAt));
 			}else{
 				me._fplItemCache[i].setDistance("---");
 				me._fplItemCache[i].setETE("---");
