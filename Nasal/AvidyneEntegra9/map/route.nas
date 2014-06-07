@@ -187,7 +187,6 @@ var RouteLayer = {
 		m._track = {cmds:[],coords:[]};
 		m._currentLeg = {cmds:[canvas.Path.VG_MOVE_TO,canvas.Path.VG_LINE_TO],coords:[0,0,0,0]};
 		m._nextLeg = {cmds:[canvas.Path.VG_MOVE_TO,canvas.Path.VG_LINE_TO],coords:[0,0,0,0]};
-		m._planSize = 0;
 		
 		
 		m._mapOptions = {
@@ -199,17 +198,19 @@ var RouteLayer = {
 		m._obsCourse = 0;
 		m._obsWaypoint = RouteItemClass.new(m._groupOBS,"obs_wp");
 		m._obsCourseData = {cmds:[canvas.Path.VG_MOVE_TO,canvas.Path.VG_LINE_TO],coords:[0,0,0,0]};
-		#m._flightPlan = flightplan();
+		
 		return m;
 	},
 	setListeners : func(){
-			append(me._listeners, setlistener("/autopilot/route-manager/signals/waypoint-changed",func(n){me.onFlightPlanChange(n);},0,1));
-			append(me._listeners, setlistener("/autopilot/route-manager/current-wp",func(n){me._onCurrentChange(n)},1,0));	
+			append(me._listeners, setlistener(extra500.fms._signal.fplChange,func(n){me._onFlightPlanChange(n)},1,1));	
+			append(me._listeners, setlistener(extra500.fms._signal.currentWpChange,func(n){me._onCurrentWaypointChange(n)},1,1));
+		
+			append(me._listeners, setlistener(extra500.fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,0));	
+			append(me._listeners, setlistener(extra500.fms._signal.fplUpdated,func(n){me._onFplUpdatedChange(n)},0,1));	
 			
 			append(me._listeners, setlistener(extra500.fms._node.ObsMode,func(n){me._onObsModeChange(n);},1,0) );
 			append(me._listeners, setlistener("/instrumentation/fms[0]/selected-course-deg",func(n){me._onObsCourseChange(n);},1,0) );
-			append(me._listeners, setlistener("/instrumentation/fms[0]/signal/fpl-ready",func(n){me._onFplReadyChange(n);},1,0) );
-			append(me._listeners, setlistener("/instrumentation/fms[0]/signal/fpl-updated",func(n){me._onFplUpdatedChange(n);},1,1) );
+			
 			
 	},
 	updateOrientation : func(value){
@@ -217,46 +218,41 @@ var RouteLayer = {
 		me._can.obsCourse.setRotation((me._obsCourse - me._mapOptions.orientation) * global.CONST.DEG2RAD);
 	},
 	
-	onFlightPlanChange : func(n){
+	_onFlightPlanChange : func(n){
 		me._drawWaypoints();
 		me._drawLegs();
 	},
-	_onCurrentChange : func(n){
+	_onCurrentWaypointChange : func(n){
 		me._currentWaypoint = n.getValue();
 		me._drawLegs();
 	},
 	_onVisibilityChange : func(){
 		me._group.setVisible(me._visibility and (me._obsMode == 0));
 		me._groupOBS.setVisible(me._visibility and (me._obsMode == 1));
-		me._TOD.setVisible(extra500.fms._TODvisible and me._visibility);
-		me._TOC.setVisible(extra500.fms._TOCvisible and me._visibility);
-		me._RTA.setVisible(extra500.fms._RTAvisible and me._visibility);
+		me._TOD.setVisible(extra500.fms._dynamicPoint.TOD.visible and me._visibility);
+		me._TOC.setVisible(extra500.fms._dynamicPoint.TOC.visible and me._visibility);
+		me._RTA.setVisible(extra500.fms._dynamicPoint.RTA.visible and me._visibility);
 	},
-	
 	_onFplReadyChange : func(n){
-		me._TOD.setVisible(extra500.fms._TODvisible and me._visibility);
-		me._TOC.setVisible(extra500.fms._TOCvisible and me._visibility);
-		me._RTA.setVisible(extra500.fms._RTAvisible and me._visibility);
+		me._TOD.setVisible(extra500.fms._dynamicPoint.TOD.visible and me._visibility);
+		me._TOC.setVisible(extra500.fms._dynamicPoint.TOC.visible and me._visibility);
+		me._RTA.setVisible(extra500.fms._dynamicPoint.RTA.visible and me._visibility);
 	},
 	_onFplUpdatedChange : func(n){
-		if(extra500.fms._isFPLready and extra500.fms._fplUpdated){
-# 			print("_onFplUpdatedChange() lat:"~extra500.fms._waypoint.TOD.lat~" lon:"~extra500.fms._waypoint.TOD.lon);
-# 			me._can.TOD.setGeoPosition(extra500.fms._waypoint.TOD.lat,extra500.fms._waypoint.TOD.lon);
-# 			me._can.TOC.setGeoPosition(extra500.fms._waypoint.TOC.lat,extra500.fms._waypoint.TOC.lon);
-			if(extra500.fms._TODvisible){
-				me._TOD.setGeoPosition(extra500.fms._waypoint.TOD.lat,extra500.fms._waypoint.TOD.lon);
-			}
-			if(extra500.fms._TOCvisible){
-				me._TOC.setGeoPosition(extra500.fms._waypoint.TOC.lat,extra500.fms._waypoint.TOC.lon);
-			}
-			if(extra500.fms._RTAvisible){
-				me._RTA.setGeoPosition(extra500.fms._waypoint.RTA.lat,extra500.fms._waypoint.RTA.lon);	
-			}
-			
-			me._TOD.setVisible(extra500.fms._TODvisible and me._visibility);
-			me._TOC.setVisible(extra500.fms._TOCvisible and me._visibility);
-			me._RTA.setVisible(extra500.fms._RTAvisible and me._visibility);
-		}		
+		if(extra500.fms._dynamicPoint.TOD.visible){
+			me._TOD.setGeoPosition(extra500.fms._dynamicPoint.TOD.position.lat,extra500.fms._dynamicPoint.TOD.position.lon);
+		}
+		if(extra500.fms._dynamicPoint.TOC.visible){
+			me._TOC.setGeoPosition(extra500.fms._dynamicPoint.TOC.position.lat,extra500.fms._dynamicPoint.TOC.position.lon);
+		}
+		if(extra500.fms._dynamicPoint.RTA.visible){
+			me._RTA.setGeoPosition(extra500.fms._dynamicPoint.RTA.position.lat,extra500.fms._dynamicPoint.RTA.position.lon);	
+		}
+		
+		me._TOD.setVisible(extra500.fms._dynamicPoint.TOD.visible and me._visibility);
+		me._TOC.setVisible(extra500.fms._dynamicPoint.TOC.visible and me._visibility);
+		me._RTA.setVisible(extra500.fms._dynamicPoint.RTA.visible and me._visibility);
+	
 	},
 	_onObsModeChange : func(n){
 		me._obsMode = n.getValue();
@@ -319,10 +315,8 @@ var RouteLayer = {
 		me._track.cmds = [];
 		me._track.coords = [];
 		me._itemIndex	= 0;
-		me._flightPlan = flightplan();
-		me._planSize = me._flightPlan.getPlanSize();	
-		for( var i=0; i < me._planSize; i+=1 ){
-			var fmsWP = me._flightPlan.getWP(i);
+		for( var i=0; i < extra500.fms._fightPlan.planSize; i+=1 ){
+			var fmsWP = extra500.fms._fpl.getWP(i);
 # 				print(sprintf("%s range:%0.2f | lat:%0.3f lon:%0.3f a:%+i vs:%0.1f l:%i",tcas.id,tcas.range,tcas.lat,tcas.lon,tcas.alt,tcas.vs,tcas.level));
 					
 			if(me._itemIndex >= me._itemCount){
@@ -351,9 +345,9 @@ var RouteLayer = {
 	_drawLegs : func(){
 # 		var cmds 	= [];
 # 		var coords	= [];
-# 		me._planSize = me._flightPlan.getPlanSize();
-# 		for( var i=0; i < me._planSize; i+=1 ){
-# 			var fmsWP = me._flightPlan.getWP(i);
+# 		extra500.fms._fightPlan.planSize = extra500.fms._fpl.getPlanSize();
+# 		for( var i=0; i < extra500.fms._fightPlan.planSize; i+=1 ){
+# 			var fmsWP = extra500.fms._fpl.getWP(i);
 # 			if(i <= me._currentWaypoint){
 # 				
 # 			}elsif(i > me._currentWaypoint+1){
@@ -363,8 +357,8 @@ var RouteLayer = {
 # 			}
 # 		}
 		
-		if(me._planSize > 1){
-			for( var i=0; i < me._planSize; i+=1 ){
+		if(extra500.fms._fightPlan.planSize > 1){
+			for( var i=0; i < extra500.fms._fightPlan.planSize; i+=1 ){
 			
 				if(i != me._currentWaypoint  ){
 					me._item[i].setColor("#FFFFFF");
@@ -373,7 +367,7 @@ var RouteLayer = {
 				}
 			}	
 			
-			if(me._currentWaypoint >= 1 and me._currentWaypoint < me._planSize){
+			if(me._currentWaypoint >= 1 and me._currentWaypoint < extra500.fms._fightPlan.planSize){
 				me._currentLeg.coords[0] = me._track.coords[(me._currentWaypoint-1)*2];
 				me._currentLeg.coords[1] = me._track.coords[(me._currentWaypoint-1)*2+1];
 				me._currentLeg.coords[2] = me._track.coords[(me._currentWaypoint)*2];
@@ -384,7 +378,7 @@ var RouteLayer = {
 				me._can.currentLeg.setVisible(0);
 			}
 			
-			if(me._currentWaypoint >= 0 and me._currentWaypoint < me._planSize-1){
+			if(me._currentWaypoint >= 0 and me._currentWaypoint < extra500.fms._fightPlan.planSize-1){
 				me._nextLeg.coords[0] = me._track.coords[(me._currentWaypoint)*2];
 				me._nextLeg.coords[1] = me._track.coords[(me._currentWaypoint)*2+1];
 				me._nextLeg.coords[2] = me._track.coords[(me._currentWaypoint+1)*2];

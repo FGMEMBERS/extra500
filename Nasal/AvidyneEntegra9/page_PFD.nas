@@ -220,7 +220,6 @@ var VerticalSpeedWidget = {
 		m._class 	= "VerticalSpeedWidget";
 		m._ptree	= {
 			vs	: props.globals.initNode("/instrumentation/ivsi-IFD-"~m._ifd.name~"/indicated-speed-fpm",0.0,"DOUBLE"),
-			vsr	: props.globals.initNode("/instrumentation/fms/vsr",0,"INT"),
 		};
 		m._can		= {
 			Needle		: m._group.getElementById("VS_Needle").updateCenter(),
@@ -238,8 +237,7 @@ var VerticalSpeedWidget = {
 	setListeners : func(instance) {
 		append(me._listeners, setlistener("/autopilot/mode/vs",func(n){me._onApChange(n)},1,0));	
 		append(me._listeners, setlistener("/autopilot/settings/vertical-speed-fpm",func(n){me._onBugChange(n)},1,0));	
-		append(me._listeners, setlistener(me._ptree.vsr,func(n){me._onVsrChange(n)},1,0));	
-		
+		append(me._listeners, setlistener(extra500.fms._node.vsrRate,func(n){me._onVsrChange(n)},1,0));
 	},
 	_onApChange : func(n){
 		me._ap = n.getValue();
@@ -255,12 +253,18 @@ var VerticalSpeedWidget = {
 		me._can.Bug.setRotation(me._rotateScale(me._bug));
 		
 	},
-	_onVsrChange  : func(n){
-		me._vsr = n.getValue();
-		if(me._vsr != 0){
-			me._can.BugFMS.setRotation(me._rotateScale(me._vsr));
+	_onVsrChange : func(n){
+		if(extra500.fms._constraint.VSR.rate != 0){
+			me._can.BugFMS.setRotation(me._rotateScale(extra500.fms._constraint.VSR.rate));
 		}
-		me._can.BugFMS.setVisible(me._vsr != 0);
+		me._can.BugFMS.setVisible(extra500.fms._constraint.VSR.visible);
+	},
+	_onFplReadyChange : func(n){
+		if(extra500.fms._fightPlan.isReady){
+			
+		}else{
+			me._can.BugFMS.setVisible(0);
+		}
 	},
 	_rotateScale : func(vs){
 		if (vs >= -1000 ){
@@ -876,7 +880,6 @@ var NavSourceWidget = {
 			Distance	: nil,
 			Source		: props.globals.initNode("/instrumentation/nav-source",0,"INT"),
 			FMSCourse	: props.globals.initNode("/instrumentation/fms[0]/selected-course-deg",0,"DOUBLE"),
-			btnObsMode		: props.globals.initNode("/instrumentation/fms[0]/btn-obs-mode",0,"BOOL"),
 			
 		};
 		
@@ -1152,7 +1155,7 @@ var NavSourceWidget = {
 	},
 	_onCourseChange : func(n){
 		me._Pointer		= n.getValue();
-		me._ptree.FMSCourse.setValue(me._Pointer);
+# 		me._ptree.FMSCourse.setValue(me._Pointer);
 		me._can.Crs.setText(sprintf("%i",tool.course(me._Pointer)));
 		
 	},

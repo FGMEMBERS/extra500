@@ -101,6 +101,25 @@ var HeadlineWidget = {
 		m._timer	= maketimer(1.0,m,HeadlineWidget.update);
 		m._source = 0;
 		m._freqencyListeners = [];
+		m._can = {
+			freqency1LabelActive	: m._group.getElementById("Freqency1_label_active"),
+			freqency1LabelStandby	: m._group.getElementById("Freqency1_label_standby"),
+			freqency2LabelActive	: m._group.getElementById("Freqency2_label_active"),
+			freqency2LabelStandby	: m._group.getElementById("Freqency2_label_standby"),
+			
+			freqency1Active		: m._group.getElementById("Freqency1_active"),
+			freqency1Standby	: m._group.getElementById("Freqency1_standby"),
+			freqency2Active		: m._group.getElementById("Freqency2_active"),
+			freqency2Standby	: m._group.getElementById("Freqency2_standby"),
+			
+			Xpdr			: m._group.getElementById("Head_xpdr"),
+			XpdrMode		: m._group.getElementById("Head_xpdr_mode"),
+			Dest			: m._group.getElementById("Head_Dest"),
+			Fuel			: m._group.getElementById("Head_gal"),
+			ETA			: m._group.getElementById("Head_eta"),
+			Time			: m._group.getElementById("Head_time"),
+		};
+		
 		return m;
 	},
 	_removeFreqencyListeners : func(){
@@ -119,27 +138,18 @@ var HeadlineWidget = {
 		append(me._listeners, setlistener("/instrumentation/transponder/id-code",func(n){me._onXPDRChange(n);},1,0) );
 		append(me._listeners, setlistener("/instrumentation/transponder/inputs/knob-mode",func(n){me._onXPDRmodeChange(n);},1,0) );
 		append(me._listeners, setlistener("/autopilot/route-manager/signals/waypoint-changed",func(n){me._onWaypointChange(n)},1,0));	
+		append(me._listeners, setlistener(extra500.fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,0));	
+		append(me._listeners, setlistener(extra500.fms._signal.fplUpdated,func(n){me._onFplUpdatedChange(n)},0,1));	
+		
 	},
 	init : func(instance=me){
 		#print("HeadlineWidget.init() ... ");
-		me._can = {
-			freqency1LabelActive	: me._group.getElementById("Freqency1_label_active"),
-			freqency1LabelStandby	: me._group.getElementById("Freqency1_label_standby"),
-			freqency2LabelActive	: me._group.getElementById("Freqency2_label_active"),
-			freqency2LabelStandby	: me._group.getElementById("Freqency2_label_standby"),
-			
-			freqency1Active		: me._group.getElementById("Freqency1_active"),
-			freqency1Standby	: me._group.getElementById("Freqency1_standby"),
-			freqency2Active		: me._group.getElementById("Freqency2_active"),
-			freqency2Standby	: me._group.getElementById("Freqency2_standby"),
-			
-			Xpdr			: me._group.getElementById("Head_xpdr"),
-			XpdrMode		: me._group.getElementById("Head_xpdr_mode"),
-			Dest			: me._group.getElementById("Head_Dest"),
-			Fuel			: me._group.getElementById("Head_gal"),
-			ETA			: me._group.getElementById("Head_eta"),
-			Time			: me._group.getElementById("Head_time"),
-		};
+		me._can.Dest.setText("----");
+		me._can.Xpdr.setText("----");
+		me._can.XpdrMode.setText("---");
+		me._can.Time.setText("--:--:--");
+		me._can.ETA.setText("--:--");
+		me._can.Fuel.setText("---");
 		#me.setListeners(instance);
 	},
 	_onVisibiltyChange : func(){
@@ -170,6 +180,7 @@ var HeadlineWidget = {
 			append(me._freqencyListeners, setlistener("/instrumentation/nav[0]/frequencies/standby-mhz",func(n){me._onFreqency1StandbyChange(n)},1,0));	
 			append(me._freqencyListeners, setlistener("/instrumentation/nav[1]/frequencies/selected-mhz",func(n){me._onFreqency2ActiveChange(n)},1,0));	
 			append(me._freqencyListeners, setlistener("/instrumentation/nav[1]/frequencies/standby-mhz",func(n){me._onFreqency2StandbyChange(n)},1,0));	
+			
 		}
 	},
 	_onFreqency1ActiveChange : func(n){
@@ -193,18 +204,20 @@ var HeadlineWidget = {
 	_onWaypointChange : func(n){
 		me._can.Dest.setText(getprop("/autopilot/route-manager/destination/airport"));		
 	},
-	update : func(){
-		var gs = getprop("/velocities/groundspeed-kt");
-		if(extra500.fms._isFPLready and extra500.fms._fplUpdated){
-			var eta = getprop("/autopilot/route-manager/eta_sec");
-			me._can.ETA.setText(global.formatTime(eta));
-			me._can.Fuel.setText(sprintf("%.0f",getprop("/autopilot/route-manager/fuelAt_GalUs")));
+	_onFplReadyChange: func(n){
+		if(extra500.fms._fightPlan.isReady){
+			
 		}else{
 			me._can.ETA.setText("--:--");
 			me._can.Fuel.setText("---");
 		}
+	},
+	_onFplUpdatedChange: func(n){
+			me._can.ETA.setText(global.formatTime(extra500.fms._fightPlan.eta));
+			me._can.Fuel.setText(sprintf("%.0f",extra500.fms._fightPlan.fuelAt));
+	},
+	update : func(){
 		me._can.Time.setText(getprop("/sim/time/gmt-string"));
-		
 	},
 };
 
@@ -234,6 +247,9 @@ var PlusDataWidget = {
 		append(me._listeners, setlistener("/extra500/instrumentation/Keypad/tuningChannel",func(n){me._onTuningChannelChange(n)},1,0));	
 		append(me._listeners, setlistener("/autopilot/route-manager/current-wp",func(n){me._onCurrentWaypointChange(n)},1,0));	
 		append(me._listeners, setlistener("/autopilot/route-manager/signals/waypoint-changed",func(n){me._onWaypointChange(n)},1,0));	
+		append(me._listeners, setlistener(extra500.fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,0));	
+		append(me._listeners, setlistener(extra500.fms._signal.fplUpdated,func(n){me._onFplUpdatedChange(n)},0,1));	
+		
 	},
 	init : func(instance=me){
 		#print("PlusDataWidget.init() ... ");
@@ -372,27 +388,24 @@ var PlusDataWidget = {
 			me._can.Name.setText(sprintf("%s",getprop(me._path~"/id")));
 			me._can.Course.setText(sprintf("%03.0f",getprop(me._path~"/leg-bearing-true-deg")));
 			me._can.Distance.setText(sprintf("%03.0f",getprop(me._path~"/leg-distance-nm")));
-			me._can.Fuel.setText("---");
+
 		}else{
 			me._can.Name.setText("----");
 			me._can.Course.setText("---");
 			me._can.Distance.setText("---");
-			me._can.Fuel.setText("---");
 			me._can.ETA.setText("--:--");
 		}
 	},
 	_onWaypointChange : func(n){
 		me._can.DestName.setText(getprop("/autopilot/route-manager/destination/airport"));
 	},
-	update : func(){
-		if(extra500.fms._isFPLready and extra500.fms._fplUpdated){
-		
+	_onFplReadyChange: func(n){
+		if(extra500.fms._fightPlan.isReady){
 			me._can.ETA.setText(getprop("/autopilot/route-manager/wp/eta"));
 			me._can.Distance.setText(sprintf("%.1f",getprop("/autopilot/route-manager/wp/dist")));
 			me._can.Course.setText(sprintf("%03.0f",tool.course(getprop("/autopilot/route-manager/wp/bearing-deg"))));
-			me._can.Fuel.setText(sprintf("%.0f",getprop("/autopilot/route-manager/wp/fuelAt_GalUs")));
-			me._can.DestBearing.setText(sprintf("%03.0f",(tool.course(extra500.fms._fightPlan.destination.course - getprop("/environment/magnetic-variation-deg")))));
-			me._can.DestDistance.setText(sprintf("%.0f",extra500.fms._fightPlan.destination.distanceTo));
+			me._can.DestBearing.setText(sprintf("%03.0f",(tool.course(extra500.fms._fightPlan.destination.bearingCourse - getprop("/environment/magnetic-variation-deg")))));
+			me._can.DestDistance.setText(sprintf("%.0f",extra500.fms._fightPlan.destination.bearingDistance));
 		}else{
 			me._can.ETA.setText("--:--");
 			me._can.Distance.setText("---");
@@ -401,6 +414,32 @@ var PlusDataWidget = {
 			me._can.DestBearing.setText("---");
 			me._can.DestDistance.setText("---");
 		}
+	},
+	_onFplUpdatedChange: func(n){
+			me._can.ETA.setText(getprop("/autopilot/route-manager/wp/eta"));
+			me._can.Distance.setText(sprintf("%.1f",getprop("/autopilot/route-manager/wp/dist")));
+			me._can.Course.setText(sprintf("%03.0f",tool.course(getprop("/autopilot/route-manager/wp/bearing-deg"))));
+			me._can.Fuel.setText(sprintf("%.0f",extra500.fms._fightPlan.wp[extra500.fms._fightPlan.currentWp].fuelAt));
+			me._can.DestBearing.setText(sprintf("%03.0f",(tool.course(extra500.fms._fightPlan.destination.bearingCourse - getprop("/environment/magnetic-variation-deg")))));
+			me._can.DestDistance.setText(sprintf("%.0f",extra500.fms._fightPlan.destination.bearingDistance));
+	},
+	update : func(){
+# 		if(extra500.fms._isFPLready and extra500.fms._fplUpdated){
+# 		
+# 			me._can.ETA.setText(getprop("/autopilot/route-manager/wp/eta"));
+# 			me._can.Distance.setText(sprintf("%.1f",getprop("/autopilot/route-manager/wp/dist")));
+# 			me._can.Course.setText(sprintf("%03.0f",tool.course(getprop("/autopilot/route-manager/wp/bearing-deg"))));
+# 			me._can.Fuel.setText(sprintf("%.0f",getprop("/autopilot/route-manager/wp/fuelAt_GalUs")));
+# 			me._can.DestBearing.setText(sprintf("%03.0f",(tool.course(extra500.fms._fightPlan.destination.course - getprop("/environment/magnetic-variation-deg")))));
+# 			me._can.DestDistance.setText(sprintf("%.0f",extra500.fms._fightPlan.destination.distanceTo));
+# 		}else{
+# 			me._can.ETA.setText("--:--");
+# 			me._can.Distance.setText("---");
+# 			me._can.Course.setText("---");
+# 			me._can.Fuel.setText("--");
+# 			me._can.DestBearing.setText("---");
+# 			me._can.DestDistance.setText("---");
+# 		}
 	},
 	
 };

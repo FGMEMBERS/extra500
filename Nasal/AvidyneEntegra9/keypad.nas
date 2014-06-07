@@ -461,8 +461,6 @@ var FMSDATAKeypadWidget = {
 			code	: props.globals.initNode("/instrumentation/transponder/id-code",0,"INT"),
 			mode 	: props.globals.initNode("/instrumentation/transponder/inputs/knob-mode",0,"INT"),
 			nearest	: props.globals.initNode("/sim/airport/closest-airport-id","----","STRING"),
-			vsr	: props.globals.initNode("/instrumentation/fms/vsr",0,"INT"),
-			
 		};
 		m._can = {
 			code 		: m._group.getElementById("FMS_XPDR"),
@@ -493,8 +491,9 @@ var FMSDATAKeypadWidget = {
 		append(me._listeners, setlistener(me._tree.nearest,func(n){instance._onNRSTChange(n);},1,0) );
 		append(me._listeners, setlistener(me._tree.code,func(n){instance._onXPDRChange(n);},1,0) );
 		append(me._listeners, setlistener(me._tree.mode,func(n){instance._onXPDRmodeChange(n);},1,0) );
-		append(me._listeners, setlistener(me._tree.vsr,func(n){instance._onVsrChange(n);},1,0) );
-		append(me._listeners, setlistener(extra500.fms._node.sigFplUpdated,func(n){instance._onFplUpdatedChange(n);},1,1) );
+		append(me._listeners, setlistener(extra500.fms._node.vsrRate,func(n){instance._onVsrChange(n);},1,0) );
+		append(me._listeners, setlistener(extra500.fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,0));	
+		append(me._listeners, setlistener(extra500.fms._signal.fplUpdated,func(n){me._onFplUpdatedChange(n)},0,1));	
 		
 	},
 	
@@ -525,8 +524,7 @@ var FMSDATAKeypadWidget = {
 		me._can.mode.setText(IFD.XPDRMODE[me._xpdrMode]);
 	},
 	_onVsrChange : func(n){
-		me._vsr = n.getValue();
-		me._can.VSR.setText(sprintf("%i",me._vsr));
+		me._can.VSR.setText(sprintf("%i",n.getValue()));
 	},
 	handleKeyboardInput : func (key){
 		
@@ -534,16 +532,18 @@ var FMSDATAKeypadWidget = {
 	handleFmsKnobInput : func (key){
 		
 	},
-	_onFplUpdatedChange : func(n){
-		if(extra500.fms._isFPLready and extra500.fms._fplUpdated){
-			me._can.ETE.setText(global.formatTime(getprop("/autopilot/route-manager/wp/ete_sec"),"H:i:s"));
-			me._can.destETE.setText(global.formatTime(getprop("/autopilot/route-manager/ete"),"H:i:s"));
-# 				me._can.VSR.setText("---");
+	_onFplReadyChange: func(n){
+		if(extra500.fms._fightPlan.isReady){
+
 		}else{
-			me._can.ETE.setText("--:--:--");
-			me._can.destETE.setText("--:--:--");
-# 				me._can.VSR.setText("---");
+				me._can.destETE.setText("--:--:--");
+				me._can.ETE.setText("--:--:--");
 		}
+	},
+	
+	_onFplUpdatedChange : func(n){
+		me._can.destETE.setText(global.formatTime(extra500.fms._fightPlan.ete,"H:i:s"));
+		me._can.ETE.setText(global.formatTime(extra500.fms._fightPlan.wp[extra500.fms._fightPlan.currentWp].ete,"H:i:s"));
 	},
 	
 	

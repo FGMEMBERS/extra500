@@ -218,6 +218,7 @@ var FlightPlanListWidget = {
 		m._layout = "none";
 		m._cursorModeInsert = 1;
 		m._cacheSize = 0;
+		m._scrollSize = 1356 / 6;
 		
 		m._x = 400;
 		m._y = 70;
@@ -230,10 +231,15 @@ var FlightPlanListWidget = {
 		return m;
 	},
 	setListeners : func(instance) {
-		append(me._listeners, setlistener("/autopilot/route-manager/signals/waypoint-changed",func(n){me._onWaypointChange(n)},1,0));	
+# 		append(me._listeners, setlistener("/autopilot/route-manager/signals/waypoint-changed",func(n){me._onFlightPlanChange(n)},1,0));	
+# 		append(me._listeners, setlistener("/autopilot/route-manager/current-wp",func(n){me._onCurrentWaypointChange(n)},1,0));
+		append(me._listeners, setlistener(extra500.fms._signal.fplChange,func(n){me._onFlightPlanChange(n)},1,1));	
+		append(me._listeners, setlistener(extra500.fms._signal.currentWpChange,func(n){me._onCurrentWaypointChange(n)},1,1));
+		append(me._listeners, setlistener(extra500.fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,0));	
+		append(me._listeners, setlistener(extra500.fms._signal.fplUpdated,func(n){me._onFplUpdatedChange(n)},0,1));	
+		
 		append(me._listeners, setlistener("/sim/gui/dialogs/route-manager/selection",func(n){me._onSelectionChange(n)},1,1));	
-		append(me._listeners, setlistener("/autopilot/route-manager/current-wp",func(n){me._onCurrentChange(n)},1,0));
-		append(me._listeners, setlistener("/instrumentation/fms[0]/signal/fpl-updated",func(n){me._onFplUpdatedChange(n);},1,1) );
+		
 		
 	},
 	init : func(instance=me){
@@ -312,13 +318,9 @@ var FlightPlanListWidget = {
 		}
 	},
 	_drawList : func(){
-		
-		fp = flightplan();
-		me._planSize = fp.getPlanSize();
-		
 		var distSum = 0;
-		for( var i=0; i < me._planSize; i+=1 ){
-			var fmsWP = fp.getWP(i);
+		for( var i=0; i < extra500.fms._fightPlan.planSize; i+=1 ){
+			var fmsWP = extra500.fms._fpl.getWP(i);
 			
 			if ( i >= me._cacheSize ){
 				#append(me._fplItemCache , FlighPlanItem_old.new(me._can.list,i,fmsWP.wp_type));
@@ -342,13 +344,13 @@ var FlightPlanListWidget = {
 				restriction ~= "IAS : " ~ fmsWP.speed_cstr ~"kts ";
 			}
 			me._fplItemCache[i].setRestriction(restriction);
-			if(me._planSize > 1){
+			if(extra500.fms._fightPlan.planSize > 1){
 				distSum += fmsWP.leg_distance;
 
 			}
 			if(i > 0){
-				me._fplItemCache[i].setHeadline(sprintf("%s %03.0f",fmsWP.fly_type,fp.getWP(i-1).leg_bearing));
-				me._fplItemCache[i].setDistance(sprintf("%0.1f",fp.getWP(i-1).leg_distance));
+				me._fplItemCache[i].setHeadline(sprintf("%s %03.0f",fmsWP.fly_type,extra500.fms._fpl.getWP(i-1).leg_bearing));
+				me._fplItemCache[i].setDistance(sprintf("%0.1f",extra500.fms._fpl.getWP(i-1).leg_distance));
 			}else{
 				me._fplItemCache[i].setHeadline("");
 				me._fplItemCache[i].setDistance("---");
@@ -362,15 +364,15 @@ var FlightPlanListWidget = {
 			
 		}
 		me._resizeScroll();
-		#me._setSelection(me._planSize-1,"insert");
-		#me._scrollToCurrentIndex(me._planSize-1);
+		#me._setSelection(extra500.fms._fightPlan.planSize-1,"insert");
+		#me._scrollToCurrentIndex(extra500.fms._fightPlan.planSize-1);
 		me._scrollToCurrentIndex(me._selectedIndex);
 		
 	},
 	_resizeScroll : func(){
-		if(me._planSize > 6){
-			me._scrollSize = 1356 / me._planSize;
-			me._maxScroll = me._planSize -6;
+		if(extra500.fms._fightPlan.planSize > 6){
+			me._scrollSize = 1356 / extra500.fms._fightPlan.planSize;
+			me._maxScroll = extra500.fms._fightPlan.planSize -6;
 		}else{
 			me._scrollSize = 1356 / 6;
 			me._maxScroll = 6;
@@ -407,11 +409,13 @@ var FlightPlanListWidget = {
 		
 	},
 	_deleteWaypoint : func(){
-		flightplan().deleteWP(me._selectedIndex);
+		extra500.fms._fpl.deleteWP(me._selectedIndex);
 	},
-	_onWaypointChange : func(n){
+	_onFlightPlanChange : func(n){
+# 		print("FlightPlanListWidget._onFlightPlanChange() ... ");
+		
 		var value = n.getValue();
-		#print("FlightPlanWidget._onWaypointChange() ... " ~ value);
+		#print("FlightPlanWidget._onFlightPlanChange() ... " ~ value);
 		me._clearList();
 		me._drawList();
 	},
@@ -427,12 +431,12 @@ var FlightPlanListWidget = {
 		
 		
 	},
-	_onCurrentChange : func(n){
+	_onCurrentWaypointChange : func(n){
 		me._currentIndex = n.getValue();	
 		if(me._currentIndex == nil){
 			me._currentIndex = -1;
 		}
-		#print("FlightPlanWidget._onCurrentChange() ... "~me._currentIndex);
+		#print("FlightPlanWidget._onCurrentWaypointChange() ... "~me._currentIndex);
 		
 		
 		if(me._fplItemCache[me._lastCurrentIndex] != nil){
@@ -454,13 +458,13 @@ var FlightPlanListWidget = {
 		if(amount > 0){
 			if(me._cursorModeInsert==1){
 				me._selectedIndex += amount;
-				me._selectedIndex = global.clamp(me._selectedIndex,0,me._planSize-1);
+				me._selectedIndex = global.clamp(me._selectedIndex,0,extra500.fms._fightPlan.planSize-1);
 			}
 			me._setSelection(me._selectedIndex,!me._cursorModeInsert);
 		}elsif(amount < 0){
 			if(me._cursorModeInsert==0){
 				me._selectedIndex += amount;
-				me._selectedIndex = global.clamp(me._selectedIndex,0,me._planSize-1);
+				me._selectedIndex = global.clamp(me._selectedIndex,0,extra500.fms._fightPlan.planSize-1);
 			}
 			me._setSelection(me._selectedIndex,!me._cursorModeInsert);
 		}else{
@@ -508,43 +512,30 @@ var FlightPlanListWidget = {
 		extra500.fms.setSelectedWaypoint(me._selectedIndex);
 		me._lastSelectedIndex = me._selectedIndex;
 	},
-	_onFplUpdatedChange : func(){
-		if(extra500.fms._isFPLready and extra500.fms._fplUpdated){
-			var fuelAt = 0;
-			var eta = 0;
-			var ete = 0;
-			var dist = 0;
-
-			for( var i=0; i < me._planSize; i+=1 ){
-				if (i == me._currentIndex){
-					dist = getprop("/autopilot/route-manager/wp/dist");
-					eta = getprop("/autopilot/route-manager/wp/eta_sec");
-					ete = getprop("/autopilot/route-manager/wp/ete_sec");
-					fuelAt= getprop("/autopilot/route-manager/wp/fuelAt_GalUs");
-	# 					
-					me._fplItemCache[i].setDistance(sprintf("%0.1f",dist));
-					me._fplItemCache[i].setETE(global.formatTime(ete,"i:s"));
-					me._fplItemCache[i].setETA(global.formatTime(eta));
-					me._fplItemCache[i].setFuel(sprintf("%.0f",fuelAt));
-									
-				}elsif (i > me._currentIndex){
-					dist = getprop("/autopilot/route-manager/route/wp["~(i)~"]/distanceTo-nm");
-					eta = getprop("/autopilot/route-manager/route/wp["~(i)~"]/eta_sec");
-					ete = getprop("/autopilot/route-manager/route/wp["~(i)~"]/ete_sec");
-					fuelAt= getprop("/autopilot/route-manager/route/wp["~(i)~"]/fuelAt_GalUs");
-
-					me._fplItemCache[i].setDistance(sprintf("%0.1f",dist));
-					me._fplItemCache[i].setETE(global.formatTime(ete,"i:s"));
-					me._fplItemCache[i].setETA(global.formatTime(eta));
-					me._fplItemCache[i].setFuel(sprintf("%.0f",fuelAt));
-					
-				}else{
-					me._fplItemCache[i].setDistance("---");
-					me._fplItemCache[i].setETE("---");
-					me._fplItemCache[i].setETA("---");
-					me._fplItemCache[i].setFuel("---");
-				}
-				
+	_onFplReadyChange : func(n){
+		if(extra500.fms._fightPlan.isReady){
+			
+		}else{
+			for( var i=0; i < extra500.fms._fightPlan.planSize; i+=1 ){
+				me._fplItemCache[i].setDistance("---");
+				me._fplItemCache[i].setETE("---");
+				me._fplItemCache[i].setETA("---");
+				me._fplItemCache[i].setFuel("---");
+			}
+		}
+	},
+	_onFplUpdatedChange : func(n){
+		for( var i=0; i < extra500.fms._fightPlan.planSize; i+=1 ){
+			if (i >= extra500.fms._fightPlan.currentWp){
+				me._fplItemCache[i].setDistance(sprintf("%0.1f",extra500.fms._fightPlan.wp[i].distanceTo));
+				me._fplItemCache[i].setETE(global.formatTime(extra500.fms._fightPlan.wp[i].ete,"i:s"));
+				me._fplItemCache[i].setETA(global.formatTime(extra500.fms._fightPlan.wp[i].eta));
+				me._fplItemCache[i].setFuel(sprintf("%.0f",extra500.fms._fightPlan.wp[i].fuelAt));
+			}else{
+				me._fplItemCache[i].setDistance("---");
+				me._fplItemCache[i].setETE("---");
+				me._fplItemCache[i].setETA("---");
+				me._fplItemCache[i].setFuel("---");
 			}
 		}
 	},
