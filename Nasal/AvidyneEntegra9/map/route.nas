@@ -209,7 +209,7 @@ var RouteLayer = {
 			append(me._listeners, setlistener(fms._signal.fplUpdated,func(n){me._onFplUpdatedChange(n)},0,1));	
 			
 			append(me._listeners, setlistener(fms._node.ObsMode,func(n){me._onObsModeChange(n);},1,0) );
-			append(me._listeners, setlistener("/instrumentation/fms[0]/selected-course-deg",func(n){me._onObsCourseChange(n);},1,0) );
+			append(me._listeners, setlistener("/autopilot/fms-channel/obs/desired-course-deg",func(n){me._onObsCourseChange(n);},1,0) );
 			
 			
 	},
