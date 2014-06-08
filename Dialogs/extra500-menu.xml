@@ -133,6 +133,23 @@
 				       ]]></script>
 			       </binding>
 			</item>
+			<item>
+				<label>------------------</label>
+				<enabled>false</enabled>
+			</item>
+			<item>
+				<name>chat-download</name>
+				<label>chat : download location</label>
+				<binding>
+				       <command>nasal</command>
+				       <script><![CDATA[
+					       setprop("/sim/multiplay/chat", "extra500 download at http://gitorious.org/extra500/extra500");
+				       ]]></script>
+			       </binding>
+			</item>
+
+			
+			
 
 	
 		</menu>
