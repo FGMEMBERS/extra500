@@ -1365,7 +1365,7 @@
 			<output>/autopilot/fms-channel/course-target-deg</output>
 		</switch>
 
-		<fcs_function name="/autopilot/fms-channel/course-target-mag-deg">
+		<fcs_function name="course-target-mag-deg">
 			<function>
 				<difference>
 					<property>/autopilot/fms-channel/course-target-deg</property> 
