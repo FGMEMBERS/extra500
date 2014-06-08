@@ -679,6 +679,7 @@ JSBSim Extra Aircraft - Extra 500.
 	</radionav-channel>
 	<fms-channel>
 		<leg-true-course-deg type="double">0</leg-true-course-deg>
+		<course-target-mag-deg type="double">0</course-target-mag-deg>
 		<course-error-nm type="double">0</course-error-nm>
 		<cdi-deflection type="double">0</cdi-deflection>
 		<indicated-track-true-deg type="double">0</indicated-track-true-deg>
