@@ -406,6 +406,7 @@ var PositionedLayer = {
 			me.loadAirport();
 			me.loadVor();
 		}
+		me._timer.restart(me._mapOptions.range/(220/3600));
 	},
 	_onVisibilityChange : func(){
 		me._group.setVisible(me._visibility);
@@ -424,7 +425,6 @@ var PositionedLayer = {
 	},
 	setRange : func(range=100){
 		me._mapOptions.range = range;
-		me._timer.restart(me._mapOptions.range/(200/3600));
 		me.update();
 	},
 	setLand : func(value){
