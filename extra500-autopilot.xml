@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2014-06-08
+      Date:             2014-06-10
 -->
 
 <autopilot name="STEC55X">
@@ -368,7 +368,7 @@
 		</switch>
 
 <!--logic for cap and soft modes -->
-<!-- NOTE: gain-mode is changed to 0 or 1 all the time, do not use this property outside this channel!!! -->
+<!-- NOTE: gain-mode is changed to 0,1,2 or 3 all the time, do not use this property outside this channel!!! -->
 		<switch name="gainmode1">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -413,6 +413,16 @@
 			<output>/autopilot/radionav-channel/gain-mode</output>
 		</switch>
 
+<!--when in APR mode, set gain mode to 2 -->
+		<switch name="gainmode2b">
+			<default value="/autopilot/radionav-channel/gain-mode"/>
+			<test logic="AND" value="2">
+				/autopilot/mode/apr eq 1
+			</test>
+			<output>/autopilot/radionav-channel/gain-mode</output>
+		</switch>
+
+<!-- indication -->
 		<switch name="cap">
 			<default value="0"/>
 			<test logic="AND" value="1">
@@ -459,6 +469,7 @@
 			<output>/autopilot/radionav-channel/gain</output>
 		</switch>
 
+<!-- also for APR -->
 		<switch name="gains/gain-cs">
 			<default value="/autopilot/radionav-channel/gain"/>
 			<test value="/autopilot/radionav-channel/gains/gain-cs">
@@ -471,15 +482,6 @@
 			<default value="/autopilot/radionav-channel/gain"/>
 			<test value="/autopilot/radionav-channel/gains/gain-s">
 				/autopilot/radionav-channel/gain-mode eq 3
-			</test>
-			<output>/autopilot/radionav-channel/gain</output>
-		</switch>
-
-<!-- gain for LOC -->
-		<switch name="gains/gain-loc">
-			<default value="/autopilot/radionav-channel/gain"/>
-			<test value="/autopilot/radionav-channel/gains/gain-loc">
-				/autopilot/radionav-channel/is-localizer-frequency eq 1
 			</test>
 			<output>/autopilot/radionav-channel/gain</output>
 		</switch>
@@ -498,44 +500,6 @@
 				/autopilot/radionav-channel/gain-mode eq 3
 			</test>
 			<output>/autopilot/radionav-channel/lmd-hdg-error-kp</output>
-		</switch>
-
-<!-- turnrate for LOC -->
-		<switch name="turnrate-loc">
-			<default value="/autopilot/radionav-channel/lmd-hdg-error-kp"/>
-			<test value="/autopilot/radionav-channel/lmd-hdg-error-kp-loc">
-				/autopilot/radionav-channel/is-localizer-frequency eq 1
-			</test>
-			<output>/autopilot/radionav-channel/lmd-hdg-error-kp</output>
-		</switch>
-
-<!-- closure rate for LOC -->
-		<switch name="closurerate-loc">
-			<default value="/autopilot/radionav-channel/tgt-hdg-kd-n"/>
-			<test value="/autopilot/radionav-channel/tgt-hdg-kd-loc">
-				/autopilot/radionav-channel/is-localizer-frequency eq 1
-			</test>
-			<output>/autopilot/radionav-channel/tgt-hdg-kd</output>
-		</switch>
-
-<!-- min relative hdg for LOC -->
-		<switch name="relative-hdg-loc1">
-			<default value="/autopilot/radionav-channel/relative-hdg-extr/rel-hdg-n-min"/>
-			<test logic="AND" value="/autopilot/radionav-channel/relative-hdg-extr/rel-hdg-loc-min">
-				/autopilot/radionav-channel/is-localizer-frequency eq 1
-				/autopilot/radionav-channel/gain-mode ge 1
-			</test>
-			<output>/autopilot/radionav-channel/rel-hdg-min</output>
-		</switch>
-
-<!-- max relative hdg for LOC -->
-		<switch name="relative-hdg-loc2">
-			<default value="/autopilot/radionav-channel/relative-hdg-extr/rel-hdg-n-max"/>
-			<test logic="AND" value="/autopilot/radionav-channel/relative-hdg-extr/rel-hdg-loc-max">
-				/autopilot/radionav-channel/is-localizer-frequency eq 1
-				/autopilot/radionav-channel/gain-mode ge 1
-			</test>
-			<output>/autopilot/radionav-channel/rel-hdg-max</output>
 		</switch>
 
 <!--calculating the target heading to intercept the radial-->

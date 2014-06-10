@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2014-06-08
+      Date:             2014-06-10
 
 
 ************************************************************************
@@ -648,25 +648,18 @@ JSBSim Extra Aircraft - Extra 500.
 			<gain-c type="double">1.0</gain-c>
 			<gain-cs type="double">0.8</gain-cs>
 			<gain-s type="double">0.6</gain-s>
-			<gain-loc type="double">0.8</gain-loc>
 		</gains>
 		<tgt-hdg-kp type="double">0</tgt-hdg-kp>
-		<tgt-hdg-kd-n type="double">0.5</tgt-hdg-kd-n>
-		<tgt-hdg-kd-loc type="double">1</tgt-hdg-kd-loc>		
+		<tgt-hdg-kd type="double">0.5</tgt-hdg-kd>
 		<tgt-hdg-ki type="double">0</tgt-hdg-ki>
-		<relative-hdg-extr>	
-			<rel-hdg-n-min type="double">-45</rel-hdg-n-min>
-			<rel-hdg-n-max type="double">45</rel-hdg-n-max>	
-			<rel-hdg-loc-min type="double">-20</rel-hdg-loc-min>
-			<rel-hdg-loc-max type="double">20</rel-hdg-loc-max>
-		</relative-hdg-extr>				
+		<rel-hdg-min type="double">-45</rel-hdg-min>
+		<rel-hdg-max type="double">45</rel-hdg-max>	
 		<turn-rate-error-kp type="double">0.0003</turn-rate-error-kp>
 		<turn-rate-error-ki type="double">0.00</turn-rate-error-ki>
 		<turn-rate-error-kd type="double">0.0025</turn-rate-error-kd>
 		<lmd-hdg-error-kp-s type="double">1.35</lmd-hdg-error-kp-s>			<!--27deg/min divided by 20deg (SOFT)-->
 		<lmd-hdg-error-kp-cs type="double">4.05</lmd-hdg-error-kp-cs>			<!--81deg/min divided by 20deg (CAP-SOFT)-->
 		<lmd-hdg-error-kp-n type="double">9.0</lmd-hdg-error-kp-n>			<!--180deg/min divided by 20deg (NORMAL and CAP)-->
-		<lmd-hdg-error-kp-loc type="double">6.0</lmd-hdg-error-kp-loc>			<!--180deg/min divided by 20deg (LOC)-->
 		<lmd-hdg-error-ki type="double">0.0</lmd-hdg-error-ki>
 		<lmd-hdg-error-kd type="double">0.05</lmd-hdg-error-kd>
 		<cmd-ap-ail-pos-norm-raw type="double">0.0</cmd-ap-ail-pos-norm-raw>
