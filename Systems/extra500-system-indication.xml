@@ -840,10 +840,13 @@
 		<fcs_function name="aircraft/engine/n2">
    			 <function>
      			  <description>Indicated N2</description>
-				<product>
-					<property>/extra500/instrumentation/EIP/state</property>   <!--to make sure pointer is at 0 when unit is off -->
-					<property>propulsion/engine/propeller-rpm</property>
-				</product>
+				<sum>
+					<product>
+						<property>/extra500/instrumentation/EIP/state</property>   <!--to make sure pointer is at 0 when unit is off -->
+						<property>propulsion/engine/propeller-rpm</property>
+					</product>
+					<value>1</value> <!-- round the rpm up to stop jitter in instrument -->
+				</sum>
     			</function>
 		</fcs_function>
 
