@@ -122,7 +122,7 @@ var KeypadDisplayFreqencyWidget = {
 	handleInput : func (key){
 		if (num(key) != nil){
 			
-			print ("KeypadClass.handleInputCom("~key~") ... "~me._standby);
+# 			print ("KeypadClass.handleInputCom("~key~") ... "~me._standby);
 			if (me._inputIndex == 3){ # step over "."
 				me._inputIndex = 4
 			}else{
@@ -586,11 +586,13 @@ var HDGKeypadWidget = {
 	},
 	_onVisibiltyChange : func(){	
 		me._group.setVisible(me._visibility);
+		me._ifd._inputHandle["Keyboard"] = nil;
 		if(me._visibility == 1){
 			me.init(global.INIT_RUN);
 		}else{
 			me.init(global.INIT_PAUSE);
 		} 
+		
 	},
 	
 };
@@ -628,6 +630,7 @@ var AltKeypadWidget = {
 	},
 	_onVisibiltyChange : func(){	
 		me._group.setVisible(me._visibility);
+		me._ifd._inputHandle["Keyboard"] = nil;
 		if(me._visibility == 1){
 			me.init(global.INIT_RUN);
 		}else{
@@ -665,7 +668,6 @@ var KeypadClass = {
 		
 		#m._display = KeypadDisplayClass.new("extra500/instrumentation/Keypad/display","LH","Keypad.Display");
 		
-		m._inputWatchDog = 0;
 		m._inputIndex = 0;
 		m._inputValue = "";
 		m._inputPath = "";
@@ -770,7 +772,7 @@ var KeypadClass = {
 	setListeners : func(instance) {
 		append(me._listeners, setlistener(me._tree.Backlight.brightness,func(n){instance._onBrightnessChange(n);},1,0) );
 		append(me._listeners, setlistener("/instrumentation/comm-selected-index",func(n){me._onComSelectedChange(n)},1,0));	
-		append(me._listeners, setlistener(me.nTungingSource,func(n){me._onTuningSourceChange(n)},1,0));	
+		append(me._listeners, setlistener(me.nTungingSource,func(n){me._onTuningSourceChange(n)},1,1));	
 		append(me._listeners, setlistener(me.nTungingChannel,func(n){me._onTuningChannelChange(n)},1,0));	
 		append(me._listeners, setlistener("/instrumentation/transponder/ident",func(n){instance._onXPDRidentChange(n);},1,0) );
 		append(me._listeners, setlistener(fms._node.FlyVector,func(n){me._onFlyVectorsChange(n);},1,0) );
@@ -833,9 +835,9 @@ var KeypadClass = {
 	},	
 	selectWidget : func(index,widget){
 		if(me._activeWidget[index] != nil){
-			if(me._activeWidget[index] != me._widget[widget]){
+# 			if(me._activeWidget[index] != me._widget[widget]){
 				me._activeWidget[index].setVisible(0);
-			}
+# 			}
 		}
 		me._activeWidget[index] = me._widget[widget];
 		me._activeWidget[index].setVisible(1);
@@ -853,7 +855,6 @@ var KeypadClass = {
 	},
 	_resetSelection : func(){
 		#print("KeypadClass.resetSelection() ...");
-		#me._inputWatchDog = 0;
 		me.selectWidget(0,"COM");
 		me.selectWidget(1,"FMS");
 		me.onComSelect(getprop("/instrumentation/com2-selected"));
@@ -948,8 +949,9 @@ var KeypadClass = {
 		extra500.autopilot.nSetHeadingBugDeg.setValue(hdg);
 		
 		me.selectWidget(1,"HDG");
-		me._inputWatchDog = 0;
-		me._inputHandle["Keyboard"] = nil;
+		me._timerResetInput.restart(1);
+		me._timerResetSelection.restart(3);
+# 		me._inputHandle["Keyboard"] = nil;
 	},
 	onAdjustHeading : func(amount=nil){
 		if (amount!=nil){
@@ -966,7 +968,7 @@ var KeypadClass = {
 		me.selectWidget(1,"HDG");
 		me._timerResetInput.restart(1);
 		me._timerResetSelection.restart(3);
-		me._inputHandle["Keyboard"] = nil;
+# 		me._inputHandle["Keyboard"] = nil;
 	},
 	onHeadingSync : func(){
 		var hdg = me.nHeading.getValue();
@@ -976,7 +978,7 @@ var KeypadClass = {
 		me.selectWidget(1,"HDG");
 		me._timerResetInput.restart(1);
 		me._timerResetSelection.restart(3);
-		me._inputHandle["Keyboard"] = nil;
+# 		me._inputHandle["Keyboard"] = nil;
 	},
 	onSetAltitude : func(alt){
 		alt = global.clamp(alt,0,50000);
@@ -985,7 +987,7 @@ var KeypadClass = {
 		me.selectWidget(1,"ALT");
 		me._timerResetInput.restart(1);
 		me._timerResetSelection.restart(3);
-		me._inputHandle["Keyboard"] = nil;
+# 		me._inputHandle["Keyboard"] = nil;
 	},
 	onAdjustAltitude : func(amount=nil){
 		if (amount!=nil){
@@ -1002,7 +1004,7 @@ var KeypadClass = {
 		me.selectWidget(1,"ALT");
 		me._timerResetInput.restart(1);
 		me._timerResetSelection.restart(3);
-		me._inputHandle["Keyboard"] = nil;
+# 		me._inputHandle["Keyboard"] = nil;
 	},
 	onAltitudeSync : func(){
 		var alt = me.nAltitude.getValue();
@@ -1012,10 +1014,10 @@ var KeypadClass = {
 		me.selectWidget(1,"ALT");
 		me._timerResetInput.restart(1);
 		me._timerResetSelection.restart(3);
-		me._inputHandle["Keyboard"] = nil;
+# 		me._inputHandle["Keyboard"] = nil;
 	},
 	onFMS : func(amount=0){
-		print("KeypadClass.onFMS() ... "~amount);
+# 		print("KeypadClass.onFMS() ... "~amount);
 		me._timerResetInput.restart(5);
 		me._timerResetSelection.restart(15);
 		if (me._inputHandle["FmsKnob"] != nil){
@@ -1023,13 +1025,13 @@ var KeypadClass = {
 		}
 	},
 	onFMSpush : func(){
-		print("KeypadClass.onFMSpush() ... ");
+# 		print("KeypadClass.onFMSpush() ... ");
 		me._timerResetInput.restart(5);
 		me._timerResetSelection.restart(15);
 		
 	},
 	onKey : func(key){
-		print("KeypadClass.onKey() ... "~key);
+# 		print("KeypadClass.onKey() ... "~key);
 		me._timerResetInput.restart(5);
 		me._timerResetSelection.restart(15);
 		if (me._inputHandle["Keyboard"] != nil){
@@ -1042,7 +1044,6 @@ var KeypadClass = {
 # 			if (me._inputIndex >= 4){me._inputIndex = 0}
 # 			me._inputValue = substr(me._inputValue,0,me._inputIndex) ~ key ~ substr(me._inputValue,me._inputIndex+1);
 # 			setprop(me._inputPath,me._inputValue);
-# 			me._inputWatchDog = 0;
 # 			me._inputIndex +=1;
 # 			
 # 		}
@@ -1054,7 +1055,7 @@ var KeypadClass = {
 		
 	},
 	onFreqList : func(){
-		print("KeypadClass.onFreqList() ...");
+# 		print("KeypadClass.onFreqList() ...");
 		
 	},
 	onAux : func(){
@@ -1094,15 +1095,15 @@ var KeypadClass = {
 		setprop("/instrumentation/transponder/inputs/ident-btn","true");	 	
 	},
 	onPhone : func(){
-		print("KeypadClass.onPhone() ...");
+		print("KeypadClass.onPhone() ... not yet implemented.");
 		
 	},
 	onSound : func(){
-		print("KeypadClass.onSound() ...");
+		print("KeypadClass.onSound() ... not yet implemented.");
 		
 	},
 	onProc : func(){
-		print("KeypadClass.onProc() ...");
+		print("KeypadClass.onProc() ... not yet implemented.");
 		
 	},
 	onD : func(value=nil){
@@ -1114,27 +1115,27 @@ var KeypadClass = {
 		fms.flyVectors();
 	},
 	onNRST : func(){
-		print("KeypadClass.onNRST() ...");
+		print("KeypadClass.onNRST() ... not yet implemented.");
 		
 	},
 	onMap : func(){
-		print("KeypadClass.onMap() ...");
+		print("KeypadClass.onMap() ... not yet implemented.");
 		
 	},
 	onCLR : func(){
-		print("KeypadClass.onCLR() ...");
+		print("KeypadClass.onCLR() ... not yet implemented.");
 		
 	},
 	onCNCL : func(){
-		print("KeypadClass.onCNCL() ...");
+		print("KeypadClass.onCNCL() ... not yet implemented.");
 		
 	},
 	onSYB : func(){
-		print("KeypadClass.onSYB() ...");
+		print("KeypadClass.onSYB() ... not yet implemented.");
 		
 	},
 	onEnter : func(){
-		print("KeypadClass.onEnter() ...");
+		print("KeypadClass.onEnter() ... not yet implemented.");
 		
 	},
 	onCom1Volume : func(amount=nil){
@@ -1152,11 +1153,11 @@ var KeypadClass = {
 		setprop("/instrumentation/comm[1]/volume",value);
 	},
 	onCom1SQ : func(value){
-		print("KeypadClass.onCom1SQ() ... "~value);
+# 		print("KeypadClass.onCom1SQ() ... "~value);
 		me._nCom1SQ.setValue(value);
 	},
 	onCom2SQ : func(value){
-		print("KeypadClass.onCom2SQ() ... "~value);
+# 		print("KeypadClass.onCom2SQ() ... "~value);
 		me._nCom2SQ.setValue(value);
 	},
 	onCom1Scroll : func(amount=nil){
@@ -1170,16 +1171,16 @@ var KeypadClass = {
 		me._activeWidget[0]._channel[1].swap();
 	},
 	onCursorPush : func(value) {
-		print("KeypadClass.onCursorPush() ... "~value);
+# 		print("KeypadClass.onCursorPush() ... "~value);
 		me._nCursorPush.setValue(value);
 	},
 	onCursorScroll : func(amount) {
-		print("KeypadClass.onCursorScroll() ..."~amount);
+# 		print("KeypadClass.onCursorScroll() ..."~amount);
 		me._cursorScroll += amount;
 		me._nCursorScroll.setValue(me._cursorScroll);
 	},
 	onCursor : func(x=0,y=0) {
-		print("KeypadClass.onCursor() ... x:"~x~" y:"~y);
+# 		print("KeypadClass.onCursor() ... x:"~x~" y:"~y);
 		me._nCursorX.setValue(x);
 		me._nCursorY.setValue(y);
 	},
