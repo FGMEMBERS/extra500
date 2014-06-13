@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg 
-#      Date:             27.05.2014
+#      Date:             13.06.2014
 #
 
 var AutopilotClass = {
@@ -229,6 +229,7 @@ var AutopilotClass = {
 			me.nModeHeading.setValue(1);
 			me.nModeNav.setValue(0);
 			me.nModeNavGpss.setValue(0);
+			me.nModeRev.setValue(0);
 			me.nModeGSArmed.setValue(0);
 			me.nModeGSFollow.setValue(0);
 			setprop("/autopilot/mode/cws-armed",0);
