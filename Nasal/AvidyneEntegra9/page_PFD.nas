@@ -51,6 +51,8 @@ var AutopilotWidget = {
 			ModeGS	 	: m._group.getElementById("AP_GS").setVisible(0),
 			ModeDSBL 	: m._group.getElementById("AP_DSBL").setVisible(0),
 			ModeFD 		: m._group.getElementById("AP_FD").setVisible(0),
+			ModeREV		: m._group.getElementById("AP_REV").setVisible(0),
+			
 		};
 		me._state	= 0;
 		me._ready	= 0;
@@ -68,6 +70,7 @@ var AutopilotWidget = {
 		append(me._listeners, setlistener("/autopilot/mode/heading",func(n){me._onHDG(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/mode/nav",func(n){me._onNAV(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/mode/apr",func(n){me._onAPR(n)},1,0));
+		append(me._listeners, setlistener("/autopilot/mode/rev",func(n){me._onREV(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/mode/gpss",func(n){me._onGPSS(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/mode/cws",func(n){me._onCWS(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/mode/cws-armed",func(n){me._onCWSarmed(n)},1,0));
@@ -124,6 +127,9 @@ var AutopilotWidget = {
 	},
 	_onAPR : func(n){
 		me._can.ModeAPR.setVisible(n.getValue());
+	},
+	_onREV : func(n){
+		me._can.ModeREV.setVisible(n.getValue());
 	},
 	_onGPSS : func(n){
 		me._can.ModeGPSS.setVisible(n.getValue());
