@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2014-06-10
+      Date:             2014-06-15
 
 
 ************************************************************************
@@ -620,6 +620,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<gs-follow type="int">0</gs-follow>
 		<rev type="int">0</rev>
 		<apr type="int">0</apr>
+		<apr-rev type="int">0</apr-rev>
 		<rdy type="int">0</rdy>
 		<cws type="int">0</cws>
 		<cws-armed type="int">0</cws-armed>
@@ -650,7 +651,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<gain-s type="double">0.6</gain-s>
 		</gains>
 		<tgt-hdg-kp type="double">0</tgt-hdg-kp>
-		<tgt-hdg-kd type="double">0.5</tgt-hdg-kd>
+		<tgt-hdg-kd-n type="double">0.5</tgt-hdg-kd-n>
 		<tgt-hdg-ki type="double">0</tgt-hdg-ki>
 		<rel-hdg-min type="double">-45</rel-hdg-min>
 		<rel-hdg-max type="double">45</rel-hdg-max>	

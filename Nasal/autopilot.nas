@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg 
-#      Date:             13.06.2014
+#      Date:             15.06.2014
 #
 
 var AutopilotClass = {
@@ -187,6 +187,7 @@ var AutopilotClass = {
 		me.nModeNavGpss.setValue(0);
 		me.nModeApr.setValue(0);
 		me.nModeRev.setValue(0);
+		setprop("/autopilot/mode/apr-rev",0);
 		me.nModeAlt.setValue(0);
 		me.nModeVs.setValue(0);
 		me.nModeDiseng.setValue(1);
@@ -230,6 +231,7 @@ var AutopilotClass = {
 			me.nModeNav.setValue(0);
 			me.nModeNavGpss.setValue(0);
 			me.nModeRev.setValue(0);
+			setprop("/autopilot/mode/apr-rev",0);
 			me.nModeGSArmed.setValue(0);
 			me.nModeGSFollow.setValue(0);
 			setprop("/autopilot/mode/cws-armed",0);
@@ -420,6 +422,7 @@ var AutopilotClass = {
 			me.nModeNavGpss.setValue(0);
 			me.nModeApr.setValue(0);
 			me.nModeRev.setValue(0);
+			setprop("/autopilot/mode/apr-rev",0);
 			me.nModeAlt.setValue(0);
 			me.nModeVs.setValue(1);
 			me.nModeGSArmed.setValue(0);

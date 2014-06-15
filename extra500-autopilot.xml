@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2014-06-13
+      Date:             2014-06-15
 -->
 
 <autopilot name="STEC55X">
@@ -416,8 +416,9 @@
 <!--when in APR mode, set gain mode to 2 -->
 		<switch name="gainmode2b">
 			<default value="/autopilot/radionav-channel/gain-mode"/>
-			<test logic="AND" value="2">
+			<test logic="OR" value="2">
 				/autopilot/mode/apr eq 1
+				/autopilot/mode/apr-rev eq 1
 			</test>
 			<output>/autopilot/radionav-channel/gain-mode</output>
 		</switch>
@@ -432,7 +433,6 @@
 				</test>
 				<test  logic="OR" value="1">
 					/autopilot/radionav-channel/is-localizer-frequency eq 0
-					/autopilot/mode/rev eq 1
 				</test>
 				<test logic="OR" value="1">
 					/instrumentation/nav-source eq 0
@@ -451,7 +451,6 @@
 				</test>
 				<test  logic="OR" value="1">
 					/autopilot/radionav-channel/is-localizer-frequency eq 0
-					/autopilot/mode/rev eq 1
 				</test>
 				<test logic="OR" value="1">
 					/instrumentation/nav-source eq 0
@@ -502,6 +501,23 @@
 				/autopilot/radionav-channel/gain-mode eq 3
 			</test>
 			<output>/autopilot/radionav-channel/lmd-hdg-error-kp</output>
+		</switch>
+
+		<fcs_function name="/autopilot/radionav-channel/tgt-hdg-kd-rev">
+			<function>
+				<product>
+					<property>/autopilot/radionav-channel/tgt-hdg-kd-n</property>
+					<value>-1</value>
+				</product>
+			</function>
+		</fcs_function>
+
+		<switch name="tgt-hdg-kd for rev">
+			<default value="/autopilot/radionav-channel/tgt-hdg-kd-n"/>
+			<test value="/autopilot/radionav-channel/tgt-hdg-kd-rev">
+				/autopilot/mode/rev eq 1
+			</test>
+			<output>/autopilot/radionav-channel/tgt-hdg-kd</output>
 		</switch>
 
 <!--calculating the target heading to intercept the radial-->
@@ -819,12 +835,30 @@
 				</test>
 				<test logic="AND" value="1">
 					/autopilot/mode/nav eq 1
-					/autopilot/mode/rev eq 0 
+					/autopilot/mode/rev eq 0
 					/autopilot/radionav-channel/is-localizer-frequency eq 1
 					/autopilot/radionav-channel/timer-cap gt 5
 				</test>
 			</test>
 			<output>/autopilot/mode/apr</output>
+		</switch>
+
+<!-- setting APR-REV mode ON automatically-->
+		<switch name="APRREVmodeon">
+			<default value="/autopilot/mode/apr-rev"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/instrumentation/nav-source eq 0
+					/instrumentation/nav-source eq 1
+				</test>
+				<test logic="AND" value="1">
+					/autopilot/mode/nav eq 1
+					/autopilot/mode/rev eq 1
+					/autopilot/radionav-channel/is-localizer-frequency eq 1
+					/autopilot/radionav-channel/timer-cap gt 5
+				</test>
+			</test>
+			<output>/autopilot/mode/apr-rev</output>
 		</switch>
 
 <!-- switching APR mode off when nav mode is not on, on FMS, not tuned to localizer freq, CDI needle defl more then 1 (less then -1)-->
@@ -837,6 +871,18 @@
 				/autopilot/radionav-channel/timer-full-defl eq 1
 			</test>
 			<output>/autopilot/mode/apr</output>
+		</switch>
+
+<!-- same for rev-apr-->
+		<switch name="APRREVmodeoff">
+			<default value="/autopilot/mode/apr-rev"/>
+			<test logic="OR" value="0">
+				/autopilot/mode/nav eq 0
+				/instrumentation/nav-source eq 2
+				/autopilot/radionav-channel/is-localizer-frequency eq 0
+				/autopilot/radionav-channel/timer-full-defl eq 1
+			</test>
+			<output>/autopilot/mode/apr-rev</output>
 		</switch>
 
 	</channel>
