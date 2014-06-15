@@ -175,7 +175,7 @@ var DeicingSystemClass = {
 #		m._bootsTimer = 0;
 		
 # uhm, below some other calc is made? 
-		m._PropellerHeat 	= HeatClass.new("/extra500/system/deice/Propeller","Propeller Heat",0.0);
+		m._PropellerHeat 	= HeatClass.new("/extra500/system/deice/Propeller","Propeller Heat",450.0);
 		eSystem.circuitBreaker.PROP_HT.outputAdd(m._PropellerHeat);
 		
 		m._StallWarner 		= HeatClass.new("/extra500/system/pitot/StallWarn","Stall Warner",0.4);
@@ -194,6 +194,8 @@ var DeicingSystemClass = {
 		append(me._listeners, setlistener(me._WindshieldCtrl._nState,func(n){instance._checkWindshieldHeat();},1,0) );
 		append(me._listeners, setlistener(me._nWowNose,func(n){instance._checkPitot();},1,0) );
 		append(me._listeners, setlistener("/fdm/jsbsim/aircraft/stallwarner/state",func(n){instance._onStallWarning(n);},1,0) );
+		append(me._listeners, setlistener(eSystem.circuitBreaker.PROP_HT._nVoltOut,func(n){instance.update();},1,0) );
+		
 	},
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
@@ -240,10 +242,14 @@ var DeicingSystemClass = {
 #			deiceSystem.update();
 #		};
 
-		
-		
-#		me._timerLoop = maketimer(5.0,me,DeicingSystemClass.update);
-#		me._timerLoop.start();
+# 		eSystem.switch.Propeller.onStateChange(eSystem.switch.Propeller._nState);
+# 		eSystem.switch.PitotL.onStateChange(eSystem.switch.PitotL._nState);
+# 		eSystem.switch.PitotR.onStateChange(eSystem.switch.PitotR._nState);
+# 		eSystem.switch.Windshield.onStateChange(eSystem.switch.Windshield._nState);
+		me._PropellerHeat._nWatt.setValue(456);
+		deiceSystem.update();
+		me._timerLoop = maketimer(5.0,me,DeicingSystemClass.update);
+		me._timerLoop.start();
 	},
 	_onStallWarning : func(n){
 # 		var warning = n.getBoolValue();
@@ -325,11 +331,21 @@ var DeicingSystemClass = {
 		
 #FIXME: RPM is not updated and also not when aircraft is switched on.		
 		if (eSystem.switch.Propeller._state == 1){
-			var volt = getprop("/extra500/panel/CircuitBreaker/BankC/PropellerHeat/voltOut");
-#			var watt =( ( getprop("/engines/engine/rpm") * 0.03547/) + 384 ) / 24 * volt;
-			var watt = 456/24* volt;
-#			interpolate(me._PropellerHeat._nWatt,watt,me._dt);
-			me._PropellerHeat._nWatt.setValue(watt);
+			var watt = 0;
+			var volt = 0;
+			var norm = 0;
+			var amp  = 0;
+			volt = eSystem.circuitBreaker.PROP_HT._nVoltOut.getValue();
+# 			watt =( ( getprop("/engines/engine/rpm") * 0.03547) + 384 ) / 24 * volt;
+			norm = global.clamp(getprop("/engines/engine/rpm")/2030,0,0.5) + global.clamp((- 0.05*me._temperature)+0.5,0,0.5) ;
+# 			var watt = 456/24* volt;
+			amp = 15 + 6 * norm;
+# 			watt = 384 + 72 * norm;
+# 			watt = watt / 24 * volt;
+			watt = amp * volt;
+			watt = global.clamp(watt,384,600);
+			interpolate(me._PropellerHeat._nWatt,watt,me._dt);
+# 			me._PropellerHeat._nWatt.setValue(watt);
 		}
 		
 	}

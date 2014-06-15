@@ -1386,7 +1386,7 @@ var DeviationIndicatorWidget = {
 	_onApModeRevChange : func(n){
 		
 		me._apModeRev = n.getValue();
-		print("DeviationIndicatorWidget._onApModeRevChange("~me._apModeRev~")");
+# 		print("DeviationIndicatorWidget._onApModeRevChange("~me._apModeRev~")");
 	},
 	update20Hz : func(now,dt){
 
