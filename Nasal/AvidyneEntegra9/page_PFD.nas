@@ -1037,6 +1037,7 @@ var NavSourceWidget = {
 		me._ptree.Distance 	= props.globals.initNode(me._PATH[me._SOURCE[me._source]].distance,0,"DOUBLE");
 		me._ptree.Pointer	= props.globals.initNode(me._PATH[me._SOURCE[me._source]].Pointer,0,"DOUBLE");
 
+			
 		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].isInRange,func(n){me._onInRangeChange(n);},1,0));
 		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].isLOC,func(n){me._onIsLocChange(n);},1,0));
 		append(me._sourceListeners, setlistener(me._PATH[me._SOURCE[me._source]].isGSinRange,func(n){me._onGsInRangeChange(n);},1,0));
@@ -1366,7 +1367,26 @@ var DeviationIndicatorWidget = {
 			VDI		: m._group.getElementById("VDI"),
 			VDI_Needle	: m._group.getElementById("VDI_Needle"),
 		};
+		m._apModeRev = 0;
 		return m;
+	},
+	setListeners : func(instance) {
+
+		append(me._listeners, setlistener(extra500.autopilot.nModeRev,func(n){me._onApModeRevChange(n);},1,0));
+		
+	},
+	_onVisibiltyChange : func(){
+		if(me._visibility == 1){
+			me.setListeners(me);
+		}else{
+			me.removeListeners();
+		}
+	},
+	
+	_onApModeRevChange : func(n){
+		
+		me._apModeRev = n.getValue();
+		print("DeviationIndicatorWidget._onApModeRevChange("~me._apModeRev~")");
 	},
 	update20Hz : func(now,dt){
 
@@ -1393,7 +1413,7 @@ var DeviationIndicatorWidget = {
 					me._can.DI_Source_Text.setText("VOR");
 				}
 				
-				if (me._Page._widget.NavSource._isGSinRange == 1){
+				if (me._Page._widget.NavSource._isGSinRange == 1 and (me._apModeRev == 0) ){
 					me._can.VDI_Needle.setTranslation(0, me._Page._widget.NavSource._verticalDeviation * 240);
 					me._can.DI_Source_Text.setText("ILS");
 					me._can.VDI.setVisible(1);
