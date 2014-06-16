@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Aug 24 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             28.08.2013
+#      Last change:      Eric van den Berg
+#      Date:             16.06.2014
 #
 
 
@@ -451,6 +451,30 @@ var FlightPlanListWidget = {
 		me._setSelection(me._currentIndex);
 		me._scrollToCurrentIndex(me._currentIndex);
 		me._lastCurrentIndex = me._currentIndex;
+
+		# getting and setting the frequency in nav1 if new current waypoint is a VOR or destination ILS (course is set in extra500-autopilot.xml)
+		var currwp = getprop("/autopilot/route-manager/current-wp");
+		var freq = nil;
+		if ( currwp >= 0 ) {
+			var flp = flightplan();
+			if (flp.getWP(flp.current).wp_role == "approach" == 1) {
+# is approach, looking for ILS freq
+				var navaid = airportinfo(getprop("/autopilot/route-manager/destination/airport"));
+				var runway = navaid.runways[getprop("/autopilot/route-manager/destination/runway")].ils;
+				var freq = runway.frequency;
+			} else {
+# looking for VOR 
+				var activewpid = getprop("/autopilot/route-manager/route/wp["~currwp~"]/id");
+				var navaid = navinfo("vor",activewpid);
+				if (size(navaid) != 0 ) {
+					var freq = navaid[0].frequency;
+				}
+			}
+# set frequency
+			if (freq != nil) {
+				setprop("/instrumentation/nav/frequencies/selected-mhz",freq/100);
+			}	
+		}
 		
 	},
 	_adjustSelection : func(amount){
@@ -536,6 +560,19 @@ var FlightPlanListWidget = {
 				me._fplItemCache[i].setETE("---");
 				me._fplItemCache[i].setETA("---");
 				me._fplItemCache[i].setFuel("---");
+			}
+		}
+
+		# getting and setting the frequency in nav1 if new current waypoint is a VOR (course is set in extra500-autopilot.xml)
+		var currwp = getprop("/autopilot/route-manager/current-wp");
+		if ( currwp >= 0 ) {
+			var activewpid = getprop("/autopilot/route-manager/route/wp["~currwp~"]/id");
+			var navaid = navinfo(activewpid);
+			if (size(navaid) != 0 ) {
+				var freq = navaid[0].frequency;
+				if (freq != nil) {
+					setprop("/instrumentation/nav/frequencies/selected-mhz",freq/100);
+				}
 			}
 		}
 	},
