@@ -462,13 +462,16 @@ var FlightPlanListWidget = {
 # is approach, looking for ILS freq
 				var navaid = airportinfo(getprop("/autopilot/route-manager/destination/airport"));
 				var runway = navaid.runways[getprop("/autopilot/route-manager/destination/runway")].ils;
-				var freq = runway.frequency;
-				var course = runway.course;
+				if (runway != nil) {
+					var freq = runway.frequency;
+					var course = runway.course;
 # set course
-				if (course != nil) {
-					setprop("/autopilot/fms-channel/autotuning/approach",1);
-					setprop("/instrumentation/nav/radials/selected-deg",course);
+					if (course != nil) {
+						setprop("/autopilot/fms-channel/autotuning/approach",1);
+						setprop("/instrumentation/nav/radials/selected-deg",course);
+					}
 				}
+
 			} else {
 				setprop("/autopilot/fms-channel/autotuning/approach",0);
 # looking for VOR 
