@@ -171,12 +171,14 @@ var FlightManagementSystemClass = {
 # is approach, looking for ILS freq
 				var apt = airportinfo(getprop("/autopilot/route-manager/destination/airport"));
 				var ils = apt.runways[getprop("/autopilot/route-manager/destination/runway")].ils;
-				freq = ils.frequency;
-				course = ils.course;
+				if(ils != nil){
+					freq = ils.frequency;
+					course = ils.course;
 # set course
-				if (course != nil) {
-					setprop("/autopilot/fms-channel/autotuning/approach",1);
-					setprop("/instrumentation/nav/radials/selected-deg",course);
+					if (course != nil) {
+						setprop("/autopilot/fms-channel/autotuning/approach",1);
+						setprop("/instrumentation/nav/radials/selected-deg",course);
+					}
 				}
 				
 			} else {
