@@ -160,9 +160,49 @@ var FlightManagementSystemClass = {
 		if ( me._fightPlan.currentWp >= 0 ) {
 #			settimer(func(){me._nextGpssBearing()},1);
 			me._nextGpssBearing();
+		
+		
+		
+# getting and setting the frequency in nav1 if new current waypoint is a VOR or destination ILS (course is set in extra500-autopilot.xml)
+			var freq = nil;
+			var course = nil;
+			var currentWP = me._fpl.currentWP();
+			if (currentWP.wp_role == "approach") {
+# is approach, looking for ILS freq
+				var apt = airportinfo(getprop("/autopilot/route-manager/destination/airport"));
+				var ils = apt.runways[getprop("/autopilot/route-manager/destination/runway")].ils;
+				freq = ils.frequency;
+				course = ils.course;
+# set course
+				if (course != nil) {
+					setprop("/autopilot/fms-channel/autotuning/approach",1);
+					setprop("/instrumentation/nav/radials/selected-deg",course);
+				}
+				
+			} else {
+				setprop("/autopilot/fms-channel/autotuning/approach",0);
+# looking for VOR 
+# 					var activewpid = getprop("/autopilot/route-manager/route/wp["~me._fightPlan.currentWp~"]/id");
+				var navaid = navinfo("vor",currentWP.id);
+				if (size(navaid) != 0 ) {
+					freq = navaid[0].frequency;
+#					course = getprop("/autopilot/route-manager/route/wp["~currwp~"]/leg-bearing-true-deg");
+				}
+			}
+# set frequency
+			if (freq != nil) {
+				setprop("/instrumentation/nav/frequencies/selected-mhz",freq/100);
+			}
+
+			
+		}else {
+			setprop("/autopilot/fms-channel/autotuning/approach",0);
 		}
+		
 		me._node.btnObsMode.setValue(0);
 		me._signal.currentWpChange.setValue(me._fightPlan.currentWp);
+		
+		
 	},
 	_nextGpssBearing : func(){
 		setprop("/autopilot/fms-channel/gpss/next-bearing-deg",getprop("/autopilot/route-manager/route/wp["~me._fightPlan.currentWp~"]/leg-bearing-true-deg"));
