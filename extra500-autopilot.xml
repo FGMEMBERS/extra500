@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2014-06-16
+      Date:             2014-06-19
 -->
 
 <autopilot name="STEC55X">
@@ -1168,14 +1168,28 @@
 			<output>/autopilot/fms-channel/obs/desired-course-deg</output>
 		</switch>
 
+<!-- AUTOTUNING -->
+<!-- see also /nasal/AvidyneEntregra9/page_FMS.nas; _onCurrentWaypointChange -->
 <!-- setting the course of nav1 automatically when fms active and selected -->
 		<switch name="courseNav1set">
 			<default value="/instrumentation/nav/radials/selected-deg"/>
 			<test logic="AND" value="/autopilot/fms-channel/leg-mag-course-deg">
 				/autopilot/route-manager/current-wp gt -1
 				/instrumentation/nav-source eq 2
+				/autopilot/fms-channel/autotuning/approach eq 0
 			</test>
 			<output>/instrumentation/nav/radials/selected-deg</output>
+		</switch>
+
+		<switch name="AutoSwitchNav1">
+			<default value="/instrumentation/nav-source"/>
+			<test logic="AND" value="0">
+				/extra500/instrumentation/IFD-LH/settings/autonav1 eq 1
+				/autopilot/fms-channel/autotuning/approach eq 1
+				/instrumentation/nav-source eq 2
+				/autopilot/radionav-channel/timer-cap gt 10
+			</test>
+			<output>/instrumentation/nav-source</output>
 		</switch>
 
 <!-- GPSS calcs -->

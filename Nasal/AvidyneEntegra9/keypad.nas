@@ -17,7 +17,7 @@
 #      Date: Jun 27 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             06.06.14
+#      Date:             19.06.14
 #
 
 
@@ -1080,7 +1080,7 @@ var KeypadClass = {
 	},
 	onVFR : func(){
 		me.selectWidget(1,"XPDR");
-		setprop("/instrumentation/transponder/id-code",getprop("/instrumentation/transponder/vfr-id") );
+		setprop("/instrumentation/transponder/id-code",getprop("/extra500/instrumentation/IFD-LH/settings/default-sqwuak") );
 # FIXME: the VFR key backlight should be set to 1 as long as the transponder widget is visible: me.setKeyBacklight("VFR",1);		
 	},
 	onMode : func(){

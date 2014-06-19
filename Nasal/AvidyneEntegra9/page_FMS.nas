@@ -17,7 +17,7 @@
 #      Date: Aug 24 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             16.06.2014
+#      Date:             19.06.2014
 #
 
 
@@ -455,6 +455,7 @@ var FlightPlanListWidget = {
 		# getting and setting the frequency in nav1 if new current waypoint is a VOR or destination ILS (course is set in extra500-autopilot.xml)
 		var currwp = getprop("/autopilot/route-manager/current-wp");
 		var freq = nil;
+		var course = nil;
 		if ( currwp >= 0 ) {
 			var flp = flightplan();
 			if (flp.getWP(flp.current).wp_role == "approach" == 1) {
@@ -462,18 +463,29 @@ var FlightPlanListWidget = {
 				var navaid = airportinfo(getprop("/autopilot/route-manager/destination/airport"));
 				var runway = navaid.runways[getprop("/autopilot/route-manager/destination/runway")].ils;
 				var freq = runway.frequency;
+				var course = runway.course;
+# set course
+				if (course != nil) {
+					setprop("/autopilot/fms-channel/autotuning/approach",1);
+					setprop("/instrumentation/nav/radials/selected-deg",course);
+				}
 			} else {
+				setprop("/autopilot/fms-channel/autotuning/approach",0);
 # looking for VOR 
 				var activewpid = getprop("/autopilot/route-manager/route/wp["~currwp~"]/id");
 				var navaid = navinfo("vor",activewpid);
 				if (size(navaid) != 0 ) {
 					var freq = navaid[0].frequency;
+#					var course = getprop("/autopilot/route-manager/route/wp["~currwp~"]/leg-bearing-true-deg");
 				}
 			}
 # set frequency
 			if (freq != nil) {
 				setprop("/instrumentation/nav/frequencies/selected-mhz",freq/100);
-			}	
+			}
+
+		} else {
+			setprop("/autopilot/fms-channel/autotuning/approach",0);
 		}
 		
 	},
@@ -563,18 +575,6 @@ var FlightPlanListWidget = {
 			}
 		}
 
-		# getting and setting the frequency in nav1 if new current waypoint is a VOR (course is set in extra500-autopilot.xml)
-		var currwp = getprop("/autopilot/route-manager/current-wp");
-		if ( currwp >= 0 ) {
-			var activewpid = getprop("/autopilot/route-manager/route/wp["~currwp~"]/id");
-			var navaid = navinfo(activewpid);
-			if (size(navaid) != 0 ) {
-				var freq = navaid[0].frequency;
-				if (freq != nil) {
-					setprop("/instrumentation/nav/frequencies/selected-mhz",freq/100);
-				}
-			}
-		}
 	},
 	update : func(){
 		

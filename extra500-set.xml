@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2014-06-16
+      Date:             2014-06-19
 
 
 ************************************************************************
@@ -486,6 +486,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<path>/consumables/fuel/tank[4]/level-gal_us</path>
 		<path>/consumables/fuel/tank[5]/level-gal_us</path>
 		<path>/consumables/fuel/tank[6]/level-gal_us</path>
+		<path>/extra500/instrumentation/IFD-LH/settings</path>
 		<path>/extra500/instrumentation/panelventswitchL</path>
 		<path>/extra500/instrumentation/panelventswitchR</path>
 		<path>/extra500/instrumentation/Audiopanel/knobs</path>
@@ -686,6 +687,9 @@ JSBSim Extra Aircraft - Extra 500.
 			<turn-time-s type="double">0.0</turn-time-s>
 			<in-turn2>0</in-turn2>
 		</gpss>
+		<autotuning>
+			<approach type="int">0</approach>
+		</autotuning>
 		<dto>
 			<true-course-deg type="double">0</true-course-deg>
 		</dto>
@@ -1106,7 +1110,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<knob-mode>3</knob-mode>
 		<auto-select>1</auto-select>
 	</inputs>
-	<vfr-id type="int">7000</vfr-id>
+	<!--vfr-id type="int">7000</vfr-id-->
     </transponder>
 
     <turn-indicator>
@@ -1481,6 +1485,10 @@ JSBSim Extra Aircraft - Extra 500.
 		</TurnCoordinator>
 		<IFD-LH>
 			<state type="bool">false</state>
+			<settings>
+				<autonav1 type="bool">true</autonav1>
+				<default-sqwuak type="int">7000</default-sqwuak>
+			</settings>
 		</IFD-LH>
 		<IFD-RH>
 			<state type="bool">false</state>
