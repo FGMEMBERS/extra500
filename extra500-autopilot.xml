@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2014-06-19
+      Date:             2014-06-20
 -->
 
 <autopilot name="STEC55X">
@@ -1169,7 +1169,7 @@
 		</switch>
 
 <!-- AUTOTUNING -->
-<!-- see also /nasal/AvidyneEntregra9/page_FMS.nas; _onCurrentWaypointChange -->
+<!-- see also /nasal/AvidyneEntregra9/fms.nas; _onCurrentWaypointChange -->
 <!-- setting the course of nav1 automatically when fms active and selected -->
 		<switch name="courseNav1set">
 			<default value="/instrumentation/nav/radials/selected-deg"/>
@@ -1181,12 +1181,62 @@
 			<output>/instrumentation/nav/radials/selected-deg</output>
 		</switch>
 
+		<fcs_function name="/autopilot/fms-channel/autotuning/d-psi-deg-1">
+			<function>
+				<difference> 
+						<property>/instrumentation/nav/radials/selected-deg</property> 
+						<property>/autopilot/radionav-channel/heading-deg</property> 
+				</difference>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/autopilot/fms-channel/autotuning/d-psi-deg-2">
+			<function>
+				<sum>
+					<property>/autopilot/fms-channel/autotuning/d-psi-deg-1</property> 
+					<value>360</value> 
+				</sum>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/autopilot/fms-channel/autotuning/d-psi-deg-3">
+			<function>
+				<difference>
+					<property>/autopilot/fms-channel/autotuning/d-psi-deg-1</property> 
+					<value>360</value> 
+				</difference>
+			</function>
+		</fcs_function>
+
+		<switch name="headingerror1">
+			<default value="/autopilot/fms-channel/autotuning/d-psi-deg-1"/>
+			<test value="/autopilot/fms-channel/autotuning/d-psi-deg-2">
+				/autopilot/fms-channel/autotuning/d-psi-deg-1 le -180
+			</test>
+			<output>/autopilot/fms-channel/autotuning/d-psi-deg-4</output>
+		</switch>
+
+		<switch name="headingerror2">
+			<default value="/autopilot/fms-channel/autotuning//d-psi-deg-4"/>
+			<test value="/autopilot/fms-channel/autotuning/d-psi-deg-3">
+				/autopilot/fms-channel/autotuning/d-psi-deg-1 ge 180
+			</test>
+			<output>/autopilot/fms-channel/autotuning/d-psi-deg</output>
+		</switch>
+
+<!--switching from FMS to Nav1 on approach -->
 		<switch name="AutoSwitchNav1">
 			<default value="/instrumentation/nav-source"/>
 			<test logic="AND" value="0">
 				/extra500/instrumentation/IFD-LH/settings/autonav1 eq 1
 				/autopilot/fms-channel/autotuning/approach eq 1
 				/instrumentation/nav-source eq 2
+				/autopilot/settings/dto-leg ne 1 
+				/autopilot/settings/obs-mode ne 1 
+				/autopilot/settings/fly-vector ne 1
+				/instrumentation/nav/nav-distance lt 33336
+				/autopilot/fms-channel/autotuning/d-psi-deg lt 15
+				/autopilot/fms-channel/autotuning/d-psi-deg gt -15
 				/autopilot/radionav-channel/timer-cap gt 10
 			</test>
 			<output>/instrumentation/nav-source</output>
