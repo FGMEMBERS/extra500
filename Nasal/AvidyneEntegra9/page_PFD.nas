@@ -1207,7 +1207,8 @@ var BearingSourceWidget = {
 				isLOC			: "/instrumentation/nav[0]/frequencies/is-localizer-frequency",
 				isInRange		: "/instrumentation/nav[0]/in-range",
 				Frequency		: "/instrumentation/nav[0]/frequencies/selected-mhz-fmt",
-				Pointer			: "/instrumentation/nav[0]/radials/reciprocal-radial-deg",
+# 				Pointer			: "/instrumentation/nav[0]/radials/reciprocal-radial-deg",
+				Pointer			: "/instrumentation/nav[0]/heading-deg",
 				hasGS			: "/instrumentation/nav[0]/has-gs",
 				distance		: "/instrumentation/nav[0]/nav-distance",
 			},
@@ -1215,7 +1216,8 @@ var BearingSourceWidget = {
 				isLOC			: "/instrumentation/nav[1]/frequencies/is-localizer-frequency",
 				isInRange		: "/instrumentation/nav[1]/in-range",
 				Frequency		: "/instrumentation/nav[1]/frequencies/selected-mhz-fmt",
-				Pointer			: "/instrumentation/nav[1]/radials/reciprocal-radial-deg",
+# 				Pointer			: "/instrumentation/nav[1]/radials/reciprocal-radial-deg",
+				Pointer			: "/instrumentation/nav[1]/heading-deg",
 				hasGS			: "/instrumentation/nav[1]/has-gs",
 				distance		: "/instrumentation/nav[1]/nav-distance",
 			},
@@ -1348,7 +1350,11 @@ var BearingSourceWidget = {
 	},
 	update20Hz : func(now,dt){
 		if (me._source > 0){
-			me._Pointer	= me._ptree.Pointer.getValue();
+			if(me._source == 1 or me._source == 2){
+				me._Pointer	= me._ptree.Pointer.getValue() - getprop("environment/magnetic-variation-deg");
+			}else{
+				me._Pointer	= me._ptree.Pointer.getValue()	
+			}
 			me._can.Pointer.setRotation((me._Pointer - me._Page._widget.HSI._heading) * global.CONST.DEG2RAD);
 			me._can.Brg.setText(sprintf("%i",tool.course(me._Pointer)));
 		}
