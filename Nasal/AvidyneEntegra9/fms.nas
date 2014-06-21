@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: 07.06.2014
 #
-#      Last change:      Dirk Dittmann 
-#      Date:             07.06.2014
+#      Last change:      Eric van den Berg 
+#      Date:             21.06.2014
 #
 
 var FlightManagementSystemClass = {
@@ -173,9 +173,10 @@ var FlightManagementSystemClass = {
 				var ils = apt.runways[getprop("/autopilot/route-manager/destination/runway")].ils;
 				if(ils != nil){
 					freq = ils.frequency;
-					course = ils.course;
+					course = ils.course ;
 # set course
 					if (course != nil) {
+						course = geo.normdeg( course- getprop("/environment/magnetic-variation-deg"));
 						setprop("/autopilot/fms-channel/autotuning/approach",1);
 						setprop("/instrumentation/nav/radials/selected-deg",course);
 					}
@@ -184,11 +185,9 @@ var FlightManagementSystemClass = {
 			} else {
 				setprop("/autopilot/fms-channel/autotuning/approach",0);
 # looking for VOR 
-# 					var activewpid = getprop("/autopilot/route-manager/route/wp["~me._fightPlan.currentWp~"]/id");
 				var navaid = navinfo("vor",currentWP.id);
 				if (size(navaid) != 0 ) {
 					freq = navaid[0].frequency;
-#					course = getprop("/autopilot/route-manager/route/wp["~currwp~"]/leg-bearing-true-deg");
 				}
 			}
 # set frequency
