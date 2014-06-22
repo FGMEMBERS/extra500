@@ -311,6 +311,9 @@ var AutopilotClass = {
 			if ( me._CheckRollModeActive() == 1 ) {
 				me.nSetTargetAltitudeFt.setValue( 100 * int( me.nCurrentAlt.getValue()/100 ) );			# if ALT knob is pressed on its own, current altitude rounded to 100ft becomes the target altitude
 				me.nSetAltitudeBugFt.setValue( 100 * int( me.nCurrentAlt.getValue()/100 ) );			# setting bug (indicated on IFD)
+				if (( me.nModeAlt.getValue() == 1 ) and ( me.nModeVs.getValue() == 1 )) {
+					me.nSetVerticalSpeedFpm.setValue(0);
+				}
 				me.nModeAlt.setValue(1);
 				me.nModeVs.setValue(0);
 				me.nModeGSArmed.setValue(0);
@@ -327,12 +330,12 @@ var AutopilotClass = {
 		var Alterror = me.nCurrentAlt.getValue() - me.nSetAltitudeBugFt.getValue();
 		if ( ( me.nModeAlt.getValue() == 0 ) and (me.nModeVs.getValue() == 0) ){
 			if ( me._CheckRollModeActive() == 1 ) {
+				if ( math.abs( me.nSetVerticalSpeedFpm.getValue() ) < 100 ) {
+					me.nSetVerticalSpeedFpm.setValue( math.sgn( Alterror ) * -700 );
 				me.nModeAlt.setValue(1);
 				me.nModeVs.setValue(1);
 				me.nModeGSArmed.setValue(0);
 				me.nModeGSFollow.setValue(0);
-				if ( math.abs( me.nSetVerticalSpeedFpm.getValue() ) < 100 ) {
-					me.nSetVerticalSpeedFpm.setValue( math.sgn( Alterror ) * -700 );
 				}
 			} else {
 				if ( getprop("fdm/jsbsim/aircraft/events/show-events") == 1 ) {
@@ -341,10 +344,10 @@ var AutopilotClass = {
 			}
 		} else if ( ( me.nModeAlt.getValue() == 1 ) and (me.nModeVs.getValue() == 0) ) {
 			if ( me._CheckRollModeActive() == 1 ) {
-				me.nModeVs.setValue(1);
 				if ( math.abs( me.nSetVerticalSpeedFpm.getValue() ) < 100 ) {
 					me.nSetVerticalSpeedFpm.setValue( math.sgn( Alterror ) * -700 );
 				}
+				me.nModeVs.setValue(1);
 			} else {
 				if ( getprop("fdm/jsbsim/aircraft/events/show-events") == 1 ) {
 					UI.msg.info("A roll mode must be active before a pitch mode can be engaged");
@@ -352,10 +355,10 @@ var AutopilotClass = {
 			}
 		} else if ( ( me.nModeAlt.getValue() == 0 ) and (me.nModeVs.getValue() == 1) ) {
 			if ( me._CheckRollModeActive() == 1 ) {
-				me.nModeAlt.setValue(1);
 				if ( math.abs( me.nSetVerticalSpeedFpm.getValue() ) < 100 ) {
 					me.nSetVerticalSpeedFpm.setValue( math.sgn( Alterror ) * -700 );
 				}
+				me.nModeAlt.setValue(1);
 			} else {
 				if ( getprop("fdm/jsbsim/aircraft/events/show-events") == 1 ) {
 					UI.msg.info("A roll mode must be active before a pitch mode can be engaged");
