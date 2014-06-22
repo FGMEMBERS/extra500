@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg 
-#      Date:             15.06.2014
+#      Date:             22.06.2014
 #
 
 var AutopilotClass = {
@@ -66,7 +66,6 @@ var AutopilotClass = {
 		m.nInRange		= props.globals.initNode("/autopilot/radionav-channel/in-range",0,"DOUBLE");	
 		
 		m.nCurrentAlt 	= props.globals.getNode("/instrumentation/altimeter-IFD-LH/indicated-altitude-ft");	
-		m.nAlterror 	= props.globals.getNode("/autopilot/alt-channel/alt-error-ft");	
 		m.nNavsource	= props.globals.getNode("/instrumentation/nav-source");	
 		m.nFMSserv 	= props.globals.getNode("/autopilot/fms-channel/serviceable");
 		m.nRouteActive 	= props.globals.getNode("/autopilot/route-manager/active");																																																												
@@ -325,6 +324,7 @@ var AutopilotClass = {
 		}
 	},
 	onClickALTVS : func(){
+		var Alterror = me.nCurrentAlt.getValue() - me.nSetAltitudeBugFt.getValue();
 		if ( ( me.nModeAlt.getValue() == 0 ) and (me.nModeVs.getValue() == 0) ){
 			if ( me._CheckRollModeActive() == 1 ) {
 				me.nModeAlt.setValue(1);
@@ -332,7 +332,7 @@ var AutopilotClass = {
 				me.nModeGSArmed.setValue(0);
 				me.nModeGSFollow.setValue(0);
 				if ( math.abs( me.nSetVerticalSpeedFpm.getValue() ) < 100 ) {
-					me.nSetVerticalSpeedFpm.setValue( math.sgn( me.nAlterror.getValue() ) * -700 );
+					me.nSetVerticalSpeedFpm.setValue( math.sgn( Alterror ) * -700 );
 				}
 			} else {
 				if ( getprop("fdm/jsbsim/aircraft/events/show-events") == 1 ) {
@@ -343,7 +343,7 @@ var AutopilotClass = {
 			if ( me._CheckRollModeActive() == 1 ) {
 				me.nModeVs.setValue(1);
 				if ( math.abs( me.nSetVerticalSpeedFpm.getValue() ) < 100 ) {
-					me.nSetVerticalSpeedFpm.setValue( math.sgn( me.nAlterror.getValue() ) * -700 );
+					me.nSetVerticalSpeedFpm.setValue( math.sgn( Alterror ) * -700 );
 				}
 			} else {
 				if ( getprop("fdm/jsbsim/aircraft/events/show-events") == 1 ) {
@@ -354,7 +354,7 @@ var AutopilotClass = {
 			if ( me._CheckRollModeActive() == 1 ) {
 				me.nModeAlt.setValue(1);
 				if ( math.abs( me.nSetVerticalSpeedFpm.getValue() ) < 100 ) {
-					me.nSetVerticalSpeedFpm.setValue( math.sgn( me.nAlterror.getValue() ) * -700 );
+					me.nSetVerticalSpeedFpm.setValue( math.sgn( Alterror ) * -700 );
 				}
 			} else {
 				if ( getprop("fdm/jsbsim/aircraft/events/show-events") == 1 ) {
