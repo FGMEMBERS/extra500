@@ -332,11 +332,11 @@ var AutopilotClass = {
 			if ( me._CheckRollModeActive() == 1 ) {
 				if ( math.abs( me.nSetVerticalSpeedFpm.getValue() ) < 100 ) {
 					me.nSetVerticalSpeedFpm.setValue( math.sgn( Alterror ) * -700 );
+				}
 				me.nModeAlt.setValue(1);
 				me.nModeVs.setValue(1);
 				me.nModeGSArmed.setValue(0);
 				me.nModeGSFollow.setValue(0);
-				}
 			} else {
 				if ( getprop("fdm/jsbsim/aircraft/events/show-events") == 1 ) {
 					UI.msg.info("A roll mode must be active before a pitch mode can be engaged");
