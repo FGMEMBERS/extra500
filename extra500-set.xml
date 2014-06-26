@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2014-06-19
+      Date:             2014-06-26
 
 
 ************************************************************************
@@ -1488,6 +1488,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<settings>
 				<autonav1 type="bool">true</autonav1>
 				<default-sqwuak type="int">7000</default-sqwuak>
+				<default-climb-rate-fpm type="double">700</default-climb-rate-fpm>
 			</settings>
 		</IFD-LH>
 		<IFD-RH>

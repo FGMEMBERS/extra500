@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg 
-#      Date:             22.06.2014
+#      Date:             26.06.2014
 #
 
 var AutopilotClass = {
@@ -328,10 +328,11 @@ var AutopilotClass = {
 	},
 	onClickALTVS : func(){
 		var Alterror = me.nCurrentAlt.getValue() - me.nSetAltitudeBugFt.getValue();
+		var setVertSpeed = me.nSetVerticalSpeedFpm.getValue();
 		if ( ( me.nModeAlt.getValue() == 0 ) and (me.nModeVs.getValue() == 0) ){
 			if ( me._CheckRollModeActive() == 1 ) {
-				if ( math.abs( me.nSetVerticalSpeedFpm.getValue() ) < 100 ) {
-					me.nSetVerticalSpeedFpm.setValue( math.sgn( Alterror ) * -700 );
+				if ( Alterror * setVertSpeed >= 0 ) {
+					me.nSetVerticalSpeedFpm.setValue( math.sgn( Alterror ) * - getprop("/extra500/instrumentation/IFD-LH/settings/default-climb-rate-fpm") );
 				}
 				me.nModeAlt.setValue(1);
 				me.nModeVs.setValue(1);
@@ -344,8 +345,8 @@ var AutopilotClass = {
 			}
 		} else if ( ( me.nModeAlt.getValue() == 1 ) and (me.nModeVs.getValue() == 0) ) {
 			if ( me._CheckRollModeActive() == 1 ) {
-				if ( math.abs( me.nSetVerticalSpeedFpm.getValue() ) < 100 ) {
-					me.nSetVerticalSpeedFpm.setValue( math.sgn( Alterror ) * -700 );
+				if ( Alterror * setVertSpeed >= 0 ) {
+					me.nSetVerticalSpeedFpm.setValue( math.sgn( Alterror ) * - getprop("/extra500/instrumentation/IFD-LH/settings/default-climb-rate-fpm") );
 				}
 				me.nModeVs.setValue(1);
 			} else {
@@ -355,8 +356,8 @@ var AutopilotClass = {
 			}
 		} else if ( ( me.nModeAlt.getValue() == 0 ) and (me.nModeVs.getValue() == 1) ) {
 			if ( me._CheckRollModeActive() == 1 ) {
-				if ( math.abs( me.nSetVerticalSpeedFpm.getValue() ) < 100 ) {
-					me.nSetVerticalSpeedFpm.setValue( math.sgn( Alterror ) * -700 );
+				if ( Alterror * setVertSpeed >= 0 ) {
+					me.nSetVerticalSpeedFpm.setValue( math.sgn( Alterror ) * - getprop("/extra500/instrumentation/IFD-LH/settings/default-climb-rate-fpm") );
 				}
 				me.nModeAlt.setValue(1);
 			} else {
