@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2014-06-26
+      Date:             2014-07-01
 
 
 ************************************************************************
@@ -1750,11 +1750,12 @@ JSBSim Extra Aircraft - Extra 500.
                         	</elevator>
 				<alpha-deg>0.0</alpha-deg>					<!--dummy value -->	
                   	</hstab>
-		 	 <vstab>
-                        	<S-ft2>30.236</S-ft2>
-                        	<x_ac-ft>27.128</x_ac-ft>
-                        	<z_ac-ft>8.294</z_ac-ft>
-				<cd0>0.021</cd0>				
+		 	 	<vstab>
+                        	<S-ft2 type="double">30.236</S-ft2>
+                        	<x_ac-ft type="double">27.128</x_ac-ft>
+                        	<z_ac-ft type="double">8.294</z_ac-ft>
+					<cd0 type="double">0.021</cd0>	
+					<ind-rot-speed-factor type="double">-0.125</ind-rot-speed-factor>			
 		  		</vstab>
 		  	<engine>
 				<OP-maxsetting-psi type="double">128</OP-maxsetting-psi>
