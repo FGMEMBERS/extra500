@@ -76,9 +76,24 @@ var DirectToWidget = {
 	
 };
 
+var ScrollAble = {
+	new : func(){
+		var m = {parents:[ScrollAble]};
+		return m;
+	},
+	adjust : func(amount=nil){return 0;},
+	select : func(v){}
+};
 
 var FlightPlanItemInterface = {
-	setType : func(type){},
+	new : func(){
+		var m = {parents:[FlightPlanItemInterface]};
+		m._height = 0;
+		return m;
+	},
+	getHeight :func(){return me._height;},
+	setTranslation : func(x,y){},
+	setType : func(type,role=nil){},
 	setHeadline : func(value){},
 	setName : func(value){},
 	setRestriction : func(value){},
@@ -88,6 +103,7 @@ var FlightPlanItemInterface = {
 	setFuel : func(value){},
 	setActive   :func(value){},
 	setSelection   :func(value){},
+	
 };
 
 var TYPE_COLOR = {
@@ -105,79 +121,260 @@ var TYPE_COLOR = {
 	},
 };
 
+var FlighPlanInserCoursor = {
+	new : func(canvasGroup){
+		var m = {parents:[
+			FlighPlanInserCoursor,
+			ScrollAble.new(),
+ 			]};
+			
+		m._index = 0;
+		m._position = [0];
+		m._visibility = 0;
+		
+		m._can = {
+			CursorInsert		: canvasGroup.getElementById("FPL_Coursor_Insert").setVisible(m._visibility),
+		};
+		
+		return m;
+	},
+	adjust : func(amount=nil){
+		var adjust = 0;
+		if(amount==nil){
+			
+		}else{
+			adjust = me._visibility == 1 ? math.sgn(amount) : 0;
+		}
+		
+		if(adjust == 0){
+			me._index = global.clamp(me._index + math.sgn(amount),0,size(me._position)-1);
+			me._can.CursorInsert.setTranslation(0,me._position[me._index]);
+			me.select(1);
+			
+		}else{
+			me.select(0);
+			
+		}
+		return adjust;
+	},
+	select : func(v){
+		me._visibility = v;
+		me._can.CursorInsert.setVisible(me._visibility);
+	}
+};
 
 var FlighPlanItem_old = {
 	new : func(canvasGroup,index,type){
 		var m = {parents:[
 			FlighPlanItem_old,
-			FlightPlanItemInterface
+			ScrollAble.new(),
+ 			FlightPlanItemInterface.new()
  			]};
 		m._type = type;
 		m._group = canvasGroup.createChild("group", "waypoint_"~index).setVisible(0).set("z-index",3);
-		canvas.parsesvg(m._group, "Models/instruments/IFDs/IFD_FMS_FPL_ItemWP.svg");
+		canvas.parsesvg(m._group, "Models/instruments/IFDs/IFD_FMS_FPL_ItemWP.svg",{
+			"font-mapper": global.canvas.FontMapper
+			}
+		);
 		m._can = {
-			Item 		: m._group.getElementById("FPL_Pattern_Waypoint"),
-			Back 		: m._group.getElementById("Back"),
-			BackInner	: m._group.getElementById("BackInner"),
-			Headline	: m._group.getElementById("Headline"),
-			Name 		: m._group.getElementById("Waypoint_Navaid_Name"),
-			Ristriction 	: m._group.getElementById("Ristriction"),
-			Distance 	: m._group.getElementById("Distance"),
-			ETE	 	: m._group.getElementById("ETE"),
-			Fuel	 	: m._group.getElementById("Fuel"),
-			ETA		: m._group.getElementById("ETA"),
+# 			edit			: m._group.getElementById("edit").setVisible(0),
+# 			view 			: m._group.getElementById("view"),
+# 			Item 			: m._group.getElementById("FPL_Pattern_Waypoint"),
+# 			Back 			: m._group.getElementById("Back"),
+# 			BackInner		: m._group.getElementById("BackInner"),
+		#General
+			Wypt_back		: m._group.getElementById("Wypt_back"),
+			Airport_back		: m._group.getElementById("Airport_back").setVisible(0),
+			Headline		: m._group.getElementById("Wypt_Headline"),
+			ICAO 			: m._group.getElementById("Wypt_ICAO"),
+			ICAO_back 		: m._group.getElementById("Wypt_ICAO_back").setVisible(0),
+			Constrains 		: m._group.getElementById("Wypt_Constrains"),
+			
+		# Wypt Details
+			Wypt_Detail 		: m._group.getElementById("Wypt_Detail"),
+			Wypt_Detail_back 	: m._group.getElementById("Wypt_Detail_back"),
+			
+			Distance 		: m._group.getElementById("Distance"),
+			ETE	 		: m._group.getElementById("ETE"),
+			ETE_Unit	 	: m._group.getElementById("ETE_unit"),
+			Fuel	 		: m._group.getElementById("Fuel"),
+			ETA			: m._group.getElementById("ETA"),
+			
+		# Constarains
+			constrains_edit		: m._group.getElementById("constrains_edit").setVisible(0),
+			Constain_before_back	: m._group.getElementById("Constain_before_back"),
+			Constain_alt_back	: m._group.getElementById("Constain_alt_back"),
+			Constain_at_back	: m._group.getElementById("Constain_at_back"),
+			
+		# Airport Details
+			Airport_Detail		: m._group.getElementById("Airport_Detail").setVisible(0),
+			Airport_Detail_back	: m._group.getElementById("Airport_Detail_back"),
+			Airport_brg_nm		: m._group.getElementById("Airport_Bearing_distance"),
+			Airport_brg_deg		: m._group.getElementById("Airport_Bearing_deg"),
+			Airport_Runway_Text	: m._group.getElementById("Airport_Runway_Text"),
+			Airport_Runway_back	: m._group.getElementById("Airport_Runway_back").setVisible(0),
+			
+		# Airport procedures
+			Airport_Procedures	: m._group.getElementById("Airport_Procedures").setVisible(0),
+			Airport_Procedures_back	: m._group.getElementById("Airport_Procedures_back"),
+			
+			Airport_Arrival_lable	: m._group.getElementById("Airport_Arrival_lable"),
+			Airport_Arrival_Text	: m._group.getElementById("Airport_Arrival_Text"),
+			Airport_Arrival_back	: m._group.getElementById("Airport_Arrival_back").setVisible(0),
+			
+			Airport_Approach_lable	: m._group.getElementById("Airport_Approach_lable"),
+			Airport_Approach_Text	: m._group.getElementById("Airport_Approach_Text"),
+			Airport_Approach_back	: m._group.getElementById("Airport_Approach_back").setVisible(0),
+			
+		# selection
+			Wypt_Selection		: m._group.getElementById("Wypt_Selection").setVisible(0),
+			Airport_Selection	: m._group.getElementById("Airport_Selection").setVisible(0),
+			
 		};
 		m.checkColor();
 		
 		m._group.setVisible(0);
 		
 		m._active = 0;
-		m._selection = 0;
-
+		m._visibility = 0;
+		
+		m._offset = {x:0,y:0};
 		return m;
 	},
-	setType : func(type){
+	### implementation of SelectAble
+	adjust : func(amount=nil){
+		var adjust = 0;
+		if(amount==nil){
+			
+		}else{
+			adjust = me._visibility == 1 ? math.sgn(amount) : 0;
+		}
+		me.select(adjust == 0);
+		
+		return adjust;
+	},
+	select : func(v){
+		me._visibility = v;
+		
+		if(me._type == "runway"){
+			me._can.Airport_Selection.setVisible(me._visibility);
+		}else{
+			me._can.Wypt_Selection.setVisible(me._visibility);
+			
+		}
+	},
+	
+	setTranslation : func(x,y){
+		me._group.setTranslation(x+me._offset.x,y+me._offset.y);
+	},
+	
+	setType : func(type,role=nil){
 		me._type = type;
+		if(me._type == "runway"){
+			me._height = 256;
+			me._offset.y = 56;
+			
+			me._can.Airport_back.setVisible(1);
+			me._can.Wypt_back.setVisible(0);
+			
+			if(role != nil){
+					if(role == "sid"){
+						me._can.Airport_Procedures.setVisible(1);
+						me._can.Airport_Arrival_lable.setVisible(0);
+						me._can.Airport_Arrival_Text.setVisible(0);
+						me._can.Airport_Arrival_back.setVisible(0);
+						
+						me._can.Airport_Approach_lable.setText("Departure");
+						
+						me._can.Airport_Detail.setVisible(1);
+						me._can.Wypt_Detail.setVisible(0);
+						
+						
+					}elsif(role == "approach"){
+						me._can.Airport_Procedures.setVisible(1);
+						me._can.Airport_Arrival_lable.setVisible(1);
+						me._can.Airport_Arrival_Text.setVisible(1);
+						me._can.Airport_Arrival_back.setVisible(0);
+						
+						me._can.Airport_Approach_lable.setText("Approach");
+						
+						me._can.Airport_Detail.setVisible(1);
+						me._can.Wypt_Detail.setVisible(0);
+						
+						
+					}else{
+						me._can.Airport_Procedures.setVisible(0);
+					}
+					
+					
+			}else{
+				me._can.Airport_Procedures.setVisible(0);
+			}
+			
+		}else{
+			me._height = 200;
+			me._offset.y = 0;
+			
+			me._can.Airport_Procedures.setVisible(0);
+			me._can.Airport_back.setVisible(0);
+			me._can.Airport_Detail.setVisible(0);
+			
+			me._can.Wypt_back.setVisible(1);
+			me._can.Wypt_Detail.setVisible(1);
+			
+		}
+		me._can.Airport_Selection.setVisible(0);
+		me._can.Wypt_Selection.setVisible(0);
 		me.checkColor();
 	},
 	checkColor : func(){
-		if(contains(TYPE_COLOR,me._type)){
-			me._can.Back.setColorFill(TYPE_COLOR[me._type].back);
-			me._can.BackInner.setColorFill(TYPE_COLOR[me._type].inner);
+		
+		if(me._type == "runway"){
+			me._can.Airport_back.setColorFill("#1f305c");
+			me._can.Airport_Detail.setColorFill("#1e5c92");
+			me._can.Airport_Procedures_back.setColorFill("#201c57");
+			me._can.Wypt_Detail_back.setColorFill("#1e5c92");
 		}else{
-			me._can.Back.setColorFill(TYPE_COLOR.basic.back);
-			me._can.BackInner.setColorFill(TYPE_COLOR.basic.inner);
+			me._can.Wypt_back.setColorFill("#303030");
+			me._can.Wypt_Detail_back.setColorFill("#616660");
 		}
+
+		
 	},
-	setHeadline : func(value){ me._can.Headline.setText(value);},
-	setName : func(value){me._can.Name.setText(value);},
-	setRestriction : func(value){me._can.Ristriction.setText(value);},
-	setETE : func(value){me._can.ETE.setText(value);},
-	setETA : func(value){me._can.ETA.setText(value);},
-	setDistance : func(value){me._can.Distance.setText(value);},
-	setFuel : func(value){me._can.Fuel.setText(value);},
-	
 	setActive   :func(value){
 		me._active = value;
 		if (me._active == 1){
-			me._can.Back.setColorFill(TYPE_COLOR.bug.back);
-			me._can.BackInner.setColorFill(TYPE_COLOR.bug.inner);
+			
+			if(me._type == "runway"){
+				me._can.Airport_back.setColorFill(TYPE_COLOR.bug.back);
+				me._can.Airport_Detail.setColorFill(TYPE_COLOR.bug.inner);
+				me._can.Airport_Procedures_back.setColorFill(TYPE_COLOR.bug.inner);
+			}else{
+				me._can.Wypt_back.setColorFill(TYPE_COLOR.bug.back);
+			}
+			
+			me._can.Wypt_Detail_back.setColorFill(TYPE_COLOR.bug.inner);
+			
 		}else{
 			me.checkColor();
 		}
 	},
 	setSelection   :func(value){
-		me._selection = value;
-		if (me._selection == 1){
-# 			me._can.Back.set("stroke",COLOR["Turquoise"]);
-# 			me._can.Back.set("stroke-width",5);
-		}else{
-# 			me._can.Back.set("stroke","none");
-		}
+		me.select(value);
+
 	},
+
 	setVisible : func(visibility){
 		me._group.setVisible(visibility);
 	},
+	setHeadline : func(value){ me._can.Headline.setText(value);},
+	setName : func(value){me._can.ICAO.setText(value);},
+	setRestriction : func(value){me._can.Constrains.setText(value);},
+	setETE : func(value){me._can.ETE.setText(value);},
+	setETA : func(value){me._can.ETA.setText(value);},
+	setDistance : func(value){me._can.Distance.setText(value);},
+	setFuel : func(value){me._can.Fuel.setText(value);},
+	
 };
 
 
@@ -194,17 +391,19 @@ var FlightPlanListWidget = {
 			#Pattern_Waypoint	: m._group.getElementById("FPL_Pattern_Waypoint").setVisible(0),
 			FlightPlan		: m._group.getElementById("FPL_Flightplan"),
 			ScrollAble		: m._group.getElementById("FPL_ScrollAble"),
-			list			: m._group.getElementById("FPL_List"),
+			list			: m._group.getElementById("FPL_List").setVisible(1),
 			ScrollCursorView	: m._group.getElementById("FPL_ScrollCursorView"),
 			ScrollCursorCurrent	: m._group.getElementById("FPL_ScrollCursorCurrent"),
-			Cursor			: m._group.getElementById("FPL_Cursor").setVisible(1),
-			CursorInsert		: m._group.getElementById("FPL_Coursor_Insert").setVisible(0),
-			CursorSelect		: m._group.getElementById("FPL_Coursor_Select").setVisible(0),
 			
 			
 			
 			
 		};
+		
+		m._insertCoursor = FlighPlanInserCoursor.new(m._group);
+		m._scrollAbleList = [];
+		m._scrollAbleListSize = 0;
+		m._scrollAbleIndex = 0;
 		
 		m._canList = {};
 		m._scrollY = 0;
@@ -319,6 +518,13 @@ var FlightPlanListWidget = {
 	},
 	_drawList : func(){
 		var distSum = 0;
+		var translateY = me._y;
+		me._insertCoursor._position = [];
+		me._scrollAbleList = [];
+		
+		append(me._insertCoursor._position,me._y);
+		append(me._scrollAbleList,me._insertCoursor);
+		
 		for( var i=0; i < fms._fightPlan.planSize; i+=1 ){
 			var fmsWP = fms._fpl.getWP(i);
 			
@@ -327,9 +533,15 @@ var FlightPlanListWidget = {
 				me._fplItemCache[i] = FlighPlanItem_old.new(me._can.list,i,fmsWP.wp_type);
 				me._cacheSize = size(me._fplItemCache);
 			}
-			me._fplItemCache[i].setType(fmsWP.wp_type);
-			me._fplItemCache[i]._group.setTranslation(me._x,me._y+i*224);
-			me._fplItemCache[i].setVisible(1);
+			me._fplItemCache[i].setType(fmsWP.wp_type,fmsWP.wp_role);
+			me._fplItemCache[i].setTranslation(me._x,translateY);
+			
+			append(me._scrollAbleList,me._fplItemCache[i]);
+			
+			translateY += me._fplItemCache[i]._height + 24 ; 
+			append(me._insertCoursor._position,translateY);
+			append(me._scrollAbleList,me._insertCoursor);
+			
 			
 			#me._fplItemCache[i].setHeadline(sprintf("%s %03.0f - %s",fmsWP.fly_type,fmsWP.leg_bearing,fmsWP.wp_role));
 			#me._fplItemCache[i].setName(sprintf("%s - %s",fmsWP.wp_name,fmsWP.wp_type));
@@ -342,6 +554,16 @@ var FlightPlanListWidget = {
 			}
 			if (fmsWP.speed_cstr_type != nil) {
 				restriction ~= "IAS : " ~ fmsWP.speed_cstr ~"kts ";
+			}
+			if (fmsWP.wp_type != nil){
+				restriction ~= fmsWP.wp_type ~ " - ";
+			}else {
+				restriction ~= "nil - ";
+			}
+			if(fmsWP.wp_role != nil){
+				restriction ~=  fmsWP.wp_role;
+			}else {
+				restriction ~=  "nil";
 			}
 			me._fplItemCache[i].setRestriction(restriction);
 			if(fms._fightPlan.planSize > 1){
@@ -362,7 +584,11 @@ var FlightPlanListWidget = {
 				me._fplItemCache[i].setSelection(1);
 			}
 			
+			me._fplItemCache[i].setVisible(1);
 		}
+		
+		debug.dump("me._insertCoursor._position",me._insertCoursor._position);
+		me._scrollAbleListSize = size(me._scrollAbleList);
 		me._resizeScroll();
 		#me._setSelection(fms._fightPlan.planSize-1,"insert");
 		#me._scrollToCurrentIndex(fms._fightPlan.planSize-1);
@@ -390,7 +616,7 @@ var FlightPlanListWidget = {
 		
 		me._scrollY = global.clamp(me._scrollY,0,me._maxScroll);
 		
-		me._can.ScrollAble.setTranslation(0,me._scrollY*-224);
+# 		me._can.ScrollAble.setTranslation(0,me._scrollY*-224);
 		me._can.ScrollCursorView.setTranslation(0,me._y+me._scrollY*me._scrollSize);
 		
 	},
@@ -403,7 +629,7 @@ var FlightPlanListWidget = {
 		}
 		me._scrollY = global.clamp(me._scrollY,0,me._maxScroll);
 		
-		me._can.ScrollAble.setTranslation(0,me._scrollY*-224);
+# 		me._can.ScrollAble.setTranslation(0,me._scrollY*-224);
 		
 		me._can.ScrollCursorView.setTranslation(0,me._y+me._scrollY*me._scrollSize);
 		
@@ -456,21 +682,28 @@ var FlightPlanListWidget = {
 	},
 	_adjustSelection : func(amount){
 		
-		if(amount > 0){
-			if(me._cursorModeInsert==1){
-				me._selectedIndex += amount;
-				me._selectedIndex = global.clamp(me._selectedIndex,0,fms._fightPlan.planSize-1);
-			}
-			me._setSelection(me._selectedIndex,!me._cursorModeInsert);
-		}elsif(amount < 0){
-			if(me._cursorModeInsert==0){
-				me._selectedIndex += amount;
-				me._selectedIndex = global.clamp(me._selectedIndex,0,fms._fightPlan.planSize-1);
-			}
-			me._setSelection(me._selectedIndex,!me._cursorModeInsert);
-		}else{
-			
+		var adjust = me._scrollAbleList[me._scrollAbleIndex].adjust(amount);
+		if (adjust != 0){
+			me._scrollAbleIndex = global.clamp(me._scrollAbleIndex + adjust,0,me._scrollAbleListSize-1);
+			me._scrollAbleList[me._scrollAbleIndex].adjust(amount);
 		}
+		
+		
+# 		if(amount > 0){
+# 			if(me._cursorModeInsert==1){
+# 				me._selectedIndex += amount;
+# 				me._selectedIndex = global.clamp(me._selectedIndex,0,fms._fightPlan.planSize-1);
+# 			}
+# 			me._setSelection(me._selectedIndex,!me._cursorModeInsert);
+# 		}elsif(amount < 0){
+# 			if(me._cursorModeInsert==0){
+# 				me._selectedIndex += amount;
+# 				me._selectedIndex = global.clamp(me._selectedIndex,0,fms._fightPlan.planSize-1);
+# 			}
+# 			me._setSelection(me._selectedIndex,!me._cursorModeInsert);
+# 		}else{
+# 			
+# 		}
 		
 		#me._setSelection();
 		me._scrollToSelectedIndex(me._selectedIndex);	
@@ -492,10 +725,10 @@ var FlightPlanListWidget = {
 		if(me._fplItemCache[me._selectedIndex] != nil){
 			me._fplItemCache[me._selectedIndex].setSelection(1);
 		}
-		me._can.Cursor.setTranslation(0,me._selectedIndex*224);
 		
-		me._can.CursorSelect.setVisible(!me._cursorModeInsert);
-		me._can.CursorInsert.setVisible(me._cursorModeInsert);
+		#me._can.CursorSelect.setVisible(!me._cursorModeInsert);
+# 		me._can.CursorInsert.setTranslation(0,me._selectedIndex*224);
+# 		me._can.CursorInsert.setVisible(me._cursorModeInsert);
 		
 # 		if(me._cursorModeInsert == 1){
 # 			me._can.CursorSelect.setVisible(0);
