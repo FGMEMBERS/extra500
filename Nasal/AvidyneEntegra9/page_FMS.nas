@@ -121,6 +121,8 @@ var TYPE_COLOR = {
 	},
 };
 
+
+
 var FlighPlanInserCoursor = {
 	new : func(canvasGroup){
 		var m = {parents:[

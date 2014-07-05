@@ -19,6 +19,13 @@
 #      Last change:      Eric van den Berg 
 #      Date:             27.07.2014
 #
+var FlightPlanListData = {
+	new : func(){
+		var m = {};
+		
+		return m;
+	}
+};
 
 var FlightManagementSystemClass = {
 	new : func(root,name){
