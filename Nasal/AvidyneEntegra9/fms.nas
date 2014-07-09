@@ -19,12 +19,23 @@
 #      Last change:      Eric van den Berg 
 #      Date:             27.07.2014
 #
-var FlightPlanListData = {
+var FlightPlanData = {
 	new : func(){
 		var m = {};
+		m.ident		= "";
+		m.distanceTo 	= 0;
+		m.ete 		= 0;
+		m.eta 		= 0;
+		m.fuelAt 	= 0;
+		
+		m.constraint = {
+			alt:{type:nil,value:0},
+			distance:{type:nil,value:0}
+		};
 		
 		return m;
-	}
+	},
+	
 };
 
 var FlightManagementSystemClass = {
@@ -144,7 +155,7 @@ var FlightManagementSystemClass = {
 		me._selectedWaypointIndex = index;
 	},
 	_onFlightPlanChange : func(n){
-# 		print("FlightManagementSystemClass._onFlightPlanChange() ... ");
+		print("FlightManagementSystemClass::_onFlightPlanChange() ... ");
 		me._fpl = flightplan();
 		#updating the flightplan
 		me._fightPlan.planSize = me._fpl.getPlanSize();
@@ -371,9 +382,9 @@ var FlightManagementSystemClass = {
 				
 				for (var i = 0 ; i < me._fightPlan.planSize ; i+=1){
 					var fmsWP = me._fpl.getWP(i);
-					me._fightPlan.wp[i] = {};
-					me._fightPlan.wp[i].altConstrainType 	= fmsWP.alt_cstr_type;
-					me._fightPlan.wp[i].altConstrain	= fmsWP.alt_cstr;
+					me._fightPlan.wp[i] = FlightPlanData.new();
+					me._fightPlan.wp[i].constraint.alt.type 	= fmsWP.alt_cstr_type;
+					me._fightPlan.wp[i].constraint.alt.value	= fmsWP.alt_cstr;
 					
 					
 					if (i >= me._fightPlan.currentWp){
@@ -385,11 +396,11 @@ var FlightManagementSystemClass = {
 						
 						distance 			= fmsWP.leg_distance;
 																			
-						if ((fmsWP.alt_cstr_type != nil) and ( me._constraint.VSR.distance == 0 ) ) {
-							me._constraint.VSR.alt = fmsWP.alt_cstr;
+						if ((me._fightPlan.wp[i].constraint.alt.type != nil) and ( me._constraint.VSR.distance == 0 ) ) {
+							me._constraint.VSR.alt = me._fightPlan.wp[i].constraint.alt.value;
 							me._constraint.VSR.distance = distanceToGo;
 							me._constraint.VSR.wptIndex = i;
-							#print(""~fmsWP.wp_name ~" constraint : "~fmsWP.alt_cstr_type~" "~me._constraint.VSR.alt~" in "~me._constraint.VSR.distance~" nm");
+							#print(""~fmsWP.wp_name ~" constraint : "~me._fightPlan.wp[i].constraint.alt.type~" "~me._constraint.VSR.alt~" in "~me._constraint.VSR.distance~" nm");
 							
 						}
 					
