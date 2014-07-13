@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             02.05.2014
+      Date:             13.07.2014
 
 -->
 
@@ -425,6 +425,28 @@
   </axis>
 </animation>
 
+<animation>
+  <object-name>door.gas.spring.open</object-name>
+  <type>select</type>
+  <condition>
+   <equals>
+    <property>sim/multiplay/generic/int[0]</property>
+    <value>1</value>
+   </equals>
+  </condition>
+ </animation>
+
+<animation>
+  <object-name>door.gas.spring.closed</object-name>
+  <type>select</type>
+  <condition>
+   <equals>
+    <property>sim/multiplay/generic/int[0]</property>
+    <value>0</value>
+   </equals>
+  </condition>
+ </animation>
+
  <animation>
   <type>rotate</type>
   <object-name>door.lower</object-name>
@@ -443,6 +465,18 @@
     <z2-m>-1.00043</z2-m>
   </axis>
 </animation>
+
+<animation>
+  <object-name>door.lower.cable.aft</object-name>
+  <object-name>door.lower.cable.forward</object-name>
+  <type>select</type>
+  <condition>
+   <equals>
+    <property>sim/multiplay/generic/int[1]</property>
+    <value>1</value>
+   </equals>
+  </condition>
+ </animation>
 
 <animation>
   <type>translate</type>
