@@ -883,6 +883,17 @@
 			<value>0.0277</value>
 		</product>
 	</function>
+
+	<function name="aero/moment/Roll_prop-ind">
+	<description>Roll moment due to prop rotation</description>
+		<product>
+			<property>aero/qbar-psf</property>
+			<property>metrics/Sw-sqft</property>
+			<property>metrics/bw-ft</property>
+			<property>aircraft/wing/CX_ind</property>
+			<property>propulsion/engine/power-hp</property>
+		</product>
+	</function>
 					
 </axis>
 		

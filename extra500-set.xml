@@ -1708,12 +1708,13 @@ JSBSim Extra Aircraft - Extra 500.
                   	<wing>
                         	<x_ac-ft>11.01</x_ac-ft>      				<!--dummy value -->
                         	<y_ac-ft>8.018</y_ac-ft>
-				<incidence-deg>1.45</incidence-deg>
+					<incidence-deg>1.45</incidence-deg>
                         	<S-ft2>150.96</S-ft2>
                         	<c_aero-ft>4.337</c_aero-ft>
-				<b-ft>36.089</b-ft>
-				<cd0>0.024</cd0>
-				<alpha-deg>0.0</alpha-deg>				<!--dummy value -->
+					<b-ft>36.089</b-ft>
+					<cd0>0.024</cd0>
+					<alpha-deg>0.0</alpha-deg>				<!--dummy value -->
+					<CX_ind type="double">0.000002</CX_ind>		<!--prop induced moment of wing coefficient -->		
                   	</wing>
                   	<hstab>
                         	<S-ft2>30.268</S-ft2>
@@ -1755,7 +1756,7 @@ JSBSim Extra Aircraft - Extra 500.
                         	<x_ac-ft type="double">27.128</x_ac-ft>
                         	<z_ac-ft type="double">8.294</z_ac-ft>
 					<cd0 type="double">0.021</cd0>	
-					<ind-rot-speed-factor type="double">-0.125</ind-rot-speed-factor>			
+					<ind-rot-speed-factor type="double">-0.075</ind-rot-speed-factor>			
 		  		</vstab>
 		  	<engine>
 				<OP-maxsetting-psi type="double">128</OP-maxsetting-psi>
