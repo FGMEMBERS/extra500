@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg 
-#      Date:             26.06.2014
+#      Date:             20.07.2014
 #
 
 var AutopilotClass = {
@@ -387,13 +387,17 @@ var AutopilotClass = {
 		} else {
 		}
 	},
-	onAdjustVS : func(amount=nil){
+	onAdjustVS : func(amount=nil,control=nil){
 		if (amount!=nil){
 			var value = me.nSetVerticalSpeedFpm.getValue();
 			value += amount;
 			if (value > 1600){value = 1600;}
 			if (value < -1600){value = -1600;}
-			me.nSetVerticalSpeedFpm.setValue( 100*int(value/100 ));
+			if (control == "ifd") {
+				me.nSetVerticalSpeedFpm.setValue( 50*int(value/50 ));
+			} else if (control == "ap") {
+				me.nSetVerticalSpeedFpm.setValue( 100*int(value/100 ));
+			}
 		}else{
 			me.nSetVerticalSpeedFpm.setValue(0);
 		}
@@ -457,9 +461,9 @@ var AutopilotClass = {
 		UI.register("Autopilot ALT+VS", 	func{extra500.autopilot.onClickALTVS(); } 	);
 		UI.register("Autopilot VS", 		func{extra500.autopilot.onClickVS(); } 		);
 		
-		UI.register("Autopilot VS >",		func{extra500.autopilot.onAdjustVS(100); } 	);
-		UI.register("Autopilot VS <",		func{extra500.autopilot.onAdjustVS(-100); } 	);
-		UI.register("Autopilot VS +=",		func(v){extra500.autopilot.onAdjustVS(v); } 	);
+		UI.register("Autopilot VS >",		func{extra500.autopilot.onAdjustVS(100,"ap"); } 	);
+		UI.register("Autopilot VS <",		func{extra500.autopilot.onAdjustVS(-100,"ap"); } 	);
+		UI.register("Autopilot VS +=",		func(v){extra500.autopilot.onAdjustVS(v,"ap"); } 	);
 		UI.register("Autopilot VS =",		func(v){extra500.autopilot.onSetVS(v); } 	);
 				
 		UI.register("Autopilot disengage",	func{extra500.autopilot.onClickDisengage(); } 	);

@@ -17,7 +17,7 @@
 #      Date: Jul 20 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             01.07.14
+#      Date:             20.07.14
 #
 
 
@@ -1887,11 +1887,11 @@ var BugSelectWidget = {
 			me._can.VS.set("z-index",2);
 			
 			me._ifd.ui.bindKnob("RK",{
-				"<<"	: func(){extra500.autopilot.onAdjustVS(-200);me._ResetTimer.restart(10);},
-				"<"	: func(){extra500.autopilot.onAdjustVS(-100);me._ResetTimer.restart(10);},
+				"<<"	: func(){extra500.autopilot.onAdjustVS(-100,"ifd");me._ResetTimer.restart(10);},
+				"<"	: func(){extra500.autopilot.onAdjustVS(-50,"ifd");me._ResetTimer.restart(10);},
 				"push"	: func(){extra500.autopilot.onSetVS(0);me._ResetTimer.restart(10);},
-				">"	: func(){extra500.autopilot.onAdjustVS(100);me._ResetTimer.restart(10);},
-				">>"	: func(){extra500.autopilot.onAdjustVS(200);me._ResetTimer.restart(10);},
+				">"	: func(){extra500.autopilot.onAdjustVS(50,"ifd");me._ResetTimer.restart(10);},
+				">>"	: func(){extra500.autopilot.onAdjustVS(100,"ifd");me._ResetTimer.restart(10);},
 			},{
 				"scroll"	: "VS",
 				"push"		: "Sync",
