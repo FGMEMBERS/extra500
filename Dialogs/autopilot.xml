@@ -1,0 +1,828 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: March 13 2013
+
+      Last change:      Eric van den Berg
+      Date:             2013-06-01
+-->
+
+<PropertyList>
+<name>autopilot</name>
+<nasal>
+	<open>
+		<![CDATA[
+		
+		var nYawTrim = props.globals.initNode("/sim/gui/dialogs/autopilot/YawTrim",0.0,"DOUBLE");
+		var nAltitude = props.globals.initNode("/sim/gui/dialogs/autopilot/Altitude",0.0,"DOUBLE");
+		var nHeading = props.globals.initNode("/sim/gui/dialogs/autopilot/Heading",0.0,"DOUBLE");
+		var nVs = props.globals.initNode("/sim/gui/dialogs/autopilot/VS",0.0,"DOUBLE");
+		
+		var lYawTrim = setlistener(extra500.autopilot.nSetYawTrim,func(n){ nYawTrim.setValue(n.getValue());},1);
+		var lAltitude = setlistener(extra500.autopilot.nSetHeadingBugDeg,func(n){ nHeading.setValue(n.getValue());},1);
+		var lHeading = setlistener(extra500.autopilot.nSetAltitudeBugFt,func(n){ nAltitude.setValue(n.getValue());},1);
+		var lVs = setlistener(extra500.autopilot.nSetVerticalSpeedFpm,func(n){ nVs.setValue(n.getValue());},1);
+		
+		]]>
+	</open>
+	
+	<close>
+		<![CDATA[
+		removelistener(lYawTrim);
+		removelistener(lAltitude);
+		removelistener(lHeading);
+		removelistener(lVs);
+		
+		]]>
+	</close>
+</nasal>
+
+    
+    <layout>vbox</layout>
+    <!--
+      /autopilot/locks/altitude
+      /autopilot/locks/heading
+      /autopilot/locks/speed
+      /autopilot/locks/passive-mode
+      /autopilot/settings/heading-bug-deg
+      /autopilot/settings/target-agl-ft
+      /autopilot/settings/tgt-altitude-ft
+      /autopilot/settings/target-aoa-deg
+      /autopilot/settings/target-pitch-deg
+      /autopilot/settings/target-speed-kt
+      /autopilot/settings/true-heading-deg
+      /autopilot/settings/vertical-speed-fpm
+    -->
+
+	<group>
+		<layout>hbox</layout>
+		<empty><stretch>1</stretch></empty>
+
+		<text>
+			<label>Autopilot</label>
+		</text>
+
+		<empty><stretch>1</stretch></empty>
+
+		<button>
+			<pref-width>16</pref-width>
+			<pref-height>16</pref-height>
+			<legend></legend>
+			<default>1</default>
+			<keynum>267</keynum>
+			<border>2</border>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+			
+		</button>
+	</group>
+	<group>
+		<layout>vbox</layout>
+		<group><!-- Autopilot Panel -->
+		
+			<layout>vbox</layout>
+			<group>
+				<layout>hbox</layout>
+				<text>
+					<label>Autopilot Panel</label>
+					<halign>left</halign>
+				</text>
+				<hrule>
+					<stretch>true</stretch>
+				</hrule>
+			</group>
+			<group>
+				<default-padding>8</default-padding>
+				<layout>table</layout>
+				<group>
+					<row>0</row>
+					<col>1</col>
+					<layout>hbox</layout>
+					<button>
+						<legend>HDG</legend>
+						<keynum>h</keynum>
+						<border>2</border>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ UI.click("Autopilot HDG"); ]]>
+							</script>
+						</binding>
+					</button>
+					<button>
+						<legend>+</legend>
+						<keynum>n</keynum>
+						<border>2</border>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ UI.click("Autopilot HDG+NAV"); ]]>
+							</script>
+						</binding>
+					</button>
+					<button>
+						<legend>NAV</legend>
+						<keynum>n</keynum>
+						<border>2</border>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ UI.click("Autopilot NAV"); ]]>
+							</script>
+						</binding>
+					</button>
+				</group>
+				<button>
+					<row>0</row>
+					<col>2</col>
+					<legend>APR</legend>
+					<keynum>a</keynum>
+					<border>2</border>
+					<binding>
+						<command>nasal</command>
+						<script>
+							<![CDATA[ UI.click("Autopilot APR"); ]]>
+						</script>
+					</binding>
+				</button>
+				<button>
+					<row>0</row>
+					<col>3</col>
+					<legend>REV</legend>
+					<keynum>r</keynum>
+					<border>2</border>
+					<binding>
+						<command>nasal</command>
+						<script>
+							<![CDATA[ UI.click("Autopilot REV"); ]]>
+						</script>
+					</binding>
+				</button>
+				<group>
+					<row>0</row>
+					<col>4</col>
+					<layout>hbox</layout>
+				
+					<button>
+						<legend>ALT</legend>
+						<keynum>r</keynum>
+						<border>2</border>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ UI.click("Autopilot ALT"); ]]>
+							</script>
+						</binding>
+					</button>
+					<button>
+						<legend>+</legend>
+						<keynum>v</keynum>
+						<border>2</border>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ UI.click("Autopilot ALT+VS"); ]]>
+							</script>
+						</binding>
+					</button>
+					<button>
+						<legend>VS</legend>
+						<keynum>v</keynum>
+						<border>2</border>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ UI.click("Autopilot VS"); ]]>
+							</script>
+						</binding>
+					</button>
+				</group>
+				<group>
+					<row>0</row>
+					<col>5</col>
+					<layout>hbox</layout>
+					<button>
+						
+						<legend>&lt;</legend>
+						<keynum>-</keynum>
+						<border>2</border>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ UI.click("Autopilot VS <"); ]]>
+							</script>
+						</binding>
+					</button>
+					<input>
+						<name>VS</name>
+						<halign>center</halign>
+						<stretch>false</stretch>
+						<pref-width>70</pref-width>
+						<live>true</live>
+						<property>/sim/gui/dialogs/autopilot/VS</property>
+						<binding>
+							<command>dialog-apply</command>
+						</binding>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ 
+								UI.click("Autopilot VS =",nVs.getValue()); 
+								]]>
+							</script>
+						</binding>
+					</input>
+						
+					<button>
+						<legend>&gt;</legend>
+						<keynum>+</keynum>
+						<border>2</border>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ UI.click("Autopilot VS >"); ]]>
+							</script>
+						</binding>
+					</button>
+				</group>
+			</group>
+		</group>
+		<group><!-- MasterPanel Autopilot -->
+			<layout>vbox</layout>
+			<group>
+				<layout>hbox</layout>
+				<text>
+					<label>Master Panel</label>
+					<halign>left</halign>
+				</text>
+				<hrule>
+					<stretch>true</stretch>
+				</hrule>
+			</group>
+			<group>
+				<layout>table</layout>
+					
+				<text>
+					<row>0</row>
+					<col>0</col>
+					<label>Master</label>
+					<halign>center</halign>
+				</text>
+				
+				<group><!-- Master Switch -->
+					<layout>vbox</layout>
+					<row>1</row>
+					<col>0</col>
+
+					
+					<button>
+						<pref-width>64</pref-width>
+						<legend>AP</legend>
+						<halign>center</halign>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ UI.click("Autopilot Master on"); ]]>
+							</script>
+						</binding>
+					</button>
+					<button>
+						<pref-width>64</pref-width>
+						<legend>FD</legend>
+						<halign>center</halign>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ UI.click("Autopilot Master fd"); ]]>
+							</script>
+						</binding>
+					</button>
+					<button>
+						<pref-width>64</pref-width>
+						<legend>OFF</legend>
+						<halign>center</halign>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ UI.click("Autopilot Master off"); ]]>
+							</script>
+						</binding>
+					</button>
+				</group>	
+				<text>
+					<row>0</row>
+					<col>1</col>
+					
+					<label>Pitch Trim</label>
+					<halign>center</halign>
+				</text>
+					
+				
+				<group><!-- Pitch Trim Switch -->
+					<layout>vbox</layout>
+					
+					<row>1</row>
+					<col>1</col>
+					
+					<layout>hbox</layout>
+					<button>
+						<pref-width>64</pref-width>
+						<legend>ON</legend>
+						<halign>center</halign>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ UI.click("Autopilot PitchTrim on"); ]]>
+							</script>
+						</binding>
+					</button>
+					<button>
+						<pref-width>64</pref-width>
+						<legend>OFF</legend>
+						<halign>center</halign>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ UI.click("Autopilot PitchTrim off"); ]]>
+							</script>
+						</binding>
+					</button>
+				</group>
+				<text>
+					<row>0</row>
+					<col>2</col>
+					
+					<label>Yaw Damper</label>
+					<halign>center</halign>
+				</text>
+						
+				<group><!-- Yaw Damper Switch -->
+					<layout>vbox</layout>
+					
+					<row>1</row>
+					<col>2</col>
+					
+					<layout>hbox</layout>
+					<button>
+						<pref-width>64</pref-width>
+						<legend>ON</legend>
+						<halign>center</halign>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ UI.click("Autopilot YawDamper on"); ]]>
+							</script>
+						</binding>
+					</button>
+					<button>
+						<pref-width>64</pref-width>
+						<legend>OFF</legend>
+						<halign>center</halign>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ UI.click("Autopilot YawDamper off"); ]]>
+							</script>
+						</binding>
+					</button>
+				</group>
+				<text>
+					<row>0</row>
+					<col>3</col>
+					
+					<label>Yaw Trim</label>
+					<halign>center</halign>
+				</text>
+						
+				<group><!-- Yaw Trim Knob -->
+					<layout>vbox</layout>
+					
+					<row>1</row>
+					<col>3</col>
+					
+					<dial>
+						<pref-width>64</pref-width>
+						<pref-height>64</pref-height>
+						<min>-1.0</min>
+						<max>1.0</max>
+						<wrap>0</wrap>
+						<step>0.1</step>
+						<stretch>true</stretch>
+						<property>/sim/gui/dialogs/autopilot/YawTrim</property>
+						<live>true</live>
+						<binding>
+							<command>dialog-apply</command>
+						</binding>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ 
+								UI.click("Autopilot Yaw Trim =",nYawTrim.getValue()); 
+								]]>
+							</script>
+						</binding>
+					</dial>
+					<group>
+						<layout>hbox</layout>
+						<button>
+							<width>32</width>
+							<legend>&lt;</legend>
+							<halign>center</halign>
+							<binding>
+								<command>nasal</command>
+								<script><![CDATA[ 
+									UI.click("Autopilot Yaw Trim +=",-0.1); ]]>
+									</script>
+								</binding>
+						</button>
+						<button>
+							<width>32</width>
+							<legend>&gt;</legend>
+							<halign>center</halign>
+							<binding>
+								<command>nasal</command>
+								<script>
+									<![CDATA[ 
+									UI.click("Autopilot Yaw Trim +=",0.1); ]]>
+									</script>
+								</binding>
+						</button>
+
+					</group>
+					<button>
+						<width>64</width>
+						<legend>Zero</legend>
+						<halign>center</halign>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ 
+								UI.click("Autopilot Yaw Trim =",0); 
+								]]>
+							</script>
+						</binding>
+					</button>
+
+				</group>	
+			</group>
+		</group>
+		<group><!-- Keypad -->
+			<layout>vbox</layout>
+			<default-padding>2</default-padding>
+				
+			<group>
+				<layout>hbox</layout>
+				<text>
+					<label>Keypad</label>
+					<halign>left</halign>
+				</text>
+				<hrule>
+					<stretch>true</stretch>
+				</hrule>
+			</group>
+			<group>
+				<layout>table</layout>
+					
+				<text>
+					<row>0</row>
+					<col>0</col>
+					<label>Altitude</label>
+					<halign>center</halign>
+				</text>
+				
+				<group><!-- Altitude -->
+					<layout>vbox</layout>
+					<row>0</row>
+					<col>1</col>
+					<group>
+						<layout>hbox</layout>
+						<empty>
+							<stretch>true</stretch>
+						</empty>
+						
+					</group>	
+					<group>
+						<layout>hbox</layout>
+						<button>
+							<width>32</width>
+							<legend>&lt;&lt;</legend>
+							<halign>center</halign>
+							<binding>
+								<command>nasal</command>
+								<script><![CDATA[ 
+									UI.click("Keypad Altitude +=",-1000); 
+									]]></script>
+							</binding>
+						</button>
+						<button>
+							<width>32</width>
+							<legend>&lt;</legend>
+							<halign>center</halign>
+							<binding>
+								<command>nasal</command>
+								<script><![CDATA[ 
+									UI.click("Keypad Altitude +=",-100); 
+									]]></script>
+							</binding>
+						</button>
+						<input>
+							<name>Altitude</name>
+							<halign>center</halign>
+							<stretch>false</stretch>
+							<pref-width>70</pref-width>
+							<live>true</live>
+							<property>/sim/gui/dialogs/autopilot/Altitude</property>
+							<binding>
+								<command>dialog-apply</command>
+							</binding>
+							<binding>
+								<command>nasal</command>
+								<script>
+									<![CDATA[ 
+									UI.click("Keypad Altitude =",nAltitude.getValue()); 
+									]]>
+								</script>
+							</binding>
+						</input>
+						<button>
+							<width>32</width>
+							<legend>&gt;</legend>
+							<halign>center</halign>
+							<binding>
+								<command>nasal</command>
+								<script>
+									<![CDATA[ 
+									UI.click("Keypad Altitude +=",100); 
+									]]></script>
+							</binding>
+						</button>
+						<button>
+							<width>32</width>
+							<legend>&gt;&gt;</legend>
+							<halign>center</halign>
+							<binding>
+								<command>nasal</command>
+								<script>
+									<![CDATA[ 
+									UI.click("Keypad Altitude +=",1000); 
+									]]></script>
+							</binding>
+						</button>
+						<button>
+							<width>32</width>
+							<legend>sync</legend>
+							<halign>center</halign>
+							<binding>
+								<command>nasal</command>
+								<script>
+									<![CDATA[ 
+										UI.click("Keypad Altitude sync"); 
+									]]></script>
+							</binding>
+						</button>
+						<empty>
+							<stretch>true</stretch>
+						</empty>
+					</group>
+					
+				</group>
+			
+				<text>
+					<row>1</row>
+					<col>0</col>
+					<label>Heading</label>
+					<halign>center</halign>
+				</text>
+				
+				<group><!-- Heading -->
+					<layout>vbox</layout>
+					<row>1</row>
+					<col>1</col>
+					
+					
+					
+					<group>
+						<layout>hbox</layout>
+						<button>
+							<width>32</width>
+							<legend>&lt;&lt;</legend>
+							<halign>center</halign>
+							<binding>
+								<command>nasal</command>
+								<script><![CDATA[ 
+									UI.click("Keypad Heading +=",-10); 
+									]]></script>
+							</binding>
+						</button>
+						<button>
+							<width>32</width>
+							<legend>&lt;</legend>
+							<halign>center</halign>
+							<binding>
+								<command>nasal</command>
+								<script><![CDATA[ 
+									UI.click("Keypad Heading +=",-1); 
+									]]></script>
+							</binding>
+						</button>
+						<input>
+							<name>Heading</name>
+							<halign>center</halign>
+							<stretch>false</stretch>
+							<pref-width>70</pref-width>
+							<live>true</live>
+							<property>/sim/gui/dialogs/autopilot/Heading</property>
+							<binding>
+								<command>dialog-apply</command>
+							</binding>
+							<binding>
+								<command>nasal</command>
+								<script>
+									<![CDATA[ 
+									UI.click("Keypad Heading =",nHeading.getValue()); 
+									]]>
+								</script>
+							</binding>
+						</input>
+						<button>
+							<width>32</width>
+							<legend>&gt;</legend>
+							<halign>center</halign>
+							<binding>
+								<command>nasal</command>
+								<script>
+									<![CDATA[ 
+									UI.click("Keypad Heading +=",1); 
+									]]></script>
+							</binding>
+						</button>
+						<button>
+							<width>32</width>
+							<legend>&gt;&gt;</legend>
+							<halign>center</halign>
+							<binding>
+								<command>nasal</command>
+								<script>
+									<![CDATA[ 
+									UI.click("Keypad Heading +=",10); 
+									]]></script>
+							</binding>
+						</button>
+						
+						<button>
+							<width>32</width>
+							<legend>sync</legend>
+							<halign>center</halign>
+							<binding>
+								<command>nasal</command>
+								<script>
+									<![CDATA[ 
+										UI.click("Keypad Heading sync"); 
+									]]></script>
+							</binding>
+						</button>
+						<empty>
+							<stretch>true</stretch>
+						</empty>
+					</group>
+					
+					
+				</group>
+<!-- FMS -->
+<!--				<text>
+					<row>2</row>
+					<col>0</col>
+					<label>FMS</label>
+					<halign>center</halign>
+				</text>
+				
+				<group>
+					<layout>vbox</layout>
+					<row>2</row>
+					<col>1</col>
+				</group>
+-->
+			</group>
+		</group>
+		<group><!-- Yoke -->
+			<layout>vbox</layout>
+			<group>
+				<layout>hbox</layout>
+				<text>
+					<label>Yoke</label>
+					<halign>left</halign>
+				</text>
+				<hrule>
+					<stretch>true</stretch>
+				</hrule>
+			</group>
+			<group>
+				<layout>hbox</layout>
+				<button>
+					<legend>Disengage</legend>
+					<halign>center</halign>
+					<binding>
+						<command>nasal</command>
+						<script>
+							<![CDATA[ 
+							UI.click("Autopilot disengage"); 
+							]]>
+						</script>
+					</binding>
+				</button>
+				<checkbox>
+					<label>CWS</label>
+					<halign>center</halign>
+					<property>/extra500/instrumentation/autopilot/CWS/state</property>					
+					<binding>
+						<command>nasal</command>
+						<script>
+							<![CDATA[ 
+							UI.click("Autopilot CWS"); 
+							]]>
+						</script>
+					</binding>
+				</checkbox>
+				<empty>
+					<stretch>true</stretch>
+				</empty>
+				<group>
+					<layout>hbox</layout>
+					<text>
+						<label>Manual Electric Pitch Trim</label>
+						<halign>left</halign>
+					</text>
+				
+					<button>
+						
+						<legend>up</legend>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ 
+								UI.click("Autopilot Pitch Command up"); 
+								]]>
+							</script>
+						</binding>
+					</button>
+					<button>
+						
+						<legend>off</legend>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ 
+								UI.click("Autopilot Pitch Command off"); 
+								]]>
+							</script>
+						</binding>
+					</button>
+					<button>
+						<legend>down</legend>
+						<binding>
+							<command>nasal</command>
+							<script>
+								<![CDATA[ 
+								UI.click("Autopilot Pitch Command down"); 
+								]]>
+							</script>
+						</binding>
+					</button>
+				</group>
+			</group>
+			
+			
+		</group>
+	</group>
+  <hrule/>
+
+       <button>
+	       <legend>Close</legend>
+	       <default>true</default>
+	       <key>Esc</key>
+	       <binding>
+		       <command>dialog-close</command>
+	       </binding>
+       </button>
+
+</PropertyList>

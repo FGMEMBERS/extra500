@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8" ?>
+	
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Eric van den Berg
+      Date: 2013-09-16
+
+      Last change:      Eric van den Berg
+      Date:             2014-05-29
+-->
+
+<system name="electrics">
+
+<!-- some electrical consumers -->
+	<channel name="consumers">
+
+<!-- airco -->
+		<fcs_function name="ampereVents1">
+			<function>
+				<product>
+					<sum>
+						<property>/extra500/panel/Side/Cabin/Vent/state</property>
+						<value>1</value>
+					</sum>
+					<value>280.0</value>
+					<pow>	
+						<max>			
+							<property>/extra500/panel/CircuitBreaker/BankA/Vent/voltOut</property>
+							<value>1</value>
+						</max>
+						<value>-1</value>
+					</pow>				
+				</product>
+			</function>
+			<output>/extra500/consumers/airco/vent/ampere</output>
+		</fcs_function>
+
+		<switch name="ampereVents2">
+			<default value="0"/>
+			<test logic="AND" value="/extra500/consumers/airco/vent/ampere">
+				/extra500/panel/CircuitBreaker/BankA/Vent/voltOut gt 10
+			</test>
+			<output>/extra500/panel/CircuitBreaker/BankA/Vent/ampere</output>
+		</switch>
+
+		<fcs_function name="amperevaporcycle1">
+			<function>
+				<product>
+					<property>/extra500/panel/Side/Cabin/AirCondition/state</property>
+					<value>2072</value>
+					<pow>	
+						<max>			
+							<property>/extra500/panel/CircuitBreaker/BankA/AirCondition/voltOut</property>
+							<value>1</value>
+						</max>
+						<value>-1</value>
+					</pow>				
+				</product>
+			</function>
+			<output>/extra500/consumers/airco/vaporcycle/ampere</output>
+		</fcs_function>
+
+		<switch name="amperevaporcycle2">
+			<default value="0"/>
+			<test logic="AND" value="/extra500/consumers/airco/vaporcycle/ampere">
+				<test logic="AND" value="1">
+					/extra500/panel/CircuitBreaker/BankA/AirCondition/voltOut gt 20
+					/extra500/consumers/airco/vent/ampere gt 0
+				</test>
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/extra500/panel/Side/Main/ExternalPower/state eq 1
+						/extra500/panel/Side/Main/Battery/state eq 0
+						/extra500/panel/Side/Main/Generator/state eq 0
+					</test>
+					<test logic="AND" value="1">
+						/extra500/panel/Side/Main/Generator/state eq 1
+					</test>
+				</test>
+			</test>
+			<output>/extra500/panel/CircuitBreaker/BankA/AirCondition/ampere</output>
+		</switch>
+
+<!-- Cabin lights -->
+		<fcs_function name="cabinlights">
+			<function>
+				<sum>
+					<product>
+						<property>/extra500/interior/readinglightpic/pressed</property>
+						<value>1.0</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/BankB/CabinLight/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+					<product>
+						<property>/extra500/interior/readinglightcop/pressed</property>
+						<value>1.0</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/BankB/CabinLight/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+					<product>
+						<property>/extra500/interior/readinglightLF/pressed</property>
+						<value>1.0</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/BankB/CabinLight/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+					<product>
+						<property>/extra500/interior/readinglightLA/pressed</property>
+						<value>1.0</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/BankB/CabinLight/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+					<product>
+						<property>/extra500/interior/readinglightRF/pressed</property>
+						<value>1.0</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/BankB/CabinLight/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+					<product>
+						<property>/extra500/interior/readinglightRA/pressed</property>
+						<value>1.0</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/BankB/CabinLight/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+				</sum>
+			</function>
+			<output>/extra500/consumers/cabinlights/ampere</output>
+		</fcs_function>
+
+		<switch name="amperecabinlights">
+			<default value="0"/>
+			<test logic="AND" value="/extra500/consumers/cabinlights/ampere">
+				/extra500/panel/CircuitBreaker/BankB/CabinLight/voltOut gt 10
+				/extra500/panel/Side/Light/Cabin/state eq 1
+			</test>
+			<output>/extra500/panel/CircuitBreaker/BankB/CabinLight/ampere</output>
+		</switch>
+
+<!-- Panel vents -->
+		<fcs_function name="panelVents">
+			<function>
+				<sum>
+					<product>
+						<property>/extra500/instrumentation/panelventswitchL/pressed</property>
+						<value>8.0</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/BankA/PanelVent/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+					<product>
+						<property>/extra500/instrumentation/panelventswitchR/pressed</property>
+						<value>8.0</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/BankA/PanelVent/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+				</sum>
+			</function>
+			<output>/extra500/consumers/panelvent/ampere</output>
+		</fcs_function>
+
+		<switch name="amperePanelVent">
+			<default value="0"/>
+			<test logic="AND" value="/extra500/consumers/panelvent/ampere">
+				/extra500/panel/CircuitBreaker/BankA/PanelVent/voltOut gt 10
+			</test>
+			<output>/extra500/panel/CircuitBreaker/BankA/PanelVent/ampere</output>
+		</switch>
+
+<!--boots timer + ejector valves -->
+		<fcs_function name="boots-raw">
+			<function>
+				<sum>
+					<product>
+						<property>/systems/pneumatic/boots-timer-active</property>
+						<value>0.4</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/BankC/Boots/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+					<product>
+						<property>/systems/pneumatic/switches/ejectorvalve1-active</property>
+						<value>14.0</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/BankC/Boots/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+					<product>
+						<property>/systems/pneumatic/switches/ejectorvalve2-active</property>
+						<value>14.0</value>
+						<pow>	
+							<max>			
+								<property>/extra500/panel/CircuitBreaker/BankC/Boots/voltOut</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+				</sum>
+			</function>
+			<output>/extra500/consumers/boots/ampere</output>
+		</fcs_function>
+
+		<switch name="boots">
+			<default value="0"/>
+			<test logic="AND" value="/extra500/consumers/boots/ampere">
+				/extra500/panel/CircuitBreaker/BankC/Boots/voltOut gt 10
+			</test>
+			<output>/extra500/panel/CircuitBreaker/BankC/Boots/ampere</output>
+		</switch>
+
+<!-- gear -->
+		<fcs_function name="gear-pump">
+			<function>
+				<product>
+					<property>/systems/gear/motor/state</property>
+					<!--value>1148.0</value-->
+					<value>41.0</value>
+					<!--pow>	
+						<max>			
+							<property>/extra500/panel/CircuitBreaker/BankC/Hydraulic/voltOut</property>
+							<value>1</value>
+						</max>
+						<value>-1</value>
+					</pow-->				
+				</product>
+			</function>
+			<output>/extra500/panel/CircuitBreaker/BankC/Hydraulic/ampere</output>
+		</fcs_function>
+
+		<fcs_function name="gear-valves">
+			<function>
+				<sum>
+					<product>
+						<max>
+							<product>
+								<property>/systems/gear/solenoids/mainvalve/state</property>
+								<value>-10.0</value>
+							</product>
+							<value>0</value>
+						</max>
+						<pow>	
+							<max>			
+								<property>/extra500/electric/bus/hot/volt</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+					<product>
+						<max>
+							<product>
+								<property>/systems/gear/solenoids/upperdoorvalve/state</property>
+								<value>-10.0</value>
+							</product>
+							<value>0</value>
+						</max>
+						<pow>	
+							<max>			
+								<property>/extra500/electric/bus/hot/volt</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+					<product>
+						<max>
+							<product>
+								<property>/systems/gear/solenoids/lowerdoorvalve/state</property>
+								<value>-10.0</value>
+							</product>
+							<value>0</value>
+						</max>
+						<pow>	
+							<max>			
+								<property>/extra500/electric/bus/hot/volt</property>
+								<value>1</value>
+							</max>
+							<value>-1</value>
+						</pow>				
+					</product>
+				</sum>
+			</function>
+			<output>/extra500/panel/CircuitBreaker/GearAux2/ampere</output>
+		</fcs_function>
+
+	</channel>
+
+<!-- This "system" connects the extra500 electrical system to the hardcoded instrument power inputs -->
+	<channel name="power">
+
+		<switch name="turncoorpower">
+			<default value="0"/>
+			<test logic="AND" value="12">
+				/extra500/instrumentation/TurnCoordinator/volt gt 18
+			</test>
+			<output>/systems/electrical/outputs/turn-coordinator</output>
+		</switch>
+
+		<switch name="nav0power">
+			<default value="0"/>
+			<test logic="AND" value="1.1">
+				/extra500/instrumentation/IFD-LH/state eq 1
+			</test>
+			<output>/systems/electrical/outputs/nav[0]</output>
+		</switch>
+
+		<switch name="nav1power">
+			<default value="0"/>
+			<test logic="AND" value="1.1">
+				/extra500/instrumentation/IFD-RH/state eq 1
+			</test>
+			<output>/systems/electrical/outputs/nav[1]</output>
+		</switch>
+
+		<switch name="dmepower">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/extra500/instrumentation/dmeInd/volt gt 10
+			</test>
+			<output>/systems/electrical/outputs/dme</output>
+		</switch>
+
+		<switch name="xpdrpower">
+			<default value="0"/>
+			<test logic="AND" value="24">
+				/extra500/instrumentation/xpdr/volt gt 10
+			</test>
+			<output>/systems/electrical/outputs/transponder</output>
+		</switch>
+
+		<switch name="hdgpower">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/extra500/instrumentation/IFD-LH/state eq 1
+				/extra500/instrumentation/IFD-RH/state eq 1
+			</test>
+			<output>/systems/electrical/outputs/DG</output>
+		</switch>
+
+	</channel>
+
+</system>
+
+
+

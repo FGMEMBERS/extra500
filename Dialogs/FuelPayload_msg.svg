@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="512"
+   height="384"
+   id="svg5307"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="FuelPayload_msg.svg">
+  <defs
+     id="defs5309" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="4.4569874"
+     inkscape:cy="170.23738"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1025"
+     inkscape:window-x="-2"
+     inkscape:window-y="-3"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5312">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-668.36218)">
+    <text
+       xml:space="preserve"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#cccccc;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="255.97656"
+       y="740.2193"
+       id="msg"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="255.97656"
+         y="740.2193"
+         id="tspan5319">Sorry, the Extra500</tspan><tspan
+         sodipodi:role="line"
+         x="255.97656"
+         y="760.2193"
+         id="tspan6089"> is not able to participate on an Air to Air refueling event.</tspan><tspan
+         sodipodi:role="line"
+         x="255.97656"
+         y="780.2193"
+         id="tspan5321">You have to get on ground to the next fuel Station.</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text5323"
+       y="822.2193"
+       x="84.296875"
+       style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cccccc;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       xml:space="preserve"><tspan
+         id="tspan5329"
+         y="822.2193"
+         x="84.296875"
+         sodipodi:role="line">Nearest Airport :</tspan></text>
+    <g
+       id="g6051"
+       transform="translate(52,6)"
+       style="fill:#cccccc">
+      <text
+         xml:space="preserve"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#cccccc;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="147.97656"
+         y="915.63727"
+         id="Airport_Vector"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           x="147.97656"
+           y="915.63727"
+           id="tspan5976">Longitude :</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text5983"
+         y="896.2193"
+         x="147.97656"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#cccccc;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           id="tspan5985"
+           y="896.2193"
+           x="147.97656"
+           sodipodi:role="line">Latitude :</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text5987"
+         y="848.00836"
+         x="147.97656"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#cccccc;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           id="tspan5989"
+           y="848.00836"
+           x="147.97656"
+           sodipodi:role="line">ICAO :</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#cccccc;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="147.97656"
+         y="868.92633"
+         id="text5991"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           x="147.97656"
+           y="868.92633"
+           id="tspan5993">Name :</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text5995"
+         y="948.00836"
+         x="147.97656"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#cccccc;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           id="tspan5997"
+           y="948.00836"
+           x="147.97656"
+           sodipodi:role="line">Course :</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#cccccc;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="147.97656"
+         y="969.2193"
+         id="text5999"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           x="147.97656"
+           y="969.2193"
+           id="tspan6001">Distance :</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text6003"
+         y="990.2193"
+         x="147.97656"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#cccccc;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           id="tspan6005"
+           y="990.2193"
+           x="147.97656"
+           sodipodi:role="line">Elevation :</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#cccccc;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="219.97656"
+         y="896.00836"
+         id="Lat"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           x="219.97656"
+           y="896.00836"
+           id="tspan6009">-000.00</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="Lon"
+         y="917.00836"
+         x="219.97656"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#cccccc;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           id="tspan6013"
+           y="917.00836"
+           x="219.97656"
+           sodipodi:role="line">-000.00</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cccccc;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="157.97656"
+         y="848.00836"
+         id="ICAO"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           x="157.97656"
+           y="848.00836"
+           id="tspan6017">-000.00</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="Name"
+         y="869.00836"
+         x="157.97656"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#cccccc;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           id="tspan6021"
+           y="869.00836"
+           x="157.97656"
+           sodipodi:role="line">-000.00</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#cccccc;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="219.97656"
+         y="948.00836"
+         id="Course"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           x="219.97656"
+           y="948.00836"
+           id="tspan6025">-000.00</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="Distance"
+         y="969.00836"
+         x="219.97656"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#cccccc;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           id="tspan6029"
+           y="969.00836"
+           x="219.97656"
+           sodipodi:role="line">-000.00</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#cccccc;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="219.97656"
+         y="990.00836"
+         id="Elevation"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           x="219.97656"
+           y="990.00836"
+           id="tspan6033">-000.00</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#cccccc;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="247.97656"
+         y="969.00836"
+         id="text6039"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           x="247.97656"
+           y="969.00836"
+           id="tspan6041">nm</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text6043"
+         y="990.00836"
+         x="235.4375"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#cccccc;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           id="tspan6045"
+           y="990.00836"
+           x="235.4375"
+           sodipodi:role="line">ft</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text6047"
+         y="948.00836"
+         x="252.83594"
+         style="font-size:16px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#cccccc;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           id="tspan6049"
+           y="948.00836"
+           x="252.83594"
+           sodipodi:role="line">deg</tspan></text>
+    </g>
+  </g>
+</svg>

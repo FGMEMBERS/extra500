@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: March 13 2013
+
+      Last change:      Eric van den Berg
+      Date:             17.09.13
+
+-->
+
+<PropertyList>
+
+<path>ADIanalog.ac</path>
+
+	<animation>
+		<type>rotate</type>
+	<object-name>ADIanalog.Scheibe.vorne</object-name>
+	<object-name>ADIanalog.Scheibe.hinten</object-name>
+	<object-name>ADIanalog.Scheibe.innen</object-name>
+		<property>/instrumentation/attitude-indicator/indicated-roll-deg</property>
+		<center>
+			<x-m>1</x-m>
+			<y-m>0.0</y-m>
+			<z-m>0.0</z-m>
+		</center>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+<!-- scheibe rutschte raus wenn pitch extrem gross wurde, deshalb anderer loesungsansatz gewaehlt
+	<animation>
+		<type>translate</type>
+		<object-name>scheibe.innen</object-name>
+		<property>/orientation/pitch-deg</property>
+		<factor>0.0005</factor>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+	</animation>-->
+	
+	<animation>
+		<type>translate</type>
+		<object-name>ADIanalog.Scheibe.innen</object-name>
+		<property>/instrumentation/attitude-indicator/indicated-pitch-deg</property>
+		<interpolation>
+        <entry>
+           <ind>-30</ind>
+           <dep>0.015</dep>
+        </entry>
+            <entry>
+                <ind>-20</ind>
+                <dep>0.01</dep>
+            </entry>
+            <entry>
+                <ind>20</ind>
+                <dep>-0.01</dep>
+            </entry>
+		<entry>
+            <ind>30</ind>
+            <dep>-0.015</dep>
+        </entry>
+        </interpolation>
+		<axis>
+			<x>0</x>
+			<y>0</y>
+			<z>1</z>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>rotate</type>
+		<object-name>ADIanalog.flag</object-name>
+		<property>/instrumentation/attitude-indicator/spin</property>
+		<interpolation>
+       		<entry>
+          	 		<ind>0.99</ind>
+           			<dep>-55.0</dep>
+        		</entry>
+           		<entry>
+                		<ind>1</ind>
+                		<dep>0.0</dep>
+           		</entry>
+	      </interpolation>
+		<center>
+			<x-m>1</x-m>
+			<y-m>0</y-m>
+			<z-m>-0.01833</z-m>
+		</center>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	
+<!-- Dimming Instruments -->
+<animation>
+	<type>material</type>
+	<object-name>ADIanalog.Scheibe.vorne</object-name>
+	<object-name>ADIanalog.Scheibe.hinten</object-name>
+	<object-name>ADIanalog.Scheibe.innen</object-name>
+	<object-name>ADIanalog.Dreieck.oben</object-name>
+	<object-name>ADIanalog.Dreieck.unten</object-name>
+	<object-name>ADIanalog.flag</object-name>
+	<emission>	
+		<red>1.0</red>	
+		<green>1.0</green>	
+		<blue>1.0</blue>
+		<factor-prop>/extra500/instrumentation/StbyHSI/Backlight/state</factor-prop>
+	</emission>
+</animation>
+
+</PropertyList>
+

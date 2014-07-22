@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: March 13 2013
+
+      Last change:      Eric van den Berg
+      Date:             13.05.14
+-->
+
+<PropertyList>
+
+       <default>
+	       <menu n="10">
+		       <label>EXTRA 500</label>
+		       <enabled type="bool">true</enabled>
+		       
+		       
+			<item>
+				<name>livery</name>
+				<label>Select Livery</label>
+				<binding>
+					<command>nasal</command>
+					<script><![CDATA[
+						aircraft.livery.dialog.open();
+					]]></script>
+				</binding>
+			</item>
+			<item>
+				<name>extra500config</name>
+				<label>Configuration</label>
+				<binding>
+					<command>nasal</command>
+					<script><![CDATA[
+						gui.showDialog("extra500_Config");
+					]]></script>
+				</binding>
+			</item>
+			<item>
+				<name>yokes-toggle</name>
+				<label>Toggle Yokes Visible</label>
+				<binding>
+					<command>property-toggle</command>
+					<property>/extra500/yokes/visible</property>
+				</binding>
+			</item>
+			<!--
+			<item>
+				<name>events-toggle</name>
+				<label>Toggle Messages</label>
+				<binding>
+					<command>property-toggle</command>
+					<property>/fdm/jsbsim/aircraft/events/show-events</property>
+				</binding>
+			</item>
+		       <item>
+			       <name>chklst01</name>
+			       <label>Before engine start - battery</label>
+				<binding>
+				       <command>nasal</command>
+				       <script><![CDATA[
+					       CoPilot.performChecklist("BEFORE ENGINE START - battery");
+				       ]]></script>
+			       </binding>
+			</item>
+			<item>
+			       <name>chklst02</name>
+			       <label>Engine start</label>
+				<binding>
+				       <command>nasal</command>
+				       <script><![CDATA[
+					       CoPilot.performChecklist("ENGINE START");
+				       ]]></script>
+			       </binding>
+			</item>
+			<item>
+			       <name>chklst03</name>
+			       <label>After starting engine</label>
+				<binding>
+				       <command>nasal</command>
+				       <script><![CDATA[
+					       CoPilot.performChecklist("AFTER ENGINE START");
+				       ]]></script>
+			       </binding>
+			</item>
+			<item>
+			       <name>chklst04</name>
+			       <label>Engine shutdown</label>
+				<binding>
+				       <command>nasal</command>
+				       <script><![CDATA[
+					       CoPilot.performChecklist("ENGINE SHUTDOWN");
+				       ]]></script>
+			       </binding>
+			</item>
+			-->
+			<item>
+				<label>------------------</label>
+				<enabled>false</enabled>
+			</item>
+			
+			<item>
+				<name>aircraft-checklists</name>
+				<label>Checklists</label>
+				<binding>
+					<command>dialog-show</command>
+					<dialog-name>checklist</dialog-name>
+				</binding>
+			</item>
+
+			<item>
+			       <name>auto_start</name>
+			       <label>Autostart</label>
+				<binding>
+				       <command>nasal</command>
+				       <script><![CDATA[
+					       CoPilot.auto_start();
+				       ]]></script>
+			       </binding>
+			</item>
+			<item>
+				<label>------------------</label>
+				<enabled>false</enabled>
+			</item>
+			<item>
+				<name>chat-download</name>
+				<label>chat : download location</label>
+				<binding>
+				       <command>nasal</command>
+				       <script><![CDATA[
+					       setprop("/sim/multiplay/chat", "extra500 download at http://gitorious.org/extra500/extra500");
+				       ]]></script>
+			       </binding>
+			</item>
+
+			
+			
+
+	
+		</menu>
+  </default>
+
+</PropertyList>
+

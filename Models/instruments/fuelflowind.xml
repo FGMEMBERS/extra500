@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: August 05 2013
+
+      Last change:      -
+      Date:             -
+
+-->
+
+<PropertyList>
+
+<path>fuelflowind.ac</path>
+<!--Dimming -->
+<animation>
+	<type>material</type>
+	<object-name>ff.100</object-name>
+	<object-name>ff.010</object-name>
+	<object-name>ff.001</object-name>
+	<object-name>nm.100</object-name>
+	<object-name>nm.010</object-name>
+	<object-name>nm.001</object-name>
+	<object-name>ff.background</object-name>
+	<object-name>nm.background</object-name>
+	<emission>	
+		<red>1.0</red>	
+		<green>1.0</green>	
+		<blue>1.0</blue>
+		<factor-prop>/extra500/instrumentation/FuelFlow/Backlight/state</factor-prop>
+	</emission>
+</animation>
+<!--FF ind-->
+	<animation>
+		<!-- Power on/off -->
+		<type>select</type>
+			<object-name>ff.100</object-name>
+			<object-name>ff.010</object-name>
+			<object-name>ff.001</object-name>
+			<object-name>nm.100</object-name>
+			<object-name>nm.010</object-name>
+			<object-name>nm.001</object-name>
+			<object-name>ff.background</object-name>
+			<object-name>nm.background</object-name>
+		<condition>
+			<greater-than>
+				<property>extra500/instrumentation/FuelFlow/state</property>
+				<value>0</value>
+			</greater-than>	
+		</condition>
+	</animation>
+
+	<animation>
+		<type>textranslate</type>
+		<object-name>ff.001</object-name>
+		<property>/fdm/jsbsim/aircraft/engine/FF-l_h</property>
+		<factor>0.1</factor>
+		<step>1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>ff.010</object-name>
+		<property>/fdm/jsbsim/aircraft/engine/FF-l_h</property>
+		<factor>0.01</factor>
+		<step>10</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>ff.100</object-name>
+		<property>/fdm/jsbsim/aircraft/engine/FF-l_h</property>
+		<factor>0.001</factor>
+		<step>100</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>ff.010</object-name>
+		<condition>
+			<greater-than-equals>
+				<property>/fdm/jsbsim/aircraft/engine/FF-l_h</property>
+				<value>10</value>
+			</greater-than-equals>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>ff.100</object-name>
+		<condition>
+			<greater-than-equals>
+				<property>/fdm/jsbsim/aircraft/engine/FF-l_h</property>
+				<value>100</value>
+			</greater-than-equals>
+		</condition>
+	</animation>
+
+</PropertyList>
+

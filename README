@@ -1,0 +1,180 @@
+﻿    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Eric van den Berg
+      Date: 2013-05-12
+
+      Last change:      2014-06-04
+      Date:             Eric van den Berg
+
+========================================================================
+
+See the Extra500 POH for full procedures! Below are just quickstart.
+
+
+General Remarks:
+
+All switches are thrown by rotating the mouse wheel in the appropriate direction. Push buttons are pressed by clicking with the LH Mouse button. Rotary knobs are turned by the mouse wheel as well. Hold {{key press|SHIFT}} for large steps.
+The IFD buttons on the left, right and lower bezel are always double buttons. Meaning they always have a left and right side. The lower buttons (PFD - FMS - MAP - SYS - CHKL) navigate between the main pages. Once on the selected page the same button will let you navigate through the tabs. The side knobs do not always have a function, but if they have, they are lighted and the function is shown next to them. 
+There are a few special Extra500 shortcuts:
+
+CTRL+E  Connect / disconnect External power cart
+CTRL+F  Control pitch with pitch trim only
+W       Gear Warn Mute (you'll need it, alternatively press the switch on the throttle lever)
+R       Put the propeller in reverse (beta range)
+S       Condition lever fuel on/cut-off (alternatively click on the condition lever)
+D       Autopilot disconnect (alternatively click on the red button on the yoke)
+C       Engage Control Wheel Steering (CWS, see below)
+
+
+Engine starting:
+
+- Parking Brake:		Set ( Shift-B or pull out middle Bowden cable in middle console AND press B )
+- Battery:		Switch ON
+- Fuel Pump 1 or 2:	Switch ON
+- Engine Start:		START
+- at 12-15% N1:		Press s ( or click on condition lever, its the red one )
+CAUTION: TOT limit for starting is max. 10sec above 810degC and below 927degC 
+- Standby alternator:	Switch ON
+- Generator:		Switch ON
+- Engine start:		IGN OFF (only if N1 >= 65%)
+
+
+Take-off:
+
+- Flaps:			15 degrees ( ] or use the flap switch )
+- Power lever:		TRQ 111%
+CAUTION: for Take-off (5 minutes) maximum TRQ limit is 111%, TOT 810degC
+- Parking Brake:		Release ( Shift-B or push in middle Bowden cable in middle console )
+NOTE: For strong sidewind, turn the ailerons against the wind
+- At 71KIAS:		Rotate
+- Gear:			Retract ( G or click the gear switch )
+- Flaps:			0 degrees ( [ or use the flap switch )
+CAUTION: Flaps need to be retracted before reaching 120KIAS, gear 140KIAS
+- Power lever:		TRQ 92%
+CAUTION: For continuous operation the TRQ limit is 92%, TOT 752degC, watch the TOT while climbing!
+
+
+Climb:
+Climb with MCP (maximum continuous Power, 92%TRQ or 752degC) at 110 KIAS.
+
+
+Descent: 
+Descent with 50% TRQ and 2000ft/min. Max airspeed is 207 KIAS.
+
+
+Landing:
+Do not come in too high, too fast.
+At 140 KIAS, gear:	Extend (Shift-G or click the gear switch )
+At 120 KIAS, flaps:	15 degrees ( ] or use the flap switch )
+At 109 KIAS, flaps:	30 degrees ( ] or use the flap switch )
+Power for a 3deg descent, 80KIAS and landing configuration is ~30% TRQ
+Dont forget to brake. For reverse press R, will only toggle when power lever is in aft position!
+
+
+Engine shut-off: Press s ( or click on condition lever )
+
+--------------------------------------------------------------------------------------------------------
+		
+Principle Autopilot functionality (currently in place)
+
+- HDG 	Follows the heading bug (set HDG bug using the keypad, press to sync)
+- NAV		Intercepts and tracks VORs, LOCs or your Flight Plan (set course with LH lower rotary knob on IFD)
+- NAV/GPSS	Intercepts and tracks your Flight Plan and cuts the corners (Press NAV twice)
+- HDG+NAV	Intercept the course or active flightplan leg with your set heading
+- NAV+REV	Intercepts and tracks the LOC back course
+- GS		Is armed and activated automatically when captured on the LOC. You can switch it off by pressing APR, 
+		ALT mode will become active. To arm the GS again, press APR for a second time 
+- VS		Follows the VS bug (limited to +/-1600fpm, set with AP rotary knob)
+- ALT 	Holds the current altitude (rounded to 100ft)
+- ALT+VS	Brings and holds the aircraft to the selected altitude (set ALT bug using the keypad, press to sync)
+		with the selected vertical speed.
+- CWS		Control Wheel Steering. Follows the turn rate and vertical speed set by controlling the aircraft. 
+
+To disconnect press: d
+
+General remarks to autopilot operation:
+A roll mode (HDG, NAV/GPSS, APR/REV) must be engaged for a pitch mode (ALT, VS, GS) can engage.
+A roll mode (HDG, NAV/GPSS, APR/REV) must be engaged for the yaw trim to work
+If pitch trim is switched off, autotrim is not available, but the AP will indicate where to (manually) trim to.
+
+For CWS, a roll and pitch mode must be engaged. Press c (caution: AP servos will disengage!) and with your controls 
+bring the aircraft at your wished turn and climb rate. Press c again and the AP will engage and keep those rates.
+
+The AP will disengage when:
+- the disconnect switch is pressed (d)
+- the stall warner is on
+- absolute g-force (disregarding 1-g gravity) exceeds 0.6g
+- manual electric pitch trim is used.  
+
+---------------------------------------------------------------------------------------------------------
+
+Navigation and Communication
+
+The COM unit (1 or 2 ) is selected on the audiopanel. Just hit the appropriate "XMT" button. Note that FGCOM only works on COM1!
+If you want to hear the NAV station morse code or the marker tones, press the appropriate button on the audiopanel also. 
+The volume can be adjusted using the inner volume knob.
+ 
+The active COM standby frequency can be inputted on the keypad. The first "1" is not needed and any trailing "0" neither.
+Just type in the frequency and switch active/standby with the button just left of the frequencies.
+
+not-active-COM and NAV standby frequencies are similar, just press the NAV1 / NAV2 button first. 
+
+FMS, Nav 1 or Nav 2 may be selected on the IFD or in the NAV dialog (F12)
+The DME source can be set using the AUX button on the keypad. Select with the FMS knob. The DME hold switch next to the DME
+indicator overrides all NAV frequency switching and holds the frequency to which the DME was tuned when the HOLD button is pressed.
+
+FMS, Nav 1 or Nav 2 may be selected on the IFD or in the NAV dialog (F12)
+The DME source can be set using the AUX button on the keypad. Select with the FMS knob. The DME hold switch next to the DME
+indicator overrides all NAV frequency switching and holds the frequency to which the DME was tuned when the HOLD button is pressed.
+
+The FMS (Flight Management System) can be used with or without the autopilot. You can put your flightplan in the 
+autopilot - route manager (dont forget to press "activate". The autopilot will intercept the active leg.
+
+While flying a flightplan (FMS is the Nav source and NAV is selected on the autopilot), you can do some special stuff without touching the autopilot:
+
+1. Vectors mode: Press "V with arrow" or "Fly Vectors" knob on IFD to follow the heading bug while still in nav mode. Deselecting will return normal FMS functionality. Handy for making a brief excursion from the flightplan for weather or ATC.
+
+2. Direct-To mode: In the route manager select the waypoint and on the keypad press the "D with arrow" button.
+Close to the waypoint direct-to mode will be de-selected automatically or you can do that manually by pressing the same button again.
+
+3. FMS-OBS: Rotate the LH lower knob on the IFD. Press to cancel. Very similar to VOR functionality, except it will work on all waypoints of your flightplan. Very handy for making an approach on an airport without ILS.  
+
+XPDR squawk can be set on the keypad (press XPDR and squawk code) and in the NAV dialog (F12). Default is 7000 (Europe VFR).
+XPDR modes are selected automatically (GND or ALT), but automatic selection may be switched off
+Manual mode selection is then possible.
+The MODE button on the keypad will set the mode manually also.
+
+---------------------------------------------------------------------------------------------------------
+
+Pressurization system
+
+The extra500 is certified to 25000ft, where the air is pretty thin. So there is pressurization system that keeps the cabin altitude 
+below 8000ft which corresponds to a cabin differential pressure of 5.5psid at 25000ft. So if you are planning to fly above 10000ft, 
+you need to make sure that the ENV AIR and PRESS switches (left lower corner) on the side switch panel are on. 
+In addition, before take-off you should set the cabin controller (center console) to the airport altitude 
+and just after take-off to your target altitude.
+Before descending from cruise, set the controller to your target airport altitude. You can monitor the cabin altitude, 
+differential pressure and cabin climb rate on the instruments next to the controller.
+
+---------------------------------------------------------------------------------------------------------
+
+Night Flying
+
+For lighted instruments switch on the INSTR switch on the side switch panel
+On the same panel you can switch the DAY/NIGHT switch to NIGHT for dimming. The 5 round turn knobs
+on the panel now can be used to set your dimming level. 
+The IFD-s have their own dimming switch on the left upper side of the bezel.
+For taxying use the RECO lights. For landing the LDG light. 
