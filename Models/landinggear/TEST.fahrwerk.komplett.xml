@@ -20,12 +20,19 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             03.02.13
+      Date:             21.08.14
 
 -->
 <PropertyList>
 
-<path>TEST.fahrwerk.komplett.ac</path>
+<path>test-lg.ac</path>
+
+<!-- submodels -->
+
+<model>
+  <name>LLG</name>
+  <path>Aircraft/extra500/Models/landinggear/left-lg.xml</path>	
+</model>
 
 <animation>
   <name>BugFahrwerkKomplett</name>
@@ -35,13 +42,6 @@
   <object-name>BugradGelenkUnten</object-name>
   <object-name>BugradGelenkOben</object-name>
  </animation>
- 
-<animation>
-  <name>LinksFahrwerkKomplett</name>
-  <object-name>Radlinks</object-name>
-  <object-name>RadStangelinks</object-name>
-  <object-name>RadStangelinks.001</object-name>
-</animation>
   
 <animation>
   <name>RechtsFahrwerkKomplett</name>
@@ -200,36 +200,12 @@
   </axis>
  </animation>
  
-<!-- FAHRWERK LINKS-->
-<!-- Radeinklapp --> 
- <animation>
-  <type>rotate</type>
-  <object-name>Radlinks</object-name>
-  <object-name>RadStangelinks.001</object-name>
-  <property>gear/gear[1]/position-norm</property>
-  <interpolation>
-            <entry>
-                <ind>0.4</ind>
-                <dep>90</dep>
-            </entry>
-            <entry>
-                <ind>0.8</ind>
-                <dep>0</dep>
-            </entry>
-        </interpolation>
-  <axis>
-	<x1-m>0.93253</x1-m>
-    <y1-m>-0.89046</y1-m>
-    <z1-m>-1.43954</z1-m>
-    <x2-m>0.93253</x2-m>
-    <y2-m>-0.89046</y2-m>
-    <z2-m>-1.68062</z2-m>
-  </axis>
-  </animation>
+<!-- MAIN GEAR LEFT-->
+
 <!-- FWeinzug links  -->
 <animation>
   <type>rotate</type>
-  <object-name>LinksFahrwerkKomplett</object-name>
+  <object-name>LLG</object-name>
  <property>gear/gear[1]/position-norm</property> 
   <interpolation>
             <entry>
@@ -251,46 +227,7 @@
   </axis>
 </animation>
 
-<animation>
-  <type>translate</type>
-  <object-name>Radlinks</object-name>
-  <property>gear/gear[1]/compression-norm</property>
-  <factor>0.3048</factor>
-  <axis>
-  	<x>0</x>
-  	<y>0</y>
-  	<z>1</z>
-  </axis>
-</animation> 
 
-
-<!-- drehende Raeder -->
-<animation>
-  <type>spin</type>
-  <object-name>Radlinks</object-name>
-  
-  <condition>
-    <equals>
-      <property>gear/gear[1]/position-norm</property>
-      <value>1</value>
-    </equals>
-  </condition>
-  
-  <!--<property>gear/gear[1]/rollspeed-ms</property>-->
-    <property>sim/multiplay/generic/float[12]</property>
-
-  <factor>-20</factor>
-  <center>
-    <x-m> 0.92380</x-m>
-    <y-m>-1.11191</y-m>
-    <z-m>-1.58844</z-m>
-  </center>
-  <axis>
-    <x>0</x>
-    <y>1</y>
-    <z>0</z>
-  </axis>
- </animation>
 
 <!-- FAHRWERK RECHTS-->
 <!-- Radeinklapp --> 

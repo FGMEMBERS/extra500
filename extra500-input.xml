@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2014.05.12
+      Date:             2014.08.21
 -->
 <PropertyList>
 
@@ -140,6 +140,22 @@
 				]]></script>
 			 </binding>
 		 </key>
+
+		 <key n="7">
+			<binding n="0">
+ 				<command>property-toggle</command>
+ 				<property>/fdm/jsbsim/gear/unit[10]/pos-norm</property>
+			</binding>
+			<binding n="1">
+ 				<command>property-toggle</command>
+ 				<property>/fdm/jsbsim/gear/unit[11]/pos-norm</property>
+			</binding>
+			<binding n="2">
+ 				<command>property-toggle</command>
+ 				<property>/fdm/jsbsim/gear/unit[12]/pos-norm</property>
+			</binding>
+		 </key>
+
 		 <key n="267">
 			 <name>F11</name>
 			 <desc>Pop up autopilot dialog</desc>

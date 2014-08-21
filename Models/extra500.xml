@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             13.07.2014
+      Date:             21.08.2014
 
 -->
 
@@ -495,7 +495,7 @@
 
 <!--gear-->
 <model>
-  <path>Aircraft/extra500/Models/TEST.fahrwerk.komplett.xml</path>	
+  <path>Aircraft/extra500/Models/landinggear/TEST.fahrwerk.komplett.xml</path>	
 </model>
 
  <animation>

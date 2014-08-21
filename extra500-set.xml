@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2014-07-01
+      Date:             2014-08-21
 
 
 ************************************************************************
@@ -110,6 +110,10 @@ JSBSim Extra Aircraft - Extra 500.
      	      <key>
 			<name>C</name>
 			<desc>Arm and engage CWS</desc>
+		</key>
+     	      <key>
+			<name>Ctrl-G</name>
+			<desc>Put the Aircraft on Jacks</desc>
 		</key>
 	</help>
 	
@@ -1789,6 +1793,17 @@ JSBSim Extra Aircraft - Extra 500.
 				<FLAPS15>0</FLAPS15>
 			</events>
             	</aircraft>
+		<gear>  <!-- jack points -->
+			<unit n="10">
+				<pos-norm>0</pos-norm>
+			</unit>
+			<unit n="11">
+				<pos-norm>0</pos-norm>
+			</unit>
+			<unit n="12">
+				<pos-norm>0</pos-norm>
+			</unit>
+		</gear>
 		<velocities>
 			<hstab>
 				<v-fps>0.0</v-fps>						<!--dummy value -->

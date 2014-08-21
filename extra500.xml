@@ -24,7 +24,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             08.01.14
+      Date:             21.08.14
 -->
 
 	<fileheader>
@@ -299,6 +299,55 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<dynamic_friction> 1.00 </dynamic_friction>
 			<spring_coeff unit="LBS/FT">1830</spring_coeff>
 			<damping_coeff unit="LBS/FT/SEC">183</damping_coeff>
+		</contact>
+
+<!-- jack points: ctrl-g -->
+		<contact type="BOGEY" name="FWD_JACK">
+			<location unit="M">
+				<x>  2.415 </x>
+				<y>  0.00 </y>
+				<z>  -0.05 </z>				
+			</location>
+			<static_friction>  10.0 </static_friction>
+			<dynamic_friction> 10.0 </dynamic_friction>
+			<rolling_friction> 10.0 </rolling_friction>
+			<spring_coeff unit="N/M">        400000 </spring_coeff>
+			<damping_coeff unit="N/M/SEC">  34271.30 </damping_coeff>
+			<max_steer unit="DEG">0</max_steer>
+			<brake_group>NONE</brake_group>
+			<retractable>1</retractable>
+		</contact>
+
+		<contact type="BOGEY" name="LEFT_JACK">
+			<location unit="M">
+				<x> 4.233 </x>
+				<y> -2.06 </y>
+				<z> -0.1 </z>
+			</location>
+			<static_friction>  10.0 </static_friction>
+			<dynamic_friction> 10.0 </dynamic_friction>
+			<rolling_friction> 10.0 </rolling_friction>
+			<spring_coeff unit="N/M">        183000 </spring_coeff>
+			<damping_coeff unit="N/M/SEC">  34271.30 </damping_coeff>
+			<max_steer unit="DEG">0</max_steer>
+			<brake_group>NONE</brake_group>
+			<retractable>1</retractable>
+		</contact>
+
+		<contact type="BOGEY" name="RIGHT_JACK">
+			<location unit="M">
+				<x> 4.233 </x>
+				<y> 2.06 </y>
+				<z> -0.1 </z>
+			</location>
+			<static_friction>  10.0 </static_friction>
+			<dynamic_friction> 10.0 </dynamic_friction>
+			<rolling_friction> 10.0 </rolling_friction>
+			<spring_coeff unit="N/M">        183000 </spring_coeff>
+			<damping_coeff unit="N/M/SEC">  34271.30 </damping_coeff>
+			<max_steer unit="DEG">0</max_steer>
+			<brake_group>NONE</brake_group>
+			<retractable>1</retractable>
 		</contact>
 		
 	</ground_reactions>
