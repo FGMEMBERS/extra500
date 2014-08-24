@@ -17,7 +17,7 @@
     along with extra500.  If not, see <http://www.gnu.org/licenses/>.
 
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
-      Date: 2014-08-21
+      Date: 2014-08-22
 
       Last change: 2014-08-23     
       Date: Eric van den Berg            
@@ -25,81 +25,100 @@
 -->
 <PropertyList>
 
-<path>left-lg.ac</path>
+<path>left-middle-strut.ac</path>
 
 <!-- submodels -->
+
 <model>
-  <name>left-lockstrut</name>
-  <path>Aircraft/extra500/Models/landinggear/left-lockstrut.xml</path>
+  <name>left-wheelass</name>
+  <path>Aircraft/extra500/Models/landinggear/left-wheelass.xml</path>
 	<offsets>
-		<x-m>0.93376</x-m>
-		<y-m>-0.24247</y-m>	
-		<z-m>-1.21058</z-m>
+		<x-m>0.0</x-m>
+		<y-m>-0.27550</y-m>	
+		<z-m>-0.24013</z-m>
 	</offsets>
 </model>
 
 <model>
-  <name>left-middle-strut</name>
-  <path>Aircraft/extra500/Models/landinggear/left-middle-strut.xml</path>
+  <name>left-damper-upper</name>
+  <path>Aircraft/extra500/Models/landinggear/left-damper-upper.xml</path>
 	<offsets>
-		<x-m>0.93154</x-m>
-		<y-m>-0.61629</y-m>	
-		<z-m>-1.20655</z-m>
+		<x-m>0.0</x-m>
+		<y-m>0</y-m>	
+		<z-m>0</z-m>
 	</offsets>
 </model>
 
-<!-- lockstrut rotation --> 
+<model>
+  <name>left-damper-lower</name>
+  <path>Aircraft/extra500/Models/landinggear/left-damper-lower.ac</path>
+	<offsets>
+		<x-m>0.0</x-m>
+		<y-m>0</y-m>	
+		<z-m>-0.22100</z-m>
+	</offsets>
+</model>
+
+<!-- upperstrut rotation --> 
  <animation>
   <type>rotate</type>
-  <object-name>left-lockstrut</object-name>
-  <property>gear/gear[1]/position-norm</property>
+  <object-name>left-damper-upper</object-name>
+  <property>gear/gear[1]/compression-norm</property>
   <interpolation>
             <entry>
                 <ind>0.0</ind>
-                <dep>45</dep>
+                <dep>0</dep>
             </entry>
             <entry>
                 <ind>1</ind>
-                <dep>0</dep>
+                <dep>-50</dep>
             </entry>
         </interpolation>
   <axis>
-	<x1-m>0</x1-m>
-    <y1-m>-0.24247</y1-m>
-    <z1-m>-1.21058</z1-m>
-    <x2-m>1</x2-m>
-    <y2-m>-0.24247</y2-m>
-    <z2-m>-1.21058</z2-m>
+	<x1-m>0.0</x1-m>
+    <y1-m>-0.0</y1-m>
+    <z1-m>0</z1-m>
+    <x2-m>1.0</x2-m>
+    <y2-m>0.0</y2-m>
+    <z2-m>0</z2-m>
   </axis>
   </animation>
 
-<!-- lower part rotation --> 
+<!-- lower strut rotation --> 
  <animation>
   <type>rotate</type>
-  <object-name>left-middle-strut</object-name>
-  <property>gear/gear[1]/position-norm</property>
+  <object-name>left-damper-lower</object-name>
+  <property>gear/gear[1]/compression-norm</property>
   <interpolation>
             <entry>
                 <ind>0.0</ind>
-                <dep>20</dep>
-            </entry>
-            <entry>
-                <ind>0.5</ind>
-                <dep>8</dep>
+                <dep>0</dep>
             </entry>
             <entry>
                 <ind>1</ind>
-                <dep>0</dep>
+                <dep>-50</dep>
             </entry>
         </interpolation>
   <axis>
-	<x1-m>0</x1-m>
-    <y1-m>-0.61629</y1-m>
-    <z1-m>-1.20655</z1-m>
-    <x2-m>1</x2-m>
-    <y2-m>-0.61629</y2-m>
-    <z2-m>-1.20655</z2-m>
+	<x1-m>0.0</x1-m>
+    <y1-m>-0.0</y1-m>
+    <z1-m>-0.22100</z1-m>
+    <x2-m>1.0</x2-m>
+    <y2-m>0.0</y2-m>
+    <z2-m>-0.22100</z2-m>
   </axis>
   </animation>
+
+<animation>
+  <type>translate</type>
+  <object-name>left-wheelass</object-name>
+  <property>gear/gear[1]/compression-norm</property>
+  <factor>0.3048</factor>
+  <axis>
+  	<x>0</x>
+  	<y>-0.7</y>
+  	<z>1</z>
+  </axis>
+</animation> 
 
 </PropertyList>

@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             21.08.14
+      Date:             22.08.14
 
 -->
 <PropertyList>
@@ -202,7 +202,6 @@
  
 <!-- MAIN GEAR LEFT-->
 
-<!-- FWeinzug links  -->
 <animation>
   <type>rotate</type>
   <object-name>LLG</object-name>
@@ -210,7 +209,7 @@
   <interpolation>
             <entry>
                 <ind>0</ind>
-                <dep>-93</dep>
+                <dep>-90</dep>
             </entry>
             <entry>
                 <ind>1</ind>
