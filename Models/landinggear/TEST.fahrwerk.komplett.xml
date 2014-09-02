@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             22.08.14
+      Date:             02.09.14
 
 -->
 <PropertyList>
@@ -209,7 +209,7 @@
   <interpolation>
             <entry>
                 <ind>0</ind>
-                <dep>-90</dep>
+                <dep>-92.5</dep>
             </entry>
             <entry>
                 <ind>1</ind>
@@ -217,12 +217,12 @@
             </entry>
         </interpolation>
   <axis>
-  <x1-m> 0.95079</x1-m>
-  <y1-m>-0.11558</y1-m>
-  <z1-m>-1.15490</z1-m>
-  <x2-m> 0.95079</x2-m>
-  <y2-m>-0.39384</y2-m>
-  <z2-m>-0.99401</z2-m>
+  <x1-m>0.93407</x1-m>
+  <y1-m>-0.18040</y1-m>
+  <z1-m>-1.1038</z1-m>
+  <x2-m>0.93407</x2-m>
+  <y2-m>-0.41606</y2-m>
+  <z2-m>-0.98523</z2-m>
   </axis>
 </animation>
 

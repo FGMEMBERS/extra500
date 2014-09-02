@@ -17,54 +17,35 @@
     along with extra500.  If not, see <http://www.gnu.org/licenses/>.
 
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
-      Date: 2014-08-22
+      Date: 2014-08-31
 
-      Last change: Eric van den Berg     
-      Date: 2014-08-31            
+      Last change:      
+      Date:             
 
 -->
 <PropertyList>
 
-<path>left-lockstrut.ac</path>
+<path>left-lockbar.ac</path>
 
 <!-- submodels -->
 
-<model>
-  <name>lockbar</name>
-  <path>Aircraft/extra500/Models/landinggear/left-lockbar.xml</path>
-	<offsets>
-		<x-m>-0.05053</x-m>
-		<y-m>-0.14601</y-m>	
-		<z-m>-0.04318</z-m>
-		<heading-deg>90</heading-deg>
-		<pitch-deg>-168</pitch-deg>
-		<roll-deg>-10</roll-deg>
-	</offsets>
-</model>
+
 
 <!-- lockstrut rotation --> 
  <animation>
-  <type>rotate</type>
-  <object-name>Lmainlg-3</object-name>
+  <type>translate</type>
+  <object-name>cylinder</object-name>
+  <object-name>swivel</object-name>
   <property>gear/gear[1]/position-norm</property>
   <interpolation>
-            <entry>
-                <ind>0.0</ind>
-                <dep>-68</dep>
-            </entry>
-            <entry>
-                <ind>1</ind>
-                <dep>0</dep>
-            </entry>
-        </interpolation>
+   <entry><ind>0</ind><dep>0.030</dep></entry>
+   <entry><ind>1</ind><dep>0</dep></entry>
+  </interpolation>  
   <axis>
-	<x1-m>0</x1-m>
-    <y1-m>-0.15602</y1-m>
-    <z1-m>-0.09041</z1-m>
-    <x2-m>1</x2-m>
-    <y2-m>-0.15602</y2-m>
-    <z2-m>-0.09041</z2-m>
+   <x>0</x>
+   <y>0</y>
+   <z>1</z>
   </axis>
-  </animation>
+ </animation>
  
 </PropertyList>

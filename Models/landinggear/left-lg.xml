@@ -19,7 +19,7 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: 2014-08-21
 
-      Last change: 2014-08-23     
+      Last change: 2014-09-02     
       Date: Eric van den Berg            
 
 -->
@@ -33,8 +33,8 @@
   <path>Aircraft/extra500/Models/landinggear/left-lockstrut.xml</path>
 	<offsets>
 		<x-m>0.93376</x-m>
-		<y-m>-0.24247</y-m>	
-		<z-m>-1.21058</z-m>
+		<y-m>-0.23672</y-m>	
+		<z-m>-1.18274</z-m>
 	</offsets>
 </model>
 
@@ -43,8 +43,8 @@
   <path>Aircraft/extra500/Models/landinggear/left-middle-strut.xml</path>
 	<offsets>
 		<x-m>0.93154</x-m>
-		<y-m>-0.61629</y-m>	
-		<z-m>-1.20655</z-m>
+		<y-m>-0.61032</y-m>	
+		<z-m>-1.17800</z-m>
 	</offsets>
 </model>
 
@@ -56,7 +56,7 @@
   <interpolation>
             <entry>
                 <ind>0.0</ind>
-                <dep>45</dep>
+                <dep>44</dep>
             </entry>
             <entry>
                 <ind>1</ind>
@@ -66,10 +66,10 @@
   <axis>
 	<x1-m>0</x1-m>
     <y1-m>-0.24247</y1-m>
-    <z1-m>-1.21058</z1-m>
+    <z1-m>-1.18981</z1-m>
     <x2-m>1</x2-m>
     <y2-m>-0.24247</y2-m>
-    <z2-m>-1.21058</z2-m>
+    <z2-m>-1.18981</z2-m>
   </axis>
   </animation>
 
@@ -81,11 +81,11 @@
   <interpolation>
             <entry>
                 <ind>0.0</ind>
-                <dep>20</dep>
+                <dep>18</dep>
             </entry>
             <entry>
                 <ind>0.5</ind>
-                <dep>8</dep>
+                <dep>7</dep>
             </entry>
             <entry>
                 <ind>1</ind>
@@ -95,10 +95,10 @@
   <axis>
 	<x1-m>0</x1-m>
     <y1-m>-0.61629</y1-m>
-    <z1-m>-1.20655</z1-m>
+    <z1-m>-1.18523</z1-m>
     <x2-m>1</x2-m>
     <y2-m>-0.61629</y2-m>
-    <z2-m>-1.20655</z2-m>
+    <z2-m>-1.18523</z2-m>
   </axis>
   </animation>
 
