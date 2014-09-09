@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8" ?>
+	
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Eric van den Berg
+      Date: 2013-10-13
+
+      Last change:      -
+      Date:             -
+-->
+
+<!--
+/extra500/panel/CircuitBreaker/BankC/Boots/voltOut
+/extra500/panel/Side/Deicing/Boots/state
+-->
+<system name="pneumatic">
+	<channel name="pressure">
+
+<!-- engine bleed air pressure as a function of pressure altitude and engine compressor speed -->
+		<fcs_function name="/systems/pneumatic/functions/bleedairpressure">
+			<function>
+					<table>
+					<independentVar lookup="row">/fdm/jsbsim/propulsion/engine/n1</independentVar>
+					<independentVar lookup="column">/fdm/jsbsim/atmosphere/pressure-altitude</independentVar>
+                  			<tableData>
+        						0	10000	20000	25000
+						0	0	0	0	0
+						65	17.8	18.8	20.7	20.5
+						75	30.4	21.7	23.8	23.7
+						85	48.9	37.5	27.0	26.8
+						90	63.9	47.9	34.5	28.4
+						95	78.6	58.9	40.1	31.9
+						100	93.1	65.6	43.5	34.2
+					</tableData>
+					</table>
+			</function>
+			<output>/systems/pneumatic/bleedairpressure-psig</output>
+		</fcs_function>
+
+<!-- pneumatic pressure for de-ice boots. Regulated to 19 psig --> 
+		<pure_gain name="/systems/pneumatic/functions/pneumatic-pressure">
+			<input>/systems/pneumatic/bleedairpressure-psig</input>
+			<gain>1.0</gain>
+			<clipto>
+				<min>0</min>
+				<max>19</max>
+			</clipto>
+			<output>/systems/pneumatic/pneumatic-pressure-psig</output>
+		</pure_gain>
+
+<!-- for low pressure caution in warning panel -->
+		<switch name="/systems/pneumatic/switches/low-pressure-caution">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/pneumatic/pneumatic-pressure-psig lt 17
+			</test>
+			<output>/systems/pneumatic/low-pressure-caution</output>
+		</switch>
+
+<!-- boots timer active -->
+		<switch name="/systems/pneumatic/switches/boots-timer-active">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/extra500/panel/CircuitBreaker/BankC/Boots/voltOut gt 10
+				/extra500/panel/Side/Deicing/Boots/state eq 1
+			</test>
+			<output>/systems/pneumatic/boots-timer-active</output>
+		</switch>
+
+<!-- boots timer -->
+		<fcs_function name="/systems/pneumatic/boots-timer-sec">
+			<function>
+				<product>
+					<property>/systems/pneumatic/boots-timer-active</property>
+					<property>/systems/pneumatic/switches/reset</property>
+					<sum>
+						<property>/systems/pneumatic/boots-timer-sec</property>
+						<property>sim-dt-sec</property> 
+					</sum>
+				</product>
+			</function>
+		</fcs_function>
+
+<!-- boots timer reset -->
+		<switch name="/systems/pneumatic/switches/reset">
+			<default value="1"/>
+			<test logic="OR" value="0">
+				/systems/pneumatic/boots-timer-sec gt 60
+			</test>
+		</switch>
+
+<!-- ejector valve1 active -->
+		<switch name="/systems/pneumatic/switches/ejectorvalve1-active">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatic/boots-timer-sec gt 0
+				/systems/pneumatic/boots-timer-sec le 6
+			</test>
+		</switch>
+
+<!-- ejector valve2 active -->
+		<switch name="/systems/pneumatic/switches/ejectorvalve2-active">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pneumatic/boots-timer-sec gt 6
+				/systems/pneumatic/boots-timer-sec le 12
+			</test>
+		</switch>
+
+<!-- boots circuit 1 pressure -->
+		<fcs_function name="/systems/pneumatic/boots1-press-psig-raw">
+			<function>
+				<product>
+					<property>/systems/pneumatic/switches/ejectorvalve1-active</property>
+					<property>/systems/pneumatic/pneumatic-pressure-psig</property>
+				</product>
+			</function>
+		</fcs_function>
+
+		<lag_filter name ="/systems/pneumatic/filters/boots1-press-psig">
+ 			<input>/systems/pneumatic/boots1-press-psig-raw</input>
+			<c1>/systems/pneumatic/c1-boots-filter</c1>
+			<output>/systems/pneumatic/boots1-press-psig</output>
+		</lag_filter>
+
+<!-- boots circuit 2 pressure -->
+		<fcs_function name="/systems/pneumatic/boots2-press-psig-raw">
+			<function>
+				<product>
+					<property>/systems/pneumatic/switches/ejectorvalve2-active</property>
+					<property>/systems/pneumatic/pneumatic-pressure-psig</property>
+				</product>
+			</function>
+		</fcs_function>
+
+		<lag_filter name ="/systems/pneumatic/filters/boots2-press-psig">
+ 			<input>/systems/pneumatic/boots2-press-psig-raw</input>
+			<c1>/systems/pneumatic/c1-boots-filter</c1>
+			<output>/systems/pneumatic/boots2-press-psig</output>
+		</lag_filter>
+
+<!-- for boots active safe operation light in warning panel -->
+		<switch name="/systems/pneumatic/switches/boots-safe-oper">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/pneumatic/boots1-press-psig gt 15.6
+				/systems/pneumatic/boots2-press-psig gt 15.6
+			</test>
+			<output>/systems/pneumatic/boots-safe-oper</output>
+		</switch>
+
+	</channel>
+</system>

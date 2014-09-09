@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8" ?>
+	
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Eric van den Berg
+      Date: 2013-08-02
+
+      Last change:      Eric van den Berg
+      Date:             2014-01-17
+-->
+
+<!--
+/extra500/panel/Side/Cabin/Pressure/state -1 dump, 0 off, 1 on
+/extra500/panel/Side/Cabin/EnvironmentalAir/state 1 on, 0 off
+/engines/engine/running
+/extra500/panel/CircuitBreaker/BankC/EnvironmentalBleed/voltOut
+/extra500/panel/CircuitBreaker/BankD/CabinPressure/voltOut
+/extra500/panel/CircuitBreaker/BankD/Dump/voltOut
+/extra500/door/upperpass/state
+/gear/gear/wow
+-->
+<system name="pressurization">
+	<channel name="controlvalve">
+
+		<switch name="/systems/pressurization/switches/bleedairin">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/engines/engine/running eq 1
+				/extra500/panel/Side/Cabin/EnvironmentalAir/state eq 1
+				/extra500/panel/CircuitBreaker/BankC/EnvironmentalBleed/voltOut ge 10
+				/extra500/door/upperpass/state eq 0
+				/extra500/door/lowerpass/state eq 0
+				/extra500/door/emergencyexit/state eq 0
+			</test>
+			<output>/systems/pressurization/bleedairin</output>
+		</switch>
+
+		<switch name="/systems/pressurization/switches/controlvalvestate">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/extra500/panel/Side/Cabin/Pressure/state eq 1
+				/extra500/panel/CircuitBreaker/BankD/CabinPressure/voltOut ge 15
+			</test>
+			<output>/systems/pressurization/controlvalvestate</output>
+		</switch>
+
+		<switch name="/systems/pressurization/switches/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/pressurization/bleedairin eq 1
+				/systems/pressurization/controlvalvestate eq 1
+			</test>
+			<output>/systems/pressurization/state</output>
+		</switch>
+
+<!-- climb rate to a factor which we use for calcs later (multiplied with delta_alt_valve) -->
+		<fcs_function name="/systems/pressurization/functions/climb-factor">
+			<function>
+				<table>
+					<independentVar lookup="row">/systems/pressurization/cabin-climb-rate-fpm</independentVar>
+                  			<tableData>
+						250	35
+						500	70
+						2500	350
+					</tableData>
+				</table>
+			</function>
+			<output>/systems/pressurization/climb-factor</output>
+		</fcs_function>
+
+<!-- positive when ascending, neg when descending -->
+		<fcs_function name="/systems/pressurization/functions/alt-diff">
+			<function>
+				<difference>
+					<property>/systems/pressurization/airport-alt</property>
+					<property>/systems/pressurization/airport-alt-valve</property>
+				</difference>
+			</function>
+			<output>/systems/pressurization/alt-diff</output>
+		</fcs_function>
+
+		<switch name="/systems/pressurization/switches/valvemovupdown">
+			<default value="1"/>
+			<test value="-1">
+				/systems/pressurization/alt-diff lt 0
+			</test>
+			<output>/systems/pressurization/valvemovupdown</output>
+		</switch>
+
+		<switch name="/systems/pressurization/switches/valvemoving">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/pressurization/alt-diff gt 1
+				/systems/pressurization/alt-diff lt -1
+			</test>
+			<output>/systems/pressurization/valvemoving</output>
+		</switch>
+
+		<fcs_function name="/systems/pressurization/functions/airport-alt-valve">
+			<function>
+				<sum>
+					<property>/systems/pressurization/airport-alt-valve</property>
+					<product>
+						<property>/systems/pressurization/controlvalvestate</property>
+						<property>/systems/pressurization/valvemoving</property>
+						<property>/systems/pressurization/valvemovupdown</property>
+						<property>/systems/pressurization/climb-factor</property>
+						<pow>
+							<sum>
+								<abs>
+									<property>/systems/pressurization/alt-diff</property>
+								</abs>
+								<value>700</value>
+							</sum>
+							<value>0.1</value>
+						</pow>
+						<property>sim-dt-sec</property>
+						<property>/extra500/const/SEC2MIN</property>
+					</product>
+				</sum>
+			</function>
+			<output>/systems/pressurization/airport-alt-valve</output>
+		</fcs_function>
+
+<!-- deltap when everything is working, but with a constant control valve setting -->
+		<fcs_function name="/systems/pressurization/functions/deltap-psi-nc">
+			<function>
+				<product>
+					<property>/systems/pressurization/bleedairin</property>
+					<difference>
+						<value>1</value>
+						<property>/systems/pressurization/dumping</property>
+					</difference>
+					<table>
+					<independentVar lookup="row">/systems/pressurization/airport-alt-valve</independentVar>
+					<independentVar lookup="column">/instrumentation/altimeter/indicated-altitude-ft</independentVar>
+                  			<tableData>
+        						-300	700	2700	5350	8000	11000	11974	13441	16459	20661	25159	30733
+						-1000	0	0.528	1.538	2.788	3.940	5.136	5.5	6.028	7.038	8.445	9.729	10.899
+						0	0	0	1.01	2.260	3.412	4.608	4.972	5.5	6.51	7.760	8.912	10.108
+						2000	0	0	0	1.249	2.402	3.600	3.961	4.49	5.5	6.749	7.902 9.1
+						5000	0	0	0	0	1.153	2.348	2.712	3.24	4.251	5.5	6.63	7.848
+						8000	0	0	0	0	0	1.195	1.556	2.088	3.098	4.347	5.5	6.695
+						11000	0	0	0	0	0	0	0.364	0.892	1.903	3.152	4.304	5.5
+					</tableData>
+					</table>
+				</product>
+			</function>
+			<output>/systems/pressurization/deltap-psi-ncnf</output>
+		</fcs_function>
+
+<!-- control valve limits to 5.6 psid (luckily) and only diff pressure when bleed air available-->
+		<lag_filter name ="/systems/pressurization/filter/deltap-psi">
+ 			<input>/systems/pressurization/deltap-psi-ncnf</input>
+			<c1>/systems/pressurization/c1-dp-filter</c1>
+			<clipto>
+				<min>0</min>
+				<max>5.6</max>
+			</clipto>
+			<output>/systems/pressurization/deltap-psi</output>
+		</lag_filter>
+
+<!-- cabin pressure -->
+
+ <!-- eeh just a trick to get a "non-tied" property so the vertical speed indicator can read it 
+	not sure why I need to do this. The altimeter has no problems with tied properties....
+	Note that an "output" label is required for a non-tied property AND the function name may not be the output property name (it may be non-exsistant though)!!!!
+EDIT:
+	ok, looks like the altimeter.hxx has some "includes" to tied property list or something.
+  	adding this to the vertical speed indicator would probably solve the problem.
+
+-->
+		<fcs_function name="/systems/pressurization/functions/cabin-pressure-inhg">
+			<function>
+				<sum>
+					<product>
+						<property>/extra500/const/PSI2INHG</property>
+						<property>/systems/pressurization/deltap-psi</property>
+					</product>
+					<property>/environment/pressure-inhg</property>
+				</sum>
+			</function>
+			<output>/systems/pressurization/cabin-pressure-inhg</output>
+		</fcs_function>
+
+<!-- property for warning "cabin pressure" on annunciator panel -->
+		<switch name="/systems/pressurization/switches/warning">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/pressurization/deltap-psi gt 5.65
+				/instrumentation/cabin-altitude/pressure-alt-ft gt 10000
+			</test>
+			<output>/systems/pressurization/warning</output>
+		</switch>
+
+
+	</channel>
+
+	<channel name="safetyvalve">
+
+		<switch name="/systems/pressurization/switches/dumping">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR" value="1">
+					/extra500/panel/Side/Cabin/Pressure/state eq -1
+					/gear/gear/wow eq 1
+				</test>
+				<test value="1">
+					/extra500/panel/CircuitBreaker/BankD/Dump/voltOut gt 15
+				</test>
+			</test>
+			<output>/systems/pressurization/dumping</output>
+		</switch>
+
+	</channel>
+</system>

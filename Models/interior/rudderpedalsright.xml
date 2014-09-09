@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: 20.05.2014
+
+      Last change:     
+      Date:             
+
+-->
+
+<PropertyList>
+
+ <path>rudderpedals.ac</path>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>pedal.left</object-name>
+  <object-name>brake.cylinder.left</object-name>
+  <object-name>brake.rod.left</object-name>
+  <object-name>pedal.struct.left</object-name>
+  <property>surface-positions/rudder-pos-norm</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>17</dep></entry>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>-17</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>-0.03232</x1-m>
+    <y1-m>0</y1-m>
+    <z1-m>0.23986</z1-m>
+    <x2-m>-0.03232</x2-m>
+    <y2-m>1</y2-m>
+    <z2-m>0.23986</z2-m>
+  </axis>
+</animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>pedal.left</object-name>
+  <property>/controls/gear/brake-left</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>-5</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>0.01226</x1-m>
+    <y1-m>0</y1-m>
+    <z1-m>-0.02646</z1-m>
+    <x2-m>0.01226</x2-m>
+    <y2-m>1</y2-m>
+    <z2-m>-0.02646</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>translate</type>
+  <object-name>brake.rod.left</object-name>
+  <property>/controls/gear/brake-left</property>
+  <factor>0.00568</factor>
+  <axis>
+   <x1-m>0.06632</x1-m>
+   <y1-m>-0.01814</y1-m>
+   <z1-m>0.001773</z1-m>
+   <x2-m>0.01832</x2-m>
+   <y2-m>-0.01814</y2-m>
+   <z2-m>0.11964</z2-m>
+  </axis>
+</animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>pedal.right</object-name>
+  <object-name>brake.cylinder.right</object-name>
+  <object-name>brake.rod.right</object-name>
+  <object-name>pedal.struct.right</object-name>
+  <property>surface-positions/rudder-pos-norm</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>-17</dep></entry>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>17</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>-0.03232</x1-m>
+    <y1-m>0</y1-m>
+    <z1-m>0.23986</z1-m>
+    <x2-m>-0.03232</x2-m>
+    <y2-m>1</y2-m>
+    <z2-m>0.23986</z2-m>
+  </axis>
+</animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>pedal.right</object-name>
+  <property>/controls/gear/brake-right</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>-5</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>0.01226</x1-m>
+    <y1-m>0</y1-m>
+    <z1-m>-0.02646</z1-m>
+    <x2-m>0.01226</x2-m>
+    <y2-m>1</y2-m>
+    <z2-m>-0.02646</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>translate</type>
+  <object-name>brake.rod.right</object-name>
+  <property>/controls/gear/brake-right</property>
+  <factor>0.00568</factor>
+  <axis>
+   <x1-m>0.06632</x1-m>
+   <y1-m>-0.01814</y1-m>
+   <z1-m>0.001773</z1-m>
+   <x2-m>0.01832</x2-m>
+   <y2-m>-0.01814</y2-m>
+   <z2-m>0.11964</z2-m>
+  </axis>
+</animation>
+
+
+
+</PropertyList>

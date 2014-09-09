@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: March 13 2013
+
+      Last change:      Eric van den Berg
+      Date:             13.09.13
+
+-->
+
+<PropertyList>
+
+<path>ALTanalog.ac</path>
+
+<!--ALTanalog Needle-->
+<animation>
+  <type>rotate</type>
+  <object-name>ALTanalog.Needle100</object-name>
+  <property>/instrumentation/altimeter-backup/indicated-altitude-ft</property>
+  <factor>0.36</factor>
+  <axis>
+   <x>-1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+<animation>
+  <type>rotate</type>
+  <object-name>ALTanalog.Needle1000</object-name>
+  <property>/instrumentation/altimeter-backup/indicated-altitude-ft</property>
+  <factor>0.036</factor>
+  <axis>
+   <x>-1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+<animation>
+  <type>rotate</type>
+  <object-name>ALTanalog.Needle10000</object-name>
+  <object-name>ALTanalog.Needle10000.top</object-name>
+  <property>/instrumentation/altimeter-backup/indicated-altitude-ft</property>
+  <factor>0.0036</factor>
+  <axis>
+   <x>-1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+<!--ALTanalog Knob-->
+    <animation>
+        <type>pick</type>
+        <object-name>ALTanalog.knob</object-name>
+        <action>
+            <button>0</button>
+            <repeatable>true</repeatable>
+            <interval-sec>0.15</interval-sec>
+            <binding>
+                <command>property-adjust</command>
+                <property>/instrumentation/altimeter-backup/setting-hpa</property>
+                <step>1</step>
+                <min>955</min>
+                <max>1070</max>
+            </binding>
+        </action>
+    </animation>
+
+    <animation>
+        <type>pick</type>
+        <object-name>ALTanalog.knob</object-name>
+        <action>
+            <button>1</button>
+            <repeatable>true</repeatable>
+            <interval-sec>0.15</interval-sec>
+            <binding>
+                <command>property-adjust</command>
+                <property>/instrumentation/altimeter-backup/setting-hpa</property>
+                <step>-1</step>
+                <min>955</min>
+                <max>1070</max>
+            </binding>
+        </action>
+    </animation>
+
+    <animation>
+        <type>pick</type>
+        <object-name>ALTanalog.knob</object-name>
+        <action>
+            <button>3</button>
+            <binding>
+                <command>property-adjust</command>
+                <property>/instrumentation/altimeter-backup/setting-hpa</property>
+                <step>0.5</step>
+                <min>955</min>
+                <max>1070</max>
+            </binding>
+        </action>
+    </animation>
+
+    <animation>
+        <type>pick</type>
+        <object-name>ALTanalog.knob</object-name>
+        <action>
+            <button>4</button>
+            <binding>
+                <command>property-adjust</command>
+                <property>/instrumentation/altimeter-backup/setting-hpa</property>
+                <step>-0.5</step>
+                <min>955</min>
+                <max>1070</max>
+            </binding>
+        </action>
+    </animation>
+
+<animation>
+        <type>rotate</type>
+        <object-name>ALTanalog.hpa</object-name>
+        <property>/instrumentation/altimeter-backup/setting-hpa</property>
+        <interpolation>
+            <entry><ind>1070</ind><dep>0.0</dep></entry>
+            <entry><ind>955</ind><dep>345</dep></entry>
+        </interpolation>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    
+<!-- Dimming Instruments -->
+<animation>
+	<type>material</type>
+	<object-name>ALTanalog.hpa</object-name>
+	<object-name>ALTanalog.Scheibe</object-name>
+	<object-name>ALTanalog.Needle100</object-name>
+	<object-name>ALTanalog.Needle1000</object-name>
+	<object-name>ALTanalog.Needle10000</object-name>
+  	<object-name>ALTanalog.Needle10000.top</object-name>
+	<emission>	
+		<red>1.0</red>	
+		<green>1.0</green>	
+		<blue>1.0</blue>
+		<factor-prop>/extra500/instrumentation/StbyALT/Backlight/state</factor-prop>
+	</emission>
+</animation>
+
+</PropertyList>
+

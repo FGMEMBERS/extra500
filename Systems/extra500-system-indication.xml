@@ -1,0 +1,1592 @@
+<?xml version="1.0" encoding="utf-8" ?>
+	
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Eric van den Berg
+      Date: 2013-05-23
+
+      Last change:      Eric van den Berg
+      Date:             2014-06-21
+-->
+
+<system name="indication">
+
+	<channel name="engineparameters">
+<!-- ENGINE -->
+
+
+<!-- setting propeller feathering property, if n1 < 55%, feathered  -->
+		<switch name="feathering">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/engines/engine[0]/n1 lt 55
+			</test>
+			<output>/controls/engines/engine[0]/propeller-feather</output>
+		</switch>
+
+		<!-- for annunciator panel -->
+		<switch name="lowpitch">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/engines/engine[0]/reverser eq 1
+				/controls/engines/engine[0]/throttle ge 0.05
+			</test>
+			<output>/extra500/engine/lowPitch</output>
+		</switch>
+
+<!-- setting motoring property: starter on, but cutoff also on (no fuel,no ignition)	-->
+		<switch name="motoring">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/engines/engine[0]/cutoff eq 1
+				/controls/engines/engine[0]/starter eq 1
+			</test>
+			<output>aircraft/engine/motoring</output>
+		</switch>
+
+		<switch name="spoolup">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/engines/engine[0]/n1 gt aircraft/engine/N1-old
+				/engines/engine[0]/n1 gt 1
+				/controls/engines/engine[0]/cutoff eq 0
+				propulsion/engine/set-running eq 0
+			</test>
+			<output>aircraft/engine/spooling-up</output>
+		</switch>
+
+		<switch name="spooldown">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/controls/engines/engine[0]/starter eq 0
+				propulsion/engine/set-running eq 0
+				/engines/engine[0]/n1 gt 0.1
+				aircraft/engine/spooling-up eq 0
+				aircraft/engine/motoring eq 0
+			</test>
+			<output>aircraft/engine/spooling-down</output>
+		</switch>
+
+		<switch name="startlatch">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				aircraft/engine/start-latch eq 1
+				propulsion/engine/set-running eq 1
+				/engines/engine[0]/n1 gt 1
+				aircraft/engine/spooling-up eq 1
+				aircraft/engine/motoring eq 1
+			</test>
+			<output>aircraft/engine/start-latch</output>
+		</switch>
+
+		<fcs_function name="aircraft/engine/N1-old">
+    			<function>
+       			<description>old N1 for next cycle</description>
+       				<property>/engines/engine[0]/n1</property>
+    			</function>
+		</fcs_function>
+
+<!-- FUEL FLOW -->
+		<fcs_function name="aircraft/engine/FF/fuelflow-3rd">
+    			<function>
+       			<description>engine fuel flow 3rd order coeff</description>
+       				<table>
+            				<independentVar lookup="row">atmosphere/pressure-altitude</independentVar>
+            				<tableData>
+						0	-0.000000020936
+						1000	-0.000000020531
+						2000	-0.00000001985
+						3000	-0.00000001881
+						4000	-0.000000017304
+						5000	-0.000000015193
+						6000	-0.000000015796
+						7000	-0.000000016411
+						8000	-0.00000001703
+						9000	-0.000000017642
+						10000	-0.000000018234
+						11000	-0.000000019072
+						12000	-0.00000001996
+						13000	-0.0000000209
+						14000	-0.000000021895
+						15000	-0.000000022951
+						16000	-0.000000023698
+						17000	-0.000000024371
+						18000	-0.000000024921
+						19000	-0.000000025278
+						20000	-0.000000025339
+						21000	-0.000000033397
+						22000	-0.000000043542
+						23000	-0.000000056406
+						24000	-0.000000072851
+						25000	-0.00000009407
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/FF/fuelflow-2rd">
+    			<function>
+       			<description>engine fuel flow 2rd order coeff</description>
+       				<table>
+            				<independentVar lookup="row">atmosphere/pressure-altitude</independentVar>
+            				<tableData>
+						0	0.000022627
+						1000	0.000022051
+						2000	0.000021249
+						3000	0.000020164
+						4000	0.000018722
+						5000	0.000016826
+						6000	0.000017211
+						7000	0.000017597
+						8000	0.00001798
+						9000	0.000018353
+						10000	0.000018709
+						11000	0.000019171
+						12000	0.000019649
+						13000	0.000020144
+						14000	0.000020655
+						15000	0.000021184
+						16000	0.000021608
+						17000	0.000021995
+						18000	0.000022327
+						19000	0.000022576
+						20000	0.000022701
+						21000	0.000026872
+						22000	0.000031912
+						23000	0.000038051
+						24000	0.0000456
+						25000	0.000054978
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/FF/fuelflow-1rd">
+    			<function>
+       			<description>engine fuel flow 1rd order coeff</description>
+       				<table>
+            				<independentVar lookup="row">atmosphere/pressure-altitude</independentVar>
+            				<tableData>
+						0	-0.0085847
+						1000	-0.0083227
+						2000	-0.0080015
+						3000	-0.0076079
+						4000	-0.0071253
+						5000	-0.0065325
+						6000	-0.0065536
+						7000	-0.0065716
+						8000	-0.0065855
+						9000	-0.006594
+						10000	-0.0065955
+						11000	-0.0066122
+						12000	-0.0066278
+						13000	-0.006642
+						14000	-0.0066545
+						15000	-0.0066651
+						16000	-0.00667
+						17000	-0.006666
+						18000	-0.0066503
+						19000	-0.0066188
+						20000	-0.0065663
+						21000	-0.0071751
+						22000	-0.0078919
+						23000	-0.0087432
+						24000	-0.0097637
+						25000	-0.0109996
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/FF/fuelflow-0rd">
+    			<function>
+       			<description>engine fuel flow 0rd order coeff</description>
+       				<table>
+            				<independentVar lookup="row">atmosphere/pressure-altitude</independentVar>
+            				<tableData>
+						0	1.7807
+						1000	1.7364
+						2000	1.6872
+						3000	1.6322
+						4000	1.5701
+						5000	1.4995
+						6000	1.4821
+						7000	1.4644
+						8000	1.4462
+						9000	1.4276
+						10000	1.4083
+						11000	1.3913
+						12000	1.374
+						13000	1.3566
+						14000	1.3389
+						15000	1.321
+						16000	1.3052
+						17000	1.2889
+						18000	1.272
+						19000	1.2542
+						20000	1.2353
+						21000	1.2526
+						22000	1.274
+						23000	1.3005
+						24000	1.3334
+						25000	1.37423
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/FF-lbs_h-raw">
+    			<function>
+      			<description>fuel flow in pounds per hour</description>
+			<product>
+				<property>propulsion/engine/power-hp</property>   
+				<sum>
+					<product>
+						<property>aircraft/engine/FF/fuelflow-3rd</property>
+						<property>propulsion/engine/power-hp</property>   
+						<property>propulsion/engine/power-hp</property>   
+						<property>propulsion/engine/power-hp</property>   
+					</product>
+					<product>
+						<property>aircraft/engine/FF/fuelflow-2rd</property>
+						<property>propulsion/engine/power-hp</property>   
+						<property>propulsion/engine/power-hp</property>   
+					</product>
+					<product>
+						<property>aircraft/engine/FF/fuelflow-1rd</property>
+						<property>propulsion/engine/power-hp</property>   
+					</product>
+					<property>aircraft/engine/FF/fuelflow-0rd</property>
+				</sum>
+			</product>
+    			</function>
+		</fcs_function>
+
+		<switch name="Fuelflowcutoff">
+			<default value="aircraft/engine/FF-lbs_h-raw"/>
+			<test logic="OR" value="0">
+				/extra500/system/fuel/SelectValve eq 0
+				/extra500/system/fuel/SelectValve eq 4
+				/controls/engines/engine[0]/condition-lever-norm lt 0.1
+				aircraft/engine/Fpress-too-low eq 1
+			</test>
+			<output>aircraft/engine/FF-lbs_h</output>
+		</switch>
+
+		<fcs_function name="aircraft/engine/FF-l_h">
+    			<function>
+      			<description>fuel flow in liter per hour</description>
+				<product>
+					<property>aircraft/engine/FF-lbs_h</property>   
+					<property>/extra500/const/JETA_LB2L</property>   
+				</product>
+    			</function>
+		</fcs_function>
+
+<!-- TORQUE -->
+		<fcs_function name="aircraft/engine/TRQ-perc">
+    			<function>
+      			<description>Indicated TRQ in percent</description>
+			<product>
+				<property>/extra500/instrumentation/EIP/state</property>   <!--to make sure pointer is at 0 when unit is off -->
+				<max>
+					<value>0</value>			<!-- preventing TRQ below 0 -->
+					<product>
+						<property>propulsion/engine/power-hp</property>
+						<value>493.797</value>
+						<pow>
+							<max>			<!-- preventing devision by 0 -->
+								<property>propulsion/engine/propeller-rpm</property>
+								<value>10</value>
+							</max>
+							<value>-1</value>
+						</pow>
+					</product>
+				</max>
+			</product>
+    			</function>
+		</fcs_function>
+
+		<!-- for annunciator panel -->
+		<switch name="TRQ35lower">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/engine/TRQ-perc lt 35
+			</test>
+			<output>/extra500/engine/lowTorquePressure</output>
+		</switch>
+
+	<!-- these are properties used for messages -->
+		<switch name="TRQ111limitevent">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/events/show-events eq 1
+				aircraft/engine/TRQ-perc gt 111
+			</test>
+			<output>aircraft/events/TRQ111</output>
+		</switch>
+
+		<switch name="TRQ92limitevent">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/events/show-events eq 1
+				/controls/flight/flaps eq 0
+				/fdm/jsbsim/gear/unit/pos-norm eq 0
+				aircraft/engine/TRQ-perc gt 92
+				aircraft/engine/TRQ-perc le 111
+			</test>
+			<output>aircraft/events/TRQ92</output>
+		</switch>
+
+<!-- FUEL TEMP -->
+		<fcs_function name="aircraft/engine/FT-1-degC">
+    			<function>
+       			<description>new fuel temp due to energy transfer to outside air</description>
+			<sum>
+				<property>aircraft/engine/FT-degC</property>
+				<product>
+					<value>0.028</value>
+					<difference>
+						<property>atmosphere/T-degC</property>
+						<property>aircraft/engine/FT-degC</property>
+					</difference>
+					<property>sim-dt-sec</property>
+					<pow>
+						<max>
+							<value>0.1</value>
+							<product>
+								<property>propulsion/total-fuel-lbs</property>
+								<property>/extra500/const/LBM2KG</property>
+								<sum>							<!-- Jet-A1 fuel specific energy kJ/kg-K -->
+									<product>
+										<value>0.00481</value>
+										<property>aircraft/engine/FT-degC</property>
+									</product>
+									<value>1.7833</value>
+								</sum>
+							</product>
+						</max>
+						<value>-1</value>
+					</pow>
+				</product>
+			</sum>
+    			</function>
+		</fcs_function>
+
+		<switch name="FTinit">
+			<default value="atmosphere/T-degC"/>
+			<test logic="OR" value="aircraft/engine/FT-1-degC">
+				simulation/sim-time-sec gt 100
+				aircraft/engine/start-latch ne 0
+			</test>
+			<output>aircraft/engine/FT-degC</output>
+		</switch>
+
+<!-- IAT TEMP (engine instrument) -->
+		<fcs_function name="aircraft/engine/IAT-degC">
+    			<function>
+       			<description>Indicated Outside Air Temperature</description>
+			<difference>
+				<product>
+					<sum>
+						<property>/environment/temperature-degc</property>
+						<value>273.15</value>
+					</sum>
+					<sum>
+						<value>1</value>
+						<product>
+							<value>0.5</value> <!--k-factor -->
+							<value>0.2</value> 
+							<property>velocities/mach</property>
+							<property>velocities/mach</property>
+						</product>
+					</sum>
+				</product>
+				<value>273.15</value>
+			</difference>
+    			</function>
+		</fcs_function>
+
+<!-- OAT TEMP (IFD-s) -->
+		<fcs_function name="aircraft/engine/OAT-degC">
+    			<function>
+       			<description>Indicated Outside Air Temperature</description>
+			<difference>
+				<product>
+					<sum>
+						<property>/environment/temperature-degc</property>
+						<value>273.15</value>
+					</sum>
+					<sum>
+						<value>1</value>
+						<product>
+							<value>0.8</value> <!--k-factor -->
+							<value>0.2</value> 
+							<property>velocities/mach</property>
+							<property>velocities/mach</property>
+						</product>
+					</sum>
+				</product>
+				<value>273.15</value>
+			</difference>
+    			</function>
+		</fcs_function>
+
+<!--OIL TEMP -->
+
+<!--need to calculate Vind due to prop thrust as JSBsim has a bug and devs have no time and/or motivation to fix it or seriously look into the problem-->
+
+		<fcs_function name="aircraft/propeller/vel2sum">
+    			<function>
+       		<description>helper function for propeller induced airspeed</description>
+				<sum>
+					<product>
+						<property>velocities/u-aero-fps</property>
+						<abs>
+							<property>velocities/u-aero-fps</property>
+						</abs>
+					</product>
+					<product>
+						<value>2</value>
+						<property>propulsion/engine/thrust-lbs</property>
+						<pow>
+							<max>
+								<product>
+									<value>37.2810153831</value>
+            							<property>atmosphere/rho-slugs_ft3</property>
+								</product>
+								<value>0.0000001</value>
+							</max>							
+							<value>-1</value>
+						</pow>
+					</product>
+				</sum>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/propeller/Vind-fps">
+    			<function>
+       		<description>propeller induced airspeed at the prop plane</description>
+				<product>
+					<value>0.5</value>
+					<sum>
+						<product>
+							<value>-1</value>
+							<property>velocities/u-aero-fps</property>
+						</product>
+						<product>
+           						<property>aircraft/propeller/vel2sum</property>
+							<pow>
+								<max>
+									<abs>
+            								<property>aircraft/propeller/vel2sum</property>
+									</abs>
+									<value>0.0000001</value>
+								</max>
+								<value>-0.5</value>
+							</pow>
+						</product>
+					</sum>
+				</product>
+    			</function>
+		</fcs_function>
+
+
+		<fcs_function name="aircraft/engine/OT/cowling-deltaTemp-degC">
+    			<function>
+       		<description>cowling temperature change</description>
+				<product>
+					<property>sim-dt-sec</property>
+					<difference>
+						<property>aircraft/engine/OT/eng-cowling-W</property>
+						<property>aircraft/engine/OT/cowl-air-W</property>
+					</difference>
+					<pow>
+						<product>
+							<value>810208.8</value>
+            					<property>atmosphere/rho-slugs_ft3</property>
+						</product>
+						<value>-1</value>
+					</pow>
+				</product>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/OT/cowling-Temp1-degC">
+    			<function>
+       		<description>cowling temperature</description>
+				<sum>
+					<property>aircraft/engine/OT/cowling-Temp-degC</property>
+					<property>aircraft/engine/OT/cowling-deltaTemp-degC</property>
+				</sum>
+    			</function>
+		</fcs_function>
+
+		<switch name="cowling-Temp-init">
+			<default value="atmosphere/T-degC"/>
+			<test logic="OR" value="aircraft/engine/OT/cowling-Temp1-degC">
+				simulation/sim-time-sec gt 100
+				aircraft/engine/start-latch ne 0
+			</test>
+			<output>aircraft/engine/OT/cowling-Temp-degC</output>
+		</switch>
+
+		<fcs_function name="aircraft/engine/OT/Heat-rejection1-W">
+    			<function>
+       			<description>engine oil heat rejection</description>
+				<sum>
+					<table>
+            				<independentVar lookup="row">aircraft/engine/TOT-target-degC</independentVar>
+            				<independentVar lookup="column">aircraft/engine/OT/cowling-Temp-degC</independentVar> 
+            				<independentVar lookup="table">propulsion/engine/power-hp</independentVar>	
+            				<tableData breakPoint="0">
+								-51.1	121.1
+							-51.1	0	0							
+							121.1	600	0
+							482	1800	2200
+							537.8	721	1679
+							593.3	791	1916
+							648.9	896	2136
+							721.1	1019	2461
+							751.7	1055	2558
+							776.7	1090	2664
+							810	1143	2813
+            				</tableData>
+            				<tableData breakPoint="10">
+								-51.1	121.1
+							-51.1	0	0							
+							121.1	2016	0
+							482	6242	14507
+							537.8	7210	16793
+							593.3	7913	19167
+							648.9	8968	21365
+							721.1	10199	24618
+							751.7	10550	25585
+							776.7	10902	26640
+							810	11430	28135
+            				</tableData>
+      				</table>
+					<table>
+            				<independentVar lookup="row">propulsion/engine/power-hp</independentVar>
+            				<tableData>
+							0	0
+							450	3552
+            				</tableData>
+      				</table>
+				</sum>
+    			</function>
+		</fcs_function>
+
+		<switch name="heatrejection">
+			<default value="0"/>
+			<test value="aircraft/engine/OT/Heat-rejection1-W">
+				aircraft/engine/TOT-target-degC gt aircraft/engine/OT-true-degC
+			</test>
+			<output>aircraft/engine/OT/Heat-rejection-W</output>
+		</switch>
+
+		<fcs_function name="aircraft/engine/OT/eng-cowling-W">
+    			<function>
+       		<description>engine to cowling heat rejection</description>
+				<product>
+					<value>20</value>
+     					<difference>
+						<property>aircraft/engine/OT-true-degC</property>
+            				<property>aircraft/engine/OT/cowling-Temp-degC</property>
+					</difference>
+				</product>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/OT/u-cooler-fps">
+    			<function>
+     				<sum>
+            			<property>velocities/u-aero-fps</property>
+					<property>aircraft/propeller/Vind-fps</property>
+				</sum>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/OT/cowl-air-W">
+    			<function>
+       		<description>cowling to air heat rejection</description>
+				<product>
+					<table>
+            				<independentVar lookup="row">aircraft/engine/OT/u-cooler-fps</independentVar>
+            				<tableData>
+							0	5
+							30	15
+            				</tableData>
+      				</table>
+     					<difference>
+            				<property>aircraft/engine/OT/cowling-Temp-degC</property>
+						<property>/environment/temperature-degc</property>
+					</difference>
+				</product>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/OT/oil-thermostat-pos">
+    			<function>
+       			<description>position of oil thermostat</description>
+				<table>
+            			<independentVar lookup="row">aircraft/engine/OT-true-degC</independentVar>
+            			<tableData>
+						55	0
+						70	0.3
+						75	0.5
+						78	1
+            			</tableData>
+      			</table>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/OT/oil-cooler-W">
+    			<function>
+       			<description>oil cooler heat exchange</description>
+				<product>
+					<property>aircraft/engine/OT/oil-thermostat-pos</property>
+					<table>
+            				<independentVar lookup="row">aircraft/engine/N1-par</independentVar> <!--lower eff due to lower oil flow-->
+            				<tableData>
+							0	0
+							70	1
+            				</tableData>
+      				</table>
+					<table>
+            				<independentVar lookup="row">aircraft/engine/OT/u-cooler-fps</independentVar> <!--lower eff due to lack of airflow -->
+            				<tableData>
+							0	0
+							60	1
+            				</tableData>
+      				</table>
+					<difference>
+						<property>aircraft/engine/OT-true-degC</property>
+						<property>/environment/temperature-degc</property>
+					</difference>
+					<property>aircraft/engine/OT/oil-cooler-factor</property>
+				</product>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/OT/Delta-OT-degC">
+    			<function>
+       			<description>Oil temp change</description>
+	 			<product>
+					<property>sim-dt-sec</property>
+					<difference>
+						<property>aircraft/engine/OT/Heat-rejection-W</property>
+						<sum>
+							<property>aircraft/engine/OT/oil-cooler-W</property>
+							<property>aircraft/engine/OT/eng-cowling-W</property>
+						</sum>
+					</difference>
+					<value>0.00004</value>
+				</product>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/OT/OT-true1-degC">
+    			<function>
+       			<description>Oil temperature before filter</description>
+				<max>
+					<property>atmosphere/T-degC</property>
+					<sum>
+						<property>aircraft/engine/OT-true-degC</property>
+						<property>aircraft/engine/OT/Delta-OT-degC</property>
+					</sum>
+				</max>
+    			</function>
+		</fcs_function>
+
+		<switch name="OTinit">
+			<default value="atmosphere/T-degC"/>
+			<test logic="OR" value="aircraft/engine/OT/OT-true1-degC">
+				simulation/sim-time-sec gt 100
+				aircraft/engine/start-latch ne 0
+			</test>
+			<output>aircraft/engine/OT-true-degC</output>
+		</switch>
+
+		<fcs_function name="aircraft/engine/OT-target-degC">
+    			<function>
+       			<description>Oil temperature before filter</description>
+	 			<product>
+					<property>/extra500/instrumentation/EIP/state</property>		<!--to make sure pointer is at 0 when unit is off -->
+					<property>aircraft/engine/OT-true-degC</property>
+				</product>
+    			</function>
+		</fcs_function>
+
+<!--OIL PRESS -->
+		<fcs_function name="aircraft/engine/OP-psi">
+    			<function>
+       			<description>Indicated Oil Pressure</description>
+				<product>
+					<property>/extra500/instrumentation/EIP/state</property>   <!--to make sure pointer is at 0 when unit is off -->
+	 				<sum>	
+						<product>
+	 						<sum>	
+								<property>aircraft/engine/OP-maxsetting-psi</property>
+								<value>-125</value>
+	 						</sum>
+							<property>propulsion/engine/n1</property>	
+							<value>0.01</value>
+						</product>
+       						<table>
+            						<independentVar lookup="row">propulsion/engine/n1</independentVar>
+							<independentVar lookup="column">aircraft/engine/OT-degC</independentVar>	<!-- oil pressure dependence on oil temperature-->
+            						<tableData>
+						0	15	60	82
+					0	0	0	0	0
+					12	0	0	0	0
+					21	30	20	15	14
+					26	63	61	40	20
+					42	135	123	48	42
+					60	139	135	60	55
+					70	143	140	100	95
+					72.5	147	145	116	111
+					75	149	147	119	114
+					80	151	150	122	117
+					90	154	153	124	119
+					100	155	154	125	121
+					110	156	155	125	121
+            						</tableData>
+      						</table>
+					</sum>
+				</product>
+    			</function>
+		</fcs_function>
+
+		<!-- for annunciator panel -->
+		<switch name="OP35lower">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/engine/OP-psi lt 35
+			</test>
+			<output>/extra500/engine/lowOilPressure</output>
+		</switch>
+
+		<switch name="OP130limitevent">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/events/show-events eq 1
+				aircraft/engine/OP-psi gt 130
+			</test>
+			<output>aircraft/events/OP130</output>
+		</switch>
+
+<!-- N1 (compressor speed) -->
+		<fcs_function name="aircraft/engine/N1-par2">
+   			 <function>
+     			  <description>N1 when motoring at its max speed, so no start</description>
+				<value>20.0</value>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/dN1-par3">
+   			 <function>
+     			  <description>dN1 when starting the engine</description>
+				<product>
+					<value>3.433</value>
+					<property>sim-dt-sec</property>
+				</product>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/N1-par3">
+   			 <function>
+     			  <description>N1 when starting the engine</description>
+				<sum>
+					<property>aircraft/engine/N1-par</property>
+					<property>aircraft/engine/dN1-par3</property>
+				</sum>
+    			</function>
+		</fcs_function>
+
+		<switch name="motoringmax">
+			<default value="aircraft/engine/N1-par3"/>
+			<test logic="AND" value="aircraft/engine/N1-par2">
+				aircraft/engine/motoring eq 1
+				aircraft/engine/N1-par ge 20
+			</test>
+			<output>aircraft/engine/N1-par1</output>
+		</switch>
+
+		<switch name="runningup">
+			<default value="/engines/engine[0]/n1"/>
+			<test logic="OR" value="aircraft/engine/N1-par1">
+				aircraft/engine/motoring eq 1
+				aircraft/engine/spooling-up eq 1
+			</test>
+			<output>aircraft/engine/N1-par</output>
+		</switch>
+
+<!--N2 (prop RPM) -->
+		<fcs_function name="aircraft/engine/n2">
+   			 <function>
+     			  <description>Indicated N2</description>
+				<sum>
+					<product>
+						<property>/extra500/instrumentation/EIP/state</property>   <!--to make sure pointer is at 0 when unit is off -->
+						<property>propulsion/engine/propeller-rpm</property>
+					</product>
+					<value>1</value> <!-- round the rpm up to stop jitter in instrument -->
+				</sum>
+    			</function>
+		</fcs_function>
+
+<!-- Turbine Outlet Temperature -->
+		<fcs_function name="aircraft/engine/TOT/TOTr-degC">
+    			<function>
+       			<description>Indicated TOT when eng running</description>
+				<sum>
+       				<table>
+            				<independentVar lookup="row">atmosphere/rho-slugs_ft3</independentVar>
+            				<independentVar lookup="column">aircraft/engine/TRQ-perc</independentVar>
+            				<tableData>
+				0	20	40	60	80	90	100	120	140
+		0.00097016	590	650	710	800	915	985	1020	1140	1250
+		0.0014552	580	605	620	680	775	810	880	980	1080
+		0.0019403	576	595	605	630	655	700	745	835	925
+		0.0025224	550	570	590	600	605	610	640	710	795
+            				</tableData>
+      				</table>
+					<product>
+						<value>12</value>
+						<property>/extra500/panel/CenterConsole/Deice/state</property>
+					</product>
+				</sum>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/TOT/Delta-TOTsd-degC">
+    			<function>
+       			<description>TOT change when spooling down</description>
+				<product>
+					<property>sim-dt-sec</property>
+					<value>0.00015</value>
+					<pow>
+						<max>
+							<value>0.5</value>
+							<property>propulsion/engine/n1</property>
+						</max>
+						<value>2</value>
+					</pow>
+					<difference>
+						<property>aircraft/engine/TOT-target-degC</property>
+						<property>aircraft/engine/OT-true-degC</property>
+					</difference>
+				</product>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/TOT/TOTnr-degC">
+    			<function>
+       			<description>TOT when spooling down or not running or motoring</description>
+				<difference>
+					<property>aircraft/engine/TOT-target-degC</property>
+					<property>aircraft/engine/TOT/Delta-TOTsd-degC</property>
+				</difference>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/TOT/dTOT20-degC">
+    			<function>
+       			<description>TOT change when spooling up n1 smaller 20</description>
+				<product>
+					<value>70</value>
+					<property>aircraft/engine/dN1-par3</property>
+				</product>
+    			</function>
+		</fcs_function>
+
+		<switch name="dTOT20">
+			<default value="0"/>
+			<test value="aircraft/engine/TOT/dTOT20-degC">
+				aircraft/engine/N1-par lt 20
+			</test>
+			<output>aircraft/engine/TOT/dTOT20-l-degC</output>
+		</switch>
+
+		<fcs_function name="aircraft/engine/TOT/dTOT25-degC">
+    			<function>
+       			<description>TOT change when spooling up n1 smaller 25</description>
+				<product>
+					<value>36</value>
+					<property>aircraft/engine/dN1-par3</property>
+				</product>
+    			</function>
+		</fcs_function>
+
+		<switch name="dTOT25">
+			<default value="0"/>
+			<test logic="AND" value="aircraft/engine/TOT/dTOT25-degC">
+				aircraft/engine/N1-par ge 20
+				aircraft/engine/N1-par lt 25
+			</test>
+			<output>aircraft/engine/TOT/dTOT25-l-degC</output>
+		</switch>
+
+		<fcs_function name="aircraft/engine/TOT/dTOT30-degC">
+    			<function>
+       			<description>TOT change when spooling up n1 smaller 30</description>
+				<product>
+					<value>20</value>
+					<property>aircraft/engine/dN1-par3</property>
+				</product>
+    			</function>
+		</fcs_function>
+
+		<switch name="dTOT30">
+			<default value="0"/>
+			<test logic="AND" value="aircraft/engine/TOT/dTOT30-degC">
+				aircraft/engine/N1-par ge 25
+				aircraft/engine/N1-par lt 30
+			</test>
+			<output>aircraft/engine/TOT/dTOT30-l-degC</output>
+		</switch>
+
+		<fcs_function name="aircraft/engine/TOT/dTOT35-degC">
+    			<function>
+       			<description>TOT change when spooling up n1 smaller 35</description>
+				<product>
+					<value>6</value>
+					<property>aircraft/engine/dN1-par3</property>
+				</product>
+    			</function>
+		</fcs_function>
+
+		<switch name="dTOT35">
+			<default value="0"/>
+			<test logic="AND" value="aircraft/engine/TOT/dTOT35-degC">
+				aircraft/engine/N1-par ge 30
+				aircraft/engine/N1-par lt 35
+			</test>
+			<output>aircraft/engine/TOT/dTOT35-l-degC</output>
+		</switch>
+
+		<fcs_function name="aircraft/engine/TOT/dTOT65-degC">
+    			<function>
+       			<description>TOT change when spooling up n1 smaller 65</description>
+				<product>
+					<value>-0.25</value>
+					<difference>
+						<property>aircraft/engine/TOT-target-degC</property>
+						<property>aircraft/engine/TOT/TOTr-degC</property>
+					</difference>
+					<property>sim-dt-sec</property>
+				</product>
+    			</function>
+		</fcs_function>
+
+		<switch name="dTOT65">
+			<default value="0"/>
+			<test logic="AND" value="aircraft/engine/TOT/dTOT65-degC">
+				aircraft/engine/N1-par ge 35
+				aircraft/engine/N1-par lt 65
+			</test>
+			<output>aircraft/engine/TOT/dTOT65-l-degC</output>
+		</switch>
+
+		<fcs_function name="aircraft/engine/TOT/TOTsu-degC">
+    			<function>
+       			<description>TOT when spooling up </description>
+				<sum>
+					<property>aircraft/engine/TOT-target-degC</property>
+					<property>aircraft/engine/TOT/dTOT20-l-degC</property>
+					<property>aircraft/engine/TOT/dTOT25-l-degC</property>
+					<property>aircraft/engine/TOT/dTOT30-l-degC</property>
+					<property>aircraft/engine/TOT/dTOT35-l-degC</property>
+					<property>aircraft/engine/TOT/dTOT65-l-degC</property>
+				</sum>	
+    			</function>
+		</fcs_function>
+
+		<switch name="engrunningTOT">
+			<default value="0"/>
+			<test value="aircraft/engine/TOT/TOTr-degC">
+				propulsion/engine/set-running eq 1
+			</test>
+			<output>aircraft/engine/TOT/TOT-target1-degC</output>
+		</switch>
+
+		<switch name="notrunningTOT">
+			<default value="0"/>
+			<test logic="OR" value="aircraft/engine/TOT/TOTnr-degC">
+				aircraft/engine/spooling-down eq 1
+				/engines/engine[0]/n1 le 0.1
+				aircraft/engine/motoring eq 1
+			</test>
+			<output>aircraft/engine/TOT/TOT-target2-degC</output>
+		</switch>
+
+		<switch name="spoolupTOT">
+			<default value="0"/>
+			<test logic="OR" value="aircraft/engine/TOT/TOTsu-degC">
+				aircraft/engine/spooling-up eq 1
+			</test>
+			<output>aircraft/engine/TOT/TOT-target3-degC</output>
+		</switch>
+
+		<fcs_function name="aircraft/engine/TOT/TOT-targetsum-degC">
+    			<function>
+       			<description>TOT</description>
+				<sum>
+					<property>aircraft/engine/TOT/TOT-target1-degC</property>
+					<property>aircraft/engine/TOT/TOT-target2-degC</property>
+					<property>aircraft/engine/TOT/TOT-target3-degC</property>
+				</sum>	
+    			</function>
+		</fcs_function>
+
+		<switch name="TOTinit">
+			<default value="atmosphere/T-degC"/>
+			<test logic="OR" value="aircraft/engine/TOT/TOT-targetsum-degC">
+				simulation/sim-time-sec gt 100
+				aircraft/engine/start-latch ne 0
+			</test>
+			<output>aircraft/engine/TOT-target-degC</output>
+		</switch>
+
+		<switch name="forpointer">
+			<default value="aircraft/engine/TOT-target-degC"/>
+			<test value="0">
+				/extra500/instrumentation/EIP/state eq 0
+			</test>
+			<output>aircraft/engine/TOT/TOT-target1-degC</output>
+		</switch>
+
+		<switch name="TOT927limitevent">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/events/show-events eq 1
+				aircraft/engine/TOT-target-degC gt 927
+			</test>
+			<output>aircraft/events/TOT927</output>
+		</switch>
+
+		<switch name="TOT810limitevent">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/events/show-events eq 1
+				propulsion/engine/set-running eq 1
+				aircraft/engine/TOT-target-degC gt 810
+			</test>
+			<output>aircraft/events/TOT810</output>
+		</switch>
+
+		<switch name="TOT752limitevent">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/events/show-events eq 1
+				propulsion/engine/set-running eq 1
+				/controls/flight/flaps eq 0
+				/fdm/jsbsim/gear/unit/pos-norm eq 0
+				aircraft/engine/TOT-target-degC ge 753
+				aircraft/engine/TOT-target-degC le 810
+			</test>
+			<output>aircraft/events/TOT752</output>
+		</switch>
+
+<!--FUEL PRESS -->
+
+		<fcs_function name="aircraft/engine/Fdensity-kgm3">
+   			 <function>
+      			 <description>Fuel Density</description>
+					<table>
+            				<independentVar lookup="row">aircraft/engine/FT-degC</independentVar>
+            					<tableData>
+								-40	841
+								90	750	
+            					</tableData>
+      				</table>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/Fvis-m2ps">
+   			 <function>
+      			 <description>Fuel kinematic visc</description>
+					<table>
+            				<independentVar lookup="row">aircraft/engine/FT-degC</independentVar>
+            					<tableData>
+								-50	0.0000125
+								150	0.000000406
+            					</tableData>
+      				</table>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/Fuel/F-RE">
+   			 <function>
+      			 <description>Fuel Reynolds number</description>
+	 				<product>
+						<value>0.00223864522485714</value>
+						<pow>
+							<property>aircraft/engine/Fvis-m2ps</property>
+							<value>-1</value>
+						</pow>
+					</product>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/Fuel/F-lambda">
+   			 <function>
+      			 <description>Fuel lambda laminar</description>
+	 				<product>
+						<value>64</value>
+						<pow>
+							<property>aircraft/engine/Fuel/F-RE</property>
+							<value>-1</value>
+						</pow>
+					</product>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/Fuel/F-pressloss-psid">
+   			 <function>
+      			 <description>Fuel pressure loss</description>
+	 				<product>
+						<property>/extra500/const/PA2PSI</property>
+						<value>-0.00372</value>
+						<property>aircraft/engine/Fuel/F-lambda</property>
+						<property>aircraft/engine/Fdensity-kgm3</property>
+						<property>aircraft/engine/FF-l_h</property>
+						<property>aircraft/engine/FF-l_h</property>
+					</product>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/Fuel/F-pumppress-psid">
+   			 <function>
+      			 <description>fuel pump Fuel Pressure</description>
+	 				<product>
+						<max>	
+							<property>/extra500/system/fuel/FuelPump1/state</property>
+							<property>/extra500/system/fuel/FuelPump2/state</property>
+						</max>
+						<table>
+            					<independentVar lookup="row">atmosphere/pressure-altitude</independentVar>
+            					<tableData>
+								-1000	21.5	
+								9000	21	
+								17500	20.5	
+								20100	20	
+								22000	19.5	
+								22500	19	
+								23100	18.5	
+								23500	18	
+								25000	16	
+            					</tableData>
+      					</table>
+					</product>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/F-press-psig">
+   			 <function>
+      			 <description>Fuel pressure loss</description>
+	 				<sum>
+						<property>aircraft/engine/Fuel/F-pumppress-psid</property>
+						<property>aircraft/engine/Fuel/F-pressloss-psid</property>
+					</sum>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="aircraft/engine/FPmin-psig">
+   			 <function>
+      			 <description>minimum Fuel Pressure</description>
+					<table>
+            				<independentVar lookup="row">atmosphere/pressure-altitude</independentVar>
+            					<tableData>
+								0	-4.42
+								6000	-2.7
+								10000	-1.62
+								15000	-0.392
+								20000	0.737
+								25000	1.47
+            					</tableData>
+      				</table>
+   			 </function>
+		</fcs_function>
+
+		<switch name="toolowfuelpress">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND" value="1">
+					aircraft/engine/FPmin-psig gt aircraft/engine/F-press-psig
+				</test>
+				<test logic="AND" value="1">
+					aircraft/engine/Fpress-too-low eq 1
+					aircraft/engine/N1-par gt 10
+				</test>
+			</test>
+			<output>aircraft/engine/Fpress-too-low</output>
+		</switch>
+
+	</channel>
+
+	<channel name="fuel pressure">
+		<lag_filter name ="aircraft/engine/FP-psi">
+ 			<input>aircraft/engine/F-press-psig</input>
+			<c1>1.0</c1>
+		</lag_filter>
+
+		<!-- for annunciator panel -->
+		<switch name="lowfuelpress">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/engine/FP-psi lt 1.5
+			</test>
+			<output>/extra500/engine/lowFuelPressure</output>
+		</switch>
+
+	</channel>
+
+	<channel name="TOT">
+		<lag_filter name ="aircraft/engine/TOT-degC">
+ 			<input>aircraft/engine/TOT/TOT-target1-degC</input>
+			<c1>1.0</c1>
+		</lag_filter>
+	</channel>
+
+	<channel name="OT">
+		<lag_filter name ="aircraft/engine/OT-degC">
+ 			<input>aircraft/engine/OT-target-degC</input>
+			<c1>1.0</c1>
+		</lag_filter>
+	</channel>
+
+<!--AIRSPEED ANTI-CALIBRATION-->
+	<channel name="airspeed">
+		<fcs_function name="/instrumentation/airspeed-IFD-LH/indicated-airspeed-kt">
+			<function>
+       			<description>Calibrated to indicated airspeed</description>
+       				<table>
+            				<independentVar lookup="row">/instrumentation/airspeed-IFD-LH/indicated-speed-kt</independentVar>
+            				<independentVar lookup="column">fcs/flap-aero-pos-deg</independentVar>
+            				<tableData>
+						0	15	30
+					0	0	0	0
+					55	58	54	51
+					60	62.2	59	57.5
+					70	72	69.5	68
+					80	80.5	79.7	69
+					90	90.1	89.8	89.5
+					100	100	100	99
+					110	109.5	110	108
+					120	119	120	120
+					130	128.5	130	130
+					140	138	140	140
+					210	208	210	210
+					222	220	222	222
+					260	258	260	260
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<switch name="GEAR140limitevent">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/events/show-events eq 1
+				/fdm/jsbsim/gear/unit/pos-norm ne 0
+				/fdm/jsbsim/gear/unit[1]/pos-norm ne 0
+				/fdm/jsbsim/gear/unit[2]/pos-norm ne 0
+				/instrumentation/airspeed-IFD-LH/indicated-airspeed-kt gt 140
+			</test>
+			<output>aircraft/events/GEAR140</output>
+		</switch>
+
+		<switch name="FLAPS30limitevent">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/events/show-events eq 1
+				/fdm/jsbsim/fcs/flap-pos-deg gt 16
+				/instrumentation/airspeed-IFD-LH/indicated-airspeed-kt gt 109
+			</test>
+			<output>aircraft/events/FLAPS30</output>
+		</switch>
+
+		<switch name="FLAPS15limitevent">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/events/show-events eq 1
+				/fdm/jsbsim/fcs/flap-pos-deg ne 0
+				/instrumentation/airspeed-IFD-LH/indicated-airspeed-kt gt 120
+			</test>
+			<output>aircraft/events/FLAPS15</output>
+		</switch>
+
+		<switch name="Externalpowerevent">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/events/show-events eq 1
+				/fdm/jsbsim/velocities/vg-fps gt 5
+				/extra500/electric/source/ExternalGenerator/isPluged eq 1
+			</test>
+			<output>aircraft/events/EXTERNALPOWER</output>
+		</switch>
+
+		<fcs_function name="/instrumentation/airspeed-IFD-RH/indicated-airspeed-kt">
+			<function>
+       			<description>Calibrated to indicated airspeed</description>
+       				<table>
+            				<independentVar lookup="row">/instrumentation/airspeed-IFD-RH/indicated-speed-kt</independentVar>
+            				<independentVar lookup="column">fcs/flap-aero-pos-deg</independentVar>
+            				<tableData>
+						0	15	30
+					0	0	0	0
+					55	58	54	51
+					60	62.2	59	57.5
+					70	72	69.5	68
+					80	80.5	79.7	69
+					90	90.1	89.8	89.5
+					100	100	100	99
+					110	109.5	110	108
+					120	119	120	120
+					130	128.5	130	130
+					140	138	140	140
+					210	208	210	210
+					222	220	222	222
+					260	258	260	260
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="/instrumentation/airspeed-backup/indicated-airspeed-kt">
+			<function>
+       			<description>Calibrated to indicated airspeed</description>
+       				<table>
+            				<independentVar lookup="row">/instrumentation/airspeed-backup/indicated-speed-kt</independentVar>
+            				<independentVar lookup="column">fcs/flap-aero-pos-deg</independentVar>
+            				<tableData>
+						0	15	30
+					0	0	0	0
+					55	58	54	51
+					60	62.2	59	57.5
+					70	72	69.5	68
+					80	80.5	79.7	69
+					90	90.1	89.8	89.5
+					100	100	100	99
+					110	109.5	110	108
+					120	119	120	120
+					130	128.5	130	130
+					140	138	140	140
+					210	208	210	210
+					222	220	222	222
+					260	258	260	260
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+<!-- airspeed change indication on IFD-s (blue stripe) -->
+		<pid name="/instrumentation/airspeed-IFD-LH/airspeed-change">
+			<input>/instrumentation/airspeed-IFD-LH/indicated-airspeed-kt</input>
+			<kp>0</kp>							
+			<ki>0</ki>
+			<kd>1</kd>
+			<output>/instrumentation/airspeed-IFD-LH/airspeed-change-unfiltered</output>
+		</pid>
+
+		<lead_lag_filter name="/instrumentation/airspeed-IFD-LH/airspeed-change-ktps">
+			<input>/instrumentation/airspeed-IFD-LH/airspeed-change-unfiltered</input>
+			<c1>/autopilot/altsensor/c1</c1>
+			<c2>/autopilot/altsensor/c2</c2>
+			<c3>/autopilot/altsensor/c3</c3>
+			<c4>/autopilot/altsensor/c4</c4>
+		</lead_lag_filter>
+
+		<pid name="/instrumentation/airspeed-IFD-RH/airspeed-change">
+			<input>/instrumentation/airspeed-IFD-RH/indicated-airspeed-kt</input>
+			<kp>0</kp>							
+			<ki>0</ki>
+			<kd>1</kd>
+			<output>/instrumentation/airspeed-IFD-RH/airspeed-change-unfiltered</output>
+		</pid>
+
+		<lead_lag_filter name="/instrumentation/airspeed-IFD-RH/airspeed-change-ktps">
+			<input>/instrumentation/airspeed-IFD-RH/airspeed-change-unfiltered</input>
+			<c1>/autopilot/altsensor/c1</c1>
+			<c2>/autopilot/altsensor/c2</c2>
+			<c3>/autopilot/altsensor/c3</c3>
+			<c4>/autopilot/altsensor/c4</c4>
+		</lead_lag_filter>
+
+	</channel>
+
+<!--*****************************************Vertical speed LH IFD*****************************************************************-->
+	<channel name="verticalspeedLHIFD">
+
+		<fcs_function name="/instrumentation/ivsi-IFD-LH/vs-unfiltered">
+			<function>
+				<product>
+					<value>60.0</value>		
+					<sum>
+						<property>/instrumentation/altimeter-IFD-LH/pressure-alt-ft</property>
+						<property>/instrumentation/ivsi-IFD-LH/alt-old</property>
+					</sum>
+					<pow>
+						<max>
+							<value>0.0001</value>	
+							<property>sim-dt-sec</property>
+						</max>
+						<value>-1.0</value>	
+					</pow>
+				</product>
+			</function>
+		</fcs_function>
+
+		<lead_lag_filter name="/instrumentation/ivsi-IFD-LH/indicated-speed-fpm">
+			<input>/instrumentation/ivsi-IFD-LH/vs-unfiltered</input>
+			<c1>/autopilot/altsensor/c1</c1>
+			<c2>/autopilot/altsensor/c2</c2>
+			<c3>/autopilot/altsensor/c3</c3>
+			<c4>/autopilot/altsensor/c4</c4>
+		</lead_lag_filter>
+
+		<fcs_function name="/instrumentation/ivsi-IFD-LH/alt-old">
+			<function>
+				<product>
+					<value>-1.0</value>				
+					<property>/instrumentation/altimeter-IFD-LH/pressure-alt-ft</property>
+				</product>	
+			</function>
+		</fcs_function>
+	</channel>
+
+<!--*****************************************Vertical speed RH IFD*****************************************************************-->
+	<channel name="verticalspeedRHIFD">
+
+		<fcs_function name="/instrumentation/ivsi-IFD-RH/vs-unfiltered">
+			<function>
+				<product>
+					<value>60.0</value>		
+					<sum>
+						<property>/instrumentation/altimeter-IFD-RH/pressure-alt-ft</property>
+						<property>/instrumentation/ivsi-IFD-RH/alt-old</property>
+					</sum>
+					<pow>
+						<max>
+							<value>0.0001</value>	
+							<property>sim-dt-sec</property>
+						</max>
+						<value>-1.0</value>	
+					</pow>
+				</product>
+			</function>
+		</fcs_function>
+
+		<lead_lag_filter name="/instrumentation/ivsi-IFD-RH/indicated-speed-fpm">
+			<input>/instrumentation/ivsi-IFD-RH/vs-unfiltered</input>
+			<c1>/autopilot/altsensor/c1</c1>
+			<c2>/autopilot/altsensor/c2</c2>
+			<c3>/autopilot/altsensor/c3</c3>
+			<c4>/autopilot/altsensor/c4</c4>
+		</lead_lag_filter>
+
+		<fcs_function name="/instrumentation/ivsi-IFD-RH/alt-old">
+			<function>
+				<product>
+					<value>-1.0</value>				
+					<property>/instrumentation/altimeter-IFD-RH/pressure-alt-ft</property>
+				</product>	
+			</function>
+		</fcs_function>
+	</channel>
+
+<!--*****************************************Condition lever*****************************************************************-->
+	<channel name="conditionlever">
+
+		<fcs_function name="/controls/engines/engine[0]/cutoff-inv">
+			<function>
+				<abs>
+					<sum>
+						<property>/extra500/engine/cutoff</property>
+						<value>-1.0</value>
+					</sum>	
+				</abs>
+			</function>
+		</fcs_function>
+
+		<lead_lag_filter name="/controls/engines/engine[0]/cutoff-filtered">
+			<input>/controls/engines/engine[0]/cutoff-inv</input>
+			<c1>0.0</c1>
+			<c2>1.0</c2>
+			<c3>0.075</c3>
+			<c4>1.0</c4>
+		</lead_lag_filter>
+
+		<fcs_function name="/controls/engines/engine[0]/condition-lever-norm">
+			<function>
+				<product>
+					<value>0.5</value>
+					<sum>
+						<value>1.0</value>
+						<property>/controls/engines/engine[0]/propeller-pitch</property>
+					</sum>
+					<property>/controls/engines/engine[0]/cutoff-filtered</property>
+				</product>	
+			</function>
+		</fcs_function>
+
+	</channel>
+
+	<channel name="dme">
+		<switch name="dmeminmax">
+			<default value="/instrumentation/dme/indicated-time-min"/>
+			<test logic="AND" value="99">
+				/instrumentation/dme/indicated-time-min gt 99
+			</test>
+			<output>/instrumentation/dme/indicated-time-min-clp</output>
+		</switch>
+
+	</channel>
+
+<!--*****************************************HEADING mag variation*****************************************************************-->
+<!-- IMPORTANT: temporary until FGFS bug #1489 is fixed -->
+
+	<channel name="magvariation">
+
+		<fcs_function name="/instrumentation/heading-indicator-IFD-LH/offset-deg">
+			<function>
+				<product>
+					<property>/environment/magnetic-variation-deg</property>
+					<value>-1.0</value>
+				</product>
+			</function>
+			<output>/instrumentation/heading-indicator-IFD-LH/offset-deg</output>
+		</fcs_function>
+
+		<fcs_function name="/instrumentation/heading-indicator-IFD-RH/offset-deg">
+			<function>
+				<product>
+					<property>/environment/magnetic-variation-deg</property>
+					<value>-1.0</value>
+				</product>
+			</function>
+			<output>/instrumentation/heading-indicator-IFD-RH/offset-deg</output>
+		</fcs_function>
+
+	</channel>
+
+</system>
+
+
+

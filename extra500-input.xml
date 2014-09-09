@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: March 13 2013
+
+      Last change:      Eric van den Berg
+      Date:             2014.05.12
+-->
+<PropertyList>
+
+	<mice>
+		<mouse>
+			<mode n="1">
+				<y-axis>
+					<binding>
+						<factor type="double">-2</factor>
+					</binding>
+				</y-axis>
+			</mode>
+		</mouse>
+	</mice>
+
+	 <keyboard>
+		 
+		 <key n="6">
+			 <!-- toggle stick-fixed/loose -->
+			 <name>CRTL-F</name>
+			 <desc>Toggle stick fixed</desc>
+			 <binding n="0">
+				 <command>nasal</command>
+				 <script>e1.bitswap("fdm/jsbsim/state/controls-fixed")</script>                        
+			 </binding>
+		 </key>
+
+		 <key n="99">
+			 <name>c</name>
+			 <desc>CWS</desc>
+    				<binding>
+      				<command>nasal</command>
+      				<script><![CDATA[
+						UI.click("Autopilot CWS on");
+					]]></script>
+    				</binding>
+				<mod-up>
+    				<binding>
+      				<command>nasal</command>
+      				<script><![CDATA[
+						UI.click("Autopilot CWS off");
+					]]></script>
+    				</binding>
+				</mod-up>
+		 </key>
+
+		 <key n="100">
+			 <name>d</name>
+			 <desc>disconnect AP</desc>
+    				<binding>
+      				<command>nasal</command>
+      				<script><![CDATA[
+						UI.click("Autopilot disengage on");
+					]]></script>
+    				</binding>
+				<mod-up>
+    				<binding>
+      				<command>nasal</command>
+      				<script><![CDATA[
+						UI.click("Autopilot disengage off");
+					]]></script>
+    				</binding>
+				</mod-up>
+		 </key>
+
+		 <key n="114">
+			 <name>r</name>
+			 <desc>Toggle prop beta range</desc>
+			 <binding n="0">
+				 <command>nasal</command>
+				 <script><![CDATA[
+					UI.click("Engine reverser");
+				]]></script> 
+			 </binding>
+		 </key>
+
+<!-- toggle engine cutoff
+		 <key n="115"> 
+			 <name>s</name>
+			 <desc>Toggle engine cutoff</desc>
+			 <binding n="0">
+				 <command>nasal</command>
+				 <script><![CDATA[
+					 UI.click("Engine cutoff");
+					 ]]></script>
+			 </binding>
+		 </key>
+-->
+		 
+		 <key n="119">
+			 <name>w</name>
+			 <desc>gear warn mute</desc>
+			 <repeatable type="bool">false</repeatable>
+    				<binding>
+      			<command>nasal</command>
+     					 <script><![CDATA[
+						UI.click("Gear Clear Horn on");
+					]]></script>
+    				</binding>
+				<mod-up>
+    					<binding>
+      				<command>nasal</command>
+      					<script><![CDATA[
+							UI.click("Gear Clear Horn off");
+						]]></script>
+    					</binding>
+				</mod-up>
+		 	</key>
+		 
+		 <key n="5">
+			 <name>Ctrl-e</name>
+			 <desc>Toggle Ground External Power Generator</desc>
+			 <binding n="0">
+				 <command>nasal</command>
+				 <script><![CDATA[
+					UI.click("Ground External Power Generator");
+				]]></script>
+			 </binding>
+		 </key>
+		 <key n="267">
+			 <name>F11</name>
+			 <desc>Pop up autopilot dialog</desc>
+			 <binding>
+				 <command>nasal</command>
+				 <script>Dialogs.autopilot.open()</script>
+			 </binding>
+		 </key>
+		 <key n="268">
+			 <name>F12</name>
+			 <desc>Pop up radios dialog</desc>
+			 <binding>
+				 <command>nasal</command>
+				 <script>Dialogs.radios.open()</script>
+			 </binding>
+		 </key>
+            
+		 
+		 
+	 </keyboard> 
+
+</PropertyList>

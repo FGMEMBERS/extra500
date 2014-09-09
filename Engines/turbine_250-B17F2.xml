@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Dirk Dittmann
+      Date: 2013-03-13
+
+      Last change:      Eric van den Berg
+      Date:             29.04.13
+-->
+<!--
+    
+    Rolls-Royce (Allison) 250-B17F cutaway. 
+    450 hp @ takeoff, 
+    380 hp @ normal cruise, 
+    377 hp @ 90%, 
+    314 hp @ 75%, 
+    pressure ratio 7.9:1, 
+    output shaft 2,013 rpm @ 100%, 
+    gas generator 50,970 rpm @ 100%, 
+    power turbine 33,290 rpm @ 100%, 
+    specific fuel consumption ranges from 
+    0.613 lb/shp-hr @ takeoff  
+    0.635 lb/shp-hr @ normal cruise, 
+    0.637 lb/shp-hr @ 90% cruise, 
+    0.673 lb/shp-hr @ 75% cruise, 
+    205 lb dry weight.    
+-->
+
+<turboprop_engine name="turbine_250-B17F2">
+	<milthrust unit="LBS">       1270.0   </milthrust>
+	<idlen1>                       65.0   </idlen1>
+	<idlen2>                     1400.0   </idlen2>
+	<maxn1>                       106.0   </maxn1>
+	
+	<maxpower unit="HP">          600  </maxpower>
+	<psfc unit="LBS/HR/HP">         0.613 </psfc>
+	<!--idlefuelflow>                 75.0   </idlefuelflow-->
+	<n1idle_max_delay>              1     </n1idle_max_delay>
+	<maxstartingtime>              30     </maxstartingtime>
+	<startern1>                    20     </startern1>
+	<itt_delay>                     0.05  </itt_delay>
+	<betarangeend>                 70     </betarangeend>
+	<reversemaxpower>              30     </reversemaxpower>
+	
+	
+	<table name="EnginePowerVC">
+	<description> Engine power, function of airspeed and pressure </description>
+		<independentVar lookup="row">atmosphere/pressure-altitude</independentVar>
+		<independentVar lookup="column">velocities/vtrue-kts</independentVar>
+		<tableData>
+					0	100	300
+			0		1.0	1.	1.
+			25000		1	1	1
+		</tableData>
+	</table>
+	
+	<table name="EnginePowerRPM_N1" type="internal">
+	<description> Engine Power, function of RPM and N1 </description>
+		<tableData>
+				0	65	88	93	96.1	96.3	99.7	105	106
+			0	0	0.5	0.5	0.5	0.5	0.5	0.5	0.5	0.5
+			800	0	35	50	60	63	64	65	66	67	
+			1300	0	35	190	201	241	243	288	303	306
+			1850	0	35	205	286	344	346	410	432	436
+			2030	0	35	225	314	377	380	450	474	478
+			2100	0	35	233	325	390	393	466	490	495
+		</tableData>
+	</table>
+
+
+		
+  <table name="ITT_N1" type="internal">
+    <description> Inter-Turbine Temperature ITT [deg C] depending on N1 and engine run (0=off / 1=running) </description>
+    <tableData>
+              0     1
+        0     0     0
+       15   100   100
+       60   180   520
+       96   270   680
+      100   280   730
+      108   290   920
+    </tableData>
+  </table>
+
+</turboprop_engine>

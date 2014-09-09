@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: Aug 28 2013
+
+      Last change: Eric van den Berg     
+      Date: 2013-08-31            
+-->
+<PropertyList>
+
+<path>cabincontroller.ac</path>
+
+  <effect>
+    <inherits-from>Effects/model-transparent</inherits-from>
+    <object-name>Sphere</object-name>
+  </effect>
+
+  <animation>
+    <type>range</type>
+    <min-m>0</min-m>
+    <max-m>10</max-m>
+  </animation>
+
+<animation>
+  <type>rotate</type>
+  <object-name>scale</object-name>
+  <object-name>knob</object-name>
+  <property>systems/pressurization/airport-alt</property>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>0</dep>
+            </entry>
+            <entry>
+                <ind>6000</ind>
+                <dep>180</dep>
+            </entry>
+            <entry>
+                <ind>9500</ind>
+                <dep>270</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>0.0</x1-m>
+    <y1-m>0</y1-m>
+    <z1-m>0.0</z1-m>
+    <x2-m>0.0</x2-m>
+    <y2-m>0</y2-m>
+    <z2-m>1.0</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>knob</object-name>
+  <action>
+    <button>3</button>
+    <repeatable>true</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Cabin Altitude >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>true</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Cabin Altitude <");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<animation>
+  <type>rotate</type>
+  <object-name>rateknob</object-name>
+  <property>systems/pressurization/cabin-climb-rate-fpm</property>
+  <interpolation>
+            <entry>
+                <ind>1250</ind>
+                <dep>-155</dep>
+            </entry>
+            <entry>
+                <ind>500</ind>
+                <dep>0</dep>
+            </entry>
+            <entry>
+                <ind>250</ind>
+                <dep>155</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>-0.0234</x1-m>
+    <y1-m>0.0234</y1-m>
+    <z1-m>0.0</z1-m>
+    <x2-m>-0.0234</x2-m>
+    <y2-m>0.0234</y2-m>
+    <z2-m>1.0</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>rateknob</object-name>
+  <action>
+    <button>3</button>
+    <repeatable>true</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Cabin Rate >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>true</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Cabin Rate <");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<animation>
+	<type>material</type>
+	<object-name>scale</object-name>
+	<emission>	
+		<red>0.1</red>	
+		<green>0.3</green>	
+		<blue>1.0</blue>
+		<factor-prop>extra500/instrumentation/CabinController/Backlight/state</factor-prop>
+	</emission>
+</animation>
+
+
+</PropertyList>

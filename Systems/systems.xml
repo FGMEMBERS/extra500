@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    This file is part of extra500
+
+    extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Eric van den Berg
+      Date: 21.04.13
+
+      Last change:      Eric van den Berg
+      Date:             09.11.13
+-->
+
+<PropertyList>
+
+  <pitot>
+    <name>pitotL</name>
+    <number>0</number>
+  </pitot>
+
+  <pitot>
+    <name>pitotR</name>
+    <number>0</number>
+  </pitot>
+
+  <static>
+    <name>staticL</name>
+    <number>0</number>
+    <tau>0.1</tau>
+    <type>1</type>
+    <error-factor>1.0</error-factor>
+  </static>
+
+  <static>
+    <name>staticR</name>
+    <number>0</number>
+    <tau>0.1</tau>
+    <type>1</type>
+    <error-factor>1.0</error-factor>
+  </static>
+
+  <static>
+    <name>staticAP</name>
+    <number>0</number>
+    <tau>0.01</tau>
+  </static>
+
+</PropertyList>
