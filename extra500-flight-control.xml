@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="utf-8" ?>
+	
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Eric van den Berg
+      Date: 2013-05-23
+
+      Last change:      Eric van den Berg
+      Date:             2014-05-11
+-->
+
+<flight_control name="FCS: extra500">
+
+	 <channel name="Pitch">	
+
+	<fcs_function name="aircraft/hstab/elevator/ch_de-prad">
+    	<function >
+      	<description>moment coeff around elevator hinge line due to its deflection</description>
+            <sum>            
+                 	<property>aircraft/hstab/elevator/Ch_de</property>
+		  	<product>
+                       	<property>aircraft/hstab/elevator/Ch_de2</property>
+				<property>aircraft/hstab/elevator/elevator-pos-rad</property>
+				<property>aircraft/hstab/elevator/elevator-pos-rad</property>
+                 	</product>
+            </sum>
+    	</function>
+	</fcs_function>
+
+	<fcs_function name="aircraft/hstab/elevator/ch_alpha-prad">
+    	<function>
+      	<description>moment coeff around elevator hinge line due to local angle of attack</description>
+            <sum>            
+                  <property>aircraft/hstab/elevator/Ch_alpha</property>
+                  <product>
+                        <property>aircraft/hstab/elevator/Ch_alpha2</property>
+                        <abs>
+				<product>
+                              		<property>/extra500/const/DEG2RAD</property>
+                  			<property>aircraft/hstab/alpha-deg</property>
+				</product>
+                        </abs>
+                  </product>
+            </sum>
+    	</function>
+	</fcs_function>
+
+	<fcs_function name="aircraft/hstab/elevator/H0-lbsft">
+    	<function>
+      	<description>coeff around elevator hinge line due to unsymmetrical elevator</description>
+            <product>
+                       	<property>aircraft/hstab/elevator/Ch0</property>
+            		<value>0.5</value>
+            		<property>atmosphere/rho-slugs_ft3</property>
+            		<property>velocities/hstab/v-fps</property>
+            		<property>velocities/hstab/v-fps</property>
+            		<property>aircraft/hstab/elevator/S-ft2</property>
+            		<property>aircraft/hstab/elevator/c_aero-ft</property>
+            </product>
+    	</function>
+	</fcs_function>
+
+	<fcs_function name="aircraft/hstab/elevator/H-nz-lbsft">
+    	<function>
+      	<description>static moment coeff around elevator hinge line times nz</description>
+            <product>
+                       <property>aircraft/hstab/elevator/H-static-lbsft</property>
+                       <property>accelerations/Nz</property>  <!-- ensuring stick force per g-->
+            </product>
+    	</function>
+	</fcs_function>
+    
+	<fcs_function name="aircraft/hstab/elevator/H-ds-lbsft">
+    	<function>
+      	<description>moment coeff around elevator hinge line due to down spring</description>
+      		<sum>
+            	<property>aircraft/hstab/elevator/downspring0-lbsft</property>
+            	<product>
+                       	<value>-1</value>
+                       	<property>aircraft/hstab/elevator/downspring-lbsftprad</property>
+                       	<property>aircraft/hstab/elevator/elevator-pos-rad</property>  
+            	</product>
+      		</sum>
+    	</function>
+	</fcs_function>
+
+	<fcs_function name="aircraft/hstab/elevator/H-bw-lbsft">
+    	<function>
+      	<description>moment coeff around elevator hinge line due to bobweight</description>
+      		<product>
+            		<property>aircraft/hstab/elevator/bobweight-lbsft</property>
+            		<property>accelerations/Nz</property>
+      		</product>
+    	</function>
+	</fcs_function>
+
+	<fcs_function name="aircraft/hstab/elevator/H-alpha-lbsft">
+    	<function>
+      		<product>
+            		<value>0.5</value>
+            		<property>atmosphere/rho-slugs_ft3</property>
+            		<property>velocities/hstab/v-fps</property>
+            		<property>velocities/hstab/v-fps</property>
+            		<property>aircraft/hstab/elevator/S-ft2</property>
+            		<property>aircraft/hstab/elevator/c_aero-ft</property>
+            		<property>aircraft/hstab/elevator/ch_alpha-prad</property>
+            		<product>
+                  		<property>/extra500/const/DEG2RAD</property>
+                  		<property>aircraft/hstab/alpha-deg</property>
+            		</product>
+      		</product>
+    	</function>
+	</fcs_function>
+
+	<fcs_function name="aircraft/hstab/elevator/H-trim-lbsft">
+    	<function>
+      		<product>
+            		<property>aircraft/hstab/elevator/trim/coeff-norm</property>
+            		<property>fcs/pitch-trim-cmd-norm</property>
+            		<value>0.5</value>
+            		<property>atmosphere/rho-slugs_ft3</property>
+            		<property>velocities/hstab/v-fps</property>
+            		<property>velocities/hstab/v-fps</property>
+            		<property>aircraft/hstab/elevator/trim/S-ft2</property>
+            		<property>aircraft/hstab/elevator/trim/c_aero-ft</property>
+      		</product>
+    	</function>
+	</fcs_function>
+
+	<fcs_function name="aircraft/hstab/elevator/d_e_free-rad">
+    	<function>
+      	<description>stick-free elevator deflection rad</description>
+      		<product>
+            		<value>-1</value>
+            		<pow>
+                  		<product>
+                        		<value>0.5</value>
+                        		<property>atmosphere/rho-slugs_ft3</property>
+                        		<property>velocities/hstab/v-fps</property>
+                        		<property>velocities/hstab/v-fps</property>
+                        		<property>aircraft/hstab/elevator/S-ft2</property>
+                        		<property>aircraft/hstab/elevator/c_aero-ft</property>
+                        		<property>aircraft/hstab/elevator/ch_de-prad</property>
+                  		</product>
+                  	<value>-1</value>   
+            		</pow>
+            		<sum>
+				<property>aircraft/hstab/elevator/H0-lbsft</property>
+                  		<property>aircraft/hstab/elevator/H-nz-lbsft</property>
+                  		<property>aircraft/hstab/elevator/H-ds-lbsft</property>
+                  		<property>aircraft/hstab/elevator/H-bw-lbsft</property>
+                  		<property>aircraft/hstab/elevator/H-alpha-lbsft</property>
+                  		<property>aircraft/hstab/elevator/H-trim-lbsft</property>                 
+            		</sum>
+      		</product>
+    	</function>
+	</fcs_function>
+
+    		<summer name="aircraft/hstab/elevator/d_e_free-clipped-rad">
+      		<description>stick-free elevator deflection rad</description>
+      			<input>aircraft/hstab/elevator/d_e_free-rad</input>
+      			<clipto>
+            			<min>
+                  			<property>aircraft/hstab/elevator/min-defl-rad</property>
+            			</min>
+            			<max>
+                  			<property>aircraft/hstab/elevator/max-defl-rad</property>            
+            			</max>
+      			</clipto>
+    		</summer> 
+
+   		<aerosurface_scale name="d_e_free-clipped normalization">
+      			<input>aircraft/hstab/elevator/d_e_free-clipped-rad</input>
+      			<domain>
+        			<min> -0.5759 </min>
+        			<max>  0.3141 </max>
+      			</domain>
+      			<range>
+        			<min> -1 </min>
+        			<max>  1 </max>
+      			</range>
+      			<output>aircraft/hstab/elevator/d_e_free-norm</output>
+   		</aerosurface_scale>	
+
+<!--this makes the elevator pilot input to move along, so when the pitch trim controls the elevator position, the elevator is in the correct position-->
+		<switch name="fixedoff">
+			<default value="/controls/flight/elevator"/>
+			<test logic="AND" value="aircraft/hstab/elevator/d_e_free-norm">
+				state/controls-fixed eq 0
+				/autopilot/mode/alt eq 0
+				/autopilot/mode/vs eq 0
+				/autopilot/mode/gs-follow eq 0
+			</test>
+			<output>/controls/flight/elevator</output>
+		</switch>
+
+<!-- control choices for elevator-->
+		<switch name="elevnotfixed">
+			<default value="fcs/elevator-cmd-norm"/>
+			<test logic="AND" value="aircraft/hstab/elevator/d_e_free-norm">
+				state/controls-fixed eq 0
+				/autopilot/mode/alt eq 0
+				/autopilot/mode/vs eq 0
+				/autopilot/mode/gs-follow eq 0
+			</test>
+			<output>fcs/elevator-cmd-tot-nc1</output>
+		</switch>
+
+		<switch name="elevaltmode">
+			<default value="fcs/elevator-cmd-tot-nc1"/>
+			<test logic="AND" value="/autopilot/alt-channel/cmd-ap-elev-pos-norm">
+				/autopilot/mode/alt eq 1
+				/autopilot/settings/ap eq 1
+				/autopilot/mode/cws-armed eq 0
+			</test>
+			<output>fcs/elevator-cmd-tot-nc2</output>
+		</switch>
+
+		<switch name="elevvsmode">
+			<default value="fcs/elevator-cmd-tot-nc2"/>
+			<test logic="AND" value="/autopilot/vs-channel/cmd-ap-elev-pos-norm">
+				/autopilot/mode/vs eq 1
+				/autopilot/settings/ap eq 1
+				/autopilot/mode/cws-armed eq 0
+			</test>
+			<output>fcs/elevator-cmd-tot-nc3</output>
+		</switch>
+
+		<switch name="elevgsmode">
+			<default value="fcs/elevator-cmd-tot-nc3"/>
+			<test logic="AND" value="/autopilot/gs-channel/cmd-ap-elev-pos-norm">
+				/autopilot/mode/gs eq 1
+				/autopilot/settings/ap eq 1
+				/autopilot/mode/cws-armed eq 0
+			</test>
+			<output>fcs/elevator-cmd-tot-nc</output>
+		</switch>
+
+		 <summer name="elevator-cmd-tot">
+               		<input>fcs/elevator-cmd-tot-nc</input>
+               		<clipto>
+              			<min>-1</min>
+               			<max>1</max>
+       			 </clipto>
+       		</summer>	
+
+
+     	 	<aerosurface_scale name="Elevator Control">
+	      		<input>fcs/elevator-cmd-tot</input>
+	      		<range>
+                  		<min>-0.5759 </min>
+                  		<max> 0.3141 </max>
+	      		</range>
+	      		<output>fcs/elevator-pos-rad</output>
+      		</aerosurface_scale>
+
+   		<aerosurface_scale name="elevator normalization">
+      			<input>fcs/elevator-pos-rad</input>
+      			<domain>
+        			<min> -0.5759 </min>
+        			<max>  0.3141 </max>
+      			</domain>
+      			<range>
+        			<min> -1 </min>
+        			<max>  1 </max>
+      			</range>
+      			<output>fcs/elevator-pos-norm</output>
+   		</aerosurface_scale>
+
+	<fcs_function name="aircraft/hstab/elevator/H-de-lbsft">
+    	<function>
+      		<product>
+            		<value>0.5</value>
+            		<property>atmosphere/rho-slugs_ft3</property>
+            		<property>velocities/hstab/v-fps</property>
+            		<property>velocities/hstab/v-fps</property>
+            		<property>aircraft/hstab/elevator/S-ft2</property>
+            		<property>aircraft/hstab/elevator/c_aero-ft</property>
+            		<property>aircraft/hstab/elevator/ch_de-prad</property>
+            		<property>fcs/elevator-pos-rad</property>
+      		</product>
+    	</function>
+	</fcs_function>
+
+	<fcs_function name="aircraft/hstab/elevator/H-total-lbsft">
+    	<function>
+      		<sum>
+			<property>aircraft/hstab/elevator/H0-lbsft</property>
+            		<property>aircraft/hstab/elevator/H-nz-lbsft</property>
+            		<property>aircraft/hstab/elevator/H-ds-lbsft</property>
+            		<property>aircraft/hstab/elevator/H-bw-lbsft</property>
+            		<property>aircraft/hstab/elevator/H-alpha-lbsft</property>
+            		<property>aircraft/hstab/elevator/H-trim-lbsft</property>
+            		<property>aircraft/hstab/elevator/H-de-lbsft</property>
+      		</sum>
+    	</function>
+	</fcs_function>
+
+  	</channel>
+
+  	<channel name="Pitch trim">
+
+		<switch name="autotrim">
+			<default value="fcs/pitch-trim-cmd-norm"/>
+			<test logic="OR" value="/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm">
+				<test logic="AND" value="1">
+					<test logic="AND" value="1">
+						/autopilot/settings/trim eq 1
+						/autopilot/settings/ap eq 1
+						/autopilot/mode/cws-armed eq 0
+					</test>
+					<test logic="OR" value="1">
+						/autopilot/mode/alt eq 1
+						/autopilot/mode/vs eq 1
+						/autopilot/mode/gs-follow eq 1
+					</test>
+				</test>
+				<test logic="AND" value="1">
+					/extra500/panel/CircuitBreaker/BankC/AutopilotServo/voltOut > 10
+					/autopilot/settings/trim eq 1
+					/autopilot/mode/electrim ne 0
+				</test>
+			</test>
+			<output>fcs/pitch-trim-cmd-tot-norm</output>
+		</switch>
+
+      		<aerosurface_scale name="Pitch trim Control">
+	      		<input>fcs/pitch-trim-cmd-tot-norm</input>
+	      		<range>
+                  		<min> -30 </min>
+                  		<max>  20 </max>
+	      		</range>
+	      		<output>fcs/pitch-trim-pos-deg</output>
+      		</aerosurface_scale>
+
+  	</channel> 
+
+		
+	<channel name="Roll">
+
+		<aerosurface_scale name="rudder aileron control"> 	<!-- this is to simulate the rudder-aileron interconnect, a spring in RL -->
+			<input>fcs/rudder-cmd-norm</input>
+			<range>
+				<min> 0.15 </min>
+				<max>-0.15 </max>
+			</range>
+			<output>fcs/rudder-cmd-aileron</output>
+		</aerosurface_scale>
+
+		<fcs_function name="aileron-cmd-rdr-ail">
+			<function>
+			<sum>
+				<property>fcs/rudder-cmd-aileron</property>	
+				<property>fcs/aileron-cmd-norm</property>
+			</sum>
+			</function>
+		</fcs_function>
+
+		<switch name="ailcwsmode">
+			<default value="fcs/aileron-cmd-rdr-ail"/>
+			<test logic="AND" value="/autopilot/cws-channel/cmd-ap-ail-pos-norm">
+				/autopilot/mode/cws eq 1
+				/autopilot/settings/ap eq 1
+				/autopilot/mode/cws-armed eq 0
+			</test>
+			<output>fcs/aileron-cmd-1</output>
+		</switch>
+
+		<switch name="ailradionavmode">
+			<default value="fcs/aileron-cmd-1"/>
+			<test logic="AND" value="/autopilot/radionav-channel/cmd-ap-ail-pos-norm">
+				/autopilot/mode/nav eq 1
+				/autopilot/settings/ap eq 1
+			</test>
+			<output>fcs/aileron-cmd-2</output>
+		</switch>
+
+		<switch name="ailfmsmode">
+			<default value="fcs/aileron-cmd-2"/>
+			<test logic="AND" value="/autopilot/fms-channel/cmd-ap-ail-pos-norm">
+				/autopilot/mode/nav eq 1
+				/instrumentation/nav-source eq 2
+				/autopilot/settings/ap eq 1
+			</test>
+			<output>fcs/aileron-cmd-3</output>
+		</switch>
+
+	<!--hdg goes over nav (hdg+nav mode). hdg is switched off in radionav-channel (extra500-autopilot.xml). --> 
+		<switch name="ailhdgmode">
+			<default value="fcs/aileron-cmd-3"/>
+			<test logic="AND" value="/autopilot/hdg-channel/cmd-ap-ail-pos-norm">
+				/autopilot/mode/heading eq 1
+				/autopilot/settings/ap eq 1
+			</test>
+			<output>fcs/aileron-cmd-tot-nc</output>
+		</switch>
+
+		 <summer name="aileron-cmd-tot">
+               		<input>fcs/aileron-cmd-tot-nc</input>
+               		<clipto>
+               			<min>-1</min>
+               			<max>1</max>
+       			 </clipto>
+       		</summer>
+				
+		<aerosurface_scale name="Left Aileron Control">
+			<input>fcs/aileron-cmd-tot</input>
+			<range>
+				<min> -0.4712 </min>
+				<max>  0.3316 </max>
+			</range>
+			<output>fcs/left-aileron-pos-rad</output>
+		</aerosurface_scale>
+			
+		<aerosurface_scale name="Right Aileron Control">
+			<input>fcs/aileron-cmd-tot</input>
+			<range>
+				<min> -0.3316 </min>
+				<max>  0.4712 </max>
+			</range>
+			<output>fcs/right-aileron-pos-rad</output>
+		</aerosurface_scale>
+			
+		<aerosurface_scale name="left aileron normalization">
+			<input>fcs/left-aileron-pos-rad</input>
+			<domain>
+				<min> -0.4712 </min>
+				<max>  0.3316 </max>
+			</domain>
+			<range>
+				<min> -1 </min>
+				<max>  1 </max>
+			</range>
+			<output>fcs/left-aileron-pos-norm</output>
+		</aerosurface_scale>
+			
+		<aerosurface_scale name="right aileron normalization">
+			<input>fcs/right-aileron-pos-rad</input>
+			<domain>
+				<min> -0.3316 </min>
+				<max>  0.4712 </max>
+			</domain>
+			<range>
+				<min> -1 </min>
+				<max>  1 </max>
+			</range>
+			<output>fcs/right-aileron-pos-norm</output>
+		</aerosurface_scale>
+			
+	</channel>
+		
+		<channel name="Yaw">
+
+			<aerosurface_scale name="aileron rudder control">	<!-- this is to simulate the rudder-aileron interconnect, a spring in RL -->
+				<input>fcs/aileron-cmd-norm</input>
+				<range>
+					<min> 0.1 </min>
+					<max>-0.1 </max>
+				</range>
+				<output>fcs/aileron-cmd-rudder</output>
+			</aerosurface_scale>
+
+			<fcs_function name="rudder-cmd-tot-nc">
+				<function>
+				<sum>
+					<product>
+						<abs>
+                               		<sum>
+								<product>
+                                  					<property>/autopilot/mode/yawtrim</property>
+								</product>
+                                  			<value>-1</value> 
+                              		</sum>
+                         		</abs>
+						<sum>
+							<property>fcs/aileron-cmd-rudder</property>	
+							<property>fcs/rudder-cmd-norm</property>
+						</sum>
+					</product>
+					<product>
+                                  		<property>/autopilot/mode/yawtrim</property>
+                              		<property>/autopilot/yawtrim-channel/cmd-ap-rudder-pos-norm</property>	
+					</product>
+				</sum>
+				</function>
+			</fcs_function>
+
+			 <summer name="rudder-cmd-tot">
+                		<input>fcs/rudder-cmd-tot-nc</input>
+                		<clipto>
+                    			<min>-1</min>
+                    			<max>1</max>
+               			 </clipto>
+            		</summer>
+	
+			<aerosurface_scale name="Rudder Control">
+				<input>fcs/rudder-cmd-tot</input>
+				<range>
+					<min> -0.4363 </min>
+					<max>  0.4363 </max>
+				</range>
+				<output>fcs/rudder-pos-rad</output>
+			</aerosurface_scale>
+			
+			<aerosurface_scale name="rudder normalization">
+				<input>fcs/rudder-pos-rad</input>
+				<domain>
+					<min> -0.4363 </min>
+					<max>  0.4363 </max>
+				</domain>
+				<range>
+					<min> -1 </min>
+					<max>  1 </max>
+				</range>
+				<output>fcs/rudder-pos-norm</output>
+			</aerosurface_scale>
+			
+		</channel>
+		
+		<channel name="Flaps">
+
+			<kinematic name="Flaps Control">
+				<input>fcs/flap-wp-cmd-norm</input>
+				<traverse>
+					<setting>
+						<position>0</position>
+						<time>0</time>
+					</setting>
+					<setting>
+						<position>15</position>
+						<time>4</time>
+					</setting>
+					<setting>
+						<position>30</position>
+						<time>6</time>
+					</setting>
+				</traverse>
+				<output>fcs/flap-pos-deg</output>
+			</kinematic>
+
+			<kinematic name="Flaps Control aero">
+                  <!--this is for the aerodynamic part of the flap deflection. Much slower to prevent dynamic effects-->
+				<input>fcs/flap-wp-cmd-norm</input>
+				<traverse>
+					<setting>
+						<position>0</position>
+						<time>0</time>
+					</setting>
+					<setting>
+						<position>15</position>
+						<time>8</time>
+					</setting>
+					<setting>
+						<position>30</position>
+						<time>12</time>
+					</setting>
+				</traverse>
+				<output>fcs/flap-aero-pos-deg</output>
+			</kinematic>
+
+			<aerosurface_scale name="Flap Normalization">
+				<input>fcs/flap-pos-deg</input>
+				<domain>
+					<min>0</min>
+					<max>30</max>
+				</domain>
+				<range>
+					<min>0</min>
+					<max>1</max>
+				</range>
+				<output>fcs/flap-pos-norm</output>
+			</aerosurface_scale>
+
+		</channel>
+		
+</flight_control>

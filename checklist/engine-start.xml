@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: March 13 2013
+
+      Last change:      Eric van den Berg
+      Date:             09.02.14
+-->
+
+<PropertyList>
+	<title>Engine Start</title>
+	<item>
+		<name>NIGHT/DAY</name>
+		<value>TEST</value>
+	</item> 
+	<item>
+		<name>FUEL TRANSFER LEFT and RIGHT</name>
+		<value>Check both ON</value>
+	</item> 
+	<item>
+		<name>FUEL PUMP 1 or 2</name>
+		<value>ON</value>
+	</item> 
+	<item>
+		<name>Fuel Pressure</name>
+		<value>Check reading &gt; 10 psi</value>
+	</item> 
+	<item>
+		<name>TOT</name>
+		<value>Check reading &lt; 100 degC</value>
+	</item> 
+	<item>
+		<name>ENGINE MOTORING</name>
+		<value>Check NORMAL</value>
+	</item> 
+	<item>
+		<name>ENGINE START</name>
+		<value>Momentary START</value>
+	</item> 
+	<item>
+		<name>Condition Lever</name>
+		<value>Fully forward </value>
+	</item>
+	<item>
+		<name>TOT</name>
+		<value>Monitor &lt; 850 degC</value>
+	</item> 
+	<item>
+		<name>Oil Pressure</name>
+		<value>Check indication</value>
+	</item> 
+	<item>
+		<name>OIL PRESS</name>
+		<value>Check extinguished</value>
+	</item> 
+	<item>
+		<name>Propeller RPM</name>
+		<value>Check positive indication at 25% N1</value>
+	</item> 
+	<item>
+		<name>PNEUMATIC LOW</name>
+		<value>Check extinguished </value>
+	</item>
+
+</PropertyList>

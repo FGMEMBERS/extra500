@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: March 13 2013
+
+      Last change:      Eric van den Berg
+      Date:             2013.09.11
+-->
+
+<PropertyList>
+
+<path>Autopilot.ac</path>
+
+       <animation>
+	       <type>select</type>
+	       <object-name>Autopilot.Display.RDY</object-name>
+	       <condition>
+		       <equals>
+			       <property>/autopilot/mode/rdy</property>
+			       <value>1</value>
+		       </equals>	
+	       </condition>
+       </animation>
+       <animation>
+	       <type>select</type>
+	       <object-name>Autopilot.Display.CWS</object-name>
+	       <condition>
+		       <equals>
+			       <property>/autopilot/mode/cws</property>
+			       <value>1</value>
+		       </equals>	
+	       </condition>
+       </animation>
+       <animation>
+	       <type>select</type>
+	       <object-name>Autopilot.Display.FAIL</object-name>
+	       <condition>
+		       <equals>
+			       <property>/autopilot/mode/fail</property>
+			       <value>1</value>
+		       </equals>	
+	       </condition>
+       </animation>
+       <animation>
+	       <type>select</type>
+	       <object-name>Autopilot.Display.GPSS</object-name>
+	       <condition>
+		       <equals>
+			       <property>/autopilot/mode/gpss</property>
+			       <value>1</value>
+		       </equals>	
+	       </condition>
+       </animation>
+       <animation>
+	       <type>select</type>
+	       <object-name>Autopilot.Display.TRIM</object-name>
+	       <condition>
+		       <equals>
+			       <property>/autopilot/mode/trim</property>
+			       <value>1</value>
+		       </equals>	
+	       </condition>
+       </animation>
+       <animation>
+	       <type>select</type>
+	       <object-name>Autopilot.Display.ArrowUP</object-name>
+	       <condition>
+		       <equals>
+			       <property>/autopilot/mode/trim-up</property>
+			       <value>1</value>
+		       </equals>	
+	       </condition>
+       </animation>
+       <animation>
+	       <type>select</type>
+	       <object-name>Autopilot.Display.ArrowDOWN</object-name>
+	       <condition>
+		       <equals>
+			       <property>/autopilot/mode/trim-down</property>
+			       <value>1</value>
+		       </equals>	
+	       </condition>
+       </animation>
+       <animation>
+	       <type>select</type>
+	       <object-name>Autopilot.Display.GS</object-name>
+	       <condition>
+		       <equals>
+			       <property>/autopilot/mode/gs</property>
+			       <value>1</value>
+		       </equals>	
+	       </condition>
+       </animation>
+
+
+	   
+       <animation>
+	       <type>pick</type>
+	       <object-name>Autopilot.Button.HDG</object-name>
+	       <action>
+		       <button>0</button>
+		       <repeatable>false</repeatable>
+		       <binding>
+			       <command>nasal</command>
+			       <script>
+				       <![CDATA[
+				       UI.click("Autopilot HDG");
+				       ]]>
+			       </script>
+		       </binding>
+		</action>
+	</animation>
+	
+<animation>
+	<type>select</type>
+	<object-name>Autopilot.Display.HDG</object-name>
+	<condition>
+		<equals>
+			<property>/autopilot/mode/heading</property>
+			<value>1</value>
+		</equals>	
+	</condition>
+</animation>
+
+       <animation>
+	       <type>pick</type>
+	       <object-name>Autopilot.Hotspot.HDG+NAV</object-name>
+		   <visible>false</visible>
+	       <action>
+		       <button>0</button>
+		       <repeatable>false</repeatable>
+		       <binding>
+			       <command>nasal</command>
+			       <script>
+				       <![CDATA[
+				       UI.click("Autopilot HDG+NAV");
+					       ]]>
+				</script>
+			</binding>
+		</action>
+	</animation>
+
+<!--NAV Button -->
+
+<animation>
+  <type>pick</type>
+  <object-name>Autopilot.Button.NAV</object-name>
+  <action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Autopilot NAV");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+<animation>
+		<type>select</type>
+		<object-name>Autopilot.Display.NAV</object-name>
+		<condition>
+			<equals>
+				<property>/autopilot/mode/nav</property>
+				<value>1</value>
+			</equals>	
+		</condition>
+	</animation>
+
+<animation>
+  <type>pick</type>
+<object-name>Autopilot.Button.APR</object-name>
+  <action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Autopilot APR");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+<animation>
+		<type>select</type>
+		<object-name>Autopilot.Display.APR</object-name>
+		<condition>
+			<equals>
+				<property>/autopilot/mode/apr</property>
+				<value>1</value>
+			</equals>	
+		</condition>
+	</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>Autopilot.Button.REV</object-name>
+  <action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Autopilot REV");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+<animation>
+		<type>select</type>
+		<object-name>Autopilot.Display.REV</object-name>
+		<condition>
+			<equals>
+				<property>/autopilot/mode/rev</property>
+				<value>1</value>
+			</equals>	
+		</condition>
+	</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>Autopilot.Button.ALT</object-name>
+  <action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Autopilot ALT");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+<animation>
+		<type>select</type>
+		<object-name>Autopilot.Display.ALT</object-name>
+		<condition>
+			<equals>
+				<property>/autopilot/mode/alt</property>
+				<value>1</value>
+			</equals>	
+		</condition>
+	</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>Autopilot.Hotspot.ALT+VS</object-name>
+  <visible>false</visible>
+  <action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Autopilot ALT+VS");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>Autopilot.Button.VS</object-name>
+  <action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script><![CDATA[
+				UI.click("Autopilot VS");
+			]]></script>
+		</binding>
+	</action>
+</animation>
+<animation>
+		<type>select</type>
+		<object-name>Autopilot.Display.VS</object-name>
+		<object-name>Autopilot.Display.VSnumbers</object-name>
+		<condition>
+			<equals>
+				<property>/autopilot/mode/vs</property>
+				<value>1</value>
+			</equals>	
+		</condition>
+	</animation>
+<animation>
+  <type>pick</type>
+  <object-name>Autopilot.Knob</object-name>
+  <action>
+    <button>0</button>
+    <repeatable>true</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+	      UI.click("Autopilot VS >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>1</button>
+    <repeatable>true</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Autopilot VS <");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+	      UI.click("Autopilot VS >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Autopilot VS <");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+<!--diese werte stimmen schon! -->
+<animation>
+		<type>textranslate</type>
+		<object-name>Autopilot.Display.VSnumbers</object-name>
+		<property>autopilot/settings/vertical-speed-fpm</property>
+		<bias>0.01</bias>
+		<factor>0.00028</factor>
+		<step>100</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+</animation>
+
+<!-- Power on/off -->
+<animation>
+        <type>select</type>
+        <object-name>Autopilot.Display</object-name>
+        	<object-name>Autopilot.Display.HDG</object-name>
+		<object-name>Autopilot.Display.RDY</object-name>
+		<object-name>Autopilot.Display.NAV</object-name>
+		<object-name>Autopilot.Display.CWS</object-name>
+		<object-name>Autopilot.Display.APR</object-name>
+		<object-name>Autopilot.Display.FAIL</object-name>
+		<object-name>Autopilot.Display.GPSS</object-name>
+		<object-name>Autopilot.Display.REV</object-name>
+		<object-name>Autopilot.Display.TRIM</object-name>
+		<object-name>Autopilot.Display.ArrowUP</object-name>
+		<object-name>Autopilot.Display.ArrowDOWN</object-name>
+		<object-name>Autopilot.Display.ALT</object-name>
+		<object-name>Autopilot.Display.GS</object-name>
+		<object-name>Autopilot.Display.VS</object-name>
+		<object-name>Autopilot.Display.VSnumbers</object-name>
+	<condition>
+		<equals>
+			<property>extra500/instrumentation/Autopilot/state</property>
+			<value>1</value>
+		</equals>
+	</condition>
+</animation>
+
+<!--TEST dimming-->
+<animation>
+      <type>material</type>
+      <object-name>Autopilot.Display</object-name>
+		<object-name>Autopilot.Display.HDG</object-name>
+		<object-name>Autopilot.Display.RDY</object-name>
+		<object-name>Autopilot.Display.NAV</object-name>
+		<object-name>Autopilot.Display.CWS</object-name>
+		<object-name>Autopilot.Display.APR</object-name>
+		<object-name>Autopilot.Display.FAIL</object-name>
+		<object-name>Autopilot.Display.GPSS</object-name>
+		<object-name>Autopilot.Display.REV</object-name>
+		<object-name>Autopilot.Display.TRIM</object-name>
+		<object-name>Autopilot.Display.ArrowUP</object-name>
+		<object-name>Autopilot.Display.ArrowDOWN</object-name>
+		<object-name>Autopilot.Display.ALT</object-name>
+		<object-name>Autopilot.Display.GS</object-name>
+		<object-name>Autopilot.Display.VS</object-name>
+		<object-name>Autopilot.Display.VSnumbers</object-name>
+	<condition>
+		<equals>
+			<property>extra500/instrumentation/Autopilot/state</property>
+			<value>1</value>
+		</equals>
+	</condition>
+        <emission>
+            <red>1</red>
+            <green>1</green>
+            <blue>1</blue>
+	    <factor-prop>extra500/instrumentation/Autopilot/Backlight/state</factor-prop>
+        </emission>
+</animation>
+
+<animation>
+        <type>material</type>
+		<object-name>Autopilot.Button.HDG</object-name>
+		<object-name>Autopilot.Button.NAV</object-name>
+		<object-name>Autopilot.Button.APR</object-name>
+		<object-name>Autopilot.Button.REV</object-name>
+		<object-name>Autopilot.Button.ALT</object-name>
+		<object-name>Autopilot.Button.VS</object-name>
+	<condition>
+		<equals>
+			<property>extra500/instrumentation/Autopilot/state</property>
+			<value>1</value>
+		</equals>
+	</condition>
+        <emission>
+            <red>.5</red>
+            <green>.5</green>
+            <blue>.5</blue>
+	    <factor-prop>extra500/instrumentation/Autopilot/Backlight/state</factor-prop>
+        </emission>
+</animation>
+
+</PropertyList>

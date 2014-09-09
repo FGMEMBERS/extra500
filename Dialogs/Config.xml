@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: 14.03.2014
+
+      Last change:     Dirk Dittmann
+      Date:            14.03.2014
+-->
+
+<PropertyList>
+	<name>extra500_Config</name>
+	<modal>false</modal>
+	<layout>vbox</layout>
+	<group>
+		<layout>hbox</layout>
+		
+		
+		<text>
+			<label>Extra 500 Configuration</label>
+		</text>
+		
+		<empty><stretch>1</stretch></empty>
+		
+		<button>
+			<pref-width>16</pref-width>
+			<pref-height>16</pref-height>
+			<legend></legend>
+			<default>1</default>
+			<keynum>267</keynum>
+			<border>2</border>
+			<binding>
+				<command>dialog-apply</command>
+			</binding>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+	</group>
+	<hrule/>
+	<group>
+		<layout>table</layout>
+		<text>
+			<row>0</row><col>0</col>
+			<label>Messages</label>
+		</text>
+		<group>
+			<row>0</row><col>1</col>
+			<layout>hbox</layout>
+			<checkbox>
+				<name>msg_failure</name>
+				<label>failure</label>
+				<property>/extra500/config/ui/failure</property>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+					<object-name>msg_failure</object-name>
+				</binding>
+			</checkbox>
+			<checkbox>
+				<name>msg_warning</name>
+				<label>warning</label>
+				<property>/extra500/config/ui/warning</property>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+					<object-name>msg_warning</object-name>
+				</binding>
+			</checkbox>
+			<checkbox>
+				<name>msg_caution</name>
+				<label>caution</label>
+				<property>/extra500/config/ui/caution</property>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+					<object-name>msg_caution</object-name>
+				</binding>
+			</checkbox>
+			<checkbox>
+				<name>msg_info</name>
+				<label>info</label>
+				<property>/extra500/config/ui/info</property>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+					<object-name>msg_info</object-name>
+				</binding>
+			</checkbox>
+			<empty><stretch>1</stretch></empty>
+		</group>
+		<!--
+		<text>
+			<row>1</row><col>0</col>
+			<label>Handling</label>
+		</text>
+		<group>
+			<row>1</row><col>1</col>
+			<layout>hbox</layout>
+			<checkbox>
+				<name>msg_realTrim</name>
+				<label>real trim (force feedback)</label>
+				<property>/extra500/config/handling/realTrim</property>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+					<object-name>msg_realTrim</object-name>
+				</binding>
+			</checkbox>
+			<empty><stretch>1</stretch></empty>
+		</group>
+		<text>
+			<row>2</row><col>0</col>
+			<label>Failure</label>
+		</text>
+		<group>
+			<row>2</row><col>1</col>
+			<layout>hbox</layout>
+			<checkbox>
+				<name>fail_engine</name>
+				<label>engine</label>
+				<property>/extra500/config/failure/engine</property>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+					<object-name>fail_engine</object-name>
+				</binding>
+			</checkbox>
+			<checkbox>
+				<name>fail_hydraulic</name>
+				<label>hydraulic</label>
+				<property>/extra500/config/failure/hydraulic</property>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+					<object-name>fail_hydraulic</object-name>
+				</binding>
+			</checkbox>
+			<checkbox>
+				<name>fail_electric</name>
+				<label>electric</label>
+				<property>/extra500/config/failure/electric</property>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+					<object-name>fail_electric</object-name>
+				</binding>
+			</checkbox>
+			<checkbox>
+				<name>fail_structure</name>
+				<label>structure</label>
+				<property>/extra500/config/failure/structure</property>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+					<object-name>fail_structure</object-name>
+				</binding>
+			</checkbox>
+			<checkbox>
+				<name>fail_fuel</name>
+				<label>fuel</label>
+				<property>/extra500/config/failure/fuel</property>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+					<object-name>fail_fuel</object-name>
+				</binding>
+			</checkbox>
+			<checkbox>
+				<name>fail_avionic</name>
+				<label>avionic</label>
+				<property>/extra500/config/failure/avionic</property>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+					<object-name>fail_avionic</object-name>
+				</binding>
+			</checkbox>
+			<checkbox>
+				<name>fail_pressure</name>
+				<label>pressure</label>
+				<property>/extra500/config/failure/pressure</property>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+					<object-name>fail_pressure</object-name>
+				</binding>
+			</checkbox>
+			<empty><stretch>1</stretch></empty>
+		</group>
+		<text>
+			<row>3</row><col>0</col>
+			<label>Event</label>
+		</text>
+		<group>
+			<row>3</row><col>1</col>
+			<layout>hbox</layout>
+			<checkbox>
+				<name>evt_all</name>
+				<label>jsbsim</label>
+				<property>/fdm/jsbsim/aircraft/events/show-events</property>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+					<object-name>evt_all</object-name>
+				</binding>
+			</checkbox>
+			<empty><stretch>1</stretch></empty>
+		</group>
+		-->
+	</group>
+</PropertyList>

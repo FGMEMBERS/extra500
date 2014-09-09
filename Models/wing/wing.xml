@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: 05.01.14
+
+      Last change: Eric van den Berg     
+      Date: 31.01.14            
+
+-->
+
+<PropertyList>
+
+<path>wing.ac</path>
+
+<!-- Submodels -->
+<model>
+  <name>LHstrobe</name>
+  <path>Aircraft/extra500/Models/lights/strobe.xml</path>
+	<offsets>
+		<x-m>0.21613</x-m>
+		<y-m>-0.15048</y-m>	
+		<z-m>5.625</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>RHstrobe</name>
+  <path>Aircraft/extra500/Models/lights/strobe.xml</path>
+	<offsets>
+		<x-m>0.21613</x-m>
+		<y-m>-0.15048</y-m>	
+		<z-m>-5.625</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>LHnav</name>
+  <path>Aircraft/extra500/Models/lights/LHnav.xml</path>
+	<offsets>
+		<x-m>0.17</x-m>
+		<y-m>-0.15048</y-m>	
+		<z-m>5.6</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>RHnav</name>
+  <path>Aircraft/extra500/Models/lights/RHnav.xml</path>
+	<offsets>
+		<x-m>0.17</x-m>
+		<y-m>-0.15048</y-m>	
+		<z-m>-5.6</z-m>
+	</offsets>
+</model>
+
+<!-- Ailerons -->
+
+<animation>
+  <type>rotate</type>
+  <object-name>AilRH</object-name>
+  <property>surface-positions/left-aileron-pos-norm</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>19</dep></entry>
+   <entry><ind> 0</ind><dep>  0</dep></entry>
+   <entry><ind> 1</ind><dep>-27</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>0.615</x1-m>
+    <y1-m>-0.16</y1-m>
+    <z1-m>-4.4</z1-m>
+    <x2-m>0.653</x2-m>
+    <y2-m>-0.16</y2-m>
+    <z2-m>-5.5</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>rotate</type>
+  <object-name>AilLH</object-name>
+  <property>surface-positions/left-aileron-pos-norm</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>27</dep></entry>
+   <entry><ind> 0</ind><dep>  0</dep></entry>
+   <entry><ind>1</ind><dep>-19</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>0.615</x1-m>
+    <y1-m>-0.16</y1-m>
+    <z1-m>4.4</z1-m>
+    <x2-m>0.653</x2-m>
+    <y2-m>-0.16</y2-m>
+    <z2-m>5.5</z2-m>
+  </axis>
+</animation>
+
+<!-- Flaps -->
+
+ <animation>
+  <type>translate</type>
+  <object-name>FlapRH</object-name>
+  <property>surface-positions/flap-pos-norm</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>0.5</ind><dep>0.05</dep></entry>
+   <entry><ind>1</ind><dep>0.122</dep></entry>
+  </interpolation>  
+  <axis>
+   <x>1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+<animation>
+  <type>rotate</type>
+  <object-name>FlapRH</object-name>
+  <property>surface-positions/flap-pos-norm</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>.75</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>0.65</x1-m>
+    <y1-m>0</y1-m>
+    <z1-m>-0.55</z1-m>
+    <x2-m>0.65</x2-m>
+    <y2-m>1</y2-m>
+    <z2-m>-0.55</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>rotate</type>
+  <object-name>FlapRH</object-name>
+  <property>surface-positions/flap-pos-norm</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep> 30</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>0.48919</x1-m>
+    <y1-m>-0.14702</y1-m>
+    <z1-m>-0.55</z1-m>
+    <x2-m>0.63302</x2-m>
+    <y2-m>-0.14702</y2-m>
+    <z2-m>-4.4</z2-m>
+  </axis>
+</animation>
+
+ <animation>
+  <type>translate</type>
+  <object-name>FlapLH</object-name>
+  <property>surface-positions/flap-pos-norm</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>0.5</ind><dep>0.05</dep></entry>
+   <entry><ind>1</ind><dep>0.122</dep></entry>
+  </interpolation>  
+  <axis>
+   <x>1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+<animation>
+  <type>rotate</type>
+  <object-name>FlapLH</object-name>
+  <property>surface-positions/flap-pos-norm</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>-.75</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>0.65</x1-m>
+    <y1-m>0</y1-m>
+    <z1-m>0.55</z1-m>
+    <x2-m>0.65</x2-m>
+    <y2-m>1</y2-m>
+    <z2-m>0.55</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>rotate</type>
+  <object-name>FlapLH</object-name>
+  <property>surface-positions/flap-pos-norm</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>-30</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>0.48919</x1-m>
+    <y1-m>-0.14702</y1-m>
+    <z1-m>0.55</z1-m>
+    <x2-m>0.63302</x2-m>
+    <y2-m>-0.14702</y2-m>
+    <z2-m>4.4</z2-m>
+  </axis>
+</animation>
+
+<!-- stall warner -->
+
+<animation>
+  <type>rotate</type>
+  <object-name>stall.warner.switch</object-name>
+  <property>/fdm/jsbsim/aircraft/stallwarner/state</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>-10</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>-0.24346</x1-m>
+    <y1-m>-0.14902</y1-m>
+    <z1-m>3.41785</z1-m>
+    <x2-m>-0.24068</x2-m>
+    <y2-m>-0.14872</y2-m>
+    <z2-m>3.43765</z2-m>
+  </axis>
+</animation>
+
+<!-- lights -->
+
+  <effect>
+    <inherits-from>Effects/model-transparent</inherits-from>
+    <object-name>recolight.window.RH</object-name>
+  </effect>
+
+  <effect>
+    <inherits-from>Effects/model-transparent</inherits-from>
+    <object-name>recolight.window.LH</object-name>
+  </effect>
+
+  <effect>
+    <inherits-from>Effects/model-transparent</inherits-from>
+    <object-name>strobe.window.RH</object-name>
+  </effect>
+
+  <effect>
+    <inherits-from>Effects/model-transparent</inherits-from>
+    <object-name>strobe.window.LH</object-name>
+  </effect>
+
+      <animation>
+            <type>light</type>
+            <light-type>spot</light-type>
+            <name>LightSrc1</name>
+            <object-name>reco.LH.cone</object-name>
+            <nopreview/>
+            <position>
+                  <x>-0.22467</x>
+                  <y>-0.14608</y>
+                  <z>3.53991</z>
+            </position>
+            <direction>
+                  <x>-0.8</x>
+                  <y>-0.2</y>
+                  <z>-0.15</z>
+            </direction>
+            <ambient>
+                  <r>0.9</r>
+                  <g>0.9</g>
+                  <b>0.9</b>
+                  <a>1.0</a>
+            </ambient>
+            <diffuse>
+                  <r>0.9</r>
+                  <g>0.9</g>
+                  <b>0.9</b>
+                  <a>1.0</a>
+            </diffuse>
+            <specular>
+                  <r>0.9</r>
+                  <g>0.9</g>
+                  <b>0.9</b>
+                  <a>1.0</a>
+            </specular>
+            <attenuation>
+                  <c>1.0</c>
+                  <l>0.002</l>
+                  <q>0.00005</q>
+            </attenuation>
+            <exponent>30.0</exponent>
+            <cutoff>80</cutoff>
+            <near-m>0.1</near-m>
+            <far-m>100</far-m>
+      </animation>
+
+      <animation>
+            <type>light</type>
+            <light-type>spot</light-type>
+            <name>LightSrc2</name>
+            <object-name>reco.RH.cone</object-name>
+            <nopreview/>
+            <position>
+                  <x>-0.22467</x>
+                  <y>-0.14608</y>
+                  <z>-3.53991</z>
+            </position>
+            <direction>
+                  <x>-0.8</x>
+                  <y>-0.2</y>
+                  <z>0.15</z>
+            </direction>
+            <ambient>
+                  <r>0.9</r>
+                  <g>0.9</g>
+                  <b>0.9</b>
+                  <a>1.0</a>
+            </ambient>
+            <diffuse>
+                  <r>0.9</r>
+                  <g>0.9</g>
+                  <b>0.9</b>
+                  <a>1.0</a>
+            </diffuse>
+            <specular>
+                  <r>0.9</r>
+                  <g>0.9</g>
+                  <b>0.9</b>
+                  <a>1.0</a>
+            </specular>
+            <attenuation>
+                  <c>1.0</c>
+                  <l>0.002</l>
+                  <q>0.00005</q>
+            </attenuation>
+            <exponent>30.0</exponent>
+            <cutoff>80</cutoff>
+            <near-m>0.1</near-m>
+            <far-m>100</far-m>
+      </animation>
+
+
+      <animation>
+            <type>select</type>
+            <object-name>LightSrc1</object-name>
+            <object-name>LightSrc2</object-name>
+            <condition>
+                  <and>
+                        <property>/sim/rendering/rembrandt/enabled</property>
+                        <greater-than>
+                              <property>/sim/rendering/shaders/lights</property>
+                              <value>0</value>
+                        </greater-than>
+       			 <property>sim/multiplay/generic/int[7]</property>
+                  </and>
+            </condition>
+      </animation>
+
+  <animation>
+    <type>material</type>
+    <object-name>recolight.RH</object-name>
+    <object-name>recolight.LH</object-name>
+    <condition>
+        <property>sim/multiplay/generic/int[7]</property>
+    </condition>
+    <emission>
+      <red>   1.0 </red>
+      <green> 1.0 </green>
+      <blue>  1.0 </blue>
+    </emission>
+  </animation>
+
+</PropertyList>

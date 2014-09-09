@@ -1,0 +1,1807 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: March 13 2013
+
+      Last change:      Eric van den Berg
+      Date:             2014-06-19
+
+
+************************************************************************
+JSBSim Extra Aircraft - Extra 500.
+
+************************************************************************
+-->
+
+<PropertyList>
+
+<sim>
+	
+	<description>Extra 500</description>
+	<long-description>
+		The Extra500 is a small business turboprop powered, six seat aircraft.
+		It is a derivative of the piston powered Extra400 and shares the fully
+		carbon fibre structure as well as the landing gear and some other systems.
+		The pressurized cabin allows cruising up to FL250 at which the efficiency
+		of the RR 250-B17F/2 engine is best.
+	</long-description>
+
+	<tags>
+		<tag>Extra Aircraft</tag>
+		<tag>turboprop</tag>
+		<tag>single-engine</tag>
+	</tags>
+
+	<author>Dirk Dittmann, Eric van den Berg, Thomas Grossberger</author>
+	<status>production</status>
+	<rating>
+		<FDM type="int">4</FDM>
+		<systems type="int">5</systems>
+		<model type="int">4</model>
+		<cockpit type="int">4</cockpit>
+	</rating>
+
+	<flight-model archive="y">jsb</flight-model>
+	<aero archive="y">extra500</aero>
+	
+	<allow-toggle-cockpit type="bool">true</allow-toggle-cockpit>
+	
+	<model>
+		<path archive="y">Aircraft/extra500/Models/extra500.xml</path>
+		<livery>
+			<file type="string">extra500</file>
+			<name type="string">extra 500</name>
+			<paintkit type="string">Liveries/extra500.png</paintkit>
+		</livery>
+	</model>
+
+	<startup>
+		<splash-texture>Aircraft/extra500/splash.png</splash-texture>
+	</startup>
+
+	<dimensions>
+		<radius-m type="double">6</radius-m>
+	</dimensions>
+	<aircraft-class type="string">ga</aircraft-class>
+	<aircraft-operator type="string">NONE</aircraft-operator>
+
+	<help>
+		<title>The Extra500 very special keys</title>
+     	      <key>
+			<name>Ctrl-E</name>
+			<desc>Connect/Disconnect external power cart</desc>
+		</key>
+     	      <key>
+			<name>Ctrl-F</name>
+			<desc>Pitch control by pitch trim only</desc>
+		</key>
+     	      <key>
+			<name>W</name>
+			<desc>Gear warn mute</desc>
+		</key>
+     	      <key>
+			<name>R</name>
+			<desc>Put propeller in beta range (for reverse)</desc>
+		</key>
+     	      <key>
+			<name>S</name>
+			<desc>Toggle engine fuel cutoff</desc>
+		</key>
+     	      <key>
+			<name>D</name>
+			<desc>Disconnect Autopilot</desc>
+		</key>
+     	      <key>
+			<name>C</name>
+			<desc>Arm and engage CWS</desc>
+		</key>
+	</help>
+	
+	<!-- position the pilot viewpoint and angle -->
+	<view>
+		<internal type="bool" archive="y">true</internal>
+		<config>
+			<x-offset-m archive="y" type="double">-0.34</x-offset-m>
+			<y-offset-m archive="y" type="double">0.13</y-offset-m>
+			<z-offset-m archive="y" type="double">-0.1</z-offset-m>
+			<pitch-offset-deg type="double">-17</pitch-offset-deg>
+			<default-field-of-view-deg type="double">75.0</default-field-of-view-deg>  <!--this somehow does not work, why??? does not work on other aircraft either: flightgear bug? yes bugs 1110 and 1111-->
+		</config>
+	</view>
+	
+	<view n="101">
+		<name>Model Front View</name>
+		<enabled type="bool">true</enabled>
+		<type>lookfrom</type>
+		<internal type="bool">true</internal>
+		<config>
+			<from-model type="bool">true</from-model>
+			<from-model-idx type="int">true</from-model-idx>
+			<!-- x/y/z == right/up/back -->
+			<x-offset-m archive="y"> 0.0</x-offset-m>
+			<y-offset-m archive="y"> 0.0</y-offset-m>
+			<z-offset-m archive="y">-10.0</z-offset-m>
+			<pitch-offset-deg archive="y">0.0</pitch-offset-deg>
+			<heading-offset-deg archive="y">180.0</heading-offset-deg>
+		</config>
+	</view>
+
+	<view n="102">
+		<name>Model Right View</name>
+		<enabled type="bool">true</enabled>
+		<type>lookfrom</type>
+		<internal type="bool">true</internal>
+		<config>
+			<from-model type="bool">true</from-model>
+			<from-model-idx type="int">true</from-model-idx>
+			<!-- x/y/z == right/up/back -->
+			<x-offset-m archive="y"> 10.0</x-offset-m>
+			<y-offset-m archive="y"> 0.0</y-offset-m>
+			<z-offset-m archive="y"> 0.0</z-offset-m>
+			<pitch-offset-deg archive="y">0.0</pitch-offset-deg>
+			<heading-offset-deg archive="y">90.0</heading-offset-deg>
+		</config>
+	</view>
+
+	<view n="103">
+		<name>Model Left View</name>
+		<enabled type="bool">true</enabled>
+		<type>lookfrom</type>
+		<internal type="bool">true</internal>
+		<config>
+			<from-model type="bool">true</from-model>
+			<from-model-idx type="int">true</from-model-idx>
+			<!-- x/y/z == right/up/back -->
+			<x-offset-m archive="y"> -10.0</x-offset-m>
+			<y-offset-m archive="y"> 0.0</y-offset-m>
+			<z-offset-m archive="y"> 0.0</z-offset-m>
+			<pitch-offset-deg archive="y">0.0</pitch-offset-deg>
+			<heading-offset-deg>-90.0</heading-offset-deg>
+			<default-heading-deg type="double">-90.0</default-heading-deg>
+
+		</config>
+	</view>
+
+	<view n="104">
+		<name>Model Back View</name>
+		<enabled type="bool">true</enabled>
+		<type>lookfrom</type>
+		<internal type="bool">true</internal>
+		<config>
+			<from-model type="bool">true</from-model>
+			<from-model-idx type="int">true</from-model-idx>
+			<!-- x/y/z == right/up/back -->
+			<x-offset-m archive="y"> 0.0</x-offset-m>
+			<y-offset-m archive="y"> 0.0</y-offset-m>
+			<z-offset-m archive="y"> 10.0</z-offset-m>
+			<pitch-offset-deg archive="y">0.0</pitch-offset-deg>
+			<heading-offset-deg archive="y">0.0</heading-offset-deg>
+		</config>
+	</view>
+
+	<view n="105">
+		<name>Model Heli Back View</name>
+		<enabled type="bool">true</enabled>
+		<type>lookat</type>
+		<config>
+			<from-model type="bool">false</from-model>
+			<from-model-idx type="int">0</from-model-idx>
+			<eye-lat-deg-path>/position/latitude-deg</eye-lat-deg-path>
+			<eye-lon-deg-path>/position/longitude-deg</eye-lon-deg-path>
+			<eye-alt-ft-path>/position/altitude-ft</eye-alt-ft-path>
+			<eye-heading-deg-path>/orientation/heading-deg</eye-heading-deg-path>
+
+			<at-model type="bool">true</at-model>
+			<at-model-idx type="int">0</at-model-idx>
+			<at-model-heading-damping type="double">0.0</at-model-heading-damping>
+
+			<target-x-offset-m type="double">0.0</target-x-offset-m>
+			<target-y-offset-m type="double">1.4</target-y-offset-m>
+			<target-z-offset-m type="double">5.8</target-z-offset-m>
+
+			<ground-level-nearplane-m type="double">0.5f</ground-level-nearplane-m>
+			<default-field-of-view-deg type="double">55.0</default-field-of-view-deg>
+
+			<x-offset-m type="double">0.0</x-offset-m>
+			<y-offset-m type="double">2.0</y-offset-m>
+			<z-offset-m type="double">7.0</z-offset-m>
+		</config>
+	</view>
+
+	<view n="106">
+		<name>Model Heli Nose View</name>
+		<enabled type="bool">true</enabled>
+		<type>lookat</type>
+		<config>
+			<from-model type="bool">false</from-model>
+			<from-model-idx type="int">0</from-model-idx>
+			<eye-lat-deg-path>/position/latitude-deg</eye-lat-deg-path>
+			<eye-lon-deg-path>/position/longitude-deg</eye-lon-deg-path>
+			<eye-alt-ft-path>/position/altitude-ft</eye-alt-ft-path>
+			<eye-heading-deg-path>/orientation/heading-deg</eye-heading-deg-path>
+
+			<at-model type="bool">true</at-model>
+			<at-model-idx type="int">0</at-model-idx>
+			<at-model-heading-damping type="double">0.0</at-model-heading-damping>
+
+			<target-x-offset-m type="double">0.0</target-x-offset-m>
+			<target-y-offset-m type="double">0.0</target-y-offset-m>
+			<target-z-offset-m type="double">-3.0</target-z-offset-m>
+
+			<ground-level-nearplane-m type="double">0.5f</ground-level-nearplane-m>
+			<default-field-of-view-deg type="double">55.0</default-field-of-view-deg>
+
+			<x-offset-m type="double">0.0</x-offset-m>
+			<y-offset-m type="double">2.0</y-offset-m>
+			<z-offset-m type="double">7.0</z-offset-m>
+		</config>
+	</view>
+
+	<view n="107">
+		<name>Model Heli Right Wing View</name>
+		<enabled type="bool">true</enabled>
+		<type>lookat</type>
+		<config>
+			<from-model type="bool">false</from-model>
+			<from-model-idx type="int">0</from-model-idx>
+			
+			<eye-lat-deg-path>/position/latitude-deg</eye-lat-deg-path>
+			<eye-lon-deg-path>/position/longitude-deg</eye-lon-deg-path>
+			<eye-alt-ft-path>/position/altitude-ft</eye-alt-ft-path>
+			<eye-heading-deg-path>/orientation/heading-deg</eye-heading-deg-path>
+			<!---->
+			<at-model type="bool">true</at-model>
+			<at-model-idx type="int">0</at-model-idx>
+			<at-model-heading-damping type="double">0.0</at-model-heading-damping>
+
+			<target-x-offset-m type="double">4.0</target-x-offset-m>
+			<target-y-offset-m type="double">0.0</target-y-offset-m>
+			<target-z-offset-m type="double">1.0</target-z-offset-m>
+
+			<ground-level-nearplane-m type="double">0.5f</ground-level-nearplane-m>
+			<default-field-of-view-deg type="double">55.0</default-field-of-view-deg>
+
+			<x-offset-m type="double">0.0</x-offset-m>
+			<y-offset-m type="double">2.0</y-offset-m>
+			<z-offset-m type="double">-7.0</z-offset-m>
+			
+		</config>
+	</view>
+
+	<view n="108">
+		<name>Model Heli Left Wing View</name>
+		<enabled type="bool">true</enabled>
+		<type>lookat</type>
+		<config>
+			<from-model type="bool">false</from-model>
+			<from-model-idx type="int">0</from-model-idx>
+			
+			<eye-lat-deg-path>/position/latitude-deg</eye-lat-deg-path>
+			<eye-lon-deg-path>/position/longitude-deg</eye-lon-deg-path>
+			<eye-alt-ft-path>/position/altitude-ft</eye-alt-ft-path>
+			<eye-heading-deg-path>/orientation/heading-deg</eye-heading-deg-path>
+			<!---->
+			<at-model type="bool">true</at-model>
+			<at-model-idx type="int">0</at-model-idx>
+			<at-model-heading-damping type="double">0.0</at-model-heading-damping>
+
+			<target-x-offset-m type="double">-4.0</target-x-offset-m>
+			<target-y-offset-m type="double">0.0</target-y-offset-m>
+			<target-z-offset-m type="double">1.0</target-z-offset-m>
+
+			<ground-level-nearplane-m type="double">0.5f</ground-level-nearplane-m>
+			<default-field-of-view-deg type="double">55.0</default-field-of-view-deg>
+
+			<x-offset-m type="double">0.0</x-offset-m>
+			<y-offset-m type="double">2.0</y-offset-m>
+			<z-offset-m type="double">-7.0</z-offset-m>
+			
+		</config>
+	</view>
+<!-- Passenger Seat 5 view-->
+	<view n="109">
+          <name>Seat 5</name>
+          <type>lookfrom</type>
+          <internal archive="y">true</internal>
+          <config>
+            <from-model type="bool">true</from-model>
+            <from-model-idx type="int">0</from-model-idx>
+            <ground-level-nearplane-m type="double">0.01f</ground-level-nearplane-m>
+            <default-field-of-view-deg type="double">90</default-field-of-view-deg>
+            <pitch-offset-deg>-8.0</pitch-offset-deg>
+            <heading-offset-deg type="double">0</heading-offset-deg> <!-- parallel to the panel -->
+            <x-offset-m archive="y"> -0.25 </x-offset-m> <!--Left/Right -->
+            <y-offset-m archive="y"> 0.0 </y-offset-m> <!--Up/Down -->
+            <z-offset-m archive="y"> 2.10 </z-offset-m> <!--Fdw/Back -->
+          </config>
+       </view>
+
+<!-- Passenger Seat 6 view-->
+	<view n="110">
+          <name>Seat 6</name>
+          <type>lookfrom</type>
+          <internal archive="y">true</internal>
+          <config>
+            <from-model type="bool">true</from-model>
+            <from-model-idx type="int">0</from-model-idx>
+            <ground-level-nearplane-m type="double">0.01f</ground-level-nearplane-m>
+            <default-field-of-view-deg type="double">90</default-field-of-view-deg>
+            <pitch-offset-deg>-8.0</pitch-offset-deg>
+            <heading-offset-deg type="double">0</heading-offset-deg> <!-- parallel to the panel -->
+            <x-offset-m archive="y"> 0.25 </x-offset-m> <!--Left/Right -->
+            <y-offset-m archive="y"> 0.0 </y-offset-m> <!--Up/Down -->
+            <z-offset-m archive="y"> 2.10 </z-offset-m> <!--Fdw/Back -->
+          </config>
+       </view>
+
+	<view n="111">
+	<!-- x=rechts y=hoch z=zurueck -->
+		<name>Copilot</name>
+		<type>lookfrom</type>
+		<enabled type="bool">true</enabled>
+		<internal archive="y">true</internal>
+		<config>
+		  <from-model type="bool">true</from-model>
+			<x-offset-m archive="y">0.34</x-offset-m>
+			<y-offset-m archive="y">0.13</y-offset-m>
+			<z-offset-m archive="y">-0.1</z-offset-m>
+			<pitch-offset-deg type="double">-17</pitch-offset-deg>
+			<default-field-of-view-deg type="double">75.0</default-field-of-view-deg>
+		</config>
+	</view>
+
+	<view n="112">
+		<name>Circuit Breaker Panel</name>
+		<enabled type="bool">true</enabled>
+		<type>lookfrom</type>
+		<internal type="bool">true</internal>
+		<config>
+			<from-model type="bool">true</from-model>
+			<from-model-idx type="int">true</from-model-idx>
+			<!-- x/y/z == right/up/back -->
+			<x-offset-m archive="y" type="double">-0.37</x-offset-m>
+			<y-offset-m archive="y" type="double">-0.3</y-offset-m>
+			<z-offset-m archive="y" type="double">-0.45</z-offset-m>
+			
+			<heading-offset-deg type="double">72.0</heading-offset-deg>
+			<pitch-offset-deg type="double">-30.0</pitch-offset-deg>
+			<default-field-of-view-deg type="double">96.0</default-field-of-view-deg>
+		</config>
+	</view>	
+
+	<view n="113">
+	<!-- x=rechts y=hoch z=zurueck -->
+		<name>CenterConsole</name>
+		<type>lookfrom</type>
+		<enabled type="bool">true</enabled>
+		<internal archive="y">true</internal>
+		<config>
+			<from-model type="bool">true</from-model>
+			<x-offset-m archive="y">-0.25</x-offset-m>
+			<y-offset-m archive="y">-0.1</y-offset-m>
+			<z-offset-m archive="y">-0.1</z-offset-m>
+			<pitch-offset-deg archive="y">-35</pitch-offset-deg>
+			<heading-offset-deg archive="y">-25</heading-offset-deg>
+			<default-field-of-view-deg type="double">60.4</default-field-of-view-deg>
+		</config>
+	</view>
+
+	<view n="114">
+	<!-- x=rechts y=hoch z=zurueck -->
+		<name>Keypad</name>
+		<type>lookfrom</type>
+		<enabled type="bool">true</enabled>
+		<internal archive="y">true</internal>
+		<config>
+			<from-model type="bool">true</from-model>
+			<x-offset-m archive="y">0</x-offset-m>
+			<y-offset-m archive="y">-0.25</y-offset-m>
+			<z-offset-m archive="y">-0.30</z-offset-m>
+			<pitch-offset-deg archive="y">-50</pitch-offset-deg>
+			<default-field-of-view-deg type="double">75.0</default-field-of-view-deg>
+		</config>
+	</view>	
+
+	<view n="115">
+	<!-- x=rechts y=hoch z=zurueck -->
+		<name>switches</name>
+		<type>lookfrom</type>
+		<enabled type="bool">true</enabled>
+		<internal archive="y">true</internal>
+		<config>
+			<from-model type="bool">true</from-model>
+			<x-offset-m archive="y">0</x-offset-m>
+			<y-offset-m archive="y">-0.1</y-offset-m>
+			<z-offset-m archive="y">-0.65</z-offset-m>
+			<pitch-offset-deg archive="y">-70</pitch-offset-deg>
+			<default-field-of-view-deg type="double">75.0</default-field-of-view-deg>
+		</config>
+	</view>	
+
+	<view n="116">
+	<!-- x=rechts y=hoch z=zurueck -->
+		<name>SidePanel</name>
+		<type>lookfrom</type>
+		<enabled type="bool">true</enabled>
+		<internal archive="y">true</internal>
+		<config>
+			<from-model type="bool">true</from-model>
+			<x-offset-m archive="y" type="double">-0.37</x-offset-m>
+			<y-offset-m archive="y" type="double">0.1</y-offset-m>
+			<z-offset-m archive="y" type="double">-0.15</z-offset-m>
+			<pitch-offset-deg archive="y">-48</pitch-offset-deg>
+			<heading-offset-deg archive="y">30</heading-offset-deg>
+			<default-field-of-view-deg type="double">37.0</default-field-of-view-deg>
+		</config>
+	</view>	
+
+
+	<systems>
+            <path>Aircraft/extra500/Systems/systems.xml</path>
+	</systems>
+
+      <instrumentation>
+            <path>Aircraft/extra500/Systems/instrumentation.xml</path>
+      </instrumentation>
+
+	<flaps>
+		<setting>0</setting>
+		<setting>0.5</setting>
+		<setting>1</setting>
+	</flaps>
+
+       <!-- -->
+       <sound>
+	       <path archive="y">Aircraft/extra500/Sounds/extra500-sound.xml</path>
+	       <click n="0" type="bool">0</click>
+	       <click n="1" type="bool">0</click>
+	       <click n="2" type="bool">0</click>
+	       <click n="3" type="bool">0</click>
+	       <click n="4" type="bool">0</click>
+	       <click n="5" type="bool">0</click>
+       </sound> 
+       
+	<aircraft-data>
+		<path>extra500/panel</path>
+		<path>/extra500/electric/source/Battery</path>
+		<path>/consumables/fuel/tank[0]/level-gal_us</path>
+		<path>/consumables/fuel/tank[1]/level-gal_us</path>
+		<path>/consumables/fuel/tank[2]/level-gal_us</path>
+		<path>/consumables/fuel/tank[4]/level-gal_us</path>
+		<path>/consumables/fuel/tank[5]/level-gal_us</path>
+		<path>/consumables/fuel/tank[6]/level-gal_us</path>
+		<path>/extra500/instrumentation/IFD-LH/settings</path>
+		<path>/extra500/instrumentation/panelventswitchL</path>
+		<path>/extra500/instrumentation/panelventswitchR</path>
+		<path>/extra500/instrumentation/Audiopanel/knobs</path>
+		<path>/extra500/instrumentation/Audiopanel/volsettings</path>
+		<path>/extra500/instrumentation/dmeSwitch/pressed</path>
+		<path>/extra500/door</path>
+		<path>/extra500/interior</path>
+		<path>/systems/pressurization/airport-alt</path>
+		<path>/systems/pressurization/airport-alt-valve</path>
+		<path>/systems/pressurization/cabin-climb-rate-fpm</path>
+		<path>/instrumentation/altimeter-backup/setting-inhg</path>
+		<path>/instrumentation/altimeter-IFD-LH/setting-inhg</path>
+		<path>/instrumentation/comm/frequencies</path>
+		<path>/instrumentation/comm[1]/frequencies</path>
+		<path>/instrumentation/nav/frequencies</path>
+		<path>/instrumentation/nav[1]/frequencies</path>
+
+		<!---->
+		<path>/extra500/log/fuel</path>
+		<path>/extra500/dialog/fuel</path>
+		<path>/extra500/config</path>
+		
+	</aircraft-data> 
+	
+  <!-- <help include="extra500-help.xml"/> -->
+  
+   <checklists include="checklist/extra500-checklists.xml"/>
+<!--	  <checklists>
+		  <checklist include="checklist/engine-start.xml"/>
+		  <checklist include="checklist/before-starting-engine-batt.xml"/>
+		  <checklist include="checklist/engine-shutdown.xml"/>
+		  <checklist include="checklist/after-starting-engine.xml"/>
+	  </checklists> -->
+  <!-- <tutorials include="Tutorials/extra500-tutorials.xml"/> -->
+
+
+
+	<multiplay>
+		<chat_display>1</chat_display>
+		<generic>
+			<float n="0" alias="/engines/engine[0]/thruster/rpm"/>
+			<float n="1" alias="/systems/gear/Lupperdoor-pos"/>
+			<float n="2" alias="/systems/gear/Rupperdoor-pos"/>
+			<float n="3" alias="/systems/gear/Lowerdoor-pos"/>
+			<float n="4" alias="/systems/gear/nosegeardoor-pos"/>
+			<float n="5" alias="/engines/engine[0]/thrust_lb">0</float><!-- mp sound-->
+			<float n="6" alias="/fdm/jsbsim/aircraft/engine/motoring">0</float><!-- mp sound-->
+			<float n="7" alias="/fdm/jsbsim/aircraft/engine/spooling-up">0</float><!-- mp sound-->
+			<float n="8" alias="/fdm/jsbsim/propulsion/engine/set-running">0</float><!-- mp sound-->
+			<float n="9" alias="/fdm/jsbsim/aircraft/engine/spooling-down">0</float><!-- mp sound-->
+			<float n="10" alias="/systems/gear/motor/state">0</float><!-- mp sound-->
+			<float n="11" alias="/gear/gear[0]/rollspeed-ms">0</float><!-- gear-->
+			<float n="12" alias="/gear/gear[1]/rollspeed-ms">0</float><!-- gear-->
+			<float n="13" alias="/gear/gear[2]/rollspeed-ms">0</float><!-- gear & speed-->
+			
+			<int n="0" alias="/extra500/door/upperpass/state">0</int>
+			<int n="1" alias="/extra500/door/lowerpass/state">0</int>
+			<int n="2" alias="/extra500/door/emergencyexit/state">0</int>
+			<int n="3" alias="/extra500/light/nav/state">0</int>
+			<int n="4" alias="/extra500/light/ice/state">0</int>
+			<int n="5" alias="/extra500/light/landing/state">0</int>
+			<int n="6" alias="/extra500/light/strobe/on">0</int>
+			<int n="7" alias="/extra500/light/recognition/state">0</int>
+			<int n="8" alias="/engines/engine[0]/running">0</int><!-- mp sound-->
+			<int n="9" alias="/engines/engine[0]/ignition">0</int><!-- mp sound-->
+			<int n="10" alias="/extra500/interior/tisch/state">0</int><!-- pass tisch-->
+
+			<string n="0" alias="/sim/multiplay/callsign">callsign</string>
+		</generic>
+	</multiplay>
+
+       <flight-recorder>
+	       <replay-config type="int">0</replay-config>
+	       <config n="0" include="/Aircraft/Generic/flightrecorder/generic-turboprop-2.xml">
+		       <name type="string">extra500 Flight Recorder</name>
+	       </config>
+       </flight-recorder>
+
+  <menubar include="Dialogs/extra500-menu.xml"/>
+ 
+</sim>
+
+       <controls>
+	       <engines>
+		       <engine n="0">
+			       <propeller-feather type="bool">true</propeller-feather>
+			       <cutoff type="bool">true</cutoff>
+				 <condition-lever-norm>0</condition-lever-norm>
+		       </engine>
+	       </engines>
+	       <switches>
+		       <master-avionics type="bool">true</master-avionics>
+		       <starter type="bool">false</starter>
+	       </switches>
+       </controls>
+
+ <autopilot>
+	<settings>
+		<heading-bug-deg type="double">30</heading-bug-deg>
+		<tgt-altitude-ft type="double">5000</tgt-altitude-ft>
+		<vertical-speed-fpm type="double">0</vertical-speed-fpm>
+		<trim type="bool">false</trim>
+		<yawdamper type="int">0</yawdamper>
+		<dto-leg type="int">0</dto-leg>
+		<ap type="bool">false</ap>
+		<obs-mode type="bool">false</obs-mode>
+		<fly-vector type="bool">false</fly-vector>
+	</settings>
+	<route-manager>
+		<current-wp>-1</current-wp>
+		<route>
+			<num>0</num>
+		</route>
+		<disable-fms>1</disable-fms>
+		<disable-route-manager>1</disable-route-manager>
+		<signals>
+			<waypoint-changed type="double"></waypoint-changed>
+		</signals>
+	</route-manager>
+	<mode>
+		<disengsound type="int">0</disengsound>
+		<diseng type="int">0</diseng>
+		<fd type="int">0</fd>
+		<heading type="int">0</heading>
+		<nav type="int">0</nav>
+		<gpss type="int">0</gpss>
+		<alt type="int">0</alt>
+		<vs type="int">0</vs>
+		<gs type="int">0</gs>
+		<gs-disable type="int">0</gs-disable>
+		<gs-armed type="int">0</gs-armed>
+		<gs-follow type="int">0</gs-follow>
+		<rev type="int">0</rev>
+		<apr type="int">0</apr>
+		<apr-rev type="int">0</apr-rev>
+		<rdy type="int">0</rdy>
+		<cws type="int">0</cws>
+		<cws-armed type="int">0</cws-armed>
+		<fail type="int">0</fail>
+		<trim type="int">0</trim>
+		<trim-up type="int">0</trim-up>
+		<trim-down type="int">0</trim-down>
+		<electrim type="int">0</electrim>
+		<cap type="int">0</cap>
+		<soft type="int">0</soft>
+	</mode>
+	<hdg-channel>	
+		<turn-rate-error-kp type="double">0.0003</turn-rate-error-kp>
+		<turn-rate-error-ki type="double">0.00</turn-rate-error-ki>
+		<turn-rate-error-kd type="double">0.0025</turn-rate-error-kd>
+		<lmd-hdg-error-kp type="double">9.0</lmd-hdg-error-kp>			<!--180deg/min devided by 20deg -->
+		<lmd-hdg-error-ki type="double">0.0</lmd-hdg-error-ki>
+		<lmd-hdg-error-kd type="double">0.05</lmd-hdg-error-kd>
+		<cmd-ap-ail-pos-norm-raw type="double">0.0</cmd-ap-ail-pos-norm-raw>
+	</hdg-channel>
+	<radionav-channel>
+		<timer-cap>0</timer-cap>
+		<gain-mode>0</gain-mode>
+		<gains>
+			<gain-n type="double">1.3</gain-n>
+			<gain-c type="double">1.0</gain-c>
+			<gain-cs type="double">0.8</gain-cs>
+			<gain-s type="double">0.6</gain-s>
+		</gains>
+		<tgt-hdg-kp type="double">0</tgt-hdg-kp>
+		<tgt-hdg-kd-n type="double">0.5</tgt-hdg-kd-n>
+		<tgt-hdg-ki type="double">0</tgt-hdg-ki>
+		<rel-hdg-min type="double">-45</rel-hdg-min>
+		<rel-hdg-max type="double">45</rel-hdg-max>	
+		<turn-rate-error-kp type="double">0.0003</turn-rate-error-kp>
+		<turn-rate-error-ki type="double">0.00</turn-rate-error-ki>
+		<turn-rate-error-kd type="double">0.0025</turn-rate-error-kd>
+		<lmd-hdg-error-kp-s type="double">1.35</lmd-hdg-error-kp-s>			<!--27deg/min divided by 20deg (SOFT)-->
+		<lmd-hdg-error-kp-cs type="double">4.05</lmd-hdg-error-kp-cs>			<!--81deg/min divided by 20deg (CAP-SOFT)-->
+		<lmd-hdg-error-kp-n type="double">9.0</lmd-hdg-error-kp-n>			<!--180deg/min divided by 20deg (NORMAL and CAP)-->
+		<lmd-hdg-error-ki type="double">0.0</lmd-hdg-error-ki>
+		<lmd-hdg-error-kd type="double">0.05</lmd-hdg-error-kd>
+		<cmd-ap-ail-pos-norm-raw type="double">0.0</cmd-ap-ail-pos-norm-raw>
+		<radials>
+			<diff>0</diff>
+			<old-radial>0</old-radial>
+			<reciprocal-radial>0</reciprocal-radial>		
+		</radials>
+		<nav-distance-nm type="double">0</nav-distance-nm>
+	</radionav-channel>
+	<fms-channel>
+		<leg-true-course-deg type="double">0</leg-true-course-deg>
+		<course-target-mag-deg type="double">0</course-target-mag-deg>
+		<course-error-nm type="double">0</course-error-nm>
+		<cdi-deflection type="double">0</cdi-deflection>
+		<indicated-track-true-deg type="double">0</indicated-track-true-deg>
+		<indicated-ground-speed-kt type="double">0</indicated-ground-speed-kt>
+		<gpss>
+			<gpss-turn-rate-p type="double">9.424581</gpss-turn-rate-p>		<!-- rad/h/deg (standard turn at 20 deg course change) -->
+			<time-lead-in-p type="double">0.000011</time-lead-in-p>			<!-- lead in time proportional to turn rate [h/ (rad/h)] -->
+			<next-bearing-deg type="double">0.0</next-bearing-deg>
+			<turn-timer type="double">0.0</turn-timer>
+			<turn-time-s type="double">0.0</turn-time-s>
+			<in-turn2>0</in-turn2>
+		</gpss>
+		<autotuning>
+			<approach type="int">0</approach>
+		</autotuning>
+		<dto>
+			<true-course-deg type="double">0</true-course-deg>
+		</dto>
+		<gain type="double">1.3</gain>
+		<tgt-hdg-kp type="double">0</tgt-hdg-kp>
+		<tgt-hdg-kd type="double">0.75</tgt-hdg-kd>
+		<tgt-hdg-ki type="double">0</tgt-hdg-ki>
+		<rel-hdg-min type="double">-45</rel-hdg-min>
+		<rel-hdg-max type="double">45</rel-hdg-max>
+		<lmd-hdg-error-kp type="double">9.0</lmd-hdg-error-kp>			<!--180deg/min devided by 20deg -->
+		<lmd-hdg-error-ki type="double">0.0</lmd-hdg-error-ki>
+		<lmd-hdg-error-kd type="double">0.05</lmd-hdg-error-kd>	
+		<turn-rate-error-kp type="double">0.0003</turn-rate-error-kp>
+		<turn-rate-error-ki type="double">0.00</turn-rate-error-ki>
+		<turn-rate-error-kd type="double">0.0025</turn-rate-error-kd>
+	</fms-channel>
+	<vs-channel>
+		<turnrate-gain type="double">2.0</turnrate-gain>
+		<acc-offset-gain type="double">0.24</acc-offset-gain>
+		<accel-rate-gain type="double">8000.0</accel-rate-gain>
+		<pitch-error-gain type="double">-0.00005</pitch-error-gain>
+	</vs-channel>
+	<gs-channel>
+		<gs-ndefl-gain-kd type="double">2.0</gs-ndefl-gain-kd>
+		<accel-rate-gain type="double">5.0</accel-rate-gain> 
+		<pitch-error-gain type="double">-0.2</pitch-error-gain>
+		<fd-gain type="double">10</fd-gain>
+	</gs-channel>
+	<alt-channel>	
+		<turnrate-gain type="double">10.0</turnrate-gain>
+		<acc-offset-gain type="double">0.18</acc-offset-gain>
+		<target-alt-ft type="double">0.0</target-alt-ft>
+		<vs-target-gain type="double">6.0</vs-target-gain>
+		<accel-rate-gain type="double">6000.0</accel-rate-gain>
+		<pitch-error-gain type="double">-0.000015</pitch-error-gain>
+	</alt-channel>
+	<pitchtrim-channel>
+		<servo-gain2 type="double">-0.05</servo-gain2>
+		<servo-gain type="double">-0.05</servo-gain>			
+	</pitchtrim-channel>
+	<yawtrim-channel>
+		<poti-gain>0.01</poti-gain>
+		<servo-gain type="double">-2.5</servo-gain>
+		<accel-min type="double">-0.001</accel-min>
+		<accel-max type="double">0.001</accel-max>
+	</yawtrim-channel>
+	<cws-channel>
+		<target-turn-rate type="double">0</target-turn-rate>
+		<target-climb-rate type="double">0</target-climb-rate>
+		<turn-rate-error-kp type="double">0.0003</turn-rate-error-kp>
+		<turn-rate-error-ki type="double">0.00</turn-rate-error-ki>
+		<turn-rate-error-kd type="double">0.0025</turn-rate-error-kd>
+	</cws-channel>
+	<altsensor>
+		<c1>0.0</c1>
+		<c2>1.0</c2>
+		<c3>0.075</c3>
+		<c4>1.0</c4>
+		<alt-old>0.0</alt-old>
+	</altsensor>
+ </autopilot>
+
+ <systems>
+	<pitotL>
+        	<serviceable>1</serviceable>
+	</pitotL>
+	<pitotR>
+		<serviceable>1</serviceable>
+	</pitotR>
+	<staticL>
+		<serviceable>1</serviceable>
+	</staticL>
+	<staticR>
+		<serviceable>1</serviceable>
+	</staticR>
+	<staticAP>
+		<serviceable>1</serviceable>
+	</staticAP>
+	<pneumatic>
+		<boots-timer-sec>0</boots-timer-sec>
+		<c1-boots-filter>1</c1-boots-filter>
+	</pneumatic>
+	<pressurization>
+		<cabin-climb-rate-fpm type="double">500</cabin-climb-rate-fpm>
+		<c1-dp-filter type="double">0.1</c1-dp-filter>
+		<airport-alt type="double">0</airport-alt>
+		<cabin-pressure-inhg type="double">29.92</cabin-pressure-inhg>
+	</pressurization>
+	<gear>
+		<LMG-pos>1</LMG-pos>
+		<RMG-pos>1</RMG-pos>
+		<NG-pos>1</NG-pos>
+		<Lupperdoor-pos>0.8</Lupperdoor-pos>
+		<Rupperdoor-pos>0.8</Rupperdoor-pos>
+		<Lowerdoor-pos>1</Lowerdoor-pos>
+		<Nosegeardoor-pos>1</Nosegeardoor-pos>
+		<pressure-bar>0</pressure-bar>
+		<pressure>
+			<dpress-p-sec>50</dpress-p-sec>
+			<dpress-mov-p-sec>-60</dpress-mov-p-sec>
+			<dpress-mov2-p-sec>-30</dpress-mov2-p-sec>
+			<leakrate-p-press>-0.000833333333333</leakrate-p-press>
+		</pressure>
+		<actuators>
+			<upperdoorspeed>0.00833333333333</upperdoorspeed>
+			<lowerdoorspeed>0.00833333333333</lowerdoorspeed>
+			<nosegearspeed>0.010</nosegearspeed>
+			<maingearspeed>0.00222222222222</maingearspeed>
+			<Rupperdoor-pos-old></Rupperdoor-pos-old>
+			<Lupperdoor-pos-old></Lupperdoor-pos-old>
+			<Lowerdoor-pos-old></Lowerdoor-pos-old>
+			<Rupperdoor-moving>0</Rupperdoor-moving>
+			<Lupperdoor-moving>0</Lupperdoor-moving>
+			<Lowerdoor-moving>0</Lowerdoor-moving>
+			<LMG-pos-old>0</LMG-pos-old>
+			<RMG-pos-old>0</RMG-pos-old>
+			<NG-pos-old>0</NG-pos-old>
+			<LMG-moving>0</LMG-moving>
+			<RMG-moving>0</RMG-moving>
+			<NG-moving>0</NG-moving>
+		</actuators>
+		<annunciators>
+			<hydcaution>0</hydcaution>
+			<gearwarn>0</gearwarn>
+			<gearwarnaural>0</gearwarnaural>
+		</annunciators>
+		<gearwarn>
+			<relayK1>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</relayK1>
+			<relayK2>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</relayK2>
+			<relayK3>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</relayK3>
+			<relayK4>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</relayK4>
+			<relayK5>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</relayK5>
+			<relayK6>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</relayK6>
+			<relayK7>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</relayK7>
+		</gearwarn>
+		<switches>
+			<GearClearHorn>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</GearClearHorn>
+			<squat>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</squat>
+			<dump>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</dump>
+			<nosegearup>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</nosegearup>
+			<nosegeardown>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</nosegeardown>
+			<Lgearup>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</Lgearup>
+			<Lgeardown>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</Lgeardown>
+			<Rgearup>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</Rgearup>
+			<Rgeardown>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</Rgeardown>
+			<Rupperdoorclosed>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</Rupperdoorclosed>
+			<Rupperdooropen>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</Rupperdooropen>
+			<Lupperdoorclosed>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</Lupperdoorclosed>
+			<Lupperdooropen>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</Lupperdooropen>
+			<Lowerdoorclosed>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</Lowerdoorclosed>
+		</switches>
+		<relays>
+			<relay14GA>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</relay14GA>
+			<hydpump>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</hydpump>
+			<hydcaution>
+				<state>0</state>
+        			<serviceable type="bool">true</serviceable>
+			</hydcaution>
+		</relays>
+		<solenoids>
+			<mainvalve>
+				<state type="double">0</state>
+        			<serviceable type="bool">true</serviceable>
+			</mainvalve>
+			<upperdoorvalve>
+				<state type="double">0</state>
+        			<serviceable type="bool">true</serviceable>
+			</upperdoorvalve>
+			<lowerdoorvalve>
+				<state type="double">0</state>
+        			<serviceable type="bool">true</serviceable>
+			</lowerdoorvalve>
+		</solenoids>
+		<power>
+			<tocontrolswitch></tocontrolswitch>
+		</power>
+		<pressureswitch>
+			<state>0</state>
+        		<serviceable type="bool">true</serviceable>
+		</pressureswitch>
+		<motor>
+			<state>0</state>
+        		<serviceable type="bool">true</serviceable>
+		</motor>
+	</gear>
+ </systems>
+
+ <instrumentation>
+    <hdg-source type="int">0</hdg-source>		<!-- 0= IFD-LH, 1= IFD-RH-->
+    <nav-source type="int">2</nav-source>		<!-- 0= IFD-LH, 1= IFD-RH, 2 = FMS-->
+    <nav1-selected type="int">0</nav1-selected>
+    <nav2-selected type="int">0</nav2-selected>
+    <fms-selected type="int">1</fms-selected>
+    <com1-selected type="int">1</com1-selected>
+    <com2-selected type="int">0</com2-selected>
+	<comm-selected-index type="int">0</comm-selected-index>
+
+
+    <airspeed-IFD-LH>
+	  <serviceable type="bool" archive="y">true</serviceable>
+	  <indicated-speed-kt>0</indicated-speed-kt>
+    </airspeed-IFD-LH>
+    <airspeed-IFD-RH>
+	  <serviceable type="bool" archive="y">true</serviceable>
+	  <indicated-speed-kt>0</indicated-speed-kt>
+    </airspeed-IFD-RH>
+    <airspeed-backup>
+	  <serviceable type="bool" archive="y">true</serviceable>
+	  <indicated-speed-kt>0</indicated-speed-kt>
+    </airspeed-backup>
+
+    <altimeter>
+	<indicated-altitude-ft>0</indicated-altitude-ft>
+    </altimeter>
+    <altimeter-IFD-LH>
+	  <serviceable type="bool" archive="y">true</serviceable>
+	  <indicated-altitude-ft>0.0</indicated-altitude-ft>
+	  <pressure-alt-ft>0.0</pressure-alt-ft>
+    </altimeter-IFD-LH>
+    <altimeter-IFD-RH>
+	  <serviceable type="bool" archive="y">true</serviceable>
+	  <pressure-alt-ft>0.0</pressure-alt-ft>
+    </altimeter-IFD-RH>
+    <altimeter-backup>
+	  <serviceable type="bool" archive="y">true</serviceable>
+    </altimeter-backup>
+    <altimeter-AP>
+	  <serviceable type="bool" archive="y">true</serviceable>
+	  <indicated-altitude-ft>0.0</indicated-altitude-ft>
+    </altimeter-AP>
+    <cabin-altitude>
+	  <serviceable type="bool" archive="y">true</serviceable>
+    </cabin-altitude>
+
+    <ivsi-IFD-LH>
+	<indicated-speed-fpm>0.0</indicated-speed-fpm>
+	<alt-old>0.0</alt-old>
+        <serviceable type="bool">true</serviceable>
+    </ivsi-IFD-LH>
+    <ivsi-IFD-RH>
+	<indicated-speed-fpm>0.0</indicated-speed-fpm>
+	<alt-old>0.0</alt-old>
+        <serviceable type="bool">true</serviceable>
+    </ivsi-IFD-RH>
+    <cabin-climb-rate n="0">
+        <serviceable type="bool">true</serviceable>
+    </cabin-climb-rate>
+    <cabin-altitude n="0">
+        <pressure-alt-ft type="double">0</pressure-alt-ft>
+    </cabin-altitude>
+
+    <dme>                                                             
+      <frequencies>
+            <source>/instrumentation/dme/frequencies/keypad-selected-mhz</source>	<!--may be set to nav-RH-IFD on keyboard with aux button-->        
+		<!--<nav1-selected type="int">1</nav1-selected>
+		<nav2-selected type="int">0</nav2-selected>-->
+      </frequencies>
+	<indicated-time-min>0</indicated-time-min>
+      <selector type="int">0</selector>  
+      <volume type="double">0.0</volume>    	<!--may be set to larger value by audiopanel (mon2 button)-->                                   
+    </dme>
+
+    <heading-indicator-IFD-LH>
+	<heading-bug-error-deg>0</heading-bug-error-deg>
+	<indicated-heading-deg>0</indicated-heading-deg>
+    </heading-indicator-IFD-LH>
+    <heading-indicator-IFD-RH>
+	<heading-bug-error-deg>0</heading-bug-error-deg>
+	<indicated-heading-deg>0</indicated-heading-deg>
+    </heading-indicator-IFD-RH>
+
+    <radar>
+            <mode-control type="int" archive="y">1</mode-control>
+            <display-mode type="string">plan</display-mode>
+            <display-controls>
+                <WX type="bool" archive="y">false</WX>
+                <pos type="bool" archive="y">false</pos>
+                <data type="bool" archive="y">false</data>
+                <symbol type="bool" archive="y">false</symbol>
+                <rotate type="bool" archive="y">false</rotate>
+                <tcas type="bool" archive="n">false</tcas>
+                <abs-altitude type="bool" archive="y">false</abs-altitude>
+            </display-controls>
+            <serviceable type="bool">true</serviceable>
+	    <range >100</range>
+            <reference-range-nm type="double" archive="y">640</reference-range-nm>
+            <mode type="string" archive="y">WX</mode>
+            <font>
+                <color>
+                    <red type="float">0.7</red>
+                    <green type="float">0.7</green>
+                    <blue type="float">0.7</blue>
+                    <alpha type="float">1</alpha>
+                </color>
+                <tcas>
+                    <color n="0"> <!-- distant targets -->
+                        <red type="float">0</red>
+                        <green type="float">1</green>
+                        <blue type="float">1</blue>
+                    </color>
+                    <color n="1"> <!-- proximity targets -->
+                        <red type="float">0</red>
+                        <green type="float">1</green>
+                        <blue type="float">1</blue>
+                    </color>
+                    <color n="2"> <!-- TA threat targets -->
+                        <red type="float">1</red>
+                        <green type="float">0.5</green>
+                        <blue type="float">0</blue>
+                    </color>
+                    <color n="3"> <!-- RA threat targets -->
+                        <red type="float">1</red>
+                        <green type="float">0</green>
+                        <blue type="float">0</blue>
+                    </color>
+                </tcas>
+                <name type="string">helvetica_bold.txf</name>
+                <size type="float">12</size>
+                <line-spacing type="float">0.01</line-spacing>
+            </font>
+            <lightning type="bool">true</lightning>
+            <radar-texture-path type="string">Aircraft/777/Models/Instruments/MFD/od_wxradar.png</radar-texture-path>
+            <echo-texture-path type="string">Aircraft/777/Models/Instruments/MFD/wxecho.png</echo-texture-path>
+            <minimized type="bool">false</minimized>
+            <heading-marker type="bool">true</heading-marker>
+            <limit-deg type="int">360</limit-deg>
+        </radar>
+        <groundradar>
+            <range type="double">1.2</range>
+        </groundradar>
+        
+       <tcas>
+	       <serviceable type="bool">true</serviceable>
+	       <inputs>
+			<mode type="int">3</mode>	<!-- 0=off, 1=standby, 2=TA-only, 3=auto(TA/RA) -->
+	       </inputs>
+	       <speaker>
+			<!-- Speaker Configuration -->
+			<max-dist type="double"> 200.0 </max-dist>		<!-- Max. distance where speaker is heard -->
+			<reference-dist type="double"> 2 </reference-dist>	<!-- Distance to pilot -->
+			<volume type="double"> 1 </volume>			<!-- Volume at reference distance -->
+            </speaker>
+          
+    </tcas>
+
+    <transponder>
+	<id-code type="int">7000</id-code>
+	<inputs>
+		<knob-mode>3</knob-mode>
+		<auto-select>1</auto-select>
+	</inputs>
+	<!--vfr-id type="int">7000</vfr-id-->
+    </transponder>
+
+    <turn-indicator>
+	<indicated-turn-rate>0</indicated-turn-rate>
+    </turn-indicator>
+
+       <nav n="0">
+	       <volume type="double">0.0</volume>
+	       <!--may be set to larger value by audiopanel (nav1 button)-->
+	       <serviceable type="bool">true</serviceable>
+	       <heading-needle-deflection-norm>0</heading-needle-deflection-norm>
+	       <in-range type="bool">false</in-range>
+	       <gs-needle-deflection-norm>0</gs-needle-deflection-norm>
+	       <gs-in-range type="bool">false</gs-in-range>
+	       <has-gs type="bool">false</has-gs>
+	       <nav-distance type="double">0</nav-distance>
+	       <radials>
+		       <reciprocal-radial-deg>0</reciprocal-radial-deg>
+		       <selected-deg>0</selected-deg>
+	       </radials>
+	       <frequencies>
+		       <is-localizer-frequency type="bool">false</is-localizer-frequency>
+		       <selected-mhz>114.4</selected-mhz>
+		       <standby-mhz>112.25</standby-mhz>
+	       </frequencies>
+	       <to-flag type="bool">false</to-flag>
+	       <from-flag type="bool">false</from-flag>
+       </nav>
+       <nav n="1">
+	       <volume type="double">0.0</volume>
+	       <!--may be set to larger value by audiopanel (nav2 button)-->
+	       <serviceable type="bool">true</serviceable>
+	       <heading-needle-deflection-norm>0</heading-needle-deflection-norm>
+	       <in-range type="bool">false</in-range>
+	       <gs-needle-deflection-norm>0</gs-needle-deflection-norm>
+	       <gs-in-range type="bool">false</gs-in-range>
+	       <has-gs type="bool">false</has-gs>
+	       <nav-distance type="double">0</nav-distance>
+	       <radials>
+		       <reciprocal-radial-deg>0</reciprocal-radial-deg>
+		       <selected-deg>0</selected-deg>
+	       </radials>
+	       <frequencies>
+		       <is-localizer-frequency type="bool">false</is-localizer-frequency>
+		       <selected-mhz>110.7</selected-mhz>
+		       <standby-mhz>115.3</standby-mhz>
+	       </frequencies>
+	       <to-flag type="bool">false</to-flag>
+	       <from-flag type="bool">false</from-flag>
+       </nav>
+
+	<gps n="0">
+		<cdi-deflection>0</cdi-deflection>
+		<indicated-track-true-deg>0</indicated-track-true-deg>
+		<indicated-ground-speed-kt>0</indicated-ground-speed-kt>
+		<raim>0</raim>
+		<wp>
+			<leg-true-course-deg>0</leg-true-course-deg>
+			<leg-mag-course-deg>0</leg-mag-course-deg>
+			<leg-distance-nm>0</leg-distance-nm>
+			<wp n="1">
+				<course-error-nm>0</course-error-nm>
+				<distance-nm>0</distance-nm>
+				<bearing-true-deg type="double">0</bearing-true-deg>
+			</wp>
+		</wp>
+		<config>
+			<over-flight-arm-distance-nm>0</over-flight-arm-distance-nm>
+		</config>
+		<desired-course-deg type="double">0</desired-course-deg>
+	</gps>
+	<gps n="1">
+	       	<serviceable type="bool">true</serviceable>
+		<cdi-deflection>0</cdi-deflection>
+		<indicated-track-true-deg>0</indicated-track-true-deg>
+		<indicated-ground-speed-kt>0</indicated-ground-speed-kt>
+		<raim>0</raim>
+		<wp>
+			<leg-true-course-deg>0</leg-true-course-deg>
+			<leg-mag-course-deg>0</leg-mag-course-deg>
+			<leg-distance-nm>0</leg-distance-nm>
+			<wp n="1">
+				<course-error-nm>0</course-error-nm>
+				<distance-nm>0</distance-nm>
+				<bearing-true-deg type="double">0</bearing-true-deg>
+			</wp>
+		</wp>
+		<config>
+			<over-flight-arm-distance-nm>0</over-flight-arm-distance-nm>
+		</config>
+		<desired-course-deg type="double">0</desired-course-deg>
+	</gps>
+
+
+ </instrumentation>
+
+       <consumables>
+	       
+	       <fuel>
+		       <tank n="0">
+			       <level-gal_us type="double">20</level-gal_us>
+			       <selected type="bool">true</selected>
+		       </tank>
+		       <tank n="1">
+			       <level-gal_us type="double">20</level-gal_us>
+			       <selected type="bool">true</selected>
+		       </tank>
+		       <tank n="2">
+			       <level-gal_us type="double">20</level-gal_us>
+			       <selected type="bool">true</selected>
+		       </tank>
+		       
+		       <tank n="3">
+			       <level-gal_us type="double">20</level-gal_us>
+			       <selected type="bool">true</selected>
+		       </tank>
+		       
+		       <tank n="4">
+			       <level-gal_us type="double">20</level-gal_us>
+			       <selected type="bool">true</selected>
+		       </tank>
+		       
+		       <tank n="5">
+			       <level-gal_us type="double">20</level-gal_us>
+			       <selected type="bool">true</selected>
+		       </tank>
+		       <tank n="6">
+			       <level-gal_us type="double">20</level-gal_us>
+			       <selected type="bool">true</selected>
+		       </tank>
+	       </fuel>
+	       
+       </consumables>
+
+       <engines>
+	       <engine>
+		       <rpm alias="/engines/engine[0]/thruster/rpm"/><!-- is transmitted over MP -->
+		       <magnetos type="int">0</magnetos>
+		       <mixture type="double">0</mixture>
+		       <running type="bool">false</running>
+	       </engine>
+       </engines>
+
+<nasal>
+      <canvas>
+      	<enabled type="bool">true</enabled>
+    	</canvas>
+	<global>
+		<file>Aircraft/extra500/Nasal/global.nas</file>
+		<file>Aircraft/extra500/Nasal/global.constant.nas</file>
+		<file>Aircraft/extra500/Nasal/global.canvas.nas</file>
+	</global>
+	<sound>
+		<file>Aircraft/extra500/Nasal/sound.nas</file>
+	</sound>
+	<UI>
+		<file>Aircraft/extra500/Nasal/UserInterface/ui.nas</file>
+	</UI>
+	<extra500>
+		<file>Aircraft/extra500/Nasal/liveries.nas</file>
+		<file>Aircraft/extra500/Nasal/electrical.nas</file>
+		<file>Aircraft/extra500/Nasal/engine.nas</file>
+		<file>Aircraft/extra500/Nasal/dimming.nas</file>
+		<file>Aircraft/extra500/Nasal/flap.nas</file>
+		<file>Aircraft/extra500/Nasal/gear.nas</file>
+		<file>Aircraft/extra500/Nasal/fuel.nas</file>
+		<file>Aircraft/extra500/Nasal/autopilot.nas</file>
+		<file>Aircraft/extra500/Nasal/audiopanel.nas</file>
+		<file>Aircraft/extra500/Nasal/instrument.nas</file>
+		
+		<file>Aircraft/extra500/Nasal/annunciator.nas</file>
+		<file>Aircraft/extra500/Nasal/door.nas</file>
+		<file>Aircraft/extra500/Nasal/cabin.nas</file>
+		<file>Aircraft/extra500/Nasal/deice.nas</file>
+		<file>Aircraft/extra500/Nasal/light.nas</file>
+		<file>Aircraft/extra500/Nasal/centerConsole.nas</file>
+		<file>Aircraft/extra500/Nasal/log.nas</file>
+		<file>Aircraft/extra500/Nasal/dmeswitch.nas</file>
+		<file>Aircraft/extra500/Nasal/panelventswitch.nas</file>
+		<file>Aircraft/extra500/Nasal/interior.nas</file>
+		<file>Aircraft/extra500/Nasal/readinglightswitch.nas</file>
+		<file>Aircraft/extra500/Nasal/yokes.nas</file>
+		
+		<file>Aircraft/extra500/Nasal/route_manager.nas</file>
+		
+	</extra500>
+	<IFD>
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/base.class.nas</file>
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/widget.nas</file>
+		
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/map.nas</file>
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/movingMap.nas</file>
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/tcas.nas</file>
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/route.nas</file>
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/positioned.nas</file>
+		
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/keypad.nas</file>
+		
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/page_PFD.nas</file>
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/page_FMS.nas</file>
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/page_MAP.nas</file>
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/page_Test.nas</file>
+		
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/AvidyneIFD.nas</file>
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/fms.nas</file>
+		
+	</IFD>
+	<Checklist>
+		<file>Aircraft/extra500/Dialogs/checklist.nas</file>
+	</Checklist>
+	<Dialogs>
+            <file>Aircraft/extra500/Dialogs/fuelpayload.nas</file>
+            <file>Aircraft/extra500/Nasal/dialogs.nas</file>
+        </Dialogs>
+	
+        <run>
+		<file>Aircraft/extra500/Nasal/init.nas</file>
+	</run>
+	<CoPilot>
+		<file>Aircraft/extra500/Nasal/coPilot.nas</file>
+	</CoPilot>
+	<e1>
+		<file>Nasal/e1.nas</file>
+	</e1>
+	<!---->
+	<controls>
+		<file>Aircraft/extra500/Nasal/controls.nas</file>
+	</controls>
+	<events>
+		<file>Nasal/eventmessages.nas</file>
+	</events>
+</nasal>
+ 
+ <payload>
+  <weight>
+   <name type="string">Pilot</name>
+   <weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[0]"/>
+   <min-lb type="double">0.0</min-lb>
+   <max-lb type="double">330</max-lb>
+  </weight>
+  <weight>
+   <name type="string">Co-Pilot</name>
+   <weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[1]"/>
+   <min-lb type="double">0.0</min-lb>
+   <max-lb type="double">330</max-lb>
+  </weight>
+  <weight>
+   <name type="string">Row 1 Left Passenger</name>
+   <weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[2]"/>
+   <min-lb type="double">0.0</min-lb>
+   <max-lb type="double">330</max-lb>
+  </weight>
+  <weight>
+   <name type="string">Row 1 Right Passenger</name>
+   <weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[3]"/>
+   <min-lb type="double">0.0</min-lb>
+   <max-lb type="double">330</max-lb>
+  </weight>
+  <weight>
+   <name type="string">Row 2 Left Passenger</name>
+   <weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[4]"/>
+   <min-lb type="double">0.0</min-lb>
+   <max-lb type="double">330</max-lb>
+  </weight>
+  <weight>
+   <name type="string">Row 2 Right Passenger</name>
+   <weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[5]"/>
+   <min-lb type="double">0.0</min-lb>
+   <max-lb type="double">330</max-lb>
+  </weight>
+  <weight>
+   <name type="string">Baggage</name>
+   <weight-lb alias="/fdm/jsbsim/inertia/pointmass-weight-lbs[6]"/>
+   <min-lb type="double">0.0</min-lb>
+   <max-lb type="double">198.4</max-lb> <!-- WARNING: Max baggage "by the book" is 120lbs or less! -->
+  </weight>
+ </payload>
+
+ <extra500>
+	<const>
+		<METER2FEET type="double">3.2808399</METER2FEET>
+		<FEET2METER type="double">0.3048</FEET2METER>			<!-- exact factor: to be used with priority -->
+		<METER2INCH type="double">39.3700787</METER2INCH>
+		<INCH2METER type="double">0.0254</INCH2METER>			<!-- exact factor: to be used with priority -->
+		<INCH2FEET type="double">0.0833333333333</INCH2FEET>
+		<METER2NM type="double">0.000539956803456</METER2NM>
+		<NM2METER type="double">1852</NM2METER>				<!-- exact factor: to be used with priority -->
+		<DEG2RAD type="double">0.0174532925</DEG2RAD>
+		<RAD2DEG type="double">57.2957795131</RAD2DEG>
+		<RANKINE2KELVIN type="double">0.555555555</RANKINE2KELVIN>
+		<KELVIN2RANKINE type="double">1.8</KELVIN2RANKINE>		<!-- exact factor: to be used with priority -->
+		<LBM2KG type="double">0.5144</LBM2KG>				<!-- exact factor: to be used with priority -->
+		<JETA_LBGAL type="double">6.7898</JETA_LBGAL>
+		<JETA_LB2L type="double">0.557518</JETA_LB2L>	
+		<PSI2INHG type="double">2.03602</PSI2INHG>
+		<PA2PSI type="double">0.0001450377</PA2PSI>
+		<SEC2MIN type="double">0.0166666666667</SEC2MIN>
+		<G0 type="double">9.80665</G0>		
+	</const>
+	<config>
+		<ui>
+			<failure type="bool">1</failure>
+			<warning type="bool">1</warning>
+			<caution type="bool">1</caution>
+			<info type="bool">1</info>
+		</ui>
+		<handling>
+			<realTrim type="bool">1</realTrim>
+		</handling>
+		<failure>
+			<engine type="bool">1</engine>
+			<hydraulic type="bool">1</hydraulic>
+			<electric type="bool">1</electric>
+			<structure type="bool">1</structure>
+			<fuel type="bool">1</fuel>
+			<avionic type="bool">1</avionic>
+			<pressure type="bool">1</pressure>
+		</failure>	
+	</config>
+	<door>
+		<upperpass>
+			<state type="int">0</state>
+		</upperpass>
+		<lowerpass>
+			<state type="int">0</state>
+		</lowerpass>
+		<emergencyexit>
+			<state type="int">0</state>
+		</emergencyexit>
+	</door>
+	<instrumentation>
+		<Audiopanel>
+			<knobs>
+				<state type="int">1</state>
+				<crewVol type="double">0.5</crewVol>
+				<passVol type="double">0.5</passVol>
+				<mkrconfig type="int">1</mkrconfig>
+				<icsconfig type="int">1</icsconfig>
+				<com1rcv type="int">1</com1rcv>
+				<com1xmt type="int">1</com1xmt>
+				<com2rcv type="int">0</com2rcv>
+				<com2xmt type="int">0</com2xmt>
+				<nav1 type="int">0</nav1>
+				<nav2 type="int">0</nav2>
+				<mkr type="int">0</mkr>
+				<tel type="int">0</tel>
+				<mon1 type="int">0</mon1>
+				<mon2 type="int">0</mon2>
+				<mute type="int">0</mute>
+				<spk type="int">0</spk>
+			</knobs>
+			<volsetting>
+				<effects type="double">1</effects>
+				<apdis type="double">1</apdis>
+				<gearwarn type="double">1</gearwarn>
+				<stallwarn type="double">1</stallwarn>
+				<overspeed type="double">1</overspeed>
+				<nav1 type="double">0.2</nav1>
+				<nav2 type="double">0.2</nav2>
+				<mkr type="double">0.2</mkr>
+				<tel type="double">0.2</tel>
+				<mon1 type="double">0.2</mon1>
+				<mon2 type="double">0.2</mon2>
+				<spk type="double">0.2</spk>
+			</volsetting>
+		</Audiopanel>
+		<dmeSwitch>
+			<pressed type="int">0</pressed>
+		</dmeSwitch>
+		<TurnCoordinator>
+			<volt type="double">0</volt>
+		</TurnCoordinator>
+		<IFD-LH>
+			<state type="bool">false</state>
+			<settings>
+				<autonav1 type="bool">true</autonav1>
+				<default-sqwuak type="int">7000</default-sqwuak>
+			</settings>
+		</IFD-LH>
+		<IFD-RH>
+			<state type="bool">false</state>
+		</IFD-RH>
+		<dmeInd>
+			<volt type="double">0</volt>
+		</dmeInd>
+		<xpdr>
+			<volt type="double">0</volt>
+		</xpdr>
+		<EIP>
+			<state type="bool">false</state>
+		</EIP>
+		<panelventswitchL>
+			<pressed>0</pressed>
+			<updown>0</updown>
+			<leftright>0</leftright>
+		</panelventswitchL>
+		<panelventswitchR>
+			<pressed>0</pressed>
+			<updown>0</updown>
+			<leftright>0</leftright>
+		</panelventswitchR>
+	</instrumentation>
+	<electric>
+		<bus>
+			<battery>
+				<volt type="double">0</volt>
+			</battery>
+			<hot>
+				<volt type="double">0</volt>
+			</hot>
+		</bus>
+		<source>
+			<ExternalGenerator>
+				<isPluged type="bool">false</isPluged>
+			</ExternalGenerator>
+		</source>
+	</electric>
+	<panel>
+		<CircuitBreaker>
+			<BankA>
+				<PanelVent>
+					<voltOut type="double">0</voltOut>
+				</PanelVent>
+				<Vent>
+					<voltOut type="double">0</voltOut>
+				</Vent>
+				<AirCondition>
+					<voltOut type="double">0</voltOut>
+				</AirCondition>
+			</BankA>
+			<BankB>
+				<CabinLight>
+					<voltOut type="double">0</voltOut>
+				</CabinLight>
+			</BankB>
+			<BankC>
+				<Boots>
+					<voltOut type="double">0</voltOut>
+				</Boots>
+				<EnvironmentalBleed>
+					<voltOut type="double">0</voltOut>
+				</EnvironmentalBleed>
+				<GearControl>
+					<state type="bool">1</state>
+				</GearControl>
+				<Hydraulic>
+					<voltOut type="double">0</voltOut>
+				</Hydraulic>
+				<AutopilotServo>
+					<voltOut type="double">0</voltOut>
+				</AutopilotServo>
+			</BankC>
+			<BankD>
+				<CabinPressure>
+					<voltOut type="double">0</voltOut>
+				</CabinPressure>
+				<Dump>
+					<voltOut type="double">0</voltOut>
+				</Dump>
+				<GearAux1>
+					<state type="bool">1</state>
+				</GearAux1>
+				<GearWarn>
+					<voltOut type="double">0</voltOut>
+				</GearWarn>
+			</BankD>
+			<GearAux2>
+				<state type="bool">1</state>
+				<voltOut type="double">24</voltOut>
+			</GearAux2>
+		</CircuitBreaker>
+		<Side>
+			<Deicing>
+				<Boots>
+					<state type="int"></state>
+				</Boots>
+			</Deicing>
+			<Main>
+				<ExternalPower>
+					<state type="int"></state>
+				</ExternalPower>
+				<Battery>
+					<state type="int"></state>
+				</Battery>
+				<Generator>
+					<state type="int"></state>
+				</Generator>
+			</Main>
+			<Cabin>
+				<EnvironmentalAir>
+					<state type="int">0</state>
+				</EnvironmentalAir>
+				<Pressure>
+					<state type="int">0</state>
+				</Pressure>
+			</Cabin>
+			<Light>
+				<Cabin>
+					<state type="int">0</state>
+				</Cabin>
+			</Light>
+		</Side>
+		<Master>
+			<Autopilot>
+				<YawTrim>
+					<state type="int">0.0</state>
+				</YawTrim>
+			</Autopilot>
+		</Master>
+	</panel>
+	<system>
+		<fuel>
+			<SelectValve type="int">2</SelectValve>
+		</fuel>
+		<gear>
+			<MainGearSwitch>
+				<state type="int">1</state>
+			</MainGearSwitch>
+		</gear>
+	</system>
+	<interior>
+		<readinglightpic>
+			<pressed type="int">0</pressed>
+			<updown>0</updown>
+			<leftright>0</leftright>
+		</readinglightpic>
+		<readinglightcop>
+			<pressed type="int">0</pressed>
+			<updown>0</updown>
+			<leftright>0</leftright>
+		</readinglightcop>
+		<readinglightLF>
+			<pressed type="int">0</pressed>
+			<updown>0</updown>
+			<leftright>0</leftright>
+		</readinglightLF>
+		<readinglightLA>
+			<pressed type="int">0</pressed>
+			<updown>0</updown>
+			<leftright>0</leftright>
+		</readinglightLA>
+		<readinglightRF>
+			<pressed type="int">0</pressed>
+			<updown>0</updown>
+			<leftright>0</leftright>
+		</readinglightRF>
+		<readinglightRA>
+			<pressed type="int">0</pressed>
+			<updown>0</updown>
+			<leftright>0</leftright>
+		</readinglightRA>
+	</interior>
+	<yokes>
+		<visible type="int">1</visible>
+		<transparency type="double">1.0</transparency>
+		<ptt-copilot>
+			<pressed type="int">0</pressed>
+		</ptt-copilot>
+		<ptt-pilot>
+			<pressed type="int">0</pressed>
+		</ptt-pilot>
+		<cws>
+			<pressed type="int">0</pressed>
+		</cws>
+		<apdisc>
+			<pressed type="int">0</pressed>
+		</apdisc>
+		<trim>
+			<pressed type="int">0</pressed>
+		</trim>
+	</yokes>
+ </extra500>
+
+ <fdm>
+	<jsbsim>
+		<sim-time-sec-old>0</sim-time-sec-old>
+		<sim-dt-sec>0.008333</sim-dt-sec>
+		<atmosphere>
+			<T-degC>1</T-degC>					<!--dummy value -->
+		</atmosphere>
+		<fcs>
+			<aileron-cmd-tot type="double">0.0</aileron-cmd-tot>
+			<flap-aero-pos-deg type="double">0</flap-aero-pos-deg>
+			<elevator-cmd-tot type="double">0.0</elevator-cmd-tot>
+			<pitch-trim-cmd-tot-norm type="double">0.0</pitch-trim-cmd-tot-norm>
+			<rudder-cmd-tot type="double">0.0</rudder-cmd-tot>
+			<flap-pos-norm type="double">0.0</flap-pos-norm>		<!-- from flaps.nas -->
+			<flap-wp-cmd-norm type="double">0.0</flap-wp-cmd-norm>		<!-- from flaps.nas -->
+		</fcs>
+            	<state>
+                  	<controls-fixed type="int">1</controls-fixed>
+            	</state>
+            	<aircraft>
+                  	<wing>
+                        	<x_ac-ft>11.01</x_ac-ft>      				<!--dummy value -->
+                        	<y_ac-ft>8.018</y_ac-ft>
+				<incidence-deg>1.45</incidence-deg>
+                        	<S-ft2>150.96</S-ft2>
+                        	<c_aero-ft>4.337</c_aero-ft>
+				<b-ft>36.089</b-ft>
+				<cd0>0.024</cd0>
+				<alpha-deg>0.0</alpha-deg>				<!--dummy value -->
+                  	</wing>
+                  	<hstab>
+                        	<S-ft2>30.268</S-ft2>
+                        	<x_ac-ft>29.834</x_ac-ft>
+                        	<z_ac-ft>10.285</z_ac-ft>
+                        	<incidence-deg>0.0</incidence-deg>
+					<cd0>0.021</cd0>
+                        	<elevator>
+                              	<H-static-lbsft>2.0</H-static-lbsft>
+						<H-total-lbsft>0.0</H-total-lbsft>			<!--dummy value -->
+						<Ch0>-0.05</Ch0>
+                              	<Ch_de>-0.35</Ch_de>
+                              	<Ch_de2>0.0</Ch_de2>                     		<!--non linear part of Ch_de -->
+                              	<Ch_alpha>-0.05</Ch_alpha>
+						<Ch_alpha2>0.0</Ch_alpha2>				<!--non linear part of Ch_alpha -->
+                              	<downspring0-lbsft>16.5</downspring0-lbsft>
+                              	<downspring-lbsftprad>0.5</downspring-lbsftprad>
+                              	<bobweight-lbsft>0</bobweight-lbsft>
+						<Ip-lbsft2>1</Ip-lbsft2>		
+                              	<chord-frac>0.24</chord-frac>
+                              	<S-ft2>7.264</S-ft2>
+                              	<c_aero-ft>2.5796</c_aero-ft>
+                              	<max-defl-rad>0.3141</max-defl-rad>
+                              	<min-defl-rad>-0.5759</min-defl-rad>
+						<d_e_free-clipped-rad>0.0</d_e_free-clipped-rad>	<!--dummy value -->
+                              	<elevator-pos-rad>0</elevator-pos-rad>    		<!--dummy value -->
+                              	<elevator-pos-deg>0</elevator-pos-deg>    		<!--dummy value -->
+						<d_e_free-rad>0</d_e_free-rad>				<!--dummy value -->
+                              	<trim>
+                                    	<S-ft2>1.114</S-ft2>
+                                    	<c_aero-ft>0.4019</c_aero-ft>
+                                    	<coeff-norm>6.0</coeff-norm>        <!--this is multiplied with normalized trim position to get hinge moment of elevator -->
+                              	</trim>
+                        	</elevator>
+				<alpha-deg>0.0</alpha-deg>					<!--dummy value -->	
+                  	</hstab>
+		 	 <vstab>
+                        	<S-ft2>30.236</S-ft2>
+                        	<x_ac-ft>27.128</x_ac-ft>
+                        	<z_ac-ft>8.294</z_ac-ft>
+				<cd0>0.021</cd0>				
+		  		</vstab>
+		  	<engine>
+				<OP-maxsetting-psi type="double">128</OP-maxsetting-psi>
+				<OT>
+					<oil-cooler-factor type="double">450</oil-cooler-factor>
+					<cowling-Temp-degC>0</cowling-Temp-degC>			<!--dummy value -->
+					<cowling-deltaTemp-degC>0</cowling-deltaTemp-degC>	<!--dummy value -->
+				</OT>
+				<OT-degC type="double">0</OT-degC>					<!--dummy value -->
+				<OT-true-degC type="double">0</OT-true-degC>				<!--dummy value -->
+				<FT-degC type="double">0</FT-degC>					<!--dummy value -->
+				<motoring type="double">0</motoring>
+				<spooling-up type="double">0</spooling-up>
+				<spooling-down type="double">0</spooling-down>
+				<N1-old type="double">0.0</N1-old>					<!--dummy value -->
+				<N1-par type="double">0.0</N1-par>					<!--dummy value -->
+				<TOT-target-degC>0.0</TOT-target-degC>				<!--dummy value -->
+				<Fpress-too-low>0</Fpress-too-low>					<!--dummy value -->
+		 	</engine>
+			<events>
+				<show-events type="bool">1</show-events>				<!--set to 0 if you are fed up with those stupid messages -->
+				<TRQ111>0</TRQ111>
+				<TRQ92>0</TRQ92>
+				<OP130>0</OP130>
+				<TOT927>0</TOT927>
+				<TOT810>0</TOT810>
+				<TOT752>0</TOT752>
+				<GEAR140>0</GEAR140>
+				<FLAPS30>0</FLAPS30>
+				<FLAPS15>0</FLAPS15>
+			</events>
+            	</aircraft>
+		<velocities>
+			<hstab>
+				<v-fps>0.0</v-fps>						<!--dummy value -->
+			</hstab>
+		</velocities>
+      </jsbsim>
+ </fdm>
+
+ <limits>
+  <mass-and-balance>
+   <maximum-ramp-mass-lbs>4696</maximum-ramp-mass-lbs>
+   <maximum-takeoff-mass-lbs>4696</maximum-takeoff-mass-lbs>
+   <maximum-landing-mass-lbs>4409</maximum-landing-mass-lbs>
+  </mass-and-balance>
+ </limits>
+
+<input include="extra500-input.xml"/>
+
+</PropertyList>

@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Thomas Grossberger 
+      Date: July 04 2013
+
+      Last change:      Eric van den Berg
+      Date:             16.05.14
+-->
+<PropertyList>
+
+<path>CenterConsole.ac</path>
+
+  <animation>
+    <type>range</type>
+    <min-m>0</min-m>
+    <max-m>50</max-m>
+  </animation>
+
+<model>
+  <name>Keypad</name>
+  <path>Aircraft/extra500/Models/instruments/Keypad.xml</path>
+	<offsets>
+		<x-m>0.33196</x-m>
+		<y-m>0</y-m>	
+		<z-m>-0.006</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>cabincontroller</name>
+  <path>Aircraft/extra500/Models/instruments/cabincontroller.xml</path>
+	<offsets>
+		<x-m>0.0635</x-m>
+		<y-m>0.0</y-m>	
+		<z-m>-0.003</z-m>
+		<heading-deg>180.0</heading-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>cabinclimb</name>
+  <path>Aircraft/extra500/Models/instruments/cabinclimb.xml</path>
+	<offsets>
+		<x-m>0.036</x-m>
+		<y-m>0.061</y-m>	
+		<z-m>-0.002</z-m>
+		<heading-deg>-90.0</heading-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>cabinalt</name>
+  <path>Aircraft/extra500/Models/instruments/cabinalt.xml</path>
+	<offsets>
+		<x-m>0.036</x-m>
+		<y-m>-0.061</y-m>	
+		<z-m>-0.002</z-m>
+		<heading-deg>0.0</heading-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>gear warn mute switch</name>
+  <path>Aircraft/extra500/Models/interior/gearwarnmute.xml</path>
+	<offsets>
+		<x-m>0.17205</x-m>
+		<y-m>-0.0495</y-m>	
+		<z-m>0.11369</z-m>
+		<roll-deg>90</roll-deg>
+		<pitch-deg>0</pitch-deg>
+		<yaw-deg>0</yaw-deg>
+	</offsets>
+</model>
+
+
+<!-- Defrost -->
+<animation>
+  <type>translate</type>
+  <object-name>Defrost.Knob</object-name>
+  <object-name>Defrost.Axis</object-name>
+  <property>/extra500/panel/CenterConsole/Defrost/state</property>
+  <factor>-0.055</factor>
+  <axis>
+   <x1-m>0.41777</x1-m>
+   <y1-m>0</y1-m>
+   <z1-m>-0.13577</z1-m>
+   <x2-m>0.36853</x2-m>
+   <y2-m>0</y2-m>
+   <z2-m>-0.15146</z2-m>
+  </axis>
+</animation>
+
+<animation>
+	<type>pick</type>
+	<object-name>Defrost.Knob</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("Defrost");
+				]]>
+			</script>
+		</binding>
+	</action>
+</animation>
+
+<!-- ParkingBrake -->
+<animation>
+  <type>translate</type>
+  <object-name>ParkingBrake.Knob</object-name>
+  <object-name>ParkingBrake.Axis</object-name>
+  <property>/extra500/panel/CenterConsole/Parkingbrake/state</property>
+  <factor>-0.055</factor>
+  <axis>
+   <x1-m>0.41777</x1-m>
+   <y1-m>0</y1-m>
+   <z1-m>-0.13577</z1-m>
+   <x2-m>0.36853</x2-m>
+   <y2-m>0</y2-m>
+   <z2-m>-0.15146</z2-m>
+  </axis>
+</animation>
+
+<animation>
+	<type>pick</type>
+	<object-name>ParkingBrake.Knob</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("Parkingbrake");
+				]]>
+			</script>
+		</binding>
+	</action>
+</animation>
+
+<!-- Deice -->
+<animation>
+  <type>translate</type>
+  <object-name>AntiIce.Knob</object-name>
+  <object-name>AntiIce.Axis</object-name>
+  <property>/extra500/panel/CenterConsole/Deice/state</property>
+  <factor>-0.055</factor>
+  <axis>
+   <x1-m>0.41777</x1-m>
+   <y1-m>0</y1-m>
+   <z1-m>-0.13577</z1-m>
+   <x2-m>0.36853</x2-m>
+   <y2-m>0</y2-m>
+   <z2-m>-0.15146</z2-m>
+  </axis>
+</animation>
+
+<animation>
+	<type>pick</type>
+	<object-name>AntiIce.Knob</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("Deice");
+				]]>
+			</script>
+		</binding>
+	</action>
+</animation>
+
+<!-- PowerLever -->
+<animation>
+  <type>rotate</type>
+  <object-name>PowerLever</object-name>
+  <object-name>gear warn mute switch</object-name>
+  <property>controls/engines/engine/throttle</property>
+  <condition>
+    <equals>
+      <property>controls/engines/engine/reverser</property>
+      <value>1</value>
+    </equals>
+  </condition>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>-5.4</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-41.7</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>0.17205</x1-m>
+    <y1-m>1</y1-m>
+    <z1-m>-0.03982</z1-m>
+    <x2-m>0.17205</x2-m>
+    <y2-m>-1</y2-m>
+    <z2-m>-0.03982</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>rotate</type>
+  <object-name>PowerLever</object-name>
+  <object-name>gear warn mute switch</object-name>
+  <property>controls/engines/engine/throttle</property>
+  <condition>
+    <equals>
+      <property>controls/engines/engine/reverser</property>
+      <value>0</value>
+    </equals>
+  </condition>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>-5.4</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>40.5</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>0.17205</x1-m>
+    <y1-m>1</y1-m>
+    <z1-m>-0.03982</z1-m>
+    <x2-m>0.17205</x2-m>
+    <y2-m>-1</y2-m>
+    <z2-m>-0.03982</z2-m>
+  </axis>
+</animation>
+
+<animation>
+	<type>pick</type>
+	<object-name>PowerLever</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("Engine reverser");
+				]]>
+			</script>
+		</binding>
+	</action>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		setprop("/controls/engines/engine/throttle",getprop("/controls/engines/engine/throttle")+.0025);
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		setprop("/controls/engines/engine/throttle",getprop("/controls/engines/engine/throttle")-.0025);
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<animation>
+  <type>translate</type>
+  <object-name>PowerLever</object-name>
+  <object-name>gear warn mute switch</object-name>
+  <property>controls/engines/engine/reverser</property>
+  <factor>0.02</factor>
+  <axis>
+    <x>0</x>
+    <y>0</y>
+    <z>1</z>
+  </axis>
+</animation>
+
+<!-- ConditionLever  
+/controls/engines/engine[0]/condition-lever-norm is controlled by: 	
+		/extra500/engine/cutoff (press: s)
+		/controls/engines/engine[0]/propeller-pitch (press: n/N)
+in Systems/extra500-system-indication.xml-->
+<animation>
+  <type>rotate</type>
+  <object-name>ConditionLever</object-name>
+  <property>/controls/engines/engine[0]/condition-lever-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>22.7</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-18.2</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>0.17205</x1-m>
+    <y1-m>-1</y1-m>
+    <z1-m>-0.03982</z1-m>
+    <x2-m>0.17205</x2-m>
+    <y2-m>1</y2-m>
+    <z2-m>-0.03982</z2-m>
+  </axis>
+</animation>
+
+<animation>
+	<type>pick</type>
+	<object-name>ConditionLever</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("Engine cutoff");
+				]]>
+			</script>
+		</binding>
+	</action>
+	<!--action>
+		<button>1</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("Engine cutoff on");
+				]]>
+			</script>
+		</binding>
+	</action-->
+</animation>
+
+
+<!-- PitchTrimWheel -->
+<animation>
+  <type>rotate</type>
+  <object-name>PitchTrimWheel</object-name>
+  <property>/fdm/jsbsim/fcs/pitch-trim-pos-deg</property>
+  <factor>10</factor>
+  <axis>
+    <x1-m>0.17205</x1-m>
+    <y1-m>1</y1-m>
+    <z1-m>-0.03982</z1-m>
+    <x2-m>0.17205</x2-m>
+    <y2-m>-1</y2-m>
+    <z2-m>-0.03982</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>PitchTrimWheel</object-name>
+  <action>
+    <button>0</button>
+    <repeatable>true</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("PitchTrim >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>1</button>
+    <repeatable>true</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("PitchTrim <");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("PitchTrim >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("PitchTrim <");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<!-- Pitchindication -->
+<animation>
+  <type>rotate</type>
+  <object-name>trim.ind</object-name>
+  <property>/fdm/jsbsim/fcs/pitch-trim-pos-deg</property>
+  <factor>1.2</factor>
+  <axis>
+    <x1-m>0.17205</x1-m>
+    <y1-m>1</y1-m>
+    <z1-m>-0.03982</z1-m>
+    <x2-m>0.17205</x2-m>
+    <y2-m>-1</y2-m>
+    <z2-m>-0.03982</z2-m>
+  </axis>
+</animation>
+
+<!--Dimming Lumi Folie -->
+<animation>
+        <type>material</type>
+        <object-name>label</object-name>
+        <emission>
+	    <red>0.14</red>
+            <green>0.72</green>
+	    <blue>0.90</blue>
+	    <factor-prop>/extra500/light/Lumi/Backlight/state</factor-prop>
+        </emission>
+</animation>
+
+</PropertyList>

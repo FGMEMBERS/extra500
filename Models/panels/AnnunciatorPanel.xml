@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: March 13 2013
+
+      Last change:      Thomas Grossberger
+      Date:             21.05.13
+-->
+
+<PropertyList>
+
+<path>AnnunciatorPanel.ac</path>
+<!-- Raw 2 -->
+<!-- GeneratorFail -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.GeneratorFail</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>0.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/GeneratorFail/state</factor-prop>
+	</emission>
+</animation>
+<!-- AFTDoor -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.AFTDoor</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>0.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/AFTDoor/state</factor-prop>
+	</emission>
+</animation>
+<!-- StallHeat -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.StallHeat</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>0.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/StallHeat/state</factor-prop>
+	</emission>
+</animation>
+<!-- OilPress -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.OilPress</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>0.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/OilPress/state</factor-prop>
+	</emission>
+</animation>
+<!-- ChipDetection -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.ChipDetection</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>1.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/ChipDetection/state</factor-prop>
+	</emission>
+</animation>
+<!-- HydraulicPump -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.HydraulicPump</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>1.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/HydraulicPump/state</factor-prop>
+	</emission>
+</animation>
+<!-- Raw 2 -->
+<!-- GearWarn -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.GearWarn</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>0.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/GearWarn/state</factor-prop>
+	</emission>
+</animation>
+<!-- StallWarn -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.StallWarn</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>0.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/StallWarn/state</factor-prop>
+	</emission>
+</animation>
+<!-- WindshieldHeatFail -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.WindshieldHeatFail</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>0.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/WindshieldHeatFail/state</factor-prop>
+	</emission>
+</animation>
+<!-- FuelPress -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.FuelPress</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>0.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/FuelPress/state</factor-prop>
+	</emission>
+</animation>
+<!-- PitotHeatLeft -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.PitotHeatLeft</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>1.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/PitotHeatLeft/state</factor-prop>
+	</emission>
+</animation>
+<!-- PitotHeatRight -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.PitotHeatRight</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>1.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/PitotHeatRight/state</factor-prop>
+	</emission>
+</animation>
+<!-- Raw 3 -->
+<!-- Flaps -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.Flaps</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>0.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/Flaps/state</factor-prop>
+	</emission>
+</animation>
+<!-- CabinPressure -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.CabinPressure</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>0.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/CabinPressure/state</factor-prop>
+	</emission>
+</animation>
+<!-- BleedOvertemp -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.BleedOvertemp</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>0.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/BleedOvertemp/state</factor-prop>
+	</emission>
+</animation>
+<!-- StaticHeatLeft -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.StaticHeatLeft</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>1.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/StaticHeatLeft/state</factor-prop>
+	</emission>
+</animation>
+<!-- StaticHeatRight -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.StaticHeatRight</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>1.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/StaticHeatRight/state</factor-prop>
+	</emission>
+</animation>
+<!-- Raw 4 -->
+<!-- FuelTransLeft -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.FuelTransLeft</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>1.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/FuelTransLeft/state</factor-prop>
+	</emission>
+</animation>
+<!-- FuelTransRight -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.FuelTransRight</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>1.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/FuelTransRight/state</factor-prop>
+	</emission>
+</animation>
+<!-- StandByAlternOn -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.StandByAlternOn</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>1.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/StandByAlternOn/state</factor-prop>
+	</emission>
+</animation>
+<!-- IgnitionActive -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.IgnitionActive</object-name>
+	<emission>	
+		<red>0</red>	
+		<green>1.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/IgnitionActive/state</factor-prop>
+	</emission>
+</animation>
+<!-- IntakeHeat -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.IntakeHeat</object-name>
+	<emission>	
+		<red>0</red>	
+		<green>1.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/IntakeHeat/state</factor-prop>
+	</emission>
+</animation>
+<!-- RecognLight -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.RecognLight</object-name>
+	<emission>	
+		<red>0</red>	
+		<green>1.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/RecognLight/state</factor-prop>
+	</emission>
+</animation>
+<!-- Raw 5 -->
+<!-- FuelFilterByPass -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.FuelFilterByPass</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>1.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/FuelFilterByPass/state</factor-prop>
+	</emission>
+</animation>
+<!-- PneumaticLow -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.PneumaticLow</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>1.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/PneumaticLow/state</factor-prop>
+	</emission>
+</animation>
+<!-- LowVoltage -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.LowVoltage</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>1.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/LowVoltage/state</factor-prop>
+	</emission>
+</animation>
+<!-- DeiceBoots -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.DeiceBoots</object-name>
+	<emission>	
+		<red>0</red>	
+		<green>1.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/DeiceBoots/state</factor-prop>
+	</emission>
+</animation>
+<!-- LandingLight -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.LandingLight</object-name>
+	<emission>	
+		<red>0</red>	
+		<green>1.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/LandingLight/state</factor-prop>
+	</emission>
+</animation>
+<!-- Raw 6 -->
+<!-- FuelLowLeft -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.FuelLowLeft</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>1.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/FuelLowLeft/state</factor-prop>
+	</emission>
+</animation>
+<!-- FuelLowRight -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.FuelLowRight</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>1.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/FuelLowRight/state</factor-prop>
+	</emission>
+</animation>
+<!-- PropellerLowPitch -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.PropellerLowPitch</object-name>
+	<emission>	
+		<red>1</red>	
+		<green>1.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/PropellerLowPitch/state</factor-prop>
+	</emission>
+</animation>
+<!-- ExternalPower -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.ExternalPower</object-name>
+	<emission>	
+		<red>0</red>	
+		<green>1.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/ExternalPower/state</factor-prop>
+	</emission>
+</animation>
+<!-- WindshieldHeatOn -->
+<animation>
+	<type>material</type>
+	<object-name>AnnunciatorPanel.WindshieldHeatOn</object-name>
+	<emission>	
+		<red>0</red>	
+		<green>1.0</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/panel/Annunciator/WindshieldHeatOn/state</factor-prop>
+	</emission>
+</animation>
+
+
+
+</PropertyList>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: March 13 2013
+
+      Last change:      Thomas Grossberger
+      Date:             31.05.13
+
+-->
+
+<PropertyList>
+
+ <path>Aircraft/Instruments-3d/canvas-test/CMDU.ac</path>
+ <!-- hat thomas nach rechts verschoben weil es ihm im weg war
+ <offsets>
+   <heading-deg>90</heading-deg>
+   <roll-deg>40</roll-deg>
+   <pitch-deg>0</pitch-deg>
+   <x-m> -0.45 </x-m>
+   <y-m> -0.35 </y-m>
+   <z-m>-0.35 </z-m>-0.29
+ </offsets>
+ -->
+ <offsets>
+   <heading-deg>60</heading-deg>
+   <roll-deg>65</roll-deg>
+   <pitch-deg>0</pitch-deg>
+   <x-m> -0.70 </x-m>
+   <y-m> 0.31</y-m>
+   <z-m> -0.35 </z-m>
+ </offsets>
+</PropertyList>

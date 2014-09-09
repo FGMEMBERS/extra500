@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: 24.04.2014
+
+      Last change:     
+      Date:       
+
+-->
+
+<PropertyList>
+
+<path>maplight.ac</path>
+
+      <animation>
+            <type>light</type>
+            <light-type>point</light-type>
+            <name>LightSrc101</name>
+            <object-name>light.cone</object-name>
+            <nopreview/>
+            <position>
+			<x>-0.25338</x>
+			<y>-0.07490</y>	
+			<z>0.29566</z>
+            </position>
+            <ambient>
+                  <r>0.1</r>
+                  <g>0.1</g>
+                  <b>0.1</b>
+                  <a>1.0</a>
+            </ambient>
+            <diffuse>
+                  <r>0.1</r>
+                  <g>0.1</g>
+                  <b>0.1</b>
+                  <a>1.0</a>
+            </diffuse>
+            <specular>
+                  <r>0.1</r>
+                  <g>0.1</g>
+                  <b>0.1</b>
+                  <a>1.0</a>
+            </specular>
+            <attenuation>
+                  <c>5.0</c>
+                  <l>0.2</l>
+                  <q>0.005</q>
+            </attenuation>
+            <near-m>0.1</near-m>
+            <far-m>5</far-m>
+      </animation>
+
+      <animation>
+            <type>select</type>
+            <object-name>LightSrc101</object-name>
+            <condition>
+                  <and>
+                        <property>/sim/rendering/rembrandt/enabled</property>
+                        <greater-than>
+                              <property>/sim/rendering/shaders/lights</property>
+                              <value>0</value>
+                        </greater-than>
+           			<greater-than>
+            			<property>/extra500/light/map/output</property>
+                  		<value>0</value>
+            		</greater-than>
+       	        </and>
+            </condition>
+      </animation>
+
+  <animation>
+    <type>material</type>
+    <object-name>lens</object-name>
+    <condition>
+            <greater-than>
+            	<property>/extra500/light/map/output</property>
+                  <value>0</value>
+            </greater-than>
+    </condition>
+    <emission>
+      <red>   0.3 </red>
+      <green> 0.3 </green>
+      <blue>  0.3 </blue>
+    </emission>
+  </animation>
+
+</PropertyList>
+

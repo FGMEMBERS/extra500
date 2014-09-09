@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: August 08 2013
+
+      Last change:      Eric van den Berg
+      Date:             27.04.14
+
+-->
+
+<PropertyList>
+
+<path>dmeind.ac</path>
+<!--Dimming -->
+<animation>
+	<type>material</type>
+	<object-name>nm.100</object-name>
+	<object-name>nm.010</object-name>
+	<object-name>point</object-name>
+	<object-name>nm.001</object-name>
+	<object-name>nm.102</object-name>
+	<object-name>nm.012</object-name>
+	<object-name>nm.003</object-name>
+	<object-name>nm</object-name>
+	<object-name>1</object-name>
+	<object-name>H</object-name>
+	<object-name>kt.100</object-name>
+	<object-name>kt.010</object-name>
+	<object-name>kt.001</object-name>
+	<object-name>kt</object-name>
+	<object-name>min.10</object-name>
+	<object-name>min.01</object-name>
+	<object-name>min</object-name>
+	<object-name>nm.002</object-name>
+	<object-name>nm.011</object-name>
+	<object-name>nm.101</object-name>
+	<object-name>kt.002</object-name>
+	<object-name>kt.011</object-name>
+	<object-name>kt.101</object-name>
+	<object-name>min.02</object-name>
+	<object-name>min.11</object-name>
+	<emission>	
+		<red>1.0</red>	
+		<green>1.0</green>	
+		<blue>1.0</blue>
+		<factor-prop>/extra500/instrumentation/dmeInd/Backlight/state</factor-prop>
+	</emission>
+</animation>
+<!--DME ind-->
+	<animation>
+		<!-- Power on/off -->
+		<type>select</type>
+		<object-name>nm</object-name>
+		<object-name>1</object-name>
+		<object-name>kt</object-name>
+		<object-name>min</object-name>
+		<condition>
+			<greater-than>
+				<property>extra500/instrumentation/dmeInd/state</property>
+				<value>0</value>
+			</greater-than>	
+		</condition>
+	</animation>
+
+	<animation>
+		<!-- Hold -->
+		<type>select</type>
+		<object-name>H</object-name>
+		<condition>
+			<greater-than>
+				<property>extra500/instrumentation/dmeInd/state</property>
+				<value>0</value>
+			</greater-than>	
+			<equals>
+				<property>extra500/instrumentation/dmeSwitch/pressed</property>
+				<value>1</value>
+			</equals>
+		</condition>
+	</animation>
+
+<!--NM-->
+
+<!--normal operation-->
+
+
+	<animation>
+		<type>textranslate</type>
+		<object-name>nm.001</object-name>
+		<property>/instrumentation/dme/indicated-distance-nm</property>
+		<factor>1</factor>
+		<step>0.1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>nm.010</object-name>
+		<property>/instrumentation/dme/indicated-distance-nm</property>
+		<factor>0.1</factor>
+		<step>1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>nm.100</object-name>
+		<property>/instrumentation/dme/indicated-distance-nm</property>
+		<factor>0.01</factor>
+		<step>10</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>textranslate</type>
+		<object-name>nm.003</object-name>
+		<property>/instrumentation/dme/indicated-distance-nm</property>
+		<factor>0.1</factor>
+		<step>1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>nm.012</object-name>
+		<property>/instrumentation/dme/indicated-distance-nm</property>
+		<factor>0.01</factor>
+		<step>10</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>nm.102</object-name>
+		<property>/instrumentation/dme/indicated-distance-nm</property>
+		<factor>0.001</factor>
+		<step>100</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+	<animation>
+		<object-name>point</object-name>
+		<type>select</type>
+		<condition>
+			<and>
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>1</value>
+				</equals>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+				<less-than>
+					<property>/instrumentation/dme/indicated-distance-nm</property>
+					<value>99</value>
+				</less-than>
+			</and>
+		</condition>
+	</animation>
+
+	<animation>
+		<object-name>nm.001</object-name>
+		<type>select</type>
+		<condition>
+			<and>
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>1</value>
+				</equals>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+				<less-than>
+					<property>/instrumentation/dme/indicated-distance-nm</property>
+					<value>99</value>
+				</less-than>
+			</and>
+		</condition>
+	</animation>
+	<animation>
+		<object-name>nm.010</object-name>
+		<type>select</type>
+		<condition>
+			<and>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+				<!--greater-than-equals>
+					<property>/instrumentation/dme/indicated-distance-nm</property>
+					<value>10</value>
+				</greater-than-equals-->
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>1</value>
+				</equals>
+				<less-than>
+					<property>/instrumentation/dme/indicated-distance-nm</property>
+					<value>99</value>
+				</less-than>
+			</and>
+		</condition>
+	</animation>
+	<animation>
+		<object-name>nm.100</object-name>
+		<type>select</type>
+		<condition>
+			<and>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+				<greater-than-equals>
+					<property>/instrumentation/dme/indicated-distance-nm</property>
+					<value>10</value>
+				</greater-than-equals>
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>1</value>
+				</equals>
+				<less-than>
+					<property>/instrumentation/dme/indicated-distance-nm</property>
+					<value>99</value>
+				</less-than>
+			</and>
+		</condition>
+	</animation>
+
+	<animation>
+		<object-name>nm.003</object-name>
+		<type>select</type>
+		<condition>
+			<and>
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>1</value>
+				</equals>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+				<greater-than>
+					<property>/instrumentation/dme/indicated-distance-nm</property>
+					<value>99</value>
+				</greater-than>
+			</and>
+		</condition>
+	</animation>
+	<animation>
+		<object-name>nm.012</object-name>
+		<type>select</type>
+		<condition>
+			<and>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+				<greater-than-equals>
+					<property>/instrumentation/dme/indicated-distance-nm</property>
+					<value>10</value>
+				</greater-than-equals>
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>1</value>
+				</equals>
+				<greater-than>
+					<property>/instrumentation/dme/indicated-distance-nm</property>
+					<value>99</value>
+				</greater-than>
+			</and>
+		</condition>
+	</animation>
+	<animation>
+		<object-name>nm.102</object-name>
+		<type>select</type>
+		<condition>
+			<and>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+				<greater-than-equals>
+					<property>/instrumentation/dme/indicated-distance-nm</property>
+					<value>100</value>
+				</greater-than-equals>
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>1</value>
+				</equals>
+				<greater-than>
+					<property>/instrumentation/dme/indicated-distance-nm</property>
+					<value>99</value>
+				</greater-than>
+			</and>
+		</condition>
+	</animation>
+
+<!--speed-->
+	<animation>
+		<type>textranslate</type>
+		<object-name>kt.001</object-name>
+		<property>/instrumentation/dme/indicated-ground-speed-kt</property>
+		<factor>0.1</factor>
+		<step>1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>kt.010</object-name>
+		<property>/instrumentation/dme/indicated-ground-speed-kt</property>
+		<factor>0.01</factor>
+		<step>10</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>kt.100</object-name>
+		<property>/instrumentation/dme/indicated-ground-speed-kt</property>
+		<factor>0.001</factor>
+		<step>100</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+
+	<animation>
+		<object-name>kt.001</object-name>
+		<type>select</type>
+		<condition>
+			<and>
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>1</value>
+				</equals>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+			</and>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>kt.010</object-name>
+		<condition>
+			<and>
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>1</value>
+				</equals>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+				<greater-than-equals>
+					<property>/instrumentation/dme/indicated-ground-speed-kt</property>
+					<value>10</value>
+				</greater-than-equals>
+			</and>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>kt.100</object-name>
+		<condition>
+			<and>
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>1</value>
+				</equals>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+				<greater-than-equals>
+					<property>/instrumentation/dme/indicated-ground-speed-kt</property>
+					<value>100</value>
+				</greater-than-equals>
+			</and>
+		</condition>
+	</animation>
+
+<!--time-->
+	<animation>
+		<type>textranslate</type>
+		<object-name>min.01</object-name>
+		<property>/instrumentation/dme/indicated-time-min-clp</property>
+		<factor>0.1</factor>
+		<step>1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>min.10</object-name>
+		<property>/instrumentation/dme/indicated-time-min-clp</property>
+		<factor>0.01</factor>
+		<step>10</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>min.01</object-name>
+		<condition>
+			<and>
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>1</value>
+				</equals>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+			</and>
+		</condition>
+	</animation>
+	<animation>
+		<type>select</type>
+		<object-name>min.10</object-name>
+		<condition>
+			<and>
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>1</value>
+				</equals>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+				<greater-than-equals>
+					<property>/instrumentation/dme/indicated-time-min-clp</property>
+					<value>10</value>
+				</greater-than-equals>
+			</and>
+		</condition>
+	</animation>
+
+<!-- not in range-->
+	<animation>
+		<object-name>nm.002</object-name>
+		<object-name>nm.011</object-name>
+		<object-name>nm.101</object-name>
+		<object-name>kt.002</object-name>
+		<object-name>kt.011</object-name>
+		<object-name>kt.101</object-name>
+		<object-name>min.02</object-name>
+		<object-name>min.11</object-name>
+		<type>select</type>
+		<condition>
+			<and>
+				<equals>
+					<property>/instrumentation/dme/in-range</property>
+					<value>0</value>
+				</equals>
+				<greater-than>
+					<property>extra500/instrumentation/dmeInd/state</property>
+					<value>0</value>
+				</greater-than>
+			</and>
+		</condition>
+	</animation>
+
+
+</PropertyList>
+

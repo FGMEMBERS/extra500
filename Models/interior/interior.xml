@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: 18.04.2014
+
+      Last change: Eric van den Berg     
+      Date: 20.05.2014            
+
+-->
+
+<PropertyList>
+
+	<path>interior.ac</path>
+
+   	<animation>
+	  	<type>range</type>
+	  	<min-m>0</min-m>
+	  	<max-m>50</max-m>
+    	</animation>
+
+<!-- Submodels -->
+
+<model>
+  <name>CenterConsole</name>
+  <path>Aircraft/extra500/Models/interior/CenterConsole.xml</path>
+	<offsets>
+		<x-m>-0.80979</x-m>
+		<y-m>0</y-m>	
+		<z-m>-0.39665</z-m>
+	<pitch-deg>17</pitch-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>speaker</name>
+  <path>Aircraft/extra500/Models/interior/speaker.ac</path>
+	<offsets>
+		<x-m>-0.09953</x-m>
+		<y-m>0.0</y-m>	
+		<z-m>0.372</z-m>
+            <pitch-deg>4</pitch-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>map light cop</name>
+  <path>Aircraft/extra500/Models/interior/maplightpic.xml</path>
+	<offsets>
+		<x-m>-0.25338</x-m>
+		<y-m>0.07490</y-m>	
+		<z-m>0.29566</z-m>
+            <roll-deg>15</roll-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>map light pic</name>
+  <path>Aircraft/extra500/Models/interior/maplightcop.xml</path>
+	<offsets>
+		<x-m>-0.25338</x-m>
+		<y-m>-0.07490</y-m>	
+		<z-m>0.29566</z-m>
+            <roll-deg>-15</roll-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>reading light switch cop</name>
+  <path>Aircraft/extra500/Models/interior/readinglightcopswitch.xml</path>
+	<offsets>
+		<x-m>-0.21137</x-m>
+		<y-m>0.14517</y-m>	
+		<z-m>0.28823</z-m>
+            <pitch-deg>94</pitch-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>reading light cop</name>
+  <path>Aircraft/extra500/Models/interior/readinglightcop.xml</path>
+	<offsets>
+		<x-m>-0.16962</x-m>
+		<y-m>0.18990</y-m>	
+		<z-m>0.28577</z-m>
+            <pitch-deg>184</pitch-deg>
+            <roll-deg>0</roll-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>reading light switch pic</name>
+  <path>Aircraft/extra500/Models/interior/readinglightpicswitch.xml</path>
+	<offsets>
+		<x-m>-0.21137</x-m>
+		<y-m>-0.14517</y-m>	
+		<z-m>0.28823</z-m>
+            <pitch-deg>94</pitch-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>reading light pic</name>
+  <path>Aircraft/extra500/Models/interior/readinglightpic.xml</path>
+	<offsets>
+		<x-m>-0.16962</x-m>
+		<y-m>-0.18990</y-m>	
+		<z-m>0.28577</z-m>
+            <pitch-deg>184</pitch-deg>
+            <roll-deg>0</roll-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>reading light switch LF</name>
+  <path>Aircraft/extra500/Models/interior/readinglightLFswitch.xml</path>
+	<offsets>
+		<x-m>0.82430</x-m>
+		<y-m>-0.65431</y-m>	
+		<z-m>-0.46784</z-m>
+            <pitch-deg>-90</pitch-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>reading light LF</name>
+  <path>Aircraft/extra500/Models/interior/readinglightLF.xml</path>
+	<offsets>
+		<x-m>0.76006</x-m>
+		<y-m>-0.52456</y-m>	
+		<z-m>0.14436</z-m>
+            <roll-deg>-125.537</roll-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>reading light switch RF</name>
+  <path>Aircraft/extra500/Models/interior/readinglightRFswitch.xml</path>
+	<offsets>
+		<x-m>0.82430</x-m>
+		<y-m>0.65431</y-m>	
+		<z-m>-0.46784</z-m>
+            <pitch-deg>-90</pitch-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>reading light RF</name>
+  <path>Aircraft/extra500/Models/interior/readinglightRF.xml</path>
+	<offsets>
+		<x-m>0.76006</x-m>
+		<y-m>0.52456</y-m>	
+		<z-m>0.14436</z-m>
+            <roll-deg>125.537</roll-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>reading light switch LA</name>
+  <path>Aircraft/extra500/Models/interior/readinglightLAswitch.xml</path>
+	<offsets>
+		<x-m>1.92273</x-m>
+		<y-m>-0.60300</y-m>	
+		<z-m>-0.47289</z-m>
+            <pitch-deg>-90</pitch-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>reading light LA</name>
+  <path>Aircraft/extra500/Models/interior/readinglightLA.xml</path>
+	<offsets>
+		<x-m>1.82270</x-m>
+		<y-m>-0.41532</y-m>	
+		<z-m>0.15074</z-m>
+            <roll-deg>-139.896</roll-deg>
+            <heading-deg>10</heading-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>reading light switch RA</name>
+  <path>Aircraft/extra500/Models/interior/readinglightRAswitch.xml</path>
+	<offsets>
+		<x-m>1.92273</x-m>
+		<y-m>0.60300</y-m>	
+		<z-m>-0.47289</z-m>
+            <pitch-deg>-90</pitch-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>reading light RA</name>
+  <path>Aircraft/extra500/Models/interior/readinglightRA.xml</path>
+	<offsets>
+		<x-m>1.82270</x-m>
+		<y-m>0.41532</y-m>	
+		<z-m>0.15074</z-m>
+            <roll-deg>139.896</roll-deg>
+            <heading-deg>-10</heading-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>rudderpedalsleft</name>
+  <path>Aircraft/extra500/Models/interior/rudderpedalsleft.xml</path>
+	<offsets>
+		<x-m>-1.0169</x-m>
+		<y-m>-0.335</y-m>	
+		<z-m>-0.78</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>rudderpedalsright</name>
+  <path>Aircraft/extra500/Models/interior/rudderpedalsright.xml</path>
+	<offsets>
+		<x-m>-1.0169</x-m>
+		<y-m>0.335</y-m>	
+		<z-m>-0.78</z-m>
+	</offsets>
+</model>
+
+<!--pick animations-->
+<animation>
+  <type>pick</type>
+  <object-name>storage.right.door</object-name>
+  <visible>true</visible>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("storagedoorright open/close");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>storage.right.door</object-name>
+  <property>/extra500/interior/storageright/doorstate</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>180</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>0.16348</x1-m>
+    <y1-m>0.14836</y1-m>
+    <z1-m>-0.82936</z1-m>
+    <x2-m>0.42076</x2-m>
+    <y2-m>0.14836</y2-m>
+    <z2-m>-0.82939</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>storage.left.lower.door</object-name>
+  <visible>true</visible>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("storagedoorlowerleft open/close");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>storage.left.lower.door</object-name>
+  <property>/extra500/interior/storagelowerleft/doorstate</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>180</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>0.42070</x1-m>
+    <y1-m>-0.15251</y1-m>
+    <z1-m>-0.74657</z1-m>
+    <x2-m>0.16409</x2-m>
+    <y2-m>-0.15251</y2-m>
+    <z2-m>-0.74642</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>storage.left.upper.door</object-name>
+  <visible>true</visible>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("storagedoorupperleft open/close");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>storage.left.upper.door</object-name>
+  <property>/extra500/interior/storageupperleft/doorstate</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>180</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>0.39522</x1-m>
+    <y1-m>-0.15251</y1-m>
+    <z1-m>-0.64550</z1-m>
+    <x2-m>0.19282</x2-m>
+    <y2-m>-0.15251</y2-m>
+    <z2-m>-0.64550</z2-m>
+  </axis>
+</animation>
+
+
+
+
+</PropertyList>

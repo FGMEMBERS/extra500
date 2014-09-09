@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+	
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Eric van den Berg
+      Date: 2013-06-08
+
+      Last change:      -
+      Date:             -
+-->
+
+<system name="stall-warning">
+	<channel name="stall warner">
+		<fcs_function name="aircraft/stallwarner/alpha-stall-warn">
+			<function>
+ 				<table>
+            				<independentVar lookup="row">fcs/flap-aero-pos-deg</independentVar>
+            				<tableData>
+					0	11.5
+					15	10.0	
+					30	11.0
+					</tableData>
+				</table>
+			</function>
+		</fcs_function>
+
+		<switch name="stallwarning">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/wing/alpha-deg ge aircraft/stallwarner/alpha-stall-warn
+				velocities/vtrue-kts gt 30
+			</test>
+			<output>aircraft/stallwarner/state</output>
+		</switch>
+
+	</channel>
+</system>
