@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             02.09.14
+      Date:             11.09.14
 
 -->
 <PropertyList>
@@ -32,6 +32,16 @@
 <model>
   <name>LLG</name>
   <path>Aircraft/extra500/Models/landinggear/left-lg.xml</path>	
+</model>
+
+<model>
+  <name>testcube</name>
+  <path>Aircraft/extra500/Models/landinggear/testcube.ac</path>	
+	<offsets>
+		<x-m>0.02</x-m>
+		<y-m>-0.14</y-m>	
+		<z-m>-0.99</z-m>
+	</offsets>
 </model>
 
 <animation>

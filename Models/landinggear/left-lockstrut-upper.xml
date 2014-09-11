@@ -20,12 +20,12 @@
       Date: 2014-08-22
 
       Last change: Eric van den Berg     
-      Date: 2014-08-31            
+      Date: 2014-09-05            
 
 -->
 <PropertyList>
 
-<path>left-lockstrut.ac</path>
+<path>left-lockstrut-upper.ac</path>
 
 <!-- submodels -->
 
@@ -42,10 +42,77 @@
 	</offsets>
 </model>
 
+<model>
+  <name>lockstrut-lower</name>
+  <path>Aircraft/extra500/Models/landinggear/left-lockstrut-lower.xml</path>
+	<offsets>
+		<x-m>0</x-m>
+		<y-m>-0.15602</y-m>	
+		<z-m>-0.09041</z-m>
+	</offsets>
+</model>
+
+<!-- lockbar rotation --> 
+ <animation>
+  <type>rotate</type>
+  <object-name>lockbar</object-name>
+  <property>gear/gear[1]/position-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0.0</ind>
+                <dep>-10</dep>
+            </entry>
+            <entry>
+                <ind>0.5</ind>
+                <dep>-10</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>0</dep>
+            </entry>
+        </interpolation>
+  <axis>
+	<x1-m>-0.05053</x1-m>
+    <y1-m>-0.14601</y1-m>
+    <z1-m>-0.04318</z1-m>
+    <x2-m>0</x2-m>
+    <y2-m>-0.14601</y2-m>
+    <z2-m>-0.04318</z2-m>
+  </axis>
+  </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>lockbar</object-name>
+  <property>gear/gear[1]/position-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0.0</ind>
+                <dep>-10</dep>
+            </entry>
+            <entry>
+                <ind>0.5</ind>
+                <dep>0</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>0</dep>
+            </entry>
+        </interpolation>
+  <axis>
+	<x1-m>-0.05053</x1-m>
+    <y1-m>0</y1-m>
+    <z1-m>-0.04318</z1-m>
+    <x2-m>-0.05053</x2-m>
+    <y2-m>-0.14601</y2-m>
+    <z2-m>-0.04318</z2-m>
+  </axis>
+  </animation>
+
 <!-- lockstrut rotation --> 
  <animation>
   <type>rotate</type>
-  <object-name>Lmainlg-3</object-name>
+  <object-name>lockstrut-lower</object-name>
   <property>gear/gear[1]/position-norm</property>
   <interpolation>
             <entry>
