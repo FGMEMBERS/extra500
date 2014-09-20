@@ -19,7 +19,7 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: 2014-08-21
 
-      Last change: 2014-09-02     
+      Last change: 2014-09-20     
       Date: Eric van den Berg            
 
 -->
@@ -45,6 +45,18 @@
 		<x-m>0.93154</x-m>
 		<y-m>-0.61032</y-m>	
 		<z-m>-1.17800</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>guiderod.upper</name>
+  <path>Aircraft/extra500/Models/landinggear/left-guiderod.upper.ac</path>
+	<offsets>
+		<x-m>0.955</x-m>
+		<y-m>-0.41188</y-m>	
+		<z-m>-1.19821</z-m>
+		<roll-deg>37</roll-deg>
+		<heading-deg>-2</heading-deg>
 	</offsets>
 </model>
 
@@ -99,6 +111,56 @@
     <x2-m>1</x2-m>
     <y2-m>-0.61629</y2-m>
     <z2-m>-1.18523</z2-m>
+  </axis>
+
+  </animation>
+
+<!-- guide rod rotation --> 
+ <animation>
+  <type>rotate</type>
+  <object-name>guiderod.upper</object-name>
+  <property>gear/gear[1]/position-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0.0</ind>
+                <dep>6</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>0</dep>
+            </entry>
+        </interpolation>
+  <axis>
+	<x1-m>0.93154</x1-m>
+    <y1-m>-0.41188</y1-m>
+    <z1-m>-1.19821</z1-m>
+    <x2-m>0.93154</x2-m>
+    <y2-m>-0.41188</y2-m>
+    <z2-m>0</z2-m>
+  </axis>
+  </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>guiderod.upper</object-name>
+  <property>gear/gear[1]/position-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>-2</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>0</dep>
+            </entry>
+        </interpolation>
+  <axis>
+	<x1-m>0.93154</x1-m>
+    <y1-m>-0.41188</y1-m>
+    <z1-m>-1.19821</z1-m>
+    <x2-m>1</x2-m>
+    <y2-m>-0.41188</y2-m>
+    <z2-m>-1.19821</z2-m>
   </axis>
   </animation>
 

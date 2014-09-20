@@ -19,7 +19,7 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: 2014-08-22
 
-      Last change: 2014-08-23     
+      Last change: 2014-09-20     
       Date: Eric van den Berg            
 
 -->
@@ -58,6 +58,142 @@
 		<z-m>-0.22100</z-m>
 	</offsets>
 </model>
+
+<model>
+  <name>left-guiderod-lower</name>
+  <path>Aircraft/extra500/Models/landinggear/left-guiderod.lower.ac</path>
+	<offsets>
+		<x-m>0.06487</x-m>
+		<y-m>0.01291</y-m>	
+		<z-m>-0.13116</z-m>
+	</offsets>
+</model>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>blockarm</object-name>
+  <object-name>block.in</object-name>
+  <object-name>block.out</object-name>
+  <object-name>left-guiderod-lower</object-name>
+  <property>gear/gear[1]/position-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0.0</ind>
+                <dep>-49</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>35</dep>
+            </entry>
+        </interpolation>
+  <axis>
+	<x1-m>0</x1-m>
+    <y1-m>0</y1-m>
+    <z1-m>0</z1-m>
+    <x2-m>0</x2-m>
+    <y2-m>0</y2-m>
+    <z2-m>1</z2-m>
+  </axis>
+  </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>block.in</object-name>
+  <property>gear/gear[1]/position-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0.0</ind>
+                <dep>49</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-35</dep>
+            </entry>
+        </interpolation>
+  <axis>
+	<x1-m>0.03233</x1-m>
+    <y1-m>0.01597</y1-m>
+    <z1-m>0</z1-m>
+    <x2-m>0.03233</x2-m>
+    <y2-m>0.01597</y2-m>
+    <z2-m>1</z2-m>
+  </axis>
+  </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>block.out</object-name>
+  <object-name>left-guiderod-lower</object-name>
+  <property>gear/gear[1]/position-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0.0</ind>
+                <dep>47</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-34</dep>
+            </entry>
+        </interpolation>
+  <axis>
+	<x1-m>0.06487</x1-m>
+    <y1-m>0.01291</y1-m>
+    <z1-m>0</z1-m>
+    <x2-m>0.06487</x2-m>
+    <y2-m>0.01291</y2-m>
+    <z2-m>1</z2-m>
+  </axis>
+  </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>left-guiderod-lower</object-name>
+  <property>gear/gear[1]/position-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0.0</ind>
+                <dep>40</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>40</dep>
+            </entry>
+        </interpolation>
+  <axis>
+	<x1-m>0</x1-m>
+    <y1-m>0.01291</y1-m>
+    <z1-m>-0.13116</z1-m>
+    <x2-m>1</x2-m>
+    <y2-m>0.01291</y2-m>
+    <z2-m>-0.13116</z2-m>
+  </axis>
+  </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>left-guiderod-lower</object-name>
+  <property>gear/gear[1]/compression-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0.0</ind>
+                <dep>0</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-42</dep>
+            </entry>
+        </interpolation>
+  <axis>
+	<x1-m>0</x1-m>
+    <y1-m>0.01291</y1-m>
+    <z1-m>-0.13116</z1-m>
+    <x2-m>1</x2-m>
+    <y2-m>0.01291</y2-m>
+    <z2-m>-0.13116</z2-m>
+  </axis>
+  </animation>
+
+
 
 <!-- upperstrut rotation --> 
  <animation>
@@ -120,5 +256,6 @@
   	<z>1</z>
   </axis>
 </animation> 
+
 
 </PropertyList>
