@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             11.09.14
+      Date:             20.09.21
 
 -->
 <PropertyList>
@@ -32,6 +32,11 @@
 <model>
   <name>LLG</name>
   <path>Aircraft/extra500/Models/landinggear/left-lg.xml</path>	
+</model>
+
+<model>
+  <name>RLG</name>
+  <path>Aircraft/extra500/Models/landinggear/right-lg.xml</path>	
 </model>
 
 <model>
@@ -53,13 +58,6 @@
   <object-name>BugradGelenkOben</object-name>
  </animation>
   
-<animation>
-  <name>RechtsFahrwerkKomplett</name>
-  <object-name>Radrechts</object-name>
-  <object-name>RadStangerechts</object-name>
-  <object-name>RadStangerechts.001</object-name>
-</animation> 
-
 <!-- BUGFAHRWERK --> 
 
 <!-- Bugradeinzug  -->
@@ -239,40 +237,14 @@
 
 
 <!-- FAHRWERK RECHTS-->
-<!-- Radeinklapp --> 
- <animation>
-  <type>rotate</type>
-  <object-name>Radrechts</object-name>
-  <object-name>RadStangerechts.001</object-name>
-  <property>gear/gear[2]/position-norm</property>
-  <interpolation>
-            <entry>
-                <ind>0.4</ind>
-                <dep>-90</dep>
-            </entry>
-            <entry>
-                <ind>0.8</ind>
-                <dep>0</dep>
-            </entry>
-        </interpolation>
-  <axis>
-	<x1-m>0.93253</x1-m>
-    <y1-m>0.89046</y1-m>
-    <z1-m>-1.43954</z1-m>
-    <x2-m>0.93253</x2-m>
-    <y2-m>0.89046</y2-m>
-    <z2-m>-1.68062</z2-m>
-  </axis>
-  </animation>
-<!-- FWeinzug links  -->
 <animation>
   <type>rotate</type>
-  <object-name>RechtsFahrwerkKomplett</object-name>
+  <object-name>RLG</object-name>
  <property>gear/gear[2]/position-norm</property> 
   <interpolation>
             <entry>
                 <ind>0</ind>
-                <dep>93</dep>
+                <dep>92.5</dep>
             </entry>
             <entry>
                 <ind>1</ind>
@@ -280,53 +252,16 @@
             </entry>
         </interpolation>
   <axis>
-  <x1-m> 0.95079</x1-m>
-  <y1-m>0.11558</y1-m>
-  <z1-m>-1.15490</z1-m>
-  <x2-m> 0.95079</x2-m>
-  <y2-m>0.39384</y2-m>
-  <z2-m>-0.99401</z2-m>
+  <x1-m>0.93407</x1-m>
+  <y1-m>0.18040</y1-m>
+  <z1-m>-1.1038</z1-m>
+  <x2-m>0.93407</x2-m>
+  <y2-m>0.41606</y2-m>
+  <z2-m>-0.98523</z2-m>
   </axis>
 </animation>
 
-<animation>
-  <type>translate</type>
-  <object-name>Radrechts</object-name>
-  <property>gear/gear[2]/compression-norm</property>
-  <factor>0.3048</factor>
-  <axis>
-  	<x>0</x>
-  	<y>0</y>
-  	<z>1</z>
-  </axis>
-</animation> 
 
-<!-- drehende Raeder -->
-<animation>
-  <type>spin</type>
-  <object-name>Radrechts</object-name>
-  
-  <condition>
-    <equals>
-      <property>gear/gear[2]/position-norm</property>
-      <value>1</value>
-    </equals>
-  </condition>
-  <!--<property>gear/gear[2]/rollspeed-ms</property>-->
-    <property>sim/multiplay/generic/float[13]</property>
-
-  <factor>-20</factor>
-  <center>
-    <x-m> 0.92380</x-m>
-    <y-m>1.11191</y-m>
-    <z-m>-1.58844</z-m>
-  </center>
-  <axis>
-    <x>0</x>
-    <y>1</y>
-    <z>0</z>
-  </axis>
- </animation>
 
  
 </PropertyList>

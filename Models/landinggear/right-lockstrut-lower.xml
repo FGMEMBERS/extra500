@@ -17,109 +17,98 @@
     along with extra500.  If not, see <http://www.gnu.org/licenses/>.
 
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
-      Date: 2014-08-22
+      Date: 2014-09-21
 
-      Last change: 2014-09-21     
-      Date: Eric van den Berg            
+      Last change:      
+      Date:             
 
 -->
 <PropertyList>
 
-<path>left-wheelass.ac</path>
+<path>left-lockstrut-lower.ac</path>
 
 <!-- submodels -->
 
+<model>
+  <name>bigcyl</name>
+  <path>Aircraft/extra500/Models/landinggear/left-bigcyl.xml</path>
+	<offsets>
+		<x-m>0.06670</x-m>
+		<y-m>-0.16094</y-m>	
+		<z-m>-0.09368</z-m>
+		<pitch-deg>22</pitch-deg>
+		<heading-deg>-154</heading-deg>
+	</offsets>
+</model>
 
-<!-- wheel rotation --> 
+
+<!-- cylinder rotation --> 
  <animation>
   <type>rotate</type>
-  <object-name>Radlinks</object-name>
-  <object-name>brakeDiskL</object-name>
-  <object-name>Cube</object-name>
-  <object-name>Cube.001</object-name>
-  <object-name>RadStangelinks</object-name>
-  <object-name>brakeL</object-name>
-  <object-name>block</object-name>
-  <property>gear/gear[1]/position-norm</property>
+  <object-name>bigcyl</object-name>
+  <property>gear/gear[2]/position-norm</property>
   <interpolation>
             <entry>
                 <ind>0.0</ind>
-                <dep>-90</dep>
+                <dep>110</dep>
             </entry>
             <entry>
-                <ind>0.5</ind>
-                <dep>-40</dep>
-            </entry>
-            <entry>
-                <ind>1</ind>
-                <dep>0</dep>
-            </entry>
-        </interpolation>
-  <axis>
-	<x1-m>0.0</x1-m>
-    <y1-m>0</y1-m>
-    <z1-m>0</z1-m>
-    <x2-m>0.0</x2-m>
-    <y2-m>0</y2-m>
-    <z2-m>1</z2-m>
-  </axis>
-  </animation>
-
- <animation>
-  <type>rotate</type>
-  <object-name>block</object-name>
-  <property>gear/gear[1]/position-norm</property>
-  <interpolation>
-            <entry>
-                <ind>0.0</ind>
-                <dep>90</dep>
+                <ind>0.25</ind>
+                <dep>72</dep>
             </entry>
             <entry>
                 <ind>0.5</ind>
                 <dep>40</dep>
             </entry>
             <entry>
+                <ind>0.75</ind>
+                <dep>17</dep>
+            </entry>
+            <entry>
                 <ind>1</ind>
                 <dep>0</dep>
             </entry>
         </interpolation>
   <axis>
-	<x1-m>0.05107</x1-m>
-    <y1-m>0.04306</y1-m>
-    <z1-m>0</z1-m>
-    <x2-m>0.05107</x2-m>
-    <y2-m>0.04306</y2-m>
-    <z2-m>1</z2-m>
+	<x1-m>0.06670</x1-m>
+    <y1-m>-0.16094</y1-m>
+    <z1-m>-0.09368</z1-m>
+    <x2-m>0.06670</x2-m>
+    <y2-m>0</y2-m>
+    <z2-m>-0.09368</z2-m>
   </axis>
   </animation>
 
-
-
-
-
-<!-- spinning wheel -->
-<animation>
-  <type>spin</type>
-  <object-name>Radlinks</object-name>
-  <object-name>brakeDiskL</object-name>  
-  <condition>
-    <equals>
-      <property>gear/gear[1]/position-norm</property>
-      <value>1</value>
-    </equals>
-  </condition>
-    <property>sim/multiplay/generic/float[12]</property>
-  <factor>-20</factor>
-  <center>
-    <x-m> 0</x-m>
-    <y-m>-0.15971</y-m>
-    <z-m>-0.14150</z-m>
-  </center>
+ <animation>
+  <type>rotate</type>
+  <object-name>bigcyl</object-name>
+  <property>gear/gear[2]/position-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0.0</ind>
+                <dep>-16</dep>
+            </entry>
+            <entry>
+                <ind>0.5</ind>
+                <dep>-15</dep>
+            </entry>
+            <entry>
+                <ind>0.75</ind>
+                <dep>-9</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>0</dep>
+            </entry>
+        </interpolation>
   <axis>
-    <x>0</x>
-    <y>1</y>
-    <z>0</z>
+	<x1-m>0.06670</x1-m>
+    <y1-m>-0.16094</y1-m>
+    <z1-m>-0.09368</z1-m>
+    <x2-m>0.06670</x2-m>
+    <y2-m>-0.16094</y2-m>
+    <z2-m>0</z2-m>
   </axis>
- </animation>
+  </animation>
  
 </PropertyList>

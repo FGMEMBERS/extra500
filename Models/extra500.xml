@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             21.08.2014
+      Date:             21.09.2014
 
 -->
 
@@ -499,7 +499,7 @@
 </model>
 
 <!--for gear test purposes only -->
-<animation>
+<!--animation>
   <object-name>gear.doors.upper.left</object-name>
   <object-name>gear.doors.lower.left</object-name>
   <type>select</type>
@@ -509,7 +509,7 @@
     <value>1</value>
    </equals>
   </condition>
- </animation>
+ </animation-->
 
  <animation>
   <type>rotate</type>

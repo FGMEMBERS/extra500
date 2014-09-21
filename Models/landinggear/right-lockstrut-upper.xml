@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: 2014-09-21
+
+      Last change:      
+      Date:             
+
+-->
+<PropertyList>
+
+<path>right-lockstrut-upper.ac</path>
+
+<!-- submodels -->
+
+<model>
+  <name>lockbar</name>
+  <path>Aircraft/extra500/Models/landinggear/right-lockbar.xml</path>
+	<offsets>
+		<x-m>-0.05053</x-m>
+		<y-m>0.14601</y-m>	
+		<z-m>-0.04318</z-m>
+		<heading-deg>90</heading-deg>
+		<pitch-deg>168</pitch-deg>
+		<roll-deg>-10</roll-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>lockstrut-lower</name>
+  <path>Aircraft/extra500/Models/landinggear/right-lockstrut-lower.xml</path>
+	<offsets>
+		<x-m>0</x-m>
+		<y-m>0.15602</y-m>	
+		<z-m>-0.09041</z-m>
+		<heading-deg>180</heading-deg>
+	</offsets>
+</model>
+
+<!-- lockbar rotation --> 
+ <animation>
+  <type>rotate</type>
+  <object-name>lockbar</object-name>
+  <property>gear/gear[2]/position-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0.0</ind>
+                <dep>10</dep>
+            </entry>
+            <entry>
+                <ind>0.5</ind>
+                <dep>10</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>0</dep>
+            </entry>
+        </interpolation>
+  <axis>
+	<x1-m>-0.05053</x1-m>
+    <y1-m>0.14601</y1-m>
+    <z1-m>-0.04318</z1-m>
+    <x2-m>0</x2-m>
+    <y2-m>0.14601</y2-m>
+    <z2-m>-0.04318</z2-m>
+  </axis>
+  </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>lockbar</object-name>
+  <property>gear/gear[2]/position-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0.0</ind>
+                <dep>10</dep>
+            </entry>
+            <entry>
+                <ind>0.5</ind>
+                <dep>0</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>0</dep>
+            </entry>
+        </interpolation>
+  <axis>
+	<x1-m>-0.05053</x1-m>
+    <y1-m>0</y1-m>
+    <z1-m>-0.04318</z1-m>
+    <x2-m>-0.05053</x2-m>
+    <y2-m>-0.14601</y2-m>
+    <z2-m>-0.04318</z2-m>
+  </axis>
+  </animation>
+
+<!-- lockstrut rotation --> 
+ <animation>
+  <type>rotate</type>
+  <object-name>lockstrut-lower</object-name>
+  <property>gear/gear[2]/position-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0.0</ind>
+                <dep>68</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>0</dep>
+            </entry>
+        </interpolation>
+  <axis>
+	<x1-m>0</x1-m>
+    <y1-m>0.15602</y1-m>
+    <z1-m>-0.09041</z1-m>
+    <x2-m>1</x2-m>
+    <y2-m>0.15602</y2-m>
+    <z2-m>-0.09041</z2-m>
+  </axis>
+  </animation>
+ 
+</PropertyList>
