@@ -533,7 +533,7 @@ var FMSDATAKeypadWidget = {
 		
 	},
 	_onFplReadyChange: func(n){
-		if(fms._fightPlan.isReady){
+		if(fms._flightPlan.isReady){
 
 		}else{
 				me._can.destETE.setText("--:--:--");
@@ -542,8 +542,8 @@ var FMSDATAKeypadWidget = {
 	},
 	
 	_onFplUpdatedChange : func(n){
-		me._can.destETE.setText(global.formatTime(fms._fightPlan.ete,"H:i:s"));
-		me._can.ETE.setText(global.formatTime(fms._fightPlan.wp[fms._fightPlan.currentWp].ete,"H:i:s"));
+		me._can.destETE.setText(global.formatTime(fms._flightPlan.ete,"H:i:s"));
+		me._can.ETE.setText(global.formatTime(fms._flightPlan.wp[fms._flightPlan.currentWpIndex].ete,"H:i:s"));
 	},
 	
 	

@@ -27,8 +27,8 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 	
 	settimer(func(){
 		
-		positioned.findWithinRange(600,"airport");
-		positioned.findWithinRange(150,"vor");
+		#positioned.findWithinRange(600,"airport");
+		#positioned.findWithinRange(150,"vor");
 		
 		#print("Extra500 init");
 		extra500.eSystem.checkSource();

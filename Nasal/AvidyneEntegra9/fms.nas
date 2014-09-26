@@ -22,11 +22,22 @@
 var FlightPlanData = {
 	new : func(){
 		var m = {};
-		m.ident		= "";
+		m.id		= "";
+		m.name		= "";
+		m.lat 		= 0;
+		m.lon 		= 0;
+		
 		m.distanceTo 	= 0;
 		m.ete 		= 0;
 		m.eta 		= 0;
 		m.fuelAt 	= 0;
+		m.course	= nil;
+		
+		m.type 		= nil;
+		m.role 		= nil;
+		m.flyType 	= nil;
+		
+		m.path 		= nil;
 		
 		m.constraint = {
 			alt:{type:nil,value:0},
@@ -44,7 +55,11 @@ var FlightManagementSystemClass = {
 			FlightManagementSystemClass,
 			extra500.ServiceClass.new(root,name)
 		]};
+		
 		m._selectedWaypointIndex = 0;
+		m._selectedWaypointOptionIndex = 0;
+		m._cursorFocusIndex = 0;
+		
 		m._fplActive = 0;
 		m._nRoute 		= props.globals.getNode("/autopilot/route-manager/route",1);
 		m._nFlightPan		= m._nRoot.initNode("FlightPlan");
@@ -63,10 +78,13 @@ var FlightManagementSystemClass = {
 		m._destinationCourseDistance = [0,0];
 		
 		m._signal = {
-			fplReady	: props.globals.initNode("/instrumentation/fms[0]/signal/fpl-ready",0,"BOOL"),
-			fplUpdated	: props.globals.initNode("/instrumentation/fms[0]/signal/fpl-updated",0,"BOOL"),
-			fplChange	: props.globals.initNode("/instrumentation/fms[0]/signal/fpl-change",0,"BOOL"),
-			currentWpChange	: props.globals.initNode("/instrumentation/fms[0]/signal/fpl-current-waypoint-change",0,"INT"),
+			fplReady 		: props.globals.initNode("/instrumentation/fms[0]/signal/fpl/ready",0,"BOOL"),
+			fplUpdated 		: props.globals.initNode("/instrumentation/fms[0]/signal/fpl/updated",0,"BOOL"),
+			fplChange 		: props.globals.initNode("/instrumentation/fms[0]/signal/fpl/change",0,"BOOL"),
+			currentWpChange	 	: props.globals.initNode("/instrumentation/fms[0]/signal/fpl/current-waypoint-change",0,"INT"),
+			selectedWpChange 	: props.globals.initNode("/instrumentation/fms[0]/signal/fpl/selected-waypoint-change",0,"INT"),
+			cursorOptionChange 	: props.globals.initNode("/instrumentation/fms[0]/signal/fpl/cursor-option",0,"INT"),
+			cursorIndexChange	: props.globals.initNode("/instrumentation/fms[0]/signal/fpl/cursor-index",0,"INT"),
 			
 		};
 		
@@ -83,7 +101,7 @@ var FlightManagementSystemClass = {
 		};
 
 		m._fpl 		= nil; # the nasal flightplan();
-		m._fightPlan 	= {
+		m._flightPlan 	= {
 			isReady 	: 0,
 			isUpdated 	: 0,
 			destination : {
@@ -144,38 +162,81 @@ var FlightManagementSystemClass = {
 		append(me._listeners, setlistener(me._node.DirectTo,func(n){me._onDirectToChange(n);},1,0) );
 		append(me._listeners, setlistener(extra500.autopilot.nModeNavGpss,func(n){me._onGPSSChange(n);},1,0) );
 		append(me._listeners, setlistener("/autopilot/fms-channel/gpss/in-turn",func(n){me._onGPSSInTurnChange(n);},1,0) );
+		append(me._listeners, setlistener("/sim/gui/dialogs/route-manager/selection",func(n){me._onSelectionChange(n)},1,1));	
+		
 	},
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
 		me.setListeners(instance);
 		me._updateTimer.start();
 	},
+	_onSelectionChange : func(n){
+		var index = n.getValue();
+		if(index != nil){
+			me.setCursorOption(0);
+			me.setSelectedWaypoint(index);
+			
+		}
+	},
 	#IFD & route Manager selection, called from IFD page_FMS.nas
 	setSelectedWaypoint : func(index){
-		me._selectedWaypointIndex = index;
+		me._selectedWaypointIndex 	= index; 
+		me._signal.selectedWpChange.setValue(me._selectedWaypointIndex);
+		me.setCursorIndex(1+index*2);
+	},
+	setCursorOption : func(index){
+		me._selectedWaypointOptionIndex = index;
+		me._signal.cursorOptionChange.setValue(me._selectedWaypointOptionIndex);
+	},
+	setCursorIndex : func(index){
+		me._cursorFocusIndex = index;
+		me._signal.cursorIndexChange.setValue(me._cursorFocusIndex);
 	},
 	_onFlightPlanChange : func(n){
 		print("FlightManagementSystemClass::_onFlightPlanChange() ... ");
 		me._fpl = flightplan();
 		#updating the flightplan
-		me._fightPlan.planSize = me._fpl.getPlanSize();
-		me._fightPlan.currentWp = me._fpl.current;
+		me._flightPlan.planSize = me._fpl.getPlanSize();
+		me._flightPlan.currentWpIndex = me._fpl.current;
 		#resize the waypoint vector
-		setsize(me._fightPlan.wp,me._fightPlan.planSize);
+		setsize(me._flightPlan.wp,me._flightPlan.planSize);
 				
 		#destination bearing
 		if(me._fpl.destination != nil){
 			var result= courseAndDistance(me._fpl.destination.lat,me._fpl.destination.lon);
-			me._fightPlan.destination.bearingCourse 	= result[0];
-			me._fightPlan.destination.bearingDistance 	= result[1];
+			me._flightPlan.destination.bearingCourse 	= result[0];
+			me._flightPlan.destination.bearingDistance 	= result[1];
 		}
+		
+		
+		for (var i = 0 ; i < me._flightPlan.planSize ; i+=1){
+			var fmsWP = me._fpl.getWP(i);
+			me._flightPlan.wp[i] = FlightPlanData.new();
+			me._flightPlan.wp[i].id			 	= fmsWP.id;
+			me._flightPlan.wp[i].name		 	= fmsWP.wp_name;
+			me._flightPlan.wp[i].lat		 	= fmsWP.wp_lat;
+			me._flightPlan.wp[i].lon		 	= fmsWP.wp_lon;
+			me._flightPlan.wp[i].constraint.alt.type 	= fmsWP.alt_cstr_type;
+			me._flightPlan.wp[i].constraint.alt.value	= fmsWP.alt_cstr;
+			me._flightPlan.wp[i].type			= fmsWP.wp_type;
+			me._flightPlan.wp[i].role			= fmsWP.wp_role;
+			me._flightPlan.wp[i].flyType			= fmsWP.fly_type;
+			me._flightPlan.wp[i].path			= fmsWP.path();
+			
+			if(i>0){
+				me._flightPlan.wp[i].course			= me._fpl.getWP(i-1).leg_bearing;
+			}
+			
+			
+		}
+		
 		me._signal.fplChange.setValue(n.getValue());
 	},
 	_onCurrentWaypointChange : func(n){
 # 		print("FlightManagementSystemClass._onFlightPlanChange() ... ");
 		
-		me._fightPlan.currentWp = n.getValue();
-		if ( me._fightPlan.currentWp >= 0 ) {
+		me._flightPlan.currentWpIndex = n.getValue();
+		if ( me._flightPlan.currentWpIndex >= 0 ) {
 #			settimer(func(){me._nextGpssBearing()},1);
 			me._nextGpssBearing();
 		
@@ -219,12 +280,12 @@ var FlightManagementSystemClass = {
 		}
 		
 		me._node.btnObsMode.setValue(0);
-		me._signal.currentWpChange.setValue(me._fightPlan.currentWp);
+		me._signal.currentWpChange.setValue(me._flightPlan.currentWpIndex);
 		
 		
 	},
 	_nextGpssBearing : func(){
-		setprop("/autopilot/fms-channel/gpss/next-bearing-deg",getprop("/autopilot/route-manager/route/wp["~me._fightPlan.currentWp~"]/leg-bearing-true-deg"));
+		setprop("/autopilot/fms-channel/gpss/next-bearing-deg",getprop("/autopilot/route-manager/route/wp["~me._flightPlan.currentWpIndex~"]/leg-bearing-true-deg"));
 	},
 	# Operation functions of Avidyne FMS 
 	jumpTo : func(){
@@ -327,9 +388,19 @@ var FlightManagementSystemClass = {
 		me._fplActive = n.getValue();
 		me.checkOBSMode();
 	},
+	
+### FMS action
+	deleteWaypoint : func(index=nil){
+		if(index == nil){
+			index = me._selectedWaypointIndex;
+		}
+		me._fpl.deleteWP(index);
+	},
+	
+	
 	update : func(){
-		me._fightPlan.isReady = 0;
-		me._fightPlan.isUpdated = 0;
+		me._flightPlan.isReady = 0;
+		me._flightPlan.isUpdated = 0;
 		
 		me._dynamicPoint.TOD.visible 	= 0;
 		me._dynamicPoint.TOC.visible 	= 0;
@@ -342,12 +413,12 @@ var FlightManagementSystemClass = {
 		me._constraint.VSR.visible	= 0;
 		
 		if(me._fplActive){
-			me._fightPlan.isReady = 1;
+			me._flightPlan.isReady = 1;
 			
 			if(me._fpl.destination != nil){
 				var result= courseAndDistance(me._fpl.destination.lat,me._fpl.destination.lon);
-				me._fightPlan.destination.bearingCourse 	= result[0];
-				me._fightPlan.destination.bearingDistance 	= result[1];
+				me._flightPlan.destination.bearingCourse 	= result[0];
+				me._flightPlan.destination.bearingDistance 	= result[1];
 			}
 		
 						
@@ -380,27 +451,27 @@ var FlightManagementSystemClass = {
 				
 				me._constraint.VSR.alt = getprop("/autopilot/route-manager/destination/field-elevation-ft");
 				
-				for (var i = 0 ; i < me._fightPlan.planSize ; i+=1){
-					var fmsWP = me._fpl.getWP(i);
-					me._fightPlan.wp[i] = FlightPlanData.new();
-					me._fightPlan.wp[i].constraint.alt.type 	= fmsWP.alt_cstr_type;
-					me._fightPlan.wp[i].constraint.alt.value	= fmsWP.alt_cstr;
+				for (var i = 0 ; i < me._flightPlan.planSize ; i+=1){
+# 					var fmsWP = me._fpl.getWP(i);
+# 					me._flightPlan.wp[i] = FlightPlanData.new();
+# 					me._flightPlan.wp[i].constraint.alt.type 	= fmsWP.alt_cstr_type;
+# 					me._flightPlan.wp[i].constraint.alt.value	= fmsWP.alt_cstr;
 					
 					
-					if (i >= me._fightPlan.currentWp){
+					if (i >= me._flightPlan.currentWpIndex){
 					
-						me._fightPlan.wp[i].distanceTo 	= distance;
-						me._fightPlan.wp[i].ete		= ete;
-						me._fightPlan.wp[i].eta 	= eta;
-						me._fightPlan.wp[i].fuelAt 	= fuelAt;
+						me._flightPlan.wp[i].distanceTo 	= distance;
+						me._flightPlan.wp[i].ete		= ete;
+						me._flightPlan.wp[i].eta 	= eta;
+						me._flightPlan.wp[i].fuelAt 	= fuelAt;
 						
 						distance 			= fmsWP.leg_distance;
 																			
-						if ((me._fightPlan.wp[i].constraint.alt.type != nil) and ( me._constraint.VSR.distance == 0 ) ) {
-							me._constraint.VSR.alt = me._fightPlan.wp[i].constraint.alt.value;
+						if ((me._flightPlan.wp[i].constraint.alt.type != nil) and ( me._constraint.VSR.distance == 0 ) ) {
+							me._constraint.VSR.alt = me._flightPlan.wp[i].constraint.alt.value;
 							me._constraint.VSR.distance = distanceToGo;
 							me._constraint.VSR.wptIndex = i;
-							#print(""~fmsWP.wp_name ~" constraint : "~me._fightPlan.wp[i].constraint.alt.type~" "~me._constraint.VSR.alt~" in "~me._constraint.VSR.distance~" nm");
+							#print(""~fmsWP.wp_name ~" constraint : "~me._flightPlan.wp[i].constraint.alt.type~" "~me._constraint.VSR.alt~" in "~me._constraint.VSR.distance~" nm");
 							
 						}
 					
@@ -411,23 +482,23 @@ var FlightManagementSystemClass = {
 						fuelAt = fuelGalUs -= fuelFlowGalUSpSec * ete;
 					}else{
 						
-						me._fightPlan.wp[i].distanceTo 	= 0;
-						me._fightPlan.wp[i].ete		= 0;
-						me._fightPlan.wp[i].eta 	= 0;
-						me._fightPlan.wp[i].fuelAt 	= 0;
+						me._flightPlan.wp[i].distanceTo 	= 0;
+						me._flightPlan.wp[i].ete		= 0;
+						me._flightPlan.wp[i].eta 	= 0;
+						me._flightPlan.wp[i].fuelAt 	= 0;
 						
 					}
 						
 				}
 				
-				me._fightPlan.distanceToGo	= distanceToGo;
-				me._fightPlan.ete		= distanceToGo / gsSec ;
-				me._fightPlan.eta		= time + (distanceToGo / gsSec);
-				me._fightPlan.fuelAt		= fuelGalUs;
+				me._flightPlan.distanceToGo	= distanceToGo;
+				me._flightPlan.ete		= distanceToGo / gsSec ;
+				me._flightPlan.eta		= time + (distanceToGo / gsSec);
+				me._flightPlan.fuelAt		= fuelGalUs;
 							
 				
 				if(me._constraint.VSR.distance == 0){
-					me._constraint.VSR.wptIndex = me._fightPlan.planSize-1;
+					me._constraint.VSR.wptIndex = me._flightPlan.planSize-1;
 					me._constraint.VSR.distance = distanceToGo;
 				}
 				var altToGo = (me._constraint.VSR.alt - currentAlt);
@@ -465,10 +536,10 @@ var FlightManagementSystemClass = {
 				}
 				
 				
-				me._fightPlan.isUpdated = 1;
+				me._flightPlan.isUpdated = 1;
 				
 				#for debug deploy to property-tree not needed
-				#me._nFlightPan.setValues(me._fightPlan);
+				#me._nFlightPan.setValues(me._flightPlan);
 			}else{
 				
 			}
@@ -477,8 +548,8 @@ var FlightManagementSystemClass = {
 		
 		me._node.vsrRate.setValue(me._constraint.VSR.rate);
 		
-		me._signal.fplReady.setValue(me._fightPlan.isReady);
-		if(me._fightPlan.isUpdated){
+		me._signal.fplReady.setValue(me._flightPlan.isReady);
+		if(me._flightPlan.isUpdated){
 			me._signal.fplUpdated.setValue(1);
 		}
 	},

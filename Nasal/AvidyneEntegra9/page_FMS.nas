@@ -82,7 +82,7 @@ var ScrollAble = {
 		return m;
 	},
 	adjust : func(amount=nil){return 0;},
-	select : func(v){}
+	select : func(v,cursor=0){}
 };
 
 var FlightPlanItemInterface = {
@@ -142,24 +142,18 @@ var FlighPlanInserCoursor = {
 	},
 	adjust : func(amount=nil){
 		var adjust = 0;
+		
 		if(amount==nil){
 			
 		}else{
 			adjust = me._visibility == 1 ? math.sgn(amount) : 0;
 		}
 		
-		if(adjust == 0){
-			me._index = global.clamp(me._index + math.sgn(amount),0,size(me._position)-1);
-			me._can.CursorInsert.setTranslation(0,me._position[me._index]);
-			me.select(1);
-			
-		}else{
-			me.select(0);
-			
-		}
 		return adjust;
 	},
-	select : func(v){
+	select : func(v,cursor=0){
+		me._index = cursor/2;
+		me._can.CursorInsert.setTranslation(0,me._position[me._index]);
 		me._visibility = v;
 		me._can.CursorInsert.setVisible(me._visibility);
 	}
@@ -255,7 +249,7 @@ var FlighPlanItem_old = {
 		
 		return adjust;
 	},
-	select : func(v){
+	select : func(v,cursor=0){
 		me._visibility = v;
 		
 		if(me._type == "runway"){
@@ -405,7 +399,7 @@ var FlightPlanListWidget = {
 		m._insertCoursor = FlighPlanInserCoursor.new(m._group);
 		m._scrollAbleList = [];
 		m._scrollAbleListSize = 0;
-		m._scrollAbleIndex = 0;
+		m._cursorIndex = 0;
 		
 		m._canList = {};
 		m._scrollY = 0;
@@ -423,6 +417,7 @@ var FlightPlanListWidget = {
 		
 		m._x = 400;
 		m._y = 70;
+		m._yMax = 1356;
 		
 		m._listTransform = m._can.FlightPlan.createTransform();
 		
@@ -434,13 +429,13 @@ var FlightPlanListWidget = {
 	setListeners : func(instance) {
 # 		append(me._listeners, setlistener("/autopilot/route-manager/signals/waypoint-changed",func(n){me._onFlightPlanChange(n)},1,0));	
 # 		append(me._listeners, setlistener("/autopilot/route-manager/current-wp",func(n){me._onCurrentWaypointChange(n)},1,0));
-		append(me._listeners, setlistener(fms._signal.fplChange,func(n){me._onFlightPlanChange(n)},1,1));	
+		append(me._listeners, setlistener(fms._signal.fplChange,func(n){me._onFlightPlanChange(n)},1,1));
 		append(me._listeners, setlistener(fms._signal.currentWpChange,func(n){me._onCurrentWaypointChange(n)},1,1));
-		append(me._listeners, setlistener(fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,0));	
-		append(me._listeners, setlistener(fms._signal.fplUpdated,func(n){me._onFplUpdatedChange(n)},0,1));	
-		
-		append(me._listeners, setlistener("/sim/gui/dialogs/route-manager/selection",func(n){me._onSelectionChange(n)},1,1));	
-		
+		append(me._listeners, setlistener(fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,0));
+		append(me._listeners, setlistener(fms._signal.fplUpdated,func(n){me._onFplUpdatedChange(n)},0,1));
+# 		append(me._listeners, setlistener(fms._signal.selectedWpChange,func(n){me._onSelectedWpChange(n)},1,1));
+		append(me._listeners, setlistener(fms._signal.cursorOptionChange,func(n){me._onCursorOptionChange(n)},1,1));
+		append(me._listeners, setlistener(fms._signal.cursorIndexChange,func(n){me._onCursorIndexChange(n)},1,1));
 		
 	},
 	init : func(instance=me){
@@ -469,11 +464,11 @@ var FlightPlanListWidget = {
 			}
 			
 			me._ifd.ui.bindKnob("RK",{
-				"<<"	: func(){me._adjustSelection(1);},
-				"<"	: func(){me._adjustSelection(1);},
+				"<<"	: func(){me._adjustCursorFocus(1);},
+				"<"	: func(){me._adjustCursorFocus(1);},
 				"push"	: func(){fms.jumpTo();},
-				">"	: func(){me._adjustSelection(-1);},
-				">>"	: func(){me._adjustSelection(-1);},
+				">"	: func(){me._adjustCursorFocus(-1);},
+				">>"	: func(){me._adjustCursorFocus(-1);},
 			},{
 				"scroll"	: "Scroll",
 				"push"		: "Select",
@@ -490,6 +485,7 @@ var FlightPlanListWidget = {
 		if(me._layout == "FPL"){
 			me._x = 400;
 			me._y = 70;
+			me._yMax = 1356;
 			
 			me._can.FlightPlan.set("clip","rect(70px, 2048px, 1424px, 0px)");
 							
@@ -498,11 +494,12 @@ var FlightPlanListWidget = {
 		}elsif(layout == "split-right"){
 			me._x = 400;
 			me._y = 70;
+			me._yMax = 1356; # TODO : 
 			
 			me._can.FlightPlan.set("clip","rect(205px, 2048px, 1216px, 1024px)");
 						
 			me._listTransform.setScale(0.75,0.75);
-			me._listTransform.setTranslation(770,150);
+			me._listTransform.setTranslation(770,0);
 		}else{
 			me._visible == 0;
 			me._can.FlightPlan.setVisible(me._visible);
@@ -527,15 +524,13 @@ var FlightPlanListWidget = {
 		append(me._insertCoursor._position,me._y);
 		append(me._scrollAbleList,me._insertCoursor);
 		
-		for( var i=0; i < fms._fightPlan.planSize; i+=1 ){
-			var fmsWP = fms._fpl.getWP(i);
+		for( var i=0; i < fms._flightPlan.planSize; i+=1 ){
 			
 			if ( i >= me._cacheSize ){
-				#append(me._fplItemCache , FlighPlanItem_old.new(me._can.list,i,fmsWP.wp_type));
-				me._fplItemCache[i] = FlighPlanItem_old.new(me._can.list,i,fmsWP.wp_type);
+				me._fplItemCache[i] = FlighPlanItem_old.new(me._can.list,i,fms._flightPlan.wp[i].type);
 				me._cacheSize = size(me._fplItemCache);
 			}
-			me._fplItemCache[i].setType(fmsWP.wp_type,fmsWP.wp_role);
+			me._fplItemCache[i].setType(fms._flightPlan.wp[i].type,fms._flightPlan.wp[i].role);
 			me._fplItemCache[i].setTranslation(me._x,translateY);
 			
 			append(me._scrollAbleList,me._fplItemCache[i]);
@@ -544,41 +539,33 @@ var FlightPlanListWidget = {
 			append(me._insertCoursor._position,translateY);
 			append(me._scrollAbleList,me._insertCoursor);
 			
-			
-			#me._fplItemCache[i].setHeadline(sprintf("%s %03.0f - %s",fmsWP.fly_type,fmsWP.leg_bearing,fmsWP.wp_role));
-			#me._fplItemCache[i].setName(sprintf("%s - %s",fmsWP.wp_name,fmsWP.wp_type));
-			
-			me._fplItemCache[i].setName(sprintf("%s",fmsWP.wp_name));
+						
+			me._fplItemCache[i].setName(sprintf("%s",fms._flightPlan.wp[i].name));
 			
 			var restriction = "";
-			if (fmsWP.alt_cstr_type != nil) {
-				restriction ~= "at : " ~ fmsWP.alt_cstr ~"ft ";
+			if (fms._flightPlan.wp[i].constraint.alt.type != nil) {
+				restriction ~= "at : " ~ fms._flightPlan.wp[i].constraint.alt.value ~"ft ";
 			}
-			if (fmsWP.speed_cstr_type != nil) {
-				restriction ~= "IAS : " ~ fmsWP.speed_cstr ~"kts ";
-			}
-			if (fmsWP.wp_type != nil){
-				restriction ~= fmsWP.wp_type ~ " - ";
+			if (fms._flightPlan.wp[i].type != nil){
+				restriction ~= fms._flightPlan.wp[i].type ~ " - ";
 			}else {
 				restriction ~= "nil - ";
 			}
-			if(fmsWP.wp_role != nil){
-				restriction ~=  fmsWP.wp_role;
+			if(fms._flightPlan.wp[i].role != nil){
+				restriction ~=  fms._flightPlan.wp[i].role;
 			}else {
 				restriction ~=  "nil";
 			}
 			me._fplItemCache[i].setRestriction(restriction);
-			if(fms._fightPlan.planSize > 1){
-				distSum += fmsWP.leg_distance;
-
-			}
+			
 			if(i > 0){
-				me._fplItemCache[i].setHeadline(sprintf("%s %03.0f",fmsWP.fly_type,fms._fpl.getWP(i-1).leg_bearing));
-				me._fplItemCache[i].setDistance(sprintf("%0.1f",fms._fpl.getWP(i-1).leg_distance));
+				me._fplItemCache[i].setHeadline(sprintf("%s %03.0f",fms._flightPlan.wp[i].flyType,fms._flightPlan.wp[i].course));
+				me._fplItemCache[i].setDistance(sprintf("%0.1f",fms._flightPlan.wp[i].distanceTo));
 			}else{
 				me._fplItemCache[i].setHeadline("");
 				me._fplItemCache[i].setDistance("---");
 			}
+			
 			if( i == me._currentIndex){
 				me._fplItemCache[i].setActive(1);
 			}
@@ -586,21 +573,22 @@ var FlightPlanListWidget = {
 				me._fplItemCache[i].setSelection(1);
 			}
 			
-			me._fplItemCache[i].setVisible(1);
+			me._fplItemCache[i].setVisible(translateY <= me._yMax);
+			
 		}
 		
 		debug.dump("me._insertCoursor._position",me._insertCoursor._position);
 		me._scrollAbleListSize = size(me._scrollAbleList);
 		me._resizeScroll();
-		#me._setSelection(fms._fightPlan.planSize-1,"insert");
-		#me._scrollToCurrentIndex(fms._fightPlan.planSize-1);
+		#me._setSelection(fms._flightPlan.planSize-1,"insert");
+		#me._scrollToCurrentIndex(fms._flightPlan.planSize-1);
 		me._scrollToCurrentIndex(me._selectedIndex);
 		
 	},
 	_resizeScroll : func(){
-		if(fms._fightPlan.planSize > 6){
-			me._scrollSize = 1356 / fms._fightPlan.planSize;
-			me._maxScroll = fms._fightPlan.planSize -6;
+		if(fms._flightPlan.planSize > 6){
+			me._scrollSize = 1356 / fms._flightPlan.planSize;
+			me._maxScroll = fms._flightPlan.planSize -6;
 		}else{
 			me._scrollSize = 1356 / 6;
 			me._maxScroll = 6;
@@ -637,7 +625,7 @@ var FlightPlanListWidget = {
 		
 	},
 	_deleteWaypoint : func(){
-		fms._fpl.deleteWP(me._selectedIndex);
+		fms.deleteWaypoint();
 	},
 	_onFlightPlanChange : func(n){
 # 		print("FlightPlanListWidget._onFlightPlanChange() ... ");
@@ -647,17 +635,41 @@ var FlightPlanListWidget = {
 		me._clearList();
 		me._drawList();
 	},
-	_onSelectionChange : func(n){
+	_onSelectedWpChange : func(n){
 		var index = n.getValue();
+		me._lastSelectedIndex = me._selectedIndex;
+		
 		if(index == nil){
 			index = -1;
 		}
+		
+		me._selectedIndex = index;
+		
 		if(index >= 0){
-			me._setSelection(index);
 			me._scrollToSelectedIndex(me._selectedIndex);
 		}
 		
+		if(me._fplItemCache[me._lastSelectedIndex] != nil){
+			me._fplItemCache[me._lastSelectedIndex].setSelection(0);
+		}
+		if(me._fplItemCache[me._selectedIndex] != nil){
+			me._fplItemCache[me._selectedIndex].setSelection(1);
+		}
+		me._scrollToCurrentIndex(me._selectedIndex);
 		
+	},
+	_onCursorOptionChange : func(n){
+		var index = n.getValue();
+		
+	},
+	_setSelection : func(index=nil,mode=nil){
+		if (index!=nil){
+			fms.setSelectedWaypoint(index);
+			me._cursorModeInsert = 0;
+		}
+		if(mode!=nil){
+			me._cursorModeInsert = mode;
+		}
 	},
 	_onCurrentWaypointChange : func(n){
 		me._currentIndex = n.getValue();	
@@ -674,33 +686,32 @@ var FlightPlanListWidget = {
 			me._fplItemCache[me._currentIndex].setActive(1);
 		}
 
-		
 		me._can.ScrollCursorCurrent.setTranslation(0,me._y+me._currentIndex*me._scrollSize);
+		
 		me._setSelection(me._currentIndex);
-		me._scrollToCurrentIndex(me._currentIndex);
 		me._lastCurrentIndex = me._currentIndex;
-
-		
 	},
-	_adjustSelection : func(amount){
+	_adjustCursorFocus : func(amount){
+		var index = me._cursorIndex;
+		var adjust = me._scrollAbleList[index].adjust(amount);
 		
-		var adjust = me._scrollAbleList[me._scrollAbleIndex].adjust(amount);
+		
 		if (adjust != 0){
-			me._scrollAbleIndex = global.clamp(me._scrollAbleIndex + adjust,0,me._scrollAbleListSize-1);
-			me._scrollAbleList[me._scrollAbleIndex].adjust(amount);
+			index = global.clamp(index + adjust,0,me._scrollAbleListSize-1);
 		}
 		
+		fms.setCursorIndex(index);
 		
 # 		if(amount > 0){
 # 			if(me._cursorModeInsert==1){
 # 				me._selectedIndex += amount;
-# 				me._selectedIndex = global.clamp(me._selectedIndex,0,fms._fightPlan.planSize-1);
+# 				me._selectedIndex = global.clamp(me._selectedIndex,0,fms._flightPlan.planSize-1);
 # 			}
 # 			me._setSelection(me._selectedIndex,!me._cursorModeInsert);
 # 		}elsif(amount < 0){
 # 			if(me._cursorModeInsert==0){
 # 				me._selectedIndex += amount;
-# 				me._selectedIndex = global.clamp(me._selectedIndex,0,fms._fightPlan.planSize-1);
+# 				me._selectedIndex = global.clamp(me._selectedIndex,0,fms._flightPlan.planSize-1);
 # 			}
 # 			me._setSelection(me._selectedIndex,!me._cursorModeInsert);
 # 		}else{
@@ -708,51 +719,27 @@ var FlightPlanListWidget = {
 # 		}
 		
 		#me._setSelection();
-		me._scrollToSelectedIndex(me._selectedIndex);	
+# 		me._scrollToSelectedIndex(me._selectedIndex);	
 	},
-	_setSelection : func(index=nil,mode=nil){
-		if (index!=nil){
-			me._selectedIndex = index;
-			me._cursorModeInsert = 0;
-		}
-		if(mode!=nil){
-			me._cursorModeInsert = mode;
-		}
-
+	_onCursorIndexChange : func(n){
 		
-		#print("FlightPlanWidget._setSelection() ... "~me._selectedIndex);
-		if(me._fplItemCache[me._lastSelectedIndex] != nil){
-			me._fplItemCache[me._lastSelectedIndex].setSelection(0);
-		}
-		if(me._fplItemCache[me._selectedIndex] != nil){
-			me._fplItemCache[me._selectedIndex].setSelection(1);
+		if(me._scrollAbleList[me._cursorIndex] != nil){
+			me._scrollAbleList[me._cursorIndex].select(0,me._cursorIndex);
 		}
 		
-		#me._can.CursorSelect.setVisible(!me._cursorModeInsert);
-# 		me._can.CursorInsert.setTranslation(0,me._selectedIndex*224);
-# 		me._can.CursorInsert.setVisible(me._cursorModeInsert);
+		me._cursorIndex = n.getValue();
 		
-# 		if(me._cursorModeInsert == 1){
-# 			me._can.CursorSelect.setVisible(0);
-# 			me._can.CursorInsert.setVisible(1ndex*224);
-# 		}else{
-# 			me._can.CursorInsert.setVisible(0);
-# 			me._can.CursorSelect.setVisible(1);
-# 			#me._can.CursorSelect.setTranslation(0,me._selectedIndex*224);
-# 		}
+		if(me._scrollAbleList[me._cursorIndex] != nil){
+			me._scrollAbleList[me._cursorIndex].select(1,me._cursorIndex);
+		}	
 		
-
-		
-			
-		
-		fms.setSelectedWaypoint(me._selectedIndex);
-		me._lastSelectedIndex = me._selectedIndex;
 	},
+
 	_onFplReadyChange : func(n){
-		if(fms._fightPlan.isReady){
+		if(fms._flightPlan.isReady){
 			
 		}else{
-			for( var i=0; i < fms._fightPlan.planSize; i+=1 ){
+			for( var i=0; i < fms._flightPlan.planSize; i+=1 ){
 				me._fplItemCache[i].setDistance("---");
 				me._fplItemCache[i].setETE("---");
 				me._fplItemCache[i].setETA("---");
@@ -761,12 +748,12 @@ var FlightPlanListWidget = {
 		}
 	},
 	_onFplUpdatedChange : func(n){
-		for( var i=0; i < fms._fightPlan.planSize; i+=1 ){
-			if (i >= fms._fightPlan.currentWp){
-				me._fplItemCache[i].setDistance(sprintf("%0.1f",fms._fightPlan.wp[i].distanceTo));
-				me._fplItemCache[i].setETE(global.formatTime(fms._fightPlan.wp[i].ete,"i:s"));
-				me._fplItemCache[i].setETA(global.formatTime(fms._fightPlan.wp[i].eta));
-				me._fplItemCache[i].setFuel(sprintf("%.0f",fms._fightPlan.wp[i].fuelAt));
+		for( var i=0; i < fms._flightPlan.planSize; i+=1 ){
+			if (i >= fms._flightPlan.currentWpIndex){
+				me._fplItemCache[i].setDistance(sprintf("%0.1f",fms._flightPlan.wp[i].distanceTo));
+				me._fplItemCache[i].setETE(global.formatTime(fms._flightPlan.wp[i].ete,"i:s"));
+				me._fplItemCache[i].setETA(global.formatTime(fms._flightPlan.wp[i].eta));
+				me._fplItemCache[i].setFuel(sprintf("%.0f",fms._flightPlan.wp[i].fuelAt));
 			}else{
 				me._fplItemCache[i].setDistance("---");
 				me._fplItemCache[i].setETE("---");
