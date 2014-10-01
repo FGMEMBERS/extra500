@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: 26.09.14
 
-      Last change:      
-      Date:             
+      Last change: Eric van den Berg     
+      Date: 01.10.14            
 
 -->
 <PropertyList>
@@ -28,7 +28,10 @@
 <path>nlg.ac</path>
 
 <!-- submodels -->
-
+<model>
+  <name>torque.link</name>
+  <path>Aircraft/extra500/Models/landinggear/nlg-torquelink.xml</path>
+</model>
   
 <!-- wheel steering-->  
 <animation>
@@ -38,6 +41,7 @@
   <object-name>nlg-fork</object-name>
   <object-name>nlg-axle</object-name>
   <object-name>nlg-wheel</object-name>
+  <object-name>torque.link</object-name>
   <condition>
     <equals>
       <property>gear/gear[0]/position-norm</property>
@@ -113,6 +117,31 @@
     <z>0</z>
   </axis>
  </animation>
+
+<!--torquelink upper joint rotation -->
+<animation>
+  <type>rotate</type>
+  <object-name>torque.link</object-name>
+  <property>gear/gear/compression-norm</property>
+  	<interpolation>
+            <entry>
+                <ind>1</ind>
+                <dep>90</dep>
+            </entry>
+            <entry>
+                <ind>0.0</ind>
+                <dep>0.0</dep>
+            </entry>
+        </interpolation>   
+  <axis>
+    <x1-m>-0.05649</x1-m>
+    <y1-m>0</y1-m>
+    <z1-m>-0.24083</z1-m>
+    <x2-m>-0.05649</x2-m>
+    <y2-m>1</y2-m>
+    <z2-m>-0.24083</z2-m>
+  </axis>
+</animation>
  
 
 </PropertyList>
