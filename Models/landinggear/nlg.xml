@@ -20,7 +20,7 @@
       Date: 26.09.14
 
       Last change: Eric van den Berg     
-      Date: 01.10.14            
+      Date: 08.10.14            
 
 -->
 <PropertyList>
@@ -32,6 +32,40 @@
   <name>torque.link</name>
   <path>Aircraft/extra500/Models/landinggear/nlg-torquelink.xml</path>
 </model>
+
+<model>
+  <name>lockstrut</name>
+  <path>Aircraft/extra500/Models/landinggear/nlg-lockstrut.xml</path>
+	<offsets>
+		<x-m>0.05863</x-m>
+		<y-m>0</y-m>	
+		<z-m>-0.20255</z-m>
+		<heading-deg>90</heading-deg>
+		<roll-deg>-34</roll-deg>
+	</offsets>
+</model>
+
+<!-- LOCKSTRUT RELATIVE TO NLG-->  
+<animation>
+  <type>rotate</type>
+  <object-name>lockstrut</object-name>
+  <property>gear/gear[0]/position-norm</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>73</dep></entry>
+   <entry><ind>0.25</ind><dep>2</dep></entry>
+   <entry><ind>0.5</ind><dep>-30</dep></entry>
+   <entry><ind>0.75</ind><dep>-32</dep></entry>
+   <entry><ind>1</ind><dep>0</dep></entry>
+  </interpolation>   
+  <axis>
+    <x1-m>0.05863</x1-m>
+    <y1-m>0</y1-m>
+    <z1-m>-0.20255</z1-m>
+    <x2-m>0.05863</x2-m>
+    <y2-m>1</y2-m>
+    <z2-m>-0.20255</z2-m>
+  </axis>
+</animation>
   
 <!-- wheel steering-->  
 <animation>
@@ -75,7 +109,7 @@
 <interpolation>
             <entry>
                 <ind>1</ind>
-                <dep>0.2</dep>
+                <dep>0.1</dep>
             </entry>
             <entry>
                 <ind>0.0</ind>
@@ -93,7 +127,7 @@
 </animation>
  
 
- <!-- drehende Raeder -->
+ <!-- wheel spin -->
 <animation>
   <type>spin</type>
   <object-name>nlg-wheel</object-name>
@@ -126,7 +160,7 @@
   	<interpolation>
             <entry>
                 <ind>1</ind>
-                <dep>90</dep>
+                <dep>45</dep>
             </entry>
             <entry>
                 <ind>0.0</ind>

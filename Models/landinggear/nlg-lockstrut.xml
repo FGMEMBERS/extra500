@@ -17,44 +17,39 @@
     along with extra500.  If not, see <http://www.gnu.org/licenses/>.
 
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
-      Date: 01.10.14
+      Date: 07.10.14
 
-      Last change: Eric van den Berg      
-      Date: 03.10.14            
+      Last change: Eric van den Berg     
+      Date: 08.10.14            
 
 -->
 <PropertyList>
 
-<path>nlg-torquelink.ac</path>
+<path>nlg-lockstrut.ac</path>
 
 <!-- submodels -->
-  
-<!-- dampening movement-->  
+
+
+<!-- LOCKSTRUT RELATIVE TO NLG-->  
 <animation>
   <type>rotate</type>
-  <object-name>nlg-torque.link.lower</object-name>
-  <property>gear/gear/compression-norm</property>
-  	<interpolation>
-            <entry>
-                <ind>1</ind>
-                <dep>-90</dep>
-            </entry>
-            <entry>
-                <ind>0.0</ind>
-                <dep>0.0</dep>
-            </entry>
-        </interpolation>   
+  <object-name>vstrut</object-name>
+  <property>gear/gear[0]/position-norm</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>123</dep></entry>
+   <entry><ind>0.25</ind><dep>140</dep></entry>
+   <entry><ind>0.5</ind><dep>122</dep></entry>
+   <entry><ind>0.75</ind><dep>84</dep></entry>
+   <entry><ind>1</ind><dep>0</dep></entry>
+  </interpolation>   
   <axis>
-    <x1-m>-0.09753</x1-m>
-    <y1-m>0</y1-m>
-    <z1-m>-0.348073</z1-m>
-    <x2-m>-0.09753</x2-m>
-    <y2-m>1</y2-m>
-    <z2-m>-0.34807</z2-m>
+    <x1-m>0.</x1-m>
+    <y1-m>-0.142</y1-m>
+    <z1-m>0</z1-m>
+    <x2-m>1</x2-m>
+    <y2-m>-0.142</y2-m>
+    <z2-m>0</z2-m>
   </axis>
 </animation>
   
-
- 
-
 </PropertyList>

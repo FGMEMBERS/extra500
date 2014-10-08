@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             27.09.23
+      Date:             01.10.14
 
 -->
 <PropertyList>
@@ -62,9 +62,9 @@
   <name>NLG</name>
   <path>Aircraft/extra500/Models/landinggear/nlg.xml</path>	
 	<offsets>
-		<x-m>-1.60481</x-m>
+		<x-m>-1.606</x-m>
 		<y-m>0</y-m>	
-		<z-m>-0.98046</z-m>
+		<z-m>-0.961</z-m>
 	</offsets>
 </model>
 
@@ -90,7 +90,7 @@
   <interpolation>
             <entry>
                 <ind>0.0</ind>
-                <dep>95</dep>
+                <dep>90</dep>
             </entry>
             <entry>
                 <ind>1</ind>
@@ -98,12 +98,12 @@
             </entry>
         </interpolation>
   <axis>
-    <x1-m>-1.60481</x1-m>
+    <x1-m>-1.606</x1-m>
     <y1-m>1.0</y1-m>
-    <z1-m>-0.98046</z1-m>
-	<x2-m>-1.60481</x2-m>
+    <z1-m>-0.961</z1-m>
+	<x2-m>-1.606</x2-m>
     <y2-m>-1.0</y2-m>
-    <z2-m>-0.98046</z2-m>
+    <z2-m>-0.961</z2-m>
   </axis>
   </animation> 
   
