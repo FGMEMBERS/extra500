@@ -20,7 +20,7 @@
       Date: 2014-09-05
 
       Last change: Eric van den Berg     
-      Date: 2014-09-11            
+      Date: 2014-10-09            
 
 -->
 <PropertyList>
@@ -36,7 +36,7 @@
 		<x-m>-0.06670</x-m>
 		<y-m>-0.16094</y-m>	
 		<z-m>-0.09368</z-m>
-		<pitch-deg>22</pitch-deg>
+		<pitch-deg>20</pitch-deg>
 		<heading-deg>-26</heading-deg>
 	</offsets>
 </model>
