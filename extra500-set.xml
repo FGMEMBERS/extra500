@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2014-08-21
+      Date:             2014-11-23
 
 
 ************************************************************************
@@ -1299,7 +1299,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/yokes.nas</file>
 		
 		<file>Aircraft/extra500/Nasal/route_manager.nas</file>
-		
+		<file>Aircraft/extra500/Nasal/trimindication.nas</file>
 	</extra500>
 	<IFD>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/base.class.nas</file>
@@ -1420,6 +1420,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<warning type="bool">1</warning>
 			<caution type="bool">1</caution>
 			<info type="bool">1</info>
+			<trim type="bool">1</trim>
 		</ui>
 		<handling>
 			<realTrim type="bool">1</realTrim>
