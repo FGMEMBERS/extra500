@@ -16,6 +16,7 @@
 #      Author: Eric van den Berg
 #      Date:   23.11.2014
 
+var left2 = nil;
 
 setlistener("/sim/signals/fdm-initialized", func {
     init_display();
@@ -31,10 +32,13 @@ setlistener("/fdm/jsbsim/aircraft/events/pitchtrim", func {
 
 var init_display = func() {
     if (getprop("/extra500/config/ui/trim") == 1) {
-	    var left2  = screen.display.new(100,10);
-    	    left2.add("/fdm/jsbsim/aircraft/hstab/elevator/pilot");
+	    if(left2 == nil){
+		left2  = screen.display.new(100,10);
+		left2.add("/fdm/jsbsim/aircraft/hstab/elevator/pilot");
+	    }
     } else {
 	    left2.close();
+	    left2 = nil;
     }
 }
 
