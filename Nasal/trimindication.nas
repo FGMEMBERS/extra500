@@ -15,6 +15,10 @@
 #
 #      Author: Eric van den Berg
 #      Date:   23.11.2014
+#
+#      Last change:      Eric van den Berg 
+#      Date:             26.11.2014
+#
 
 var left2 = nil;
 
@@ -37,7 +41,6 @@ var init_display = func() {
 		left2.add("/fdm/jsbsim/aircraft/hstab/elevator/pilot");
 	    }
     } else {
-	    left2.close();
 	    left2 = nil;
     }
 }
