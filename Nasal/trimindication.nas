@@ -30,18 +30,38 @@ setlistener("/extra500/config/ui/trim", func {
     init_display();
 });
 
+setlistener("/autopilot/mode/alt", func {
+	init_display();
+});
+
+setlistener("/autopilot/mode/vs", func {
+	init_display();
+});
+
+setlistener("/autopilot/mode/gs-follow", func {
+	init_display();
+});
+
+setlistener("/autopilot/mode/cws", func {
+	init_display();
+});
+
 setlistener("/fdm/jsbsim/aircraft/events/pitchtrim", func {
 	pilottrim();
 });
 
+
 var init_display = func() {
-    if (getprop("/extra500/config/ui/trim") == 1) {
+    if ((getprop("/extra500/config/ui/trim") == 1) and (getprop("/autopilot/mode/alt")!=1)and(getprop("/autopilot/mode/vs")!=1)and(getprop("/autopilot/mode/gs-follow")!=1)and(getprop("/autopilot/mode/cws")!=1)) {
 	    if(left2 == nil){
 		left2  = screen.display.new(100,10);
 		left2.add("/fdm/jsbsim/aircraft/hstab/elevator/pilot");
 	    }
     } else {
-	    left2 = nil;
+	    if(left2 != nil){
+	    	left2.close();
+	    	left2 = nil;
+	    }
     }
 }
 
