@@ -17,7 +17,7 @@
 #      Date: Jul 20 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             27.05.14
+#      Date:             20.07.14
 #
 
 
@@ -480,7 +480,8 @@ var AltitudeWidget = {
 		return m;
 	},
 	setListeners : func(instance) {
-		append(me._listeners, setlistener("/autopilot/settings/tgt-altitude-ft",func(n){me._onBugChange(n)},1,0));	
+		append(me._listeners, setlistener("/autopilot/alt-channel/alt-bug-ft",func(n){me._onBugChange1(n)},1,0));
+		append(me._listeners, setlistener("/autopilot/settings/tgt-altitude-ft",func(n){me._onBugChange2(n)},1,0));	
 		append(me._listeners, setlistener("/instrumentation/altimeter-IFD-"~me._ifd.name~"/setting-hpa",func(n){me._onHpaChange(n)},1,0));	
 	
 	},
@@ -502,19 +503,22 @@ var AltitudeWidget = {
 		me._hpa		= n.getValue();
 		me._can.HPA.setText(sprintf("%4i",me._hpa));
 	},
-	_onBugChange : func(n){
-		me._bug = n.getValue();
+	_onBugChange1 : func(n){
+		me._bug1 = n.getValue();
 				
-		me._can.BugValue.setText(sprintf("%4i",global.roundInt( me._bug )));
-		
-		me._bugDiff = (me._alt - me._bug) * me._SCALE_LAD_PX;
+		me._bugDiff = (me._alt - me._bug1) * me._SCALE_LAD_PX;
 		me._bugDiff = global.clamp(me._bugDiff,-272,254);
 		me._can.Bug.setTranslation(0,me._bugDiff);
+	},
+	_onBugChange2 : func(n){
+		me._bug2 = n.getValue();
+				
+		me._can.BugValue.setText(sprintf("%4i",global.roundInt( me._bug2 )));
 	},
 	update20Hz : func(now,dt){
 		me._alt		= me._ptree.alt.getValue();
 		
-		me._bugDiff = (me._alt - me._bug) * me._SCALE_LAD_PX;
+		me._bugDiff = (me._alt - me._bug1) * me._SCALE_LAD_PX;
 		me._bugDiff = global.clamp(me._bugDiff,-272,254);
 		me._can.Bug.setTranslation(0,me._bugDiff);
 		
@@ -1883,11 +1887,11 @@ var BugSelectWidget = {
 			me._can.VS.set("z-index",2);
 			
 			me._ifd.ui.bindKnob("RK",{
-				"<<"	: func(){extra500.autopilot.onAdjustVS(-500);me._ResetTimer.restart(10);},
-				"<"	: func(){extra500.autopilot.onAdjustVS(-100);me._ResetTimer.restart(10);},
+				"<<"	: func(){extra500.autopilot.onAdjustVS(-100,"ifd");me._ResetTimer.restart(10);},
+				"<"	: func(){extra500.autopilot.onAdjustVS(-50,"ifd");me._ResetTimer.restart(10);},
 				"push"	: func(){extra500.autopilot.onSetVS(0);me._ResetTimer.restart(10);},
-				">"	: func(){extra500.autopilot.onAdjustVS(100);me._ResetTimer.restart(10);},
-				">>"	: func(){extra500.autopilot.onAdjustVS(500);me._ResetTimer.restart(10);},
+				">"	: func(){extra500.autopilot.onAdjustVS(50,"ifd");me._ResetTimer.restart(10);},
+				">>"	: func(){extra500.autopilot.onAdjustVS(100,"ifd");me._ResetTimer.restart(10);},
 			},{
 				"scroll"	: "VS",
 				"push"		: "Sync",

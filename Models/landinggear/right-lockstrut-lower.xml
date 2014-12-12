@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: 2014-11-04
+
+      Last change:      
+      Date:             
+
+-->
+<PropertyList>
+
+<path>left-lockstrut-lower.ac</path>
+
+<!-- submodels -->
+
+<model>
+  <name>bigcyl</name>
+  <path>Aircraft/extra500/Models/landinggear/left-bigcyl.xml</path>
+	<offsets>
+		<x-m>0.06670</x-m>
+		<y-m>-0.16094</y-m>	
+		<z-m>-0.09368</z-m>
+		<pitch-deg>20</pitch-deg>
+		<heading-deg>-150</heading-deg>
+	</offsets>
+</model>
+
+
+<!-- cylinder rotation --> 
+ <animation>
+  <type>rotate</type>
+  <object-name>bigcyl</object-name>
+  <property>gear/gear[2]/position-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0.0</ind>
+                <dep>110</dep>
+            </entry>
+            <entry>
+                <ind>0.25</ind>
+                <dep>72</dep>
+            </entry>
+            <entry>
+                <ind>0.5</ind>
+                <dep>40</dep>
+            </entry>
+            <entry>
+                <ind>0.75</ind>
+                <dep>17</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>0</dep>
+            </entry>
+        </interpolation>
+  <axis>
+	<x1-m>0.06670</x1-m>
+    <y1-m>-0.16094</y1-m>
+    <z1-m>-0.09368</z1-m>
+    <x2-m>0.06670</x2-m>
+    <y2-m>0</y2-m>
+    <z2-m>-0.09368</z2-m>
+  </axis>
+  </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>bigcyl</object-name>
+  <property>gear/gear[2]/position-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0.0</ind>
+                <dep>-16</dep>
+            </entry>
+            <entry>
+                <ind>0.5</ind>
+                <dep>-15</dep>
+            </entry>
+            <entry>
+                <ind>0.75</ind>
+                <dep>-9</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>0</dep>
+            </entry>
+        </interpolation>
+  <axis>
+	<x1-m>0.06670</x1-m>
+    <y1-m>-0.16094</y1-m>
+    <z1-m>-0.09368</z1-m>
+    <x2-m>0.06670</x2-m>
+    <y2-m>-0.16094</y2-m>
+    <z2-m>0</z2-m>
+  </axis>
+  </animation>
+ 
+</PropertyList>
