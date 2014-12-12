@@ -17,7 +17,7 @@
 #      Date: 07.06.2014
 #
 #      Last change:      Eric van den Berg 
-#      Date:             21.06.2014
+#      Date:             27.07.2014
 #
 
 var FlightManagementSystemClass = {
@@ -162,40 +162,40 @@ var FlightManagementSystemClass = {
 			me._nextGpssBearing();
 		
 		
-		
+			if (getprop("/instrumentation/nav-source") == 2 ) {
 # getting and setting the frequency in nav1 if new current waypoint is a VOR or destination ILS (course is set in extra500-autopilot.xml)
-			var freq = nil;
-			var course = nil;
-			var currentWP = me._fpl.currentWP();
-			if (currentWP.wp_role == "approach") {
+				var freq = nil;
+				var course = nil;
+				var currentWP = me._fpl.currentWP();
+				if (currentWP.wp_role == "approach") {
 # is approach, looking for ILS freq
-				var apt = airportinfo(getprop("/autopilot/route-manager/destination/airport"));
-				var ils = apt.runways[getprop("/autopilot/route-manager/destination/runway")].ils;
-				if(ils != nil){
-					freq = ils.frequency;
-					course = ils.course ;
+					var apt = airportinfo(getprop("/autopilot/route-manager/destination/airport"));
+					var ils = apt.runways[getprop("/autopilot/route-manager/destination/runway")].ils;
+					if(ils != nil){
+						freq = ils.frequency;
+						course = ils.course ;
 # set course
-					if (course != nil) {
-						course = geo.normdeg( course- getprop("/environment/magnetic-variation-deg"));
-						setprop("/autopilot/fms-channel/autotuning/approach",1);
-						setprop("/instrumentation/nav/radials/selected-deg",course);
+						if (course != nil) {
+							course = geo.normdeg( course- getprop("/environment/magnetic-variation-deg"));
+							setprop("/autopilot/fms-channel/autotuning/approach",1);
+							setprop("/instrumentation/nav/radials/selected-deg",course);
+						}
+					}
+				
+				} else {
+					setprop("/autopilot/fms-channel/autotuning/approach",0);
+# looking for VOR 
+					var navaid = navinfo("vor",currentWP.id);
+					if (size(navaid) != 0 ) {
+						freq = navaid[0].frequency;
 					}
 				}
-				
-			} else {
-				setprop("/autopilot/fms-channel/autotuning/approach",0);
-# looking for VOR 
-				var navaid = navinfo("vor",currentWP.id);
-				if (size(navaid) != 0 ) {
-					freq = navaid[0].frequency;
-				}
-			}
 # set frequency
-			if (freq != nil) {
-				setprop("/instrumentation/nav/frequencies/selected-mhz",freq/100);
-			}
+				if (freq != nil) {
+					setprop("/instrumentation/nav/frequencies/selected-mhz",freq/100);
+				}
 
-			
+			}	
 		}else {
 			setprop("/autopilot/fms-channel/autotuning/approach",0);
 		}

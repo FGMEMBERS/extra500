@@ -20,7 +20,7 @@
       Date: 2013-10-16
 
       Last change:      Eric van den Berg
-      Date:             2014-05-29
+      Date:             2014-11-02
 -->
 
 <!--
@@ -786,8 +786,8 @@ for lights:
 			<test logic="AND" value="1">
 				<test logic="OR" value="1">
 					/systems/gear/gearwarn/relayK1/state eq 0
-					/systems/gear/gearwarn/relayK1/state eq 0
-					/systems/gear/gearwarn/relayK1/state eq 0
+					/systems/gear/gearwarn/relayK2/state eq 0
+					/systems/gear/gearwarn/relayK3/state eq 0
 				</test>
 				<test logic="OR" value="1">
 					<test logic="AND" value="1">
@@ -812,8 +812,8 @@ for lights:
 			<test logic="AND" value="1">
 				<test logic="OR" value="1">
 					/systems/gear/gearwarn/relayK1/state eq 0
-					/systems/gear/gearwarn/relayK1/state eq 0
-					/systems/gear/gearwarn/relayK1/state eq 0
+					/systems/gear/gearwarn/relayK2/state eq 0
+					/systems/gear/gearwarn/relayK3/state eq 0
 				</test>
 				<test logic="AND" value="1">
 					<test logic="OR" value="1">

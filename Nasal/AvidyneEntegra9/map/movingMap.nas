@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Sep 10 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             27.04.2014
+#      Last change:      Eric van den Berg
+#      Date:             13.07.2014
 #
 
 # var RouteLayer = {
@@ -499,22 +499,22 @@ var MovingMapKnobWidget = {
 		if(me._visibility == 1){
 			if(me._hand == 0){
 				me._ifd.ui.bindKnob("LK",{
-					"<<"	: func(){me.adjustMapRange(-2);},
+					"<<"	: func(){me.adjustMapRange(-1);},
 					"<"	: func(){me.adjustMapRange(-1);},
 					"push"	: func(){me.adjustMapView(1);},
 					">"	: func(){me.adjustMapRange(1);},
-					">>"	: func(){me.adjustMapRange(2);},
+					">>"	: func(){me.adjustMapRange(1);},
 				},{
 					"scroll"	: "Range",
 					"push"		: "View"
 				});
 			}else{
 				me._ifd.ui.bindKnob("RK",{
-					"<<"	: func(){me.adjustMapRange(-2);},
+					"<<"	: func(){me.adjustMapRange(-1);},
 					"<"	: func(){me.adjustMapRange(-1);},
 					"push"	: func(){me.adjustMapView(1);},
 					">"	: func(){me.adjustMapRange(1);},
-					">>"	: func(){me.adjustMapRange(2);},
+					">>"	: func(){me.adjustMapRange(1);},
 				},{
 					"scroll"	: "Range",
 					"push"		: "View"

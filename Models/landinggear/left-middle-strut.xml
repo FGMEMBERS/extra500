@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: 2014-08-22
+
+      Last change: 2014-09-20     
+      Date: Eric van den Berg            
+
+-->
+<PropertyList>
+
+<path>left-middle-strut.ac</path>
+
+<!-- submodels -->
+
+<model>
+  <name>left-wheelass</name>
+  <path>Aircraft/extra500/Models/landinggear/left-wheelass.xml</path>
+	<offsets>
+		<x-m>0.0</x-m>
+		<y-m>-0.27550</y-m>	
+		<z-m>-0.24013</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>left-damper-upper</name>
+  <path>Aircraft/extra500/Models/landinggear/left-damper-upper.xml</path>
+	<offsets>
+		<x-m>0.0</x-m>
+		<y-m>0</y-m>	
+		<z-m>0</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>left-damper-lower</name>
+  <path>Aircraft/extra500/Models/landinggear/left-damper-lower.ac</path>
+	<offsets>
+		<x-m>0.0</x-m>
+		<y-m>0</y-m>	
+		<z-m>-0.22100</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>left-guiderod-lower</name>
+  <path>Aircraft/extra500/Models/landinggear/left-guiderod.lower.ac</path>
+	<offsets>
+		<x-m>0.06487</x-m>
+		<y-m>0.01291</y-m>	
+		<z-m>-0.13116</z-m>
+	</offsets>
+</model>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>blockarm</object-name>
+  <object-name>block.in</object-name>
+  <object-name>block.out</object-name>
+  <object-name>left-guiderod-lower</object-name>
+  <property>gear/gear[1]/position-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0.0</ind>
+                <dep>-49</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>35</dep>
+            </entry>
+        </interpolation>
+  <axis>
+	<x1-m>0</x1-m>
+    <y1-m>0</y1-m>
+    <z1-m>0</z1-m>
+    <x2-m>0</x2-m>
+    <y2-m>0</y2-m>
+    <z2-m>1</z2-m>
+  </axis>
+  </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>block.in</object-name>
+  <property>gear/gear[1]/position-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0.0</ind>
+                <dep>49</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-35</dep>
+            </entry>
+        </interpolation>
+  <axis>
+	<x1-m>0.03233</x1-m>
+    <y1-m>0.01597</y1-m>
+    <z1-m>0</z1-m>
+    <x2-m>0.03233</x2-m>
+    <y2-m>0.01597</y2-m>
+    <z2-m>1</z2-m>
+  </axis>
+  </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>block.out</object-name>
+  <object-name>left-guiderod-lower</object-name>
+  <property>gear/gear[1]/position-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0.0</ind>
+                <dep>47</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-34</dep>
+            </entry>
+        </interpolation>
+  <axis>
+	<x1-m>0.06487</x1-m>
+    <y1-m>0.01291</y1-m>
+    <z1-m>0</z1-m>
+    <x2-m>0.06487</x2-m>
+    <y2-m>0.01291</y2-m>
+    <z2-m>1</z2-m>
+  </axis>
+  </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>left-guiderod-lower</object-name>
+  <property>gear/gear[1]/position-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0.0</ind>
+                <dep>40</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>40</dep>
+            </entry>
+        </interpolation>
+  <axis>
+	<x1-m>0</x1-m>
+    <y1-m>0.01291</y1-m>
+    <z1-m>-0.13116</z1-m>
+    <x2-m>1</x2-m>
+    <y2-m>0.01291</y2-m>
+    <z2-m>-0.13116</z2-m>
+  </axis>
+  </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>left-guiderod-lower</object-name>
+  <property>gear/gear[1]/compression-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0.0</ind>
+                <dep>0</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-42</dep>
+            </entry>
+        </interpolation>
+  <axis>
+	<x1-m>0</x1-m>
+    <y1-m>0.01291</y1-m>
+    <z1-m>-0.13116</z1-m>
+    <x2-m>1</x2-m>
+    <y2-m>0.01291</y2-m>
+    <z2-m>-0.13116</z2-m>
+  </axis>
+  </animation>
+
+
+
+<!-- upperstrut rotation --> 
+ <animation>
+  <type>rotate</type>
+  <object-name>left-damper-upper</object-name>
+  <property>gear/gear[1]/compression-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0.0</ind>
+                <dep>0</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-50</dep>
+            </entry>
+        </interpolation>
+  <axis>
+	<x1-m>0.0</x1-m>
+    <y1-m>-0.0</y1-m>
+    <z1-m>0</z1-m>
+    <x2-m>1.0</x2-m>
+    <y2-m>0.0</y2-m>
+    <z2-m>0</z2-m>
+  </axis>
+  </animation>
+
+<!-- lower strut rotation --> 
+ <animation>
+  <type>rotate</type>
+  <object-name>left-damper-lower</object-name>
+  <property>gear/gear[1]/compression-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0.0</ind>
+                <dep>0</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-50</dep>
+            </entry>
+        </interpolation>
+  <axis>
+	<x1-m>0.0</x1-m>
+    <y1-m>-0.0</y1-m>
+    <z1-m>-0.22100</z1-m>
+    <x2-m>1.0</x2-m>
+    <y2-m>0.0</y2-m>
+    <z2-m>-0.22100</z2-m>
+  </axis>
+  </animation>
+
+<animation>
+  <type>translate</type>
+  <object-name>left-wheelass</object-name>
+  <property>gear/gear[1]/compression-norm</property>
+  <factor>0.3048</factor>
+  <axis>
+  	<x>0</x>
+  	<y>-0.7</y>
+  	<z>1</z>
+  </axis>
+</animation> 
+
+
+</PropertyList>

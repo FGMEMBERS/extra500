@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Dirk Dittmann
-      Date:             27.04.2014
+      Last change:      Eric van den Berg
+      Date:             01.07.2014
 
 -->
 
@@ -2143,7 +2143,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-					UI.click("IFD LH LK >>");
+					UI.click("IFD LH LK >");
 				]]>
 			</script>
 		</binding>
@@ -2156,7 +2156,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-					UI.click("IFD LH LK >");
+					UI.click("IFD LH LK >>");
 				]]>
 			</script>
 		</binding>
@@ -2173,7 +2173,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-					UI.click("IFD LH LK <<");
+					UI.click("IFD LH LK <");
 				]]>
 			</script>
 		</binding>
@@ -2186,7 +2186,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-					UI.click("IFD LH LK <");
+					UI.click("IFD LH LK <<");
 				]]>
 			</script>
 		</binding>
@@ -2236,7 +2236,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-					UI.click("IFD LH RK >>");
+					UI.click("IFD LH RK >");
 				]]>
 			</script>
 		</binding>
@@ -2249,7 +2249,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-					UI.click("IFD LH RK >");
+					UI.click("IFD LH RK >>");
 				]]>
 			</script>
 		</binding>
@@ -2266,7 +2266,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-					UI.click("IFD LH RK <<");
+					UI.click("IFD LH RK <");
 				]]>
 			</script>
 		</binding>
@@ -2279,7 +2279,7 @@
 			<command>nasal</command>
 			<script>
 				<![CDATA[
-					UI.click("IFD LH RK <");
+					UI.click("IFD LH RK <<");
 				]]>
 			</script>
 		</binding>

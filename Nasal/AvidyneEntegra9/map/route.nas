@@ -315,6 +315,7 @@ var RouteLayer = {
 		me._track.cmds = [];
 		me._track.coords = [];
 		me._itemIndex	= 0;
+		var cmd = canvas.Path.VG_MOVE_TO;
 		for( var i=0; i < fms._fightPlan.planSize; i+=1 ){
 			var fmsWP = fms._fpl.getWP(i);
 # 				print(sprintf("%s range:%0.2f | lat:%0.3f lon:%0.3f a:%+i vs:%0.1f l:%i",tcas.id,tcas.range,tcas.lat,tcas.lon,tcas.alt,tcas.vs,tcas.level));
@@ -324,14 +325,14 @@ var RouteLayer = {
 				me._itemCount = size(me._item);
 			}
 			me._item[me._itemIndex].draw(fmsWP);
-			if(me._itemIndex == 0){
-				append(me._track.cmds,canvas.Path.VG_MOVE_TO);
-			}else{
-				append(me._track.cmds,canvas.Path.VG_LINE_TO);
-				
+
+			foreach (var pt; fmsWP.path()) {
+				append(me._track.coords,"N"~pt.lat);
+				append(me._track.coords,"E"~pt.lon);
+				append(me._track.cmds,cmd);
+				cmd = canvas.Path.VG_LINE_TO;
 			}
-			append(me._track.coords,"N"~fmsWP.wp_lat);
-			append(me._track.coords,"E"~fmsWP.wp_lon);
+			
 			me._itemIndex +=1;
 		}
 		#append(cmds,canvas.Path.VG_CLOSE_PATH);
@@ -343,19 +344,7 @@ var RouteLayer = {
 
 	},
 	_drawLegs : func(){
-# 		var cmds 	= [];
-# 		var coords	= [];
-# 		fms._fightPlan.planSize = fms._fpl.getPlanSize();
-# 		for( var i=0; i < fms._fightPlan.planSize; i+=1 ){
-# 			var fmsWP = fms._fpl.getWP(i);
-# 			if(i <= me._currentWaypoint){
-# 				
-# 			}elsif(i > me._currentWaypoint+1){
-# 				
-# 			}else{
-# 				
-# 			}
-# 		}
+		var cmd = canvas.Path.VG_MOVE_TO;
 		
 		if(fms._fightPlan.planSize > 1){
 			for( var i=0; i < fms._fightPlan.planSize; i+=1 ){
@@ -368,10 +357,18 @@ var RouteLayer = {
 			}	
 			
 			if(me._currentWaypoint >= 1 and me._currentWaypoint < fms._fightPlan.planSize){
-				me._currentLeg.coords[0] = me._track.coords[(me._currentWaypoint-1)*2];
-				me._currentLeg.coords[1] = me._track.coords[(me._currentWaypoint-1)*2+1];
-				me._currentLeg.coords[2] = me._track.coords[(me._currentWaypoint)*2];
-				me._currentLeg.coords[3] = me._track.coords[(me._currentWaypoint)*2+1];
+				var fmsWP = fms._fpl.getWP(me._currentWaypoint);
+				cmd = canvas.Path.VG_MOVE_TO;
+				me._currentLeg.coords = [];
+				me._currentLeg.cmds = [];
+				foreach (var pt; fmsWP.path()) {
+					append(me._currentLeg.coords,"N"~pt.lat);
+					append(me._currentLeg.coords,"E"~pt.lon);
+					append(me._currentLeg.cmds,cmd);
+					cmd = canvas.Path.VG_LINE_TO;
+				}
+				
+				
 				me._can.currentLeg.setDataGeo(me._currentLeg.cmds,me._currentLeg.coords);
 				me._can.currentLeg.setVisible(1);
 			}else{
@@ -379,11 +376,17 @@ var RouteLayer = {
 			}
 			
 			if(me._currentWaypoint >= 0 and me._currentWaypoint < fms._fightPlan.planSize-1){
-				me._nextLeg.coords[0] = me._track.coords[(me._currentWaypoint)*2];
-				me._nextLeg.coords[1] = me._track.coords[(me._currentWaypoint)*2+1];
-				me._nextLeg.coords[2] = me._track.coords[(me._currentWaypoint+1)*2];
-				me._nextLeg.coords[3] = me._track.coords[(me._currentWaypoint+1)*2+1
-				];
+				var fmsWP = fms._fpl.getWP(me._currentWaypoint+1);
+				cmd = canvas.Path.VG_MOVE_TO;
+				me._nextLeg.coords = [];
+				me._nextLeg.cmds = [];
+				foreach (var pt; fmsWP.path()) {
+					append(me._nextLeg.coords,"N"~pt.lat);
+					append(me._nextLeg.coords,"E"~pt.lon);
+					append(me._nextLeg.cmds,cmd);
+					cmd = canvas.Path.VG_LINE_TO;
+				}
+				
 				me._can.nextLeg.setDataGeo(me._nextLeg.cmds,me._nextLeg.coords);
 				me._can.nextLeg.setVisible(1);
 			}else{

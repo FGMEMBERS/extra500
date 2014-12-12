@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2014-06-21
+      Date:             2014-11-30
 -->
 
 <system name="indication">
@@ -1529,7 +1529,7 @@
 			<input>/controls/engines/engine[0]/cutoff-inv</input>
 			<c1>0.0</c1>
 			<c2>1.0</c2>
-			<c3>0.075</c3>
+			<c3>0.15</c3>
 			<c4>1.0</c4>
 		</lead_lag_filter>
 
@@ -1584,6 +1584,61 @@
 			<output>/instrumentation/heading-indicator-IFD-RH/offset-deg</output>
 		</fcs_function>
 
+	</channel>
+
+	<channel name="pilottrim">
+<!-- the next switches are used to set the pilot trim indication: see trimindication.nas -->
+		<switch name="pitchtrim1">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				aircraft/hstab/elevator/H-total-lbsft lt -3.5
+				aircraft/hstab/elevator/H-total-lbsft gt -9.0
+			</test>
+			<output>aircraft/events/pitchtrim1</output>
+		</switch>
+
+		<switch name="pitchtrim2">
+			<default value="aircraft/events/pitchtrim1"/>
+			<test logic="AND" value="-1">
+				aircraft/hstab/elevator/H-total-lbsft gt 3.5
+				aircraft/hstab/elevator/H-total-lbsft lt 9.0
+			</test>
+			<output>aircraft/events/pitchtrim2</output>
+		</switch>
+
+		<switch name="pitchtrim3">
+			<default value="aircraft/events/pitchtrim2"/>
+			<test logic="AND" value="2">
+				aircraft/hstab/elevator/H-total-lbsft le -9.0
+				aircraft/hstab/elevator/H-total-lbsft gt -15.0
+			</test>
+			<output>aircraft/events/pitchtrim3</output>
+		</switch>
+
+		<switch name="pitchtrim4">
+			<default value="aircraft/events/pitchtrim3"/>
+			<test logic="AND" value="-2">
+				aircraft/hstab/elevator/H-total-lbsft ge 9.0
+				aircraft/hstab/elevator/H-total-lbsft lt 15.0
+			</test>
+			<output>aircraft/events/pitchtrim4</output>
+		</switch>
+
+		<switch name="pitchtrim5">
+			<default value="aircraft/events/pitchtrim4"/>
+			<test logic="AND" value="3">
+				aircraft/hstab/elevator/H-total-lbsft le -15.0
+			</test>
+			<output>aircraft/events/pitchtrim5</output>
+		</switch>
+
+		<switch name="pitchtrim6">
+			<default value="aircraft/events/pitchtrim5"/>
+			<test logic="AND" value="-3">
+				aircraft/hstab/elevator/H-total-lbsft ge 15.0
+			</test>
+			<output>aircraft/events/pitchtrim</output>
+		</switch>
 	</channel>
 
 </system>

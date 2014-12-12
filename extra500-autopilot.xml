@@ -2005,6 +2005,14 @@
 			<output>/autopilot/alt-channel/target-alt-ft</output>
 		</switch>
 
+		<switch name="altbud">
+			<default value="/autopilot/alt-channel/target-alt-ft"/>
+			<test logic="AND" value="/autopilot/settings/tgt-altitude-ft">
+				/autopilot/mode/alt ne 1
+			</test>
+			<output>/autopilot/alt-channel/alt-bug-ft</output>
+		</switch>
+
 		<fcs_function name="/autopilot/alt-channel/alt-error-ft">
 			<function>
 				<sum>
