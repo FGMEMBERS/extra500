@@ -102,6 +102,16 @@
 					<object-name>msg_info</object-name>
 				</binding>
 			</checkbox>
+			<checkbox>
+				<name>trim_info</name>
+				<label>trim</label>
+				<property>/extra500/config/ui/trim</property>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+					<object-name>trim_info</object-name>
+				</binding>
+			</checkbox>
 			<empty><stretch>1</stretch></empty>
 		</group>
 		<!--

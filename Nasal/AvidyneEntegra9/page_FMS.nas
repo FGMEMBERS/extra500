@@ -17,7 +17,7 @@
 #      Date: Aug 24 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             19.06.2014
+#      Date:             01.08.2014
 #
 
 
@@ -268,11 +268,11 @@ var FlightPlanListWidget = {
 			}
 			
 			me._ifd.ui.bindKnob("RK",{
-				"<<"	: func(){me._adjustSelection(2);},
+				"<<"	: func(){me._adjustSelection(1);},
 				"<"	: func(){me._adjustSelection(1);},
 				"push"	: func(){fms.jumpTo();},
 				">"	: func(){me._adjustSelection(-1);},
-				">>"	: func(){me._adjustSelection(-2);},
+				">>"	: func(){me._adjustSelection(-1);},
 			},{
 				"scroll"	: "Scroll",
 				"push"		: "Select",
