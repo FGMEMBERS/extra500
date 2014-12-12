@@ -16,9 +16,16 @@
       Author: Eric van den Berg
       Date: 2014-06-22
 
-      Last change:      -
-      Date:             -
+      Last change:      Eric van den Berg
+      Date:             2014.12.04
 
+
+Release 1.2.0
+* Model: new very realistic Landing Gear model, several small interior improvements
+* User interface: elevator pilot force indication
+* Aerodynamics: more realistic engine torque and slipstream effects 
+* Avionics: bug fixes and some minor usability improvements
+* Autopilot: some logic and bug fixes
 
 Release 1.1.0
 * Engine+fuel: realistic flame-out, fuel flow to collector compartment, anti ice influence on TOT, improved oil press and temp model
