@@ -17,7 +17,7 @@
 #      Date: Jul 05 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             24.10.13
+#      Date:             14.12.14
 #
 
 var CenterConsole = {
@@ -43,7 +43,7 @@ var CenterConsole = {
 		m._nParkingbrakePressure 	= m._nRoot.initNode("Parkingbrake/Pressure",0.0,"DOUBLE");
 		m._nDefrost 			= m._nRoot.initNode("Defrost/state",0,"BOOL");
 		m._nDeice 			= m._nRoot.initNode("Deice/state",0,"BOOL");
-		m._nPitchTrim 			= m._nRoot.initNode("PitchTrim/state",0.0,"DOUBLE");
+		m._nPitchTrim 			= props.globals.getNode("controls/flight/elevator-trim",0.0,"DOUBLE");
 		
 		return m;
 	},
@@ -153,8 +153,8 @@ var CenterConsole = {
 		UI.register("Deice off", 	func{me.onDeiceClick(0); } );
 		
 		UI.register("PitchTrim", 	func{me.onPitchTrimClick(); } );
-		UI.register("PitchTrim >", 	func{me.onPitchTrimClick(0.05); } );
-		UI.register("PitchTrim <",	func{me.onPitchTrimClick(-0.05); } );
+		UI.register("PitchTrim >", 	func{me.onPitchTrimClick(0.01); } );
+		UI.register("PitchTrim <",	func{me.onPitchTrimClick(-0.01); } );
 
 		UI.register("Cabin Altitude", 	func{me.onCabinAltitude(); } );
 		UI.register("Cabin Altitude >", 	func{me.onCabinAltitude(100); } );
