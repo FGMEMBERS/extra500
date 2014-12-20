@@ -223,10 +223,13 @@ var FlightManagementSystemClass = {
 			me._flightPlan.wp[i].flyType			= fmsWP.fly_type;
 			me._flightPlan.wp[i].path			= fmsWP.path();
 			
-			if(i>0){
-				me._flightPlan.wp[i].course			= me._fpl.getWP(i-1).leg_bearing;
-			}
+# fixed in flightgear 
+# 			if(i>0){
+# 				me._flightPlan.wp[i].course			= me._fpl.getWP(i-1).leg_bearing;
+# 			}
 			
+			me._flightPlan.wp[i].course			= fmsWP.leg_bearing;
+			me._flightPlan.wp[i].distance			= fmsWP.leg_distance;
 			
 		}
 		
@@ -285,7 +288,12 @@ var FlightManagementSystemClass = {
 		
 	},
 	_nextGpssBearing : func(){
-		setprop("/autopilot/fms-channel/gpss/next-bearing-deg",getprop("/autopilot/route-manager/route/wp["~me._flightPlan.currentWpIndex~"]/leg-bearing-true-deg"));
+		
+		var nextWpIndex = me._flightPlan.currentWpIndex+1;
+		if(nextWpIndex < me._flightPlan.planSize){
+			
+			setprop("/autopilot/fms-channel/gpss/next-bearing-deg",getprop("/autopilot/route-manager/route/wp["~nextWpIndex~"]/leg-bearing-true-deg"));
+		}
 	},
 	# Operation functions of Avidyne FMS 
 	jumpTo : func(){
@@ -452,21 +460,24 @@ var FlightManagementSystemClass = {
 				me._constraint.VSR.alt = getprop("/autopilot/route-manager/destination/field-elevation-ft");
 				
 				for (var i = 0 ; i < me._flightPlan.planSize ; i+=1){
-# 					var fmsWP = me._fpl.getWP(i);
-# 					me._flightPlan.wp[i] = FlightPlanData.new();
-# 					me._flightPlan.wp[i].constraint.alt.type 	= fmsWP.alt_cstr_type;
-# 					me._flightPlan.wp[i].constraint.alt.value	= fmsWP.alt_cstr;
-					
-					
+# 					
 					if (i >= me._flightPlan.currentWpIndex){
 					
-						me._flightPlan.wp[i].distanceTo 	= distance;
+						if(i == me._flightPlan.currentWpIndex){
+							me._flightPlan.wp[i].distanceTo 	= distance;
+						}else{
+							me._flightPlan.wp[i].distanceTo 	= me._flightPlan.wp[i].distance;
+						}
 						me._flightPlan.wp[i].ete		= ete;
 						me._flightPlan.wp[i].eta 	= eta;
 						me._flightPlan.wp[i].fuelAt 	= fuelAt;
 						
-						distance 			= fmsWP.leg_distance;
-																			
+						# count data for the next waypoint
+						distanceToGo += me._flightPlan.wp[i].distance;
+						ete = distance / gsSec ;
+						eta = time + (distanceToGo / gsSec);
+						fuelAt = fuelGalUs -= fuelFlowGalUSpSec * ete;													
+						
 						if ((me._flightPlan.wp[i].constraint.alt.type != nil) and ( me._constraint.VSR.distance == 0 ) ) {
 							me._constraint.VSR.alt = me._flightPlan.wp[i].constraint.alt.value;
 							me._constraint.VSR.distance = distanceToGo;
@@ -475,11 +486,7 @@ var FlightManagementSystemClass = {
 							
 						}
 					
-						# count data for the next waypoint
-						distanceToGo += distance;
-						ete = distance / gsSec ;
-						eta = time + (distanceToGo / gsSec);
-						fuelAt = fuelGalUs -= fuelFlowGalUSpSec * ete;
+						
 					}else{
 						
 						me._flightPlan.wp[i].distanceTo 	= 0;

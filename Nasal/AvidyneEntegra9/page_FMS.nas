@@ -722,16 +722,19 @@ var FlightPlanListWidget = {
 # 		me._scrollToSelectedIndex(me._selectedIndex);	
 	},
 	_onCursorIndexChange : func(n){
-		
-		if(me._scrollAbleList[me._cursorIndex] != nil){
-			me._scrollAbleList[me._cursorIndex].select(0,me._cursorIndex);
+		var newIndex = n.getValue();
+		debug.dump("FlightPlanListWidget._onCursorIndexChange() ... ",newIndex);
+		if( newIndex < me._scrollAbleListSize ){
+			if(me._scrollAbleList[me._cursorIndex] != nil){
+				me._scrollAbleList[me._cursorIndex].select(0,me._cursorIndex);
+			}
+			
+			me._cursorIndex = newIndex;
+			
+			if(me._scrollAbleList[me._cursorIndex] != nil){
+				me._scrollAbleList[me._cursorIndex].select(1,me._cursorIndex);
+			}	
 		}
-		
-		me._cursorIndex = n.getValue();
-		
-		if(me._scrollAbleList[me._cursorIndex] != nil){
-			me._scrollAbleList[me._cursorIndex].select(1,me._cursorIndex);
-		}	
 		
 	},
 
