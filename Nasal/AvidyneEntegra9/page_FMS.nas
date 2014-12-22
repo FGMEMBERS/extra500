@@ -723,7 +723,7 @@ var FlightPlanListWidget = {
 	},
 	_onCursorIndexChange : func(n){
 		var newIndex = n.getValue();
-		debug.dump("FlightPlanListWidget._onCursorIndexChange() ... ",newIndex);
+		#debug.dump("FlightPlanListWidget._onCursorIndexChange() ... ",newIndex);
 		if( newIndex < me._scrollAbleListSize ){
 			if(me._scrollAbleList[me._cursorIndex] != nil){
 				me._scrollAbleList[me._cursorIndex].select(0,me._cursorIndex);

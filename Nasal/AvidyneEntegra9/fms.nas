@@ -452,7 +452,7 @@ var FlightManagementSystemClass = {
 				var altBug 		= getprop("/autopilot/settings/tgt-altitude-ft");
 				
 				var distance 		= getprop("/autopilot/route-manager/wp/dist");
-				var distanceToGo 	= distance;
+				var distanceToGo 	= 0;
 				var ete 		= distance / gsSec ;
 				var eta 		= time + ete;
 				var fuelAt 		= fuelGalUs -= fuelFlowGalUSpSec * ete;
@@ -473,7 +473,7 @@ var FlightManagementSystemClass = {
 						me._flightPlan.wp[i].fuelAt 	= fuelAt;
 						
 						# count data for the next waypoint
-						distanceToGo += me._flightPlan.wp[i].distance;
+						distanceToGo += me._flightPlan.wp[i].distanceTo;
 						ete = distance / gsSec ;
 						eta = time + (distanceToGo / gsSec);
 						fuelAt = fuelGalUs -= fuelFlowGalUSpSec * ete;													
@@ -538,7 +538,7 @@ var FlightManagementSystemClass = {
 				var difAltBug = altBug - currentAlt;
 				if ((me._dynamicPoint.RTA.rate <= -100 or me._dynamicPoint.RTA.rate >= 100) and (difAltBug >= 150 or difAltBug <= -150)){
 					me._dynamicPoint.RTA.distance = distanceToGo - math.abs((difAltBug / me._dynamicPoint.RTA.rate) * gsMin) ;
-					me._dynamicPoint.RTA.position = me._fpl.pathGeod(-1, -me._dynamicPoint.RTA.distance);
+					me._dynamicPoint.RTA.position = me._fpl.pathGeod(me._flightPlan.planSize-1, -me._dynamicPoint.RTA.distance);
 					me._dynamicPoint.RTA.visible = legMode and (me._dynamicPoint.RTA.distance > 0);
 				}
 				
