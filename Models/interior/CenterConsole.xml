@@ -20,7 +20,7 @@
       Date: July 04 2013
 
       Last change:      Eric van den Berg
-      Date:             30.11.14
+      Date:             22.12.14
 -->
 <PropertyList>
 
@@ -46,7 +46,7 @@
   <name>cabincontroller</name>
   <path>Aircraft/extra500/Models/instruments/cabincontroller.xml</path>
 	<offsets>
-		<x-m>0.0635</x-m>
+		<x-m>0.0666</x-m>
 		<y-m>0.0</y-m>	
 		<z-m>-0.003</z-m>
 		<heading-deg>180.0</heading-deg>
@@ -85,6 +85,120 @@
 		<roll-deg>90</roll-deg>
 		<pitch-deg>0</pitch-deg>
 		<yaw-deg>0</yaw-deg>
+	</offsets>
+</model>
+
+<!-- screws -->
+<model>
+  <name>screw01</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0601</x-m>
+		<y-m>-0.0846</y-m>
+		<z-m>-0.002</z-m>
+		<pitch-deg>90</pitch-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw02</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0601</x-m>
+		<y-m>-0.0374</y-m>
+		<z-m>-0.002</z-m>
+		<pitch-deg>90</pitch-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw03</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.013</x-m>
+		<y-m>-0.0846</y-m>
+		<z-m>-0.002</z-m>
+		<pitch-deg>90</pitch-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw04</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.013</x-m>
+		<y-m>-0.0374</y-m>
+		<z-m>-0.002</z-m>
+		<pitch-deg>90</pitch-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>screw05</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0601</x-m>
+		<y-m>0.0846</y-m>
+		<z-m>-0.002</z-m>
+		<pitch-deg>90</pitch-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw06</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0601</x-m>
+		<y-m>0.0374</y-m>
+		<z-m>-0.002</z-m>
+		<pitch-deg>90</pitch-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw07</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.013</x-m>
+		<y-m>0.0846</y-m>
+		<z-m>-0.002</z-m>
+		<pitch-deg>90</pitch-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw08</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.013</x-m>
+		<y-m>0.0374</y-m>
+		<z-m>-0.002</z-m>
+		<pitch-deg>90</pitch-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>screw09</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.043</x-m>
+		<y-m>0.0236</y-m>
+		<z-m>-0.002</z-m>
+		<pitch-deg>90</pitch-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw09</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.043</x-m>
+		<y-m>-0.0236</y-m>
+		<z-m>-0.002</z-m>
+		<pitch-deg>90</pitch-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw10</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0902</x-m>
+		<y-m>0.0236</y-m>
+		<z-m>-0.002</z-m>
+		<pitch-deg>90</pitch-deg>
 	</offsets>
 </model>
 

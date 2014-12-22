@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             21.09.13
+      Date:             22.12.14
 -->
 
 <PropertyList>
@@ -53,6 +53,44 @@
 		<z-m>-0.0285</z-m>
 		<pitch-deg>90</pitch-deg>
 		<roll-deg>90</roll-deg>
+	</offsets>
+</model>
+
+<!-- DME ind screws -->
+<model>
+  <name>screw01</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.4075</y-m>
+		<z-m>-0.0414</z-m>
+	</offsets>
+</model>
+<model>
+  <name>screw02</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.4075</y-m>
+		<z-m>-0.015</z-m>
+	</offsets>
+</model>
+<model>
+  <name>screw03</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.4893</y-m>
+		<z-m>-0.0414</z-m>
+	</offsets>
+</model>
+<model>
+  <name>screw04</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.4893</y-m>
+		<z-m>-0.015</z-m>
 	</offsets>
 </model>
 
