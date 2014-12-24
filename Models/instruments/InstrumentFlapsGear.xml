@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             22.12.14
+      Date:             24.12.14
 -->
 
 <PropertyList>
@@ -31,6 +31,15 @@
     <min-m>0</min-m>
     <max-m>50</max-m>
   </animation>
+
+<effect>
+    <name>gearflaps</name>
+    <inherits-from>Models/Effects/panel</inherits-from>
+    <object-name>Plane</object-name>
+    <parameters>
+		<grain-magnification type="float">500</grain-magnification>
+    </parameters>
+</effect>
 
 <model>
   <name>DME indicator</name>

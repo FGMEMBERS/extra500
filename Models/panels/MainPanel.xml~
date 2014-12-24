@@ -50,7 +50,7 @@
     </parameters>
 </effect>
 <effect>
-    <name>yokecover</name>
+    <name>MainPanel</name>
     <inherits-from>Models/Effects/panel</inherits-from>
     <object-name>YokeFrameR</object-name>
     <object-name>YokeFrameL</object-name>

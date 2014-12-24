@@ -20,7 +20,7 @@
       Date: July 04 2013
 
       Last change:      Eric van den Berg
-      Date:             22.12.14
+      Date:             24.12.14
 -->
 <PropertyList>
 
@@ -31,6 +31,15 @@
     <min-m>0</min-m>
     <max-m>50</max-m>
   </animation>
+
+<effect>
+    <name>centreC</name>
+    <inherits-from>Models/Effects/panel</inherits-from>
+    <object-name>CenterConsoleFrame</object-name>
+    <parameters>
+		<grain-magnification type="float">2000</grain-magnification>
+    </parameters>
+</effect>
 
 <model>
   <name>Keypad</name>
