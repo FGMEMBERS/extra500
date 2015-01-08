@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             22.12.14
+      Date:             08.01.15
 -->
 <PropertyList>
 
@@ -87,6 +87,31 @@
   </effect>
 
 <!-- Submodels -->
+
+<!-- external power -->
+
+<model>
+  <name>externalpower</name>
+  <path>Aircraft/extra500/Models/instruments/externalpower.xml</path>
+	<offsets>
+		<x-m>0.0</x-m>
+		<y-m>-0.5</y-m>	
+		<z-m>0.4</z-m>
+		<pitch-deg>90</pitch-deg>
+		<roll-deg>180</roll-deg>
+	</offsets>
+</model>
+
+  <animation>
+	  <object-name>externalpower</object-name>
+	  <type>select</type>
+	  <condition>
+		  <equals>
+			  <property>/extra500/electric/source/ExternalGenerator/isPluged</property>
+			  <value>1</value>
+		  </equals>
+	  </condition>
+  </animation> 
 
 <!-- instruments -->
 

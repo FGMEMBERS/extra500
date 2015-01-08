@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: Jan 08 2015
+
+      Last change:      
+      Date:             
+
+-->
+
+<PropertyList>
+
+<path>externalpower.ac</path>
+
+<!--elumination -->
+<animation>
+	<type>material</type>
+		<object-name>VDC.dec</object-name>
+		<object-name>VDC.point</object-name>
+		<object-name>VDC.01</object-name>
+		<object-name>VDC.10</object-name>
+		<object-name>A.001</object-name>
+		<object-name>A.010</object-name>
+		<object-name>A.100</object-name>
+		<object-name>Plane</object-name>
+		<emission>	
+			<red>1.0</red>	
+			<green>1.0</green>	
+			<blue>1.0</blue>
+		<factor-prop>/extra500/electric/source/ExternalGenerator/isPluged</factor-prop>
+	</emission>
+</animation>
+<!--normal operation-->
+
+	<animation>
+		<type>textranslate</type>
+		<object-name>VDC.dec</object-name>
+		<property>/extra500/electric/source/ExternalGenerator/volt</property>
+		<factor>1</factor>
+		<step>0.1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>VDC.01</object-name>
+		<property>/extra500/electric/source/ExternalGenerator/volt</property>
+		<factor>0.1</factor>
+		<step>1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>VDC.10</object-name>
+		<property>/extra500/electric/source/ExternalGenerator/volt</property>
+		<factor>0.01</factor>
+		<step>10</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+
+	<animation>
+		<type>textranslate</type>
+		<object-name>A.001</object-name>
+		<property>/extra500/electric/source/ExternalGenerator/ampere</property>
+		<factor>0.1</factor>
+		<step>1</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>A.010</object-name>
+		<property>/extra500/electric/source/ExternalGenerator/ampere</property>
+		<factor>0.01</factor>
+		<step>10</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+	<animation>
+		<type>textranslate</type>
+		<object-name>A.100</object-name>
+		<property>/extra500/electric/source/ExternalGenerator/ampere</property>
+		<factor>0.001</factor>
+		<step>100</step>
+		<axis>
+			<x>1</x>
+			<y>0</y>
+		</axis>
+	</animation>
+
+</PropertyList>
+
