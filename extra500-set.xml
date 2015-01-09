@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2014-11-23
+      Date:             2015-01-09
 
 
 ************************************************************************
@@ -1183,11 +1183,12 @@ JSBSim Extra Aircraft - Extra 500.
 		</wp>
 		<config>
 			<over-flight-arm-distance-nm>0</over-flight-arm-distance-nm>
+			<follow-leg-track-to-fix type="bool">true</follow-leg-track-to-fix>
 		</config>
 		<desired-course-deg type="double">0</desired-course-deg>
 	</gps>
 	<gps n="1">
-	       	<serviceable type="bool">true</serviceable>
+	      <serviceable type="bool">true</serviceable>
 		<cdi-deflection>0</cdi-deflection>
 		<indicated-track-true-deg>0</indicated-track-true-deg>
 		<indicated-ground-speed-kt>0</indicated-ground-speed-kt>
@@ -1204,6 +1205,7 @@ JSBSim Extra Aircraft - Extra 500.
 		</wp>
 		<config>
 			<over-flight-arm-distance-nm>0</over-flight-arm-distance-nm>
+			<follow-leg-track-to-fix type="bool">true</follow-leg-track-to-fix>
 		</config>
 		<desired-course-deg type="double">0</desired-course-deg>
 	</gps>
