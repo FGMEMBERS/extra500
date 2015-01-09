@@ -38,11 +38,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="696.67704"
-     inkscape:cy="1573.254"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="1139.9904"
+     inkscape:cy="289.65404"
      inkscape:document-units="px"
-     inkscape:current-layer="FPL_Flightplan"
+     inkscape:current-layer="FMS_FPL_Content"
      showgrid="true"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -652,7 +652,7 @@
          sodipodi:nodetypes="cccc" />
     </g>
     <g
-       id="g3905"
+       id="InsertDelete"
        transform="matrix(1.0024278,0,0,1,-0.97112445,0)">
       <rect
          ry="5.431643"
@@ -660,14 +660,14 @@
          x="1652"
          height="119.90956"
          width="391.57458"
-         id="rect4058-7-5"
+         id="InsertDelete_Background"
          style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#3391e8;stroke-width:7.9903059;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
       <text
          xml:space="preserve"
          style="font-size:48px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:80.00000119%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#00ffff;fill-opacity:1;stroke:#00ffff;stroke-width:1.35791647;stroke-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
          x="2098.5728"
          y="1176.4987"
-         id="text4066-9-6"
+         id="InsertDelete_Text"
          sodipodi:linespacing="80.000001%"
          transform="scale(0.8805119,1.135703)"
          inkscape:label="#text5341-2"><tspan
@@ -675,12 +675,21 @@
            sodipodi:role="line"
            x="2098.5728"
            y="1176.4987"
-           id="tspan4068-1-4">Delete</tspan><tspan
-           style="font-size:48px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:80.00000119%;writing-mode:lr-tb;text-anchor:middle;fill:#00ffff;stroke:#00ffff;stroke-width:1.35791647;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
-           sodipodi:role="line"
+           id="tspan3786">Delete</tspan></text>
+      <text
+         inkscape:label="#text5341-2"
+         transform="scale(0.8805119,1.135703)"
+         sodipodi:linespacing="80.000001%"
+         id="text3103"
+         y="1217.0013"
+         x="2098.5728"
+         style="font-size:48px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:80.00000119%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#00ffff;fill-opacity:1;stroke:#00ffff;stroke-width:1.35791647;stroke-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+         xml:space="preserve"><tspan
+           id="tspan3107"
+           y="1217.0013"
            x="2098.5728"
-           y="1214.8987"
-           id="tspan3786">Waypoint</tspan></text>
+           sodipodi:role="line"
+           style="font-size:48px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:80.00000119%;writing-mode:lr-tb;text-anchor:middle;fill:#00ffff;stroke:#00ffff;stroke-width:1.35791647;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold">Waypoint</tspan></text>
     </g>
   </g>
   <g
@@ -690,40 +699,6 @@
      style="display:inline">
     <g
        id="FPL_List" />
-    <g
-       id="FPL_Coursor_Insert"
-       transform="translate(0,-82)">
-      <path
-         sodipodi:nodetypes="cc"
-         inkscape:connector-curvature="0"
-         id="path3477"
-         d="M 470.57723,82 1609.0767,82"
-         style="fill:none;stroke:#00ffff;stroke-width:5.00000048;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <path
-         sodipodi:nodetypes="ccc"
-         inkscape:connector-curvature="0"
-         id="path4259"
-         d="m 474,82 c -7.58355,0 -13.94215,-3.10978 -14,-11.862 l 0,-15.99112"
-         style="fill:none;stroke:#00ffff;stroke-width:5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <path
-         style="fill:none;stroke:#00ffff;stroke-width:5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-         d="m 474,82 c -7.58355,0 -13.94215,3.10978 -14,11.862 l 0,15.99112"
-         id="path4261"
-         inkscape:connector-curvature="0"
-         sodipodi:nodetypes="ccc" />
-      <path
-         style="fill:none;stroke:#00ffff;stroke-width:5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-         d="m 1610,82 c 7.5835,0 13.9421,-3.10978 14,-11.862 l 0,-15.99112"
-         id="path4408"
-         inkscape:connector-curvature="0"
-         sodipodi:nodetypes="ccc" />
-      <path
-         sodipodi:nodetypes="ccc"
-         inkscape:connector-curvature="0"
-         id="path4410"
-         d="m 1610,82 c 7.5835,0 13.9421,3.10978 14,11.862 l 0,15.99112"
-         style="fill:none;stroke:#00ffff;stroke-width:5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-    </g>
     <g
        id="FPL_ScrollBar">
       <rect

@@ -15,7 +15,7 @@ var RouteManagerDelegate = {
 
     departureChanged: func
     {
-        debug.dump('saw departure changed');
+        #debug.dump('saw departure changed');
         me.flightplan.clearWPType('sid');
         if (me.flightplan.departure == nil)
             return;
@@ -36,13 +36,13 @@ var RouteManagerDelegate = {
             
     # and we have a SID
         var sid = me.flightplan.sid;
-        debug.dump('routing via SID ' ~ sid.id);
+        #debug.dump('routing via SID ' ~ sid.id);
         me.flightplan.insertWaypoints(sid.route(me.flightplan.departure_runway), 1);
     },
 
     arrivalChanged: func
     {
-        debug.dump('saw arrival changed');
+        #debug.dump('saw arrival changed');
         me.flightplan.clearWPType('star');
         me.flightplan.clearWPType('approach');
         if (me.flightplan.destination == nil)
@@ -57,17 +57,17 @@ var RouteManagerDelegate = {
         }
          
         if (me.flightplan.star != nil) {
-            debug.dump('routing via STAR ' ~ me.flightplan.star.id);
+            #debug.dump('routing via STAR ' ~ me.flightplan.star.id);
             var wps = me.flightplan.star.route(me.flightplan.destination_runway);
             me.flightplan.insertWaypoints(wps, -1);
         }
         
         if (me.flightplan.approach != nil) {
-            debug.dump('routing via approach ' ~ me.flightplan.approach.id);
+            #debug.dump('routing via approach ' ~ me.flightplan.approach.id);
             var wps = me.flightplan.approach.route();
             me.flightplan.insertWaypoints(wps, -1);
         } else {
-            debug.dump('routing direct to runway ' ~ me.flightplan.destination_runway.id);
+            #debug.dump('routing direct to runway ' ~ me.flightplan.destination_runway.id);
             # no approach, just use the runway waypoint
             var wp = createWPFrom(me.flightplan.destination_runway);
             wp.wp_role = 'approach';
@@ -77,14 +77,14 @@ var RouteManagerDelegate = {
     
     cleared: func
     {
-        debug.dump("saw active flightplan cleared, deactivating");
+        #debug.dump("saw active flightplan cleared, deactivating");
         # see http://https://code.google.com/p/flightgear-bugs/issues/detail?id=885
         fgcommand("activate-flightplan", props.Node.new({"activate": 0}));
     },
     
     endOfFlightPlan: func
     {
-        debug.dump("end of flight-plan, deactivating");
+        #debug.dump("end of flight-plan, deactivating");
         fgcommand("activate-flightplan", props.Node.new({"activate": 0}));
     }
 };
@@ -105,7 +105,7 @@ var FMSDelegate = {
         var wow = getprop('gear/gear[0]/wow');
         var gs = getprop('velocities/groundspeed-kt');
         if (wow and (gs < 25))  {
-          debug.dump('touchdown on destination runway, end of route.');
+          #debug.dump('touchdown on destination runway, end of route.');
           me.landingCheck.stop();
           # record touch-down time?
           me.flightplan.finish();
@@ -114,31 +114,31 @@ var FMSDelegate = {
     
     waypointsChanged: func
     {
-	   debug.dump('FMSDelegate.waypointsChanged() ...'); 
+	   #debug.dump('FMSDelegate.waypointsChanged() ...'); 
 	   setprop("/autopilot/route-manager/signals/waypoint-changed",systime());
     },
     
     endOfFlightPlan: func
     {
-      debug.dump('end of flight-plan');
+      #debug.dump('end of flight-plan');
       
     },
     
     currentWaypointChanged: func
     {
-	debug.dump('FMSDelegate.currentWaypointChanged() ...');
+	#debug.dump('FMSDelegate.currentWaypointChanged() ...');
 	setprop("/autopilot/route-manager/signals/current-waypoint-changed",systime());
         if (me.landingCheck != nil) {
             me.landingCheck.stop();
             me.landingCheck = nil; # delete timer
         }
         
-        #debug.dump('saw current WP changed, now ' ~ me.flightplan.current);
+        ##debug.dump('saw current WP changed, now ' ~ me.flightplan.current);
         var active = me.flightplan.currentWP();
         if (active == nil) return;
         
         if (active.alt_cstr_type != nil) {
-            debug.dump('new WP has valid altitude restriction, setting on AP');
+            ##debug.dump('new WP has valid altitude restriction, setting on AP');
             setprop('/autopilot/settings/target-altitude-ft', active.alt_cstr);
         }
         

@@ -27,11 +27,15 @@ var FlightPlanData = {
 		m.lat 		= 0;
 		m.lon 		= 0;
 		
+		m.sid		= "---";
+		
+		
 		m.distanceTo 	= 0;
 		m.ete 		= 0;
 		m.eta 		= 0;
 		m.fuelAt 	= 0;
 		m.course	= nil;
+		m.distance	= nil;
 		
 		m.type 		= nil;
 		m.role 		= nil;
@@ -56,7 +60,7 @@ var FlightManagementSystemClass = {
 			extra500.ServiceClass.new(root,name)
 		]};
 		
-		m._selectedWaypointIndex = 0;
+		m._selectedWaypointIndex = -1;
 		m._selectedWaypointOptionIndex = 0;
 		m._cursorFocusIndex = 0;
 		
@@ -98,6 +102,9 @@ var FlightManagementSystemClass = {
 			FlyVector	: props.globals.initNode("/autopilot/settings/fly-vector",0,"BOOL"),
 			CurrentWp	: props.globals.initNode("/autopilot/route-manager/current-wp",0,"INT"),
 			vsrRate		: props.globals.initNode("/instrumentation/fms[0]/vsr",0,"INT"),
+			
+			RouteManagerSelection		: props.globals.initNode("/sim/gui/dialogs/route-manager/selection",-1,"INT"),
+			
 		};
 
 		m._fpl 		= nil; # the nasal flightplan();
@@ -162,7 +169,7 @@ var FlightManagementSystemClass = {
 		append(me._listeners, setlistener(me._node.DirectTo,func(n){me._onDirectToChange(n);},1,0) );
 		append(me._listeners, setlistener(extra500.autopilot.nModeNavGpss,func(n){me._onGPSSChange(n);},1,0) );
 		append(me._listeners, setlistener("/autopilot/fms-channel/gpss/in-turn",func(n){me._onGPSSInTurnChange(n);},1,0) );
-		append(me._listeners, setlistener("/sim/gui/dialogs/route-manager/selection",func(n){me._onSelectionChange(n)},1,1));	
+		append(me._listeners, setlistener(me._node.RouteManagerSelection,func(n){me._onSelectionChange(n)},1,0));	
 		
 	},
 	init : func(instance=nil){
@@ -191,17 +198,30 @@ var FlightManagementSystemClass = {
 	setCursorIndex : func(index){
 		me._cursorFocusIndex = index;
 		me._signal.cursorIndexChange.setValue(me._cursorFocusIndex);
+		if ( global.odd(index)){
+			# only the odd index are Waypoints from the FG flightplan
+			me._selectedWaypointIndex = ((index-1) / 2);
+			#debug.dump("FlightManagementSystemClass::setCursorIndex ... _selectedWaypointIndex",me._selectedWaypointIndex);
+		}else{
+			me._selectedWaypointIndex = -1;
+		}
+		me._signal.selectedWpChange.setValue(me._selectedWaypointIndex);
+		
 	},
 	_onFlightPlanChange : func(n){
-		print("FlightManagementSystemClass::_onFlightPlanChange() ... ");
+# 		print("FlightManagementSystemClass::_onFlightPlanChange() ... ");
 		me._fpl = flightplan();
 		#updating the flightplan
+# 		print("FlightManagementSystemClass::_onFlightPlanChange() ... getPlanSize()");
 		me._flightPlan.planSize = me._fpl.getPlanSize();
+# 		print("FlightManagementSystemClass::_onFlightPlanChange() ... current");
 		me._flightPlan.currentWpIndex = me._fpl.current;
 		#resize the waypoint vector
+# 		print("FlightManagementSystemClass::_onFlightPlanChange() ... size");
 		setsize(me._flightPlan.wp,me._flightPlan.planSize);
 				
 		#destination bearing
+# 		print("FlightManagementSystemClass::_onFlightPlanChange() ... courseAndDistance");
 		if(me._fpl.destination != nil){
 			var result= courseAndDistance(me._fpl.destination.lat,me._fpl.destination.lon);
 			me._flightPlan.destination.bearingCourse 	= result[0];
@@ -209,8 +229,12 @@ var FlightManagementSystemClass = {
 		}
 		
 		
+# 		print("FlightManagementSystemClass::_onFlightPlanChange() ... details");
 		for (var i = 0 ; i < me._flightPlan.planSize ; i+=1){
 			var fmsWP = me._fpl.getWP(i);
+			
+			#debug.dump(fmsWP);
+			
 			me._flightPlan.wp[i] = FlightPlanData.new();
 			me._flightPlan.wp[i].id			 	= fmsWP.id;
 			me._flightPlan.wp[i].name		 	= fmsWP.wp_name;
@@ -233,6 +257,7 @@ var FlightManagementSystemClass = {
 			
 		}
 		
+# 		print("FlightManagementSystemClass::_onFlightPlanChange() ... signal");
 		me._signal.fplChange.setValue(n.getValue());
 	},
 	_onCurrentWaypointChange : func(n){
@@ -290,15 +315,33 @@ var FlightManagementSystemClass = {
 	_nextGpssBearing : func(){
 		
 		var nextWpIndex = me._flightPlan.currentWpIndex+1;
-		if(nextWpIndex < me._flightPlan.planSize){
-			
-			setprop("/autopilot/fms-channel/gpss/next-bearing-deg",getprop("/autopilot/route-manager/route/wp["~nextWpIndex~"]/leg-bearing-true-deg"));
+		if((nextWpIndex > 0) and (nextWpIndex < me._flightPlan.planSize)){
+			var bearing = getprop("/autopilot/route-manager/route/wp["~nextWpIndex~"]/leg-bearing-true-deg");
+			#debug.dump(bearing);
+			setprop("/autopilot/fms-channel/gpss/next-bearing-deg",bearing);
 		}
 	},
+
 	# Operation functions of Avidyne FMS 
+
+	deleteWaypoint : func(index=nil){
+		if(index != nil){
+			me._selectedWaypointIndex = index;
+		}
+		
+		if(me._selectedWaypointIndex > 0){
+			me._fpl.deleteWP(me._selectedWaypointIndex);
+		}
+	},
+	insertWaypoint : func(index=nil){
+		print("FlightManagementSystemClass::insertWaypoint() ... not implemented yet.");
+	},
+
 	jumpTo : func(){
 		me.checkOBSMode(0);
-		me._node.CurrentWp.setValue(me._selectedWaypointIndex);
+		if(me._selectedWaypointIndex > 0){
+			me._node.CurrentWp.setValue(me._selectedWaypointIndex);
+		}
 	},
 	directTo : func(){# called from keypad.nas
 		if(me._fplActive){
@@ -306,9 +349,10 @@ var FlightManagementSystemClass = {
 				me._node.DirectTo.setValue(0);
 			} else {
 				me.checkOBSMode(0);
-				
-				me._node.CurrentWp.setValue(me._selectedWaypointIndex);
-				me._node.DirectTo.setValue(1);
+				if(me._selectedWaypointIndex > 0){
+					me._node.CurrentWp.setValue(me._selectedWaypointIndex);
+					me._node.DirectTo.setValue(1);
+				}
 			}
 		}
 	},
@@ -397,13 +441,6 @@ var FlightManagementSystemClass = {
 		me.checkOBSMode();
 	},
 	
-### FMS action
-	deleteWaypoint : func(index=nil){
-		if(index == nil){
-			index = me._selectedWaypointIndex;
-		}
-		me._fpl.deleteWP(index);
-	},
 	
 	
 	update : func(){
