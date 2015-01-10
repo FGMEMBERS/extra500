@@ -51,11 +51,10 @@ var RouteItemClass = {
 		 return m;
 	},
 	draw : func(wpt){
-		me._group.setGeoPosition(wpt.wp_lat,wpt.wp_lon);
-		me._can.Label.setText(wpt.wp_name);
+		me._group.setGeoPosition(wpt.lat,wpt.lon);
+		me._can.Label.setText(wpt.name);
 		me.setColor("#FFFFFF");
 		me._group.setVisible(1);
-		
 	},
 	setColor : func(color){
 		me._can.Label.setColor(color).setColorFill(color);
@@ -223,7 +222,7 @@ var RouteLayer = {
 		me._drawLegs();
 	},
 	_onCurrentWaypointChange : func(n){
-		me._currentWaypoint = n.getValue();
+		me._currentWpIndex = n.getValue();
 		me._drawLegs();
 	},
 	_onVisibilityChange : func(){
@@ -286,7 +285,6 @@ var RouteLayer = {
 				5000,
 			];
 			
-# 			me._obsWaypoint.draw(wp);
 			me._obsWaypoint._can.Label.setText(wp.wp_name);
 			me._obsWaypoint.setColor("#FF0EEB");
 			me._obsWaypoint._group.setVisible(1);
@@ -316,17 +314,15 @@ var RouteLayer = {
 		me._track.coords = [];
 		me._itemIndex	= 0;
 		var cmd = canvas.Path.VG_MOVE_TO;
-		for( var i=0; i < fms._fightPlan.planSize; i+=1 ){
-			var fmsWP = fms._fpl.getWP(i);
-# 				print(sprintf("%s range:%0.2f | lat:%0.3f lon:%0.3f a:%+i vs:%0.1f l:%i",tcas.id,tcas.range,tcas.lat,tcas.lon,tcas.alt,tcas.vs,tcas.level));
-					
+		for( var i=0; i < fms._flightPlan.planSize; i+=1 ){
+
 			if(me._itemIndex >= me._itemCount){
 				append(me._item,RouteItemClass.new(me._group,me._itemIndex));
 				me._itemCount = size(me._item);
 			}
-			me._item[me._itemIndex].draw(fmsWP);
+			me._item[me._itemIndex].draw(fms._flightPlan.wp[i]);
 
-			foreach (var pt; fmsWP.path()) {
+			foreach (var pt; fms._flightPlan.wp[i].path) {
 				append(me._track.coords,"N"~pt.lat);
 				append(me._track.coords,"E"~pt.lon);
 				append(me._track.cmds,cmd);
@@ -346,22 +342,21 @@ var RouteLayer = {
 	_drawLegs : func(){
 		var cmd = canvas.Path.VG_MOVE_TO;
 		
-		if(fms._fightPlan.planSize > 1){
-			for( var i=0; i < fms._fightPlan.planSize; i+=1 ){
+		if(fms._flightPlan.planSize > 1){
+			for( var i=0; i < fms._flightPlan.planSize; i+=1 ){
 			
-				if(i != me._currentWaypoint  ){
+				if(i != me._currentWpIndex  ){
 					me._item[i].setColor("#FFFFFF");
 				}else{
 					me._item[i].setColor("#FF0EEB");
 				}
 			}	
 			
-			if(me._currentWaypoint >= 1 and me._currentWaypoint < fms._fightPlan.planSize){
-				var fmsWP = fms._fpl.getWP(me._currentWaypoint);
+			if(me._currentWpIndex >= 1 and me._currentWpIndex < fms._flightPlan.planSize){
 				cmd = canvas.Path.VG_MOVE_TO;
 				me._currentLeg.coords = [];
 				me._currentLeg.cmds = [];
-				foreach (var pt; fmsWP.path()) {
+				foreach (var pt; fms._flightPlan.wp[me._currentWpIndex].path) {
 					append(me._currentLeg.coords,"N"~pt.lat);
 					append(me._currentLeg.coords,"E"~pt.lon);
 					append(me._currentLeg.cmds,cmd);
@@ -375,12 +370,11 @@ var RouteLayer = {
 				me._can.currentLeg.setVisible(0);
 			}
 			
-			if(me._currentWaypoint >= 0 and me._currentWaypoint < fms._fightPlan.planSize-1){
-				var fmsWP = fms._fpl.getWP(me._currentWaypoint+1);
+			if(me._currentWpIndex >= 0 and me._currentWpIndex < fms._flightPlan.planSize-1){
 				cmd = canvas.Path.VG_MOVE_TO;
 				me._nextLeg.coords = [];
 				me._nextLeg.cmds = [];
-				foreach (var pt; fmsWP.path()) {
+				foreach (var pt; fms._flightPlan.wp[me._currentWpIndex+1].path) {
 					append(me._nextLeg.coords,"N"~pt.lat);
 					append(me._nextLeg.coords,"E"~pt.lon);
 					append(me._nextLeg.cmds,cmd);

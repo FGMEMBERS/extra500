@@ -20,7 +20,7 @@
       Date: 26.09.14
 
       Last change: Eric van den Berg     
-      Date: 08.10.14            
+      Date: 14.12.14            
 
 -->
 <PropertyList>
@@ -68,6 +68,7 @@
 </animation>
   
 <!-- wheel steering-->  
+
 <animation>
   <type>rotate</type>
   <object-name>nlg-trunion.lower</object-name>
@@ -76,18 +77,13 @@
   <object-name>nlg-axle</object-name>
   <object-name>nlg-wheel</object-name>
   <object-name>torque.link</object-name>
-  <condition>
-    <equals>
-      <property>gear/gear[0]/position-norm</property>
-      <value>1</value>
-    </equals>
-  </condition>
-  <property>surface-positions/rudder-pos-norm</property>
-  <interpolation>
-   <entry><ind>-1</ind><dep>30</dep></entry>
-   <entry><ind> 0</ind><dep>  0</dep></entry>
-   <entry><ind> 1</ind><dep>-30</dep></entry>
-  </interpolation>   
+     <expression>
+       <product>
+         <property>gear/gear[0]/position-norm</property>
+         <property>surface-positions/rudder-pos-norm</property>
+	   <value>-30</value>
+       </product>
+     </expression>
   <axis>
     <x1-m>0</x1-m>
     <y1-m>0</y1-m>
@@ -96,7 +92,7 @@
     <y2-m>0</y2-m>
     <z2-m>1</z2-m>
   </axis>
-</animation>
+ </animation>
   
 <!-- damper -->
 <animation>
