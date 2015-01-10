@@ -28,7 +28,7 @@
      inkscape:cx="673.0345"
      inkscape:cy="218.55552"
      inkscape:document-units="px"
-     inkscape:current-layer="FPL_Item_Detail"
+     inkscape:current-layer="Airport_Procedures"
      showgrid="false"
      inkscape:snap-page="true"
      inkscape:window-width="1920"
@@ -130,24 +130,28 @@
        style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
     <text
        xml:space="preserve"
-       style="font-size:39.87700653px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-       x="598.15509"
+       style="font-size:39.87700653px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr-tb;text-anchor:end;fill:#ffffff;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="785.57648"
        y="6.2245426"
-       id="Airport_Approach_lable"
-       transform="scale(1.0030843,0.99692519)"><tspan
+       id="Airport_Approach_Label"
+       transform="scale(1.0030843,0.99692519)"
+       inkscape:label="#Airport_Approach_lable"
+       sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3177-6-2"
-         x="598.15509"
+         x="785.57648"
          y="6.2245426">Approach:</tspan></text>
     <text
-       id="Airport_Arrival_lable"
+       id="Airport_Arrival_Label"
        y="6.2245426"
-       x="79.754036"
-       style="font-size:39.87700653px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="207.36047"
+       style="font-size:39.87700653px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr-tb;text-anchor:end;fill:#ffffff;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
        xml:space="preserve"
-       transform="scale(1.0030843,0.99692519)"><tspan
+       transform="scale(1.0030843,0.99692519)"
+       inkscape:label="#Airport_Arrival_lable"
+       sodipodi:linespacing="125%"><tspan
          y="6.2245426"
-         x="79.754036"
+         x="207.36047"
          id="tspan4915"
          sodipodi:role="line">Arrival:</tspan></text>
     <text

@@ -19,7 +19,44 @@
 #      Last change:      Eric van den Berg 
 #      Date:             27.07.2014
 #
-var FlightPlanData = {
+
+# internal flightplan
+var InternalFlightPlan = {
+	new : func(){
+		var m = {
+			isReady 	: 0,
+			isUpdated 	: 0,
+			destination : {
+				bearingCourse 		: 0,
+				bearingDistance 	: 0,
+				icao			: "",
+				name			: "",
+				runway	: {
+					id : "",
+				}
+			},
+			departure : {
+				bearingCourse 		: 0,
+				bearingDistance 	: 0,
+				icao			: "",
+				name			: "",
+				runway	: {
+					id : "",
+				}
+			},
+			planSize 	: 0,
+			wp 		: [],
+			currentWp 	: 0 ,
+			distanceToGo 	: 0 ,
+			fuelAt	 	: 0,
+			eta 		: 0,
+			ete 		: 0,
+		};
+		return m;
+	},
+};
+
+var InternalFlightPlanData = {
 	new : func(){
 		var m = {};
 		m.id		= "";
@@ -27,9 +64,7 @@ var FlightPlanData = {
 		m.lat 		= 0;
 		m.lon 		= 0;
 		
-		m.sid		= "---";
-		
-		
+			
 		m.distanceTo 	= 0;
 		m.ete 		= 0;
 		m.eta 		= 0;
@@ -40,6 +75,12 @@ var FlightPlanData = {
 		m.type 		= nil;
 		m.role 		= nil;
 		m.flyType 	= nil;
+		
+		# Avidyne waypoint data
+		m.variant	= "Default"; # Origin,Arrival,Default
+		m.sid		= ""; # Sid name
+		m.arrival	= ""; # arrival name
+		m.approach	= ""; # approach name
 		
 		m.path 		= nil;
 		
@@ -107,23 +148,8 @@ var FlightManagementSystemClass = {
 			
 		};
 
-		m._fpl 		= nil; # the nasal flightplan();
-		m._flightPlan 	= {
-			isReady 	: 0,
-			isUpdated 	: 0,
-			destination : {
-				bearingCourse 		: 0,
-				bearingDistance 	: 0,
-			},
-			planSize 	: 0,
-			wp 		: [],
-			currentWp 	: 0 ,
-			distanceToGo 	: 0 ,
-			fuelAt	 	: 0,
-			eta 		: 0,
-			ete 		: 0,
-			
-		};
+		m._nasalFlightPlan 	= nil; 			# the nasal flightplan();
+		m._flightPlan 		= InternalFlightPlan.new();	# the internal FlightPlan
 		
 		m._dynamicPoint = {
 			TOD : {
@@ -210,46 +236,90 @@ var FlightManagementSystemClass = {
 	},
 	_onFlightPlanChange : func(n){
 # 		print("FlightManagementSystemClass::_onFlightPlanChange() ... ");
-		me._fpl = flightplan();
+		me._nasalFlightPlan = flightplan();
 		#updating the flightplan
 # 		print("FlightManagementSystemClass::_onFlightPlanChange() ... getPlanSize()");
-		me._flightPlan.planSize = me._fpl.getPlanSize();
+		me._flightPlan.planSize = me._nasalFlightPlan.getPlanSize();
 # 		print("FlightManagementSystemClass::_onFlightPlanChange() ... current");
-		me._flightPlan.currentWpIndex = me._fpl.current;
+		me._flightPlan.currentWpIndex = me._nasalFlightPlan.current;
 		#resize the waypoint vector
 # 		print("FlightManagementSystemClass::_onFlightPlanChange() ... size");
 		setsize(me._flightPlan.wp,me._flightPlan.planSize);
 				
-		#destination bearing
-# 		print("FlightManagementSystemClass::_onFlightPlanChange() ... courseAndDistance");
-		if(me._fpl.destination != nil){
-			var result= courseAndDistance(me._fpl.destination.lat,me._fpl.destination.lon);
+		# destination bearing
+# 		# prepair the Procedure data
+		#print("FlightManagementSystemClass::_onFlightPlanChange() ... Procedure data");
+		if (me._nasalFlightPlan.destination != nil){
+			var result= courseAndDistance(me._nasalFlightPlan.destination.lat,me._nasalFlightPlan.destination.lon);
 			me._flightPlan.destination.bearingCourse 	= result[0];
 			me._flightPlan.destination.bearingDistance 	= result[1];
+			
+			me._flightPlan.destination.icao 	= me._nasalFlightPlan.destination.id;
+			me._flightPlan.destination.name 	= me._nasalFlightPlan.destination.name;
+			
+			if (me._nasalFlightPlan.destination_runway != nil){
+				me._flightPlan.destination.runway.id 	= me._nasalFlightPlan.destination_runway.id;
+			}
+		}
+		if (me._nasalFlightPlan.departure != nil){
+			me._flightPlan.departure.icao 		= me._nasalFlightPlan.departure.id;
+			me._flightPlan.departure.name 		= me._nasalFlightPlan.departure.name;
+			if (me._nasalFlightPlan.departure_runway != nil){
+				me._flightPlan.departure.runway.id 	= me._nasalFlightPlan.departure_runway.id;
+			}
+# 		
 		}
 		
-		
-# 		print("FlightManagementSystemClass::_onFlightPlanChange() ... details");
+		#print("FlightManagementSystemClass::_onFlightPlanChange() ... details");
 		for (var i = 0 ; i < me._flightPlan.planSize ; i+=1){
-			var fmsWP = me._fpl.getWP(i);
+			var fmsWP = me._nasalFlightPlan.getWP(i);
 			
 			#debug.dump(fmsWP);
 			
-			me._flightPlan.wp[i] = FlightPlanData.new();
+			me._flightPlan.wp[i] = InternalFlightPlanData.new();
 			me._flightPlan.wp[i].id			 	= fmsWP.id;
 			me._flightPlan.wp[i].name		 	= fmsWP.wp_name;
+			me._flightPlan.wp[i].type			= fmsWP.wp_type;
+			me._flightPlan.wp[i].flyType			= fmsWP.fly_type;
+			me._flightPlan.wp[i].role			= fmsWP.wp_role;
 			me._flightPlan.wp[i].lat		 	= fmsWP.wp_lat;
 			me._flightPlan.wp[i].lon		 	= fmsWP.wp_lon;
 			me._flightPlan.wp[i].constraint.alt.type 	= fmsWP.alt_cstr_type;
 			me._flightPlan.wp[i].constraint.alt.value	= fmsWP.alt_cstr;
-			me._flightPlan.wp[i].type			= fmsWP.wp_type;
-			me._flightPlan.wp[i].role			= fmsWP.wp_role;
-			me._flightPlan.wp[i].flyType			= fmsWP.fly_type;
 			me._flightPlan.wp[i].path			= fmsWP.path();
+						
+			if (	(me._flightPlan.wp[i].role == "sid") and 
+				( 
+					(me._flightPlan.wp[i].type == "navaid") or 
+					(me._flightPlan.wp[i].type == "runway")
+				)
+			   ){
+				me._flightPlan.wp[i].variant 	= "Origin";
+				if(me._nasalFlightPlan.sid != nil){
+					me._flightPlan.wp[i].sid	= me._nasalFlightPlan.sid.id;
+				}
+			
+			
+			}elsif(	(me._flightPlan.wp[i].role == "approach") and 
+				( 
+					(me._flightPlan.wp[i].type == "navaid") or 
+					(me._flightPlan.wp[i].type == "runway")
+				)
+			   ){
+				me._flightPlan.wp[i].variant = "Arrival";
+				if(me._nasalFlightPlan.star != nil){
+					me._flightPlan.wp[i].arrival	= me._nasalFlightPlan.star.id;
+				}
+				if(me._nasalFlightPlan.approach != nil){
+					me._flightPlan.wp[i].approach	= me._nasalFlightPlan.approach.id;
+				}
+			}else{
+				me._flightPlan.wp[i].variant = "Default";
+			}	
 			
 # fixed in flightgear 
 # 			if(i>0){
-# 				me._flightPlan.wp[i].course			= me._fpl.getWP(i-1).leg_bearing;
+# 				me._flightPlan.wp[i].course			= me._nasalFlightPlan.getWP(i-1).leg_bearing;
 # 			}
 			
 			me._flightPlan.wp[i].course			= fmsWP.leg_bearing;
@@ -273,7 +343,7 @@ var FlightManagementSystemClass = {
 # getting and setting the frequency in nav1 if new current waypoint is a VOR or destination ILS (course is set in extra500-autopilot.xml)
 				var freq = nil;
 				var course = nil;
-				var currentWP = me._fpl.currentWP();
+				var currentWP = me._nasalFlightPlan.currentWP();
 				if (currentWP.wp_role == "approach") {
 # is approach, looking for ILS freq
 					var apt = airportinfo(getprop("/autopilot/route-manager/destination/airport"));
@@ -330,7 +400,7 @@ var FlightManagementSystemClass = {
 		}
 		
 		if(me._selectedWaypointIndex > 0){
-			me._fpl.deleteWP(me._selectedWaypointIndex);
+			me._nasalFlightPlan.deleteWP(me._selectedWaypointIndex);
 		}
 	},
 	insertWaypoint : func(index=nil){
@@ -366,7 +436,7 @@ var FlightManagementSystemClass = {
 		if(me._obsMode != nextMode){
 			me._obsMode = nextMode;
 			if(me._obsMode){
-				var wypt = me._fpl.getWP(me._fpl.current);
+				var wypt = me._nasalFlightPlan.getWP(me._nasalFlightPlan.current);
 				
 				var nGPS0 = props.globals.getNode("/instrumentation/gps[0]/scratch", 1);
 				var nGPS1 = props.globals.getNode("/instrumentation/gps[1]/scratch", 1);
@@ -437,7 +507,7 @@ var FlightManagementSystemClass = {
 		#me.checkOBSMode();
 	},
 	_onFPLActiveChange : func(n){
-		me._fplActive = n.getValue();
+		me._nasalFlightPlanActive = n.getValue();
 		me.checkOBSMode();
 	},
 	
@@ -457,11 +527,11 @@ var FlightManagementSystemClass = {
 		me._constraint.VSR.wptIndex	= 0;
 		me._constraint.VSR.visible	= 0;
 		
-		if(me._fplActive){
+		if(me._nasalFlightPlanActive){
 			me._flightPlan.isReady = 1;
 			
-			if(me._fpl.destination != nil){
-				var result= courseAndDistance(me._fpl.destination.lat,me._fpl.destination.lon);
+			if(me._nasalFlightPlan.destination != nil){
+				var result= courseAndDistance(me._nasalFlightPlan.destination.lat,me._nasalFlightPlan.destination.lon);
 				me._flightPlan.destination.bearingCourse 	= result[0];
 				me._flightPlan.destination.bearingDistance 	= result[1];
 			}
@@ -560,14 +630,14 @@ var FlightManagementSystemClass = {
 				# me._dynamicPoint.TOD 
 				if(altToGo <= -150){
 					me._dynamicPoint.TOD.distance = (altToGo / me._dynamicPoint.TOD.rate) * gsMin ;
-					me._dynamicPoint.TOD.position = me._fpl.pathGeod(me._constraint.VSR.wptIndex, -me._dynamicPoint.TOD.distance);
+					me._dynamicPoint.TOD.position = me._nasalFlightPlan.pathGeod(me._constraint.VSR.wptIndex, -me._dynamicPoint.TOD.distance);
 					me._dynamicPoint.TOD.visible = legMode;
 				}
 				
 				# me._dynamicPoint.TOC 
 				if (me._dynamicPoint.TOC.rate > 0 and altToGo >= 150){
 					me._dynamicPoint.TOC.distance = me._constraint.VSR.distance - (altToGo / me._dynamicPoint.TOC.rate) * gsMin ;
-					me._dynamicPoint.TOC.position = me._fpl.pathGeod(me._constraint.VSR.wptIndex, -me._dynamicPoint.TOC.distance);
+					me._dynamicPoint.TOC.position = me._nasalFlightPlan.pathGeod(me._constraint.VSR.wptIndex, -me._dynamicPoint.TOC.distance);
 					me._dynamicPoint.TOC.visible = legMode;
 				}
 				
@@ -575,7 +645,7 @@ var FlightManagementSystemClass = {
 				var difAltBug = altBug - currentAlt;
 				if ((me._dynamicPoint.RTA.rate <= -100 or me._dynamicPoint.RTA.rate >= 100) and (difAltBug >= 150 or difAltBug <= -150)){
 					me._dynamicPoint.RTA.distance = distanceToGo - math.abs((difAltBug / me._dynamicPoint.RTA.rate) * gsMin) ;
-					me._dynamicPoint.RTA.position = me._fpl.pathGeod(me._flightPlan.planSize-1, -me._dynamicPoint.RTA.distance);
+					me._dynamicPoint.RTA.position = me._nasalFlightPlan.pathGeod(me._flightPlan.planSize-1, -me._dynamicPoint.RTA.distance);
 					me._dynamicPoint.RTA.visible = legMode and (me._dynamicPoint.RTA.distance > 0);
 				}
 				

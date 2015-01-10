@@ -180,18 +180,21 @@ var FlightPlanItemInterface = {
 		m._height = 0;
 		return m;
 	},
-	getHeight :func(){return me._height;},
-	setTranslation : func(x,y){},
-	setType : func(type,role=nil){},
-	setHeadline : func(value){},
-	setName : func(value){},
-	setRestriction : func(value){},
-	setETE : func(value){},
-	setETA : func(value){},
-	setDistance : func(value){},
-	setFuel : func(value){},
-	setActive   :func(value){},
-	setSelection   :func(value){},
+	getHeight 	: func(){return me._height;},
+	setTranslation 	: func(x,y){},
+	setType 	: func(type,role=nil){},
+	setHeadline 	: func(v){},
+	setName 	: func(v){},
+	setRestriction 	: func(v){},
+	setETE 		: func(v){},
+	setETA 		: func(v){},
+	setDistance 	: func(v){},
+	setFuel 	: func(v){},
+	setActive   	: func(v){},
+	setSelection   	: func(v){},
+	setSid	: func(v){},
+	setArrival	: func(v){},
+	setApproach	: func(v){},
 	
 };
 
@@ -679,6 +682,8 @@ var FlightPlanListWidget = {
 			
 			me._fplItemCache[i].setVisible(translateY <= me._yMax);
 			
+			
+			
 		}
 		
 		debug.dump("me._insertCoursor._position",me._insertCoursor._position);
@@ -896,9 +901,12 @@ var WaypointInterface2 = {
 	setActive   	: func(v){},
 	setSelection    : func(v){},
 	setBearing 	: func(v){},
-	setRunway 	: func(v){},
-	setApproach	: func(v){},
+	
+	setSid 		: func(v){},
 	setArrival	: func(v){},
+	setApproach	: func(v){},
+	setRunway	: func(v){},
+	
 };
 var FlightPlanItemTest = {
 	new : func(canvasGroup,index){
@@ -1019,8 +1027,10 @@ var FlightPlanItemAirport = {
 			
 			# Ariport 
 			ProceduresBackground	: m._group.getElementById("Airport_Procedures_back"),
+			ArrivalLabel 		: m._group.getElementById("Airport_Arrival_Label"),
 			Arrival 		: m._group.getElementById("Airport_Arrival_Text"),
 			ArrivalBackground 	: m._group.getElementById("Airport_Arrival_back"),
+			ApproachLabel 		: m._group.getElementById("Airport_Approach_Label"),
 			Approach 		: m._group.getElementById("Airport_Approach_Text"),
 			ApproachBackground 	: m._group.getElementById("Airport_Approach_back"),
 			
@@ -1043,9 +1053,28 @@ var FlightPlanItemAirport = {
 	setHeadline 	: func(v){ me._can.Headline.setText(v);},
 	setName 	: func(v){ me._can.ICAO.setText(v);},
 	setConstrain 	: func(v){ me._can.Constrains.setText(v);},
-	setApproach	: func(v){ me._can.Approach.setText(v);},
-	setArrival	: func(v){ me._can.Arrival.setText(v);},
-	setDeparture	: func(v){ me._can.Arrival.setText(v);},
+	setApproach	: func(v){ 
+		me._can.Approach.setVisible(1);
+		me._can.ApproachBackground.setVisible(1);
+		me._can.Approach.setText(v);
+	},
+	setArrival	: func(v){ 
+		me._can.Arrival.setVisible(1);
+		me._can.ArrivalBackground.setVisible(1);
+		me._can.ArrivalLabel.setText("Arrival:");
+		me._can.Arrival.setText(v);
+	},
+	setSid	: func(v){ 
+		me._can.ArrivalLabel.setVisible(0);
+		me._can.Arrival.setVisible(0);
+		me._can.ArrivalBackground.setVisible(0);
+		
+		me._can.ApproachLabel.setText("Sid:");
+		me._can.Approach.setText(v);
+	},
+	setRunway	: func(v){ 
+		me._can.Runway.setText(v);
+	},
 	setActive   	: func(v){
 		if (v == 1){
 			me._can.Background.setColorFill(TYPE_COLOR.Bug.Background);
@@ -1233,9 +1262,9 @@ var FlightPlanItemFactory = {
 	getItem : func(type,canvasGrp,index){
 		#print(sprintf("FlightPlanItemFactory::getItem(%s,%s,%s) ...",type,"canvasGroup",index));
 		var item = nil;
-		if (type == "runway"){
+		if (type == "Airport"){
 			item = me._Airport.getItem(canvasGrp,index);
-		}elsif (type == "cursor"){
+		}elsif (type == "Cursor"){
 			item = me._Cursor.getItem(canvasGrp,index);
 		}else{
 			item = me._Waypoint.getItem(canvasGrp,index);
@@ -1492,65 +1521,73 @@ var FlightPlanListWidget2 = {
 		me._flightplanItemMap = [];
 		
 		var item = nil;
-		item = me._flightPlanItemFactory.getItem("cursor",me._can.list,-1);
+		item = me._flightPlanItemFactory.getItem("Cursor",me._can.list,-1);
 		me._listView.appendItem(item);
 		for( var i=0; i < fms._flightPlan.planSize; i+=1 ){
 			var wp = fms._flightPlan.wp[i];
 			
-			### TODO move to a factory
-# 			if (wp.type == "runway"){
-# 				item = FlightPlanItemAirport.new(me._can.list,i);
-# 			}else{
-# 				item = FlightPlanItemWaypoint.new(me._can.list,i);
-# 			}
-			item = me._flightPlanItemFactory.getItem(wp.type,me._can.list,i);
-			
-			append(me._flightplanItemMap,item);
-			
-			
-			item.setType(wp.type,wp.role);
-			item.setName(sprintf("%s",wp.name));
-			
-			if (wp.type == "runway"){
-				item.setApproach("APPROACH");
-				item.setArrival("STAR");
-				item.setDeparture("SID");
-			}
-			
-			var constrain = "";
-			if (wp.constraint.alt.type != nil) {
-				constrain ~= "at : " ~ wp.constraint.alt.value ~"ft ";
-			}
-			if (wp.type != nil){
-				constrain ~= wp.type ~ " - ";
-			}else {
-				constrain ~= "nil - ";
-			}
-			if(wp.role != nil){
-				constrain ~=  wp.role;
-			}else {
-				constrain ~=  "nil";
-			}
-			item.setConstrain(constrain);
-			
-			if(i > 0){
-				item.setHeadline(sprintf("%s %03.0f",wp.flyType,wp.course));
-				item.setDistance(sprintf("%0.1f",wp.distanceTo));
+			if (wp.variant == "Origin"){
+				#print("FlightPlanListWidget2::_drawList() ... ----------------------------------- Origin");
+				item = me._flightPlanItemFactory.getItem("Airport",me._can.list,i);
+				item.setHeadline("Origin");
+				#item.setHeadline(sprintf("Origin %s %s",wp.role,wp.type));
+					
+				item.setName(fms._flightPlan.departure.icao);
+				item.setConstrain(fms._flightPlan.departure.name);
+				
+				item.setSid(wp.sid);
+				item.setRunway(fms._flightPlan.departure.runway.id);
+				
+			}elsif(wp.variant == "Arrival"){
+				#print("FlightPlanListWidget2::_drawList() ... ----------------------------------- Arrival");
+				item = me._flightPlanItemFactory.getItem("Airport",me._can.list,i);
+				item.setHeadline("Destination");
+				#item.setHeadline(sprintf("Destination %s %s",wp.role,wp.type));
+				item.setName(fms._flightPlan.destination.icao);
+				item.setConstrain(fms._flightPlan.destination.name);
+				item.setArrival(wp.arrival);
+				item.setApproach(wp.approach);
+				item.setRunway(fms._flightPlan.destination.runway.id);
+				
 			}else{
-				item.setHeadline("");
-				item.setDistance("---");
+				#print("FlightPlanListWidget2::_drawList() ... ----------------------------------- Waypoint");
+		
+				item = me._flightPlanItemFactory.getItem("Waypoint",me._can.list,i);
+				
+				item.setType(wp.type,wp.role);
+				item.setName(sprintf("%s",wp.name));
+				
+				
+				
+				var constrain = "";
+				if (wp.constraint.alt.type != nil) {
+					constrain = sprintf("cross %s %s %3.0f ft",wp.name,wp.constraint.alt.type,wp.constraint.alt.value);
+				}
+				
+				item.setConstrain(constrain);
+				
+				if(i > 0){
+					item.setHeadline(sprintf("%s (%03.0f°)",wp.flyType,wp.course));
+					#item.setHeadline(sprintf("%s (%03.0f°) %s %s ",wp.flyType,wp.course,wp.role,wp.type ));
+					item.setDistance(sprintf("%0.1f",wp.distanceTo));
+				}else{
+					item.setHeadline("");
+					item.setDistance("---");
+				}
 			}
 			
 			if( i == me._currentIndex){
 				item.setActive(1);
 			}
+			
 			if( i == me._focusIndex){
 				item.setFocus(1);
 			}
-			
+			#print("FlightPlanListWidget2::_drawList() ... ----------------------------------- append Item");
+			append(me._flightplanItemMap,item);
 			me._listView.appendItem(item);
 						
-			item = me._flightPlanItemFactory.getItem("cursor",me._can.list,-1);
+			item = me._flightPlanItemFactory.getItem("Cursor",me._can.list,-1);
 			me._listView.appendItem(item);
 			
 		}
@@ -1561,27 +1598,35 @@ var FlightPlanListWidget2 = {
 		me._listViewTransform.setTranslation(me._listView._viewPort._x,-me._listView._viewPort._y);
 	},
 	onScrollBarUpdate : func(){
-		var cursorHeight = 0;
-		var cursorPosY 	 = 0;
+		var activeHeight = 0;
+		var activePosY 	 = 0;
 		var viewHeight 	 = 0;
 		var viewPosY 	 = 0;
+		var activeItem	 = nil;
 		
+		if (me._currentIndex >= 0 and me._currentIndex < size(me._flightplanItemMap)){
+			var activeItem = me._flightplanItemMap[me._currentIndex];
+		}
 			
 		if (me._listView._height > me._listView._viewPort._height){
-			cursorHeight 	 = (me._listView._focusedItem._bound._height / me._listView._height) * me._listView._viewPort._height;
-			cursorPosY 	 = (me._listView._focusedItem._bound._y / me._listView._height) * me._listView._viewPort._height;
+			if (activeItem != nil){
+				activeHeight 	 = (activeItem._bound._height / me._listView._height) * me._listView._viewPort._height;
+				activePosY 	 = (activeItem._bound._y / me._listView._height) * me._listView._viewPort._height;
+			}
 			viewHeight 	 = (me._listView._viewPort._height / me._listView._height) * me._listView._viewPort._height;
 			viewPosY	 = (me._listView._viewPort._y / me._listView._height) * me._listView._viewPort._height;
 		}else{
-			cursorHeight 	 = (me._listView._focusedItem._bound._height / me._listView._viewPort._height) * me._listView._viewPort._height;
-			cursorPosY 	 = (me._listView._focusedItem._bound._y / me._listView._viewPort._height) * me._listView._viewPort._height;
+			if (activeItem != nil){
+				activeHeight 	 = (activeItem._bound._height / me._listView._viewPort._height) * me._listView._viewPort._height;
+				activePosY 	 = (activeItem._bound._y / me._listView._viewPort._height) * me._listView._viewPort._height;
+			}
 			viewHeight	 = me._listView._viewPort._height;
 			viewPosY	 = (me._listView._viewPort._y / me._listView._viewPort._height) * me._listView._viewPort._height;
 		}
 		
 		me._can.ScrollCursorCurrent.set("coord[1]",0);
-		me._can.ScrollCursorCurrent.set("coord[3]",cursorHeight);
-		me._can.ScrollCursorCurrent.setTranslation(0,cursorPosY);
+		me._can.ScrollCursorCurrent.set("coord[3]",activeHeight);
+		me._can.ScrollCursorCurrent.setTranslation(0,activePosY);
 		me._can.ScrollCursorView.set("coord[1]",0);
 		me._can.ScrollCursorView.set("coord[3]",viewHeight);
 		me._can.ScrollCursorView.setTranslation(0,viewPosY);

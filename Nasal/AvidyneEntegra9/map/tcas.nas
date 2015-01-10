@@ -145,7 +145,7 @@ var TcasItemClass = {
 		};
 		m._can.layer.setTranslation(-16,-32);
 		m._color = COLOR["TCAS_LEVEL_0"];
-		print("TcasItemClass.new() ... constructed.");
+		#print("TcasItemClass.new() ... constructed.");
 		return m;
 	},
 	setData : func(lat,lon,alt,vs,level){
