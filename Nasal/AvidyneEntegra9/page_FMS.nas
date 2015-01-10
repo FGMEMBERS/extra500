@@ -34,10 +34,14 @@ var DirectToWidget = {
 			border		: m._group.getElementById("DirectTo_Border"),
 		};
 		
+				
 		return m;
 	},
 	setListeners : func(instance) {
-		append(me._listeners, setlistener(fms._node.DirectTo,func(n){me._onChange(n)},1,0));	
+		append(me._listeners, setlistener(fms._node.DirectTo,func(n){me._onDirectToChange(n)},1,0));	
+		append(me._listeners, setlistener(fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,0));
+		append(me._listeners, setlistener(fms._signal.selectedWpChange,func(n){me._onSelectedWpChange(n)},1,0));
+		
 	},
 	init : func(instance=me){
 		
@@ -46,7 +50,24 @@ var DirectToWidget = {
 		
 		
 	},
-	_onChange : func(n){
+	check : func(){
+		if (	(fms._node.DirectTo.getValue() == 1) or 
+			( 
+				(me._visibility == 1) and 
+				(fms._flightPlan.isReady == 1) and 
+				(fms._signal.selectedWpChange.getValue() >= 0)
+			))
+		{
+			me._ifd.ui.bindKey("R4",{
+				"<"	: func(){fms.directTo();},
+				">"	: func(){fms.directTo();},
+			});
+			
+		}else{
+			me._ifd.ui.bindKey("R4");
+		}
+	},
+	_onDirectToChange : func(n){
 		if (n.getValue()==1){
 			me._can.text.set("fill",COLOR["White"]);
 			me._can.border.set("stroke",COLOR["Turquoise"]);
@@ -56,128 +77,411 @@ var DirectToWidget = {
 			me._can.border.set("stroke",COLOR["Blue"]);
 			me._can.border.set("stroke-width",10);
 		}
+		me.check();
+	},
+	_onFplReadyChange : func(n){
+		me.check();
+	},
+	_onSelectedWpChange : func(n){
+		me.check();
 	},
 	_onVisibiltyChange : func(){
 		if(me._visibility == 1){
 			me.setListeners(me);
-			
-			me._ifd.ui.bindKey("R4",{
-				"<"	: func(){keypad.onD()},
-				">"	: func(){keypad.onD()},
-			});
-			
 			me._can.button.setVisible(1);
 		}else{
-			me._can.button.setVisible(0);
-			me._ifd.ui.bindKey("R4");
 			me.removeListeners();
+			me._can.button.setVisible(0);
 		}
+		me.check();
 	},
 	
 };
 
+var InsertDeleteWidget = {
+	new : func(page,canvasGroup,name){
+		var m = {parents:[InsertDeleteWidget,IfdWidget.new(page,canvasGroup,name)]};
+		m._class 	= "InsertDeleteWidget";
+		m._tab		= [];
+		m._can		= {};
+		
+		m._can = {
+			button		: m._group.getElementById("InsertDelete").setVisible(0),
+			text		: m._group.getElementById("InsertDelete_Text"),
+			border		: m._group.getElementById("InsertDelete_Background"),
+		};
+		
+				
+		return m;
+	},
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(fms._signal.selectedWpChange,func(n){me._onSelectedWpChange(n)},1,0));
+		
+	},
+	init : func(instance=me){
+		
+	},
+	deinit : func(){
+		
+		
+	},
+	check : func(){
+		if(me._visibility == 1){
+			if (fms._signal.selectedWpChange.getValue() >= 0){
+				me._can.text.setText("Delete");
+				
+				me._ifd.ui.bindKey("R5",{
+					"<"	: func(){fms.deleteWaypoint();},
+					">"	: func(){fms.deleteWaypoint();},
+				});
+				
+			}else{
+				me._can.text.setText("Insert");
+				
+				me._ifd.ui.bindKey("R5",{
+					"<"	: func(){fms.insertWaypoint();},
+					">"	: func(){fms.insertWaypoint();},
+				});
+			}
+		}else{
+			me._ifd.ui.bindKey("R5");
+		}
+	},
+	_onSelectedWpChange : func(n){
+		
+		me.check();
+	},
+	
+	_onVisibiltyChange : func(){
+		if(me._visibility == 1){
+			me.setListeners(me);
+			me._can.button.setVisible(1);
+		}else{
+			me.removeListeners();
+			me._can.button.setVisible(0);
+		}
+		me.check();
+	},
+	
+};
+
+var ScrollAble = {
+	new : func(){
+		var m = {parents:[ScrollAble]};
+		return m;
+	},
+	adjust : func(amount=nil){return 0;},
+	select : func(v,cursor=0){}
+};
 
 var FlightPlanItemInterface = {
-	setType : func(type){},
-	setHeadline : func(value){},
-	setName : func(value){},
-	setRestriction : func(value){},
-	setETE : func(value){},
-	setETA : func(value){},
-	setDistance : func(value){},
-	setFuel : func(value){},
-	setActive   :func(value){},
-	setSelection   :func(value){},
+	new : func(){
+		var m = {parents:[FlightPlanItemInterface]};
+		m._height = 0;
+		return m;
+	},
+	getHeight 	: func(){return me._height;},
+	setTranslation 	: func(x,y){},
+	setType 	: func(type,role=nil){},
+	setHeadline 	: func(v){},
+	setName 	: func(v){},
+	setRestriction 	: func(v){},
+	setETE 		: func(v){},
+	setETA 		: func(v){},
+	setDistance 	: func(v){},
+	setFuel 	: func(v){},
+	setActive   	: func(v){},
+	setSelection   	: func(v){},
+	setSid	: func(v){},
+	setArrival	: func(v){},
+	setApproach	: func(v){},
+	
 };
 
 var TYPE_COLOR = {
 	runway : {
-		back	: "#207C97",
-		inner	: "#56CCD3",
+		back	: "#1f305c",
+		inner	: "#1e5c92",
+		
 	},
 	basic : {
-		back	: "#67584E",
-		inner	: "#C0AA9D",
+		back	: "#303030",
+		inner	: "#666666",
 	},
 	bug : {
 		back	: "#BD5889",
 		inner	: "#FE80C8",
 	},
+	Bug : {
+		Background	: "#BD5889",
+		Detail		: "#FE80C8",
+		Procedures 	: "#FE80C8",
+	},
+	
+	Airport : {
+		Background	: "#1f305c",
+		Detail		: "#1e5c92",
+		Procedures 	: "#201c57",
+		
+	},
+	Waypoint : {
+		Background	: "#303030",
+		Detail		: "#666666",
+	},
+	
+	
 };
 
 
-var FlighPlanItem_old = {
+
+var FlightPlanInserCoursor = {
+	new : func(canvasGroup){
+		var m = {parents:[
+			FlightPlanInserCoursor,
+			ScrollAble.new(),
+ 			]};
+			
+		m._index = 0;
+		m._position = [0];
+		m._visibility = 0;
+		
+		m._can = {
+			CursorInsert		: canvasGroup.getElementById("FPL_Coursor_Insert").setVisible(m._visibility),
+		};
+		
+		return m;
+	},
+	adjust : func(amount=nil){
+		var adjust = 0;
+		
+		if(amount==nil){
+			
+		}else{
+			adjust = me._visibility == 1 ? math.sgn(amount) : 0;
+		}
+		
+		return adjust;
+	},
+	select : func(v,cursor=0){
+		me._index = cursor/2;
+		me._can.CursorInsert.setTranslation(0,me._position[me._index]);
+		me._visibility = v;
+		me._can.CursorInsert.setVisible(me._visibility);
+	}
+};
+
+var FlightPlanItem_old = {
 	new : func(canvasGroup,index,type){
 		var m = {parents:[
-			FlighPlanItem_old,
-			FlightPlanItemInterface
+			FlightPlanItem_old,
+			ScrollAble.new(),
+ 			FlightPlanItemInterface.new()
  			]};
 		m._type = type;
 		m._group = canvasGroup.createChild("group", "waypoint_"~index).setVisible(0).set("z-index",3);
-		canvas.parsesvg(m._group, "Models/instruments/IFDs/IFD_FMS_FPL_ItemWP.svg");
+		canvas.parsesvg(m._group, "Models/instruments/IFDs/IFD_FMS_FPL_ItemWP.svg",{
+			"font-mapper": global.canvas.FontMapper
+			}
+		);
 		m._can = {
-			Item 		: m._group.getElementById("FPL_Pattern_Waypoint"),
-			Back 		: m._group.getElementById("Back"),
-			BackInner	: m._group.getElementById("BackInner"),
-			Headline	: m._group.getElementById("Headline"),
-			Name 		: m._group.getElementById("Waypoint_Navaid_Name"),
-			Ristriction 	: m._group.getElementById("Ristriction"),
-			Distance 	: m._group.getElementById("Distance"),
-			ETE	 	: m._group.getElementById("ETE"),
-			Fuel	 	: m._group.getElementById("Fuel"),
-			ETA		: m._group.getElementById("ETA"),
+# 			edit			: m._group.getElementById("edit").setVisible(0),
+# 			view 			: m._group.getElementById("view"),
+# 			Item 			: m._group.getElementById("FPL_Pattern_Waypoint"),
+# 			Back 			: m._group.getElementById("Back"),
+# 			BackInner		: m._group.getElementById("BackInner"),
+		#General
+			Wypt_back		: m._group.getElementById("Wypt_back"),
+			Airport_back		: m._group.getElementById("Airport_back").setVisible(0),
+			Headline		: m._group.getElementById("Wypt_Headline"),
+			ICAO 			: m._group.getElementById("Wypt_ICAO"),
+			ICAO_back 		: m._group.getElementById("Wypt_ICAO_back").setVisible(0),
+			Constrains 		: m._group.getElementById("Wypt_Constrains"),
+			
+		# Wypt Details
+			Wypt_Detail 		: m._group.getElementById("Wypt_Detail"),
+			Wypt_Detail_back 	: m._group.getElementById("Wypt_Detail_back"),
+			
+			Distance 		: m._group.getElementById("Distance"),
+			ETE	 		: m._group.getElementById("ETE"),
+			ETE_Unit	 	: m._group.getElementById("ETE_unit"),
+			Fuel	 		: m._group.getElementById("Fuel"),
+			ETA			: m._group.getElementById("ETA"),
+			
+		# Constarains
+			constrains_edit		: m._group.getElementById("constrains_edit").setVisible(0),
+			Constain_before_back	: m._group.getElementById("Constain_before_back"),
+			Constain_alt_back	: m._group.getElementById("Constain_alt_back"),
+			Constain_at_back	: m._group.getElementById("Constain_at_back"),
+			
+		# Airport Details
+			Airport_Detail		: m._group.getElementById("Airport_Detail").setVisible(0),
+			Airport_Detail_back	: m._group.getElementById("Airport_Detail_back"),
+			Airport_brg_nm		: m._group.getElementById("Airport_Bearing_distance"),
+			Airport_brg_deg		: m._group.getElementById("Airport_Bearing_deg"),
+			Airport_Runway_Text	: m._group.getElementById("Airport_Runway_Text"),
+			Airport_Runway_back	: m._group.getElementById("Airport_Runway_back").setVisible(0),
+			
+		# Airport procedures
+			Airport_Procedures	: m._group.getElementById("Airport_Procedures").setVisible(0),
+			Airport_Procedures_back	: m._group.getElementById("Airport_Procedures_back"),
+			
+			Airport_Arrival_lable	: m._group.getElementById("Airport_Arrival_lable"),
+			Airport_Arrival_Text	: m._group.getElementById("Airport_Arrival_Text"),
+			Airport_Arrival_back	: m._group.getElementById("Airport_Arrival_back").setVisible(0),
+			
+			Airport_Approach_lable	: m._group.getElementById("Airport_Approach_lable"),
+			Airport_Approach_Text	: m._group.getElementById("Airport_Approach_Text"),
+			Airport_Approach_back	: m._group.getElementById("Airport_Approach_back").setVisible(0),
+			
+		# selection
+			Wypt_Selection		: m._group.getElementById("Wypt_Selection").setVisible(0),
+			Airport_Selection	: m._group.getElementById("Airport_Selection").setVisible(0),
+			
 		};
 		m.checkColor();
 		
 		m._group.setVisible(0);
 		
 		m._active = 0;
-		m._selection = 0;
-
+		m._visibility = 0;
+		
+		m._offset = {x:0,y:0};
 		return m;
 	},
-	setType : func(type){
+	### implementation of SelectAble
+	adjust : func(amount=nil){
+		var adjust = 0;
+		if(amount==nil){
+			
+		}else{
+			adjust = me._visibility == 1 ? math.sgn(amount) : 0;
+		}
+		me.select(adjust == 0);
+		
+		return adjust;
+	},
+	select : func(v,cursor=0){
+		me._visibility = v;
+		
+		if(me._type == "runway"){
+			me._can.Airport_Selection.setVisible(me._visibility);
+		}else{
+			me._can.Wypt_Selection.setVisible(me._visibility);
+			
+		}
+	},
+	
+	setTranslation : func(x,y){
+		me._group.setTranslation(x+me._offset.x,y+me._offset.y);
+	},
+	
+	setType : func(type,role=nil){
 		me._type = type;
+		if(me._type == "runway"){
+			me._height = 256;
+			me._offset.y = 56;
+			
+			me._can.Airport_back.setVisible(1);
+			me._can.Wypt_back.setVisible(0);
+			
+			if(role != nil){
+					if(role == "sid"){
+						me._can.Airport_Procedures.setVisible(1);
+						me._can.Airport_Arrival_lable.setVisible(0);
+						me._can.Airport_Arrival_Text.setVisible(0);
+						me._can.Airport_Arrival_back.setVisible(0);
+						
+						me._can.Airport_Approach_lable.setText("Departure");
+						
+						me._can.Airport_Detail.setVisible(1);
+						me._can.Wypt_Detail.setVisible(0);
+						
+						
+					}elsif(role == "approach"){
+						me._can.Airport_Procedures.setVisible(1);
+						me._can.Airport_Arrival_lable.setVisible(1);
+						me._can.Airport_Arrival_Text.setVisible(1);
+						me._can.Airport_Arrival_back.setVisible(0);
+						
+						me._can.Airport_Approach_lable.setText("Approach");
+						
+						me._can.Airport_Detail.setVisible(1);
+						me._can.Wypt_Detail.setVisible(0);
+						
+						
+					}else{
+						me._can.Airport_Procedures.setVisible(0);
+					}
+					
+					
+			}else{
+				me._can.Airport_Procedures.setVisible(0);
+			}
+			
+		}else{
+			me._height = 200;
+			me._offset.y = 0;
+			
+			me._can.Airport_Procedures.setVisible(0);
+			me._can.Airport_back.setVisible(0);
+			me._can.Airport_Detail.setVisible(0);
+			
+			me._can.Wypt_back.setVisible(1);
+			me._can.Wypt_Detail.setVisible(1);
+			
+		}
+		me._can.Airport_Selection.setVisible(0);
+		me._can.Wypt_Selection.setVisible(0);
 		me.checkColor();
 	},
 	checkColor : func(){
-		if(contains(TYPE_COLOR,me._type)){
-			me._can.Back.setColorFill(TYPE_COLOR[me._type].back);
-			me._can.BackInner.setColorFill(TYPE_COLOR[me._type].inner);
+		
+		if(me._type == "runway"){
+			me._can.Airport_back.setColorFill("#1f305c");
+			me._can.Airport_Detail.setColorFill("#1e5c92");
+			me._can.Airport_Procedures_back.setColorFill("#201c57");
+			me._can.Wypt_Detail_back.setColorFill("#1e5c92");
 		}else{
-			me._can.Back.setColorFill(TYPE_COLOR.basic.back);
-			me._can.BackInner.setColorFill(TYPE_COLOR.basic.inner);
+			me._can.Wypt_back.setColorFill("#303030");
+			me._can.Wypt_Detail_back.setColorFill("#616660");
 		}
+
+		
 	},
-	setHeadline : func(value){ me._can.Headline.setText(value);},
-	setName : func(value){me._can.Name.setText(value);},
-	setRestriction : func(value){me._can.Ristriction.setText(value);},
-	setETE : func(value){me._can.ETE.setText(value);},
-	setETA : func(value){me._can.ETA.setText(value);},
-	setDistance : func(value){me._can.Distance.setText(value);},
-	setFuel : func(value){me._can.Fuel.setText(value);},
-	
 	setActive   :func(value){
 		me._active = value;
 		if (me._active == 1){
-			me._can.Back.setColorFill(TYPE_COLOR.bug.back);
-			me._can.BackInner.setColorFill(TYPE_COLOR.bug.inner);
+			
+			if(me._type == "runway"){
+				me._can.Airport_back.setColorFill(TYPE_COLOR.bug.back);
+				me._can.Airport_Detail.setColorFill(TYPE_COLOR.bug.inner);
+				me._can.Airport_Procedures_back.setColorFill(TYPE_COLOR.bug.inner);
+			}else{
+				me._can.Wypt_back.setColorFill(TYPE_COLOR.bug.back);
+			}
+			
+			me._can.Wypt_Detail_back.setColorFill(TYPE_COLOR.bug.inner);
+			
 		}else{
 			me.checkColor();
 		}
 	},
 	setSelection   :func(value){
-		me._selection = value;
-		if (me._selection == 1){
-# 			me._can.Back.set("stroke",COLOR["Turquoise"]);
-# 			me._can.Back.set("stroke-width",5);
-		}else{
-# 			me._can.Back.set("stroke","none");
-		}
+		me.select(value);
+
 	},
+
 	setVisible : func(visibility){
 		me._group.setVisible(visibility);
 	},
+	setHeadline : func(value){ me._can.Headline.setText(value);},
+	setName : func(value){me._can.ICAO.setText(value);},
+	setRestriction : func(value){me._can.Constrains.setText(value);},
+	setETE : func(value){me._can.ETE.setText(value);},
+	setETA : func(value){me._can.ETA.setText(value);},
+	setDistance : func(value){me._can.Distance.setText(value);},
+	setFuel : func(value){me._can.Fuel.setText(value);},
+	
 };
 
 
@@ -194,17 +498,15 @@ var FlightPlanListWidget = {
 			#Pattern_Waypoint	: m._group.getElementById("FPL_Pattern_Waypoint").setVisible(0),
 			FlightPlan		: m._group.getElementById("FPL_Flightplan"),
 			ScrollAble		: m._group.getElementById("FPL_ScrollAble"),
-			list			: m._group.getElementById("FPL_List"),
+			list			: m._group.getElementById("FPL_List").setVisible(1),
 			ScrollCursorView	: m._group.getElementById("FPL_ScrollCursorView"),
 			ScrollCursorCurrent	: m._group.getElementById("FPL_ScrollCursorCurrent"),
-			Cursor			: m._group.getElementById("FPL_Cursor").setVisible(1),
-			CursorInsert		: m._group.getElementById("FPL_Coursor_Insert").setVisible(0),
-			CursorSelect		: m._group.getElementById("FPL_Coursor_Select").setVisible(0),
-			
-			
-			
-			
 		};
+		
+		m._insertCoursor = FlightPlanInserCoursor.new(m._group);
+		m._scrollAbleList = [];
+		m._scrollAbleListSize = 0;
+		m._cursorIndex = 0;
 		
 		m._canList = {};
 		m._scrollY = 0;
@@ -222,10 +524,11 @@ var FlightPlanListWidget = {
 		
 		m._x = 400;
 		m._y = 70;
+		m._yMax = 1356;
 		
 		m._listTransform = m._can.FlightPlan.createTransform();
-		
-		#m._fplItemCache[0] = FlighPlanItem_old.new(e._can.list,0,0);
+					
+		#m._fplItemCache[0] = FlightPlanItem_old.new(e._can.list,0,0);
 		#m._cacheSize = 1;
 		
 		return m;
@@ -233,13 +536,13 @@ var FlightPlanListWidget = {
 	setListeners : func(instance) {
 # 		append(me._listeners, setlistener("/autopilot/route-manager/signals/waypoint-changed",func(n){me._onFlightPlanChange(n)},1,0));	
 # 		append(me._listeners, setlistener("/autopilot/route-manager/current-wp",func(n){me._onCurrentWaypointChange(n)},1,0));
-		append(me._listeners, setlistener(fms._signal.fplChange,func(n){me._onFlightPlanChange(n)},1,1));	
+		append(me._listeners, setlistener(fms._signal.fplChange,func(n){me._onFlightPlanChange(n)},1,1));
 		append(me._listeners, setlistener(fms._signal.currentWpChange,func(n){me._onCurrentWaypointChange(n)},1,1));
-		append(me._listeners, setlistener(fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,0));	
-		append(me._listeners, setlistener(fms._signal.fplUpdated,func(n){me._onFplUpdatedChange(n)},0,1));	
-		
-		append(me._listeners, setlistener("/sim/gui/dialogs/route-manager/selection",func(n){me._onSelectionChange(n)},1,1));	
-		
+		append(me._listeners, setlistener(fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,0));
+		append(me._listeners, setlistener(fms._signal.fplUpdated,func(n){me._onFplUpdatedChange(n)},0,1));
+# 		append(me._listeners, setlistener(fms._signal.selectedWpChange,func(n){me._onSelectedWpChange(n)},1,1));
+		append(me._listeners, setlistener(fms._signal.cursorOptionChange,func(n){me._onCursorOptionChange(n)},1,1));
+		append(me._listeners, setlistener(fms._signal.cursorIndexChange,func(n){me._onCursorIndexChange(n)},1,1));
 		
 	},
 	init : func(instance=me){
@@ -268,11 +571,11 @@ var FlightPlanListWidget = {
 			}
 			
 			me._ifd.ui.bindKnob("RK",{
-				"<<"	: func(){me._adjustSelection(1);},
-				"<"	: func(){me._adjustSelection(1);},
+				"<<"	: func(){me._adjustCursorFocus(1);},
+				"<"	: func(){me._adjustCursorFocus(1);},
 				"push"	: func(){fms.jumpTo();},
-				">"	: func(){me._adjustSelection(-1);},
-				">>"	: func(){me._adjustSelection(-1);},
+				">"	: func(){me._adjustCursorFocus(-1);},
+				">>"	: func(){me._adjustCursorFocus(-1);},
 			},{
 				"scroll"	: "Scroll",
 				"push"		: "Select",
@@ -289,6 +592,7 @@ var FlightPlanListWidget = {
 		if(me._layout == "FPL"){
 			me._x = 400;
 			me._y = 70;
+			me._yMax = 1356;
 			
 			me._can.FlightPlan.set("clip","rect(70px, 2048px, 1424px, 0px)");
 							
@@ -297,11 +601,12 @@ var FlightPlanListWidget = {
 		}elsif(layout == "split-right"){
 			me._x = 400;
 			me._y = 70;
+			me._yMax = 1356; # TODO : 
 			
 			me._can.FlightPlan.set("clip","rect(205px, 2048px, 1216px, 1024px)");
 						
 			me._listTransform.setScale(0.75,0.75);
-			me._listTransform.setTranslation(770,150);
+			me._listTransform.setTranslation(770,0);
 		}else{
 			me._visible == 0;
 			me._can.FlightPlan.setVisible(me._visible);
@@ -319,42 +624,55 @@ var FlightPlanListWidget = {
 	},
 	_drawList : func(){
 		var distSum = 0;
-		for( var i=0; i < fms._fightPlan.planSize; i+=1 ){
-			var fmsWP = fms._fpl.getWP(i);
+		var translateY = me._y;
+		me._insertCoursor._position = [];
+		me._scrollAbleList = [];
+		
+		append(me._insertCoursor._position,me._y);
+		append(me._scrollAbleList,me._insertCoursor);
+		
+		for( var i=0; i < fms._flightPlan.planSize; i+=1 ){
 			
 			if ( i >= me._cacheSize ){
-				#append(me._fplItemCache , FlighPlanItem_old.new(me._can.list,i,fmsWP.wp_type));
-				me._fplItemCache[i] = FlighPlanItem_old.new(me._can.list,i,fmsWP.wp_type);
+				me._fplItemCache[i] = FlightPlanItem_old.new(me._can.list,i,fms._flightPlan.wp[i].type);
 				me._cacheSize = size(me._fplItemCache);
 			}
-			me._fplItemCache[i].setType(fmsWP.wp_type);
-			me._fplItemCache[i]._group.setTranslation(me._x,me._y+i*224);
-			me._fplItemCache[i].setVisible(1);
+			me._fplItemCache[i].setType(fms._flightPlan.wp[i].type,fms._flightPlan.wp[i].role);
+			me._fplItemCache[i].setTranslation(me._x,translateY);
 			
-			#me._fplItemCache[i].setHeadline(sprintf("%s %03.0f - %s",fmsWP.fly_type,fmsWP.leg_bearing,fmsWP.wp_role));
-			#me._fplItemCache[i].setName(sprintf("%s - %s",fmsWP.wp_name,fmsWP.wp_type));
+			append(me._scrollAbleList,me._fplItemCache[i]);
 			
-			me._fplItemCache[i].setName(sprintf("%s",fmsWP.wp_name));
+			translateY += me._fplItemCache[i]._height + 24 ; 
+			append(me._insertCoursor._position,translateY);
+			append(me._scrollAbleList,me._insertCoursor);
+			
+						
+			me._fplItemCache[i].setName(sprintf("%s",fms._flightPlan.wp[i].name));
 			
 			var restriction = "";
-			if (fmsWP.alt_cstr_type != nil) {
-				restriction ~= "at : " ~ fmsWP.alt_cstr ~"ft ";
+			if (fms._flightPlan.wp[i].constraint.alt.type != nil) {
+				restriction ~= "at : " ~ fms._flightPlan.wp[i].constraint.alt.value ~"ft ";
 			}
-			if (fmsWP.speed_cstr_type != nil) {
-				restriction ~= "IAS : " ~ fmsWP.speed_cstr ~"kts ";
+			if (fms._flightPlan.wp[i].type != nil){
+				restriction ~= fms._flightPlan.wp[i].type ~ " - ";
+			}else {
+				restriction ~= "nil - ";
+			}
+			if(fms._flightPlan.wp[i].role != nil){
+				restriction ~=  fms._flightPlan.wp[i].role;
+			}else {
+				restriction ~=  "nil";
 			}
 			me._fplItemCache[i].setRestriction(restriction);
-			if(fms._fightPlan.planSize > 1){
-				distSum += fmsWP.leg_distance;
-
-			}
+			
 			if(i > 0){
-				me._fplItemCache[i].setHeadline(sprintf("%s %03.0f",fmsWP.fly_type,fms._fpl.getWP(i-1).leg_bearing));
-				me._fplItemCache[i].setDistance(sprintf("%0.1f",fms._fpl.getWP(i-1).leg_distance));
+				me._fplItemCache[i].setHeadline(sprintf("%s %03.0f",fms._flightPlan.wp[i].flyType,fms._flightPlan.wp[i].course));
+				me._fplItemCache[i].setDistance(sprintf("%0.1f",fms._flightPlan.wp[i].distanceTo));
 			}else{
 				me._fplItemCache[i].setHeadline("");
 				me._fplItemCache[i].setDistance("---");
 			}
+			
 			if( i == me._currentIndex){
 				me._fplItemCache[i].setActive(1);
 			}
@@ -362,17 +680,24 @@ var FlightPlanListWidget = {
 				me._fplItemCache[i].setSelection(1);
 			}
 			
+			me._fplItemCache[i].setVisible(translateY <= me._yMax);
+			
+			
+			
 		}
+		
+		debug.dump("me._insertCoursor._position",me._insertCoursor._position);
+		me._scrollAbleListSize = size(me._scrollAbleList);
 		me._resizeScroll();
-		#me._setSelection(fms._fightPlan.planSize-1,"insert");
-		#me._scrollToCurrentIndex(fms._fightPlan.planSize-1);
+		#me._setSelection(fms._flightPlan.planSize-1,"insert");
+		#me._scrollToCurrentIndex(fms._flightPlan.planSize-1);
 		me._scrollToCurrentIndex(me._selectedIndex);
 		
 	},
 	_resizeScroll : func(){
-		if(fms._fightPlan.planSize > 6){
-			me._scrollSize = 1356 / fms._fightPlan.planSize;
-			me._maxScroll = fms._fightPlan.planSize -6;
+		if(fms._flightPlan.planSize > 6){
+			me._scrollSize = 1356 / fms._flightPlan.planSize;
+			me._maxScroll = fms._flightPlan.planSize -6;
 		}else{
 			me._scrollSize = 1356 / 6;
 			me._maxScroll = 6;
@@ -390,7 +715,7 @@ var FlightPlanListWidget = {
 		
 		me._scrollY = global.clamp(me._scrollY,0,me._maxScroll);
 		
-		me._can.ScrollAble.setTranslation(0,me._scrollY*-224);
+# 		me._can.ScrollAble.setTranslation(0,me._scrollY*-224);
 		me._can.ScrollCursorView.setTranslation(0,me._y+me._scrollY*me._scrollSize);
 		
 	},
@@ -403,13 +728,13 @@ var FlightPlanListWidget = {
 		}
 		me._scrollY = global.clamp(me._scrollY,0,me._maxScroll);
 		
-		me._can.ScrollAble.setTranslation(0,me._scrollY*-224);
+# 		me._can.ScrollAble.setTranslation(0,me._scrollY*-224);
 		
 		me._can.ScrollCursorView.setTranslation(0,me._y+me._scrollY*me._scrollSize);
 		
 	},
 	_deleteWaypoint : func(){
-		fms._fpl.deleteWP(me._selectedIndex);
+		fms.deleteWaypoint();
 	},
 	_onFlightPlanChange : func(n){
 # 		print("FlightPlanListWidget._onFlightPlanChange() ... ");
@@ -417,19 +742,43 @@ var FlightPlanListWidget = {
 		var value = n.getValue();
 		#print("FlightPlanWidget._onFlightPlanChange() ... " ~ value);
 		me._clearList();
-		me._drawList();
+		#me._drawList();
 	},
-	_onSelectionChange : func(n){
+	_onSelectedWpChange : func(n){
 		var index = n.getValue();
+		me._lastSelectedIndex = me._selectedIndex;
+		
 		if(index == nil){
 			index = -1;
 		}
+		
+		me._selectedIndex = index;
+		
 		if(index >= 0){
-			me._setSelection(index);
 			me._scrollToSelectedIndex(me._selectedIndex);
 		}
 		
+		if(me._fplItemCache[me._lastSelectedIndex] != nil){
+			me._fplItemCache[me._lastSelectedIndex].setSelection(0);
+		}
+		if(me._fplItemCache[me._selectedIndex] != nil){
+			me._fplItemCache[me._selectedIndex].setSelection(1);
+		}
+		me._scrollToCurrentIndex(me._selectedIndex);
 		
+	},
+	_onCursorOptionChange : func(n){
+		var index = n.getValue();
+		
+	},
+	_setSelection : func(index=nil,mode=nil){
+		if (index!=nil){
+			fms.setSelectedWaypoint(index);
+			me._cursorModeInsert = 0;
+		}
+		if(mode!=nil){
+			me._cursorModeInsert = mode;
+		}
 	},
 	_onCurrentWaypointChange : func(n){
 		me._currentIndex = n.getValue();	
@@ -446,78 +795,63 @@ var FlightPlanListWidget = {
 			me._fplItemCache[me._currentIndex].setActive(1);
 		}
 
-		
 		me._can.ScrollCursorCurrent.setTranslation(0,me._y+me._currentIndex*me._scrollSize);
+		
 		me._setSelection(me._currentIndex);
-		me._scrollToCurrentIndex(me._currentIndex);
 		me._lastCurrentIndex = me._currentIndex;
-
-		
 	},
-	_adjustSelection : func(amount){
+	_adjustCursorFocus : func(amount){
+		var index = me._cursorIndex;
+		var adjust = me._scrollAbleList[index].adjust(amount);
 		
-		if(amount > 0){
-			if(me._cursorModeInsert==1){
-				me._selectedIndex += amount;
-				me._selectedIndex = global.clamp(me._selectedIndex,0,fms._fightPlan.planSize-1);
-			}
-			me._setSelection(me._selectedIndex,!me._cursorModeInsert);
-		}elsif(amount < 0){
-			if(me._cursorModeInsert==0){
-				me._selectedIndex += amount;
-				me._selectedIndex = global.clamp(me._selectedIndex,0,fms._fightPlan.planSize-1);
-			}
-			me._setSelection(me._selectedIndex,!me._cursorModeInsert);
-		}else{
-			
+		
+		if (adjust != 0){
+			index = global.clamp(index + adjust,0,me._scrollAbleListSize-1);
 		}
 		
-		#me._setSelection();
-		me._scrollToSelectedIndex(me._selectedIndex);	
-	},
-	_setSelection : func(index=nil,mode=nil){
-		if (index!=nil){
-			me._selectedIndex = index;
-			me._cursorModeInsert = 0;
-		}
-		if(mode!=nil){
-			me._cursorModeInsert = mode;
-		}
-
+		fms.setCursorIndex(index);
 		
-		#print("FlightPlanWidget._setSelection() ... "~me._selectedIndex);
-		if(me._fplItemCache[me._lastSelectedIndex] != nil){
-			me._fplItemCache[me._lastSelectedIndex].setSelection(0);
-		}
-		if(me._fplItemCache[me._selectedIndex] != nil){
-			me._fplItemCache[me._selectedIndex].setSelection(1);
-		}
-		me._can.Cursor.setTranslation(0,me._selectedIndex*224);
-		
-		me._can.CursorSelect.setVisible(!me._cursorModeInsert);
-		me._can.CursorInsert.setVisible(me._cursorModeInsert);
-		
-# 		if(me._cursorModeInsert == 1){
-# 			me._can.CursorSelect.setVisible(0);
-# 			me._can.CursorInsert.setVisible(1ndex*224);
+# 		if(amount > 0){
+# 			if(me._cursorModeInsert==1){
+# 				me._selectedIndex += amount;
+# 				me._selectedIndex = global.clamp(me._selectedIndex,0,fms._flightPlan.planSize-1);
+# 			}
+# 			me._setSelection(me._selectedIndex,!me._cursorModeInsert);
+# 		}elsif(amount < 0){
+# 			if(me._cursorModeInsert==0){
+# 				me._selectedIndex += amount;
+# 				me._selectedIndex = global.clamp(me._selectedIndex,0,fms._flightPlan.planSize-1);
+# 			}
+# 			me._setSelection(me._selectedIndex,!me._cursorModeInsert);
 # 		}else{
-# 			me._can.CursorInsert.setVisible(0);
-# 			me._can.CursorSelect.setVisible(1);
-# 			#me._can.CursorSelect.setTranslation(0,me._selectedIndex*224);
+# 			
 # 		}
 		
-
-		
-			
-		
-		fms.setSelectedWaypoint(me._selectedIndex);
-		me._lastSelectedIndex = me._selectedIndex;
+		#me._setSelection();
+# 		me._scrollToSelectedIndex(me._selectedIndex);	
 	},
+	_onCursorIndexChange : func(n){
+		var newIndex = n.getValue();
+		#debug.dump("FlightPlanListWidget._onCursorIndexChange() ... ",newIndex);
+		if( newIndex < me._scrollAbleListSize ){
+			if(me._scrollAbleList[me._cursorIndex] != nil){
+				me._scrollAbleList[me._cursorIndex].select(0,me._cursorIndex);
+			}
+			
+			me._cursorIndex = newIndex;
+			
+			if(me._scrollAbleList[me._cursorIndex] != nil){
+				me._scrollAbleList[me._cursorIndex].select(1,me._cursorIndex);
+			}	
+		}
+		
+	},
+
 	_onFplReadyChange : func(n){
-		if(fms._fightPlan.isReady){
+		if(fms._flightPlan.isReady){
 			
 		}else{
-			for( var i=0; i < fms._fightPlan.planSize; i+=1 ){
+			for( var i=0; i < fms._flightPlan.planSize; i+=1 ){
 				me._fplItemCache[i].setDistance("---");
 				me._fplItemCache[i].setETE("---");
 				me._fplItemCache[i].setETA("---");
@@ -526,12 +860,12 @@ var FlightPlanListWidget = {
 		}
 	},
 	_onFplUpdatedChange : func(n){
-		for( var i=0; i < fms._fightPlan.planSize; i+=1 ){
-			if (i >= fms._fightPlan.currentWp){
-				me._fplItemCache[i].setDistance(sprintf("%0.1f",fms._fightPlan.wp[i].distanceTo));
-				me._fplItemCache[i].setETE(global.formatTime(fms._fightPlan.wp[i].ete,"i:s"));
-				me._fplItemCache[i].setETA(global.formatTime(fms._fightPlan.wp[i].eta));
-				me._fplItemCache[i].setFuel(sprintf("%.0f",fms._fightPlan.wp[i].fuelAt));
+		for( var i=0; i < fms._flightPlan.planSize; i+=1 ){
+			if (i >= fms._flightPlan.currentWpIndex){
+				me._fplItemCache[i].setDistance(sprintf("%0.1f",fms._flightPlan.wp[i].distanceTo));
+				me._fplItemCache[i].setETE(global.formatTime(fms._flightPlan.wp[i].ete,"i:s"));
+				me._fplItemCache[i].setETA(global.formatTime(fms._flightPlan.wp[i].eta));
+				me._fplItemCache[i].setFuel(sprintf("%.0f",fms._flightPlan.wp[i].fuelAt));
 			}else{
 				me._fplItemCache[i].setDistance("---");
 				me._fplItemCache[i].setETE("---");
@@ -547,6 +881,826 @@ var FlightPlanListWidget = {
 	
 };
 
+#########################################################################################
+
+###############  FMS 2 ##################################################################
+
+var WaypointInterface2 = {
+	new : func(){
+		var m = {parents:[WaypointInterface2]};
+		return m;
+	},
+	setType 	: func(type,role=nil){},
+	setHeadline 	: func(v){},
+	setName 	: func(v){},
+	setRestriction  : func(v){},
+	setETE 		: func(v){},
+	setETA 		: func(v){},
+	setDistance 	: func(v){},
+	setFuel 	: func(v){},
+	setActive   	: func(v){},
+	setSelection    : func(v){},
+	setBearing 	: func(v){},
+	
+	setSid 		: func(v){},
+	setArrival	: func(v){},
+	setApproach	: func(v){},
+	setRunway	: func(v){},
+	
+};
+var FlightPlanItemTest = {
+	new : func(canvasGroup,index){
+		var m = {parents:[
+			FlightPlanItemTest,
+			WaypointInterface2.new(),
+			ListViewItem.new(),
+ 		]};
+		m._bound._height = 270;
+		m._group = canvasGroup.createChild("group", "waypoint_"~index).setVisible(1).set("z-index",3);
+		canvas.parsesvg(m._group, "Models/instruments/IFDs/IFD_FMS_FPL_Item_Waypoint.svg",{
+			"font-mapper": global.canvas.FontMapper
+			}
+		);
+		m._can = {
+			# General
+			Background		: m._group.getElementById("FPL_Item_back"),
+			Headline		: m._group.getElementById("FPL_Item_Headline"),
+			ICAO 			: m._group.getElementById("FPL_Item_ICAO"),
+			ICAO_back 		: m._group.getElementById("FPL_Item_ICAO_back").setVisible(0),
+			Constrains 		: m._group.getElementById("FPL_Item_Constrains"),
+			Focus 			: m._group.getElementById("FPL_Item_Focus").setVisible(0),
+			
+			# Detail
+			Detail 			: m._group.getElementById("FPL_Item_Detail"),
+			DetailBackground 	: m._group.getElementById("FPL_Item_Detail_back"),
+			
+			Distance 		: m._group.getElementById("Distance"),
+			ETE	 		: m._group.getElementById("ETE"),
+			ETE_Unit	 	: m._group.getElementById("ETE_unit"),
+			Fuel	 		: m._group.getElementById("Fuel"),
+			ETA			: m._group.getElementById("ETA"),
+			
+			# Constarains
+			Constrains_edit		: m._group.getElementById("FPL_Item_Constrains_Edit").setVisible(0),
+			Constain_before_back	: m._group.getElementById("Constain_before_back"),
+			Constain_alt_back	: m._group.getElementById("Constain_alt_back"),
+			Constain_at_back	: m._group.getElementById("Constain_at_back"),
+		
+		};
+		
+		
+		return m;	
+	},
+	### implement WaypointInterface2
+	
+	### implement ListViewItem
+	del 	: func(){
+
+	},
+	_updateView 	: func(){
+		#print("FlightPlanItemAirport::_updateView() ...");
+		me._group.setTranslation(me._bound._x,me._bound._y);
+	},
+};
+
+var FlightPlanItemInsertCursor = {
+	new : func(canvasGroup,index){
+		#print("FlightPlanItemInsertCursor::new() ...");
+		
+		var m = {parents:[
+			FlightPlanItemInsertCursor,
+			WaypointInterface2.new(),
+			ListViewItem.new(),
+ 		]};
+		m._class = "FlightPlanItemInsertCursor";
+		m._bound._height = 8;
+		m._group = canvasGroup.createChild("group", "InsertCursor_"~index).setVisible(0).set("z-index",3);
+		canvas.parsesvg(m._group, "Models/instruments/IFDs/IFD_FMS_FPL_Item_InsertCursor.svg",{
+			"font-mapper": global.canvas.FontMapper
+			}
+		);
+		m._can = {
+			Focus 			: m._group.getElementById("FPL_Item_Focus").setVisible(0),
+		};
+		
+		return m;	
+	},
+	### implement WaypointInterface2
+	### implement ListViewItem
+	del 	: func(){
+		
+	},
+	setVisible : func(v){me._group.setVisible(v)},
+	setFocus : func(v){me._can.Focus.setVisible(v)},
+	setAction : func(type,value){},
+	_updateView : func(){
+		#print("FlightPlanItemInsertCursor::_updateView() ...");
+		#debug.dump(me._bound);
+		#debug.dump(me._group);
+		me._group.setTranslation(me._bound._x,me._bound._y);
+	},
+};
+
+var FlightPlanItemAirport = {
+	new : func(canvasGroup,index){
+		#print("FlightPlanItemAirport::new() ...");
+		var m = {parents:[
+			FlightPlanItemAirport,
+			WaypointInterface2.new(),
+			ListViewItem.new(),
+ 		]};
+		m._class = "FlightPlanItemAirport";
+		m._bound._height = 270;
+		m._group = canvasGroup.createChild("group", "Airport_"~index).setVisible(0).set("z-index",3);
+		canvas.parsesvg(m._group, "Models/instruments/IFDs/IFD_FMS_FPL_Item_Airport.svg",{
+			"font-mapper": global.canvas.FontMapper
+			}
+		);
+		m._can = {
+			# General
+			Background		: m._group.getElementById("FPL_Item_back"),
+			Headline		: m._group.getElementById("FPL_Item_Headline"),
+			ICAO 			: m._group.getElementById("FPL_Item_ICAO"),
+			ICAO_back 		: m._group.getElementById("FPL_Item_ICAO_back").setVisible(0),
+			Constrains 		: m._group.getElementById("FPL_Item_Constrains"),
+			Focus 			: m._group.getElementById("FPL_Item_Focus").setVisible(0),
+			
+			# Ariport 
+			ProceduresBackground	: m._group.getElementById("Airport_Procedures_back"),
+			ArrivalLabel 		: m._group.getElementById("Airport_Arrival_Label"),
+			Arrival 		: m._group.getElementById("Airport_Arrival_Text"),
+			ArrivalBackground 	: m._group.getElementById("Airport_Arrival_back"),
+			ApproachLabel 		: m._group.getElementById("Airport_Approach_Label"),
+			Approach 		: m._group.getElementById("Airport_Approach_Text"),
+			ApproachBackground 	: m._group.getElementById("Airport_Approach_back"),
+			
+			
+			# Detail
+			Detail 			: m._group.getElementById("FPL_Item_Detail"),
+			DetailBackground 	: m._group.getElementById("FPL_Item_Detail_back"),
+			
+			Distance 		: m._group.getElementById("Bearing_Distance"),
+			Bearing 		: m._group.getElementById("Bearing_deg"),
+			Runway 			: m._group.getElementById("Runway_Text"),
+			RunwayBackground	: m._group.getElementById("Runway_back"),
+		
+		};
+		
+		
+		return m;	
+	},
+	### implement WaypointInterface2
+	setHeadline 	: func(v){ me._can.Headline.setText(v);},
+	setName 	: func(v){ me._can.ICAO.setText(v);},
+	setConstrain 	: func(v){ me._can.Constrains.setText(v);},
+	setApproach	: func(v){ 
+		me._can.Approach.setVisible(1);
+		me._can.ApproachBackground.setVisible(1);
+		me._can.Approach.setText(v);
+	},
+	setArrival	: func(v){ 
+		me._can.Arrival.setVisible(1);
+		me._can.ArrivalBackground.setVisible(1);
+		me._can.ArrivalLabel.setText("Arrival:");
+		me._can.Arrival.setText(v);
+	},
+	setSid	: func(v){ 
+		me._can.ArrivalLabel.setVisible(0);
+		me._can.Arrival.setVisible(0);
+		me._can.ArrivalBackground.setVisible(0);
+		
+		me._can.ApproachLabel.setText("Sid:");
+		me._can.Approach.setText(v);
+	},
+	setRunway	: func(v){ 
+		me._can.Runway.setText(v);
+	},
+	setActive   	: func(v){
+		if (v == 1){
+			me._can.Background.setColorFill(TYPE_COLOR.Bug.Background);
+			me._can.DetailBackground.setColorFill(TYPE_COLOR.Bug.Detail);
+			me._can.ProceduresBackground.setColorFill(TYPE_COLOR.Bug.Procedures);
+			
+		}else{
+			me._can.Background.setColorFill(TYPE_COLOR.Airport.Background);
+			me._can.DetailBackground.setColorFill(TYPE_COLOR.Airport.Detail);
+			me._can.ProceduresBackground.setColorFill(TYPE_COLOR.Airport.Procedures);
+		}
+	},
+	### implement ListViewItem
+	del 	: func(){
+
+	},
+	setVisible 	: func(v){ me._group.setVisible(v)},
+	setFocus 	: func(v){ me._can.Focus.setVisible(v)},
+	setAction 	: func(type,value){},
+	_updateView 	: func(){
+		#print("FlightPlanItemAirport::_updateView() ...");
+		me._group.setTranslation(me._bound._x,me._bound._y);
+	},
+};
+
+var FlightPlanItemWaypoint = {
+	new : func(canvasGroup,index){
+		#print("FlightPlanItemWaypoint::new() ...");
+		var m = {parents:[
+			FlightPlanItemWaypoint,
+			WaypointInterface2.new(),
+			ListViewItem.new(),
+ 		]};
+		m._class = "FlightPlanItemWaypoint";
+		m._bound._height = 210;
+		m._group = canvasGroup.createChild("group", "Waypoint_"~index).setVisible(0).set("z-index",3);
+		canvas.parsesvg(m._group, "Models/instruments/IFDs/IFD_FMS_FPL_Item_Waypoint.svg",{
+			"font-mapper": global.canvas.FontMapper
+			}
+		);
+		m._can = {
+			# General
+			Background		: m._group.getElementById("FPL_Item_back"),
+			Headline		: m._group.getElementById("FPL_Item_Headline"),
+			ICAO 			: m._group.getElementById("FPL_Item_ICAO"),
+			ICAO_back 		: m._group.getElementById("FPL_Item_ICAO_back").setVisible(0),
+			Constrains 		: m._group.getElementById("FPL_Item_Constrains"),
+			Focus 			: m._group.getElementById("FPL_Item_Focus").setVisible(0),
+			
+			# Detail
+			Detail 			: m._group.getElementById("FPL_Item_Detail"),
+			DetailBackground 	: m._group.getElementById("FPL_Item_Detail_back"),
+			
+			Distance 		: m._group.getElementById("Distance"),
+			ETE	 		: m._group.getElementById("ETE"),
+			ETE_Unit	 	: m._group.getElementById("ETE_unit"),
+			Fuel	 		: m._group.getElementById("Fuel"),
+			ETA			: m._group.getElementById("ETA"),
+			
+			# Constarains
+			Constrains_edit		: m._group.getElementById("FPL_Item_Constrains_Edit").setVisible(0),
+			Constain_before_back	: m._group.getElementById("Constain_before_back"),
+			Constain_alt_back	: m._group.getElementById("Constain_alt_back"),
+			Constain_at_back	: m._group.getElementById("Constain_at_back"),
+		
+		};
+		
+		
+		return m;	
+	},
+	### implement WaypointInterface2
+	setHeadline 	: func(v){ me._can.Headline.setText(v);},
+	setName 	: func(v){ me._can.ICAO.setText(v);},
+	setConstrain 	: func(v){ me._can.Constrains.setText(v);},
+	setETE 		: func(v){ me._can.ETE.setText(v);},
+	setETA 		: func(v){ me._can.ETA.setText(v);},
+	setDistance 	: func(v){ me._can.Distance.setText(v);},
+	setFuel 	: func(v){ me._can.Fuel.setText(v);},
+	setActive   	: func(v){
+		if (v == 1){
+			me._can.Background.setColorFill(TYPE_COLOR.Bug.Background);
+			me._can.DetailBackground.setColorFill(TYPE_COLOR.Bug.Detail);
+		}else{
+			me._can.Background.setColorFill(TYPE_COLOR.Waypoint.Background);
+			me._can.DetailBackground.setColorFill(TYPE_COLOR.Waypoint.Detail);
+		}
+	},
+	### implement ListViewItem
+	del 	: func(){
+
+	},
+	setVisible 	: func(v){ me._group.setVisible(v)},
+	setFocus 	: func(v){ me._can.Focus.setVisible(v)},
+	setAction 	: func(type,value){},
+	_updateView 	: func(){
+		#print("FlightPlanItemWaypoint::_updateView() ...");
+		me._group.setTranslation(me._bound._x,me._bound._y);
+	},
+	
+};
+
+var FactroryCache = {
+	new : func(name,constructor){
+		var m = {parents:[
+			FactroryCache,
+ 		]};
+		m._name 	= name;
+		m._constructor 	= constructor;
+		m._unUsed 	= [];
+		m._used 	= [];
+		m._count 	= 0;
+		return m;
+	},
+	removeAll : func(){
+		#print(sprintf("FactroryCache::removeAll() ... %s",me._name));
+		var item = nil;
+		var usedSize = size(me._used);
+		for(var i=0; i < usedSize; i = i+1){
+			item = pop(me._used);
+			item.setVisible(0);
+			append(me._unUsed,item);
+		}
+		#me.printCache();
+	},
+	getItem : func(canvasGrp,index){
+		#print(sprintf("FactroryCache::getItem() ... %s",me._name));
+		var item = pop(me._unUsed);
+		if(item == nil){
+			#print(sprintf("FactroryCache::getItem() ... create %s" , me._name));
+			me._count += 1;
+			item = me._constructor(canvasGrp,me._count);
+			append(me._used,item);
+		}else{
+			#print(sprintf("FactroryCache::getItem() ... get %s from Cache",me._name));
+			append(me._used,item);
+		}
+		#me.printCache();
+		return item;
+	},
+	printCache : func(){
+		print(sprintf("FactroryCache::printCache() ... Cache for %s",me._name));
+		
+		var sizeUsed 	= size(me._used);
+		var sizeUnUsed 	= size(me._unUsed);
+		
+		print("\tused\tunused");
+		for(var i=0; i < me._count; i = i+1){
+			var line = "";
+			
+			if (i < sizeUsed ){
+				line ~= "\tX";
+			}else{
+				line ~= "\t_";
+			}
+			
+			if (i < sizeUnUsed ){
+				line ~= "\tX";
+			}else{
+				line ~= "\t_";
+			}
+			
+			print(line);
+		}
+		
+	},
+};
+
+var FlightPlanItemFactory = {
+	new : func(){
+		var m = {parents:[
+			FlightPlanItemFactory,
+ 		]};
+		m._Cursor = FactroryCache.new("Cursor",FlightPlanItemInsertCursor.new);
+		m._Airport = FactroryCache.new("Airport",FlightPlanItemAirport.new);
+		m._Waypoint = FactroryCache.new("Waypoint",FlightPlanItemWaypoint.new);
+		
+		return m;
+	},
+	removeAll : func(){
+		me._Cursor.removeAll();
+		me._Airport.removeAll();
+		me._Waypoint.removeAll();
+		
+	},
+	getItem : func(type,canvasGrp,index){
+		#print(sprintf("FlightPlanItemFactory::getItem(%s,%s,%s) ...",type,"canvasGroup",index));
+		var item = nil;
+		if (type == "Airport"){
+			item = me._Airport.getItem(canvasGrp,index);
+		}elsif (type == "Cursor"){
+			item = me._Cursor.getItem(canvasGrp,index);
+		}else{
+			item = me._Waypoint.getItem(canvasGrp,index);
+		}
+		return item;	
+	},
+};
+
+var FlightPlanItemFactoryX = {
+	new : func(){
+		var m = {parents:[
+			FlightPlanItemFactoryX,
+ 		]};
+		m._counter = {
+			Cursor : 0,
+			Airport : 0,
+			Waypoint : 0,
+		};
+		m._unUsedItems = {
+			Cursor : [],
+			Airport : [],
+			Waypoint : [],
+		};
+		m._usedItems = {
+			Cursor : [],
+			Airport : [],
+			Waypoint : [],
+		};
+		return m;
+	},
+	removeAll : func(){
+		var item = nil;
+		forindex(var i;me._usedItems.Airport){
+			item = pop(me._usedItems.Airport);
+			item.setVisible(0);
+			append(me._unUsedItems.Airport,item);
+		}
+		forindex(var i;me._usedItems.Cursor){
+			item = pop(me._usedItems.Cursor);
+			item.setVisible(0);
+			append(me._unUsedItems.Cursor,item);
+		}
+		forindex(var i;me._usedItems.Waypoint){
+			item = pop(me._usedItems.Waypoint);
+			item.setVisible(0);
+			append(me._unUsedItems.Waypoint,item);
+		}
+		
+		
+	},
+	getItem : func(type,canvasGrp,index){
+		print(sprintf("FlightPlanItemFactory::getItem(%s,%s,%s) ...",type,canvasGrp,index));
+		var item = nil;
+		if (type == "runway"){
+			item = pop(me._unUsedItems.Airport);
+			#debug.dump(item);
+			if(item == nil){
+				print("FlightPlanItemFactory::getItem() ... create Airport");
+				me._counter.Airport += 1;
+				item = FlightPlanItemAirport.new(canvasGrp,me._counter.Airport);
+				append(me._usedItems.Airport,item);
+				
+			}else{
+				print("FlightPlanItemFactory::getItem() ... get Airport from Cache");
+			}
+		}elsif (type == "cursor"){
+			item = pop(me._unUsedItems.Cursor);
+			#debug.dump(item);
+			if(item==nil){
+				print("FlightPlanItemFactory::getItem() ... create Cursor");
+				me._counter.Cursor += 1;
+				item = FlightPlanItemInsertCursor.new(canvasGrp,me._counter.Cursor);
+				append(me._usedItems.Cursor,item);
+			}else{
+				print("FlightPlanItemFactory::getItem() ... get Cursor from Cache");
+			}
+		}else{
+			item = pop(me._unUsedItems.Waypoint);
+			#debug.dump(item);
+			if(item==nil){
+				print("FlightPlanItemFactory::getItem() ... create Waypoint");
+				me._counter.Waypoint += 1;
+				item = FlightPlanItemWaypoint.new(canvasGrp,me._counter.Waypoint );
+				append(me._usedItems.Waypoint,item);
+			}else{
+				print("FlightPlanItemFactory::getItem() ... get Waypoint from Cache");
+			}
+		}
+		
+		return item;
+	},
+};
+
+var FlightPlanListWidget2 = {
+	new : func(page,canvasGroup,name){
+		var m = {parents:[FlightPlanListWidget2,
+			IfdWidget.new(page,canvasGroup,name),
+			ListViewListener.new(),
+			
+ 		]};
+		m._class 	= "FlightPlanListWidget2";
+		m._tab		= [];
+		m._can		= {};
+		m._can = {
+			#Pattern_Waypoint	: m._group.getElementById("FPL_Pattern_Waypoint").setVisible(0),
+			FlightPlan		: m._group.getElementById("FPL_Flightplan"),
+			ScrollAble		: m._group.getElementById("FPL_ScrollAble"),
+			list			: m._group.getElementById("FPL_List").setVisible(1),
+			ScrollCursorView	: m._group.getElementById("FPL_ScrollCursorView"),
+			ScrollCursorCurrent	: m._group.getElementById("FPL_ScrollCursorCurrent"),
+		};
+		m._flightPlanTransform 	= m._can.FlightPlan.createTransform();
+		m._listTransform 	= m._can.list.createTransform();
+		m._listViewTransform	= m._can.list.createTransform();
+		
+		
+		m._flightPlanItemFactory = FlightPlanItemFactory.new();
+		m._listView = ListViewClass.new();
+		
+		m._flightplanItemMap = [];
+		
+		m._currentIndex = 0;
+		m._focusIndex = 0;
+		
+		m._listView.setListViewListener(m);
+		
+		return m;
+	},
+	setListeners : func(instance) {
+		#print("FlightPlanListWidget2.setListeners() ... ");
+		append(me._listeners, setlistener(fms._signal.fplChange,func(n){me._onFlightPlanChange(n)},1,1));
+		append(me._listeners, setlistener(fms._signal.currentWpChange,func(n){me._onCurrentWaypointChange(n)},1,1));
+		append(me._listeners, setlistener(fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,0));
+		append(me._listeners, setlistener(fms._signal.fplUpdated,func(n){me._onFplUpdatedChange(n)},0,1));
+		append(me._listeners, setlistener(fms._signal.selectedWpChange,func(n){me._onSelectedWpChange(n)},1,1));
+		append(me._listeners, setlistener(fms._signal.cursorOptionChange,func(n){me._onCursorOptionChange(n)},1,1));
+		append(me._listeners, setlistener(fms._signal.cursorIndexChange,func(n){me._onCursorIndexChange(n)},1,1));
+	},
+	init : func(instance=me){
+		#print("FlightPlanListWidget2.init() ... ");
+		#me.setListeners(instance);	
+	},
+	deinit : func(){
+		#me.removeListeners();
+				
+	},
+	_onVisibiltyChange : func(){
+		me._checkKeys();
+		if (me._visibility){
+			me.setListeners(me);
+		}else{
+			me.removeListeners();
+		}
+		me._can.FlightPlan.setVisible(me._visibility);
+		
+	},
+	_checkKeys  : func(){
+		if(me._visibility == 1 ){
+# 			if (me._layout == "FPL"){
+# 				
+# 				me._ifd.ui.bindKey("R5",{
+# 					"<"	: func(){me._deleteWaypoint();},
+# 					">"	: func(){me._deleteWaypoint();},
+# 				});
+# 				
+# 			}else{
+# 				me._ifd.ui.bindKey("R5");
+# 			}
+			
+			me._ifd.ui.bindKnob("RK",{
+				"<<"	: func(){me._adjustCursorFocus(1);},
+				"<"	: func(){me._adjustCursorFocus(1);},
+				"push"	: func(){me._jumpWaypoint();},
+				">"	: func(){me._adjustCursorFocus(-1);},
+				">>"	: func(){me._adjustCursorFocus(-1);},
+			},{
+				"scroll"	: "Scroll",
+				"push"		: "Select",
+				
+			});
+			
+		}else{
+# 			me._ifd.ui.bindKey("R5");
+			me._ifd.ui.bindKnob("RK");
+		}
+	},
+	_adjustCursorFocus : func(v){
+		var index = me._listView.getCursorFocusAdjusted(v);
+		
+		fms.setCursorIndex(index);
+	},
+	_deleteWaypoint : func(){
+		fms.deleteWaypoint();
+	},
+	_jumpWaypoint : func(){
+		fms.jumpTo();
+	},
+	
+	setLayout : func(layout){
+		me._layout = layout;
+		if(me._layout == "FPL"){
+# 			me._x = 400;
+# 			me._y = 70;
+# 			me._yMax = 1356;
+			
+			me._listView._viewPort._height = 1356;
+			
+			me._can.FlightPlan.set("clip","rect(72px, 2048px, 1424px, 0px)");
+					
+			me._listTransform.setTranslation(400,70);
+			
+			me._flightPlanTransform.setTranslation(0,0);
+			me._flightPlanTransform.setScale(1.0,1.0);
+			
+		}elsif(layout == "split-right"){
+# 			me._x = 400;
+# 			me._y = 70;
+# 			me._yMax = 1356; # TODO : 
+			
+			me._listView._viewPort._height = 1356;
+			
+			me._can.FlightPlan.set("clip","rect(205px, 2048px, 1216px, 1024px)");
+			
+			me._listTransform.setTranslation(400,70);
+			
+			
+			me._flightPlanTransform.setTranslation(770,0);
+			me._flightPlanTransform.setScale(0.75,0.75);
+		}else{
+			me._visible == 0;
+			me._can.FlightPlan.setVisible(me._visible);
+		}
+		me._checkKeys();
+	},
+	_clearList : func(){
+		#print("FlightPlanListWidget2::_clearList() ... ");
+		
+		#print("FlightPlanListWidget2::_clearList() ... clear()");
+		me._listView.clear();
+		
+		
+		#print("FlightPlanListWidget2::_clearList() ... _flightPlanItemFactory.removeAll()");
+		me._flightPlanItemFactory.removeAll();
+		
+		#print("FlightPlanListWidget2::_clearList() ... removeAllChildren()");
+		#me._can.list.removeAllChildren();
+		
+		
+	},
+	_drawList : func(){
+		#print("FlightPlanListWidget2::_drawList() ... ----------------------------------- Begin");
+		#me._listView.appendItem(FlightPlanItemInsertCursor.new(me._can.list,-1));
+		#me._listView.appendItem(FlightPlanItemTest.new(me._can.list,-1));
+		me._flightplanItemMap = [];
+		
+		var item = nil;
+		item = me._flightPlanItemFactory.getItem("Cursor",me._can.list,-1);
+		me._listView.appendItem(item);
+		for( var i=0; i < fms._flightPlan.planSize; i+=1 ){
+			var wp = fms._flightPlan.wp[i];
+			
+			if (wp.variant == "Origin"){
+				#print("FlightPlanListWidget2::_drawList() ... ----------------------------------- Origin");
+				item = me._flightPlanItemFactory.getItem("Airport",me._can.list,i);
+				item.setHeadline("Origin");
+				#item.setHeadline(sprintf("Origin %s %s",wp.role,wp.type));
+					
+				item.setName(fms._flightPlan.departure.icao);
+				item.setConstrain(fms._flightPlan.departure.name);
+				
+				item.setSid(wp.sid);
+				item.setRunway(fms._flightPlan.departure.runway.id);
+				
+			}elsif(wp.variant == "Arrival"){
+				#print("FlightPlanListWidget2::_drawList() ... ----------------------------------- Arrival");
+				item = me._flightPlanItemFactory.getItem("Airport",me._can.list,i);
+				item.setHeadline("Destination");
+				#item.setHeadline(sprintf("Destination %s %s",wp.role,wp.type));
+				item.setName(fms._flightPlan.destination.icao);
+				item.setConstrain(fms._flightPlan.destination.name);
+				item.setArrival(wp.arrival);
+				item.setApproach(wp.approach);
+				item.setRunway(fms._flightPlan.destination.runway.id);
+				
+			}else{
+				#print("FlightPlanListWidget2::_drawList() ... ----------------------------------- Waypoint");
+		
+				item = me._flightPlanItemFactory.getItem("Waypoint",me._can.list,i);
+				
+				item.setType(wp.type,wp.role);
+				item.setName(sprintf("%s",wp.name));
+				
+				
+				
+				var constrain = "";
+				if (wp.constraint.alt.type != nil) {
+					constrain = sprintf("cross %s %s %3.0f ft",wp.name,wp.constraint.alt.type,wp.constraint.alt.value);
+				}
+				
+				item.setConstrain(constrain);
+				
+				if(i > 0){
+					item.setHeadline(sprintf("%s (%03.0f°)",wp.flyType,wp.course));
+					#item.setHeadline(sprintf("%s (%03.0f°) %s %s ",wp.flyType,wp.course,wp.role,wp.type ));
+					item.setDistance(sprintf("%0.1f",wp.distanceTo));
+				}else{
+					item.setHeadline("");
+					item.setDistance("---");
+				}
+			}
+			
+			if( i == me._currentIndex){
+				item.setActive(1);
+			}
+			
+			if( i == me._focusIndex){
+				item.setFocus(1);
+			}
+			#print("FlightPlanListWidget2::_drawList() ... ----------------------------------- append Item");
+			append(me._flightplanItemMap,item);
+			me._listView.appendItem(item);
+						
+			item = me._flightPlanItemFactory.getItem("Cursor",me._can.list,-1);
+			me._listView.appendItem(item);
+			
+		}
+		#print("FlightPlanListWidget2::_drawList() ... ----------------------------------- ENDE");
+	},
+### implements ListViewListener
+	onListViewUpdate : func(){
+		me._listViewTransform.setTranslation(me._listView._viewPort._x,-me._listView._viewPort._y);
+	},
+	onScrollBarUpdate : func(){
+		var activeHeight = 0;
+		var activePosY 	 = 0;
+		var viewHeight 	 = 0;
+		var viewPosY 	 = 0;
+		var activeItem	 = nil;
+		
+		if (me._currentIndex >= 0 and me._currentIndex < size(me._flightplanItemMap)){
+			var activeItem = me._flightplanItemMap[me._currentIndex];
+		}
+			
+		if (me._listView._height > me._listView._viewPort._height){
+			if (activeItem != nil){
+				activeHeight 	 = (activeItem._bound._height / me._listView._height) * me._listView._viewPort._height;
+				activePosY 	 = (activeItem._bound._y / me._listView._height) * me._listView._viewPort._height;
+			}
+			viewHeight 	 = (me._listView._viewPort._height / me._listView._height) * me._listView._viewPort._height;
+			viewPosY	 = (me._listView._viewPort._y / me._listView._height) * me._listView._viewPort._height;
+		}else{
+			if (activeItem != nil){
+				activeHeight 	 = (activeItem._bound._height / me._listView._viewPort._height) * me._listView._viewPort._height;
+				activePosY 	 = (activeItem._bound._y / me._listView._viewPort._height) * me._listView._viewPort._height;
+			}
+			viewHeight	 = me._listView._viewPort._height;
+			viewPosY	 = (me._listView._viewPort._y / me._listView._viewPort._height) * me._listView._viewPort._height;
+		}
+		
+		me._can.ScrollCursorCurrent.set("coord[1]",0);
+		me._can.ScrollCursorCurrent.set("coord[3]",activeHeight);
+		me._can.ScrollCursorCurrent.setTranslation(0,activePosY);
+		me._can.ScrollCursorView.set("coord[1]",0);
+		me._can.ScrollCursorView.set("coord[3]",viewHeight);
+		me._can.ScrollCursorView.setTranslation(0,viewPosY);
+	},
+	
+### implements fms events
+	_onFlightPlanChange : func(n){
+		#print("\n############################################# FlightPlanListWidget2::_onFlightPlanChange() ... ");
+		#print("\n");
+		var value = n.getValue();
+		#print("FlightPlanListWidget2::_onFlightPlanChange() ... ------------- _clearList");
+		me._clearList();
+		#print("FlightPlanListWidget2::_onFlightPlanChange() ... ------------- _drawList");
+		me._drawList();
+		#print("\n");
+	},
+	_onCurrentWaypointChange : func(n){
+		
+		if(me._currentIndex >= 0 and size(me._flightplanItemMap)){
+			me._flightplanItemMap[me._currentIndex].setActive(0);
+		}
+		
+		me._currentIndex = n.getValue();
+		
+		if(me._currentIndex == nil){
+			me._currentIndex = -1;
+		}
+		
+		if (me._currentIndex >= 0 and size(me._flightplanItemMap)){
+			me._flightplanItemMap[me._currentIndex].setActive(1);
+			me._listView.setFocusItem(me._flightplanItemMap[me._currentIndex]);
+		}
+		
+	},
+	_onFplReadyChange : func(n){
+		if(fms._flightPlan.isReady){
+			
+		}else{
+			for( var i=0; i < fms._flightPlan.planSize; i+=1 ){
+				me._flightplanItemMap[i].setDistance("---");
+				me._flightplanItemMap[i].setETE("---");
+				me._flightplanItemMap[i].setETA("---");
+				me._flightplanItemMap[i].setFuel("---");
+			}
+		}
+	},
+	_onFplUpdatedChange : func(n){
+		for( var i=0; i < fms._flightPlan.planSize; i+=1 ){
+			if (i >= fms._flightPlan.currentWpIndex){
+				me._flightplanItemMap[i].setDistance(sprintf("%0.1f",fms._flightPlan.wp[i].distanceTo));
+				me._flightplanItemMap[i].setETE(global.formatTime(fms._flightPlan.wp[i].ete,"i:s"));
+				me._flightplanItemMap[i].setETA(global.formatTime(fms._flightPlan.wp[i].eta));
+				me._flightplanItemMap[i].setFuel(sprintf("%.0f",fms._flightPlan.wp[i].fuelAt));
+			}else{
+				me._flightplanItemMap[i].setDistance("---");
+				me._flightplanItemMap[i].setETE("---");
+				me._flightplanItemMap[i].setETA("---");
+				me._flightplanItemMap[i].setFuel("---");
+			}
+		}
+		
+	},
+	_onCursorOptionChange : func(n){
+		
+	},
+	_onCursorIndexChange : func(n){
+		var index = n.getValue();
+		me._listView.setFocusIndex(index);
+	},
+	_onSelectedWpChange : func(n){
+		var index = n.getValue();
+		
+	},
+};
 
 var AvidynePageFMS = {
 	new: func(ifd,name,data){
@@ -563,12 +1717,9 @@ var AvidynePageFMS = {
 		m._widget	= {
 			Tab	 	: TabWidget.new(m,m.page,"TabSelectMAP"),
 			DirectTo 	: DirectToWidget.new(m,m.page,"DirectTo"),
-			FPL	 	: FlightPlanListWidget.new(m,m.page,"FPL-List"),
+			InsertDelete 	: InsertDeleteWidget.new(m,m.page,"DirectTo"),
+			FPL	 	: FlightPlanListWidget2.new(m,m.page,"FPL-List"),
 			MovingMapKnob	: MovingMapKnobWidget.new(m,m.page,"MovingMapKnob"),
-			
-			
-			
-			
 		};
 		
 		m._can = {
@@ -628,6 +1779,8 @@ var AvidynePageFMS = {
 			me._widget.MovingMapKnob.setVisible(me._visibility);
 			me._widget.FPL.setVisible(me._visibility);
 			me._widget.DirectTo.setVisible(me._visibility);
+			me._widget.InsertDelete.setVisible(me._visibility);
+			
 		}
 		me._widget.Tab.setVisible(me._visibility);
 		me.page.setVisible(me._visibility);
@@ -649,6 +1802,7 @@ var AvidynePageFMS = {
 			me._widget.FPL.setLayout("FPL");
 			me._widget.FPL.setVisible(1);
 			me._widget.DirectTo.setVisible(1);
+			me._widget.InsertDelete.setVisible(1);
 			me._can.FPLContent.setVisible(1);
 		}elsif(index == 1){ # MapFPL
 			me._widget.MovingMapKnob.setHand(0);
@@ -657,6 +1811,7 @@ var AvidynePageFMS = {
 			me._widget.FPL.setLayout("split-right");
 			me._widget.FPL.setVisible(1);
 			me._widget.DirectTo.setVisible(0);
+			me._widget.InsertDelete.setVisible(0);
 			me._widget.MovingMapKnob.setVisible(1);	
 		}elsif(index == 2){ # Info
 			me._widget.MovingMapKnob.setVisible(0);
@@ -664,6 +1819,7 @@ var AvidynePageFMS = {
 			me.IFD.movingMap.setLayout("none");
 			me.IFD.setLayout(IFD_LAYOUT.PLUS);
 			me._widget.DirectTo.setVisible(1);
+			me._widget.InsertDelete.setVisible(1);
 			me._can.InfoContent.setVisible(1);
 		}elsif(index == 3){ # Routes
 			me._widget.FPL.setVisible(0);
@@ -671,6 +1827,7 @@ var AvidynePageFMS = {
 			me.IFD.setLayout(IFD_LAYOUT.PLUS);
 			me.IFD.movingMap.setLayout("none");
 			me._widget.DirectTo.setVisible(0);
+			me._widget.InsertDelete.setVisible(0);
 			me._can.RoutesContent.setVisible(1);
 		}elsif(index == 4){ # UserWypts
 			me._widget.MovingMapKnob.setVisible(0);
@@ -678,6 +1835,7 @@ var AvidynePageFMS = {
 			me.IFD.setLayout(IFD_LAYOUT.PLUS);
 			me.IFD.movingMap.setLayout("none");
 			me._widget.DirectTo.setVisible(1);
+			me._widget.InsertDelete.setVisible(1);
 			me._can.UserWyptsContent.setVisible(1);
 		
 		}elsif(index == 5){ # Nearest
@@ -685,6 +1843,7 @@ var AvidynePageFMS = {
 			me._widget.FPL.setVisible(0);
 			me.IFD.movingMap.setLayout("none");
 			me._widget.DirectTo.setVisible(1);
+			me._widget.InsertDelete.setVisible(1);
 			me.IFD.setLayout(IFD_LAYOUT.PLUS);
 			
 		}elsif(index == 6){ # MapNearest
@@ -694,6 +1853,7 @@ var AvidynePageFMS = {
 			me._widget.MovingMapKnob.setHand(0);
 			me._widget.MovingMapKnob.setVisible(1);
 			me._widget.DirectTo.setVisible(0);
+			me._widget.InsertDelete.setVisible(0);
 			
 		}else{
 			
@@ -701,7 +1861,7 @@ var AvidynePageFMS = {
 	},
 	update2Hz : func(now,dt){
 
-		me._widget.FPL.update();
+		#me._widget.FPL.update();
 		
 	},
 	update20Hz : func(now,dt){

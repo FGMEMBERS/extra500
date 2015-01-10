@@ -1248,6 +1248,7 @@
 		<fcs_function name="/autopilot/fms-channel/gpss/angle/d-psi-deg-1">
 			<function>
 				<difference> 
+<!-- /autopilot/fms-channel/gpss/next-bearing-deg set in /nasal/AvidyneEntregra9/fms.nas; __nextGpssBearing -->
 						<property>/autopilot/fms-channel/gpss/next-bearing-deg</property> 
 						<property>/autopilot/fms-channel/indicated-track-true-deg</property> 
 				</difference>
