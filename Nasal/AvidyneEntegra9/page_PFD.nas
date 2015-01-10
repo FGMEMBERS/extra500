@@ -266,7 +266,7 @@ var VerticalSpeedWidget = {
 		me._can.BugFMS.setVisible(fms._constraint.VSR.visible);
 	},
 	_onFplReadyChange : func(n){
-		if(fms._fightPlan.isReady){
+		if(fms._flightPlan.isReady){
 			
 		}else{
 			me._can.BugFMS.setVisible(0);

@@ -17,10 +17,14 @@
       Date: 2014-06-22
 
       Last change:      Eric van den Berg
-      Date:             2014.12.04
+      Date:             2015.01.10
 
 
-Release 1.2.0
+Release 2.0.0: use for Flightgear version 3.4 and up
+* Route-manager/FMS: adjustments for bug fixes in Flightgear 3.4
+* Model: screws in panel
+
+Release 1.2.0: use only upto Flightgear version 3.2
 * Model: new very realistic Landing Gear model, several small interior improvements
 * User interface: elevator pilot force indication
 * Aerodynamics: more realistic engine torque and slipstream effects 

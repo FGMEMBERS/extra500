@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1252"
+   height="224"
+   id="svg2985"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="IFD_FMS_FPL_ItemAirport.svg">
+  <defs
+     id="defs2987" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.0992667"
+     inkscape:cx="660.99092"
+     inkscape:cy="141.90508"
+     inkscape:document-units="px"
+     inkscape:current-layer="default"
+     showgrid="false"
+     inkscape:snap-page="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1025"
+     inkscape:window-x="-2"
+     inkscape:window-y="-3"
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:snap-bbox="false"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:bbox-paths="true">
+    <sodipodi:guide
+       orientation="1,0"
+       position="1232,295.89645"
+       id="guide3857" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="64,171.9328"
+       id="guide3088" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="1216,146.66172"
+       id="guide3090" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="1184.2291,212.00001"
+       id="guide3092" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="1176.51,12.000003"
+       id="guide3094" />
+    <inkscape:grid
+       type="xygrid"
+       id="grid3332" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="58,148"
+       id="guide3384" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata2990">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="default"
+     inkscape:label="default"
+     style="display:inline">
+    <g
+       style="fill:#1f305c;fill-opacity:1;display:inline"
+       id="FPL_Pattern_Waypoint"
+       transform="matrix(1.3942952,0,0,1.3942952,-550.39886,-107.43285)">
+      <rect
+         ry="14.421753"
+         y="45.059731"
+         x="440.65192"
+         height="184.04015"
+         width="826.22388"
+         id="Back"
+         style="color:#000000;fill:#1f305c;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         xml:space="preserve"
+         style="font-size:35.8412323px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:#60ffb8;stroke-width:0.97509044;stroke-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="510.01767"
+         y="106.97196"
+         id="Headline"
+         sodipodi:linespacing="125%"
+         transform="scale(0.87941822,1.1371154)"
+         inkscape:label="#text5341-2"><tspan
+           sodipodi:role="line"
+           x="510.01767"
+           y="106.97196"
+           id="tspan4032-6">Destination</tspan></text>
+      <path
+         style="color:#000000;fill:#1e5c92;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         d="m 459.29934,131.6492 0,22.14381 14.34416,0 0,-6.45488 8.6065,10.04092 -8.6065,10.04091 0,-6.45487 -21.51625,0 0,-29.31589 -11.47533,0 0,51.45969 405.92585,0 279.93673,0 55.4588,0 c 7.4444,0 13.4333,-6.14518 13.4333,-13.78384 l 0,-23.98165 c 0,-7.63866 -5.9889,-13.78385 -13.4333,-13.78385 z"
+         id="BackInner"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccccccccccccssscc" />
+    </g>
+    <path
+       style="color:#000000;fill:#201c57;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.00000024;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 84.50696,-39.812229 1110.47544,0 c 9.019,0 16.2797,7.260727 16.2797,16.279657 l 0,35.532562 -1143.034797,0 0,-35.532562 c 0,-9.01893 7.260727,-16.279657 16.279657,-16.279657 z"
+       id="rect4170"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssccss" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="edit"
+     inkscape:label="edit"
+     style="display:inline">
+    <rect
+       style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="Airport_ICAO_back"
+       width="188.16533"
+       height="62.769115"
+       x="132.81581"
+       y="80.61544"
+       ry="6.1192102" />
+    <rect
+       style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="Airport_Runway_back"
+       width="120.27074"
+       height="45"
+       x="464.08313"
+       y="89.4375"
+       ry="4.8193722" />
+    <rect
+       style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       id="edit_at_back"
+       width="409.56403"
+       height="45"
+       x="789.51019"
+       y="-36.40612"
+       ry="6.8022242" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot3167"
+       style="font-size:12px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"><flowRegion
+         id="flowRegion3169"><rect
+           id="rect3171"
+           width="96.809601"
+           height="36.665432"
+           x="102.92051"
+           y="162.89095" /></flowRegion><flowPara
+         id="flowPara3173"></flowPara></flowRoot>    <path
+       transform="matrix(1.3942952,0,0,1.3942952,-550.39886,-107.43285)"
+       style="color:#000000;fill:none;stroke:#00ffff;stroke-width:3.58604121;stroke-miterlimit:4;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="m 455.07367,45.059731 797.38033,0 c 7.9897,0 14.4218,6.432101 14.4218,14.421752 l 0,155.196637 c 0,7.98965 -6.4321,14.42176 -14.4218,14.42176 l -797.38033,0 c -7.98965,0 -14.42175,-6.43211 -14.42175,-14.42176 l 0,-155.196637 c 0,-7.989651 6.4321,-14.421752 14.42175,-14.421752 z"
+       id="rect4207"
+       inkscape:connector-curvature="0" />
+    <rect
+       ry="6.8022242"
+       y="-36.40612"
+       x="208.51353"
+       height="45"
+       width="371.13995"
+       id="Airport_Arrival_back"
+       style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="view"
+     inkscape:label="view"
+     style="display:inline">
+    <text
+       xml:space="preserve"
+       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.97509044;stroke-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="555.44672"
+       y="191.15906"
+       id="Airport_Name"
+       sodipodi:linespacing="125%"
+       transform="matrix(1.2276935,0,0,1.5835052,-550.39886,-107.43285)"
+       inkscape:label="#text5341-2"><tspan
+         sodipodi:role="line"
+         x="555.44672"
+         y="191.15906"
+         id="tspan4032-6-3">Airport Name</tspan></text>
+    <text
+       inkscape:label="#text5341-2"
+       transform="scale(0.87692405,1.1403496)"
+       sodipodi:linespacing="125%"
+       id="Airport_ICAO"
+       y="117.49284"
+       x="168.4048"
+       style="font-size:56px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.35956395;stroke-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+       xml:space="preserve"><tspan
+         id="tspan4459-4"
+         y="117.49284"
+         x="168.4048"
+         sodipodi:role="line"
+         style="font-size:56px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;stroke:#ffffff;stroke-width:1.35956395;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold">ICAO</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;text-anchor:end;fill:#ffffff;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="580"
+       y="125.70703"
+       id="Airport_Runway"><tspan
+         sodipodi:role="line"
+         id="tspan3177-3-8"
+         x="580"
+         y="125.70703">25L</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="794"
+       y="0.3907555"
+       id="Airport_Procedur"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3177-3-9"
+         x="794"
+         y="0.3907555">---.ILS 24</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="600"
+       y="0.3907547"
+       id="Airport_Procedur_lable"><tspan
+         sodipodi:role="line"
+         id="tspan3177-6"
+         x="600"
+         y="0.3907547">Approach:</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="370"
+       y="125.70703"
+       id="text3175-84"><tspan
+         sodipodi:role="line"
+         id="tspan3177-60"
+         x="370"
+         y="125.70703">Rwy:</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#60ffb8;fill-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="1025"
+       y="125.70703"
+       id="edit_alt_unit"><tspan
+         sodipodi:role="line"
+         id="tspan3177-5-6"
+         x="1025"
+         y="125.70703">NM</tspan></text>
+    <text
+       id="text3386"
+       y="125.70703"
+       x="716"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       xml:space="preserve"><tspan
+         y="125.70703"
+         x="716"
+         id="tspan3388"
+         sodipodi:role="line">Brg:</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr-tb;text-anchor:end;fill:#ffffff;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       x="1015"
+       y="125.70703"
+       id="Airport_bearing_distance"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3392"
+         x="1015"
+         y="125.70703">234</tspan></text>
+    <text
+       id="Airport_bearing_deg"
+       y="125.70703"
+       x="805"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       xml:space="preserve"><tspan
+         y="125.70703"
+         x="805"
+         id="tspan3396"
+         sodipodi:role="line">360</tspan></text>
+    <text
+       id="text3398"
+       y="125.70703"
+       x="878"
+       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#60ffb8;fill-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       xml:space="preserve"><tspan
+         y="125.70703"
+         x="878"
+         id="tspan3400"
+         sodipodi:role="line">°</tspan></text>
+    <text
+       id="Airport_Arrival_lable"
+       y="0.3907547"
+       x="80"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       xml:space="preserve"><tspan
+         y="0.3907547"
+         x="80"
+         id="tspan4915"
+         sodipodi:role="line">Arrival:</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="Airport_Arrival"
+       y="0.3907555"
+       x="214"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+       xml:space="preserve"><tspan
+         y="0.3907555"
+         x="214"
+         id="tspan4919"
+         sodipodi:role="line">BETEX 1K</tspan></text>
+  </g>
+</svg>
