@@ -1373,12 +1373,15 @@ var FlightPlanListWidget2 = {
 			FlightPlan		: m._group.getElementById("FPL_Flightplan"),
 			ScrollAble		: m._group.getElementById("FPL_ScrollAble"),
 			list			: m._group.getElementById("FPL_List").setVisible(1),
+			ScrollBar 		: m._group.getElementById("FPL_ScrollBar"),
+			ScrollBarBackground 	: m._group.getElementById("FPL_ScrollBar_Background"),
 			ScrollCursorView	: m._group.getElementById("FPL_ScrollCursorView"),
 			ScrollCursorCurrent	: m._group.getElementById("FPL_ScrollCursorCurrent"),
 		};
 		m._flightPlanTransform 	= m._can.FlightPlan.createTransform();
 		m._listTransform 	= m._can.list.createTransform();
 		m._listViewTransform	= m._can.list.createTransform();
+		m._scrollBarTransform	= m._can.list.createTransform();
 		
 		
 		m._flightPlanItemFactory = FlightPlanItemFactory.new();
@@ -1419,7 +1422,7 @@ var FlightPlanListWidget2 = {
 			me.removeListeners();
 		}
 		me._can.FlightPlan.setVisible(me._visibility);
-		
+
 	},
 	_checkKeys  : func(){
 		if(me._visibility == 1 ){
@@ -1472,11 +1475,12 @@ var FlightPlanListWidget2 = {
 			
 			me._listView._viewPort._height = 1356;
 			
-			me._can.FlightPlan.set("clip","rect(72px, 2048px, 1424px, 0px)");
+			me._can.FlightPlan.set("clip","rect(72px, 2048px, 1424px, 400px)");
 					
-			me._listTransform.setTranslation(400,70);
+			me._listTransform.setTranslation(400,0);
+			#me._scrollBarTransform.setTranslation(0,0);
 			
-			me._flightPlanTransform.setTranslation(0,0);
+			me._flightPlanTransform.setTranslation(0,70);
 			me._flightPlanTransform.setScale(1.0,1.0);
 			
 		}elsif(layout == "split-right"){
@@ -1484,19 +1488,23 @@ var FlightPlanListWidget2 = {
 # 			me._y = 70;
 # 			me._yMax = 1356; # TODO : 
 			
-			me._listView._viewPort._height = 1356;
+			me._listView._viewPort._height = 1534 ;#(1356/0.82)-120; = 1534
 			
-			me._can.FlightPlan.set("clip","rect(205px, 2048px, 1216px, 1024px)");
+			me._can.FlightPlan.set("clip","rect(120px, 2048px, 1424px, 1024px)");
 			
-			me._listTransform.setTranslation(400,70);
+			#me._listTransform.setTranslation(400,70);
+			#me._scrollBarTransform.setTranslation(0,70);
 			
+			me._listTransform.setTranslation(400,0);
+			#me._scrollBarTransform.setTranslation(0,0);
 			
-			me._flightPlanTransform.setTranslation(770,0);
-			me._flightPlanTransform.setScale(0.75,0.75);
+			me._flightPlanTransform.setTranslation(695,120);
+			me._flightPlanTransform.setScale(0.82,0.82);
 		}else{
 			me._visible == 0;
 			me._can.FlightPlan.setVisible(me._visible);
 		}
+		me._listView._updateView();
 		me._checkKeys();
 	},
 	_clearList : func(){
@@ -1623,6 +1631,8 @@ var FlightPlanListWidget2 = {
 			viewHeight	 = me._listView._viewPort._height;
 			viewPosY	 = (me._listView._viewPort._y / me._listView._viewPort._height) * me._listView._viewPort._height;
 		}
+		me._can.ScrollBarBackground.set("coord[1]",0);
+		me._can.ScrollBarBackground.set("coord[3]",me._listView._viewPort._height);
 		
 		me._can.ScrollCursorCurrent.set("coord[1]",0);
 		me._can.ScrollCursorCurrent.set("coord[3]",activeHeight);
@@ -1630,6 +1640,9 @@ var FlightPlanListWidget2 = {
 		me._can.ScrollCursorView.set("coord[1]",0);
 		me._can.ScrollCursorView.set("coord[3]",viewHeight);
 		me._can.ScrollCursorView.setTranslation(0,viewPosY);
+		
+		
+		
 	},
 	
 ### implements fms events

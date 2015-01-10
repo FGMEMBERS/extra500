@@ -217,46 +217,33 @@ var ListViewClass = {
 	setScrollBar : func(scrollbar){
 		me._scrollbar = scrollbar;
 	},
+	_moveViewPort : func(){
+		if(me._focusedItem!=nil){
+			# move the viewport
+			var topDif 	= me._viewPort._y - me._focusedItem._bound._y;
+			var bottomDif 	= (me._focusedItem._bound._y + me._focusedItem._bound._height) - (me._viewPort._y + me._viewPort._height);
+			#debug.dump(me._viewPort,me._focusedItem._bound);
+			#print(sprintf("ListViewClass::_updateView() ... Difference top:%s bottom:%s",topDif,bottomDif));
+			
+			if (topDif > 0){
+				#me._viewPort._y -= topDif;
+				me._viewPort._y = me._focusedItem._bound._y;
+			}elsif(bottomDif > 0){
+				#me._viewPort._y += bottomDif;
+				me._viewPort._y = (me._focusedItem._bound._y + me._focusedItem._bound._height) - me._viewPort._height;
+			}else{
+				#focused item is inside View nothing to move
+			}
+		}
+	},
 	_updateView : func(){
 		
-		# move the viewport
-		var topDif 	= me._viewPort._y - me._focusedItem._bound._y;
-		var bottomDif 	= (me._focusedItem._bound._y + me._focusedItem._bound._height) - (me._viewPort._y + me._viewPort._height);
-		#debug.dump(me._viewPort,me._focusedItem._bound);
-		#print(sprintf("ListViewClass::_updateView() ... Difference top:%s bottom:%s",topDif,bottomDif));
-		
-		if (topDif > 0){
-			#me._viewPort._y -= topDif;
-			me._viewPort._y = me._focusedItem._bound._y;
-		}elsif(bottomDif > 0){
-			#me._viewPort._y += bottomDif;
-			me._viewPort._y = (me._focusedItem._bound._y + me._focusedItem._bound._height) - me._viewPort._height;
-		}else{
-			#focused item is inside View nothing to move
-		}
-				
+		me._moveViewPort();
 		me._showItemsInView();
+		
 		me._listViewListener.onListViewUpdate();
 		me._listViewListener.onScrollBarUpdate();
-		#print("ListViewClass::_updateView() ... calc scrollbar");
-		
-		# move the scrollbar
-# 		if (me._height > 0){
-# 			var itemNormStartY = me._focusedItem._bound._y / me._height;
-# 			var itemNormEndeY  = (me._focusedItem._bound._y + me._focusedItem._bound._height) / me._height;
-# 			
-# 			var viewNormStartY = me._viewPort._y / me._height;
-# 			var viewNormEndeY  = (me._viewPort._y + me._viewPort._height) / me._height;
-# 			
-# 			
-# 			
-# 			if(me._scrollbar != nil){
-# 				me._scrollbar.setBarBounds("itemY",itemNormStartY,itemNormEndeY);
-# 				me._scrollbar.setBarBounds("viewY",viewNormStartY,viewNormEndeY);
-# 			}
-# 		}
-		
-		
+
 	},
 	
 	
