@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             01.10.2014
+      Date:             11.01.2015
 
 -->
 
@@ -498,6 +498,50 @@
 <model>
   <path>Aircraft/extra500/Models/landinggear/LandingGearTotal.xml</path>	
 </model>
+
+<!--jacks-->
+<model>
+  <name>jack-lh</name>
+  <path>Aircraft/extra500/Models/landinggear/jack-large.ac</path>
+	<offsets>
+		<x-m>0.9525</x-m>
+		<y-m>-2.635</y-m>	
+		<z-m>-1.980</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>jack-rh</name>
+  <path>Aircraft/extra500/Models/landinggear/jack-large.ac</path>
+	<offsets>
+		<x-m>0.9525</x-m>
+		<y-m>2.635</y-m>	
+		<z-m>-1.980</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>jack-fwd</name>
+  <path>Aircraft/extra500/Models/landinggear/jack-small.ac</path>
+	<offsets>
+		<x-m>-0.6</x-m>
+		<y-m>0.1</y-m>	
+		<z-m>-2.35</z-m>
+	</offsets>
+</model>
+
+<animation>
+  <object-name>jack-lh</object-name>
+  <object-name>jack-rh</object-name>
+  <object-name>jack-fwd</object-name>
+  <type>select</type>
+  <condition>
+   <equals>
+    <property>/fdm/jsbsim/gear/unit[10]/pos-norm</property>
+    <value>1</value>
+   </equals>
+  </condition>
+ </animation>
 
 <!--for gear test purposes only -->
 <!--animation>

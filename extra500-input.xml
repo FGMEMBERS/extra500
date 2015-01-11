@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2014.08.21
+      Date:             2015.01.10
 -->
 <PropertyList>
 
@@ -142,6 +142,7 @@
 		 </key>
 
 		 <key n="7">
+			<name>Ctrl-g</name>
 			<binding n="0">
  				<command>property-toggle</command>
  				<property>/fdm/jsbsim/gear/unit[10]/pos-norm</property>
