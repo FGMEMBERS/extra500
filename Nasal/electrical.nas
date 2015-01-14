@@ -17,7 +17,7 @@
 #      Date: Jun 06 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             06.09.13
+#      Date:             14.01.15
 #
 
 
@@ -463,11 +463,15 @@ var ExternalGeneratorClass = {
 			]
 		};
 		m._nAmpereAvailable	= m._nRoot.initNode("ampere_available",0.0,"DOUBLE");
+		m._nAmpereSurplus	= m._nRoot.initNode("ampere_surplus",0.0,"DOUBLE");
+		m._nHasLoad		= m._nRoot.initNode("hasLoad",0,"BOOL");
 		m._isPluged		= 0;
 		m._nIsPluged		= m._nRoot.initNode("isPluged",m._isPluged,"BOOL");
-		m._voltMax		= 28.5;
+		m._voltMax		= 28.2; # 28.2 + 0.3 = 28.5 
 		m._ampereMax		= 1200.0;
-		m._ampereAvailable	= 0.0;			
+		m._ampereAvailable	= 0.0;	
+		m._surplusAmpere	= 1.0;
+		
 		return m;
 	},
 	init : func(instance=nil){
@@ -480,7 +484,7 @@ var ExternalGeneratorClass = {
 	},
 	update : func(now,dt){
 		if (me._isPluged == 1){
-			me._volt 		= me._voltMax;
+			me._volt 		= me._voltMax + (0.3 * me._surplusAmpere) + 0.05;
 			me._ampereAvailable 	= me._ampereMax;
 		}else{
 			me._volt 		= 0;
@@ -497,11 +501,24 @@ var ExternalGeneratorClass = {
 	},
 	applyAmpere : func(electron=nil){
 		me._ampereAvailable = me._nAmpereAvailable.getValue();
-		if (electron.ampere <= me._ampereAvailable){
-			electron.ampere = 0;
+		me._ampere = electron.ampere;
+		if(electron.ampere>0){
+			me._nHasLoad.setValue(1);
+			me._surplusAmpere = (me._ampereAvailable - electron.ampere) / me._ampereMax;
+			
+			if (me._surplusAmpere >= 0){
+				electron.ampere = 0;
+			}else{
+				electron.ampere -= me._ampereAvailable;
+			}
 		}else{
-			electron.ampere -= me._ampereAvailable;
+			me._surplusAmpere = 1.0;
+			me._nHasLoad.setValue(0);
+		
 		}
+			
+		me._nAmpereSurplus.setValue(me._surplusAmpere);
+		me._nAmpere.setValue(me._ampere);
 	},
 	onPlug : func(value = nil){
 		if (value == nil){
@@ -1058,6 +1075,8 @@ var ESystem = {
 		m._vEmergencyBus 	= ElectronClass.new();
 		m._vPreBatteryBus 	= ElectronClass.new();
 		
+		m._NullLoad		= ElectronClass.new();
+		
 		m._volt = 0;
 		m._ampere = 0;
 		
@@ -1335,6 +1354,8 @@ var ESystem = {
 			
 			
 		}else{
+			
+			
 			if (me.relay.K3._state == 1){ # Load goes to Generator
 				
 				if(me.relay.K5._state == 1){
@@ -1671,6 +1692,7 @@ eSystem.relay.K1.checkCondition = func(){
 		me.setState(1);
 	}else{
 		me.setState(0);
+		eSystem.source.ExternalGenerator.applyAmpere(eSystem._NullLoad);
 	}
 
 };

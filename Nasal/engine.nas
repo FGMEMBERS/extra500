@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jun 26 2013
 #
-#      Last change:      Eric van den Berg
-#      Date:             12.04.14
+#      Last change:      Dirk Dittmann
+#      Date:             14.01.15
 #
 var IgnitionClass = {
 	new : func(root,name,watt=45.0){
@@ -68,6 +68,7 @@ var StarterClass = {
 		m._nGenerator     	= props.globals.initNode("/controls/electric/engine/generator",0,"BOOL");
 		
 		m._nStarter		= props.globals.initNode("/controls/engines/engine[0]/starter",0,"BOOL");
+		m._nRPM			= props.globals.initNode("/engines/engine[0]/rpm",0,"INT");
 		m._starterListener	= nil;
 		m._starter		= 0;
 		
@@ -99,9 +100,15 @@ var StarterClass = {
 		me.electricWork();
 	},
 	electricWork : func(){
+		# max rpm 425
+		# rpm	A
+		# 0	950
+		# 425	750
 		if ((me._starter == 1) and (me._volt > me._voltMin)){
 			me._watt = me._nWatt.getValue();
-			me._ampere = me._watt / me._volt;
+			#me._ampere = me._watt / me._volt;
+			# Anlaufstrom
+			me._ampere = (-0.47 * me._nRPM.getValue()) + 950;
 		}else{
 			me._ampere = 0;
 			me._starter = 0;
