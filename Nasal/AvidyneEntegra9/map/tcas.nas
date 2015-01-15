@@ -17,7 +17,7 @@
 #      Date: Sep 10 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             14.09.2013
+#      Date:             15.01.15
 #
 
 var TcasData = {
@@ -83,12 +83,18 @@ var TcasModel = {
 								var callsign 	= sprintf("[%i]%s :",ac.getIndex(),ac.getChild("callsign").getValue());
 								var lat 	= ac.getNode("position/latitude-deg").getValue();
 								var lon 	= ac.getNode("position/longitude-deg").getValue();
-								var vs		= ac.getNode("velocities/vertical-speed-fps").getValue();
 								var aAlt 	= ac.getNode("position/altitude-ft").getValue();
+								var vs		= ac.getNode("velocities/vertical-speed-fps").getValue();
 								var alt 	= math.floor(((aAlt-me._alt)/100)+0.5);
 								#print(sprintf("%s range:%0.2f | lat:%0.3f lon:%0.3f a:%+i vs:%0.1f l:%i",callsign,range,lat,lon,alt,vs,level));
-								append(me._data,TcasData.new(callsign,range,lat,lon,alt,vs,level));
-								me._dataIndex += 1;
+								if ( 	(lat != nil) and
+									(lon != nil) and
+									(vs != nil) and
+									(aAlt != nil)
+								){
+									append(me._data,TcasData.new(callsign,range,lat,lon,alt,vs,level));
+									me._dataIndex += 1;
+								}
 							}
 						}
 					}
