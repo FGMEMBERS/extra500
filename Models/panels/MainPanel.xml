@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             11.01.15
+      Date:             16.01.15
 -->
 <PropertyList>
 
@@ -92,7 +92,7 @@
 
 <model>
   <name>externalpower</name>
-  <path>Aircraft/extra500/Models/instruments/externalpower.xml</path>
+  <path>Aircraft/extra500/Models/externalpower/externalpower.xml</path>
 	<offsets>
 		<x-m>0.0</x-m>
 		<y-m>-0.5</y-m>	

@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             13.01.2015
+      Date:             15.01.2015
 
 -->
 
@@ -88,9 +88,9 @@
 		<pitch-deg>1.39</pitch-deg>
 	</offsets>
 
-	<model>
+	<!--model>
           <path>Models/Aircraft/marker.xml</path>
-      </model>
+      </model-->
 <!-- Rembrand transparency -->
 
 
@@ -493,6 +493,29 @@
    <y>-0.4</y>
    <z>-1</z>
   </axis>
+ </animation>
+
+<!--external power unit-->
+<model>
+  <name>extpowerunit</name>
+  <path>Aircraft/extra500/Models/externalpower/extpowunit.ac</path>
+	<offsets>
+		<x-m>-1.4</x-m>
+		<y-m>1.4</y-m>	
+		<z-m>-1.780</z-m>
+            <heading-deg>-90</heading-deg>
+	</offsets>
+</model>
+
+<animation>
+  <object-name>extpowerunit</object-name>
+  <type>select</type>
+  <condition>
+   <equals>
+    <property>/extra500/electric/source/ExternalGenerator/isPluged</property>
+    <value>1</value>
+   </equals>
+  </condition>
  </animation>
 
 <!--gear-->
