@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2013.09.11
+      Date:             2015.01.17
 -->
 
 <PropertyList>
@@ -420,6 +420,7 @@
 
 <animation>
         <type>material</type>
+		<object-name>Autopilot.Frame</object-name>
 		<object-name>Autopilot.Button.HDG</object-name>
 		<object-name>Autopilot.Button.NAV</object-name>
 		<object-name>Autopilot.Button.APR</object-name>
@@ -433,9 +434,9 @@
 		</equals>
 	</condition>
         <emission>
-            <red>.5</red>
-            <green>.5</green>
-            <blue>.5</blue>
+            <red>.4</red>
+            <green>.4</green>
+            <blue>.4</blue>
 	    <factor-prop>extra500/instrumentation/Autopilot/Backlight/state</factor-prop>
         </emission>
 </animation>
