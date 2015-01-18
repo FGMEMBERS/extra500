@@ -539,7 +539,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<float n="5" alias="/engines/engine[0]/thrust_lb">0</float><!-- mp sound-->
 			<float n="6" alias="/fdm/jsbsim/aircraft/engine/motoring">0</float><!-- mp sound-->
 			<float n="7" alias="/fdm/jsbsim/aircraft/engine/spooling-up">0</float><!-- mp sound-->
-			<!--float n="8" alias="/fdm/jsbsim/propulsion/engine/set-running">0</float--><!-- mp sound-->
+			<float n="8" alias="/fdm/jsbsim/propulsion/engine/set-running">0</float><!-- mp sound: double with int[13] for backward compatibility-->
 			<float n="9" alias="/fdm/jsbsim/aircraft/engine/spooling-down">0</float><!-- mp sound-->
 			<float n="10" alias="/systems/gear/motor/state">0</float><!-- mp sound-->
 			<float n="11" alias="/gear/gear[0]/rollspeed-ms">0</float><!-- gear-->
