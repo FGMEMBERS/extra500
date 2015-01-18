@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2015-01-09
+      Date:             2015-01-18
 
 
 ************************************************************************
@@ -557,6 +557,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<int n="8" alias="/engines/engine[0]/running">0</int><!-- mp sound-->
 			<int n="9" alias="/engines/engine[0]/ignition">0</int><!-- mp sound-->
 			<int n="10" alias="/extra500/interior/tisch/state">0</int><!-- pass tisch-->
+			<int n="11" alias="/extra500/electric/source/ExternalGenerator/isPluged">0</int><!-- external power-->
 
 			<string n="0" alias="/sim/multiplay/callsign">callsign</string>
 		</generic>

@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             16.01.15
+      Date:             18.01.15
 -->
 <PropertyList>
 
@@ -107,7 +107,7 @@
 	  <type>select</type>
 	  <condition>
 		  <equals>
-			  <property>/extra500/electric/source/ExternalGenerator/isPluged</property>
+			  <property>sim/multiplay/generic/int[11]</property>
 			  <value>1</value>
 		  </equals>
 	  </condition>
