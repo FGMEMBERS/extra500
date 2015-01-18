@@ -558,6 +558,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<int n="9" alias="/engines/engine[0]/ignition">0</int><!-- mp sound-->
 			<int n="10" alias="/extra500/interior/tisch/state">0</int><!-- pass tisch-->
 			<int n="11" alias="/extra500/electric/source/ExternalGenerator/isPluged">0</int><!-- external power-->
+			<int n="12" alias="/engines/engine[0]/thruster/rpm"/>
 
 			<string n="0" alias="/sim/multiplay/callsign">callsign</string>
 		</generic>
