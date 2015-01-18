@@ -531,7 +531,7 @@ JSBSim Extra Aircraft - Extra 500.
 	<multiplay>
 		<chat_display>1</chat_display>
 		<generic>
-			<float n="0" alias="/engines/engine[0]/thruster/rpm"/>
+			<!--float n="0" alias="/engines/engine[0]/thruster/rpm"/-->
 			<float n="1" alias="/systems/gear/Lupperdoor-pos"/>
 			<float n="2" alias="/systems/gear/Rupperdoor-pos"/>
 			<float n="3" alias="/systems/gear/Lowerdoor-pos"/>
@@ -539,7 +539,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<float n="5" alias="/engines/engine[0]/thrust_lb">0</float><!-- mp sound-->
 			<float n="6" alias="/fdm/jsbsim/aircraft/engine/motoring">0</float><!-- mp sound-->
 			<float n="7" alias="/fdm/jsbsim/aircraft/engine/spooling-up">0</float><!-- mp sound-->
-			<float n="8" alias="/fdm/jsbsim/propulsion/engine/set-running">0</float><!-- mp sound-->
+			<!--float n="8" alias="/fdm/jsbsim/propulsion/engine/set-running">0</float--><!-- mp sound-->
 			<float n="9" alias="/fdm/jsbsim/aircraft/engine/spooling-down">0</float><!-- mp sound-->
 			<float n="10" alias="/systems/gear/motor/state">0</float><!-- mp sound-->
 			<float n="11" alias="/gear/gear[0]/rollspeed-ms">0</float><!-- gear-->
@@ -559,6 +559,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<int n="10" alias="/extra500/interior/tisch/state">0</int><!-- pass tisch-->
 			<int n="11" alias="/extra500/electric/source/ExternalGenerator/isPluged">0</int><!-- external power-->
 			<int n="12" alias="/engines/engine[0]/thruster/rpm"/>
+			<int n="13" alias="/fdm/jsbsim/propulsion/engine/set-running">0</int><!-- mp sound-->
 
 			<string n="0" alias="/sim/multiplay/callsign">callsign</string>
 		</generic>

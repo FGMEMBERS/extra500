@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: 11.02.2014
 
-      Last change:      Dirk Dittmann
-      Date:             16.04.2014
+      Last change:      Eric van den Berg
+      Date:             17.01.2015
 -->
  
 <PropertyList>
@@ -166,7 +166,7 @@
 			<path>Aircraft/extra500/Sounds/extra500turbineLOOP.wav</path>
 			<condition>
 				<!--<property>/fdm/jsbsim/propulsion/engine/set-running</property>-->
-				<property>sim/multiplay/generic/float[8]</property>
+				<property>sim/multiplay/generic/int[13]</property>
 			</condition>
 			<position>
 				<x>0</x>
