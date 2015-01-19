@@ -819,7 +819,7 @@ var SwitchBoolClass = {
 				ServiceClass.new(root,name)
 		]};
 		m._nState	= m._nRoot.initNode("state",default,"BOOL");
-		m._state	= 0;
+		m._state	= default;
 		return m;
 	},
 	setListeners : func(instance) {
@@ -836,7 +836,7 @@ var SwitchBoolClass = {
 	},
 	onClick : func(value=nil){
 		if (value == nil){
-			me._state = value == 1 ? 0 : 1;
+			me._state = me._state == 1 ? 0 : 1;
 		}else{
 			me._state = value;
 		}
