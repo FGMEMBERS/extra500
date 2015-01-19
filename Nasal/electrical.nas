@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jun 06 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             14.01.15
+#      Last change:      Eric van den Berg
+#      Date:             18.01.15
 #
 
 
@@ -1096,7 +1096,7 @@ var ESystem = {
 		me.parents[1].init(instance);
 		me.setListeners(instance);
 		
-		
+		me.initUI();
 		
 		var index = nil;
 
@@ -1516,6 +1516,19 @@ var ESystem = {
 		me._ampere = me._nAmpere.getValue();
 		me._nAmpere.setValue(me._ampere + ampere);
 	},
+	onClickSC : func(value=nil){
+#		/extra500/panel/Side/Emergency/safetyCap/state
+#		/extra500/panel/Side/Emergency/state"
+		if (getprop("/extra500/panel/Side/Emergency/safetyCap/state") == 0 ) {
+			setprop("/extra500/panel/Side/Emergency/safetyCap/state",1);
+		} else {
+			setprop("/extra500/panel/Side/Emergency/safetyCap/state",0);
+			setprop("/extra500/panel/Side/Emergency/state",0);
+		}
+	},
+	initUI : func(){
+		UI.register("EM safetyCap",func{extra500.eSystem.onClickSC(); } 	);
+	}
 };
 
 

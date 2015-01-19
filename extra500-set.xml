@@ -1624,6 +1624,11 @@ JSBSim Extra Aircraft - Extra 500.
 					<state type="int">0</state>
 				</Cabin>
 			</Light>
+			<Emergency>
+				<safetyCap>
+					<state type="int">0</state>
+				</safetyCap>
+			</Emergency>
 		</Side>
 		<Master>
 			<Autopilot>
