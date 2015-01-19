@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: 18.01.15
 
-      Last change:      
-      Date:             
+      Last change: Eric van den Berg     
+      Date: 19.01.15            
 
 -->
 <PropertyList>
@@ -79,7 +79,7 @@
     <binding>
       <command>nasal</command>
       <script><![CDATA[
-		UI.click("EM safetyCap");
+		UI.click("EM safetyCap off");
 	]]></script>
     </binding>
   </action>
@@ -89,7 +89,7 @@
     <binding>
       <command>nasal</command>
       <script><![CDATA[
-		UI.click("EM safetyCap");
+		UI.click("EM safetyCap on");
 	]]></script>
     </binding>
   </action>

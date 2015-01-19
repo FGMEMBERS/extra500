@@ -17,7 +17,7 @@
 #      Date: Jun 06 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             18.01.15
+#      Date:             19.01.15
 #
 
 
@@ -1519,15 +1519,26 @@ var ESystem = {
 	onClickSC : func(value=nil){
 #		/extra500/panel/Side/Emergency/safetyCap/state
 #		/extra500/panel/Side/Emergency/state"
-		if (getprop("/extra500/panel/Side/Emergency/safetyCap/state") == 0 ) {
-			setprop("/extra500/panel/Side/Emergency/safetyCap/state",1);
+		if (value == nil) {
+			if (getprop("/extra500/panel/Side/Emergency/safetyCap/state") == 0 ) {
+				setprop("/extra500/panel/Side/Emergency/safetyCap/state",1);
+			} else {
+				setprop("/extra500/panel/Side/Emergency/safetyCap/state",0);
+				setprop("/extra500/panel/Side/Emergency/state",0);
+			}
 		} else {
-			setprop("/extra500/panel/Side/Emergency/safetyCap/state",0);
-			setprop("/extra500/panel/Side/Emergency/state",0);
+			if (value == 1) {
+				setprop("/extra500/panel/Side/Emergency/safetyCap/state",1);
+			} else {
+				setprop("/extra500/panel/Side/Emergency/safetyCap/state",0);
+				setprop("/extra500/panel/Side/Emergency/state",0);
+			}
 		}
 	},
 	initUI : func(){
 		UI.register("EM safetyCap",func{extra500.eSystem.onClickSC(); } 	);
+		UI.register("EM safetyCap off",func{extra500.eSystem.onClickSC(0); } 	);
+		UI.register("EM safetyCap on",func{extra500.eSystem.onClickSC(1); } 	);
 	}
 };
 
