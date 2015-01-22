@@ -17,7 +17,7 @@
 #      Date: Jun 06 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             19.01.15
+#      Date:             22.01.15
 #
 
 
@@ -1074,6 +1074,7 @@ var ESystem = {
 		m._vLoadBus 		= ElectronClass.new();
 		m._vEmergencyBus 	= ElectronClass.new();
 		m._vPreBatteryBus 	= ElectronClass.new();
+		m._vStandbyAltBus 	= ElectronClass.new();
 		
 		m._NullLoad		= ElectronClass.new();
 		
@@ -1272,40 +1273,62 @@ var ESystem = {
 		me._vLoadBus.volt = 0;
 		me._vEmergencyBus.volt = 0;
 		me._vPreBatteryBus.volt = 0;
-				
+		me._vStandbyAltBus.volt = me.source.Alternator._volt;
 
+# setting voltages on electrical busses depending on relays and CB-s				
+# if alt relay is closed, EB has alt voltage
+		if(me.relay.K7._state == 0){
+			me._vEmergencyBus.volt = me._vStandbyAltBus.volt;
+		}
+# if altcharge relay is powered, hotbus is connected to emergency bus, take highest voltage
+		if(me.relay.K10._state == 1){
+			me._vEmergencyBus.volt = me._vHotBus.volt;
+			me._vEmergencyBus.balanceVolt(me._vStandbyAltBus);
+		}
+# if external power is on (pre)battery bus has ext powr voltage, take highest voltage
 		if(me.relay.K1._state == 1){
 			me._vPreBatteryBus.volt = me.source.ExternalGenerator._volt;
 			me._vPreBatteryBus.balanceVolt(me._vBatteryBus);
 		}
-		
+# gen relay on: generator voltage (external power relay automatically off)		
 		if(me.relay.K3._state == 1){
 			me._vLoadBus.volt = me.source.Generator._volt;
 		}
-				
-		if(me.relay.K7._state == 0){
-			me._vEmergencyBus.volt = me.source.Alternator._volt;
-		}
 		
-		
-		
+# batt relay on: hotbus connected to pre batt bus, take highest voltage		
 		if(me.relay.K4._state == 1){
 			me._vHotBus.balanceVolt(me._vPreBatteryBus);
 			me._vPreBatteryBus.balanceVolt(me._vBatteryBus);
 		}
+# RCCB closed: take highest voltage between load and batt bus
 		if(me.relay.K5._state == 1){
 			me._vBatteryBus.balanceVolt(me._vLoadBus);
 		}
+# bus tie closed: take highest voltage between load and batt bus
+		if(me.circuitBreaker.BUS_TIE._state == 1){
+			me._vBatteryBus.balanceVolt(me._vLoadBus);
+		}
+# alt charge closed: take highest voltage between batt and emergency bus
 		if(me.relay.K10._state == 0){
 			me._vBatteryBus.balanceVolt(me._vEmergencyBus);
 		}
+# batt relay on (for batt charging): if batt bus has higher voltage; transfer to hotbus
 		if(me.relay.K4._state == 1){
 			me._vBatteryBus.balanceVolt(me._vPreBatteryBus);
 			me._vPreBatteryBus.balanceVolt(me._vHotBus);
 		}
-		
-		
-		
+# when emerg1 CB is in and batt bus voltage higher then emerg bus, take batt bus voltage for emergency bus (not other way around;diode)
+		if((me.circuitBreaker.EMGC_1._state == 1) and (me._vBatteryBus.volt > me._vEmergencyBus.volt)) {
+			me._vEmergencyBus.volt = me._vBatteryBus.volt;
+		}
+# when emerg2 CB is in and load bus voltage higher then emerg bus, take load bus voltage for emergency bus (not other way around;diode)		
+		if((me.circuitBreaker.EMGC_2._state == 1) and (me._vLoadBus.volt > me._vEmergencyBus.volt)) {
+			me._vEmergencyBus.volt = me._vLoadBus.volt;
+		}		
+# if altcharge relay is powered, hotbus is connected to emergency bus, take highest voltage (battery charging on alternator)		
+		if(me.relay.K10._state == 1) {
+			me._vHotBus.balanceVolt(me._vEmergencyBus);
+		}
 		
 		me._HotBus._nVolt.setValue(me._vHotBus.volt);
 		me._BatteryBus._nVolt.setValue(me._vBatteryBus.volt);
@@ -1761,7 +1784,7 @@ eSystem.relay.K3._onStateChange = func(n){
 
 ### Battery Relay K4 MM Page 567, 569
 eSystem.relay.K4.checkCondition = func(){
-	if ( (eSystem.switch.Battery._state == 1) ){
+	if ( (eSystem.switch.Battery._state == 1) and (eSystem.switch.Emergency._state==0) ){
 		me.setState(1);
 	}else{
 		me.setState(0);
@@ -1895,6 +1918,7 @@ eSystem.switch.Emergency.onStateChange = func(n){
 	me._state = n.getValue();
 	#print("\nSwitch.onStateChange() ... "~me._name~" "~me._state~"\n");
 	eSystem.relay.K10.checkCondition();
+	eSystem.relay.K4.checkCondition();
 	eSystem.checkSource();
 };
 
