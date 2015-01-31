@@ -173,6 +173,14 @@
 				 <script>Dialogs.radios.open()</script>
 			 </binding>
 		 </key>
+		<key n="60">
+			 <name>QuickZoom</name>
+			 <desc>Quick Zoom View</desc>
+			 <binding>
+				 <command>nasal</command>
+				 <script>View.quickZoomView()</script>
+			 </binding>
+		 </key>
             
 		 
 		 

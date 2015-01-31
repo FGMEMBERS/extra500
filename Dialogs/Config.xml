@@ -234,4 +234,49 @@
 		</group>
 		-->
 	</group>
+	<hrule/>
+	<group>
+			<layout>vbox</layout>
+			<text>
+				<row>0</row><col>0</col>
+				<halign>right</halign>
+				<label>Quick zoom view</label>
+			</text>
+			<input>
+				<name>quickZoom_Field</name>
+				<width>150</width>
+				<height>25</height>
+				<label>Field of View</label>
+				<live>true</live>
+				<property>/extra500/config/view/quickZoom/field-of-view</property>
+				<binding>
+					<command>dialog-apply</command>
+					<object-name>quickZoom_Field</object-name>
+				</binding>
+			</input>
+			<input>
+				<name>quickZoom_heading</name>
+				<width>150</width>
+				<height>25</height>
+				<label>Heading</label>
+				<live>true</live>
+				<property>/extra500/config/view/quickZoom/goal-heading-offset-deg</property>
+				<binding>
+					<command>dialog-apply</command>
+					<object-name>quickZoom_heading</object-name>
+				</binding>
+			</input>
+			<input>
+				<name>quickZoom_pitch</name>
+				<width>150</width>
+				<height>25</height>
+				<label>Pitch</label>
+				<live>true</live>
+				<property>/extra500/config/view/quickZoom/goal-pitch-offset-deg</property>
+				<binding>
+					<command>dialog-apply</command>
+					<object-name>quickZoom_pitch</object-name>
+				</binding>
+			</input>
+	</group>
 </PropertyList>

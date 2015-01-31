@@ -1335,7 +1335,9 @@ JSBSim Extra Aircraft - Extra 500.
             <file>Aircraft/extra500/Dialogs/fuelpayload.nas</file>
             <file>Aircraft/extra500/Nasal/dialogs.nas</file>
         </Dialogs>
-	
+	<View>
+		<file>Aircraft/extra500/Nasal/view.nas</file>
+	</View>
         <run>
 		<file>Aircraft/extra500/Nasal/init.nas</file>
 	</run>
@@ -1439,7 +1441,14 @@ JSBSim Extra Aircraft - Extra 500.
 			<fuel type="bool">1</fuel>
 			<avionic type="bool">1</avionic>
 			<pressure type="bool">1</pressure>
-		</failure>	
+		</failure>
+		<view>
+			<quickZoom>
+				<field-of-view type="double">40</field-of-view>
+				<goal-heading-offset-deg type="double">346.0</goal-heading-offset-deg>
+				<goal-pitch-offset-deg type="double">-23.0</goal-pitch-offset-deg>
+			</quickZoom>	
+		</view>
 	</config>
 	<door>
 		<upperpass>
