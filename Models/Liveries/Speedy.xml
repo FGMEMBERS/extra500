@@ -28,6 +28,7 @@
         <livery>
             <name type="string">Speedy</name>
             <paintkit>Liveries/Speedy.png</paintkit>
+	    <paintkit_low>Liveries/Speedy_low.png</paintkit_low>
         </livery>
     </model>
 </sim>
