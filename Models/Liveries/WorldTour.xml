@@ -19,7 +19,7 @@
       Date: 11.02.14
 
       Last change:      Thomas Grossberger
-      Date:             13.02.14
+      Date:             14.02.14
 -->
 
 <PropertyList>
@@ -28,6 +28,7 @@
         <livery>
             <name type="string">WorldTour</name>
             <paintkit>Liveries/WorldTour.png</paintkit>
+	    <paintkit>Liveries/WorldTour_low.png</paintkit>
         </livery>
     </model>
 </sim>
