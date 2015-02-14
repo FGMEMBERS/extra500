@@ -1430,6 +1430,10 @@ JSBSim Extra Aircraft - Extra 500.
 			<info type="bool">1</info>
 			<trim type="bool">1</trim>
 		</ui>
+		<livery>
+			<resolution type="bool">1</resolution>
+			<resolution-ai type="bool">0</resolution-ai>
+		</livery>
 		<handling>
 			<realTrim type="bool">1</realTrim>
 		</handling>

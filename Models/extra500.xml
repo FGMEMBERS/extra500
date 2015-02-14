@@ -40,18 +40,36 @@
 		</unload>
 	</nasal>
 	<!-- 
-		livery for normal player in high resolution
+		livery in high resolution
 	-->
 	
 	<animation>
 		<type>material</type>
 		<condition>
-			<not>
-				<equals>
-					<property>type</property>
-					<value>AI</value>
-				</equals>
-			</not>
+			<or>
+				<and><!-- lokal player -->
+					<not>
+						<equals>
+							<property>type</property>
+							<value>AI</value>
+						</equals>
+					</not>
+					<equals>
+						<property>/extra500/config/livery/resolution</property>
+						<value>1</value>
+					</equals>
+				</and>
+				<and><!-- ai multiplayer -->
+					<equals>
+						<property>type</property>
+						<value>AI</value>
+					</equals>
+					<equals>
+						<property>/extra500/config/livery/resolution-ai</property>
+						<value>1</value>
+					</equals>
+				</and>
+			</or>
 		</condition>
 		<!-- extra500_frame.ac objects using paintkit.png -->
 		<object-name>BezierCircle.000</object-name>
@@ -90,19 +108,39 @@
 		
 		<property-base>sim/model/livery</property-base>
 		<texture-prop>paintkit</texture-prop>
-		<texture>paintkit.png</texture>
+		<texture>Liveries/extra500_low.png</texture>
 		
 	</animation>
 	<!-- 
-		livery for multiplayer in low resolution
+		livery in low resolution
 	-->
 	<animation>
 		<type>material</type>
 		<condition>
-			<equals>
-				<property>type</property>
-				<value>AI</value>
-			</equals>
+			<or>
+				<and><!-- lokal player -->
+					<not>
+						<equals>
+							<property>type</property>
+							<value>AI</value>
+						</equals>
+					</not>
+					<less-than>
+						<property>/extra500/config/livery/resolution</property>
+						<value>1</value>
+					</less-than>
+				</and>
+				<and><!-- ai multiplayer -->
+					<equals>
+						<property>type</property>
+						<value>AI</value>
+					</equals>
+					<less-than>
+						<property>/extra500/config/livery/resolution-ai</property>
+						<value>1</value>
+					</less-than>
+				</and>
+			</or>
 		</condition>
 		<!-- extra500_frame.ac objects using paintkit.png -->
 		<object-name>BezierCircle.000</object-name>
@@ -141,7 +179,7 @@
 		
 		<property-base>sim/model/livery</property-base>
 		<texture-prop>paintkit_low</texture-prop>
-		<texture>paintkit.png</texture>
+		<texture>Liveries/extra500_low.png</texture>
 		
 	</animation>
 	
