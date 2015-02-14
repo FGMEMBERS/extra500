@@ -39,10 +39,20 @@
 			livery_update.stop();
 		</unload>
 	</nasal>
+	<!-- 
+		livery for normal player in high resolution
+	-->
 	
 	<animation>
 		<type>material</type>
-		
+		<condition>
+			<not>
+				<equals>
+					<property>type</property>
+					<value>AI</value>
+				</equals>
+			</not>
+		</condition>
 		<!-- extra500_frame.ac objects using paintkit.png -->
 		<object-name>BezierCircle.000</object-name>
 		<object-name>cooler.outlet.LH</object-name>
@@ -83,6 +93,59 @@
 		<texture>paintkit.png</texture>
 		
 	</animation>
+	<!-- 
+		livery for multiplayer in low resolution
+	-->
+	<animation>
+		<type>material</type>
+		<condition>
+			<equals>
+				<property>type</property>
+				<value>AI</value>
+			</equals>
+		</condition>
+		<!-- extra500_frame.ac objects using paintkit.png -->
+		<object-name>BezierCircle.000</object-name>
+		<object-name>cooler.outlet.LH</object-name>
+		<object-name>cooler.outlet.RH</object-name>
+		<object-name>door.lower</object-name>
+		<object-name>door.upper</object-name>
+		<object-name>emergency.exit</object-name>
+		<object-name>frame</object-name>
+		<object-name>gear.doors.lower.left</object-name>
+		<object-name>gear.doors.lower.right</object-name>
+		<object-name>gear.doors.nose.left</object-name>
+		<object-name>gear.doors.nose.right</object-name>
+		<object-name>gear.doors.upper.left</object-name>
+		<object-name>gear.doors.upper.right</object-name>
+		<object-name>Heck</object-name>
+		<object-name>HRlinks</object-name>
+		<object-name>HRrechts</object-name>
+		<object-name>NACA.inlets</object-name>
+		<object-name>SR</object-name>
+		<object-name>horstab</object-name>
+		<object-name>Vstab.left</object-name>
+		<object-name>Vstab.right</object-name>
+		<object-name>HRlinks</object-name>
+		<object-name>HRrechts</object-name>
+		<object-name>HRtrim</object-name>
+		
+		<!-- wing objects using paintkit.png -->
+		<object-name>AilLH</object-name>
+		<object-name>AilRH</object-name>
+		<object-name>FlapLH</object-name>
+		<object-name>FlapRH</object-name>
+		<object-name>wing</object-name>
+		<object-name>winglet.LH</object-name>
+		<object-name>winglet.RH</object-name>
+		
+		<property-base>sim/model/livery</property-base>
+		<texture-prop>paintkit_low</texture-prop>
+		<texture>paintkit.png</texture>
+		
+	</animation>
+	
+	
 
 	<offsets>
 		<pitch-deg>1.39</pitch-deg>
