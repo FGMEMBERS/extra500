@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
-      Date:             17.06.13
+      Last change:      Eric van den Berg
+      Date:             01.02.15
 
 -->
 
@@ -749,7 +749,7 @@
 		<object-name>EngineInstruments.BAT.minus</object-name>
 		<condition>
 		<less-than>
-			<property>/extra500/electric/eSystem/loadBattery</property>
+			<property>/extra500/electric/shunt/battery_shunt</property>
 			<value>0</value>
 		</less-than>
 		</condition>
