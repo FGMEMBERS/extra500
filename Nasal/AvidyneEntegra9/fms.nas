@@ -23,7 +23,7 @@
 # internal flightplan
 var InternalFlightPlan = {
 	new : func(){
-		var m = {
+		var m = {parents:[InternalFlightPlan],
 			isReady 	: 0,
 			isUpdated 	: 0,
 			destination : {
@@ -54,11 +54,18 @@ var InternalFlightPlan = {
 		};
 		return m;
 	},
+	
+	
 };
 
 var InternalFlightPlanData = {
 	new : func(){
-		var m = {};
+		var m = {parents:[
+			InternalFlightPlanData
+			
+		]};
+		m.index		= 0;		# index inside nasal flightplan
+		
 		m.id		= "";
 		m.name		= "";
 		m.lat 		= 0;
@@ -85,12 +92,29 @@ var InternalFlightPlanData = {
 		m.path 		= nil;
 		
 		m.constraint = {
+			before:{type:nil,value:0},
 			alt:{type:nil,value:0},
-			distance:{type:nil,value:0}
+			#distance:{type:nil,value:0}
 		};
+		
+		
 		
 		return m;
 	},
+	setConstrainAlt : func(v){
+		me.constraint.alt.value = v;
+		me.constraint.alt.type = "at";
+		
+		fms._nasalFlightPlan.getWP(me.index).setAltitude(me.constraint.alt.value,"at");
+	},
+	setConstrainAt : func(v){
+		me.constraint.alt.type = v;
+	},
+	setConstrainBefore : func(v){
+		me.constraint.before.value = v; 
+		me.constraint.before.type = (v > 0 ? 1 : nil);
+	},
+	
 	
 };
 
@@ -102,8 +126,8 @@ var FlightManagementSystemClass = {
 		]};
 		
 		m._selectedWaypointIndex = -1;
-		m._selectedWaypointOptionIndex = 0;
-		m._cursorFocusIndex = 0;
+		m._cursorOption = 0;
+		m._cursorFocus = 0;
 		
 		m._fplActive = 0;
 		m._nRoute 		= props.globals.getNode("/autopilot/route-manager/route",1);
@@ -129,7 +153,7 @@ var FlightManagementSystemClass = {
 			currentWpChange	 	: props.globals.initNode("/instrumentation/fms[0]/signal/fpl/current-waypoint-change",0,"INT"),
 			selectedWpChange 	: props.globals.initNode("/instrumentation/fms[0]/signal/fpl/selected-waypoint-change",0,"INT"),
 			cursorOptionChange 	: props.globals.initNode("/instrumentation/fms[0]/signal/fpl/cursor-option",0,"INT"),
-			cursorIndexChange	: props.globals.initNode("/instrumentation/fms[0]/signal/fpl/cursor-index",0,"INT"),
+			cursorFocusChange	: props.globals.initNode("/instrumentation/fms[0]/signal/fpl/cursor-index",0,"INT"),
 			
 		};
 		
@@ -215,19 +239,19 @@ var FlightManagementSystemClass = {
 	setSelectedWaypoint : func(index){
 		me._selectedWaypointIndex 	= index; 
 		me._signal.selectedWpChange.setValue(me._selectedWaypointIndex);
-		me.setCursorIndex(1+index*2);
+		me.setCursorFocus(1+index*2);
 	},
 	setCursorOption : func(index){
-		me._selectedWaypointOptionIndex = index;
-		me._signal.cursorOptionChange.setValue(me._selectedWaypointOptionIndex);
+		me._cursorOption = index;
+		me._signal.cursorOptionChange.setValue(me._cursorOption);
 	},
-	setCursorIndex : func(index){
-		me._cursorFocusIndex = index;
-		me._signal.cursorIndexChange.setValue(me._cursorFocusIndex);
+	setCursorFocus : func(index){
+		me._cursorFocus = index;
+		me._signal.cursorFocusChange.setValue(me._cursorFocus);
 		if ( global.odd(index)){
 			# only the odd index are Waypoints from the FG flightplan
 			me._selectedWaypointIndex = ((index-1) / 2);
-			#debug.dump("FlightManagementSystemClass::setCursorIndex ... _selectedWaypointIndex",me._selectedWaypointIndex);
+			#debug.dump("FlightManagementSystemClass::setCursorFocus ... _selectedWaypointIndex",me._selectedWaypointIndex);
 		}else{
 			me._selectedWaypointIndex = -1;
 		}
@@ -235,7 +259,7 @@ var FlightManagementSystemClass = {
 		
 	},
 	_onFlightPlanChange : func(n){
-# 		print("FlightManagementSystemClass::_onFlightPlanChange() ... ");
+		print("FlightManagementSystemClass::_onFlightPlanChange() ... ");
 		me._nasalFlightPlan = flightplan();
 		#updating the flightplan
 # 		print("FlightManagementSystemClass::_onFlightPlanChange() ... getPlanSize()");
@@ -277,6 +301,8 @@ var FlightManagementSystemClass = {
 			#debug.dump(fmsWP);
 			
 			me._flightPlan.wp[i] = InternalFlightPlanData.new();
+			
+			me._flightPlan.wp[i].index			= i;
 			me._flightPlan.wp[i].id			 	= fmsWP.id;
 			me._flightPlan.wp[i].name		 	= fmsWP.wp_name;
 			me._flightPlan.wp[i].type			= fmsWP.wp_type;
@@ -382,6 +408,94 @@ var FlightManagementSystemClass = {
 		
 		
 	},
+	getOriginRunwayList : func(){
+		var list = [];
+		var runways = me._nasalFlightPlan.departure.runways;
+		foreach(var rwy ; keys(runways)){
+			append(list,runways[rwy].id);
+		}
+		return list;
+	},
+	setOriginRunway : func(rwy){
+		print(sprintf("FlightManagementSystemClass::setOriginRunway(%s)",rwy));
+		me._nasalFlightPlan.departure_runway = me._nasalFlightPlan.departure.runways[rwy];
+		setprop("/autopilot[0]/route-manager[0]/departure[0]/runway",rwy);
+	},
+	getOriginSidList : func(){
+		var list = [""];
+		var rwy 	= me._nasalFlightPlan.departure_runway;
+		var data 	= me._nasalFlightPlan.departure.sids(rwy);
+		debug.dump(rwy,data);
+		foreach(var i ; data){
+			append(list,i);
+		}
+		if (size(list)== 1){
+			append(list,"DEFAULT");
+		}
+		return list;
+	},
+	setOriginSid : func(sid){
+		print(sprintf("FlightManagementSystemClass::setOriginSid(%s)",sid));
+		#me._nasalFlightPlan = flightplan();
+		#me._nasalFlightPlan.sid = sid;
+		setprop("/autopilot[0]/route-manager[0]/departure[0]/sid",sid);
+	},
+	getDestinationRunwayList : func(){
+		var list = [];
+		var data = me._nasalFlightPlan.destination.runways;
+		debug.dump(data);
+		foreach(var i ; keys(data)){
+			append(list,data[i].id);
+		}
+		return list;
+	},
+	setDestinationRunway : func(rwy){
+		print(sprintf("FlightManagementSystemClass::setDestinationRunway(%s)",rwy));
+		#me._nasalFlightPlan = flightplan();
+		#me._nasalFlightPlan.destination_runway = me._nasalFlightPlan.destination.runways[rwy];
+		setprop("/autopilot[0]/route-manager[0]/destination[0]/runway",rwy);
+	},
+	getDestinationArrivalList : func(){
+		var list = [""];
+		var rwy 	= me._nasalFlightPlan.destination_runway;
+		var data 	= me._nasalFlightPlan.destination.stars(rwy);
+		debug.dump(rwy,data);
+		foreach(var i ; data){
+			append(list,i);
+		}
+		if (size(list)== 1){
+			append(list,"DEFAULT");
+		}
+		return list;
+	},
+	setDestinationArrival : func(s){
+		print(sprintf("FlightManagementSystemClass::setDestinationArrival(%s)",s));
+		#me._nasalFlightPlan = flightplan();
+		#me._nasalFlightPlan.star = s;
+		setprop("/autopilot[0]/route-manager[0]/destination[0]/star",s);
+	},
+	getDestinationApproachList : func(){
+		var list = [""];
+		var rwy 	= me._nasalFlightPlan.destination_runway;
+		var data 	= me._nasalFlightPlan.destination.getApproachList(rwy);
+		debug.dump(rwy,data);
+		foreach(var i ; data){
+			append(list,i);
+		}
+		if (size(list)== 1){
+			append(list,"DEFAULT");
+		}
+		return list;
+	},
+	setDestinationApproach : func(s){
+		print(sprintf("FlightManagementSystemClass::setDestinationApproach(%s)",s));
+		#me._nasalFlightPlan = flightplan();
+		#me._nasalFlightPlan.approach = s;
+		setprop("/autopilot[0]/route-manager[0]//destination[0]/approach",s);
+	},
+	
+	
+	
 	_nextGpssBearing : func(){
 		
 		var nextWpIndex = me._flightPlan.currentWpIndex+1;
@@ -555,14 +669,18 @@ var FlightManagementSystemClass = {
 				var time 		= systime() + getprop("/sim/time/warp");
 				var fuelGalUs 		= getprop("/consumables/fuel/total-fuel-gal_us");
 				var fuelFlowGalUSpSec 	= extra500.fuelSystem._nFuelFlowGalUSpSec.getValue();
+				
+				var fuelLiter		= getprop("/consumables/fuel/total-fuel-lbs") * global.CONST.JETA_LB2L;
+				var fuelFlowLph 	= extra500.fuelSystem._nFuelFlowLph.getValue() / 3600.0;
+				
 				var currentAlt 		= getprop("/instrumentation/altimeter-IFD-LH/indicated-altitude-ft");
 				var altBug 		= getprop("/autopilot/settings/tgt-altitude-ft");
 				
 				var distance 		= getprop("/autopilot/route-manager/wp/dist");
 				var distanceToGo 	= 0;
-				var ete 		= distance / gsSec ;
-				var eta 		= time + ete;
-				var fuelAt 		= fuelGalUs -= fuelFlowGalUSpSec * ete;
+				var ete 		= 0;
+				var eta 		= 0;
+				var fuelAt 		= 0;
 				
 				me._constraint.VSR.alt = getprop("/autopilot/route-manager/destination/field-elevation-ft");
 				
@@ -575,23 +693,31 @@ var FlightManagementSystemClass = {
 						}else{
 							me._flightPlan.wp[i].distanceTo 	= me._flightPlan.wp[i].distance;
 						}
-						me._flightPlan.wp[i].ete		= ete;
+						
+						distanceToGo 	+= me._flightPlan.wp[i].distanceTo;
+						ete 		 = me._flightPlan.wp[i].distanceTo / gsSec ;
+						eta 		 = time + (distanceToGo / gsSec);
+						fuelAt 		 = (fuelLiter -= fuelFlowLph * ete);													
+						
+						
+						me._flightPlan.wp[i].ete	= ete;
 						me._flightPlan.wp[i].eta 	= eta;
 						me._flightPlan.wp[i].fuelAt 	= fuelAt;
 						
-						# count data for the next waypoint
-						distanceToGo += me._flightPlan.wp[i].distanceTo;
-						ete = distance / gsSec ;
-						eta = time + (distanceToGo / gsSec);
-						fuelAt = fuelGalUs -= fuelFlowGalUSpSec * ete;													
 						
 						if ((me._flightPlan.wp[i].constraint.alt.type != nil) and ( me._constraint.VSR.distance == 0 ) ) {
 							me._constraint.VSR.alt = me._flightPlan.wp[i].constraint.alt.value;
 							me._constraint.VSR.distance = distanceToGo;
 							me._constraint.VSR.wptIndex = i;
+							
+							if (me._flightPlan.wp[i].constraint.before.type != nil){
+								me._constraint.VSR.distance -= me._flightPlan.wp[i].constraint.before.value;
+							}
 							#print(""~fmsWP.wp_name ~" constraint : "~me._flightPlan.wp[i].constraint.alt.type~" "~me._constraint.VSR.alt~" in "~me._constraint.VSR.distance~" nm");
 							
 						}
+						
+						
 					
 						
 					}else{
@@ -608,7 +734,7 @@ var FlightManagementSystemClass = {
 				me._flightPlan.distanceToGo	= distanceToGo;
 				me._flightPlan.ete		= distanceToGo / gsSec ;
 				me._flightPlan.eta		= time + (distanceToGo / gsSec);
-				me._flightPlan.fuelAt		= fuelGalUs;
+				me._flightPlan.fuelAt		= fuelLiter;
 							
 				
 				if(me._constraint.VSR.distance == 0){

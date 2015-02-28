@@ -113,6 +113,7 @@ var PageClass = {
 	new: func(ifd,name,data){
 		var m = { parents: [PageClass,ListenerClass.new()] };
 		m.IFD = ifd;	# parent pointer to IFD
+		m._ifd = ifd;
 		m.page = m.IFD.canvas.createGroup(name);
 		m._visibility	= 0;
 		m.page.setVisible(m._visibility);

@@ -258,7 +258,7 @@ var IFDUserInterface = {
 # 							print("IFDUserInterface.bindKey() ... "~callbackName~" : active.");
 						}else{
 							me._keyMap[callbackName] = nil;
-# 							print("IFDUserInterface.bindKey() ... "~callbackName~" : nil.");
+							print("IFDUserInterface.bindKey() ... "~callbackName~" : nil.");
 						}
 					}else{
 # 						print("IFDUserInterface.bindKey() ... no such Knob("~callbackName~").");

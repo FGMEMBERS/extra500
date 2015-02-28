@@ -1275,6 +1275,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/global.nas</file>
 		<file>Aircraft/extra500/Nasal/global.constant.nas</file>
 		<file>Aircraft/extra500/Nasal/global.canvas.nas</file>
+		<file>Aircraft/extra500/Nasal/global.positioned.nas</file>
 	</global>
 	<sound>
 		<file>Aircraft/extra500/Nasal/sound.nas</file>
@@ -1314,6 +1315,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/base.class.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/widget.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/gui/listview.nas</file>
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/gui/dialog.nas</file>
 		
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/map.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/movingMap.nas</file>

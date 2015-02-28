@@ -53,19 +53,18 @@ var ListViewItem = {
 	new: func(){
 		var m = { parents: [ListViewItem] };
 		m._bound = Rectangle.new(0,0,0,0); 
+		m._cursorFocus 	= 0;
 		return m;
 	},
 	del : func(){},
 	setVisible : func(v){
 		print("ListViewItem::setVisible("~v~") ... abstract");
 	},
-	setFocus : func(v){
+	setCursorFocus : func(v){
+		me._cursorFocus = v;
 		print("ListViewItem::setFocus("~v~") ... abstract");
 	},
-	setAction : func(type,value){
-		print("ListViewItem::setAction("~type~","~value~") ... abstract");
-	},
-	_updateView : func(){},
+	hasCursorFocus : func(){return (me._cursorFocus == 1);},
 };
 
 var ScrollBarClass = {
