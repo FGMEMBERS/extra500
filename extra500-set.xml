@@ -70,7 +70,11 @@ JSBSim Extra Aircraft - Extra 500.
 			<paintkit type="string">Liveries/extra500.png</paintkit>
 		</livery>
 	</model>
-
+	<rendering>
+		<camera-group>
+			<near-field type="double">0.02</near-field>
+		</camera-group>
+	</rendering>
 	<startup>
 		<splash-texture>Aircraft/extra500/splash.png</splash-texture>
 	</startup>
