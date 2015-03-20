@@ -96,10 +96,10 @@ var GuiDialogFactory = {
 		m._dialog = nil;
 		m._catalog = {};
 		m._event = {
-			onOpen		: func {print("GuiDialogFactory::EVENT onOpen")},
-			onClose		: func {print("GuiDialogFactory::EVENT onClose")},
-			onCreate	: func {print("GuiDialogFactory::EVENT onCreate")},
-			onDestruct	: func {print("GuiDialogFactory::EVENT onDestruct")},
+			onOpen		: func {dP.bulk("GuiDialogFactory::EVENT onOpen")},
+			onClose		: func {dP.bulk("GuiDialogFactory::EVENT onClose")},
+			onCreate	: func {dP.bulk("GuiDialogFactory::EVENT onCreate")},
+			onDestruct	: func {dP.bulk("GuiDialogFactory::EVENT onDestruct")},
 		};
 		m._clipPosition = {
 			top : 0,
@@ -148,14 +148,14 @@ var GuiDialogFactory = {
 	open : func(){
 		if (me._dialog != nil){
 			me._dialog.open();
-			print("GuiDialogFactory::open() ...");
+			dP.bulk("GuiDialogFactory::open() ...");
 			#me._event['onOpen']();
 		}
 	},
 	close : func(){
 		if (me._dialog != nil){
 			me._dialog.close();
-			print("GuiDialogFactory::close() ...");
+			dP.bulk("GuiDialogFactory::close() ...");
 			#me._event['onClose']();
 		}
 	},
@@ -355,7 +355,7 @@ var GuiSelectDialogTextItem = {
 	},
 	setAction 	: func(type,value){},
 	_updateView 	: func(){
-		#print("FlightPlanItemWaypoint::_updateView() ...");
+		#dP.bulk("FlightPlanItemWaypoint::_updateView() ...");
 		me._group.setTranslation(me._bound._x,me._bound._y);
 	},
 };
@@ -460,41 +460,41 @@ var GuiSelectDialog = {
 		me._group.removeAllChildren();
 	},
 	setPositionClipBound : func(top,right,bottom,left){
-		print(sprintf("GuiSelectDialog::setPositionClipBound(%i,%i,%i,%i)",top,right,bottom,left));
+		dP.bulk(sprintf("GuiSelectDialog::setPositionClipBound(%i,%i,%i,%i)",top,right,bottom,left));
 		me._clipPosition.top = top;
 		me._clipPosition.right = right;
 		me._clipPosition.bottom = bottom;
 		me._clipPosition.left = left;
 	},
 	setOffset : func(x,y){
-		print(sprintf("GuiSelectDialog::setOffset(%i,%i)",x,y));
+		dP.bulk(sprintf("GuiSelectDialog::setOffset(%i,%i)",x,y));
 		me._popupOffset.setTranslation(x,y);
 	},
 	setScale : func(x,y){
-		print(sprintf("GuiSelectDialog::setScale(%i,%i)",x,y));
+		dP.bulk(sprintf("GuiSelectDialog::setScale(%i,%i)",x,y));
 		me._scale.x  = x;
 		me._scale.y  = y;
 		me._popupTransform.setScale(me._scale.x,me._scale.y);
 	},
 	setTranslation : func(x=0,y=0){
-		print(sprintf("GuiSelectDialog::setTranslation(%i,%i)",x,y));
+		dP.bulk(sprintf("GuiSelectDialog::setTranslation(%i,%i)",x,y));
 		m._can.popup.setTranslation(x,y);
 	},
 	setPosition : func(x=0,y=0){
-		print(sprintf("GuiSelectDialog::setPosition(%i,%i)",x,y));
-		#print(sprintf("input \t\t x:%i y:%i",x,y));
+		dP.bulk(sprintf("GuiSelectDialog::setPosition(%i,%i)",x,y));
+		#dP.bulk(sprintf("input \t\t x:%i y:%i",x,y));
 				
 		#x *= me._scale.x;
 		#y *= me._scale.y;
 		
-		print(sprintf("scaled \t\t x:%i y:%i",x,y));
+		dP.bulk(sprintf("scaled \t\t x:%i y:%i",x,y));
 		me._can.popup.update();
 		var bb = me._can.popup.getTightBoundingBox(); # 0:x1 1:y1 2:x2 3:y2
-		debug.dump(bb);
+		#debug.dump(bb);
 		var width = (bb[2]-bb[0]);
 		var height = (bb[3]-bb[1]);
-		print(sprintf("dimesion \t\t width:%f height:%f",width,height));
-		debug.dump(me._clipPosition);
+		dP.bulk(sprintf("dimesion \t\t width:%f height:%f",width,height));
+		#debug.dump(me._clipPosition);
 		
 		if (x < me._clipPosition.left){ x = me._clipPosition.left }
 		if ((x + width) > me._clipPosition.right){ x = me._clipPosition.right - width }
@@ -503,14 +503,14 @@ var GuiSelectDialog = {
 		
 		
 		
-		print(sprintf("cliped \t\t x:%i y:%i",x,y));
+		dP.bulk(sprintf("cliped \t\t x:%i y:%i",x,y));
 						
 		me._popupTransform.setTranslation(x,y);
 		
 		
 	},
 	_resizeView : func(){
-		print("GuiSelectDialog::_resizeView()");
+		dP.bulk("GuiSelectDialog::_resizeView()");
 		var dataSize = size(me._data);
 				
 		

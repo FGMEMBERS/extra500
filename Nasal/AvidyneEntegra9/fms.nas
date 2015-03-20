@@ -259,20 +259,20 @@ var FlightManagementSystemClass = {
 		
 	},
 	_onFlightPlanChange : func(n){
-		print("FlightManagementSystemClass::_onFlightPlanChange() ... ");
+		dP.bulk("FlightManagementSystemClass::_onFlightPlanChange() ... ");
 		me._nasalFlightPlan = flightplan();
 		#updating the flightplan
-# 		print("FlightManagementSystemClass::_onFlightPlanChange() ... getPlanSize()");
+ 		dP.info("FlightManagementSystemClass::_onFlightPlanChange() ... getPlanSize()");
 		me._flightPlan.planSize = me._nasalFlightPlan.getPlanSize();
-# 		print("FlightManagementSystemClass::_onFlightPlanChange() ... current");
+ 		dP.info("FlightManagementSystemClass::_onFlightPlanChange() ... current");
 		me._flightPlan.currentWpIndex = me._nasalFlightPlan.current;
 		#resize the waypoint vector
-# 		print("FlightManagementSystemClass::_onFlightPlanChange() ... size");
+ 		dP.info("FlightManagementSystemClass::_onFlightPlanChange() ... size");
 		setsize(me._flightPlan.wp,me._flightPlan.planSize);
 				
 		# destination bearing
-# 		# prepair the Procedure data
-		#print("FlightManagementSystemClass::_onFlightPlanChange() ... Procedure data");
+ 		# prepair the Procedure data
+		dP.info("FlightManagementSystemClass::_onFlightPlanChange() ... Procedure data");
 		if (me._nasalFlightPlan.destination != nil){
 			var result= courseAndDistance(me._nasalFlightPlan.destination.lat,me._nasalFlightPlan.destination.lon);
 			me._flightPlan.destination.bearingCourse 	= result[0];
@@ -294,7 +294,7 @@ var FlightManagementSystemClass = {
 # 		
 		}
 		
-		#print("FlightManagementSystemClass::_onFlightPlanChange() ... details");
+		#dP.bulk("FlightManagementSystemClass::_onFlightPlanChange() ... details");
 		for (var i = 0 ; i < me._flightPlan.planSize ; i+=1){
 			var fmsWP = me._nasalFlightPlan.getWP(i);
 			
@@ -353,11 +353,11 @@ var FlightManagementSystemClass = {
 			
 		}
 		
-# 		print("FlightManagementSystemClass::_onFlightPlanChange() ... signal");
+ 		dP.info("FlightManagementSystemClass::_onFlightPlanChange() ... signal");
 		me._signal.fplChange.setValue(n.getValue());
 	},
 	_onCurrentWaypointChange : func(n){
-# 		print("FlightManagementSystemClass._onFlightPlanChange() ... ");
+ 		dP.bulk("FlightManagementSystemClass._onFlightPlanChange() ... ");
 		
 		me._flightPlan.currentWpIndex = n.getValue();
 		if ( me._flightPlan.currentWpIndex >= 0 ) {
@@ -417,7 +417,7 @@ var FlightManagementSystemClass = {
 		return list;
 	},
 	setOriginRunway : func(rwy){
-		print(sprintf("FlightManagementSystemClass::setOriginRunway(%s)",rwy));
+		dP.bulk(sprintf("FlightManagementSystemClass::setOriginRunway(%s)",rwy));
 		me._nasalFlightPlan.departure_runway = me._nasalFlightPlan.departure.runways[rwy];
 		setprop("/autopilot[0]/route-manager[0]/departure[0]/runway",rwy);
 	},
@@ -425,7 +425,7 @@ var FlightManagementSystemClass = {
 		var list = [""];
 		var rwy 	= me._nasalFlightPlan.departure_runway;
 		var data 	= me._nasalFlightPlan.departure.sids(rwy);
-		debug.dump(rwy,data);
+		#debug.dump(rwy,data);
 		foreach(var i ; data){
 			append(list,i);
 		}
@@ -435,7 +435,7 @@ var FlightManagementSystemClass = {
 		return list;
 	},
 	setOriginSid : func(sid){
-		print(sprintf("FlightManagementSystemClass::setOriginSid(%s)",sid));
+		dP.bulk(sprintf("FlightManagementSystemClass::setOriginSid(%s)",sid));
 		#me._nasalFlightPlan = flightplan();
 		#me._nasalFlightPlan.sid = sid;
 		setprop("/autopilot[0]/route-manager[0]/departure[0]/sid",sid);
@@ -443,14 +443,14 @@ var FlightManagementSystemClass = {
 	getDestinationRunwayList : func(){
 		var list = [];
 		var data = me._nasalFlightPlan.destination.runways;
-		debug.dump(data);
+		#debug.dump(data);
 		foreach(var i ; keys(data)){
 			append(list,data[i].id);
 		}
 		return list;
 	},
 	setDestinationRunway : func(rwy){
-		print(sprintf("FlightManagementSystemClass::setDestinationRunway(%s)",rwy));
+		dP.bulk(sprintf("FlightManagementSystemClass::setDestinationRunway(%s)",rwy));
 		#me._nasalFlightPlan = flightplan();
 		#me._nasalFlightPlan.destination_runway = me._nasalFlightPlan.destination.runways[rwy];
 		setprop("/autopilot[0]/route-manager[0]/destination[0]/runway",rwy);
@@ -459,7 +459,7 @@ var FlightManagementSystemClass = {
 		var list = [""];
 		var rwy 	= me._nasalFlightPlan.destination_runway;
 		var data 	= me._nasalFlightPlan.destination.stars(rwy);
-		debug.dump(rwy,data);
+		#debug.dump(rwy,data);
 		foreach(var i ; data){
 			append(list,i);
 		}
@@ -469,7 +469,7 @@ var FlightManagementSystemClass = {
 		return list;
 	},
 	setDestinationArrival : func(s){
-		print(sprintf("FlightManagementSystemClass::setDestinationArrival(%s)",s));
+		dP.bulk(sprintf("FlightManagementSystemClass::setDestinationArrival(%s)",s));
 		#me._nasalFlightPlan = flightplan();
 		#me._nasalFlightPlan.star = s;
 		setprop("/autopilot[0]/route-manager[0]/destination[0]/star",s);
@@ -478,7 +478,7 @@ var FlightManagementSystemClass = {
 		var list = [""];
 		var rwy 	= me._nasalFlightPlan.destination_runway;
 		var data 	= me._nasalFlightPlan.destination.getApproachList(rwy);
-		debug.dump(rwy,data);
+		#debug.dump(rwy,data);
 		foreach(var i ; data){
 			append(list,i);
 		}
@@ -488,7 +488,7 @@ var FlightManagementSystemClass = {
 		return list;
 	},
 	setDestinationApproach : func(s){
-		print(sprintf("FlightManagementSystemClass::setDestinationApproach(%s)",s));
+		dP.bulk(sprintf("FlightManagementSystemClass::setDestinationApproach(%s)",s));
 		#me._nasalFlightPlan = flightplan();
 		#me._nasalFlightPlan.approach = s;
 		setprop("/autopilot[0]/route-manager[0]//destination[0]/approach",s);
@@ -518,7 +518,7 @@ var FlightManagementSystemClass = {
 		}
 	},
 	insertWaypoint : func(index=nil){
-		print("FlightManagementSystemClass::insertWaypoint() ... not implemented yet.");
+		dP.bulk("FlightManagementSystemClass::insertWaypoint() ... not implemented yet.");
 	},
 
 	jumpTo : func(){
@@ -663,7 +663,7 @@ var FlightManagementSystemClass = {
 				me._dynamicPoint.RTA.rate	= me._dynamicPoint.TOC.rate;
 							
 				
-# 				print("FlightManagementSystemClass.calcRoute() ... ");
+# 				dP.bulk("FlightManagementSystemClass.calcRoute() ... ");
 				var gsSec = gs / 3600;
 				var gsMin = gs / 60;
 				var time 		= systime() + getprop("/sim/time/warp");
@@ -713,7 +713,7 @@ var FlightManagementSystemClass = {
 							if (me._flightPlan.wp[i].constraint.before.type != nil){
 								me._constraint.VSR.distance -= me._flightPlan.wp[i].constraint.before.value;
 							}
-							#print(""~fmsWP.wp_name ~" constraint : "~me._flightPlan.wp[i].constraint.alt.type~" "~me._constraint.VSR.alt~" in "~me._constraint.VSR.distance~" nm");
+							#dP.bulk(""~fmsWP.wp_name ~" constraint : "~me._flightPlan.wp[i].constraint.alt.type~" "~me._constraint.VSR.alt~" in "~me._constraint.VSR.distance~" nm");
 							
 						}
 						

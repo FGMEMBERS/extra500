@@ -306,11 +306,11 @@ var FlightPlanListViewItem = {
 		return m;
 	},
 	setAction : func(type,value){
-		print("FlightPlanListViewItem::setAction("~type~","~value~") ... abstract");
+		dP.bulk("FlightPlanListViewItem::setAction("~type~","~value~") ... abstract");
 	},
 	setCursorOption : func(v){
 		me._cursorOption = v;
-		print("FlightPlanListViewItem::setOption("~v~") ... abstract");
+		dP.bulk("FlightPlanListViewItem::setOption("~v~") ... abstract");
 	},
 	getCursorOption : func(){return me._cursorOption;},
 	getCursorOptionAdjusted : func(amount){
@@ -386,14 +386,14 @@ var FlightPlanItemTest = {
 
 	},
 	_updateView 	: func(){
-		#print("FlightPlanItemAirport::_updateView() ...");
+		dP.bulk("FlightPlanItemAirport::_updateView() ...");
 		me._group.setTranslation(me._bound._x,me._bound._y);
 	},
 };
 
 var FlightPlanItemInsertCursor = {
 	new : func(canvasGroup,index){
-		#print("FlightPlanItemInsertCursor::new() ...");
+		dP.bulk("FlightPlanItemInsertCursor::new() ...");
 		
 		var m = {parents:[
 			FlightPlanItemInsertCursor,
@@ -424,7 +424,7 @@ var FlightPlanItemInsertCursor = {
 	setFocus : func(v){me._can.Focus.setVisible(v)},
 	setAction : func(type,value){},
 	_updateView : func(){
-		#print("FlightPlanItemInsertCursor::_updateView() ...");
+		dP.bulk("FlightPlanItemInsertCursor::_updateView() ...");
 		#debug.dump(me._bound);
 		#debug.dump(me._group);
 		me._group.setTranslation(me._bound._x,me._bound._y);
@@ -433,7 +433,7 @@ var FlightPlanItemInsertCursor = {
 
 var FlightPlanItemAirport = {
 	new : func(canvasGroup,index){
-		#print("FlightPlanItemAirport::new() ...");
+		dP.bulk("FlightPlanItemAirport::new() ...");
 		var m = {parents:[
 			FlightPlanItemAirport,
 			WaypointInterface2.new(),
@@ -506,7 +506,7 @@ var FlightPlanItemAirport = {
 			me.setApproach(me._data.approach);
 			me.setRunway(fms._flightPlan.destination.runway.id);
 		}else{
-			print("FlightPlanItemAirport::init() ... ERROR no variant");
+			dP.alert("FlightPlanItemAirport::init() ... ERROR no variant");
 			me._origin = 0;
 		}
 		
@@ -592,7 +592,7 @@ var FlightPlanItemAirport = {
 	},
 	
 	setCursorOption : func(v){
-		print("FlightPlanItemAirport::setCursorOption("~v~") ...");
+		dP.bulk("FlightPlanItemAirport::setCursorOption("~v~") ...");
 		me._cursorOption = v;
 		me._checkCursorOption();
 	},
@@ -639,16 +639,16 @@ var FlightPlanItemAirport = {
 			
 			
 			if (me._cursorOption == 1){
-				print("\t Airport Arrival");
+				dP.debug("\t Airport Arrival");
 				me._can.ArrivalBackground.set("stroke",FPL_COLOR.Cursor.selected);
 			}elsif (me._cursorOption == 2){
-				print("\t Airport Sid/Approach");
+				dP.debug("\t Airport Sid/Approach");
 				me._can.ApproachBackground.set("stroke",FPL_COLOR.Cursor.selected);
 			}elsif (me._cursorOption == 3){
-				print("\t Airport ICAO");
+				dP.debug("\t Airport ICAO");
 				me._can.ICAO_back.set("stroke",FPL_COLOR.Cursor.selected);
 			}elsif (me._cursorOption == 4){
-				print("\t Airport Runway");
+				dP.debug("\t Airport Runway");
 				me._can.RunwayBackground.set("stroke",FPL_COLOR.Cursor.selected);
 			}
 		}
@@ -656,7 +656,7 @@ var FlightPlanItemAirport = {
 	_onOptionDialogOpen : func(){
 		
 		if (me._cursorOption == 1){# Arrival
-			print("\t Airport Arrival");
+			dP.debug("\t Airport Arrival");
 			me._can.ArrivalBackground.set("stroke",FPL_COLOR.Cursor.selected);
 			me._can.ArrivalBackground.set("fill",FPL_COLOR.Cursor.Background);
 			me._can.Arrival.setColor(FPL_COLOR.Font.Selected);
@@ -690,7 +690,7 @@ var FlightPlanItemAirport = {
 			
 			
 		}elsif (me._cursorOption == 2){# SID / Approch
-			print("\t Airport Sid/Approach");
+			dP.debug("\t Airport Sid/Approach");
 			me._can.ApproachBackground.set("stroke",FPL_COLOR.Cursor.selected);
 			me._can.ApproachBackground.set("fill",FPL_COLOR.Cursor.Background);
 			me._can.Approach.setColor(FPL_COLOR.Font.Selected);
@@ -732,7 +732,7 @@ var FlightPlanItemAirport = {
 			me._can.ICAO_back.set("fill",FPL_COLOR.Cursor.Background);
 			me._can.ICAO.setColor(FPL_COLOR.Font.Selected);
 		}elsif (me._cursorOption == 4){ # Runway
-			print("\t Airport Runway");
+			dP.debug("\t Airport Runway");
 			me._can.RunwayBackground.set("stroke",FPL_COLOR.Cursor.selected);
 			me._can.RunwayBackground.set("fill",FPL_COLOR.Cursor.Background);
 			me._can.Runway.setColor(FPL_COLOR.Font.Selected);
@@ -871,14 +871,14 @@ var FlightPlanItemAirport = {
 	setFocus 	: func(v){ me._can.Focus.setVisible(v)},
 	setAction 	: func(type,value){},
 	_updateView 	: func(){
-		#print("FlightPlanItemAirport::_updateView() ...");
+		dP.bulk("FlightPlanItemAirport::_updateView() ...");
 		me._group.setTranslation(me._bound._x,me._bound._y);
 	},
 };
 
 var FlightPlanItemWaypoint = {
 	new : func(canvasGroup,index){
-		#print("FlightPlanItemWaypoint::new() ...");
+		dP.bulk("FlightPlanItemWaypoint::new() ...");
 		var m = {parents:[
 			FlightPlanItemWaypoint,
 			WaypointInterface2.new(),
@@ -976,7 +976,7 @@ var FlightPlanItemWaypoint = {
 	},
 	### implement FlightPlanListViewItem
 	setCursorOption : func(v){
-		print("FlightPlanItemWaypoint::setCursorOption("~v~") ...");
+		dP.bulk("FlightPlanItemWaypoint::setCursorOption("~v~") ...");
 		me._cursorOption = v;
 		me._checkCursorOption();
 	},
@@ -1039,27 +1039,27 @@ var FlightPlanItemWaypoint = {
 				});
 			
 			if (me._cursorOption == 1){
-				print("\t Waypoint ICAO");
+				dP.debug("\t Waypoint ICAO");
 				me._can.ICAO_back.set("stroke",FPL_COLOR.Cursor.selected);
 			#debug.dump(me._parent);
 								
 			}elsif (me._cursorOption == 2){
-				print("\t Waypoint before");
+				dP.debug("\t Waypoint before");
 				me._can.Constain_before_back.set("stroke",FPL_COLOR.Cursor.selected);
 				#me._parent._Page.dialog.setCallBack(func() {me._onConstrainBeforeChange();});
 				#me._parent._Page.dialog.setValue(fms._flightPlan.wp[i].)
 				
 				
 			}elsif (me._cursorOption == 3){
-				print("\t Waypoint restriction at or above");
+				dP.debug("\t Waypoint restriction at or above");
 				me._can.Constain_at_back.set("stroke",FPL_COLOR.Cursor.selected);
 				
 			}elsif (me._cursorOption == 4){
-				print("\t Waypoint alt");
+				dP.debug("\t Waypoint alt");
 				me._can.Constain_alt_back.set("stroke",FPL_COLOR.Cursor.selected);
 				
 			}else{
-				print("\t Waypoint ERROR unknown cursorOption");
+				dP.alert("\t Waypoint ERROR unknown cursorOption");
 			}
 		}
 	},
@@ -1233,7 +1233,7 @@ var FlightPlanItemWaypoint = {
 	setFocus 	: func(v){ me._can.Focus.setVisible(v)},
 	setAction 	: func(type,value){},
 	_updateView 	: func(){
-		#print("FlightPlanItemWaypoint::_updateView() ...");
+		dP.bulk("FlightPlanItemWaypoint::_updateView() ...");
 		me._group.setTranslation(me._bound._x,me._bound._y);
 	},
 	
@@ -1270,7 +1270,7 @@ var FactroryCache = {
 		me._parent = parent;
 	},
 	removeAll : func(){
-		#print(sprintf("FactroryCache::removeAll() ... %s",me._name));
+		dP.bulk(sprintf("FactroryCache::removeAll() ... %s",me._name));
 		var item = nil;
 		var usedSize = size(me._used);
 		for(var i=0; i < usedSize; i = i+1){
@@ -1281,16 +1281,16 @@ var FactroryCache = {
 		#me.printCache();
 	},
 	getItem : func(data,canvasGrp){
-		#print(sprintf("FactroryCache::getItem() ... %s",me._name));
+		dP.bulk(sprintf("FactroryCache::getItem() ... %s",me._name));
 		var item = pop(me._unUsed);
 		if(item == nil){
-			#print(sprintf("FactroryCache::getItem() ... create %s" , me._name));
+			dP.bulk(sprintf("FactroryCache::getItem() ... create %s" , me._name));
 			me._count += 1;
 			item = me._constructor(canvasGrp,me._count);
 			
 			append(me._used,item);
 		}else{
-			#print(sprintf("FactroryCache::getItem() ... get %s from Cache",me._name));
+			dP.bulk(sprintf("FactroryCache::getItem() ... get %s from Cache",me._name));
 			append(me._used,item);
 		}
 		item.setData(data);
@@ -1301,12 +1301,12 @@ var FactroryCache = {
 		return item;
 	},
 	printCache : func(){
-		print(sprintf("FactroryCache::printCache() ... Cache for %s",me._name));
+		dP.bulk(sprintf("FactroryCache::printCache() ... Cache for %s",me._name));
 		
 		var sizeUsed 	= size(me._used);
 		var sizeUnUsed 	= size(me._unUsed);
 		
-		print("\tused\tunused");
+		dP.bulk("\tused\tunused");
 		for(var i=0; i < me._count; i = i+1){
 			var line = "";
 			
@@ -1354,7 +1354,7 @@ var FlightPlanItemFactory = {
 		
 	},
 	getItem : func(data,type,canvasGrp){
-		#print(sprintf("FlightPlanItemFactory::getItem(%s,%s,%s) ...",type,"canvasGroup",index));
+		dP.bulk(sprintf("FlightPlanItemFactory::getItem(%s,%s,%s) ...","data",type,"canvasGroup"));
 		var item = nil;
 		if (type == "Airport"){
 			item = me._Airport.getItem(data,canvasGrp);
@@ -1413,7 +1413,7 @@ var FlightPlanListWidget2 = {
 		return m;
 	},
 	setListeners : func(instance) {
-		#print("FlightPlanListWidget2.setListeners() ... ");
+		dP.bulk("FlightPlanListWidget2.setListeners() ... ");
 		append(me._listeners, setlistener(fms._signal.fplChange,func(n){me._onFlightPlanChange(n)},1,1));
 		append(me._listeners, setlistener(fms._signal.currentWpChange,func(n){me._onCurrentWaypointChange(n)},1,1));
 		append(me._listeners, setlistener(fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,0));
@@ -1423,7 +1423,7 @@ var FlightPlanListWidget2 = {
 		append(me._listeners, setlistener(fms._signal.cursorFocusChange,func(n){me._onCursorFocusChange(n)},1,1));
 	},
 	init : func(instance=me){
-		#print("FlightPlanListWidget2.init() ... ");
+		dP.bulk("FlightPlanListWidget2.init() ... ");
 		#me.setListeners(instance);	
 		me._flightPlanItemFactory.setParent(me);
 	},
@@ -1552,22 +1552,22 @@ var FlightPlanListWidget2 = {
 		me._checkKeys();
 	},
 	_clearList : func(){
-		#print("FlightPlanListWidget2::_clearList() ... ");
+		dP.bulk("FlightPlanListWidget2::_clearList() ... ");
 		
-		#print("FlightPlanListWidget2::_clearList() ... clear()");
+		dP.debug("FlightPlanListWidget2::_clearList() ... clear()");
 		me._listView.clear();
 		
 		
-		#print("FlightPlanListWidget2::_clearList() ... _flightPlanItemFactory.removeAll()");
+		dP.debug("FlightPlanListWidget2::_clearList() ... _flightPlanItemFactory.removeAll()");
 		me._flightPlanItemFactory.removeAll();
 		
-		#print("FlightPlanListWidget2::_clearList() ... removeAllChildren()");
+		dP.debug("FlightPlanListWidget2::_clearList() ... removeAllChildren()");
 		#me._can.list.removeAllChildren();
 		
 		
 	},
 	_drawList : func(){
-		#print("FlightPlanListWidget2::_drawList() ... ----------------------------------- Begin");
+		dP.bulk("FlightPlanListWidget2::_drawList() ... ----------------------------------- Begin");
 		#me._listView.appendItem(FlightPlanItemInsertCursor.new(me._can.list,-1));
 		#me._listView.appendItem(FlightPlanItemTest.new(me._can.list,-1));
 		me._flightplanItemMap = [];
@@ -1580,7 +1580,7 @@ var FlightPlanListWidget2 = {
 			var wp = fms._flightPlan.wp[i];
 			
 			if (wp.variant == "Origin"){
-				#print("FlightPlanListWidget2::_drawList() ... ----------------------------------- Origin");
+				dP.bulk("FlightPlanListWidget2::_drawList() ... ----------------------------------- Origin");
 				item = me._flightPlanItemFactory.getItem(wp,"Airport",me._can.list);
 				
 # 				item.setHeadline("Origin");
@@ -1593,7 +1593,7 @@ var FlightPlanListWidget2 = {
 # 				item.setRunway(fms._flightPlan.departure.runway.id);
 				
 			}elsif(wp.variant == "Arrival"){
-				#print("FlightPlanListWidget2::_drawList() ... ----------------------------------- Arrival");
+				dP.bulk("FlightPlanListWidget2::_drawList() ... ----------------------------------- Arrival");
 				item = me._flightPlanItemFactory.getItem(wp,"Airport",me._can.list);
 				
 # 				item.setHeadline("Destination");
@@ -1605,7 +1605,7 @@ var FlightPlanListWidget2 = {
 # 				item.setRunway(fms._flightPlan.destination.runway.id);
 				
 			}else{
-				#print("FlightPlanListWidget2::_drawList() ... ----------------------------------- Waypoint");
+				dP.bulk("FlightPlanListWidget2::_drawList() ... ----------------------------------- Waypoint");
 		
 				item = me._flightPlanItemFactory.getItem(wp,"Waypoint",me._can.list);
 				
@@ -1638,7 +1638,7 @@ var FlightPlanListWidget2 = {
 			if( i == me._focusIndex){
 				item.setFocus(1);
 			}
-			#print("FlightPlanListWidget2::_drawList() ... ----------------------------------- append Item");
+			dP.bulk("FlightPlanListWidget2::_drawList() ... ----------------------------------- append Item");
 			append(me._flightplanItemMap,item);
 			me._listView.appendItem(item);
 						
@@ -1648,7 +1648,7 @@ var FlightPlanListWidget2 = {
 			
 		}
 		me._listView.setFocusIndex(me._cursorFocusIndex);
-		#print("FlightPlanListWidget2::_drawList() ... ----------------------------------- ENDE");
+		dP.bulk("FlightPlanListWidget2::_drawList() ... ----------------------------------- ENDE");
 	},
 ### implements ListViewListener
 	onListViewUpdate : func(){
@@ -1702,14 +1702,14 @@ var FlightPlanListWidget2 = {
 	
 ### implements fms events
 	_onFlightPlanChange : func(n){
-		#print("\n############################################# FlightPlanListWidget2::_onFlightPlanChange() ... ");
-		#print("\n");
+		dP.bulk("\n############################################# FlightPlanListWidget2::_onFlightPlanChange() ... ");
+		dP.bulk("\n");
 		var value = n.getValue();
-		#print("FlightPlanListWidget2::_onFlightPlanChange() ... ------------- _clearList");
+		dP.bulk("FlightPlanListWidget2::_onFlightPlanChange() ... ------------- _clearList");
 		me._clearList();
-		#print("FlightPlanListWidget2::_onFlightPlanChange() ... ------------- _drawList");
+		dP.bulk("FlightPlanListWidget2::_onFlightPlanChange() ... ------------- _drawList");
 		me._drawList();
-		#print("\n");
+		dP.bulk("\n");
 	},
 	_onCurrentWaypointChange : func(n){
 		
@@ -1759,12 +1759,12 @@ var FlightPlanListWidget2 = {
 	},
 	_onCursorOptionChange : func(n){
 		var index = n.getValue();
-		print(sprintf("FlightPlanListWidget2::_onCursorOptionChange(%i)",index));
+		dP.bulk(sprintf("FlightPlanListWidget2::_onCursorOptionChange(%i)",index));
 		me._listView._focusedItem.setCursorOption(index);
 	},
 	_onCursorFocusChange : func(n){
 		me._cursorFocusIndex = n.getValue();
-		print(sprintf("FlightPlanListWidget2::_onCursorFocusChange(%i)",me._cursorFocusIndex));
+		dP.bulk(sprintf("FlightPlanListWidget2::_onCursorFocusChange(%i)",me._cursorFocusIndex));
 		me._listView.setFocusIndex(me._cursorFocusIndex);
 	},
 	_onSelectedWpChange : func(n){
@@ -1827,12 +1827,12 @@ var AvidynePageFMS = {
 		return m;
 	},
 	init : func(instance=me){
-		#print("AvidynePageFMS.init() ... ");
+		dP.bulk("AvidynePageFMS.init() ... ");
 				
 		me.setListeners(instance);
 		
 # 		foreach(var widget;keys(me._widget)){
-# 			#print("widget : "~widget);
+# 			#dP.bulk("widget : "~widget);
 # 			if(me._widget[widget] != nil){
 # 				
 # 				me._widget[widget].init();
@@ -1847,7 +1847,7 @@ var AvidynePageFMS = {
 	
 	},
 	_onDialogCreate : func(){
-		print("AvidynePageFMS::_onDialogCreate() ...");
+		dP.bulk("AvidynePageFMS::_onDialogCreate() ...");
 		me._can.Dialog.setVisible(1);
 		me._can.RoutesContent.setVisible(0);
 		me._can.FPLContent.setVisible(0);
@@ -1857,7 +1857,7 @@ var AvidynePageFMS = {
 		
 	},
 	_onDialogDestruct : func(){
-		print("AvidynePageFMS::_onDialogDestruct() ...");
+		dP.bulk("AvidynePageFMS::_onDialogDestruct() ...");
 		me._can.Dialog.setVisible(0);
 		me._initWidgetsForTab(me._widget.Tab._index);
 	},
