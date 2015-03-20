@@ -1304,6 +1304,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/centerConsole.nas</file>
 		<file>Aircraft/extra500/Nasal/log.nas</file>
 		<file>Aircraft/extra500/Nasal/dmeswitch.nas</file>
+		<file>Aircraft/extra500/Nasal/elt.nas</file>
 		<file>Aircraft/extra500/Nasal/panelventswitch.nas</file>
 		<file>Aircraft/extra500/Nasal/interior.nas</file>
 		<file>Aircraft/extra500/Nasal/readinglightswitch.nas</file>
@@ -1311,6 +1312,7 @@ JSBSim Extra Aircraft - Extra 500.
 		
 		<file>Aircraft/extra500/Nasal/route_manager.nas</file>
 		<file>Aircraft/extra500/Nasal/trimindication.nas</file>
+		
 	</extra500>
 	<IFD>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/debug.nas</file>
@@ -1512,6 +1514,14 @@ JSBSim Extra Aircraft - Extra 500.
 		<dmeSwitch>
 			<pressed type="int">0</pressed>
 		</dmeSwitch>
+		<elt>
+			<accel-fps_sec type="double">0.0</accel-fps_sec> 
+			<switch-remote type="int">1</switch-remote> 
+			<switch-elt type="int">1</switch-elt> 
+			<switch-G type="bool">0</switch-G> 
+			<led type="bool">0</led>
+			
+		</elt>
 		<TurnCoordinator>
 			<volt type="double">0</volt>
 		</TurnCoordinator>

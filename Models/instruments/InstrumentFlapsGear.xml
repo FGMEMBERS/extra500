@@ -107,6 +107,20 @@
 	</offsets>
 </model>
 
+<model>
+  <name>ELT</name>
+  <path>Aircraft/extra500/Models/instruments/Artex.ELT.xml</path>
+	<offsets>
+		<x-m>0.001</x-m>
+		<y-m>-0.274</y-m>
+		<z-m>-0.06</z-m>
+		<roll-deg>0</roll-deg>
+	</offsets>
+</model>
+	
+	
+
+
 <!--GearLampen-->
 <animation>
 	<type>material</type>

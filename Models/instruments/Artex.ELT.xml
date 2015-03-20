@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+This file is part of extra500
+
+The extra500 is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
+
+The extra500 is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+Authors: Dirk Dittmann 
+Date: 20.03.2015
+
+Last change:      Dirk Dittmann
+Date:             20.03.2015
+
+-->
+
+<PropertyList>
+	
+	<path>Artex.ELT.ac</path>
+	<!--Dimming -->
+	
+	<animation>
+		<type>material</type>
+		<object-name>ARTEX.ELT.LED</object-name>
+		<emission>
+			<red>1.0</red>
+			<green>0.0</green>
+			<blue>0.0</blue>
+			<factor-prop>/extra500/instrumentation/elt/led</factor-prop>
+		</emission>
+	</animation>
+	<animation>
+		<type>rotate</type>
+		<object-name>ARTEX.ELT.switch</object-name>
+		<property>/extra500/instrumentation/elt/switch-remote</property> 
+		<interpolation>
+			<entry>
+				<ind>-1</ind>
+				<dep>-10</dep>
+			</entry>
+			<entry>
+				<ind>1</ind>
+				<dep>10</dep>
+			</entry>
+		</interpolation>
+		<!--
+		<axis>
+			<x1-m>0.00291</x1-m>
+			<y1-m>-1</y1-m>
+			<z1-m>-0.033933</z1-m>
+			
+			<x2-m>0.00291</x2-m>
+			<y2-m>1</y2-m>
+			<z2-m>-0.033933</z2-m>
+		</axis>
+		-->
+		<center>
+			<x-m> 0.00087 </x-m>
+			<y-m> 0.02156 </y-m>
+			<z-m> 0.02369</z-m>
+		</center>
+		<axis>
+			<x>0</x>
+			<y>1</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<animation>
+		<type>pick</type>
+		<object-name>ARTEX.ELT.switch</object-name>
+		<visible>true</visible>
+		<action>
+			<button>0</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					<![CDATA[
+					UI.click("ELT remote on");
+					]]>
+				</script>
+			</binding>
+		</action>
+		<action>
+			<button>1</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					<![CDATA[
+					UI.click("ELT remote arm");
+					]]>
+				</script>
+			</binding>
+		</action>
+		<action>
+			<button>3</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					<![CDATA[
+					UI.click("ELT remote on");
+					]]>
+				</script>
+			</binding>
+		</action><action>
+			<button>4</button>
+			<repeatable>false</repeatable>
+			<binding>
+				<command>nasal</command>
+				<script>
+					<![CDATA[
+					UI.click("ELT remote arm");
+					]]>
+				</script>
+			</binding>
+		</action>
+	</animation>
+	
+</PropertyList>
+

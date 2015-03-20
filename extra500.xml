@@ -44,7 +44,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	<system file="extra500-system-gear.xml"/>
 	<system file="extra500-system-electric.xml"/>
 	<aerodynamics file="extra500-aerodynamics.xml"/>
-
+	<system file="extra500-system-elt.xml"/>
+	
 	<metrics>
 		<wingarea  unit="M2">  14.025 </wingarea>
 		<wingspan  unit="M" >  11.0 </wingspan>
