@@ -138,14 +138,15 @@
 				<enabled>false</enabled>
 			</item>
 			<item>
-				<name>chat-download</name>
-				<label>chat : download location</label>
+				<name>browser-wiki-EA-500</name>
+				<label>wiki EA-500 (Browser)</label>
 				<binding>
-				       <command>nasal</command>
-				       <script><![CDATA[
-					       setprop("/sim/multiplay/chat", "extra500 download at http://gitorious.org/extra500/extra500");
-				       ]]></script>
-			       </binding>
+					<command>nasal</command>
+					<script>
+						var _url = "http://wiki.flightgear.org/Extra_EA-500";
+						fgcommand("open-browser", props.Node.new({ "url": _url }));
+					</script>
+				</binding>
 			</item>
 
 			
