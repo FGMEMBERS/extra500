@@ -488,6 +488,7 @@ JSBSim Extra Aircraft - Extra 500.
 	<aircraft-data>
 		<path>extra500/panel</path>
 		<path>/extra500/electric/source/Battery</path>
+		<path>/extra500/electric/source/ExternalGenerator</path>
 		<path>/consumables/fuel/tank[0]/level-gal_us</path>
 		<path>/consumables/fuel/tank[1]/level-gal_us</path>
 		<path>/consumables/fuel/tank[2]/level-gal_us</path>
@@ -511,6 +512,9 @@ JSBSim Extra Aircraft - Extra 500.
 		<path>/instrumentation/comm[1]/frequencies</path>
 		<path>/instrumentation/nav/frequencies</path>
 		<path>/instrumentation/nav[1]/frequencies</path>
+		<path>/fdm/jsbsim/gear/unit[10]/pos-norm</path>
+		<path>/fdm/jsbsim/gear/unit[11]/pos-norm</path>
+		<path>/fdm/jsbsim/gear/unit[12]/pos-norm</path>
 
 		<!---->
 		<path>/extra500/log/fuel</path>

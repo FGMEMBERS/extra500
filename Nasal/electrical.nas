@@ -475,6 +475,7 @@ var ExternalGeneratorClass = {
 		m._nHasLoad		= m._nRoot.initNode("hasLoad",0,"BOOL");
 		m._isPluged		= 0;
 		m._nIsPluged		= m._nRoot.initNode("isPluged",m._isPluged,"BOOL");
+		m._isPluged		= m._nIsPluged.getValue();
 		m._voltMax		= 28.2; # 28.2 + 0.3 = 28.5 
 		m._ampereMax		= 1200.0;
 		m._ampereAvailable	= 0.0;	
@@ -487,6 +488,8 @@ var ExternalGeneratorClass = {
 		me.parents[1].init(instance);
 		
 		me.outputIndexRebuild();
+		
+		
 		
 		me.registerUI();
 	},
