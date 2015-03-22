@@ -46,11 +46,11 @@ Date:             20.03.2015
 		<interpolation>
 			<entry>
 				<ind>-1</ind>
-				<dep>-10</dep>
+				<dep>-12</dep>
 			</entry>
 			<entry>
 				<ind>1</ind>
-				<dep>10</dep>
+				<dep>12</dep>
 			</entry>
 		</interpolation>
 		<!--
