@@ -121,9 +121,12 @@ var ELT = {
 
 		var lat = getprop("/position/latitude-string");
 		var lon = getprop("/position/longitude-string");
-		var help_string = "ELT AutoMessage: " ~ aircraft_id ~ ", CRASHED AT LAT: " ~lat~" LON: "~lon~", REQUESTING SAR SERVICE";
+		#var msg = "ELT AutoMessage: " ~ aircraft_id ~ ", CRASHED AT LAT: " ~lat~" LON: "~lon~", REQUESTING SAR SERVICE";
+		var msg = sprintf("[ELT SAR REQUEST] %s, LAT: %s LON: %s", aircraft_id, lat, lon);
+		
+		
 
-		setprop("/sim/multiplay/chat", help_string);
+		setprop("/sim/multiplay/chat", msg);
 	}
 	
 	
