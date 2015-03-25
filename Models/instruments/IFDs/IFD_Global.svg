@@ -38,11 +38,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="289.15374"
-     inkscape:cy="1300.5775"
+     inkscape:zoom="0.35"
+     inkscape:cx="687.25984"
+     inkscape:cy="1011.6779"
      inkscape:document-units="px"
-     inkscape:current-layer="PlusData"
+     inkscape:current-layer="Info_Right"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -54,7 +54,7 @@
      inkscape:snap-global="true"
      inkscape:window-width="1920"
      inkscape:window-height="1025"
-     inkscape:window-x="1918"
+     inkscape:window-x="-2"
      inkscape:window-y="-3"
      inkscape:window-maximized="1">
     <sodipodi:guide
@@ -184,7 +184,8 @@
   <g
      inkscape:groupmode="layer"
      id="MovingMap"
-     inkscape:label="MovingMap" />
+     inkscape:label="MovingMap"
+     style="display:inline" />
   <g
      inkscape:groupmode="layer"
      id="PlusData"
@@ -685,10 +686,232 @@
       <rect
          y="114.64285"
          x="1648"
-         height="520"
+         height="494.25583"
          width="400"
          id="rect4983"
          style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.01030636;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <g
+         id="Baro"
+         transform="translate(0,-162.50534)">
+        <text
+           xml:space="preserve"
+           style="font-size:36px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           x="1669.7684"
+           y="328.23773"
+           id="text7827-8-5-4"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan7829-7-0-2"
+             x="1669.7684"
+             y="328.23773">MAP</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-size:36px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           x="1955.1864"
+           y="328.23773"
+           id="text4912-5"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan4914-5"
+             x="1955.1864"
+             y="328.23773">Mb</tspan></text>
+        <text
+           sodipodi:linespacing="125%"
+           id="Baro_Value"
+           y="328.23773"
+           x="1941.1539"
+           style="font-size:48px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           xml:space="preserve"><tspan
+             y="328.23773"
+             x="1941.1539"
+             id="tspan4926-8"
+             sodipodi:role="line">1013</tspan></text>
+      </g>
+      <g
+         transform="translate(0,-111.24789)"
+         id="Data_Time">
+        <text
+           sodipodi:linespacing="125%"
+           id="text3283"
+           y="328.23773"
+           x="1669.7684"
+           style="font-size:36px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           xml:space="preserve"><tspan
+             y="328.23773"
+             x="1669.7684"
+             id="tspan3285"
+             sodipodi:role="line">Time</tspan></text>
+        <text
+           sodipodi:linespacing="125%"
+           id="text3287"
+           y="328.23773"
+           x="1955.1864"
+           style="font-size:36px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           xml:space="preserve"><tspan
+             y="328.23773"
+             x="1955.1864"
+             id="tspan3289"
+             sodipodi:role="line">H:M</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-size:48px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           x="1941.1539"
+           y="328.23773"
+           id="Data_Time_Value"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan3293"
+             x="1941.1539"
+             y="328.23773">00:00</tspan></text>
+      </g>
+      <g
+         id="Fuel_Flow"
+         transform="translate(0,-59.990483)">
+        <text
+           xml:space="preserve"
+           style="font-size:36px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           x="1669.7684"
+           y="328.23773"
+           id="text3297"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan3299"
+             x="1669.7684"
+             y="328.23773">Flow</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-size:36px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           x="1955.1864"
+           y="328.23773"
+           id="text3301"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan3303"
+             x="1955.1864"
+             y="328.23773">LPH</tspan></text>
+        <text
+           sodipodi:linespacing="125%"
+           id="Fuel_Flow_Value"
+           y="328.23773"
+           x="1941.1539"
+           style="font-size:48px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           xml:space="preserve"><tspan
+             y="328.23773"
+             x="1941.1539"
+             id="tspan3307"
+             sodipodi:role="line">0.0</tspan></text>
+      </g>
+      <g
+         transform="translate(0,-12.234084)"
+         id="Fuel_Rmng">
+        <text
+           sodipodi:linespacing="125%"
+           id="text3311"
+           y="328.23773"
+           x="1669.7684"
+           style="font-size:36px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           xml:space="preserve"><tspan
+             y="328.23773"
+             x="1669.7684"
+             id="tspan3313"
+             sodipodi:role="line">Rmng</tspan></text>
+        <text
+           sodipodi:linespacing="125%"
+           id="text3315"
+           y="328.23773"
+           x="1955.1864"
+           style="font-size:36px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           xml:space="preserve"><tspan
+             y="328.23773"
+             x="1955.1864"
+             id="tspan3317"
+             sodipodi:role="line">L</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-size:48px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           x="1941.1539"
+           y="328.23773"
+           id="Fuel_Rmng_Value"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan3321"
+             x="1941.1539"
+             y="328.23773">0.0</tspan></text>
+      </g>
+      <g
+         id="Fuel_Time"
+         transform="translate(0,42.524315)">
+        <text
+           xml:space="preserve"
+           style="font-size:36px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           x="1669.7684"
+           y="328.23773"
+           id="text3325"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan3327"
+             x="1669.7684"
+             y="328.23773">Time</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-size:36px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           x="1955.1864"
+           y="328.23773"
+           id="text3329"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan3331"
+             x="1955.1864"
+             y="328.23773">H:M</tspan></text>
+        <text
+           sodipodi:linespacing="125%"
+           id="Fuel_Time_Value"
+           y="328.23773"
+           x="1941.1539"
+           style="font-size:48px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           xml:space="preserve"><tspan
+             y="328.23773"
+             x="1941.1539"
+             id="tspan3335"
+             sodipodi:role="line">00:00</tspan></text>
+      </g>
+      <g
+         transform="translate(0,90.280714)"
+         id="Fuel_Range">
+        <text
+           sodipodi:linespacing="125%"
+           id="text3339"
+           y="328.23773"
+           x="1669.7684"
+           style="font-size:36px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           xml:space="preserve"><tspan
+             y="328.23773"
+             x="1669.7684"
+             id="tspan3341"
+             sodipodi:role="line">Range</tspan></text>
+        <text
+           sodipodi:linespacing="125%"
+           id="text3343"
+           y="328.23773"
+           x="1955.1864"
+           style="font-size:36px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           xml:space="preserve"><tspan
+             y="328.23773"
+             x="1955.1864"
+             id="tspan3345"
+             sodipodi:role="line">nm</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-size:48px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           x="1941.1539"
+           y="328.23773"
+           id="Fuel_Range_Value"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan3349"
+             x="1941.1539"
+             y="328.23773">0.0</tspan></text>
+      </g>
     </g>
   </g>
   <g
@@ -928,7 +1151,7 @@
            sodipodi:role="line">--:--</tspan></text>
       <text
          xml:space="preserve"
-         style="font-size:48px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         style="font-size:48px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
          x="1329.9788"
          y="48.220516"
          id="text3644"
@@ -942,7 +1165,7 @@
          id="text3648"
          y="48.220516"
          x="1615.9382"
-         style="font-size:48px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         style="font-size:48px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
          xml:space="preserve"><tspan
            y="48.220516"
            x="1615.9382"

@@ -146,6 +146,13 @@ var FlightManagementSystemClass = {
 		
 		m._destinationCourseDistance = [0,0];
 		
+		m._engineRunTime = 0;
+		m._fuelFlow 	= 0;
+		m._fuelLiter 	= 0;
+		m._fuelTime 	= 0;
+		m._fuelRange 	= 0;
+		
+		
 		m._signal = {
 			fplReady 		: props.globals.initNode("/instrumentation/fms[0]/signal/fpl/ready",0,"BOOL"),
 			fplUpdated 		: props.globals.initNode("/instrumentation/fms[0]/signal/fpl/updated",0,"BOOL"),
@@ -169,6 +176,11 @@ var FlightManagementSystemClass = {
 			vsrRate		: props.globals.initNode("/instrumentation/fms[0]/vsr",0,"INT"),
 			
 			RouteManagerSelection		: props.globals.initNode("/sim/gui/dialogs/route-manager/selection",-1,"INT"),
+			
+			EngineRunTime	: m._nRoot.initNode("engineRunTime_sec",0,"INT"),
+			FuelTime	: m._nRoot.initNode("fuelTime_sec",0,"INT"),
+			FuelRange	: m._nRoot.initNode("fuelRange_nm",0,"DOUBLE"),
+			
 			
 		};
 
@@ -641,6 +653,34 @@ var FlightManagementSystemClass = {
 		me._constraint.VSR.wptIndex	= 0;
 		me._constraint.VSR.visible	= 0;
 		
+		var gs 			= getprop("/velocities/groundspeed-kt");
+		me._fuelLiter		= getprop("/consumables/fuel/total-fuel-lbs") * global.CONST.JETA_LB2L;
+		me._fuelFlow		= extra500.fuelSystem._nFuelFlowLph.getValue();
+		var fuelFlowLpSec 	= me._fuelFlow / 3600.0;
+		
+		# Fuel calculation
+		if (extra500.engine.nIsRunning.getValue()){
+			me._engineRunTime += 1;
+			me._node.EngineRunTime.setValue(me._engineRunTime);
+			
+			if (gs > 15 and fuelFlowLpSec > 0){
+				me._fuelTime = me._fuelLiter / fuelFlowLpSec;
+				me._fuelRange = gs * me._fuelTime / 3600.0;
+
+			}else{
+				me._fuelTime = 0;
+				me._fuelRange = 0;
+			}
+
+		}else{
+			me._fuelTime = 0;
+			me._fuelRange = 0;
+		}
+		
+		me._node.FuelTime.setValue(me._fuelTime);
+		me._node.FuelRange.setValue(me._fuelRange);
+						
+		
 		if(me._nasalFlightPlanActive){
 			me._flightPlan.isReady = 1;
 			
@@ -651,7 +691,6 @@ var FlightManagementSystemClass = {
 			}
 		
 						
-			var gs = getprop("/velocities/groundspeed-kt");
 			if(gs > 15){
 				
 				me._dynamicPoint.TOC.distance	= 0;
@@ -670,8 +709,6 @@ var FlightManagementSystemClass = {
 				var fuelGalUs 		= getprop("/consumables/fuel/total-fuel-gal_us");
 				var fuelFlowGalUSpSec 	= extra500.fuelSystem._nFuelFlowGalUSpSec.getValue();
 				
-				var fuelLiter		= getprop("/consumables/fuel/total-fuel-lbs") * global.CONST.JETA_LB2L;
-				var fuelFlowLph 	= extra500.fuelSystem._nFuelFlowLph.getValue() / 3600.0;
 				
 				var currentAlt 		= getprop("/instrumentation/altimeter-IFD-LH/indicated-altitude-ft");
 				var altBug 		= getprop("/autopilot/settings/tgt-altitude-ft");
@@ -697,7 +734,7 @@ var FlightManagementSystemClass = {
 						distanceToGo 	+= me._flightPlan.wp[i].distanceTo;
 						ete 		 = me._flightPlan.wp[i].distanceTo / gsSec ;
 						eta 		 = time + (distanceToGo / gsSec);
-						fuelAt 		 = (fuelLiter -= fuelFlowLph * ete);													
+						fuelAt 		 = (me._fuelLiter -= fuelFlowLpSec * ete);													
 						
 						
 						me._flightPlan.wp[i].ete	= ete;
@@ -734,7 +771,7 @@ var FlightManagementSystemClass = {
 				me._flightPlan.distanceToGo	= distanceToGo;
 				me._flightPlan.ete		= distanceToGo / gsSec ;
 				me._flightPlan.eta		= time + (distanceToGo / gsSec);
-				me._flightPlan.fuelAt		= fuelLiter;
+				me._flightPlan.fuelAt		= me._fuelLiter;
 							
 				
 				if(me._constraint.VSR.distance == 0){
