@@ -25,6 +25,7 @@
 
 <system name="elt-gforce-switch">
 	<channel name="elt gforce">
+		<!--
 		<fcs_function name="/extra500/instrumentation/elt/accel-fps_sec">
 			<function>
 				<pow>
@@ -46,14 +47,12 @@
 							</sum>
 							<value>2.0</value>
 						</pow>
-						<!--
-						<value>0.0</value>
-						-->
 					</sum>
 					<value>0.5</value>
 				</pow>
 			</function>
 		</fcs_function>
+		-->
 <!--
 	Automatic by 4.5 feet per second (2.3 G) Primary G-Switch or Manual Activation
 		32.1989146288434 * 2.3 = 74.0575036463
@@ -61,7 +60,7 @@
 		<switch name="elt-gforce-switch">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/extra500/instrumentation/elt/accel-fps_sec gt 74.0575036463
+				/accelerations/pilot/x-accel-fps_sec lt -74.0575036463
 			</test>
 			<output>/extra500/instrumentation/elt/switch-G</output>
 		</switch>
