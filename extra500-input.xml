@@ -67,25 +67,153 @@
 				</mod-up>
 		 </key>
 
-		 <key n="100">
+<!-- Autopilot hot-keys
+
+	d : disconnect
+
+	alt+1 : HDG
+	alt+2 : HDG + NAV
+	alt+3 : NAV
+	alt+4 : APR
+	alt+5 : REV
+	alt+6 : ALT
+	alt+7 : ALT + VS
+	alt+8 : VS
+	alt+9 : VS -100
+	alt+0 : VS +100
+
+-->
+		 <key n="100"><!-- d -->
 			 <name>d</name>
 			 <desc>disconnect AP</desc>
-    				<binding>
-      				<command>nasal</command>
-      				<script><![CDATA[
-						UI.click("Autopilot disengage on");
+			 <binding>
+				 <command>nasal</command>
+				 <script><![CDATA[
+					 UI.click("Autopilot disengage on");
+					 ]]></script>
+			 </binding>
+			 <mod-up>
+				 <binding>
+					 <command>nasal</command>
+					 <script><![CDATA[
+						 UI.click("Autopilot disengage off");
+						 ]]></script>
+				 </binding>
+			 </mod-up>
+		 </key>
+		
+		 <key n="49"><!-- 1 -->
+			 <mod-alt>
+				 <desc>Autopilot - HDG</desc>
+				 <binding>
+					<command>nasal</command>
+					<script><![CDATA[
+						UI.click("Autopilot HDG");
 					]]></script>
     				</binding>
-				<mod-up>
-    				<binding>
-      				<command>nasal</command>
-      				<script><![CDATA[
-						UI.click("Autopilot disengage off");
+			 </mod-alt>
+		 </key>
+		 <key n="50"><!-- 2 -->
+			 <mod-alt>
+				 <desc>Autopilot - HDG+NAV</desc>
+				 <binding>
+					<command>nasal</command>
+					<script><![CDATA[
+						UI.click("Autopilot HDG+NAV");
 					]]></script>
     				</binding>
-				</mod-up>
+			 </mod-alt>
+		 </key>
+		 <key n="51"><!-- 3 -->
+			 <mod-alt>
+				 <desc>Autopilot - NAV</desc>
+				 <binding>
+					<command>nasal</command>
+					<script><![CDATA[
+						UI.click("Autopilot NAV");
+					]]></script>
+    				</binding>
+			 </mod-alt>
+		 </key>
+		 <key n="52"><!-- 4 -->
+			 <mod-alt>
+				 <desc>Autopilot - APR</desc>
+				 <binding>
+					<command>nasal</command>
+					<script><![CDATA[
+						UI.click("Autopilot APR");
+					]]></script>
+    				</binding>
+			 </mod-alt>
+		 </key>
+		 <key n="53"><!-- 5 -->
+			 <mod-alt>
+				 <desc>Autopilot - REV</desc>
+				 <binding>
+					<command>nasal</command>
+					<script><![CDATA[
+						UI.click("Autopilot REV");
+					]]></script>
+    				</binding>
+			 </mod-alt>
+		 </key>
+		 <key n="54"><!-- 6 -->
+			 <mod-alt>
+				 <desc>Autopilot - ALT</desc>
+				 <binding>
+					<command>nasal</command>
+					<script><![CDATA[
+						UI.click("Autopilot ALT");
+					]]></script>
+    				</binding>
+			 </mod-alt>
+		 </key>
+		 <key n="55"><!-- 7 -->
+			 <mod-alt>
+				 <desc>Autopilot - ALT + VS</desc>
+				 <binding>
+					 <command>nasal</command>
+					 <script><![CDATA[
+						 UI.click("Autopilot ALT+VS");
+						 ]]></script>
+				 </binding>
+			 </mod-alt>
+		 </key>
+		 <key n="56"><!-- 8 -->
+			 <mod-alt>
+				 <desc>Autopilot - VS</desc>
+				 <binding>
+					<command>nasal</command>
+					<script><![CDATA[
+						UI.click("Autopilot VS");
+					]]></script>
+    				</binding>
+			 </mod-alt>
+		 </key>
+		 <key n="57"><!-- 9 -->
+			 <mod-alt>
+				 <desc>Autopilot - VS -100</desc>
+				 <binding>
+					<command>nasal</command>
+					<script><![CDATA[
+						UI.click("Autopilot VS <");
+					]]></script>
+    				</binding>
+			 </mod-alt>
+		 </key>
+		 <key n="48"><!-- 0 -->
+			 <mod-alt>
+				 <desc>Autopilot - VS +100</desc>
+				 <binding>
+					 <command>nasal</command>
+					 <script><![CDATA[
+						 UI.click("Autopilot VS >");
+						 ]]></script>
+				 </binding>
+			 </mod-alt>
 		 </key>
 
+<!-- Autopilot end-->
 		 <key n="114">
 			 <name>r</name>
 			 <desc>Toggle prop beta range</desc>
@@ -96,7 +224,7 @@
 				]]></script> 
 			 </binding>
 		 </key>
-
+		 
 <!-- toggle engine cutoff
 		 <key n="115"> 
 			 <name>s</name>
@@ -171,6 +299,14 @@
 			 <binding>
 				 <command>nasal</command>
 				 <script>Dialogs.radios.open()</script>
+			 </binding>
+		 </key>
+		<key n="60">
+			 <name>QuickZoom</name>
+			 <desc>Quick Zoom View</desc>
+			 <binding>
+				 <command>nasal</command>
+				 <script>View.quickZoomView()</script>
 			 </binding>
 		 </key>
             

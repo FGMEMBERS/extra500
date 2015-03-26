@@ -73,6 +73,7 @@
 		<x-m>0.0001</x-m>
 		<y-m>-0.4075</y-m>
 		<z-m>-0.0414</z-m>
+		<roll-deg>6</roll-deg>
 	</offsets>
 </model>
 <model>
@@ -82,6 +83,7 @@
 		<x-m>0.0001</x-m>
 		<y-m>-0.4075</y-m>
 		<z-m>-0.015</z-m>
+		<roll-deg>-7</roll-deg>
 	</offsets>
 </model>
 <model>
@@ -91,6 +93,7 @@
 		<x-m>0.0001</x-m>
 		<y-m>-0.4893</y-m>
 		<z-m>-0.0414</z-m>
+		<roll-deg>-3</roll-deg>
 	</offsets>
 </model>
 <model>
@@ -100,6 +103,7 @@
 		<x-m>0.0001</x-m>
 		<y-m>-0.4893</y-m>
 		<z-m>-0.015</z-m>
+		<roll-deg>8</roll-deg>
 	</offsets>
 </model>
 
