@@ -718,6 +718,7 @@ var FlightManagementSystemClass = {
 				var ete 		= 0;
 				var eta 		= 0;
 				var fuelAt 		= 0;
+				var fuelLiter 		= me._fuelLiter;
 				
 				me._constraint.VSR.alt = getprop("/autopilot/route-manager/destination/field-elevation-ft");
 				
@@ -734,7 +735,7 @@ var FlightManagementSystemClass = {
 						distanceToGo 	+= me._flightPlan.wp[i].distanceTo;
 						ete 		 = me._flightPlan.wp[i].distanceTo / gsSec ;
 						eta 		 = time + (distanceToGo / gsSec);
-						fuelAt 		 = (me._fuelLiter -= fuelFlowLpSec * ete);													
+						fuelAt 		 = (fuelLiter -= fuelFlowLpSec * ete);
 						
 						
 						me._flightPlan.wp[i].ete	= ete;

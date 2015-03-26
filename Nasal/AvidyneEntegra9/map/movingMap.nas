@@ -123,6 +123,8 @@ var MovingMap = {
 			Compass300	: m._group.getElementById("MovingMap_Compass_300"),
 			Compass330	: m._group.getElementById("MovingMap_Compass_330"),
 			
+			DataFuelRange	: m._group.getElementById("Data_Fuel_Range"),
+			
 		};
 		
 		m._map = Map.new(m._can.LayerMap,name);
@@ -148,6 +150,8 @@ var MovingMap = {
 		m._routeManagerActive 	= 0;
 		m._fmsServiceable	= 0;
 		m._flyVectors		= 0;
+		
+		m._screenSize	= 512;
 		
 		m._layer 	= {};
 		m._view 	= MAP_VIEW.HDG_UP_CENTER ;
@@ -201,6 +205,7 @@ var MovingMap = {
 		me._map._node.getNode("ref-lat", 1).setDoubleValue(lat);
 		me._map._node.getNode("ref-lon", 1).setDoubleValue(lon);
 		me._can.plane.setGeoPosition(lat,lon);
+		
 		me; # chainable
 	},
 	setHdg : func(deg){
@@ -353,6 +358,8 @@ var MovingMap = {
 		
 		me.setRefPos(me._lat,me._lon);
 		me.setHdg(me._tree.Heading.getValue());
+		
+		me.setFuelRange();
 	},
 	_onAutopilotModeHDG : func(n){
 		me._modeHDG = n.getValue();
@@ -432,12 +439,33 @@ var MovingMap = {
 	
 	setRangeNm : func(nm){
 # 		print("MovingMap.setRangeNm("~nm~") ...");
-		var range = 200 / (me._screenSize / nm);
-		me._map._node.getNode("range", 1).setDoubleValue(range);
+		#var range = 200 / (me._screenSize / nm);
+		me._mapRange = 200 / (me._screenSize / nm);
+		me._map._node.getNode("range", 1).setDoubleValue(me._mapRange);
 		me._can.CompassRangeMax.setText(sprintf("%.0f",nm));
 		me._can.CompassRangeMid.setText(sprintf("%.0f",nm/2));
 		me._mapOptions.range = nm;
 		me._layer.positioned.setMapOptions(me._mapOptions);
+		
+	},
+	
+	setFuelRange : func(nm=nil){
+		if (nm == nil){
+			nm = fms._fuelRange;
+		}
+		
+		if (nm > 0){
+			var r = (me._screenSize/me._mapOptions.range) * nm;
+			
+			me._can.DataFuelRange.reset()
+				.move(1024-r, 768)
+				.arcSmallCCW(r, r, 0,  r*2, 0)
+				.arcSmallCCW(r, r, 0, -r*2, 0)
+				;
+		}else{
+			me._can.DataFuelRange.reset();
+		}
+			
 	},
 	
 	setLand : func(value){
