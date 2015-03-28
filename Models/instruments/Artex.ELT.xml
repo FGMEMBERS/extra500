@@ -86,7 +86,7 @@ Date:             20.03.2015
 				<command>nasal</command>
 				<script>
 					<![CDATA[
-					UI.click("ELT remote on");
+					UI.click("ELT remote <");
 					]]>
 				</script>
 			</binding>
@@ -98,7 +98,7 @@ Date:             20.03.2015
 				<command>nasal</command>
 				<script>
 					<![CDATA[
-					UI.click("ELT remote arm");
+					UI.click("ELT remote >");
 					]]>
 				</script>
 			</binding>
@@ -110,7 +110,7 @@ Date:             20.03.2015
 				<command>nasal</command>
 				<script>
 					<![CDATA[
-					UI.click("ELT remote on");
+					UI.click("ELT remote <");
 					]]>
 				</script>
 			</binding>
@@ -121,7 +121,7 @@ Date:             20.03.2015
 				<command>nasal</command>
 				<script>
 					<![CDATA[
-					UI.click("ELT remote arm");
+					UI.click("ELT remote >");
 					]]>
 				</script>
 			</binding>

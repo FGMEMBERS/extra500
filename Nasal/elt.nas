@@ -29,8 +29,8 @@ var ELT = {
 			]
 		};
 		
-		m._switchRemote = 1;
-		m._switchElt 	= 1;
+		m._switchRemote = 0;
+		m._switchElt 	= 0;
 		m._switchG 	= 0;
 		m._active	= 0;
 		m._cycleSec	= 50;
@@ -60,23 +60,56 @@ var ELT = {
 				
 	},
 	initUI : func(){
-		UI.register("ELT remote on", 		func{extra500.elt._nSwitchRemote.setValue(-1); } 	);
-		UI.register("ELT remote arm", 		func{extra500.elt._nSwitchRemote.setValue(1); } 	);
+		UI.register("ELT remote >", 		func{extra500.elt.adjustSwitchRemote(1); 	});
+		UI.register("ELT remote <", 		func{extra500.elt.adjustSwitchRemote(-1); 	});
+		UI.register("ELT remote on", 		func{extra500.elt._nSwitchRemote.setValue(-1); 	});
+		UI.register("ELT remote arm", 		func{extra500.elt._nSwitchRemote.setValue(0);  	});
+		UI.register("ELT remote test", 		func{extra500.elt._nSwitchRemote.setValue(1); 	});
 		
-		UI.register("ELT on", 		func{extra500.elt._nSwitchElt.setValue(-1); } 	);
-		UI.register("ELT arm", 		func{extra500.elt._nSwitchElt.setValue(1); } 	);
+		UI.register("ELT >", 		func{extra500.elt.adjustSwitchElt(1); 		});
+		UI.register("ELT <", 		func{extra500.elt.adjustSwitchElt(-1); 		});
+		UI.register("ELT on", 		func{extra500.elt._nSwitchElt.setValue(-1); 	});
+		UI.register("ELT arm", 		func{extra500.elt._nSwitchElt.setValue(0); 	});
+		UI.register("ELT test", 	func{extra500.elt._nSwitchElt.setValue(1); 	});
+		
+		
 		
 	},
+	adjustSwitchRemote : func(value=0){
+		value = me._nSwitchRemote.getValue() + value;
+		value = global.clamp(value,-1,1);
+		me._nSwitchRemote.setValue(value);
+	},
+	adjustSwitchElt : func(value=0){
+		value = me._nSwitchElt.getValue() + value;
+		value = global.clamp(value,-1,1);
+		me._nSwitchElt.setValue(value);
+	},
+	
 	_onSwitchRemoteChange : func(n){
 		me._switchRemote = n.getValue();
 		
-		me._setActive((me._switchRemote == -1 ));
+		if (me._switchRemote == 1){
+			me._setActive(1);
+			settimer(func{UI.click("ELT remote arm")}, 1);
+		}elsif (me._switchRemote == -1){
+			me._setActive(1);
+		}else{
+			me._setActive(0);
+		}
 		
 	},
 	_onSwitchEltChange : func(n){
 		me._switchElt = n.getValue();
 		
-		me._setActive((me._switchElt == -1 ));
+		if (me._switchElt == 1){
+			me._setActive(1);
+			settimer(func{UI.click("ELT arm")}, 1);
+		}elsif (me._switchRemote == -1){
+			me._setActive(1);
+		}else{
+			me._setActive(0);
+		}
 		
 	},
 	_onSwitchGChange : func(n){

@@ -1520,8 +1520,8 @@ JSBSim Extra Aircraft - Extra 500.
 		</dmeSwitch>
 		<elt>
 			<accel-fps_sec type="double">0.0</accel-fps_sec> 
-			<switch-remote type="int">1</switch-remote> 
-			<switch-elt type="int">1</switch-elt> 
+			<switch-remote type="int">0</switch-remote> 
+			<switch-elt type="int">0</switch-elt> 
 			<switch-G type="bool">0</switch-G> 
 			<led type="bool">0</led>
 			
