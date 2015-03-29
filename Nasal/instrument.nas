@@ -57,8 +57,8 @@ var DigitalInstrumentPackageClass = {
 	},
 	setListeners : func(instance) {
 		append(me._listeners, setlistener(eSystem.circuitBreaker.VOLT_MON._nVoltOut,func(n){instance._onVoltMonitorChange(n);},1,0) );
-		append(me._listeners, setlistener("/extra500/electric/shunt/battery_shunt",func(n){instance._onBatteryMonitorChange(n);},1,0) );
-		append(me._listeners, setlistener(eSystem._nLoadGenerator,func(n){instance._onGeneratorMonitorChange(n);},1,0) );
+		append(me._listeners, setlistener(eSystem._nShuntBattery,func(n){instance._onBatteryMonitorChange(n);},1,0) );
+		append(me._listeners, setlistener(eSystem._nShuntGenerator,func(n){instance._onGeneratorMonitorChange(n);},1,0) );
 	},
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
