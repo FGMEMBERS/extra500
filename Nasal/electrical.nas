@@ -425,10 +425,13 @@ var AlternatorClass = {
 		}else{
 			me._volt 		= 0;
 			me._ampereAvailable 	= 0;
-			me._nHasLoad.setValue(0);
+			#me._nHasLoad.setValue(0);
 		}
 		me._nVolt.setValue(me._volt);
 		me._nAmpereAvailable.setValue(me._ampereAvailable);
+		
+		me._nHasLoad.setValue(me._ampereApplyed > 0);
+		me._ampereApplyed = 0;
 			
 	},
 	setOnline : func(value){
