@@ -1374,11 +1374,11 @@ var ESystem = {
 		# charge the battery from the vHotBus to get the amps
 		me.source.Battery.charge(me._vHotBus);
 		
+		var debugText = "";
 		
-		
-		print ("--- Bus Voltage ------");
+		debugText ~= sprintf("--- Bus Voltage ------\n");
 		foreach(var bus; me._listBuses){
-			print ("\t",sprintf("%15s: %0.2fV, %0.2fA",bus.name,bus.volt,bus.ampere));
+			debugText ~= "\t" ~ sprintf("%15s: %0.2fV, %0.2fA\n",bus.name,bus.volt,bus.ampere);
 		}
 		
 		
@@ -1405,15 +1405,15 @@ var ESystem = {
 		}
 		# keep the index list for multiple usage
 		var mapBusVoltIndex = keys (mapBusVoltAmpere);
-		print ("\n");
+		debugText ~= sprintf ("\n");
 		
-		print ("--- BusTree total ampere ------");
+		debugText ~= sprintf ("--- BusTree total ampere ------\n");
 		foreach (var i; mapBusVoltIndex) {
-			print ("\t",sprintf("%0.2fV\t: %0.2fA",i,mapBusVoltAmpere[i].ampere));
+			debugText ~= "\t" ~ sprintf("%0.2fV\t: %0.2fA\n",i,mapBusVoltAmpere[i].ampere);
 		}
 		
 		# search for source which is in the voltage(tree) by its tagging bus and apply the load.
-		print ("--- applyAmpere to all sources ------");
+		debugText ~= sprintf ("--- applyAmpere to all sources ------\n");
 		foreach (var s; listSources) {
 			var text = sprintf("%15s %0.2fV: bus:%0.2fV",s.source._name,s.source._volt,s.bus.volt);
 			
@@ -1427,15 +1427,17 @@ var ESystem = {
 					text ~= sprintf(", rest: %0.2fA",mapBusVoltAmpere[voltIndex].ampere);
 				}
 			}
-			print ("\t",text);
+			debugText ~= "\t" ~ text ~ "\n";
 		}
 		
-		print ("--- BusTree total ampere left ------");
+		debugText ~= sprintf ("--- BusTree total ampere left ------\n");
 		foreach (var i; mapBusVoltIndex) {
-			print ("\t",sprintf("%0.2fV\t: %0.2fA",i,mapBusVoltAmpere[i].ampere));
+			debugText ~= "\t" ~ sprintf("%0.2fV\t: %0.2fA\n",i,mapBusVoltAmpere[i].ampere);
 		}
 		
-		print ("\n");
+		debugText ~= sprintf ("\n");
+		
+		#print(debugText);
 		
 		# calc the shunts 
 		me._calcShunts();
