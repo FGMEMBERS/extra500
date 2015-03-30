@@ -221,6 +221,30 @@
   </effect>
 
 
+  <effect>
+    <inherits-from>Effects/model-transparent</inherits-from>
+    <object-name>window.pass.aft</object-name>
+  </effect>
+
+  
+  <animation>
+	  <type>shader</type>
+	  <shader>chrome</shader>
+	  <texture>Aircraft/extra500/Models/Effects/chrome2.png</texture>
+	  <object-name>exhaust.cover</object-name>
+	  <object-name>inlet</object-name>
+	  
+  </animation>
+   <animation>
+	  <type>shader</type>
+	  <shader>chrome</shader>
+	  <texture>Aircraft/extra500/Models/Effects/chrome1.png</texture>
+	  <object-name>exhaust.left</object-name>
+	  <object-name>exhaust.right</object-name>
+	  
+  </animation>
+<!--  -->
+  
 <!-- Submodels -->
 
 <!-- registration label-->
