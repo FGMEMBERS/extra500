@@ -1448,7 +1448,11 @@ var ESystem = {
 		eSystem.relay.K7.checkCondition();
 	},
 	_calcShunts : func(){
-		me._shuntGenerator	= me.source.Generator._ampereApplyed;
+		if (me.relay.K3._state == 1){
+			me._shuntGenerator	= me.source.Generator._ampereApplyed;
+		}else{
+			me._shuntGenerator	= me.source.Alternator._ampereApplyed;
+		}
 		me._shuntBattery	= 0;
 		
 		
