@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2015-03-29
+      Date:             2015-03-31
 -->
 
 <system name="indication">
@@ -735,7 +735,7 @@
 <!--OIL PRESS -->
 		<fcs_function name="aircraft/engine/OP/OPstart-psi">
     			<function>
-       			<description>Indicated Oil Pressure when starting</description>
+       			<description>Oil Pressure when starting</description>
 				<table>
             			<independentVar lookup="row">propulsion/engine/n1</independentVar>
 					<independentVar lookup="column">aircraft/engine/OT-degC</independentVar>	<!-- oil pressure dependence on oil temperature-->
@@ -743,6 +743,7 @@
 						0	15	82
 					0	0	0	0
 					12	0	0	0
+					15	4	2	1
 					17.5	18	5	3
 					23	31	18	15
 					29	88	75	60
@@ -755,17 +756,46 @@
 			</function>
 		</fcs_function>
 
+		<fcs_function name="aircraft/engine/OP/OPmotoring-psi">
+    			<function>
+       			<description>Oil Pressure when motoring</description>
+				<table>
+            			<independentVar lookup="row">propulsion/engine/n1</independentVar>
+					<independentVar lookup="column">aircraft/engine/OT-degC</independentVar>	<!-- oil pressure dependence on oil temperature-->
+            			<tableData>
+						0	15	82
+					0	0	0	0
+					12	0	0	0
+					15	4	2	1
+					17.5	18	5	3
+					20	42	40	38
+					25	50	60	55
+					</tableData>
+      			</table>
+			</function>
+		</fcs_function>
+
+		<switch name="OPstmot">
+			<default value="aircraft/engine/OP/OPstart-psi"/>
+			<test logic="AND" value="aircraft/engine/OP/OPmotoring-psi">
+				aircraft/engine/motoring eq 1
+			</test>
+			<output>aircraft/engine/OP/OPstmon-psi</output>
+		</switch>
+
 		<fcs_function name="aircraft/engine/OP/OPmax-psi">
     			<function>
        			<description>Indicated Oil Pressure when RPM2030</description>
 				<table>
             			<independentVar lookup="row">propulsion/engine/propeller-rpm</independentVar>
+					<independentVar lookup="column">aircraft/engine/OT-degC</independentVar>	
             			<tableData>
-					0	150
-					1300	117
-					1450	117	
-					1900	124	
-					2100	126	
+						40	75
+					0	150	150
+					1300	122	117
+					1450	122	117	
+					1900	129	124	
+					2100	131	126	
 					</tableData>
       			</table>
 			</function>
@@ -776,10 +806,22 @@
        			<description>Indicated Oil Pressure</description>
 				<product>
 					<property>/extra500/instrumentation/EIP/state</property>   <!--to make sure pointer is at 0 when unit is off -->
-	 				<min>	
-						<property>aircraft/engine/OP/OPstart-psi</property>	
-						<property>aircraft/engine/OP/OPmax-psi</property>	
-					</min>
+					<sum>
+	 					<min>	
+							<property>aircraft/engine/OP/OPstmon-psi</property>	
+							<property>aircraft/engine/OP/OPmax-psi</property>	
+						</min>
+						<table>								<!--altitude influence -->
+            					<independentVar lookup="row">atmosphere/pressure-altitude</independentVar>
+            					<tableData>
+							0	0
+							12000 0
+							19000 -2
+							25000	-10
+							30000 -20
+							</tableData>
+      					</table>
+					</sum>
 				</product>
     			</function>
 		</fcs_function>
