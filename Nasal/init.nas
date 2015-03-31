@@ -81,7 +81,7 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		extra500.eSystem.init();
 		
 		
-		
+		extra500.environment.init();
 		
 	},1);
 

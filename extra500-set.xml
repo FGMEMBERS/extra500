@@ -1317,6 +1317,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/route_manager.nas</file>
 		<file>Aircraft/extra500/Nasal/trimindication.nas</file>
 		
+		<file>Aircraft/extra500/Nasal/environment.nas</file>
 	</extra500>
 	<IFD>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/debug.nas</file>
