@@ -50,13 +50,17 @@ var HeatClass = {
 			me._state  = 0;
 			me._ampere = 0;
 		}
+		
 		me._nState.setValue(me._state);
 		me._nAmpere.setValue(me._ampere);
 	},
 	setOn : func(value){
 		me._value = value;
 		me.electricWork();
-	}
+	},
+	heatPower : func(){
+		return me._watt * me._value;
+	},
 	
 	
 };
@@ -138,6 +142,7 @@ var DeicingSystemClass = {
 		m._visibility	= 0;
 		m._rain	= 0;
 		
+		m._WindshieldCtrlTemperaturSwitch = environment._windshieldTemperature > 50.0 ? 1 : environment._windshieldTemperature < 50.0;
 		
 		
 		m._nIceWarning	= m._nRoot.initNode("iceWarning",0,"BOOL");
@@ -232,7 +237,7 @@ var DeicingSystemClass = {
 
 		eSystem.switch.Windshield.onStateChange = func(n){
 			me._state = n.getValue();
-			deiceSystem._checkWindshieldHeat();
+			deiceSystem._checkWindshieldHeat(me._state);
 		};
 
 #		eSystem.switch.Boots.onStateChange = func(n){
@@ -256,8 +261,25 @@ var DeicingSystemClass = {
 # 		print("We have a Stall Warning. "~warning);
 		me._StallWarner.setOn(n.getBoolValue());
 	},
-	_checkWindshieldHeat : func(){
-		me._WindshieldHeat.setOn(eSystem.switch.Windshield._state * me._WindshieldCtrl._state);
+	_checkWindshieldHeat : func(state=nil){
+		
+		
+		if (state==1){
+			me._WindshieldCtrlTemperaturSwitch = 1;
+		}
+		me._WindshieldHeat.setOn(eSystem.switch.Windshield._state and me._WindshieldCtrl._state and me._WindshieldCtrlTemperaturSwitch);
+		
+		me._WindshieldCtrlTemperaturSwitch = environment._windshieldTemperature > 50.0 ? 0 : me._WindshieldCtrlTemperaturSwitch;
+		me._WindshieldCtrlTemperaturSwitch = environment._windshieldTemperature < 40.0 ? 1 : me._WindshieldCtrlTemperaturSwitch;
+				
+		me._defrostValve = environment._windshieldTemperature > 20.0 ? 1.0 - ((environment._windshieldTemperature - 20.0) / 35.0) : 1.0;
+		
+		me._defrostWindShieldWatt = 0 ;
+		me._defrostWindShieldWatt += me._WindshieldHeat.heatPower();
+		me._defrostWindShieldWatt += engine.nIsRunning.getValue() * centerConsole._Defrost * me._defrostValve * 500.0;
+		
+		environment.deforstWindshieldWatt(me._defrostWindShieldWatt);
+		
 	},
 	_checkPitot : func(){
 		
@@ -313,6 +335,12 @@ var DeicingSystemClass = {
 		
 		
 		me._checkIce(me._dt);
+		
+		
+		me._checkWindshieldHeat();
+		
+		
+		
 	#Boots
 	# boots timer implemented in systems/extra500-pneumatic.xml: pls remove!	
 #		if (eSystem.switch.Boots._state == 1){
