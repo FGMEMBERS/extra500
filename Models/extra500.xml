@@ -196,7 +196,7 @@
 
 
   <effect>
-    <inherits-from>Effects/glass</inherits-from>
+    <inherits-from>Aircraft/extra500/Models/Effects/interior/extra500-interior-glass-reflection-front</inherits-from>
     <object-name>window.pilot</object-name>
   </effect>
 
