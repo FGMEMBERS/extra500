@@ -45,6 +45,17 @@ var CenterConsole = {
 		m._nDeice 			= m._nRoot.initNode("Deice/state",0,"BOOL");
 		m._nPitchTrim 			= props.globals.getNode("controls/flight/elevator-trim",0.0,"DOUBLE");
 		
+		m._Parkingbrake		= m._nParkingbrake.getValue();
+		m._Defrost		= m._nDefrost.getValue();
+		m._Deice		= m._nDeice.getValue();
+		m._PitchTrim		= 0;
+		m._ParkingbrakePressure = m._nParkingbrakePressure.getValue();
+		m._BrakePressure 	= 0;
+		m._CabinAltSetting = 0;
+		m._CabinRate = 0;
+		
+		
+		
 		return m;
 	},
 	setListeners : func(instance) {
@@ -52,7 +63,9 @@ var CenterConsole = {
 		append(me._listeners, setlistener(me._nParkingbrakePressure,func(n){instance.onParkingbrakePressureChange(n);},1,1) );
 		append(me._listeners, setlistener(me._nCtrlLeftBrake,func(n){instance.onBrakeChange(n);},1,0) );
 		append(me._listeners, setlistener(me._nCtrlRightBrake,func(n){instance.onBrakeChange(n);},1,0) );
-		append(me._listeners, setlistener(me._nDeice,func(n){instance.onDeiceChange(n);},1,0) );	
+		append(me._listeners, setlistener(me._nDeice,func(n){instance.onDeiceChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nDefrost,func(n){instance.onDefrostChange(n);},1,0) );
+		
 	},
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
@@ -109,6 +122,10 @@ var CenterConsole = {
 	onDeiceChange : func(n){
 		me._Deice = n.getValue();
 		deiceSystem.setIntakeHeat(me._Deice);
+	},
+	onDefrostChange : func(n){
+		me._Defrost = n.getValue();
+		deiceSystem.setDefrost(me._Defrost);
 	},
 	onPitchTrimClick : func(value = nil){
 		if (value == nil){

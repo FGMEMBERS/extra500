@@ -142,6 +142,9 @@ var DeicingSystemClass = {
 		m._visibility	= 0;
 		m._rain	= 0;
 		
+		m._defrost 	= 0;
+		m._intakeHeat	= 0;
+		
 		m._WindshieldCtrlTemperaturSwitch = environment._windshieldTemperature > 50.0 ? 1 : environment._windshieldTemperature < 50.0;
 		
 		
@@ -270,7 +273,7 @@ var DeicingSystemClass = {
 # 		eSystem.switch.Windshield.onStateChange(eSystem.switch.Windshield._nState);
 		me._PropellerHeat._nWatt.setValue(456);
 		deiceSystem.update();
-		me._timerLoop = maketimer(5.0,me,DeicingSystemClass.update);
+		me._timerLoop = maketimer(1.0,me,DeicingSystemClass.update);
 		me._timerLoop.start();
 	},
 	_onStallWarning : func(n){
@@ -302,7 +305,7 @@ var DeicingSystemClass = {
 		me._defrostValve = environment._windshieldTemperature > 20.0 ? 1.0 - ((environment._windshieldTemperature - 20.0) / 35.0) : 1.0;
 		
 		me._defrostWindShieldWatt = 0 ;
-		me._defrostWindShieldWatt += engine.nIsRunning.getValue() * centerConsole._Defrost * me._defrostValve * 500.0;
+		me._defrostWindShieldWatt += engine.nIsRunning.getValue() * me._defrost * me._defrostValve * 200.0;
 		
 		environment.deforstWindshieldWatt(me._defrostWindShieldWatt);
 		environment.heatWindshieldElectric(me._WindshieldHeat.heatPower());
@@ -343,50 +346,18 @@ var DeicingSystemClass = {
 		me._intakeHeat  = value;
 		me._nIntakeHeat.setOn(me._intakeHeat);
 	},
-	_checkIce : func(dt){
-		me._temperature = me._nTemperature.getValue();
-		me._humidity	= me._nHumidity.getValue();
-		#me._dewpoint	= me._nDewpoint.getValue();
-		#me._visibility	= me._nVisibility.getValue();
-		#me._rain	= me._nRain.getValue();
-		
-		if ( (me._humidity >= 100) and (me._temperature <= 0)){
-			me._nIceWarning.setValue(1);
-		}else{
-			me._nIceWarning.setValue(0);
-		}
-		
-	},
-	update : func(){
-		me._now 	= systime();
-		me._dt 		= me._now - me._lastTime;
-		me._lastTime	= me._now;
-		
-		
-		me._checkIce(me._dt);
-		
-		me._checkWindshieldHeatFail();
+	setDefrost : func(value){
+		me._defrost = value;
 		me._checkWindshieldHeat();
-		
-		
-		
-	#Boots
-	# boots timer implemented in systems/extra500-pneumatic.xml: pls remove!	
-#		if (eSystem.switch.Boots._state == 1){
-#			if (me._bootsTimer <= 0.0){
-#				me._Boots.setOn( (!me._Boots._state) );
-#				me._bootsTimer = 60.0;
-#			}
-#			me._bootsTimer -= me._dt;
-#		}
-		
-	# Propeller heat
+	},
+	_checkPropellerHeat : func(){
+		# Propeller heat
 		# RPM		A	Watt
 		# 0		16	384
 		# 2030		19	456
 		# 0.03546x + 16
 		
-#FIXME: RPM is not updated and also not when aircraft is switched on.		
+		#FIXME: RPM is not updated and also not when aircraft is switched on.		
 		if (eSystem.switch.Propeller._state == 1){
 			var watt = 0;
 			var volt = 0;
@@ -404,7 +375,27 @@ var DeicingSystemClass = {
 			interpolate(me._PropellerHeat._nWatt,watt,me._dt);
 # 			me._PropellerHeat._nWatt.setValue(watt);
 		}
+	},
+	_checkBoots : func(){
+			#Boots
+	# boots timer implemented in systems/extra500-pneumatic.xml: pls remove!	
+#		if (eSystem.switch.Boots._state == 1){
+#			if (me._bootsTimer <= 0.0){
+#				me._Boots.setOn( (!me._Boots._state) );
+#				me._bootsTimer = 60.0;
+#			}
+#			me._bootsTimer -= me._dt;
+#		}
+	},
+	update : func(){
+		me._now 	= systime();
+		me._dt 		= me._now - me._lastTime;
+		me._lastTime	= me._now;
 		
+		me._checkWindshieldHeatFail();
+		me._checkWindshieldHeat();
+		me._checkPropellerHeat();
+		me._checkBoots();
 	}
 };
 

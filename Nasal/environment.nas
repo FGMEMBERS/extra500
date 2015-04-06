@@ -84,18 +84,18 @@ var Environment = {
 		var humidity 	= getprop("/environment/relative-humidity");
 		var temperature	= getprop("/environment/temperature-degc");
 		#var ias		= getprop("/instrumentation/airspeed-backup/indicated-speed-kt");
-		var adjust	= 0;
 		var waterCatchEffect = 0;
 		
 		me._windshieldTemperature 		= me._nWindshieldTemperature.getValue();
 		me._windshieldTemperature 		+= ((temperature - me._windshieldTemperature) * 0.01)* me._updateSec;
-		me._windshieldTemperature 		+= ((me._defrostWatt / 4.1868) / 12 ) * me._updateSec;
+		me._windshieldTemperature 		+= ((me._defrostWatt / 16.5) / 12 ) * me._updateSec;
 		me._nWindshieldTemperature.setValue(me._windshieldTemperature);
 		
 		
 		me._windshieldElectricTemperature 	= me._nWindshieldElectricTemperature.getValue();
 		me._windshieldElectricTemperature	+= ((temperature - me._windshieldElectricTemperature) * 0.01) * me._updateSec;
-		me._windshieldElectricTemperature 	+= ((me._electricWatt / 625) / 0.76 ) * me._updateSec;
+		me._windshieldElectricTemperature 	+= ((me._defrostWatt / 16.5) / 12 ) * me._updateSec;
+		me._windshieldElectricTemperature 	+= (((me._electricWatt) / 625) / 0.76 ) * me._updateSec;
 		me._nWindshieldElectricTemperature.setValue(me._windshieldElectricTemperature);
 		
 		
