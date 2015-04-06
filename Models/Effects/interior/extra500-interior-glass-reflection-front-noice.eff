@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is part of extra500
+
+The extra500 is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
+
+The extra500 is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+Authors: 		Dirk Dittmann
+Date: 		02.04.2015
+
+Last change:	Dirk Dittmann
+Date:       	02.04.2015    
+-->
+<PropertyList>
+	<name>c172p-interior-glass-reflection-front-noice</name>
+	<inherits-from>Effects/glass</inherits-from>
+	<parameters>
+		<texture n="3">
+			<type>cubemap</type>
+			<images>
+				<positive-x>Models/Effects/interior/default_px.png</positive-x>
+				<negative-x>Models/Effects/interior/default_nx.png</negative-x>
+				<positive-y>Models/Effects/interior/default_py.png</positive-y>
+				<negative-y>Models/Effects/interior/default_ny.png</negative-y>
+				<positive-z>Models/Effects/interior/default_pz.png</positive-z>
+				<negative-z>Models/Effects/interior/default_nz.png</negative-z>
+			</images>
+		</texture>
+		<use-reflection type="int">1</use-reflection>
+		<reflection-strength type="float">0.25</reflection-strength>
+		<frost-level><use>/environment/aircraft-effects/frost-level-noice</use></frost-level>
+	</parameters>
+</PropertyList>
