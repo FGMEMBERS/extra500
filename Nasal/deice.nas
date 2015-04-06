@@ -207,6 +207,7 @@ var DeicingSystemClass = {
 		me.parents[1].init(instance);
 		me.setListeners(instance);
 		
+				
 		me._nIntakeHeat.init();
 		me._WindshieldHeat.init();
 		me._WindshieldCtrl.init();
@@ -237,9 +238,25 @@ var DeicingSystemClass = {
 
 		eSystem.switch.Windshield.onStateChange = func(n){
 			me._state = n.getValue();
+			deiceSystem._checkWindshieldHeatFail();
 			deiceSystem._checkWindshieldHeat(me._state);
+			
 		};
 
+		me._WindshieldCtrl._onStateChange = func(n){
+			#print("DeicingSystemClass::_WindshieldCtrl::_onStateChange ... ");
+			me._state = n.getValue();
+			deiceSystem._checkWindshieldHeatFail();	
+			deiceSystem._checkWindshieldHeat();	
+		};
+		
+		me._WindshieldHeat._onStateChange = func(n){
+			#print("DeicingSystemClass::_WindshieldHeat::_onStateChange ... ");
+			me._state = n.getValue();
+			deiceSystem._checkWindshieldHeatFail();	
+			deiceSystem._checkWindshieldHeat();
+		};
+		
 #		eSystem.switch.Boots.onStateChange = func(n){
 #			me._state = n.getValue();
 #			deiceSystem._Boots.setOn(me._state);
@@ -261,6 +278,15 @@ var DeicingSystemClass = {
 # 		print("We have a Stall Warning. "~warning);
 		me._StallWarner.setOn(n.getBoolValue());
 	},
+	_checkWindshieldHeatFail : func(){
+		#print("DeicingSystemClass::_checkWindshieldHeatFail ... ");
+		var fail = (me._WindshieldCtrl._state == 1) 
+				and (eSystem.switch.Windshield._state == 1)
+				and ((environment._windshieldElectricTemperature >= 50.0) or (me._WindshieldHeat._volt <= 0.0));
+				
+		me._WindshieldHeatFail.setValue(fail);
+		
+	},
 	_checkWindshieldHeat : func(state=nil){
 		
 		
@@ -269,16 +295,19 @@ var DeicingSystemClass = {
 		}
 		me._WindshieldHeat.setOn(eSystem.switch.Windshield._state and me._WindshieldCtrl._state and me._WindshieldCtrlTemperaturSwitch);
 		
-		me._WindshieldCtrlTemperaturSwitch = environment._windshieldTemperature > 50.0 ? 0 : me._WindshieldCtrlTemperaturSwitch;
-		me._WindshieldCtrlTemperaturSwitch = environment._windshieldTemperature < 40.0 ? 1 : me._WindshieldCtrlTemperaturSwitch;
+		me._WindshieldCtrlTemperaturSwitch = environment._windshieldElectricTemperature > 50.0 ? 0 : me._WindshieldCtrlTemperaturSwitch;
+		me._WindshieldCtrlTemperaturSwitch = environment._windshieldElectricTemperature < 40.0 ? 1 : me._WindshieldCtrlTemperaturSwitch;
 				
+		
 		me._defrostValve = environment._windshieldTemperature > 20.0 ? 1.0 - ((environment._windshieldTemperature - 20.0) / 35.0) : 1.0;
 		
 		me._defrostWindShieldWatt = 0 ;
-		me._defrostWindShieldWatt += me._WindshieldHeat.heatPower();
 		me._defrostWindShieldWatt += engine.nIsRunning.getValue() * centerConsole._Defrost * me._defrostValve * 500.0;
 		
 		environment.deforstWindshieldWatt(me._defrostWindShieldWatt);
+		environment.heatWindshieldElectric(me._WindshieldHeat.heatPower());
+		
+		
 		
 	},
 	_checkPitot : func(){
@@ -336,7 +365,7 @@ var DeicingSystemClass = {
 		
 		me._checkIce(me._dt);
 		
-		
+		me._checkWindshieldHeatFail();
 		me._checkWindshieldHeat();
 		
 		
