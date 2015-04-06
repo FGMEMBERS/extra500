@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             18.01.2015
+      Date:             06.04.2015
 
 -->
 
@@ -197,7 +197,9 @@
 
   <effect>
     <inherits-from>Aircraft/extra500/Models/Effects/interior/extra500-interior-glass-reflection-front</inherits-from>
-    <object-name>window.pilot</object-name>
+    <object-name>window.pilot.icing</object-name>
+    <object-name>window.pilot.heated</object-name>
+    <object-name>window.pilot.noicing</object-name>
   </effect>
 
   <effect>
