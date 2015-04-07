@@ -339,9 +339,9 @@ var DeicingSystemClass = {
 			me._WindshieldCtrlTemperaturSwitch = 1;
 		}
 		
-		if (cabin._windShieldHeated._temperature > 48.0){
+		if (cabin._windShieldHeated._temperature > 40.0){
 			me._WindshieldCtrlTemperaturSwitch = 0;
-		}elsif (cabin._windShieldHeated._temperature < 40.0){
+		}elsif (cabin._windShieldHeated._temperature < 20.0){
 			me._WindshieldCtrlTemperaturSwitch = 1;
 		}
 		
@@ -364,7 +364,7 @@ var DeicingSystemClass = {
 		
 		me._WindshieldDefrost._watt = 450.0 * me._defrostValve ;
 		
-		if (engine.nIsRunning.getValue() and centerConsole._defrost ){
+		if (engine.nIsRunning.getValue() and centerConsole._Defrost ){
 			me._WindshieldDefrost.setOn(1);
 		}else{
 			me._WindshieldDefrost.setOn(0);

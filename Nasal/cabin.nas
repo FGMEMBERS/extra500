@@ -30,8 +30,8 @@ var TemperatureSurface = {
 			]
 		};
 		m._mass = 12 ; # kg
-		m._specificHeatCapacity = 1.47 ;# kJ / (kg*K) glas
-		m._energie = 0.0 ;# kJ
+		m._specificHeatCapacity = 1470 ;# kJ / (kg*K) glas
+		m._energie = 0.0 ;# J
 		m._temperature = temp; #°C
 		m._nTemperature = m._nRoot.initNode("temperature-degc",m._temperature,"DOUBLE",1);
 		m._nEnergie = m._nRoot.initNode("energie-kJ",m._energie,"DOUBLE",1);
@@ -53,7 +53,7 @@ var TemperatureSurface = {
 		me._nEnergie.setValue(me._energie);
 	},
 	addWatt : func(watt=0.0,dt=1.0){
-		var energieFlow = (watt/1000) * dt;
+		var energieFlow = (watt) * dt;
 		me._energie += energieFlow;
 		me._nEnergie.setValue(me._energie);
 		

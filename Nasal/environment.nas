@@ -100,11 +100,11 @@ var Environment = {
 		var area	= 0.53376 ; 				# (m²) 0.48 * 1.112
 		var massflow 	= me._density * flowSpeed * area; 	# (kg/s)
 		
-		massflow *= (1.005); # specific Air 
+		massflow *= (1005); # specific Air 
 		
-		var  engerieWindShield 		= (massflow * (0.937)) * (me._temperature - cabin._windShield._temperature) * 1000;# W
+		var  engerieWindShield 		= (massflow * (0.937)) * (me._temperature - cabin._windShield._temperature) ;# W
 		
-		var  engerieWindShieldHeated 	= (massflow * (0.063)) * (me._temperature - cabin._windShieldHeated._temperature) * 1000;# W
+		var  engerieWindShieldHeated 	= (massflow * (0.063)) * (me._temperature - cabin._windShieldHeated._temperature) ;# W
 		
 		#print("frost| ",sprintf("windshield %0.3f W %0.3f W",engerieWindShield,engerieWindShieldHeated));
 		
