@@ -449,9 +449,9 @@ var DeicingSystemClass = {
 		me._checkWindshieldHeatFail();
 		me._checkWindshieldHeat();
 		
-		var  engerieWindShield 		=  me._WindshieldDefrost.heatPower();# W/s
+		var  engerieWindShield 		=  me._WindshieldDefrost.heatPower();# W
 		
-		var  engerieWindShieldHeated 	= me._WindshieldHeat.heatPower() + engerieWindShield*(0.063);# W/s
+		var  engerieWindShieldHeated 	= me._WindshieldHeat.heatPower() + (engerieWindShield*(0.063) * (0.1));# W
 		
 		engerieWindShield *= (0.937) * (0.1);
 		
