@@ -17,9 +17,63 @@
 #      Date: Jul 02 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             02.07.13
+#      Date:             07.04.15
 #
 # MM Page 563
+
+var TemperatureSurface = {
+	new : func(root,name,temp=0.0){
+		var m = { 
+			parents : [
+				TemperatureSurface, 
+				ServiceClass.new(root,name)
+			]
+		};
+		m._mass = 12 ; # kg
+		m._specificHeatCapacity = 0.7 ;# kJ / (kg*K) glas
+		m._energie = 0.0 ;# kJ
+		m._temperature = temp; #°C
+		m._nTemperature = m._nRoot.initNode("temperature-degc",m._temperature,"DOUBLE",1);
+		m._nEnergie = m._nRoot.initNode("energie-kJ",m._energie,"DOUBLE",1);
+		
+		return m;
+	},
+	setTemperatur : func(temp){
+		me._temperature = temp;
+		me._nTemperature.setValue(me._temperature);
+		
+		me._energie = me._specificHeatCapacity * (me._mass * me._temperature);
+		me._nEnergie.setValue(me._energie);
+	},
+	addTemperature : func(temp){
+		me._temperature += temp;
+		me._nTemperature.setValue(me._temperature);
+		
+		me._energie = me._specificHeatCapacity * (me._mass * me._temperature);
+		me._nEnergie.setValue(me._energie);
+	},
+	addWatt : func(watt=0.0,dt=1.0){
+		var energieFlow = (watt/1000) * dt;
+		me._energie += energieFlow;
+		me._nEnergie.setValue(me._energie);
+		
+		me._temperature = me._energie / (me._mass * me._specificHeatCapacity);
+		me._nTemperature.setValue(me._temperature);
+		
+	},
+	setEnergie : func(kJ){
+		
+		me._energie =kJ;
+		me._nEnergie.setValue(me._energie);
+		
+		me._temperature = me._energie / (me._mass * me._specificHeatCapacity);
+		me._nTemperature.setValue(me._temperature);
+		
+	},
+	
+		
+};
+
 
 var CabinClass = {
 	new : func(root,name){
@@ -45,6 +99,17 @@ var CabinClass = {
 		m._oxygenRate 		= 0.05; # Levelchange/deltaT
 		m._oxygenDeltaT 	= 15.0;
 		m._timerLoop = nil;
+		
+		m._windShield 		=  TemperatureSurface.new(root~"/windShield","windshield",environment._temperature);
+		m._windShield._mass = 11.244 ; # kg
+		m._windShield.setTemperatur(environment._temperature);
+		
+		m._windShieldHeated 	=  TemperatureSurface.new(root~"/windShieldHeated","windshieldHeated",environment._temperature);
+		m._windShieldHeated._mass = 0.756 ; # kg
+		m._windShieldHeated.setTemperatur(environment._temperature);
+		
+		
+		
 		
 		return m;
 	},

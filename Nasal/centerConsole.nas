@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jul 05 2013
 #
-#      Last change:      Eric van den Berg
-#      Date:             14.12.14
+#      Last change:      Dirk Dittmann
+#      Date:             07.04.15
 #
 
 var CenterConsole = {
@@ -125,7 +125,7 @@ var CenterConsole = {
 	},
 	onDefrostChange : func(n){
 		me._Defrost = n.getValue();
-		deiceSystem.setDefrost(me._Defrost);
+		
 	},
 	onPitchTrimClick : func(value = nil){
 		if (value == nil){

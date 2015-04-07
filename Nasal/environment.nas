@@ -17,8 +17,10 @@
 #      Date: 20.03.2015
 #
 #      Last change:      Dirk Dittmann
-#      Date:             31.03.2015
+#      Date:             07.04.15
 #
+
+
 
 var Environment = {
 	new : func(root,name){
@@ -27,41 +29,47 @@ var Environment = {
 			_nRoot		: props.globals.initNode(root),
 			_name		: name
 		};
-		m._windshieldTemperature = getprop("/environment/temperature-degc");
-		m._nWindshieldTemperature = m._nRoot.initNode("windshieldTemperatur-degc",m._windshieldTemperature,"DOUBLE");
-		m._windshieldElectricTemperature = getprop("/environment/temperature-degc");
-		m._nWindshieldElectricTemperature = m._nRoot.initNode("windshieldHeatedTemperatur-degc",m._windshieldElectricTemperature,"DOUBLE");
+		m._temperature 	= getprop("/environment/temperature-degc");
+		m._airspeed 	= getprop("/velocities/airspeed-kt");
+		m._humidity 	= getprop("/environment/relative-humidity");
 		
+		m._nWaterCatchFactor 	= m._nRoot.initNode("waterCatchFactor",0.0001,"DOUBLE",1);
 		
 		m._electricWatt = 0;
 		m._defrostWatt = 0;
-		m._updateSec = 1.0;
+		m._dt = 1.0;
 		m._timerLoop = nil;
 		return m;
 	},
 	init : func(instance=nil){
 		me.setListeners(instance);
 		
-		me._timerLoop = maketimer(me._updateSec,me,Environment.update);
-		me._timerLoop.start();
+		#me._timerLoop = maketimer(me._dt,me,Environment.update);
+		#me._timerLoop.start();
 	},
 	setListeners : func(instance) {
 		
 	},
-	update : func(){
+	update : func(dt){
+		me._dt = dt;
+		
+		me._airspeed 	= getprop("/velocities/airspeed-kt");
+		me._temperature	= getprop("/environment/temperature-degc");
+		me._humidity 	= getprop("/environment/relative-humidity");
+		me._density 	= getprop("/environment/density-slugft3") * 0.413253311; # (kg/m³)
+
 		
 		me.rainSplashVector();
 		me.frost();
 	},
 	rainSplashVector : func(){
-		var airspeed = getprop("/velocities/airspeed-kt");
-
+		var airspeed = me._airspeed;
 		# f16
 		var airspeed_max = 250;
 
-		if (airspeed > airspeed_max) {airspeed = airspeed_max;}
+		if (airspeed > airspeed_max) airspeed = airspeed_max;
 
-		airspeed = math.sqrt(airspeed/airspeed_max);
+		var airspeed = math.sqrt(airspeed/airspeed_max);
 
 		var splash_x = -0.1 - 2.0 * airspeed;
 		var splash_y = 0.0;
@@ -69,9 +77,9 @@ var Environment = {
 
 
 
-		interpolate("/environment/aircraft-effects/splash-vector-x", splash_x,me._updateSec);
-		interpolate("/environment/aircraft-effects/splash-vector-y", splash_y,me._updateSec);
-		interpolate("/environment/aircraft-effects/splash-vector-z", splash_z,me._updateSec);
+		interpolate("/environment/aircraft-effects/splash-vector-x", splash_x,me._dt);
+		interpolate("/environment/aircraft-effects/splash-vector-y", splash_y,me._dt);
+		interpolate("/environment/aircraft-effects/splash-vector-z", splash_z,me._dt);
 
 	},
 	frost : func(){
@@ -80,51 +88,49 @@ var Environment = {
 		var frostHeated = getprop("/environment/aircraft-effects/frost-level-heated");
 		var frostNoice 	= getprop("/environment/aircraft-effects/frost-level-noice");
 		
-		#var dewpoint 	= getprop("/environment/dewpoint-degc");
-		var humidity 	= getprop("/environment/relative-humidity");
-		var temperature	= getprop("/environment/temperature-degc");
-		#var ias		= getprop("/instrumentation/airspeed-backup/indicated-speed-kt");
-		var waterCatchEffect = 0;
+
+		# cooling the windshield
 		
-		me._windshieldTemperature 		= me._nWindshieldTemperature.getValue();
-		me._windshieldTemperature 		+= ((temperature - me._windshieldTemperature) * 0.01)* me._updateSec;
-		me._windshieldTemperature 		+= ((me._defrostWatt / 16.5) / 12 ) * me._updateSec;
-		me._nWindshieldTemperature.setValue(me._windshieldTemperature);
+		# specificHeatCapacity Air 1.005
+		# m² ~ 0.8
+		# Massflow 	(kg/s) = (kg/m³) * (m/s) * (m²)
+		# energie 	(kJ) = (1.005) * (kg/s) * (°C)
+		
+		var flowSpeed	= me._airspeed * 0.51444444444 ; 	# (m/s)
+		var area	= 0.53376 ; 				# (m²) 0.48 * 1.112
+		var massflow 	= me._density * flowSpeed * area; 	# (kg/s)
+		
+		massflow *= (1.005); # specific Air 
+		
+		var  engerieWindShield 		= (massflow * (0.937)) * (me._temperature - cabin._windShield._temperature) * 1000;# W/s
+		
+		var  engerieWindShieldHeated 	= (massflow * (0.063)) * (me._temperature - cabin._windShieldHeated._temperature) * 1000;# W/s
+		
+		#print("frost| ",sprintf("windshield %0.3f W %0.3f W",engerieWindShield,engerieWindShieldHeated));
+		
+		cabin._windShield.addWatt( engerieWindShield ,me._dt);
+		cabin._windShieldHeated.addWatt( engerieWindShieldHeated ,me._dt);
 		
 		
-		me._windshieldElectricTemperature 	= me._nWindshieldElectricTemperature.getValue();
-		me._windshieldElectricTemperature	+= ((temperature - me._windshieldElectricTemperature) * 0.01) * me._updateSec;
-		me._windshieldElectricTemperature 	+= ((me._defrostWatt / 16.5) / 12 ) * me._updateSec;
-		me._windshieldElectricTemperature 	+= (((me._electricWatt) / 625) / 0.76 ) * me._updateSec;
-		me._nWindshieldElectricTemperature.setValue(me._windshieldElectricTemperature);
+		var waterCatchEffect = me._humidity * me._nWaterCatchFactor.getValue();
 		
+		frostFront 	+= - cabin._windShield._temperature * waterCatchEffect;
+		frostFront 	= global.clamp(frostFront,0.0,1.0);
 		
-		waterCatchEffect = humidity * 0.0001;
-		
-		frostFront 	+= -me._windshieldTemperature * waterCatchEffect;
-		frostFront 		= global.clamp(frostFront,0.0,1.0);
-		
-		frostHeated 	+= -me._windshieldElectricTemperature * waterCatchEffect;
+		frostHeated 	+= - cabin._windShieldHeated._temperature * waterCatchEffect;
 		frostHeated 	= global.clamp(frostHeated,0.0,1.0);
 		
 		#print("frost| ",sprintf("windshield: %0.2f, T: %0.2f, F: %0.2f,  a: %0.2f",me._windshieldTemperature,temperature,frost,adjust));
 		
-		interpolate("/environment/aircraft-effects/frost-level", frost ,me._updateSec);
-		interpolate("/environment/aircraft-effects/frost-level-front", frostFront ,me._updateSec);
-		interpolate("/environment/aircraft-effects/frost-level-heated", frostHeated ,me._updateSec);
-		interpolate("/environment/aircraft-effects/frost-level-noice", frostNoice ,me._updateSec);
+		interpolate("/environment/aircraft-effects/frost-level", frost ,me._dt);
+		interpolate("/environment/aircraft-effects/frost-level-front", frostFront ,me._dt);
+		interpolate("/environment/aircraft-effects/frost-level-heated", frostHeated ,me._dt);
+		#interpolate("/environment/aircraft-effects/frost-level-noice", frostNoice ,me._dt);
 		
+		print("frost| ",sprintf("windshield %0.3fkJ (%0.1f°C),  %0.3fkJ (%0.1f°C)",cabin._windShield._energie,cabin._windShield._temperature,cabin._windShieldHeated._energie,cabin._windShieldHeated._temperature));
 		
 	},
-	deforstWindshieldWatt : func(watt){
-		me._defrostWatt = watt;
-	},
-	heatWindshieldElectric : func(watt){
-		me._electricWatt = watt;
-	},
-	
-	
-	
+		
 };
 
 var environment = Environment.new("/extra500/environment","Environment");
