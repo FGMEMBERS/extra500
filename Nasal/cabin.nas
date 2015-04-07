@@ -30,7 +30,7 @@ var TemperatureSurface = {
 			]
 		};
 		m._mass = 12 ; # kg
-		m._specificHeatCapacity = 0.7 ;# kJ / (kg*K) glas
+		m._specificHeatCapacity = 1.47 ;# kJ / (kg*K) glas
 		m._energie = 0.0 ;# kJ
 		m._temperature = temp; #°C
 		m._nTemperature = m._nRoot.initNode("temperature-degc",m._temperature,"DOUBLE",1);

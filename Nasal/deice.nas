@@ -216,7 +216,7 @@ var DeicingSystemClass = {
 		m._StallHeat 		= ElectricHeatClass.new("/extra500/system/deice/StallHeat","Stall Heat",140.0);
 		eSystem.circuitBreaker.PITOT_R.outputAdd(m._StallHeat);
 		
-		m._WindshieldDefrost		= AirHeatClass.new("/extra500/system/deice/WindshieldDeforst","Windshield Deforst",2000.0);
+		m._WindshieldDefrost		= AirHeatClass.new("/extra500/system/deice/WindshieldDeforst","Windshield Deforst",450.0);
 		
 # this does not include the ejector valves (6 sec 14W, 6sec 14W, 48s 0W): added in /systems/extra500-electrical-system.xml
 #		m._Boots 		= BootsClass.new("/extra500/system/deice/Boots","Boots",0.4);
@@ -360,10 +360,9 @@ var DeicingSystemClass = {
 			me._defrostValve = 1.0 - ((cabin._windShield._temperature - 20.0) / 35.0);
 		}else{
 			me._defrostValve = 1.0 ;
-			
 		}
 		
-		me._WindshieldDefrost._watt = 2000.0 * me._defrostValve ;
+		me._WindshieldDefrost._watt = 450.0 * me._defrostValve ;
 		
 		if (engine.nIsRunning.getValue() and centerConsole._defrost ){
 			me._WindshieldDefrost.setOn(1);
@@ -454,7 +453,7 @@ var DeicingSystemClass = {
 		
 		var  engerieWindShieldHeated 	= me._WindshieldHeat.heatPower() + engerieWindShield*(0.063);# W/s
 		
-		engerieWindShield *= (0.937);
+		engerieWindShield *= (0.937) * (0.1);
 		
 # 		cabin._windShield.addWatt(me._WindshieldDefrost.heatPower()*(0.937),me._dt);
 # 		

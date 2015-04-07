@@ -53,7 +53,7 @@ var Environment = {
 	update : func(dt){
 		me._dt = dt;
 		
-		me._airspeed 	= getprop("/velocities/airspeed-kt");
+		me._airspeed 	= getprop("/fdm[0]/jsbsim[0]/velocities[0]/vt-fps");
 		me._temperature	= getprop("/environment/temperature-degc");
 		me._humidity 	= getprop("/environment/relative-humidity");
 		me._density 	= getprop("/environment/density-slugft3") * 0.413253311; # (kg/m³)
@@ -96,20 +96,20 @@ var Environment = {
 		# Massflow 	(kg/s) = (kg/m³) * (m/s) * (m²)
 		# energie 	(kJ) = (1.005) * (kg/s) * (°C)
 		
-		var flowSpeed	= me._airspeed * 0.51444444444 ; 	# (m/s)
+		var flowSpeed	= me._airspeed * 0.3048 ; 	# (m/s)
 		var area	= 0.53376 ; 				# (m²) 0.48 * 1.112
 		var massflow 	= me._density * flowSpeed * area; 	# (kg/s)
 		
 		massflow *= (1.005); # specific Air 
 		
-		var  engerieWindShield 		= (massflow * (0.937)) * (me._temperature - cabin._windShield._temperature) * 1000;# W/s
+		var  engerieWindShield 		= (massflow * (0.937)) * (me._temperature - cabin._windShield._temperature) * 1000;# W
 		
-		var  engerieWindShieldHeated 	= (massflow * (0.063)) * (me._temperature - cabin._windShieldHeated._temperature) * 1000;# W/s
+		var  engerieWindShieldHeated 	= (massflow * (0.063)) * (me._temperature - cabin._windShieldHeated._temperature) * 1000;# W
 		
 		#print("frost| ",sprintf("windshield %0.3f W %0.3f W",engerieWindShield,engerieWindShieldHeated));
 		
-		cabin._windShield.addWatt( engerieWindShield ,me._dt);
-		cabin._windShieldHeated.addWatt( engerieWindShieldHeated ,me._dt);
+		cabin._windShield.addWatt( engerieWindShield*0.1 ,me._dt);
+		cabin._windShieldHeated.addWatt( engerieWindShieldHeated*0.1 ,me._dt);
 		
 		
 		var waterCatchEffect = me._humidity * me._nWaterCatchFactor.getValue();
