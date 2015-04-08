@@ -33,7 +33,10 @@ var Environment = {
 		m._airspeed 	= getprop("/velocities/airspeed-kt");
 		m._humidity 	= getprop("/environment/relative-humidity");
 		
-		m._nWaterCatchFactor 	= m._nRoot.initNode("waterCatchFactor",0.0001,"DOUBLE",1);
+		m._nFrostWaterCatchFactor 	= m._nRoot.initNode("frost/waterCatchFactor",0.0001,"DOUBLE",1);
+		m._nFrostAirEffectFactor 	= m._nRoot.initNode("frost/airEffectFactor",0.001,"DOUBLE",1);
+		m._nFrostAirEffectMin 		= m._nRoot.initNode("frost/airEffectMin",0.1,"DOUBLE",1);
+		m._nFrostExchangeFactor		= m._nRoot.initNode("frost/exchangeFactor",0.1,"DOUBLE",1);
 		
 		m._electricWatt = 0;
 		m._defrostWatt = 0;
@@ -91,28 +94,36 @@ var Environment = {
 
 		# cooling the windshield
 		
-		# specificHeatCapacity Air 1.005
-		# m² ~ 0.8
+		
+		# Air effect factor 0.001 and min 0.1
+		var eff_factor 	= me._nFrostAirEffectFactor.getValue() ;
+		var eff_min	= me._nFrostAirEffectMin.getValue() ;
+		
+		# specificHeatCapacity Air 1.005 kJ / (kg*K)
+		# windshield  ~ 0.53376m² = 0.48m * 1.112m
 		# Massflow 	(kg/s) = (kg/m³) * (m/s) * (m²)
 		# energie 	(kJ) = (1.005) * (kg/s) * (°C)
-		
 		var flowSpeed	= me._airspeed * 0.3048 ; 	# (m/s)
-		var area	= 0.53376 ; 				# (m²) 0.48 * 1.112
-		var massflow 	= me._density * flowSpeed * area; 	# (kg/s)
-		
+		var area	= 0.53376 ; 			# (m²) 
+		var massflow 	= me._density * (eff_min + eff_factor * flowSpeed) * area; 	# (kg/s)
 		massflow *= (1005); # specific Air 
 		
-		var  engerieWindShield 		= (massflow * (0.937)) * (me._temperature - cabin._windShield._temperature) ;# W
+		# echange Factor between Air and Windshield default 0.1
+		var exchangeFactor = me._nFrostExchangeFactor.getValue() ;
 		
-		var  engerieWindShieldHeated 	= (massflow * (0.063)) * (me._temperature - cabin._windShieldHeated._temperature) ;# W
+		#	energie flow		= (exchange factor) * (massflow) * (Delta Temp)
+		var  engerieWindShield 		= (exchangeFactor) * (massflow * (0.937)) * (me._temperature - cabin._windShield._temperature) ;# W
+		
+		var  engerieWindShieldHeated 	= (exchangeFactor) * (massflow * (0.063)) * (me._temperature - cabin._windShieldHeated._temperature) ;# W
 		
 		#print("frost| ",sprintf("windshield %0.3f W %0.3f W",engerieWindShield,engerieWindShieldHeated));
 		
-		cabin._windShield.addWatt( engerieWindShield*0.1 ,me._dt);
-		cabin._windShieldHeated.addWatt( engerieWindShieldHeated*0.1 ,me._dt);
+		# put the energie flow onto the windshield
+		cabin._windShield.addWatt( engerieWindShield ,me._dt);
+		cabin._windShieldHeated.addWatt( engerieWindShieldHeated ,me._dt);
 		
 		
-		var waterCatchEffect = me._humidity * me._nWaterCatchFactor.getValue();
+		var waterCatchEffect = me._humidity * me._nFrostWaterCatchFactor.getValue();
 		
 		frostFront 	+= - cabin._windShield._temperature * waterCatchEffect;
 		frostFront 	= global.clamp(frostFront,0.0,1.0);
@@ -127,7 +138,14 @@ var Environment = {
 		interpolate("/environment/aircraft-effects/frost-level-heated", frostHeated ,me._dt);
 		#interpolate("/environment/aircraft-effects/frost-level-noice", frostNoice ,me._dt);
 		
-		print("frost| ",sprintf("windshield %0.3fkJ (%0.1f°C),  %0.3fkJ (%0.1f°C)",cabin._windShield._energie,cabin._windShield._temperature,cabin._windShieldHeated._energie,cabin._windShieldHeated._temperature));
+		print("frost| ",sprintf("windshield %0.3fJ+=%0.3fJ (%0.1f°C),  %0.3fJ+=%0.3fJ (%0.1f°C)",
+				cabin._windShield._energie,
+			  engerieWindShield,
+				cabin._windShield._temperature,
+				cabin._windShieldHeated._energie,
+			  engerieWindShieldHeated,
+				cabin._windShieldHeated._temperature
+				       ));
 		
 	},
 		
