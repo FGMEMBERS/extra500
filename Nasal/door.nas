@@ -23,9 +23,9 @@
 	var onClickUpperDoor = func(value = nil){
 		var doorState = getprop("/extra500/door/upperpass/state");
 		if (value == nil) {
-			setprop("/extra500/door/upperpass/state",!doorState);
+			interpolate("/extra500/door/upperpass/state",!(doorState>0)?1000:0, 1.0);
 		} else if (doorState == 1) {
-			setprop("/extra500/door/upperpass/state",value);
+			interpolate("/extra500/door/upperpass/state",value?1000:0, 1.0);
 		}
 	}
 
@@ -44,19 +44,19 @@
 		}
 		
 		if (value == nil) {
-			setprop("/extra500/door/lowerpass/state",!doorStateLower and doorStateUpper);
+			interpolate("/extra500/door/lowerpass/state",((doorStateLower<=0) and (doorStateUpper>0.0))?1000:0,1.0);
 		}else{
-			setprop("/extra500/door/lowerpass/state",value and doorStateUpper  );
+			interpolate("/extra500/door/lowerpass/state",(value and doorStateUpper)?1000:0,1.0);
 		}
 	}
 
 	var onClickEmergencyExit = func(value = nil){
 		var doorState = getprop("/extra500/door/emergencyexit/state");
-		
+		interior.onTableClick(0);
 		if (value == nil){
-			setprop("/extra500/door/emergencyexit/state",!doorState);
+			interpolate("/extra500/door/emergencyexit/state",(!doorState?1000:0),2.0);
 		}else{
-			setprop("/extra500/door/emergencyexit/state",value);
+			interpolate("/extra500/door/emergencyexit/state",(value)?1000:0,2.0);
 		}
 	}
 
