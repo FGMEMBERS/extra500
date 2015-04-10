@@ -26,12 +26,13 @@
 
 <path>CenterConsole.ac</path>
 
-  <animation>
-    <type>range</type>
-    <min-m>0</min-m>
-    <max-m>50</max-m>
-  </animation>
-
+<animation>
+	<type>range</type>
+	<min-m>0</min-m>
+	<max-m>50</max-m>
+</animation>
+  
+<!-- Grain Effect 
 <effect>
     <name>centreC</name>
     <inherits-from>Models/Effects/panel</inherits-from>
@@ -39,6 +40,14 @@
     <parameters>
 		<grain-magnification type="float">2000</grain-magnification>
     </parameters>
+</effect>
+-->
+  
+<!-- shadow -->
+<effect>
+	<name>CenterConsoleShadow</name>
+	<inherits-from>Models/Effects/interior/extra500-interior</inherits-from>
+	<object-name>CenterConsoleFrame</object-name>
 </effect>
 
 <model>

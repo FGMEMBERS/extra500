@@ -737,6 +737,8 @@ var ConsumerClass = {
 		append(me._listeners, setlistener(me._nWatt,func(n){instance._onWattChange(n);},1,0) );
 		append(me._listeners, setlistener(me._nVoltMin,func(n){instance._onVoltMinChange(n);},1,0) );
 		append(me._listeners, setlistener(me._nVoltMax,func(n){instance._onVoltMaxChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nState,func(n){instance._onStateChange(n);},1,0) );
+		
 	},
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
@@ -790,6 +792,10 @@ var ConsumerClass = {
 			me._input.addAmpere(dif);
 		}
 	},
+	_onStateChange : func(n){
+		me._state = n.getValue();
+	},
+	
 	registerUI : func(){
 		
 	},

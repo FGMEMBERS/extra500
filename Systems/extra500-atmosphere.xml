@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+	
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Eric van den Berg
+      Date: 2015-04-08
+
+      Last change:      -
+      Date:             -
+-->
+
+<!--
+
+-->
+<system name="atmosphere">
+
+	<channel name="temperature">
+
+<!-- temperature in Kelvin -->
+		<fcs_function name="/environment/temperature-degK">
+			<function>
+				<sum>
+					<property>/environment/temperature-degc</property>
+					<value>273.15</value>
+				</sum>
+			</function>
+			<output>/environment/temperature-degK</output>
+		</fcs_function>
+	</channel>
+
+
+
+	<channel name="liquid water content">
+
+<!-- saturation water pressure -->
+		<fcs_function name="/environment/e-max-pa">
+			<function>	
+				<product>
+					<value>611</value>
+					<pow>
+						<value>10</value>
+						<product>
+							<value>7.5</value>
+							<property>/environment/temperature-degc</property>
+							<pow>
+								<sum>
+									<value>237.3</value>
+									<property>/environment/temperature-degc</property>
+								</sum>
+								<value>-1</value>
+							</pow>
+						</product>
+					</pow>
+				</product>
+			</function>
+			<output>/environment/e-max-pa</output>
+		</fcs_function>
+
+<!-- water pressure -->
+		<fcs_function name="/environment/e-pa">
+			<function>	
+				<product>
+					<value>0.01</value>
+					<property>/environment/relative-humidity</property>
+					<property>/environment/e-max-pa</property>
+				</product>
+			</function>
+			<output>/environment/e-pa</output>
+		</fcs_function>
+
+<!-- absolute humidity -->
+		<fcs_function name="/environment/a-kg-per-m3">
+			<function>	
+				<product>
+					<property>/environment/e-pa</property>
+					<pow>
+						<product>
+							<value>461.9</value>
+							<property>/environment/temperature-degK</property>
+						</product>
+						<value>-1</value>
+					</pow>
+				</product>
+			</function>
+			<output>/environment/a-kg-per-m3</output>
+		</fcs_function>
+
+	</channel>
+</system>

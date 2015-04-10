@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2015-01-18
+      Date:             2015-04-08
 
 
 ************************************************************************
@@ -1219,7 +1219,14 @@ JSBSim Extra Aircraft - Extra 500.
 
 
  </instrumentation>
-
+ <environment>
+	<temperature-degK type="double">15</temperature-degK>
+	 <aircraft-effects>
+		 <frost-level-noice type="double">0.0</frost-level-noice>
+		 <frost-level-heated type="double">0.0</frost-level-heated>
+		 <frost-level-front type="double">0.0</frost-level-front>
+	 </aircraft-effects>
+ </environment>
        <consumables>
 	       
 	       <fuel>
@@ -1296,6 +1303,8 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/audiopanel.nas</file>
 		<file>Aircraft/extra500/Nasal/instrument.nas</file>
 		
+		<file>Aircraft/extra500/Nasal/environment.nas</file>
+		
 		<file>Aircraft/extra500/Nasal/annunciator.nas</file>
 		<file>Aircraft/extra500/Nasal/door.nas</file>
 		<file>Aircraft/extra500/Nasal/cabin.nas</file>
@@ -1312,6 +1321,7 @@ JSBSim Extra Aircraft - Extra 500.
 		
 		<file>Aircraft/extra500/Nasal/route_manager.nas</file>
 		<file>Aircraft/extra500/Nasal/trimindication.nas</file>
+		
 		
 	</extra500>
 	<IFD>

@@ -34,6 +34,31 @@
     	</animation>
 
 <!-- Submodels -->
+	
+<!-- shadow -->
+<effect>
+    <name>InteriorShadow</name>
+    <inherits-from>Models/Effects/interior/extra500-interior</inherits-from>
+    <object-name>frame.inner</object-name>
+    <object-name>seat.copilot</object-name>
+    <object-name>seat.pilot</object-name>
+    <object-name>storage.left</object-name>
+    <object-name>storage.right</object-name>
+    <object-name>interior.handRail</object-name>
+    <object-name>interior.side</object-name>
+    <object-name>himmel</object-name>
+    <object-name>interior.Lichtbalken</object-name>
+    <object-name>seat.middle.right</object-name>
+    <object-name>seat.middle.left</object-name>
+    <object-name>seat.aft.right</object-name>
+    <object-name>seat.aft.left</object-name>
+    <object-name>interior.emergency.exit</object-name>
+    <object-name>interior.doorUpper</object-name>
+    <object-name>interior.doorLower.handRail</object-name>
+    <object-name>interior.door</object-name>
+    <object-name>storage4</object-name>
+    <object-name>interior.Tisch</object-name>
+</effect>
 
 <model>
   <name>CenterConsole</name>
