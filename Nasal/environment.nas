@@ -33,10 +33,12 @@ var Environment = {
 		m._airspeed 	= getprop("/velocities/airspeed-kt");
 		m._humidity 	= getprop("/environment/relative-humidity");
 		
-		m._nFrostWaterCatchFactor 	= m._nRoot.initNode("frost/waterCatchFactor",0.0001,"DOUBLE",1);
+		m._nFrostWaterCatchFactor 	= m._nRoot.initNode("frost/waterCatchFactor",0.25,"DOUBLE",1);
+		m._nDeFrostFactor	 	= m._nRoot.initNode("frost/deFrostFactor",0.001,"DOUBLE",1);
 		m._nFrostAirEffectFactor 	= m._nRoot.initNode("frost/airEffectFactor",5.0,"DOUBLE",1);
 		m._nFrostAirEffectMin 		= m._nRoot.initNode("frost/airEffectMin",0.1,"DOUBLE",1);
 		m._nFrostExchangeFactor		= m._nRoot.initNode("frost/exchangeFactor",50,"DOUBLE",1);
+		m._nAbsoluteHumidityMin		= m._nRoot.initNode("frost/absoluteHumidityMin",0.005,"DOUBLE",1);
 		
 		m._electricWatt = 0;
 		m._defrostWatt = 0;
@@ -56,10 +58,11 @@ var Environment = {
 	update : func(dt){
 		me._dt = dt;
 		
-		me._airspeed 	= getprop("/fdm[0]/jsbsim[0]/velocities[0]/vt-fps");
-		me._temperature	= getprop("/environment/temperature-degc");
-		me._humidity 	= getprop("/environment/relative-humidity");
-		me._density 	= getprop("/environment/density-slugft3");
+		me._airspeed 		= getprop("/fdm[0]/jsbsim[0]/velocities[0]/vt-fps");
+		me._temperature		= getprop("/environment/temperature-degc");
+		me._humidity 		= getprop("/environment/relative-humidity");
+		me._density 		= getprop("/environment/density-slugft3");
+		me._absoluteHumidity 	= getprop("/environment/a-kg-per-m3");
 
 		
 		me.rainSplashVector();
@@ -117,13 +120,20 @@ var Environment = {
 		cabin._windShield.addWatt( energyWindShield ,me._dt);
 		cabin._windShieldHeated.addWatt( energyWindShieldHeated ,me._dt);
 		
+		var waterCatchEffect = 0;
 		
-		var waterCatchEffect = me._humidity * me._nFrostWaterCatchFactor.getValue();
+		if (cabin._windShield._temperature > 0.0){
+			waterCatchEffect = cabin._windShield._temperature * me._nDeFrostFactor.getValue();
+		}else{
+			if (me._absoluteHumidity > me._nAbsoluteHumidityMin.getValue()){
+				waterCatchEffect = cabin._windShield._temperature * me._absoluteHumidity * me._nFrostWaterCatchFactor.getValue();
+			}
+		}
 		
-		frostFront 	+= - cabin._windShield._temperature * waterCatchEffect;
+		frostFront 	-= waterCatchEffect;
 		frostFront 	= global.clamp(frostFront,0.0,1.0);
 		
-		frostHeated 	+= - cabin._windShieldHeated._temperature * waterCatchEffect;
+		frostHeated 	-= waterCatchEffect;
 		frostHeated 	= global.clamp(frostHeated,0.0,1.0);
 		
 		#print("frost| ",sprintf("windshield: %0.2f, T: %0.2f, F: %0.2f,  a: %0.2f",me._windshieldTemperature,temperature,frost,adjust));
