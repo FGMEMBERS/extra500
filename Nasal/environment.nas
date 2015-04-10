@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: 20.03.2015
 #
-#      Last change:      Dirk Dittmann
-#      Date:             07.04.15
+#      Last change:      Eric van den Berg
+#      Date:             10.04.15
 #
 
 
@@ -34,9 +34,9 @@ var Environment = {
 		m._humidity 	= getprop("/environment/relative-humidity");
 		
 		m._nFrostWaterCatchFactor 	= m._nRoot.initNode("frost/waterCatchFactor",0.0001,"DOUBLE",1);
-		m._nFrostAirEffectFactor 	= m._nRoot.initNode("frost/airEffectFactor",0.001,"DOUBLE",1);
+		m._nFrostAirEffectFactor 	= m._nRoot.initNode("frost/airEffectFactor",5.0,"DOUBLE",1);
 		m._nFrostAirEffectMin 		= m._nRoot.initNode("frost/airEffectMin",0.1,"DOUBLE",1);
-		m._nFrostExchangeFactor		= m._nRoot.initNode("frost/exchangeFactor",0.1,"DOUBLE",1);
+		m._nFrostExchangeFactor		= m._nRoot.initNode("frost/exchangeFactor",50,"DOUBLE",1);
 		
 		m._electricWatt = 0;
 		m._defrostWatt = 0;
@@ -59,7 +59,7 @@ var Environment = {
 		me._airspeed 	= getprop("/fdm[0]/jsbsim[0]/velocities[0]/vt-fps");
 		me._temperature	= getprop("/environment/temperature-degc");
 		me._humidity 	= getprop("/environment/relative-humidity");
-		me._density 	= getprop("/environment/density-slugft3") * 0.413253311; # (kg/m³)
+		me._density 	= getprop("/environment/density-slugft3");
 
 		
 		me.rainSplashVector();
@@ -99,28 +99,23 @@ var Environment = {
 		var eff_factor 	= me._nFrostAirEffectFactor.getValue() ;
 		var eff_min	= me._nFrostAirEffectMin.getValue() ;
 		
-		# specificHeatCapacity Air 1.005 kJ / (kg*K)
-		# windshield  ~ 0.53376m² = 0.48m * 1.112m
-		# Massflow 	(kg/s) = (kg/m³) * (m/s) * (m²)
-		# energie 	(kJ) = (1.005) * (kg/s) * (°C)
-		var flowSpeed	= me._airspeed * 0.3048 ; 	# (m/s)
-		var area	= 0.53376 ; 			# (m²) 
-		var massflow 	= me._density * (eff_min + eff_factor * flowSpeed) * area; 	# (kg/s)
-		massflow *= (1005); # specific Air 
+		var flowSpeed	= me._airspeed ; 	# (ft/s)
+		var density = me._density ;
 		
-		# echange Factor between Air and Windshield default 0.1
+		# exchange Factor between Air and Windshield default 0.1 for V = 0
 		var exchangeFactor = me._nFrostExchangeFactor.getValue() ;
+		var eff = eff_min + flowSpeed * density * eff_factor;
 		
 		#	energie flow		= (exchange factor) * (massflow) * (Delta Temp)
-		var  engerieWindShield 		= (exchangeFactor) * (massflow * (0.937)) * (me._temperature - cabin._windShield._temperature) ;# W
+		var  energyWindShield 		= eff * exchangeFactor * 0.937 * (me._temperature - cabin._windShield._temperature) ;# W
 		
-		var  engerieWindShieldHeated 	= (exchangeFactor) * (massflow * (0.063)) * (me._temperature - cabin._windShieldHeated._temperature) ;# W
+		var  energyWindShieldHeated 	= eff * exchangeFactor * 0.063 * (me._temperature - cabin._windShieldHeated._temperature) ;# W
 		
-		#print("frost| ",sprintf("windshield %0.3f W %0.3f W",engerieWindShield,engerieWindShieldHeated));
+		#print("frost| ",sprintf("windshield %0.3f W %0.3f W",energyWindShield,energyWindShieldHeated));
 		
 		# put the energie flow onto the windshield
-		cabin._windShield.addWatt( engerieWindShield ,me._dt);
-		cabin._windShieldHeated.addWatt( engerieWindShieldHeated ,me._dt);
+		cabin._windShield.addWatt( energyWindShield ,me._dt);
+		cabin._windShieldHeated.addWatt( energyWindShieldHeated ,me._dt);
 		
 		
 		var waterCatchEffect = me._humidity * me._nFrostWaterCatchFactor.getValue();
@@ -138,12 +133,12 @@ var Environment = {
 		interpolate("/environment/aircraft-effects/frost-level-heated", frostHeated ,me._dt);
 		#interpolate("/environment/aircraft-effects/frost-level-noice", frostNoice ,me._dt);
 		
-		print("frost| ",sprintf("windshield %0.3fJ+=%0.3fJ (%0.1f°C),  %0.3fJ+=%0.3fJ (%0.1f°C)",
-				cabin._windShield._energie,
-			  engerieWindShield,
+		print("frost| ",sprintf("windshield %0.3fJ (%0.1f°C),  %0.3fJ (%0.1f°C)",
+#				cabin._windShield._energy,
+			  energyWindShield,
 				cabin._windShield._temperature,
-				cabin._windShieldHeated._energie,
-			  engerieWindShieldHeated,
+#				cabin._windShieldHeated._energy,
+			  energyWindShieldHeated,
 				cabin._windShieldHeated._temperature
 				       ));
 		

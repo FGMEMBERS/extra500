@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jul 02 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             07.04.15
+#      Last change:      Eric van den Berg
+#      Date:             10.04.15
 #
 # MM Page 563
 
@@ -31,10 +31,11 @@ var TemperatureSurface = {
 		};
 		m._mass = 12 ; # kg
 		m._specificHeatCapacity = 1470 ;# kJ / (kg*K) acryl
-		m._energie = 0.0 ;# J
+#		m._energie = 0.0 ;# J
 		m._temperature = temp; #°C
+		m._deltaTemp = 0;
 		m._nTemperature = m._nRoot.initNode("temperature-degc",m._temperature,"DOUBLE",1);
-		m._nEnergie = m._nRoot.initNode("energie-kJ",m._energie,"DOUBLE",1);
+#		m._nEnergie = m._nRoot.initNode("energie-kJ",m._energie,"DOUBLE",1);
 		
 		return m;
 	},
@@ -42,34 +43,34 @@ var TemperatureSurface = {
 		me._temperature = temp;
 		me._nTemperature.setValue(me._temperature);
 		
-		me._energie = me._specificHeatCapacity * (me._mass * me._temperature);
-		me._nEnergie.setValue(me._energie);
+#		me._energie = me._specificHeatCapacity * (me._mass * me._temperature);
+#		me._nEnergie.setValue(me._energie);
 	},
 	addTemperature : func(temp){
 		me._temperature += temp;
 		me._nTemperature.setValue(me._temperature);
 		
-		me._energie = me._specificHeatCapacity * (me._mass * me._temperature);
-		me._nEnergie.setValue(me._energie);
+#		me._energie = me._specificHeatCapacity * (me._mass * me._temperature);
+#		me._nEnergie.setValue(me._energie);
 	},
 	addWatt : func(watt=0.0,dt=1.0){
 		var energieFlow = (watt) * dt;
-		me._energie += energieFlow;
-		me._nEnergie.setValue(me._energie);
+#		me._energie += energieFlow;
+#		me._nEnergie.setValue(me._energie);
 		
-		me._temperature = me._energie / (me._mass * me._specificHeatCapacity);
-		me._nTemperature.setValue(me._temperature);
-		
-	},
-	setEnergie : func(kJ){
-		
-		me._energie =kJ;
-		me._nEnergie.setValue(me._energie);
-		
-		me._temperature = me._energie / (me._mass * me._specificHeatCapacity);
-		me._nTemperature.setValue(me._temperature);
+		me._deltaTemp = energieFlow / (me._mass * me._specificHeatCapacity);
+		me.addTemperature(me._deltaTemp);
 		
 	},
+#	setEnergie : func(kJ){
+		
+#		me._energie =kJ;
+#		me._nEnergie.setValue(me._energie);
+		
+#		me._temperature = me._energie / (me._mass * me._specificHeatCapacity);
+#		me._nTemperature.setValue(me._temperature);
+		
+#	},
 	
 		
 };

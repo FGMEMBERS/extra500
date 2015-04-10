@@ -449,21 +449,21 @@ var DeicingSystemClass = {
 		me._checkWindshieldHeatFail();
 		me._checkWindshieldHeat();
 		
-		var  engerieWindShield 		=  me._WindshieldDefrost.heatPower();# W
+		var  energyWindShield 		=  me._WindshieldDefrost.heatPower();# W
 		
-		var  engerieWindShieldHeated 	= me._WindshieldHeat.heatPower() + (engerieWindShield*(0.063) * (0.1));# W
+		var  energyWindShieldHeated 	= me._WindshieldHeat.heatPower() + (energyWindShield*(0.063) * (0.1));# W
 		
-		engerieWindShield *= (0.937) * (0.1);
+		energyWindShield *= (0.937) * (0.1);
 		
 # 		cabin._windShield.addWatt(me._WindshieldDefrost.heatPower()*(0.937),me._dt);
 # 		
 # 		cabin._windShieldHeated.addWatt(me._WindshieldDefrost.heatPower()*(0.063),me._dt); #  mass part of cabin._windShield
 # 		cabin._windShieldHeated.addWatt(me._WindshieldHeat.heatPower(),me._dt);
 # 		
-		cabin._windShield.addWatt( engerieWindShield ,me._dt);
-		cabin._windShieldHeated.addWatt( engerieWindShieldHeated ,me._dt);
+		cabin._windShield.addWatt( energyWindShield ,me._dt);
+		cabin._windShieldHeated.addWatt( energyWindShieldHeated ,me._dt);
 		
-		#print("deice| ",sprintf("windshield %0.3f W %0.3f W",engerieWindShield,engerieWindShieldHeated));
+		#print("deice| ",sprintf("windshield %0.3f W %0.3f W",energyWindShield,energyWindShieldHeated));
 		
 		
 		me._checkPropellerHeat();
