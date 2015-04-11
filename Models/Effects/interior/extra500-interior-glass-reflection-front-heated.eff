@@ -48,5 +48,7 @@ Date:       	02.04.2015
 		<reflection-strength type="float">0.25</reflection-strength>
 		<frost-level><use>/environment/aircraft-effects/frost-level-heated</use></frost-level>
 		<glass-tint type="vec4d" n="0"> 1.0 1.0 1.0 1.0</glass-tint>
+		<fog-level><use>/environment/aircraft-effects/fog-level-heated</use></fog-level>
+		
 	</parameters>
 </PropertyList>

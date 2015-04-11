@@ -98,7 +98,7 @@ var CabinClass = {
 		m._nCabinPressureAltFt  = props.globals.initNode("/instrumentation[0]/cabin-altitude[0]/pressure-alt-ft",0,"DOUBLE");
 		m._oxygenLevel 		= 1.0;
 		m._oxygenRate 		= 0.05; # Levelchange/deltaT
-		m._oxygenDeltaT 	= 15.0;
+		m._dt 	= 1.0;
 		m._timerLoop = nil;
 		
 		m._windShield 		=  TemperatureSurface.new(root~"/windShield","windshield",environment._temperature);
@@ -109,16 +109,22 @@ var CabinClass = {
 		m._windShieldHeated._mass = 0.756 ; # kg
 		m._windShieldHeated.setTemperatur(environment._temperature);
 		
-		
-		
+		m._absoluteHumidity = 0;
 		
 		return m;
 	},
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
 		me.parents[1].init(instance);
-		me._timerLoop = maketimer(me._oxygenDeltaT,me,CabinClass.oxygen);
+		me._timerLoop = maketimer(me._dt,me,CabinClass.update);
 		me._timerLoop.start();
+		
+		me._absoluteHumidity = getprop("/environment/a-kg-per-m3");
+		
+	},
+	update : func(){
+		me.oxygen();
+		me.humidity();
 	},
 	oxygen : func(){
 		
@@ -126,9 +132,9 @@ var CabinClass = {
 		var cabinPressureAlt = me._nCabinPressureAltFt.getValue();
 		
 		if (cabinPressureAlt > 9600.0){# ab 9600 ft
-			me._oxygenRate = -((cabinPressureAlt * 0.00000053 - 0.0045321637) * me._oxygenDeltaT);
+			me._oxygenRate = -((cabinPressureAlt * 0.00000053 - 0.0045321637) * me._dt);
 		}else{
-			me._oxygenRate = 0.0025 * me._oxygenDeltaT;
+			me._oxygenRate = 0.0025 * me._dt;
 		}
 		
 		me._oxygenLevel += me._oxygenRate;
@@ -145,9 +151,40 @@ var CabinClass = {
 		
 		#print(sprintf("%f/%f : %f += %f",blackoutOn,blackoutComplete,me._oxygenLevel,me._oxygenRate));
 		
-		interpolate(me._nBlackoutOnsetG,blackoutOn,me._oxygenDeltaT);
-		interpolate(me._nBlackoutCompleteG,blackoutComplete,me._oxygenDeltaT);
+		interpolate(me._nBlackoutOnsetG,blackoutOn,me._dt);
+		interpolate(me._nBlackoutCompleteG,blackoutComplete,me._dt);
 		
+		
+	},
+	humidity : func(){
+		var absoluteHumidity = getprop("/environment/a-kg-per-m3");
+		var rate = 0;
+		
+		
+		var deltaHumidity = (absoluteHumidity - me._absoluteHumidity);
+		
+		if (eSystem.switch.EnvironmentalAir._state == 1){
+			rate += 0.02;
+		}
+		
+		if (eSystem.switch.Pressure._state == -1){
+			rate += 0.2;
+		}
+		
+		if( 	   getprop("/extra500/door/lowerpass/state")>0 
+			or getprop("/extra500/door/upperpass/state")>0
+			or getprop("/extra500/door/emergencyexit/state")>0
+		){
+			rate += 0.4;
+		}
+		
+# 		print("cabin| ",sprintf("delta: %0.5f , hum: %0.5f , fog: %0.5f",
+# 					deltaHumidity,
+# 					rate,
+# 					me._absoluteHumidity
+# 				));
+		
+		me._absoluteHumidity += deltaHumidity * rate * me._dt;
 		
 	},
 

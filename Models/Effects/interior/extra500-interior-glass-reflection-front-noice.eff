@@ -39,5 +39,6 @@ Date:       	02.04.2015
 		<use-reflection type="int">1</use-reflection>
 		<reflection-strength type="float">0.25</reflection-strength>
 		<frost-level><use>/environment/aircraft-effects/frost-level-noice</use></frost-level>
+		
 	</parameters>
 </PropertyList>
