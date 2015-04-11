@@ -67,6 +67,7 @@ var Environment = {
 		
 		me.rainSplashVector();
 		me.frost();
+		me.fog();
 	},
 	rainSplashVector : func(){
 		var airspeed = me._airspeed;
@@ -130,10 +131,10 @@ var Environment = {
 			}
 		}
 		
-		frostFront 	-= waterCatchEffect;
+		frostFront 	-= waterCatchEffect * me._dt;
 		frostFront 	= global.clamp(frostFront,0.0,1.0);
 		
-		frostHeated 	-= waterCatchEffect;
+		frostHeated 	-= waterCatchEffect * me._dt;
 		frostHeated 	= global.clamp(frostHeated,0.0,1.0);
 		
 		#print("frost| ",sprintf("windshield: %0.2f, T: %0.2f, F: %0.2f,  a: %0.2f",me._windshieldTemperature,temperature,frost,adjust));
@@ -151,6 +152,50 @@ var Environment = {
 			  energyWindShieldHeated,
 				cabin._windShieldHeated._temperature
 				       ));
+		
+	},
+	fog : func(){
+		#var fog 	= getprop("/environment/aircraft-effects/fog-level");
+		var fogFront 	= getprop("/environment/aircraft-effects/fog-level-front");
+		var fogHeated 	= getprop("/environment/aircraft-effects/fog-level-heated");
+		
+		var effectFront = 0;
+		var effectHeated = 0;
+		
+		var deltaHumidity = cabin._absoluteHumidity - 0.003;
+		
+			
+		effectFront 	+=  deltaHumidity * (cabin._windShield._temperature - 12.0);
+		effectHeated 	+=  deltaHumidity * (cabin._windShieldHeated._temperature - 12.0);
+			
+		if (deiceSystem._WindshieldDefrost._state == 1){
+			effectFront	+= 0.05;
+			effectHeated	+= 0.05;
+		}
+		
+		
+		
+		
+		fogFront 	-= effectFront * me._dt;
+		fogFront 	= global.clamp(fogFront,0.0,1.0);
+		
+		fogHeated 	-= effectHeated * me._dt;
+		fogHeated 	= global.clamp(fogHeated,0.0,1.0);
+		
+				print("fog  | ",sprintf("windshield: %0.1f°C , hum: %0.5f , effect: %f , level: %f",
+					cabin._windShield._temperature,
+					cabin._absoluteHumidity,
+					effectFront,
+					fogFront
+			    
+				));
+				
+				
+		
+		interpolate("/environment/aircraft-effects/fog-level", fogFront ,me._dt);
+		interpolate("/environment/aircraft-effects/fog-level-front", fogFront ,me._dt);
+		interpolate("/environment/aircraft-effects/fog-level-heated", fogHeated ,me._dt);
+		
 		
 	},
 		
