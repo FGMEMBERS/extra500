@@ -209,31 +209,12 @@
   </effect>  
 
   <effect>
-    <inherits-from>Effects/glass</inherits-from>
+    <inherits-from>Aircraft/extra500/Models/Effects/interior/extra500-interior-glass</inherits-from>
     <object-name>window.pass.front</object-name>
-  </effect>
-
-  <effect>
-    <inherits-from>Effects/glass</inherits-from>
     <object-name>window.pass.middle.LH</object-name>
-  </effect>
-
-  <effect>
-    <inherits-from>Effects/glass</inherits-from>
     <object-name>window.pass.middle.RH</object-name>
-  </effect>
-
-  <effect>
-    <inherits-from>Effects/glass</inherits-from>
     <object-name>window.pass.aft</object-name>
   </effect>
-
-
-  <effect>
-    <inherits-from>Effects/glass</inherits-from>
-    <object-name>window.pass.aft</object-name>
-  </effect>
-
   
   <animation>
 	  <type>shader</type>
