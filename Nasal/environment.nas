@@ -125,10 +125,12 @@ var Environment = {
 		
 		if (cabin._windShield._temperature > 0.0){
 			waterCatchEffect = cabin._windShield._temperature * me._nDeFrostFactor.getValue();
+		}else	if ( (me._absoluteHumidity > me._nAbsoluteHumidityMin.getValue()) and (me._temperature > -18) and (me._humidity == 100 ){
+	# no liquid water below -18degC, so no icing. Only liquid water in air if dewpoint is below temperature (=rel humidity 100%).
+	# cannot detect clouds sadly. So only use absolute humidity as 'indication' of ice accretion. Is wrong, I know...
+			waterCatchEffect = cabin._windShield._temperature * me._absoluteHumidity * me._nFrostWaterCatchFactor.getValue();
 		}else{
-			if (me._absoluteHumidity > me._nAbsoluteHumidityMin.getValue()){
-				waterCatchEffect = cabin._windShield._temperature * me._absoluteHumidity * me._nFrostWaterCatchFactor.getValue();
-			}
+			waterCatchEffect = 0;
 		}
 		
 		frostFront 	-= waterCatchEffect * me._dt;
