@@ -22,7 +22,7 @@ Last change:	Dirk Dittmann
 Date:       	02.04.2015    
 -->
 <PropertyList>
-	<name>c172p-interior-glass-reflection-front</name>
+	<name>extra500-interior-glass-reflection-front</name>
 	<inherits-from>Effects/glass</inherits-from>
 	<parameters>
 		<texture n="1">
@@ -33,6 +33,16 @@ Date:       	02.04.2015
 			<wrap-t>repeat</wrap-t>
 			<internal-format>normalized</internal-format>
 		</texture>
+		<texture n="2">
+			<image>Models/Effects/interior/windshield_mask.png</image>
+			<type>2d</type>
+			<filter>linear-mipmap-linear</filter>
+			<wrap-s>clamp</wrap-s>
+			<wrap-t>clamp</wrap-t>
+			<internal-format>normalized</internal-format>
+		</texture>
+		<use-mask type="int">1</use-mask>
+		<overlay-color type="vec3d" n="0">1.0 1.0 1.0</overlay-color>
 		<texture n="3">
 			<type>cubemap</type>
 			<images>
