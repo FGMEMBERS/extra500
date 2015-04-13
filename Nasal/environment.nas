@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: 20.03.2015
 #
-#      Last change:      Eric van den Berg
-#      Date:             10.04.15
+#      Last change:      Dirk Dittmann
+#      Date:             12.04.13
 #
 
 
@@ -121,20 +121,35 @@ var Environment = {
 		cabin._windShield.addWatt( energyWindShield ,me._dt);
 		cabin._windShieldHeated.addWatt( energyWindShieldHeated ,me._dt);
 		
-		var waterCatchEffect = 0;
+		var waterCatchEffectFront = 0;
+		var waterCatchEffectHeated = 0;
 		
 		if (cabin._windShield._temperature > 0.0){
-			waterCatchEffect = cabin._windShield._temperature * me._nDeFrostFactor.getValue();
+			waterCatchEffectFront = cabin._windShield._temperature * me._nDeFrostFactor.getValue();
+		}else	if ( (me._absoluteHumidity > me._nAbsoluteHumidityMin.getValue()) and (me._temperature > -18) and (me._humidity == 100 ) ){
+			# no liquid water below -18degC, so no icing. Only liquid water in air if dewpoint is below temperature (=rel humidity 100%).
+			# cannot detect clouds sadly. So only use absolute humidity as 'indication' of ice accretion. Is wrong, I know...
+			waterCatchEffectFront = cabin._windShield._temperature * me._absoluteHumidity * me._nFrostWaterCatchFactor.getValue();
 		}else{
-			if (me._absoluteHumidity > me._nAbsoluteHumidityMin.getValue()){
-				waterCatchEffect = cabin._windShield._temperature * me._absoluteHumidity * me._nFrostWaterCatchFactor.getValue();
-			}
+			waterCatchEffectFront = 0;
 		}
 		
-		frostFront 	-= waterCatchEffect * me._dt;
+		
+		if (cabin._windShieldHeated._temperature > 0.0){
+			waterCatchEffectHeated = cabin._windShieldHeated._temperature * me._nDeFrostFactor.getValue();
+		}else	if ( (me._absoluteHumidity > me._nAbsoluteHumidityMin.getValue()) and (me._temperature > -18) and (me._humidity == 100 ) ){
+			# no liquid water below -18degC, so no icing. Only liquid water in air if dewpoint is below temperature (=rel humidity 100%).
+			# cannot detect clouds sadly. So only use absolute humidity as 'indication' of ice accretion. Is wrong, I know...
+			waterCatchEffectHeated = cabin._windShieldHeated._temperature * me._absoluteHumidity * me._nFrostWaterCatchFactor.getValue();
+		}else{
+			waterCatchEffectHeated = 0;
+		}
+		
+		
+		frostFront 	-= waterCatchEffectFront * me._dt;
 		frostFront 	= global.clamp(frostFront,0.0,1.0);
 		
-		frostHeated 	-= waterCatchEffect * me._dt;
+		frostHeated 	-= waterCatchEffectHeated * me._dt;
 		frostHeated 	= global.clamp(frostHeated,0.0,1.0);
 		
 		#print("frost| ",sprintf("windshield: %0.2f, T: %0.2f, F: %0.2f,  a: %0.2f",me._windshieldTemperature,temperature,frost,adjust));
