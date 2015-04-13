@@ -24,7 +24,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             27.09.14
+      Date:             11.01.15
 -->
 
 	<fileheader>
@@ -44,7 +44,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	<system file="extra500-system-gear.xml"/>
 	<system file="extra500-system-electric.xml"/>
 	<aerodynamics file="extra500-aerodynamics.xml"/>
-
+	<system file="extra500-system-elt.xml"/>
+	
 	<metrics>
 		<wingarea  unit="M2">  14.025 </wingarea>
 		<wingspan  unit="M" >  11.0 </wingspan>
@@ -304,7 +305,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 <!-- jack points: ctrl-g -->
 		<contact type="BOGEY" name="FWD_JACK">
 			<location unit="M">
-				<x>  2.415 </x>
+				<x>  2.546 </x>
 				<y>  0.00 </y>
 				<z>  -0.05 </z>				
 			</location>
@@ -320,8 +321,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 
 		<contact type="BOGEY" name="LEFT_JACK">
 			<location unit="M">
-				<x> 4.233 </x>
-				<y> -2.06 </y>
+				<x> 4.0985 </x>
+				<y> -2.635 </y>
 				<z> -0.1 </z>
 			</location>
 			<static_friction>  10.0 </static_friction>
@@ -336,8 +337,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 
 		<contact type="BOGEY" name="RIGHT_JACK">
 			<location unit="M">
-				<x> 4.233 </x>
-				<y> 2.06 </y>
+				<x> 4.0985 </x>
+				<y> 2.635 </y>
 				<z> -0.1 </z>
 			</location>
 			<static_friction>  10.0 </static_friction>

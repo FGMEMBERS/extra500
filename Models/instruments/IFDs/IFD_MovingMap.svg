@@ -24,11 +24,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="878.93577"
-     inkscape:cy="1043.7167"
+     inkscape:zoom="0.7"
+     inkscape:cx="1146.9459"
+     inkscape:cy="792.39525"
      inkscape:document-units="px"
-     inkscape:current-layer="layer5"
+     inkscape:current-layer="svg2"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -378,6 +378,11 @@
          id="path3881"
          d="m 1034.5114,797.33927 -21.0228,0"
          style="fill:#00ff00;stroke:#ffffff;stroke-width:10;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+      <path
+         inkscape:connector-curvature="0"
+         id="Data_Fuel_Range"
+         d="m 1023.9998,642.7265 c 69.1886,0 125.2772,56.08664 125.2772,125.27324 0,69.18639 -56.0886,125.27326 -125.2772,125.27326 -69.18881,0 -125.27722,-56.08687 -125.27722,-125.27326 0,-69.1866 56.08841,-125.27324 125.27722,-125.27324 z"
+         style="fill:none;stroke:#008000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline" />
     </g>
   </g>
   <g

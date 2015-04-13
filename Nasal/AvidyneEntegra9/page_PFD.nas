@@ -460,7 +460,8 @@ var AltitudeWidget = {
 			D200H		: m._group.getElementById("ALT_LAD_D200H"),
 			Plade		: m._group.getElementById("AltBlackPlade"),
 			BarMinus	: m._group.getElementById("AltBarMinus").setVisible(0),
-			Bar10		: m._group.getElementById("AltBar10").set("clip","rect(326px, 1718px, 507px, 1478px)"),
+			BarPlus10	: m._group.getElementById("AltBarPlus10").set("clip","rect(326px, 1718px, 507px, 1478px)"),
+			BarMinus10	: m._group.getElementById("AltBarMinus10").set("clip","rect(326px, 1718px, 507px, 1478px)").setVisible(0),
 			Bar100		: m._group.getElementById("AltBar100").set("clip","rect(385px, 1718px, 449px, 1478px)"),
 			Bar1000		: m._group.getElementById("AltBar1000").set("clip","rect(385px, 1718px, 449px, 1478px)"),
 			Bar10000	: m._group.getElementById("AltBar10000").set("clip","rect(385px, 1718px, 449px, 1478px)"),
@@ -587,7 +588,15 @@ var AltitudeWidget = {
 		
 		
 		me._tmpAlt = math.mod(me._alt,100);
-		me._can.Bar10.setTranslation(0, me._tmpAlt * me._SCALE_BAR_PX_10);
+		if (me._alt >= 0){
+			me._can.BarMinus10.setVisible(0);
+			me._can.BarPlus10.setVisible(1);
+			me._can.BarPlus10.setTranslation(0, me._tmpAlt * me._SCALE_BAR_PX_10);
+		}else{
+			me._can.BarPlus10.setVisible(0);
+			me._can.BarMinus10.setVisible(1);
+			me._can.BarMinus10.setTranslation(0, me._tmpAlt * me._SCALE_BAR_PX_10);
+		}
 		me._absAlt = math.abs(me._alt);
 		
 		me._can.BarMinus.setVisible( (me._alt<0) );

@@ -247,9 +247,11 @@ var PlusDataWidget = {
 		append(me._listeners, setlistener("/extra500/instrumentation/Keypad/tuningChannel",func(n){me._onTuningChannelChange(n)},1,0));	
 		append(me._listeners, setlistener("/autopilot/route-manager/current-wp",func(n){me._onCurrentWaypointChange(n)},1,0));	
 		append(me._listeners, setlistener("/autopilot/route-manager/signals/waypoint-changed",func(n){me._onWaypointChange(n)},1,0));	
-		append(me._listeners, setlistener(fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,0));	
+		append(me._listeners, setlistener(fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,1));	
 		append(me._listeners, setlistener(fms._signal.fplUpdated,func(n){me._onFplUpdatedChange(n)},0,1));	
-		
+		#right
+		append(me._listeners, setlistener("/instrumentation/altimeter-IFD-"~me._ifd.name~"/setting-hpa",func(n){me._onHpaChange(n)},1,0));	
+	
 	},
 	init : func(instance=me){
 		#print("PlusDataWidget.init() ... ");
@@ -275,6 +277,14 @@ var PlusDataWidget = {
 			DestName	: me._group.getElementById("FPL_Dest_Name").setText("----"),
 			DestBearing	: me._group.getElementById("FPL_Dest_Bearing_Deg").setText("---"),
 			DestDistance	: me._group.getElementById("FPL_Dest_Bearing_Distance").setText("---"),
+			
+			Baro		: me._group.getElementById("Baro_Value").setText("----"),
+			EngineRunning	: me._group.getElementById("Data_Time_Value").setText("--:--"),
+			FuelFlow	: me._group.getElementById("Fuel_Flow_Value").setText("-.-"),
+			FuelRmng	: me._group.getElementById("Fuel_Rmng_Value").setText("-.-"),
+			FuelTime	: me._group.getElementById("Fuel_Time_Value").setText("--:--"),
+			FuelRange	: me._group.getElementById("Fuel_Range_Value").setText("-.-"),
+			
 			
 		};
 		me._widget.TCAS.init();
@@ -414,6 +424,12 @@ var PlusDataWidget = {
 			me._can.DestBearing.setText("---");
 			me._can.DestDistance.setText("---");
 		}
+		
+		me._can.EngineRunning.setText(global.formatTime(fms._engineRunTime));
+		me._can.FuelFlow.setText(sprintf("%.1f",fms._fuelFlow));
+		me._can.FuelRmng.setText(sprintf("%.1f",fms._fuelLiter));
+		me._can.FuelTime.setText(global.formatTime(fms._fuelTime));
+		me._can.FuelRange.setText(sprintf("%.1f",fms._fuelRange));
 	},
 	_onFplUpdatedChange: func(n){
 			me._can.ETA.setText(getprop("/autopilot/route-manager/wp/eta"));
@@ -441,6 +457,13 @@ var PlusDataWidget = {
 # 			me._can.DestDistance.setText("---");
 # 		}
 	},
+	
+	_onHpaChange : func(n){
+		me._can.Baro.setText(sprintf("%4i",n.getValue()));
+	},
+	
+	
+	
 	
 };
 

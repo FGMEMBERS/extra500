@@ -28,6 +28,7 @@
         <livery>
             <name type="string">extra 500</name>
             <paintkit>Liveries/extra500.png</paintkit>
+	    <paintkit_low>Liveries/extra500_low.png</paintkit_low>
         </livery>
     </model>
 </sim>

@@ -41,18 +41,18 @@
   <type>rotate</type>
   <object-name>pointer1</object-name>
   <property>/instrumentation/cabin-altitude/pressure-alt-ft</property>
-  <interpolation>
+  	  <interpolation>
             <entry>
                 <ind>0</ind>
                 <dep>0</dep>
             </entry>
             <entry>
                 <ind>2000</ind>
-                <dep>-22</dep>
+                <dep>-32</dep>
             </entry>
             <entry>
                 <ind>4000</ind>
-                <dep>-55</dep>
+                <dep>-65</dep>
             </entry>
             <entry>
                 <ind>6000</ind>
@@ -67,8 +67,16 @@
                 <dep>-156</dep>
             </entry>
             <entry>
+                <ind>11000</ind>
+                <dep>-172</dep>
+            </entry>
+            <entry>
+                <ind>12000</ind>
+                <dep>-190</dep>
+            </entry>
+            <entry>
                 <ind>15000</ind>
-                <dep>-138</dep>
+                <dep>-228</dep>
             </entry>
             <entry>
                 <ind>20000</ind>
