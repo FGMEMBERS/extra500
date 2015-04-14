@@ -907,6 +907,8 @@ var NavSourceWidget = {
 			ID 		: m._group.getElementById("NAV_ID"),
 			Crs 		: m._group.getElementById("NAV_CRS"),
 			Distance 	: m._group.getElementById("NAV_Distance"),
+			ObsModeActive 	: m._group.getElementById("NAV_ObsMode_Active"),
+			
 		};
 		
 		m._sourceListeners	= [];
@@ -1177,6 +1179,9 @@ var NavSourceWidget = {
 		me._Pointer		= n.getValue();
 # 		me._ptree.FMSCourse.setValue(me._Pointer);
 		me._can.Crs.setText(sprintf("%i",tool.course(me._Pointer)));
+		me._can.ObsModeActive.setVisible(me._btnObsMode?1:0);
+		me._can.Crs.setColor(me._btnObsMode?COLOR["Black"]:COLOR["Green"]);
+
 		
 	},
 	update2Hz : func(now,dt){
