@@ -129,7 +129,7 @@ var FlightManagementSystemClass = {
 		m._cursorOption = 0;
 		m._cursorFocus = 0;
 		
-		m._fplActive = 0;
+		m._routeManagerActive = 0;
 		m._nRoute 		= props.globals.getNode("/autopilot/route-manager/route",1);
 		m._nFlightPan		= m._nRoot.initNode("FlightPlan");
 		
@@ -540,7 +540,7 @@ var FlightManagementSystemClass = {
 		}
 	},
 	directTo : func(){# called from keypad.nas
-		if(me._fplActive){
+		if(me._routeManagerActive){
 			if ( me._directTo ) {
 				me._node.DirectTo.setValue(0);
 			} else {
@@ -555,7 +555,7 @@ var FlightManagementSystemClass = {
 	checkOBSMode : func(active=1){
 		
 		var nextMode = 	me._btnObsMode 
-				and me._fplActive
+				and me._routeManagerActive
 				and active
 				;
 		
@@ -633,7 +633,7 @@ var FlightManagementSystemClass = {
 		#me.checkOBSMode();
 	},
 	_onFPLActiveChange : func(n){
-		me._nasalFlightPlanActive = n.getValue();
+		me._routeManagerActive = n.getValue();
 		me.checkOBSMode();
 	},
 	
@@ -681,7 +681,7 @@ var FlightManagementSystemClass = {
 		me._node.FuelRange.setValue(me._fuelRange);
 						
 		
-		if(me._nasalFlightPlanActive){
+		if(me._routeManagerActive){
 			me._flightPlan.isReady = 1;
 			
 			if(me._nasalFlightPlan.destination != nil){

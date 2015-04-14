@@ -529,7 +529,7 @@
   <property>sim/multiplay/generic/int[0]</property>
   <interpolation>
    <entry><ind>0</ind><dep>0</dep></entry>
-   <entry><ind>1</ind><dep>-80</dep></entry>
+   <entry><ind>1000</ind><dep>-80</dep></entry>
   </interpolation>   
   <axis>
     <x1-m>1.12560</x1-m>
@@ -547,12 +547,12 @@
   <condition>
    <equals>
     <property>sim/multiplay/generic/int[0]</property>
-    <value>1</value>
+    <value>1000</value>
    </equals>
   </condition>
  </animation>
 
-<animation>
+<!--<animation>
   <object-name>door.gas.spring.closed</object-name>
   <type>select</type>
   <condition>
@@ -561,7 +561,7 @@
     <value>0</value>
    </equals>
   </condition>
- </animation>
+  </animation>-->
 
  <animation>
   <type>rotate</type>
@@ -570,7 +570,7 @@
   <property>sim/multiplay/generic/int[1]</property>
   <interpolation>
    <entry><ind>0</ind><dep>0</dep></entry>
-   <entry><ind>1</ind><dep>120</dep></entry>
+   <entry><ind>1000</ind><dep>120</dep></entry>
   </interpolation>   
   <axis>
     <x1-m>1.12973</x1-m>
@@ -589,17 +589,17 @@
   <condition>
    <equals>
     <property>sim/multiplay/generic/int[1]</property>
-    <value>1</value>
+    <value>1000</value>
    </equals>
   </condition>
  </animation>
-
+<!--
 <animation>
   <type>translate</type>
   <object-name>emergency.exit</object-name>
   <object-name>interior.emergency.exit</object-name>
   <object-name>window.pass.middle.RH</object-name>
-  <property>sim/multiplay/generic/int[2]</property>
+  <property>sim/multiplay/generic/int[3]</property>
   <factor>.5</factor>
   <offset-m>0.0</offset-m>
   <axis>
@@ -608,6 +608,70 @@
    <z>-1</z>
   </axis>
  </animation>
+ -->
+ <!-- emergency exit by HerbyW  -->
+ 
+ 
+ <animation>
+	 <type>translate</type>
+	 <object-name>emergency.exit</object-name>
+	 <object-name>interior.emergency.exit</object-name>
+	 <object-name>window.pass.middle.RH</object-name>
+	 <property>sim/multiplay/generic/int[2]</property>
+	 <interpolation>
+		 <entry><ind>0</ind><dep>0</dep></entry>
+		 <entry><ind>300</ind><dep>-0.15</dep></entry>
+		 <entry><ind>400</ind><dep>-0.10</dep></entry>
+		 <entry><ind>800</ind><dep>-0.07</dep></entry>
+		 <entry><ind>1000</ind><dep>-0.07</dep></entry> 
+	 </interpolation>
+	 <offset-m>0.0</offset-m>
+	 <axis>
+		 <x>0</x>
+		 <y>1</y>
+		 <z>0</z>
+	 </axis>
+ </animation> 
+ 
+ <animation>
+	 <type>translate</type>
+	 <object-name>emergency.exit</object-name>
+	 <object-name>interior.emergency.exit</object-name>
+	 <object-name>window.pass.middle.RH</object-name>
+	 <property>sim/multiplay/generic/int[2]</property>
+	 <interpolation>
+		 <entry><ind>0</ind><dep>0</dep></entry>
+		 <entry><ind>400</ind><dep>0</dep></entry>
+		 <entry><ind>1000</ind><dep>-0.3</dep></entry>
+	 </interpolation>
+	 <offset-m>0.0</offset-m>
+	 <axis>
+		 <x>0</x>
+		 <y>0</y>
+		 <z>1</z>
+	 </axis>
+ </animation>
+ 
+ <animation>
+	 <type>rotate</type>
+	 <object-name>emergency.exit</object-name>
+	 <object-name>interior.emergency.exit</object-name>
+	 <object-name>window.pass.middle.RH</object-name>
+	 <property>sim/multiplay/generic/int[2]</property>
+	 <interpolation>
+		 <entry><ind>0</ind><dep>0</dep></entry>
+		 <entry><ind>200</ind><dep>0</dep></entry>
+		 <entry><ind>400</ind><dep>-25</dep></entry>
+		 <entry><ind>1000</ind><dep>-25</dep></entry>
+	 </interpolation>
+	 <offset-m>0.0</offset-m>
+	 <axis>
+		 <x>1</x>
+		 <y>0</y>
+		 <z>0</z>
+	 </axis>
+ </animation>
+ 
 
 <!--external power unit-->
 <model>
