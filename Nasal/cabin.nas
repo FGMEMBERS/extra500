@@ -150,10 +150,13 @@ var CabinClass = {
 		
 		
 		#print(sprintf("%f/%f : %f += %f",blackoutOn,blackoutComplete,me._oxygenLevel,me._oxygenRate));
-		
-		interpolate(me._nBlackoutOnsetG,blackoutOn,me._dt);
-		interpolate(me._nBlackoutCompleteG,blackoutComplete,me._dt);
-		
+		if ( getprop("/gear/gear/wow") == 1 ){
+			interpolate(me._nBlackoutOnsetG,me._blackoutOnsetG,me._dt);
+			interpolate(me._nBlackoutCompleteG,me._blackoutCompleteG,me._dt);
+		}else{
+			interpolate(me._nBlackoutOnsetG,blackoutOn,me._dt);
+			interpolate(me._nBlackoutCompleteG,blackoutComplete,me._dt);
+		}
 		
 	},
 	humidity : func(){
