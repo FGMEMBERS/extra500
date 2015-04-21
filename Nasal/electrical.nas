@@ -1377,12 +1377,12 @@ var ESystem = {
 		# charge the battery from the vHotBus to get the amps
 		me.source.Battery.charge(me._vHotBus);
 		
-		var debugText = "";
-		
-		debugText ~= sprintf("--- Bus Voltage ------\n");
-		foreach(var bus; me._listBuses){
-			debugText ~= "\t" ~ sprintf("%15s: %0.2fV, %0.2fA\n",bus.name,bus.volt,bus.ampere);
-		}
+# # 		var debugText = "";
+# # 		
+# # 		debugText ~= sprintf("--- Bus Voltage ------\n");
+# # 		foreach(var bus; me._listBuses){
+# # 			debugText ~= "\t" ~ sprintf("%15s: %0.2fV, %0.2fA\n",bus.name,bus.volt,bus.ampere);
+# # 		}
 		
 		
 		# map to hold the bus per voltage(tree)
@@ -1408,39 +1408,40 @@ var ESystem = {
 		}
 		# keep the index list for multiple usage
 		var mapBusVoltIndex = keys (mapBusVoltAmpere);
-		debugText ~= sprintf ("\n");
+# # 		debugText ~= sprintf ("\n");
+# # 		
+# # 		debugText ~= sprintf ("--- BusTree total ampere ------\n");
+# # 		foreach (var i; mapBusVoltIndex) {
+# # 			debugText ~= "\t" ~ sprintf("%0.2fV\t: %0.2fA\n",i,mapBusVoltAmpere[i].ampere);
+# # 		}
 		
-		debugText ~= sprintf ("--- BusTree total ampere ------\n");
-		foreach (var i; mapBusVoltIndex) {
-			debugText ~= "\t" ~ sprintf("%0.2fV\t: %0.2fA\n",i,mapBusVoltAmpere[i].ampere);
-		}
+# # 		debugText ~= sprintf ("--- applyAmpere to all sources ------\n");
 		
 		# search for source which is in the voltage(tree) by its tagging bus and apply the load.
-		debugText ~= sprintf ("--- applyAmpere to all sources ------\n");
 		foreach (var s; listSources) {
-			var text = sprintf("%15s %0.2fV: bus:%0.2fV",s.source._name,s.source._volt,s.bus.volt);
+# # 			var text = sprintf("%15s %0.2fV: bus:%0.2fV",s.source._name,s.source._volt,s.bus.volt);
 			
 			foreach (var voltIndex; mapBusVoltIndex) {
 				if ( s.bus.volt == voltIndex ){
-					text ~= sprintf(", input: %0.2fA",mapBusVoltAmpere[voltIndex].ampere);
+# # 					text ~= sprintf(", input: %0.2fA",mapBusVoltAmpere[voltIndex].ampere);
 					
 					# apply the load
 					s.source.applyAmpere(mapBusVoltAmpere[voltIndex]);
 					
-					text ~= sprintf(", rest: %0.2fA",mapBusVoltAmpere[voltIndex].ampere);
+# # 					text ~= sprintf(", rest: %0.2fA",mapBusVoltAmpere[voltIndex].ampere);
 				}
 			}
-			debugText ~= "\t" ~ text ~ "\n";
+# # 			debugText ~= "\t" ~ text ~ "\n";
 		}
 		
-		debugText ~= sprintf ("--- BusTree total ampere left ------\n");
-		foreach (var i; mapBusVoltIndex) {
-			debugText ~= "\t" ~ sprintf("%0.2fV\t: %0.2fA\n",i,mapBusVoltAmpere[i].ampere);
-		}
-		
-		debugText ~= sprintf ("\n");
-		
-		#print(debugText);
+# # 		debugText ~= sprintf ("--- BusTree total ampere left ------\n");
+# # 		foreach (var i; mapBusVoltIndex) {
+# # 			debugText ~= "\t" ~ sprintf("%0.2fV\t: %0.2fA\n",i,mapBusVoltAmpere[i].ampere);
+# # 		}
+# # 		
+# # 		debugText ~= sprintf ("\n");
+# # 		
+# # 		#print(debugText);
 		
 		# calc the shunts 
 		me._calcShunts();
