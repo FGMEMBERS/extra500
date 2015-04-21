@@ -159,14 +159,14 @@ var Environment = {
 		interpolate("/environment/aircraft-effects/frost-level-heated", frostHeated ,me._dt);
 		#interpolate("/environment/aircraft-effects/frost-level-noice", frostNoice ,me._dt);
 		
-		print("frost| ",sprintf("windshield %0.3fJ (%0.1f°C),  %0.3fJ (%0.1f°C)",
-#				cabin._windShield._energy,
-			  energyWindShield,
-				cabin._windShield._temperature,
-#				cabin._windShieldHeated._energy,
-			  energyWindShieldHeated,
-				cabin._windShieldHeated._temperature
-				       ));
+# 		print("frost| ",sprintf("windshield %0.3fJ (%0.1f°C),  %0.3fJ (%0.1f°C)",
+# #				cabin._windShield._energy,
+# 			  energyWindShield,
+# 				cabin._windShield._temperature,
+# #				cabin._windShieldHeated._energy,
+# 			  energyWindShieldHeated,
+# 				cabin._windShieldHeated._temperature
+# 				       ));
 		
 	},
 	fog : func(){
@@ -197,13 +197,13 @@ var Environment = {
 		fogHeated 	-= effectHeated * me._dt;
 		fogHeated 	= global.clamp(fogHeated,0.0,1.0);
 		
-				print("fog  | ",sprintf("windshield: %0.1f°C , hum: %0.5f , effect: %f , level: %f",
-					cabin._windShield._temperature,
-					cabin._absoluteHumidity,
-					effectFront,
-					fogFront
-			    
-				));
+# 				print("fog  | ",sprintf("windshield: %0.1f°C , hum: %0.5f , effect: %f , level: %f",
+# 					cabin._windShield._temperature,
+# 					cabin._absoluteHumidity,
+# 					effectFront,
+# 					fogFront
+# 			    
+# 				));
 				
 				
 		
