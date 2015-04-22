@@ -19,8 +19,8 @@
       Authors: Eric van den Berg
       Date: 23.12.14
 
-      Last change:      
-      Date:             
+	Last change:	Dirk Dittmann
+	Date:		22.04.15
 -->
 
 <PropertyList>
@@ -30,7 +30,7 @@
        	<grain-texture-enabled type="int">1</grain-texture-enabled>
 		<grain-magnification type="float">100</grain-magnification>
 	<texture n="7">
-		<image>Models/Effects/MainPanelGrain.png</image>
+		<image>Aircraft/extra500/Models/Effects/MainPanelGrain.png</image>
 		<type>2d</type>
 		<filter>linear-mipmap-linear</filter>
 		<wrap-s>repeat</wrap-s>

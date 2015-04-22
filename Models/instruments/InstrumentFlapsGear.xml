@@ -18,8 +18,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Eric van den Berg
-      Date:             24.12.14
+	Last change:	Dirk Dittmann
+	Date:		22.04.15
 -->
 
 <PropertyList>
@@ -34,7 +34,7 @@
 <!--
 <effect>
     <name>gearflaps</name>
-    <inherits-from>Models/Effects/panel</inherits-from>
+    <inherits-from>Aircraft/extra500/Models/Effects/panel</inherits-from>
     <object-name>Plane</object-name>
     <parameters>
 		<grain-magnification type="float">500</grain-magnification>
@@ -45,7 +45,7 @@
 <!-- shadow -->
   <effect>
 	  <name>InteriorShadow</name>
-	  <inherits-from>Models/Effects/interior/extra500-interior</inherits-from>
+	  <inherits-from>Aircraft/extra500/Models/Effects/interior/extra500-interior</inherits-from>
 	  <object-name>Plane</object-name>
   </effect>
 
