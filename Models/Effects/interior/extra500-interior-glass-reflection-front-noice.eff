@@ -18,8 +18,8 @@ along with extra500.  If not, see <http://www.gnu.org/licenses/>.
 Authors: 		Dirk Dittmann
 Date: 		02.04.2015
 
-Last change:	Dirk Dittmann
-Date:       	02.04.2015    
+	Last change:	Dirk Dittmann
+	Date:		22.04.15
 -->
 <PropertyList>
 	<name>extra500-interior-glass-reflection-front-noice</name>
@@ -28,16 +28,16 @@ Date:       	02.04.2015
 		<texture n="3">
 			<type>cubemap</type>
 			<images>
-				<positive-x>Models/Effects/interior/default_px.png</positive-x>
-				<negative-x>Models/Effects/interior/default_nx.png</negative-x>
-				<positive-y>Models/Effects/interior/default_py.png</positive-y>
-				<negative-y>Models/Effects/interior/default_ny.png</negative-y>
-				<positive-z>Models/Effects/interior/default_pz.png</positive-z>
-				<negative-z>Models/Effects/interior/default_nz.png</negative-z>
+				<positive-x>Aircraft/extra500/Models/Effects/interior/default_px.png</positive-x>
+				<negative-x>Aircraft/extra500/Models/Effects/interior/default_nx.png</negative-x>
+				<positive-y>Aircraft/extra500/Models/Effects/interior/default_py.png</positive-y>
+				<negative-y>Aircraft/extra500/Models/Effects/interior/default_ny.png</negative-y>
+				<positive-z>Aircraft/extra500/Models/Effects/interior/default_pz.png</positive-z>
+				<negative-z>Aircraft/extra500/Models/Effects/interior/default_nz.png</negative-z>
 			</images>
 		</texture>
 		<texture n="2">
-			<image>Models/Effects/interior/windshield_mask.png</image>
+			<image>Aircraft/extra500/Models/Effects/interior/windshield_mask.png</image>
 			<type>2d</type>
 			<filter>linear-mipmap-linear</filter>
 			<wrap-s>clamp</wrap-s>

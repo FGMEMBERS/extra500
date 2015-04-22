@@ -19,8 +19,8 @@
       Authors: Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Eric van den Berg
-      Date:             18.01.15
+	Last change:	Dirk Dittmann
+	Date:		22.04.15
 -->
 <PropertyList>
 
@@ -63,7 +63,7 @@
 <!-- shadow -->
   <effect>
 	  <name>InteriorShadow</name>
-	  <inherits-from>Models/Effects/interior/extra500-interior</inherits-from>
+	  <inherits-from>Aircraft/extra500/Models/Effects/interior/extra500-interior</inherits-from>
 	  <object-name>MainPanel</object-name>
 	  <object-name>Glareshield.upperh</object-name>
 	  <object-name>autopilot.case</object-name>

@@ -18,8 +18,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: 18.04.2014
 
-      Last change: Eric van den Berg     
-      Date: 13.01.2015            
+	Last change:	Dirk Dittmann
+	Date:		22.04.15
 
 -->
 
@@ -38,7 +38,7 @@
 <!-- shadow -->
 <effect>
     <name>InteriorShadow</name>
-    <inherits-from>Models/Effects/interior/extra500-interior</inherits-from>
+    <inherits-from>Aircraft/extra500/Models/Effects/interior/extra500-interior</inherits-from>
     <object-name>frame.inner</object-name>
     <object-name>seat.copilot</object-name>
     <object-name>seat.pilot</object-name>

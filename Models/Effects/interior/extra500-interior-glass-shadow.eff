@@ -15,11 +15,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with extra500.  If not, see <http://www.gnu.org/licenses/>.
 
-Authors: 		Dirk Dittmann
-Date: 		02.04.2015
+	Authors: 	Dirk Dittmann
+	Date: 		02.04.2015
 
-Last change:	Dirk Dittmann
-Date:       	02.04.2015    
+	Last change:	Dirk Dittmann
+	Date:		22.04.15
 -->
 <PropertyList>
 	<name>extra500-interior-glass-shadow</name>
@@ -28,12 +28,12 @@ Date:       	02.04.2015
 		<texture n="4">
 			<type>cubemap</type>
 			<images>
-				<positive-x>Models/Effects/interior/shadow_px.png</positive-x>
-				<negative-x>Models/Effects/interior/shadow_nx.png</negative-x>
-				<positive-y>Models/Effects/interior/shadow_py.png</positive-y>
-				<negative-y>Models/Effects/interior/shadow_ny.png</negative-y>
-				<positive-z>Models/Effects/interior/shadow_pz.png</positive-z>
-				<negative-z>Models/Effects/interior/shadow_nz.png</negative-z>
+				<positive-x>Aircraft/extra500/Models/Effects/interior/shadow_px.png</positive-x>
+				<negative-x>Aircraft/extra500/Models/Effects/interior/shadow_nx.png</negative-x>
+				<positive-y>Aircraft/extra500/Models/Effects/interior/shadow_py.png</positive-y>
+				<negative-y>Aircraft/extra500/Models/Effects/interior/shadow_ny.png</negative-y>
+				<positive-z>Aircraft/extra500/Models/Effects/interior/shadow_pz.png</positive-z>
+				<negative-z>Aircraft/extra500/Models/Effects/interior/shadow_nz.png</negative-z>
 			</images>
 		</texture>
 		<opacity-cube-center type="vec3d" n="0"> 0.5 0.0 0.3</opacity-cube-center>

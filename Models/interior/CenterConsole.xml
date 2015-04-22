@@ -19,8 +19,8 @@
       Authors: Thomas Grossberger 
       Date: July 04 2013
 
-      Last change:      Eric van den Berg
-      Date:             24.12.14
+	Last change:	Dirk Dittmann
+	Date:		22.04.15
 -->
 <PropertyList>
 
@@ -46,7 +46,7 @@
 <!-- shadow -->
 <effect>
 	<name>CenterConsoleShadow</name>
-	<inherits-from>Models/Effects/interior/extra500-interior</inherits-from>
+	<inherits-from>Aircraft/extra500/Models/Effects/interior/extra500-interior</inherits-from>
 	<object-name>CenterConsoleFrame</object-name>
 </effect>
 
