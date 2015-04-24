@@ -139,7 +139,7 @@
 			</item>
 			<item>
 				<name>browser-wiki-EA-500</name>
-				<label>wiki EA-500 (Browser)</label>
+				<label>Wiki (Browser)</label>
 				<binding>
 					<command>nasal</command>
 					<script>
@@ -149,7 +149,17 @@
 				</binding>
 			</item>
 
-			
+			<item>
+				<name>aircraft-about</name>
+				<label>About</label>
+				<binding>
+					<command>nasal</command>
+					<script><![CDATA[
+						gui.showDialog("extra500_About");
+					]]></script>
+				</binding>
+			</item>
+
 			
 
 	

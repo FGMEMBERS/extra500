@@ -33,14 +33,15 @@ JSBSim Extra Aircraft - Extra 500.
 
 <sim>
 	
+	<license-description>Extra500 is free and open source software, licensed
+under the GNU General Public License Version 2.</license-description>	
+	
 	<description>Extra 500</description>
-	<long-description>
-		The Extra500 is a small business turboprop powered, six seat aircraft.
-		It is a derivative of the piston powered Extra400 and shares the fully
-		carbon fibre structure as well as the landing gear and some other systems.
-		The pressurized cabin allows cruising up to FL250 at which the efficiency
-		of the RR 250-B17F/2 engine is best.
-	</long-description>
+	<long-description>The Extra500 is a small business turboprop powered, six seat aircraft.
+It is a derivative of the piston powered Extra400 and shares the fully
+carbon fibre structure as well as the landing gear and some other systems.
+The pressurized cabin allows cruising up to FL250 at which the efficiency
+of the RR 250-B17F/2 engine is best.</long-description>
 
 	<tags>
 		<tag>Extra Aircraft</tag>
@@ -49,6 +50,8 @@ JSBSim Extra Aircraft - Extra 500.
 	</tags>
 
 	<author>Dirk Dittmann, Eric van den Berg, Thomas Grossberger</author>
+	<author-callsign>D-EKEW, D-LEON, D-STHO</author-callsign>
+	
 	<status>production</status>
 	<rating>
 		<FDM type="int">4</FDM>
@@ -56,7 +59,10 @@ JSBSim Extra Aircraft - Extra 500.
 		<model type="int">4</model>
 		<cockpit type="int">4</cockpit>
 	</rating>
-
+	<extra500-version>2.0.0</extra500-version>
+	<extra500-git>https://gitlab.com/extra500/extra500</extra500-git>
+	<extra500-wiki>http://wiki.flightgear.org/Extra_EA-500</extra500-wiki>
+	
 	<flight-model archive="y">jsb</flight-model>
 	<aero archive="y">extra500</aero>
 	
