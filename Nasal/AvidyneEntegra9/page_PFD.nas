@@ -84,6 +84,12 @@ var AutopilotWidget = {
 		append(me._listeners, setlistener("/autopilot/settings/ap",func(n){me._onAP(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/settings/fd",func(n){me._onFP(n)},1,0));
 		
+		append(me._listeners, setlistener("/autopilot/fms-channel/fail",func(n){me._onFmsFail(n)},1,0));
+		append(me._listeners, setlistener("/autopilot/hdg-channel/fail",func(n){me._onHdgFail(n)},1,0));
+		append(me._listeners, setlistener("/autopilot/radionav-channel/fail",func(n){me._onNavFail(n)},1,0));
+		append(me._listeners, setlistener("/autopilot/vs-channel/fail",func(n){me._onVsFail(n)},1,0));
+		
+		
 	},
 	_onStateChange: func(n){
 		me._state	= n.getValue();
@@ -118,6 +124,47 @@ var AutopilotWidget = {
 		me._fail	= n.getValue();
 		me._checkState();
 	},
+	_onFmsFail : func(n){
+		if(n.getValue()==0){
+			me._can.ModeNAV.setColor(COLOR["Green"]);
+			me._can.ModeGPSS.setColor(COLOR["Green"]);
+			
+		}else{
+			me._can.ModeNAV.setColor(COLOR["Yellow"]);
+			me._can.ModeGPSS.setColor(COLOR["Yellow"]);
+			
+		}
+	},
+	_onHdgFail : func(n){
+		if(n.getValue()==0){
+			me._can.ModeHDG.setColor(COLOR["Green"]);
+		}else{
+			me._can.ModeHDG.setColor(COLOR["Yellow"]);
+		}
+		
+	},
+	_onNavFail : func(n){
+		if(n.getValue()==0){
+			me._can.ModeNAV.setColor(COLOR["Green"]);
+			me._can.ModeAPR.setColor(COLOR["Green"]);
+			me._can.ModeGS.setColor(COLOR["Green"]);
+			
+		}else{
+			me._can.ModeNAV.setColor(COLOR["Yellow"]);
+			me._can.ModeAPR.setColor(COLOR["Yellow"]);
+			me._can.ModeGS.setColor(COLOR["Yellow"]);
+			
+		}
+		
+	},
+	_onVsFail : func(n){
+		if(n.getValue()==0){
+			me._can.ModeVS.setColor(COLOR["Green"]);
+		}else{
+			me._can.ModeVS.setColor(COLOR["Yellow"]);
+		}
+	},
+	
 	_onHDG : func(n){
 		me._modeHDG = n.getValue();
 		me._can.ModeHDG.setVisible(me._modeHDG);
@@ -466,8 +513,7 @@ var AltitudeWidget = {
 			Bar1000		: m._group.getElementById("AltBar1000").set("clip","rect(385px, 1718px, 449px, 1478px)"),
 			Bar10000	: m._group.getElementById("AltBar10000").set("clip","rect(385px, 1718px, 449px, 1478px)"),
 			Bug		: m._group.getElementById("ALT_Bug").set("clip","rect(145px, 1718px, 688px, 1410px)"),
-			BugValue1000	: m._group.getElementById("ALT_BUG_Value_1000"),
-			BugValue100	: m._group.getElementById("ALT_BUG_Value_100"),
+			BugValue	: m._group.getElementById("ALT_Selected"),
 			HPA		: m._group.getElementById("hPa"),
 		};
 		m._alt	 	= 0;
@@ -515,12 +561,7 @@ var AltitudeWidget = {
 	_onBugChange2 : func(n){
 		me._bug2 = n.getValue();
 				
-		if (me._bug2 >= 1000){
-			me._can.BugValue1000.setText(sprintf("%2i",math.floor( me._bug2/1000)));
-		}else {
-			me._can.BugValue1000.setText("");
-		}
-		me._can.BugValue100.setText(sprintf("%03i",global.roundInt( math.mod(me._bug2,1000 ))));
+		me._can.BugValue.setText(sprintf("%4i",global.roundInt( me._bug2 )));
 	},
 	update20Hz : func(now,dt){
 		me._alt		= me._ptree.alt.getValue();

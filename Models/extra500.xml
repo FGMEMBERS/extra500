@@ -553,7 +553,7 @@
   </condition>
  </animation>
 
-<!--<animation>
+<animation>
   <object-name>door.gas.spring.closed</object-name>
   <type>select</type>
   <condition>
@@ -562,7 +562,7 @@
     <value>0</value>
    </equals>
   </condition>
-  </animation>-->
+  </animation>
 
  <animation>
   <type>rotate</type>
