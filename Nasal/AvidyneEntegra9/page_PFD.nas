@@ -84,6 +84,12 @@ var AutopilotWidget = {
 		append(me._listeners, setlistener("/autopilot/settings/ap",func(n){me._onAP(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/settings/fd",func(n){me._onFP(n)},1,0));
 		
+		append(me._listeners, setlistener("/autopilot/fms-channel/fail",func(n){me._onFmsFail(n)},1,0));
+		append(me._listeners, setlistener("/autopilot/hdg-channel/fail",func(n){me._onHdgFail(n)},1,0));
+		append(me._listeners, setlistener("/autopilot/radionav-channel/fail",func(n){me._onNavFail(n)},1,0));
+		append(me._listeners, setlistener("/autopilot/vs-channel/fail",func(n){me._onVsFail(n)},1,0));
+		
+		
 	},
 	_onStateChange: func(n){
 		me._state	= n.getValue();
@@ -118,6 +124,47 @@ var AutopilotWidget = {
 		me._fail	= n.getValue();
 		me._checkState();
 	},
+	_onFmsFail : func(n){
+		if(n.getValue()==0){
+			me._can.ModeNAV.setColor(COLOR["Green"]);
+			me._can.ModeGPSS.setColor(COLOR["Green"]);
+			
+		}else{
+			me._can.ModeNAV.setColor(COLOR["Yellow"]);
+			me._can.ModeGPSS.setColor(COLOR["Yellow"]);
+			
+		}
+	},
+	_onHdgFail : func(n){
+		if(n.getValue()==0){
+			me._can.ModeHDG.setColor(COLOR["Green"]);
+		}else{
+			me._can.ModeHDG.setColor(COLOR["Yellow"]);
+		}
+		
+	},
+	_onNavFail : func(n){
+		if(n.getValue()==0){
+			me._can.ModeNAV.setColor(COLOR["Green"]);
+			me._can.ModeAPR.setColor(COLOR["Green"]);
+			me._can.ModeGS.setColor(COLOR["Green"]);
+			
+		}else{
+			me._can.ModeNAV.setColor(COLOR["Yellow"]);
+			me._can.ModeAPR.setColor(COLOR["Yellow"]);
+			me._can.ModeGS.setColor(COLOR["Yellow"]);
+			
+		}
+		
+	},
+	_onVsFail : func(n){
+		if(n.getValue()==0){
+			me._can.ModeVS.setColor(COLOR["Green"]);
+		}else{
+			me._can.ModeVS.setColor(COLOR["Yellow"]);
+		}
+	},
+	
 	_onHDG : func(n){
 		me._modeHDG = n.getValue();
 		me._can.ModeHDG.setVisible(me._modeHDG);
