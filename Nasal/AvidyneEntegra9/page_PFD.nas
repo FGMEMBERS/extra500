@@ -466,8 +466,7 @@ var AltitudeWidget = {
 			Bar1000		: m._group.getElementById("AltBar1000").set("clip","rect(385px, 1718px, 449px, 1478px)"),
 			Bar10000	: m._group.getElementById("AltBar10000").set("clip","rect(385px, 1718px, 449px, 1478px)"),
 			Bug		: m._group.getElementById("ALT_Bug").set("clip","rect(145px, 1718px, 688px, 1410px)"),
-			BugValue1000	: m._group.getElementById("ALT_BUG_Value_1000"),
-			BugValue100	: m._group.getElementById("ALT_BUG_Value_100"),
+			BugValue	: m._group.getElementById("ALT_Selected"),
 			HPA		: m._group.getElementById("hPa"),
 		};
 		m._alt	 	= 0;
@@ -515,12 +514,7 @@ var AltitudeWidget = {
 	_onBugChange2 : func(n){
 		me._bug2 = n.getValue();
 				
-		if (me._bug2 >= 1000){
-			me._can.BugValue1000.setText(sprintf("%2i",math.floor( me._bug2/1000)));
-		}else {
-			me._can.BugValue1000.setText("");
-		}
-		me._can.BugValue100.setText(sprintf("%03i",global.roundInt( math.mod(me._bug2,1000 ))));
+		me._can.BugValue.setText(sprintf("%4i",global.roundInt( me._bug2 )));
 	},
 	update20Hz : func(now,dt){
 		me._alt		= me._ptree.alt.getValue();
