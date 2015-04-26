@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2015-04-25
+      Date:             2015-04-26
 -->
 
 <autopilot name="STEC55X">
@@ -2852,34 +2852,40 @@
 			<test value="/autopilot/cws-channel/fld-bank-deg">
 				/autopilot/mode/cws eq 1
 			</test>
-			<output>/autopilot/flight-director/fld-bank-deg</output>
+			<output>/autopilot/flight-director/fld-bank-raw-deg</output>
 		</switch>
 
 		<switch name="fldbank2">
-			<default value="/autopilot/flight-director/fld-bank-deg"/>
+			<default value="/autopilot/flight-director/fld-bank-raw-deg"/>
 			<test value="/autopilot/hdg-channel/fld-bank-deg">
 				/autopilot/mode/heading eq 1
 			</test>
-			<output>/autopilot/flight-director/fld-bank-deg</output>
+			<output>/autopilot/flight-director/fld-bank-raw-deg</output>
 		</switch>
 
 		<switch name="fldbank3">
-			<default value="/autopilot/flight-director/fld-bank-deg"/>
+			<default value="/autopilot/flight-director/fld-bank-raw-deg"/>
 			<test logic="AND" value="/autopilot/radionav-channel/fld-bank-deg">
           			/autopilot/mode/heading eq 0
           			/autopilot/mode/nav eq 1
 			</test>
-			<output>/autopilot/flight-director/fld-bank-deg</output>
+			<output>/autopilot/flight-director/fld-bank-raw-deg</output>
 		</switch>
 
 		<switch name="fldbank4">
-			<default value="/autopilot/flight-director/fld-bank-deg"/>
+			<default value="/autopilot/flight-director/fld-bank-raw-deg"/>
 			<test logic="AND" value="/autopilot/fms-channel/fld-bank-deg">
 				/autopilot/mode/nav eq 1
 				/instrumentation/nav-source eq 2
 			</test>
-			<output>/autopilot/flight-director/fld-bank-deg</output>
+			<output>/autopilot/flight-director/fld-bank-raw-deg</output>
 		</switch>
+
+		<lag_filter name ="fld-bank">
+ 			<input>/autopilot/flight-director/fld-bank-raw-deg</input>
+			<c1>1.0</c1>
+			<output>/autopilot/flight-director/fld-bank-deg</output>
+		</lag_filter>
 
 
 		<switch name="fldpitch1">
@@ -2887,25 +2893,31 @@
 			<test value="/autopilot/vs-channel/fld-pitch-deg">
           			/autopilot/mode/vs eq 1
 			</test>
-			<output>/autopilot/flight-director/fld-pitch-deg</output>
+			<output>/autopilot/flight-director/fld-pitch-raw-deg</output>
 		</switch>
 
 		<switch name="fldpitch2">
-			<default value="/autopilot/flight-director/fld-pitch-deg"/>
+			<default value="/autopilot/flight-director/fld-pitch-raw-deg"/>
 			<test logic="AND" value="/autopilot/alt-channel/fld-pitch-deg">
           			/autopilot/mode/vs eq 0
           			/autopilot/mode/alt eq 1
 			</test>
-			<output>/autopilot/flight-director/fld-pitch-deg</output>
+			<output>/autopilot/flight-director/fld-pitch-raw-deg</output>
 		</switch>
 
 		<switch name="fldpitch3">
-			<default value="/autopilot/flight-director/fld-pitch-deg"/>
+			<default value="/autopilot/flight-director/fld-pitch-raw-deg"/>
 			<test logic="AND" value="/autopilot/gs-channel/fld-pitch-deg">
           			/autopilot/mode/gs-follow eq 1
 			</test>
-			<output>/autopilot/flight-director/fld-pitch-deg</output>
+			<output>/autopilot/flight-director/fld-pitch-raw-deg</output>
 		</switch>
+
+		<lag_filter name ="fld-pitch">
+ 			<input>/autopilot/flight-director/fld-pitch-raw-deg</input>
+			<c1>1.0</c1>
+			<output>/autopilot/flight-director/fld-pitch-deg</output>
+		</lag_filter>
 
 	</channel>
 
