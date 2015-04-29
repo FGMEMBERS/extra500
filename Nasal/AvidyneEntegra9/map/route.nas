@@ -24,9 +24,12 @@
 var RouteItemClass = {
 	new : func(canvasGroup,index){
 		var m = {parents:[RouteItemClass]};
-		m._group = canvasGroup.createChild("group", "Waypoint_"~index).setVisible(0);	
+		m._index = index;
+		m._group = canvasGroup.createChild("group", "Waypoint_"~index).setVisible(0);
+		m._groupTrack = canvasGroup.createChild("group", "Waypoint_Track"~index).setVisible(0);
+		
 		m._can = {
-			Waypoint : m._group.createChild("path","track")
+			Waypoint : m._group.createChild("path","icon")
 				.setStrokeLineWidth(3)
 				.setScale(1)
 				.setColor("#FFFFFF")
@@ -47,8 +50,17 @@ var RouteItemClass = {
 				.setColor("#FFFFFF")
 				.setColorFill("#FFFFFF")
 				,
+			track : m._groupTrack.createChild("path","track")
+				.setStrokeLineWidth(3)
+				.setScale(1)
+				.setColor("#FFFFFF")
+			,
 		};
 		 return m;
+	},
+	setVisible : func(v){
+		me._group.setVisible(v);
+		me._groupTrack.setVisible(v);
 	},
 	draw : func(wpt){
 		me._group.setGeoPosition(wpt.lat,wpt.lon);
@@ -56,6 +68,27 @@ var RouteItemClass = {
 		me.setColor("#FFFFFF");
 		me._group.setVisible(1);
 	},
+	drawTrack : func(wpt){
+		var cmds = [];
+		var coords = [];
+		var cmd = canvas.Path.VG_MOVE_TO;
+		print(sprintf("RouteItemClass::drawTrack() ... [%i] %s \t : %i",
+				me._index,
+				wpt.name,
+				size(wpt.path)
+			     ));
+		
+		foreach (var pt; wpt.path) {
+			append(coords,"N"~pt.lat);
+			append(coords,"E"~pt.lon);
+			append(cmds,cmd);
+			cmd = canvas.Path.VG_LINE_TO;
+		}
+		me._can.track.setDataGeo(cmds,coords);
+		me._groupTrack.setVisible(1);
+		
+	},
+	
 	setColor : func(color){
 		me._can.Label.setColor(color).setColorFill(color);
 		me._can.Waypoint.setColor(color).setColorFill(color);
@@ -87,6 +120,8 @@ var FMSIcon = {
 				.setColorFill("#00FF00")
 				.setText(text)
 			,
+			
+			
 		};
 		return m;
 	},
@@ -133,8 +168,9 @@ var RouteLayer = {
 		m._item 	= [];
 		m._itemIndex	= 0;
 		m._itemCount	= 0;
-		m._groupOBS	= group.createChild("group",id~"_OBS").setVisible(0);
-		m._groupFMS	= group.createChild("group",id~"_FMS");
+		m._groupTrack	= m._group.createChild("group",id~"_Track");
+		m._groupOBS	= m._group.createChild("group",id~"_OBS").setVisible(0);
+		m._groupFMS	= m._group.createChild("group",id~"_FMS");
 		
 		m._can = {
 			track : m._group.createChild("path","track")
@@ -155,6 +191,7 @@ var RouteLayer = {
 				.setScale(1)
 				.setColor("#FF0EEB"),
 				
+			
 # 			"TOD" : m._groupFMS.createChild("image", "imgTOD")
 # 				.setFile(mapIconCache._canvas.getPath())
 # 				.setSourceRect(0,0,0,0,0)
@@ -165,6 +202,7 @@ var RouteLayer = {
 # 				.setTranslation(-15,-15),
 			
 		};
+		
 		
 # 			var imgTOD = m._can.TOD.createChild("image", "imgTOD")
 # 				.setFile(mapIconCache._canvas.getPath())
@@ -310,33 +348,41 @@ var RouteLayer = {
 	},
 	_drawWaypoints : func(){
 # 		print("TcasLayer._draw() ... ");
-		me._track.cmds = [];
-		me._track.coords = [];
+# 		me._track.cmds = [];
+# 		me._track.coords = [];
 		me._itemIndex	= 0;
+		print(sprintf("RouteLayer::_drawWaypoints() ... plan size = %i",
+				fms._flightPlan.planSize
+			     ));
+		
 		var cmd = canvas.Path.VG_MOVE_TO;
 		for( var i=0; i < fms._flightPlan.planSize; i+=1 ){
 
 			if(me._itemIndex >= me._itemCount){
-				append(me._item,RouteItemClass.new(me._group,me._itemIndex));
+				append(me._item,RouteItemClass.new(me._groupTrack,me._itemIndex));
 				me._itemCount = size(me._item);
 			}
+			
 			me._item[me._itemIndex].draw(fms._flightPlan.wp[i]);
-
-			foreach (var pt; fms._flightPlan.wp[i].path) {
-				append(me._track.coords,"N"~pt.lat);
-				append(me._track.coords,"E"~pt.lon);
-				append(me._track.cmds,cmd);
-				cmd = canvas.Path.VG_LINE_TO;
-			}
+			me._item[me._itemIndex].drawTrack(fms._flightPlan.wp[i]);
+			
+			
+# 			foreach (var pt; fms._flightPlan.wp[i].path) {
+# 				append(me._track.coords,"N"~pt.lat);
+# 				append(me._track.coords,"E"~pt.lon);
+# 				append(me._track.cmds,cmd);
+# 				cmd = canvas.Path.VG_LINE_TO;
+# 			}
 			
 			me._itemIndex +=1;
 		}
 		#append(cmds,canvas.Path.VG_CLOSE_PATH);
-		me._can.track.setDataGeo(me._track.cmds,me._track.coords);
+		#me._can.track.setDataGeo(me._track.cmds,me._track.coords);
 		
 		for (me._itemIndex ; me._itemIndex < me._itemCount ; me._itemIndex += 1){
-			me._item[me._itemIndex]._group.setVisible(0);
+			me._item[me._itemIndex].setVisible(0);
 		}
+		print("\n");
 
 	},
 	_drawLegs : func(){
