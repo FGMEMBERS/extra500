@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: 07.06.2014
 #
-#      Last change:      Eric van den Berg 
-#      Date:             27.07.2014
+#	Last change:	Dirk Dittmann
+#	Date:		30.04.15
 #
 
 # internal flightplan
@@ -146,11 +146,14 @@ var FlightManagementSystemClass = {
 		
 		m._destinationCourseDistance = [0,0];
 		
-		m._engineRunTime = 0;
-		m._fuelFlow 	= 0;
-		m._fuelLiter 	= 0;
-		m._fuelTime 	= 0;
-		m._fuelRange 	= 0;
+		m._engineRunTime 	= 0;
+		m._fuelFlow 		= 0;
+		m._fuelLiter 		= 0;
+		m._fuelTime 		= 0;
+		m._fuelRange 		= 0;
+		m._fuelRangeReserve 	= 0;
+		m._fuelTimeReserve	= 2700; #sec 45min
+		
 		
 		
 		m._signal = {
@@ -177,9 +180,10 @@ var FlightManagementSystemClass = {
 			
 			RouteManagerSelection		: props.globals.initNode("/sim/gui/dialogs/route-manager/selection",-1,"INT"),
 			
-			EngineRunTime	: m._nRoot.initNode("engineRunTime_sec",0,"INT"),
-			FuelTime	: m._nRoot.initNode("fuelTime_sec",0,"INT"),
-			FuelRange	: m._nRoot.initNode("fuelRange_nm",0,"DOUBLE"),
+			EngineRunTime		: m._nRoot.initNode("engineRunTime_sec",0,"INT"),
+			FuelTime		: m._nRoot.initNode("fuelTime_sec",0,"INT"),
+			FuelRange		: m._nRoot.initNode("fuelRange_nm",0,"DOUBLE"),
+			FuelRangeReserve	: m._nRoot.initNode("fuelRangeReserve_nm",0,"DOUBLE"),
 			
 			
 		};
@@ -666,19 +670,24 @@ var FlightManagementSystemClass = {
 			if (gs > 15 and fuelFlowLpSec > 0){
 				me._fuelTime = me._fuelLiter / fuelFlowLpSec;
 				me._fuelRange = gs * me._fuelTime / 3600.0;
+				me._fuelRangeReserve = gs * me._fuelTimeReserve / 3600.0;
 
 			}else{
 				me._fuelTime = 0;
 				me._fuelRange = 0;
+				me._fuelRangeReserve = 0;
 			}
 
 		}else{
 			me._fuelTime = 0;
 			me._fuelRange = 0;
+			me._fuelRangeReserve = 0;
 		}
 		
 		me._node.FuelTime.setValue(me._fuelTime);
 		me._node.FuelRange.setValue(me._fuelRange);
+		me._node.FuelRangeReserve.setValue(me._fuelRangeReserve);
+		
 						
 		
 		if(me._routeManagerActive){

@@ -250,8 +250,7 @@ var PlusDataWidget = {
 		append(me._listeners, setlistener(fms._signal.fplReady,func(n){me._onFplReadyChange(n)},1,1));	
 		append(me._listeners, setlistener(fms._signal.fplUpdated,func(n){me._onFplUpdatedChange(n)},0,1));	
 		#right
-		append(me._listeners, setlistener("/instrumentation/altimeter-IFD-"~me._ifd.name~"/setting-hpa",func(n){me._onHpaChange(n)},1,0));	
-	
+		
 	},
 	init : func(instance=me){
 		#print("PlusDataWidget.init() ... ");
@@ -278,7 +277,6 @@ var PlusDataWidget = {
 			DestBearing	: me._group.getElementById("FPL_Dest_Bearing_Deg").setText("---"),
 			DestDistance	: me._group.getElementById("FPL_Dest_Bearing_Distance").setText("---"),
 			
-			Baro		: me._group.getElementById("Baro_Value").setText("----"),
 			EngineRunning	: me._group.getElementById("Data_Time_Value").setText("--:--"),
 			FuelFlow	: me._group.getElementById("Fuel_Flow_Value").setText("-.-"),
 			FuelRmng	: me._group.getElementById("Fuel_Rmng_Value").setText("-.-"),
@@ -457,14 +455,7 @@ var PlusDataWidget = {
 # 			me._can.DestDistance.setText("---");
 # 		}
 	},
-	
-	_onHpaChange : func(n){
-		me._can.Baro.setText(sprintf("%4i",n.getValue()));
-	},
-	
-	
-	
-	
+		
 };
 
 

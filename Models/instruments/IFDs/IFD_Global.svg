@@ -38,9 +38,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="687.25984"
-     inkscape:cy="1011.6779"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="1761.8436"
+     inkscape:cy="1250.1696"
      inkscape:document-units="px"
      inkscape:current-layer="Info_Right"
      showgrid="false"
@@ -691,43 +691,6 @@
          id="rect4983"
          style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.01030636;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
       <g
-         id="Baro"
-         transform="translate(0,-162.50534)">
-        <text
-           xml:space="preserve"
-           style="font-size:36px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-           x="1669.7684"
-           y="328.23773"
-           id="text7827-8-5-4"
-           sodipodi:linespacing="125%"><tspan
-             sodipodi:role="line"
-             id="tspan7829-7-0-2"
-             x="1669.7684"
-             y="328.23773">MAP</tspan></text>
-        <text
-           xml:space="preserve"
-           style="font-size:36px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-           x="1955.1864"
-           y="328.23773"
-           id="text4912-5"
-           sodipodi:linespacing="125%"><tspan
-             sodipodi:role="line"
-             id="tspan4914-5"
-             x="1955.1864"
-             y="328.23773">Mb</tspan></text>
-        <text
-           sodipodi:linespacing="125%"
-           id="Baro_Value"
-           y="328.23773"
-           x="1941.1539"
-           style="font-size:48px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-           xml:space="preserve"><tspan
-             y="328.23773"
-             x="1941.1539"
-             id="tspan4926-8"
-             sodipodi:role="line">1013</tspan></text>
-      </g>
-      <g
          transform="translate(0,-111.24789)"
          id="Data_Time">
         <text
@@ -777,7 +740,7 @@
              sodipodi:role="line"
              id="tspan3299"
              x="1669.7684"
-             y="328.23773">Flow</tspan></text>
+             y="328.23773">FFlow</tspan></text>
         <text
            xml:space="preserve"
            style="font-size:36px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
@@ -814,7 +777,7 @@
              y="328.23773"
              x="1669.7684"
              id="tspan3313"
-             sodipodi:role="line">Rmng</tspan></text>
+             sodipodi:role="line">FRmng</tspan></text>
         <text
            sodipodi:linespacing="125%"
            id="text3315"
@@ -851,7 +814,7 @@
              sodipodi:role="line"
              id="tspan3327"
              x="1669.7684"
-             y="328.23773">Time</tspan></text>
+             y="328.23773">FTime</tspan></text>
         <text
            xml:space="preserve"
            style="font-size:36px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#60ffb8;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
@@ -888,7 +851,7 @@
              y="328.23773"
              x="1669.7684"
              id="tspan3341"
-             sodipodi:role="line">Range</tspan></text>
+             sodipodi:role="line">FRange</tspan></text>
         <text
            sodipodi:linespacing="125%"
            id="text3343"
