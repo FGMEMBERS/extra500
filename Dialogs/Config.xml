@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: 14.03.2014
 
-      Last change:     Dirk Dittmann
-      Date:            14.03.2014
+	Last change:	Dirk Dittmann
+	Date:		30.04.15
 -->
 
 <PropertyList>
@@ -114,6 +114,7 @@
 			</checkbox>
 			<empty><stretch>1</stretch></empty>
 		</group>
+		
 		<!--
 		<text>
 			<row>1</row><col>0</col>
@@ -233,7 +234,31 @@
 			<empty><stretch>1</stretch></empty>
 		</group>
 		-->
+		
+		<text>
+			<row>4</row><col>0</col>
+			<label>ELT</label>
+		</text>
+		<group>
+			<row>4</row><col>1</col>
+			<layout>hbox</layout>
+			<checkbox>
+				<name>msg_ELT</name>
+				<label>over multiplayer chat</label>
+				<property>/extra500/config/ui/elt</property>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+					<object-name>msg_ELT</object-name>
+				</binding>
+			</checkbox>
+			<empty><stretch>1</stretch></empty>
+		</group>
+		
+		
+		
 	</group>
+	
 	<hrule/>
 	<group>
 			<layout>vbox</layout>
