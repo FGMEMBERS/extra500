@@ -465,6 +465,7 @@ var MovingMap = {
 			var r = (me._screenSize/me._mapOptions.range) * rangeNM;
 			var rr = (me._screenSize/me._mapOptions.range) * reserveNM;
 			
+			rr = r - rr;
 						
 			me._can.DataFuelRange.reset()
 				.move(1024-r, 768)
