@@ -28,7 +28,7 @@
      inkscape:cx="1146.9459"
      inkscape:cy="792.39525"
      inkscape:document-units="px"
-     inkscape:current-layer="svg2"
+     inkscape:current-layer="layer5"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -382,7 +382,13 @@
          inkscape:connector-curvature="0"
          id="Data_Fuel_Range"
          d="m 1023.9998,642.7265 c 69.1886,0 125.2772,56.08664 125.2772,125.27324 0,69.18639 -56.0886,125.27326 -125.2772,125.27326 -69.18881,0 -125.27722,-56.08687 -125.27722,-125.27326 0,-69.1866 56.08841,-125.27324 125.27722,-125.27324 z"
-         style="fill:none;stroke:#008000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;display:inline" />
+         style="fill:none;stroke:#67e54a;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+      <path
+         style="fill:none;stroke:#67e54a;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:15, 15;stroke-dashoffset:0;display:inline"
+         d="m 1023.9998,642.7265 c 69.1886,0 125.2772,56.08664 125.2772,125.27324 0,69.18639 -56.0886,125.27326 -125.2772,125.27326 -69.18881,0 -125.27722,-56.08687 -125.27722,-125.27326 0,-69.1866 56.08841,-125.27324 125.27722,-125.27324 z"
+         id="Data_Fuel_RangeReserve"
+         inkscape:connector-curvature="0"
+         inkscape:label="#path3277" />
     </g>
   </g>
   <g

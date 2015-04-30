@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Sep 10 2013
 #
-#      Last change:      Eric van den Berg
-#      Date:             13.07.2014
+#	Last change:	Dirk Dittmann
+#	Date:		30.04.15
 #
 
 # var RouteLayer = {
@@ -123,7 +123,9 @@ var MovingMap = {
 			Compass300	: m._group.getElementById("MovingMap_Compass_300"),
 			Compass330	: m._group.getElementById("MovingMap_Compass_330"),
 			
-			DataFuelRange	: m._group.getElementById("Data_Fuel_Range"),
+			DataFuelRange		: m._group.getElementById("Data_Fuel_Range"),
+			DataFuelRangeReserve	: m._group.getElementById("Data_Fuel_RangeReserve"),
+			
 			
 		};
 		
@@ -449,21 +451,48 @@ var MovingMap = {
 		
 	},
 	
-	setFuelRange : func(nm=nil){
-		if (nm == nil){
-			nm = fms._fuelRange;
+	setFuelRange : func(rangeNM=nil,reserveNM=nil){
+		if (rangeNM == nil){
+			rangeNM = fms._fuelRange;
+		}
+		if (reserveNM == nil){
+			reserveNM = fms._fuelRangeReserve;
 		}
 		
-		if (nm > 0){
-			var r = (me._screenSize/me._mapOptions.range) * nm;
+		
+		
+		if (rangeNM > 0){
+			var r = (me._screenSize/me._mapOptions.range) * rangeNM;
+			var rr = (me._screenSize/me._mapOptions.range) * reserveNM;
 			
+			rr = r - rr;
+						
 			me._can.DataFuelRange.reset()
 				.move(1024-r, 768)
 				.arcSmallCCW(r, r, 0,  r*2, 0)
 				.arcSmallCCW(r, r, 0, -r*2, 0)
 				;
+				
+			me._can.DataFuelRangeReserve.reset()
+				.move(1024-rr, 768)
+				.arcSmallCCW(rr, rr, 0,  rr*2, 0)
+				.arcSmallCCW(rr, rr, 0, -rr*2, 0)
+				;
+			
+				
+			me._can.DataFuelRange.setVisible(1);
+			
+			if (rangeNM < reserveNM){
+				me._can.DataFuelRangeReserve.setVisible(0);
+				me._can.DataFuelRange.setColor(COLOR["Yellow"]);
+			}else{
+				me._can.DataFuelRangeReserve.setVisible(1);
+				me._can.DataFuelRange.setColor(COLOR["Green"]);
+			}
+			
 		}else{
-			me._can.DataFuelRange.reset();
+			me._can.DataFuelRange.setVisible(0);
+			me._can.DataFuelRangeReserve.setVisible(0);
 		}
 			
 	},

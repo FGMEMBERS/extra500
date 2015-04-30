@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Eric van den Berg
-      Date:             2015-04-25
+	Last change:	Dirk Dittmann
+	Date:		30.04.15
 
 
 ************************************************************************
@@ -1467,6 +1467,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<caution type="bool">1</caution>
 			<info type="bool">1</info>
 			<trim type="bool">1</trim>
+			<elt type="bool">0</elt>
 		</ui>
 		<livery>
 			<resolution type="bool">1</resolution>

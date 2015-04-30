@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: 20.03.15
 #
-#      Last change:      Dirk Dittmann
-#      Date:             20.03.15
+#	Last change:	Dirk Dittmann
+#	Date:		30.04.15
 #
 
 var ELT = {
@@ -157,9 +157,11 @@ var ELT = {
 		#var msg = "ELT AutoMessage: " ~ aircraft_id ~ ", CRASHED AT LAT: " ~lat~" LON: "~lon~", REQUESTING SAR SERVICE";
 		var msg = sprintf("[ELT SAR REQUEST] %s, LAT: %s LON: %s", aircraft_id, lat, lon);
 		
-		
-
-		setprop("/sim/multiplay/chat", msg);
+		if (getprop("/extra500/config/ui/elt")){
+			setprop("/sim/multiplay/chat", msg);
+		}else{
+			UI.msg.failure(msg);
+		}
 	}
 	
 	
