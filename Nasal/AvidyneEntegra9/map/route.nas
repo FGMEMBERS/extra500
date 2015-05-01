@@ -168,7 +168,7 @@ var RouteLayer = {
 		m._item 	= [];
 		m._itemIndex	= 0;
 		m._itemCount	= 0;
-		m._groupTrack	= m._group.createChild("group",id~"_Track");
+		m._groupTrack	= m._group.createChild("group",id~"_Track").setVisible(1);
 		m._groupOBS	= m._group.createChild("group",id~"_OBS").setVisible(0);
 		m._groupFMS	= m._group.createChild("group",id~"_FMS");
 		
@@ -177,11 +177,11 @@ var RouteLayer = {
 				.setStrokeLineWidth(3)
 				.setScale(1)
 				.setColor("#FFFFFF"),
-			currentLeg : m._group.createChild("path","currentLeg")
+			currentLeg : m._groupFMS.createChild("path","currentLeg")
 				.setStrokeLineWidth(5)
 				.setScale(1)
 				.setColor("#FF0EEB"),
-			nextLeg : m._group.createChild("path","nextLeg")
+			nextLeg : m._groupFMS.createChild("path","nextLeg")
 				.setStrokeLineWidth(5)
 				.setScale(1)
 				.setStrokeDashArray([25,25])
@@ -265,6 +265,8 @@ var RouteLayer = {
 	},
 	_onVisibilityChange : func(){
 		me._group.setVisible(me._visibility and (me._obsMode == 0));
+		me._groupTrack.setVisible(me._visibility and (me._obsMode == 0));
+		me._groupFMS.setVisible(me._visibility and (me._obsMode == 0));
 		me._groupOBS.setVisible(me._visibility and (me._obsMode == 1));
 		me._TOD.setVisible(fms._dynamicPoint.TOD.visible and me._visibility);
 		me._TOC.setVisible(fms._dynamicPoint.TOC.visible and me._visibility);
@@ -338,7 +340,8 @@ var RouteLayer = {
 			
 		}
 		
-		me._group.setVisible(me._visibility and (me._obsMode == 0));
+		me._groupTrack.setVisible(me._visibility and (me._obsMode == 0));
+		me._groupFMS.setVisible(me._visibility and (me._obsMode == 0));
 		me._groupOBS.setVisible(me._visibility and (me._obsMode == 1));
 	},
 	_onObsCourseChange : func(n){
@@ -383,7 +386,7 @@ var RouteLayer = {
 			me._item[me._itemIndex].setVisible(0);
 		}
 		print("\n");
-
+		me._groupTrack.setVisible(me._visibility and (me._obsMode == 0));
 	},
 	_drawLegs : func(){
 		var cmd = canvas.Path.VG_MOVE_TO;
