@@ -43,5 +43,6 @@ Date: 		02.04.2015
 		</texture>
 		<use-mask type="int">1</use-mask>
 		<overlay-color type="vec3d" n="0">1.0 1.0 1.0</overlay-color>
+		<rnorm><use>/extra500/environment/rain-norm</use></rnorm>
 	</parameters>
 </PropertyList>

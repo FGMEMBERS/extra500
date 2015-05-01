@@ -58,6 +58,6 @@ Date: 		02.04.2015
 		<reflection-strength type="float">0.25</reflection-strength>
 		<frost-level><use>/environment/aircraft-effects/frost-level-front</use></frost-level>
 		<fog-level><use>/environment/aircraft-effects/fog-level-front</use></fog-level>
-		
+		<rnorm><use>/extra500/environment/rain-norm</use></rnorm>
 	</parameters>
 </PropertyList>

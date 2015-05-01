@@ -32,6 +32,9 @@ var Environment = {
 		m._temperature 	= getprop("/environment/temperature-degc");
 		m._airspeed 	= getprop("/velocities/airspeed-kt");
 		m._humidity 	= getprop("/environment/relative-humidity");
+		m._rainNorm 	= getprop("/environment/rain-norm");
+		m._rainLevel 	= getprop("/environment/params/precipitation-level-ft");
+		
 		
 		m._nFrostWaterCatchFactor 	= m._nRoot.initNode("frost/waterCatchFactor",0.25,"DOUBLE",1);
 		m._nDeFrostFactor	 	= m._nRoot.initNode("frost/deFrostFactor",0.001,"DOUBLE",1);
@@ -41,9 +44,9 @@ var Environment = {
 		m._nAbsoluteHumidityMin		= m._nRoot.initNode("frost/absoluteHumidityMin",0.005,"DOUBLE",1);
 		
 		m._electricWatt = 0;
-		m._defrostWatt = 0;
-		m._dt = 1.0;
-		m._timerLoop = nil;
+		m._defrostWatt  = 0;
+		m._dt 		= 1.0;
+		m._timerLoop 	= nil;
 		return m;
 	},
 	init : func(instance=nil){
@@ -63,7 +66,9 @@ var Environment = {
 		me._humidity 		= getprop("/environment/relative-humidity");
 		me._density 		= getprop("/environment/density-slugft3");
 		me._absoluteHumidity 	= getprop("/environment/a-kg-per-m3");
-
+		me._rainNorm 		= getprop("/environment/rain-norm");
+		me._rainLevelFt		= getprop("/environment/params/precipitation-level-ft");
+		me._posAltitudeFt 	= getprop("/position/altitude-ft");
 		
 		me.rainSplashVector();
 		me.frost();
@@ -82,7 +87,12 @@ var Environment = {
 		var splash_y = 0.0;
 		var splash_z = 1.0 - 1.35 * airspeed;
 
-
+		
+		if(me._posAltitudeFt > me._rainLevelFt){
+			me._rainNorm = 0.0;
+		}
+		
+		interpolate("/extra500/environment/rain-norm", me._rainNorm,me._dt);
 
 		interpolate("/environment/aircraft-effects/splash-vector-x", splash_x,me._dt);
 		interpolate("/environment/aircraft-effects/splash-vector-y", splash_y,me._dt);
