@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:	Dirk Dittmann
-	Date:		30.04.15
+	Date:		02.05.15
 
 
 ************************************************************************
@@ -59,7 +59,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<model type="int">4</model>
 		<cockpit type="int">4</cockpit>
 	</rating>
-	<extra500-version>2.0.0</extra500-version>
+	<extra500-version>2.1.0</extra500-version>
 	<extra500-git>https://gitlab.com/extra500/extra500</extra500-git>
 	<extra500-wiki>http://wiki.flightgear.org/Extra_EA-500</extra500-wiki>
 	
