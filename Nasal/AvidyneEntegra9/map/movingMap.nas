@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Sep 10 2013
 #
-#      Last change:      Eric van den Berg
-#      Date:             13.07.2014
+#	Last change:	Dirk Dittmann
+#	Date:		30.04.15
 #
 
 # var RouteLayer = {
@@ -123,6 +123,10 @@ var MovingMap = {
 			Compass300	: m._group.getElementById("MovingMap_Compass_300"),
 			Compass330	: m._group.getElementById("MovingMap_Compass_330"),
 			
+			DataFuelRange		: m._group.getElementById("Data_Fuel_Range"),
+			DataFuelRangeReserve	: m._group.getElementById("Data_Fuel_RangeReserve"),
+			
+			
 		};
 		
 		m._map = Map.new(m._can.LayerMap,name);
@@ -148,6 +152,8 @@ var MovingMap = {
 		m._routeManagerActive 	= 0;
 		m._fmsServiceable	= 0;
 		m._flyVectors		= 0;
+		
+		m._screenSize	= 512;
 		
 		m._layer 	= {};
 		m._view 	= MAP_VIEW.HDG_UP_CENTER ;
@@ -201,6 +207,7 @@ var MovingMap = {
 		me._map._node.getNode("ref-lat", 1).setDoubleValue(lat);
 		me._map._node.getNode("ref-lon", 1).setDoubleValue(lon);
 		me._can.plane.setGeoPosition(lat,lon);
+		
 		me; # chainable
 	},
 	setHdg : func(deg){
@@ -353,6 +360,8 @@ var MovingMap = {
 		
 		me.setRefPos(me._lat,me._lon);
 		me.setHdg(me._tree.Heading.getValue());
+		
+		me.setFuelRange();
 	},
 	_onAutopilotModeHDG : func(n){
 		me._modeHDG = n.getValue();
@@ -432,12 +441,60 @@ var MovingMap = {
 	
 	setRangeNm : func(nm){
 # 		print("MovingMap.setRangeNm("~nm~") ...");
-		var range = 200 / (me._screenSize / nm);
-		me._map._node.getNode("range", 1).setDoubleValue(range);
+		#var range = 200 / (me._screenSize / nm);
+		me._mapRange = 200 / (me._screenSize / nm);
+		me._map._node.getNode("range", 1).setDoubleValue(me._mapRange);
 		me._can.CompassRangeMax.setText(sprintf("%.0f",nm));
 		me._can.CompassRangeMid.setText(sprintf("%.0f",nm/2));
 		me._mapOptions.range = nm;
 		me._layer.positioned.setMapOptions(me._mapOptions);
+		
+	},
+	
+	setFuelRange : func(rangeNM=nil,reserveNM=nil){
+		if (rangeNM == nil){
+			rangeNM = fms._fuelRange;
+		}
+		if (reserveNM == nil){
+			reserveNM = fms._fuelRangeReserve;
+		}
+		
+		
+		
+		if (rangeNM > 0){
+			var r = (me._screenSize/me._mapOptions.range) * rangeNM;
+			var rr = (me._screenSize/me._mapOptions.range) * reserveNM;
+			
+			rr = r - rr;
+						
+			me._can.DataFuelRange.reset()
+				.move(1024-r, 768)
+				.arcSmallCCW(r, r, 0,  r*2, 0)
+				.arcSmallCCW(r, r, 0, -r*2, 0)
+				;
+				
+			me._can.DataFuelRangeReserve.reset()
+				.move(1024-rr, 768)
+				.arcSmallCCW(rr, rr, 0,  rr*2, 0)
+				.arcSmallCCW(rr, rr, 0, -rr*2, 0)
+				;
+			
+				
+			me._can.DataFuelRange.setVisible(1);
+			
+			if (rangeNM < reserveNM){
+				me._can.DataFuelRangeReserve.setVisible(0);
+				me._can.DataFuelRange.setColor(COLOR["Yellow"]);
+			}else{
+				me._can.DataFuelRangeReserve.setVisible(1);
+				me._can.DataFuelRange.setColor(COLOR["Green"]);
+			}
+			
+		}else{
+			me._can.DataFuelRange.setVisible(0);
+			me._can.DataFuelRangeReserve.setVisible(0);
+		}
+			
 	},
 	
 	setLand : func(value){

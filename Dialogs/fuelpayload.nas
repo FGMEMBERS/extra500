@@ -1,3 +1,24 @@
+#    This file is part of extra500
+#
+#    extra500 is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 2 of the License, or
+#    (at your option) any later version.
+#
+#    extra500 is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+#
+#	Authors: 	Dirk Dittmann
+#	Date: 		Mai 02 2015
+#
+#	Last change:	Dirk Dittmann
+#	Date:		02.05.15
+#
 
 var MyWindow = {
   # Constructor
@@ -1369,7 +1390,7 @@ var FuelPayloadClass = {
 		append(me._listeners, setlistener(me._nNotify,func(n){me._onNotifyChange(n);},1,0) );
 	},
 	_onClose : func(){
-		print("FuelPayloadClass._onClose() ... ");
+		#print("FuelPayloadClass._onClose() ... ");
 		me.removeListeners();
 		me._dlg.del();
 		

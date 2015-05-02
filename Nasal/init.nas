@@ -63,6 +63,7 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		extra500.propellerHeat.init();
 		extra500.turnCoordinator.init();
 		extra500.xpdr.init();
+		extra500.elt.init();
 		extra500.pcBoard1.init();
 		extra500.cabincontroller.init();
 		extra500.cabinaltimeter.init();

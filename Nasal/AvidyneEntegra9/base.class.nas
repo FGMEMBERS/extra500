@@ -22,9 +22,10 @@
 
 var COLOR = {};
 COLOR["Red"] 		= "rgb(244,28,33)";
-COLOR["Green"] 		= "rgb(64,178,80)";
+COLOR["Green"] 		= "#67e54a";
 COLOR["Magenta"] 	= "rgb(255,14,235)";
 COLOR["Yellow"] 	= "rgb(241,205,57)";
+COLOR["Black"] 		= "rgb(0,0,0)";
 COLOR["White"] 		= "rgb(255,255,255)";
 COLOR["Turquoise"] 	= "rgb(4,254,252)";
 COLOR["Blue"] 		= "rgb(51,145,232)";
@@ -113,6 +114,7 @@ var PageClass = {
 	new: func(ifd,name,data){
 		var m = { parents: [PageClass,ListenerClass.new()] };
 		m.IFD = ifd;	# parent pointer to IFD
+		m._ifd = ifd;
 		m.page = m.IFD.canvas.createGroup(name);
 		m._visibility	= 0;
 		m.page.setVisible(m._visibility);

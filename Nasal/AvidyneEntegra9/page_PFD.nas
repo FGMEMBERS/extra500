@@ -84,6 +84,12 @@ var AutopilotWidget = {
 		append(me._listeners, setlistener("/autopilot/settings/ap",func(n){me._onAP(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/settings/fd",func(n){me._onFP(n)},1,0));
 		
+		append(me._listeners, setlistener("/autopilot/fms-channel/fail",func(n){me._onFmsFail(n)},1,0));
+		append(me._listeners, setlistener("/autopilot/hdg-channel/fail",func(n){me._onHdgFail(n)},1,0));
+		append(me._listeners, setlistener("/autopilot/radionav-channel/fail",func(n){me._onNavFail(n)},1,0));
+		append(me._listeners, setlistener("/autopilot/vs-channel/fail",func(n){me._onVsFail(n)},1,0));
+		
+		
 	},
 	_onStateChange: func(n){
 		me._state	= n.getValue();
@@ -118,6 +124,47 @@ var AutopilotWidget = {
 		me._fail	= n.getValue();
 		me._checkState();
 	},
+	_onFmsFail : func(n){
+		if(n.getValue()==0){
+			me._can.ModeNAV.setColor(COLOR["Green"]);
+			me._can.ModeGPSS.setColor(COLOR["Green"]);
+			
+		}else{
+			me._can.ModeNAV.setColor(COLOR["Yellow"]);
+			me._can.ModeGPSS.setColor(COLOR["Yellow"]);
+			
+		}
+	},
+	_onHdgFail : func(n){
+		if(n.getValue()==0){
+			me._can.ModeHDG.setColor(COLOR["Green"]);
+		}else{
+			me._can.ModeHDG.setColor(COLOR["Yellow"]);
+		}
+		
+	},
+	_onNavFail : func(n){
+		if(n.getValue()==0){
+			me._can.ModeNAV.setColor(COLOR["Green"]);
+			me._can.ModeAPR.setColor(COLOR["Green"]);
+			me._can.ModeGS.setColor(COLOR["Green"]);
+			
+		}else{
+			me._can.ModeNAV.setColor(COLOR["Yellow"]);
+			me._can.ModeAPR.setColor(COLOR["Yellow"]);
+			me._can.ModeGS.setColor(COLOR["Yellow"]);
+			
+		}
+		
+	},
+	_onVsFail : func(n){
+		if(n.getValue()==0){
+			me._can.ModeVS.setColor(COLOR["Green"]);
+		}else{
+			me._can.ModeVS.setColor(COLOR["Yellow"]);
+		}
+	},
+	
 	_onHDG : func(n){
 		me._modeHDG = n.getValue();
 		me._can.ModeHDG.setVisible(me._modeHDG);
@@ -460,7 +507,8 @@ var AltitudeWidget = {
 			D200H		: m._group.getElementById("ALT_LAD_D200H"),
 			Plade		: m._group.getElementById("AltBlackPlade"),
 			BarMinus	: m._group.getElementById("AltBarMinus").setVisible(0),
-			Bar10		: m._group.getElementById("AltBar10").set("clip","rect(326px, 1718px, 507px, 1478px)"),
+			BarPlus10	: m._group.getElementById("AltBarPlus10").set("clip","rect(326px, 1718px, 507px, 1478px)"),
+			BarMinus10	: m._group.getElementById("AltBarMinus10").set("clip","rect(326px, 1718px, 507px, 1478px)").setVisible(0),
 			Bar100		: m._group.getElementById("AltBar100").set("clip","rect(385px, 1718px, 449px, 1478px)"),
 			Bar1000		: m._group.getElementById("AltBar1000").set("clip","rect(385px, 1718px, 449px, 1478px)"),
 			Bar10000	: m._group.getElementById("AltBar10000").set("clip","rect(385px, 1718px, 449px, 1478px)"),
@@ -587,7 +635,15 @@ var AltitudeWidget = {
 		
 		
 		me._tmpAlt = math.mod(me._alt,100);
-		me._can.Bar10.setTranslation(0, me._tmpAlt * me._SCALE_BAR_PX_10);
+		if (me._alt >= 0){
+			me._can.BarMinus10.setVisible(0);
+			me._can.BarPlus10.setVisible(1);
+			me._can.BarPlus10.setTranslation(0, me._tmpAlt * me._SCALE_BAR_PX_10);
+		}else{
+			me._can.BarPlus10.setVisible(0);
+			me._can.BarMinus10.setVisible(1);
+			me._can.BarMinus10.setTranslation(0, me._tmpAlt * me._SCALE_BAR_PX_10);
+		}
 		me._absAlt = math.abs(me._alt);
 		
 		me._can.BarMinus.setVisible( (me._alt<0) );
@@ -898,6 +954,8 @@ var NavSourceWidget = {
 			ID 		: m._group.getElementById("NAV_ID"),
 			Crs 		: m._group.getElementById("NAV_CRS"),
 			Distance 	: m._group.getElementById("NAV_Distance"),
+			ObsModeActive 	: m._group.getElementById("NAV_ObsMode_Active"),
+			
 		};
 		
 		m._sourceListeners	= [];
@@ -1168,6 +1226,9 @@ var NavSourceWidget = {
 		me._Pointer		= n.getValue();
 # 		me._ptree.FMSCourse.setValue(me._Pointer);
 		me._can.Crs.setText(sprintf("%i",tool.course(me._Pointer)));
+		me._can.ObsModeActive.setVisible(me._btnObsMode?1:0);
+		me._can.Crs.setColor(me._btnObsMode?COLOR["Black"]:COLOR["Green"]);
+
 		
 	},
 	update2Hz : func(now,dt){

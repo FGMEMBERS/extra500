@@ -159,6 +159,7 @@ var FuelSystemClass = {
 		]};
 		m._listeners		=[];
 		m._nFuelFlow		= props.globals.initNode("/fdm/jsbsim/aircraft/engine/FF-lbs_h");
+		m._nFuelFlowLph		= props.globals.initNode("/fdm/jsbsim/aircraft/engine/FF-l_h");
 		m._nFuelFlowGalUSpSec	= m._nRoot.initNode("FuelFlow-gal_us_sec",0.0,"DOUBLE");
 		
 		m._nFuelFilterByPass	= m._nRoot.initNode("FuelFilterByPass",0,"BOOL");

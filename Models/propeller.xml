@@ -19,7 +19,7 @@
       Date: June 03 2013
 
       Last change:      Eric van den Berg
-      Date:             30.06.13
+      Date:             17.01.15
 
 -->
 
@@ -40,7 +40,7 @@
   <object-name>Propeller</object-name>
   <condition>
     <less-than>
-      <property>sim/multiplay/generic/float[0]</property>
+      <property>sim/multiplay/generic/int[12]</property>
       <value>700</value>
     </less-than>
   </condition>
@@ -52,11 +52,11 @@
   <condition>
     <and>
       <greater-than-equals>
-        <property>sim/multiplay/generic/float[0]</property>
+      <property>sim/multiplay/generic/int[12]</property>
         <value>700</value>
       </greater-than-equals>
       <less-than>
-        <property>sim/multiplay/generic/float[0]</property>
+      <property>sim/multiplay/generic/int[12]</property>
         <value>1500</value>
       </less-than>
     </and>
@@ -68,7 +68,7 @@
   <object-name>PropFast</object-name>
   <condition>
     <greater-than-equals>
-      <property>sim/multiplay/generic/float[0]</property>
+      <property>sim/multiplay/generic/int[12]</property>
       <value>1500</value>
     </greater-than-equals>
   </condition>
@@ -80,7 +80,7 @@
   <object-name>Propeller</object-name>
   <object-name>PropSlow</object-name>
   <object-name>PropFast</object-name>
-  <property>sim/multiplay/generic/float[0]</property>
+      <property>sim/multiplay/generic/int[12]</property>
   <factor>1</factor>
   <axis>
    <x1-m>1</x1-m>

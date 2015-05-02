@@ -34,7 +34,7 @@
 
 <effect>
     <name>centreC</name>
-    <inherits-from>Models/Effects/panel</inherits-from>
+    <inherits-from>Aircraft/extra500/Models/Effects/panel</inherits-from>
     <object-name>CenterConsoleFrame</object-name>
     <parameters>
 		<grain-magnification type="float">2000</grain-magnification>

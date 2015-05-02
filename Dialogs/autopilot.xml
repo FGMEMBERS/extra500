@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2013-06-01
+      Date:             2015-04-04
 -->
 
 <PropertyList>
@@ -753,12 +753,16 @@
 				<checkbox>
 					<label>CWS</label>
 					<halign>center</halign>
-					<property>/extra500/instrumentation/autopilot/CWS/state</property>					
+					<property>/extra500/instrumentation/Autopilot/CWS/state</property>					
 					<binding>
 						<command>nasal</command>
 						<script>
 							<![CDATA[ 
-							UI.click("Autopilot CWS"); 
+							if (getprop("/extra500/instrumentation/Autopilot/CWS/state") == 1 ) {
+								UI.click("Autopilot CWS on"); 
+							} else {
+								UI.click("Autopilot CWS off"); 
+							}
 							]]>
 						</script>
 					</binding>

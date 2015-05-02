@@ -114,4 +114,17 @@ var even = func(v){
 	return (math.fmod(v,2.0) == 0);
 }
 
+var format = {
+	FlightLevelInFeet : func(v){
+		v = int(v / 100) * 100;
+		return v;
+	},
+	PositiveFloat : func(v){
+		if (v < 0.0){
+			v = 0.0;
+		}
+		return v;
+	},
+};
+
 

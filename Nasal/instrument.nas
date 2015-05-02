@@ -17,7 +17,7 @@
 #      Date: Jun 27 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             01.03.14
+#      Date:             01.02.15
 #
 
 var DigitalInstrumentPackageClass = {
@@ -57,8 +57,8 @@ var DigitalInstrumentPackageClass = {
 	},
 	setListeners : func(instance) {
 		append(me._listeners, setlistener(eSystem.circuitBreaker.VOLT_MON._nVoltOut,func(n){instance._onVoltMonitorChange(n);},1,0) );
-		append(me._listeners, setlistener(eSystem._nLoadBattery,func(n){instance._onBatteryMonitorChange(n);},1,0) );
-		append(me._listeners, setlistener(eSystem._nLoadGenerator,func(n){instance._onGeneratorMonitorChange(n);},1,0) );
+		append(me._listeners, setlistener(eSystem._nShuntBattery,func(n){instance._onBatteryMonitorChange(n);},1,0) );
+		append(me._listeners, setlistener(eSystem._nShuntGenerator,func(n){instance._onGeneratorMonitorChange(n);},1,0) );
 	},
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}

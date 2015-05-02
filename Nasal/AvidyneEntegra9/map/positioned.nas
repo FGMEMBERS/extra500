@@ -291,6 +291,8 @@ var AirportItem = {
 	setVisible : func(visibility){
 		me._can.group.setVisible(visibility);
 		me._can.layout.setVisible(visibility);
+		me._can.image.setVisible(visibility);
+		me._can.layoutIcon.setVisible(visibility);
 	},
 	getGroup : func(){
 		return me._can.group;
@@ -346,6 +348,19 @@ var VorItem = {
 };
 var MAP_RUNWAY_AT_RANGE = {2:0,4:0,10:0,20:0,30:0,40:250,50:500,80:1000,160:2000,240:3000};
 var MAP_RUNWAY_SURFACE = {0:0,1:1,2:1,3:0,4:0,5:0,6:1,7:1,8:0,9:0,10:0,11:0,12:0};
+
+####
+# Declutter
+#	land
+#		0 : "Terrain"
+# 		1 : "Political boundaries"
+#		2 : "River/Lakes/Oceans"
+#		3 : "Roads"
+#	Nav
+#		0 : "Airspace"
+#		1 : "Victor/Jet airways"
+#		2 : "Obstacles"
+#		3 : "Navaids"
 
 var PositionedLayer = {
 	new : func(group,id="none"){
@@ -445,16 +460,17 @@ var PositionedLayer = {
 	},
 	
 	loadAirport : func(){
+		#print("PositionedLayer.loadAirport() ... ");
 		me._cache.airport.index = 0;
 		var results = positioned.findWithinRange(me._mapOptions.range*2.5,"airport");
 		var item = nil;
 		
-		if(me._mapOptions.declutterNAV >= 3){
+		if(me._mapOptions.declutterNAV >= 2){
 			me._mapOptions.runwayLength = MAP_RUNWAY_AT_RANGE[me._mapOptions.range];
-		}elsif (me._mapOptions.declutterNAV >= 2){
-			me._mapOptions.runwayLength = 3000;
+		}elsif (me._mapOptions.declutterNAV >= 1){
+			me._mapOptions.runwayLength = 2000;
 		}else{
-			me._mapOptions.runwayLength = -1;
+			me._mapOptions.runwayLength = 3000;
 		}
 		
 				
@@ -487,7 +503,7 @@ var PositionedLayer = {
 	},
 	loadVor : func(){
 		me._cache.vor.index = 0;
-		if(me._mapOptions.declutterNAV >= 1){
+		if(me._mapOptions.declutterNAV >= 3){
 			var range = me._mapOptions.range*2.0 <= 100 ? me._mapOptions.range*2.5 : 100 ;
 			var results = positioned.findWithinRange(me._mapOptions.range*2.5,"vor");
 			var item = nil;

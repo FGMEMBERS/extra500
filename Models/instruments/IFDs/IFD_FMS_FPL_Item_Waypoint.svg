@@ -24,16 +24,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="676.87522"
-     inkscape:cy="115.59878"
+     inkscape:zoom="2"
+     inkscape:cx="543.54925"
+     inkscape:cy="100.45563"
      inkscape:document-units="px"
-     inkscape:current-layer="FPL_Item_General"
+     inkscape:current-layer="FPL_Item_Detail"
      showgrid="false"
      inkscape:snap-page="true"
      inkscape:window-width="1920"
      inkscape:window-height="1025"
-     inkscape:window-x="-2"
+     inkscape:window-x="1918"
      inkscape:window-y="-3"
      inkscape:window-maximized="1"
      showguides="true"
@@ -123,7 +123,7 @@
          sodipodi:role="line"
          id="tspan4797-9"
          x="827.74799"
-         y="127.90865">Gal</tspan></text>
+         y="127.90865">L</tspan></text>
     <text
        sodipodi:linespacing="125%"
        id="text4486"
@@ -289,7 +289,8 @@
        style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
        x="347.4758"
        y="201.60201"
-       id="edit_before_unit"><tspan
+       id="Constain_before_unit"
+       inkscape:label="#edit_before_unit"><tspan
          sodipodi:role="line"
          id="tspan3177-5"
          x="347.4758"
@@ -307,13 +308,13 @@
     <text
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-       x="554.95459"
+       x="532.70459"
        y="201.60201"
        id="Constain_icao"><tspan
          sodipodi:role="line"
          id="tspan3177-60"
-         x="554.95459"
-         y="201.60201">FIXID</tspan></text>
+         x="532.70459"
+         y="201.60201">XXXXX</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;text-anchor:middle;fill:#ffffff;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
@@ -329,7 +330,8 @@
        style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#ffffff;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
        x="1070.4187"
        y="201.60201"
-       id="edit_alt_unit"><tspan
+       id="Constain_alt_unit"
+       inkscape:label="#edit_alt_unit"><tspan
          sodipodi:role="line"
          id="tspan3177-5-6"
          x="1070.4187"

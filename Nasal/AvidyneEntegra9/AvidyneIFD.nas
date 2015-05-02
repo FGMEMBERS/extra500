@@ -255,13 +255,13 @@ var IFDUserInterface = {
 						if(contains(callback,cb)){
 							me._keyMap[callbackName] = callback[cb];
 							active = 1;
-# 							print("IFDUserInterface.bindKey() ... "~callbackName~" : active.");
+ 							#dp.debug("IFDUserInterface.bindKey() ... "~callbackName~" : active.");
 						}else{
 							me._keyMap[callbackName] = nil;
-# 							print("IFDUserInterface.bindKey() ... "~callbackName~" : nil.");
+							#dp.debug("IFDUserInterface.bindKey() ... "~callbackName~" : nil.");
 						}
 					}else{
-# 						print("IFDUserInterface.bindKey() ... no such Knob("~callbackName~").");
+ 						dp.alert("IFDUserInterface.bindKey() ... no such Knob("~callbackName~").");
 					}
 				}
 			}else{

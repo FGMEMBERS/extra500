@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Eric van den Berg
-      Date:             2015-01-09
+	Last change:	Dirk Dittmann
+	Date:		02.05.15
 
 
 ************************************************************************
@@ -33,14 +33,15 @@ JSBSim Extra Aircraft - Extra 500.
 
 <sim>
 	
+	<license-description>Extra500 is free and open source software, licensed
+under the GNU General Public License Version 2.</license-description>	
+	
 	<description>Extra 500</description>
-	<long-description>
-		The Extra500 is a small business turboprop powered, six seat aircraft.
-		It is a derivative of the piston powered Extra400 and shares the fully
-		carbon fibre structure as well as the landing gear and some other systems.
-		The pressurized cabin allows cruising up to FL250 at which the efficiency
-		of the RR 250-B17F/2 engine is best.
-	</long-description>
+	<long-description>The Extra500 is a small business turboprop powered, six seat aircraft.
+It is a derivative of the piston powered Extra400 and shares the fully
+carbon fibre structure as well as the landing gear and some other systems.
+The pressurized cabin allows cruising up to FL250 at which the efficiency
+of the RR 250-B17F/2 engine is best.</long-description>
 
 	<tags>
 		<tag>Extra Aircraft</tag>
@@ -49,6 +50,8 @@ JSBSim Extra Aircraft - Extra 500.
 	</tags>
 
 	<author>Dirk Dittmann, Eric van den Berg, Thomas Grossberger</author>
+	<author-callsign>D-EKEW, D-LEON, D-STHO</author-callsign>
+	
 	<status>production</status>
 	<rating>
 		<FDM type="int">4</FDM>
@@ -56,7 +59,10 @@ JSBSim Extra Aircraft - Extra 500.
 		<model type="int">4</model>
 		<cockpit type="int">4</cockpit>
 	</rating>
-
+	<extra500-version>2.1.0</extra500-version>
+	<extra500-git>https://gitlab.com/extra500/extra500</extra500-git>
+	<extra500-wiki>http://wiki.flightgear.org/Extra_EA-500</extra500-wiki>
+	
 	<flight-model archive="y">jsb</flight-model>
 	<aero archive="y">extra500</aero>
 	
@@ -484,6 +490,7 @@ JSBSim Extra Aircraft - Extra 500.
 	<aircraft-data>
 		<path>extra500/panel</path>
 		<path>/extra500/electric/source/Battery</path>
+		<path>/extra500/electric/source/ExternalGenerator</path>
 		<path>/consumables/fuel/tank[0]/level-gal_us</path>
 		<path>/consumables/fuel/tank[1]/level-gal_us</path>
 		<path>/consumables/fuel/tank[2]/level-gal_us</path>
@@ -507,6 +514,9 @@ JSBSim Extra Aircraft - Extra 500.
 		<path>/instrumentation/comm[1]/frequencies</path>
 		<path>/instrumentation/nav/frequencies</path>
 		<path>/instrumentation/nav[1]/frequencies</path>
+		<path>/fdm/jsbsim/gear/unit[10]/pos-norm</path>
+		<path>/fdm/jsbsim/gear/unit[11]/pos-norm</path>
+		<path>/fdm/jsbsim/gear/unit[12]/pos-norm</path>
 
 		<!---->
 		<path>/extra500/log/fuel</path>
@@ -531,7 +541,7 @@ JSBSim Extra Aircraft - Extra 500.
 	<multiplay>
 		<chat_display>1</chat_display>
 		<generic>
-			<float n="0" alias="/engines/engine[0]/thruster/rpm"/>
+			<!--float n="0" alias="/engines/engine[0]/thruster/rpm"/-->
 			<float n="1" alias="/systems/gear/Lupperdoor-pos"/>
 			<float n="2" alias="/systems/gear/Rupperdoor-pos"/>
 			<float n="3" alias="/systems/gear/Lowerdoor-pos"/>
@@ -539,7 +549,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<float n="5" alias="/engines/engine[0]/thrust_lb">0</float><!-- mp sound-->
 			<float n="6" alias="/fdm/jsbsim/aircraft/engine/motoring">0</float><!-- mp sound-->
 			<float n="7" alias="/fdm/jsbsim/aircraft/engine/spooling-up">0</float><!-- mp sound-->
-			<float n="8" alias="/fdm/jsbsim/propulsion/engine/set-running">0</float><!-- mp sound-->
+			<float n="8" alias="/fdm/jsbsim/propulsion/engine/set-running">0</float><!-- mp sound: double with int[13] for backward compatibility-->
 			<float n="9" alias="/fdm/jsbsim/aircraft/engine/spooling-down">0</float><!-- mp sound-->
 			<float n="10" alias="/systems/gear/motor/state">0</float><!-- mp sound-->
 			<float n="11" alias="/gear/gear[0]/rollspeed-ms">0</float><!-- gear-->
@@ -557,6 +567,9 @@ JSBSim Extra Aircraft - Extra 500.
 			<int n="8" alias="/engines/engine[0]/running">0</int><!-- mp sound-->
 			<int n="9" alias="/engines/engine[0]/ignition">0</int><!-- mp sound-->
 			<int n="10" alias="/extra500/interior/tisch/state">0</int><!-- pass tisch-->
+			<int n="11" alias="/extra500/electric/source/ExternalGenerator/isPluged">0</int><!-- external power-->
+			<int n="12" alias="/engines/engine[0]/thruster/rpm"/>
+			<int n="13" alias="/fdm/jsbsim/propulsion/engine/set-running">0</int><!-- mp sound-->
 
 			<string n="0" alias="/sim/multiplay/callsign">callsign</string>
 		</generic>
@@ -637,6 +650,11 @@ JSBSim Extra Aircraft - Extra 500.
 		<cap type="int">0</cap>
 		<soft type="int">0</soft>
 	</mode>
+	<indication>
+		<heading type="int">0</heading>
+		<nav type="int">0</nav>
+		<vs type="int">0</vs>
+	</indication>
 	<hdg-channel>	
 		<turn-rate-error-kp type="double">0.0003</turn-rate-error-kp>
 		<turn-rate-error-ki type="double">0.00</turn-rate-error-ki>
@@ -1026,12 +1044,14 @@ JSBSim Extra Aircraft - Extra 500.
     </dme>
 
     <heading-indicator-IFD-LH>
-	<heading-bug-error-deg>0</heading-bug-error-deg>
-	<indicated-heading-deg>0</indicated-heading-deg>
+		<heading-bug-error-deg>0</heading-bug-error-deg>
+		<indicated-heading-deg>0</indicated-heading-deg>
+            <serviceable type="bool">true</serviceable>
     </heading-indicator-IFD-LH>
     <heading-indicator-IFD-RH>
-	<heading-bug-error-deg>0</heading-bug-error-deg>
-	<indicated-heading-deg>0</indicated-heading-deg>
+		<heading-bug-error-deg>0</heading-bug-error-deg>
+		<indicated-heading-deg>0</indicated-heading-deg>
+            <serviceable type="bool">true</serviceable>
     </heading-indicator-IFD-RH>
 
     <radar>
@@ -1125,6 +1145,7 @@ JSBSim Extra Aircraft - Extra 500.
 	       <volume type="double">0.0</volume>
 	       <!--may be set to larger value by audiopanel (nav1 button)-->
 	       <serviceable type="bool">true</serviceable>
+	       <operable type="bool">true</operable>
 	       <heading-needle-deflection-norm>0</heading-needle-deflection-norm>
 	       <in-range type="bool">false</in-range>
 	       <gs-needle-deflection-norm>0</gs-needle-deflection-norm>
@@ -1147,6 +1168,7 @@ JSBSim Extra Aircraft - Extra 500.
 	       <volume type="double">0.0</volume>
 	       <!--may be set to larger value by audiopanel (nav2 button)-->
 	       <serviceable type="bool">true</serviceable>
+	       <operable type="bool">true</operable>
 	       <heading-needle-deflection-norm>0</heading-needle-deflection-norm>
 	       <in-range type="bool">false</in-range>
 	       <gs-needle-deflection-norm>0</gs-needle-deflection-norm>
@@ -1266,8 +1288,10 @@ JSBSim Extra Aircraft - Extra 500.
     	</canvas>
 	<global>
 		<file>Aircraft/extra500/Nasal/global.nas</file>
+		<file>Aircraft/extra500/Nasal/global.debug.nas</file>
 		<file>Aircraft/extra500/Nasal/global.constant.nas</file>
 		<file>Aircraft/extra500/Nasal/global.canvas.nas</file>
+		<file>Aircraft/extra500/Nasal/global.positioned.nas</file>
 	</global>
 	<sound>
 		<file>Aircraft/extra500/Nasal/sound.nas</file>
@@ -1295,6 +1319,7 @@ JSBSim Extra Aircraft - Extra 500.
 		<file>Aircraft/extra500/Nasal/centerConsole.nas</file>
 		<file>Aircraft/extra500/Nasal/log.nas</file>
 		<file>Aircraft/extra500/Nasal/dmeswitch.nas</file>
+		<file>Aircraft/extra500/Nasal/elt.nas</file>
 		<file>Aircraft/extra500/Nasal/panelventswitch.nas</file>
 		<file>Aircraft/extra500/Nasal/interior.nas</file>
 		<file>Aircraft/extra500/Nasal/readinglightswitch.nas</file>
@@ -1302,11 +1327,14 @@ JSBSim Extra Aircraft - Extra 500.
 		
 		<file>Aircraft/extra500/Nasal/route_manager.nas</file>
 		<file>Aircraft/extra500/Nasal/trimindication.nas</file>
+		
 	</extra500>
 	<IFD>
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/debug.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/base.class.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/widget.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/gui/listview.nas</file>
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/gui/dialog.nas</file>
 		
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/map.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/movingMap.nas</file>
@@ -1332,7 +1360,9 @@ JSBSim Extra Aircraft - Extra 500.
             <file>Aircraft/extra500/Dialogs/fuelpayload.nas</file>
             <file>Aircraft/extra500/Nasal/dialogs.nas</file>
         </Dialogs>
-	
+	<View>
+		<file>Aircraft/extra500/Nasal/view.nas</file>
+	</View>
         <run>
 		<file>Aircraft/extra500/Nasal/init.nas</file>
 	</run>
@@ -1424,7 +1454,12 @@ JSBSim Extra Aircraft - Extra 500.
 			<caution type="bool">1</caution>
 			<info type="bool">1</info>
 			<trim type="bool">1</trim>
+			<elt type="bool">0</elt>
 		</ui>
+		<livery>
+			<resolution type="bool">1</resolution>
+			<resolution-ai type="bool">0</resolution-ai>
+		</livery>
 		<handling>
 			<realTrim type="bool">1</realTrim>
 		</handling>
@@ -1436,7 +1471,14 @@ JSBSim Extra Aircraft - Extra 500.
 			<fuel type="bool">1</fuel>
 			<avionic type="bool">1</avionic>
 			<pressure type="bool">1</pressure>
-		</failure>	
+		</failure>
+		<view>
+			<quickZoom>
+				<field-of-view type="double">40</field-of-view>
+				<goal-heading-offset-deg type="double">346.0</goal-heading-offset-deg>
+				<goal-pitch-offset-deg type="double">-23.0</goal-pitch-offset-deg>
+			</quickZoom>	
+		</view>
 	</config>
 	<door>
 		<upperpass>
@@ -1488,6 +1530,14 @@ JSBSim Extra Aircraft - Extra 500.
 		<dmeSwitch>
 			<pressed type="int">0</pressed>
 		</dmeSwitch>
+		<elt>
+			<accel-fps_sec type="double">0.0</accel-fps_sec> 
+			<switch-remote type="int">0</switch-remote> 
+			<switch-elt type="int">0</switch-elt> 
+			<switch-G type="bool">0</switch-G> 
+			<led type="bool">0</led>
+			
+		</elt>
 		<TurnCoordinator>
 			<volt type="double">0</volt>
 		</TurnCoordinator>
@@ -1621,6 +1671,11 @@ JSBSim Extra Aircraft - Extra 500.
 					<state type="int">0</state>
 				</Cabin>
 			</Light>
+			<Emergency>
+				<safetyCap>
+					<state type="int">0</state>
+				</safetyCap>
+			</Emergency>
 		</Side>
 		<Master>
 			<Autopilot>

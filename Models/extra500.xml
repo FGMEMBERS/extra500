@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             01.10.2014
+      Date:             18.01.2015
 
 -->
 
@@ -39,10 +39,38 @@
 			livery_update.stop();
 		</unload>
 	</nasal>
+	<!-- 
+		livery in high resolution
+	-->
 	
 	<animation>
 		<type>material</type>
-		
+		<condition>
+			<or>
+				<and><!-- lokal player -->
+					<not>
+						<equals>
+							<property>type</property>
+							<value>AI</value>
+						</equals>
+					</not>
+					<equals>
+						<property>/extra500/config/livery/resolution</property>
+						<value>1</value>
+					</equals>
+				</and>
+				<and><!-- ai multiplayer -->
+					<equals>
+						<property>type</property>
+						<value>AI</value>
+					</equals>
+					<equals>
+						<property>/extra500/config/livery/resolution-ai</property>
+						<value>1</value>
+					</equals>
+				</and>
+			</or>
+		</condition>
 		<!-- extra500_frame.ac objects using paintkit.png -->
 		<object-name>BezierCircle.000</object-name>
 		<object-name>cooler.outlet.LH</object-name>
@@ -80,17 +108,91 @@
 		
 		<property-base>sim/model/livery</property-base>
 		<texture-prop>paintkit</texture-prop>
-		<texture>paintkit.png</texture>
+		<texture>Liveries/extra500_low.png</texture>
 		
 	</animation>
+	<!-- 
+		livery in low resolution
+	-->
+	<animation>
+		<type>material</type>
+		<condition>
+			<or>
+				<and><!-- lokal player -->
+					<not>
+						<equals>
+							<property>type</property>
+							<value>AI</value>
+						</equals>
+					</not>
+					<less-than>
+						<property>/extra500/config/livery/resolution</property>
+						<value>1</value>
+					</less-than>
+				</and>
+				<and><!-- ai multiplayer -->
+					<equals>
+						<property>type</property>
+						<value>AI</value>
+					</equals>
+					<less-than>
+						<property>/extra500/config/livery/resolution-ai</property>
+						<value>1</value>
+					</less-than>
+				</and>
+			</or>
+		</condition>
+		<!-- extra500_frame.ac objects using paintkit.png -->
+		<object-name>BezierCircle.000</object-name>
+		<object-name>cooler.outlet.LH</object-name>
+		<object-name>cooler.outlet.RH</object-name>
+		<object-name>door.lower</object-name>
+		<object-name>door.upper</object-name>
+		<object-name>emergency.exit</object-name>
+		<object-name>frame</object-name>
+		<object-name>gear.doors.lower.left</object-name>
+		<object-name>gear.doors.lower.right</object-name>
+		<object-name>gear.doors.nose.left</object-name>
+		<object-name>gear.doors.nose.right</object-name>
+		<object-name>gear.doors.upper.left</object-name>
+		<object-name>gear.doors.upper.right</object-name>
+		<object-name>Heck</object-name>
+		<object-name>HRlinks</object-name>
+		<object-name>HRrechts</object-name>
+		<object-name>NACA.inlets</object-name>
+		<object-name>SR</object-name>
+		<object-name>horstab</object-name>
+		<object-name>Vstab.left</object-name>
+		<object-name>Vstab.right</object-name>
+		<object-name>HRlinks</object-name>
+		<object-name>HRrechts</object-name>
+		<object-name>HRtrim</object-name>
+		
+		<!-- wing objects using paintkit.png -->
+		<object-name>AilLH</object-name>
+		<object-name>AilRH</object-name>
+		<object-name>FlapLH</object-name>
+		<object-name>FlapRH</object-name>
+		<object-name>wing</object-name>
+		<object-name>winglet.LH</object-name>
+		<object-name>winglet.RH</object-name>
+		
+		<property-base>sim/model/livery</property-base>
+		<texture-prop>paintkit_low</texture-prop>
+		<texture>Liveries/extra500_low.png</texture>
+		
+	</animation>
+	
+	
 
 	<offsets>
 		<pitch-deg>1.39</pitch-deg>
 	</offsets>
-
+	
+	<!-- checklist marker (pink circle)-->
 	<model>
-          <path>Models/Aircraft/marker.xml</path>
-      </model>
+		<path>Models/Aircraft/marker.xml</path>
+	</model>
 <!-- Rembrand transparency -->
 
 
@@ -120,6 +222,30 @@
   </effect>
 
 
+  <effect>
+    <inherits-from>Effects/model-transparent</inherits-from>
+    <object-name>window.pass.aft</object-name>
+  </effect>
+
+  
+  <animation>
+	  <type>shader</type>
+	  <shader>chrome</shader>
+	  <texture>Aircraft/extra500/Models/Effects/chrome2.png</texture>
+	  <object-name>exhaust.cover</object-name>
+	  <object-name>inlet</object-name>
+	  
+  </animation>
+   <animation>
+	  <type>shader</type>
+	  <shader>chrome</shader>
+	  <texture>Aircraft/extra500/Models/Effects/chrome1.png</texture>
+	  <object-name>exhaust.left</object-name>
+	  <object-name>exhaust.right</object-name>
+	  
+  </animation>
+<!--  -->
+  
 <!-- Submodels -->
 
 <!-- registration label-->
@@ -411,10 +537,11 @@
   <object-name>door.upper</object-name>
   <object-name>interior.doorUpper</object-name>
   <object-name>window.pass.middle.LH</object-name>
+  <object-name>doorhandleinner</object-name>
   <property>sim/multiplay/generic/int[0]</property>
   <interpolation>
    <entry><ind>0</ind><dep>0</dep></entry>
-   <entry><ind>1</ind><dep>-80</dep></entry>
+   <entry><ind>1000</ind><dep>-80</dep></entry>
   </interpolation>   
   <axis>
     <x1-m>1.12560</x1-m>
@@ -432,7 +559,7 @@
   <condition>
    <equals>
     <property>sim/multiplay/generic/int[0]</property>
-    <value>1</value>
+    <value>1000</value>
    </equals>
   </condition>
  </animation>
@@ -446,7 +573,7 @@
     <value>0</value>
    </equals>
   </condition>
- </animation>
+  </animation>
 
  <animation>
   <type>rotate</type>
@@ -455,7 +582,7 @@
   <property>sim/multiplay/generic/int[1]</property>
   <interpolation>
    <entry><ind>0</ind><dep>0</dep></entry>
-   <entry><ind>1</ind><dep>120</dep></entry>
+   <entry><ind>1000</ind><dep>120</dep></entry>
   </interpolation>   
   <axis>
     <x1-m>1.12973</x1-m>
@@ -474,17 +601,17 @@
   <condition>
    <equals>
     <property>sim/multiplay/generic/int[1]</property>
-    <value>1</value>
+    <value>1000</value>
    </equals>
   </condition>
  </animation>
-
+<!--
 <animation>
   <type>translate</type>
   <object-name>emergency.exit</object-name>
   <object-name>interior.emergency.exit</object-name>
   <object-name>window.pass.middle.RH</object-name>
-  <property>sim/multiplay/generic/int[2]</property>
+  <property>sim/multiplay/generic/int[3]</property>
   <factor>.5</factor>
   <offset-m>0.0</offset-m>
   <axis>
@@ -493,11 +620,142 @@
    <z>-1</z>
   </axis>
  </animation>
+ -->
+ <!-- emergency exit by HerbyW  -->
+ 
+ 
+ <animation>
+	 <type>translate</type>
+	 <object-name>emergency.exit</object-name>
+	 <object-name>interior.emergency.exit</object-name>
+	 <object-name>window.pass.middle.RH</object-name>
+	 <property>sim/multiplay/generic/int[2]</property>
+	 <interpolation>
+		 <entry><ind>0</ind><dep>0</dep></entry>
+		 <entry><ind>300</ind><dep>-0.15</dep></entry>
+		 <entry><ind>400</ind><dep>-0.10</dep></entry>
+		 <entry><ind>800</ind><dep>-0.07</dep></entry>
+		 <entry><ind>1000</ind><dep>-0.07</dep></entry> 
+	 </interpolation>
+	 <offset-m>0.0</offset-m>
+	 <axis>
+		 <x>0</x>
+		 <y>1</y>
+		 <z>0</z>
+	 </axis>
+ </animation> 
+ 
+ <animation>
+	 <type>translate</type>
+	 <object-name>emergency.exit</object-name>
+	 <object-name>interior.emergency.exit</object-name>
+	 <object-name>window.pass.middle.RH</object-name>
+	 <property>sim/multiplay/generic/int[2]</property>
+	 <interpolation>
+		 <entry><ind>0</ind><dep>0</dep></entry>
+		 <entry><ind>400</ind><dep>0</dep></entry>
+		 <entry><ind>1000</ind><dep>-0.3</dep></entry>
+	 </interpolation>
+	 <offset-m>0.0</offset-m>
+	 <axis>
+		 <x>0</x>
+		 <y>0</y>
+		 <z>1</z>
+	 </axis>
+ </animation>
+ 
+ <animation>
+	 <type>rotate</type>
+	 <object-name>emergency.exit</object-name>
+	 <object-name>interior.emergency.exit</object-name>
+	 <object-name>window.pass.middle.RH</object-name>
+	 <property>sim/multiplay/generic/int[2]</property>
+	 <interpolation>
+		 <entry><ind>0</ind><dep>0</dep></entry>
+		 <entry><ind>200</ind><dep>0</dep></entry>
+		 <entry><ind>400</ind><dep>-25</dep></entry>
+		 <entry><ind>1000</ind><dep>-25</dep></entry>
+	 </interpolation>
+	 <offset-m>0.0</offset-m>
+	 <axis>
+		 <x>1</x>
+		 <y>0</y>
+		 <z>0</z>
+	 </axis>
+ </animation>
+ 
+
+<!--external power unit-->
+<model>
+  <name>extpowerunit</name>
+  <path>Aircraft/extra500/Models/externalpower/extpowunit.ac</path>
+	<offsets>
+		<x-m>-1.4</x-m>
+		<y-m>1.4</y-m>	
+		<z-m>-1.780</z-m>
+            <heading-deg>-90</heading-deg>
+	</offsets>
+</model>
+
+<animation>
+  <object-name>extpowerunit</object-name>
+  <type>select</type>
+  <condition>
+   <equals>
+    <property>sim/multiplay/generic/int[11]</property>
+    <value>1</value>
+   </equals>
+  </condition>
+ </animation>
 
 <!--gear-->
 <model>
   <path>Aircraft/extra500/Models/landinggear/LandingGearTotal.xml</path>	
 </model>
+
+<!--jacks-->
+<model>
+  <name>jack-lh</name>
+  <path>Aircraft/extra500/Models/landinggear/jack-large.ac</path>
+	<offsets>
+		<x-m>0.9525</x-m>
+		<y-m>-2.635</y-m>	
+		<z-m>-1.980</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>jack-rh</name>
+  <path>Aircraft/extra500/Models/landinggear/jack-large.ac</path>
+	<offsets>
+		<x-m>0.9525</x-m>
+		<y-m>2.635</y-m>	
+		<z-m>-1.980</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>jack-fwd</name>
+  <path>Aircraft/extra500/Models/landinggear/jack-small.ac</path>
+	<offsets>
+		<x-m>-0.6</x-m>
+		<y-m>0.1</y-m>	
+		<z-m>-2.35</z-m>
+	</offsets>
+</model>
+
+<animation>
+  <object-name>jack-lh</object-name>
+  <object-name>jack-rh</object-name>
+  <object-name>jack-fwd</object-name>
+  <type>select</type>
+  <condition>
+   <equals>
+    <property>/fdm/jsbsim/gear/unit[10]/pos-norm</property>
+    <value>1</value>
+   </equals>
+  </condition>
+ </animation>
 
 <!--for gear test purposes only -->
 <!--animation>

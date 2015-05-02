@@ -53,19 +53,18 @@ var ListViewItem = {
 	new: func(){
 		var m = { parents: [ListViewItem] };
 		m._bound = Rectangle.new(0,0,0,0); 
+		m._cursorFocus 	= 0;
 		return m;
 	},
 	del : func(){},
 	setVisible : func(v){
-		print("ListViewItem::setVisible("~v~") ... abstract");
+		dP.bulk("ListViewItem::setVisible("~v~") ... abstract");
 	},
-	setFocus : func(v){
-		print("ListViewItem::setFocus("~v~") ... abstract");
+	setCursorFocus : func(v){
+		me._cursorFocus = v;
+		dP.bulk("ListViewItem::setFocus("~v~") ... abstract");
 	},
-	setAction : func(type,value){
-		print("ListViewItem::setAction("~type~","~value~") ... abstract");
-	},
-	_updateView : func(){},
+	hasCursorFocus : func(){return (me._cursorFocus == 1);},
 };
 
 var ScrollBarClass = {
@@ -108,11 +107,11 @@ var ListViewClass = {
 		me._listViewListener = l;
 	},
 	appendItem : func(item){
-		#print("ListViewClass::appendItem() ... in");
+		#dP.bulk(("ListViewClass::appendItem() ... in");
 		me._items.append(item);
 		me._recalcItems();
 		me.setFocusItem(item);
-		#print("ListViewClass::appendItem() ... out");
+		#dP.bulk(("ListViewClass::appendItem() ... out");
 	},
 	addAfterIndex : func(index,item){
 		me._items.insert(index+1,item);
@@ -144,7 +143,7 @@ var ListViewClass = {
 	},
 	
 	_recalcItems : func(){
-		#print("ListViewClass::_recalcItems() ...");
+		#dP.bulk(("ListViewClass::_recalcItems() ...");
 		me._height = 0;
 		forindex (var index; me._items.vector) {
 			me._items.vector[index]._bound._y = me._height;
@@ -152,7 +151,7 @@ var ListViewClass = {
 		};
 	},
 	_showItemsInView : func(){
-		#print("ListViewClass::_showItemsInView() ...");
+		#dP.bulk(("ListViewClass::_showItemsInView() ...");
 		#debug.dump(me._viewPort);
 		forindex (var index; me._items.vector) {
 			var topIn 	= (me._items.vector[index]._bound._y >= me._viewPort._y);
@@ -160,7 +159,7 @@ var ListViewClass = {
 			
 			var visible = topIn and bottomIn;
 			
-			#print(sprintf("ListViewClass::_showItemsInView() ... Difference top:%s bottom:%s visible:%s",topIn,bottomIn,visible));
+			#dP.bulk((sprintf("ListViewClass::_showItemsInView() ... Difference top:%s bottom:%s visible:%s",topIn,bottomIn,visible));
 			
 			me._items.vector[index].setVisible(visible);
 			me._items.vector[index]._updateView();
@@ -223,7 +222,7 @@ var ListViewClass = {
 			var topDif 	= me._viewPort._y - me._focusedItem._bound._y;
 			var bottomDif 	= (me._focusedItem._bound._y + me._focusedItem._bound._height) - (me._viewPort._y + me._viewPort._height);
 			#debug.dump(me._viewPort,me._focusedItem._bound);
-			#print(sprintf("ListViewClass::_updateView() ... Difference top:%s bottom:%s",topDif,bottomDif));
+			#dP.bulk(sprintf("ListViewClass::_updateView() ... Difference top:%s bottom:%s",topDif,bottomDif));
 			
 			if (topDif > 0){
 				#me._viewPort._y -= topDif;
