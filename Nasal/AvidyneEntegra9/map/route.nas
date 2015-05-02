@@ -13,11 +13,11 @@
 #    You should have received a copy of the GNU General Public License
 #    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
 #
-#      Authors: Dirk Dittmann
-#      Date: Sep 14 2013
+#	Authors:	Dirk Dittmann
+#	Date:		Sep 14 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             14.09.2013
+#	Last change:	Dirk Dittmann
+#	Date:		02.05.15
 #
 
 
@@ -72,11 +72,11 @@ var RouteItemClass = {
 		var cmds = [];
 		var coords = [];
 		var cmd = canvas.Path.VG_MOVE_TO;
-		print(sprintf("RouteItemClass::drawTrack() ... [%i] %s \t : %i",
-				me._index,
-				wpt.name,
-				size(wpt.path)
-			     ));
+# 		print(sprintf("RouteItemClass::drawTrack() ... [%i] %s \t : %i",
+# 				me._index,
+# 				wpt.name,
+# 				size(wpt.path)
+# 			     ));
 		
 		foreach (var pt; wpt.path) {
 			append(coords,"N"~pt.lat);
@@ -354,9 +354,9 @@ var RouteLayer = {
 # 		me._track.cmds = [];
 # 		me._track.coords = [];
 		me._itemIndex	= 0;
-		print(sprintf("RouteLayer::_drawWaypoints() ... plan size = %i",
-				fms._flightPlan.planSize
-			     ));
+# 		print(sprintf("RouteLayer::_drawWaypoints() ... plan size = %i",
+# 				fms._flightPlan.planSize
+# 			     ));
 		
 		var cmd = canvas.Path.VG_MOVE_TO;
 		for( var i=0; i < fms._flightPlan.planSize; i+=1 ){
@@ -385,7 +385,7 @@ var RouteLayer = {
 		for (me._itemIndex ; me._itemIndex < me._itemCount ; me._itemIndex += 1){
 			me._item[me._itemIndex].setVisible(0);
 		}
-		print("\n");
+# 		print("\n");
 		me._groupTrack.setVisible(me._visibility and (me._obsMode == 0));
 	},
 	_drawLegs : func(){
