@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+This file is part of extra500
+
+The extra500 is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
+
+The extra500 is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+Authors: 	Dirk Dittmann 
+Date: 		24.04.2014
+
+Last change:     Dirk Dittmann
+Date:            14.03.2014
+-->
+
+<PropertyList>
+	<name>extra500_About</name>
+	<modal>false</modal>
+	<layout>vbox</layout>
+	<group>
+		<layout>hbox</layout>
+		<default-padding>10</default-padding>
+		<empty><stretch>true</stretch></empty>
+		<text>
+			<label>MMMMMMMMMMMMMMMMMMMMMMMMMMMMMM</label>
+			<format>Extra 500 version: %s</format>
+			<property>/sim/extra500-version</property>
+			<color>
+				<red>1.0</red>
+				<green>0.7</green>
+				<blue>0.0</blue>
+			</color>
+			<font>
+				<name type="string">helvetica_bold.txf</name>
+				<size>22</size>
+			</font>
+		</text>
+		<empty><stretch>true</stretch></empty>
+	</group>
+	
+	<hrule/>
+	<!-- Description Section -->
+	<group>
+		<layout>vbox</layout>
+		
+		<default-padding>5</default-padding>
+		<text>
+			<halign>left</halign>
+			<label>Description:</label>
+			<color>
+				<red>1.0</red>
+				<green>0.7</green>
+				<blue>0.0</blue>
+			</color>
+		</text>
+		<textbox>
+			<name>aircraft-description</name>
+			<halign>fill</halign>
+			<stretch>true</stretch>
+			<pref-width>480</pref-width>
+			<pref-height>120</pref-height>
+			<editable>false</editable>
+			<wrap>true</wrap>
+			<live>true</live>
+			<slider>false</slider>
+			<property>/sim/long-description</property>
+			<border>0</border>
+			
+		</textbox>
+		<group>
+			<layout>hbox</layout>
+			<default-padding>5</default-padding>
+			<text>
+				<halign>left</halign>
+				<label>wiki</label>
+				<color>
+					<red>1.0</red>
+					<green>0.7</green>
+					<blue>0.0</blue>
+				</color>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>MMMMMMMMMMMMM</label>
+				<format>%s</format>
+				<property>/sim/extra500-wiki</property>
+			</text>
+			<empty><stretch>true</stretch></empty>
+			<button>
+				<legend>open Browser</legend>
+				<binding>
+					<command>nasal</command>
+					<script>
+						var _url = getprop("/sim/extra500-wiki");
+						fgcommand("open-browser", props.Node.new({ "url": _url }));
+					</script>
+				</binding>
+			</button>
+		</group>
+		<empty><stretch>true</stretch></empty>
+	</group>
+	
+	<hrule/>
+	<!-- Development Section -->
+	<group>
+		<layout>vbox</layout>
+		
+		<default-padding>5</default-padding>
+		
+		<text>
+			<halign>left</halign>
+			<label>License:</label>
+			<color>
+				<red>1.0</red>
+				<green>0.7</green>
+				<blue>0.0</blue>
+			</color>
+		</text>
+		<text>
+			<halign>left</halign>
+			<label>MMMMMMMMMM</label>
+			<format>(c) 2013-2015 %s</format>
+			<property>/sim/author-callsign</property>
+			<font>
+				<name type="string">HELVETICA_10</name>
+			</font>
+		</text>
+		<textbox>
+			<name>aircraft-description</name>
+			<halign>fill</halign>
+			<stretch>true</stretch>
+			<pref-width>480</pref-width>
+			<pref-height>60</pref-height>
+			<editable>false</editable>
+			<wrap>true</wrap>
+			<live>true</live>
+			<slider>false</slider>
+			<property>/sim/license-description</property>
+			<border>0</border>
+		</textbox>
+		<group>
+			<layout>hbox</layout>
+			<default-padding>5</default-padding>
+			
+			<text>
+				<halign>left</halign>
+				<label>git</label>
+				<color>
+					<red>1.0</red>
+					<green>0.7</green>
+					<blue>0.0</blue>
+				</color>
+			</text>
+			<text>
+				<halign>left</halign>
+				<label>MMMMMMMMMMMMM</label>
+				<format>%s</format>
+				<property>/sim/extra500-git</property>
+			</text>
+			<empty><stretch>true</stretch></empty>
+			<button>
+				<legend>open Browser</legend>
+				<binding>
+					<command>nasal</command>
+					<script>
+						var _url = getprop("/sim/extra500-git");
+						fgcommand("open-browser", props.Node.new({ "url": _url }));
+					</script>
+				</binding>
+			</button>
+		</group>
+	</group>
+	
+	<hrule/>
+	
+	<group>
+		<layout>hbox</layout>
+		<halign>fill</halign>
+		
+		<empty><stretch>true</stretch></empty>
+		
+		<button>
+			<legend>Close</legend>
+			<equal>true</equal>
+			<default>true</default>
+			<key>Esc</key>
+			<binding>
+				<command>dialog-close</command>
+			</binding>
+		</button>
+		
+		<empty><stretch>true</stretch></empty>
+	</group>
+</PropertyList>

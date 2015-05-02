@@ -26,13 +26,15 @@ var interior = {
 			interior,
 			ServiceClass.new(root,name)
 		]};
-		m._Tisch		= 0;
-		m._door		= 0;
+		m._table		= 0;
+		m._doorRight		= 0;
+		m._doorLeftUp		= 0;
+		m._doorLeftLow		= 0;
 		
-		m._nTisch		= props.globals.initNode("extra500/interior/tisch/state",0,"BOOL");
-		m._nDoorstorageright		= props.globals.initNode("extra500/interior/storageright/doorstate",0,"BOOL");
-		m._nDoorstorageupperleft	= props.globals.initNode("extra500/interior/storageupperleft/doorstate",0,"BOOL");
-		m._nDoorstoragelowerleft	= props.globals.initNode("extra500/interior/storagelowerleft/doorstate",0,"BOOL");
+		m._nTable		= props.globals.initNode("extra500/interior/tisch/state",0,"DOUBLE");
+		m._nDoorStorageRight		= props.globals.initNode("extra500/interior/storageright/doorstate",0,"DOUBLE");
+		m._nDoorStorageLeftUpper	= props.globals.initNode("extra500/interior/storageupperleft/doorstate",0,"DOUBLE");
+		m._nDoorStorageLeftLower	= props.globals.initNode("extra500/interior/storagelowerleft/doorstate",0,"DOUBLE");
 	
 		return m;
 	},
@@ -43,54 +45,54 @@ var interior = {
 		
 		me.initUI();
 	},
-	onTischClick : func(value = nil){
+	onTableClick : func(value = nil){
 		if (value == nil){
-			me._Tisch = me._Tisch == 1 ? 0 : 1;
+			me._table = me._table == 1 ? 0 : 1;
 		}else{
-			me._Tisch = value;
+			me._table = value;
 		}
-		me._nTisch.setValue(me._Tisch);
+		interpolate(me._nTable,me._table,0.3);
 	},
-	onStoragedoorrightClick : func(value = nil){
+	onDoorStorageRightClick : func(value = nil){
 		if (value == nil){
-			me._door = me._door == 1 ? 0 : 1;
+			me._doorRight = me._doorRight == 1 ? 0 : 1;
 		}else{
-			me._door = value;
+			me._doorRight = value;
 		}
-		me._nDoorstorageright.setValue(me._door);
+		interpolate(me._nDoorStorageRight,me._doorRight,0.3);
 	},
-	onStorageupperdoorleftClick : func(value = nil){
+	onDoorStorageLeftUpperClick : func(value = nil){
 		if (value == nil){
-			me._door = me._door == 1 ? 0 : 1;
+			me._doorLeftUp = me._doorLeftUp == 1 ? 0 : 1;
 		}else{
-			me._door = value;
+			me._doorLeftUp = value;
 		}
-		me._nDoorstorageupperleft.setValue(me._door);		
+		interpolate(me._nDoorStorageLeftUpper,me._doorLeftUp,0.3);		
 	},
-	onStoragelowerdoorleftClick : func(value = nil){
+	onDoorStorageLeftLowerClick : func(value = nil){
 		if (value == nil){
-			me._door = me._door == 1 ? 0 : 1;
+			me._doorLeftLow = me._doorLeftLow == 1 ? 0 : 1;
 		}else{
-			me._door = value;
+			me._doorLeftLow = value;
 		}
-		me._nDoorstoragelowerleft.setValue(me._door);		
+		interpolate(me._nDoorStorageLeftLower,me._doorLeftLow,0.3);		
 	},
 	initUI : func(){
-		UI.register("Tisch", 	func{me.onTischClick(); } 	);
-		UI.register("Tisch up", 	func{me.onTischClick(1); } 	);
-		UI.register("Tisch down", func{me.onTischClick(0); } );
+		UI.register("Tisch", 	func{me.onTableClick(); } 	);
+		UI.register("Tisch up", 	func{me.onTableClick(1); } 	);
+		UI.register("Tisch down", func{me.onTableClick(0); } );
 
-		UI.register("storagedoorright open/close",func{me.onStoragedoorrightClick(); } 	);
-		UI.register("storagedoorright open", 	func{me.onStoragedoorrightClick(1); } 	);
-		UI.register("storagedoorright close", 	func{me.onStoragedoorrightClick(0); } );
+		UI.register("storagedoorright open/close",func{me.onDoorStorageRightClick(); } 	);
+		UI.register("storagedoorright open", 	func{me.onDoorStorageRightClick(1); } 	);
+		UI.register("storagedoorright close", 	func{me.onDoorStorageRightClick(0); } );
 
-		UI.register("storagedoorupperleft open/close",func{me.onStorageupperdoorleftClick(); } 	);
-		UI.register("storagedoorupperleft open", 	func{me.onStorageupperdoorleftClick(1); } 	);
-		UI.register("storagedoorupperleft close", 	func{me.onStorageupperdoorleftClick(0); } );
+		UI.register("storagedoorupperleft open/close",func{me.onDoorStorageLeftUpperClick(); } 	);
+		UI.register("storagedoorupperleft open", 	func{me.onDoorStorageLeftUpperClick(1); } 	);
+		UI.register("storagedoorupperleft close", 	func{me.onDoorStorageLeftUpperClick(0); } );
 
-		UI.register("storagedoorlowerleft open/close",func{me.onStoragelowerdoorleftClick(); } 	);
-		UI.register("storagedoorlowerleft open", 	func{me.onStoragelowerdoorleftClick(1); } 	);
-		UI.register("storagedoorlowerleft close", 	func{me.onStoragelowerdoorleftClick(0); } );
+		UI.register("storagedoorlowerleft open/close",func{me.onDoorStorageLeftLowerClick(); } 	);
+		UI.register("storagedoorlowerleft open", 	func{me.onDoorStorageLeftLowerClick(1); } 	);
+		UI.register("storagedoorlowerleft close", 	func{me.onDoorStorageLeftLowerClick(0); } );
 				
 	},
 };

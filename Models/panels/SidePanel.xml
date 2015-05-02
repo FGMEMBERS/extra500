@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             21.09.13
+      Date:             17.01.15
 
 -->
 <PropertyList>
@@ -32,6 +32,18 @@
     <min-m>0</min-m>
     <max-m>50</max-m>
   </animation>
+
+<!--submodels -->
+<model>
+  <name>safetycap</name>
+  <path>Aircraft/extra500/Models/panels/safetycap.xml</path>
+	<offsets>
+		<x-m>0.161</x-m>
+		<y-m>-0.02497</y-m>	
+		<z-m>0.</z-m>
+	</offsets>
+</model>
+
 
 <!-- ##### REIHE1 ##### -0.17003 -->
 <!-- SidePanel.Main.Battery -->

@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg 
-#      Date:             20.07.2014
+#      Date:             04.04.2015
 #
 
 var AutopilotClass = {
@@ -412,10 +412,14 @@ var AutopilotClass = {
 		}
 	},
 	onClickDisengage : func(value){
-		setprop("/extra500/yokes/apdisc/pressed",value);
-		if (value == 1 ) {
+		if (value == nil) {
 			me._APDisengage();
-		}			
+		} else {
+			setprop("/extra500/yokes/apdisc/pressed",value);
+			if (value == 1 ) {
+				me._APDisengage();
+			}
+		}
 	},
 	
 ########
@@ -466,7 +470,7 @@ var AutopilotClass = {
 		UI.register("Autopilot VS +=",		func(v){extra500.autopilot.onAdjustVS(v,"ap"); } 	);
 		UI.register("Autopilot VS =",		func(v){extra500.autopilot.onSetVS(v); } 	);
 				
-		UI.register("Autopilot disengage",	func{extra500.autopilot.onClickDisengage(); } 	);
+		UI.register("Autopilot disengage",	func{extra500.autopilot.onClickDisengage(nil); } 	);
 		UI.register("Autopilot disengage on",	func{extra500.autopilot.onClickDisengage(1); } 	);
 		UI.register("Autopilot disengage off",	func{extra500.autopilot.onClickDisengage(0); } 	);
 		

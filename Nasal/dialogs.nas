@@ -34,6 +34,8 @@ var checklist = gui.Dialog.new("/sim/gui/dialogs/checklist/dialog",
 var extra500config = gui.Dialog.new("/sim/gui/dialogs/extra500config/dialog",
         "Aircraft/extra500/Dialogs/Config.xml");
 
+var extra500about = gui.Dialog.new("/sim/gui/dialogs/extra500about/dialog",
+        "Aircraft/extra500/Dialogs/about.xml");
 
 
 gui.menuBind("fuel-and-payload", "Dialogs.fuelPayload.toggle();");

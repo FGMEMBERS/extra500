@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+	
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Dirk Dittmann
+      Date: 20.03.15
+
+      Last change:      Dirk Dittmann
+      Date:             20.03.15
+-->
+
+<system name="elt-gforce-switch">
+	<channel name="elt gforce">
+		<!--
+		<fcs_function name="/extra500/instrumentation/elt/accel-fps_sec">
+			<function>
+				<pow>
+					<sum>
+						
+						<pow>
+							<property>/accelerations/pilot/x-accel-fps_sec</property>
+							<value>2.0</value>
+						</pow>
+						
+						<pow>
+							<property>/accelerations/pilot/y-accel-fps_sec</property>
+							<value>2.0</value>
+						</pow>
+						<pow>
+							<sum>
+								<property>/accelerations/pilot/z-accel-fps_sec</property>
+								<property>/fdm/jsbsim/accelerations/gravity-ft_sec2</property>
+							</sum>
+							<value>2.0</value>
+						</pow>
+					</sum>
+					<value>0.5</value>
+				</pow>
+			</function>
+		</fcs_function>
+		-->
+<!--
+	Automatic by 4.5 feet per second (2.3 G) Primary G-Switch or Manual Activation
+		32.1989146288434 * 2.3 = 74.0575036463
+-->
+		<switch name="elt-gforce-switch">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/accelerations/pilot/x-accel-fps_sec lt -74.0575036463
+			</test>
+			<output>/extra500/instrumentation/elt/switch-G</output>
+		</switch>
+
+	</channel>
+</system>

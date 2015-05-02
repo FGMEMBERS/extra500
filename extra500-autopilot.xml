@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2014-06-24
+      Date:             2015-04-26
 -->
 
 <autopilot name="STEC55X">
@@ -88,10 +88,65 @@
 		</fcs_function>
 	</channel>
 
+<!--***************************************BLINKER**********************************************************************-->
+
+	<channel name="timer">
+
+<!-- indication timer -->
+		<fcs_function name="/autopilot/indication/timer-sec">
+			<function>
+				<product>
+					<property>/extra500/light/strobe/reset</property>
+					<sum>
+						<property>/autopilot/indication/timer-sec</property>
+						<property>sim-dt-sec</property> 
+					</sum>
+				</product>
+			</function>
+		</fcs_function>
+
+<!-- timer reset -->
+		<switch name="/autopilot/indication/reset">
+			<default value="1"/>
+			<test logic="OR" value="0">
+				/autopilot/indication/timer-sec gt 2.0
+			</test>
+		</switch>
+
+<!-- on/off -->
+		<switch name="/autopilot/indication/timer-on">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/autopilot/indication/timer-sec ge 0.0
+				/autopilot/indication/timer-sec lt 1
+			</test>
+		</switch>
+
+	</channel>
+
 <!--***************************************HEADING**********************************************************************-->
 
 	<channel name="heading">
 <!-- this is the heading channel. when the hdg mode is active, the hdg bug of the LH IFD is followed-->
+
+<!-- heading fail used for indication-->
+		<switch name="hdgfail">
+			<default value="0"/>
+			<test value="1">
+				/instrumentation/heading-indicator-IFD-LH/serviceable eq 0
+				/instrumentation/heading-indicator-IFD-RH/serviceable eq 0
+			</test>
+			<output>/autopilot/hdg-channel/fail</output>
+		</switch>
+
+		<switch name="hdgind">
+			<default value="/autopilot/mode/heading"/>
+			<test value="/autopilot/indication/timer-on">
+				/autopilot/hdg-channel/fail eq 1
+				/autopilot/mode/heading eq 1
+			</test>
+			<output>/autopilot/indication/heading</output>
+		</switch>
 
 <!-- heading source is selected -->
 		<switch name="hdgselect">
@@ -211,6 +266,31 @@
 	<channel name="radionav">
 <!-- this is the radionav channel. when the nav mode is active, the ap will intercept the selected radial of a VOR or the selected LOC-->
 
+<!-- radio nav mode fail used for indication -->
+		<switch name="radnavfail">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					<test logic="AND">
+						/instrumentation/nav-source eq 0
+					</test>
+					<test logic="OR">
+						/instrumentation/nav[0]/operable eq 0 
+						/instrumentation/nav[0]/in-range eq 0
+					</test>
+				</test>
+				<test logic="AND">
+					<test logic="AND">
+						/instrumentation/nav-source eq 1
+					</test>
+					<test logic="OR">
+						/instrumentation/nav[1]/operable eq 0 
+						/instrumentation/nav[1]/in-range eq 0
+					</test>
+				</test>
+			</test>
+			<output>/autopilot/radionav-channel/fail</output>
+		</switch>
 
 <!-- selection of nav unit based on /instrumentation/nav-source property -->
 		<switch name="navdistanceselect">
@@ -889,6 +969,42 @@
 
 <!-- ********************* GLIDESLOPE ********************-->
 	<channel name="glideslope">
+
+<!-- gs fail used for indication -->
+		<!--switch name="gsnavfail">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND">
+					<test logic="AND">
+						/instrumentation/nav-source eq 0
+					</test>
+					<test logic="OR">
+						/instrumentation/nav[0]/operable eq 0
+						/instrumentation/nav[0]/gs-in-range eq 0
+					</test>
+				</test>
+				<test logic="AND">
+					<test logic="AND">
+						/instrumentation/nav-source eq 1
+					</test>
+					<test logic="OR">
+						/instrumentation/nav[1]/operable eq 0
+						/instrumentation/nav[1]/gs-in-range eq 0
+					</test>
+				</test>
+			</test>
+			<output>/autopilot/gs-channel/fail</output>
+		</switch>
+
+		<switch name="gsind">
+			<default value="/autopilot/mode/gs"/>
+			<test value="/autopilot/indication/timer-on">
+				/autopilot/gs-channel/fail eq 1
+				/autopilot/mode/gs eq 1
+			</test>
+			<output>/autopilot/indication/gs</output>
+		</switch-->
+
 	
 	<!-- selecting GS properties from active nav -->
 		<switch name="gsselect">
@@ -1064,6 +1180,43 @@
 
 -->
 
+<!-- fms fail used for indication -->
+		<switch name="fmsnavfail">
+			<default value="0"/>
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/instrumentation/nav-source eq 2
+						/instrumentation/gps/serviceable eq 0
+						/instrumentation/gps[1]/serviceable eq 0
+						/autopilot/route-manager/current-wp eq -1
+					</test>
+					<test logic="OR" value="1">
+						/instrumentation/gps/raim eq 0
+					</test>
+				</test>
+			<output>/autopilot/fms-channel/fail</output>
+		</switch>
+
+		<switch name="fmsnav">
+			<default value="/autopilot/mode/nav"/>
+			<test logic="AND" value="/autopilot/indication/timer-on">
+				<test logic="AND" value="1">
+					/autopilot/mode/nav eq 1
+				</test>
+				<test logic="OR" value="1">
+					<test logic="AND" value="1">
+						/instrumentation/nav-source eq 2
+						/autopilot/fms-channel/fail eq 1
+					</test>
+					<test logic="AND" value="1">
+						/instrumentation/nav-source ne 2
+						/autopilot/radionav-channel/fail eq 1
+					</test>
+				</test>
+			</test>
+			<output>/autopilot/indication/nav</output>
+		</switch>
+
 	<!-- determining if fms is "servicable" -->
 		<switch name="fmsservicable">
 			<default value="0"/>
@@ -1079,7 +1232,7 @@
 			<output>/autopilot/fms-channel/serviceable</output>
 		</switch>
 
-	<!-- selecting GPS properties from gps1 or 2 depending on "servicable" -->
+	<!-- selecting GPS properties from gps1 or 2 depending on "serviceable" -->
 		<switch name="gpsselect1">
 			<default value="/instrumentation/gps/wp/leg-true-course-deg"/>
 			<test value="/instrumentation/gps[1]/wp/leg-true-course-deg">
@@ -1879,6 +2032,24 @@
 				</sum>
 			</function>
 		</fcs_function>
+
+<!-- vs fail used for indication: aircraft cannot maintain climb rate (stall "protection")-->
+		<switch name="vsfail">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/autopilot/vs-channel/vs-error-fpm gt 150
+			</test>
+			<output>/autopilot/vs-channel/fail</output>
+		</switch>
+
+		<switch name="vsind">
+			<default value="/autopilot/mode/vs"/>
+			<test value="/autopilot/indication/timer-on">
+				/autopilot/vs-channel/fail eq 1
+				/autopilot/mode/vs eq 1
+			</test>
+			<output>/autopilot/indication/vs</output>
+		</switch>
 
 <!-- Flight director indication in deg relative to AC current VS-->
 		<fcs_function name="/autopilot/vs-channel/fld-pitch-deg">
@@ -2681,34 +2852,40 @@
 			<test value="/autopilot/cws-channel/fld-bank-deg">
 				/autopilot/mode/cws eq 1
 			</test>
-			<output>/autopilot/flight-director/fld-bank-deg</output>
+			<output>/autopilot/flight-director/fld-bank-raw-deg</output>
 		</switch>
 
 		<switch name="fldbank2">
-			<default value="/autopilot/flight-director/fld-bank-deg"/>
+			<default value="/autopilot/flight-director/fld-bank-raw-deg"/>
 			<test value="/autopilot/hdg-channel/fld-bank-deg">
 				/autopilot/mode/heading eq 1
 			</test>
-			<output>/autopilot/flight-director/fld-bank-deg</output>
+			<output>/autopilot/flight-director/fld-bank-raw-deg</output>
 		</switch>
 
 		<switch name="fldbank3">
-			<default value="/autopilot/flight-director/fld-bank-deg"/>
+			<default value="/autopilot/flight-director/fld-bank-raw-deg"/>
 			<test logic="AND" value="/autopilot/radionav-channel/fld-bank-deg">
           			/autopilot/mode/heading eq 0
           			/autopilot/mode/nav eq 1
 			</test>
-			<output>/autopilot/flight-director/fld-bank-deg</output>
+			<output>/autopilot/flight-director/fld-bank-raw-deg</output>
 		</switch>
 
 		<switch name="fldbank4">
-			<default value="/autopilot/flight-director/fld-bank-deg"/>
+			<default value="/autopilot/flight-director/fld-bank-raw-deg"/>
 			<test logic="AND" value="/autopilot/fms-channel/fld-bank-deg">
 				/autopilot/mode/nav eq 1
 				/instrumentation/nav-source eq 2
 			</test>
-			<output>/autopilot/flight-director/fld-bank-deg</output>
+			<output>/autopilot/flight-director/fld-bank-raw-deg</output>
 		</switch>
+
+		<lag_filter name ="fld-bank">
+ 			<input>/autopilot/flight-director/fld-bank-raw-deg</input>
+			<c1>1.0</c1>
+			<output>/autopilot/flight-director/fld-bank-deg</output>
+		</lag_filter>
 
 
 		<switch name="fldpitch1">
@@ -2716,25 +2893,31 @@
 			<test value="/autopilot/vs-channel/fld-pitch-deg">
           			/autopilot/mode/vs eq 1
 			</test>
-			<output>/autopilot/flight-director/fld-pitch-deg</output>
+			<output>/autopilot/flight-director/fld-pitch-raw-deg</output>
 		</switch>
 
 		<switch name="fldpitch2">
-			<default value="/autopilot/flight-director/fld-pitch-deg"/>
+			<default value="/autopilot/flight-director/fld-pitch-raw-deg"/>
 			<test logic="AND" value="/autopilot/alt-channel/fld-pitch-deg">
           			/autopilot/mode/vs eq 0
           			/autopilot/mode/alt eq 1
 			</test>
-			<output>/autopilot/flight-director/fld-pitch-deg</output>
+			<output>/autopilot/flight-director/fld-pitch-raw-deg</output>
 		</switch>
 
 		<switch name="fldpitch3">
-			<default value="/autopilot/flight-director/fld-pitch-deg"/>
+			<default value="/autopilot/flight-director/fld-pitch-raw-deg"/>
 			<test logic="AND" value="/autopilot/gs-channel/fld-pitch-deg">
           			/autopilot/mode/gs-follow eq 1
 			</test>
-			<output>/autopilot/flight-director/fld-pitch-deg</output>
+			<output>/autopilot/flight-director/fld-pitch-raw-deg</output>
 		</switch>
+
+		<lag_filter name ="fld-pitch">
+ 			<input>/autopilot/flight-director/fld-pitch-raw-deg</input>
+			<c1>1.0</c1>
+			<output>/autopilot/flight-director/fld-pitch-deg</output>
+		</lag_filter>
 
 	</channel>
 

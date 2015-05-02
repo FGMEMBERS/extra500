@@ -127,8 +127,7 @@ var FMSDelegate = {
     currentWaypointChanged: func
     {
 	#debug.dump('FMSDelegate.currentWaypointChanged() ...');
-	setprop("/autopilot/route-manager/signals/current-waypoint-changed",systime());
-        if (me.landingCheck != nil) {
+	if (me.landingCheck != nil) {
             me.landingCheck.stop();
             me.landingCheck = nil; # delete timer
         }
@@ -155,6 +154,7 @@ var FMSDelegate = {
             me.landingCheck = maketimer(2.0, me, FMSDelegate._landingCheckTimeout);
             me.landingCheck.start();
         }
+        setprop("/autopilot/route-manager/signals/current-waypoint-changed",systime());
     }
 };
 

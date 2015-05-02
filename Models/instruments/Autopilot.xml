@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2013.09.11
+      Date:             2015-04-25
 -->
 
 <PropertyList>
@@ -132,7 +132,7 @@
 	<object-name>Autopilot.Display.HDG</object-name>
 	<condition>
 		<equals>
-			<property>/autopilot/mode/heading</property>
+			<property>/autopilot/indication/heading</property>
 			<value>1</value>
 		</equals>	
 	</condition>
@@ -177,7 +177,7 @@
 		<object-name>Autopilot.Display.NAV</object-name>
 		<condition>
 			<equals>
-				<property>/autopilot/mode/nav</property>
+				<property>/autopilot/indication/nav</property>
 				<value>1</value>
 			</equals>	
 		</condition>
@@ -291,6 +291,15 @@
 <animation>
 		<type>select</type>
 		<object-name>Autopilot.Display.VS</object-name>
+		<condition>
+			<equals>
+				<property>/autopilot/indication/vs</property>
+				<value>1</value>
+			</equals>	
+		</condition>
+</animation>
+<animation>
+		<type>select</type>
 		<object-name>Autopilot.Display.VSnumbers</object-name>
 		<condition>
 			<equals>
@@ -298,7 +307,7 @@
 				<value>1</value>
 			</equals>	
 		</condition>
-	</animation>
+</animation>
 <animation>
   <type>pick</type>
   <object-name>Autopilot.Knob</object-name>
@@ -420,6 +429,7 @@
 
 <animation>
         <type>material</type>
+		<object-name>Autopilot.Frame</object-name>
 		<object-name>Autopilot.Button.HDG</object-name>
 		<object-name>Autopilot.Button.NAV</object-name>
 		<object-name>Autopilot.Button.APR</object-name>
@@ -433,9 +443,9 @@
 		</equals>
 	</condition>
         <emission>
-            <red>.5</red>
-            <green>.5</green>
-            <blue>.5</blue>
+            <red>.4</red>
+            <green>.4</green>
+            <blue>.4</blue>
 	    <factor-prop>extra500/instrumentation/Autopilot/Backlight/state</factor-prop>
         </emission>
 </animation>
