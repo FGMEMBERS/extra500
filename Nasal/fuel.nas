@@ -24,6 +24,7 @@
 var FLOW_JETPUMP	= 0.503 / 60.0;		# 0.503 Gal/min
 var FLOW_COl2MAIN	= 1.585 / 3600.0;	# 6 L/Std
 var FLOW_MAIN2COL	= FLOW_JETPUMP * 50;
+var NOT_USEABLE_LITER	= 14.0;
 
 var FuelTankClass = {
 	new : func(position,name,index,refuelable=1){
@@ -387,6 +388,17 @@ var FuelSystemClass = {
 		
 		
 	},
+	
+	getUseAbleFuelLiter : func(){
+		var usableFuelLiter = getprop("/consumables/fuel/total-fuel-lbs") * global.CONST.JETA_LB2L;
+		if( usableFuelLiter > NOT_USEABLE_LITER){
+			usableFuelLiter -= NOT_USEABLE_LITER;
+		}else{
+			usableFuelLiter = 0;
+		}
+		return usableFuelLiter ;
+	},
+	
 	initUI : func(){
 		UI.register("Fuel Select Valve <", 	func{me.onValveClick(-1);} 	);
 		UI.register("Fuel Select Valve >", 	func{me.onValveClick(1);} 	);

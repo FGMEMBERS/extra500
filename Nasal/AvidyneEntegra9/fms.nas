@@ -658,7 +658,7 @@ var FlightManagementSystemClass = {
 		me._constraint.VSR.visible	= 0;
 		
 		var gs 			= getprop("/velocities/groundspeed-kt");
-		me._fuelLiter		= getprop("/consumables/fuel/total-fuel-lbs") * global.CONST.JETA_LB2L;
+		me._fuelLiter		= extra500.fuelSystem.getUseAbleFuelLiter();
 		me._fuelFlow		= extra500.fuelSystem._nFuelFlowLph.getValue();
 		var fuelFlowLpSec 	= me._fuelFlow / 3600.0;
 		

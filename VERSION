@@ -16,16 +16,17 @@
       Author: Eric van den Berg
       Date: 2014-06-22
 
-      Last change:      Dirk Dittmann
+      Last change:      Eric van den Berg
       Date:             2015.05.02
 
 Release 2.1.0: use for Flightgear version 3.4 and up
-* Autopilot: fail indication, flight director
+* Autopilot: improved fail indication, flight director, fixes for broken functions, hotkeys
 * IFD: flightplan improved, map fuel reserve indication, obs course indication
 * ELT: improved and configureable msg
-* Electric: more precise
+* Electric system: more accurate model, External power indication (V+A)
 * Interior: door animation
-* Model: fixes, propeller
+* Model: fixes, propeller, possibility to put aircraft on Jacks
+* Engine: reworked oil pressure and TOT spool-down model 
 
 Release 2.0.0: use for Flightgear version 3.4 and up
 * Route-manager/FMS: adjustments for bug fixes in Flightgear 3.4
