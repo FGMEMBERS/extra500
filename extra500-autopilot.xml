@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2015-04-26
+      Date:             2015-05-03
 -->
 
 <autopilot name="STEC55X">
@@ -1992,14 +1992,25 @@
 			<output>/autopilot/fms-channel/gpss/inturn-course</output>
 		</fcs_function-->
 
-		<switch name="indcourse">
+		<switch name="indtruecourse">
 			<default value="/autopilot/fms-channel/leg-true-course-deg"/>
 			<test logic="AND" value="/autopilot/fms-channel/indicated-track-true-deg">
 				/autopilot/mode/gpss eq 1
 				/autopilot/fms-channel/gpss/in-turn eq 1
 			</test>
-			<output>/autopilot/fms-channel/indicated-course-deg</output>
+			<output>/autopilot/fms-channel/indicated-true-course-deg</output>
 		</switch>
+
+		<fcs_function name="indmagcourse">
+			<function>
+				<difference>
+					<property>/autopilot/fms-channel/indicated-true-course-deg</property> 
+					<property>/environment/magnetic-variation-deg</property>  
+				</difference>
+			</function>
+			<output>/autopilot/fms-channel/indicated-course-deg</output>
+		</fcs_function>
+
 
 <!-- indication: cdi-->
 		<switch name="inderror">
