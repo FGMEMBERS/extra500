@@ -88,12 +88,48 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		<ixx unit="SLUG*FT2">      2891 </ixx>
 		<iyy unit="SLUG*FT2">      3919 </iyy>	
 		<izz unit="SLUG*FT2">      6136 </izz>
-		<emptywt unit="KG" >      1385 </emptywt>  		<!-- subtracted main gear, find below as pointmasses -->
+		<!-- 1385 kg-->
+		<emptywt unit="KG" >      277 </emptywt>  		<!-- subtracted main gear, find below as pointmasses -->
 		<location name="CG" unit="M">
 			<x> 3.4995 </x>
 			<y> 0.00 </y>
 			<z> 1.659 </z>
 		</location>
+		
+		<pointmass name="Fuselage_Front">
+			<weight unit="KG"> 415.5 </weight>  
+			<location name="POINTMASS" unit="M">
+				<x> 2.4995 </x>
+				<y> 0.00 </y>
+				<z> 1.659 </z>
+			</location>
+		</pointmass>
+		<pointmass name="Fuselage_Rear">
+			<weight unit="KG"> 415.5 </weight>  
+			<location name="POINTMASS" unit="M">
+				<x> 4.4995 </x>
+				<y> 0.00 </y>
+				<z> 1.659 </z>
+			</location>
+		</pointmass>
+		<pointmass name="Fuselage_Left">
+			<weight unit="KG"> 138.5 </weight>  
+			<location name="POINTMASS" unit="M">
+				<x> 3.4995 </x>
+				<y> -0.50 </y>
+				<z> 1.659 </z>
+			</location>
+		</pointmass>
+		<pointmass name="Fuselage_Right">
+			<weight unit="KG"> 138.5 </weight>  
+			<location name="POINTMASS" unit="M">
+				<x> 3.4995 </x>
+				<y> 0.50 </y>
+				<z> 1.659 </z>
+			</location>
+		</pointmass>
+		
+		
 		<pointmass name="Pilot">
 			<weight unit="KG"> 80 </weight>
 			<location name="POINTMASS" unit="M">
