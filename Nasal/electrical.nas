@@ -1485,6 +1485,7 @@ var ESystem = {
 			# no power source
 			me._shuntBattery = 0;
 		}
+		me._shuntBattery	= 0;
 		
 		
 		me._nShuntBattery.setValue(me._shuntBattery);
