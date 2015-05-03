@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2015.01.17
+      Date:             2015-04-25
 -->
 
 <PropertyList>
@@ -132,7 +132,7 @@
 	<object-name>Autopilot.Display.HDG</object-name>
 	<condition>
 		<equals>
-			<property>/autopilot/mode/heading</property>
+			<property>/autopilot/indication/heading</property>
 			<value>1</value>
 		</equals>	
 	</condition>
@@ -177,7 +177,7 @@
 		<object-name>Autopilot.Display.NAV</object-name>
 		<condition>
 			<equals>
-				<property>/autopilot/mode/nav</property>
+				<property>/autopilot/indication/nav</property>
 				<value>1</value>
 			</equals>	
 		</condition>
@@ -291,6 +291,15 @@
 <animation>
 		<type>select</type>
 		<object-name>Autopilot.Display.VS</object-name>
+		<condition>
+			<equals>
+				<property>/autopilot/indication/vs</property>
+				<value>1</value>
+			</equals>	
+		</condition>
+</animation>
+<animation>
+		<type>select</type>
 		<object-name>Autopilot.Display.VSnumbers</object-name>
 		<condition>
 			<equals>
@@ -298,7 +307,7 @@
 				<value>1</value>
 			</equals>	
 		</condition>
-	</animation>
+</animation>
 <animation>
   <type>pick</type>
   <object-name>Autopilot.Knob</object-name>

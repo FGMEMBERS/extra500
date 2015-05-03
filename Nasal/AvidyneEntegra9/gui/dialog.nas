@@ -116,7 +116,7 @@ var GuiDialogFactory = {
 			y : 1.0
 		};
 		m._can = {
-			clip	: canGroup.createChild("path","FPL_DialogClip"),
+			clip	: canGroup.createChild("path","FPL_DialogClip"), # debug indication clip area
 		};
 		
 		
@@ -188,7 +188,7 @@ var GuiDialogFactory = {
 		me._offset.x = x;
 		me._offset.y = y;
 		
-		me._can.clip.setTranslation(x,y);
+# 		me._can.clip.setTranslation(x,y);
 		
 		if (me._dialog != nil){
 			me._dialog.setOffset(x,y);
@@ -207,10 +207,10 @@ var GuiDialogFactory = {
 		me._clipPosition.bottom = bottom;
 		me._clipPosition.left = left;
 		
-		me._can.clip.reset();
-		me._can.clip.rect(left,top,right-left,bottom-top)
-					.set("stroke","#FF0000")
-					.set("stroke-width",2);
+# 		me._can.clip.reset();
+# 		me._can.clip.rect(left,top,right-left,bottom-top)
+# 					.set("stroke","#FF0000")
+# 					.set("stroke-width",2);
 		if (me._dialog != nil and me._dialog._class == "GuiSelectDialog"){
 			me._dialog.setPositionClipBound(top,right,bottom,left);
 		}

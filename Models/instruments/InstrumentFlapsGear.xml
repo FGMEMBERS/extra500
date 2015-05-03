@@ -34,7 +34,7 @@
 
 <effect>
     <name>gearflaps</name>
-    <inherits-from>Models/Effects/panel</inherits-from>
+    <inherits-from>Aircraft/extra500/Models/Effects/panel</inherits-from>
     <object-name>Plane</object-name>
     <parameters>
 		<grain-magnification type="float">500</grain-magnification>

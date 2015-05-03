@@ -34,7 +34,7 @@
 
 <effect>
     <name>MainPanel</name>
-    <inherits-from>Models/Effects/panel</inherits-from>
+    <inherits-from>Aircraft/extra500/Models/Effects/panel</inherits-from>
     <object-name>MainPanel</object-name>
     <object-name>Glareshield.lower</object-name>
     <parameters>
@@ -43,7 +43,7 @@
 </effect>
 <effect>
     <name>AP</name>
-    <inherits-from>Models/Effects/panel</inherits-from>
+    <inherits-from>Aircraft/extra500/Models/Effects/panel</inherits-from>
     <object-name>autopilot.case</object-name>
     <parameters>
 		<grain-magnification type="float">4000</grain-magnification>
@@ -51,7 +51,7 @@
 </effect>
 <effect>
     <name>yokecover</name>
-    <inherits-from>Models/Effects/panel</inherits-from>
+    <inherits-from>Aircraft/extra500/Models/Effects/panel</inherits-from>
     <object-name>YokeFrameR</object-name>
     <object-name>YokeFrameL</object-name>
     <parameters>

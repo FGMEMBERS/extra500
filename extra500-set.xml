@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Eric van den Berg
-      Date:             2015-01-18
+	Last change:	Dirk Dittmann
+	Date:		02.05.15
 
 
 ************************************************************************
@@ -33,14 +33,15 @@ JSBSim Extra Aircraft - Extra 500.
 
 <sim>
 	
+	<license-description>Extra500 is free and open source software, licensed
+under the GNU General Public License Version 2.</license-description>	
+	
 	<description>Extra 500</description>
-	<long-description>
-		The Extra500 is a small business turboprop powered, six seat aircraft.
-		It is a derivative of the piston powered Extra400 and shares the fully
-		carbon fibre structure as well as the landing gear and some other systems.
-		The pressurized cabin allows cruising up to FL250 at which the efficiency
-		of the RR 250-B17F/2 engine is best.
-	</long-description>
+	<long-description>The Extra500 is a small business turboprop powered, six seat aircraft.
+It is a derivative of the piston powered Extra400 and shares the fully
+carbon fibre structure as well as the landing gear and some other systems.
+The pressurized cabin allows cruising up to FL250 at which the efficiency
+of the RR 250-B17F/2 engine is best.</long-description>
 
 	<tags>
 		<tag>Extra Aircraft</tag>
@@ -49,6 +50,8 @@ JSBSim Extra Aircraft - Extra 500.
 	</tags>
 
 	<author>Dirk Dittmann, Eric van den Berg, Thomas Grossberger</author>
+	<author-callsign>D-EKEW, D-LEON, D-STHO</author-callsign>
+	
 	<status>production</status>
 	<rating>
 		<FDM type="int">4</FDM>
@@ -56,7 +59,10 @@ JSBSim Extra Aircraft - Extra 500.
 		<model type="int">4</model>
 		<cockpit type="int">4</cockpit>
 	</rating>
-
+	<extra500-version>2.1.0</extra500-version>
+	<extra500-git>https://gitlab.com/extra500/extra500</extra500-git>
+	<extra500-wiki>http://wiki.flightgear.org/Extra_EA-500</extra500-wiki>
+	
 	<flight-model archive="y">jsb</flight-model>
 	<aero archive="y">extra500</aero>
 	
@@ -644,6 +650,11 @@ JSBSim Extra Aircraft - Extra 500.
 		<cap type="int">0</cap>
 		<soft type="int">0</soft>
 	</mode>
+	<indication>
+		<heading type="int">0</heading>
+		<nav type="int">0</nav>
+		<vs type="int">0</vs>
+	</indication>
 	<hdg-channel>	
 		<turn-rate-error-kp type="double">0.0003</turn-rate-error-kp>
 		<turn-rate-error-ki type="double">0.00</turn-rate-error-ki>
@@ -1033,12 +1044,14 @@ JSBSim Extra Aircraft - Extra 500.
     </dme>
 
     <heading-indicator-IFD-LH>
-	<heading-bug-error-deg>0</heading-bug-error-deg>
-	<indicated-heading-deg>0</indicated-heading-deg>
+		<heading-bug-error-deg>0</heading-bug-error-deg>
+		<indicated-heading-deg>0</indicated-heading-deg>
+            <serviceable type="bool">true</serviceable>
     </heading-indicator-IFD-LH>
     <heading-indicator-IFD-RH>
-	<heading-bug-error-deg>0</heading-bug-error-deg>
-	<indicated-heading-deg>0</indicated-heading-deg>
+		<heading-bug-error-deg>0</heading-bug-error-deg>
+		<indicated-heading-deg>0</indicated-heading-deg>
+            <serviceable type="bool">true</serviceable>
     </heading-indicator-IFD-RH>
 
     <radar>
@@ -1132,6 +1145,7 @@ JSBSim Extra Aircraft - Extra 500.
 	       <volume type="double">0.0</volume>
 	       <!--may be set to larger value by audiopanel (nav1 button)-->
 	       <serviceable type="bool">true</serviceable>
+	       <operable type="bool">true</operable>
 	       <heading-needle-deflection-norm>0</heading-needle-deflection-norm>
 	       <in-range type="bool">false</in-range>
 	       <gs-needle-deflection-norm>0</gs-needle-deflection-norm>
@@ -1154,6 +1168,7 @@ JSBSim Extra Aircraft - Extra 500.
 	       <volume type="double">0.0</volume>
 	       <!--may be set to larger value by audiopanel (nav2 button)-->
 	       <serviceable type="bool">true</serviceable>
+	       <operable type="bool">true</operable>
 	       <heading-needle-deflection-norm>0</heading-needle-deflection-norm>
 	       <in-range type="bool">false</in-range>
 	       <gs-needle-deflection-norm>0</gs-needle-deflection-norm>
@@ -1439,6 +1454,7 @@ JSBSim Extra Aircraft - Extra 500.
 			<caution type="bool">1</caution>
 			<info type="bool">1</info>
 			<trim type="bool">1</trim>
+			<elt type="bool">0</elt>
 		</ui>
 		<livery>
 			<resolution type="bool">1</resolution>
