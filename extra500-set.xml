@@ -1442,6 +1442,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<LBM2KG type="double">0.5144</LBM2KG>				<!-- exact factor: to be used with priority -->
 		<JETA_LBGAL type="double">6.7898</JETA_LBGAL>
 		<JETA_LB2L type="double">0.557518</JETA_LB2L>	
+		<JETA_GAL2L type="double">3.785412</JETA_GAL2L>	
 		<PSI2INHG type="double">2.03602</PSI2INHG>
 		<PA2PSI type="double">0.0001450377</PA2PSI>
 		<SEC2MIN type="double">0.0166666666667</SEC2MIN>
