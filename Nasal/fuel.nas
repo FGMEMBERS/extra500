@@ -24,7 +24,7 @@
 var FLOW_JETPUMP	= 0.503 / 60.0;		# 0.503 Gal/min
 var FLOW_COl2MAIN	= 1.585 / 3600.0;	# 6 L/Std
 var FLOW_MAIN2COL	= FLOW_JETPUMP * 50;
-var NOT_USEABLE_LITER	= 14.0;
+var NOT_USEABLE_LITER	= 28.0;
 
 var FuelTankClass = {
 	new : func(position,name,index,refuelable=1){
@@ -44,37 +44,56 @@ var FuelTankClass = {
 		m._capacity	= m._nCapacity.getValue();
 		m._fraction	= m._level / m._capacity;
 		
+		m._isEmpty	= 0;
 		return m;
 	},
 	load : func(){
 		me._level	= me._nLevel.getValue();
-		me._fraction	= me._level / me._capacity;	
+		me._fraction	= me._level / me._capacity;
+		me._checkEmpty();
 	},
 	save : func(){
+		me._checkEmpty();
 		me._nLevel.setValue(me._level);
 		#interpolate(me._nLevel,me._level,dt);
+	},
+	_checkEmpty : func(){
+		me._isEmpty = (me._level <= 0);
+	},
+	isEmpty : func(){
+		me._isEmpty = (me._level <= 0);
+		return me._isEmpty;
 	},
 	setFull : func() {
 		me._level = me._capacity;
 	},
 	flow : func(amount){
-		if (me._level >= amount){
-			me._level -= amount;
-			amount = 0;
-		}else{
-			amount -= me._level;
-			me._level = 0;
+		if(me._isEmpty==0){
+			if (me._level >= amount){
+				me._level -= amount;
+				amount = 0;
+			}else{
+				amount -= me._level;
+				me._level = 0;
+			}
 		}
 		return amount;
 	},
+	# get the amount or less
 	get : func(amount){
 		#print(sprintf("%s get\t %.4f\t %.4f",me._name,amount,me._level));
-		if (amount > me._level){
-			amount 	= me._level;
+		if(me._isEmpty==0){
+			if (amount > me._level){
+				amount 	= me._level;
+			}
+			me._level 	-= amount;
+		}else{
+			amount = 0;
 		}
-		me._level 	-= amount;
 		return amount;
 	},
+	###
+	# adds fuel to the tank and the overflow runs back
 	add : func(amount){
 		#print(sprintf("%s add\t %.4f\t %.4f",me._name,amount,me._level));
 		if (me._level + amount > me._capacity){
@@ -87,7 +106,7 @@ var FuelTankClass = {
 		return amount;
 	},
 	gravity : func(amount,target){
-		if (me._fraction > target._fraction){
+		if ((me._fraction > 0.001)and(me._fraction > target._fraction)){
 			amount = amount * (me._fraction - target._fraction);
 			amount = me.get(amount);
 			amount = target.add(amount);
@@ -162,6 +181,7 @@ var FuelSystemClass = {
 		m._nFuelFlow		= props.globals.initNode("/fdm/jsbsim/aircraft/engine/FF-lbs_h");
 		m._nFuelFlowLph		= props.globals.initNode("/fdm/jsbsim/aircraft/engine/FF-l_h");
 		m._nFuelFlowGalUSpSec	= m._nRoot.initNode("FuelFlow-gal_us_sec",0.0,"DOUBLE");
+		m._nUpdateRate		= m._nRoot.initNode("updateRate",1.0,"DOUBLE");
 		
 		m._nFuelFilterByPass	= m._nRoot.initNode("FuelFilterByPass",0,"BOOL");
 		m._nFuelLowLeft		= m._nRoot.initNode("FuelLowLeft",0,"BOOL");
@@ -220,6 +240,8 @@ var FuelSystemClass = {
 		m._empty		= 0;
 		m._selectValve		= 0;
 		m._toFlow		= 0;
+		m._engineOverflow	= 0;
+		m._outgassing		= 0;
 				
 		m.dt = 0;
 		m.now = systime();
@@ -240,9 +262,11 @@ var FuelSystemClass = {
 			
 		me.startupBallance();
 		
-		append(me._listeners, setlistener(me._nSelectValve,func(n){me._selectValve = n.getValue();me.update();},1,0) );
-		
 		me._timerLoop = maketimer(1.0,me,FuelSystemClass.update);
+		
+		append(me._listeners, setlistener(me._nSelectValve,func(n){me._selectValve = n.getValue();me.update();},1,0) );
+		append(me._listeners, setlistener(me._nUpdateRate,func(n){me._onUpdateRateChange(n)},1,0) );
+		
 		me._timerLoop.start();
 		
 	},
@@ -261,6 +285,9 @@ var FuelSystemClass = {
 		me._tank.RightMain.save();
 		
 	},
+	_onUpdateRateChange : func(n){
+		me._timerLoop.restart(n.getValue());
+	},
 	onValveClick : func(value){
 		me._selectValve += value;
 		me._selectValve = global.clamp(me._selectValve,0,4);
@@ -278,10 +305,10 @@ var FuelSystemClass = {
 		
 		me._tank.Engine.load();
 		
-		if (me._empty == 0){
-			me._tank.Engine.setFull();
-			me._tank.Engine.save(me._dt);
-		}
+# 		if (me._empty == 0){
+# 			me._tank.Engine.setFull();
+# 			me._tank.Engine.save();
+# 		}
 		
 		
 		me._tank.LeftAuxiliary.load();
@@ -317,47 +344,92 @@ var FuelSystemClass = {
 		
 	# consume by engine in dt
 		
-		me._fuelFlowGalUsPerSec = ( me._nFuelFlow.getValue() / global.CONST.JETA_LBGAL ) / 3600 ;
-		me._nFuelFlowGalUSpSec.setValue(me._fuelFlowGalUsPerSec);
+# 		me._fuelFlowGalUsPerSec = ( me._nFuelFlow.getValue() / global.CONST.JETA_LBGAL ) / 3600 ;
+# 		
+# 		if(me._fuelFlowGalUsPerSec < 0){
+# 			me._fuelFlowGalUsPerSec = 0;	
+# 		}
+# 		
+# 		me._nFuelFlowGalUSpSec.setValue(me._fuelFlowGalUsPerSec);
+# 		me._fuelFlowAmount = me._fuelFlowGalUsPerSec * me._dt;
+			
+		me._fuelFlowAmount = me._tank.Engine._capacity - me._tank.Engine._level;
+		me._toFlow = 0;
 		
-		me._fuelFlowAmount = me._fuelFlowGalUsPerSec * me._dt;
-		
-		if ((me._selectValve == 0) or (me._selectValve == 4) or (getprop("/fdm/jsbsim/aircraft/engine/Fpress-too-low") == 1) or (getprop("/accelerations/n-z-cg-fps_sec") > 0)){	#none
-			me._empty = 1;
-		}elsif(me._selectValve == 1){ # Left
-			if (me._tank.LeftCollector.flow(me._fuelFlowAmount) >  0){
+		if ((getprop("/fdm/jsbsim/aircraft/engine/Fpress-too-low") == 1) or (getprop("/accelerations/n-z-cg-fps_sec") > 0)){
+			me._fuelFlowAmount = 0;
+			me._outgassing += 0.125;
+			me._outgassing = global.clamp(me._outgassing,0,1);
+		}else{
+			me._outgassing = 0.0;
+			
+			if ((me._selectValve == 0) or (me._selectValve == 4)){	#none
+				me._fuelFlowAmount = 0;
 				me._empty = 1;
-			}else{
-				me._empty = 0;
-			}
-		}elsif(me._selectValve == 2){ # Both
-			me._fuelFlowAmount /= 2;
-			me._toFlow = me._fuelFlowAmount;
-			
-			if (me._tank.LeftCollector._level > me._tank.RightCollector._level){
-				me._toFlow 	 = me._tank.LeftCollector.flow(me._toFlow);
-				me._toFlow 	+= me._fuelFlowAmount;
-				me._toFlow 	 = me._tank.RightCollector.flow(me._toFlow);
-			}else{
-				me._toFlow 	 = me._tank.RightCollector.flow(me._toFlow);
-				me._toFlow 	+= me._fuelFlowAmount;
-				me._toFlow 	 = me._tank.LeftCollector.flow(me._toFlow);
-			}
-			
-			if (me._toFlow >  0){
-				me._empty = 1;
-			}else{
-				me._empty = 0;
-			}
-			
-			
-		}elsif(me._selectValve == 3){ #Right
-			if (me._tank.RightCollector.flow(me._fuelFlowAmount) >  0){
-				me._empty = 1;
-			}else{
-				me._empty = 0;
+				
+			}elsif(me._selectValve == 1){ # Left
+				me._toFlow = me._tank.LeftCollector.flow(me._fuelFlowAmount);
+				
+				me._engineOverflow = me._tank.Engine.add(me._fuelFlowAmount - me._toFlow);
+				
+				if(me._engineOverflow > 0){
+					me._tank.LeftCollector.add(overflow);
+				}
+				
+				me._empty = (me._tank.LeftCollector.isEmpty()==1);
+				
+			}elsif(me._selectValve == 2){ # Both
+				
+				var flowAmount = me._fuelFlowAmount / 2;
+				me._toFlow = flowAmount;
+				
+				if (me._tank.LeftCollector._level > me._tank.RightCollector._level){
+					me._toFlow 	 = me._tank.LeftCollector.flow(me._toFlow);
+					me._toFlow 	+= flowAmount;
+					me._toFlow 	 = me._tank.RightCollector.flow(me._toFlow);
+				}else{
+					me._toFlow 	 = me._tank.RightCollector.flow(me._toFlow);
+					me._toFlow 	+= flowAmount;
+					me._toFlow 	 = me._tank.LeftCollector.flow(me._toFlow);
+				}
+				
+				me._engineOverflow = me._tank.Engine.add(me._fuelFlowAmount - me._toFlow);
+				
+				if(me._engineOverflow > 0){
+					me._engineOverflow /= 2;
+					me._tank.LeftCollector.add(overflow);
+					me._tank.RightCollector.add(overflow);
+					
+				}
+				
+				
+				me._empty = ((me._tank.LeftCollector.isEmpty()==1) and (me._tank.RightCollector.isEmpty()==1));
+				
+			}elsif(me._selectValve == 3){ #Right
+				
+				me._toFlow = me._tank.RightCollector.flow(me._fuelFlowAmount);
+				
+				me._engineOverflow = me._tank.Engine.add(me._fuelFlowAmount - me._toFlow);
+				
+				if(me._engineOverflow > 0){
+					me._tank.RightCollector.add(overflow);
+				}
+				
+				me._empty = (me._tank.RightCollector.isEmpty()==1);
+				
 			}
 		}
+		
+		me._nFuelEmpty.setValue(me._empty);
+		
+				
+		me._tank.Engine.save();
+		me._tank.LeftAuxiliary.save();
+		me._tank.LeftMain.save();
+		me._tank.LeftCollector.save();
+		me._tank.RightCollector.save();
+		me._tank.RightMain.save();
+		me._tank.RightAuxiliary.save();
 		
 		
 		if (me._tank.LeftCollector._fraction <= 0.68){
@@ -371,26 +443,22 @@ var FuelSystemClass = {
 			me._nFuelLowRight.setValue(0);
 		}
 		
+		if(me._outgassing > 0){
+			setprop("/fdm/jsbsim/propulsion/tank[3]/priority",0);
+			settimer(func(){setprop("/fdm/jsbsim/propulsion/tank[3]/priority",1);},me._outgassing);
+		}
 		
-		
-		
-		me._nFuelEmpty.setValue(me._empty);
-		
-		me._tank.LeftAuxiliary.save();
-		me._tank.LeftMain.save();
-		me._tank.LeftCollector.save();
-		me._tank.RightCollector.save();
-		me._tank.RightMain.save();
-		me._tank.RightAuxiliary.save();
-
-		
-		
-		
+# 		if(me._empty == 1){
+# 			setprop("/fdm/jsbsim/propulsion/tank[3]/priority",0);
+# 		}else{
+# 			setprop("/fdm/jsbsim/propulsion/tank[3]/priority",1);
+# 		}
+# 		
 		
 	},
 	
 	getUseAbleFuelLiter : func(){
-		var usableFuelLiter = getprop("/consumables/fuel/total-fuel-lbs") * global.CONST.JETA_LB2L;
+		var usableFuelLiter = getprop("/consumables/fuel/total-fuel-gal_us") * global.CONST.JETA_USG2L;
 		if( usableFuelLiter > NOT_USEABLE_LITER){
 			usableFuelLiter -= NOT_USEABLE_LITER;
 		}else{
