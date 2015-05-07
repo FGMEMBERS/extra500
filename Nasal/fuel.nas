@@ -344,22 +344,23 @@ var FuelSystemClass = {
 		
 	# consume by engine in dt
 		
-# 		me._fuelFlowGalUsPerSec = ( me._nFuelFlow.getValue() / global.CONST.JETA_LBGAL ) / 3600 ;
-# 		
-# 		if(me._fuelFlowGalUsPerSec < 0){
-# 			me._fuelFlowGalUsPerSec = 0;	
-# 		}
-# 		
-# 		me._nFuelFlowGalUSpSec.setValue(me._fuelFlowGalUsPerSec);
-# 		me._fuelFlowAmount = me._fuelFlowGalUsPerSec * me._dt;
+		me._fuelFlowGalUsPerSec = ( me._nFuelFlow.getValue() / global.CONST.JETA_LBGAL ) / 3600 ;
+		
+		if(me._fuelFlowGalUsPerSec < 0){
+			me._fuelFlowGalUsPerSec = 0;	
+		}
+		
+		me._nFuelFlowGalUSpSec.setValue(me._fuelFlowGalUsPerSec);
+		me._fuelFlowAmount = me._fuelFlowGalUsPerSec * me._dt;
 			
-		me._fuelFlowAmount = me._tank.Engine._capacity - me._tank.Engine._level;
+		#me._fuelFlowAmount = me._tank.Engine._capacity - me._tank.Engine._level;
 		me._toFlow = 0;
 		
 		if ((getprop("/fdm/jsbsim/aircraft/engine/Fpress-too-low") == 1) or (getprop("/accelerations/n-z-cg-fps_sec") > 0)){
 			me._fuelFlowAmount = 0;
 			me._outgassing += 0.125;
 			me._outgassing = global.clamp(me._outgassing,0,1);
+			me._empty = 1;
 		}else{
 			me._outgassing = 0.0;
 			
@@ -370,37 +371,37 @@ var FuelSystemClass = {
 			}elsif(me._selectValve == 1){ # Left
 				me._toFlow = me._tank.LeftCollector.flow(me._fuelFlowAmount);
 				
-				me._engineOverflow = me._tank.Engine.add(me._fuelFlowAmount - me._toFlow);
-				
-				if(me._engineOverflow > 0){
-					me._tank.LeftCollector.add(overflow);
-				}
+# 				me._engineOverflow = me._tank.Engine.add(me._fuelFlowAmount - me._toFlow);
+# 				
+# 				if(me._engineOverflow > 0){
+# 					me._tank.LeftCollector.add(overflow);
+# 				}
 				
 				me._empty = (me._tank.LeftCollector.isEmpty()==1);
 				
 			}elsif(me._selectValve == 2){ # Both
 				
-				var flowAmount = me._fuelFlowAmount / 2;
-				me._toFlow = flowAmount;
+				me._fuelFlowAmount /= 2;
+				me._toFlow = me._fuelFlowAmount;
 				
 				if (me._tank.LeftCollector._level > me._tank.RightCollector._level){
 					me._toFlow 	 = me._tank.LeftCollector.flow(me._toFlow);
-					me._toFlow 	+= flowAmount;
+					me._toFlow 	+= me._fuelFlowAmount;
 					me._toFlow 	 = me._tank.RightCollector.flow(me._toFlow);
 				}else{
 					me._toFlow 	 = me._tank.RightCollector.flow(me._toFlow);
-					me._toFlow 	+= flowAmount;
+					me._toFlow 	+= me._fuelFlowAmount;
 					me._toFlow 	 = me._tank.LeftCollector.flow(me._toFlow);
 				}
 				
-				me._engineOverflow = me._tank.Engine.add(me._fuelFlowAmount - me._toFlow);
-				
-				if(me._engineOverflow > 0){
-					me._engineOverflow /= 2;
-					me._tank.LeftCollector.add(overflow);
-					me._tank.RightCollector.add(overflow);
-					
-				}
+# 				me._engineOverflow = me._tank.Engine.add(me._fuelFlowAmount - me._toFlow);
+# 				
+# 				if(me._engineOverflow > 0){
+# 					me._engineOverflow /= 2;
+# 					me._tank.LeftCollector.add(overflow);
+# 					me._tank.RightCollector.add(overflow);
+# 					
+# 				}
 				
 				
 				me._empty = ((me._tank.LeftCollector.isEmpty()==1) and (me._tank.RightCollector.isEmpty()==1));
@@ -409,21 +410,24 @@ var FuelSystemClass = {
 				
 				me._toFlow = me._tank.RightCollector.flow(me._fuelFlowAmount);
 				
-				me._engineOverflow = me._tank.Engine.add(me._fuelFlowAmount - me._toFlow);
-				
-				if(me._engineOverflow > 0){
-					me._tank.RightCollector.add(overflow);
-				}
+# 				me._engineOverflow = me._tank.Engine.add(me._fuelFlowAmount - me._toFlow);
+# 				
+# 				if(me._engineOverflow > 0){
+# 					me._tank.RightCollector.add(overflow);
+# 				}
 				
 				me._empty = (me._tank.RightCollector.isEmpty()==1);
 				
 			}
 		}
 		
+		if (me._empty == 0){
+			me._tank.Engine.setFull();
+			me._tank.Engine.save();
+		}
+		
 		me._nFuelEmpty.setValue(me._empty);
 		
-				
-		me._tank.Engine.save();
 		me._tank.LeftAuxiliary.save();
 		me._tank.LeftMain.save();
 		me._tank.LeftCollector.save();
