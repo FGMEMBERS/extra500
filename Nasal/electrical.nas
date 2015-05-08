@@ -430,7 +430,7 @@ var AlternatorClass = {
 		me._nVolt.setValue(me._volt);
 		me._nAmpereAvailable.setValue(me._ampereAvailable);
 		
-		me._nHasLoad.setValue(me._ampereApplyed > 0);
+		me._nHasLoad.setValue((me._ampereApplyed > 0) and (me._online==1));
 		me._ampereApplyed = 0;
 			
 	},
@@ -454,7 +454,7 @@ var AlternatorClass = {
 		me._ampere = electron.ampere;
 		me._ampereApplyed = 0;
 		if(electron.ampere>0){
-			me._nHasLoad.setValue(1);
+			me._nHasLoad.setValue(me._online);
 			#me._surplusAmpere = (me._ampereAvailable - electron.ampere) / 20;
 			if(me._ampereAvailable > 0){
 				me._surplusAmpere = 1.0 - (electron.ampere/me._ampereAvailable);
