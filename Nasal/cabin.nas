@@ -131,7 +131,7 @@ var CabinClass = {
 		 
 		var cabinPressureAlt = me._nCabinPressureAltFt.getValue();
 		
-		if (cabinPressureAlt > 9600.0){# ab 9600 ft
+		if (cabinPressureAlt > 18000.0){# ab 9600 ft
 			me._oxygenRate = -((cabinPressureAlt * 0.00000053 - 0.0045321637) * me._dt);
 		}else{
 			me._oxygenRate = 0.0025 * me._dt;
