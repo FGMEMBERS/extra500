@@ -43,7 +43,7 @@ var CabinClass = {
 		m._nCabinPressureAltFt  = props.globals.initNode("/instrumentation[0]/cabin-altitude[0]/pressure-alt-ft",0,"DOUBLE");
 		m._oxygenLevel 		= 1.0;
 		m._oxygenRate 		= 0.05; # Levelchange/deltaT
-		m._oxygenDeltaT 	= 15.0;
+		m._updateDeltaT 	= 15.0;
 		m._timerLoop = nil;
 		
 		return m;
@@ -51,18 +51,21 @@ var CabinClass = {
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
 		me.parents[1].init(instance);
-		me._timerLoop = maketimer(me._oxygenDeltaT,me,CabinClass.oxygen);
+		me._timerLoop = maketimer(me._updateDeltaT,me,CabinClass.update);
 		me._timerLoop.start();
+	},
+	update : func(){
+		me.oxygen();
 	},
 	oxygen : func(){
 		
 		 
 		var cabinPressureAlt = me._nCabinPressureAltFt.getValue();
 		
-		if (cabinPressureAlt > 9600.0){# ab 9600 ft
-			me._oxygenRate = -((cabinPressureAlt * 0.00000053 - 0.0045321637) * me._oxygenDeltaT);
+		if (cabinPressureAlt > 18000.0){# ab 9600 ft
+			me._oxygenRate = -((cabinPressureAlt * 0.00000053 - 0.0045321637) * me._updateDeltaT);
 		}else{
-			me._oxygenRate = 0.0025 * me._oxygenDeltaT;
+			me._oxygenRate = 0.0025 * me._updateDeltaT;
 		}
 		
 		me._oxygenLevel += me._oxygenRate;
@@ -79,8 +82,8 @@ var CabinClass = {
 		
 		#print(sprintf("%f/%f : %f += %f",blackoutOn,blackoutComplete,me._oxygenLevel,me._oxygenRate));
 		
-		interpolate(me._nBlackoutOnsetG,blackoutOn,me._oxygenDeltaT);
-		interpolate(me._nBlackoutCompleteG,blackoutComplete,me._oxygenDeltaT);
+		interpolate(me._nBlackoutOnsetG,blackoutOn,me._updateDeltaT);
+		interpolate(me._nBlackoutCompleteG,blackoutComplete,me._updateDeltaT);
 		
 		
 	},
