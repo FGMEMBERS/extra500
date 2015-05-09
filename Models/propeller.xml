@@ -24,72 +24,54 @@
 -->
 
 <PropertyList>
-
-<path>propeller.ac</path>
-
-<!-- Transparent Surfaces for Rembrandt rendering & rain -->
-   <effect>
-       <inherits-from>Effects/model-transparent</inherits-from>
-       <object-name>PropSlow</object-name>
-       <object-name>PropFast</object-name>
-   </effect>
-   
-<!--Propeller-->
-<animation>
-  <type>select</type>
-  <object-name>Propeller</object-name>
-  <condition>
-    <less-than>
-      <property>sim/multiplay/generic/int[12]</property>
-      <value>700</value>
-    </less-than>
-  </condition>
-</animation>
-
-<animation>
-  <type>select</type>
-  <object-name>PropSlow</object-name>
-  <condition>
-    <and>
-      <greater-than-equals>
-      <property>sim/multiplay/generic/int[12]</property>
-        <value>700</value>
-      </greater-than-equals>
-      <less-than>
-      <property>sim/multiplay/generic/int[12]</property>
-        <value>1500</value>
-      </less-than>
-    </and>
-  </condition>
-</animation>
-
-<animation>
-  <type>select</type>
-  <object-name>PropFast</object-name>
-  <condition>
-    <greater-than-equals>
-      <property>sim/multiplay/generic/int[12]</property>
-      <value>1500</value>
-    </greater-than-equals>
-  </condition>
-</animation>
-
-<animation>
-  <type>spin</type>
-  <object-name>Spinner</object-name>
-  <object-name>Propeller</object-name>
-  <object-name>PropSlow</object-name>
-  <object-name>PropFast</object-name>
-      <property>sim/multiplay/generic/int[12]</property>
-  <factor>1</factor>
-  <axis>
-   <x1-m>1</x1-m>
-   <y1-m>0</y1-m>
-   <z1-m>0</z1-m>
-   <x2-m>-1</x2-m>
-   <y2-m>0</y2-m>
-   <z2-m>0</z2-m>
-  </axis>
- </animation>
-
+	
+	<path>propeller.ac</path>
+	
+	<!-- Transparent Surfaces for Rembrandt rendering & rain -->
+	<effect>
+		<inherits-from>Effects/model-transparent</inherits-from>
+		<object-name>PropSlow</object-name>
+		<object-name>PropFast</object-name>
+	</effect>
+	
+	<!--Propeller-->
+	<animation>
+		<type>select</type>
+		<object-name>Propeller</object-name>
+		<condition>
+			<less-than>
+				<property>sim/multiplay/generic/int[12]</property>
+				<value>700</value>
+			</less-than>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>PropFast</object-name>
+		<condition>
+			<greater-than-equals>
+				<property>sim/multiplay/generic/int[12]</property>
+				<value>700</value>
+			</greater-than-equals>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>spin</type>
+		<object-name>Spinner</object-name>
+		<object-name>Propeller</object-name>
+		<object-name>PropFast</object-name>
+		<property>sim/multiplay/generic/int[12]</property>
+		<factor>1</factor>
+		<axis>
+			<x1-m>1</x1-m>
+			<y1-m>0</y1-m>
+			<z1-m>0</z1-m>
+			<x2-m>-1</x2-m>
+			<y2-m>0</y2-m>
+			<z2-m>0</z2-m>
+		</axis>
+	</animation>
+	
 </PropertyList>
