@@ -35,6 +35,7 @@ var HeatClass = {
 				ConsumerClass.new(root,name,watt)
 			]
 		};
+		m._resistor = 28*28 / watt;
 		m._value = 0;
 		return m;
 	},
@@ -44,7 +45,9 @@ var HeatClass = {
 	},
 	electricWork : func(){
 		if ((me._value == 1 ) and (me._volt >= me._voltMin) ){
-			me._ampere = me._watt / me._volt;
+			#me._ampere 	= me._watt / me._volt;
+			me._ampere 	= me._volt / me._resistor;
+			me._watt 	= me._volt * me._ampere;
 			me._state  = 1;
 		}else{
 			me._state  = 0;
@@ -52,7 +55,10 @@ var HeatClass = {
 		}
 		me._nState.setValue(me._state);
 		me._nAmpere.setValue(me._ampere);
+		me._nWatt.setValue(me._watt);
+		
 	},
+	_onWattChange : func(){},
 	setOn : func(value){
 		me._value = value;
 		me.electricWork();
