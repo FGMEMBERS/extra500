@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jul 03 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             07.04.15
+#	Last change:	Dirk Dittmann
+#	Date:		10.05.15
 #
 
 # MM page 
@@ -70,12 +70,16 @@ var ElectricHeatClass = {
 			]
 		};
 		m._resistor = 28*28 / watt;
+		m._nResistor	= m._nRoot.initNode("resistor",m._resistor,"DOUBLE");
+		
 		m._value = 0;
 		return m;
 	},
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
 		me.parents[1].init(instance);
+		append(me._listeners, setlistener(me._nResistor,func(n){instance._onResitorChange(n);},1,0) );
+		
 	},
 	electricWork : func(){
 		if ((me._value == 1 ) and (me._volt >= me._voltMin) ){
@@ -94,6 +98,11 @@ var ElectricHeatClass = {
 		
 	},
 	_onWattChange : func(){},
+	_onResitorChange : func(n){
+		#print("HeatClass::_onResitorChange() ...");
+		me._resistor = n.getValue();
+		me.electricWork();
+	},
 	setOn : func(value){
 		me._value = value;
 		me.electricWork();
@@ -411,29 +420,29 @@ var DeicingSystemClass = {
 		me._nIntakeHeat.setOn(me._intakeHeat);
 	},
 	_checkPropellerHeat : func(){
-		# Propeller heat
-		# RPM		A	Watt
-		# 0		16	384
-		# 2030		19	456
-		# 0.03546x + 16
-		
-		#FIXME: RPM is not updated and also not when aircraft is switched on.		
 		if (eSystem.switch.Propeller._state == 1){
-			var watt = 0;
-			var volt = 0;
-			var norm = 0;
-			var amp  = 0;
-			volt = eSystem.circuitBreaker.PROP_HT._nVoltOut.getValue();
-# 			watt =( ( getprop("/engines/engine/rpm") * 0.03547) + 384 ) / 24 * volt;
-			norm = global.clamp(getprop("/engines/engine/rpm")/2030,0,0.5) + global.clamp((- 0.05*me._temperature)+0.5,0,0.5) ;
-# 			var watt = 456/24* volt;
-			amp = 15 + 6 * norm;
-# 			watt = 384 + 72 * norm;
-# 			watt = watt / 24 * volt;
-			watt = amp * volt;
-			watt = global.clamp(watt,384,600);
-			interpolate(me._PropellerHeat._nWatt,watt,me._dt);
-# 			me._PropellerHeat._nWatt.setValue(watt);
+			
+			# resistor min 1.3 max 1.742
+			var resistor = 1.742;
+			var rate = 0;
+			
+			rate += global.norm(getprop("/engines/engine/rpm"),0,2030) * -0.025;
+			rate += global.norm(me._temperature,0,-50) * -0.375;
+			
+			rate = global.clamp(rate,-0.4,0.4);
+			
+			resistor += 1.742 * rate;
+			
+# 			print(sprintf("DeicingSystemClass::update() rate: %0.3f resistor: %0.03f"
+# 				,rate
+# 				,resistor
+# 			));
+			
+			resistor = global.clamp(resistor,1.3,1.742);
+						
+			me._PropellerHeat._resistor = resistor;
+			me._PropellerHeat.electricWork();
+						
 		}
 	},
 	_checkBoots : func(){
@@ -451,6 +460,8 @@ var DeicingSystemClass = {
 		me._now 	= systime();
 		me._dt 		= me._now - me._lastTime;
 		me._lastTime	= me._now;
+		
+		me._temperature = me._nTemperature.getValue();
 		
 		me._checkWindshieldHeatFail();
 		me._checkWindshieldHeat();
