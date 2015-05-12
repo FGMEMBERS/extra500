@@ -582,8 +582,10 @@ var BatteryClass = {
 		m._ampereApplyed	= 0;
 		m._loadLevel 		= 0.97;
 		m._usedAs 		= (m._capacityAs * (1.0-m._loadLevel));
+		m._availableAs		= m._capacityAs * m._loadLevel;
 		m._nAmpereAvailable	= m._nRoot.initNode("ampere_available",m._ampereMax,"DOUBLE");
-		m._nUsedAs		= m._nRoot.initNode("ampere_sec_used",m._usedAs,"DOUBLE");
+		m._nAvailableAs		= m._nRoot.initNode("ampere_sec_available",m._availableAs,"DOUBLE");
+		#m._nUsedAs		= m._nRoot.initNode("ampere_sec_used",m._usedAs,"DOUBLE");
 		m._nLoadLevel		= m._nRoot.initNode("loadLevel",m._loadLevel,"DOUBLE");
 		m._nAmpereCharge	= m._nRoot.initNode("ampere_charge",0,"DOUBLE",1);
 		m._voltCells		= 0;
@@ -602,19 +604,25 @@ var BatteryClass = {
 		me.outputIndexRebuild();
 		
 		me._loadLevel 		= me._nLoadLevel.getValue();
-		me._usedAs 		= (me._capacityAs * (1.0-me._loadLevel));
-		me._nUsedAs.setValue(me._usedAs);
+		
+		me._availableAs 	= me._capacityAs * me._loadLevel;
+		me._nAvailableAs.setValue(me._availableAs);
 		
 	},
 	update : func(now,dt){
 		me._dt = dt;
-# 		me._volt = math.floor((me._voltMin + (me._voltDelta * me._loadLevel) + 0.05)*10 )/10; ### FIXME : Better Volt Curve depending on Load Level
-# 		V = 0.9286 * Ka + 22.457
+
+		if(me._loadLevel>0){
+			# cell volts curve by remaining capacity
+			me._voltCells = me._voltMax * (1 - ((1/(me._loadLevel*me._loadLevel)) * 0.00025) ) ;
+			# lower the cell volts by load
+			me._voltCells -= 1.5 *  (me._ampereApplyed / me._ampereMax) ; 
+		}else{
+			me._voltCells = 0;
+		}
 		
-		me._voltCells = 0.000257944444444 * (me._capacityAs - me._usedAs) + 22.457;
-		me._voltCells = global.clamp(me._voltCells,me._voltMin,me._voltMax);
-		
-		#me._volt = me._voltCells >= me._voltPole ? me._voltCells : me._voltPole;
+		me._voltCells = global.clamp(me._voltCells,0,me._voltMax);
+				
 		me._volt = me._voltCells;
 		
 		me._nVolt.setValue(me._volt);
@@ -627,14 +635,15 @@ var BatteryClass = {
 	},
 	applyAmpere : func(electron=nil){
 		if (electron.ampere > 0){
-			me._usedAs += electron.ampere * me._dt;
+			me._availableAs -= electron.ampere * me._dt;
+			
 			me._ampereApplyed = electron.ampere;
 			electron.ampere = 0;
 			
-			me._usedAs = global.clamp(me._usedAs,0,me._capacityAs);
-			me._loadLevel = (me._capacityAs - me._usedAs) / me._capacityAs;
+			me._availableAs = global.clamp(me._availableAs,0,me._capacityAs);
+			me._loadLevel = me._availableAs / me._capacityAs;
 			
-			me._nUsedAs.setValue(me._usedAs);
+			me._nAvailableAs.setValue(me._availableAs);
 			me._nLoadLevel.setValue(me._loadLevel);
 		}else{
 			me._ampereApplyed = 0;
@@ -648,16 +657,15 @@ var BatteryClass = {
 # 			Ka >=23Ah; I = 90-18*(Ka-23)
 			var voltDelta = (electron.volt - me._voltCells) / 4;
 			
-			me._ampereCharge =  ( 90 - ( 18 * ( ((me._capacityAs - me._usedAs)/3600) - 23 ) ) ) ; 
+			me._ampereCharge =  ( 90 - ( 18 * ( (me._availableAs/3600) - 23 ) ) ) ; 
 			me._ampereCharge *=  voltDelta * voltDelta;
 			me._ampereCharge = global.clamp(me._ampereCharge,0,90.0);
 			
-			me._usedAs -= me._ampereCharge * me._dt ;
-			me._usedAs = global.clamp(me._usedAs,0,me._capacityAs);
-			me._loadLevel = (me._capacityAs - me._usedAs) / me._capacityAs;
-			
-			
-			me._nUsedAs.setValue(me._usedAs);
+			me._availableAs += me._ampereCharge * me._dt ;
+			me._availableAs = global.clamp(me._availableAs,0,me._capacityAs);
+			me._loadLevel = me._availableAs / me._capacityAs;
+				
+			me._nAvailableAs.setValue(me._availableAs);
 			me._nLoadLevel.setValue(me._loadLevel);
 			
 			electron.ampere += me._ampereCharge;
