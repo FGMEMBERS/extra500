@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:	Dirk Dittmann
-	Date:		02.05.15
+	Date:		13.05.15
 
 
 ************************************************************************
@@ -463,7 +463,15 @@ of the RR 250-B17F/2 engine is best.</long-description>
 
 
 	<systems>
-            <path>Aircraft/extra500/Systems/systems.xml</path>
+		<path>Aircraft/extra500/Systems/systems.xml</path>
+		<autopilot n="0">
+			<name>disable generic autopilot</name>
+			<path>Aircraft/extra500/Systems/disabled.xml</path>
+		</autopilot>
+		<autopilot n="1">
+			<name>disable generic autopilot helper</name>
+			<path>Aircraft/extra500/Systems/disabled.xml</path>
+		</autopilot>
 	</systems>
 
       <instrumentation>
