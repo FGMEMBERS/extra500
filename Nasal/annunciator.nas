@@ -71,7 +71,8 @@ var AnnunciatorClass = {
 		var m = { 
 			parents : [
 				AnnunciatorClass,
-				ConsumerClass.new(root,name,watt)
+				ConsumerClass.new(root,name,watt),
+				SubSystemClass.new()
 			]
 		};
 		
@@ -142,8 +143,11 @@ var AnnunciatorClass = {
 		#eSystem.circuitBreaker.DIP_2.outputAdd(me._backlight);
 		
 		
-		me._timerLoop = maketimer(1.0,me,AnnunciatorClass.update);
-		me._timerLoop.start();
+		#me._timerLoop = maketimer(1.0,me,AnnunciatorClass.update);
+		#me._timerLoop.start();
+		
+		me.__initSubSystem(me);
+		subSystemManager2Hz.register(me);
 		
 	},
 	setListeners : func(instance) {

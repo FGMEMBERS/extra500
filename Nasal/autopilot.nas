@@ -24,7 +24,8 @@ var AutopilotClass = {
 	new : func(root,name){
 		var m = {parents:[
 			AutopilotClass,
-			ConsumerClass.new(root,name,28.0)
+			ConsumerClass.new(root,name,28.0),
+			SubSystemClass.new()
 		]};
 		
 		
@@ -132,8 +133,11 @@ var AutopilotClass = {
 		eSystem.circuitBreaker.AP_CMPTR.outputAdd(me);
 		
 		
-		me._timerLoop = maketimer(1.0,me,AutopilotClass.update);
-		me._timerLoop.start();
+		#me._timerLoop = maketimer(1.0,me,AutopilotClass.update);
+		#me._timerLoop.start();
+		
+		me.__initSubSystem(me);
+		subSystemManager2Hz.register(me);
 	},
 	_onBrightnessChange : func(n){
 		me._brightness = n.getValue();

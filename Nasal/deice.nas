@@ -133,7 +133,8 @@ var DeicingSystemClass = {
 		var m = { 
 			parents : [
 				DeicingSystemClass, 
-				ServiceClass.new(root,name)
+				ServiceClass.new(root,name),
+				SubSystemClass.new()
 			]
 		};
 		
@@ -263,8 +264,11 @@ var DeicingSystemClass = {
 # 		eSystem.switch.Windshield.onStateChange(eSystem.switch.Windshield._nState);
 		me._PropellerHeat._nWatt.setValue(456);
 		deiceSystem.update();
-		me._timerLoop = maketimer(5.0,me,DeicingSystemClass.update);
-		me._timerLoop.start();
+		#me._timerLoop = maketimer(5.0,me,DeicingSystemClass.update);
+		#me._timerLoop.start();
+		
+		me.__initSubSystem(me);
+		subSystemManager2Hz.register(me);
 	},
 	_onStallWarning : func(n){
 # 		var warning = n.getBoolValue();

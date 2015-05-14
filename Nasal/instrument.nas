@@ -25,7 +25,8 @@ var DigitalInstrumentPackageClass = {
 		var m = { 
 			parents : [
 				DigitalInstrumentPackageClass,
-				ConsumerClass.new(root,name,watt)
+				ConsumerClass.new(root,name,watt),
+				SubSystemClass.new()
 			]
 		};
 		
@@ -72,8 +73,11 @@ var DigitalInstrumentPackageClass = {
 		eSystem.circuitBreaker.DIP_1.outputAdd(me);
 		eSystem.circuitBreaker.DIP_1.outputAdd(me._backlight);
 		
-		me._timerLoop = maketimer(1.0,me,DigitalInstrumentPackageClass.update);
-		me._timerLoop.start();
+		#me._timerLoop = maketimer(1.0,me,DigitalInstrumentPackageClass.update);
+		#me._timerLoop.start();
+		
+		me.__initSubSystem(me);
+		subSystemManager2Hz.register(me);
 		
 	},
 	_onVoltMonitorChange : func(n){

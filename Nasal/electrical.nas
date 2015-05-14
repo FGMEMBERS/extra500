@@ -1108,6 +1108,7 @@ var ESystem = {
 				ESystem,
 				ServiceClass.new(root,name),
 				OutPutClass.new(),
+				SubSystemClass.new()
 				
 			]			
 		};
@@ -1309,9 +1310,15 @@ var ESystem = {
 		eSystem.relay.K10.checkCondition();
 		
 
-		me._timerLoop = maketimer(1.0,me,ESystem.checkSource);
-		me._timerLoop.start();
+# 		me._timerLoop = maketimer(1.0,me,ESystem.checkSource);
+# 		me._timerLoop.start();
 		
+		me.__initSubSystem(me);
+		subSystemManager2Hz.register(me);
+		
+	},
+	update : func(){
+		me.checkSource2();
 	},
 	setListeners : func(instance) {
 		#append(me._listeners, setlistener(me._nVolt,func(n){me._onVoltChange(n);},1,0) );

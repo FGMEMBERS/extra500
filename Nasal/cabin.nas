@@ -26,7 +26,8 @@ var CabinClass = {
 		var m = { 
 			parents : [
 				CabinClass,
-				ServiceClass.new(root,name)
+				ServiceClass.new(root,name),
+				SubSystemClass.new()
 			]
 		};
 		m._nCabinPressure	= m._nRoot.initNode("hasPressureWarning",0,"BOOL");
@@ -51,10 +52,14 @@ var CabinClass = {
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
 		me.parents[1].init(instance);
-		me._timerLoop = maketimer(me._updateDeltaT,me,CabinClass.update);
-		me._timerLoop.start();
+# 		me._timerLoop = maketimer(me._updateDeltaT,me,CabinClass.update);
+# 		me._timerLoop.start();
+		
+		me.__initSubSystem(me);
+		subSystemManager2Hz.register(me);
 	},
 	update : func(){
+		
 		me.oxygen();
 	},
 	oxygen : func(){

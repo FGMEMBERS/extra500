@@ -71,7 +71,8 @@ var FlapSystemClass = {
 	new : func(root,name){
 		var m = {parents:[
 			FlapSystemClass,
-			ServiceClass.new(root,name)
+			ServiceClass.new(root,name),
+			SubSystemClass.new()
 		]};
 		
 		m._switchFlapPosition = {};
@@ -148,8 +149,11 @@ var FlapSystemClass = {
 		UI.register("Flaps 15", 	func{me._switch.onSet(0); } 	);
 		UI.register("Flaps 30", 	func{me._switch.onSet(-1); } );
 				
-		me._timerLoop = maketimer(1.0,me,FlapSystemClass.update);
-		me._timerLoop.start();
+		#me._timerLoop = maketimer(1.0,me,FlapSystemClass.update);
+		#me._timerLoop.start();
+		
+		me.__initSubSystem(me);
+		subSystemManager2Hz.register(me);
 	},
 	_onDimTestChange : func(n){
 		if (n.getValue() == 1){

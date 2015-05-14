@@ -80,9 +80,8 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		
 		extra500.eSystem.init();
 		
-		
-		
-		
+		extra500.subSystemManager2Hz.init();
+		extra500.subSystemManager2Hz.start(1.0);
 	},1);
 
 		

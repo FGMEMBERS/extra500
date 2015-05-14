@@ -175,7 +175,9 @@ var FuelSystemClass = {
 	new : func(root,name){
 		var m = {parents:[
 			FuelSystemClass,
-			ServiceClass.new(root,name)
+			ServiceClass.new(root,name),
+			SubSystemClass.new()
+			
 		]};
 		m._listeners		=[];
 		m._nFuelFlow		= props.globals.initNode("/fdm/jsbsim/aircraft/engine/FF-lbs_h");
@@ -262,13 +264,15 @@ var FuelSystemClass = {
 			
 		me.startupBallance();
 		
-		me._timerLoop = maketimer(1.0,me,FuelSystemClass.update);
+		#me._timerLoop = maketimer(1.0,me,FuelSystemClass.update);
 		
 		append(me._listeners, setlistener(me._nSelectValve,func(n){me._selectValve = n.getValue();me.update();},1,0) );
-		append(me._listeners, setlistener(me._nUpdateRate,func(n){me._onUpdateRateChange(n)},1,0) );
+		#append(me._listeners, setlistener(me._nUpdateRate,func(n){me._onUpdateRateChange(n)},1,0) );
 		
-		me._timerLoop.start();
+		#me._timerLoop.start();
 		
+		me.__initSubSystem(me);
+		subSystemManager2Hz.register(me);
 	},
 	startupBallance : func(){
 		me._tank.LeftMain.load();
@@ -302,6 +306,8 @@ var FuelSystemClass = {
 		me._now 	= systime();
 		me._dt 		= me._now - me._lastTime;
 		me._lastTime	= me._now;
+		
+		print("FuelSystemClass::update() ... ");
 		
 		me._tank.Engine.load();
 		
