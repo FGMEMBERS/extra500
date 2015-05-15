@@ -133,8 +133,7 @@ var DeicingSystemClass = {
 		var m = { 
 			parents : [
 				DeicingSystemClass, 
-				ServiceClass.new(root,name),
-				SubSystemClass.new()
+				ServiceClass.new(root,name)
 			]
 		};
 		
@@ -267,8 +266,6 @@ var DeicingSystemClass = {
 		#me._timerLoop = maketimer(5.0,me,DeicingSystemClass.update);
 		#me._timerLoop.start();
 		
-		me.__initSubSystem(me);
-		subSystemManager2Hz.register(me);
 	},
 	_onStallWarning : func(n){
 # 		var warning = n.getBoolValue();

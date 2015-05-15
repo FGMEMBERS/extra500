@@ -567,11 +567,11 @@ var AvidyneIFD = {
 		me.page["MAP"].init();
 		
 		
-		me._timerLoop20Hz = maketimer(0.05,me,AvidyneIFD.update20Hz);
-		me._timerLoop2Hz = maketimer(0.5,me,AvidyneIFD.update2Hz);
-	
-		me._timerLoop20Hz.start();
-		me._timerLoop2Hz.start();
+# 		me._timerLoop20Hz = maketimer(0.05,me,AvidyneIFD.update20Hz);
+# 		me._timerLoop2Hz = maketimer(0.5,me,AvidyneIFD.update2Hz);
+# 	
+# 		me._timerLoop20Hz.start();
+# 		me._timerLoop2Hz.start();
 		
 	},
 	

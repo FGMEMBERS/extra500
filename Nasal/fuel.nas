@@ -175,8 +175,7 @@ var FuelSystemClass = {
 	new : func(root,name){
 		var m = {parents:[
 			FuelSystemClass,
-			ServiceClass.new(root,name),
-			SubSystemClass.new()
+			ServiceClass.new(root,name)
 			
 		]};
 		m._listeners		=[];
@@ -271,8 +270,6 @@ var FuelSystemClass = {
 		
 		#me._timerLoop.start();
 		
-		me.__initSubSystem(me);
-		subSystemManager2Hz.register(me);
 	},
 	startupBallance : func(){
 		me._tank.LeftMain.load();
@@ -307,7 +304,7 @@ var FuelSystemClass = {
 		me._dt 		= me._now - me._lastTime;
 		me._lastTime	= me._now;
 		
-		print("FuelSystemClass::update() ... ");
+		#print("FuelSystemClass::update() ... ");
 		
 		me._tank.Engine.load();
 		

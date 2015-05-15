@@ -25,8 +25,7 @@ var DigitalInstrumentPackageClass = {
 		var m = { 
 			parents : [
 				DigitalInstrumentPackageClass,
-				ConsumerClass.new(root,name,watt),
-				SubSystemClass.new()
+				ConsumerClass.new(root,name,watt)
 			]
 		};
 		
@@ -76,8 +75,6 @@ var DigitalInstrumentPackageClass = {
 		#me._timerLoop = maketimer(1.0,me,DigitalInstrumentPackageClass.update);
 		#me._timerLoop.start();
 		
-		me.__initSubSystem(me);
-		subSystemManager2Hz.register(me);
 		
 	},
 	_onVoltMonitorChange : func(n){

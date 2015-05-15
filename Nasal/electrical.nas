@@ -1107,9 +1107,7 @@ var ESystem = {
 			parents : [
 				ESystem,
 				ServiceClass.new(root,name),
-				OutPutClass.new(),
-				SubSystemClass.new()
-				
+				OutPutClass.new()				
 			]			
 		};
 		m._nVolt		= m._nRoot.initNode("volt",0.0,"DOUBLE");
@@ -1313,9 +1311,7 @@ var ESystem = {
 # 		me._timerLoop = maketimer(1.0,me,ESystem.checkSource);
 # 		me._timerLoop.start();
 		
-		me.__initSubSystem(me);
-		subSystemManager2Hz.register(me);
-		
+				
 	},
 	update : func(){
 		me.checkSource2();

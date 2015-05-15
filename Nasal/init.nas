@@ -80,8 +80,77 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		
 		extra500.eSystem.init();
 		
-		extra500.subSystemManager2Hz.init();
-		extra500.subSystemManager2Hz.start(1.0);
+		
+		
+		
+		
+		
+		
+		extra500.subSystemManager.init();
+		extra500.subSystemManager20Hz.init();
+		
+		extra500.subSystemManager.register(extra500.SubSystemTimer.new(
+			extra500.flapSystem,
+			func(){  extra500.flapSystem.update();}
+		));
+		extra500.subSystemManager.register(extra500.SubSystemTimer.new(
+			extra500.autopilot,
+			func(){  extra500.autopilot.update();}
+		));
+		extra500.subSystemManager.register(extra500.SubSystemTimer.new(
+			extra500.cabin,
+			func(){  extra500.cabin.update();}
+		));
+		extra500.subSystemManager.register(extra500.SubSystemTimer.new(
+			extra500.annunciator,
+			func(){  extra500.annunciator.update();}
+		));
+		extra500.subSystemManager.register(extra500.SubSystemTimer.new(
+			extra500.deiceSystem,
+			func(){  extra500.deiceSystem.update();}
+		));
+		extra500.subSystemManager.register(extra500.SubSystemTimer.new(
+			extra500.fuelSystem,
+			func(){  extra500.fuelSystem.update();}
+		));
+		extra500.subSystemManager.register(extra500.SubSystemTimer.new(
+			extra500.digitalInstrumentPackage,
+			func(){  extra500.digitalInstrumentPackage.update();}
+		));
+		extra500.subSystemManager.register(extra500.SubSystemTimer.new(
+			extra500.eSystem,
+			func(){ extra500.eSystem.update();}
+		));
+			
+		
+		extra500.subSystemManager.register(extra500.SubSystemTimer.new(
+			IFD.LH,
+			func(){ IFD.LH.update2Hz();}
+		));
+		
+		extra500.subSystemManager.register(extra500.SubSystemTimer.new(
+			IFD.RH,
+			func(){ IFD.RH.update2Hz();}
+		));
+		
+		extra500.subSystemManager20Hz.register(extra500.SubSystemTimer.new(
+			IFD.LH,
+			func(){ IFD.LH.update20Hz();}
+		));
+		
+		extra500.subSystemManager20Hz.register(extra500.SubSystemTimer.new(
+			IFD.RH,
+			func(){ IFD.RH.update20Hz();}
+		));
+		
+		
+		extra500.subSystemManager.start(0.5);
+		extra500.subSystemManager._verbose = 0;
+		extra500.subSystemManager20Hz.start(0.05);
+		
+		
+		
+		
 	},1);
 
 		
