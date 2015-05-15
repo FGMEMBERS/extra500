@@ -673,7 +673,7 @@ var KeypadClass = {
 		m._inputPath = "";
 		m._inputHandle = {"Keyboard":nil,"FmsKnob":nil};
 		
-		m._timerLoop = maketimer(1,m,KeypadClass._update);
+		#m._timerLoop = maketimer(1,m,KeypadClass._update);
 		
 		m._timerResetInput 	= maketimer(10,m,KeypadClass._resetInput);
 		m._timerResetInput.singleShot = 1;
@@ -799,17 +799,17 @@ var KeypadClass = {
 			
 			me._resetSelection();		
 			
-			me._timerLoop.start();
+			#me._timerLoop.start();
 			
 		}elsif (mode == global.INIT_PAUSE){
 			me.removeListeners();
-			me._timerLoop.stop();
+			#me._timerLoop.stop();
 		}elsif (mode == global.INIT_RUN){
 			me.setListeners(instance);
-			me._timerLoop.start();
+			#me._timerLoop.start();
 		}elsif (mode == global.INIT_STOP){
 			me.removeListeners();
-			me._timerLoop.stop();
+			#me._timerLoop.stop();
 		}else{
 			print("KeypadClass.init() ... unsupported init mode");
 		}

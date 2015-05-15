@@ -222,7 +222,7 @@ var FlightManagementSystemClass = {
 			},
 		};
 		
-		m._updateTimer = maketimer(1.0,m,FlightManagementSystemClass.update);
+		#m._updateTimer = maketimer(1.0,m,FlightManagementSystemClass.update);
 		return m;
 	},
 	setListeners : func(instance) {
@@ -241,7 +241,7 @@ var FlightManagementSystemClass = {
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
 		me.setListeners(instance);
-		me._updateTimer.start();
+		#me._updateTimer.start();
 	},
 	_onSelectionChange : func(n){
 		var index = n.getValue();

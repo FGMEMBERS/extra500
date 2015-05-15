@@ -40,6 +40,7 @@ var TcasModel = {
 			Model.new(rootPath),
 			ListenerClass.new(),
 		]};
+		m._name = "TCAS Model";
 		m._nAIModels = nil;
 		m._minLevel = -1;
 		m._alt = 0;
@@ -49,7 +50,7 @@ var TcasModel = {
 		m._range = 0;
 		m._nRange = m._nRoot.initNode("range",6.0,"DOUBLE");
 		m._range = m._nRange.getValue();
-		m._timer = maketimer(0.05,m,TcasModel.update);
+		#m._timer = maketimer(0.05,m,TcasModel.update);
 		return m;
 	},
 	setListeners : func(instance=me) {
@@ -58,7 +59,7 @@ var TcasModel = {
 	init : func(){
 		me._nAIModels = props.globals.getNode("/ai/models");
 		me.setListeners();
-		me._timer.start();
+		#me._timer.start();
 	},
 	update : func(){
 		me._alt = getprop("/position/altitude-ft");

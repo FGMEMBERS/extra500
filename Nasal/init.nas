@@ -76,7 +76,7 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		extra500.light.init();
 		extra500.centerConsole.init();
 		extra500.interior.init();
-		extra500.fuelFlowLog.init();
+		#extra500.fuelFlowLog.init();
 		
 		extra500.eSystem.init();
 		
@@ -117,6 +117,7 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 			extra500.digitalInstrumentPackage,
 			func(){  extra500.digitalInstrumentPackage.update();}
 		));
+		
 		extra500.subSystemManager.register(extra500.SubSystemTimer.new(
 			extra500.eSystem,
 			func(){ extra500.eSystem.update();}
@@ -126,6 +127,16 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		extra500.subSystemManager.register(extra500.SubSystemTimer.new(
 			IFD.LH,
 			func(){ IFD.LH.update2Hz();}
+		));
+		
+		extra500.subSystemManager.register(extra500.SubSystemTimer.new(
+			IFD.fms,
+			func(){ IFD.fms.update();}
+		));
+		
+		extra500.subSystemManager.register(extra500.SubSystemTimer.new(
+			IFD.keypad,
+			func(){ IFD.keypad._update();}
 		));
 		
 		extra500.subSystemManager.register(extra500.SubSystemTimer.new(
@@ -143,13 +154,19 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 			func(){ IFD.RH.update20Hz();}
 		));
 		
+		extra500.subSystemManager20Hz.register(extra500.SubSystemTimer.new(
+			IFD.tcasModel,
+			func(){ IFD.tcasModel.update();}
+		));
+		
 		
 		extra500.subSystemManager.start(0.5);
 		extra500.subSystemManager._verbose = 0;
 		extra500.subSystemManager20Hz.start(0.05);
+# 		
 		
-		
-		
+# 		extra500.subSystemManager.printStats();
+# 		extra500.subSystemManager20Hz.printStats();
 		
 	},1);
 

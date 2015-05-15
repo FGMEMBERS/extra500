@@ -10,6 +10,9 @@ var SubSystemTimer = {
 		m.__stop	= 0;
 		m.__duration	= 0;
 		m.__timeline	= 0;
+		m.__avg		= 0;
+		m.__sum 	= 0;
+		m.__count 	= 0;
 		m.__timer	= nil;
 		
 		m.__timer		= maketimer(1.0,m,SubSystemTimer.__update);
@@ -29,6 +32,9 @@ var SubSystemTimer = {
 		me.__callback();
 		me.__stop 	= systime();
 		me.__duration = me.__stop - me.__start;
+		me.__sum += me.__duration;
+		me.__count +=1;
+		me.__avg = me.__sum / me.__count;
 	},
 };
 
@@ -72,7 +78,7 @@ var SystemManagerClass = {
 	_calcDuration : func(){
 		me._subSystemDuration = 0;
 		foreach(var sub;me._subSystemList){
-			me._subSystemDuration += sub.__duration;
+			me._subSystemDuration += sub.__avg;
 		}
 	},
 	_fireTimers : func(){
@@ -90,26 +96,27 @@ var SystemManagerClass = {
 			me._subSystemTimeLine += sub.__duration + me._subSystemSpace;
 		}
 	},
-	_printStats : func(){
+	printStats : func(){
 		print("\n");
-		print(sprintf("%20s(%.2f sec)\t%s\t%s\t%s(%f)","system",me._timerIntervall,"duration(sec)","load(%)","timeline",me._subSystemSpace));
+		print(sprintf("              system(%.2f sec)\tDeltaT(sec)\t     AVG\t load(%%)\ttimeline(%f)",me._timerIntervall,me._subSystemSpace));
 		print("--------------------------------------------------------");
 		foreach(var sub;me._subSystemList){
-			print(sprintf("%30s\t%f\t%f\t%f",
+			print(sprintf("%30s\t%f\t%f\t%f\t%f",
 					sub.__system._name,
 					sub.__duration,
-					(sub.__duration/me._timerIntervall)*100,
+					sub.__avg,
+					(sub.__avg/me._timerIntervall)*100,
 					sub.__timeline
 				     ));
 		}
 		print("--------------------------------------------------------");
-		print(sprintf("%30s\t%f\t%f","sum",me._subSystemDuration,(me._subSystemDuration/me._timerIntervall)*100));
+		print(sprintf("%30s\t\t\t%f\t%f","sum",me._subSystemDuration,(me._subSystemDuration/me._timerIntervall)*100));
 		print("\n");
 	},
 	_update : func(){
 		me._start 	= systime();
 		if(me._verbose){
-			me._printStats();
+			me.printStats();
 		}
 		me._calcDuration();
 		me._fireTimers();
