@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: 07.06.2014
 #
-#	Last change:	Dirk Dittmann
-#	Date:		30.04.15
+#	Last change:	Eric van den Berg
+#	Date:		14.05.15
 #
 
 # internal flightplan
@@ -658,11 +658,13 @@ var FlightManagementSystemClass = {
 		me._constraint.VSR.visible	= 0;
 		
 		var gs 			= getprop("/velocities/groundspeed-kt");
-		me._fuelLiter		= extra500.fuelSystem.getUseAbleFuelLiter();
-		me._fuelFlow		= extra500.fuelSystem._nFuelFlowLph.getValue();
+		me._fuelLiter		= getprop("consumables/fuel/total-fuel-m3") * 1000 - 28;
+		me._fuelFlow		= getprop("fdm/jsbsim/aircraft/engine/FF-l_h");
 		var fuelFlowLpSec 	= me._fuelFlow / 3600.0;
 		
 		# Fuel calculation
+# FIXME: the fuel remaining (and subsequent range calculation is dependent on the initial fuel volume (inputted by pilot) and integrated fuel flow.
+# The actual fuel quantity measurement (by sensors in tank) is not available to IFD-s
 		if (extra500.engine.nIsRunning.getValue()){
 			me._engineRunTime += 1;
 			me._node.EngineRunTime.setValue(me._engineRunTime);

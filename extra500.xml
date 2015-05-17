@@ -24,7 +24,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             11.01.15
+      Date:             15.05.15
 -->
 
 	<fileheader>
@@ -42,6 +42,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	<system file="extra500-system-pneumatic.xml"/>
 	<system file="extra500-system-strobe.xml"/>
 	<system file="extra500-system-gear.xml"/>
+	<system file="extra500-system-fuel.xml"/>
 	<system file="extra500-system-electric.xml"/>
 	<aerodynamics file="extra500-aerodynamics.xml"/>
 	<system file="extra500-system-elt.xml"/>
@@ -428,8 +429,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			</location>
 			<priority> 1 </priority>
 			<type>JET-A</type> 
-			<capacity unit="KG"> 0.25 </capacity>
-			<contents unit="KG"> 0.25 </contents>
+			<capacity unit="KG"> 0.15 </capacity>
+			<contents unit="KG"> 0.15 </contents>
 		</tank>
 		<tank type="FUEL" number="4">
 			<!-- right collector compartment -->
