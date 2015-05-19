@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-	Last change:	Dirk Dittmann
-	Date:		13.05.15
+	Last change:	Eric van den Berg
+	Date:		19.05.15
 
 
 ************************************************************************
@@ -978,6 +978,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<balanceLR type="double">0.5</balanceLR>
 		<FT-degC type="double">0</FT-degC>					<!--dummy value -->
 		<Fpress-too-low type="bool">0</Fpress-too-low>
+		<F-filter-prloss-psid type="double">0</F-filter-prloss-psid>
 
 		<fuelfilter>
 			<clogged type="double">0</clogged>
@@ -1004,7 +1005,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
         		<serviceable type="bool">true</serviceable>
 		</FP2checkvalve>
 		<FFtransducer>
-			<serviceable type="bool">true</serviceable>
+			<blocked type="bool">false</blocked>
 		</FFtransducer>
 
 		<LHtank>

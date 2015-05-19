@@ -17,7 +17,7 @@
 #      Date: 07.06.2014
 #
 #	Last change:	Eric van den Berg
-#	Date:		14.05.15
+#	Date:		18.05.15
 #
 
 # internal flightplan
@@ -717,8 +717,8 @@ var FlightManagementSystemClass = {
 				var gsSec = gs / 3600;
 				var gsMin = gs / 60;
 				var time 		= systime() + getprop("/sim/time/warp");
-				var fuelGalUs 		= getprop("/consumables/fuel/total-fuel-gal_us");
-				var fuelFlowGalUSpSec 	= extra500.fuelSystem._nFuelFlowGalUSpSec.getValue();
+#				var fuelGalUs 		= getprop("/consumables/fuel/total-fuel-gal_us");
+#				var fuelFlowGalUSpSec 	= extra500.fuelSystem._nFuelFlowGalUSpSec.getValue();
 				
 				
 				var currentAlt 		= getprop("/instrumentation/altimeter-IFD-LH/indicated-altitude-ft");

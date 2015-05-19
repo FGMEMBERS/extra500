@@ -20,7 +20,7 @@
       Date: 2015-05-08
 
       Last change: Eric van den Berg     
-      Date: 2015-05-17           
+      Date: 2015-05-19           
 -->
 
 <!--
@@ -130,13 +130,26 @@ i=0-6 left to right
 		<fcs_function name="/systems/fuel/Fvis-m2ps">
    			 <function>
       			 <description>Fuel kinematic visc</description>
-					<table>
-            				<independentVar lookup="row">/systems/fuel/FT-degC</independentVar>
-            					<tableData>
-								-50	0.0000125
-								150	0.000000406
-            					</tableData>
-      				</table>
+					<product>
+						<value>0.000001</value>
+						<sum>
+							<value>-2.09519711241635</value>
+							<product>
+								<value>311.396772184257</value>
+								<pow>
+									<sum>
+										<property>/systems/fuel/FT-degC</property>
+										<value>66.8358944387488</value>
+									</sum>
+									<value>-1</value>
+								</pow>
+							</product>
+							<product>
+								<value>0.00788931550858887</value>
+								<property>/systems/fuel/FT-degC</property>
+							</product>
+						</sum>
+					</product>
    			 </function>
 		</fcs_function>
 
@@ -166,9 +179,9 @@ i=0-6 left to right
    			 </function>
 		</fcs_function>
 
-		<fcs_function name="/systems/fuel/F-pressloss-psid">
+		<fcs_function name="/systems/fuel/F-tube-prloss-psid">
    			 <function>
-      			 <description>Fuel pressure loss</description>
+      			 <description>Fuel pressure loss in tubing</description>
 	 				<product>
 						<property>/extra500/const/PA2PSI</property>
 						<value>-0.00372</value>
@@ -176,6 +189,90 @@ i=0-6 left to right
 						<property>/systems/fuel/Fdensity-kgm3</property>
 						<property>aircraft/engine/FF-l_h</property>
 						<property>aircraft/engine/FF-l_h</property>
+					</product>
+   			 </function>
+		</fcs_function>
+
+<!-- Fuel filter pressure loss (including opening of bypass and indication switch) -->
+		<switch name="/systems/fuel/fuelfilter/bypass/state">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/fuel/F-filter-prloss-psid lt -1.2
+				/systems/fuel/fuelfilter/bypass/state eq 1
+			</test>
+		</switch>
+
+		<fcs_function name="/systems/fuel/fuelfilter/zeta">
+   			 <function>
+      			 <description>zeta fuel fliter</description>
+					<table>
+            				<independentVar lookup="row">/systems/fuel/fuelfilter/clogged</independentVar>
+						<independentVar lookup="column">/systems/fuel/fuelfilter/bypass/state</independentVar>
+            					<tableData>
+									0			1
+								0	-0.000000034	-0.00000032
+								1	-0.000055		-0.00000032
+            					</tableData>
+      				</table>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="/systems/fuel/F-filter-prloss-psid">
+   			 <function>
+      			 <description>Fuel pressure loss in fuel filter</description>
+	 				<product>
+						<property>/systems/fuel/fuelfilter/zeta</property>
+						<property>/systems/fuel/F-lambda</property>
+						<property>/systems/fuel/Fdensity-kgm3</property>
+						<property>aircraft/engine/FF-l_h</property>
+						<property>aircraft/engine/FF-l_h</property>
+					</product>
+   			 </function>
+		</fcs_function>
+
+		<switch name="FF-bypass-switch">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fuel/F-filter-prloss-psid lt -0.8
+				/systems/fuel/fuelfilter/bypass/switch/serviceable eq 1
+			</test>
+			<output>/systems/fuel/fuelfilter/bypass/switch/state</output>
+		</switch>
+
+<!-- fuel flow transducer pressure loss (including blocked turbine) -->
+
+		<fcs_function name="/systems/fuel/FFtransducer/zeta">
+   			 <function>
+      			 <description>zeta fuel fliter</description>
+					<table>
+            				<independentVar lookup="row">/systems/fuel/FFtransducer/blocked</independentVar>
+            					<tableData>			
+								0	-0.000000029	
+								1	-0.0000000577	
+            					</tableData>
+      				</table>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="/systems/fuel/F-fftrans-prloss-psid">
+   			 <function>
+      			 <description>Fuel pressure loss in fuel flow transducer</description>
+	 				<product>
+						<property>/systems/fuel/FFtransducer/zeta</property>
+						<property>/systems/fuel/F-lambda</property>
+						<property>/systems/fuel/Fdensity-kgm3</property>
+						<property>aircraft/engine/FF-l_h</property>
+						<property>aircraft/engine/FF-l_h</property>
+					</product>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="/systems/fuel/F-hydr-press-psid">
+   			 <function>
+      			 <description>Fuel pressure hydrostatic</description>
+	 				<product>
+						<property>accelerations/Nz</property>
+						<value>1.4</value>
 					</product>
    			 </function>
 		</fcs_function>
@@ -231,7 +328,10 @@ i=0-6 left to right
       			 <description>Fuel pressure loss</description>
 	 				<sum>
 						<property>/systems/fuel/F-pumppress-psid</property>
-						<property>/systems/fuel/F-pressloss-psid</property>
+						<property>/systems/fuel/F-hydr-press-psid</property>
+						<property>/systems/fuel/F-tube-prloss-psid</property>
+						<property>/systems/fuel/F-filter-prloss-psid</property>
+						<property>/systems/fuel/F-fftrans-prloss-psid</property>
 					</sum>
    			 </function>
 		</fcs_function>
@@ -364,7 +464,7 @@ i=0-6 left to right
 
 <!-- netflow for 'engine' tank -->
 		<switch name="tank3 flow">
-			<default value="0.078"/>
+			<default value="0.1"/>
 			<test logic="OR" value="0">
 				<test logic="OR">	
 					/systems/fuel/Fpress-too-low eq 1	
