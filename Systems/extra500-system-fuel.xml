@@ -20,7 +20,7 @@
       Date: 2015-05-08
 
       Last change: Eric van den Berg     
-      Date: 2015-05-19           
+      Date: 2015-05-25           
 -->
 
 <!--
@@ -308,15 +308,15 @@ i=0-6 left to right
 						<table>
             					<independentVar lookup="row">atmosphere/pressure-altitude</independentVar>
             					<tableData>
-								-1000	21.5	
-								9000	21	
-								17500	20.5	
-								20100	20	
-								22000	19.5	
-								22500	19	
-								23100	18.5	
-								23500	18	
-								25000	16	
+								-1000	20	
+								9000	19.5	
+								17500	19	
+								20100	18.5	
+								22000	18	
+								22500	17.5	
+								23100	17	
+								23500	16.5	
+								25000	14.5	
             					</tableData>
       					</table>
 					</product>
