@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2015-05-03
+      Date:             2015-06-01
 -->
 
 <autopilot name="STEC55X">
@@ -214,12 +214,34 @@
 		</fcs_function>
 
 <!-- the commanded aileron position change using the turn rate error -->
-		<pid name="/autopilot/hdg-channel/cmd-ail-change">
+		<pid name="/autopilot/hdg-channel/cmd-ail-change-ap">
 			<input>/autopilot/hdg-channel/turn-rate-error</input>
 			<kp>/autopilot/hdg-channel/turn-rate-error-kp</kp>							
 			<ki>/autopilot/hdg-channel/turn-rate-error-ki</ki>
 			<kd>/autopilot/hdg-channel/turn-rate-error-kd</kd>
 		</pid>
+
+<!-- aileron position change while overpowering the roll servo-->
+		<fcs_function name="/autopilot/hdg-channel/cmd-ail-change-overp">
+			<function>
+				<product>
+					<property>/autopilot/overpower/rollSpeedFactor</property>	
+					<difference>
+						<property>/controls/flight/aileron</property>	
+						<property>/autopilot/hdg-channel/cmd-ap-ail-pos-norm</property>
+					</difference>
+				</product>
+			</function>
+			<output>/autopilot/hdg-channel/cmd-ail-change-overp</output>
+		</fcs_function>
+
+		<switch name="headingOverpoweron">
+			<default value="/autopilot/hdg-channel/cmd-ail-change-ap"/>
+			<test logic="AND" value="/autopilot/hdg-channel/cmd-ail-change-overp">
+				/autopilot/mode/overpower eq 1
+			</test>
+			<output>/autopilot/hdg-channel/cmd-ail-change</output>
+		</switch>
 
 <!-- calculating the new aileron position-->
 		<fcs_function name="/autopilot/hdg-channel/cmd-ap-ail-pos-norm-raw">
@@ -254,6 +276,7 @@
 			<test logic="AND" value="/autopilot/hdg-channel/cmd-ap-ail-pos-norm">
 				/autopilot/mode/heading eq 1
 				/autopilot/settings/ap eq 1
+				/autopilot/mode/overpower eq 0
 			</test>
 			<output>/controls/flight/aileron</output>
 		</switch>

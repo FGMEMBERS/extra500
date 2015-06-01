@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:	Eric van den Berg
-	Date:		19.05.15
+	Date:		01.06.15
 
 
 ************************************************************************
@@ -116,6 +116,10 @@ of the RR 250-B17F/2 engine is best.</long-description>
      	      <key>
 			<name>C</name>
 			<desc>Arm and engage CWS</desc>
+		</key>
+     	      <key>
+			<name>O</name>
+			<desc>Overpower Autopilot</desc>
 		</key>
      	      <key>
 			<name>Ctrl-G</name>
@@ -657,12 +661,16 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<electrim type="int">0</electrim>
 		<cap type="int">0</cap>
 		<soft type="int">0</soft>
+		<overpower type="int">0</overpower>
 	</mode>
 	<indication>
 		<heading type="int">0</heading>
 		<nav type="int">0</nav>
 		<vs type="int">0</vs>
 	</indication>
+	<overpower>
+		<rollSpeedFactor type="double">1</rollSpeedFactor>
+	</overpower>
 	<hdg-channel>	
 		<turn-rate-error-kp type="double">0.0003</turn-rate-error-kp>
 		<turn-rate-error-ki type="double">0.00</turn-rate-error-ki>
