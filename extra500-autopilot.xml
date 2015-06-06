@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2015-06-01
+      Date:             2015-06-06
 -->
 
 <autopilot name="STEC55X">
@@ -219,6 +219,10 @@
 			<kp>/autopilot/hdg-channel/turn-rate-error-kp</kp>							
 			<ki>/autopilot/hdg-channel/turn-rate-error-ki</ki>
 			<kd>/autopilot/hdg-channel/turn-rate-error-kd</kd>
+			<clipto>								<!-- making sure the aileron servo is not going to fast-->	
+				<min>-0.2</min>
+				<max>0.2</max>
+			</clipto>
 		</pid>
 
 <!-- aileron position change while overpowering the roll servo-->
@@ -244,7 +248,7 @@
 		</switch>
 
 <!-- calculating the new aileron position-->
-		<fcs_function name="/autopilot/hdg-channel/cmd-ap-ail-pos-norm-raw">
+		<fcs_function name="/autopilot/hdg-channel/cmd-ap-ail-pos-norm">
 			<function>
 				<sum>
 					<property>fcs/aileron-cmd-tot</property>	
@@ -256,11 +260,11 @@
 					</product>
 				</sum>
 			</function>
-			<output>/autopilot/hdg-channel/cmd-ap-ail-pos-norm-raw</output>
+			<output>/autopilot/hdg-channel/cmd-ap-ail-pos-norm</output>
 		</fcs_function>
 
-<!-- making sure the aileron servo is not going to fast-->	
-		<actuator name="/autopilot/hdg-channel/ail-servo">
+
+		<!--actuator name="/autopilot/hdg-channel/ail-servo">
 			<input>/autopilot/hdg-channel/cmd-ap-ail-pos-norm-raw</input>
 			<rate_limit>0.2</rate_limit>
 			<clipto>
@@ -268,7 +272,7 @@
 				<max>1</max>
 			</clipto>
 			<output>/autopilot/hdg-channel/cmd-ap-ail-pos-norm</output>
-		</actuator>
+		</actuator-->
 
 <!--this makes the aileron pilot input to move along, so when the hdg mode is disconnected, the ailerons are in the correct position-->
 		<switch name="headingon">
@@ -856,31 +860,57 @@
 
 
 <!-- the commanded aileron position change using the turn rate error -->
-		<pid name="/autopilot/radionav-channel/cmd-ail-change">
+		<pid name="/autopilot/radionav-channel/cmd-ail-change-ap">
 			<input>/autopilot/radionav-channel/turn-rate-error</input>
 			<kp>/autopilot/radionav-channel/turn-rate-error-kp</kp>							
 			<ki>/autopilot/radionav-channel/turn-rate-error-ki</ki>
 			<kd>/autopilot/radionav-channel/turn-rate-error-kd</kd>
+			<clipto>
+				<min>-0.05</min>
+				<max>0.05</max>
+			</clipto>
 		</pid>
 
+<!-- aileron position change while overpowering the roll servo-->
+		<fcs_function name="/autopilot/radionav-channel/cmd-ail-change-overp">
+			<function>
+				<product>
+					<property>/autopilot/overpower/rollSpeedFactor</property>	
+					<difference>
+						<property>/controls/flight/aileron</property>	
+						<property>/autopilot/radionav-channel/cmd-ap-ail-pos-norm</property>
+					</difference>
+				</product>
+			</function>
+			<output>/autopilot/radionav-channel/cmd-ail-change-overp</output>
+		</fcs_function>
+
+		<switch name="radionavOverpoweron">
+			<default value="/autopilot/radionav-channel/cmd-ail-change-ap"/>
+			<test logic="AND" value="/autopilot/radionav-channel/cmd-ail-change-overp">
+				/autopilot/mode/overpower eq 1
+			</test>
+			<output>/autopilot/radionav-channel/cmd-ail-change</output>
+		</switch>
+
 <!-- calculating the new aileron position-->
-		<fcs_function name="/autopilot/radionav-channel/cmd-ap-ail-pos-norm-raw">
+		<fcs_function name="/autopilot/radionav-channel/cmd-ap-ail-pos-norm">
 			<function>
 				<sum>
 					<property>fcs/aileron-cmd-tot</property>	
 					<product>
-                                  		<property>/autopilot/mode/nav</property>
+                                  	<property>/autopilot/mode/nav</property>
 						<value>1.0</value>
 						<property>/autopilot/radionav-channel/cmd-ail-change</property>
 						<property>sim-dt-sec</property>
 					</product>
 				</sum>
 			</function>
-			<output>/autopilot/radionav-channel/cmd-ap-ail-pos-norm-raw</output>
+			<output>/autopilot/radionav-channel/cmd-ap-ail-pos-norm</output>
 		</fcs_function>
 
 <!-- making sure the aileron servo is not going to fast-->	
-		<actuator name="/autopilot/radionav-channel/ail-servo">
+		<!--actuator name="/autopilot/radionav-channel/ail-servo">
 			<input>/autopilot/radionav-channel/cmd-ap-ail-pos-norm-raw</input>
 			<rate_limit>0.05</rate_limit>
 			<clipto>
@@ -888,7 +918,7 @@
 				<max>1</max>
 			</clipto>
 			<output>/autopilot/radionav-channel/cmd-ap-ail-pos-norm</output>
-		</actuator>
+		</actuator-->
 
 <!--this makes the aileron pilot input to move along, so when the nav mode is disconnected, the ailerons are in the correct position-->
 		<switch name="radionavon">
@@ -897,6 +927,7 @@
 				<test logic="AND" value="1">
 					/autopilot/mode/nav eq 1
 					/autopilot/settings/ap eq 1
+					/autopilot/mode/overpower eq 0
 				</test>
 				<test logic="OR" value="1">
 					/instrumentation/nav-source eq 0
@@ -1928,15 +1959,41 @@
 		</fcs_function>
 
 <!-- the commanded aileron position change using the turn rate error -->
-		<pid name="/autopilot/fms-channel/cmd-ail-change">
+		<pid name="/autopilot/fms-channel/cmd-ail-change-ap">
 			<input>/autopilot/fms-channel/turn-rate-error</input>
 			<kp>/autopilot/fms-channel/turn-rate-error-kp</kp>							
 			<ki>/autopilot/fms-channel/turn-rate-error-ki</ki>
 			<kd>/autopilot/fms-channel/turn-rate-error-kd</kd>
+			<clipto>
+				<min>-0.05</min>
+				<max>0.05</max>
+			</clipto>
 		</pid>
 
+<!-- aileron position change while overpowering the roll servo-->
+		<fcs_function name="/autopilot/fms-channel/cmd-ail-change-overp">
+			<function>
+				<product>
+					<property>/autopilot/overpower/rollSpeedFactor</property>	
+					<difference>
+						<property>/controls/flight/aileron</property>	
+						<property>/autopilot/fms-channel/cmd-ap-ail-pos-norm</property>
+					</difference>
+				</product>
+			</function>
+			<output>/autopilot/hdg-channel/fms-ail-change-overp</output>
+		</fcs_function>
+
+		<switch name="fmsOverpoweron">
+			<default value="/autopilot/fms-channel/cmd-ail-change-ap"/>
+			<test logic="AND" value="/autopilot/fms-channel/cmd-ail-change-overp">
+				/autopilot/mode/overpower eq 1
+			</test>
+			<output>/autopilot/fms-channel/cmd-ail-change</output>
+		</switch>
+
 <!-- calculating the new aileron position-->
-		<fcs_function name="/autopilot/fms-channel/cmd-ap-ail-pos-norm-raw">
+		<fcs_function name="/autopilot/fms-channel/cmd-ap-ail-pos-norm">
 			<function>
 				<sum>
 					<property>fcs/aileron-cmd-tot</property>	
@@ -1948,11 +2005,11 @@
 					</product>
 				</sum>
 			</function>
-			<output>/autopilot/fms-channel/cmd-ap-ail-pos-norm-raw</output>
+			<output>/autopilot/fms-channel/cmd-ap-ail-pos-norm</output>
 		</fcs_function>
 
 <!-- making sure the aileron servo is not going to fast-->	
-		<actuator name="/autopilot/fms-channel/ail-servo">
+		<!--actuator name="/autopilot/fms-channel/ail-servo">
 			<input>/autopilot/fms-channel/cmd-ap-ail-pos-norm-raw</input>
 			<rate_limit>0.05</rate_limit>
 			<clipto>
@@ -1960,7 +2017,7 @@
 				<max>1</max>
 			</clipto>
 			<output>/autopilot/fms-channel/cmd-ap-ail-pos-norm</output>
-		</actuator>
+		</actuator-->
 
 <!--this makes the aileron pilot input to move along, so when the nav mode is disconnected, the ailerons are in the correct position-->
 		<switch name="fmsnavon">
@@ -1969,6 +2026,7 @@
 				/autopilot/mode/nav eq 1
 				/instrumentation/nav-source eq 2
 				/autopilot/settings/ap eq 1
+				/autopilot/mode/overpower eq 0
 			</test>
 			<output>/controls/flight/aileron</output>
 		</switch>
@@ -2816,15 +2874,42 @@
 		</fcs_function>
 
 <!-- the commanded aileron position change using the turn rate error -->
-		<pid name="/autopilot/cws-channel/cmd-ail-change">
+		<pid name="/autopilot/cws-channel/cmd-ail-change-ap">
 			<input>/autopilot/cws-channel/turn-rate-error</input>
 			<kp>/autopilot/cws-channel/turn-rate-error-kp</kp>							
 			<ki>/autopilot/cws-channel/turn-rate-error-ki</ki>
 			<kd>/autopilot/cws-channel/turn-rate-error-kd</kd>
+			<clipto>								<!-- making sure the aileron servo is not going to fast-->	
+				<min>-0.2</min>
+				<max>0.2</max>
+			</clipto>
 		</pid>
 
+<!-- aileron position change while overpowering the roll servo-->
+		<fcs_function name="/autopilot/cws-channel/cmd-ail-change-overp">
+			<function>
+				<product>
+					<property>/autopilot/overpower/rollSpeedFactor</property>	
+					<difference>
+						<property>/controls/flight/aileron</property>	
+						<property>/autopilot/cws-channel/cmd-ap-ail-pos-norm</property>
+					</difference>
+				</product>
+			</function>
+			<output>/autopilot/hdg-channel/cws-ail-change-overp</output>
+		</fcs_function>
+
+		<switch name="cwsOverpoweron">
+			<default value="/autopilot/cws-channel/cmd-ail-change-ap"/>
+			<test logic="AND" value="/autopilot/cws-channel/cmd-ail-change-overp">
+				/autopilot/mode/overpower eq 1
+			</test>
+			<output>/autopilot/cws-channel/cmd-ail-change</output>
+		</switch>
+
+
 <!-- calculating the new aileron position-->
-		<fcs_function name="/autopilot/cws-channel/cmd-ap-ail-pos-norm-raw">
+		<fcs_function name="/autopilot/cws-channel/cmd-ap-ail-pos-norm">
 			<function>
 				<sum>
 					<property>fcs/aileron-cmd-tot</property>	
@@ -2836,11 +2921,11 @@
 					</product>
 				</sum>
 			</function>
-			<output>/autopilot/cws-channel/cmd-ap-ail-pos-norm-raw</output>
+			<output>/autopilot/cws-channel/cmd-ap-ail-pos-norm</output>
 		</fcs_function>
 
 <!-- making sure the aileron servo is not going to fast-->	
-		<actuator name="/autopilot/cws-channel/ail-servo">
+		<!--actuator name="/autopilot/cws-channel/ail-servo">
 			<input>/autopilot/cws-channel/cmd-ap-ail-pos-norm-raw</input>
 			<rate_limit>0.2</rate_limit>
 			<clipto>
@@ -2848,7 +2933,7 @@
 				<max>1</max>
 			</clipto>
 			<output>/autopilot/cws-channel/cmd-ap-ail-pos-norm</output>
-		</actuator>
+		</actuator-->
 
 <!--this makes the aileron pilot input to move along, so when the cws mode is disconnected, the ailerons are in the correct position-->
 		<switch name="cwson1">
@@ -2857,6 +2942,7 @@
 				/autopilot/mode/cws eq 1
 				/autopilot/settings/ap eq 1
 				/autopilot/mode/cws-armed eq 0
+				/autopilot/mode/overpower eq 0
 			</test>
 			<output>/controls/flight/aileron</output>
 		</switch>
