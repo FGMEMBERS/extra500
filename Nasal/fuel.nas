@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             15.05.15
+#      Date:             06.06.15
 #
 
 var FuelSystemClass = {
@@ -50,10 +50,10 @@ var FuelSystemClass = {
 		setprop("/consumables/fuel/tank[1]/level-norm",fracL);
 		setprop("/consumables/fuel/tank[2]/level-norm",fracL);
 
-		var RmainCap = getprop("/consumables/fuel/tank[4]/capacity-gal_us");
+		var RmainCap = getprop("/consumables/fuel/tank[5]/capacity-gal_us");
 		var Rmainfrac = getprop("/consumables/fuel/tank[5]/level-norm");
 		var RcollCap = getprop("/consumables/fuel/tank[4]/capacity-gal_us");
-		var Rcollfrac = getprop("/consumables/fuel/tank[5]/level-norm");
+		var Rcollfrac = getprop("/consumables/fuel/tank[4]/level-norm");
 
 		var fracR = (RmainCap*Rmainfrac + RcollCap*Rcollfrac) / (RmainCap + RcollCap);
 		setprop("/consumables/fuel/tank[4]/level-norm",fracR);
