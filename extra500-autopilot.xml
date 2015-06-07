@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2015-06-06
+      Date:             2015-06-07
 -->
 
 <autopilot name="STEC55X">
@@ -96,7 +96,7 @@
 		<fcs_function name="/autopilot/indication/timer-sec">
 			<function>
 				<product>
-					<property>/extra500/light/strobe/reset</property>
+					<property>/autopilot/indication/reset</property>
 					<sum>
 						<property>/autopilot/indication/timer-sec</property>
 						<property>sim-dt-sec</property> 
@@ -1153,7 +1153,7 @@
 
 	
 <!-- pitch error (NOT in deg) using the glideslope deflection, dampened by the accel sensor inthe AP computer-->
-		<fcs_function name="/autopilot/gs-channel/pitch-error">
+		<fcs_function name="/autopilot/gs-channel/pitch-error-ap">
 			<function>
 				<product>
 					<property>/autopilot/mode/gs-follow</property>
@@ -1165,6 +1165,10 @@
 					</sum>
 				</product>
 			</function>
+			<clipto>
+				<min>-0.2</min>
+				<max>0.2</max>
+			</clipto>
 		</fcs_function>
 
 		<fcs_function name="/autopilot/gs-channel/fld-pitch-deg">
@@ -1176,10 +1180,30 @@
 			</function>
 		</fcs_function>
 
+<!-- elevator position change while overpowering the pitch servo-->
+		<fcs_function name="/autopilot/gs-channel/pitch-error-overp">
+			<function>
+				<product>
+					<property>/autopilot/overpower/pitchSpeedFactor</property>	
+					<difference>
+						<property>/controls/flight/elevator</property>	
+						<property>/autopilot/gs-channel/cmd-ap-elev-pos-norm</property>
+					</difference>
+				</product>
+			</function>
+			<output>/autopilot/gs-channel/pitch-error-overp</output>
+		</fcs_function>
 
+		<switch name="gsOverpoweron">
+			<default value="/autopilot/gs-channel/pitch-error-ap"/>
+			<test logic="AND" value="/autopilot/gs-channel/pitch-error-overp">
+				/autopilot/mode/overpower eq 1
+			</test>
+			<output>/autopilot/gs-channel/pitch-error</output>
+		</switch>
 
 <!-- moving the elevator -->
-		<fcs_function name="/autopilot/gs-channel/cmd-ap-elev-pos-norm-raw">
+		<fcs_function name="/autopilot/gs-channel/cmd-ap-elev-pos-norm">
 			<function>
 				<sum>
 					<property>fcs/elevator-cmd-tot</property>	
@@ -1191,11 +1215,11 @@
 					</product>
 				</sum>
 			</function>
-			<output>/autopilot/gs-channel/cmd-ap-elev-pos-norm-raw</output>
+			<output>/autopilot/gs-channel/cmd-ap-elev-pos-norm</output>
 		</fcs_function>
 
 <!-- limiting the elevator movement speed -->
-		<actuator name="/autopilot/gs-channel/pitch-servo">
+		<!--actuator name="/autopilot/gs-channel/pitch-servo">
 			<input>/autopilot/gs-channel/cmd-ap-elev-pos-norm-raw</input>
 			<rate_limit>0.2</rate_limit>
 			<clipto>
@@ -1203,7 +1227,7 @@
 				<max>1</max>
 			</clipto>
 			<output>/autopilot/gs-channel/cmd-ap-elev-pos-norm</output>
-		</actuator>
+		</actuator-->
 
 <!--this makes the elevator pilot input to move along, so when the gs mode is disconnected, the elevator is in the correct position-->
 		<switch name="gson">
@@ -1211,6 +1235,7 @@
 			<test logic="AND" value="/autopilot/gs-channel/cmd-ap-elev-pos-norm">
 				/autopilot/mode/gs-follow eq 1
 				/autopilot/settings/ap eq 1
+				/autopilot/mode/overpower eq 0
 			</test>
 			<output>/controls/flight/elevator</output>
 		</switch>
@@ -2194,7 +2219,7 @@
 		</fcs_function>	
 	
 <!-- pitch error (NOT in deg) using the vs error, dampened by the accel sensor inthe AP computer-->
-		<fcs_function name="/autopilot/vs-channel/pitch-error">
+		<fcs_function name="/autopilot/vs-channel/pitch-error-ap">
 			<function>
 				<product>
 					<property>/autopilot/mode/vs</property>
@@ -2217,24 +2242,46 @@
 			</function>
 		</fcs_function>
 
+<!-- elevator position change while overpowering the pitch servo-->
+		<fcs_function name="/autopilot/vs-channel/pitch-error-overp">
+			<function>
+				<product>
+					<property>/autopilot/overpower/pitchSpeedFactor</property>	
+					<difference>
+						<property>/controls/flight/elevator</property>	
+						<property>/autopilot/vs-channel/cmd-ap-elev-pos-norm</property>
+					</difference>
+				</product>
+			</function>
+			<output>/autopilot/vs-channel/pitch-error-overp</output>
+		</fcs_function>
+
+		<switch name="vsOverpoweron">
+			<default value="/autopilot/vs-channel/pitch-error-ap"/>
+			<test logic="AND" value="/autopilot/vs-channel/pitch-error-overp">
+				/autopilot/mode/overpower eq 1
+			</test>
+			<output>/autopilot/vs-channel/pitch-error</output>
+		</switch>
+
 <!-- moving the elevator -->
-		<fcs_function name="/autopilot/vs-channel/cmd-ap-elev-pos-norm-raw">
+		<fcs_function name="/autopilot/vs-channel/cmd-ap-elev-pos-norm">
 			<function>
 				<sum>
 					<property>fcs/elevator-cmd-tot</property>	
 					<product>
-                                  		<property>/autopilot/mode/vs</property>
+                                  	<property>/autopilot/mode/vs</property>
 						<value>1.0</value>
 						<property>/autopilot/vs-channel/pitch-error</property>
 						<property>sim-dt-sec</property>
 					</product>
 				</sum>
 			</function>
-			<output>/autopilot/vs-channel/cmd-ap-elev-pos-norm-raw</output>
+			<output>/autopilot/vs-channel/cmd-ap-elev-pos-norm</output>
 		</fcs_function>
 
 <!-- limiting the elevator movement speed -->
-		<actuator name="/autopilot/vs-channel/pitch-servo">
+		<!--actuator name="/autopilot/vs-channel/pitch-servo">
 			<input>/autopilot/vs-channel/cmd-ap-elev-pos-norm-raw</input>
 			<rate_limit>0.2</rate_limit>
 			<clipto>
@@ -2242,7 +2289,7 @@
 				<max>1</max>
 			</clipto>
 			<output>/autopilot/vs-channel/cmd-ap-elev-pos-norm</output>
-		</actuator>
+		</actuator-->
 
 <!--this makes the elevator pilot input to move along, so when the vs mode is disconnected, the elevator is in the correct position-->
 		<switch name="vson">
@@ -2251,6 +2298,7 @@
 				/autopilot/mode/vs eq 1
 				/autopilot/settings/ap eq 1
 				/autopilot/mode/cws-armed eq 0
+				/autopilot/mode/overpower eq 0
 			</test>
 			<output>/controls/flight/elevator</output>
 		</switch>
@@ -2359,7 +2407,7 @@
 			</function>
 		</fcs_function>
 
-		<fcs_function name="/autopilot/alt-channel/pitch-error">
+		<fcs_function name="/autopilot/alt-channel/pitch-error-ap">
 			<function>
 				<product>
 					<property>/autopilot/alt-channel/pitch-error-gain</property>
@@ -2379,7 +2427,33 @@
 					</sum>
 				</product>
 			</function>
+			<clipto>
+				<min>-0.2</min>
+				<max>0.2</max>
+			</clipto>
 		</fcs_function>
+
+<!-- elevator position change while overpowering the pitch servo-->
+		<fcs_function name="/autopilot/alt-channel/pitch-error-overp">
+			<function>
+				<product>
+					<property>/autopilot/overpower/pitchSpeedFactor</property>	
+					<difference>
+						<property>/controls/flight/elevator</property>	
+						<property>/autopilot/alt-channel/cmd-ap-elev-pos-norm</property>
+					</difference>
+				</product>
+			</function>
+			<output>/autopilot/alt-channel/pitch-error-overp</output>
+		</fcs_function>
+
+		<switch name="altOverpoweron">
+			<default value="/autopilot/alt-channel/pitch-error-ap"/>
+			<test logic="AND" value="/autopilot/alt-channel/pitch-error-overp">
+				/autopilot/mode/overpower eq 1
+			</test>
+			<output>/autopilot/alt-channel/pitch-error</output>
+		</switch>
 
 		<switch name="alterroron">
 			<default value="0"/>
@@ -2392,7 +2466,7 @@
 
 
 
-		<fcs_function name="/autopilot/alt-channel/cmd-ap-elev-pos-norm-raw">
+		<fcs_function name="/autopilot/alt-channel/cmd-ap-elev-pos-norm">
 			<function>
 				<sum>
 					<property>fcs/elevator-cmd-tot</property>	
@@ -2402,10 +2476,10 @@
 					</product>
 				</sum>
 			</function>
-			<output>/autopilot/alt-channel/cmd-ap-elev-pos-norm-raw</output>
+			<output>/autopilot/alt-channel/cmd-ap-elev-pos-norm</output>
 		</fcs_function>
 
-		<actuator name="/autopilot/alt-channel/pitch-servo">
+		<!--actuator name="/autopilot/alt-channel/pitch-servo">
 			<input>/autopilot/alt-channel/cmd-ap-elev-pos-norm-raw</input>
 			<rate_limit>0.2</rate_limit>
 			<clipto>
@@ -2413,7 +2487,7 @@
 				<max>1</max>
 			</clipto>
 			<output>/autopilot/alt-channel/cmd-ap-elev-pos-norm</output>
-		</actuator>
+		</actuator-->
 
 <!--this part is used for ALT+VS only -->
 
@@ -2517,6 +2591,7 @@
 				/autopilot/mode/vs eq 0
 				/autopilot/mode/alt eq 1
 				/autopilot/settings/ap eq 1
+				/autopilot/mode/overpower eq 0
 			</test>
 			<output>/controls/flight/elevator</output>
 		</switch>
