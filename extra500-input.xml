@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2015.06.01
+      Date:             2015.06.07
 -->
 <PropertyList>
 
@@ -108,13 +108,21 @@
 
 		 <key n="111">
 			 <name>o</name>
-			 <desc>autopilot overpower toggle</desc>
+			 <desc>autopilot overpower hold to activate</desc>
     				<binding>
       				<command>nasal</command>
       				<script><![CDATA[
-						UI.click("Autopilot Overpower");
+						UI.click("Autopilot Overpower on");
 					]]></script>
     				</binding>
+				<mod-up>
+    				<binding>
+      				<command>nasal</command>
+      				<script><![CDATA[
+						UI.click("Autopilot Overpower off");
+					]]></script>
+    				</binding>
+				</mod-up>
 		 </key>
 		
 		 <key n="49"><!-- 1 -->
