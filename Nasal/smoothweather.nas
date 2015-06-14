@@ -37,6 +37,55 @@ setlistener("/extra500/weather/smooth", func {
 	init_weather();
 });
 
+setlistener("/extra500/weather/ready", func {
+	local_metar();
+});
+
+var local_metar = func() {
+	if (getprop("/extra500/weather/ready") == 1) {
+		# checking for valid metars and calculating weighing factors
+		var total_weight = 0;
+#		var j = 0;
+		var vvalid = [];
+		var vweight = [];
+		var one_valid = 0;
+		for (var i = 0 ; i <= 20; i+=1){
+			if (getprop("/extra500/weather/station["~i~"]/metar/valid") == 1) {
+				one_valid = 1;
+				append( vvalid , i);		
+				append( vweight ,math.pow(getprop("/extra500/weather/station["~i~"]/distance-m"),-2) );
+				total_weight = total_weight + vweight[i];
+#				j = j + 1;
+			} else {
+				append( vweight ,0 );
+				print("METAR station ",i," not valid");
+			}
+		}
+
+		# calculating average values
+		if (one_valid == 1) {
+			var metardata = ["dewpoint-sea-level-degc","max-visibility-m","min-visibility-m","pressure-sea-level-inhg","temperature-sea-level-degc","base-wind-dir-deg","base-wind-range-from","base-wind-range-to","base-wind-speed-kt","gust-wind-speed-kt"];
+
+			foreach(var mdata; metardata) {
+				var sum = 0;
+				if ((mdata == "base-wind-dir-deg") or (mdata == "base-wind-range-from") or (mdata == "base-wind-range-to")) {
+					foreach(var valid; vvalid) {
+						sum = sum + vweight[valid] * (getprop("/extra500/weather/station["~valid~"]/metar/",mdata) - 180);
+					}
+					setprop("/extra500/weather/avgmetar/",mdata ,sum / total_weight + 180);
+				} else {
+					foreach(var valid; vvalid) {
+						sum = sum + vweight[valid] * getprop("/extra500/weather/station["~valid~"]/metar/",mdata);
+					}
+					setprop("/extra500/weather/avgmetar/",mdata ,sum / total_weight);
+				}
+			}
+		} else {
+			print("no valid METARs in range");
+		}
+	}
+};
+
 var WeatherStation = {
 	new : func(root){
 		#print("WeatherStation::new() ... ");
