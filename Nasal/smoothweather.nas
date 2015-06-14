@@ -20,19 +20,6 @@
 #      Date:             
 #
 
-
-var init_weather = func() {
-    if (getprop("/extra500/weather/smooth") == 1)  {
-		setprop("sim/gui/dialogs/metar/mode/manual-weather",1);
-            setprop("sim/gui/dialogs/metar/source-selection", "Manual input" );
-# think need to do controller.apply(); from weather.xml, not sure howto...
-    } else {
-		setprop("sim/gui/dialogs/metar/mode/manual-weather",0);
-            setprop("sim/gui/dialogs/metar/source-selection", "Live input" );
-# think need to do controller.apply(); from weather.xml, not sure howto...
-    }
-}
-
 setlistener("/extra500/weather/smooth", func {
 	init_weather();
 });
@@ -40,6 +27,154 @@ setlistener("/extra500/weather/smooth", func {
 setlistener("/extra500/weather/ready", func {
 	local_metar();
 });
+
+var init_weather = func() {
+    if (getprop("/extra500/weather/smooth") == 1)  {
+		open();
+		setprop("sim/gui/dialogs/metar/mode/manual-weather",1);
+            setprop("sim/gui/dialogs/metar/source-selection", "Manual input" );
+		apply();
+    } else {
+		setprop("sim/gui/dialogs/metar/mode/manual-weather",0);
+            setprop("sim/gui/dialogs/metar/source-selection", "Live input" );
+		apply();
+    }
+}
+
+# taken from fgdata/gui/dialogs/weather.xml
+
+var open = func() {
+        
+	# Determine the weather mode.
+	if ( getprop("/nasal/local_weather/enabled") == 1) {
+		# Local weather mode
+		setprop("sim/gui/dialogs/metar/mode/global-weather", "0" );
+		setprop("sim/gui/dialogs/metar/mode/local-weather", "1" );
+		setprop("sim/gui/dialogs/metar/mode/manual-weather", "0" );          
+	} else if ( getprop( "environment/params/metar-updates-environment" ) == 0 ) {
+		# Manual weather mode
+		setprop("sim/gui/dialogs/metar/mode/global-weather", "1" );
+            setprop("sim/gui/dialogs/metar/mode/local-weather", "0" );
+            setprop("sim/gui/dialogs/metar/mode/manual-weather", "1" );
+	} else {
+            # Global weather mode
+            setprop("sim/gui/dialogs/metar/mode/global-weather", "1" );
+            setprop("sim/gui/dialogs/metar/mode/local-weather", "0" );
+            setprop("sim/gui/dialogs/metar/mode/manual-weather", "0" );
+	}
+           
+      # initialize the METAR source selection
+	if( getprop( "environment/realwx/enabled" ) ) {
+		setprop("sim/gui/dialogs/metar/source-selection", "Live data" );
+	} else {
+		# preset configured scenario
+		var wsn = props.globals.getNode( "/environment/weather-scenarios" );
+            var current = getprop("/environment/weather-scenario", "");
+            var found = 0;
+            if( wsn != nil ) {
+			var scenarios = wsn.getChildren("scenario");
+			forindex (var i; scenarios ) {
+				var metarN = scenarios[i].getNode("metar");
+				metarN == nil and continue;
+           				if( scenarios[i].getNode("name").getValue() == current ) {
+            				setprop("sim/gui/dialogs/metar/source-selection", scenarios[i].getNode("name").getValue() );
+                  			found = 1;
+                  		break;
+            			}
+			}
+		}
+            if( found == 0 )
+            setprop("sim/gui/dialogs/metar/source-selection", "Manual input" );
+	}
+          
+      setprop("sim/gui/dialogs/metar/metar-string", normalize_string(getprop("environment/metar/data")) );
+#      gui.findElementByName( me.dlgRoot, "metar-string" ).getNode("legend", 1).setValue(normalize_string(getprop("environment/metar/data")));
+
+          # fill the METAR source combo box
+#         var combo = gui.findElementByName( me.dlgRoot, "source-selection" );
+#         var wsn = props.globals.getNode( "/environment/weather-scenarios" );
+#          if( wsn != nil ) {
+#            var scenarios = wsn.getChildren("scenario");
+#            forindex (var i; scenarios ) {
+#              combo.getChild("value", i, 1).setValue(scenarios[i].getNode("name").getValue());
+#            }
+#          }
+
+#          me.scenarioListenerId = setlistener("sim/gui/dialogs/metar/source-selection", func(n) { me.scenarioListener(n); }, 1, 1 );
+#          me.metarListenerId = setlistener( "environment/metar/valid", func(n) { me.metarListener(n); }, 1, 1 );
+          
+          # Update the dialog itself
+#          me.refresh();
+}
+
+
+var apply = func() {
+	var scenarioName = getprop( "sim/gui/dialogs/metar/source-selection");
+      var metar = getprop( "environment/metar/data" );
+      var global_weather_enabled = getprop("sim/gui/dialogs/metar/mode/global-weather");
+      var local_weather_enabled = getprop("sim/gui/dialogs/metar/mode/local-weather");
+      var manual_weather_enabled = getprop("sim/gui/dialogs/metar/mode/manual-weather");
+          
+     # General weather settings based on scenario          
+     	if (manual_weather_enabled == 1) {
+     		setprop( "/environment/params/metar-updates-environment", 0 );
+            setprop( "/environment/realwx/enabled", 0 );
+            setprop( "/environment/config/enabled", 1 );
+            metar = "";
+	} else if( scenarioName == "Live data" ) {
+            setprop( "/environment/params/metar-updates-environment", 1 );
+            setprop( "/environment/realwx/enabled", 1 );
+            setprop( "/environment/config/enabled", 1 );
+	} else if( scenarioName == "Manual input" ) {
+            setprop( "/environment/params/metar-updates-environment", 1 );
+            setprop( "/environment/realwx/enabled", 0 );
+            setprop( "/environment/config/enabled", 1 );
+            metar = getprop("sim/gui/dialogs/metar/metar-string" );
+	} else {
+            setprop( "/environment/params/metar-updates-environment", 1 );
+            setprop( "/environment/realwx/enabled", 0 );
+            setprop( "/environment/config/enabled", 1 );
+            metar = getprop("sim/gui/dialogs/metar/metar-string" );
+            setprop("/environment/weather-scenario", scenarioName);
+	}
+          
+	if( metar != nil ) {
+		setprop( "environment/metar/data", normalize_string(metar) );
+	}
+          
+	# Clear any local weather that might be running
+	if (getprop("/nasal/local_weather/loaded")) local_weather.clear_all();
+	setprop("/nasal/local_weather/enabled", "false");
+          
+	if (local_weather_enabled) {
+	# If Local Weather is enabled, re-initialize with updated 
+	# initial tile and tile selection.
+		setprop("/nasal/local_weather/enabled", "true");
+            
+            # Re-initialize local weather.
+		settimer( func {local_weather.set_tile();}, 0.2);            
+	} 
+}
+
+var normalize_string = func(src) {
+	if( src == nil ) src = "";
+	var dst = "";
+	for( var i = 0; i < size(src); i+=1 ) {
+		if( src[i] == `\n` or src[i] == `\r` )
+			src[i] = ` `;
+              
+		if (i == 0 and src[i] == ` `)
+			continue;
+
+		if( i != 0 and src[i] == ` ` and src[i-1] == ` ` )
+			continue;
+
+		dst = dst ~ " ";
+		dst[size(dst)-1] = src[i];
+	}
+	return dst;
+}
+
 
 var local_metar = func() {
 	if (getprop("/extra500/weather/ready") == 1) {
