@@ -25,7 +25,10 @@ setlistener("/extra500/weather/smooth", func {
 });
 
 setlistener("/extra500/weather/ready", func {
-	local_metar();
+	if (getprop("/extra500/weather/ready") == 1) {
+		settimer(func{ local_metar(); }, 5);
+#		local_metar();
+	}
 });
 
 var init_weather = func() {
@@ -177,20 +180,18 @@ var normalize_string = func(src) {
 
 
 var local_metar = func() {
-	if (getprop("/extra500/weather/ready") == 1) {
+#	if (getprop("/extra500/weather/ready") == 1) {
 		# checking for valid metars and calculating weighing factors
 		var total_weight = 0;
-#		var j = 0;
 		var vvalid = [];
 		var vweight = [];
 		var one_valid = 0;
 		for (var i = 0 ; i <= 20; i+=1){
 			if (getprop("/extra500/weather/station["~i~"]/metar/valid") == 1) {
-				one_valid = 1;
-				append( vvalid , i);		
+				one_valid = 1; 		# setting flag that at least one metar is valid
+				append( vvalid , i);	# vector of valid metar stations		
 				append( vweight ,math.pow(getprop("/extra500/weather/station["~i~"]/distance-m"),-2) );
 				total_weight = total_weight + vweight[i];
-#				j = j + 1;
 			} else {
 				append( vweight ,0 );
 				print("METAR station ",i," not valid");
@@ -199,26 +200,85 @@ var local_metar = func() {
 
 		# calculating average values
 		if (one_valid == 1) {
+
+			var deg2rad = getprop("/extra500/const/DEG2RAD");
+			var rad2deg = getprop("/extra500/const/RAD2DEG");
+
 			var metardata = ["dewpoint-sea-level-degc","max-visibility-m","min-visibility-m","pressure-sea-level-inhg","temperature-sea-level-degc","base-wind-dir-deg","base-wind-range-from","base-wind-range-to","base-wind-speed-kt","gust-wind-speed-kt"];
 
 			foreach(var mdata; metardata) {
 				var sum = 0;
+				var sumx = 0;
+				var sumy = 0;
+
+				# for angles
 				if ((mdata == "base-wind-dir-deg") or (mdata == "base-wind-range-from") or (mdata == "base-wind-range-to")) {
 					foreach(var valid; vvalid) {
-						sum = sum + vweight[valid] * (getprop("/extra500/weather/station["~valid~"]/metar/",mdata) - 180);
+						sumx = sumx + vweight[valid] * math.sin(deg2rad*(getprop("/extra500/weather/station["~valid~"]/metar/",mdata)));
+						sumy = sumy + vweight[valid] * math.cos(deg2rad*(getprop("/extra500/weather/station["~valid~"]/metar/",mdata)));
 					}
-					setprop("/extra500/weather/avgmetar/",mdata ,sum / total_weight + 180);
+					var avgx = sumx / total_weight;
+					var avgy = sumy / total_weight;
+
+					var avg_angle = rad2deg * math.atan2(avgx,avgy);
+					setprop("/extra500/weather/avgmetar/",mdata ,avg_angle);
+
 				} else {
+
+				# for normal values
 					foreach(var valid; vvalid) {
 						sum = sum + vweight[valid] * getprop("/extra500/weather/station["~valid~"]/metar/",mdata);
 					}
 					setprop("/extra500/weather/avgmetar/",mdata ,sum / total_weight);
 				}
 			}
+		buildMetar();
 		} else {
 			print("no valid METARs in range");
 		}
+#	}
+};
+
+var buildMetar = func() {
+	var sp = " ";
+	var winddir = sprintf("%03d",math.round( getprop("/extra500/weather/avgmetar/base-wind-dir-deg") ) );
+	var windspeed = sprintf("%02d",math.round( getprop("/extra500/weather/avgmetar/base-wind-speed-kt") ) );
+
+	var fromwind = getprop("/extra500/weather/avgmetar/base-wind-range-from");
+	var towind = getprop("/extra500/weather/avgmetar/base-wind-range-to");
+	if ( abs(fromwind-towind) > 10 ) {
+		if (fromwind < 0) {fromwind = 360 + fromwind; }
+		if (towind < 0) {towind = 360 + towind; }
+		var vwind = sprintf("%03d",10*math.round( fromwind/10) ) ~"V"~ sprintf("%03d",10*math.round( towind/10) ) ~sp ;
+	} else {
+		var vwind = "";
 	}
+
+	var visi = getprop("/extra500/weather/avgmetar/max-visibility-m");
+	if (visi > 9999) {
+		var visi_str = "9999";
+	} else {
+		var visi_str = sprintf("%04d",math.round( getprop("/extra500/weather/avgmetar/max-visibility-m") ) );
+	}
+
+	var temp = getprop("/extra500/weather/avgmetar/temperature-sea-level-degc");
+	if (temp < 0 ) {
+		var temp_str = "M"~sprintf("%02d",math.round( abs(temp) ) );
+	} else {
+		var temp_str = sprintf("%02d",math.round(temp) );
+	}
+
+	var dewp = getprop("/extra500/weather/avgmetar/dewpoint-sea-level-degc");
+	if (dewp < 0 ) {
+		var dewp_str = "M"~sprintf("%02d",math.round( abs(dewp) ) );
+	} else {
+		var dewp_str = sprintf("%02d",math.round(dewp) );
+	}
+
+	var qnh = sprintf("%04d",math.round( 33.8639 * getprop("/extra500/weather/avgmetar/pressure-sea-level-inhg") ) );
+
+	var metar = "XXXX" ~sp~ "012345Z" ~sp~ winddir~windspeed~"KT" ~sp~ vwind ~ visi_str ~sp~ temp_str~"/"~dewp_str ~sp~ "Q"~qnh;
+print(metar);
 };
 
 var WeatherStation = {
