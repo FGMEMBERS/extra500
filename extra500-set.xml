@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:	Eric van den Berg
-	Date:			12.06.15
+	Date:			16.06.15
 
 
 ************************************************************************
@@ -1981,6 +1981,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 	</yokes>
 	<weather>
 		<smooth type="bool">0</smooth>
+		<noruns type="int">0</noruns>
 	</weather>
  </extra500>
 
