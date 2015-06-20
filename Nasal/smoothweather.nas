@@ -17,7 +17,7 @@
 #      Date:   12.06.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 12.06.2015            
+#      Date: 20.06.2015            
 #
 # note: some parts are taken from fgdata/gui/dialogs/weather.xml
 
@@ -39,14 +39,14 @@ setlistener("/extra500/weather/ready", func {
 			if (local_w) local_weather.clear_all();
 			setprop("/nasal/local_weather/enabled", "false");
           
-			if (local_w) {
+#			if (local_w) {
 			# If Local Weather is enabled, re-initialize with updated 
 			# initial tile and tile selection.
-				setprop("/nasal/local_weather/enabled", "true");
+#				setprop("/nasal/local_weather/enabled", "true");
             
             		# Re-initialize local weather.
-				settimer( func {local_weather.set_tile();}, 0.2);
-			}            
+#				settimer( func {local_weather.set_tile();}, 0.2);
+#			}            
 		} 
 	}
 });
@@ -111,7 +111,7 @@ var local_metar = func() {
 			var deg2rad = getprop("/extra500/const/DEG2RAD");
 			var rad2deg = getprop("/extra500/const/RAD2DEG");
 
-			var metardata = ["dewpoint-sea-level-degc","max-visibility-m","min-visibility-m","pressure-sea-level-inhg","temperature-sea-level-degc","base-wind-dir-deg","base-wind-range-from","base-wind-range-to","base-wind-speed-kt","gust-wind-speed-kt"];
+			var metardata = ["dewpoint-sea-level-degc","max-visibility-m","min-visibility-m","pressure-sea-level-inhg","temperature-sea-level-degc","base-wind-dir-deg","base-wind-range-from","base-wind-range-to","base-wind-speed-kt","gust-wind-speed-kt","clouds/layer/coverage-type","clouds/layer/elevation-ft","clouds/layer[1]/coverage-type","clouds/layer[1]/elevation-ft","clouds/layer[2]/coverage-type","clouds/layer[2]/elevation-ft","clouds/layer[3]/coverage-type","clouds/layer[3]/elevation-ft","clouds/layer[4]/coverage-type","clouds/layer[4]/elevation-ft"];
 
 			foreach(var mdata; metardata) {
 				var sum = 0;
@@ -130,6 +130,23 @@ var local_metar = func() {
 					var avg_angle = rad2deg * math.atan2(avgx,avgy);
 					setprop("/extra500/weather/avgmetar/",mdata ,avg_angle);
 
+				} else if ( ( mdata == "clouds/layer/elevation-ft" ) or (mdata == "clouds/layer[1]/elevation-ft") or (mdata == "clouds/layer[2]/elevation-ft") or (mdata == "clouds/layer[3]/elevation-ft") or (mdata == "clouds/layer[4]/elevation-ft") ){
+				# for cloud layer altitude
+					total_weight2 = 0;
+
+					foreach(var valid; vvalid) {
+						var cl_elvtn = getprop("/extra500/weather/station["~valid~"]/metar/",mdata);
+						if ( cl_elvtn > 0 ) {	# for 'clear sky' elevation is set as -9999
+							sum = sum + vweight[valid] * cl_elvtn;
+							total_weight2 = total_weight2 + vweight[valid];
+						} 
+					}
+					if ( total_weight2 > 0 ) {
+						setprop("/extra500/weather/avgmetar/",mdata ,sum / total_weight2);
+					} else {
+						setprop("/extra500/weather/avgmetar/",mdata ,-9999);
+					}
+
 				} else {
 
 				# for normal values
@@ -147,17 +164,24 @@ var local_metar = func() {
 };
 
 var buildMetar = func() {
+
+#FIXME: QNH calcs, temp to nearest airport
+#FIXME: clouds failing
+#FIXME: precipation failing
+
 	var first_run = 1;
 	var sp = " ";
 
-	var winddir = sprintf("%03d",math.round( getprop("/extra500/weather/avgmetar/base-wind-dir-deg") ) );
-	if (winddir < 0) {winddir = 360 + winddir; }
+# wind
+	var winddirection = getprop("/extra500/weather/avgmetar/base-wind-dir-deg") ;
+	if (winddirection < 0) {winddirection = 360 + winddirection; }
+	var winddir = sprintf("%03d",math.round( winddirection ) );
 
 	var windspeed = sprintf("%02d",math.round( getprop("/extra500/weather/avgmetar/base-wind-speed-kt") ) );
 
 	var fromwind = getprop("/extra500/weather/avgmetar/base-wind-range-from");
 	var towind = getprop("/extra500/weather/avgmetar/base-wind-range-to");
-	if ( abs(fromwind-towind) > 10 ) {
+	if ( abs(fromwind-towind) > 60 ) {
 		if (fromwind < 0) {fromwind = 360 + fromwind; }
 		if (towind < 0) {towind = 360 + towind; }
 		var vwind = sprintf("%03d",10*math.round( fromwind/10) ) ~"V"~ sprintf("%03d",10*math.round( towind/10) ) ~sp ;
@@ -165,6 +189,15 @@ var buildMetar = func() {
 		var vwind = "";
 	}
 
+# gusts
+	var gust = getprop("/extra500/weather/avgmetar/gust-wind-speed-kt");
+	if (gust > 10 ) {
+		gustwind = "G"~sprintf("%02d",math.round(gust) );
+	} else {
+		gustwind = "";
+	}
+
+#visibility
 	var visi = getprop("/extra500/weather/avgmetar/max-visibility-m");
 	if (visi > 9999) {
 		var visi_str = "9999";
@@ -172,6 +205,23 @@ var buildMetar = func() {
 		var visi_str = sprintf("%04d",math.round( getprop("/extra500/weather/avgmetar/max-visibility-m") ) );
 	}
 
+# clouds
+	var vlayer = [0,1,2,3,4];
+	var layer = [];
+
+	foreach(var lay; vlayer) {
+		var cl_type = math.round (getprop("/extra500/weather/avgmetar/clouds/layer["~lay~"]/coverage-type"));
+		var cl_alt = sprintf("%03d",getprop("/extra500/weather/avgmetar/clouds/layer["~lay~"]/elevation-ft")/100);
+
+		if (cl_type == 0 ) { append (layer, "OVC"~cl_alt~" "); }
+		if (cl_type == 1 ) { append (layer, "BKN"~cl_alt~" "); }
+		if (cl_type == 2 ) { append (layer, "SCT"~cl_alt~" "); }
+		if (cl_type == 3 ) { append (layer, "FEW"~cl_alt~" "); }
+		if ( (cl_type == 4) or (cl_type == 5) ) { append (layer, ""); }
+
+	}
+
+# temperature
 	var temp = getprop("/extra500/weather/avgmetar/temperature-sea-level-degc");
 	if (temp < 0 ) {
 		var temp_str = "M"~sprintf("%02d",math.round( abs(temp) ) );
@@ -179,6 +229,7 @@ var buildMetar = func() {
 		var temp_str = sprintf("%02d",math.round(temp) );
 	}
 
+#dewpoint
 	var dewp = getprop("/extra500/weather/avgmetar/dewpoint-sea-level-degc");
 	if (dewp < 0 ) {
 		var dewp_str = "M"~sprintf("%02d",math.round( abs(dewp) ) );
@@ -186,14 +237,19 @@ var buildMetar = func() {
 		var dewp_str = sprintf("%02d",math.round(dewp) );
 	}
 
+#QNH
 	var qnh = sprintf("%04d",math.round( 33.8639 * getprop("/extra500/weather/avgmetar/pressure-sea-level-inhg") ) );
 
-	var metar = "XXXX" ~sp~ "012345Z" ~sp~ winddir~windspeed~"KT" ~sp~ vwind ~ visi_str ~sp~ temp_str~"/"~dewp_str ~sp~ "Q"~qnh;
+# assembling METAR
+	var metar = "XXXX" ~sp~ "012345Z" ~sp~ winddir~windspeed~gustwind~"KT" ~sp~ vwind ~ visi_str ~sp~ layer[0] ~ layer[1] ~ layer[2] ~ layer[3] ~ layer[4] ~ temp_str~"/"~dewp_str ~sp~ "Q"~qnh;
 print(metar);
 
 	if( metar != nil ) {
 		setprop( "environment/metar/data", normalize_string(metar) );
 	}
+
+#	setprop("environment/wind-from-heading-deg",winddirection);
+#	setprop("environment/wind-speed-kt",windspeed);
 
 };
 
