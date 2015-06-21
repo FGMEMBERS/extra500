@@ -25,6 +25,17 @@ setlistener("/extra500/weather/smooth", func {
 	init_weather();
 });
 
+setlistener("/environment/metar/valid", func {
+	if (getprop("/environment/metar/valid")==0) {
+		setprop("/environment/param/metar-updates-environment",0);
+	} else if (getprop("/extra500/weather/ready") == 1) {
+		buildMetar();
+		setprop("/environment/param/metar-updates-environment",1);
+	}
+
+});
+
+
 setlistener("/extra500/weather/ready", func {
 	if (getprop("/extra500/weather/ready") == 1) {
 
@@ -108,8 +119,8 @@ var local_metar = func() {
 		# calculating average values
 		if (one_valid == 1) {
 
-			var deg2rad = getprop("/extra500/const/DEG2RAD");
-			var rad2deg = getprop("/extra500/const/RAD2DEG");
+			var deg2rad = global.CONST.DEG2RAD;
+			var rad2deg = global.CONST.RAD2DEG;
 
 			var metardata = ["dewpoint-sea-level-degc","max-visibility-m","min-visibility-m","pressure-sea-level-inhg","temperature-sea-level-degc","base-wind-dir-deg","base-wind-range-from","base-wind-range-to","base-wind-speed-kt","gust-wind-speed-kt","clouds/layer/coverage-type","clouds/layer/elevation-ft","clouds/layer[1]/coverage-type","clouds/layer[1]/elevation-ft","clouds/layer[2]/coverage-type","clouds/layer[2]/elevation-ft","clouds/layer[3]/coverage-type","clouds/layer[3]/elevation-ft","clouds/layer[4]/coverage-type","clouds/layer[4]/elevation-ft"];
 
@@ -265,21 +276,23 @@ print(metar);
 };
 
 var QNHandTcalc = func(elevation_ft,p_sl_hPa,T_sl_degC) {
-	var p0 = getprop("/extra500/const/P0");
-	var T0 = getprop("/extra500/const/T0");
-	var g0 = getprop("/extra500/const/G0");
-	var R = getprop("/extra500/const/R");
-	var lambda = getprop("/extra500/const/lambda");
-	var Re = getprop("/extra500/const/Re");
+	var p0 = global.CONST.P0;
+	var T0 = global.CONST.T0;
+	var g0 = global.CONST.G0;
+	var R = global.CONST.R;
+	var lambda = global.CONST.lambda;
+	var Re = global.CONST.Re;
 
-	var elevation_m = elevation_ft * getprop("/extra500/const/FEET2METER");
+
+	var elevation_m = elevation_ft * global.CONST.FEET2METER;
 	var geopotheight_ap = Re * elevation_m / (Re + elevation_m);
-	var p_ap_hPa = p_sl_hPa * math.pow(geopotheight_ap * lambda/T0 + 1 , - g0/(R*lambda));
+
+	var T_ap_degC = T_sl_degC + lambda * geopotheight_ap;
+
+	var p_ap_hPa = p_sl_hPa * math.pow(geopotheight_ap * lambda / (T_ap_degC + 273.15) + 1 , - g0 / (R*lambda));
 	var ind_pr_alt = T0 / lambda *  (math.pow( p_ap_hPa / p0 , - R * lambda / g0 ) -1);
 	var alt_corr = geopotheight_ap - ind_pr_alt;
 	var QNH = p0 * math.pow(-alt_corr * lambda/T0 + 1 , - g0 / (R *  lambda));
-
-	var T_ap_degC = T_sl_degC + lambda * geopotheight_ap;
 
 	setprop("/extra500/weather/avgmetar/QNH",QNH);
 	setprop("/extra500/weather/avgmetar/T_atAP",T_ap_degC);
