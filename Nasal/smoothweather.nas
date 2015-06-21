@@ -17,7 +17,7 @@
 #      Date:   12.06.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 20.06.2015            
+#      Date: 21.06.2015            
 #
 # note: some parts are taken from fgdata/gui/dialogs/weather.xml
 
@@ -67,18 +67,11 @@ var init_weather = func() {
             setprop( "/environment/params/metar-updates-environment", 1 ); # makes sure it follows (new) metar set in /environment/metar/data
             setprop( "/environment/realwx/enabled", 1 ); # make sure metars can be picked up
             setprop( "/environment/config/enabled", 1 );
-		
 		weatherService.init();
-		
-		# alias our smooth-metar to the environment/metar[0]
-		aliasAllChildes(props.globals.getNode("/extra500/weather/metar-avg"),props.globals.getNode("/environment/metar"));
-	    
 		weatherService.start();
     } else {
 		setprop("extra500/weather/noruns",0);
 		WeatherService.stop;
-		# alias the metar-nearest back to the environment/metar[0]
-		aliasAllChildes(props.globals.getNode("environment/metar-nearest"),props.globals.getNode("/environment/metar"));
     }
 }
 
@@ -183,12 +176,22 @@ var local_metar = func() {
 
 var buildMetar = func() {
 
-#FIXME: QNH calcs, temp to nearest airport
-#FIXME: clouds failing
 #FIXME: precipation failing
+#FIXME: altitude adjusment for dewpoint fails
 
 	var first_run = 1;
 	var sp = " ";
+
+	QNHandTcalc(getprop("/extra500/weather/nearest-arprt-elev"),33.8639 * getprop("/extra500/weather/avgmetar/pressure-sea-level-inhg"),getprop("/extra500/weather/avgmetar/temperature-sea-level-degc"));
+
+# date and time
+
+	var dat = substr(getprop("/extra500/weather/station/metar/data"),0,16);
+	var dat2 = substr(getprop("/extra500/weather/station/metar/data"),22,7);
+#	print(dat2);
+
+# airport
+	var nrst_arp = getprop("/extra500/weather/nearest-arprt");
 
 # wind
 	var winddirection = getprop("/extra500/weather/avgmetar/base-wind-dir-deg") ;
@@ -240,7 +243,7 @@ var buildMetar = func() {
 	}
 
 # temperature
-	var temp = getprop("/extra500/weather/avgmetar/temperature-sea-level-degc");
+	var temp = getprop("/extra500/weather/avgmetar/T_atAP");
 	if (temp < 0 ) {
 		var temp_str = "M"~sprintf("%02d",math.round( abs(temp) ) );
 	} else {
@@ -256,26 +259,21 @@ var buildMetar = func() {
 	}
 
 #QNH
-	var qnh = sprintf("%04d",math.round( 33.8639 * getprop("/extra500/weather/avgmetar/pressure-sea-level-inhg") ) );
+	var qnh = sprintf("%04d",math.round( getprop("/extra500/weather/avgmetar/QNH") ) );
 
 # assembling METAR
-	var metar = "XXXX" ~sp~ "012345Z" ~sp~ winddir~windspeed~gustwind~"KT" ~sp~ vwind ~ visi_str ~sp~ layer[0] ~ layer[1] ~ layer[2] ~ layer[3] ~ layer[4] ~ temp_str~"/"~dewp_str ~sp~ "Q"~qnh;
+	var metar = dat ~ sp ~ nrst_arp ~sp~ dat2 ~sp~ winddir~windspeed~gustwind~"KT" ~sp~ vwind ~ visi_str ~sp~ layer[0] ~ layer[1] ~ layer[2] ~ layer[3] ~ layer[4] ~ temp_str~"/"~dewp_str ~sp~ "Q"~qnh;
 print(metar);
 
 	if( metar != nil ) {
-		
-		#setprop( "environment/metar/data", normalize_string(metar) );
-		
-		# write the metar string to our smooth-metar tree
-		setprop( "/extra500/weather/metar-avg/data", normalize_string(metar) );
-		
+		setprop( "environment/metar/data", normalize_string(metar) );
 	}
 
+	
 #	setprop("environment/wind-from-heading-deg",winddirection);
 #	setprop("environment/wind-speed-kt",windspeed);
 
 };
-
 
 var QNHandTcalc = func(elevation_ft,p_sl_hPa,T_sl_degC) {
 	var p0 = global.CONST.P0;
@@ -299,7 +297,6 @@ var QNHandTcalc = func(elevation_ft,p_sl_hPa,T_sl_degC) {
 	setprop("/extra500/weather/avgmetar/QNH",QNH);
 	setprop("/extra500/weather/avgmetar/T_atAP",T_ap_degC);
 };
-
 
 var WeatherStation = {
 	new : func(root){
@@ -401,10 +398,6 @@ var WeatherService = {
 			var station = WeatherStation.new(me._root ~ "/station["~i~"]");
 			append(me._weatherStation,station);
 		}
-		
-		#create a metar tree for the smooth-metar
-		
-		fgcommand("request-metar", var n = props.Node.new({ "path": me._root~"/metar-avg"}));
 	},
 	start : func(){
 		me.update();
@@ -451,10 +444,16 @@ var WeatherService = {
 		
 		var geoStation = geo.Coord.new().set_latlon(0, 0, 0);
 
-		
+		var closest_ap = 0;		
+
 		foreach(var airport; listAirports) {
+			if (closest_ap == 0) {			
+				print("closest airport is ",airport.id," at ",airport.elevation,"m");
+				setprop("/extra500/weather/nearest-arprt",airport.id);
+				setprop("/extra500/weather/nearest-arprt-elev",airport.elevation);
+				closest_ap = 1;
+			}
 			if(airport.has_metar){
-				
 				me._weatherStation[stationIndex].setData(airport.id,airport.lat,airport.lon,airport.elevation);
 				me._weatherStation[stationIndex].fetchMetar();
 								
@@ -480,26 +479,6 @@ var WeatherService = {
 			
 
 	},
-};
-
-
-var aliasAllChildes = func(src, dest) {
-    foreach(var c; src.getChildren()) {
-        var name = c.getName() ~ "[" ~ c.getIndex() ~ "]";
-        aliasAllChildes(src.getNode(name), dest.getNode(name, 1));
-    }
-    var type = src.getType();
-    
-    if(type == "NONE"){ 
-	return;
-	dest.unalias();
-    }elsif(type == "ALIAS") {
-	dest.unalias();
-	dest.alias(src.getAliasTarget());
-    }else{
-	dest.unalias();
-	dest.alias(src);
-    }
 };
 
 
