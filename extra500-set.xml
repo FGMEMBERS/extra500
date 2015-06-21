@@ -598,59 +598,6 @@ of the RR 250-B17F/2 engine is best.</long-description>
   <menubar include="Dialogs/extra500-menu.xml"/>
  
 </sim>
-<environment>
-	
-	<realwx>
-		<!-- Spawn a metar loader for each metar node 
-		index 0..9 are reserved for internal (hardcoded) loaders
-		and will be set from FlightGear's subsystems.
-		Index 10..n may be used by user defined systems
-		
-		To retrieve a METAR in /environment/metar[10], write
-		the station id (e.g. KSFO) to 
-		/enviornment/metar[10]/station-id and set 
-		/environment/metar[10]/time-to-live to zero
-		Wait for 
-		/environment/metar[10]/valid to become true.
-		-->
-		
-		
-		<!-- 
-		DD our tick move the metar[0] to metar-nearest[0] and alias all properties to metar[0]
-		so we can alias to the smooth-metar later on.
-		
-		see smoothweather.nas
-		-->
-		
-		
-		<metar n="0" type="string">/environment/metar-nearest[0]</metar>
-		<!-- nearest airport -->
-		<metar n="1" type="string">/environment/metar[1]</metar>
-		<!-- NAV1 -->
-		<metar n="2" type="string">/environment/metar[2]</metar>
-		<!-- NAV2 -->
-		<metar n="3" type="string">/environment/metar[3]</metar>
-		<!-- VHF-COMM1 -->
-		<metar n="4" type="string">/environment/metar[4]</metar>
-		<!-- VHF-COMM2 -->
-		<metar n="5" type="string">/environment/metar[5]</metar>
-		<!-- UHF-COMM1 -->
-		<metar n="6" type="string">/environment/metar[6]</metar>
-		<!-- UHF-COMM2 -->
-		
-		<!-- User defined queries -->
-		<metar n="10" type="string">/environment/metar[10]</metar>
-		<metar n="11" type="string">/environment/metar[11]</metar>
-		
-		<!-- use NOAA for METAR (no aloft data) -->
-		<data-source type="string">noaa</data-source>
-		
-		<!-- use http://www.navlost.eu/ for METAR and aloft data -->
-		<!-- data-source>nwx<data-source -->
-		<enabled type="bool">true</enabled>
-	</realwx>
-  </environment>
-  
        <controls>
 	       <engines>
 		       <engine n="0">
