@@ -17,7 +17,7 @@
 #      Date:   12.06.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 20.06.2015            
+#      Date: 21.06.2015            
 #
 # note: some parts are taken from fgdata/gui/dialogs/weather.xml
 
@@ -165,12 +165,22 @@ var local_metar = func() {
 
 var buildMetar = func() {
 
-#FIXME: QNH calcs, temp to nearest airport
-#FIXME: clouds failing
 #FIXME: precipation failing
+#FIXME: altitude adjusment for dewpoint fails
 
 	var first_run = 1;
 	var sp = " ";
+
+	QNHandTcalc(getprop("/extra500/weather/nearest-arprt-elev"),33.8639 * getprop("/extra500/weather/avgmetar/pressure-sea-level-inhg"),getprop("/extra500/weather/avgmetar/temperature-sea-level-degc"));
+
+# date and time
+
+	var dat = substr(getprop("/extra500/weather/station/metar/data"),0,16);
+	var dat2 = substr(getprop("/extra500/weather/station/metar/data"),22,7);
+#	print(dat2);
+
+# airport
+	var nrst_arp = getprop("/extra500/weather/nearest-arprt");
 
 # wind
 	var winddirection = getprop("/extra500/weather/avgmetar/base-wind-dir-deg") ;
@@ -222,7 +232,7 @@ var buildMetar = func() {
 	}
 
 # temperature
-	var temp = getprop("/extra500/weather/avgmetar/temperature-sea-level-degc");
+	var temp = getprop("/extra500/weather/avgmetar/T_atAP");
 	if (temp < 0 ) {
 		var temp_str = "M"~sprintf("%02d",math.round( abs(temp) ) );
 	} else {
@@ -238,19 +248,41 @@ var buildMetar = func() {
 	}
 
 #QNH
-	var qnh = sprintf("%04d",math.round( 33.8639 * getprop("/extra500/weather/avgmetar/pressure-sea-level-inhg") ) );
+	var qnh = sprintf("%04d",math.round( getprop("/extra500/weather/avgmetar/QNH") ) );
 
 # assembling METAR
-	var metar = "XXXX" ~sp~ "012345Z" ~sp~ winddir~windspeed~gustwind~"KT" ~sp~ vwind ~ visi_str ~sp~ layer[0] ~ layer[1] ~ layer[2] ~ layer[3] ~ layer[4] ~ temp_str~"/"~dewp_str ~sp~ "Q"~qnh;
+	var metar = dat ~ sp ~ nrst_arp ~sp~ dat2 ~sp~ winddir~windspeed~gustwind~"KT" ~sp~ vwind ~ visi_str ~sp~ layer[0] ~ layer[1] ~ layer[2] ~ layer[3] ~ layer[4] ~ temp_str~"/"~dewp_str ~sp~ "Q"~qnh;
 print(metar);
 
 	if( metar != nil ) {
 		setprop( "environment/metar/data", normalize_string(metar) );
 	}
 
+	
 #	setprop("environment/wind-from-heading-deg",winddirection);
 #	setprop("environment/wind-speed-kt",windspeed);
 
+};
+
+var QNHandTcalc = func(elevation_ft,p_sl_hPa,T_sl_degC) {
+	var p0 = getprop("/extra500/const/P0");
+	var T0 = getprop("/extra500/const/T0");
+	var g0 = getprop("/extra500/const/G0");
+	var R = getprop("/extra500/const/R");
+	var lambda = getprop("/extra500/const/lambda");
+	var Re = getprop("/extra500/const/Re");
+
+	var elevation_m = elevation_ft * getprop("/extra500/const/FEET2METER");
+	var geopotheight_ap = Re * elevation_m / (Re + elevation_m);
+	var p_ap_hPa = p_sl_hPa * math.pow(geopotheight_ap * lambda/T0 + 1 , - g0/(R*lambda));
+	var ind_pr_alt = T0 / lambda *  (math.pow( p_ap_hPa / p0 , - R * lambda / g0 ) -1);
+	var alt_corr = geopotheight_ap - ind_pr_alt;
+	var QNH = p0 * math.pow(-alt_corr * lambda/T0 + 1 , - g0 / (R *  lambda));
+
+	var T_ap_degC = T_sl_degC + lambda * geopotheight_ap;
+
+	setprop("/extra500/weather/avgmetar/QNH",QNH);
+	setprop("/extra500/weather/avgmetar/T_atAP",T_ap_degC);
 };
 
 var WeatherStation = {
@@ -399,10 +431,16 @@ var WeatherService = {
 		
 		var geoStation = geo.Coord.new().set_latlon(0, 0, 0);
 
-		
+		var closest_ap = 0;		
+
 		foreach(var airport; listAirports) {
+			if (closest_ap == 0) {			
+				print("closest airport is ",airport.id," at ",airport.elevation,"m");
+				setprop("/extra500/weather/nearest-arprt",airport.id);
+				setprop("/extra500/weather/nearest-arprt-elev",airport.elevation);
+				closest_ap = 1;
+			}
 			if(airport.has_metar){
-				
 				me._weatherStation[stationIndex].setData(airport.id,airport.lat,airport.lon,airport.elevation);
 				me._weatherStation[stationIndex].fetchMetar();
 								
