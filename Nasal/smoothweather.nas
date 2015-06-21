@@ -56,11 +56,18 @@ var init_weather = func() {
             setprop( "/environment/params/metar-updates-environment", 1 ); # makes sure it follows (new) metar set in /environment/metar/data
             setprop( "/environment/realwx/enabled", 1 ); # make sure metars can be picked up
             setprop( "/environment/config/enabled", 1 );
+		
 		weatherService.init();
+		
+		# alias our smooth-metar to the environment/metar[0]
+		aliasAllChildes(props.globals.getNode("/extra500/weather/metar-avg"),props.globals.getNode("/environment/metar"));
+	    
 		weatherService.start();
     } else {
 		setprop("extra500/weather/noruns",0);
 		WeatherService.stop;
+		# alias the metar-nearest back to the environment/metar[0]
+		aliasAllChildes(props.globals.getNode("environment/metar-nearest"),props.globals.getNode("/environment/metar"));
     }
 }
 
@@ -255,7 +262,12 @@ var buildMetar = func() {
 print(metar);
 
 	if( metar != nil ) {
-		setprop( "environment/metar/data", normalize_string(metar) );
+		
+		#setprop( "environment/metar/data", normalize_string(metar) );
+		
+		# write the metar string to our smooth-metar tree
+		setprop( "/extra500/weather/metar-avg/data", normalize_string(metar) );
+		
 	}
 
 	
@@ -385,6 +397,10 @@ var WeatherService = {
 			var station = WeatherStation.new(me._root ~ "/station["~i~"]");
 			append(me._weatherStation,station);
 		}
+		
+		#create a metar tree for the smooth-metar
+		
+		fgcommand("request-metar", var n = props.Node.new({ "path": me._root~"/metar-avg"}));
 	},
 	start : func(){
 		me.update();
@@ -466,6 +482,26 @@ var WeatherService = {
 			
 
 	},
+};
+
+
+var aliasAllChildes = func(src, dest) {
+    foreach(var c; src.getChildren()) {
+        var name = c.getName() ~ "[" ~ c.getIndex() ~ "]";
+        aliasAllChildes(src.getNode(name), dest.getNode(name, 1));
+    }
+    var type = src.getType();
+    
+    if(type == "NONE"){ 
+	return;
+	dest.unalias();
+    }elsif(type == "ALIAS") {
+	dest.unalias();
+	dest.alias(src.getAliasTarget());
+    }else{
+	dest.unalias();
+	dest.alias(src);
+    }
 };
 
 
