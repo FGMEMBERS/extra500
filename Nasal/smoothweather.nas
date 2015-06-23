@@ -17,7 +17,7 @@
 #      Date:   12.06.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 21.06.2015            
+#      Date: 23.06.2015            
 #
 # note: some parts are taken from fgdata/gui/dialogs/weather.xml
 
@@ -27,10 +27,10 @@ setlistener("/extra500/weather/smooth", func {
 
 setlistener("/environment/metar/valid", func {
 	if (getprop("/environment/metar/valid")==0) {
-		setprop("/environment/param/metar-updates-environment",0);
+		setprop("/environment/params/metar-updates-environment",0);
 	} else if (getprop("/extra500/weather/ready") == 1) {
 		buildMetar();
-		setprop("/environment/param/metar-updates-environment",1);
+		setprop("/environment/params/metar-updates-environment",1);
 	}
 
 });
@@ -100,11 +100,11 @@ var local_metar = func() {
 		var total_weight = 0;
 		var vvalid = [];
 		var vweight = [];
-		var one_valid = 0;
+		var no_valid = 0;
 		for (var i = 0 ; i <= 20; i+=1){
 			if (getprop("/extra500/weather/station["~i~"]/metar/valid") == 1) {
-				one_valid = 1; 		# setting flag that at least one metar is valid
-				append( vvalid , i);	# vector of valid metar stations
+				no_valid = no_valid +1; 		# counting valid metars
+				append( vvalid , i);			# vector of valid metar stations
 
 				var dist = getprop("/extra500/weather/station["~i~"]/distance-m");
 				if (dist <	1) {dist = 1;}	
@@ -115,9 +115,10 @@ var local_metar = func() {
 				print("METAR station ",i," not valid");
 			}
 		}
+		print("number of METAR station used for calcs ",no_valid);
 
 		# calculating average values
-		if (one_valid == 1) {
+		if (no_valid > 0) {
 
 			var deg2rad = global.CONST.DEG2RAD;
 			var rad2deg = global.CONST.RAD2DEG;
@@ -269,9 +270,9 @@ print(metar);
 		setprop( "environment/metar/data", normalize_string(metar) );
 	}
 
-	
-#	setprop("environment/wind-from-heading-deg",winddirection);
-#	setprop("environment/wind-speed-kt",windspeed);
+# metar is too 'rough' for pressure and temperature (and calculated density), so setting average settings explicitly	
+	setprop("environment/metar/pressure-sea-level-inhg",getprop("/extra500/weather/avgmetar/pressure-sea-level-inhg"));
+	setprop("environment/metar/temperature-sea-level-degc",getprop("/extra500/weather/avgmetar/temperature-sea-level-degc"));
 
 };
 
@@ -384,7 +385,7 @@ var WeatherService = {
 		m._nMetar  		= m._nRoot.initNode("metar",m._metar,"STRING");
 		m._nReady  		= m._nRoot.initNode("ready",m._ready,"BOOL");
 		
-		m._timerIntervall	= 60.0;
+		m._timerIntervall	= getprop("/extra500/weather/interval-sec");
 		m._timer 		= maketimer(m._timerIntervall,m,WeatherService.update);
 		m._timer.singleShot 	= 0;
 		
@@ -444,7 +445,7 @@ var WeatherService = {
 		
 		var geoStation = geo.Coord.new().set_latlon(0, 0, 0);
 
-		var closest_ap = 0;		
+		var closest_ap = 0;
 
 		foreach(var airport; listAirports) {
 			if (closest_ap == 0) {			
