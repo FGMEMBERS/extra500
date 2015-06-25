@@ -48,16 +48,7 @@ setlistener("/extra500/weather/ready", func {
 			# Clear any local weather that might be running
 			var local_w = getprop("/nasal/local_weather/loaded");
 			if (local_w) local_weather.clear_all();
-			setprop("/nasal/local_weather/enabled", "false");
-          
-#			if (local_w) {
-			# If Local Weather is enabled, re-initialize with updated 
-			# initial tile and tile selection.
-#				setprop("/nasal/local_weather/enabled", "true");
-            
-            		# Re-initialize local weather.
-#				settimer( func {local_weather.set_tile();}, 0.2);
-#			}            
+			setprop("/nasal/local_weather/enabled", "false");          
 		} 
 	}
 });
@@ -123,7 +114,7 @@ var local_metar = func() {
 			var deg2rad = global.CONST.DEG2RAD;
 			var rad2deg = global.CONST.RAD2DEG;
 
-			var metardata = ["dewpoint-sea-level-degc","max-visibility-m","min-visibility-m","pressure-sea-level-inhg","temperature-sea-level-degc","base-wind-dir-deg","base-wind-range-from","base-wind-range-to","base-wind-speed-kt","gust-wind-speed-kt","clouds/layer/coverage-type","clouds/layer/elevation-ft","clouds/layer[1]/coverage-type","clouds/layer[1]/elevation-ft","clouds/layer[2]/coverage-type","clouds/layer[2]/elevation-ft","clouds/layer[3]/coverage-type","clouds/layer[3]/elevation-ft","clouds/layer[4]/coverage-type","clouds/layer[4]/elevation-ft"];
+			var metardata = ["dewpoint-sea-level-degc","max-visibility-m","min-visibility-m","pressure-sea-level-inhg","temperature-sea-level-degc","base-wind-dir-deg","base-wind-range-from","base-wind-range-to","base-wind-speed-kt","gust-wind-speed-kt","clouds/layer/coverage-type","clouds/layer/elevation-ft","clouds/layer[1]/coverage-type","clouds/layer[1]/elevation-ft","clouds/layer[2]/coverage-type","clouds/layer[2]/elevation-ft","clouds/layer[3]/coverage-type","clouds/layer[3]/elevation-ft","clouds/layer[4]/coverage-type","clouds/layer[4]/elevation-ft","rain-norm","snow-norm"];
 
 			foreach(var mdata; metardata) {
 				var sum = 0;
@@ -177,13 +168,11 @@ var local_metar = func() {
 
 var buildMetar = func() {
 
-#FIXME: precipation failing
-#FIXME: altitude adjusment for dewpoint fails
-
 	var first_run = 1;
 	var sp = " ";
 
-	QNHandTcalc(getprop("/extra500/weather/nearest-arprt-elev"),33.8639 * getprop("/extra500/weather/avgmetar/pressure-sea-level-inhg"),getprop("/extra500/weather/avgmetar/temperature-sea-level-degc"));
+	var airp_elev_ft = getprop("/extra500/weather/nearest-arprt-elev");
+	QNHandTcalc(airp_elev_ft,33.8639 * getprop("/extra500/weather/avgmetar/pressure-sea-level-inhg"),getprop("/extra500/weather/avgmetar/temperature-sea-level-degc"));
 
 # date and time
 
@@ -252,7 +241,7 @@ var buildMetar = func() {
 	}
 
 #dewpoint
-	var dewp = getprop("/extra500/weather/avgmetar/dewpoint-sea-level-degc");
+	var dewp = getprop("/extra500/weather/avgmetar/dewpoint-sea-level-degc") -0.002 * airp_elev_ft * global.CONST.FEET2METER;
 	if (dewp < 0 ) {
 		var dewp_str = "M"~sprintf("%02d",math.round( abs(dewp) ) );
 	} else {
@@ -273,6 +262,11 @@ print(metar);
 # metar is too 'rough' for pressure and temperature (and calculated density), so setting average settings explicitly	
 	setprop("environment/metar/pressure-sea-level-inhg",getprop("/extra500/weather/avgmetar/pressure-sea-level-inhg"));
 	setprop("environment/metar/temperature-sea-level-degc",getprop("/extra500/weather/avgmetar/temperature-sea-level-degc"));
+
+# rain
+	setprop("environment/metar/rain-norm",getprop("/extra500/weather/avgmetar/rain-norm"));
+# snow
+	setprop("environment/metar/snow-norm",getprop("/extra500/weather/avgmetar/snow-norm"));
 
 };
 
@@ -449,7 +443,7 @@ var WeatherService = {
 
 		foreach(var airport; listAirports) {
 			if (closest_ap == 0) {			
-				print("closest airport is ",airport.id," at ",airport.elevation,"m");
+				print("closest airport is ",airport.id," at ",sprintf("%4d",math.round( airport.elevation ) ),"m");
 				setprop("/extra500/weather/nearest-arprt",airport.id);
 				setprop("/extra500/weather/nearest-arprt-elev",airport.elevation);
 				closest_ap = 1;
