@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:	Eric van den Berg
-	Date:			23.06.15
+	Date:			26.06.15
 
 
 ************************************************************************
@@ -1988,6 +1988,11 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<interval-sec type="double">60.0</interval-sec>
 		<smooth type="bool">0</smooth>
 		<noruns type="int">0</noruns>
+		<filter-c1 type="double">0.1</filter-c1>
+		<avgmetar>
+			<pressure-sea-level-inhg type="double">29.92</pressure-sea-level-inhg>
+			<temperature-sea-level-degc type="double">15.0</temperature-sea-level-degc>
+		</avgmetar>
 	</weather>
  </extra500>
 

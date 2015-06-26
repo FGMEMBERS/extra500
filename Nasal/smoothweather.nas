@@ -260,8 +260,8 @@ print(metar);
 	}
 
 # metar is too 'rough' for pressure and temperature (and calculated density), so setting average settings explicitly	
-	setprop("environment/metar/pressure-sea-level-inhg",getprop("/extra500/weather/avgmetar/pressure-sea-level-inhg"));
-	setprop("environment/metar/temperature-sea-level-degc",getprop("/extra500/weather/avgmetar/temperature-sea-level-degc"));
+	setprop("environment/metar/pressure-sea-level-inhg",getprop("/extra500/weather/avgmetar/filtered-pressure-sea-level-inhg"));
+	setprop("environment/metar/temperature-sea-level-degc",getprop("/extra500/weather/avgmetar/filtered-temperature-sea-level-degc"));
 
 # rain
 	setprop("environment/metar/rain-norm",getprop("/extra500/weather/avgmetar/rain-norm"));

@@ -24,7 +24,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             15.05.15
+      Date:             26.06.15
 -->
 
 	<fileheader>
@@ -46,6 +46,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	<system file="extra500-system-electric.xml"/>
 	<aerodynamics file="extra500-aerodynamics.xml"/>
 	<system file="extra500-system-elt.xml"/>
+	<system file="extra500-weather.xml"/>
 	
 	<metrics>
 		<wingarea  unit="M2">  14.025 </wingarea>
