@@ -17,7 +17,7 @@
 #      Date:   12.06.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 23.06.2015            
+#      Date: 27.06.2015            
 #
 # note: some parts are taken from fgdata/gui/dialogs/weather.xml
 
@@ -62,7 +62,8 @@ var init_weather = func() {
 		weatherService.start();
     } else {
 		setprop("extra500/weather/noruns",0);
-		WeatherService.stop;
+		setprop("/extra500/weather/ready",0);
+		WeatherService.stop();
     }
 }
 
