@@ -60,10 +60,12 @@ var init_weather = func() {
             setprop( "/environment/config/enabled", 1 );
 		weatherService.init();
 		weatherService.start();
+		UI.msg.info("Smooth weather is now active");
     } else {
 		setprop("extra500/weather/noruns",0);
 		setprop("/extra500/weather/ready",0);
 		weatherService.stop();
+		UI.msg.info("Smooth weather is de-activated");
     }
 }
 
