@@ -63,7 +63,7 @@ var init_weather = func() {
     } else {
 		setprop("extra500/weather/noruns",0);
 		setprop("/extra500/weather/ready",0);
-		WeatherService.stop();
+		weatherService.stop();
     }
 }
 
