@@ -17,7 +17,7 @@
 #      Date:   12.06.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 27.06.2015            
+#      Date: 04.07.2015            
 #
 # note: some parts are taken from fgdata/gui/dialogs/weather.xml
 
@@ -64,6 +64,7 @@ var init_weather = func() {
     } else {
 		setprop("extra500/weather/noruns",0);
 		setprop("/extra500/weather/ready",0);
+		setprop("/environment/params/metar-updates-environment",1);
 		weatherService.stop();
 		UI.msg.info("Smooth weather is de-activated");
     }
@@ -95,7 +96,7 @@ var local_metar = func() {
 		var vvalid = [];
 		var vweight = [];
 		var no_valid = 0;
-		for (var i = 0 ; i <= 20; i+=1){
+		for (var i = 0 ; i <= 19; i+=1){
 			if (getprop("/extra500/weather/station["~i~"]/metar/valid") == 1) {
 				no_valid = no_valid +1; 		# counting valid metars
 				append( vvalid , i);			# vector of valid metar stations
@@ -171,11 +172,10 @@ var local_metar = func() {
 
 var buildMetar = func() {
 
-	var first_run = 1;
 	var sp = " ";
 
-	var airp_elev_ft = getprop("/extra500/weather/nearest-arprt-elev");
-	QNHandTcalc(airp_elev_ft,33.8639 * getprop("/extra500/weather/avgmetar/pressure-sea-level-inhg"),getprop("/extra500/weather/avgmetar/temperature-sea-level-degc"));
+	var airp_elev_m = getprop("/extra500/weather/nearest-arprt-elev");
+	QNHandTcalc(airp_elev_m,33.8639 * getprop("/extra500/weather/avgmetar/pressure-sea-level-inhg"),getprop("/extra500/weather/avgmetar/temperature-sea-level-degc"));
 
 # date and time
 
@@ -244,7 +244,7 @@ var buildMetar = func() {
 	}
 
 #dewpoint
-	var dewp = getprop("/extra500/weather/avgmetar/dewpoint-sea-level-degc") -0.002 * airp_elev_ft * global.CONST.FEET2METER;
+	var dewp = getprop("/extra500/weather/avgmetar/dewpoint-sea-level-degc") -0.002 * airp_elev_m;
 	if (dewp < 0 ) {
 		var dewp_str = "M"~sprintf("%02d",math.round( abs(dewp) ) );
 	} else {
@@ -262,9 +262,15 @@ print(metar);
 		setprop( "environment/metar/data", normalize_string(metar) );
 	}
 
+	var noruns = getprop("extra500/weather/noruns");
+	if (noruns>1){
 # metar is too 'rough' for pressure and temperature (and calculated density), so setting average settings explicitly	
-	setprop("environment/metar/pressure-sea-level-inhg",getprop("/extra500/weather/avgmetar/filtered-pressure-sea-level-inhg"));
-	setprop("environment/metar/temperature-sea-level-degc",getprop("/extra500/weather/avgmetar/filtered-temperature-sea-level-degc"));
+		setprop("environment/metar/pressure-sea-level-inhg",getprop("/extra500/weather/avgmetar/filtered-pressure-sea-level-inhg"));
+		setprop("environment/metar/temperature-sea-level-degc",getprop("/extra500/weather/avgmetar/filtered-temperature-sea-level-degc"));
+	} else {
+		setprop("environment/metar/pressure-sea-level-inhg",getprop("/extra500/weather/avgmetar/pressure-sea-level-inhg"));
+		setprop("environment/metar/temperature-sea-level-degc",getprop("/extra500/weather/avgmetar/temperature-sea-level-degc"));
+	}
 
 # rain
 	setprop("environment/metar/rain-norm",getprop("/extra500/weather/avgmetar/rain-norm"));
@@ -273,7 +279,7 @@ print(metar);
 
 };
 
-var QNHandTcalc = func(elevation_ft,p_sl_hPa,T_sl_degC) {
+var QNHandTcalc = func(elevation_m,p_sl_hPa,T_sl_degC) {
 	var p0 = global.CONST.P0;
 	var T0 = global.CONST.T0;
 	var g0 = global.CONST.G0;
@@ -281,13 +287,11 @@ var QNHandTcalc = func(elevation_ft,p_sl_hPa,T_sl_degC) {
 	var lambda = global.CONST.lambda;
 	var Re = global.CONST.Re;
 
-
-	var elevation_m = elevation_ft * global.CONST.FEET2METER;
 	var geopotheight_ap = Re * elevation_m / (Re + elevation_m);
 
 	var T_ap_degC = T_sl_degC + lambda * geopotheight_ap;
 
-	var p_ap_hPa = p_sl_hPa * math.pow(geopotheight_ap * lambda / (T_ap_degC + 273.15) + 1 , - g0 / (R*lambda));
+	var p_ap_hPa = p_sl_hPa * math.pow(geopotheight_ap * lambda / (T_sl_degC + 273.15) + 1 , - g0 / (R*lambda));
 	var ind_pr_alt = T0 / lambda *  (math.pow( p_ap_hPa / p0 , - R * lambda / g0 ) -1);
 	var alt_corr = geopotheight_ap - ind_pr_alt;
 	var QNH = p0 * math.pow(-alt_corr * lambda/T0 + 1 , - g0 / (R *  lambda));
@@ -446,7 +450,7 @@ var WeatherService = {
 
 		foreach(var airport; listAirports) {
 			if (closest_ap == 0) {			
-				print("closest airport is ",airport.id," at ",sprintf("%4d",math.round( airport.elevation ) ),"m");
+				print("Closest airport is ",airport.id," at ",sprintf("%4d",math.round( airport.elevation ) ),"m or ",sprintf("%4d",math.round( airport.elevation/0.3048 ) ),"ft");
 				setprop("/extra500/weather/nearest-arprt",airport.id);
 				setprop("/extra500/weather/nearest-arprt-elev",airport.elevation);
 				closest_ap = 1;
