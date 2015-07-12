@@ -1487,9 +1487,14 @@ of the RR 250-B17F/2 engine is best.</long-description>
        </engines>
 
 <nasal>
-      <canvas>
-      	<enabled type="bool">true</enabled>
-    	</canvas>
+	<!-- make sure fgdata namespaces are enabled-->
+	<std>
+		<enabled type="bool">true</enabled>
+	</std>
+	<canvas>
+		<enabled type="bool">true</enabled>
+	</canvas>
+	
 	<global>
 		<file>Aircraft/extra500/Nasal/global.nas</file>
 		<file>Aircraft/extra500/Nasal/global.debug.nas</file>
