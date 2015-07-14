@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2015-06-07
+      Date:             2015-07-14
 -->
 
 <autopilot name="STEC55X">
@@ -124,9 +124,51 @@
 
 	</channel>
 
+
+<!--***************************************INDICATION**********************************************************************-->
+
+	<channel name="indicationandmodes">
+
+		<switch name="hdgind">
+			<default value="/autopilot/mode/heading"/>
+			<test value="/autopilot/indication/timer-on">
+				/autopilot/hdg-channel/fail eq 1
+				/autopilot/mode/heading eq 1
+			</test>
+			<output>/autopilot/indication/heading</output>
+		</switch>
+
+		<switch name="vsind">
+			<default value="/autopilot/mode/vs"/>
+			<test value="/autopilot/indication/timer-on">
+				/autopilot/vs-channel/fail eq 1
+				/autopilot/mode/vs eq 1
+			</test>
+			<output>/autopilot/indication/vs</output>
+		</switch>
+
+<!--checking if yaw trim CAN be on -->
+		<switch name="yawtrimon">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test value="1">
+					/autopilot/settings/yawdamper eq 1
+					/autopilot/settings/ap eq 1
+				</test>
+				<test logic="OR" value="1">
+					/autopilot/mode/heading eq 1
+					/autopilot/mode/nav eq 1
+				</test>
+			</test>
+			<output>/autopilot/mode/yawtrim</output>
+		</switch>
+
+
+	</channel>
+
 <!--***************************************HEADING**********************************************************************-->
 
-	<channel name="heading">
+	<channel name="heading" execute="/autopilot/mode/heading">
 <!-- this is the heading channel. when the hdg mode is active, the hdg bug of the LH IFD is followed-->
 
 <!-- heading fail used for indication-->
@@ -137,15 +179,6 @@
 				/instrumentation/heading-indicator-IFD-RH/serviceable eq 0
 			</test>
 			<output>/autopilot/hdg-channel/fail</output>
-		</switch>
-
-		<switch name="hdgind">
-			<default value="/autopilot/mode/heading"/>
-			<test value="/autopilot/indication/timer-on">
-				/autopilot/hdg-channel/fail eq 1
-				/autopilot/mode/heading eq 1
-			</test>
-			<output>/autopilot/indication/heading</output>
 		</switch>
 
 <!-- heading source is selected -->
@@ -290,7 +323,7 @@
 
 <!--***************************************RADIO NAVIGATION**********************************************************************-->
 
-	<channel name="radionav">
+	<channel name="radionav" execute="/autopilot/mode/nav">
 <!-- this is the radionav channel. when the nav mode is active, the ap will intercept the selected radial of a VOR or the selected LOC-->
 
 <!-- radio nav mode fail used for indication -->
@@ -1022,7 +1055,7 @@
 	</channel>
 
 <!-- ********************* GLIDESLOPE ********************-->
-	<channel name="glideslope">
+	<channel name="glideslope" execute="/autopilot/mode/apr">
 
 <!-- gs fail used for indication -->
 		<!--switch name="gsnavfail">
@@ -2133,7 +2166,7 @@
 
 <!--********************************VERTICAL SPEED****************************************************************-->
 
-	<channel name="verticalspeed">
+	<channel name="verticalspeed" execute="/autopilot/mode/vs">
 
 <!-- active when vs mode is on-->
 
@@ -2157,15 +2190,6 @@
 				/autopilot/vs-channel/vs-error-fpm gt 150
 			</test>
 			<output>/autopilot/vs-channel/fail</output>
-		</switch>
-
-		<switch name="vsind">
-			<default value="/autopilot/mode/vs"/>
-			<test value="/autopilot/indication/timer-on">
-				/autopilot/vs-channel/fail eq 1
-				/autopilot/mode/vs eq 1
-			</test>
-			<output>/autopilot/indication/vs</output>
 		</switch>
 
 <!-- Flight director indication in deg relative to AC current VS-->
@@ -2308,6 +2332,7 @@
 <!--********************************ALTITUDE HOLD*************************************************************************-->
 
 	<channel name="althold">
+<!-- execute="/autopilot/mode/alt" makes a problem in PFD -->
 
 		<switch name="vson2">
 			<default value="/autopilot/alt-channel/target-alt-ft"/>
@@ -2741,23 +2766,7 @@
 
 <!--****************************YAW TRIM*****************************************************************************-->
 
-	<channel name="yawtrim">
-
-<!--checking if yaw trim CAN be on -->
-		<switch name="yawtrimon">
-			<default value="0"/>
-			<test logic="AND" value="1">
-				<test value="1">
-					/autopilot/settings/yawdamper eq 1
-					/autopilot/settings/ap eq 1
-				</test>
-				<test logic="OR" value="1">
-					/autopilot/mode/heading eq 1
-					/autopilot/mode/nav eq 1
-				</test>
-			</test>
-			<output>/autopilot/mode/yawtrim</output>
-		</switch>
+	<channel name="yawtrim" execute="/autopilot/mode/yawtrim">
 
 <!--lateral acceleronmeter in the tailcone-->
 		<accelerometer name="/autopilot/yawtrim-channel/ap-y-accelsensor">
@@ -2865,7 +2874,7 @@
 
 <!--****************************Control Wheel Steering (CWS)****************************************************************-->
 
-	<channel name="CWS">
+	<channel name="CWS" execute="/autopilot/mode/cws">
 
 <!-- target turn rate setting () -->
 		<switch name="cwshdg">

@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:	Eric van den Berg
-	Date:			26.06.15
+	Date:			14.07.15
 
 
 ************************************************************************
@@ -680,6 +680,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<lmd-hdg-error-ki type="double">0.0</lmd-hdg-error-ki>
 		<lmd-hdg-error-kd type="double">0.05</lmd-hdg-error-kd>
 		<cmd-ap-ail-pos-norm-raw type="double">0.0</cmd-ap-ail-pos-norm-raw>
+		<fail type="double">0</fail>
 	</hdg-channel>
 	<radionav-channel>
 		<timer-cap>0</timer-cap>
@@ -750,6 +751,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<acc-offset-gain type="double">0.24</acc-offset-gain>
 		<accel-rate-gain type="double">8000.0</accel-rate-gain>
 		<pitch-error-gain type="double">-0.00005</pitch-error-gain>
+		<fail type="double">0</fail>
 	</vs-channel>
 	<gs-channel>
 		<gs-ndefl-gain-kd type="double">2.0</gs-ndefl-gain-kd>
