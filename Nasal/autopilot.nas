@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg 
-#      Date:             01.06.2015
+#      Date:             15.07.2015
 #
 
 var AutopilotClass = {
@@ -192,6 +192,7 @@ var AutopilotClass = {
 		me.nModeDiseng.setValue(1);
 		me.nModeGSArmed.setValue(0);
 		me.nModeGSFollow.setValue(0);
+		setprop("/autopilot/mode/gs",0);
 		setprop("/autopilot/mode/cws-armed",0);
 		setprop("/autopilot/mode/cws",0);
 		setprop("/autopilot/settings/fly-vector",0);

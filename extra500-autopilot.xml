@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2015-07-14
+      Date:             2015-07-15
 -->
 
 <autopilot name="STEC55X">
@@ -323,7 +323,8 @@
 
 <!--***************************************RADIO NAVIGATION**********************************************************************-->
 
-	<channel name="radionav" execute="/autopilot/mode/nav">
+	<channel name="radionav">
+<!--  execute="/autopilot/mode/nav" brings some problems: NAV in IFD always yellow -->
 <!-- this is the radionav channel. when the nav mode is active, the ap will intercept the selected radial of a VOR or the selected LOC-->
 
 <!-- radio nav mode fail used for indication -->
