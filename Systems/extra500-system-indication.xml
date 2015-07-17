@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2015-07-13
+      Date:             2015-07-17
 -->
 
 <system name="indication">
@@ -1545,7 +1545,7 @@
 					<property>/position/altitude-agl-ft</property>
 					<property>/extra500/const/FEET2METER</property>
 				</product>
-				<value>0.35</value>
+				<value>0.3</value>
 			</sum>
 			</function>			
 			<output>/position/altitude-agl-m</output>
