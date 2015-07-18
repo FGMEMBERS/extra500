@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-	Last change:	Dirk Dittmann
-	Date:		13.05.15
+	Last change:	Eric van den Berg
+	Date:			14.07.15
 
 
 ************************************************************************
@@ -116,6 +116,10 @@ of the RR 250-B17F/2 engine is best.</long-description>
      	      <key>
 			<name>C</name>
 			<desc>Arm and engage CWS</desc>
+		</key>
+     	      <key>
+			<name>O</name>
+			<desc>Hold to Overpower Autopilot</desc>
 		</key>
      	      <key>
 			<name>Ctrl-G</name>
@@ -511,6 +515,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<path>/extra500/instrumentation/Audiopanel/knobs</path>
 		<path>/extra500/instrumentation/Audiopanel/volsettings</path>
 		<path>/extra500/instrumentation/dmeSwitch/pressed</path>
+		<path>/extra500/system/fuel/SelectValve</path>
 		<path>/extra500/door</path>
 		<path>/extra500/interior</path>
 		<path>/systems/pressurization/airport-alt</path>
@@ -593,7 +598,6 @@ of the RR 250-B17F/2 engine is best.</long-description>
   <menubar include="Dialogs/extra500-menu.xml"/>
  
 </sim>
-
        <controls>
 	       <engines>
 		       <engine n="0">
@@ -657,12 +661,17 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<electrim type="int">0</electrim>
 		<cap type="int">0</cap>
 		<soft type="int">0</soft>
+		<overpower type="int">0</overpower>
 	</mode>
 	<indication>
 		<heading type="int">0</heading>
 		<nav type="int">0</nav>
 		<vs type="int">0</vs>
 	</indication>
+	<overpower>
+		<rollSpeedFactor type="double">1</rollSpeedFactor>
+		<pitchSpeedFactor type="double">0.5</pitchSpeedFactor>
+	</overpower>
 	<hdg-channel>	
 		<turn-rate-error-kp type="double">0.0003</turn-rate-error-kp>
 		<turn-rate-error-ki type="double">0.00</turn-rate-error-ki>
@@ -671,6 +680,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<lmd-hdg-error-ki type="double">0.0</lmd-hdg-error-ki>
 		<lmd-hdg-error-kd type="double">0.05</lmd-hdg-error-kd>
 		<cmd-ap-ail-pos-norm-raw type="double">0.0</cmd-ap-ail-pos-norm-raw>
+		<fail type="double">0</fail>
 	</hdg-channel>
 	<radionav-channel>
 		<timer-cap>0</timer-cap>
@@ -741,6 +751,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<acc-offset-gain type="double">0.24</acc-offset-gain>
 		<accel-rate-gain type="double">8000.0</accel-rate-gain>
 		<pitch-error-gain type="double">-0.00005</pitch-error-gain>
+		<fail type="double">0</fail>
 	</vs-channel>
 	<gs-channel>
 		<gs-ndefl-gain-kd type="double">2.0</gs-ndefl-gain-kd>
@@ -974,6 +985,193 @@ of the RR 250-B17F/2 engine is best.</long-description>
         		<serviceable type="bool">true</serviceable>
 		</motor>
 	</gear>
+	<fuel>
+		<balanceLR type="double">0.5</balanceLR>
+		<FT-degC type="double">0</FT-degC>					<!--dummy value -->
+		<Fpress-too-low type="bool">0</Fpress-too-low>
+		<F-filter-prloss-psid type="double">0</F-filter-prloss-psid>
+
+		<fuelfilter>
+			<clogged type="double">0</clogged>
+			<bypass>
+				<state type="bool">0</state>
+				<switch>
+					<state type="bool">0</state>
+        				<serviceable type="bool">true</serviceable>
+				</switch>
+			</bypass>
+		</fuelfilter>
+		<FuelPump1>
+			<state type="bool">0</state>
+        		<serviceable type="bool">true</serviceable>
+		</FuelPump1>
+		<FP1checkvalve>
+        		<serviceable type="bool">true</serviceable>
+		</FP1checkvalve>
+		<FuelPump2>
+			<state type="bool">0</state>
+        		<serviceable type="bool">true</serviceable>
+		</FuelPump2>
+		<FP2checkvalve>
+        		<serviceable type="bool">true</serviceable>
+		</FP2checkvalve>
+		<FFtransducer>
+			<blocked type="bool">false</blocked>
+		</FFtransducer>
+
+		<LHtank>
+			<checkvalve>
+        			<serviceable type="bool">true</serviceable>
+			</checkvalve>
+			<motivepump>
+				<press>0</press>
+        			<serviceable type="bool">true</serviceable>
+			</motivepump>
+			<motivefilter>
+				<clogged type="double">0</clogged>  
+			</motivefilter>
+			<prswitch>
+				<state type="bool">1</state> <!-- normally closed: 1 = low press, 0=high press -->
+        			<serviceable type="bool">true</serviceable>
+			</prswitch>
+			<collector>
+				<pickupscreen>
+					<clogged type="double">0</clogged>
+				</pickupscreen>
+				<flappervalves>
+					<leakrate-raw type="double">0.00044</leakrate-raw>  <!-- collector to main -->
+				</flappervalves>
+				<drain>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</drain>
+				<overflow-raw type="double">0.2</overflow-raw>
+			</collector>
+			<main>
+				<innerjetpump>
+					<effectiveness type="double">3</effectiveness>
+					<clogged type="double">0</clogged>
+				</innerjetpump>
+				<outerjetpump>
+					<effectiveness type="double">3</effectiveness>
+					<clogged type="double">0</clogged>
+				</outerjetpump>
+				<overprvalve>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+				</overprvalve>
+				<ventssys>
+				</ventssys>
+				<draininboard>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</draininboard>
+				<drainoutboard>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</drainoutboard>
+			</main>
+			<aux>
+				<motiveoprvalve>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</motiveoprvalve>
+				<jetpump>
+					<effectiveness type="double">3</effectiveness>
+					<clogged type="double">0</clogged>
+				</jetpump>
+				<overprvalve>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</overprvalve>
+				<ventssys>
+				</ventssys>
+				<draininboard>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</draininboard>
+				<drainoutboard>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</drainoutboard>
+			</aux>
+		</LHtank>
+		<RHtank>
+			<checkvalve>
+        			<serviceable type="bool">true</serviceable>
+			</checkvalve>
+			<motivepump>
+				<press>0</press>
+        			<serviceable type="bool">true</serviceable>
+			</motivepump>
+			<motivefilter>
+				<clogged type="double">0</clogged>  
+			</motivefilter>
+			<prswitch>
+				<state type="bool">1</state> <!-- normally closed: 1 = low press, 0=high press -->
+        			<serviceable type="bool">true</serviceable>
+			</prswitch>
+			<collector>
+				<pickupscreen>
+					<clogged type="double">0</clogged>
+				</pickupscreen>
+				<flappervalves>
+					<leakrate-raw type="double">0.00044</leakrate-raw>  <!-- collector to main -->
+				</flappervalves>
+				<drain>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</drain>
+				<overflow-raw type="double">0.2</overflow-raw>
+			</collector>
+			<main>
+				<innerjetpump>
+					<effectiveness type="double">3</effectiveness>
+					<clogged type="double">0</clogged>
+				</innerjetpump>
+				<outerjetpump>
+					<effectiveness type="double">3</effectiveness>
+					<clogged type="double">0</clogged>
+				</outerjetpump>
+				<overprvalve>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+				</overprvalve>
+				<ventssys>
+				</ventssys>
+				<draininboard>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</draininboard>
+				<drainoutboard>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</drainoutboard>
+			</main>
+			<aux>
+				<motiveoprvalve>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</motiveoprvalve>
+				<jetpump>
+					<effectiveness type="double">3</effectiveness>
+					<clogged type="double">0</clogged>
+				</jetpump>
+				<overprvalve>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</overprvalve>
+				<ventssys>
+				</ventssys>
+				<draininboard>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</draininboard>
+				<drainoutboard>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</drainoutboard>
+			</aux>
+		</RHtank>
+	</fuel>
  </systems>
 
  <instrumentation>
@@ -1352,6 +1550,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		
 		<file>Aircraft/extra500/Nasal/route_manager.nas</file>
 		<file>Aircraft/extra500/Nasal/trimindication.nas</file>
+		<file>Aircraft/extra500/Nasal/smoothweather.nas</file>
 		
 		
 	</extra500>
@@ -1472,7 +1671,13 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<PSI2INHG type="double">2.03602</PSI2INHG>
 		<PA2PSI type="double">0.0001450377</PA2PSI>
 		<SEC2MIN type="double">0.0166666666667</SEC2MIN>
-		<G0 type="double">9.80665</G0>		
+		<G0 type="double">9.80665</G0>	
+		<P0 type="double">1013.25</P0>
+		<T0 type="double">288.15</T0>				
+		<G0 type="double">9.80665</G0>
+		<R type="double">287.05</R>	
+		<lambda type="double">-0.0065</lambda>
+		<Re type="double">63781550</Re>		
 	</const>
 	<config>
 		<ui>
@@ -1634,6 +1839,12 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				<CabinLight>
 					<voltOut type="double">0</voltOut>
 				</CabinLight>
+				<FuelTransferR>
+					<voltOut type="double">0</voltOut>
+				</FuelTransferR>
+				<FuelTransferL>
+					<voltOut type="double">0</voltOut>
+				</FuelTransferL>
 			</BankB>
 			<BankC>
 				<Boots>
@@ -1642,6 +1853,9 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				<EnvironmentalBleed>
 					<voltOut type="double">0</voltOut>
 				</EnvironmentalBleed>
+				<FuelPump2>
+					<voltOut type="double">0</voltOut>
+				</FuelPump2>
 				<GearControl>
 					<state type="bool">1</state>
 				</GearControl>
@@ -1659,6 +1873,9 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				<Dump>
 					<voltOut type="double">0</voltOut>
 				</Dump>
+				<FuelPump1>
+					<voltOut type="double">0</voltOut>
+				</FuelPump1>
 				<GearAux1>
 					<state type="bool">1</state>
 				</GearAux1>
@@ -1710,9 +1927,23 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<Master>
 			<Autopilot>
 				<YawTrim>
-					<state type="int">0.0</state>
+					<state type="int">0</state>
 				</YawTrim>
 			</Autopilot>
+			<Fuel>
+				<Pump1>
+					<state type="int">0</state>
+				</Pump1>
+				<Pump2>
+					<state type="int">0</state>
+				</Pump2>
+				<TransferLeft>
+					<state type="int">0</state>
+				</TransferLeft>
+				<TransferRight>
+					<state type="int">0</state>
+				</TransferRight>
+			</Fuel>
 		</Master>
 	</panel>
 	<system>
@@ -1776,6 +2007,16 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<pressed type="int">0</pressed>
 		</trim>
 	</yokes>
+	<weather>
+		<interval-sec type="double">60.0</interval-sec>
+		<smooth type="bool">0</smooth>
+		<noruns type="int">0</noruns>
+		<filter-c1 type="double">0.1</filter-c1>
+		<avgmetar>
+			<pressure-sea-level-inhg type="double">29.92</pressure-sea-level-inhg>
+			<temperature-sea-level-degc type="double">15.0</temperature-sea-level-degc>
+		</avgmetar>
+	</weather>
  </extra500>
 
  <fdm>
@@ -1860,14 +2101,12 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				</OT>
 				<OT-degC type="double">0</OT-degC>					<!--dummy value -->
 				<OT-true-degC type="double">0</OT-true-degC>				<!--dummy value -->
-				<FT-degC type="double">0</FT-degC>					<!--dummy value -->
 				<motoring type="double">0</motoring>
 				<spooling-up type="double">0</spooling-up>
 				<spooling-down type="double">0</spooling-down>
 				<N1-old type="double">0.0</N1-old>					<!--dummy value -->
 				<N1-par type="double">0.0</N1-par>					<!--dummy value -->
 				<TOT-target-degC>0.0</TOT-target-degC>				<!--dummy value -->
-				<Fpress-too-low>0</Fpress-too-low>					<!--dummy value -->
 		 	</engine>
 			<events>
 				<show-events type="bool">1</show-events>				<!--set to 0 if you are fed up with those stupid messages -->

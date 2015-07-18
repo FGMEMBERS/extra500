@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             01.02.15
+      Date:             17.05.15
 
 -->
 
@@ -870,7 +870,7 @@
 		<object-name>EngineInstruments.TEMP.minus</object-name>
 		<condition>
 		<less-than>
-			<property>/fdm/jsbsim/aircraft/engine/FT-degC</property>
+			<property>/systems/fuel/FT-degC</property>
 			<value>0</value>
 		</less-than>
 		</condition>

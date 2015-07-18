@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             04.02.14
+      Date:             25.05.15
 
 -->
 
@@ -35,11 +35,11 @@
   <property>/extra500/instrumentation/FuelQuantity/tank[2]/level-norm</property>
 		<interpolation>
             <entry>
-                <ind>0</ind>
+                <ind>0.01</ind>
                 <dep>-199.5</dep>
             </entry>
             <entry>
-                <ind>1</ind>
+                <ind>0.95</ind>
                 <dep>90</dep>
             </entry>
         </interpolation>
@@ -59,11 +59,11 @@
   <property>/extra500/instrumentation/FuelQuantity/tank[4]/level-norm</property>
 		<interpolation>
             <entry>
-                <ind>0</ind>
+                <ind>0.01</ind>
                 <dep>-199.5</dep>
             </entry>
             <entry>
-                <ind>1</ind>
+                <ind>0.95</ind>
                 <dep>90</dep>
             </entry>
         </interpolation>
@@ -84,11 +84,11 @@
   <property>/extra500/instrumentation/FuelQuantity/tank[1]/level-norm</property>
 		<interpolation>
             <entry>
-                <ind>0</ind>
+                <ind>0.01</ind>
                 <dep>-90</dep>
             </entry>
             <entry>
-                <ind>1</ind>
+                <ind>0.95</ind>
                 <dep>90</dep>
             </entry>
         </interpolation>
@@ -108,11 +108,11 @@
   <property>/extra500/instrumentation/FuelQuantity/tank[5]/level-norm</property>
 		<interpolation>
             <entry>
-                <ind>0</ind>
+                <ind>0.01</ind>
                 <dep>-90</dep>
             </entry>
             <entry>
-                <ind>1</ind>
+                <ind>0.95</ind>
                 <dep>90</dep>
             </entry>
         </interpolation>
@@ -133,11 +133,11 @@
   <property>/extra500/instrumentation/FuelQuantity/tank[0]/level-norm</property>
 		<interpolation>
             <entry>
-                <ind>0</ind>
+                <ind>0.01</ind>
                 <dep>-90</dep>
             </entry>
             <entry>
-                <ind>1</ind>
+                <ind>0.95</ind>
                 <dep>90</dep>
             </entry>
         </interpolation>
@@ -157,11 +157,11 @@
   <property>/extra500/instrumentation/FuelQuantity/tank[6]/level-norm</property>
 		<interpolation>
             <entry>
-                <ind>0</ind>
+                <ind>0.01</ind>
                 <dep>-90</dep>
             </entry>
             <entry>
-                <ind>1</ind>
+                <ind>0.95</ind>
                 <dep>90</dep>
             </entry>
         </interpolation>

@@ -80,8 +80,15 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		
 		extra500.eSystem.init();
 		
-		
 		extra500.environment.init();
+		
+#		extra500.weatherService.init();
+#		extra500.weatherService.start();
+		
+#		extra500.aliasAllChildes(props.globals.getNode("environment/metar-nearest"),props.globals.getNode("/environment/metar"));
+		
+# 		props.globals.getNode("/environment/metar").unalias();
+# 		props.globals.getNode("/environment/metar").alias(props.globals.getNode("environment/metar-nearest"));
 		
 	},1);
 

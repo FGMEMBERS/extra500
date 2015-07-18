@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: 17.04.2014
 #
-#      Last change:      Dirk Dittmann
-#      Date:             27.04.2013
+#	Last change:	Dirk Dittmann
+#	Date:		28.05.15
 #
 
 var MapIconCache = {
@@ -101,7 +101,9 @@ mapIconCache.registerIcon("Airport_1110");
 mapIconCache.registerIcon("Airport_1011");
 mapIconCache.registerIcon("Airport_1111");
 mapIconCache.registerIcon("Navaid_VOR");
+mapIconCache.registerIcon("Navaid_TACAN");
 mapIconCache.registerIcon("Navaid_DME");
+mapIconCache.registerIcon("Navaid_NDB");
 mapIconCache.registerIcon("Navaid_Height");
 mapIconCache.registerIcon("Navaid_Height2");
 
@@ -346,9 +348,154 @@ var VorItem = {
 	},
 	
 };
+var TacanItem = {
+	new : func(id){
+		var m = {parents:[TacanItem]};
+		m._id = id;
+		m._can = {
+			"group" : nil,
+			"label" : nil,
+			"image" : nil,
+			
+		};
+		return m;
+	},
+	create : func(group){	
+		me._can.group = group.createChild("group", "tacan_" ~ me._id);
+		
+
+		me._can.image = me._can.group.createChild("image", "tacan-image_" ~ me._id)
+			.setFile(mapIconCache._canvas.getPath())
+			.setSourceRect(0,0,0,0,0);
+	
+			
+		me._can.label = me._can.group.createChild("text", "tacan-label_" ~ me._id)
+		.setDrawMode( canvas.Text.TEXT )
+		.setTranslation(0,42)
+		.setAlignment("center-bottom-baseline")
+		.setFont("LiberationFonts/LiberationSans-Regular.ttf")
+		.setFontSize(32);
+		
+		me._can.label.set('fill',"#BACBFB");
+		me._can.label.set('stroke',"#000000");
+				
+		return me._can.group;
+	},
+	setData : func(tacan){
+		mapIconCache.boundIconToImage("Navaid_TACAN",me._can.image);
+		me._can.label.setText(tacan.id);
+		me._can.group.setGeoPosition(tacan.lat, tacan.lon);
+	},
+	setVisible : func(visibility){
+		me._can.group.setVisible(visibility);
+		
+	},
+	getGroup : func(){
+		return me._can.group;
+	},
+	
+};
+
+
+var NdbItem = {
+	new : func(id){
+		var m = {parents:[NdbItem]};
+		m._id = id;
+		m._can = {
+			"group" : nil,
+			"label" : nil,
+			"image" : nil,
+			
+		};
+		return m;
+	},
+	create : func(group){	
+		me._can.group = group.createChild("group", "ndb_" ~ me._id);
+		
+
+		me._can.image = me._can.group.createChild("image", "ndb-image_" ~ me._id)
+			.setFile(mapIconCache._canvas.getPath())
+			.setSourceRect(0,0,0,0,0);
+	
+			
+		me._can.label = me._can.group.createChild("text", "ndb-label_" ~ me._id)
+		.setDrawMode( canvas.Text.TEXT )
+		.setTranslation(0,42)
+		.setAlignment("center-bottom-baseline")
+		.setFont("LiberationFonts/LiberationSans-Regular.ttf")
+		.setFontSize(32);
+		
+		me._can.label.set('fill',"#BACBFB");
+		me._can.label.set('stroke',"#000000");
+				
+		return me._can.group;
+	},
+	setData : func(ndb){
+		mapIconCache.boundIconToImage("Navaid_NDB",me._can.image);
+		me._can.label.setText(ndb.id);
+		me._can.group.setGeoPosition(ndb.lat, ndb.lon);
+	},
+	setVisible : func(visibility){
+		me._can.group.setVisible(visibility);
+		
+	},
+	getGroup : func(){
+		return me._can.group;
+	},
+	
+};
+
+var DmeItem = {
+	new : func(id){
+		var m = {parents:[DmeItem]};
+		m._id = id;
+		m._can = {
+			"group" : nil,
+			"label" : nil,
+			"image" : nil,
+			
+		};
+		return m;
+	},
+	create : func(group){	
+		me._can.group = group.createChild("group", "dme_" ~ me._id);
+		
+
+		me._can.image = me._can.group.createChild("image", "dme-image_" ~ me._id)
+			.setFile(mapIconCache._canvas.getPath())
+			.setSourceRect(0,0,0,0,0);
+	
+			
+		me._can.label = me._can.group.createChild("text", "dme-label_" ~ me._id)
+		.setDrawMode( canvas.Text.TEXT )
+		.setTranslation(0,42)
+		.setAlignment("center-bottom-baseline")
+		.setFont("LiberationFonts/LiberationSans-Regular.ttf")
+		.setFontSize(32);
+		
+		me._can.label.set('fill',"#BACBFB");
+		me._can.label.set('stroke',"#000000");
+				
+		return me._can.group;
+	},
+	setData : func(dme){
+		mapIconCache.boundIconToImage("Navaid_DME",me._can.image);
+		me._can.label.setText(dme.id);
+		me._can.group.setGeoPosition(dme.lat, dme.lon);
+	},
+	setVisible : func(visibility){
+		me._can.group.setVisible(visibility);
+		
+	},
+	getGroup : func(){
+		return me._can.group;
+	},
+	
+};
+
 var MAP_RUNWAY_AT_RANGE = {2:0,4:0,10:0,20:0,30:0,40:250,50:500,80:1000,160:2000,240:3000};
 var MAP_RUNWAY_SURFACE = {0:0,1:1,2:1,3:0,4:0,5:0,6:1,7:1,8:0,9:0,10:0,11:0,12:0};
-
+var MAP_TXRANGE_VOR = {2:0,4:0,10:0,20:0,30:0,40:20,50:25,80:30,160:50,240:100};
 ####
 # Declutter
 #	land
@@ -372,12 +519,19 @@ var PositionedLayer = {
 		m._can = { 
 			"airport" 	: m._group.createChild("group","airport"),
 			"vor" 		: m._group.createChild("group","vor"),
+			"tacan"		: m._group.createChild("group","tacan"),
+			"ndb" 		: m._group.createChild("group","ndb"),
+			"dme" 		: m._group.createChild("group","dme"),
 			
 		};
 		
 		m._cache = {
 			"airport" : {"data":[],"index":0,"max":100},
 			"vor"	  : {"data":[],"index":0,"max":100},
+			"tacan"	  : {"data":[],"index":0,"max":100},
+			"ndb"	  : {"data":[],"index":0,"max":100},
+			"dme"	  : {"data":[],"index":0,"max":100},
+			
 		};
 		m._mapOptions = {
 			declutterLand 	: 3,
@@ -386,6 +540,7 @@ var PositionedLayer = {
 			reports		: 0,
 			overlay		: 0,
 			range		: 30,
+			rangeLow	: 15,
 			runwayLength    : -1,
 			orientation	: 0,
 		};
@@ -418,8 +573,21 @@ var PositionedLayer = {
 	update : func(){
 		if(me._visibility == 1){
 # 			print ("PositionedLayer.update() ...") ;
+			
 			me.loadAirport();
-			me.loadVor();
+# 			me.loadVor();
+# 			me.loadTacan();
+# 			me.loadNdb();
+# 			me.loadDme();
+			
+# 			settimer(func(){me.loadAirport()},0.05);
+			settimer(func(){me.loadVor()},0.05);
+			settimer(func(){me.loadTacan()},0.05);
+			settimer(func(){me.loadNdb()},0.05);
+			settimer(func(){me.loadNdb()},0.05);
+			settimer(func(){me.loadDme()},0.05);
+			
+			
 		}
 		me._timer.restart(me._mapOptions.range/(220/3600));
 	},
@@ -440,6 +608,7 @@ var PositionedLayer = {
 	},
 	setRange : func(range=100){
 		me._mapOptions.range = range;
+		me._mapOptions.rangeLow = range/2;
 		me.update();
 	},
 	setLand : func(value){
@@ -459,6 +628,8 @@ var PositionedLayer = {
 # 		print("PositionedLayer.setOverlay("~value~")");
 	},
 	
+	# positioned.findWithinRange : any, fix, vor, ndb, ils, dme, tacan
+		
 	loadAirport : func(){
 		#print("PositionedLayer.loadAirport() ... ");
 		me._cache.airport.index = 0;
@@ -504,10 +675,19 @@ var PositionedLayer = {
 	loadVor : func(){
 		me._cache.vor.index = 0;
 		if(me._mapOptions.declutterNAV >= 3){
-			var range = me._mapOptions.range*2.0 <= 100 ? me._mapOptions.range*2.5 : 100 ;
-			var results = positioned.findWithinRange(me._mapOptions.range*2.5,"vor");
+			var range = me._mapOptions.range*2.5;
+			var txRange = MAP_TXRANGE_VOR[me._mapOptions.range];
+			#range = global.clamp(range,0,250) ;
+			var results = positioned.findWithinRange(range,"vor");
 			var item = nil;
 			foreach(var vor; results) {
+				if(vor.range_nm < txRange){
+					break;
+				}
+# 				else{
+# 					print(sprintf("PositionedLayer:loadVor() %s\trange:%f",vor.id,vor.range_nm));
+# 				}
+				
 				if (me._cache.vor.index >= me._cache.vor.max ){
 					break;
 				}
@@ -530,5 +710,107 @@ var PositionedLayer = {
 			item.setVisible(0);
 		}
 	},
-	
+	loadTacan : func(){
+		me._cache.tacan.index = 0;
+		if(me._mapOptions.declutterNAV >= 3){
+			var range = me._mapOptions.range*2.5;
+			var txRange = MAP_TXRANGE_VOR[me._mapOptions.range];
+			#range = global.clamp(range,0,250) ;
+			var results = positioned.findWithinRange(range,"tacan");
+			var item = nil;
+			foreach(var tacan; results) {
+				if(tacan.range_nm < txRange){
+					break;
+				}
+				if (me._cache.tacan.index >= me._cache.tacan.max ){
+					break;
+				}
+				
+				if (size(me._cache.tacan.data) > me._cache.tacan.index){
+					item = me._cache.tacan.data[me._cache.tacan.index];
+					item.setData(tacan);
+				}else{
+					item = VorItem.new(me._cache.tacan.index);
+					item.create(me._can.tacan);
+					item.setData(tacan);
+					append(me._cache.tacan.data,item);
+				}
+				item.setVisible(1);
+				me._cache.tacan.index += 1;
+			}
+		}
+		for (var i = me._cache.tacan.index ; i < size(me._cache.tacan.data) ; i +=1){
+			item = me._cache.tacan.data[i];
+			item.setVisible(0);
+		}
+	},
+	loadNdb : func(){
+		me._cache.ndb.index = 0;
+		if(me._mapOptions.declutterNAV >= 3 and me._mapOptions.range <= 100){
+			var range = me._mapOptions.range*2.5;
+			var txRange = MAP_TXRANGE_VOR[me._mapOptions.range];
+			#range = global.clamp(range,0,100) ;
+			var results = positioned.findWithinRange(range,"ndb");
+			var item = nil;
+			foreach(var ndb; results) {
+				if(ndb.range_nm < txRange){
+					break;
+				}
+				if (me._cache.ndb.index >= me._cache.ndb.max ){
+					break;
+				}
+				
+				if (size(me._cache.ndb.data) > me._cache.ndb.index){
+					item = me._cache.ndb.data[me._cache.ndb.index];
+					item.setData(ndb);
+				}else{
+					item = NdbItem.new(me._cache.ndb.index);
+					item.create(me._can.ndb);
+					item.setData(ndb);
+					append(me._cache.ndb.data,item);
+				}
+				item.setVisible(1);
+				me._cache.ndb.index += 1;
+				
+			}
+		}
+		for (var i = me._cache.ndb.index ; i < size(me._cache.ndb.data) ; i +=1){
+			item = me._cache.ndb.data[i];
+			item.setVisible(0);
+		}
+	},
+	loadDme : func(){
+		me._cache.dme.index = 0;
+		if(me._mapOptions.declutterNAV >= 3 and me._mapOptions.range <= 100){
+			var range = me._mapOptions.range*2.5;
+			var txRange = MAP_TXRANGE_VOR[me._mapOptions.range];
+			#range = global.clamp(range,0,100) ;
+			var results = positioned.findWithinRange(range,"dme");
+			var item = nil;
+			foreach(var dme; results) {
+				if(dme.range_nm < txRange){
+					break;
+				}
+				if (me._cache.dme.index >= me._cache.dme.max ){
+					break;
+				}
+				
+				if (size(me._cache.dme.data) > me._cache.dme.index){
+					item = me._cache.dme.data[me._cache.dme.index];
+					item.setData(dme);
+				}else{
+					item = DmeItem.new(me._cache.dme.index);
+					item.create(me._can.dme);
+					item.setData(dme);
+					append(me._cache.dme.data,item);
+				}
+				item.setVisible(1);
+				me._cache.dme.index += 1;
+			}
+		}
+		for (var i = me._cache.dme.index ; i < size(me._cache.dme.data) ; i +=1){
+			item = me._cache.dme.data[i];
+			item.setVisible(0);
+		}
+	},
 };
