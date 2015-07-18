@@ -1536,6 +1536,22 @@
 		</switch>
 	</channel>
 
+	<channel name="shadow">
+
+		<fcs_function name="shadow">
+			<function>
+			<sum>
+				<product>
+					<property>/position/altitude-agl-ft</property>
+					<property>/extra500/const/FEET2METER</property>
+				</product>
+				<value>0.3</value>
+			</sum>
+			</function>			
+			<output>/position/altitude-agl-m</output>
+		</fcs_function>
+	</channel>
+
 </system>
 
 
