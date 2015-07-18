@@ -18,18 +18,14 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: 14.07.2015
 
-      Last change: Eric van den Berg     
-      Date: 17.07.2015            
+      Last change:      
+      Date:             
 
 -->
 
 <PropertyList>
 
 <path>shadowframe.ac</path>
-
-	<offsets>
-		<pitch-deg>-1.39</pitch-deg>
-	</offsets>
 
 <!-- shadow on ground-->
  <animation>
