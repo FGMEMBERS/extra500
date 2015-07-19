@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2015-07-15
+      Date:             2015-07-19
 -->
 
 <autopilot name="STEC55X">
@@ -125,19 +125,11 @@
 	</channel>
 
 
-<!--***************************************INDICATION**********************************************************************-->
+<!--***************************************INDICATION*MODES*SELECTIONS********************************************************************-->
 
 	<channel name="indicationandmodes">
 
-		<switch name="hdgind">
-			<default value="/autopilot/mode/heading"/>
-			<test value="/autopilot/indication/timer-on">
-				/autopilot/hdg-channel/fail eq 1
-				/autopilot/mode/heading eq 1
-			</test>
-			<output>/autopilot/indication/heading</output>
-		</switch>
-
+<!--VS -->
 		<switch name="vsind">
 			<default value="/autopilot/mode/vs"/>
 			<test value="/autopilot/indication/timer-on">
@@ -147,6 +139,7 @@
 			<output>/autopilot/indication/vs</output>
 		</switch>
 
+<!--YAWTRIM-->
 <!--checking if yaw trim CAN be on -->
 		<switch name="yawtrimon">
 			<default value="0"/>
@@ -168,9 +161,8 @@
 
 <!--***************************************HEADING**********************************************************************-->
 
-	<channel name="heading" execute="/autopilot/mode/heading">
 <!-- this is the heading channel. when the hdg mode is active, the hdg bug of the LH IFD is followed-->
-
+	<channel name="heading1">
 <!-- heading fail used for indication-->
 		<switch name="hdgfail">
 			<default value="0"/>
@@ -181,6 +173,15 @@
 			<output>/autopilot/hdg-channel/fail</output>
 		</switch>
 
+		<switch name="hdgind">
+			<default value="/autopilot/mode/heading"/>
+			<test value="/autopilot/indication/timer-on">
+				/autopilot/hdg-channel/fail eq 1
+				/autopilot/mode/heading eq 1
+			</test>
+			<output>/autopilot/indication/heading</output>
+		</switch>
+
 <!-- heading source is selected -->
 		<switch name="hdgselect">
 			<default value="/instrumentation/heading-indicator-IFD-LH/heading-bug-error-deg"/>
@@ -189,6 +190,9 @@
 			</test>
 			<output>/autopilot/hdg-channel/heading-bug-error-deg</output>
 		</switch>
+	</channel>
+
+	<channel name="heading2" execute="/autopilot/mode/heading">
 
 <!--the heading error is clipped to -20 to 20 deg -->
 		<pure_gain name="/autopilot/hdg-channel/lmd-hdg-error">
@@ -323,9 +327,9 @@
 
 <!--***************************************RADIO NAVIGATION**********************************************************************-->
 
-	<channel name="radionav">
-<!--  execute="/autopilot/mode/nav" brings some problems: NAV in IFD always yellow -->
+	<channel name="radionav1">
 <!-- this is the radionav channel. when the nav mode is active, the ap will intercept the selected radial of a VOR or the selected LOC-->
+<!-- there are 2 channels of which the 1st is always executed, but the second only when the nav mode is on-->
 
 <!-- radio nav mode fail used for indication -->
 		<switch name="radnavfail">
@@ -660,6 +664,9 @@
 			</test>
 			<output>/autopilot/radionav-channel/tgt-hdg-kd</output>
 		</switch>
+
+	</channel>
+	<channel name="radionav2" execute="/autopilot/mode/nav">
 
 <!--calculating the target heading to intercept the radial-->
 		<pid name="/autopilot/radionav-channel/relative-diff-heading-target-deg">
@@ -1278,7 +1285,7 @@
 
 <!--***************************************FMS (GPS) NAVIGATION**********************************************************************-->
 
-	<channel name="fmsnav">
+
 
 <!-- 	/instrumentation/gps/wp/leg-true-course-deg
 	/instrumentation/gps/wp/leg-distance-nm
@@ -1292,7 +1299,7 @@
 	/instrumentation/gps/raim (should be 1)
 
 -->
-
+	<channel name="fmsnav1">
 <!-- fms fail used for indication -->
 		<switch name="fmsnavfail">
 			<default value="0"/>
@@ -1378,15 +1385,6 @@
 			<output>/autopilot/fms-channel/course-error-nm</output>
 		</switch>
 
-		<pure_gain name="/autopilot/fms-channel/course-error-norm">
-			<input>/autopilot/fms-channel/course-error-nm</input>
-			<gain>0.3333333</gain>
-			<clipto>
-				<min>-1</min>
-				<max>1</max>
-			</clipto>
-		</pure_gain>
-
 		<switch name="gpsselect4">
 			<default value="/instrumentation/gps/cdi-deflection"/>
 			<test value="/instrumentation/gps[1]/cdi-deflection">
@@ -1434,6 +1432,16 @@
 			</test>
 			<output>/autopilot/fms-channel/obs/desired-course-deg</output>
 		</switch>
+
+		<pure_gain name="/autopilot/fms-channel/course-error-norm">
+			<input>/autopilot/fms-channel/course-error-nm</input>
+			<gain>0.3333333</gain>
+			<clipto>
+				<min>-1</min>
+				<max>1</max>
+			</clipto>
+		</pure_gain>
+
 
 <!-- AUTOTUNING -->
 <!-- see also /nasal/AvidyneEntregra9/fms.nas; _onCurrentWaypointChange -->
@@ -1508,6 +1516,10 @@
 			</test>
 			<output>/instrumentation/nav-source</output>
 		</switch>
+
+	</channel>
+
+	<channel name="fmsnav2">
 
 <!-- GPSS calcs -->
 <!-- the course change at next waypoint -->
@@ -3080,6 +3092,7 @@
 		<switch name="fldbank4">
 			<default value="/autopilot/flight-director/fld-bank-raw-deg"/>
 			<test logic="AND" value="/autopilot/fms-channel/fld-bank-deg">
+          			/autopilot/mode/heading eq 0
 				/autopilot/mode/nav eq 1
 				/instrumentation/nav-source eq 2
 			</test>
