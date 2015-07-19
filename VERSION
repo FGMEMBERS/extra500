@@ -19,6 +19,18 @@
       Last change:      Eric van den Berg
       Date:             2015.05.02
 
+      
+Release 2.2.0: use for Flightgear version 3.4 and up
+* FMS: CDI indication
+* IFD: fuel indication, map icons DME/NDB/TACAN
+* Fuel: new fuel system
+* cabin: oxygenblackout
+* Model: propeller
+* Electric: battery, load 
+* Autopilot: overpower
+* Environment: smooth weather
+* Sound: positioning, volume, angle and headset
+
 Release 2.1.0: use for Flightgear version 3.4 and up
 * Autopilot: improved fail indication, flight director, fixes for broken functions, hotkeys
 * IFD: flightplan improved, map fuel reserve indication, obs course indication
