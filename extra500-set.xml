@@ -691,6 +691,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<gain-cs type="double">0.8</gain-cs>
 			<gain-s type="double">0.6</gain-s>
 		</gains>
+		<fail>0</fail>
 		<tgt-hdg-kp type="double">0</tgt-hdg-kp>
 		<tgt-hdg-kd-n type="double">0.5</tgt-hdg-kd-n>
 		<tgt-hdg-ki type="double">0</tgt-hdg-ki>
