@@ -2047,13 +2047,29 @@ var TimerWidget = {
 	}
 };
 
+var FREQ_NAME_TYPE = {
+	"tower"			: "TWR",
+	"atis"			: "ATIS",
+	"awos"			: "AWOS",
+	"ground"		: "GND",
+	"clearance"		: "CLR",
+	"unicom"		: "UNICOM",
+	"approach-departure"	: "APP/DEP",
+};
+
 var ActiveComWidget = {
 	new : func(page,canvasGroup,name){
 		var m = {parents:[ActiveComWidget,IfdWidget.new(page,canvasGroup,name)]};
 		m._class 	= "ActiveComWidget";
 		m._tab		= [];
 		m._can		= {};
-		m._activeChannelListener = nil;
+		m._activeChannelListener = [];
+		
+		m._icao = "----";
+		m._type = "---";
+		m._freqency = "---";
+		m._name = "---";
+		
 		return m;
 	},
 	setListeners : func(instance) {
@@ -2076,31 +2092,48 @@ var ActiveComWidget = {
 		}
 	},
 	_setActiveListener : func(index=nil){
-		if(index == nil){
-			if(me._activeChannelListener != nil){
-				removelistener(me._activeChannelListener);
-				me._activeChannelListener = nil;
-			}
-		}else{
-			if(me._activeChannelListener != nil){
-				removelistener(me._activeChannelListener);
-				me._activeChannelListener = nil;
-			}
-			me._activeChannelListener = setlistener("/instrumentation/comm["~index~"]/frequencies/selected-mhz",func(n){me._onFreqencyChange(n)},1,0);
+		me._removeActiveListener();
+		if(index != nil){
+			append(me._activeChannelListener,setlistener("/instrumentation/comm["~index~"]/frequencies/selected-mhz",func(n){me._onFreqencyChange(n)},1,0));
+			append(me._activeChannelListener,setlistener("/instrumentation/comm["~index~"]/station-name",func(n){me._onStationNameChange(n)},1,0));
+			append(me._activeChannelListener,setlistener("/instrumentation/comm["~index~"]/station-type",func(n){me._onStationTypeChange(n)},1,0));
+			#append(me._activeChannelListener,setlistener("/instrumentation/comm["~index~"]/airport-id",func(n){me._onAirportIdChange(n)},1,0));
+			
 		}
+	},
+	_removeActiveListener : func(){
+		foreach (var l ; me._activeChannelListener){
+			removelistener(l);
+		}
+		me._activeChannelListener = [];
 	},
 	_onComSelectedChange : func(n){
 		var index = n.getValue();
 		me._setActiveListener(index);
-		if(index==0){
-			me._can.airport.setText("Com 1");
-		}else{
-			me._can.airport.setText("Com 2");
-		}
 	},
 	_onFreqencyChange : func(n){
 		var freqency = n.getValue();
 		me._can.freqency.setText(sprintf("%.3f",freqency));
+	},
+	_onStationNameChange : func(n){
+		me._name = n.getValue();
+		me._updateCanvas();
+	},
+	_onStationTypeChange : func(n){
+		me._type = n.getValue();
+		if(contains(FREQ_NAME_TYPE,me._type)){
+			me._type = FREQ_NAME_TYPE[me._type];
+		}
+		me._updateCanvas();
+	},
+	_onAirportIdChange : func(n){
+		me._icao = n.getValue();
+		me._updateCanvas();
+	},
+	_updateCanvas : func(){
+		me._can.airport.setText(me._name);
+		me._can.info.setText(me._type);
+		#me._can.info.setText(me._icao ~ " " ~ me._type);
 	},
 };
 
