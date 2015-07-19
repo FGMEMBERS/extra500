@@ -31,8 +31,6 @@ Date:             2014-03-25
 		
 		<ignition>
 			<name>ignition</name>
-			<reference-dist>1.0</reference-dist>
-			<max-dist>1.0</max-dist>
 			<mode>looped</mode>
 			<path>Aircraft/extra500/Sounds/ignition.wav</path>
 			<condition>
@@ -44,16 +42,17 @@ Date:             2014-03-25
 				<offset>1.0</offset>
 			</volume>
 			<position>
-				<x>0</x>
+				<x>-2.0</x>
 				<y>0</y>
-				<z>0</z>
+				<z>-0.75</z>
 			</position>
+			<reference-dist>3.0</reference-dist>
+			<max-dist>30.0</max-dist>
+			
 		</ignition>
 		
 		<motoring>
 			<name>motoring</name>
-			<reference-dist>3.0</reference-dist>
-			<max-dist>6.0</max-dist>
 			<mode>once</mode>
 			<path>Aircraft/extra500/Sounds/motoringStart.wav</path>
 			<condition>
@@ -65,16 +64,17 @@ Date:             2014-03-25
 				<offset>0.4</offset>
 			</volume>
 			<position>
-				<x>0</x>
+				<x>-2.0</x>
 				<y>0</y>
-				<z>0</z>
+				<z>-0.75</z>
 			</position>
+			<reference-dist>5.0</reference-dist>
+			<max-dist>1000.0</max-dist>
+			
 		</motoring>
 		
 		<motoring_loop>
 			<name>motoring_loop</name>
-			<reference-dist>3.0</reference-dist>
-			<max-dist>6.0</max-dist>
 			<delay-sec>10.0</delay-sec>
 			<mode>looped</mode>
 			<path>Aircraft/extra500/Sounds/motoringLoop.wav</path>
@@ -82,9 +82,9 @@ Date:             2014-03-25
 				<property>/fdm/jsbsim/aircraft/engine/motoring</property>
 			</condition>
 			<position>
-				<x>0</x>
+				<x>-2.0</x>
 				<y>0</y>
-				<z>0</z>
+				<z>-0.75</z>
 			</position>
 			<pitch>
 				<property>engines/engine[0]/n1</property>
@@ -93,12 +93,12 @@ Date:             2014-03-25
 				<min>0.5</min>
 				<max>1.5</max>
 			</pitch>
+			<reference-dist>5.0</reference-dist>
+			<max-dist>1000.0</max-dist>
 		</motoring_loop>
 		
 		<start>
 			<name>engine_start</name>
-			<reference-dist>3.0</reference-dist>
-			<max-dist>6.0</max-dist>
 			<mode>once</mode>
 			<path>Aircraft/extra500/Sounds/spoolup.wav</path>
 			<condition>
@@ -110,10 +110,13 @@ Date:             2014-03-25
 				<offset>0.9</offset>
 			</volume>
 			<position>
-				<x>0</x>
+				<x>-2.0</x>
 				<y>0</y>
-				<z>0</z>
+				<z>-0.75</z>
 			</position>
+			<reference-dist>10.0</reference-dist>
+			<max-dist>100.0</max-dist>
+			
 		</start>
 		<!---->
 		<propeller>
@@ -121,10 +124,18 @@ Date:             2014-03-25
 			<mode>looped</mode>
 			<path>Sounds/wasp.wav</path>
 			<position>
-				<x>0</x>
+				<x>-3.0</x>
+				<y>0</y>
+				<z>-0.5</z>
+			</position>
+			<orientation>
+				<x>1</x>
 				<y>0</y>
 				<z>0</z>
-			</position>
+				<inner-angle>60</inner-angle>
+				<outer-angle>180</outer-angle>
+				<outer-gain>0.15</outer-gain>
+			</orientation>
 			<condition>
 				<or>
 					<property>/engines/engine[0]/running</property>		       
@@ -136,7 +147,7 @@ Date:             2014-03-25
 				<factor>0.0005</factor>
 				<offset>-0</offset>
 				<min>0.15</min>
-				<max>0.35</max>
+				<max>0.55</max>
 			</volume>
 			<pitch>
 				<property>/engines/engine[0]/thruster/rpm</property>
@@ -145,24 +156,21 @@ Date:             2014-03-25
 				<min>0.5</min>
 				<max>1.5</max>
 			</pitch>
-			
-			
-			
+			<reference-dist>40.0</reference-dist>
+			<max-dist>4000.0</max-dist>
 		</propeller>
 		
 		<turbine>
 			<name>turbine</name>
-			<reference-dist>1.0</reference-dist>
-			<max-dist>4.0</max-dist>
 			<mode>looped</mode>
 			<path>Aircraft/extra500/Sounds/extra500turbineLOOP.wav</path>
 			<condition>
 				<property>/fdm/jsbsim/propulsion/engine/set-running</property>
 			</condition>
 			<position>
-				<x>0</x>
+				<x>-2.0</x>
 				<y>0</y>
-				<z>0</z>
+				<z>-0.75</z>
 			</position>
 			<pitch>
 				<property>engines/engine[0]/n1</property>
@@ -171,12 +179,12 @@ Date:             2014-03-25
 				<min>0.5</min>
 				<max>1.5</max>
 			</pitch>
+			<reference-dist>40.0</reference-dist>
+			<max-dist>4000.0</max-dist>
 		</turbine>
 		
 		<shutdown>
 			<name>shutdown</name>
-			<reference-dist>1.0</reference-dist>
-			<max-dist>4.0</max-dist>
 			<mode>once</mode>
 			<path>Aircraft/extra500/Sounds/extra500turbineDOWN.wav</path>
 			<condition>
@@ -186,10 +194,13 @@ Date:             2014-03-25
 				<offset>0.9</offset>
 			</volume>
 			<position>
-				<x>0</x>
+				<x>-2.0</x>
 				<y>0</y>
-				<z>0</z>
+				<z>-0.75</z>
 			</position>
+			<reference-dist>10.0</reference-dist>
+			<max-dist>1000.0</max-dist>
+			
 		</shutdown>
 		
 		<tire-rumble>
@@ -208,6 +219,9 @@ Date:             2014-03-25
 				<factor>0.01</factor>
 				<max>0.9</max>
 			</volume>
+			<reference-dist>10.0</reference-dist>
+			<max-dist>100.0</max-dist>
+			
 		</tire-rumble>
 		
 		<gear>
@@ -218,8 +232,8 @@ Date:             2014-03-25
 			<volume>
 				<max>1.0</max>
 			</volume>
-			<reference-dist>10.0</reference-dist>
-			<max-dist>20.0</max-dist>
+			<reference-dist>5.0</reference-dist>
+			<max-dist>100.0</max-dist>
 		</gear>
 		<gear-lock>
 			<name>gear-lock</name>
@@ -230,8 +244,8 @@ Date:             2014-03-25
 					<value>0</value>
 				</equals>
 			</condition>
-			<reference-dist>10.0</reference-dist>
-			<max-dist>20.0</max-dist>
+			<reference-dist>5.0</reference-dist>
+			<max-dist>100.0</max-dist>
 		</gear-lock>
 		<flap>
 			<name>flaps</name>
@@ -241,8 +255,13 @@ Date:             2014-03-25
 			<volume>
 				<factor>0.45</factor>
 			</volume>
+			<position>
+				<x>0.4</x>
+				<y>0</y>
+				<z>0.4</z>
+			</position>
 			<reference-dist>10.0</reference-dist>
-			<max-dist>20.0</max-dist>
+			<max-dist>100.0</max-dist>
 		</flap>
 			
 			<!-- Sounds for the Switches
@@ -312,7 +331,7 @@ Date:             2014-03-25
 			<apdis>
 				<name>ap disconnect</name>
 				<reference-dist>1</reference-dist>
-				<max-dist>100.0</max-dist>
+				<max-dist>10.0</max-dist>
 				<mode>once</mode>
 				<path>Aircraft/extra500/Sounds/APdisconnect.wav</path>
 				<condition>
@@ -337,7 +356,7 @@ Date:             2014-03-25
 			<cwsdis>
 				<name>cws disconnect</name>
 				<reference-dist>1</reference-dist>
-				<max-dist>100.0</max-dist>
+				<max-dist>10.0</max-dist>
 				<mode>once</mode>
 				<path>Aircraft/extra500/Sounds/CWSdisconnect.wav</path>
 				<condition>
@@ -362,7 +381,7 @@ Date:             2014-03-25
 			<gearwarn>
 				<name>gear warning</name>
 				<reference-dist>1</reference-dist>
-				<max-dist>100.0</max-dist>
+				<max-dist>10.0</max-dist>
 				<mode>looped</mode>
 				<path>Aircraft/extra500/Sounds/gearwarn.wav</path>
 				<condition>
@@ -387,7 +406,7 @@ Date:             2014-03-25
 			<stallwarn>
 				<name>stall warning</name>
 				<reference-dist>1</reference-dist>
-				<max-dist>100.0</max-dist>
+				<max-dist>10.0</max-dist>
 				<mode>looped</mode>
 				<path>Aircraft/extra500/Sounds/stallwarning.wav</path>
 				<condition>
@@ -423,7 +442,7 @@ Date:             2014-03-25
 			<overspeed>
 				<name>over speed</name>
 				<reference-dist>1</reference-dist>
-				<max-dist>100.0</max-dist>
+				<max-dist>10.0</max-dist>
 				<mode>looped</mode>
 				<path>Aircraft/extra500/Sounds/overspeed.wav</path>
 				<condition>

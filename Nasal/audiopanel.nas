@@ -49,6 +49,7 @@ var AudiopanelClass = {
 		m.dimmingVolt = 0.0;
 
 		m.nAPState 	= props.globals.getNode("/extra500/instrumentation/Audiopanel/state");		
+		m.nInternalView	= props.globals.getNode("/sim/current-view/internal");		
 		
 		m._nBrightness		= props.globals.initNode("/extra500/system/dimming/Instrument",0.0,"DOUBLE");
 		m._brightness		= 0;
@@ -56,6 +57,11 @@ var AudiopanelClass = {
 		m._nBacklight 		= m._nRoot.initNode("Backlight/state",0.0,"DOUBLE");
 		m._backLightState 	= 0;
 		m._backLight 		= 0;
+		
+		m._userVolumeEffects 	= 0;
+		m._userVolumeAimodels 	= 0;
+		m._headSetOn		= 0;
+		m._isOn			= 0;
 	
 		m.dt = 0;
 		m.now = systime();
@@ -66,16 +72,21 @@ var AudiopanelClass = {
 	},
 	setListeners : func(instance) {
 		append(me._listeners, setlistener(me._nBrightness,func(n){instance._onBrightnessChange(n);},1,0) );
+		append(me._listeners, setlistener(me.nAPState,func(n){instance._onStateChange(n);},1,0) );
+		append(me._listeners, setlistener(me.nInternalView,func(n){instance._onInternalViewChange(n);},1,0) );
+		
 	},
 	init : func(instance=nil){
+#		print("AudiopanelClass.init() ... ");
 		if (instance==nil){instance=me;}
 		me.parents[1].init(instance);
+		
+		me.saveUserSoundVolume();
+				
 		me.setListeners(instance);
 		
 		me.initUI();
-		
-#		print("AudiopanelClass.init() ... ");
-
+				
 		eSystem.circuitBreaker.AUDIO_MRK.outputAdd(me);		
 	},
 	_onBrightnessChange : func(n){
@@ -93,12 +104,12 @@ var AudiopanelClass = {
 			}else{
 				me._backLight = 0;	
 			}
-			me._switchOn();
+			
 		}else{
 			me._ampere = 0;
 			me.nAPState.setValue(0);
 			me._backLight = 0;
-			me._switchOff();	
+				
 		}
 
 		me._nBacklight.setValue(me._backLight);
@@ -107,6 +118,32 @@ var AudiopanelClass = {
 	setBacklight : func(value){
 		me._backLightState = value;
 		me.electricWork();
+	},
+	_onStateChange : func(n){
+		if(n.getValue()){
+			me._switchOn();
+		}else{
+			me._switchOff();
+		}
+	},
+	_onInternalViewChange : func(n){
+		if(n.getValue()){
+			me.switchHeadSet(me._isOn);
+		}else{
+			me.switchHeadSet(0);
+		}
+	},
+	saveUserSoundVolume : func(){
+		#print("AudiopanelClass.saveUserSoundVolume() ... ");
+		me._userVolumeEffects 	= getprop("/sim/sound/effects/volume");
+		me._userVolumeAimodels 	= getprop("/sim/sound/aimodels/volume");
+		me._userVolumeAvionics  = getprop("/sim/sound/avionics/volume");
+	},
+	restoreUserSoundVolume : func(){
+		#print("AudiopanelClass.restoreUserSoundVolume() ... ");
+		setprop("/sim/sound/effects/volume",me._userVolumeEffects);
+		setprop("/sim/sound/aimodels/volume",me._userVolumeAimodels);
+		setprop("/sim/sound/avionics/volume",me._userVolumeAvionics);	
 	},
 	_switchOn : func(){
 		var vol = getprop("/extra500/instrumentation/Audiopanel/knobs/crewVol");
@@ -124,12 +161,13 @@ var AudiopanelClass = {
 			setprop("/instrumentation/com2-selected",1);
 			setprop("/sim/fgcom/speaker-level",0);
 		}
-		if (getprop("/extra500/instrumentation/Audiopanel/volsetting/effects") == 1) {
-			setprop("/sim/sound/effects/volume",0.25 * getprop("/sim/sound/effects/volume"));
-			setprop("/sim/sound/aimodels/volume",0.25 * getprop("/sim/sound/aimodels/volume"));
-			setprop("/extra500/instrumentation/Audiopanel/volsetting/effects",0);	
-		}
-
+# 		if (getprop("/extra500/instrumentation/Audiopanel/volsetting/effects") == 1) {
+# 			setprop("/sim/sound/effects/volume",0.25 * getprop("/sim/sound/effects/volume"));
+# 			setprop("/sim/sound/aimodels/volume",0.25 * getprop("/sim/sound/aimodels/volume"));
+# 			setprop("/extra500/instrumentation/Audiopanel/volsetting/effects",0);	
+# 		}
+		me._isOn	= 1;	
+		me.switchHeadSet(1);
 	},
 	_switchOff : func(){
 		setprop("/instrumentation/comm[0]/volume",1);
@@ -139,13 +177,59 @@ var AudiopanelClass = {
 		setprop("/instrumentation/comm-selected-index",0);
 		setprop("/instrumentation/com1-selected",1);
 		setprop("/instrumentation/com2-selected",0);
-		if (getprop("/extra500/instrumentation/Audiopanel/volsetting/effects") == 0) {
-			setprop("/sim/sound/effects/volume",4.0 * getprop("/sim/sound/effects/volume"));
-			setprop("/sim/sound/aimodels/volume",4.0 * getprop("/sim/sound/aimodels/volume"));
-			setprop("/extra500/instrumentation/Audiopanel/volsetting/effects",1);
-		}				
+# 		if (getprop("/extra500/instrumentation/Audiopanel/volsetting/effects") == 0) {
+# 			setprop("/sim/sound/effects/volume",4.0 * getprop("/sim/sound/effects/volume"));
+# 			setprop("/sim/sound/aimodels/volume",4.0 * getprop("/sim/sound/aimodels/volume"));
+# 			setprop("/extra500/instrumentation/Audiopanel/volsetting/effects",1);
+# 		}		
+		me._isOn	= 0;	
+		me.switchHeadSet(0);
 	},
-
+	switchHeadSet : func(v=nil){
+		#print("AudiopanelClass.switchHeadSet("~v~") ... ");
+		if (v == nil){
+			if (me._headSetOn == 1) {
+				
+				setprop("/sim/sound/effects/volume",me._userVolumeEffects);
+				setprop("/sim/sound/aimodels/volume",me._userVolumeAimodels);
+				
+				me._headSetOn = 0;
+			}else{
+				me._userVolumeEffects 	= getprop("/sim/sound/effects/volume");
+				me._userVolumeAimodels 	= getprop("/sim/sound/aimodels/volume");
+		
+				
+				setprop("/sim/sound/effects/volume",0.25 * me._userVolumeEffects);
+				setprop("/sim/sound/aimodels/volume",0.25 * me._userVolumeAimodels);
+				
+				
+				me._headSetOn = 1;
+			}
+			
+		}else{
+			if (v == 1){
+				if (me._headSetOn != 1){
+					me._userVolumeEffects 	= getprop("/sim/sound/effects/volume");
+					me._userVolumeAimodels 	= getprop("/sim/sound/aimodels/volume");
+							
+					setprop("/sim/sound/effects/volume",0.25 * me._userVolumeEffects);
+					setprop("/sim/sound/aimodels/volume",0.25 * me._userVolumeAimodels);
+			
+					me._headSetOn = 1;
+				}
+				
+			}else{
+				if (me._headSetOn != 0){	
+					setprop("/sim/sound/effects/volume",me._userVolumeEffects);
+					setprop("/sim/sound/aimodels/volume",me._userVolumeAimodels);
+					
+					me._headSetOn = 0;
+				}
+				
+			}
+		}
+		setprop("/extra500/instrumentation/Audiopanel/headSetOn",me._headSetOn);
+	},
 # Events from the UI
 	onClickonoff: func(){
 		if (getprop("/extra500/instrumentation/Audiopanel/knobs/state") == 0 ) {

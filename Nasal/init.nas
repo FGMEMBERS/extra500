@@ -96,10 +96,7 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 });
 
 var exit_listener = setlistener("/sim/signals/exit", func {
-
-	if (getprop("/extra500/instrumentation/Audiopanel/volsetting/effects") == 0) {
-		setprop("/sim/sound/effects/volume",4.0 * getprop("/sim/sound/effects/volume"));
-		setprop("/sim/sound/aimodels/volume",4.0 * getprop("/sim/sound/aimodels/volume"));
-	}
-
+	#print("listener.exit() ... ");
+	extra500.audiopanel.restoreUserSoundVolume();
+		
 });

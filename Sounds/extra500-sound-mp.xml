@@ -43,9 +43,9 @@
 				<offset>1.0</offset>
 			</volume>
 			<position>
-				<x>0</x>
+				<x>-2.0</x>
 				<y>0</y>
-				<z>0</z>
+				<z>-0.75</z>
 			</position>
 			<reference-dist>3.0</reference-dist>
 			<max-dist>30.0</max-dist>
@@ -65,10 +65,10 @@
 				<offset>0.4</offset>
 			</volume>
 			<position>
-				<x>0</x>
+				<x>-2.0</x>
 				<y>0</y>
-				<z>0</z>
-			</position> 
+				<z>-0.75</z>
+			</position>
 			<reference-dist>5.0</reference-dist>
 			<max-dist>1000.0</max-dist>
 			
@@ -76,8 +76,6 @@
 		
 		<motoring_loop>
 			<name>motoring_loop</name>
-			<reference-dist>3.0</reference-dist>
-			<max-dist>6.0</max-dist>
 			<delay-sec>10.0</delay-sec>
 			<mode>looped</mode>
 			<path>Aircraft/extra500/Sounds/motoringLoop.wav</path>
@@ -86,9 +84,9 @@
 				<property>sim/multiplay/generic/float[6]</property>
 			</condition>
 			<position>
-				<x>0</x>
+				<x>-2.0</x>
 				<y>0</y>
-				<z>0</z>
+				<z>-0.75</z>
 			</position>
 			<pitch>
 				<property>engines/engine[0]/n1</property>
@@ -97,6 +95,9 @@
 				<min>0.5</min>
 				<max>1.5</max>
 			</pitch>
+			<reference-dist>5.0</reference-dist>
+			<max-dist>1000.0</max-dist>
+			
 		</motoring_loop>
 		
 		<start>
@@ -113,9 +114,9 @@
 				<offset>0.9</offset>
 			</volume>
 			<position>
-				<x>0</x>
+				<x>-2.0</x>
 				<y>0</y>
-				<z>0</z>
+				<z>-0.75</z>
 			</position>
 			<reference-dist>10.0</reference-dist>
 			<max-dist>100.0</max-dist>
@@ -130,6 +131,14 @@
 				<y>0</y>
 				<z>0</z>
 			</position>
+			<orientation>
+				<x>1</x>
+				<y>0</y>
+				<z>0</z>
+				<inner-angle>60</inner-angle>
+				<outer-angle>180</outer-angle>
+				<outer-gain>0.15</outer-gain>
+			</orientation>
 			<!---->
 			<condition>
 				<or>
@@ -148,7 +157,7 @@
 			</volume>
 			<pitch>
 				<!--<property>/engines/engine[0]/thruster/rpm</property>-->
-				<property>sim/multiplay/generic/float[0]</property>
+				<property>sim/multiplay/generic/int[12]</property>
 				<offset>0.5</offset>
 				<factor>0.0010</factor>
 				<min>0.5</min>
@@ -169,9 +178,9 @@
 				<property>sim/multiplay/generic/int[13]</property>
 			</condition>
 			<position>
-				<x>0</x>
+				<x>-2.0</x>
 				<y>0</y>
-				<z>0</z>
+				<z>-0.75</z>
 			</position>
 			<pitch>
 				<property>engines/engine[0]/n1</property>
@@ -197,9 +206,9 @@
 				<offset>0.9</offset>
 			</volume>
 			<position>
-				<x>0</x>
+				<x>-2.0</x>
 				<y>0</y>
-				<z>0</z>
+				<z>-0.75</z>
 			</position>
 			<reference-dist>10.0</reference-dist>
 			<max-dist>1000.0</max-dist>
@@ -237,8 +246,8 @@
 			<volume>
 				<max>1.0</max>
 			</volume>
-			<reference-dist>2.0</reference-dist>
-			<max-dist>50.0</max-dist>
+			<reference-dist>5.0</reference-dist>
+			<max-dist>100.0</max-dist>
 		</gear>
 		<gear-lock>
 			<name>mp_gear-lock</name>
@@ -249,8 +258,8 @@
 					<value>0</value>
 				</equals>
 			</condition>
-			<reference-dist>2.0</reference-dist>
-			<max-dist>50.0</max-dist>
+			<reference-dist>5.0</reference-dist>
+			<max-dist>100.0</max-dist>
 		</gear-lock>
 		<flap>
 			<name>mp_flaps</name>
@@ -260,8 +269,8 @@
 			<volume>
 				<factor>0.45</factor>
 			</volume>
-			<reference-dist>2.0</reference-dist>
-			<max-dist>80.0</max-dist>
+			<reference-dist>10.0</reference-dist>
+			<max-dist>100.0</max-dist>
 		</flap>
 	</fx>
 </PropertyList>

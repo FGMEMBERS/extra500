@@ -17,7 +17,7 @@
 #      Date:   12.06.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 04.07.2015            
+#      Date: 19.07.2015            
 #
 # note: some parts are taken from fgdata/gui/dialogs/weather.xml
 
@@ -92,6 +92,7 @@ var normalize_string = func(src) {
 
 var local_metar = func() {
 		# checking for valid metars and calculating weighing factors
+		var debug = getprop("/extra500/weather/debug");
 		var total_weight = 0;
 		var vvalid = [];
 		var vweight = [];
@@ -107,10 +108,10 @@ var local_metar = func() {
 				total_weight = total_weight + vweight[i];
 			} else {
 				append( vweight ,0 );
-				print("METAR station ",i," not valid");
+				if (debug) {print("METAR station ",i," not valid"); }
 			}
 		}
-		print("number of METAR station used for calcs ",no_valid);
+		if (debug) {print("number of METAR station used for calcs: ",no_valid); }
 
 		# calculating average values
 		if (no_valid > 0) {
@@ -166,7 +167,7 @@ var local_metar = func() {
 		buildMetar();
 
 		} else {
-			print("no valid METARs in range");
+			if (debug) {print("no valid METARs in range"); }
 		}
 };
 
@@ -256,7 +257,7 @@ var buildMetar = func() {
 
 # assembling METAR
 	var metar = dat ~ sp ~ nrst_arp ~sp~ dat2 ~sp~ winddir~windspeed~gustwind~"KT" ~sp~ vwind ~ visi_str ~sp~ layer[0] ~ layer[1] ~ layer[2] ~ layer[3] ~ layer[4] ~ temp_str~"/"~dewp_str ~sp~ "Q"~qnh;
-print(metar);
+	if (getprop("/extra500/weather/debug")) {print(metar);}
 
 	if( metar != nil ) {
 		setprop( "environment/metar/data", normalize_string(metar) );
@@ -421,8 +422,10 @@ var WeatherService = {
 		#props.dump(me._nRoot);
 	},
 	update : func(){
-		print("--------------------------------------------------------");
-		print("WeatherService::update() ... ");
+		if (getprop("/extra500/weather/debug")) {
+			print("--------------------------------------------------------");
+			print("WeatherService::update() ... ");
+		}
 		me._ready = 0;
 		me._nReady.setValue(me._ready);
 		
@@ -434,7 +437,7 @@ var WeatherService = {
 		
 	},
 	fetchMetar : func(){
-		print("WeatherService::fetchMetar() ... ");
+		if (getprop("/extra500/weather/debug")) {print("WeatherService::fetchMetar() ... ");}
 		var listAirports = positioned.findAirportsWithinRange(100);
 		me._stationsReady = 0;
 		var stationIndex = 0;
@@ -450,7 +453,7 @@ var WeatherService = {
 
 		foreach(var airport; listAirports) {
 			if (closest_ap == 0) {			
-				print("Closest airport is ",airport.id," at ",sprintf("%4d",math.round( airport.elevation ) ),"m or ",sprintf("%4d",math.round( airport.elevation/0.3048 ) ),"ft");
+				if (getprop("/extra500/weather/debug")) {print("Closest airport is ",airport.id," at ",sprintf("%4d",math.round( airport.elevation ) ),"m or ",sprintf("%4d",math.round( airport.elevation/0.3048 ) ),"ft"); }
 				setprop("/extra500/weather/nearest-arprt",airport.id);
 				setprop("/extra500/weather/nearest-arprt-elev",airport.elevation);
 				closest_ap = 1;
