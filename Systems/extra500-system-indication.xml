@@ -1166,6 +1166,24 @@
 		</lag_filter>
 	</channel>
 
+	<channel name="reverse" execute="/fdm/jsbsim/propulsion/engine/reverser">
+
+			<fcs_function name="blade-angle">
+			<function>
+       			<description>in beta mode blade angle is controlled by thrust lever</description>
+       				<table>
+            				<independentVar lookup="row">/controls/engines/engine/throttle</independentVar>
+            				<tableData>
+							0	-2
+							1	-20
+            				</tableData>
+      				</table>
+    			</function>
+			<output>/fdm/jsbsim/propulsion/engine/blade-angle</output>
+		</fcs_function>
+
+	</channel>
+
 <!--AIRSPEED ANTI-CALIBRATION-->
 	<channel name="airspeed">
 		<fcs_function name="/instrumentation/airspeed-IFD-LH/indicated-airspeed-kt">
