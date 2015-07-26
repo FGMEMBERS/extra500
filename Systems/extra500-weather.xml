@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+	
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Eric van den Berg
+      Date: 2015-05-19
+
+      Last change:      
+      Date:             
+-->
+
+<system name="weather">
+
+	<channel name="lag-filters">
+
+		<lag_filter name ="/extra500/weather/stuff/press-filter">
+ 			<input>/extra500/weather/avgmetar/pressure-sea-level-inhg</input>
+			<c1>/extra500/weather/filter-c1</c1>
+			<output>/extra500/weather/avgmetar/filtered-pressure-sea-level-inhg</output>
+		</lag_filter>
+
+		<switch name="/extra500/weather/stuff/press-switch">
+			<default value="/environment/metar/pressure-sea-level-inhg"/>
+			<test logic="AND" value="/extra500/weather/avgmetar/filtered-pressure-sea-level-inhg">
+				/extra500/weather/smooth eq 1
+			</test>
+			<output>/environment/metar/pressure-sea-level-inhg</output>
+		</switch>
+
+		<lag_filter name ="/extra500/weather/stuff/temp-filter">
+ 			<input>/extra500/weather/avgmetar/temperature-sea-level-degc</input>
+			<c1>/extra500/weather/filter-c1</c1>
+			<output>/extra500/weather/avgmetar/filtered-temperature-sea-level-degc</output>
+		</lag_filter>
+
+		<switch name="/extra500/weather/stuff/temp-switch">
+			<default value="/environment/metar/temperature-sea-level-degc"/>
+			<test logic="AND" value="/extra500/weather/avgmetar/filtered-temperature-sea-level-degc">
+				/extra500/weather/smooth eq 1
+			</test>
+			<output>/environment/metar/temperature-sea-level-degc</output>
+		</switch>
+
+
+
+
+		<!--lead_lag_filter name="/instrumentation/airspeed-IFD-RH/airspeed-change-ktps">
+			<input>/instrumentation/airspeed-IFD-RH/airspeed-change-unfiltered</input>
+			<c1>/autopilot/altsensor/c1</c1>
+			<c2>/autopilot/altsensor/c2</c2>
+			<c3>/autopilot/altsensor/c3</c3>
+			<c4>/autopilot/altsensor/c4</c4>
+		</lead_lag_filter-->
+
+	</channel>
+
+
+
+</system>
+
+
+

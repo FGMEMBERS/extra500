@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2015.01.10
+      Date:             2015.06.07
 -->
 <PropertyList>
 
@@ -48,28 +48,13 @@
 			 </binding>
 		 </key>
 
-		 <key n="99">
-			 <name>c</name>
-			 <desc>CWS</desc>
-    				<binding>
-      				<command>nasal</command>
-      				<script><![CDATA[
-						UI.click("Autopilot CWS on");
-					]]></script>
-    				</binding>
-				<mod-up>
-    				<binding>
-      				<command>nasal</command>
-      				<script><![CDATA[
-						UI.click("Autopilot CWS off");
-					]]></script>
-    				</binding>
-				</mod-up>
-		 </key>
+
 
 <!-- Autopilot hot-keys
 
 	d : disconnect
+	c : control wheel steering
+	o : autopilot over power toggle
 
 	alt+1 : HDG
 	alt+2 : HDG + NAV
@@ -100,6 +85,44 @@
 						 ]]></script>
 				 </binding>
 			 </mod-up>
+		 </key>
+
+		 <key n="99">
+			 <name>c</name>
+			 <desc>CWS</desc>
+    				<binding>
+      				<command>nasal</command>
+      				<script><![CDATA[
+						UI.click("Autopilot CWS on");
+					]]></script>
+    				</binding>
+				<mod-up>
+    				<binding>
+      				<command>nasal</command>
+      				<script><![CDATA[
+						UI.click("Autopilot CWS off");
+					]]></script>
+    				</binding>
+				</mod-up>
+		 </key>
+
+		 <key n="111">
+			 <name>o</name>
+			 <desc>autopilot overpower hold to activate</desc>
+    				<binding>
+      				<command>nasal</command>
+      				<script><![CDATA[
+						UI.click("Autopilot Overpower on");
+					]]></script>
+    				</binding>
+				<mod-up>
+    				<binding>
+      				<command>nasal</command>
+      				<script><![CDATA[
+						UI.click("Autopilot Overpower off");
+					]]></script>
+    				</binding>
+				</mod-up>
 		 </key>
 		
 		 <key n="49"><!-- 1 -->
