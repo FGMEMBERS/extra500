@@ -17,8 +17,12 @@
       Date: 2014-06-22
 
       Last change:      Eric van den Berg
-      Date:             2015.07.19
+      Date:             2015.07.26
 
+
+Release 3.0.0: use for Flightgear version 3.6 and up
+* ALS inside shadow
+* ALS outside (volumetric) shadow
       
 Release 2.2.0: use for Flightgear version 3.4 and up
 * FMS: CDI indication
