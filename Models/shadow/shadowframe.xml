@@ -41,6 +41,7 @@
       <not>
         <property>/sim/rendering/rembrandt/enabled</property>
       </not>
+      <property>/sim/rendering/shaders/skydome</property>
     </condition>
   </animation>
  
