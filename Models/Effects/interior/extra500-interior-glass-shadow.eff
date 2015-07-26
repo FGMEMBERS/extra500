@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is part of extra500
+
+The extra500 is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 2 of the License, or
+(at your option) any later version.
+
+The extra500 is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+	Authors: 	Dirk Dittmann
+	Date: 		02.04.2015
+
+	Last change:	Dirk Dittmann
+	Date:		22.04.15
+-->
+<PropertyList>
+	<name>extra500-interior-glass-shadow</name>
+	<inherits-from>Effects/model-interior</inherits-from>
+	<parameters>
+		<texture n="4">
+			<type>cubemap</type>
+			<images>
+				<positive-x>Aircraft/extra500/Models/Effects/interior/shadow_px.png</positive-x>
+				<negative-x>Aircraft/extra500/Models/Effects/interior/shadow_nx.png</negative-x>
+				<positive-y>Aircraft/extra500/Models/Effects/interior/shadow_py.png</positive-y>
+				<negative-y>Aircraft/extra500/Models/Effects/interior/shadow_ny.png</negative-y>
+				<positive-z>Aircraft/extra500/Models/Effects/interior/shadow_pz.png</positive-z>
+				<negative-z>Aircraft/extra500/Models/Effects/interior/shadow_nz.png</negative-z>
+			</images>
+		</texture>
+		<opacity-cube-center type="vec3d" n="0"> 0.5 0.0 0.3</opacity-cube-center>
+		<opacity-cube-scale type="vec3d" n="0"> 1.5 0.5 0.7</opacity-cube-scale>
+		<opacity-cube-angle type="float">0.0</opacity-cube-angle>
+		<rnorm><use>/extra500/environment/rain-norm</use></rnorm>
+	</parameters>
+</PropertyList>

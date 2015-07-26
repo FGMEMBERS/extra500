@@ -1441,7 +1441,17 @@ of the RR 250-B17F/2 engine is best.</long-description>
 
 
  </instrumentation>
-
+ <environment>
+	<temperature-degK type="double">15</temperature-degK>
+	 <aircraft-effects>
+		 <frost-level-noice type="double">0.0</frost-level-noice>
+		 <frost-level-heated type="double">0.0</frost-level-heated>
+		 <frost-level-front type="double">0.0</frost-level-front>
+		 <fog-level-noice type="double">0.0</fog-level-noice>
+		 <fog-level-heated type="double">0.0</fog-level-heated>
+		 <fog-level-front type="double">0.0</fog-level-front>
+	 </aircraft-effects>
+ </environment>
        <consumables>
 	       
 	       <fuel>
@@ -1523,6 +1533,8 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<file>Aircraft/extra500/Nasal/audiopanel.nas</file>
 		<file>Aircraft/extra500/Nasal/instrument.nas</file>
 		
+		<file>Aircraft/extra500/Nasal/environment.nas</file>
+		
 		<file>Aircraft/extra500/Nasal/annunciator.nas</file>
 		<file>Aircraft/extra500/Nasal/door.nas</file>
 		<file>Aircraft/extra500/Nasal/cabin.nas</file>
@@ -1540,6 +1552,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<file>Aircraft/extra500/Nasal/route_manager.nas</file>
 		<file>Aircraft/extra500/Nasal/trimindication.nas</file>
 		<file>Aircraft/extra500/Nasal/smoothweather.nas</file>
+		
 		
 	</extra500>
 	<IFD>
@@ -1711,6 +1724,9 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<state type="int">0</state>
 		</emergencyexit>
 	</door>
+	<environment>
+		<rain-norm type="double">0.0</rain-norm>
+	</environment>
 	<instrumentation>
 		<Audiopanel>
 			<knobs>

@@ -35,6 +35,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	
 	<autopilot file="extra500-autopilot"/>
 	<flight_control file="extra500-flight-control"/>
+	<system file="extra500-atmosphere.xml"/>
 	<system file="extra500-system-indication.xml"/>
 	<system file="extra500-system-stallwarner.xml"/>
 	<system file="extra500-system-transponder.xml"/>
