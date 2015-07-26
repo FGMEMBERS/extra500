@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             18.01.2015
+      Date:             06.04.2015
 
 -->
 
@@ -197,36 +197,25 @@
 
 
   <effect>
-    <inherits-from>Effects/model-transparent</inherits-from>
-    <object-name>window.pilot</object-name>
+    <inherits-from>Aircraft/extra500/Models/Effects/interior/extra500-interior-glass-reflection-front</inherits-from>
+    <object-name>window.pilot.icing</object-name>
   </effect>
+  <effect>
+    <inherits-from>Aircraft/extra500/Models/Effects/interior/extra500-interior-glass-reflection-front-heated</inherits-from>
+    <object-name>window.pilot.heated</object-name>
+  </effect>
+  <effect>
+    <inherits-from>Aircraft/extra500/Models/Effects/interior/extra500-interior-glass-reflection-front-noice</inherits-from>
+    <object-name>window.pilot.noicing</object-name>
+  </effect>  
 
   <effect>
-    <inherits-from>Effects/model-transparent</inherits-from>
+    <inherits-from>Aircraft/extra500/Models/Effects/interior/extra500-interior-glass</inherits-from>
     <object-name>window.pass.front</object-name>
-  </effect>
-
-  <effect>
-    <inherits-from>Effects/model-transparent</inherits-from>
     <object-name>window.pass.middle.LH</object-name>
-  </effect>
-
-  <effect>
-    <inherits-from>Effects/model-transparent</inherits-from>
     <object-name>window.pass.middle.RH</object-name>
-  </effect>
-
-  <effect>
-    <inherits-from>Effects/model-transparent</inherits-from>
     <object-name>window.pass.aft</object-name>
   </effect>
-
-
-  <effect>
-    <inherits-from>Effects/model-transparent</inherits-from>
-    <object-name>window.pass.aft</object-name>
-  </effect>
-
   
   <animation>
 	  <type>shader</type>
@@ -468,6 +457,16 @@
 <model>
   <name>icelight</name>
   <path>Aircraft/extra500/Models/lights/icelight.xml</path>
+	<offsets>
+		<x-m>0</x-m>
+		<y-m>0</y-m>	
+		<z-m>0</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>shadow</name>
+  <path>Aircraft/extra500/Models/shadow/shadowframe.xml</path>
 	<offsets>
 		<x-m>0</x-m>
 		<y-m>0</y-m>	

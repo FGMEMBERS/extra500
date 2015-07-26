@@ -17,7 +17,7 @@
 #      Date: Jun 30 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             17.01.14
+#      Date:             14.05.15
 #
 
 # MM Page 590
@@ -159,7 +159,7 @@ var AnnunciatorClass = {
 		append(me._listeners, setlistener("/systems/gear/annunciators/gearwarn",		func(n){instance._leds["GearWarn"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/pitot/StallWarn/state",	func(n){instance._leds["StallWarn"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/deice/WindshieldHeat/Fail",	func(n){instance._leds["WindshieldHeatFail"].setState(n.getValue());},1,0) );
-		append(me._listeners, setlistener("/extra500/engine/lowFuelPressure",		func(n){instance._leds["FuelPress"].setState(n.getValue());},1,0) );
+		append(me._listeners, setlistener("/systems/fuel/lowFuelPressure",		func(n){instance._leds["FuelPress"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/deice/PitotHeatLeft/state",	func(n){instance._leds["PitotHeatLeft"].setState(!n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/deice/PitotHeatRight/state",func(n){instance._leds["PitotHeatRight"].setState(!n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/flap/hasWarning",		func(n){instance._leds["Flaps"].setState(n.getValue());},1,0) );
@@ -167,19 +167,19 @@ var AnnunciatorClass = {
 		append(me._listeners, setlistener("/extra500/cabin/hasBleedOvertempWarning",	func(n){instance._leds["BleedOvertemp"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/deice/StaticHeatLeft/state",func(n){instance._leds["StaticHeatLeft"].setState(!n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/deice/StaticHeatRight/state",func(n){instance._leds["StaticHeatRight"].setState(!n.getValue());},1,0) );
-		append(me._listeners, setlistener("/extra500/system/fuel/FuelPumpTransLeft/state",	func(n){instance._leds["FuelTransLeft"].setState(!n.getValue());},1,0) );
-		append(me._listeners, setlistener("/extra500/system/fuel/FuelPumpTransRight/state",	func(n){instance._leds["FuelTransRight"].setState(!n.getValue());},1,0) );
+		append(me._listeners, setlistener("/systems/fuel/LHtank/prswitch/state",	func(n){instance._leds["FuelTransLeft"].setState(n.getValue());},1,0) );
+		append(me._listeners, setlistener("/systems/fuel/RHtank/prswitch/state",	func(n){instance._leds["FuelTransRight"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/electric/source/Alternator/hasLoad",	func(n){instance._leds["StandByAlternOn"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/controls/engines/engine[0]/ignition",	func(n){instance._leds["IgnitionActive"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/deice/IntakeHeat/state",	func(n){instance._leds["IntakeHeat"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/panel/Side/Light/Recognition/state",func(n){instance._leds["RecognLight"].setState(n.getValue());},1,0) );
-		append(me._listeners, setlistener("/extra500/system/fuel/FuelFilterByPass",	func(n){instance._leds["FuelFilterByPass"].setState(n.getValue());},1,0) );
+		append(me._listeners, setlistener("/systems/fuel/fuelfilter/bypass/switch/state",	func(n){instance._leds["FuelFilterByPass"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/systems/pneumatic/low-pressure-caution",	func(n){instance._leds["PneumaticLow"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/electric/pcBoard1/lowVoltage",	func(n){instance._leds["LowVoltage"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/systems/pneumatic/boots-safe-oper",		func(n){instance._leds["DeiceBoots"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/panel/Side/Light/Landing/state",	func(n){instance._leds["LandingLight"].setState(n.getValue());},1,0) );
-		append(me._listeners, setlistener("/extra500/system/fuel/FuelLowLeft",		func(n){instance._leds["FuelLowLeft"].setState(n.getValue());},1,0) );
-		append(me._listeners, setlistener("/extra500/system/fuel/FuelLowRight",		func(n){instance._leds["FuelLowRight"].setState(n.getValue());},1,0) );
+		append(me._listeners, setlistener("/systems/fuel/LHtank/lowfuel/state",		func(n){instance._leds["FuelLowLeft"].setState(n.getValue());},1,0) );
+		append(me._listeners, setlistener("/systems/fuel/RHtank/lowfuel/state",		func(n){instance._leds["FuelLowRight"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/engine/lowPitch",			func(n){instance._leds["PropellerLowPitch"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/electric/source/ExternalGenerator/isPluged",		func(n){instance._leds["ExternalPower"].setState(n.getValue());},1,0) );
 		append(me._listeners, setlistener("/extra500/system/deice/WindshieldHeat/state",	func(n){instance._leds["WindshieldHeatOn"].setState(n.getValue());},1,0) );

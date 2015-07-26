@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             13.05.14
+      Date:             12.06.15
 -->
 
 <PropertyList>
@@ -57,6 +57,14 @@
 				<binding>
 					<command>property-toggle</command>
 					<property>/extra500/yokes/visible</property>
+				</binding>
+			</item>
+			<item>
+				<name>smooth-weather-toggle</name>
+				<label>Toggle Smooth Weather</label>
+				<binding>
+					<command>property-toggle</command>
+					<property>/extra500/weather/smooth</property>
 				</binding>
 			</item>
 			<!--

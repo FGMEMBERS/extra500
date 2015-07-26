@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: 14.07.2015
+
+      Last change: Eric van den Berg     
+      Date: 17.07.2015            
+
+-->
+
+<PropertyList>
+
+<path>shadowframe.ac</path>
+
+	<offsets>
+		<pitch-deg>-1.39</pitch-deg>
+	</offsets>
+
+<!-- shadow on ground-->
+ <animation>
+    <!-- opaque objects -->
+    <!-- transparent objects -->
+    <object-name>shadow</object-name>
+    <type>select</type>
+    <condition>
+      <not>
+        <property>/sim/rendering/rembrandt/enabled</property>
+      </not>
+      <property>/sim/rendering/shaders/skydome</property>
+    </condition>
+  </animation>
+ 
+  <effect>
+    <inherits-from>Effects/shadow-vol</inherits-from>
+    <object-name>shadow</object-name>
+  </effect>
+ 
+  <animation>
+    <type>noshadow</type>
+    <object-name>shadow</object-name>
+  </animation>
+ 
+  <!-- pitch -->
+  <animation>
+    <type>rotate</type>
+    <object-name>shadow</object-name>
+    <property>/orientation/pitch-deg</property>
+    <factor>-1.0</factor>
+    <center>
+      <x-m>0</x-m>
+      <y-m>0</y-m>
+      <z-m>0</z-m>
+    </center>
+    <axis>
+      <x>0</x>
+      <y>1</y>
+      <z>0</z>
+    </axis>
+  </animation>
+ 
+  <!-- roll -->
+  <animation>
+    <type>rotate</type>
+    <object-name>shadow</object-name>
+    <property>/orientation/roll-deg</property>
+    <factor>1.0</factor>
+    <center>
+      <x-m>0</x-m>
+      <y-m>0</y-m>
+      <z-m>0</z-m>
+    </center>
+    <axis>
+      <x>1</x>
+      <y>0</y>
+      <z>0</z>
+    </axis>
+  </animation>
+ 
+  <!--Translate to ground level  -->
+  <animation>
+   <type>translate</type>
+    <object-name>shadow</object-name>
+   <condition>
+    <not>
+      <property>/sim/rendering/shaders/skydome</property>
+    </not>
+   </condition>
+   <property>/position/altitude-agl-ft</property>
+   <factor>-0.3048</factor>
+   <center>
+     <x-m>0</x-m>
+     <y-m>0</y-m>
+     <z-m>0</z-m>
+   </center>
+   <axis>
+     <x>0</x>
+     <y>0</y>
+     <z>1</z>
+   </axis>
+  </animation>
+
+</PropertyList>

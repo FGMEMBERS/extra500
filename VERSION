@@ -17,7 +17,27 @@
       Date: 2014-06-22
 
       Last change:      Eric van den Berg
-      Date:             2015.05.02
+      Date:             2015.07.26
+
+
+Release 3.0.0: use for Flightgear version 3.6 and up
+* ALS: inside shadow
+* ALS: outside (volumetric) shadow
+* ALS: shader rain, ice, fog
+* cabin: no oxygenblackout on ground, deicing and fogging
+* IFD: PFD horizon, map data
+
+Release 2.2.0: use for Flightgear version 3.4 and up
+* FMS: CDI indication
+* IFD: fuel indication, map icons DME/NDB/TACAN
+* Fuel: re-model fuel system
+* cabin: oxygenblackout
+* Model: propeller
+* Electric: battery, load 
+* Autopilot: overpower servos
+* Environment: smooth weather
+* Sound: positioning, volume, angle and headset
+* model performance: disabling unused code
 
 Release 2.1.0: use for Flightgear version 3.4 and up
 * Autopilot: improved fail indication, flight director, fixes for broken functions, hotkeys
