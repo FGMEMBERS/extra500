@@ -19,7 +19,11 @@
       Last change:      Eric van den Berg
       Date:             2015.07.19
 
-      
+Release 3.0.0: use for Flightgear version 3.6 and up
+* Environment : ALS shader rain, ice, interoir shadow, outside shadow
+* cabin: no oxygenblackout on ground, deicing and fogging
+* IFD: PFD horizon, map data
+
 Release 2.2.0: use for Flightgear version 3.4 and up
 * FMS: CDI indication
 * IFD: fuel indication, map icons DME/NDB/TACAN
