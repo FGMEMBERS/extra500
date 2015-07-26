@@ -17,10 +17,13 @@
       Date: 2014-06-22
 
       Last change:      Eric van den Berg
-      Date:             2015.07.19
+      Date:             2015.07.26
+
 
 Release 3.0.0: use for Flightgear version 3.6 and up
-* Environment : ALS shader rain, ice, interoir shadow, outside shadow
+* ALS: inside shadow
+* ALS: outside (volumetric) shadow
+* ALS: shader rain, ice, fog
 * cabin: no oxygenblackout on ground, deicing and fogging
 * IFD: PFD horizon, map data
 
