@@ -93,7 +93,7 @@ var ServiceClass = {
 	},
 	setListeners  :func(instance){
 		#print("ServiceClass.setListeners() ... " ~me._name);
-		append(me._listeners, setlistener(me._nFailureCode,func(n){instance._onFailureCodeChange(n);},1,1) );
+		append(me._listeners, setlistener(me._nFailureCode,func(n){instance._onFailureCodeChange(n);},1,0) );
 		append(me._listeners, setlistener(me._nDamage,func(n){instance._onDamageChange(n);},1,0) );
 		
 	},
@@ -147,6 +147,9 @@ var ServiceClass = {
 			me.raiseFailure(me._failureOverStress);
 		}else{
 			#print(me.getPartName() ~ " ... OK");
+			me._nFailureCode.setValue(0);
+			me._nFailureString.setValue("");
+		
 		}
 	},
 	raiseFailure : func(overStress){
@@ -277,7 +280,7 @@ var ExtraService = {
 		
 		me._timer = maketimer(me._timerIntervall,me,ExtraService.update);
 		
-		append(me._listeners, setlistener(me._nTimerIntervall,func(n){instance._onTimerIntervallChange(n);},1,1) );
+		append(me._listeners, setlistener(me._nTimerIntervall,func(n){instance._onTimerIntervallChange(n);},1,0) );
 		
 	},
 	_onTimerIntervallChange : func(n){
