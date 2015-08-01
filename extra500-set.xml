@@ -500,6 +500,15 @@ of the RR 250-B17F/2 engine is best.</long-description>
        </sound> 
        
 	<aircraft-data>
+		<!-- save all service parts -->
+		<path>/extra500/engine</path>
+		<path>/extra500/system/gear</path>
+		<path>/extra500/light</path>
+		<path>/extra500/system</path>
+		<path>/extra500/electric</path>
+		<path>/extra500/instrumentation</path>
+		<path>/extra500/cabin</path>
+		
 		<path>extra500/panel</path>
 		<path>/extra500/electric/source/Battery</path>
 		<path>/extra500/electric/source/ExternalGenerator</path>
@@ -531,8 +540,8 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<path>/fdm/jsbsim/gear/unit[11]/pos-norm</path>
 		<path>/fdm/jsbsim/gear/unit[12]/pos-norm</path>
 
-		<!---->
-		<path>/extra500/log/fuel</path>
+		<!--
+		<path>/extra500/log/fuel</path>-->
 		<path>/extra500/dialog/fuel</path>
 		<path>/extra500/config</path>
 		
@@ -1522,6 +1531,9 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<file>Aircraft/extra500/Nasal/UserInterface/ui.nas</file>
 	</UI>
 	<extra500>
+		
+		<file>Aircraft/extra500/Nasal/service.nas</file>
+		
 		<file>Aircraft/extra500/Nasal/liveries.nas</file>
 		<file>Aircraft/extra500/Nasal/electrical.nas</file>
 		<file>Aircraft/extra500/Nasal/engine.nas</file>

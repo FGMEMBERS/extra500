@@ -89,53 +89,6 @@ var ElectronClass ={
 	
 };
 
-var ServiceClass = {
-	new : func(root,name){
-		var m = { 
-			parents 	: [ServiceClass] ,
-			_path		: root,
-			_nRoot		: props.globals.initNode(root),
-			_name		: name,
-		};
-		m._listeners = [];
-		m._nService = m._nRoot.getNode("service",1);
-		m._qos = 1.0;
-		
-		m._nQos  		= m._nService.initNode("qos",1.0,"DOUBLE");
-		m._nLifetime 		= m._nService.initNode("lifetime",72000000,"INT");
-		m._nBuildin 		= m._nService.initNode("buildin",0,"INT");
-		m._nSerialNumber 	= m._nService.initNode("SerialNumber","","STRING");
-		
-		
-		
-		return m;
-	},
-	getName : func(){
-		return me._name;
-	},
-	getPath : func(){
-		return me._path;
-	},
-	init : func(instance=nil){
-		if (instance==nil){instance=me;}
-		me.setListeners(instance);
-		#print("Service init\t" ~me._name);
-	},
-	deinit : func(){
-		me.removeListeners();
-	},
-	setListeners  :func(instance){
-		#print("ServiceClass.setListeners() ... " ~me._name);
-	},
-	removeListeners  :func(){
-		foreach(var l;me._listeners){
-			removelistener(l);
-		}
-		me._listeners = [];
-	},
-	
-};
-
 var OutPutClass = {
 	new : func(){
 		var m = { parents : [ OutPutClass ] };

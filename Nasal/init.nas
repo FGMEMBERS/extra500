@@ -90,6 +90,9 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 # 		props.globals.getNode("/environment/metar").unalias();
 # 		props.globals.getNode("/environment/metar").alias(props.globals.getNode("environment/metar-nearest"));
 		
+		
+		extra500.extraService.init();
+		
 	},1);
 
 		
