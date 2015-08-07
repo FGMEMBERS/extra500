@@ -29,7 +29,10 @@ var ServiceClass = {
 			_nRoot		: props.globals.initNode(root),
 			_name		: name,
 		};
-		
+		#config members
+		m._raisOnEveryTest 	= 0;	# bool
+		m._onlyIncreasableFailure = 0;	# bool 
+		m._autoFailure		= 1;	# bool
 		
 		m._listeners = [];
 		m._nService = m._nRoot.getNode("service",1);
@@ -39,6 +42,7 @@ var ServiceClass = {
 		m._lifetime		= lifetime;
 		m._qos 			= 1.0;
 		m._damage		= 0;
+		m._wear			= 0;
 		m._failureCode		= 0;
 		m._failureString	= "";
 		
@@ -52,12 +56,14 @@ var ServiceClass = {
 		m._nLifetime 		= m._nService.initNode("lifetime",m._lifetime,"INT",1);
 		m._nQos  		= m._nService.initNode("qos",m._qos,"DOUBLE");
 		m._nDamage		= m._nService.initNode("damage",m._damage,"DOUBLE");
+		m._nWear		= m._nService.initNode("wear",m._wear,"DOUBLE");
 		m._nFailureCode		= m._nService.initNode("failureCode",m._failureCode,"INT",1);
 		m._nFailureString	= m._nService.initNode("failureString",m._failureString,"STRING",1);
 		
 				
 		m._buildin	 	= m._nBuildin.getValue() ;
 		m._qos 			= m._nQos.getValue() ;
+		m._wear			= m._nWear.getValue() ;
 		m._damage		= m._nDamage.getValue() ;
 # 		m._failureCode		= m._nFailureCode.getValue() ;
 # 		m._failureString	= m._nFailureString.getValue() ;
@@ -76,9 +82,9 @@ var ServiceClass = {
 		if (instance==nil){instance=me;}
 		#print("Service init\t" ~me._name);
 		
-		me._initFailure();
+		instance._initFailure();
 		
-		me._failureStressMapIndex = sort ( keys(me._failureStressMap) , func(a,b) a-b ) ;
+		me._failureStressMapIndex = sort ( keys(instance._failureStressMap) , func(a,b) a-b ) ;
 		
 		me.resetFailure();
 		
@@ -93,8 +99,9 @@ var ServiceClass = {
 	},
 	setListeners  :func(instance){
 		#print("ServiceClass.setListeners() ... " ~me._name);
-		append(me._listeners, setlistener(me._nFailureCode,func(n){instance._onFailureCodeChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nFailureCode,func(n){instance._onFailureCodeChange(n);},1,instance._raisOnEveryTest) );
 		append(me._listeners, setlistener(me._nDamage,func(n){instance._onDamageChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nWear,func(n){instance._onWearChange(n);},1,0) );
 		
 	},
 	removeListeners  :func(){
@@ -129,40 +136,63 @@ var ServiceClass = {
 	},
 	checkQos : func(){
 		
-		var wear = (systime() - me._buildin) / me._lifetime;
-		me._qos = 1.0 - (wear * wear * wear * wear);
+		var lifetime = (systime() - me._buildin) / me._lifetime;
+		me._qos = 1.0;
+		me._qos -= (lifetime * lifetime * lifetime * lifetime);
+		me._qos -= me._wear;
 		me._qos -= me._damage;
-		me._qos = global.clamp(me._qos,0,1.0);
+		me._qos = global.clamp(me._qos,0.0,1.0);
 		
 		me._nQos.setValue(me._qos);
 	},
 	stressTest : func(){
-		
-		var stress = rand();
-		
-		if (stress > me._qos){
-			me._failureOverStress = stress - me._qos;
-			#print("ServiceClass::stressTest(" ~me._name ~") ... FAILURE overStress: "~me._failureOverStress);
+		if(me._autoFailure){
+			var stress = rand();
 			
-			me.raiseFailure(me._failureOverStress);
-		}else{
-			#print(me.getPartName() ~ " ... OK");
-			me._nFailureCode.setValue(0);
-			me._nFailureString.setValue("");
-		
+			if (stress > me._qos){
+				me._failureOverStress = stress - me._qos;
+				#print("ServiceClass::stressTest(" ~me._name ~") ... FAILURE overStress: "~me._failureOverStress);
+				
+				me.raiseFailure(me._failureOverStress);
+			}else{
+				#print(me.getPartName() ~ " ... OK");
+				me._failureOverStress = 0;
+				
+				if(me._raisOnEveryTest == 1){
+					me._nFailureCode.setValue(me._failureCode);
+				}else{
+					if(me._onlyIncreasableFailure == 0){
+						me._nFailureCode.setValue(0);
+						me._nFailureString.setValue("");
+					}
+				}
+			}
 		}
 	},
 	raiseFailure : func(overStress){
-		
-		foreach (var stressIndex; me._failureStressMapIndex) {
-			if (stressIndex <= overStress ){
-				me._failureCode = me._failureStressMap[stressIndex];
-			}else{
-				#we are above the map stressIndex
-				break;
+		print(sprintf("ServiceClass::raiseFailure(%.1f) ... %i",overStress,me._onlyIncreasableFailure));
+		if (me._onlyIncreasableFailure == 1){
+			foreach (var stressIndex; me._failureStressMapIndex) {
+				if (stressIndex <= overStress ){
+					if(me._failureStressMap[stressIndex] > me._failureCode){
+						me._failureCode = me._failureStressMap[stressIndex];
+					}
+				}else{
+					#we are above the map stressIndex
+					break;
+				}
+			}
+		}else{
+			
+			foreach (var stressIndex; me._failureStressMapIndex) {
+				if (stressIndex <= overStress ){
+					me._failureCode = me._failureStressMap[stressIndex];
+				}else{
+					#we are above the map stressIndex
+					break;
+				}
 			}
 		}
-		
 		me.setFailureCode(me._failureCode);
 	},
 	setBuildin : func(t){
@@ -186,6 +216,21 @@ var ServiceClass = {
 	setFailureCode : func(nr){
 		me._nFailureCode.setValue(nr);
 	},
+	getWear : func(){
+		me._wear = me._nWear.getValue();
+		me._wear = global.clamp(me._wear,0,1.0);
+		return me._wear;
+	},
+	setWear : func(v){
+		me._wear = v;
+		me._wear = global.clamp(me._wear,0,1.0);
+		me._nWear.setValue(me._wear);
+	},
+	addWear : func(v){
+		me._wear += v;
+		me._wear = global.clamp(me._wear,0,1.0);
+		me._nWear.setValue(me._wear);
+	},
 	getDamage : func(){
 		me._damage = me._nDamage.getValue();
 		me._damage = global.clamp(me._damage,0,1.0);
@@ -202,15 +247,33 @@ var ServiceClass = {
 		me._nDamage.setValue(me._damage);
 	},
 	repairPart : func(){
-		me._damage = 0.0;
+		me._damage = 0.05;
+		me._wear = 0.05;
+		me._failureOverStress = 0;
+		
+		me._nWear.setValue(me._wear);
 		me._nDamage.setValue(me._damage);
+		me._nFailureString.setValue("");
+		me._nFailureCode.setValue(0);
+				
 	},
 	replacePart : func(){
 		me._damage = 0.0;
+		me._wear = 0.0;
+		me._failureOverStress = 0;
 		me._buildin = systime();
 		
+		me._nWear.setValue(me._wear);
 		me._nDamage.setValue(me._damage);
 		me._nBuildin.setValue(me._buildin);
+		me._nFailureString.setValue("");
+		me._nFailureCode.setValue(0);
+		
+	},
+	_onWearChange : func(n){
+		me._wear =  n.getValue();
+		me.checkQos();
+		#me.stressTest();
 	},
 	_onDamageChange : func(n){
 		me._damage =  n.getValue();
@@ -271,6 +334,8 @@ var ExtraService = {
 		m._timer 	= nil;
 		
 		m._now 	= systime();
+		m._dt = 2.0;
+		m._timeLast = m._now - m._dt;
 		
 		return m;
 	},
@@ -325,11 +390,20 @@ var ExtraService = {
 		}
 	},
 	update : func(){
+		
+		
+		
 		var random = rand();
 		var partCount = me._partOut.size();
 		if(partCount == 0){
-			# swap the dubble buffer
-			print("ExtraService::update() ... swap dubble Buffer.");
+			# swap the dubble buffered Part List
+			
+			me._now = systime();
+			me._dt = me._now - me._timeLast;
+			me._timeLast = me._now;
+		
+			
+			print(sprintf("ExtraService::update() ... DT: %.1f sec",me._dt));
 			var partTemp = me._partOut;
 			me._partOut 	= me._partIn;
 			me._partIn 	= partTemp;

@@ -1565,6 +1565,8 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<file>Aircraft/extra500/Nasal/trimindication.nas</file>
 		<file>Aircraft/extra500/Nasal/smoothweather.nas</file>
 		
+		<file>Aircraft/extra500/Nasal/service.example.nas</file>
+		
 		
 	</extra500>
 	<IFD>
