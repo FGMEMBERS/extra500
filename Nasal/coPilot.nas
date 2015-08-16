@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: April 04 2013
 #
-#      Last change:      Eric van den Berg
-#      Date:             12.03.14
+#      Last change:      Dirk Dittmann
+#      Date:             16.08.15
 #
 var buisy = 0;
 var checklist = "";
@@ -43,15 +43,21 @@ var auto_engine_start = func(){
 	UI.click("Main Avionics on");
 	UI.click("Main Generator on");
 	UI.click("Main Standby Alternator on");
+	UI.click("Fuel Transfer Left on");
+	UI.click("Fuel Transfer Right on");
 	UI.click("Fuel Pump 2 on");
 	UI.click("Engine Motoring normal");
 	UI.click("Engine Start on");
-	UI.click("Engine cutoff off");
+	settimer(func{
+		UI.click("Engine cutoff off");
+	},3.8);
 	
 };
 
 var auto_engine_shutdown = func(){
 	UI.click("Fuel Pump 2 off");
+	UI.click("Fuel Transfer Left off");
+	UI.click("Fuel Transfer Right off");
 	UI.click("Main Generator off");
 	UI.click("Main Standby Alternator off");
 	UI.click("Engine cutoff on");

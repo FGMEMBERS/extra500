@@ -17,7 +17,7 @@
 #      Date: 13.03.2014
 #
 #      Last change:      Dirk Dittmann
-#      Date:             14.03.2014
+#      Date:             16.08.2015
 #
 
 var dlgRoot = nil;
@@ -344,10 +344,6 @@ var loopItems = func(){
 				#print("loopItems 1 wait ... ");
 																												
 				var loop_wait = nil;
-				if(item.getNode("loop-wait-pre") != nil ){
-					loop_wait = item.getNode("loop-wait-pre").getValue();
-				}
-				
 				if(loop_wait == nil){
 					loop_wait = loop_wait_pre;
 				}
@@ -355,6 +351,11 @@ var loopItems = func(){
 				if(nConfigImpatient.getBoolValue() and (loop_wait > 0.1) ){
 					loop_wait = 0.1;
 				}
+				
+				if(item.getNode("loop-wait-pre") != nil ){
+					loop_wait = item.getNode("loop-wait-pre").getValue();
+				}
+				
 				
 				#print("loopItems 1 showMarker ... ");
 				setMarker(loop_item_index);
@@ -373,9 +374,6 @@ var loopItems = func(){
 			var loop_wait = nil;
 			var item = listItem[loop_item_index];
 			
-			if(item.getNode("loop-wait-post") != nil){
-				loop_wait = item.getNode("loop-wait-post").getValue();
-			}
 			
 			if(loop_wait == nil){
 				loop_wait = loop_wait_pre;
@@ -384,6 +382,11 @@ var loopItems = func(){
 			if(nConfigImpatient.getValue() and loop_wait > 0.5){
 				loop_wait = 0.5;
 			}
+			
+			if(item.getNode("loop-wait-post") != nil){
+				loop_wait = item.getNode("loop-wait-post").getValue();
+			}
+			
 			
 			callBinding(loop_item_index);
 			loop_state = 3;
