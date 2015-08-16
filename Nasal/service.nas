@@ -248,10 +248,10 @@ var ServiceClass = {
 	},
 	repairPart : func(){
 		me._damage = 0.05;
-		me._wear = 0.05;
+		#me._wear = 0.05;
 		me._failureOverStress = 0;
 		
-		me._nWear.setValue(me._wear);
+		#me._nWear.setValue(me._wear);
 		me._nDamage.setValue(me._damage);
 		me._nFailureString.setValue("");
 		me._nFailureCode.setValue(0);
