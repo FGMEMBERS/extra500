@@ -21,7 +21,7 @@
 #
 
 var TireExample = {
-	new : func(root,name,unitIndex,sn="ATA-32-001",lifetime=72000000){
+	new : func(root,name,unitIndex,nBreak=nil,sn="ATA-32-001",lifetime=72000000){
 		var m = { 
 			parents : [
 				TireExample,
@@ -36,6 +36,13 @@ var TireExample = {
 		m._nWow			 	= props.globals.getNode("/gear/gear["~unitIndex~"]/wow",1);
 		m._nCompression		 	= props.globals.getNode("/gear/gear["~unitIndex~"]/compression-norm",1);
 		
+		m._nBreak			= nil;
+		m._nParkingBreak		= nil;
+		
+		if(nBreak != nil){
+			m._nBreak			= props.globals.getNode(nBreak);
+			m._nParkingBreak		= props.globals.getNode("/controls/gear/brake-parking");
+		}
 		
 		m._rollingFrictionCoeff 	= m._nRollingFrictionCoeff.getValue();
 		m._staticFrictionCoeff 		= m._nStaticFrictionCoeff.getValue();
@@ -186,9 +193,21 @@ var TireExample = {
 			me.getGeodInfo();
 			
 			if(me._ground.solid == 1 ){
+				
+				var wearFactor = 0.00555;
+				var breakNorm = 0;
+				if(me._nBreak != nil){
+					breakNorm = global.clamp(me._nBreak.getValue() + me._nParkingBreak.getValue() ,0.0,1.0);
+					wearFactor += wearFactor * breakNorm * 10;
+				}
+				
+				#{ load_resistance: 1e+30, friction_factor: 1, names: ['pa_threshold'], solid: 1, bumpiness: 0, rolling_friction: 0.02, light_coverage: 0 }
+				#{ load_resistance: 100000, friction_factor: 0.8, names: ['grass_rwy'], solid: 1, bumpiness: 0.05, rolling_friction: 0.05, light_coverage: 0 }
+				#{ load_resistance: 1e+30, friction_factor: 0.6999999999999999, names: ['Grass', 'Airport', 'AirportKeep', 'Greenspace'], solid: 1, bumpiness: 0.1, rolling_friction: 0.1, light_coverage: 4000000 }]
+				
 				#wear += 0.001 * me._ground.load_resistance;
-				wear += 0.001 * me._ground.friction_factor * me._ground.rolling_friction;
-				wear += 0.001 * me._ground.bumpiness ;
+				wear += wearFactor * me._ground.friction_factor * me._ground.rolling_friction;
+				wear += wearFactor * me._ground.bumpiness ;
 				
 				# TODO : by force adding damge
 				if(me._nCompression.getValue() > 0.14){
@@ -212,7 +231,7 @@ var TireExample = {
 		var lon = getprop("/position/longitude-deg");
 		var info = geodinfo(lat, lon);
 		if (info != nil) {
-			#debug.dump(info);
+			debug.dump(info);
 			 if (info[1] != nil){
 				 me._ground.solid = info[1].solid;
 				 me._ground.load_resistance = info[1].load_resistance;
@@ -229,6 +248,6 @@ var TireExample = {
 
 
 var tireNose = TireExample.new("/extra500/system/gear/nose","Tire-Front",0,"ATA-32-001");
-var tireLeft = TireExample.new("/extra500/system/gear/left","Tire-Left",1,"ATA-32-002");
-var tireRight = TireExample.new("/extra500/system/gear/right","Tire-Right",2,"ATA-32-003");
+var tireLeft = TireExample.new("/extra500/system/gear/left","Tire-Left",1,"/controls/gear/brake-left","ATA-32-002");
+var tireRight = TireExample.new("/extra500/system/gear/right","Tire-Right",2,"/controls/gear/brake-right","ATA-32-003");
 
