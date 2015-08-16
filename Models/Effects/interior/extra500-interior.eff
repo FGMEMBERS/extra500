@@ -27,7 +27,7 @@
   <parameters>
 	  
 	  
-	  <grain-texture-enabled type="int">1</grain-texture-enabled>
+	  <grain-texture-enabled type="int">0</grain-texture-enabled>
 	  <grain-magnification type="float">100</grain-magnification>
 	  <texture n="7">
 		  <image>Aircraft/extra500/Models/Effects/MainPanelGrain.png</image>
