@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2015-07-19
+      Date:             2015-08-18
 -->
 
 <autopilot name="STEC55X">
@@ -42,8 +42,22 @@
   			</orientation>
 			<axis>Z</axis>
 			<gain>0.0310809970784</gain>	<!--1/32.174 -->
-			<output>/autopilot/accsens-channel/ap-z-accel</output>
+			<output>/autopilot/accsens-channel/ap-z-accel-raw</output>
 		</accelerometer>
+
+	<fcs_function name="/autopilot/accsens-channel/output">
+    		<function>
+           		<table>
+                 		<independentVar lookup="row">/autopilot/accsens-channel/ap-z-accel-raw</independentVar>
+                 		 <tableData>
+					-11	-10
+                  		-1	0
+					 9	10
+                 		</tableData>
+            	</table>
+    		</function>
+		<output>/autopilot/accsens-channel/ap-z-accel</output>
+	</fcs_function>
 
 	</channel>
 
@@ -2798,27 +2812,10 @@
 			<output>/autopilot/yawtrim-channel/ap-y-accel</output>
 		</accelerometer>
 
-		<fcs_function name="/autopilot/yawtrim-channel/ap-y-accelsensor-incl-gforce">
-			<function>
-				<sum>
-					<property>/autopilot/yawtrim-channel/ap-y-accelsensor</property>	
-					<product>
-						<cos>
-							<property>attitude/pitch-rad</property>
-						</cos>
-						<sin>
-							<property>attitude/phi-rad</property>
-						</sin>
-					</product>
-				</sum>
-			</function>
-			<output>/autopilot/yawtrim-channel/ap-y-accelsensor-incl-gforce</output>
-		</fcs_function>
-
 		<fcs_function name="/autopilot/yawtrim-channel/ap-y-accel-incl-input">
 			<function>
 				<sum>
-					<property>/autopilot/yawtrim-channel/ap-y-accelsensor-incl-gforce</property>
+					<property>/autopilot/yawtrim-channel/ap-y-accelsensor</property>
 					<product>
 						<property>/autopilot/yawtrim-channel/poti-gain</property>	
 						<property>/extra500/panel/Master/Autopilot/YawTrim/state</property>
@@ -2833,8 +2830,8 @@
 			<width>0.002</width>
 			<clipto>
 		     		<min>/autopilot/yawtrim-channel/accel-min</min>
-                    		<max>/autopilot/yawtrim-channel/accel-max</max>
-               		 </clipto>
+                    	<max>/autopilot/yawtrim-channel/accel-max</max>
+               	 </clipto>
 		</deadband>
 
 <!-- this moves the rudder if needed and possible--> 
