@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2015-08-18
+      Date:             2015-08-23
 -->
 
 <autopilot name="STEC55X">
@@ -2793,7 +2793,7 @@
 
 <!--****************************YAW TRIM*****************************************************************************-->
 
-	<channel name="yawtrim" execute="/autopilot/mode/yawtrim">
+	<channel name="yawtrim">
 
 <!--lateral acceleronmeter in the tailcone-->
 		<accelerometer name="/autopilot/yawtrim-channel/ap-y-accelsensor">
@@ -2827,7 +2827,7 @@
 
 		<deadband name="/autopilot/yawtrim-channel/ap-y-accel-clipped">
 			<input>/autopilot/yawtrim-channel/ap-y-accel-incl-input</input>
-			<width>0.002</width>
+			<width>0.001</width>
 			<clipto>
 		     		<min>/autopilot/yawtrim-channel/accel-min</min>
                     	<max>/autopilot/yawtrim-channel/accel-max</max>
