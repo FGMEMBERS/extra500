@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:	Eric van den Berg
-	Date:			23.08.15
+	Date:			24.08.15
 
 
 ************************************************************************
@@ -765,7 +765,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<acc-offset-gain type="double">0.18</acc-offset-gain>
 		<target-alt-ft type="double">0.0</target-alt-ft>
 		<vs-target-gain type="double">6.0</vs-target-gain>
-		<accel-rate-gain type="double">6000.0</accel-rate-gain>
+		<accel-rate-gain type="double">5000.0</accel-rate-gain>
 		<pitch-error-gain type="double">-0.000015</pitch-error-gain>
 	</alt-channel>
 	<pitchtrim-channel>
