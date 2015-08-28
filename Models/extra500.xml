@@ -365,7 +365,7 @@
 	</offsets>
 </model>
 <model>
-  <name>MainPanel</name>
+  <name>FlapsGear</name>
   <path>Aircraft/extra500/Models/instruments/InstrumentFlapsGear.xml</path>
 	<offsets>
 		<x-m>-0.81047</x-m>

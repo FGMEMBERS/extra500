@@ -274,9 +274,19 @@ var buildMetar = func() {
 	}
 
 # rain
-	setprop("environment/metar/rain-norm",getprop("/extra500/weather/avgmetar/rain-norm"));
+	var rain_norm = getprop("/extra500/weather/avgmetar/rain-norm");
+	if (rain_norm < 0.1 ) {
+		setprop("environment/metar/rain-norm",0);
+	} else {
+		setprop("environment/metar/rain-norm",rain_norm);
+	}
 # snow
-	setprop("environment/metar/snow-norm",getprop("/extra500/weather/avgmetar/snow-norm"));
+	var snow_norm = getprop("/extra500/weather/avgmetar/snow-norm");
+	if (snow_norm < 0.1 ) {
+		setprop("environment/metar/snow-norm",0);
+	} else {
+		setprop("environment/metar/snow-norm",snow_norm);
+	}
 
 };
 
