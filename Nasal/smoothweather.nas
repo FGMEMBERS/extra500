@@ -456,6 +456,9 @@ var WeatherService = {
 		
 		me._geoAircraft = geo.aircraft_position();
 		me._elevation = geo.elevation(me._geoAircraft.lat(),me._geoAircraft.lon());
+		if(me._elevation == nil){
+			me._elevation = 0.001;
+		}
 		
 		var geoStation = geo.Coord.new().set_latlon(0, 0, 0);
 
