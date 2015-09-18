@@ -217,12 +217,20 @@ var EngineClass = {
 		me._checkIgnitionCutoff();
 	},
 	onReverserClick : func(value = nil){
+		var reverse_state = me.nReverser.getValue();
+
 		if (me.nThrottle.getValue() < 0.01) {
 			if (value == nil){
-				me.nReverser.setValue(!me.nReverser.getValue());
-			}else{
-				me.nReverser.setValue(value);
+				reverse_state = !reverse_state;
 			}
+		}
+
+		me.nReverser.setValue(reverse_state);
+
+		if (reverse_state == 1) { # in this case, the throttle lever is directly setting the prop bladse angle, see systems/esxtra500-system-indication.xml
+			setprop("/fdm/jsbsim/propulsion/engine/constant-speed-mode",0);
+		} else {
+			setprop("/fdm/jsbsim/propulsion/engine/constant-speed-mode",1);
 		}
 	},
 	init : func(instance=nil){

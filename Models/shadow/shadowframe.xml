@@ -19,7 +19,7 @@
       Date: 14.07.2015
 
       Last change: Eric van den Berg     
-      Date: 17.07.2015            
+      Date: 28.08.2015            
 
 -->
 
@@ -59,7 +59,7 @@
   <animation>
     <type>rotate</type>
     <object-name>shadow</object-name>
-    <property>/orientation/pitch-deg</property>
+    <property>/orientation/model/pitch-deg</property>
     <factor>-1.0</factor>
     <center>
       <x-m>0</x-m>
@@ -77,7 +77,7 @@
   <animation>
     <type>rotate</type>
     <object-name>shadow</object-name>
-    <property>/orientation/roll-deg</property>
+    <property>/orientation/model/roll-deg</property>
     <factor>1.0</factor>
     <center>
       <x-m>0</x-m>
