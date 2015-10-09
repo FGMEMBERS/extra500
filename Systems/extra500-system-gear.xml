@@ -20,7 +20,7 @@
       Date: 2013-10-16
 
       Last change:      Eric van den Berg
-      Date:             2014-11-02
+      Date:             2015-10-09
 -->
 
 <!--
@@ -200,9 +200,14 @@ for lights:
 
 		<switch name="/systems/gear/actuators/NG-pos-raw2">
 			<default value="/systems/gear/actuators/NG-pos-raw"/>
-			<test logic="AND" value="/fdm/jsbsim/gear/unit/pos-norm">
-				/systems/gear/pressure-bar lt 100
-				/systems/gear/solenoids/mainvalve/state eq -1
+			<test logic="OR" value="/fdm/jsbsim/gear/unit/pos-norm">
+				<test logic="AND">
+					/systems/gear/pressure-bar lt 100
+					/systems/gear/solenoids/mainvalve/state eq -1
+				</test>
+				<test logic="OR">
+					/systems/gear/NG-free eq 0
+				</test>
 			</test>
 		</switch>
 
@@ -233,6 +238,7 @@ for lights:
 				<sum>
 					<property>/fdm/jsbsim/gear/unit[1]/pos-norm</property>
 					<product>
+						<property>/systems/gear/LMG-free</property>
 						<property>/systems/gear/solenoids/mainvalve/state</property>
 						<property>/systems/gear/actuators/maingearspeed</property>
 						<property>/systems/gear/pressure-bar</property>
@@ -257,6 +263,7 @@ for lights:
 				<sum>
 					<property>/fdm/jsbsim/gear/unit[2]/pos-norm</property>
 					<product>
+						<property>/systems/gear/RMG-free</property>
 						<property>/systems/gear/solenoids/mainvalve/state</property>
 						<property>/systems/gear/actuators/maingearspeed</property>
 						<property>/systems/gear/pressure-bar</property>
