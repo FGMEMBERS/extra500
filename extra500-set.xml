@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:	Eric van den Berg
-	Date:			19.07.15
+	Date:			09.10.15
 
 
 ************************************************************************
@@ -821,37 +821,40 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<cabin-pressure-inhg type="double">29.92</cabin-pressure-inhg>
 	</pressurization>
 	<gear>
-		<LMG-pos>1</LMG-pos>
-		<RMG-pos>1</RMG-pos>
-		<NG-pos>1</NG-pos>
-		<Lupperdoor-pos>0.8</Lupperdoor-pos>
-		<Rupperdoor-pos>0.8</Rupperdoor-pos>
-		<Lowerdoor-pos>1</Lowerdoor-pos>
-		<Nosegeardoor-pos>1</Nosegeardoor-pos>
-		<pressure-bar>0</pressure-bar>
+		<LMG-pos type="double">1</LMG-pos>
+		<RMG-pos type="double">1</RMG-pos>
+		<NG-pos type="double">1</NG-pos>
+		<LMG-free type="double">1</LMG-free>
+		<RMG-free type="double">1</RMG-free>
+		<NG-free type="double">1</NG-free>
+		<Lupperdoor-pos type="double">0.8</Lupperdoor-pos>
+		<Rupperdoor-pos type="double">0.8</Rupperdoor-pos>
+		<Lowerdoor-pos type="double">1</Lowerdoor-pos>
+		<Nosegeardoor-pos type="double">1</Nosegeardoor-pos>
+		<pressure-bar type="double">0</pressure-bar>
 		<pressure>
-			<dpress-p-sec>50</dpress-p-sec>
-			<dpress-mov-p-sec>-60</dpress-mov-p-sec>
-			<dpress-mov2-p-sec>-30</dpress-mov2-p-sec>
-			<leakrate-p-press>-0.000833333333333</leakrate-p-press>
+			<dpress-p-sec type="double">50</dpress-p-sec>
+			<dpress-mov-p-sec type="double">-60</dpress-mov-p-sec>
+			<dpress-mov2-p-sec type="double">-30</dpress-mov2-p-sec>
+			<leakrate-p-press type="double">-0.000833333333333</leakrate-p-press>
 		</pressure>
 		<actuators>
-			<upperdoorspeed>0.00833333333333</upperdoorspeed>
-			<lowerdoorspeed>0.00833333333333</lowerdoorspeed>
-			<nosegearspeed>0.010</nosegearspeed>
-			<maingearspeed>0.00222222222222</maingearspeed>
-			<Rupperdoor-pos-old></Rupperdoor-pos-old>
-			<Lupperdoor-pos-old></Lupperdoor-pos-old>
-			<Lowerdoor-pos-old></Lowerdoor-pos-old>
-			<Rupperdoor-moving>0</Rupperdoor-moving>
-			<Lupperdoor-moving>0</Lupperdoor-moving>
-			<Lowerdoor-moving>0</Lowerdoor-moving>
-			<LMG-pos-old>0</LMG-pos-old>
-			<RMG-pos-old>0</RMG-pos-old>
-			<NG-pos-old>0</NG-pos-old>
-			<LMG-moving>0</LMG-moving>
-			<RMG-moving>0</RMG-moving>
-			<NG-moving>0</NG-moving>
+			<upperdoorspeed type="double">0.00833333333333</upperdoorspeed>
+			<lowerdoorspeed type="double">0.00833333333333</lowerdoorspeed>
+			<nosegearspeed type="double">0.010</nosegearspeed>
+			<maingearspeed type="double">0.00222222222222</maingearspeed>
+			<Rupperdoor-pos-old type="double"></Rupperdoor-pos-old>
+			<Lupperdoor-pos-old type="double"></Lupperdoor-pos-old>
+			<Lowerdoor-pos-old type="double"></Lowerdoor-pos-old>
+			<Rupperdoor-moving type="double">0</Rupperdoor-moving>
+			<Lupperdoor-moving type="double">0</Lupperdoor-moving>
+			<Lowerdoor-moving type="double">0</Lowerdoor-moving>
+			<LMG-pos-old type="double">0</LMG-pos-old>
+			<RMG-pos-old type="double">0</RMG-pos-old>
+			<NG-pos-old type="double">0</NG-pos-old>
+			<LMG-moving type="double">0</LMG-moving>
+			<RMG-moving type="double">0</RMG-moving>
+			<NG-moving type="double">0</NG-moving>
 		</actuators>
 		<annunciators>
 			<hydcaution>0</hydcaution>
@@ -1603,7 +1606,8 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<file>Aircraft/extra500/Nasal/controls.nas</file>
 	</controls>
 	<events>
-		<file>Nasal/eventmessages.nas</file>
+		<file>Aircraft/extra500/Nasal/eventmessages.nas</file>
+		<file>Aircraft/extra500/Nasal/failurescenarios.nas</file>
 	</events>
 </nasal>
 
@@ -1727,6 +1731,10 @@ of the RR 250-B17F/2 engine is best.</long-description>
 	<environment>
 		<rain-norm type="double">0.0</rain-norm>
 	</environment>
+	<failurescenarios>
+		<activate type="bool">0</activate>
+		<name type="string"></name>
+	</failurescenarios>
 	<instrumentation>
 		<Audiopanel>
 			<knobs>
