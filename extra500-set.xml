@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:	Eric van den Berg
-	Date:			10.10.15
+	Date:			17.10.15
 
 
 ************************************************************************
@@ -2132,7 +2132,17 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				<FLAPS15>0</FLAPS15>
 			</events>
             	</aircraft>
-		<gear>  <!-- jack points -->
+		<gear>  
+			<unit n="0">
+				<flatTire type="bool">0</flatTire>
+			</unit>
+			<unit n="1">
+				<flatTire type="bool">0</flatTire>
+			</unit>
+			<unit n="2">
+				<flatTire type="bool">0</flatTire>
+			</unit>
+			<!-- jack points -->
 			<unit n="10">
 				<pos-norm>0</pos-norm>
 			</unit>

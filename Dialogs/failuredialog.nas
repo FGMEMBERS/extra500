@@ -16,8 +16,8 @@
 #	Authors: 	Eric van den Berg
 #	Date: 	10.10.2015
 #
-#	Last change:	
-#	Date:		
+#	Last change: Eric van den Berg	
+#	Date:	17.10.2015	
 #
 
 var fd_toggle = func() {
@@ -34,9 +34,34 @@ var fd_toggle = func() {
 
 
 # create a new layout
-	var myLayout = canvas.HBoxLayout.new();
+	var myLayout1 = canvas.VBoxLayout.new();
 # assign it to the Canvas
-	myCanvas.setLayout(myLayout);
+	myCanvas.setLayout(myLayout1);
+
+
+	var button_NG = canvas.gui.widgets.Button.new(root, canvas.style, {})
+       	.setCheckable(1) 
+       	.setChecked( math.abs(getprop("/systems/gear/NG-free")-1) ) 
+        	.setFixedSize(70,25);
+
+	if ( getprop("/systems/gear/NG-free") == 1 ) {
+		button_NG.setText("OK");
+	} else {
+		button_NG.setText("JAMMED");
+	}
+
+	button_NG.listen("toggled", func (e) {
+        	if( e.detail.checked ) {
+			button_NG.setText("JAMMED");
+			setprop("/extra500/failurescenarios/name","NG_jammed");
+			setprop("/extra500/failurescenarios/activate",1);
+        	} else {
+			button_NG.setText("OK");
+			setprop("/extra500/failurescenarios/name","NG_jammed");
+			setprop("/extra500/failurescenarios/activate",0);
+        	}
+    	});
+
 
 	var button_RMG = canvas.gui.widgets.Button.new(root, canvas.style, {})
        	.setCheckable(1) 
@@ -85,9 +110,103 @@ var fd_toggle = func() {
         	}
     	});
 
-	myLayout.addItem(button_LMG);
-	myLayout.addItem(button_RMG);
+	var button_NG_flatTire = canvas.gui.widgets.Button.new(root, canvas.style, {})
+       	.setCheckable(1) 
+       	.setChecked( getprop("/fdm/jsbsim/gear/unit[0]/flatTire") ) 
+        	.setFixedSize(70,25);
+
+	if ( getprop("/fdm/jsbsim/gear/unit[0]/flatTire") == 0 ) {
+		button_NG_flatTire.setText("OK");
+	} else {
+		button_NG_flatTire.setText("FLAT");
+	}
+
+	button_NG_flatTire.listen("toggled", func (e) {
+        	if( e.detail.checked ) {
+			button_NG_flatTire.setText("FLAT");
+			setprop("/extra500/failurescenarios/name","NG_flat");
+			setprop("/extra500/failurescenarios/activate",1);
+        	} else {
+			button_NG_flatTire.setText("OK");
+			setprop("/extra500/failurescenarios/name","NG_flat");
+			setprop("/extra500/failurescenarios/activate",0);
+        	}
+    	});
+
+	var button_RMG_flatTire = canvas.gui.widgets.Button.new(root, canvas.style, {})
+       	.setCheckable(1) 
+       	.setChecked( getprop("/fdm/jsbsim/gear/unit[2]/flatTire") ) 
+        	.setFixedSize(70,25);
+
+	if ( getprop("/fdm/jsbsim/gear/unit[2]/flatTire") == 0 ) {
+		button_RMG_flatTire.setText("OK");
+	} else {
+		button_RMG_flatTire.setText("FLAT");
+	}
+
+	button_RMG_flatTire.listen("toggled", func (e) {
+        	if( e.detail.checked ) {
+			button_RMG_flatTire.setText("FLAT");
+			setprop("/extra500/failurescenarios/name","RMG_flat");
+			setprop("/extra500/failurescenarios/activate",1);
+        	} else {
+			button_RMG_flatTire.setText("OK");
+			setprop("/extra500/failurescenarios/name","RMG_flat");
+			setprop("/extra500/failurescenarios/activate",0);
+        	}
+    	});
+
+	var button_LMG_flatTire = canvas.gui.widgets.Button.new(root, canvas.style, {})
+       	.setCheckable(1) 
+       	.setChecked( getprop("/fdm/jsbsim/gear/unit[1]/flatTire") ) 
+        	.setFixedSize(70,25);
+
+	if ( getprop("/fdm/jsbsim/gear/unit[1]/flatTire") == 0 ) {
+		button_LMG_flatTire.setText("OK");
+	} else {
+		button_LMG_flatTire.setText("FLAT");
+	}
+
+	button_LMG_flatTire.listen("toggled", func (e) {
+        	if( e.detail.checked ) {
+			button_LMG_flatTire.setText("FLAT");
+			setprop("/extra500/failurescenarios/name","LMG_flat");
+			setprop("/extra500/failurescenarios/activate",1);
+        	} else {
+			button_LMG_flatTire.setText("OK");
+			setprop("/extra500/failurescenarios/name","LMG_flat");
+			setprop("/extra500/failurescenarios/activate",0);
+        	}
+    	});
+
+	myLayout1.addStretch(2);
+
+# 'jammed' buttons'
+	var hbox1 = canvas.HBoxLayout.new();
+	hbox1.addStretch(3);	
+	hbox1.addItem(button_LMG);
+	hbox1.addStretch(1);	
+	hbox1.addItem(button_NG);
+	hbox1.addStretch(1);	
+	hbox1.addItem(button_RMG);
+	hbox1.addStretch(3);
 	
+	myLayout1.addItem(hbox1);
+	myLayout1.addStretch(1);
+
+# 'flat buttons'
+	var hbox2 = canvas.HBoxLayout.new();
+	hbox2.addStretch(1);
+	hbox2.addItem(button_LMG_flatTire);
+	hbox2.addStretch(2);
+	hbox2.addItem(button_NG_flatTire);
+	hbox2.addStretch(2);
+	hbox2.addItem(button_RMG_flatTire);
+	hbox2.addStretch(1);
+
+	myLayout1.addItem(hbox2);
+	myLayout1.addStretch(2);
+
 }
 
 
