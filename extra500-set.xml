@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:	Eric van den Berg
-	Date:			09.10.15
+	Date:			10.10.15
 
 
 ************************************************************************
@@ -1587,6 +1587,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 	</Checklist>
 	<Dialogs>
             <file>Aircraft/extra500/Dialogs/fuelpayload.nas</file>
+            <file>Aircraft/extra500/Dialogs/failuredialog.nas</file>
             <file>Aircraft/extra500/Nasal/dialogs.nas</file>
         </Dialogs>
 	<View>

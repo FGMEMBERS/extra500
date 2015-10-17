@@ -16,28 +16,25 @@
 #      Author: Eric van den Berg
 #      Date:   09.10.2015
 #
-#      Last change:       
-#      Date:             
+#      Last change: Eric van den Berg      
+#      Date: 12.10.2015            
 #
 # 
 
 setlistener("/extra500/failurescenarios/activate", func {
-	if ( getprop("/extra500/failurescenarios/activate") == 1 ) {
-		init_failure();
-	} else {
-		failure_reset();
-	}
+	var fail = getprop("/extra500/failurescenarios/activate");
+	set_failure(fail);
 });
 
-var init_failure = func() {
+var set_failure = func(fail) {
 	var failure = getprop("/extra500/failurescenarios/name");	# getting failure name
 	if (failure != "") {
-		if (failure == "RMG_jammed") { RMG_jammed(); }
-		else if (failure == "LMG_jammed") { LMG_jammed(); }
-		else if (failure == "NG_jammed") { NG_jammed(); }
-		else if (failure == "mainvalve_solenoid_fail") { mainvalve_solenoid_fail(); }
-		else if (failure == "upperdoorvalve_solenoid_fail") { upperdoorvalve_solenoid_fail(); }
-		else if (failure == "lowerdoorvalve_solenoid_fail") { lowerdoorvalve_solenoid_fail(); }
+		if (failure == "RMG_jammed") { RMG(fail); }
+		else if (failure == "LMG_jammed") { LMG(fail); }
+		else if (failure == "NG_jammed") { NG(fail); }
+		else if (failure == "mainvalve_solenoid_fail") { mainvalve_solenoid(fail); }
+		else if (failure == "upperdoorvalve_solenoid_fail") { upperdoorvalve_solenoid(fail); }
+		else if (failure == "lowerdoorvalve_solenoid_fail") { lowerdoorvalve_solenoid(fail); }
 	} else {
 		print("Error: No failure scenario name set");
 		setprop("/extra500/failurescenarios/activate",0);
@@ -48,26 +45,15 @@ var init_failure = func() {
 # GEAR FAILURES
 
 #individual gears jammed
-var RMG_jammed = func() {
-     setprop("/systems/gear/RMG-free", 0 ); 
-}
-var LMG_jammed = func() {
-     setprop("/systems/gear/LMG-free", 0 ); 
-}
-var NG_jammed = func() {
-     setprop("/systems/gear/NG-free", 0 ); 
-}
+var RMG = func(n) {setprop("/systems/gear/RMG-free", math.abs(n-1) ); }
+var LMG = func(n) {setprop("/systems/gear/LMG-free", math.abs(n-1) ); }
+var NG = func(n) {setprop("/systems/gear/NG-free", math.abs(n-1) ); }
 
 #solenoids failed
-var mainvalve_solenoid_fail = func() {
-     setprop("/systems/gear/solenoids/mainvalve/serviceable", 0 ); 
-}
-var upperdoorvalve_solenoid_fail = func() {
-     setprop("/systems/gear/solenoids/upperdoorvalve/serviceable", 0 ); 
-}
-var lowerdoorvalve_solenoid_fail = func() {
-     setprop("/systems/gear/solenoids/lowerdoorvalve/serviceable", 0 ); 
-}
+var mainvalve_solenoid = func(n) {setprop("/systems/gear/solenoids/mainvalve/serviceable", math.abs(n-1) ); }
+var upperdoorvalve_solenoid = func(n) {setprop("/systems/gear/solenoids/upperdoorvalve/serviceable", math.abs(n-1) ); }
+var lowerdoorvalve_solenoid = func(n) {setprop("/systems/gear/solenoids/lowerdoorvalve/serviceable", math.abs(n-1) ); }
+
 
 # FAILURE RESET
 
