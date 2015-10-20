@@ -17,197 +17,289 @@
 #	Date: 	10.10.2015
 #
 #	Last change: Eric van den Berg	
-#	Date:	17.10.2015	
+#	Date:	20.10.2015	
 #
 
-var fd_toggle = func() {
-	var (width,height) = (750,512);
-	var title = 'Gear Failure Dialog';
+var FailureClass = {
+	new : func(){
+		var m = {parents:[FailureClass]};
 
-	var gfd_window = canvas.Window.new([width,height],"dialog").set('title',title);
-	var myCanvas = gfd_window.createCanvas().set("background", canvas.style.getColor("bg_color"));
-	var root = myCanvas.createGroup();
+		m._title = 'Extra500 Failure Dialog';
+		m._gfd 	= nil;
+		m._canvas	= nil;
 
-	var filename = "/Dialogs/failuredialog.svg";
-	var svg_symbol = root.createChild('group');
-	canvas.parsesvg(svg_symbol, filename);
+		return m;
+	},
+	openDialog : func(){
+		me._gfd = MyWindow.new([750,512],"dialog");
+		me._gfd.set('title',me._title);
+		me._canvas = me._gfd.createCanvas().set("background", canvas.style.getColor("bg_color"));
+           	me._root = me._canvas.createGroup();
+
+		var filename = "/Dialogs/failuredialog.svg";
+		me._svg_gear = me._root.createChild('group');
+		canvas.parsesvg(me._svg_gear, filename);
+
+		me._Layout1 = canvas.VBoxLayout.new();
+		me._canvas.setLayout(me._Layout1);
+
+# MENU
+		me._button_Gear = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
+       		.setCheckable(1) 
+       		.setChecked( getprop("/extra500/failurescenarios/gear") ) 
+        		.setFixedSize(80,30);
+
+		if ( getprop("/extra500/failurescenarios/gear") == 1 ) {
+			me._button_Gear.setText("ACTIVE");
+		} else {
+			me._button_Gear.setText("GEAR");
+		}
+
+		me._button_Gear.listen("toggled", func (e) {
+        		if( e.detail.checked ) {
+				me._menuButtonsReset();
+				me._button_Gear.setText("ACTIVE");
+				setprop("/extra500/failurescenarios/gear",1);
+				me._hideAll();
+				me._hbox_gear1.show();
+				me._hbox_gear2.show();
+				me._svg_gear.show();
+				me._gearButtons_update();
+        		} else {
+				me._gearButtons_update();
+				me._button_Gear.setChecked(1);
+        		}
+    		});
+
+		me._button_Fuel = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
+       		.setCheckable(1) 
+       		.setChecked( getprop("/extra500/failurescenarios/fuel") ) 
+        		.setFixedSize(80,30);
+
+		if ( getprop("/extra500/failurescenarios/fuel") == 1 ) {
+			me._button_Fuel.setText("ACTIVE");
+		} else {
+			me._button_Fuel.setText("FUEL");
+		}
+
+		me._button_Fuel.listen("toggled", func (e) {
+        		if( e.detail.checked ) {
+				me._menuButtonsReset();
+				me._button_Fuel.setText("ACTIVE");
+				setprop("/extra500/failurescenarios/fuel",1);
+				me._hideAll();
+#				me._hbox_fuel1.show();
+#				me._hbox_fuel2.show();
+#				me._svg_fuel.show();
+				me._fuelButtons_update();
+        		} else {
+				me._fuelButtons_update();
+				me._button_Fuel.setChecked(1);
+        		}
+    		});
+
+		var hbox_menu = canvas.HBoxLayout.new();
+		hbox_menu.addItem(me._button_Gear);
+		hbox_menu.addItem(me._button_Fuel);
+		hbox_menu.addStretch(1);
+
+		me._Layout1.addItem(hbox_menu);
 
 
-# create a new layout
-	var myLayout1 = canvas.VBoxLayout.new();
-# assign it to the Canvas
-	myCanvas.setLayout(myLayout1);
+# GEAR
 
 
-	var button_NG = canvas.gui.widgets.Button.new(root, canvas.style, {})
-       	.setCheckable(1) 
-       	.setChecked( math.abs(getprop("/systems/gear/NG-free")-1) ) 
-        	.setFixedSize(70,25);
+		me._button_NG = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
+       		.setCheckable(1) 
+       		.setChecked( math.abs(getprop("/systems/gear/NG-free")-1) ) 
+        		.setFixedSize(70,25);
 
-	if ( getprop("/systems/gear/NG-free") == 1 ) {
-		button_NG.setText("OK");
-	} else {
-		button_NG.setText("JAMMED");
-	}
-
-	button_NG.listen("toggled", func (e) {
-        	if( e.detail.checked ) {
-			button_NG.setText("JAMMED");
-			setprop("/extra500/failurescenarios/name","NG_jammed");
-			setprop("/extra500/failurescenarios/activate",1);
-        	} else {
-			button_NG.setText("OK");
-			setprop("/extra500/failurescenarios/name","NG_jammed");
-			setprop("/extra500/failurescenarios/activate",0);
-        	}
-    	});
+		me._button_NG.listen("toggled", func (e) {
+        		if( e.detail.checked ) {
+				me._button_NG.setText("JAMMED");
+				setprop("/extra500/failurescenarios/name","NG_jammed");
+				setprop("/extra500/failurescenarios/activate",1);
+        		} else {
+				me._button_NG.setText("OK");
+				setprop("/extra500/failurescenarios/name","NG_jammed");
+				setprop("/extra500/failurescenarios/activate",0);
+        		}
+    		});
 
 
-	var button_RMG = canvas.gui.widgets.Button.new(root, canvas.style, {})
-       	.setCheckable(1) 
-       	.setChecked( math.abs(getprop("/systems/gear/RMG-free")-1) ) 
-        	.setFixedSize(70,25);
+		me._button_RMG = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
+      	 	.setCheckable(1) 
+      	 	.setChecked( math.abs(getprop("/systems/gear/RMG-free")-1) ) 
+      	  	.setFixedSize(70,25);
 
-	if ( getprop("/systems/gear/RMG-free") == 1 ) {
-		button_RMG.setText("OK");
-	} else {
-		button_RMG.setText("JAMMED");
-	}
-
-	button_RMG.listen("toggled", func (e) {
-        	if( e.detail.checked ) {
-			button_RMG.setText("JAMMED");
-			setprop("/extra500/failurescenarios/name","RMG_jammed");
-			setprop("/extra500/failurescenarios/activate",1);
-        	} else {
-			button_RMG.setText("OK");
-			setprop("/extra500/failurescenarios/name","RMG_jammed");
-			setprop("/extra500/failurescenarios/activate",0);
-        	}
-    	});
+		me._button_RMG.listen("toggled", func (e) {
+	        	if( e.detail.checked ) {
+				me._button_RMG.setText("JAMMED");
+				setprop("/extra500/failurescenarios/name","RMG_jammed");
+				setprop("/extra500/failurescenarios/activate",1);
+	        	} else {
+				me._button_RMG.setText("OK");
+				setprop("/extra500/failurescenarios/name","RMG_jammed");
+				setprop("/extra500/failurescenarios/activate",0);
+	        	}
+	    	});
 
 
-	var button_LMG = canvas.gui.widgets.Button.new(root, canvas.style, {})
-       	.setCheckable(1) 
-       	.setChecked( math.abs(getprop("/systems/gear/LMG-free")-1) ) 
-        	.setFixedSize(70,25);
-
-	if ( getprop("/systems/gear/LMG-free") == 1 ) {
-		button_LMG.setText("OK");
-	} else {
-		button_LMG.setText("JAMMED");
-	}
-
-	button_LMG.listen("toggled", func (e) {
-        	if( e.detail.checked ) {
-			button_LMG.setText("JAMMED");
-			setprop("/extra500/failurescenarios/name","LMG_jammed");
-			setprop("/extra500/failurescenarios/activate",1);
-        	} else {
-			button_LMG.setText("OK");
-			setprop("/extra500/failurescenarios/name","LMG_jammed");
-			setprop("/extra500/failurescenarios/activate",0);
-        	}
-    	});
-
-	var button_NG_flatTire = canvas.gui.widgets.Button.new(root, canvas.style, {})
-       	.setCheckable(1) 
-       	.setChecked( getprop("/fdm/jsbsim/gear/unit[0]/flatTire") ) 
-        	.setFixedSize(70,25);
-
-	if ( getprop("/fdm/jsbsim/gear/unit[0]/flatTire") == 0 ) {
-		button_NG_flatTire.setText("OK");
-	} else {
-		button_NG_flatTire.setText("FLAT");
-	}
-
-	button_NG_flatTire.listen("toggled", func (e) {
-        	if( e.detail.checked ) {
-			button_NG_flatTire.setText("FLAT");
-			setprop("/extra500/failurescenarios/name","NG_flat");
-			setprop("/extra500/failurescenarios/activate",1);
-        	} else {
-			button_NG_flatTire.setText("OK");
-			setprop("/extra500/failurescenarios/name","NG_flat");
-			setprop("/extra500/failurescenarios/activate",0);
-        	}
-    	});
-
-	var button_RMG_flatTire = canvas.gui.widgets.Button.new(root, canvas.style, {})
-       	.setCheckable(1) 
-       	.setChecked( getprop("/fdm/jsbsim/gear/unit[2]/flatTire") ) 
-        	.setFixedSize(70,25);
-
-	if ( getprop("/fdm/jsbsim/gear/unit[2]/flatTire") == 0 ) {
-		button_RMG_flatTire.setText("OK");
-	} else {
-		button_RMG_flatTire.setText("FLAT");
-	}
-
-	button_RMG_flatTire.listen("toggled", func (e) {
-        	if( e.detail.checked ) {
-			button_RMG_flatTire.setText("FLAT");
-			setprop("/extra500/failurescenarios/name","RMG_flat");
-			setprop("/extra500/failurescenarios/activate",1);
-        	} else {
-			button_RMG_flatTire.setText("OK");
-			setprop("/extra500/failurescenarios/name","RMG_flat");
-			setprop("/extra500/failurescenarios/activate",0);
-        	}
-    	});
-
-	var button_LMG_flatTire = canvas.gui.widgets.Button.new(root, canvas.style, {})
-       	.setCheckable(1) 
-       	.setChecked( getprop("/fdm/jsbsim/gear/unit[1]/flatTire") ) 
-        	.setFixedSize(70,25);
-
-	if ( getprop("/fdm/jsbsim/gear/unit[1]/flatTire") == 0 ) {
-		button_LMG_flatTire.setText("OK");
-	} else {
-		button_LMG_flatTire.setText("FLAT");
-	}
-
-	button_LMG_flatTire.listen("toggled", func (e) {
-        	if( e.detail.checked ) {
-			button_LMG_flatTire.setText("FLAT");
-			setprop("/extra500/failurescenarios/name","LMG_flat");
-			setprop("/extra500/failurescenarios/activate",1);
-        	} else {
-			button_LMG_flatTire.setText("OK");
-			setprop("/extra500/failurescenarios/name","LMG_flat");
-			setprop("/extra500/failurescenarios/activate",0);
-        	}
-    	});
-
-	myLayout1.addStretch(2);
-
-# 'jammed' buttons'
-	var hbox1 = canvas.HBoxLayout.new();
-	hbox1.addStretch(3);	
-	hbox1.addItem(button_LMG);
-	hbox1.addStretch(1);	
-	hbox1.addItem(button_NG);
-	hbox1.addStretch(1);	
-	hbox1.addItem(button_RMG);
-	hbox1.addStretch(3);
+		me._button_LMG = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
+	       	.setCheckable(1) 
+	       	.setChecked( math.abs(getprop("/systems/gear/LMG-free")-1) ) 
+	        	.setFixedSize(70,25);
 	
-	myLayout1.addItem(hbox1);
-	myLayout1.addStretch(1);
+		me._button_LMG.listen("toggled", func (e) {
+	        	if( e.detail.checked ) {
+				me._button_LMG.setText("JAMMED");
+				setprop("/extra500/failurescenarios/name","LMG_jammed");
+				setprop("/extra500/failurescenarios/activate",1);
+	        	} else {
+				me._button_LMG.setText("OK");
+				setprop("/extra500/failurescenarios/name","LMG_jammed");
+				setprop("/extra500/failurescenarios/activate",0);
+	        	}
+	    	});
+	
+		me._button_NG_flatTire = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
+	       	.setCheckable(1) 
+	       	.setChecked( getprop("/fdm/jsbsim/gear/unit[0]/flatTire") ) 
+	        	.setFixedSize(70,25);
+	
+		me._button_NG_flatTire.listen("toggled", func (e) {
+	        	if( e.detail.checked ) {
+				me._button_NG_flatTire.setText("FLAT");
+				setprop("/extra500/failurescenarios/name","NG_flat");
+				setprop("/extra500/failurescenarios/activate",1);
+	        	} else {
+				me._button_NG_flatTire.setText("OK");
+				setprop("/extra500/failurescenarios/name","NG_flat");
+				setprop("/extra500/failurescenarios/activate",0);
+	        	}
+	    	});
 
-# 'flat buttons'
-	var hbox2 = canvas.HBoxLayout.new();
-	hbox2.addStretch(1);
-	hbox2.addItem(button_LMG_flatTire);
-	hbox2.addStretch(2);
-	hbox2.addItem(button_NG_flatTire);
-	hbox2.addStretch(2);
-	hbox2.addItem(button_RMG_flatTire);
-	hbox2.addStretch(1);
+		me._button_RMG_flatTire = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
+	       	.setCheckable(1) 
+	       	.setChecked( getprop("/fdm/jsbsim/gear/unit[2]/flatTire") ) 
+	        	.setFixedSize(70,25);
+	
+		me._button_RMG_flatTire.listen("toggled", func (e) {
+	        	if( e.detail.checked ) {
+				me._button_RMG_flatTire.setText("FLAT");
+				setprop("/extra500/failurescenarios/name","RMG_flat");
+				setprop("/extra500/failurescenarios/activate",1);
+	        	} else {
+				me._button_RMG_flatTire.setText("OK");
+				setprop("/extra500/failurescenarios/name","RMG_flat");
+				setprop("/extra500/failurescenarios/activate",0);
+	        	}
+	    	});
 
-	myLayout1.addItem(hbox2);
-	myLayout1.addStretch(2);
+		me._button_LMG_flatTire = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
+	       	.setCheckable(1) 
+	       	.setChecked( getprop("/fdm/jsbsim/gear/unit[1]/flatTire") ) 
+	        	.setFixedSize(70,25);
 
-}
+		me._button_LMG_flatTire.listen("toggled", func (e) {
+	        	if( e.detail.checked ) {
+				me._button_LMG_flatTire.setText("FLAT");
+				setprop("/extra500/failurescenarios/name","LMG_flat");
+				setprop("/extra500/failurescenarios/activate",1);
+	        	} else {
+				me._button_LMG_flatTire.setText("OK");
+				setprop("/extra500/failurescenarios/name","LMG_flat");
+				setprop("/extra500/failurescenarios/activate",0);
+	        	}
+	    	});
+
+		me._Layout1.addStretch(2);
+
+# gear 'jammed' buttons'
+		me._hbox_gear1 = canvas.HBoxLayout.new();
+		me._hbox_gear1.addStretch(3);	
+		me._hbox_gear1.addItem(me._button_LMG);
+		me._hbox_gear1.addStretch(1);	
+		me._hbox_gear1.addItem(me._button_NG);
+		me._hbox_gear1.addStretch(1);	
+		me._hbox_gear1.addItem(me._button_RMG);
+		me._hbox_gear1.addStretch(3);
+	
+		me._Layout1.addItem(me._hbox_gear1);
+		me._Layout1.addStretch(1);
+
+# gear 'flat buttons'
+		me._hbox_gear2 = canvas.HBoxLayout.new();
+		me._hbox_gear2.addStretch(1);
+		me._hbox_gear2.addItem(me._button_LMG_flatTire);
+		me._hbox_gear2.addStretch(2);
+		me._hbox_gear2.addItem(me._button_NG_flatTire);
+		me._hbox_gear2.addStretch(2);
+		me._hbox_gear2.addItem(me._button_RMG_flatTire);
+		me._hbox_gear2.addStretch(1);
+
+		me._Layout1.addItem(me._hbox_gear2);
+		me._Layout1.addStretch(2);
+
+		me._gearButtons_update();
+
+	},
+	_menuButtonsReset : func() {
+		setprop("/extra500/failurescenarios/fuel",0);
+		me._button_Fuel.setChecked(0);
+		me._button_Fuel.setText("FUEL");
+
+		setprop("/extra500/failurescenarios/gear",0);
+		me._button_Gear.setChecked(0);
+		me._button_Gear.setText("GEAR");
+
+	},
+	_hideAll : func() {
+		me._hbox_gear1.hide();
+		me._hbox_gear2.hide();
+		me._svg_gear.hide();
+	},
+	_fuelButtons_update : func() {
+	},
+	_gearButtons_update : func() {
+
+		if ( getprop("/systems/gear/NG-free") == 1 ) {
+			me._button_NG.setText("OK");
+		} else {
+			me._button_NG.setText("JAMMED");
+		}
+		if ( getprop("/systems/gear/RMG-free") == 1 ) {
+			me._button_RMG.setText("OK");
+		} else {
+			me._button_RMG.setText("JAMMED");
+		}
+		if ( getprop("/systems/gear/LMG-free") == 1 ) {
+			me._button_LMG.setText("OK");
+		} else {
+			me._button_LMG.setText("JAMMED");
+		}
+		if ( getprop("/fdm/jsbsim/gear/unit[0]/flatTire") == 0 ) {
+			me._button_NG_flatTire.setText("OK");
+		} else {
+			me._button_NG_flatTire.setText("FLAT");
+		}
+		if ( getprop("/fdm/jsbsim/gear/unit[2]/flatTire") == 0 ) {
+			me._button_RMG_flatTire.setText("OK");
+		} else {
+			me._button_RMG_flatTire.setText("FLAT");
+		}
+		if ( getprop("/fdm/jsbsim/gear/unit[1]/flatTire") == 0 ) {
+			me._button_LMG_flatTire.setText("OK");
+		} else {
+			me._button_LMG_flatTire.setText("FLAT");
+		}
+
+	},
+
+};
+
+var Failuredialog = FailureClass.new();
+
 
 
 

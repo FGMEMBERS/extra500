@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             10.10.15
+      Date:             20.10.15
 -->
 
 <PropertyList>
@@ -73,7 +73,7 @@
 				<binding>
 					<command>nasal</command>
 					<script><![CDATA[
-						Dialogs.fd_toggle();
+						Dialogs.Failuredialog.openDialog();
 					]]></script>
 				</binding>
 			</item>
