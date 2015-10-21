@@ -880,7 +880,7 @@
 			<property>metrics/Sw-sqft</property>
 			<property>metrics/bw-ft</property>
 			<property>fcs/left-aileron-pos-norm</property>
-			<value>0.0277</value>
+			<property>aero/coefficients/cl_aileron</property>
 		</product>
 	</function>
 

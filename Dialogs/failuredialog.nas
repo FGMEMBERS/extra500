@@ -36,9 +36,13 @@ var FailureClass = {
 		me._canvas = me._gfd.createCanvas().set("background", canvas.style.getColor("bg_color"));
            	me._root = me._canvas.createGroup();
 
-		var filename = "/Dialogs/failuredialog.svg";
+		var filename = "/Dialogs/GearFaildialog.svg";
 		me._svg_gear = me._root.createChild('group');
 		canvas.parsesvg(me._svg_gear, filename);
+
+		filename = "/Dialogs/FuelFaildialog.svg";
+		me._svg_fuel = me._root.createChild('group');
+		canvas.parsesvg(me._svg_fuel, filename);
 
 		me._Layout1 = canvas.VBoxLayout.new();
 		me._canvas.setLayout(me._Layout1);
@@ -90,7 +94,7 @@ var FailureClass = {
 				me._hideAll();
 #				me._hbox_fuel1.show();
 #				me._hbox_fuel2.show();
-#				me._svg_fuel.show();
+				me._svg_fuel.show();
 				me._fuelButtons_update();
         		} else {
 				me._fuelButtons_update();
@@ -245,6 +249,8 @@ var FailureClass = {
 
 	},
 	_menuButtonsReset : func() {
+		setprop("/extra500/failurescenarios/welcome",0);
+
 		setprop("/extra500/failurescenarios/fuel",0);
 		me._button_Fuel.setChecked(0);
 		me._button_Fuel.setText("FUEL");
@@ -258,6 +264,7 @@ var FailureClass = {
 		me._hbox_gear1.hide();
 		me._hbox_gear2.hide();
 		me._svg_gear.hide();
+		me._svg_fuel.hide();
 	},
 	_fuelButtons_update : func() {
 	},

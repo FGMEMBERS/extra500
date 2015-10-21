@@ -38,12 +38,95 @@ var set_failure = func(fail) {
 		else if (failure == "NG_flat") { NG_flat(fail); }
 		else if (failure == "LMG_flat") { LMG_flat(fail); }
 		else if (failure == "RMG_flat") { RMG_flat(fail); }
+
+		else if (failure == "RAil") { RAil(fail); }
+		else if (failure == "LAil") { LAil(fail); }
+
+		else if (failure == "LAuxLargeLeakeage") { LAuxLargeLeakeage(fail); }
+		else if (failure == "RAuxLargeLeakeage") { RAuxLargeLeakeage(fail); }
+		else if (failure == "LMainLargeLeakeage") { LMainLargeLeakeage(fail); }
+		else if (failure == "RMainLargeLeakeage") { RMainLargeLeakeage(fail); }
+		else if (failure == "LColLargeLeakeage") { LColLargeLeakeage(fail); }
+		else if (failure == "RColLargeLeakeage") { RColLargeLeakeage(fail); }
 	} else {
 		print("Error: No failure scenario name set");
 		setprop("/extra500/failurescenarios/activate",0);
 	}
 }
 
+# CONTROL SYSTEM FAILURES
+
+#ailerons
+var RAil = func(n) { #FIXME: need some yaw moment here as well
+	if (n==1) {
+		setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.01385);
+	} else {
+		setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.0277);
+	}
+}
+var LAil = func(n) {
+	if (n==1) {
+		setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.01385);
+	} else {
+		setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.0277);
+	}
+}
+
+# FUEL SYSTEM FAILURES
+var LAuxLargeLeakeage = func(n) {
+	if (n==1) {
+		setprop("/systems/fuel/LHtank/aux/leakage/flow",1); # 1ppm
+		setprop("/systems/fuel/LHtank/aux/leakage/state",1); 
+	} else {
+		setprop("/systems/fuel/LHtank/aux/leakage/flow",0); 
+		setprop("/systems/fuel/LHtank/aux/leakage/state",0); 
+	}
+}
+var LMainLargeLeakeage = func(n) {
+	if (n==1) {
+		setprop("/systems/fuel/LHtank/main/leakage/flow",1); # 1ppm
+		setprop("/systems/fuel/LHtank/main/leakage/state",1); 
+	} else {
+		setprop("/systems/fuel/LHtank/main/leakage/flow",0); 
+		setprop("/systems/fuel/LHtank/main/leakage/state",0); 
+	}
+}
+var LColLargeLeakeage = func(n) {
+	if (n==1) {
+		setprop("/systems/fuel/LHtank/collector/leakage/flow",1); # 1ppm
+		setprop("/systems/fuel/LHtank/collector/leakage/state",1); 
+	} else {
+		setprop("/systems/fuel/LHtank/collector/leakage/flow",0); 
+		setprop("/systems/fuel/LHtank/collector/leakage/state",0); 
+	}
+}
+var LAuxLargeLeakeage = func(n) {
+	if (n==1) {
+		setprop("/systems/fuel/RHtank/aux/leakage/flow",1); # 1ppm
+		setprop("/systems/fuel/RHtank/aux/leakage/state",1); 
+	} else {
+		setprop("/systems/fuel/RHtank/aux/leakage/flow",0); 
+		setprop("/systems/fuel/RHtank/aux/leakage/state",0); 
+	}
+}
+var LMainLargeLeakeage = func(n) {
+	if (n==1) {
+		setprop("/systems/fuel/RHtank/main/leakage/flow",1); # 1ppm
+		setprop("/systems/fuel/RHtank/main/leakage/state",1); 
+	} else {
+		setprop("/systems/fuel/RHtank/main/leakage/flow",0); 
+		setprop("/systems/fuel/RHtank/main/leakage/state",0); 
+	}
+}
+var LColLargeLeakeage = func(n) {
+	if (n==1) {
+		setprop("/systems/fuel/RHtank/collector/leakage/flow",1); # 1ppm
+		setprop("/systems/fuel/RHtank/collector/leakage/state",1); 
+	} else {
+		setprop("/systems/fuel/RHtank/collector/leakage/flow",0); 
+		setprop("/systems/fuel/RHtank/collector/leakage/state",0); 
+	}
+}
 
 # GEAR FAILURES
 
