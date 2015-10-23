@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 17.10.2015            
+#      Date: 22.10.2015            
 #
 # 
 
@@ -25,34 +25,6 @@ setlistener("/extra500/failurescenarios/activate", func {
 	var fail = getprop("/extra500/failurescenarios/activate");
 	set_failure(fail);
 });
-
-var set_failure = func(fail) {
-	var failure = getprop("/extra500/failurescenarios/name");	# getting failure name
-	if (failure != "") {
-		if (failure == "RMG_jammed") { RMG(fail); }
-		else if (failure == "LMG_jammed") { LMG(fail); }
-		else if (failure == "NG_jammed") { NG(fail); }
-		else if (failure == "mainvalve_solenoid_fail") { mainvalve_solenoid(fail); }
-		else if (failure == "upperdoorvalve_solenoid_fail") { upperdoorvalve_solenoid(fail); }
-		else if (failure == "lowerdoorvalve_solenoid_fail") { lowerdoorvalve_solenoid(fail); }
-		else if (failure == "NG_flat") { NG_flat(fail); }
-		else if (failure == "LMG_flat") { LMG_flat(fail); }
-		else if (failure == "RMG_flat") { RMG_flat(fail); }
-
-		else if (failure == "RAil") { RAil(fail); }
-		else if (failure == "LAil") { LAil(fail); }
-
-		else if (failure == "LAuxLargeLeakeage") { LAuxLargeLeakeage(fail); }
-		else if (failure == "RAuxLargeLeakeage") { RAuxLargeLeakeage(fail); }
-		else if (failure == "LMainLargeLeakeage") { LMainLargeLeakeage(fail); }
-		else if (failure == "RMainLargeLeakeage") { RMainLargeLeakeage(fail); }
-		else if (failure == "LColLargeLeakeage") { LColLargeLeakeage(fail); }
-		else if (failure == "RColLargeLeakeage") { RColLargeLeakeage(fail); }
-	} else {
-		print("Error: No failure scenario name set");
-		setprop("/extra500/failurescenarios/activate",0);
-	}
-}
 
 # CONTROL SYSTEM FAILURES
 
@@ -73,7 +45,7 @@ var LAil = func(n) {
 }
 
 # FUEL SYSTEM FAILURES
-var LAuxLargeLeakeage = func(n) {
+var LAux_leak = func(n) {
 	if (n==1) {
 		setprop("/systems/fuel/LHtank/aux/leakage/flow",1); # 1ppm
 		setprop("/systems/fuel/LHtank/aux/leakage/state",1); 
@@ -82,7 +54,7 @@ var LAuxLargeLeakeage = func(n) {
 		setprop("/systems/fuel/LHtank/aux/leakage/state",0); 
 	}
 }
-var LMainLargeLeakeage = func(n) {
+var LMain_leak = func(n) {
 	if (n==1) {
 		setprop("/systems/fuel/LHtank/main/leakage/flow",1); # 1ppm
 		setprop("/systems/fuel/LHtank/main/leakage/state",1); 
@@ -91,7 +63,7 @@ var LMainLargeLeakeage = func(n) {
 		setprop("/systems/fuel/LHtank/main/leakage/state",0); 
 	}
 }
-var LColLargeLeakeage = func(n) {
+var LCol_leak = func(n) {
 	if (n==1) {
 		setprop("/systems/fuel/LHtank/collector/leakage/flow",1); # 1ppm
 		setprop("/systems/fuel/LHtank/collector/leakage/state",1); 
@@ -100,7 +72,7 @@ var LColLargeLeakeage = func(n) {
 		setprop("/systems/fuel/LHtank/collector/leakage/state",0); 
 	}
 }
-var LAuxLargeLeakeage = func(n) {
+var RAux_leak = func(n) {
 	if (n==1) {
 		setprop("/systems/fuel/RHtank/aux/leakage/flow",1); # 1ppm
 		setprop("/systems/fuel/RHtank/aux/leakage/state",1); 
@@ -109,7 +81,7 @@ var LAuxLargeLeakeage = func(n) {
 		setprop("/systems/fuel/RHtank/aux/leakage/state",0); 
 	}
 }
-var LMainLargeLeakeage = func(n) {
+var RMain_leak = func(n) {
 	if (n==1) {
 		setprop("/systems/fuel/RHtank/main/leakage/flow",1); # 1ppm
 		setprop("/systems/fuel/RHtank/main/leakage/state",1); 
@@ -118,7 +90,7 @@ var LMainLargeLeakeage = func(n) {
 		setprop("/systems/fuel/RHtank/main/leakage/state",0); 
 	}
 }
-var LColLargeLeakeage = func(n) {
+var RCol_leak = func(n) {
 	if (n==1) {
 		setprop("/systems/fuel/RHtank/collector/leakage/flow",1); # 1ppm
 		setprop("/systems/fuel/RHtank/collector/leakage/state",1); 
@@ -181,6 +153,31 @@ var RMG_flat = func(n) {
 	}
 }
 
+var set_failure = func(fail) {
+	var failure = getprop("/extra500/failurescenarios/name");	# getting failure name
+	if (failure != "") {
+		if (failure == "RMG_jammed") { RMG(fail); }
+		else if (failure == "LMG_jammed") { LMG(fail); }
+		else if (failure == "NG_jammed") { NG(fail); }
+		else if (failure == "mainvalve_solenoid_fail") { mainvalve_solenoid(fail); }
+		else if (failure == "upperdoorvalve_solenoid_fail") { upperdoorvalve_solenoid(fail); }
+		else if (failure == "lowerdoorvalve_solenoid_fail") { lowerdoorvalve_solenoid(fail); }
+		else if (failure == "NG_flat") { NG_flat(fail); }
+		else if (failure == "LMG_flat") { LMG_flat(fail); }
+		else if (failure == "RMG_flat") { RMG_flat(fail); }
+		else if (failure == "RAil") { RAil(fail); }
+		else if (failure == "LAil") { LAil(fail); }
+		else if (failure == "LAux_leakage") { LAux_leak(fail); }
+		else if (failure == "RAux_leakage") { RAux_leak(fail); }
+		else if (failure == "LMain_leakage") { LMain_leak(fail); }
+		else if (failure == "RMain_leakage") { RMain_leak(fail); }
+		else if (failure == "LCol_leakage") { LCol_leak(fail); }
+		else if (failure == "RCol_leakage") { RCol_leak(fail); }
+	} else {
+		print("Error: No failure scenario name set");
+		setprop("/extra500/failurescenarios/activate",0);
+	}
+}
 
 # FAILURE RESET
 

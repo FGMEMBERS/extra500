@@ -17,7 +17,7 @@
 #	Date: 	10.10.2015
 #
 #	Last change: Eric van den Berg	
-#	Date:	20.10.2015	
+#	Date:	22.10.2015	
 #
 
 var FailureClass = {
@@ -36,13 +36,17 @@ var FailureClass = {
 		me._canvas = me._gfd.createCanvas().set("background", canvas.style.getColor("bg_color"));
            	me._root = me._canvas.createGroup();
 
-		var filename = "/Dialogs/GearFaildialog.svg";
-		me._svg_gear = me._root.createChild('group');
-		canvas.parsesvg(me._svg_gear, filename);
+		me._filename = "/Dialogs/welcomeFaildialog.svg";
+		me._svg_welcome = me._root.createChild('group');
+		canvas.parsesvg(me._svg_welcome, me._filename);
 
-		filename = "/Dialogs/FuelFaildialog.svg";
+		me._filename = "/Dialogs/GearFaildialog.svg";
+		me._svg_gear = me._root.createChild('group');
+		canvas.parsesvg(me._svg_gear, me._filename);
+
+		me._filename = "/Dialogs/FuelFaildialog.svg";
 		me._svg_fuel = me._root.createChild('group');
-		canvas.parsesvg(me._svg_fuel, filename);
+		canvas.parsesvg(me._svg_fuel, me._filename);
 
 		me._Layout1 = canvas.VBoxLayout.new();
 		me._canvas.setLayout(me._Layout1);
@@ -92,7 +96,7 @@ var FailureClass = {
 				me._button_Fuel.setText("ACTIVE");
 				setprop("/extra500/failurescenarios/fuel",1);
 				me._hideAll();
-#				me._hbox_fuel1.show();
+				me._hbox_fuel1.show();
 #				me._hbox_fuel2.show();
 				me._svg_fuel.show();
 				me._fuelButtons_update();
@@ -108,6 +112,130 @@ var FailureClass = {
 		hbox_menu.addStretch(1);
 
 		me._Layout1.addItem(hbox_menu);
+		me._Layout1.addStretch(1);
+
+# FUEL
+
+		me._button_LAux = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
+       		.setCheckable(1) 
+       		.setChecked( getprop("/systems/fuel/LHtank/aux/leakage/state") ) 
+        		.setFixedSize(70,25);
+
+		me._button_LAux.listen("toggled", func (e) {
+        		if( e.detail.checked ) {
+				me._button_LAux.setText("Leaking");
+				setprop("/extra500/failurescenarios/name","LAux_leakage");
+				setprop("/extra500/failurescenarios/activate",1);
+        		} else {
+				me._button_LAux.setText("OK");
+				setprop("/extra500/failurescenarios/name","LAux_leakage");
+				setprop("/extra500/failurescenarios/activate",0);
+        		}
+    		});
+
+		me._button_LMain = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
+       		.setCheckable(1) 
+       		.setChecked( getprop("/systems/fuel/LHtank/main/leakage/state") ) 
+        		.setFixedSize(70,25);
+
+		me._button_LMain.listen("toggled", func (e) {
+        		if( e.detail.checked ) {
+				me._button_LMain.setText("Leaking");
+				setprop("/extra500/failurescenarios/name","LMain_leakage");
+				setprop("/extra500/failurescenarios/activate",1);
+        		} else {
+				me._button_LMain.setText("OK");
+				setprop("/extra500/failurescenarios/name","LMain_leakage");
+				setprop("/extra500/failurescenarios/activate",0);
+        		}
+    		});
+
+		me._button_LCol = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
+       		.setCheckable(1) 
+       		.setChecked( getprop("/systems/fuel/LHtank/collector/leakage/state") ) 
+        		.setFixedSize(70,25);
+
+		me._button_LCol.listen("toggled", func (e) {
+        		if( e.detail.checked ) {
+				me._button_LCol.setText("Leaking");
+				setprop("/extra500/failurescenarios/name","LCol_leakage");
+				setprop("/extra500/failurescenarios/activate",1);
+        		} else {
+				me._button_LCol.setText("OK");
+				setprop("/extra500/failurescenarios/name","LCol_leakage");
+				setprop("/extra500/failurescenarios/activate",0);
+        		}
+    		});
+
+		me._button_RCol = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
+       		.setCheckable(1) 
+       		.setChecked( getprop("/systems/fuel/RHtank/collector/leakage/state") ) 
+        		.setFixedSize(70,25);
+
+		me._button_RCol.listen("toggled", func (e) {
+        		if( e.detail.checked ) {
+				me._button_RCol.setText("Leaking");
+				setprop("/extra500/failurescenarios/name","RCol_leakage");
+				setprop("/extra500/failurescenarios/activate",1);
+        		} else {
+				me._button_RCol.setText("OK");
+				setprop("/extra500/failurescenarios/name","RCol_leakage");
+				setprop("/extra500/failurescenarios/activate",0);
+        		}
+    		});
+
+		me._button_RMain = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
+       		.setCheckable(1) 
+       		.setChecked( getprop("/systems/fuel/RHtank/main/leakage/state") ) 
+        		.setFixedSize(70,25);
+
+		me._button_RMain.listen("toggled", func (e) {
+        		if( e.detail.checked ) {
+				me._button_RMain.setText("Leaking");
+				setprop("/extra500/failurescenarios/name","RMain_leakage");
+				setprop("/extra500/failurescenarios/activate",1);
+        		} else {
+				me._button_RMain.setText("OK");
+				setprop("/extra500/failurescenarios/name","RMain_leakage");
+				setprop("/extra500/failurescenarios/activate",0);
+        		}
+    		});
+
+		me._button_RAux = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
+       		.setCheckable(1) 
+       		.setChecked( getprop("/systems/fuel/RHtank/aux/leakage/state") ) 
+        		.setFixedSize(70,25);
+
+		me._button_RAux.listen("toggled", func (e) {
+        		if( e.detail.checked ) {
+				me._button_RAux.setText("Leaking");
+				setprop("/extra500/failurescenarios/name","RAux_leakage");
+				setprop("/extra500/failurescenarios/activate",1);
+        		} else {
+				me._button_RAux.setText("OK");
+				setprop("/extra500/failurescenarios/name","RAux_leakage");
+				setprop("/extra500/failurescenarios/activate",0);
+        		}
+    		});
+
+
+#		me._button_LAux.move(100,50);
+		me._hbox_fuel1 = canvas.HBoxLayout.new();
+		me._hbox_fuel1.addStretch(6);
+		me._hbox_fuel1.addItem(me._button_LAux);
+		me._hbox_fuel1.addStretch(2);
+		me._hbox_fuel1.addItem(me._button_LMain);
+		me._hbox_fuel1.addStretch(2);
+		me._hbox_fuel1.addItem(me._button_LCol);
+		me._hbox_fuel1.addStretch(5);
+		me._hbox_fuel1.addItem(me._button_RCol);
+		me._hbox_fuel1.addStretch(2);
+		me._hbox_fuel1.addItem(me._button_RMain);
+		me._hbox_fuel1.addStretch(2);
+		me._hbox_fuel1.addItem(me._button_RAux);
+		me._hbox_fuel1.addStretch(6);
+
+		me._Layout1.addItem(me._hbox_fuel1);
 
 
 # GEAR
@@ -217,7 +345,7 @@ var FailureClass = {
 	        	}
 	    	});
 
-		me._Layout1.addStretch(2);
+		me._Layout1.addStretch(4);
 
 # gear 'jammed' buttons'
 		me._hbox_gear1 = canvas.HBoxLayout.new();
@@ -243,9 +371,11 @@ var FailureClass = {
 		me._hbox_gear2.addStretch(1);
 
 		me._Layout1.addItem(me._hbox_gear2);
-		me._Layout1.addStretch(2);
+		me._Layout1.addStretch(6);
 
-		me._gearButtons_update();
+		me._menuButtonsReset();
+		me._hideAll();
+		me._svg_welcome.show();
 
 	},
 	_menuButtonsReset : func() {
@@ -264,9 +394,45 @@ var FailureClass = {
 		me._hbox_gear1.hide();
 		me._hbox_gear2.hide();
 		me._svg_gear.hide();
+
+#		me._button_LAux.hide();
+		me._hbox_fuel1.hide();
 		me._svg_fuel.hide();
+
+		me._svg_welcome.hide();
 	},
 	_fuelButtons_update : func() {
+
+		if ( getprop("/systems/fuel/LHtank/aux/leakage/state") == 1 ) {
+			me._button_LAux.setText("LEAKING");
+		} else {
+			me._button_LAux.setText("OK");
+		}
+		if ( getprop("/systems/fuel/LHtank/main/leakage/state") == 1 ) {
+			me._button_LMain.setText("LEAKING");
+		} else {
+			me._button_LMain.setText("OK");
+		}
+		if ( getprop("/systems/fuel/LHtank/collector/leakage/state") == 1 ) {
+			me._button_LCol.setText("LEAKING");
+		} else {
+			me._button_LCol.setText("OK");
+		}
+		if ( getprop("/systems/fuel/RHtank/collector/leakage/state") == 1 ) {
+			me._button_RCol.setText("LEAKING");
+		} else {
+			me._button_RCol.setText("OK");
+		}
+		if ( getprop("/systems/fuel/RHtank/main/leakage/state") == 1 ) {
+			me._button_RMain.setText("LEAKING");
+		} else {
+			me._button_RMain.setText("OK");
+		}
+		if ( getprop("/systems/fuel/RHtank/aux/leakage/state") == 1 ) {
+			me._button_RAux.setText("LEAKING");
+		} else {
+			me._button_RAux.setText("OK");
+		}
 	},
 	_gearButtons_update : func() {
 
