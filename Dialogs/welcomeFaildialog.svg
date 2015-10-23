@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="744.09448"
+   height="1052.3622"
+   id="svg3651"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="welcomeFaildialog.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1440"
+     inkscape:window-height="836"
+     id="namedview8"
+     showgrid="false"
+     inkscape:zoom="0.89702958"
+     inkscape:cx="481.53989"
+     inkscape:cy="835.35418"
+     inkscape:window-x="0"
+     inkscape:window-y="21"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs3653" />
+  <metadata
+     id="metadata3656">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     transform="matrix(1.019268,0,0,1,-0.38535967,0)">
+    <rect
+       style="fill:#ffffff;fill-opacity:1"
+       id="rect3059"
+       width="741.53998"
+       height="497.19653"
+       x="-4.4709768"
+       y="-11.497629" />
+    <rect
+       width="8.8887863"
+       height="416.92413"
+       x="20"
+       y="33.452339"
+       id="rect3659"
+       style="fill:#123b00;fill-opacity:1" />
+    <rect
+       width="8.8691587"
+       height="416.98117"
+       x="705.41656"
+       y="33.394772"
+       id="rect5872"
+       style="fill:#123b00;fill-opacity:1" />
+    <rect
+       style="fill:#123b00;fill-opacity:1"
+       id="rect2987"
+       width="685.76038"
+       height="5.5739522"
+       x="25.533558"
+       y="444.80139" />
+    <rect
+       style="fill:#123b00;fill-opacity:1"
+       id="rect2985"
+       width="683.57294"
+       height="4.4591618"
+       x="27.720993"
+       y="33.443714" />
+    <text
+       xml:space="preserve"
+       style="font-size:36.74382019px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="402.07779"
+       y="104.13855"
+       id="text3264"
+       sodipodi:linespacing="125%"
+       transform="scale(0.91859546,1.0886185)"><tspan
+         sodipodi:role="line"
+         id="tspan3266"
+         x="402.07779"
+         y="104.13855"
+         style="text-align:center;text-anchor:middle">Welcome to the Extra500</tspan><tspan
+         sodipodi:role="line"
+         x="402.07779"
+         y="150.06833"
+         id="tspan3268"
+         style="text-align:center;text-anchor:middle">Failure Dialog</tspan><tspan
+         sodipodi:role="line"
+         x="402.07779"
+         y="195.99811"
+         id="tspan3270" /><tspan
+         sodipodi:role="line"
+         x="407.92667"
+         y="241.92787"
+         id="tspan3274"
+         style="text-align:center;text-anchor:middle">Please select one of the </tspan><tspan
+         sodipodi:role="line"
+         x="407.92667"
+         y="287.85764"
+         id="tspan3285"
+         style="text-align:center;text-anchor:middle">systems above and </tspan><tspan
+         sodipodi:role="line"
+         x="402.07779"
+         y="333.78741"
+         style="text-align:center;text-anchor:middle"
+         id="tspan3004">start messing things up</tspan><tspan
+         sodipodi:role="line"
+         x="402.07779"
+         y="379.71719"
+         id="tspan3276" /></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Layer2" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Layer3" />
+</svg>

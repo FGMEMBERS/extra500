@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             12.06.15
+      Date:             20.10.15
 -->
 
 <PropertyList>
@@ -67,6 +67,17 @@
 					<property>/extra500/weather/smooth</property>
 				</binding>
 			</item>
+			<item>
+				<name>Failure-dialog</name>
+				<label>Failure Dialog</label>
+				<binding>
+					<command>nasal</command>
+					<script><![CDATA[
+						Dialogs.Failuredialog.openDialog();
+					]]></script>
+				</binding>
+			</item>
+
 			<!--
 			<item>
 				<name>events-toggle</name>

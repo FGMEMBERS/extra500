@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:	Eric van den Berg
-	Date:			09.10.15
+	Date:			20.10.15
 
 
 ************************************************************************
@@ -1049,6 +1049,10 @@ of the RR 250-B17F/2 engine is best.</long-description>
 					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
         				<serviceable type="bool">true</serviceable>
 				</drain>
+				<leakage>
+					<flow type="double">0</flow>
+					<state type="bool">0</state>
+				</leakage>
 				<overflow-raw type="double">0.2</overflow-raw>
 			</collector>
 			<main>
@@ -1073,6 +1077,10 @@ of the RR 250-B17F/2 engine is best.</long-description>
 					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
         				<serviceable type="bool">true</serviceable>
 				</drainoutboard>
+				<leakage>
+					<flow type="double">0</flow>
+					<state type="bool">0</state>
+				</leakage>
 			</main>
 			<aux>
 				<motiveoprvalve>
@@ -1097,6 +1105,10 @@ of the RR 250-B17F/2 engine is best.</long-description>
 					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
         				<serviceable type="bool">true</serviceable>
 				</drainoutboard>
+				<leakage>
+					<flow type="double">0</flow>
+					<state type="bool">0</state>
+				</leakage>
 			</aux>
 		</LHtank>
 		<RHtank>
@@ -1125,6 +1137,10 @@ of the RR 250-B17F/2 engine is best.</long-description>
 					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
         				<serviceable type="bool">true</serviceable>
 				</drain>
+				<leakage>
+					<flow type="double">0</flow>
+					<state type="bool">0</state>
+				</leakage>
 				<overflow-raw type="double">0.2</overflow-raw>
 			</collector>
 			<main>
@@ -1149,6 +1165,10 @@ of the RR 250-B17F/2 engine is best.</long-description>
 					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
         				<serviceable type="bool">true</serviceable>
 				</drainoutboard>
+				<leakage>
+					<flow type="double">0</flow>
+					<state type="bool">0</state>
+				</leakage>
 			</main>
 			<aux>
 				<motiveoprvalve>
@@ -1173,6 +1193,10 @@ of the RR 250-B17F/2 engine is best.</long-description>
 					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
         				<serviceable type="bool">true</serviceable>
 				</drainoutboard>
+				<leakage>
+					<flow type="double">0</flow>
+					<state type="bool">0</state>
+				</leakage>
 			</aux>
 		</RHtank>
 	</fuel>
@@ -1587,6 +1611,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 	</Checklist>
 	<Dialogs>
             <file>Aircraft/extra500/Dialogs/fuelpayload.nas</file>
+            <file>Aircraft/extra500/Dialogs/failuredialog.nas</file>
             <file>Aircraft/extra500/Nasal/dialogs.nas</file>
         </Dialogs>
 	<View>
@@ -1734,6 +1759,9 @@ of the RR 250-B17F/2 engine is best.</long-description>
 	<failurescenarios>
 		<activate type="bool">0</activate>
 		<name type="string"></name>
+		<welcome type="bool">1</welcome>
+		<gear type="bool">0</gear>
+		<fuel type="bool">0</fuel>
 	</failurescenarios>
 	<instrumentation>
 		<Audiopanel>
@@ -2033,6 +2061,11 @@ of the RR 250-B17F/2 engine is best.</long-description>
 	<jsbsim>
 		<sim-time-sec-old>0</sim-time-sec-old>
 		<sim-dt-sec>0.008333</sim-dt-sec>
+		<aero>
+			<coefficients>
+				<cl_aileron type="double">0.0277</cl_aileron>
+			</coefficients>
+		</aero>
 		<atmosphere>
 			<T-degC>1</T-degC>					<!--dummy value -->
 		</atmosphere>
@@ -2131,7 +2164,17 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				<FLAPS15>0</FLAPS15>
 			</events>
             	</aircraft>
-		<gear>  <!-- jack points -->
+		<gear>  
+			<unit n="0">
+				<flatTire type="bool">0</flatTire>
+			</unit>
+			<unit n="1">
+				<flatTire type="bool">0</flatTire>
+			</unit>
+			<unit n="2">
+				<flatTire type="bool">0</flatTire>
+			</unit>
+			<!-- jack points -->
 			<unit n="10">
 				<pos-norm>0</pos-norm>
 			</unit>
