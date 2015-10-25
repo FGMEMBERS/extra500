@@ -269,7 +269,7 @@ var XPDRKeypadWidget = {
 	},
 	_onXPDRChange : func(n){
 		me._xpdr = n.getValue(); 
-		me._can.code.setText(sprintf("%i",me._xpdr));
+		me._can.code.setText(sprintf("%04i",me._xpdr));
 	},
 	_onXPDRaltChange : func(n){
 		me._alt = n.getValue();
@@ -316,7 +316,7 @@ var XPDRKeypadWidget = {
 			me._input		= ["-","-","-","-"];
 			
 			me._xpdr = me._tree.code.getValue();
-			me._can.code.setText(sprintf("%i",me._xpdr));
+			me._can.code.setText(sprintf("%04i",me._xpdr));
 			
 		}elsif (key == "Enter"){ # confirm
 			me.resetInput();
@@ -517,7 +517,7 @@ var FMSDATAKeypadWidget = {
 	},
 	_onXPDRChange : func(n){
 		me._xpdr = n.getValue(); 
-		me._can.code.setText(sprintf("%i",me._xpdr));
+		me._can.code.setText(sprintf("%04i",me._xpdr));
 	},
 	_onXPDRmodeChange : func(n){
 		me._xpdrMode = n.getValue(); 
