@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 22.10.2015            
+#      Date: 25.10.2015            
 #
 # 
 
@@ -182,6 +182,9 @@ var set_failure = func(fail) {
 # FAILURE RESET
 
 var failure_reset = func() {
+
+# Propellor
+	setprop("/fdm/jsbsim/aircraft/propeller/contact",0);
 
 # Flight Controls
 	setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.0277);
