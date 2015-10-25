@@ -19,7 +19,7 @@
       Date: June 03 2013
 
       Last change:      Eric van den Berg
-      Date:             17.01.15
+      Date:             25.10.15
 
 -->
 
@@ -30,8 +30,8 @@
 	<!-- Transparent Surfaces for Rembrandt rendering & rain -->
 	<effect>
 		<inherits-from>Effects/model-transparent</inherits-from>
-		<object-name>PropSlow</object-name>
 		<object-name>PropFast</object-name>
+		<object-name>PropFastBroken</object-name>
 	</effect>
 	
 	<!--Propeller-->
@@ -39,10 +39,33 @@
 		<type>select</type>
 		<object-name>Propeller</object-name>
 		<condition>
-			<less-than>
-				<property>sim/multiplay/generic/int[12]</property>
-				<value>700</value>
-			</less-than>
+			<and>
+				<less-than>
+					<property>sim/multiplay/generic/int[12]</property>
+					<value>700</value>
+				</less-than>
+  				 <equals>
+    					<property>/fdm/jsbsim/aircraft/propeller/contact</property>
+   			 		<value>0</value>
+   				</equals>
+			</and>
+		</condition>
+	</animation>
+
+	<animation>
+		<type>select</type>
+		<object-name>PropellerBroken</object-name>
+		<condition>
+			<and>
+				<less-than>
+					<property>sim/multiplay/generic/int[12]</property>
+					<value>700</value>
+				</less-than>
+  				 <equals>
+    					<property>/fdm/jsbsim/aircraft/propeller/contact</property>
+   			 		<value>1</value>
+   				</equals>
+			</and>
 		</condition>
 	</animation>
 	
@@ -50,18 +73,43 @@
 		<type>select</type>
 		<object-name>PropFast</object-name>
 		<condition>
-			<greater-than-equals>
-				<property>sim/multiplay/generic/int[12]</property>
-				<value>700</value>
-			</greater-than-equals>
+			<and>
+				<greater-than-equals>
+					<property>sim/multiplay/generic/int[12]</property>
+					<value>700</value>
+				</greater-than-equals>
+  				 <equals>
+    					<property>/fdm/jsbsim/aircraft/propeller/contact</property>
+   			 		<value>0</value>
+   				</equals>
+			</and>
 		</condition>
 	</animation>
-	
+
+	<animation>
+		<type>select</type>
+		<object-name>PropFastBroken</object-name>
+		<condition>
+			<and>
+				<greater-than-equals>
+					<property>sim/multiplay/generic/int[12]</property>
+					<value>700</value>
+				</greater-than-equals>
+  				 <equals>
+    					<property>/fdm/jsbsim/aircraft/propeller/contact</property>
+   			 		<value>1</value>
+   				</equals>
+			</and>
+		</condition>
+	</animation>
+
 	<animation>
 		<type>spin</type>
 		<object-name>Spinner</object-name>
 		<object-name>Propeller</object-name>
+		<object-name>PropellerBroken</object-name>
 		<object-name>PropFast</object-name>
+		<object-name>PropFastBroken</object-name>
 		<property>sim/multiplay/generic/int[12]</property>
 		<factor>1</factor>
 		<axis>

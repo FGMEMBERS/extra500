@@ -182,11 +182,42 @@ var set_failure = func(fail) {
 # FAILURE RESET
 
 var failure_reset = func() {
+
+# Flight Controls
+	setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.0277);
+
+# FUEL
+	setprop("/systems/fuel/LHtank/aux/leakage/flow",0); 
+	setprop("/systems/fuel/LHtank/aux/leakage/state",0); 
+	setprop("/systems/fuel/LHtank/main/leakage/flow",0); 
+	setprop("/systems/fuel/LHtank/main/leakage/state",0); 
+	setprop("/systems/fuel/LHtank/collector/leakage/flow",0); 
+	setprop("/systems/fuel/LHtank/collector/leakage/state",0); 
+	setprop("/systems/fuel/RHtank/aux/leakage/flow",0); 
+	setprop("/systems/fuel/RHtank/aux/leakage/state",0); 
+	setprop("/systems/fuel/RHtank/main/leakage/flow",0); 
+	setprop("/systems/fuel/RHtank/main/leakage/state",0); 
+	setprop("/systems/fuel/RHtank/collector/leakage/flow",0); 
+	setprop("/systems/fuel/RHtank/collector/leakage/state",0); 
+
+#GEAR
      setprop("/systems/gear/RMG-free", 1 ); 
      setprop("/systems/gear/LMG-free", 1 ); 
      setprop("/systems/gear/NG-free", 1 ); 
      setprop("/systems/gear/solenoids/mainvalve/serviceable", 1 );
      setprop("/systems/gear/solenoids/upperdoorvalve/serviceable", 1 );  
      setprop("/systems/gear/solenoids/lowerdoorvalve/serviceable", 1 ); 
+	setprop("/fdm/jsbsim/gear/unit[0]/flatTire", 0 ); 
+	setprop("/fdm/jsbsim/gear/unit[0]/z-position", 5.748 ); 
+	setprop("/fdm/jsbsim/gear/unit[0]/static_friction", 0.7 ); 
+	setprop("/fdm/jsbsim/gear/unit[0]/dynamic_friction", 0.4 ); 
+	setprop("/fdm/jsbsim/gear/unit[1]/flatTire", 0 ); 
+	setprop("/fdm/jsbsim/gear/unit[1]/z-position", 8.268 ); 
+	setprop("/fdm/jsbsim/gear/unit[1]/static_friction", 0.7 ); 
+	setprop("/fdm/jsbsim/gear/unit[1]/dynamic_friction", 0.4 ); 
+	setprop("/fdm/jsbsim/gear/unit[2]/flatTire", 0 ); 
+	setprop("/fdm/jsbsim/gear/unit[2]/z-position", 8.268 ); 
+	setprop("/fdm/jsbsim/gear/unit[2]/static_friction", 0.7 ); 
+	setprop("/fdm/jsbsim/gear/unit[2]/dynamic_friction", 0.4 ); 
 }
 
