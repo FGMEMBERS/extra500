@@ -2078,10 +2078,13 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<flap-pos-norm type="double">0.0</flap-pos-norm>		<!-- from flaps.nas -->
 			<flap-wp-cmd-norm type="double">0.0</flap-wp-cmd-norm>		<!-- from flaps.nas -->
 		</fcs>
-            	<state>
-                  	<controls-fixed type="int">1</controls-fixed>
-            	</state>
-            	<aircraft>
+           	<state>
+                 	<controls-fixed type="int">1</controls-fixed>
+            </state>
+            <aircraft>
+			<propeller>
+				<contact type="bool">0</contact>				
+			</propeller>
                   	<wing>
                         	<x_ac-ft>11.01</x_ac-ft>      				<!--dummy value -->
                         	<y_ac-ft>8.018</y_ac-ft>
@@ -2163,7 +2166,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				<FLAPS30>0</FLAPS30>
 				<FLAPS15>0</FLAPS15>
 			</events>
-            	</aircraft>
+            </aircraft>
 		<gear>  
 			<unit n="0">
 				<flatTire type="bool">0</flatTire>

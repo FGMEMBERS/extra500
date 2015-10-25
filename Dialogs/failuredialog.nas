@@ -58,15 +58,15 @@ var FailureClass = {
         		.setFixedSize(80,30);
 
 		if ( getprop("/extra500/failurescenarios/gear") == 1 ) {
-			me._button_Gear.setText("ACTIVE");
-		} else {
 			me._button_Gear.setText("GEAR");
+		} else {
+			me._button_Gear.setText("gear");
 		}
 
 		me._button_Gear.listen("toggled", func (e) {
         		if( e.detail.checked ) {
 				me._menuButtonsReset();
-				me._button_Gear.setText("ACTIVE");
+				me._button_Gear.setText("GEAR");
 				setprop("/extra500/failurescenarios/gear",1);
 				me._hideAll();
 				me._hbox_gear1.show();
@@ -85,15 +85,15 @@ var FailureClass = {
         		.setFixedSize(80,30);
 
 		if ( getprop("/extra500/failurescenarios/fuel") == 1 ) {
-			me._button_Fuel.setText("ACTIVE");
-		} else {
 			me._button_Fuel.setText("FUEL");
+		} else {
+			me._button_Fuel.setText("fuel");
 		}
 
 		me._button_Fuel.listen("toggled", func (e) {
         		if( e.detail.checked ) {
 				me._menuButtonsReset();
-				me._button_Fuel.setText("ACTIVE");
+				me._button_Fuel.setText("FUEL");
 				setprop("/extra500/failurescenarios/fuel",1);
 				me._hideAll();
 				me._hbox_fuel1.show();
@@ -106,10 +106,22 @@ var FailureClass = {
         		}
     		});
 
+		me._button_Reset = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
+        		.setFixedSize(90,30)
+			.setText("REPAIR ALL");
+
+		me._button_Reset.listen("clicked", func (e) {
+			events.failure_reset();
+
+			me._fuelButtons_update();
+			me._gearButtons_update();
+    		});
+
 		var hbox_menu = canvas.HBoxLayout.new();
 		hbox_menu.addItem(me._button_Gear);
 		hbox_menu.addItem(me._button_Fuel);
 		hbox_menu.addStretch(1);
+		hbox_menu.addItem(me._button_Reset);
 
 		me._Layout1.addItem(hbox_menu);
 		me._Layout1.addStretch(1);
@@ -123,11 +135,11 @@ var FailureClass = {
 
 		me._button_LAux.listen("toggled", func (e) {
         		if( e.detail.checked ) {
-				me._button_LAux.setText("Leaking");
+				me._button_LAux.setText("LEAKING");
 				setprop("/extra500/failurescenarios/name","LAux_leakage");
 				setprop("/extra500/failurescenarios/activate",1);
         		} else {
-				me._button_LAux.setText("OK");
+				me._button_LAux.setText("ok");
 				setprop("/extra500/failurescenarios/name","LAux_leakage");
 				setprop("/extra500/failurescenarios/activate",0);
         		}
@@ -140,11 +152,11 @@ var FailureClass = {
 
 		me._button_LMain.listen("toggled", func (e) {
         		if( e.detail.checked ) {
-				me._button_LMain.setText("Leaking");
+				me._button_LMain.setText("LEAKING");
 				setprop("/extra500/failurescenarios/name","LMain_leakage");
 				setprop("/extra500/failurescenarios/activate",1);
         		} else {
-				me._button_LMain.setText("OK");
+				me._button_LMain.setText("ok");
 				setprop("/extra500/failurescenarios/name","LMain_leakage");
 				setprop("/extra500/failurescenarios/activate",0);
         		}
@@ -157,11 +169,11 @@ var FailureClass = {
 
 		me._button_LCol.listen("toggled", func (e) {
         		if( e.detail.checked ) {
-				me._button_LCol.setText("Leaking");
+				me._button_LCol.setText("LEAKING");
 				setprop("/extra500/failurescenarios/name","LCol_leakage");
 				setprop("/extra500/failurescenarios/activate",1);
         		} else {
-				me._button_LCol.setText("OK");
+				me._button_LCol.setText("ok");
 				setprop("/extra500/failurescenarios/name","LCol_leakage");
 				setprop("/extra500/failurescenarios/activate",0);
         		}
@@ -174,11 +186,11 @@ var FailureClass = {
 
 		me._button_RCol.listen("toggled", func (e) {
         		if( e.detail.checked ) {
-				me._button_RCol.setText("Leaking");
+				me._button_RCol.setText("LEAKING");
 				setprop("/extra500/failurescenarios/name","RCol_leakage");
 				setprop("/extra500/failurescenarios/activate",1);
         		} else {
-				me._button_RCol.setText("OK");
+				me._button_RCol.setText("ok");
 				setprop("/extra500/failurescenarios/name","RCol_leakage");
 				setprop("/extra500/failurescenarios/activate",0);
         		}
@@ -191,11 +203,11 @@ var FailureClass = {
 
 		me._button_RMain.listen("toggled", func (e) {
         		if( e.detail.checked ) {
-				me._button_RMain.setText("Leaking");
+				me._button_RMain.setText("LEAKING");
 				setprop("/extra500/failurescenarios/name","RMain_leakage");
 				setprop("/extra500/failurescenarios/activate",1);
         		} else {
-				me._button_RMain.setText("OK");
+				me._button_RMain.setText("ok");
 				setprop("/extra500/failurescenarios/name","RMain_leakage");
 				setprop("/extra500/failurescenarios/activate",0);
         		}
@@ -208,18 +220,21 @@ var FailureClass = {
 
 		me._button_RAux.listen("toggled", func (e) {
         		if( e.detail.checked ) {
-				me._button_RAux.setText("Leaking");
+				me._button_RAux.setText("LEAKING");
 				setprop("/extra500/failurescenarios/name","RAux_leakage");
 				setprop("/extra500/failurescenarios/activate",1);
         		} else {
-				me._button_RAux.setText("OK");
+				me._button_RAux.setText("ok");
 				setprop("/extra500/failurescenarios/name","RAux_leakage");
 				setprop("/extra500/failurescenarios/activate",0);
         		}
     		});
 
+#		me._button_LAux.move(1000,150);
+#		me._Layout1.addItem(me._button_LAux);
+#		me._button_LMain.move(250,500);
+#		me._Layout1.addItem(me._button_LMain);
 
-#		me._button_LAux.move(100,50);
 		me._hbox_fuel1 = canvas.HBoxLayout.new();
 		me._hbox_fuel1.addStretch(6);
 		me._hbox_fuel1.addItem(me._button_LAux);
@@ -252,7 +267,7 @@ var FailureClass = {
 				setprop("/extra500/failurescenarios/name","NG_jammed");
 				setprop("/extra500/failurescenarios/activate",1);
         		} else {
-				me._button_NG.setText("OK");
+				me._button_NG.setText("ok");
 				setprop("/extra500/failurescenarios/name","NG_jammed");
 				setprop("/extra500/failurescenarios/activate",0);
         		}
@@ -270,7 +285,7 @@ var FailureClass = {
 				setprop("/extra500/failurescenarios/name","RMG_jammed");
 				setprop("/extra500/failurescenarios/activate",1);
 	        	} else {
-				me._button_RMG.setText("OK");
+				me._button_RMG.setText("ok");
 				setprop("/extra500/failurescenarios/name","RMG_jammed");
 				setprop("/extra500/failurescenarios/activate",0);
 	        	}
@@ -288,7 +303,7 @@ var FailureClass = {
 				setprop("/extra500/failurescenarios/name","LMG_jammed");
 				setprop("/extra500/failurescenarios/activate",1);
 	        	} else {
-				me._button_LMG.setText("OK");
+				me._button_LMG.setText("ok");
 				setprop("/extra500/failurescenarios/name","LMG_jammed");
 				setprop("/extra500/failurescenarios/activate",0);
 	        	}
@@ -305,7 +320,7 @@ var FailureClass = {
 				setprop("/extra500/failurescenarios/name","NG_flat");
 				setprop("/extra500/failurescenarios/activate",1);
 	        	} else {
-				me._button_NG_flatTire.setText("OK");
+				me._button_NG_flatTire.setText("ok");
 				setprop("/extra500/failurescenarios/name","NG_flat");
 				setprop("/extra500/failurescenarios/activate",0);
 	        	}
@@ -322,7 +337,7 @@ var FailureClass = {
 				setprop("/extra500/failurescenarios/name","RMG_flat");
 				setprop("/extra500/failurescenarios/activate",1);
 	        	} else {
-				me._button_RMG_flatTire.setText("OK");
+				me._button_RMG_flatTire.setText("ok");
 				setprop("/extra500/failurescenarios/name","RMG_flat");
 				setprop("/extra500/failurescenarios/activate",0);
 	        	}
@@ -339,7 +354,7 @@ var FailureClass = {
 				setprop("/extra500/failurescenarios/name","LMG_flat");
 				setprop("/extra500/failurescenarios/activate",1);
 	        	} else {
-				me._button_LMG_flatTire.setText("OK");
+				me._button_LMG_flatTire.setText("ok");
 				setprop("/extra500/failurescenarios/name","LMG_flat");
 				setprop("/extra500/failurescenarios/activate",0);
 	        	}
@@ -383,11 +398,11 @@ var FailureClass = {
 
 		setprop("/extra500/failurescenarios/fuel",0);
 		me._button_Fuel.setChecked(0);
-		me._button_Fuel.setText("FUEL");
+		me._button_Fuel.setText("fuel");
 
 		setprop("/extra500/failurescenarios/gear",0);
 		me._button_Gear.setChecked(0);
-		me._button_Gear.setText("GEAR");
+		me._button_Gear.setText("gear");
 
 	},
 	_hideAll : func() {
@@ -406,63 +421,63 @@ var FailureClass = {
 		if ( getprop("/systems/fuel/LHtank/aux/leakage/state") == 1 ) {
 			me._button_LAux.setText("LEAKING");
 		} else {
-			me._button_LAux.setText("OK");
+			me._button_LAux.setText("ok");
 		}
 		if ( getprop("/systems/fuel/LHtank/main/leakage/state") == 1 ) {
 			me._button_LMain.setText("LEAKING");
 		} else {
-			me._button_LMain.setText("OK");
+			me._button_LMain.setText("ok");
 		}
 		if ( getprop("/systems/fuel/LHtank/collector/leakage/state") == 1 ) {
 			me._button_LCol.setText("LEAKING");
 		} else {
-			me._button_LCol.setText("OK");
+			me._button_LCol.setText("ok");
 		}
 		if ( getprop("/systems/fuel/RHtank/collector/leakage/state") == 1 ) {
 			me._button_RCol.setText("LEAKING");
 		} else {
-			me._button_RCol.setText("OK");
+			me._button_RCol.setText("ok");
 		}
 		if ( getprop("/systems/fuel/RHtank/main/leakage/state") == 1 ) {
 			me._button_RMain.setText("LEAKING");
 		} else {
-			me._button_RMain.setText("OK");
+			me._button_RMain.setText("ok");
 		}
 		if ( getprop("/systems/fuel/RHtank/aux/leakage/state") == 1 ) {
 			me._button_RAux.setText("LEAKING");
 		} else {
-			me._button_RAux.setText("OK");
+			me._button_RAux.setText("ok");
 		}
 	},
 	_gearButtons_update : func() {
 
 		if ( getprop("/systems/gear/NG-free") == 1 ) {
-			me._button_NG.setText("OK");
+			me._button_NG.setText("ok");
 		} else {
 			me._button_NG.setText("JAMMED");
 		}
 		if ( getprop("/systems/gear/RMG-free") == 1 ) {
-			me._button_RMG.setText("OK");
+			me._button_RMG.setText("ok");
 		} else {
 			me._button_RMG.setText("JAMMED");
 		}
 		if ( getprop("/systems/gear/LMG-free") == 1 ) {
-			me._button_LMG.setText("OK");
+			me._button_LMG.setText("ok");
 		} else {
 			me._button_LMG.setText("JAMMED");
 		}
 		if ( getprop("/fdm/jsbsim/gear/unit[0]/flatTire") == 0 ) {
-			me._button_NG_flatTire.setText("OK");
+			me._button_NG_flatTire.setText("ok");
 		} else {
 			me._button_NG_flatTire.setText("FLAT");
 		}
 		if ( getprop("/fdm/jsbsim/gear/unit[2]/flatTire") == 0 ) {
-			me._button_RMG_flatTire.setText("OK");
+			me._button_RMG_flatTire.setText("ok");
 		} else {
 			me._button_RMG_flatTire.setText("FLAT");
 		}
 		if ( getprop("/fdm/jsbsim/gear/unit[1]/flatTire") == 0 ) {
-			me._button_LMG_flatTire.setText("OK");
+			me._button_LMG_flatTire.setText("ok");
 		} else {
 			me._button_LMG_flatTire.setText("FLAT");
 		}
