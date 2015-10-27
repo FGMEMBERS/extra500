@@ -19,7 +19,7 @@
       Date: 14.07.2015
 
       Last change: Eric van den Berg     
-      Date: 28.08.2015            
+      Date: 27.10.2015            
 
 -->
 
@@ -38,10 +38,16 @@
     <object-name>shadow</object-name>
     <type>select</type>
     <condition>
-      <not>
-        <property>/sim/rendering/rembrandt/enabled</property>
-      </not>
-      <property>/sim/rendering/shaders/skydome</property>
+	<and>
+      	<not>
+       	 	<property>/sim/rendering/rembrandt/enabled</property>
+      	</not>
+      	<property>/sim/rendering/shaders/skydome</property>
+      	<less-than>
+        		<property>/sim/time/sun-angle-rad</property>
+        		<value>1.5708</value>
+      	</less-than>
+	</and>
     </condition>
   </animation>
  
