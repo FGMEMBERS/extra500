@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 25.10.2015            
+#      Date: 30.10.2015            
 #
 # 
 
@@ -31,16 +31,36 @@ setlistener("/extra500/failurescenarios/activate", func {
 #ailerons
 var RAil = func(n) { #FIXME: need some yaw moment here as well
 	if (n==1) {
-		setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.01385);
+		setprop("/extra500/failurescenarios/controls/R-aileron",1);
+		if ( getprop("/extra500/failurescenarios/controls/L-aileron") == 1) {
+			setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.0);
+		} else {
+			setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.01385);
+		}
 	} else {
-		setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.0277);
+		setprop("/extra500/failurescenarios/controls/R-aileron",0);
+		if ( getprop("/extra500/failurescenarios/controls/L-aileron") == 1) {
+			setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.01385);
+		} else {
+			setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.0277);
+		}
 	}
 }
 var LAil = func(n) {
 	if (n==1) {
-		setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.01385);
+		setprop("/extra500/failurescenarios/controls/L-aileron",1);
+		if ( getprop("/extra500/failurescenarios/controls/R-aileron") == 1) {
+			setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.0);
+		} else {
+			setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.01385);
+		}
 	} else {
-		setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.0277);
+		setprop("/extra500/failurescenarios/controls/L-aileron",0);
+		if ( getprop("/extra500/failurescenarios/controls/R-aileron") == 1) {
+			setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.01385);
+		} else {
+			setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.0277);
+		}
 	}
 }
 
@@ -188,6 +208,8 @@ var failure_reset = func() {
 
 # Flight Controls
 	setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.0277);
+	setprop("/extra500/failurescenarios/controls/L-aileron",0);
+	setprop("/extra500/failurescenarios/controls/R-aileron",0);
 
 # FUEL
 	setprop("/systems/fuel/LHtank/aux/leakage/flow",0); 

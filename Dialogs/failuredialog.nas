@@ -17,7 +17,7 @@
 #	Date: 	10.10.2015
 #
 #	Last change: Eric van den Berg	
-#	Date:	22.10.2015	
+#	Date:	30.10.2015	
 #
 
 var FailureClass = {
@@ -47,6 +47,10 @@ var FailureClass = {
 		me._filename = "/Dialogs/FuelFaildialog.svg";
 		me._svg_fuel = me._root.createChild('group');
 		canvas.parsesvg(me._svg_fuel, me._filename);
+
+		me._filename = "/Dialogs/ControlsFaildialog.svg";
+		me._svg_contr = me._root.createChild('group');
+		canvas.parsesvg(me._svg_contr, me._filename);
 
 		me._Layout1 = canvas.VBoxLayout.new();
 		me._canvas.setLayout(me._Layout1);
@@ -106,25 +110,51 @@ var FailureClass = {
         		}
     		});
 
+		me._button_Contr = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
+       		.setCheckable(1) 
+       		.setChecked( getprop("/extra500/failurescenarios/contr") ) 
+        		.setFixedSize(100,30);
+
+		if ( getprop("/extra500/failurescenarios/contr") == 1 ) {
+			me._button_Contr.setText("CONTROLS");
+		} else {
+			me._button_Contr.setText("controls");
+		}
+
+		me._button_Contr.listen("toggled", func (e) {
+        		if( e.detail.checked ) {
+				me._menuButtonsReset();
+				me._button_Contr.setText("CONTROLS");
+				setprop("/extra500/failurescenarios/contr",1);
+				me._hideAll();
+				me._hbox_contr1.show();
+#				me._hbox_contr2.show();
+				me._svg_contr.show();
+				me._contrButtons_update();
+        		} else {
+				me._contrButtons_update();
+				me._button_Contr.setChecked(1);
+        		}
+    		});
+
 		me._button_Reset = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
         		.setFixedSize(90,30)
 			.setText("REPAIR ALL");
 
 		me._button_Reset.listen("clicked", func (e) {
-			events.failure_reset();
+			events.failure_reset();					# nasal/failurescenarios.nas
 
 			me._fuelButtons_update();
 			me._gearButtons_update();
+			me._contrButtons_update();
     		});
 
 		var hbox_menu = canvas.HBoxLayout.new();
 		hbox_menu.addItem(me._button_Gear);
 		hbox_menu.addItem(me._button_Fuel);
+		hbox_menu.addItem(me._button_Contr);
 		hbox_menu.addStretch(1);
 		hbox_menu.addItem(me._button_Reset);
-
-		me._Layout1.addItem(hbox_menu);
-		me._Layout1.addStretch(1);
 
 # FUEL
 
@@ -250,7 +280,48 @@ var FailureClass = {
 		me._hbox_fuel1.addItem(me._button_RAux);
 		me._hbox_fuel1.addStretch(6);
 
-		me._Layout1.addItem(me._hbox_fuel1);
+
+# FLIGHT CONTROLS
+		me._button_LAil = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
+       		.setCheckable(1) 
+       		.setChecked( getprop("/extra500/failurescenarios/controls/L-aileron") ) 
+        		.setFixedSize(70,25);
+
+		me._button_LAil.listen("toggled", func (e) {
+        		if( e.detail.checked ) {
+				me._button_LAil.setText("FREE");
+				setprop("/extra500/failurescenarios/name","LAil");
+				setprop("/extra500/failurescenarios/activate",1);
+        		} else {
+				me._button_LAil.setText("ok");
+				setprop("/extra500/failurescenarios/name","LAil");
+				setprop("/extra500/failurescenarios/activate",0);
+        		}
+    		});
+
+		me._button_RAil = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
+       		.setCheckable(1) 
+       		.setChecked( getprop("/extra500/failurescenarios/controls/R-aileron") ) 
+        		.setFixedSize(70,25);
+
+		me._button_RAil.listen("toggled", func (e) {
+        		if( e.detail.checked ) {
+				me._button_RAil.setText("FREE");
+				setprop("/extra500/failurescenarios/name","RAil");
+				setprop("/extra500/failurescenarios/activate",1);
+        		} else {
+				me._button_RAil.setText("ok");
+				setprop("/extra500/failurescenarios/name","RAil");
+				setprop("/extra500/failurescenarios/activate",0);
+        		}
+    		});
+
+		me._hbox_contr1 = canvas.HBoxLayout.new();
+		me._hbox_contr1.addStretch(1);
+		me._hbox_contr1.addItem(me._button_LAil);
+		me._hbox_contr1.addStretch(5);
+		me._hbox_contr1.addItem(me._button_RAil);
+		me._hbox_contr1.addStretch(1);
 
 
 # GEAR
@@ -360,7 +431,6 @@ var FailureClass = {
 	        	}
 	    	});
 
-		me._Layout1.addStretch(4);
 
 # gear 'jammed' buttons'
 		me._hbox_gear1 = canvas.HBoxLayout.new();
@@ -372,9 +442,6 @@ var FailureClass = {
 		me._hbox_gear1.addItem(me._button_RMG);
 		me._hbox_gear1.addStretch(3);
 	
-		me._Layout1.addItem(me._hbox_gear1);
-		me._Layout1.addStretch(1);
-
 # gear 'flat buttons'
 		me._hbox_gear2 = canvas.HBoxLayout.new();
 		me._hbox_gear2.addStretch(1);
@@ -385,6 +452,15 @@ var FailureClass = {
 		me._hbox_gear2.addItem(me._button_RMG_flatTire);
 		me._hbox_gear2.addStretch(1);
 
+#adding vboxes to layout (a vbox)
+		me._Layout1.addItem(hbox_menu);
+		me._Layout1.addStretch(1);
+		me._Layout1.addItem(me._hbox_fuel1);
+		me._Layout1.addStretch(3);
+		me._Layout1.addItem(me._hbox_contr1);
+		me._Layout1.addStretch(1);
+		me._Layout1.addItem(me._hbox_gear1);
+		me._Layout1.addStretch(1);
 		me._Layout1.addItem(me._hbox_gear2);
 		me._Layout1.addStretch(6);
 
@@ -404,6 +480,10 @@ var FailureClass = {
 		me._button_Gear.setChecked(0);
 		me._button_Gear.setText("gear");
 
+		setprop("/extra500/failurescenarios/contr",0);
+		me._button_Contr.setChecked(0);
+		me._button_Contr.setText("controls");
+
 	},
 	_hideAll : func() {
 		me._hbox_gear1.hide();
@@ -413,6 +493,9 @@ var FailureClass = {
 #		me._button_LAux.hide();
 		me._hbox_fuel1.hide();
 		me._svg_fuel.hide();
+
+		me._hbox_contr1.hide();
+		me._svg_contr.hide();
 
 		me._svg_welcome.hide();
 	},
@@ -480,6 +563,20 @@ var FailureClass = {
 			me._button_LMG_flatTire.setText("ok");
 		} else {
 			me._button_LMG_flatTire.setText("FLAT");
+		}
+
+	},
+	_contrButtons_update : func() {
+
+		if ( getprop("/extra500/failurescenarios/controls/L-aileron") == 0 ) {
+			me._button_LAil.setText("ok");
+		} else {
+			me._button_LAil.setText("FREE");
+		}
+		if ( getprop("/extra500/failurescenarios/controls/R-aileron") == 0 ) {
+			me._button_RAil.setText("ok");
+		} else {
+			me._button_RAil.setText("FREE");
 		}
 
 	},

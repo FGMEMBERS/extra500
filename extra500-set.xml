@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:	Eric van den Berg
-	Date:			20.10.15
+	Date:			30.10.15
 
 
 ************************************************************************
@@ -1762,6 +1762,15 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<welcome type="bool">1</welcome>
 		<gear type="bool">0</gear>
 		<fuel type="bool">0</fuel>
+		<contr type="bool">0</contr>
+		<controls>
+			<L-aileron type="bool">0</L-aileron>
+			<R-aileron type="bool">0</R-aileron>
+			<rudder type="bool">0</rudder>
+			<elevator type="bool">0</elevator>
+			<L-flap type="bool">0</L-flap>
+			<R-flap type="bool">0</R-flap>
+		</controls>
 	</failurescenarios>
 	<instrumentation>
 		<Audiopanel>
