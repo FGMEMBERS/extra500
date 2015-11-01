@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: 20.03.2015
 #
-#      Last change:      Dirk Dittmann
-#      Date:             12.04.13
+#      Last change:      Eric van den Berg
+#      Date:             01.11.15
 #
 
 
@@ -75,17 +75,19 @@ var Environment = {
 		me.fog();
 	},
 	rainSplashVector : func(){
-		var airspeed = me._airspeed;
-		# f16
-		var airspeed_max = 250;
+		var airspeed = getprop("/fdm/jsbsim/aircraft/propeller/Vind-fps") + getprop("/fdm/jsbsim/velocities/u-aero-fps");
+#		var airspeed_max = 100;
 
-		if (airspeed > airspeed_max) airspeed = airspeed_max;
+#		if (airspeed > airspeed_max) airspeed = airspeed_max;
 
-		var airspeed = math.sqrt(airspeed/airspeed_max);
+#		var airspeed = math.sqrt(math.abs(airspeed)/airspeed_max);
 
-		var splash_x = -0.1 - 2.0 * airspeed;
-		var splash_y = 0.0;
-		var splash_z = 1.0 - 1.35 * airspeed;
+#		var splash_x = -0.1 - 2.0 * airspeed;
+#		var splash_y = 0.0;
+#		var splash_z = 1.0 - 1.35 * airspeed;
+		var splash_x = 0.35 - 0.015 * airspeed;
+		var splash_y = 0.15 + 0.001 * airspeed;
+		var splash_z = 1.0 - 0.002 * airspeed;
 
 		
 		if(me._posAltitudeFt > me._rainLevelFt){
