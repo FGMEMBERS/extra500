@@ -1636,8 +1636,9 @@ var EnvironmentWidget = {
 	},
 	update20Hz : func(now,dt){
 		var OAT			= getprop("/fdm/jsbsim/aircraft/engine/OAT-degC");
-		var windDirection		= getprop("/environment/wind-from-heading-deg");
+		var windDirection	= getprop("/environment/wind-from-heading-deg");
 		var windSpeed		= getprop("/environment/wind-speed-kt");
+		# TODO : /autopilot/fms-channel/indicated-ground-speed-kt as source 
 		var groundSpeed		= getprop("/velocities/groundspeed-kt");
 				
 		if (windSpeed > 2){
@@ -1982,7 +1983,7 @@ var TimerWidget = {
 			OAT		: props.globals.initNode("/environment/temperature-degc",0.0,"DOUBLE"),
 			WindDirection	: props.globals.initNode("/environment/wind-from-heading-deg",0.0,"DOUBLE"),
 			WindSpeed	: props.globals.initNode("/environment/wind-speed-kt",0.0,"DOUBLE"),
-			GroundSpeed	: props.globals.initNode("/velocities/groundspeed-kt",0.0,"DOUBLE"),
+			#GroundSpeed	: props.globals.initNode("/velocities/groundspeed-kt",0.0,"DOUBLE"),
 		};
 		m._can		= {
 			On		: m._group.getElementById("Timer_On"),
@@ -1994,7 +1995,7 @@ var TimerWidget = {
 		m._windSpeed 		= 0;
 		m._windDirection 	= 0;
 		m._oat			= 0;
-		m._groundSpeed		= 0;
+		#m._groundSpeed		= 0;
 		return m;
 	},
 	init : func(instance=me){
