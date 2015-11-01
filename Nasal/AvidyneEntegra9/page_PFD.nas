@@ -1639,7 +1639,8 @@ var EnvironmentWidget = {
 		var windDirection	= getprop("/environment/wind-from-heading-deg");
 		var windSpeed		= getprop("/environment/wind-speed-kt");
 		# TODO : /autopilot/fms-channel/indicated-ground-speed-kt as source 
-		var groundSpeed		= getprop("/velocities/groundspeed-kt");
+		#var groundSpeed		= getprop("/velocities/groundspeed-kt");
+		var groundSpeed		= getprop("/autopilot/fms-channel/indicated-ground-speed-kt");
 				
 		if (windSpeed > 2){
 			me._can.WindVector.setText(sprintf("%03i / %3i",windDirection,windSpeed));
