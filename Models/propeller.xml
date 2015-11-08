@@ -19,7 +19,7 @@
       Date: June 03 2013
 
       Last change:      Eric van den Berg
-      Date:             25.10.15
+      Date:             31.10.15
 
 -->
 
@@ -45,7 +45,7 @@
 					<value>700</value>
 				</less-than>
   				 <equals>
-    					<property>/fdm/jsbsim/aircraft/propeller/contact</property>
+    					<property>sim/multiplay/generic/int[14]</property>
    			 		<value>0</value>
    				</equals>
 			</and>
@@ -62,7 +62,7 @@
 					<value>700</value>
 				</less-than>
   				 <equals>
-    					<property>/fdm/jsbsim/aircraft/propeller/contact</property>
+    					<property>sim/multiplay/generic/int[14]</property>
    			 		<value>1</value>
    				</equals>
 			</and>
@@ -79,7 +79,7 @@
 					<value>700</value>
 				</greater-than-equals>
   				 <equals>
-    					<property>/fdm/jsbsim/aircraft/propeller/contact</property>
+    					<property>sim/multiplay/generic/int[14]</property>
    			 		<value>0</value>
    				</equals>
 			</and>
@@ -96,7 +96,7 @@
 					<value>700</value>
 				</greater-than-equals>
   				 <equals>
-    					<property>/fdm/jsbsim/aircraft/propeller/contact</property>
+    					<property>sim/multiplay/generic/int[14]</property>
    			 		<value>1</value>
    				</equals>
 			</and>

@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             08.09.2015
+      Date:             07.11.2015
 
 -->
 
@@ -400,6 +400,27 @@
 
 	</offsets>
 </model>
+
+<model>
+  <name>Trimpanel</name>
+  <path>Aircraft/extra500/Models/panels/trimpanel.xml</path>
+	<offsets>
+		<x-m>-0.6</x-m>
+		<y-m>-0.335</y-m>	
+		<z-m>-0.25</z-m>
+	<pitch-deg>-60</pitch-deg>
+	</offsets>
+</model>
+<animation>
+  <object-name>Trimpanel</object-name>
+  <type>select</type>
+  <condition>
+   	<equals>
+    		<property>/fdm/jsbsim/aircraft/hstab/elevator/trimscreen</property>
+    		<value>1</value>
+   	</equals>
+  </condition>
+ </animation>
 
 <model>
   <name>FuelSelector</name>

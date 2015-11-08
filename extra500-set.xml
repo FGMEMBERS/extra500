@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:	Eric van den Berg
-	Date:			30.10.15
+	Date:			31.10.15
 
 
 ************************************************************************
@@ -583,6 +583,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<int n="11" alias="/extra500/electric/source/ExternalGenerator/isPluged">0</int><!-- external power-->
 			<int n="12" alias="/engines/engine[0]/thruster/rpm"/>
 			<int n="13" alias="/fdm/jsbsim/propulsion/engine/set-running">0</int><!-- mp sound-->
+			<int n="14" alias="/fdm/jsbsim/aircraft/propeller/contact">0</int><!-- broken propeller-->
 
 			<string n="0" alias="/sim/multiplay/callsign">callsign</string>
 		</generic>
