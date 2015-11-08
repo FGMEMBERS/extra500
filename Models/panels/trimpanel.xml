@@ -17,7 +17,7 @@
     along with extra500.  If not, see <http://www.gnu.org/licenses/>.
 
       Authors: Eric van den Berg
-      Date: 2015.11.07
+      Date: 2015.11.08
 
       Last change:      
       Date:            
@@ -28,17 +28,15 @@
 
 <path>trimpanel.ac</path>
 
-<!--Dimming -->
-<!--animation>
-        <type>material</type>
-        <object-name>IFD.Screen</object-name>
-        <emission>
-            <red>0.7</red>
-            <green>0.7</green>
-            <blue>0.7</blue>
-            <factor-prop>extra500/instrumentation/IFD-LH/Backlight/state</factor-prop>
-        </emission>
-</animation-->
+<animation>
+      <type>material</type>
+      <object-name>trimpanel.Screen</object-name>
+ 	<transparency>
+   		<alpha-prop>/fdm/jsbsim/aircraft/hstab/elevator/trimscreen</alpha-prop>
+   		<factor>0.3</factor>
+   		<offset>0</offset>
+  	</transparency>
+</animation>
 
 
 
