@@ -1,0 +1,25 @@
+AC3Db
+MATERIAL "DefaultWhite" rgb 1.0000 1.0000 1.0000  amb 0.2000 0.2000 0.2000  emis 0.0000 0.0000 0.0000  spec 0.5000 0.5000 0.5000  shi 10 trans 0.0000
+MATERIAL "Material" rgb 0.8000 0.8000 0.8000  amb 1.0000 1.0000 1.0000  emis 1.0000 1.0000 1.0000  spec 0.5000 0.5000 0.5000  shi 12 trans 0.0000
+OBJECT world
+name "Blender_export__trimpanel.ac"
+kids 1
+OBJECT poly
+name "trimpanel.Screen"
+crease 35.0
+texture "glareshield.png"
+texrep 1 1
+numvert 4
+0.0000000 -0.0377364 -0.0251801
+0.0000000 -0.0377364 0.0251801
+0.0000001 0.0377364 -0.0251800
+-0.0000001 0.0377364 0.0251801
+numsurf 1
+SURF 0X0
+mat 1
+refs 4
+0 1.002722 0.000070
+2 1.002722 0.999930
+3 0.000070 0.999930
+1 0.000070 0.000070
+kids 0
