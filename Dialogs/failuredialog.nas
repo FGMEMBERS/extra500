@@ -17,8 +17,15 @@
 #	Date: 	10.10.2015
 #
 #	Last change: Eric van den Berg	
-#	Date:	30.10.2015	
+#	Date:	14.11.2015	
 #
+
+var COLORfd = {};
+COLORfd["AilOk"] = "#c7f291";
+COLORfd["EleOk"] = "#7af4b9";
+COLORfd["RudOk"] = "#00f4ff";
+COLORfd["TriOk"] = "#7ad2b9";
+COLORfd["Failed"] = "#ff2a2a";
 
 var FailureClass = {
 	new : func(){
@@ -51,6 +58,28 @@ var FailureClass = {
 		me._filename = "/Dialogs/ControlsFaildialog.svg";
 		me._svg_contr = me._root.createChild('group');
 		canvas.parsesvg(me._svg_contr, me._filename);
+
+# defining clickable fields
+		me._LAileron	= me._svg_contr.getElementById("LAileron");
+		me._RAileron	= me._svg_contr.getElementById("RAileron");
+		me._Text_LAil	= me._svg_contr.getElementById("text_LHAil");
+		me._Text_RAil	= me._svg_contr.getElementById("text_RHAil");
+		me._Elevator	= me._svg_contr.getElementById("layer4");
+		me._LElevator	= me._svg_contr.getElementById("Lelevator");
+		me._RElevator	= me._svg_contr.getElementById("Relevator");
+		me._Text_Elevator	= me._svg_contr.getElementById("text_Elevator").hide();
+		me._Flaps		= me._svg_contr.getElementById("layer5");
+		me._Text_flaps	= me._svg_contr.getElementById("text_Flaps").hide();
+		me._ElevatorTrim	= me._svg_contr.getElementById("elevatorTrim");
+		me._Rudder		= me._svg_contr.getElementById("rudder");
+
+# setting listeners on clickable fields
+		me._LAileron.addEventListener("click",func(){me._onLAileronClick();});
+		me._RAileron.addEventListener("click",func(){me._onRAileronClick();});
+		me._Elevator.addEventListener("click",func(){me._onElevatorClick();});
+		me._Flaps.addEventListener("click",func(){me._onFlapsClick();});
+		me._ElevatorTrim.addEventListener("click",func(){me._onElevatorTrimClick();});
+		me._Rudder.addEventListener("click",func(){me._onRudderClick();});
 
 		me._Layout1 = canvas.VBoxLayout.new();
 		me._canvas.setLayout(me._Layout1);
@@ -127,8 +156,6 @@ var FailureClass = {
 				me._button_Contr.setText("CONTROLS");
 				setprop("/extra500/failurescenarios/contr",1);
 				me._hideAll();
-				me._hbox_contr1.show();
-#				me._hbox_contr2.show();
 				me._svg_contr.show();
 				me._contrButtons_update();
         		} else {
@@ -260,11 +287,6 @@ var FailureClass = {
         		}
     		});
 
-#		me._button_LAux.move(1000,150);
-#		me._Layout1.addItem(me._button_LAux);
-#		me._button_LMain.move(250,500);
-#		me._Layout1.addItem(me._button_LMain);
-
 		me._hbox_fuel1 = canvas.HBoxLayout.new();
 		me._hbox_fuel1.addStretch(6);
 		me._hbox_fuel1.addItem(me._button_LAux);
@@ -280,52 +302,7 @@ var FailureClass = {
 		me._hbox_fuel1.addItem(me._button_RAux);
 		me._hbox_fuel1.addStretch(6);
 
-
-# FLIGHT CONTROLS
-		me._button_LAil = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
-       		.setCheckable(1) 
-       		.setChecked( getprop("/extra500/failurescenarios/controls/L-aileron") ) 
-        		.setFixedSize(70,25);
-
-		me._button_LAil.listen("toggled", func (e) {
-        		if( e.detail.checked ) {
-				me._button_LAil.setText("FREE");
-				setprop("/extra500/failurescenarios/name","LAil");
-				setprop("/extra500/failurescenarios/activate",1);
-        		} else {
-				me._button_LAil.setText("ok");
-				setprop("/extra500/failurescenarios/name","LAil");
-				setprop("/extra500/failurescenarios/activate",0);
-        		}
-    		});
-
-		me._button_RAil = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
-       		.setCheckable(1) 
-       		.setChecked( getprop("/extra500/failurescenarios/controls/R-aileron") ) 
-        		.setFixedSize(70,25);
-
-		me._button_RAil.listen("toggled", func (e) {
-        		if( e.detail.checked ) {
-				me._button_RAil.setText("FREE");
-				setprop("/extra500/failurescenarios/name","RAil");
-				setprop("/extra500/failurescenarios/activate",1);
-        		} else {
-				me._button_RAil.setText("ok");
-				setprop("/extra500/failurescenarios/name","RAil");
-				setprop("/extra500/failurescenarios/activate",0);
-        		}
-    		});
-
-		me._hbox_contr1 = canvas.HBoxLayout.new();
-		me._hbox_contr1.addStretch(1);
-		me._hbox_contr1.addItem(me._button_LAil);
-		me._hbox_contr1.addStretch(5);
-		me._hbox_contr1.addItem(me._button_RAil);
-		me._hbox_contr1.addStretch(1);
-
-
 # GEAR
-
 
 		me._button_NG = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
        		.setCheckable(1) 
@@ -456,9 +433,7 @@ var FailureClass = {
 		me._Layout1.addItem(hbox_menu);
 		me._Layout1.addStretch(1);
 		me._Layout1.addItem(me._hbox_fuel1);
-		me._Layout1.addStretch(3);
-		me._Layout1.addItem(me._hbox_contr1);
-		me._Layout1.addStretch(1);
+		me._Layout1.addStretch(5);
 		me._Layout1.addItem(me._hbox_gear1);
 		me._Layout1.addStretch(1);
 		me._Layout1.addItem(me._hbox_gear2);
@@ -490,11 +465,9 @@ var FailureClass = {
 		me._hbox_gear2.hide();
 		me._svg_gear.hide();
 
-#		me._button_LAux.hide();
 		me._hbox_fuel1.hide();
 		me._svg_fuel.hide();
 
-		me._hbox_contr1.hide();
 		me._svg_contr.hide();
 
 		me._svg_welcome.hide();
@@ -569,16 +542,80 @@ var FailureClass = {
 	_contrButtons_update : func() {
 
 		if ( getprop("/extra500/failurescenarios/controls/L-aileron") == 0 ) {
-			me._button_LAil.setText("ok");
+			me._LAileron.setColorFill(COLORfd["AilOk"]);
+			me._Text_LAil.hide();
 		} else {
-			me._button_LAil.setText("FREE");
+			me._LAileron.setColorFill(COLORfd["Failed"]);
+			me._Text_LAil.show();
 		}
 		if ( getprop("/extra500/failurescenarios/controls/R-aileron") == 0 ) {
-			me._button_RAil.setText("ok");
+			me._RAileron.setColorFill(COLORfd["AilOk"]);
+			me._Text_RAil.hide();
 		} else {
-			me._button_RAil.setText("FREE");
+			me._RAileron.setColorFill(COLORfd["Failed"]);
+			me._Text_RAil.show();
+		}
+		if ( getprop("/extra500/failurescenarios/controls/elevator") == 0 ) {
+			me._LElevator.setColorFill(COLORfd["EleOk"]);
+			me._RElevator.setColorFill(COLORfd["EleOk"]);
+			me._Text_Elevator.hide();
+		} else {
+			me._LElevator.setColorFill(COLORfd["Failed"]);
+			me._RElevator.setColorFill(COLORfd["Failed"]);
+			me._Text_Elevator.show();
 		}
 
+	},
+	_onLAileronClick : func() {
+		if (getprop("/extra500/failurescenarios/controls/L-aileron") == 1) {
+			setprop("/extra500/failurescenarios/name","LAil");
+			setprop("/extra500/failurescenarios/activate",0);
+			me._LAileron.setColorFill(COLORfd["AilOk"]);
+			me._Text_LAil.hide();
+		} else {
+			setprop("/extra500/failurescenarios/name","LAil");
+			setprop("/extra500/failurescenarios/activate",1);
+			me._LAileron.setColorFill(COLORfd["Failed"]);
+			me._Text_LAil.show();
+		}
+	},
+	_onRAileronClick : func() {
+		if (getprop("/extra500/failurescenarios/controls/R-aileron") == 1) {
+			setprop("/extra500/failurescenarios/name","RAil");
+			setprop("/extra500/failurescenarios/activate",0);
+			me._RAileron.setColorFill(COLORfd["AilOk"]);
+			me._Text_RAil.hide();
+		} else {
+			setprop("/extra500/failurescenarios/name","RAil");
+			setprop("/extra500/failurescenarios/activate",1);
+			me._RAileron.setColorFill(COLORfd["Failed"]);
+			me._Text_RAil.show();
+		}
+	},
+	_onElevatorClick : func(){
+		if (getprop("/extra500/failurescenarios/controls/elevator") == 1) {
+			setprop("/extra500/failurescenarios/name","Elevator");
+			setprop("/extra500/failurescenarios/activate",0);
+			me._LElevator.setColorFill(COLORfd["EleOk"]);
+			me._RElevator.setColorFill(COLORfd["EleOk"]);
+			me._Text_Elevator.hide();
+		} else {
+			setprop("/extra500/failurescenarios/name","Elevator");
+			setprop("/extra500/failurescenarios/activate",1);
+			me._LElevator.setColorFill(COLORfd["Failed"]);
+			me._RElevator.setColorFill(COLORfd["Failed"]);
+			me._Text_Elevator.show();
+		}
+	},
+	_onFlapsClick : func(){
+print("clicked on flaps");
+		me._Text_flaps.show();
+	},
+	_onElevatorTrimClick : func(){
+print("clicked on elevator trim");
+	},
+	_onRudderClick : func(){
+print("clicked on rudder");
 	},
 
 };

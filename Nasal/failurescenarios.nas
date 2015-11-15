@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 30.10.2015            
+#      Date: 14.11.2015            
 #
 # 
 
@@ -61,6 +61,13 @@ var LAil = func(n) {
 		} else {
 			setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.0277);
 		}
+	}
+}
+var Elevator = func(n) {
+	if (n==1) {
+		setprop("/extra500/failurescenarios/controls/elevator",1);
+	} else {
+		setprop("/extra500/failurescenarios/controls/elevator",0);
 	}
 }
 
@@ -187,6 +194,7 @@ var set_failure = func(fail) {
 		else if (failure == "RMG_flat") { RMG_flat(fail); }
 		else if (failure == "RAil") { RAil(fail); }
 		else if (failure == "LAil") { LAil(fail); }
+		else if (failure == "Elevator") { Elevator(fail); }
 		else if (failure == "LAux_leakage") { LAux_leak(fail); }
 		else if (failure == "RAux_leakage") { RAux_leak(fail); }
 		else if (failure == "LMain_leakage") { LMain_leak(fail); }
@@ -210,6 +218,7 @@ var failure_reset = func() {
 	setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.0277);
 	setprop("/extra500/failurescenarios/controls/L-aileron",0);
 	setprop("/extra500/failurescenarios/controls/R-aileron",0);
+	setprop("/extra500/failurescenarios/controls/elevator",0);
 
 # FUEL
 	setprop("/systems/fuel/LHtank/aux/leakage/flow",0); 
