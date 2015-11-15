@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2014-05-11
+      Date:             2015-11-15
 -->
 
 <flight_control name="FCS: extra500">
@@ -211,11 +211,16 @@
 <!-- control choices for elevator-->
 		<switch name="elevnotfixed">
 			<default value="fcs/elevator-cmd-norm"/>
-			<test logic="AND" value="aircraft/hstab/elevator/d_e_free-norm">
-				state/controls-fixed eq 0
-				/autopilot/mode/alt eq 0
-				/autopilot/mode/vs eq 0
-				/autopilot/mode/gs-follow eq 0
+			<test logic="OR" value="aircraft/hstab/elevator/d_e_free-norm">
+				<test logic="AND">
+					/extra500/failurescenarios/controls/elevator eq 1
+				</test>
+				<test logic="AND">
+					state/controls-fixed eq 0
+					/autopilot/mode/alt eq 0
+					/autopilot/mode/vs eq 0
+					/autopilot/mode/gs-follow eq 0
+				</test>
 			</test>
 			<output>fcs/elevator-cmd-tot-nc1</output>
 		</switch>
@@ -223,6 +228,7 @@
 		<switch name="elevaltmode">
 			<default value="fcs/elevator-cmd-tot-nc1"/>
 			<test logic="AND" value="/autopilot/alt-channel/cmd-ap-elev-pos-norm">
+				/extra500/failurescenarios/controls/elevator ne 1
 				/autopilot/mode/alt eq 1
 				/autopilot/settings/ap eq 1
 				/autopilot/mode/cws-armed eq 0
@@ -233,6 +239,7 @@
 		<switch name="elevvsmode">
 			<default value="fcs/elevator-cmd-tot-nc2"/>
 			<test logic="AND" value="/autopilot/vs-channel/cmd-ap-elev-pos-norm">
+				/extra500/failurescenarios/controls/elevator ne 1
 				/autopilot/mode/vs eq 1
 				/autopilot/settings/ap eq 1
 				/autopilot/mode/cws-armed eq 0
@@ -243,6 +250,7 @@
 		<switch name="elevgsmode">
 			<default value="fcs/elevator-cmd-tot-nc3"/>
 			<test logic="AND" value="/autopilot/gs-channel/cmd-ap-elev-pos-norm">
+				/extra500/failurescenarios/controls/elevator ne 1
 				/autopilot/mode/gs eq 1
 				/autopilot/settings/ap eq 1
 				/autopilot/mode/cws-armed eq 0
@@ -256,7 +264,7 @@
               			<min>-1</min>
                			<max>1</max>
        			 </clipto>
-       		</summer>	
+       	</summer>	
 
 
      	 	<aerosurface_scale name="Elevator Control">
@@ -280,6 +288,15 @@
       			</range>
       			<output>fcs/elevator-pos-norm</output>
    		</aerosurface_scale>
+
+<!--controls yoke position: different then elevator when control system failed -->
+		<switch name="yokepos">
+			<default value="fcs/elevator-pos-norm"/>
+			<test logic="AND" value="/controls/flight/elevator">
+				/extra500/failurescenarios/controls/elevator eq 1
+			</test>
+			<output>fcs/yoke-pos-norm</output>
+		</switch>
 
 	<fcs_function name="aircraft/hstab/elevator/H-de-lbsft">
     	<function>

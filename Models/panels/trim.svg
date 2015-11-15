@@ -35,7 +35,7 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
-     inkscape:cx="189.43851"
+     inkscape:cx="190.44866"
      inkscape:cy="988.24974"
      inkscape:document-units="px"
      inkscape:current-layer="layer5"
@@ -378,22 +378,23 @@
      style="display:inline">
     <text
        xml:space="preserve"
-       style="font-size:40px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#cccccc;fill-opacity:1;stroke:none;font-family:Sans"
-       x="73.396088"
-       y="46.250256"
+       style="font-size:38.66695023px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#cccccc;fill-opacity:1;stroke:none;font-family:Sans"
+       x="77.966064"
+       y="44.708908"
        id="text_PCFailed"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       transform="scale(0.96667374,1.0344752)"><tspan
          sodipodi:role="line"
          id="tspan4253"
-         x="73.396088"
-         y="46.250256">Pitch</tspan><tspan
+         x="77.966064"
+         y="44.708908">Pitch</tspan><tspan
          sodipodi:role="line"
-         x="73.396088"
-         y="96.250259"
+         x="77.966064"
+         y="93.042595"
          id="tspan4255">Control</tspan><tspan
          sodipodi:role="line"
-         x="73.396088"
-         y="146.25026"
+         x="77.966064"
+         y="141.37628"
          id="tspan4257">Failed</tspan></text>
   </g>
 </svg>

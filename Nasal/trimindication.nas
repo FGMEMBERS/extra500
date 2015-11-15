@@ -17,48 +17,16 @@
 #      Date:   23.11.2014
 #
 #      Last change:      Eric van den Berg 
-#      Date:             08.11.2015
+#      Date:             14.11.2015
 #
-
-#var left2 = nil;
 
 var init_display = func() {
     if ((getprop("/extra500/config/ui/trim") == 1) and (getprop("/autopilot/mode/alt")!=1)and(getprop("/autopilot/mode/vs")!=1)and(getprop("/autopilot/mode/gs-follow")!=1)and(getprop("/autopilot/mode/cws")!=1)) {
-#	    if(left2 == nil){
-#		left2  = screen.display.new(100,10);
-#		left2.add("/fdm/jsbsim/aircraft/hstab/elevator/pilot");
-
 		setprop("/fdm/jsbsim/aircraft/hstab/elevator/trimscreen",1);
-#	    }
     } else {
-#	    if(left2 != nil){
-#	    	left2.close();
-#	    	left2 = nil;
-
 		setprop("/fdm/jsbsim/aircraft/hstab/elevator/trimscreen",0);
-#	    }
     }
 }
-
-#var pilottrim = func() {
-#	if (getprop("/fdm/jsbsim/state/controls-fixed")!=1) {
-#		setprop("/fdm/jsbsim/aircraft/hstab/elevator/pilot","has let go of controls");
-#	} else if (getprop("/fdm/jsbsim/aircraft/events/pitchtrim") == 1) {
-#		setprop("/fdm/jsbsim/aircraft/hstab/elevator/pilot","PUSHING +");
-#	} else if (getprop("/fdm/jsbsim/aircraft/events/pitchtrim") == 2){
-#		setprop("/fdm/jsbsim/aircraft/hstab/elevator/pilot","PUSHING ++");
-#	} else if (getprop("/fdm/jsbsim/aircraft/events/pitchtrim") == 3){
-#		setprop("/fdm/jsbsim/aircraft/hstab/elevator/pilot","PUSHING +++");
-#	} else if (getprop("/fdm/jsbsim/aircraft/events/pitchtrim") == -1){
-#		setprop("/fdm/jsbsim/aircraft/hstab/elevator/pilot","PULLING -");
-#	} else if (getprop("/fdm/jsbsim/aircraft/events/pitchtrim") == -2){
-#		setprop("/fdm/jsbsim/aircraft/hstab/elevator/pilot","PULLING --");
-#	} else if (getprop("/fdm/jsbsim/aircraft/events/pitchtrim") == -3){
-#		setprop("/fdm/jsbsim/aircraft/hstab/elevator/pilot","PULLING ---");
-#	} else {
-#		setprop("/fdm/jsbsim/aircraft/hstab/elevator/pilot","TRIMMED");
-#	}
-#}
 
 var TrimInd = {
 	new: func(){
@@ -110,8 +78,20 @@ var TrimInd = {
 		return m;
 	},
 	trimChange : func() {
-		if (getprop("/fdm/jsbsim/state/controls-fixed")!=1) {
-#			setprop("/fdm/jsbsim/aircraft/hstab/elevator/pilot","has let go of controls");
+		if (getprop("/extra500/failurescenarios/controls/elevator") ==1) {
+			me._can.Layout.Force.setVisible(0);
+			me._can.Layout.Push1.setVisible(0);
+			me._can.Layout.Push2.setVisible(0);
+			me._can.Layout.Push3.setVisible(0);
+			me._can.Layout.Pull1.setVisible(0);
+			me._can.Layout.Pull2.setVisible(0);
+			me._can.Layout.Pull3.setVisible(0);
+			me._can.Layout.Pulling.setVisible(0);
+			me._can.Layout.Pushing.setVisible(0);
+			me._can.Layout.Trimmed.setVisible(0);
+			me._can.Layout.Letgo.setVisible(0);
+			me._can.Layout.PContrFailed.setVisible(1);
+		}else if (getprop("/fdm/jsbsim/state/controls-fixed")!=1) {
 			me._can.Layout.Force.setVisible(0);
 			me._can.Layout.Push1.setVisible(0);
 			me._can.Layout.Push2.setVisible(0);
@@ -247,7 +227,6 @@ setlistener("/autopilot/mode/cws", func {
 },1,0);
 
 setlistener("/fdm/jsbsim/aircraft/events/pitchtrim", func {
-#	pilottrim();
 	extra500.TrimIndication.trimChange();
 });
 

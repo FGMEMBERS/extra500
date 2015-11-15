@@ -29,13 +29,13 @@
      inkscape:window-height="836"
      id="namedview8"
      showgrid="false"
-     inkscape:zoom="0.89702958"
-     inkscape:cx="534.31943"
-     inkscape:cy="854.89794"
+     inkscape:zoom="1.2685914"
+     inkscape:cx="257.99962"
+     inkscape:cy="869.15435"
      inkscape:window-x="0"
      inkscape:window-y="21"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="layer5" />
   <defs
      id="defs3653">
     <linearGradient
@@ -295,37 +295,15 @@
     <path
        style="fill:#c7f291;fill-opacity:1;stroke:#00c800;stroke-width:0.99050301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 98.059329,143.99103 0,11.7053 52.771831,0.41805 0.27342,-14.35293 z"
-       id="path7238"
-       inkscape:connector-curvature="0" />
-    <path
-       style="fill:#c7f2df;fill-opacity:1;stroke:#00c800;stroke-width:0.99050301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 151.99323,156.25373 188.87121,-0.13935 0,-12.82009 -188.87121,4.7727 z"
-       id="path7240"
-       inkscape:connector-curvature="0" />
-    <path
-       style="fill:#c7f2df;fill-opacity:1;stroke:#00c800;stroke-width:0.99050301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 586.8696,156.16015 -188.8712,-0.13935 0,-12.82009 188.8712,4.7727 z"
-       id="path7240-2"
+       id="LAileron"
        inkscape:connector-curvature="0" />
     <path
        style="fill:#c7f291;fill-opacity:1;stroke:#00c800;stroke-width:0.99050301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 640.81624,144.0607 0,11.7053 -52.77183,0.41805 -0.27342,-14.35293 z"
-       id="path7238-7"
+       id="RAileron"
        inkscape:connector-curvature="0" />
-    <path
-       style="fill:#7af4b9;fill-opacity:1;stroke:#51a300;stroke-width:0.99050301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 362.0552,415.02446 0,-16.16446 -75.05631,5.7133 0,-10.45116 -11.62074,1.67219 0,19.23013 z"
-       id="path5246"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccccc" />
-    <path
-       style="fill:#7af4b9;fill-opacity:1;stroke:#51a300;stroke-width:0.99050301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 376.27352,414.74577 0,-16.16446 75.05631,5.7133 0,-10.45116 11.62074,1.67219 0,19.23013 z"
-       id="path5246-2"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccccc" />
     <g
-       id="g6046"
+       id="elevatorTrim"
        style="fill:#7ad2b9;fill-opacity:1;stroke:#0040ad;stroke-opacity:1"
        transform="translate(-12.373992,1.5765518)">
       <path
@@ -386,7 +364,7 @@
     <path
        style="fill:#00f4ff;fill-opacity:1;stroke:#0073f5;stroke-width:0.99050301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 369.30107,401.22893 -2.05071,2.50828 2.05071,23.54995 2.32415,-23.968 z"
-       id="path8426"
+       id="rudder"
        inkscape:connector-curvature="0" />
   </g>
   <g
@@ -395,6 +373,94 @@
      inkscape:label="Layer2" />
   <g
      inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="elevator"
+     style="display:inline">
+    <path
+       style="fill:#7af4b9;fill-opacity:1;stroke:#51a300;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 368.87689,414.98992 0,-16.16446 -76.50249,5.7133 0,-10.45116 -11.84465,1.67219 0,19.23013 z"
+       id="Lelevator"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccc" />
+    <path
+       style="fill:#7af4b9;fill-opacity:1;stroke:#51a300;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 383.36917,414.71123 0,-16.16446 76.5025,5.7133 0,-10.45116 11.84465,1.67219 0,19.23013 z"
+       id="Relevator"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccc" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer5"
+     inkscape:label="flaps">
+    <path
+       style="fill:#c7f2df;fill-opacity:1;stroke:#00c800;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 154.5276,156.26354 192.51039,-0.13935 0,-12.82009 -192.51039,4.7727 z"
+       id="path7240"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:#c7f2df;fill-opacity:1;stroke:#00c800;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 597.78318,156.16996 -192.51037,-0.13935 0,-12.82009 192.51037,4.7727 z"
+       id="path7240-2"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:17.53933716px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="93.956436"
+       y="155.59329"
+       id="text_LHAil"
+       sodipodi:linespacing="125%"
+       transform="scale(0.8494571,1.1772225)"
+       inkscape:label="#text_LHAil"><tspan
+         sodipodi:role="line"
+         id="tspan3049"
+         x="93.956436"
+         y="155.59329">Aileron Free</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:17.53933716px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="685.1756"
+       y="153.86394"
+       id="text_RHAil"
+       sodipodi:linespacing="125%"
+       transform="scale(0.8494571,1.1772225)"><tspan
+         sodipodi:role="line"
+         id="tspan3049-0"
+         x="685.1756"
+         y="153.86394">Aileron Free</tspan></text>
+  </g>
+  <g
+     inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="Layer3" />
+  <text
+     xml:space="preserve"
+     style="font-size:17.53933716px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+     x="376.15955"
+     y="153.86395"
+     id="text_Flaps"
+     sodipodi:linespacing="125%"
+     transform="scale(0.8494571,1.1772225)"><tspan
+       sodipodi:role="line"
+       id="tspan3049-0-6"
+       x="376.15955"
+       y="153.86395">Flap failure WIP</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:17.53933716px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+     x="286.14587"
+     y="297.82938"
+     id="text_Elevator"
+     sodipodi:linespacing="125%"
+     transform="scale(0.8494571,1.1772225)"
+     inkscape:label="#text_Elevator"><tspan
+       sodipodi:role="line"
+       id="tspan3049-1"
+       x="286.14587"
+       y="297.82938">Elevator Free</tspan><tspan
+       sodipodi:role="line"
+       x="286.14587"
+       y="312.23871"
+       id="tspan3848"
+       style="font-size:10px">(control cables broken)</tspan></text>
 </svg>
