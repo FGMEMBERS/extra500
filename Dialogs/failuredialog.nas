@@ -17,7 +17,7 @@
 #	Date: 	10.10.2015
 #
 #	Last change: Eric van den Berg	
-#	Date:	14.11.2015	
+#	Date:	18.11.2015	
 #
 
 var COLORfd = {};
@@ -25,7 +25,10 @@ COLORfd["AilOk"] = "#c7f291";
 COLORfd["EleOk"] = "#7af4b9";
 COLORfd["RudOk"] = "#00f4ff";
 COLORfd["TriOk"] = "#7ad2b9";
-COLORfd["Failed"] = "#ff2a2a";
+COLORfd["GeaOk"] = "#00a2ff";
+COLORfd["BraOk"] = "#bba9ff";
+COLORfd["TyrOk"] = "#8cd0ff";
+COLORfd["Failed"] = "#ff8080";
 
 var FailureClass = {
 	new : func(){
@@ -60,6 +63,26 @@ var FailureClass = {
 		canvas.parsesvg(me._svg_contr, me._filename);
 
 # defining clickable fields
+	# gear
+		me._LHgear		= me._svg_gear.getElementById("LHgear");
+		me._RHgear		= me._svg_gear.getElementById("RHgear");
+		me._Ngear		= me._svg_gear.getElementById("Ngear");
+		me._LHbrake		= me._svg_gear.getElementById("LHbrake");
+		me._RHbrake		= me._svg_gear.getElementById("RHbrake");
+		me._LHtyre		= me._svg_gear.getElementById("LHtyre");
+		me._RHtyre		= me._svg_gear.getElementById("RHtyre");
+		me._Ntyre		= me._svg_gear.getElementById("Ntyre");
+
+		me._Text_LHgear		= me._svg_gear.getElementById("text_LHgear").hide();
+		me._Text_RHgear		= me._svg_gear.getElementById("text_RHgear").hide();
+		me._Text_Ngear		= me._svg_gear.getElementById("text_Ngear").hide();
+		me._Text_LHbrake		= me._svg_gear.getElementById("text_LHbrake").hide();
+		me._Text_RHbrake		= me._svg_gear.getElementById("text_RHbrake").hide();
+		me._Text_LHtyre		= me._svg_gear.getElementById("text_LHtyre").hide();
+		me._Text_RHtyre		= me._svg_gear.getElementById("text_RHtyre").hide();
+		me._Text_Ntyre		= me._svg_gear.getElementById("text_Ntyre").hide();
+
+	# control system
 		me._LAileron	= me._svg_contr.getElementById("LAileron");
 		me._RAileron	= me._svg_contr.getElementById("RAileron");
 		me._Text_LAil	= me._svg_contr.getElementById("text_LHAil");
@@ -67,13 +90,25 @@ var FailureClass = {
 		me._Elevator	= me._svg_contr.getElementById("layer4");
 		me._LElevator	= me._svg_contr.getElementById("Lelevator");
 		me._RElevator	= me._svg_contr.getElementById("Relevator");
-		me._Text_Elevator	= me._svg_contr.getElementById("text_Elevator").hide();
 		me._Flaps		= me._svg_contr.getElementById("layer5");
-		me._Text_flaps	= me._svg_contr.getElementById("text_Flaps").hide();
 		me._ElevatorTrim	= me._svg_contr.getElementById("elevatorTrim");
 		me._Rudder		= me._svg_contr.getElementById("rudder");
 
+		me._Text_Elevator	= me._svg_contr.getElementById("text_Elevator").hide();
+		me._Text_flaps	= me._svg_contr.getElementById("text_Flaps").hide();
+
 # setting listeners on clickable fields
+	# gear
+		me._LHgear.addEventListener("click",func(){me._onGeneralClick("/systems/gear/LMG-free",0,"LMG_jammed","GeaOk",me._LHgear,me._Text_LHgear);});
+		me._RHgear.addEventListener("click",func(){me._onGeneralClick("/systems/gear/RMG-free",0,"RMG_jammed","GeaOk",me._RHgear,me._Text_RHgear);});
+		me._Ngear.addEventListener("click",func(){me._onGeneralClick("/systems/gear/NG-free",0,"NG_jammed","GeaOk",me._Ngear,me._Text_Ngear);});
+		me._LHbrake.addEventListener("click",func(){me._onGeneralClick("/fdm/jsbsim/gear/unit[1]/brakeFail",1,"Lbrake","BraOk",me._LHbrake,me._Text_LHbrake);});
+		me._RHbrake.addEventListener("click",func(){me._onGeneralClick("/fdm/jsbsim/gear/unit[2]/brakeFail",1,"Rbrake","BraOk",me._RHbrake,me._Text_RHbrake);});
+		me._LHtyre.addEventListener("click",func(){me._onGeneralClick("/fdm/jsbsim/gear/unit[1]/flatTire",1,"LMG_flat","TyrOk",me._LHtyre,me._Text_LHtyre);});
+		me._RHtyre.addEventListener("click",func(){me._onGeneralClick("/fdm/jsbsim/gear/unit[2]/flatTire",1,"RMG_flat","TyrOk",me._RHtyre,me._Text_RHtyre);});
+		me._Ntyre.addEventListener("click",func(){me._onGeneralClick("/fdm/jsbsim/gear/unit[0]/flatTire",1,"NG_flat","TyrOk",me._Ntyre,me._Text_Ntyre);});
+
+	# control system
 		me._LAileron.addEventListener("click",func(){me._onLAileronClick();});
 		me._RAileron.addEventListener("click",func(){me._onRAileronClick();});
 		me._Elevator.addEventListener("click",func(){me._onElevatorClick();});
@@ -102,8 +137,6 @@ var FailureClass = {
 				me._button_Gear.setText("GEAR");
 				setprop("/extra500/failurescenarios/gear",1);
 				me._hideAll();
-				me._hbox_gear1.show();
-				me._hbox_gear2.show();
 				me._svg_gear.show();
 				me._gearButtons_update();
         		} else {
@@ -302,142 +335,13 @@ var FailureClass = {
 		me._hbox_fuel1.addItem(me._button_RAux);
 		me._hbox_fuel1.addStretch(6);
 
-# GEAR
 
-		me._button_NG = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
-       		.setCheckable(1) 
-       		.setChecked( math.abs(getprop("/systems/gear/NG-free")-1) ) 
-        		.setFixedSize(70,25);
-
-		me._button_NG.listen("toggled", func (e) {
-        		if( e.detail.checked ) {
-				me._button_NG.setText("JAMMED");
-				setprop("/extra500/failurescenarios/name","NG_jammed");
-				setprop("/extra500/failurescenarios/activate",1);
-        		} else {
-				me._button_NG.setText("ok");
-				setprop("/extra500/failurescenarios/name","NG_jammed");
-				setprop("/extra500/failurescenarios/activate",0);
-        		}
-    		});
-
-
-		me._button_RMG = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
-      	 	.setCheckable(1) 
-      	 	.setChecked( math.abs(getprop("/systems/gear/RMG-free")-1) ) 
-      	  	.setFixedSize(70,25);
-
-		me._button_RMG.listen("toggled", func (e) {
-	        	if( e.detail.checked ) {
-				me._button_RMG.setText("JAMMED");
-				setprop("/extra500/failurescenarios/name","RMG_jammed");
-				setprop("/extra500/failurescenarios/activate",1);
-	        	} else {
-				me._button_RMG.setText("ok");
-				setprop("/extra500/failurescenarios/name","RMG_jammed");
-				setprop("/extra500/failurescenarios/activate",0);
-	        	}
-	    	});
-
-
-		me._button_LMG = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
-	       	.setCheckable(1) 
-	       	.setChecked( math.abs(getprop("/systems/gear/LMG-free")-1) ) 
-	        	.setFixedSize(70,25);
-	
-		me._button_LMG.listen("toggled", func (e) {
-	        	if( e.detail.checked ) {
-				me._button_LMG.setText("JAMMED");
-				setprop("/extra500/failurescenarios/name","LMG_jammed");
-				setprop("/extra500/failurescenarios/activate",1);
-	        	} else {
-				me._button_LMG.setText("ok");
-				setprop("/extra500/failurescenarios/name","LMG_jammed");
-				setprop("/extra500/failurescenarios/activate",0);
-	        	}
-	    	});
-	
-		me._button_NG_flatTire = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
-	       	.setCheckable(1) 
-	       	.setChecked( getprop("/fdm/jsbsim/gear/unit[0]/flatTire") ) 
-	        	.setFixedSize(70,25);
-	
-		me._button_NG_flatTire.listen("toggled", func (e) {
-	        	if( e.detail.checked ) {
-				me._button_NG_flatTire.setText("FLAT");
-				setprop("/extra500/failurescenarios/name","NG_flat");
-				setprop("/extra500/failurescenarios/activate",1);
-	        	} else {
-				me._button_NG_flatTire.setText("ok");
-				setprop("/extra500/failurescenarios/name","NG_flat");
-				setprop("/extra500/failurescenarios/activate",0);
-	        	}
-	    	});
-
-		me._button_RMG_flatTire = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
-	       	.setCheckable(1) 
-	       	.setChecked( getprop("/fdm/jsbsim/gear/unit[2]/flatTire") ) 
-	        	.setFixedSize(70,25);
-	
-		me._button_RMG_flatTire.listen("toggled", func (e) {
-	        	if( e.detail.checked ) {
-				me._button_RMG_flatTire.setText("FLAT");
-				setprop("/extra500/failurescenarios/name","RMG_flat");
-				setprop("/extra500/failurescenarios/activate",1);
-	        	} else {
-				me._button_RMG_flatTire.setText("ok");
-				setprop("/extra500/failurescenarios/name","RMG_flat");
-				setprop("/extra500/failurescenarios/activate",0);
-	        	}
-	    	});
-
-		me._button_LMG_flatTire = canvas.gui.widgets.Button.new(me._root, canvas.style, {})
-	       	.setCheckable(1) 
-	       	.setChecked( getprop("/fdm/jsbsim/gear/unit[1]/flatTire") ) 
-	        	.setFixedSize(70,25);
-
-		me._button_LMG_flatTire.listen("toggled", func (e) {
-	        	if( e.detail.checked ) {
-				me._button_LMG_flatTire.setText("FLAT");
-				setprop("/extra500/failurescenarios/name","LMG_flat");
-				setprop("/extra500/failurescenarios/activate",1);
-	        	} else {
-				me._button_LMG_flatTire.setText("ok");
-				setprop("/extra500/failurescenarios/name","LMG_flat");
-				setprop("/extra500/failurescenarios/activate",0);
-	        	}
-	    	});
-
-
-# gear 'jammed' buttons'
-		me._hbox_gear1 = canvas.HBoxLayout.new();
-		me._hbox_gear1.addStretch(3);	
-		me._hbox_gear1.addItem(me._button_LMG);
-		me._hbox_gear1.addStretch(1);	
-		me._hbox_gear1.addItem(me._button_NG);
-		me._hbox_gear1.addStretch(1);	
-		me._hbox_gear1.addItem(me._button_RMG);
-		me._hbox_gear1.addStretch(3);
-	
-# gear 'flat buttons'
-		me._hbox_gear2 = canvas.HBoxLayout.new();
-		me._hbox_gear2.addStretch(1);
-		me._hbox_gear2.addItem(me._button_LMG_flatTire);
-		me._hbox_gear2.addStretch(2);
-		me._hbox_gear2.addItem(me._button_NG_flatTire);
-		me._hbox_gear2.addStretch(2);
-		me._hbox_gear2.addItem(me._button_RMG_flatTire);
-		me._hbox_gear2.addStretch(1);
 
 #adding vboxes to layout (a vbox)
 		me._Layout1.addItem(hbox_menu);
 		me._Layout1.addStretch(1);
 		me._Layout1.addItem(me._hbox_fuel1);
-		me._Layout1.addStretch(5);
-		me._Layout1.addItem(me._hbox_gear1);
-		me._Layout1.addStretch(1);
-		me._Layout1.addItem(me._hbox_gear2);
-		me._Layout1.addStretch(6);
+		me._Layout1.addStretch(14);
 
 		me._menuButtonsReset();
 		me._hideAll();
@@ -461,8 +365,6 @@ var FailureClass = {
 
 	},
 	_hideAll : func() {
-		me._hbox_gear1.hide();
-		me._hbox_gear2.hide();
 		me._svg_gear.hide();
 
 		me._hbox_fuel1.hide();
@@ -508,34 +410,60 @@ var FailureClass = {
 	_gearButtons_update : func() {
 
 		if ( getprop("/systems/gear/NG-free") == 1 ) {
-			me._button_NG.setText("ok");
+			me._Ngear.setColorFill(COLORfd["GeaOk"]);
+			me._Text_Ngear.hide();
 		} else {
-			me._button_NG.setText("JAMMED");
+			me._Ngear.setColorFill(COLORfd["Failed"]);
+			me._Text_Ngear.show();
 		}
 		if ( getprop("/systems/gear/RMG-free") == 1 ) {
-			me._button_RMG.setText("ok");
+			me._RHgear.setColorFill(COLORfd["GeaOk"]);
+			me._Text_RHgear.hide();
 		} else {
-			me._button_RMG.setText("JAMMED");
+			me._RHgear.setColorFill(COLORfd["Failed"]);
+			me._Text_RHgear.show();
 		}
 		if ( getprop("/systems/gear/LMG-free") == 1 ) {
-			me._button_LMG.setText("ok");
+			me._LHgear.setColorFill(COLORfd["GeaOk"]);
+			me._Text_LHgear.hide();
 		} else {
-			me._button_LMG.setText("JAMMED");
+			me._LHgear.setColorFill(COLORfd["Failed"]);
+			me._Text_LHgear.show();
 		}
 		if ( getprop("/fdm/jsbsim/gear/unit[0]/flatTire") == 0 ) {
-			me._button_NG_flatTire.setText("ok");
+			me._Ntyre.setColorFill(COLORfd["TyrOk"]);
+			me._Text_Ntyre.hide();
 		} else {
-			me._button_NG_flatTire.setText("FLAT");
+			me._Ntyre.setColorFill(COLORfd["Failed"]);
+			me._Text_Ntyre.show();
 		}
 		if ( getprop("/fdm/jsbsim/gear/unit[2]/flatTire") == 0 ) {
-			me._button_RMG_flatTire.setText("ok");
+			me._RHtyre.setColorFill(COLORfd["TyrOk"]);
+			me._Text_RHtyre.hide();
 		} else {
-			me._button_RMG_flatTire.setText("FLAT");
+			me._RHtyre.setColorFill(COLORfd["Failed"]);
+			me._Text_RHtyre.show();
 		}
 		if ( getprop("/fdm/jsbsim/gear/unit[1]/flatTire") == 0 ) {
-			me._button_LMG_flatTire.setText("ok");
+			me._LHtyre.setColorFill(COLORfd["TyrOk"]);
+			me._Text_LHtyre.hide();
 		} else {
-			me._button_LMG_flatTire.setText("FLAT");
+			me._LHtyre.setColorFill(COLORfd["Failed"]);
+			me._Text_LHtyre.show();
+		}
+		if ( getprop("/fdm/jsbsim/gear/unit[1]/brakeFail") == 0 ) {
+			me._LHbrake.setColorFill(COLORfd["BraOk"]);
+			me._Text_LHbrake.hide();
+		} else {
+			me._LHbrake.setColorFill(COLORfd["Failed"]);
+			me._Text_LHbrake.show();
+		}
+		if ( getprop("/fdm/jsbsim/gear/unit[2]/brakeFail") == 0 ) {
+			me._RHbrake.setColorFill(COLORfd["BraOk"]);
+			me._Text_RHbrake.hide();
+		} else {
+			me._RHbrake.setColorFill(COLORfd["Failed"]);
+			me._Text_RHbrake.show();
 		}
 
 	},
@@ -605,6 +533,19 @@ var FailureClass = {
 			me._LElevator.setColorFill(COLORfd["Failed"]);
 			me._RElevator.setColorFill(COLORfd["Failed"]);
 			me._Text_Elevator.show();
+		}
+	},
+	_onGeneralClick : func(property,logic,failname,color,field,text){
+		if (getprop(property) == logic) {
+			setprop("/extra500/failurescenarios/name",failname);
+			setprop("/extra500/failurescenarios/activate",0);
+			field.setColorFill(COLORfd[color]);
+			text.hide();
+		} else {
+			setprop("/extra500/failurescenarios/name",failname);
+			setprop("/extra500/failurescenarios/activate",1);
+			field.setColorFill(COLORfd["Failed"]);
+			text.show();
 		}
 	},
 	_onFlapsClick : func(){
