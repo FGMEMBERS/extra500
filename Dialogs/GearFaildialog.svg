@@ -14,7 +14,7 @@
    height="1052.3622"
    id="svg3651"
    inkscape:version="0.48.5 r10040"
-   sodipodi:docname="failuredialog.svg">
+   sodipodi:docname="GearFaildialog.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -28,9 +28,9 @@
      inkscape:window-height="836"
      id="namedview8"
      showgrid="false"
-     inkscape:zoom="1.2685914"
-     inkscape:cx="516.17059"
-     inkscape:cy="866.15688"
+     inkscape:zoom="0.89702958"
+     inkscape:cx="333.36477"
+     inkscape:cy="764.19488"
      inkscape:window-x="0"
      inkscape:window-y="21"
      inkscape:window-maximized="1"
@@ -54,20 +54,11 @@
      transform="matrix(1.019268,0,0,1,-0.38535967,0)">
     <rect
        style="fill:#ffffff;fill-opacity:1"
-       id="rect3059"
-       width="755.82794"
-       height="497.19653"
-       x="-2.2295809"
-       y="-1.1147947"
-       transform="matrix(0.98109624,0,0,1,0.37807492,0)" />
-    <rect
-       style="fill:#0000ff;fill-opacity:1"
-       id="rect2992"
-       width="33.154095"
-       height="205.24554"
-       x="271.17838"
-       y="-169.70955"
-       transform="matrix(0.67157115,0.74094007,-0.72803089,0.68554432,0,0)" />
+       id="rect2988-7"
+       width="1109.0287"
+       height="673.33344"
+       x="-230.39613"
+       y="-94.757172" />
     <rect
        width="8.8887863"
        height="416.92413"
@@ -90,6 +81,11 @@
        x="25.533558"
        y="444.80139" />
     <path
+       style="fill:#00a2ff;fill-opacity:1;stroke:#000000;stroke-width:0.99050301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 366.5709,231.37285 0,-43.35517 18.94767,0.39414 0,43.35517 z"
+       id="Ngear"
+       inkscape:connector-curvature="0" />
+    <path
        sodipodi:type="arc"
        style="fill:#0000ff;fill-opacity:1"
        id="path2986"
@@ -106,125 +102,6 @@
        height="229.64684"
        x="115.21833"
        y="-163.87421" />
-    <rect
-       style="fill:#0000ff;fill-opacity:1"
-       id="rect2992-9"
-       width="33.154095"
-       height="205.24554"
-       x="-245.42749"
-       y="386.42291"
-       transform="matrix(-0.67157115,0.74094007,0.72803089,0.68554432,0,0)"
-       inkscape:transform-center-x="102.56072"
-       inkscape:transform-center-y="96.986769" />
-    <rect
-       style="fill:#0000ff;fill-opacity:1"
-       id="rect3012"
-       width="16.40575"
-       height="102.56072"
-       x="367.86688"
-       y="180.59605" />
-    <rect
-       style="fill:#0000ff;fill-opacity:1"
-       id="rect3039"
-       width="257.42932"
-       height="30.099342"
-       x="248.65178"
-       y="150.4967" />
-    <rect
-       style="fill:#0000ff;fill-opacity:1"
-       id="rect2999"
-       width="40.215473"
-       height="83.557243"
-       x="124.118"
-       y="193.14146" />
-    <path
-       sodipodi:type="arc"
-       style="fill:#0000ff;fill-opacity:1"
-       id="path3001"
-       sodipodi:cx="133.14778"
-       sodipodi:cy="178.36647"
-       sodipodi:rx="14.004555"
-       sodipodi:ry="14.770973"
-       d="m 147.15234,178.36647 a 14.004555,14.770973 0 1 1 -28.00911,0 14.004555,14.770973 0 1 1 28.00911,0 z"
-       transform="matrix(1.4350363,0,0,1.4611771,-46.87008,-67.053464)" />
-    <path
-       sodipodi:type="arc"
-       style="fill:#0000ff;fill-opacity:1"
-       id="path3001-6"
-       sodipodi:cx="133.14778"
-       sodipodi:cy="178.36647"
-       sodipodi:rx="14.004555"
-       sodipodi:ry="14.770973"
-       d="m 147.15234,178.36647 a 14.004555,14.770973 0 1 1 -28.00911,0 14.004555,14.770973 0 1 1 28.00911,0 z"
-       transform="matrix(1.4350363,0,0,1.4611771,-46.846166,15.778103)" />
-    <rect
-       style="fill:#0000ff;fill-opacity:1"
-       id="rect3021"
-       width="21.737619"
-       height="28.427156"
-       x="156.77957"
-       y="221.2859" />
-    <rect
-       style="fill:#0000ff;fill-opacity:1"
-       id="rect2999-6"
-       width="40.215473"
-       height="83.557243"
-       x="590.57086"
-       y="190.58794" />
-    <path
-       sodipodi:type="arc"
-       style="fill:#0000ff;fill-opacity:1"
-       id="path3001-2"
-       sodipodi:cx="133.14778"
-       sodipodi:cy="178.36647"
-       sodipodi:rx="14.004555"
-       sodipodi:ry="14.770973"
-       d="m 147.15234,178.36647 a 14.004555,14.770973 0 1 1 -28.00911,0 14.004555,14.770973 0 1 1 28.00911,0 z"
-       transform="matrix(1.4350363,0,0,1.4611771,419.5828,-69.606974)" />
-    <path
-       sodipodi:type="arc"
-       style="fill:#0000ff;fill-opacity:1"
-       id="path3001-6-9"
-       sodipodi:cx="133.14778"
-       sodipodi:cy="178.36647"
-       sodipodi:rx="14.004555"
-       sodipodi:ry="14.770973"
-       d="m 147.15234,178.36647 a 14.004555,14.770973 0 1 1 -28.00911,0 14.004555,14.770973 0 1 1 28.00911,0 z"
-       transform="matrix(1.4350363,0,0,1.4611771,419.60671,13.224583)" />
-    <rect
-       style="fill:#0000ff;fill-opacity:1"
-       id="rect3021-9"
-       width="21.157589"
-       height="21.234138"
-       x="573.177"
-       y="226.99921" />
-    <rect
-       style="fill:#0000ff;fill-opacity:1"
-       id="rect2999-6-4"
-       width="35.295368"
-       height="60.639233"
-       x="358.70132"
-       y="241.08305" />
-    <path
-       sodipodi:type="arc"
-       style="fill:#0000ff;fill-opacity:1"
-       id="path3001-2-7"
-       sodipodi:cx="133.14778"
-       sodipodi:cy="178.36647"
-       sodipodi:rx="14.004555"
-       sodipodi:ry="14.770973"
-       d="m 147.15234,178.36647 a 14.004555,14.770973 0 1 1 -28.00911,0 14.004555,14.770973 0 1 1 28.00911,0 z"
-       transform="matrix(1.2594688,0,0,1.0604067,208.63254,52.254185)" />
-    <path
-       sodipodi:type="arc"
-       style="fill:#0000ff;fill-opacity:1"
-       id="path3001-6-9-2"
-       sodipodi:cx="133.14778"
-       sodipodi:cy="178.36647"
-       sodipodi:rx="14.004555"
-       sodipodi:ry="14.770973"
-       d="m 147.15234,178.36647 a 14.004555,14.770973 0 1 1 -28.00911,0 14.004555,14.770973 0 1 1 28.00911,0 z"
-       transform="matrix(1.2594688,0,0,1.0604067,208.65353,112.36676)" />
     <path
        sodipodi:type="arc"
        style="fill:#ffffff;fill-opacity:1"
@@ -233,8 +110,8 @@
        sodipodi:cy="68.593872"
        sodipodi:rx="75.674484"
        sodipodi:ry="17.34207"
-       d="m 385.4669,68.593872 a 75.674484,17.34207 0 1 1 -151.34896,0 75.674484,17.34207 0 1 1 151.34896,0 z"
-       transform="matrix(1.982632,0,0,8.3409091,-239.51303,-541.77275)" />
+       d="m 385.4669,68.593872 c 0,9.577761 -33.88062,17.34207 -75.67448,17.34207 -41.79386,0 -75.67448,-7.764309 -75.67448,-17.34207 0,-9.577761 33.88062,-17.34207 75.67448,-17.34207 41.79386,0 75.67448,7.764309 75.67448,17.34207 z"
+       transform="matrix(1.982632,0,0,8.7272728,-239.51303,-561.57458)" />
     <rect
        style="fill:#123b00;fill-opacity:1"
        id="rect2985"
@@ -242,6 +119,174 @@
        height="4.4591618"
        x="27.720993"
        y="33.443714" />
+    <path
+       style="fill:#bba9ff;fill-opacity:1;stroke:#000000;stroke-width:0.99050301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 178.25421,210.48354 0,49.66138 -10.82725,0 -0.13671,-49.68323 z"
+       id="LHbrake"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc" />
+    <path
+       style="fill:#8cd0ff;fill-opacity:1;stroke:#000000;stroke-width:0.99050301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 124.6203,201.67556 c 0.51232,-11.70201 0.21253,-22.14526 20.10773,-22.13935 19.68201,-0.19361 18.83087,12.05328 19.33437,22.46586 l 0.38669,71.52203 c -0.35803,7.83905 0.50063,18.34963 -19.14102,18.32742 -21.12206,0.25912 -21.0299,-10.15389 -20.68777,-18.11634 z"
+       id="LHtyre"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccc" />
+    <path
+       style="fill:#8cd0ff;fill-opacity:1;stroke:#000000;stroke-width:0.99050307px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 361.07273,244.16831 c 0.40086,-9.15615 0.16629,-17.3274 15.73315,-17.32277 15.40004,-0.15149 14.73407,9.431 15.12803,17.57824 l 0.30256,55.96189 c -0.28013,6.1336 0.39172,14.35753 -14.97675,14.34015 -16.5268,0.20275 -16.45469,-7.94483 -16.18699,-14.17499 z"
+       id="Ntyre"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccc" />
+    <path
+       style="fill:#8cd0ff;fill-opacity:1;stroke:#000000;stroke-width:0.99050301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 583.39012,201.3664 c 0.51232,-11.70201 0.21253,-22.14526 20.10773,-22.13935 19.68201,-0.19361 18.83087,12.05328 19.33437,22.46586 l 0.38669,71.52203 c -0.35803,7.83906 0.50063,18.34964 -19.14102,18.32743 -21.12206,0.25912 -21.0299,-10.15389 -20.68777,-18.11635 z"
+       id="RHtyre"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccc"
+       inkscape:label="#RHtyre" />
+    <path
+       style="fill:#bba9ff;fill-opacity:1;stroke:#000000;stroke-width:0.99050301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 580.86399,210.2974 0,49.66138 -10.82725,0 -0.13671,-49.68323 z"
+       id="RHbrake"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc" />
+    <text
+       xml:space="preserve"
+       style="font-size:22.51537895px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="155.87599"
+       y="315.41867"
+       id="text_LHgear"
+       sodipodi:linespacing="125%"
+       transform="scale(0.99050304,1.009588)"><tspan
+         sodipodi:role="line"
+         id="tspan3880"
+         x="155.87599"
+         y="315.41867">LH Gear jammed</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22.51538086px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="415.79498"
+       y="314.63718"
+       id="text_RHgear"
+       sodipodi:linespacing="125%"
+       transform="scale(0.99050305,1.009588)"><tspan
+         sodipodi:role="line"
+         id="tspan3880-2"
+         x="415.79498"
+         y="314.63718">RH Gear jammed</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22.51538277px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="445.59778"
+       y="211.15598"
+       id="text_Ngear"
+       sodipodi:linespacing="125%"
+       transform="scale(0.99050305,1.009588)"><tspan
+         sodipodi:role="line"
+         id="tspan3880-2-9"
+         x="449.18176"
+         y="211.15598">Nose </tspan><tspan
+         sodipodi:role="line"
+         x="449.18176"
+         y="239.3002"
+         id="tspan3864">Gear </tspan><tspan
+         sodipodi:role="line"
+         x="445.59778"
+         y="267.44443"
+         id="tspan3866">jammed</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22.51538277px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="587.45343"
+       y="129.52504"
+       id="text_RHbrake"
+       sodipodi:linespacing="125%"
+       transform="scale(0.99050305,1.009588)"><tspan
+         sodipodi:role="line"
+         id="tspan3880-2-4"
+         x="587.45343"
+         y="129.52504">RH brake</tspan><tspan
+         sodipodi:role="line"
+         x="587.45343"
+         y="157.66927"
+         id="tspan3023">failed</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22.51538467px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="173.09106"
+       y="130.33517"
+       id="text_LHbrake"
+       sodipodi:linespacing="125%"
+       transform="scale(0.99050305,1.009588)"><tspan
+         sodipodi:role="line"
+         id="tspan3880-2-4-6"
+         x="173.09106"
+         y="130.33517">LH brake</tspan><tspan
+         sodipodi:role="line"
+         x="173.09106"
+         y="158.4794"
+         id="tspan3021">failed</tspan></text>
+    <path
+       style="fill:#00a2ff;fill-opacity:1;stroke:#000000;stroke-width:0.99050301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 254.43159,134.80906 -72.85266,84.06682 0,30.92993 11.41296,-0.0478 62.21308,-67.65237 63.64322,-0.23088 -17.06116,-6.88922 -18.70172,-12.46317 -16.24086,-13.29925 z"
+       id="LHgear"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccccccc" />
+    <text
+       xml:space="preserve"
+       style="font-size:22.51538658px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="80.85994"
+       y="257.47943"
+       id="text_LHtyre"
+       sodipodi:linespacing="125%"
+       transform="scale(0.99050305,1.009588)"><tspan
+         sodipodi:role="line"
+         id="tspan3880-2-4-6-7"
+         x="84.443932"
+         y="257.47943">LH tyre </tspan><tspan
+         sodipodi:role="line"
+         x="80.85994"
+         y="285.62366"
+         id="tspan3987">flat</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22.51538849px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="669.9751"
+       y="263.36157"
+       id="text_RHtyre"
+       sodipodi:linespacing="125%"
+       transform="scale(0.99050305,1.009588)"><tspan
+         sodipodi:role="line"
+         id="tspan3880-2-4-6-7-1"
+         x="673.55908"
+         y="263.36157">RH tyre </tspan><tspan
+         sodipodi:role="line"
+         x="669.9751"
+         y="291.5058"
+         id="tspan3987-6">flat</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:22.5153904px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="381.06387"
+       y="343.7655"
+       id="text_Ntyre"
+       sodipodi:linespacing="125%"
+       transform="scale(0.99050305,1.009588)"
+       inkscape:label="#text_Ntyre-1"><tspan
+         sodipodi:role="line"
+         id="tspan3880-2-4-6-7-1-0"
+         x="384.64786"
+         y="343.7655">Nose tyre </tspan><tspan
+         sodipodi:role="line"
+         x="381.06387"
+         y="371.90973"
+         id="tspan3987-6-8">flat</tspan></text>
+    <path
+       style="fill:#00a2ff;fill-opacity:1;stroke:#000000;stroke-width:0.99050301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 493.32658,134.85482 72.85266,84.06682 0,30.92993 -11.41296,-0.0478 -62.21308,-67.65237 -61.18235,-0.50958 17.33458,-8.56141 18.97514,-12.74186 13.23316,-11.34837 z"
+       id="RHgear"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccccccc" />
   </g>
   <g
      inkscape:groupmode="layer"

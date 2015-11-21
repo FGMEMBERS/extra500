@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:	Eric van den Berg
-	Date:			14.11.15
+	Date:			18.11.15
 
 
 ************************************************************************
@@ -2184,9 +2184,11 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			</unit>
 			<unit n="1">
 				<flatTire type="bool">0</flatTire>
+				<brakeFail type="bool">0</brakeFail>
 			</unit>
 			<unit n="2">
 				<flatTire type="bool">0</flatTire>
+				<brakeFail type="bool">0</brakeFail>
 			</unit>
 			<!-- jack points -->
 			<unit n="10">

@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 14.11.2015            
+#      Date: 18.11.2015            
 #
 # 
 
@@ -144,39 +144,65 @@ var NG_flat = func(n) {
 	if (n==1) {
 		setprop("/fdm/jsbsim/gear/unit[0]/flatTire", 1 ); 
 		setprop("/fdm/jsbsim/gear/unit[0]/z-position", 9 ); 
-		setprop("/fdm/jsbsim/gear/unit[0]/static_friction", 0.6 ); 
-		setprop("/fdm/jsbsim/gear/unit[0]/dynamic_friction", 0.3 ); 
+		setprop("/fdm/jsbsim/gear/unit[0]/static_friction_coeff", 0.6 ); 
+		setprop("/fdm/jsbsim/gear/unit[0]/dynamic_friction_coeff", 0.3 ); 
 	} else {
 		setprop("/fdm/jsbsim/gear/unit[0]/flatTire", 0 ); 
 		setprop("/fdm/jsbsim/gear/unit[0]/z-position", 5.748 ); 
-		setprop("/fdm/jsbsim/gear/unit[0]/static_friction", 0.7 ); 
-		setprop("/fdm/jsbsim/gear/unit[0]/dynamic_friction", 0.4 ); 
+		setprop("/fdm/jsbsim/gear/unit[0]/static_friction_coeff", 0.7 ); 
+		setprop("/fdm/jsbsim/gear/unit[0]/dynamic_friction_coeff", 0.4 ); 
 	}
 }
 var LMG_flat = func(n) {
 	if (n==1) {
 		setprop("/fdm/jsbsim/gear/unit[1]/flatTire", 1 ); 
 		setprop("/fdm/jsbsim/gear/unit[1]/z-position", 12 ); 
-		setprop("/fdm/jsbsim/gear/unit[1]/static_friction", 0.6 ); 
-		setprop("/fdm/jsbsim/gear/unit[1]/dynamic_friction", 0.3 ); 
+		if (getprop("/fdm/jsbsim/gear/unit[1]/brakeFail")==0) { 
+			setprop("/fdm/jsbsim/gear/unit[1]/static_friction_coeff", 0.6 ); 
+		}
+		setprop("/fdm/jsbsim/gear/unit[1]/dynamic_friction_coeff", 0.3 ); 
 	} else {
 		setprop("/fdm/jsbsim/gear/unit[1]/flatTire", 0 ); 
 		setprop("/fdm/jsbsim/gear/unit[1]/z-position", 8.268 ); 
-		setprop("/fdm/jsbsim/gear/unit[1]/static_friction", 0.7 ); 
-		setprop("/fdm/jsbsim/gear/unit[1]/dynamic_friction", 0.4 ); 
+		if (getprop("/fdm/jsbsim/gear/unit[1]/brakeFail")==0) { 
+			setprop("/fdm/jsbsim/gear/unit[1]/static_friction_coeff", 0.7 ); 
+		}
+		setprop("/fdm/jsbsim/gear/unit[1]/dynamic_friction_coeff", 0.4 ); 
 	}
 }
 var RMG_flat = func(n) {
 	if (n==1) {
 		setprop("/fdm/jsbsim/gear/unit[2]/flatTire", 1 ); 
 		setprop("/fdm/jsbsim/gear/unit[2]/z-position", 12 ); 
-		setprop("/fdm/jsbsim/gear/unit[2]/static_friction", 0.6 ); 
-		setprop("/fdm/jsbsim/gear/unit[2]/dynamic_friction", 0.3 ); 
+		if (getprop("/fdm/jsbsim/gear/unit[2]/brakeFail")==0) { 
+			setprop("/fdm/jsbsim/gear/unit[2]/static_friction_coeff", 0.6 ); 
+		}
+		setprop("/fdm/jsbsim/gear/unit[2]/dynamic_friction_coeff", 0.3 ); 
 	} else {
 		setprop("/fdm/jsbsim/gear/unit[2]/flatTire", 0 ); 
 		setprop("/fdm/jsbsim/gear/unit[2]/z-position", 8.268 ); 
-		setprop("/fdm/jsbsim/gear/unit[2]/static_friction", 0.7 ); 
-		setprop("/fdm/jsbsim/gear/unit[2]/dynamic_friction", 0.4 ); 
+		if (getprop("/fdm/jsbsim/gear/unit[2]/brakeFail")==0) { 
+			setprop("/fdm/jsbsim/gear/unit[2]/static_friction_coeff", 0.7 ); 
+		}
+		setprop("/fdm/jsbsim/gear/unit[2]/dynamic_friction_coeff", 0.4 ); 
+	}
+}
+var LMG_nobrake = func(n) {
+	if (n==1) {
+		setprop("/fdm/jsbsim/gear/unit[1]/brakeFail", 1 ); 
+		setprop("/fdm/jsbsim/gear/unit[1]/static_friction_coeff", 0.0 ); 
+	} else {
+		setprop("/fdm/jsbsim/gear/unit[1]/brakeFail", 0 ); 
+		setprop("/fdm/jsbsim/gear/unit[1]/static_friction_coeff", 0.7 ); 
+	}
+}
+var RMG_nobrake = func(n) {
+	if (n==1) {
+		setprop("/fdm/jsbsim/gear/unit[2]/brakeFail", 1 ); 
+		setprop("/fdm/jsbsim/gear/unit[2]/static_friction_coeff", 0.0 ); 
+	} else {
+		setprop("/fdm/jsbsim/gear/unit[2]/brakeFail", 0 ); 
+		setprop("/fdm/jsbsim/gear/unit[2]/static_friction_coeff", 0.7 ); 
 	}
 }
 
@@ -192,6 +218,8 @@ var set_failure = func(fail) {
 		else if (failure == "NG_flat") { NG_flat(fail); }
 		else if (failure == "LMG_flat") { LMG_flat(fail); }
 		else if (failure == "RMG_flat") { RMG_flat(fail); }
+		else if (failure == "Lbrake") { LMG_nobrake(fail); }
+		else if (failure == "Rbrake") { RMG_nobrake(fail); }
 		else if (failure == "RAil") { RAil(fail); }
 		else if (failure == "LAil") { LAil(fail); }
 		else if (failure == "Elevator") { Elevator(fail); }
@@ -243,15 +271,17 @@ var failure_reset = func() {
      setprop("/systems/gear/solenoids/lowerdoorvalve/serviceable", 1 ); 
 	setprop("/fdm/jsbsim/gear/unit[0]/flatTire", 0 ); 
 	setprop("/fdm/jsbsim/gear/unit[0]/z-position", 5.748 ); 
-	setprop("/fdm/jsbsim/gear/unit[0]/static_friction", 0.7 ); 
-	setprop("/fdm/jsbsim/gear/unit[0]/dynamic_friction", 0.4 ); 
+	setprop("/fdm/jsbsim/gear/unit[0]/static_friction_coeff", 0.7 ); 
+	setprop("/fdm/jsbsim/gear/unit[0]/dynamic_friction_coeff", 0.4 ); 
 	setprop("/fdm/jsbsim/gear/unit[1]/flatTire", 0 ); 
 	setprop("/fdm/jsbsim/gear/unit[1]/z-position", 8.268 ); 
-	setprop("/fdm/jsbsim/gear/unit[1]/static_friction", 0.7 ); 
-	setprop("/fdm/jsbsim/gear/unit[1]/dynamic_friction", 0.4 ); 
+	setprop("/fdm/jsbsim/gear/unit[1]/static_friction_coeff", 0.7 ); 
+	setprop("/fdm/jsbsim/gear/unit[1]/dynamic_friction_coeff", 0.4 ); 
 	setprop("/fdm/jsbsim/gear/unit[2]/flatTire", 0 ); 
 	setprop("/fdm/jsbsim/gear/unit[2]/z-position", 8.268 ); 
-	setprop("/fdm/jsbsim/gear/unit[2]/static_friction", 0.7 ); 
-	setprop("/fdm/jsbsim/gear/unit[2]/dynamic_friction", 0.4 ); 
+	setprop("/fdm/jsbsim/gear/unit[2]/static_friction_coeff", 0.7 ); 
+	setprop("/fdm/jsbsim/gear/unit[2]/dynamic_friction_coeff", 0.4 ); 
+	setprop("/fdm/jsbsim/gear/unit[1]/brakeFail", 0 ); 
+	setprop("/fdm/jsbsim/gear/unit[2]/brakeFail", 0 ); 
 }
 
