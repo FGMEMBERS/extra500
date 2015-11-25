@@ -17,7 +17,7 @@
 #	Date: 	10.10.2015
 #
 #	Last change: Eric van den Berg	
-#	Date:	24.11.2015	
+#	Date:	25.11.2015	
 #
 
 var COLORfd = {};
@@ -46,13 +46,15 @@ var FailureClass = {
 		return m;
 	},
 	openDialog : func(){
+		# making window
 		me._gfd = MyWindow.new([750,512],"dialog");
 		me._gfd._onClose = func(){Failuredialog._onClose();}
 
 		me._gfd.set('title',me._title);
 		me._canvas = me._gfd.createCanvas().set("background", canvas.style.getColor("bg_color"));
            	me._root = me._canvas.createGroup();
-
+		
+		# parsing svg-s
 		me._filename = "/Dialogs/MenuFaildialog.svg";
 		me._svg_menu = me._root.createChild('group');
 		canvas.parsesvg(me._svg_menu, me._filename);
@@ -73,14 +75,10 @@ var FailureClass = {
 		me._svg_contr = me._root.createChild('group');
 		canvas.parsesvg(me._svg_contr, me._filename);
 
-# defining clickable fields and other elements
+# defining clickable fields and other elements from svg files
 	# menu
 		me._gear		= me._svg_menu.getElementById("field_gear");
 		me._gear_ind	= me._svg_menu.getElementById("gearfailind").hide();
-		me._gear_num	= me._svg_menu.getElementById("gear_numbers").setVisible(0);
-#.set("clip","rect(84px, 639px, 688px, 320px)")
-#						.setVisible(1);
-#						.hide();
 		me._fuel		= me._svg_menu.getElementById("field_fuel");
 		me._fuel_ind	= me._svg_menu.getElementById("fuelfailind").hide();
 		me._controls	= me._svg_menu.getElementById("field_controls");
@@ -137,9 +135,27 @@ var FailureClass = {
 		me._Text_Elevator	= me._svg_contr.getElementById("text_Elevator").hide();
 		me._Text_flaps	= me._svg_contr.getElementById("text_Flaps").hide();
 
+# additional elements
+	#number of failure indication in menu
+		me._gearfailnumber = me._root.createChild("text")
+      		.setFontSize(10, 0.9)         
+      		.setAlignment("center-center") 
+      		.setTranslation(106, 23);
 
+		me._fuelfailnumber = me._root.createChild("text")
+      		.setFontSize(10, 0.9)        
+      		.setAlignment("center-center") 
+      		.setTranslation(198, 23);
+
+		me._controlsfailnumber = me._root.createChild("text")
+      		.setFontSize(10, 0.9)  
+      		.setAlignment("center-center") 
+      		.setTranslation(346, 23);     
+
+# listeners
 		me.setListeners(instance = me);
 
+# initialisation
 		me._menuReset();
 		me._hideAll();
 
@@ -191,10 +207,6 @@ var FailureClass = {
 		me._Rudder.addEventListener("click",func(){me._onRudderClick();});
 	},
 	_menuReset : func() {
-#		setprop("/extra500/failurescenarios/welcome",0);
-#		setprop("/extra500/failurescenarios/fuel",0);
-#		setprop("/extra500/failurescenarios/gear",0);
-#		setprop("/extra500/failurescenarios/contr",0);
 		me._gear.setColorFill(COLORfd["menuns"]);
 		me._fuel.setColorFill(COLORfd["menuns"]);
 		me._controls.setColorFill(COLORfd["menuns"]);
@@ -213,7 +225,6 @@ var FailureClass = {
 	_onGearClick : func() {
 		me._menuReset();
 		me._gear.setColorFill(COLORfd["menuse"]);
-#		setprop("/extra500/failurescenarios/gear",1);
 		me._hideAll();
 		me._svg_gear.show();
 		me._gearButtons_update();
@@ -221,7 +232,6 @@ var FailureClass = {
 	_onFuelClick : func() {
 		me._menuReset();
 		me._fuel.setColorFill(COLORfd["menuse"]);
-#		setprop("/extra500/failurescenarios/fuel",1);
 		me._hideAll();
 		me._svg_fuel.show();
 		me._fuelButtons_update();
@@ -229,7 +239,6 @@ var FailureClass = {
 	_onControlsClick : func() {
 		me._menuReset();
 		me._controls.setColorFill(COLORfd["menuse"]);
-#		setprop("/extra500/failurescenarios/contr",1);
 		me._hideAll();
 		me._svg_contr.show();
 		me._contrButtons_update();
@@ -253,10 +262,14 @@ var FailureClass = {
 		me._genButtons_update("/systems/fuel/RHtank/main/leakage/state",0,me._Rmain,me._Text_Rmain,"mainOk","/extra500/failurescenarios/fuel");
 		me._genButtons_update("/systems/fuel/RHtank/collector/leakage/state",0,me._Rcol,me._Text_Rcol,"colOk","/extra500/failurescenarios/fuel");
 
+		# setting fail indication in menu
 		if (getprop("/extra500/failurescenarios/fuel") > 0) {
 			me._fuel_ind.show();
+			me._fuelfailnumber.setText(getprop("/extra500/failurescenarios/fuel"))
+				.setColor(1,1,1,1);		
 		} else {
 			me._fuel_ind.hide();
+			me._fuelfailnumber.setColor(1,1,1,0);
 		}
 
 	},
@@ -273,10 +286,14 @@ var FailureClass = {
 		me._genButtons_update("/fdm/jsbsim/gear/unit[1]/brakeFail",0,me._LHbrake,me._Text_LHbrake,"BraOk","/extra500/failurescenarios/gear");
 		me._genButtons_update("/fdm/jsbsim/gear/unit[2]/brakeFail",0,me._RHbrake,me._Text_RHbrake,"BraOk","/extra500/failurescenarios/gear");
 
+		# setting fail indication in menu
 		if (getprop("/extra500/failurescenarios/gear") > 0) {
 			me._gear_ind.show();
+			me._gearfailnumber.setText(getprop("/extra500/failurescenarios/gear"))
+				.setColor(1,1,1,1);		
 		} else {
 			me._gear_ind.hide();
+			me._gearfailnumber.setColor(1,1,1,0);
 		}
 
 	},
@@ -296,10 +313,14 @@ var FailureClass = {
 			setprop("/extra500/failurescenarios/contr",getprop("/extra500/failurescenarios/contr") + 1);
 		}
 
+		# setting fail indication in menu
 		if (getprop("/extra500/failurescenarios/contr") > 0) {
 			me._controls_ind.show();
+			me._controlsfailnumber.setText(getprop("/extra500/failurescenarios/contr"))
+				.setColor(1,1,1,1);
 		} else {
 			me._controls_ind.hide();
+			me._controlsfailnumber.setColor(1,1,1,0);
 		}
 
 	},
