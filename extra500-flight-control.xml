@@ -154,6 +154,7 @@
 		<default value="aircraft/hstab/elevator/H-pilot-lbsft"/>
 		<test logic="OR" value="0">
 			state/controls-fixed eq 1
+			/extra500/failurescenarios/controls/elevator eq 1
 		</test>
 		<output>aircraft/hstab/elevator/H-pilot2-lbsft</output>
 	</switch>
