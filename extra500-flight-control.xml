@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2015-11-15
+      Date:             2015-11-29
 -->
 
 <flight_control name="FCS: extra500">
@@ -216,6 +216,7 @@
    		</aerosurface_scale>	
 
 <!--this makes the elevator pilot input to move along, so when the pitch trim controls the elevator position, the elevator is in the correct position-->
+<!-- NOTE: since the implementation of 'force control', this function is taken over by a listener in controls.nas-->
 		<!--switch name="fixedoff">
 			<default value="/controls/flight/elevator"/>
 			<test logic="AND" value="aircraft/hstab/elevator/d_e_free-norm">
