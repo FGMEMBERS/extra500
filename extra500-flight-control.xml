@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2015-11-15
+      Date:             2015-11-29
 -->
 
 <flight_control name="FCS: extra500">
@@ -141,6 +141,24 @@
     	</function>
 	</fcs_function>
 
+	<fcs_function name="aircraft/hstab/elevator/H-pilot-lbsft">
+    		<function>
+      		<product>
+            		<property>/controls/flight/elevator</property>
+            		<property>aircraft/hstab/elevator/yoke-force-ratio</property>
+       		</product>
+    		</function>
+	</fcs_function>
+
+	<switch name="elevnotfixed2">
+		<default value="aircraft/hstab/elevator/H-pilot-lbsft"/>
+		<test logic="OR" value="0">
+			state/controls-fixed eq 1
+		</test>
+		<output>aircraft/hstab/elevator/H-pilot2-lbsft</output>
+	</switch>
+
+
 	<fcs_function name="aircraft/hstab/elevator/d_e_free-rad">
     	<function>
       	<description>stick-free elevator deflection rad</description>
@@ -164,7 +182,8 @@
                   		<property>aircraft/hstab/elevator/H-ds-lbsft</property>
                   		<property>aircraft/hstab/elevator/H-bw-lbsft</property>
                   		<property>aircraft/hstab/elevator/H-alpha-lbsft</property>
-                  		<property>aircraft/hstab/elevator/H-trim-lbsft</property>                 
+                  		<property>aircraft/hstab/elevator/H-trim-lbsft</property>  
+					<property>aircraft/hstab/elevator/H-pilot2-lbsft</property>           
             		</sum>
       		</product>
     	</function>
@@ -197,7 +216,8 @@
    		</aerosurface_scale>	
 
 <!--this makes the elevator pilot input to move along, so when the pitch trim controls the elevator position, the elevator is in the correct position-->
-		<switch name="fixedoff">
+<!-- NOTE: since the implementation of 'force control', this function is taken over by a listener in controls.nas-->
+		<!--switch name="fixedoff">
 			<default value="/controls/flight/elevator"/>
 			<test logic="AND" value="aircraft/hstab/elevator/d_e_free-norm">
 				state/controls-fixed eq 0
@@ -206,7 +226,7 @@
 				/autopilot/mode/gs-follow eq 0
 			</test>
 			<output>/controls/flight/elevator</output>
-		</switch>
+		</switch-->
 
 <!-- control choices for elevator-->
 		<switch name="elevnotfixed">
