@@ -95,7 +95,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		</key>
      	      <key>
 			<name>Ctrl-F</name>
-			<desc>Pitch control by pitch trim only</desc>
+			<desc>Toggle pitch control mode</desc>
 		</key>
      	      <key>
 			<name>W</name>
