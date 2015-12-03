@@ -992,7 +992,8 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		</motor>
 	</gear>
 	<fuel>
-		<balanceLR type="double">0.5</balanceLR>
+		<ValvebalanceLR type="double">0.5</ValvebalanceLR>
+		<FlowbalanceLR type="double">0.5</FlowbalanceLR>
 		<FT-degC type="double">0</FT-degC>					<!--dummy value -->
 		<Fpress-too-low type="bool">0</Fpress-too-low>
 		<F-filter-prloss-psid type="double">0</F-filter-prloss-psid>

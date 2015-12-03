@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             06.06.15
+#      Date:             26.11.15
 #
 
 var FuelSystemClass = {
@@ -36,6 +36,7 @@ var FuelSystemClass = {
 		me.parents[1].init(instance);
 		me.initUI();
 		me.initBal();
+		me._setBalance(getprop("/extra500/system/fuel/SelectValve"));
 			
 		append(me._listeners, setlistener(me._nSelectValve,func(n){me._selectValve = n.getValue();},1,0) );		
 	},
@@ -64,17 +65,28 @@ var FuelSystemClass = {
 		me._selectValve += value;
 		me._selectValve = global.clamp(me._selectValve,0,4);
 		me._nSelectValve.setValue(me._selectValve);
+		me._setBalance(me._selectValve);
 	},	
 	onValveSet : func(value){
 		me._selectValve = value;
 		me._selectValve = global.clamp(me._selectValve,0,4);
 		me._nSelectValve.setValue(me._selectValve);
+		me._setBalance(me._selectValve);
 	},	
+	_setBalance : func(value){
+		if (value == 1 ) {
+			setprop("/systems/fuel/ValvebalanceLR",1);
+		} else if (value == 3 ) {
+			setprop("/systems/fuel/ValvebalanceLR",0);
+		} else {
+			setprop("/systems/fuel/ValvebalanceLR",0.5);
+		}
+	},
 	
 	initUI : func(){
 		UI.register("Fuel Select Valve <", 	func{me.onValveClick(-1);} 	);
 		UI.register("Fuel Select Valve >", 	func{me.onValveClick(1);} 	);
-		UI.register("Fuel Select Off", 		func{me.onValveSet(0);} 	);
+		UI.register("Fuel Select Off", 	func{me.onValveSet(0);} 	);
 		UI.register("Fuel Select Left", 	func{me.onValveSet(1);} 	);
 		UI.register("Fuel Select Both", 	func{me.onValveSet(2);} 	);
 		UI.register("Fuel Select Right", 	func{me.onValveSet(3);} 	);
