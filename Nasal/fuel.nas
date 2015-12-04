@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             26.11.15
+#      Date:             04.12.15
 #
 
 var FuelSystemClass = {
@@ -36,7 +36,7 @@ var FuelSystemClass = {
 		me.parents[1].init(instance);
 		me.initUI();
 		me.initBal();
-		me._setBalance(getprop("/extra500/system/fuel/SelectValve"));
+		me.setFlowBalance();
 			
 		append(me._listeners, setlistener(me._nSelectValve,func(n){me._selectValve = n.getValue();},1,0) );		
 	},
@@ -65,21 +65,33 @@ var FuelSystemClass = {
 		me._selectValve += value;
 		me._selectValve = global.clamp(me._selectValve,0,4);
 		me._nSelectValve.setValue(me._selectValve);
-		me._setBalance(me._selectValve);
+		me.setFlowBalance();
 	},	
 	onValveSet : func(value){
 		me._selectValve = value;
 		me._selectValve = global.clamp(me._selectValve,0,4);
 		me._nSelectValve.setValue(me._selectValve);
-		me._setBalance(me._selectValve);
+		me.setFlowBalance();
 	},	
-	_setBalance : func(value){
-		if (value == 1 ) {
-			setprop("/systems/fuel/ValvebalanceLR",1);
-		} else if (value == 3 ) {
-			setprop("/systems/fuel/ValvebalanceLR",0);
+	setFlowBalance : func(){
+#	/systems/fuel/FlowbalanceLR: 1 = all fuel from left tank; 0 = all fuel from RH tank
+
+		var valvepos = getprop("/extra500/system/fuel/SelectValve");
+		var LHcheckValve = getprop("/systems/fuel/LHtank/checkvalve/serviceable");
+		var RHcheckValve = getprop("/systems/fuel/RHtank/checkvalve/serviceable");
+
+		if (valvepos == 1 ) {
+			setprop("/systems/fuel/FlowbalanceLR",1);
+		} else if (valvepos == 3 ) {
+			setprop("/systems/fuel/FlowbalanceLR",0);
 		} else {
-			setprop("/systems/fuel/ValvebalanceLR",0.5);
+			if (LHcheckValve == 0){
+				setprop("/systems/fuel/FlowbalanceLR",0);
+			} else if (RHcheckValve == 0) {
+				setprop("/systems/fuel/FlowbalanceLR",1);
+			} else {
+				setprop("/systems/fuel/FlowbalanceLR",0.5);
+			}
 		}
 	},
 	
@@ -94,4 +106,4 @@ var FuelSystemClass = {
 	
 };
 
-var fuelSystem= FuelSystemClass.new("extra500/system/fuel","Fuel System");
+var fuelSystem = FuelSystemClass.new("extra500/system/fuel","Fuel System");

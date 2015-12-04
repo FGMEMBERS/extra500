@@ -20,7 +20,7 @@
       Date: 2015-05-08
 
       Last change: Eric van den Berg     
-      Date: 2015-05-25           
+      Date: 2015-12-04           
 -->
 
 <!--
@@ -421,27 +421,14 @@ i=0-6 left to right
 
 	<channel name="engine flow">
 
-		<!-- balance: 1 = all fuel from left tank; 0 = all fuel from RH tank -->
-		<!--fcs_function name="fuelflowbalance">
-			<function>
-				<sum>
-					<product>
-						<value>-0.5</value>
-						<property>/extra500/system/fuel/SelectValve</property>
-					</product>
-					<value>1.5</value>
-				</sum>
-			</function>
-			<output>/systems/fuel/FlowbalanceLR</output>
-		</fcs_function-->
+		<!-- /systems/fuel/FlowbalanceLR: 1 = all fuel from left tank; 0 = all fuel from RH tank -->
 
 		<fcs_function name="LHengfuelflow">
 			<function>
 				<product>
 					<value>0.000277777777778</value>
 					<property>aircraft/engine/FF-lbs_h</property>
-					<property>/systems/fuel/ValvebalanceLR</property>
-					<!--property>/systems/fuel/FlowbalanceLR</property-->
+					<property>/systems/fuel/FlowbalanceLR</property>
 				</product>
 			</function>
 			<output>/systems/fuel/LHtank/collector/engine/outflow</output>
@@ -455,15 +442,9 @@ i=0-6 left to right
 					<abs>	
 						<sum>		
 							<value>-1</value>		
-							<property>/systems/fuel/ValvebalanceLR</property>
-						</sum>
-					</abs>
-					<!--abs>	
-						<sum>		
-							<value>-1</value>		
 							<property>/systems/fuel/FlowbalanceLR</property>
 						</sum>
-					</abs-->					
+					</abs>			
 				</product>
 			</function>
 			<output>/systems/fuel/RHtank/collector/engine/outflow</output>

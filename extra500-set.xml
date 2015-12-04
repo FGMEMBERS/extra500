@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:	Eric van den Berg
-	Date:			29.11.15
+	Date:			04.12.15
 
 
 ************************************************************************
@@ -992,7 +992,6 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		</motor>
 	</gear>
 	<fuel>
-		<ValvebalanceLR type="double">0.5</ValvebalanceLR>
 		<FlowbalanceLR type="double">0.5</FlowbalanceLR>
 		<FT-degC type="double">0</FT-degC>					<!--dummy value -->
 		<Fpress-too-low type="bool">0</Fpress-too-low>

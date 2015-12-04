@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 25.11.2015            
+#      Date: 04.12.2015            
 #
 # 
 
@@ -80,6 +80,15 @@ var tankLeak = func(flowrate,flowprop,stateprop) {
 	} else {	
 		setprop(stateprop,0);
 	} 
+}
+
+var LcheckvalveFail = func(fail) {
+	setprop("/systems/fuel/LHtank/checkvalve/serviceable", math.abs(fail-1) );
+	extra500.fuelSystem.setFlowBalance();
+}
+var RcheckvalveFail = func(fail) {
+	setprop("/systems/fuel/RHtank/checkvalve/serviceable", math.abs(fail-1) );
+	extra500.fuelSystem.setFlowBalance();
 }
 
 # GEAR FAILURES
@@ -200,8 +209,8 @@ var set_failure = func(fail) {
 		else if (failure == "RAux_inbDrainFail") { setprop("/systems/fuel/RHtank/aux/draininboard/serviceable", math.abs(fail-1) ); }
 		else if (failure == "RAux_outbDrainFail") { setprop("/systems/fuel/RHtank/aux/drainoutboard/serviceable", math.abs(fail-1) ); }
 	# component failures
-		else if (failure == "LcheckvalveFail") { setprop("/systems/fuel/LHtank/checkvalve/serviceable", math.abs(fail-1) ); }
-		else if (failure == "RcheckvalveFail") { setprop("/systems/fuel/RHtank/checkvalve/serviceable", math.abs(fail-1) ); }
+		else if (failure == "LcheckvalveFail") { LcheckvalveFail(fail); }
+		else if (failure == "RcheckvalveFail") { RcheckvalveFail(fail); }
 	# transfer system failures
 		else if (failure == "LtransferPumpFail") { setprop("/systems/fuel/LHtank/motivepump/serviceable", math.abs(fail-1) ); }
 		else if (failure == "RtransferPumpFail") { setprop("/systems/fuel/RHtank/motivepump/serviceable", math.abs(fail-1) ); }
@@ -248,6 +257,11 @@ var failure_reset = func() {
 	setprop("/systems/fuel/LHtank/aux/drainoutboard/serviceable", 1 ); 
 	setprop("/systems/fuel/RHtank/aux/draininboard/serviceable", 1 ); 
 	setprop("/systems/fuel/RHtank/aux/drainoutboard/serviceable", 1 ); 
+	setprop("/systems/fuel/LHtank/checkvalve/serviceable", 1 );
+	setprop("/systems/fuel/RHtank/checkvalve/serviceable", 1 );
+	extra500.fuelSystem.setFlowBalance();
+	setprop("/systems/fuel/LHtank/motivepump/serviceable", 1 );
+	setprop("/systems/fuel/RHtank/motivepump/serviceable", 1 );
 
 #GEAR
      	setprop("/systems/gear/RMG-free", 1 ); 

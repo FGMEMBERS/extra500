@@ -28,9 +28,9 @@
      inkscape:window-height="836"
      id="namedview8"
      showgrid="false"
-     inkscape:zoom="0.89702958"
-     inkscape:cx="405.44211"
-     inkscape:cy="782.42224"
+     inkscape:zoom="3.5881183"
+     inkscape:cx="364.58552"
+     inkscape:cy="828.52557"
      inkscape:window-x="0"
      inkscape:window-y="21"
      inkscape:window-maximized="1"
@@ -682,7 +682,7 @@
          style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     </g>
     <g
-       id="g4048"
+       id="LHcheckvalve"
        transform="matrix(-1.5372168,0,0,-1.5294619,856.28723,556.1434)">
       <path
          sodipodi:nodetypes="ccc"
@@ -698,12 +698,13 @@
          sodipodi:rx="4.1804643"
          sodipodi:cy="215.74678"
          sodipodi:cx="345.93341"
-         id="path3278"
+         id="LHcvfield"
          style="fill:#00ff00;fill-opacity:0.28947371;stroke:#00ff00;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-         sodipodi:type="arc" />
+         sodipodi:type="arc"
+         inkscape:label="#path3278" />
     </g>
     <g
-       id="g4048-4"
+       id="RHcheckvalve"
        transform="matrix(1.5372168,0,0,-1.5294619,-118.6736,555.95129)">
       <path
          sodipodi:nodetypes="ccc"
@@ -719,9 +720,10 @@
          sodipodi:rx="4.1804643"
          sodipodi:cy="215.74678"
          sodipodi:cx="345.93341"
-         id="path3278-1"
+         id="RHcvfield"
          style="fill:#00ff00;fill-opacity:0.28947371;stroke:#00ff00;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-         sodipodi:type="arc" />
+         sodipodi:type="arc"
+         inkscape:label="#path3278-1" />
     </g>
     <g
        id="g4048-5"
@@ -898,6 +900,34 @@
          y="80.256348"
          id="tspan4010-9"
          style="text-align:center;text-anchor:middle">leaking</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:39.620121px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="227.57153"
+       y="231.60666"
+       id="text_LCV"
+       sodipodi:linespacing="125%"
+       transform="scale(0.99050302,1.009588)"
+       inkscape:label="#text_LCV"><tspan
+         sodipodi:role="line"
+         id="tspan3130"
+         x="227.57153"
+         y="231.60666"
+         style="font-size:9.90503025px">Check Valve Blocked</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:39.620121px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="404.82901"
+       y="234.47113"
+       id="text_RCV"
+       sodipodi:linespacing="125%"
+       inkscape:label="#text_RCV"
+       transform="scale(0.99050305,1.009588)"><tspan
+         sodipodi:role="line"
+         id="tspan3130-1"
+         x="404.82901"
+         y="234.47113"
+         style="font-size:9.90503025px">Check Valve Blocked</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"

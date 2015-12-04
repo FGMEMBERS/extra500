@@ -17,7 +17,7 @@
 #	Date: 	10.10.2015
 #
 #	Last change: Eric van den Berg	
-#	Date:	25.11.2015	
+#	Date:	04.12.2015	
 #
 
 var COLORfd = {};
@@ -33,6 +33,7 @@ COLORfd["TyrOk"] = "#8cd0ff";
 COLORfd["auxOk"] = "#d4aa00";
 COLORfd["mainOk"] = "#ffcc00";
 COLORfd["colOk"] = "#ffdd55";
+COLORfd["CVOk"] = "#00ff004a";
 COLORfd["Failed"] = "#ff8080";
 
 var FailureClass = {
@@ -112,6 +113,10 @@ var FailureClass = {
 		me._Rcol		= me._svg_fuel.getElementById("Rcol");
 		me._Rmain		= me._svg_fuel.getElementById("Rmain");
 		me._Raux		= me._svg_fuel.getElementById("Raux");
+		me._LCV		= me._svg_fuel.getElementById("LHcheckvalve");
+		me._RCV		= me._svg_fuel.getElementById("RHcheckvalve");
+		me._LCV_field	= me._svg_fuel.getElementById("LHcvfield");
+		me._RCV_field	= me._svg_fuel.getElementById("RHcvfield");
 
 		me._Text_Laux		= me._svg_fuel.getElementById("text_Laux").hide();
 		me._Text_Lmain		= me._svg_fuel.getElementById("text_Lmain").hide();
@@ -119,6 +124,8 @@ var FailureClass = {
 		me._Text_Raux		= me._svg_fuel.getElementById("text_Raux").hide();
 		me._Text_Rmain		= me._svg_fuel.getElementById("text_Rmain").hide();
 		me._Text_Rcol		= me._svg_fuel.getElementById("text_Rcol").hide();
+		me._Text_LCV		= me._svg_fuel.getElementById("text_LCV").hide();
+		me._Text_RCV		= me._svg_fuel.getElementById("text_RCV").hide();
 
 	# control system
 		me._LAileron	= me._svg_contr.getElementById("LAileron");
@@ -197,6 +204,9 @@ var FailureClass = {
 		me._Raux.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/RHtank/aux/leakage/state",1,"RAux_leakage","auxOk",me._Raux,me._Text_Raux);});
 		me._Rmain.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/RHtank/main/leakage/state",1,"RMain_leakage","mainOk",me._Rmain,me._Text_Rmain);});
 		me._Rcol.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/RHtank/collector/leakage/state",1,"RCol_leakage","colOk",me._Rcol,me._Text_Rcol);});
+		me._LCV.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/LHtank/checkvalve/serviceable",0,"LcheckvalveFail","CVOk",me._LCV_field,me._Text_LCV);});
+		me._RCV.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/RHtank/checkvalve/serviceable",0,"RcheckvalveFail","CVOk",me._RCV_field,me._Text_RCV);});
+
 
 	# control system
 		me._LAileron.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/L-aileron",1,"LAil","AilOk",me._LAileron,me._Text_LAil);});
@@ -261,6 +271,8 @@ var FailureClass = {
 		me._genButtons_update("/systems/fuel/RHtank/aux/leakage/state",0,me._Raux,me._Text_Raux,"auxOk","/extra500/failurescenarios/fuel");
 		me._genButtons_update("/systems/fuel/RHtank/main/leakage/state",0,me._Rmain,me._Text_Rmain,"mainOk","/extra500/failurescenarios/fuel");
 		me._genButtons_update("/systems/fuel/RHtank/collector/leakage/state",0,me._Rcol,me._Text_Rcol,"colOk","/extra500/failurescenarios/fuel");
+		me._genButtons_update("/systems/fuel/LHtank/checkvalve/serviceable",1,me._LCV_field,me._Text_LCV,"CVOk","/extra500/failurescenarios/fuel");
+		me._genButtons_update("/systems/fuel/RHtank/checkvalve/serviceable",1,me._RCV_field,me._Text_RCV,"CVOk","/extra500/failurescenarios/fuel");
 
 		# setting fail indication in menu
 		if (getprop("/extra500/failurescenarios/fuel") > 0) {
