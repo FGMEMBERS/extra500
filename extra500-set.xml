@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:	Eric van den Berg
-	Date:			29.11.15
+	Date:			05.12.15
 
 
 ************************************************************************
@@ -95,7 +95,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		</key>
      	      <key>
 			<name>Ctrl-F</name>
-			<desc>Pitch control by pitch trim only</desc>
+			<desc>Toggle pitch control mode</desc>
 		</key>
      	      <key>
 			<name>W</name>
@@ -992,11 +992,14 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		</motor>
 	</gear>
 	<fuel>
-		<balanceLR type="double">0.5</balanceLR>
+		<FlowbalanceLR type="double">0.5</FlowbalanceLR>
 		<FT-degC type="double">0</FT-degC>					<!--dummy value -->
 		<Fpress-too-low type="bool">0</Fpress-too-low>
-		<F-filter-prloss-psid type="double">0</F-filter-prloss-psid>
 
+		<selectorValve>
+        		<serviceable type="bool">true</serviceable>
+		</selectorValve>
+		<F-filter-prloss-psid type="double">0</F-filter-prloss-psid>
 		<fuelfilter>
 			<clogged type="double">0</clogged>
 			<bypass>

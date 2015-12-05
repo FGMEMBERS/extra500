@@ -28,9 +28,9 @@
      inkscape:window-height="836"
      id="namedview8"
      showgrid="false"
-     inkscape:zoom="2.5371829"
-     inkscape:cx="568.77765"
-     inkscape:cy="792.36187"
+     inkscape:zoom="10.148732"
+     inkscape:cx="376.76328"
+     inkscape:cy="871.67625"
      inkscape:window-x="0"
      inkscape:window-y="21"
      inkscape:window-maximized="1"
@@ -276,7 +276,7 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccc" />
     <path
-       style="fill:#005ffe;fill-opacity:1;stroke:#000000;stroke-width:0.99050301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.99050300999999996px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 225.02503,65.723378 28.52148,0 C 265.6005,126.11283 292.96155,174.5022 375.41107,176.80666 l 0,10.98627 c -66.85519,0.005 -119.4853,-16.88178 -150.38604,-122.069552 z"
        id="path3799"
        inkscape:connector-curvature="0"
@@ -288,7 +288,7 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccccccc" />
     <path
-       style="fill:#005ffe;fill-opacity:1;stroke:#000000;stroke-width:0.99050301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.99050300999999996px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 526.7624,65.691016 -28.52148,0 C 486.18693,126.08046 458.82588,174.46982 376.37636,176.77428 l 0,10.98627 c 66.85519,0.005 119.4853,-16.88178 150.38604,-122.069534 z"
        id="path3799-1"
        inkscape:connector-curvature="0"
@@ -299,6 +299,13 @@
        id="RHgear"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccccccc" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       id="rect3795"
+       width="4.9302621"
+       height="10.050518"
+       x="373.4346"
+       y="177.17892" />
   </g>
   <g
      inkscape:groupmode="layer"

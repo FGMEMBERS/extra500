@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 18.11.2015            
+#      Date: 05.12.2015            
 #
 # 
 
@@ -72,59 +72,23 @@ var Elevator = func(n) {
 }
 
 # FUEL SYSTEM FAILURES
-var LAux_leak = func(n) {
-	if (n==1) {
-		setprop("/systems/fuel/LHtank/aux/leakage/flow",1); # 1ppm
-		setprop("/systems/fuel/LHtank/aux/leakage/state",1); 
-	} else {
-		setprop("/systems/fuel/LHtank/aux/leakage/flow",0); 
-		setprop("/systems/fuel/LHtank/aux/leakage/state",0); 
-	}
+
+var tankLeak = func(flowrate,flowprop,stateprop) {
+	setprop(flowprop,flowrate);
+	if (flowrate>0) {
+		setprop(stateprop,1);
+	} else {	
+		setprop(stateprop,0);
+	} 
 }
-var LMain_leak = func(n) {
-	if (n==1) {
-		setprop("/systems/fuel/LHtank/main/leakage/flow",1); # 1ppm
-		setprop("/systems/fuel/LHtank/main/leakage/state",1); 
-	} else {
-		setprop("/systems/fuel/LHtank/main/leakage/flow",0); 
-		setprop("/systems/fuel/LHtank/main/leakage/state",0); 
-	}
+
+var LcheckvalveFail = func(fail) {
+	setprop("/systems/fuel/LHtank/checkvalve/serviceable", math.abs(fail-1) );
+	extra500.fuelSystem.setFlowBalance();
 }
-var LCol_leak = func(n) {
-	if (n==1) {
-		setprop("/systems/fuel/LHtank/collector/leakage/flow",1); # 1ppm
-		setprop("/systems/fuel/LHtank/collector/leakage/state",1); 
-	} else {
-		setprop("/systems/fuel/LHtank/collector/leakage/flow",0); 
-		setprop("/systems/fuel/LHtank/collector/leakage/state",0); 
-	}
-}
-var RAux_leak = func(n) {
-	if (n==1) {
-		setprop("/systems/fuel/RHtank/aux/leakage/flow",1); # 1ppm
-		setprop("/systems/fuel/RHtank/aux/leakage/state",1); 
-	} else {
-		setprop("/systems/fuel/RHtank/aux/leakage/flow",0); 
-		setprop("/systems/fuel/RHtank/aux/leakage/state",0); 
-	}
-}
-var RMain_leak = func(n) {
-	if (n==1) {
-		setprop("/systems/fuel/RHtank/main/leakage/flow",1); # 1ppm
-		setprop("/systems/fuel/RHtank/main/leakage/state",1); 
-	} else {
-		setprop("/systems/fuel/RHtank/main/leakage/flow",0); 
-		setprop("/systems/fuel/RHtank/main/leakage/state",0); 
-	}
-}
-var RCol_leak = func(n) {
-	if (n==1) {
-		setprop("/systems/fuel/RHtank/collector/leakage/flow",1); # 1ppm
-		setprop("/systems/fuel/RHtank/collector/leakage/state",1); 
-	} else {
-		setprop("/systems/fuel/RHtank/collector/leakage/flow",0); 
-		setprop("/systems/fuel/RHtank/collector/leakage/state",0); 
-	}
+var RcheckvalveFail = func(fail) {
+	setprop("/systems/fuel/RHtank/checkvalve/serviceable", math.abs(fail-1) );
+	extra500.fuelSystem.setFlowBalance();
 }
 
 # GEAR FAILURES
@@ -209,6 +173,7 @@ var RMG_nobrake = func(n) {
 var set_failure = func(fail) {
 	var failure = getprop("/extra500/failurescenarios/name");	# getting failure name
 	if (failure != "") {
+# gear
 		if (failure == "RMG_jammed") { RMG(fail); }
 		else if (failure == "LMG_jammed") { LMG(fail); }
 		else if (failure == "NG_jammed") { NG(fail); }
@@ -220,15 +185,39 @@ var set_failure = func(fail) {
 		else if (failure == "RMG_flat") { RMG_flat(fail); }
 		else if (failure == "Lbrake") { LMG_nobrake(fail); }
 		else if (failure == "Rbrake") { RMG_nobrake(fail); }
+# controls
 		else if (failure == "RAil") { RAil(fail); }
 		else if (failure == "LAil") { LAil(fail); }
 		else if (failure == "Elevator") { Elevator(fail); }
-		else if (failure == "LAux_leakage") { LAux_leak(fail); }
-		else if (failure == "RAux_leakage") { RAux_leak(fail); }
-		else if (failure == "LMain_leakage") { LMain_leak(fail); }
-		else if (failure == "RMain_leakage") { RMain_leak(fail); }
-		else if (failure == "LCol_leakage") { LCol_leak(fail); }
-		else if (failure == "RCol_leakage") { RCol_leak(fail); }
+# fuel
+	# tank leakage
+		else if (failure == "LAux_leakage") { tankLeak(fail,"/systems/fuel/LHtank/aux/leakage/flow","/systems/fuel/LHtank/aux/leakage/state"); }
+		else if (failure == "RAux_leakage") { tankLeak(fail,"/systems/fuel/RHtank/aux/leakage/flow","/systems/fuel/RHtank/aux/leakage/state"); }
+		else if (failure == "LMain_leakage") { tankLeak(fail,"/systems/fuel/LHtank/main/leakage/flow","/systems/fuel/LHtank/main/leakage/state"); }
+		else if (failure == "RMain_leakage") { tankLeak(fail,"/systems/fuel/RHtank/main/leakage/flow","/systems/fuel/RHtank/main/leakage/state"); }
+		else if (failure == "LCol_leakage") { tankLeak(fail,"/systems/fuel/LHtank/collector/leakage/flow","/systems/fuel/LHtank/collector/leakage/state"); }
+		else if (failure == "RCol_leakage") { tankLeak(fail,"/systems/fuel/RHtank/collector/leakage/flow","/systems/fuel/RHtank/collector/leakage/state"); }
+	# drain failures
+		else if (failure == "LCol_drainFail") { setprop("/systems/fuel/LHtank/collector/drain/serviceable", math.abs(fail-1) ); }
+		else if (failure == "RCol_drainFail") { setprop("/systems/fuel/RHtank/collector/drain/serviceable", math.abs(fail-1) ); }
+		else if (failure == "LMain_inbDrainFail") { setprop("/systems/fuel/LHtank/main/draininboard/serviceable", math.abs(fail-1) ); }
+		else if (failure == "LMain_outbDrainFail") { setprop("/systems/fuel/LHtank/main/drainoutboard/serviceable", math.abs(fail-1) ); }
+		else if (failure == "RMain_inbDrainFail") { setprop("/systems/fuel/RHtank/main/draininboard/serviceable", math.abs(fail-1) ); }
+		else if (failure == "RMain_outbDrainFail") { setprop("/systems/fuel/RHtank/main/drainoutboard/serviceable", math.abs(fail-1) ); }
+		else if (failure == "LAux_inbDrainFail") { setprop("/systems/fuel/LHtank/aux/draininboard/serviceable", math.abs(fail-1) ); }
+		else if (failure == "LAux_outbDrainFail") { setprop("/systems/fuel/LHtank/aux/drainoutboard/serviceable", math.abs(fail-1) ); }
+		else if (failure == "RAux_inbDrainFail") { setprop("/systems/fuel/RHtank/aux/draininboard/serviceable", math.abs(fail-1) ); }
+		else if (failure == "RAux_outbDrainFail") { setprop("/systems/fuel/RHtank/aux/drainoutboard/serviceable", math.abs(fail-1) ); }
+	# component failures
+		else if (failure == "LcheckvalveFail") { LcheckvalveFail(fail); }
+		else if (failure == "RcheckvalveFail") { RcheckvalveFail(fail); }
+		else if (failure == "SelectorValveFail") { setprop("/systems/fuel/selectorValve/serviceable", math.abs(fail-1) ); }
+		else if (failure == "fuelPump1Fail") { setprop("/systems/fuel/FuelPump1/serviceable", math.abs(fail-1) ); }
+		else if (failure == "fuelPump2Fail") { setprop("/systems/fuel/FuelPump2/serviceable", math.abs(fail-1) ); }
+	# transfer system failures
+		else if (failure == "LtransferPumpFail") { setprop("/systems/fuel/LHtank/motivepump/serviceable", math.abs(fail-1) ); }
+		else if (failure == "RtransferPumpFail") { setprop("/systems/fuel/RHtank/motivepump/serviceable", math.abs(fail-1) ); }
+
 	} else {
 		print("Error: No failure scenario name set");
 		setprop("/extra500/failurescenarios/activate",0);
@@ -261,14 +250,32 @@ var failure_reset = func() {
 	setprop("/systems/fuel/RHtank/main/leakage/state",0); 
 	setprop("/systems/fuel/RHtank/collector/leakage/flow",0); 
 	setprop("/systems/fuel/RHtank/collector/leakage/state",0); 
+	setprop("/systems/fuel/LHtank/collector/drain/serviceable", 1 );
+	setprop("/systems/fuel/RHtank/collector/drain/serviceable", 1 ); 
+	setprop("/systems/fuel/LHtank/main/draininboard/serviceable", 1 ); 
+	setprop("/systems/fuel/LHtank/main/drainoutboard/serviceable", 1 ); 
+	setprop("/systems/fuel/RHtank/main/draininboard/serviceable", 1 ); 
+	setprop("/systems/fuel/RHtank/main/drainoutboard/serviceable", 1 ); 
+	setprop("/systems/fuel/LHtank/aux/draininboard/serviceable", 1 ); 
+	setprop("/systems/fuel/LHtank/aux/drainoutboard/serviceable", 1 ); 
+	setprop("/systems/fuel/RHtank/aux/draininboard/serviceable", 1 ); 
+	setprop("/systems/fuel/RHtank/aux/drainoutboard/serviceable", 1 ); 
+	setprop("/systems/fuel/LHtank/checkvalve/serviceable", 1 );
+	setprop("/systems/fuel/RHtank/checkvalve/serviceable", 1 );
+	extra500.fuelSystem.setFlowBalance();
+	setprop("/systems/fuel/selectorValve/serviceable", 1 );
+	setprop("/systems/fuel/FuelPump1/serviceable", 1 );
+	setprop("/systems/fuel/FuelPump2/serviceable", 1 );
+	setprop("/systems/fuel/LHtank/motivepump/serviceable", 1 );
+	setprop("/systems/fuel/RHtank/motivepump/serviceable", 1 );
 
 #GEAR
-     setprop("/systems/gear/RMG-free", 1 ); 
-     setprop("/systems/gear/LMG-free", 1 ); 
-     setprop("/systems/gear/NG-free", 1 ); 
-     setprop("/systems/gear/solenoids/mainvalve/serviceable", 1 );
-     setprop("/systems/gear/solenoids/upperdoorvalve/serviceable", 1 );  
-     setprop("/systems/gear/solenoids/lowerdoorvalve/serviceable", 1 ); 
+     	setprop("/systems/gear/RMG-free", 1 ); 
+     	setprop("/systems/gear/LMG-free", 1 ); 
+     	setprop("/systems/gear/NG-free", 1 ); 
+     	setprop("/systems/gear/solenoids/mainvalve/serviceable", 1 );
+     	setprop("/systems/gear/solenoids/upperdoorvalve/serviceable", 1 );  
+     	setprop("/systems/gear/solenoids/lowerdoorvalve/serviceable", 1 ); 
 	setprop("/fdm/jsbsim/gear/unit[0]/flatTire", 0 ); 
 	setprop("/fdm/jsbsim/gear/unit[0]/z-position", 5.748 ); 
 	setprop("/fdm/jsbsim/gear/unit[0]/static_friction_coeff", 0.7 ); 
