@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             04.12.15
+#      Date:             05.12.15
 #
 
 var FuelSystemClass = {
@@ -62,16 +62,20 @@ var FuelSystemClass = {
 	},
 
 	onValveClick : func(value){
-		me._selectValve += value;
-		me._selectValve = global.clamp(me._selectValve,0,4);
-		me._nSelectValve.setValue(me._selectValve);
-		me.setFlowBalance();
+		if (getprop("/systems/fuel/selectorValve/serviceable")==1){
+			me._selectValve += value;
+			me._selectValve = global.clamp(me._selectValve,0,4);
+			me._nSelectValve.setValue(me._selectValve);
+			me.setFlowBalance();
+		}
 	},	
 	onValveSet : func(value){
-		me._selectValve = value;
-		me._selectValve = global.clamp(me._selectValve,0,4);
-		me._nSelectValve.setValue(me._selectValve);
-		me.setFlowBalance();
+		if (getprop("/systems/fuel/selectorValve/serviceable")==1){
+			me._selectValve = value;
+			me._selectValve = global.clamp(me._selectValve,0,4);
+			me._nSelectValve.setValue(me._selectValve);
+			me.setFlowBalance();
+		}
 	},	
 	setFlowBalance : func(){
 #	/systems/fuel/FlowbalanceLR: 1 = all fuel from left tank; 0 = all fuel from RH tank

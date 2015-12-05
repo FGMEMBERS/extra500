@@ -17,7 +17,7 @@
 #	Date: 	10.10.2015
 #
 #	Last change: Eric van den Berg	
-#	Date:	04.12.2015	
+#	Date:	05.12.2015	
 #
 
 var COLORfd = {};
@@ -34,7 +34,8 @@ COLORfd["auxOk"] = "#d4aa00";
 COLORfd["mainOk"] = "#ffcc00";
 COLORfd["colOk"] = "#ffdd55";
 COLORfd["CVOk"] = "#00ff004a";
-COLORfd["Failed"] = "#ff8080";
+COLORfd["SVok"] = "#00800059";
+COLORfd["Failed"] = "#ff8080ff";
 
 var FailureClass = {
 	new : func(){
@@ -117,6 +118,9 @@ var FailureClass = {
 		me._RCV		= me._svg_fuel.getElementById("RHcheckvalve");
 		me._LCV_field	= me._svg_fuel.getElementById("LHcvfield");
 		me._RCV_field	= me._svg_fuel.getElementById("RHcvfield");
+		me._SelValve	= me._svg_fuel.getElementById("selectorValve");
+		me._pump1		= me._svg_fuel.getElementById("pump1");
+		me._pump2		= me._svg_fuel.getElementById("pump2");
 
 		me._Text_Laux		= me._svg_fuel.getElementById("text_Laux").hide();
 		me._Text_Lmain		= me._svg_fuel.getElementById("text_Lmain").hide();
@@ -126,6 +130,9 @@ var FailureClass = {
 		me._Text_Rcol		= me._svg_fuel.getElementById("text_Rcol").hide();
 		me._Text_LCV		= me._svg_fuel.getElementById("text_LCV").hide();
 		me._Text_RCV		= me._svg_fuel.getElementById("text_RCV").hide();
+		me._Text_SelValve		= me._svg_fuel.getElementById("text_selectorValve").hide();
+		me._Text_pump1		= me._svg_fuel.getElementById("text_pump1").hide();
+		me._Text_pump2		= me._svg_fuel.getElementById("text_pump2").hide();
 
 	# control system
 		me._LAileron	= me._svg_contr.getElementById("LAileron");
@@ -206,7 +213,9 @@ var FailureClass = {
 		me._Rcol.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/RHtank/collector/leakage/state",1,"RCol_leakage","colOk",me._Rcol,me._Text_Rcol);});
 		me._LCV.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/LHtank/checkvalve/serviceable",0,"LcheckvalveFail","CVOk",me._LCV_field,me._Text_LCV);});
 		me._RCV.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/RHtank/checkvalve/serviceable",0,"RcheckvalveFail","CVOk",me._RCV_field,me._Text_RCV);});
-
+		me._SelValve.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/selectorValve/serviceable",0,"SelectorValveFail","CVOk",me._SelValve,me._Text_SelValve);});
+		me._pump1.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/FuelPump1/serviceable",0,"fuelPump1Fail","CVOk",me._pump1,me._Text_pump1);});
+		me._pump2.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/FuelPump2/serviceable",0,"fuelPump2Fail","CVOk",me._pump2,me._Text_pump2);});
 
 	# control system
 		me._LAileron.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/L-aileron",1,"LAil","AilOk",me._LAileron,me._Text_LAil);});
@@ -273,6 +282,9 @@ var FailureClass = {
 		me._genButtons_update("/systems/fuel/RHtank/collector/leakage/state",0,me._Rcol,me._Text_Rcol,"colOk","/extra500/failurescenarios/fuel");
 		me._genButtons_update("/systems/fuel/LHtank/checkvalve/serviceable",1,me._LCV_field,me._Text_LCV,"CVOk","/extra500/failurescenarios/fuel");
 		me._genButtons_update("/systems/fuel/RHtank/checkvalve/serviceable",1,me._RCV_field,me._Text_RCV,"CVOk","/extra500/failurescenarios/fuel");
+		me._genButtons_update("/systems/fuel/selectorValve/serviceable",1,me._SelValve,me._Text_SelValve,"CVOk","/extra500/failurescenarios/fuel");
+		me._genButtons_update("/systems/fuel/FuelPump1/serviceable",1,me._pump1,me._Text_pump1,"CVOk","/extra500/failurescenarios/fuel");
+		me._genButtons_update("/systems/fuel/FuelPump2/serviceable",1,me._pump2,me._Text_pump2,"CVOk","/extra500/failurescenarios/fuel");
 
 		# setting fail indication in menu
 		if (getprop("/extra500/failurescenarios/fuel") > 0) {
