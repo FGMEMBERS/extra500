@@ -20,7 +20,7 @@
       Date: 2015-05-08
 
       Last change: Eric van den Berg     
-      Date: 2015-12-04           
+      Date: 2015-12-08           
 -->
 
 <!--
@@ -194,12 +194,13 @@ i=0-6 left to right
 		</fcs_function>
 
 <!-- Fuel filter pressure loss (including opening of bypass and indication switch) -->
-		<switch name="/systems/fuel/fuelfilter/bypass/state">
+		<switch name="fuelfilter-bypass">
 			<default value="0"/>
 			<test logic="OR" value="1">
 				/systems/fuel/F-filter-prloss-psid lt -1.2
 				/systems/fuel/fuelfilter/bypass/state eq 1
 			</test>
+			<output>/systems/fuel/fuelfilter/bypass/state</output>
 		</switch>
 
 		<fcs_function name="/systems/fuel/fuelfilter/zeta">
@@ -297,13 +298,31 @@ i=0-6 left to right
 			<output>/systems/fuel/FuelPump2/state</output>
 		</switch>
 
+		<switch name="FuelPump1press">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fuel/FuelPump1/state eq 1
+				/systems/fuel/FP1checkvalve/serviceable eq 1
+			</test>
+			<output>/systems/fuel/FuelPump1/press</output>
+		</switch>
+
+		<switch name="FuelPump2press">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fuel/FuelPump2/state eq 1
+				/systems/fuel/FP2checkvalve/serviceable eq 1
+			</test>
+			<output>/systems/fuel/FuelPump2/press</output>
+		</switch>
+
 		<fcs_function name="/systems/fuel/F-pumppress-psid">
    			 <function>
       			 <description>fuel pump Fuel Pressure</description>
 	 				<product>
 						<max>	
-							<property>/systems/fuel/FuelPump1/state</property>
-							<property>/systems/fuel/FuelPump2/state</property>
+							<property>/systems/fuel/FuelPump1/press</property>
+							<property>/systems/fuel/FuelPump2/press</property>
 						</max>
 						<table>
             					<independentVar lookup="row">atmosphere/pressure-altitude</independentVar>

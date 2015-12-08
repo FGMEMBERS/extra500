@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 05.12.2015            
+#      Date: 08.12.2015            
 #
 # 
 
@@ -211,9 +211,13 @@ var set_failure = func(fail) {
 	# component failures
 		else if (failure == "LcheckvalveFail") { LcheckvalveFail(fail); }
 		else if (failure == "RcheckvalveFail") { RcheckvalveFail(fail); }
+		else if (failure == "filterFail") { setprop("/systems/fuel/fuelfilter/clogged", fail ); }
 		else if (failure == "SelectorValveFail") { setprop("/systems/fuel/selectorValve/serviceable", math.abs(fail-1) ); }
 		else if (failure == "fuelPump1Fail") { setprop("/systems/fuel/FuelPump1/serviceable", math.abs(fail-1) ); }
 		else if (failure == "fuelPump2Fail") { setprop("/systems/fuel/FuelPump2/serviceable", math.abs(fail-1) ); }
+		else if (failure == "fuelPumpCV1Fail") { setprop("/systems/fuel/FP1checkvalve/serviceable", math.abs(fail-1) ); }
+		else if (failure == "fuelPumpCV2Fail") { setprop("/systems/fuel/FP2checkvalve/serviceable", math.abs(fail-1) ); }
+		else if (failure == "fftransdFail") { setprop("/systems/fuel/FFtransducer/blocked", fail ); }
 	# transfer system failures
 		else if (failure == "LtransferPumpFail") { setprop("/systems/fuel/LHtank/motivepump/serviceable", math.abs(fail-1) ); }
 		else if (failure == "RtransferPumpFail") { setprop("/systems/fuel/RHtank/motivepump/serviceable", math.abs(fail-1) ); }
@@ -262,10 +266,15 @@ var failure_reset = func() {
 	setprop("/systems/fuel/RHtank/aux/drainoutboard/serviceable", 1 ); 
 	setprop("/systems/fuel/LHtank/checkvalve/serviceable", 1 );
 	setprop("/systems/fuel/RHtank/checkvalve/serviceable", 1 );
+	setprop("/systems/fuel/fuelfilter/clogged", 0 );
+	setprop("/systems/fuel/fuelfilter/bypass/state", 0 );
 	extra500.fuelSystem.setFlowBalance();
 	setprop("/systems/fuel/selectorValve/serviceable", 1 );
 	setprop("/systems/fuel/FuelPump1/serviceable", 1 );
 	setprop("/systems/fuel/FuelPump2/serviceable", 1 );
+	setprop("/systems/fuel/FP1checkvalve/serviceable", 1 );
+	setprop("/systems/fuel/FP2checkvalve/serviceable", 1 );
+	setprop("/systems/fuel/FFtransducer/blocked", 0 );
 	setprop("/systems/fuel/LHtank/motivepump/serviceable", 1 );
 	setprop("/systems/fuel/RHtank/motivepump/serviceable", 1 );
 
