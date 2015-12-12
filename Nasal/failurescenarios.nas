@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 08.12.2015            
+#      Date: 12.12.2015            
 #
 # 
 
@@ -70,6 +70,14 @@ var Elevator = func(n) {
 		setprop("/extra500/failurescenarios/controls/elevator",0);
 	}
 }
+var Rudder = func(n) {
+	if (n==1) {
+		setprop("/extra500/failurescenarios/controls/rudder",1);
+	} else {
+		setprop("/extra500/failurescenarios/controls/rudder",0);
+	}
+}
+
 
 # FUEL SYSTEM FAILURES
 
@@ -189,6 +197,7 @@ var set_failure = func(fail) {
 		else if (failure == "RAil") { RAil(fail); }
 		else if (failure == "LAil") { LAil(fail); }
 		else if (failure == "Elevator") { Elevator(fail); }
+		else if (failure == "Rudder") { Rudder(fail); }
 # fuel
 	# tank leakage
 		else if (failure == "LAux_leakage") { tankLeak(fail,"/systems/fuel/LHtank/aux/leakage/flow","/systems/fuel/LHtank/aux/leakage/state"); }
@@ -240,6 +249,7 @@ var failure_reset = func() {
 	setprop("/extra500/failurescenarios/controls/L-aileron",0);
 	setprop("/extra500/failurescenarios/controls/R-aileron",0);
 	setprop("/extra500/failurescenarios/controls/elevator",0);
+	setprop("/extra500/failurescenarios/controls/rudder",0);
 
 # FUEL
 	setprop("/systems/fuel/LHtank/aux/leakage/flow",0); 

@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2015-11-29
+      Date:             2015-12-12
 -->
 
 <flight_control name="FCS: extra500">
@@ -566,6 +566,14 @@
 				</range>
 				<output>fcs/rudder-pos-norm</output>
 			</aerosurface_scale>
+
+			<switch name="fcs/rudder-pos-norm1">
+				<default value="fcs/rudder-pos-norm"/>
+				<test logic="AND" value="aircraft/vstab/rudder-pos-norm-free">
+					/extra500/failurescenarios/controls/rudder eq 1
+				</test>
+			<output>fcs/rudder-pos-norm1</output>
+			</switch>
 			
 		</channel>
 		

@@ -2154,6 +2154,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
                         	<z_ac-ft type="double">8.294</z_ac-ft>
 					<cd0 type="double">0.021</cd0>
 					<ind-rot-speed-factor type="double">-0.075</ind-rot-speed-factor>
+					<rudder-pos-norm-free type="double">0</rudder-pos-norm-free>	<!--dummy value -->
 		  		</vstab>
 		  	<engine>
 				<OP-maxsetting-psi type="double">128</OP-maxsetting-psi>

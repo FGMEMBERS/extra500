@@ -17,7 +17,7 @@
 #	Date: 	10.10.2015
 #
 #	Last change: Eric van den Berg	
-#	Date:	08.12.2015	
+#	Date:	12.12.2015	
 #
 
 var COLORfd = {};
@@ -156,6 +156,7 @@ var FailureClass = {
 		me._Text_RAil	= me._svg_contr.getElementById("text_RHAil");
 		me._Text_Elevator	= me._svg_contr.getElementById("text_Elevator").hide();
 		me._Text_flaps	= me._svg_contr.getElementById("text_Flaps").hide();
+		me._Text_Rudder	= me._svg_contr.getElementById("text_Rudder").hide();
 
 # additional elements
 	#number of failure indication in menu
@@ -235,7 +236,7 @@ var FailureClass = {
 		me._Elevator.addEventListener("click",func(){me._onElevatorClick();});
 		me._Flaps.addEventListener("click",func(){me._onFlapsClick();});
 		me._ElevatorTrim.addEventListener("click",func(){me._onElevatorTrimClick();});
-		me._Rudder.addEventListener("click",func(){me._onRudderClick();});
+		me._Rudder.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/rudder",1,"Rudder","RudOk",me._Rudder,me._Text_Rudder);});
 	},
 	_menuReset : func() {
 		me._gear.setColorFill(COLORfd["menuns"]);
@@ -351,6 +352,7 @@ var FailureClass = {
 		setprop("/extra500/failurescenarios/contr",0);
 		me._genButtons_update("/extra500/failurescenarios/controls/L-aileron",0,me._LAileron,me._Text_LAil,"AilOk","/extra500/failurescenarios/contr");
 		me._genButtons_update("/extra500/failurescenarios/controls/R-aileron",0,me._RAileron,me._Text_RAil,"AilOk","/extra500/failurescenarios/contr");
+		me._genButtons_update("/extra500/failurescenarios/controls/rudder",0,me._Rudder,me._Text_Rudder,"RudOk","/extra500/failurescenarios/contr");
 
 		if ( getprop("/extra500/failurescenarios/controls/elevator") == 0 ) {
 			me._LElevator.setColorFill(COLORfd["EleOk"]);
@@ -424,10 +426,7 @@ print("clicked on flaps");
 	},
 	_onElevatorTrimClick : func(){
 print("clicked on elevator trim");
-	},
-	_onRudderClick : func(){
-print("clicked on rudder");
-	},
+	}
 
 };
 
