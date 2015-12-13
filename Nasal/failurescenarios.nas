@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 12.12.2015            
+#      Date: 13.12.2015            
 #
 # 
 
@@ -61,27 +61,6 @@ var LAil = func(n) {
 		} else {
 			setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.0277);
 		}
-	}
-}
-var Elevator = func(n) {
-	if (n==1) {
-		setprop("/extra500/failurescenarios/controls/elevator",1);
-	} else {
-		setprop("/extra500/failurescenarios/controls/elevator",0);
-	}
-}
-var Rudder = func(n) {
-	if (n==1) {
-		setprop("/extra500/failurescenarios/controls/rudder",1);
-	} else {
-		setprop("/extra500/failurescenarios/controls/rudder",0);
-	}
-}
-var Trim = func(n) {
-	if (n==1) {
-		setprop("/extra500/failurescenarios/controls/trim",1);
-	} else {
-		setprop("/extra500/failurescenarios/controls/trim",0);
 	}
 }
 
@@ -203,9 +182,11 @@ var set_failure = func(fail) {
 # controls
 		else if (failure == "RAil") { RAil(fail); }
 		else if (failure == "LAil") { LAil(fail); }
-		else if (failure == "Elevator") { Elevator(fail); }
-		else if (failure == "Rudder") { Rudder(fail); }
-		else if (failure == "Trim") { Trim(fail); }
+		else if (failure == "Elevator") { setprop("/extra500/failurescenarios/controls/elevator",fail); }
+		else if (failure == "Rudder") { setprop("/extra500/failurescenarios/controls/rudder",fail); }
+		else if (failure == "Trim") { setprop("/extra500/failurescenarios/controls/trim",fail); }
+		else if (failure == "LFlap") { setprop("/extra500/failurescenarios/controls/L-flap",fail); }
+		else if (failure == "RFlap") { setprop("/extra500/failurescenarios/controls/R-flap",fail); }
 # fuel
 	# tank leakage
 		else if (failure == "LAux_leakage") { tankLeak(fail,"/systems/fuel/LHtank/aux/leakage/flow","/systems/fuel/LHtank/aux/leakage/state"); }
@@ -259,6 +240,8 @@ var failure_reset = func() {
 	setprop("/extra500/failurescenarios/controls/elevator",0);
 	setprop("/extra500/failurescenarios/controls/rudder",0);
 	setprop("/extra500/failurescenarios/controls/trim",0);
+	setprop("/extra500/failurescenarios/controls/L-flap",0);
+	setprop("/extra500/failurescenarios/controls/R-flap",0);
 
 # FUEL
 	setprop("/systems/fuel/LHtank/aux/leakage/flow",0); 

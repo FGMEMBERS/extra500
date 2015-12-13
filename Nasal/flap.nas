@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             27.09.13
+#      Date:             13.12.2015
 #
 
 # MM Page 580
@@ -189,10 +189,11 @@ var FlapSystemClass = {
 	},
 	update : func(){
 		#me._flapPosition = me._nFlapPosition.getValue();
+		if ( (getprop("/extra500/failurescenarios/controls/L-flap") == 0) and (getprop("/extra500/failurescenarios/controls/R-flap") == 0) ) {		
+			me._motor.drive(me._flapPosition,me._switchFlapPosition[me._switch._state]);
 				
-		me._motor.drive(me._flapPosition,me._switchFlapPosition[me._switch._state]);
-				
-		me.updateLeds();
+			me.updateLeds();
+		}
 		
 	}
 };

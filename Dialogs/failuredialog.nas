@@ -17,7 +17,7 @@
 #	Date: 	10.10.2015
 #
 #	Last change: Eric van den Berg	
-#	Date:	12.12.2015	
+#	Date:	13.12.2015	
 #
 
 var COLORfd = {};
@@ -27,6 +27,7 @@ COLORfd["AilOk"] = "#c7f291";
 COLORfd["EleOk"] = "#7af4b9";
 COLORfd["RudOk"] = "#00f4ff";
 COLORfd["TriOk"] = "#7ad2b9";
+COLORfd["FlaOk"] = "#c7f2dfff";
 COLORfd["GeaOk"] = "#00a2ff";
 COLORfd["BraOk"] = "#bba9ff";
 COLORfd["TyrOk"] = "#8cd0ff";
@@ -148,14 +149,16 @@ var FailureClass = {
 		me._Elevator	= me._svg_contr.getElementById("layer4");
 		me._LElevator	= me._svg_contr.getElementById("Lelevator");
 		me._RElevator	= me._svg_contr.getElementById("Relevator");
-		me._Flaps		= me._svg_contr.getElementById("layer5");
+		me._LFlap		= me._svg_contr.getElementById("LHFlap");
+		me._RFlap		= me._svg_contr.getElementById("RHFlap");
 		me._ElevatorTrim	= me._svg_contr.getElementById("elevatorTrim");
 		me._Rudder		= me._svg_contr.getElementById("rudder");
 
 		me._Text_LAil	= me._svg_contr.getElementById("text_LHAil");
 		me._Text_RAil	= me._svg_contr.getElementById("text_RHAil");
 		me._Text_Elevator	= me._svg_contr.getElementById("text_Elevator").hide();
-		me._Text_flaps	= me._svg_contr.getElementById("text_Flaps").hide();
+		me._Text_LFlap	= me._svg_contr.getElementById("text_LHFlap").hide();
+		me._Text_RFlap	= me._svg_contr.getElementById("text_RHFlap").hide();
 		me._Text_Rudder	= me._svg_contr.getElementById("text_Rudder").hide();
 		me._Text_Trim	= me._svg_contr.getElementById("text_Trim").hide();
 
@@ -235,7 +238,8 @@ var FailureClass = {
 		me._LAileron.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/L-aileron",1,"LAil","AilOk",me._LAileron,me._Text_LAil);});
 		me._RAileron.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/R-aileron",1,"RAil","AilOk",me._RAileron,me._Text_RAil);});
 		me._Elevator.addEventListener("click",func(){me._onElevatorClick();});
-		me._Flaps.addEventListener("click",func(){me._onFlapsClick();});
+		me._LFlap.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/L-flap",1,"LFlap","FlaOk",me._LFlap,me._Text_LFlap);});
+		me._RFlap.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/R-flap",1,"RFlap","FlaOk",me._RFlap,me._Text_RFlap);});
 		me._Rudder.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/rudder",1,"Rudder","RudOk",me._Rudder,me._Text_Rudder);});
 		me._ElevatorTrim.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/trim",1,"Trim","TriOk",me._ElevatorTrim,me._Text_Trim);});
 	},
@@ -355,6 +359,8 @@ var FailureClass = {
 		me._genButtons_update("/extra500/failurescenarios/controls/R-aileron",0,me._RAileron,me._Text_RAil,"AilOk","/extra500/failurescenarios/contr");
 		me._genButtons_update("/extra500/failurescenarios/controls/rudder",0,me._Rudder,me._Text_Rudder,"RudOk","/extra500/failurescenarios/contr");
 		me._genButtons_update("/extra500/failurescenarios/controls/trim",0,me._ElevatorTrim,me._Text_Trim,"TriOk","/extra500/failurescenarios/contr");
+		me._genButtons_update("/extra500/failurescenarios/controls/L-flap",0,me._LFlap,me._Text_LFlap,"FlaOk","/extra500/failurescenarios/contr");
+		me._genButtons_update("/extra500/failurescenarios/controls/R-flap",0,me._RFlap,me._Text_RFlap,"FlaOk","/extra500/failurescenarios/contr");
 
 		if ( getprop("/extra500/failurescenarios/controls/elevator") == 0 ) {
 			me._LElevator.setColorFill(COLORfd["EleOk"]);
@@ -421,10 +427,6 @@ var FailureClass = {
 			text.show();
 		}
 		me._updateMenu();
-	},
-	_onFlapsClick : func(){
-print("clicked on flaps");
-		me._Text_flaps.show();
 	}
 
 };
