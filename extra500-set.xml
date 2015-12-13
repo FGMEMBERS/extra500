@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:	Eric van den Berg
-	Date:			05.12.15
+	Date:			08.12.15
 
 
 ************************************************************************
@@ -1025,7 +1025,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
         		<serviceable type="bool">true</serviceable>
 		</FP2checkvalve>
 		<FFtransducer>
-			<blocked type="bool">false</blocked>
+			<blocked type="double">0</blocked>
 		</FFtransducer>
 
 		<LHtank>
@@ -1762,7 +1762,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<rain-norm type="double">0.0</rain-norm>
 	</environment>
 	<failurescenarios>
-		<activate type="bool">0</activate>
+		<activate type="double">0</activate>
 		<name type="string"></name>
 		<!--welcome type="int">1</welcome-->
 		<gear type="int">0</gear>
@@ -2154,6 +2154,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
                         	<z_ac-ft type="double">8.294</z_ac-ft>
 					<cd0 type="double">0.021</cd0>
 					<ind-rot-speed-factor type="double">-0.075</ind-rot-speed-factor>
+					<rudder-pos-norm-free type="double">0</rudder-pos-norm-free>	<!--dummy value -->
 		  		</vstab>
 		  	<engine>
 				<OP-maxsetting-psi type="double">128</OP-maxsetting-psi>

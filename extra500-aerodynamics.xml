@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2014-07-01
+      Date:             2015-12-12
 -->
 
 <aerodynamics>
@@ -695,17 +695,32 @@
                         <property>aircraft/vstab/v-local-fps</property>
                   </product>
                   <product>
-		    <property>aircraft/vstab/u-local-fps</property>
-                    <property>aircraft/vstab/u-local-fps</property>
+		    		<property>aircraft/vstab/u-local-fps</property>
+                    	<property>aircraft/vstab/u-local-fps</property>
                   </product>
             </sum>
             <value>0.5</value>
       </pow>
     </function>
 
+    <function name="aircraft/vstab/rudder-pos-norm-free">
+       <description>rudder pos when free floating</description>      
+            <table>
+                  <independentVar lookup="row">aircraft/vstab/beta-stab-deg</independentVar>
+                  <independentVar lookup="column">velocities/vstab/v-fps</independentVar>
+                  <tableData>
+					0	10
+				-40 	-0.1	-1
+				-10	0	0
+				10	0	0
+				40	0.1	1
+                  </tableData>
+            </table>
+    </function>
+
     <function name="aircraft/vstab/rudder-pos-deg">
 	<product>
-		<property>fcs/rudder-pos-norm</property> 
+		<property>fcs/rudder-pos-norm1</property> 
 		<value>25</value>
 	</product>
     </function>

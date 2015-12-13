@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 05.12.2015            
+#      Date: 12.12.2015            
 #
 # 
 
@@ -70,6 +70,21 @@ var Elevator = func(n) {
 		setprop("/extra500/failurescenarios/controls/elevator",0);
 	}
 }
+var Rudder = func(n) {
+	if (n==1) {
+		setprop("/extra500/failurescenarios/controls/rudder",1);
+	} else {
+		setprop("/extra500/failurescenarios/controls/rudder",0);
+	}
+}
+var Trim = func(n) {
+	if (n==1) {
+		setprop("/extra500/failurescenarios/controls/trim",1);
+	} else {
+		setprop("/extra500/failurescenarios/controls/trim",0);
+	}
+}
+
 
 # FUEL SYSTEM FAILURES
 
@@ -189,6 +204,8 @@ var set_failure = func(fail) {
 		else if (failure == "RAil") { RAil(fail); }
 		else if (failure == "LAil") { LAil(fail); }
 		else if (failure == "Elevator") { Elevator(fail); }
+		else if (failure == "Rudder") { Rudder(fail); }
+		else if (failure == "Trim") { Trim(fail); }
 # fuel
 	# tank leakage
 		else if (failure == "LAux_leakage") { tankLeak(fail,"/systems/fuel/LHtank/aux/leakage/flow","/systems/fuel/LHtank/aux/leakage/state"); }
@@ -211,9 +228,13 @@ var set_failure = func(fail) {
 	# component failures
 		else if (failure == "LcheckvalveFail") { LcheckvalveFail(fail); }
 		else if (failure == "RcheckvalveFail") { RcheckvalveFail(fail); }
+		else if (failure == "filterFail") { setprop("/systems/fuel/fuelfilter/clogged", fail ); }
 		else if (failure == "SelectorValveFail") { setprop("/systems/fuel/selectorValve/serviceable", math.abs(fail-1) ); }
 		else if (failure == "fuelPump1Fail") { setprop("/systems/fuel/FuelPump1/serviceable", math.abs(fail-1) ); }
 		else if (failure == "fuelPump2Fail") { setprop("/systems/fuel/FuelPump2/serviceable", math.abs(fail-1) ); }
+		else if (failure == "fuelPumpCV1Fail") { setprop("/systems/fuel/FP1checkvalve/serviceable", math.abs(fail-1) ); }
+		else if (failure == "fuelPumpCV2Fail") { setprop("/systems/fuel/FP2checkvalve/serviceable", math.abs(fail-1) ); }
+		else if (failure == "fftransdFail") { setprop("/systems/fuel/FFtransducer/blocked", fail ); }
 	# transfer system failures
 		else if (failure == "LtransferPumpFail") { setprop("/systems/fuel/LHtank/motivepump/serviceable", math.abs(fail-1) ); }
 		else if (failure == "RtransferPumpFail") { setprop("/systems/fuel/RHtank/motivepump/serviceable", math.abs(fail-1) ); }
@@ -236,6 +257,8 @@ var failure_reset = func() {
 	setprop("/extra500/failurescenarios/controls/L-aileron",0);
 	setprop("/extra500/failurescenarios/controls/R-aileron",0);
 	setprop("/extra500/failurescenarios/controls/elevator",0);
+	setprop("/extra500/failurescenarios/controls/rudder",0);
+	setprop("/extra500/failurescenarios/controls/trim",0);
 
 # FUEL
 	setprop("/systems/fuel/LHtank/aux/leakage/flow",0); 
@@ -262,10 +285,15 @@ var failure_reset = func() {
 	setprop("/systems/fuel/RHtank/aux/drainoutboard/serviceable", 1 ); 
 	setprop("/systems/fuel/LHtank/checkvalve/serviceable", 1 );
 	setprop("/systems/fuel/RHtank/checkvalve/serviceable", 1 );
+	setprop("/systems/fuel/fuelfilter/clogged", 0 );
+	setprop("/systems/fuel/fuelfilter/bypass/state", 0 );
 	extra500.fuelSystem.setFlowBalance();
 	setprop("/systems/fuel/selectorValve/serviceable", 1 );
 	setprop("/systems/fuel/FuelPump1/serviceable", 1 );
 	setprop("/systems/fuel/FuelPump2/serviceable", 1 );
+	setprop("/systems/fuel/FP1checkvalve/serviceable", 1 );
+	setprop("/systems/fuel/FP2checkvalve/serviceable", 1 );
+	setprop("/systems/fuel/FFtransducer/blocked", 0 );
 	setprop("/systems/fuel/LHtank/motivepump/serviceable", 1 );
 	setprop("/systems/fuel/RHtank/motivepump/serviceable", 1 );
 

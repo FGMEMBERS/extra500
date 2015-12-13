@@ -17,7 +17,7 @@
 #	Date: 	10.10.2015
 #
 #	Last change: Eric van den Berg	
-#	Date:	05.12.2015	
+#	Date:	12.12.2015	
 #
 
 var COLORfd = {};
@@ -119,8 +119,12 @@ var FailureClass = {
 		me._LCV_field	= me._svg_fuel.getElementById("LHcvfield");
 		me._RCV_field	= me._svg_fuel.getElementById("RHcvfield");
 		me._SelValve	= me._svg_fuel.getElementById("selectorValve");
+		me._Filter		= me._svg_fuel.getElementById("filter");
 		me._pump1		= me._svg_fuel.getElementById("pump1");
 		me._pump2		= me._svg_fuel.getElementById("pump2");
+		me._pumpcv1		= me._svg_fuel.getElementById("pumpcv1");
+		me._pumpcv2		= me._svg_fuel.getElementById("pumpcv2");
+		me._FFtransd	= me._svg_fuel.getElementById("fftransd");
 
 		me._Text_Laux		= me._svg_fuel.getElementById("text_Laux").hide();
 		me._Text_Lmain		= me._svg_fuel.getElementById("text_Lmain").hide();
@@ -128,11 +132,15 @@ var FailureClass = {
 		me._Text_Raux		= me._svg_fuel.getElementById("text_Raux").hide();
 		me._Text_Rmain		= me._svg_fuel.getElementById("text_Rmain").hide();
 		me._Text_Rcol		= me._svg_fuel.getElementById("text_Rcol").hide();
+		me._Text_Filter		= me._svg_fuel.getElementById("text_filter").hide();
 		me._Text_LCV		= me._svg_fuel.getElementById("text_LCV").hide();
 		me._Text_RCV		= me._svg_fuel.getElementById("text_RCV").hide();
 		me._Text_SelValve		= me._svg_fuel.getElementById("text_selectorValve").hide();
 		me._Text_pump1		= me._svg_fuel.getElementById("text_pump1").hide();
 		me._Text_pump2		= me._svg_fuel.getElementById("text_pump2").hide();
+		me._Text_pumpcv1		= me._svg_fuel.getElementById("text_pumpcv1").hide();
+		me._Text_pumpcv2		= me._svg_fuel.getElementById("text_pumpcv2").hide();
+		me._Text_FFtransd		= me._svg_fuel.getElementById("text_fftransd").hide();
 
 	# control system
 		me._LAileron	= me._svg_contr.getElementById("LAileron");
@@ -148,6 +156,8 @@ var FailureClass = {
 		me._Text_RAil	= me._svg_contr.getElementById("text_RHAil");
 		me._Text_Elevator	= me._svg_contr.getElementById("text_Elevator").hide();
 		me._Text_flaps	= me._svg_contr.getElementById("text_Flaps").hide();
+		me._Text_Rudder	= me._svg_contr.getElementById("text_Rudder").hide();
+		me._Text_Trim	= me._svg_contr.getElementById("text_Trim").hide();
 
 # additional elements
 	#number of failure indication in menu
@@ -213,17 +223,21 @@ var FailureClass = {
 		me._Rcol.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/RHtank/collector/leakage/state",1,"RCol_leakage","colOk",me._Rcol,me._Text_Rcol);});
 		me._LCV.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/LHtank/checkvalve/serviceable",0,"LcheckvalveFail","CVOk",me._LCV_field,me._Text_LCV);});
 		me._RCV.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/RHtank/checkvalve/serviceable",0,"RcheckvalveFail","CVOk",me._RCV_field,me._Text_RCV);});
+		me._Filter.addEventListener("click",func(){me._onValueClick("/systems/fuel/fuelfilter/clogged","filterFail","CVOk",me._Filter,me._Text_Filter);});
 		me._SelValve.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/selectorValve/serviceable",0,"SelectorValveFail","CVOk",me._SelValve,me._Text_SelValve);});
 		me._pump1.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/FuelPump1/serviceable",0,"fuelPump1Fail","CVOk",me._pump1,me._Text_pump1);});
 		me._pump2.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/FuelPump2/serviceable",0,"fuelPump2Fail","CVOk",me._pump2,me._Text_pump2);});
+		me._pumpcv1.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/FP1checkvalve/serviceable",0,"fuelPumpCV1Fail","CVOk",me._pumpcv1,me._Text_pumpcv1);});
+		me._pumpcv2.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/FP2checkvalve/serviceable",0,"fuelPumpCV2Fail","CVOk",me._pumpcv2,me._Text_pumpcv2);});
+		me._FFtransd.addEventListener("click",func(){me._onValueClick("/systems/fuel/FFtransducer/blocked","fftransdFail","CVOk",me._FFtransd,me._Text_FFtransd);});
 
 	# control system
 		me._LAileron.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/L-aileron",1,"LAil","AilOk",me._LAileron,me._Text_LAil);});
 		me._RAileron.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/R-aileron",1,"RAil","AilOk",me._RAileron,me._Text_RAil);});
 		me._Elevator.addEventListener("click",func(){me._onElevatorClick();});
 		me._Flaps.addEventListener("click",func(){me._onFlapsClick();});
-		me._ElevatorTrim.addEventListener("click",func(){me._onElevatorTrimClick();});
-		me._Rudder.addEventListener("click",func(){me._onRudderClick();});
+		me._Rudder.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/rudder",1,"Rudder","RudOk",me._Rudder,me._Text_Rudder);});
+		me._ElevatorTrim.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/trim",1,"Trim","TriOk",me._ElevatorTrim,me._Text_Trim);});
 	},
 	_menuReset : func() {
 		me._gear.setColorFill(COLORfd["menuns"]);
@@ -262,8 +276,18 @@ var FailureClass = {
 		me._svg_contr.show();
 		me._contrButtons_update();
 	},
-	_genButtons_update : func(gfailprop,glogic,gfield,gtext,gcolor,gfail) {
+	_genButtons_update : func(gfailprop,glogic,gfield,gtext,gcolor,gfail) {			# for 'servicable' values, so glogic 0 or 1
 		if ( getprop(gfailprop) == glogic ) {
+			gfield.setColorFill(COLORfd[gcolor]);
+			gtext.hide();
+		} else {
+			gfield.setColorFill(COLORfd["Failed"]);
+			gtext.show();
+			setprop(gfail,getprop(gfail) + 1);
+		}
+	},
+	_valButtons_update : func(gfailprop,gfield,gtext,gcolor,gfail) {				# for step values between 0-1
+		if ( getprop(gfailprop) == 0 ) {
 			gfield.setColorFill(COLORfd[gcolor]);
 			gtext.hide();
 		} else {
@@ -283,8 +307,12 @@ var FailureClass = {
 		me._genButtons_update("/systems/fuel/LHtank/checkvalve/serviceable",1,me._LCV_field,me._Text_LCV,"CVOk","/extra500/failurescenarios/fuel");
 		me._genButtons_update("/systems/fuel/RHtank/checkvalve/serviceable",1,me._RCV_field,me._Text_RCV,"CVOk","/extra500/failurescenarios/fuel");
 		me._genButtons_update("/systems/fuel/selectorValve/serviceable",1,me._SelValve,me._Text_SelValve,"CVOk","/extra500/failurescenarios/fuel");
+		me._valButtons_update("/systems/fuel/fuelfilter/clogged",me._Filter,me._Text_Filter,"CVOk","/extra500/failurescenarios/fuel");
 		me._genButtons_update("/systems/fuel/FuelPump1/serviceable",1,me._pump1,me._Text_pump1,"CVOk","/extra500/failurescenarios/fuel");
 		me._genButtons_update("/systems/fuel/FuelPump2/serviceable",1,me._pump2,me._Text_pump2,"CVOk","/extra500/failurescenarios/fuel");
+		me._genButtons_update("/systems/fuel/FP1checkvalve/serviceable",1,me._pumpcv1,me._Text_pumpcv1,"CVOk","/extra500/failurescenarios/fuel");
+		me._genButtons_update("/systems/fuel/FP2checkvalve/serviceable",1,me._pumpcv2,me._Text_pumpcv2,"CVOk","/extra500/failurescenarios/fuel");
+		me._valButtons_update("/systems/fuel/FFtransducer/blocked",me._FFtransd,me._Text_FFtransd,"CVOk","/extra500/failurescenarios/fuel");
 
 		# setting fail indication in menu
 		if (getprop("/extra500/failurescenarios/fuel") > 0) {
@@ -325,6 +353,8 @@ var FailureClass = {
 		setprop("/extra500/failurescenarios/contr",0);
 		me._genButtons_update("/extra500/failurescenarios/controls/L-aileron",0,me._LAileron,me._Text_LAil,"AilOk","/extra500/failurescenarios/contr");
 		me._genButtons_update("/extra500/failurescenarios/controls/R-aileron",0,me._RAileron,me._Text_RAil,"AilOk","/extra500/failurescenarios/contr");
+		me._genButtons_update("/extra500/failurescenarios/controls/rudder",0,me._Rudder,me._Text_Rudder,"RudOk","/extra500/failurescenarios/contr");
+		me._genButtons_update("/extra500/failurescenarios/controls/trim",0,me._ElevatorTrim,me._Text_Trim,"TriOk","/extra500/failurescenarios/contr");
 
 		if ( getprop("/extra500/failurescenarios/controls/elevator") == 0 ) {
 			me._LElevator.setColorFill(COLORfd["EleOk"]);
@@ -365,31 +395,37 @@ var FailureClass = {
 			me._updateMenu();
 		}
 	},
-	_onGeneralClick : func(property,logic,failname,color,field,text){
+	_onGeneralClick : func(property,logic,failname,color,field,text){			# for 'servicable' values, so logic 0 or 1
+		setprop("/extra500/failurescenarios/name",failname);
 		if (getprop(property) == logic) {
-			setprop("/extra500/failurescenarios/name",failname);
 			setprop("/extra500/failurescenarios/activate",0);
 			field.setColorFill(COLORfd[color]);
 			text.hide();
-			me._updateMenu();
 		} else {
-			setprop("/extra500/failurescenarios/name",failname);
 			setprop("/extra500/failurescenarios/activate",1);
 			field.setColorFill(COLORfd["Failed"]);
 			text.show();
-			me._updateMenu();
 		}
+		me._updateMenu();
+	},
+	_onValueClick : func(property,failname,color,field,text){				# for step values between 0-1
+		setprop("/extra500/failurescenarios/name",failname);
+		var value = getprop(property) + 0.1;
+		if (value>1) {value = 0;}
+		setprop("/extra500/failurescenarios/activate",value);
+		if (value==0) {
+			field.setColorFill(COLORfd[color]);
+			text.hide();
+		} else {
+			field.setColorFill(COLORfd["Failed"]);
+			text.show();
+		}
+		me._updateMenu();
 	},
 	_onFlapsClick : func(){
 print("clicked on flaps");
 		me._Text_flaps.show();
-	},
-	_onElevatorTrimClick : func(){
-print("clicked on elevator trim");
-	},
-	_onRudderClick : func(){
-print("clicked on rudder");
-	},
+	}
 
 };
 

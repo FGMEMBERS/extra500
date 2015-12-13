@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             07.11.2015
+      Date:             12.12.2015
 
 -->
 
@@ -975,11 +975,11 @@
  <animation>
   <type>rotate</type>
   <object-name>SR</object-name>
-  <property>surface-positions/rudder-pos-norm</property>
+  <property>/fdm/jsbsim/fcs/rudder-pos-norm1</property>
   <interpolation>
-   <entry><ind>-1</ind><dep>-25</dep></entry>
+   <entry><ind>-1</ind><dep>25</dep></entry>
    <entry><ind> 0</ind><dep>  0</dep></entry>
-   <entry><ind> 1</ind><dep> 25</dep></entry>
+   <entry><ind> 1</ind><dep>-25</dep></entry>
   </interpolation>   
   <axis>
     <x1-m>5.36605</x1-m>

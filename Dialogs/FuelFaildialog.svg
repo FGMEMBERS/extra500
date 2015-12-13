@@ -28,9 +28,9 @@
      inkscape:window-height="836"
      id="namedview8"
      showgrid="false"
-     inkscape:zoom="1.2685914"
-     inkscape:cx="494.52604"
-     inkscape:cy="764.36264"
+     inkscape:zoom="1.7940592"
+     inkscape:cx="425.09328"
+     inkscape:cy="720.68301"
      inkscape:window-x="0"
      inkscape:window-y="21"
      inkscape:window-maximized="1"
@@ -78,7 +78,7 @@
        sodipodi:cy="300.34698"
        sodipodi:rx="8.0798283"
        sodipodi:ry="7.8827591"
-       d="m 366.94244,300.34698 a 8.0798283,7.8827591 0 1 1 -16.15966,0 8.0798283,7.8827591 0 1 1 16.15966,0 z"
+       d="m 366.94244,300.34698 c 0,4.35353 -3.61746,7.88276 -8.07983,7.88276 -4.46237,0 -8.07983,-3.52923 -8.07983,-7.88276 0,-4.35352 3.61746,-7.88275 8.07983,-7.88275 4.46237,0 8.07983,3.52923 8.07983,7.88275 z"
        transform="matrix(0.98109624,0,0,1,3.534239,-4.8075334)" />
     <rect
        width="8.8887863"
@@ -138,14 +138,6 @@
        id="path3977"
        inkscape:connector-curvature="0"
        transform="matrix(0.98109624,0,0,1,0.37807492,0)" />
-    <rect
-       style="fill:#008000;fill-opacity:0.35087717;stroke:#00ff00;stroke-width:0.58117753;stroke-opacity:1"
-       id="rect3979"
-       width="15.45057"
-       height="14.976424"
-       x="442.95383"
-       y="-60.695084"
-       transform="matrix(0.73645744,0.67648388,-0.71013761,0.70406291,0,0)" />
     <path
        style="fill:none;stroke:#00ff00;stroke-width:0.65100473;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:0.65100471, 1.30200944;stroke-dashoffset:0"
        d="m 360.29925,267.47653 15.532,0"
@@ -170,7 +162,7 @@
        sodipodi:cy="300.34698"
        sodipodi:rx="8.0798283"
        sodipodi:ry="7.8827591"
-       d="m 366.94244,300.34698 a 8.0798283,7.8827591 0 1 1 -16.15966,0 8.0798283,7.8827591 0 1 1 16.15966,0 z"
+       d="m 366.94244,300.34698 c 0,4.35353 -3.61746,7.88276 -8.07983,7.88276 -4.46237,0 -8.07983,-3.52923 -8.07983,-7.88276 0,-4.35352 3.61746,-7.88275 8.07983,-7.88275 4.46237,0 8.07983,3.52923 8.07983,7.88275 z"
        transform="matrix(0.98109624,0,0,1,32.564964,-4.04071)" />
     <path
        style="fill:none;stroke:#00ff00;stroke-width:1.04508889px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -243,32 +235,27 @@
        d="m 380.68499,267.33793 4.58043,0"
        id="path4187"
        inkscape:connector-curvature="0" />
-    <g
-       id="g4211"
-       transform="matrix(0.78522911,0,0,0.79001357,80.371097,62.830152)">
-      <path
-         transform="matrix(0.98109624,0,0,1,0.37807492,0)"
-         d="m 385.71749,369.55304 c 0,5.23329 -4.3672,9.47572 -9.75442,9.47572 -5.38721,0 -9.75441,-4.24243 -9.75441,-9.47572 0,-5.2333 4.3672,-9.47572 9.75441,-9.47572 5.38722,0 9.75442,4.24242 9.75442,9.47572 z"
-         sodipodi:ry="9.4757185"
-         sodipodi:rx="9.7544165"
-         sodipodi:cy="369.55304"
-         sodipodi:cx="375.96307"
-         id="path4189"
-         style="fill:#00ff00;fill-opacity:0.35087717;stroke:#00ff00;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-         sodipodi:type="arc" />
-      <path
-         sodipodi:nodetypes="cc"
-         inkscape:connector-curvature="0"
-         id="path4191"
-         d="m 362.26159,363.28233 c 3.51805,4.31108 4.1278,8.47273 0,12.39098"
-         style="fill:none;stroke:#00ff00;stroke-width:1.01910126px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <path
-         sodipodi:nodetypes="cc"
-         inkscape:connector-curvature="0"
-         id="path4191-1"
-         d="m 376.27521,363.83973 c -3.51805,4.07252 -4.1278,8.00388 0,11.7053"
-         style="fill:none;stroke:#00ff00;stroke-width:0.99050301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-    </g>
+    <rect
+       style="fill:#008000;fill-opacity:0.35087717;stroke:#00ff00;stroke-width:0.58117753;stroke-opacity:1"
+       id="filter"
+       width="15.45057"
+       height="14.976424"
+       x="442.95383"
+       y="-60.695084"
+       transform="matrix(0.73645744,0.67648388,-0.71013761,0.70406291,0,0)"
+       inkscape:label="#rect3979" />
+    <path
+       style="fill:none;stroke:#00ff00;stroke-width:0.80266219px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 364.82944,349.82812 c 2.76248,3.40581 3.24127,6.69357 0,9.78904"
+       id="path4191"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:none;stroke:#00ff00;stroke-width:0.78013772px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 375.83335,350.26848 c -2.76248,3.21734 -3.24127,6.32317 0,9.24734"
+       id="path4191-1"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
     <g
        id="g4224">
       <path
@@ -408,18 +395,29 @@
        id="path4260"
        inkscape:connector-curvature="0"
        transform="matrix(0.98109624,0,0,1,0.37807492,0)" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#00ff00;fill-opacity:0.35087717;stroke:#00ff00;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="fftransd"
+       sodipodi:cx="375.96307"
+       sodipodi:cy="369.55304"
+       sodipodi:rx="9.7544165"
+       sodipodi:ry="9.4757185"
+       d="m 385.71749,369.55304 a 9.7544165,9.4757185 0 1 1 -19.50883,0 9.7544165,9.4757185 0 1 1 19.50883,0 z"
+       transform="matrix(0.77038533,0,0,0.79001357,80.667972,62.830152)"
+       inkscape:label="#path4189" />
     <text
        xml:space="preserve"
        style="font-size:10.11599541px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="391.09473"
-       y="346.03546"
+       x="381.15643"
+       y="347.01694"
        id="text4264"
        sodipodi:linespacing="125%"
        transform="scale(0.88040492,1.135841)"><tspan
          sodipodi:role="line"
          id="tspan4266"
-         x="391.09473"
-         y="346.03546">Engine Inlet</tspan></text>
+         x="381.15643"
+         y="347.01694">Engine Inlet</tspan></text>
     <g
        id="g3112">
       <path
@@ -703,48 +701,40 @@
          sodipodi:type="arc"
          inkscape:label="#path3278-1" />
     </g>
-    <g
-       id="g4048-5"
-       transform="matrix(0,-1.5668359,1.5005493,0,25.724093,848.88216)">
-      <path
-         sodipodi:nodetypes="ccc"
-         transform="matrix(0.98109624,0,0,1,0.37807492,0)"
-         inkscape:connector-curvature="0"
-         id="path3276-5"
-         d="m 342.10132,214.24878 6.61907,5.50428 -6.61907,5.992"
-         style="fill:none;stroke:#00ff00;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <path
-         transform="matrix(0.98109624,0,0,1,-4.4069357,4.1107898)"
-         d="m 350.11387,215.74678 c 0,2.21261 -1.87165,4.00628 -4.18046,4.00628 -2.30881,0 -4.18046,-1.79367 -4.18046,-4.00628 0,-2.21261 1.87165,-4.00628 4.18046,-4.00628 2.30881,0 4.18046,1.79367 4.18046,4.00628 z"
-         sodipodi:ry="4.006278"
-         sodipodi:rx="4.1804643"
-         sodipodi:cy="215.74678"
-         sodipodi:cx="345.93341"
-         id="path3278-4"
-         style="fill:#00ff00;fill-opacity:0.28947371;stroke:#00ff00;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-         sodipodi:type="arc" />
-    </g>
-    <g
-       id="g4048-5-7"
-       transform="matrix(0,-1.5668359,1.5005493,0,55.015664,849.07924)">
-      <path
-         sodipodi:nodetypes="ccc"
-         transform="matrix(0.98109624,0,0,1,0.37807492,0)"
-         inkscape:connector-curvature="0"
-         id="path3276-5-8"
-         d="m 342.10132,214.24878 6.61907,5.50428 -6.61907,5.992"
-         style="fill:none;stroke:#00ff00;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-      <path
-         transform="matrix(0.98109624,0,0,1,-4.4069357,4.1107898)"
-         d="m 350.11387,215.74678 c 0,2.21261 -1.87165,4.00628 -4.18046,4.00628 -2.30881,0 -4.18046,-1.79367 -4.18046,-4.00628 0,-2.21261 1.87165,-4.00628 4.18046,-4.00628 2.30881,0 4.18046,1.79367 4.18046,4.00628 z"
-         sodipodi:ry="4.006278"
-         sodipodi:rx="4.1804643"
-         sodipodi:cy="215.74678"
-         sodipodi:cx="345.93341"
-         id="path3278-4-0"
-         style="fill:#00ff00;fill-opacity:0.28947371;stroke:#00ff00;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-         sodipodi:type="arc" />
-    </g>
+    <path
+       style="fill:none;stroke:#00ff00;stroke-width:1.51877236px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 347.21495,322.40588 8.25944,-10.17494 8.99129,10.17494"
+       id="path3276-5"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccc" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#00ff00;fill-opacity:0.28947371;stroke:#00ff00;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="pumpcv1"
+       sodipodi:cx="345.93341"
+       sodipodi:cy="215.74678"
+       sodipodi:rx="4.1804643"
+       sodipodi:ry="4.006278"
+       d="m 350.11387,215.74678 a 4.1804643,4.006278 0 1 1 -8.36092,0 4.1804643,4.006278 0 1 1 8.36092,0 z"
+       transform="matrix(0,-1.5372168,1.5005493,0,31.892536,855.78711)"
+       inkscape:label="#path3278-4" />
+    <path
+       style="fill:none;stroke:#00ff00;stroke-width:1.51877236px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 376.50652,322.60296 8.25944,-10.17494 8.9913,10.17494"
+       id="path3276-5-8"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccc" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#00ff00;fill-opacity:0.28947371;stroke:#00ff00;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="pumpcv2"
+       sodipodi:cx="345.93341"
+       sodipodi:cy="215.74678"
+       sodipodi:rx="4.1804643"
+       sodipodi:ry="4.006278"
+       d="m 350.11387,215.74678 a 4.1804643,4.006278 0 1 1 -8.36092,0 4.1804643,4.006278 0 1 1 8.36092,0 z"
+       transform="matrix(0,-1.5372168,1.5005493,0,61.184107,855.98419)"
+       inkscape:label="#path3278-4-0" />
     <path
        style="fill:#d4aa00;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1"
        d="m 71.346588,100.05245 96.150672,-3.623068 0,70.510498 -96.42937,0 z"
@@ -963,6 +953,92 @@
          y="304.30322"
          style="font-size:11.88603592px;text-align:center;text-anchor:middle"
          id="tspan3153-9-8">failed</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:39.620121px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="296.82837"
+       y="316.76248"
+       id="text_pumpcv1"
+       sodipodi:linespacing="125%"
+       inkscape:label="#text_pump1"
+       transform="scale(0.99050305,1.009588)"><tspan
+         sodipodi:role="line"
+         id="tspan3130-1-4-7-9"
+         x="296.82837"
+         y="316.76248"
+         style="font-size:11.88603592px;text-align:center;text-anchor:middle">Pump 1</tspan><tspan
+         sodipodi:role="line"
+         x="298.7204"
+         y="331.62003"
+         style="font-size:11.88603592px;text-align:center;text-anchor:middle"
+         id="tspan3153-9-1">Check Valve </tspan><tspan
+         sodipodi:role="line"
+         x="296.82837"
+         y="346.47757"
+         style="font-size:11.88603592px;text-align:center;text-anchor:middle"
+         id="tspan3163">Blocked</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:39.620121px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="443.66165"
+       y="317.33917"
+       id="text_pumpcv2"
+       sodipodi:linespacing="125%"
+       inkscape:label="#text_pump1"
+       transform="scale(0.99050305,1.009588)"><tspan
+         sodipodi:role="line"
+         id="tspan3130-1-4-7-9-7"
+         x="443.66165"
+         y="317.33917"
+         style="font-size:11.88603592px;text-align:center;text-anchor:middle">Pump 2</tspan><tspan
+         sodipodi:role="line"
+         x="445.55368"
+         y="332.19672"
+         style="font-size:11.88603592px;text-align:center;text-anchor:middle"
+         id="tspan3153-9-1-3">Check Valve </tspan><tspan
+         sodipodi:role="line"
+         x="443.66165"
+         y="347.05426"
+         style="font-size:11.88603592px;text-align:center;text-anchor:middle"
+         id="tspan3163-4">Blocked</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:39.620121px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="441.72931"
+       y="362.33545"
+       id="text_fftransd"
+       sodipodi:linespacing="125%"
+       inkscape:label="#text_pump1"
+       transform="scale(0.99050305,1.009588)"><tspan
+         sodipodi:role="line"
+         id="tspan3130-1-4-7-9-5"
+         x="441.72931"
+         y="362.33545"
+         style="font-size:11.88603592px;text-align:center;text-anchor:middle">Fuel Flow</tspan><tspan
+         sodipodi:role="line"
+         x="443.62134"
+         y="377.19299"
+         style="font-size:11.88603592px;text-align:center;text-anchor:middle"
+         id="tspan3153-9-1-7">Transducer </tspan><tspan
+         sodipodi:role="line"
+         x="441.72931"
+         y="392.05054"
+         style="font-size:11.88603592px;text-align:center;text-anchor:middle"
+         id="tspan3163-9">Blocked</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:39.620121px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="442.63254"
+       y="267.28073"
+       id="text_filter"
+       sodipodi:linespacing="125%"
+       inkscape:label="#text_pump1"
+       transform="scale(0.99050305,1.009588)"><tspan
+         sodipodi:role="line"
+         x="442.63254"
+         y="267.28073"
+         style="font-size:11.88603592px;text-align:center;text-anchor:middle"
+         id="tspan3163-9-6">Filter Clogged</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
