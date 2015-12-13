@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2015-12-12
+      Date:             2015-12-13
 -->
 
 <flight_control name="FCS: extra500">
@@ -352,8 +352,16 @@
 
   	<channel name="Pitch trim">
 
-		<switch name="autotrim">
+		<switch name="trimfail">
 			<default value="fcs/pitch-trim-cmd-norm"/>
+			<test logic="OR" value="fcs/pitch-trim-cmd-norm1">
+				/extra500/failurescenarios/controls/trim eq 1
+			</test>
+			<output>fcs/pitch-trim-cmd-norm1</output>
+		</switch>
+
+		<switch name="autotrim">
+			<default value="fcs/pitch-trim-cmd-norm1"/>
 			<test logic="OR" value="/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm">
 				<test logic="AND" value="1">
 					<test logic="AND" value="1">

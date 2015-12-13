@@ -157,6 +157,7 @@ var FailureClass = {
 		me._Text_Elevator	= me._svg_contr.getElementById("text_Elevator").hide();
 		me._Text_flaps	= me._svg_contr.getElementById("text_Flaps").hide();
 		me._Text_Rudder	= me._svg_contr.getElementById("text_Rudder").hide();
+		me._Text_Trim	= me._svg_contr.getElementById("text_Trim").hide();
 
 # additional elements
 	#number of failure indication in menu
@@ -235,8 +236,8 @@ var FailureClass = {
 		me._RAileron.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/R-aileron",1,"RAil","AilOk",me._RAileron,me._Text_RAil);});
 		me._Elevator.addEventListener("click",func(){me._onElevatorClick();});
 		me._Flaps.addEventListener("click",func(){me._onFlapsClick();});
-		me._ElevatorTrim.addEventListener("click",func(){me._onElevatorTrimClick();});
 		me._Rudder.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/rudder",1,"Rudder","RudOk",me._Rudder,me._Text_Rudder);});
+		me._ElevatorTrim.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/trim",1,"Trim","TriOk",me._ElevatorTrim,me._Text_Trim);});
 	},
 	_menuReset : func() {
 		me._gear.setColorFill(COLORfd["menuns"]);
@@ -353,6 +354,7 @@ var FailureClass = {
 		me._genButtons_update("/extra500/failurescenarios/controls/L-aileron",0,me._LAileron,me._Text_LAil,"AilOk","/extra500/failurescenarios/contr");
 		me._genButtons_update("/extra500/failurescenarios/controls/R-aileron",0,me._RAileron,me._Text_RAil,"AilOk","/extra500/failurescenarios/contr");
 		me._genButtons_update("/extra500/failurescenarios/controls/rudder",0,me._Rudder,me._Text_Rudder,"RudOk","/extra500/failurescenarios/contr");
+		me._genButtons_update("/extra500/failurescenarios/controls/trim",0,me._ElevatorTrim,me._Text_Trim,"TriOk","/extra500/failurescenarios/contr");
 
 		if ( getprop("/extra500/failurescenarios/controls/elevator") == 0 ) {
 			me._LElevator.setColorFill(COLORfd["EleOk"]);
@@ -423,9 +425,6 @@ var FailureClass = {
 	_onFlapsClick : func(){
 print("clicked on flaps");
 		me._Text_flaps.show();
-	},
-	_onElevatorTrimClick : func(){
-print("clicked on elevator trim");
 	}
 
 };

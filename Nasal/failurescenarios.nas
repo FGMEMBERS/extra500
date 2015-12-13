@@ -77,6 +77,13 @@ var Rudder = func(n) {
 		setprop("/extra500/failurescenarios/controls/rudder",0);
 	}
 }
+var Trim = func(n) {
+	if (n==1) {
+		setprop("/extra500/failurescenarios/controls/trim",1);
+	} else {
+		setprop("/extra500/failurescenarios/controls/trim",0);
+	}
+}
 
 
 # FUEL SYSTEM FAILURES
@@ -198,6 +205,7 @@ var set_failure = func(fail) {
 		else if (failure == "LAil") { LAil(fail); }
 		else if (failure == "Elevator") { Elevator(fail); }
 		else if (failure == "Rudder") { Rudder(fail); }
+		else if (failure == "Trim") { Trim(fail); }
 # fuel
 	# tank leakage
 		else if (failure == "LAux_leakage") { tankLeak(fail,"/systems/fuel/LHtank/aux/leakage/flow","/systems/fuel/LHtank/aux/leakage/state"); }
@@ -250,6 +258,7 @@ var failure_reset = func() {
 	setprop("/extra500/failurescenarios/controls/R-aileron",0);
 	setprop("/extra500/failurescenarios/controls/elevator",0);
 	setprop("/extra500/failurescenarios/controls/rudder",0);
+	setprop("/extra500/failurescenarios/controls/trim",0);
 
 # FUEL
 	setprop("/systems/fuel/LHtank/aux/leakage/flow",0); 
