@@ -20,7 +20,7 @@
       Date: 09.05.14
 
       Last change: Eric van den Berg     
-      Date: 15.11.15            
+      Date: 14.12.15            
 -->
 <PropertyList>
 
@@ -63,7 +63,7 @@
   <object-name>pilot cws</object-name>  
   <object-name>pilot apdisc</object-name> 
   <object-name>pilot trimswitch</object-name>                          
-  <property>surface-positions/left-aileron-pos-norm</property>
+  <property>/fdm/jsbsim/fcs/aileron-cmd-tot-nc</property>
   <interpolation>
    <entry><ind>-1</ind><dep>75</dep></entry>
    <entry><ind> 1</ind><dep>-75</dep></entry>
@@ -84,7 +84,7 @@
   <object-name>yoke.copilot</object-name>
   <object-name>yoke.copilot.plate</object-name>
   <object-name>copilot ppt</object-name>
-  <property>surface-positions/left-aileron-pos-norm</property>
+  <property>/fdm/jsbsim/fcs/aileron-cmd-tot-nc</property>
   <interpolation>
    <entry><ind>-1</ind><dep>75</dep></entry>
    <entry><ind> 1</ind><dep>-75</dep></entry>

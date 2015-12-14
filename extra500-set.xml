@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:	Eric van den Berg
-	Date:			08.12.15
+	Date:			14.12.15
 
 
 ************************************************************************
@@ -2078,7 +2078,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<sim-dt-sec>0.008333</sim-dt-sec>
 		<aero>
 			<coefficients>
-				<cl_aileron type="double">0.0277</cl_aileron>
+				<cl_aileron type="double">0.01385</cl_aileron>  <!--one aileron -->
 			</coefficients>
 		</aero>
 		<atmosphere>
@@ -2110,6 +2110,8 @@ of the RR 250-B17F/2 engine is best.</long-description>
 					<cd0>0.024</cd0>
 					<alpha-deg>0.0</alpha-deg>				<!--dummy value -->
 					<CX_ind type="double">0.000002</CX_ind>		<!--prop induced moment of wing coefficient -->
+					<Laileron-pos-norm-free type="double">0</Laileron-pos-norm-free>	<!--dummy value -->
+					<Raileron-pos-norm-free type="double">0</Raileron-pos-norm-free>	<!--dummy value -->
                   	</wing>
                   	<hstab>
                         	<S-ft2>30.268</S-ft2>
