@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 12.12.2015            
+#      Date: 14.12.2015            
 #
 # 
 
@@ -27,64 +27,6 @@ setlistener("/extra500/failurescenarios/activate", func {
 });
 
 # CONTROL SYSTEM FAILURES
-
-#ailerons
-var RAil = func(n) { #FIXME: need some yaw moment here as well
-	if (n==1) {
-		setprop("/extra500/failurescenarios/controls/R-aileron",1);
-		if ( getprop("/extra500/failurescenarios/controls/L-aileron") == 1) {
-			setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.0);
-		} else {
-			setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.01385);
-		}
-	} else {
-		setprop("/extra500/failurescenarios/controls/R-aileron",0);
-		if ( getprop("/extra500/failurescenarios/controls/L-aileron") == 1) {
-			setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.01385);
-		} else {
-			setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.0277);
-		}
-	}
-}
-var LAil = func(n) {
-	if (n==1) {
-		setprop("/extra500/failurescenarios/controls/L-aileron",1);
-		if ( getprop("/extra500/failurescenarios/controls/R-aileron") == 1) {
-			setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.0);
-		} else {
-			setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.01385);
-		}
-	} else {
-		setprop("/extra500/failurescenarios/controls/L-aileron",0);
-		if ( getprop("/extra500/failurescenarios/controls/R-aileron") == 1) {
-			setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.01385);
-		} else {
-			setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.0277);
-		}
-	}
-}
-var Elevator = func(n) {
-	if (n==1) {
-		setprop("/extra500/failurescenarios/controls/elevator",1);
-	} else {
-		setprop("/extra500/failurescenarios/controls/elevator",0);
-	}
-}
-var Rudder = func(n) {
-	if (n==1) {
-		setprop("/extra500/failurescenarios/controls/rudder",1);
-	} else {
-		setprop("/extra500/failurescenarios/controls/rudder",0);
-	}
-}
-var Trim = func(n) {
-	if (n==1) {
-		setprop("/extra500/failurescenarios/controls/trim",1);
-	} else {
-		setprop("/extra500/failurescenarios/controls/trim",0);
-	}
-}
-
 
 # FUEL SYSTEM FAILURES
 
@@ -201,11 +143,13 @@ var set_failure = func(fail) {
 		else if (failure == "Lbrake") { LMG_nobrake(fail); }
 		else if (failure == "Rbrake") { RMG_nobrake(fail); }
 # controls
-		else if (failure == "RAil") { RAil(fail); }
-		else if (failure == "LAil") { LAil(fail); }
-		else if (failure == "Elevator") { Elevator(fail); }
-		else if (failure == "Rudder") { Rudder(fail); }
-		else if (failure == "Trim") { Trim(fail); }
+		else if (failure == "RAil") { setprop("/extra500/failurescenarios/controls/R-aileron",fail); }
+		else if (failure == "LAil") { setprop("/extra500/failurescenarios/controls/L-aileron",fail); }
+		else if (failure == "Elevator") { setprop("/extra500/failurescenarios/controls/elevator",fail); }
+		else if (failure == "Rudder") { setprop("/extra500/failurescenarios/controls/rudder",fail); }
+		else if (failure == "Trim") { setprop("/extra500/failurescenarios/controls/trim",fail); }
+		else if (failure == "LFlap") { setprop("/extra500/failurescenarios/controls/L-flap",fail); }
+		else if (failure == "RFlap") { setprop("/extra500/failurescenarios/controls/R-flap",fail); }
 # fuel
 	# tank leakage
 		else if (failure == "LAux_leakage") { tankLeak(fail,"/systems/fuel/LHtank/aux/leakage/flow","/systems/fuel/LHtank/aux/leakage/state"); }
@@ -253,12 +197,13 @@ var failure_reset = func() {
 	setprop("/fdm/jsbsim/aircraft/propeller/contact",0);
 
 # Flight Controls
-	setprop("/fdm/jsbsim/aero/coefficients/cl_aileron",0.0277);
 	setprop("/extra500/failurescenarios/controls/L-aileron",0);
 	setprop("/extra500/failurescenarios/controls/R-aileron",0);
 	setprop("/extra500/failurescenarios/controls/elevator",0);
 	setprop("/extra500/failurescenarios/controls/rudder",0);
 	setprop("/extra500/failurescenarios/controls/trim",0);
+	setprop("/extra500/failurescenarios/controls/L-flap",0);
+	setprop("/extra500/failurescenarios/controls/R-flap",0);
 
 # FUEL
 	setprop("/systems/fuel/LHtank/aux/leakage/flow",0); 

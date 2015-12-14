@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2015-12-13
+      Date:             2015-12-14
 -->
 
 <flight_control name="FCS: extra500">
@@ -491,8 +491,16 @@
 				<min> -1 </min>
 				<max>  1 </max>
 			</range>
-			<output>fcs/left-aileron-pos-norm</output>
+			<output>fcs/left-aileron-pos-norm1</output>
 		</aerosurface_scale>
+
+		<switch name="left-aileron-free">
+			<default value="fcs/left-aileron-pos-norm1"/>
+			<test logic="AND" value="aircraft/wing/Laileron-pos-norm-free">
+				/extra500/failurescenarios/controls/L-aileron eq 1
+			</test>
+			<output>fcs/left-aileron-pos-norm</output>
+		</switch>
 			
 		<aerosurface_scale name="right aileron normalization">
 			<input>fcs/right-aileron-pos-rad</input>
@@ -504,8 +512,17 @@
 				<min> -1 </min>
 				<max>  1 </max>
 			</range>
-			<output>fcs/right-aileron-pos-norm</output>
+			<output>fcs/right-aileron-pos-norm1</output>
 		</aerosurface_scale>
+
+		<switch name="right-aileron-free">
+			<default value="fcs/right-aileron-pos-norm1"/>
+			<test logic="AND" value="aircraft/wing/Raileron-pos-norm-free">
+				/extra500/failurescenarios/controls/R-aileron eq 1
+			</test>
+			<output>fcs/right-aileron-pos-norm</output>
+		</switch>
+
 			
 	</channel>
 		

@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2015-12-12
+      Date:             2015-12-14
 -->
 
 <aerodynamics>
@@ -388,6 +388,36 @@
             <property>aircraft/wing/c_aero-ft</property>
             <property>aero/coefficients/cm_ac-h</property>
        </product>
+    </function>
+
+<!--aileron free-->
+
+   <function name="aircraft/wing/Laileron-pos-norm-free">
+       <description>left aileron pos when free floating</description>      
+            <table>
+            <independentVar lookup="row">aircraft/wing/alpha-deg</independentVar>
+            <independentVar lookup="column">velocities/u-aero-fps</independentVar>
+                  <tableData>
+					0	20
+				-20 	-1	1
+				0	-1	-0.1
+				20	-1	-0.8
+                  </tableData>
+            </table>
+    </function>
+
+   <function name="aircraft/wing/Raileron-pos-norm-free">
+       <description>right aileron pos when free floating</description>      
+            <table>
+            <independentVar lookup="row">aircraft/wing/alpha-deg</independentVar>
+            <independentVar lookup="column">velocities/u-aero-fps</independentVar>
+                  <tableData>
+					0	20
+				-20 	1	-1
+				0	1	0.1
+				20	1	0.8
+                  </tableData>
+            </table>
     </function>
 
 
@@ -888,13 +918,24 @@
 				</product>
 			</function-->
 			
-	<function name="aero/moment/Roll_aileron">
-	<description>Roll moment due to aileron</description>
+	<function name="aero/moment/Roll_Laileron">
+	<description>Roll moment due to left aileron</description>
 		<product>
 			<property>aero/qbar-psf</property>
 			<property>metrics/Sw-sqft</property>
 			<property>metrics/bw-ft</property>
 			<property>fcs/left-aileron-pos-norm</property>
+			<property>aero/coefficients/cl_aileron</property>
+		</product>
+	</function>
+
+	<function name="aero/moment/Roll_Raileron">
+	<description>Roll moment due to right aileron</description>
+		<product>
+			<property>aero/qbar-psf</property>
+			<property>metrics/Sw-sqft</property>
+			<property>metrics/bw-ft</property>
+			<property>fcs/right-aileron-pos-norm</property>
 			<property>aero/coefficients/cl_aileron</property>
 		</product>
 	</function>

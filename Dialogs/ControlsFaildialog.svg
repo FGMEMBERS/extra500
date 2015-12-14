@@ -29,13 +29,13 @@
      inkscape:window-height="836"
      id="namedview8"
      showgrid="false"
-     inkscape:zoom="5.0743657"
-     inkscape:cx="372.06022"
-     inkscape:cy="654.98814"
+     inkscape:zoom="0.8970296"
+     inkscape:cx="219.04925"
+     inkscape:cy="931.74654"
      inkscape:window-x="0"
      inkscape:window-y="21"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer1" />
+     inkscape:current-layer="svg3651" />
   <defs
      id="defs3653">
     <linearGradient
@@ -387,13 +387,15 @@
     <path
        style="fill:#c7f2df;fill-opacity:1;stroke:#00c800;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 154.5276,156.26354 192.51039,-0.13935 0,-12.82009 -192.51039,4.7727 z"
-       id="path7240"
-       inkscape:connector-curvature="0" />
+       id="LHFlap"
+       inkscape:connector-curvature="0"
+       inkscape:label="#path7240" />
     <path
        style="fill:#c7f2df;fill-opacity:1;stroke:#00c800;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 597.78318,156.16996 -192.51037,-0.13935 0,-12.82009 192.51037,4.7727 z"
-       id="path7240-2"
-       inkscape:connector-curvature="0" />
+       id="RHFlap"
+       inkscape:connector-curvature="0"
+       inkscape:label="#path7240-2" />
     <text
        xml:space="preserve"
        style="font-size:17.53933716px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -427,15 +429,16 @@
   <text
      xml:space="preserve"
      style="font-size:17.53933716px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-     x="376.15955"
-     y="153.86395"
-     id="text_Flaps"
+     x="238.81909"
+     y="155.87277"
+     id="text_LHFlap"
      sodipodi:linespacing="125%"
-     transform="scale(0.8494571,1.1772225)"><tspan
+     transform="scale(0.8494571,1.1772225)"
+     inkscape:label="#text_Flaps"><tspan
        sodipodi:role="line"
        id="tspan3049-0-6"
-       x="376.15955"
-       y="153.86395">Flap failure WIP</tspan></text>
+       x="238.81909"
+       y="155.87277">Flap Jammed</tspan></text>
   <text
      xml:space="preserve"
      style="font-size:17.53933716px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -468,8 +471,8 @@
        y="433.81927"
        id="tspan3848-8"
        style="font-size:8.4062767px"><tspan
-   id="tspan3080"
-   style="font-size:14.74405193px">Rudder Free </tspan></tspan><tspan
+         id="tspan3080"
+         style="font-size:14.74405193px">Rudder Free </tspan></tspan><tspan
        sodipodi:role="line"
        x="271.37955"
        y="445.93216"
@@ -491,4 +494,17 @@
        style="font-size:10px"><tspan
          id="tspan3080-0"
          style="font-size:17.53933716px">Trim Tab Jammed</tspan></tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-size:17.53933716px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+     x="520.78613"
+     y="153.51251"
+     id="text_RHFlap"
+     sodipodi:linespacing="125%"
+     transform="scale(0.8494571,1.1772225)"
+     inkscape:label="#text_Flaps"><tspan
+       sodipodi:role="line"
+       id="tspan3049-0-6-1"
+       x="520.78613"
+       y="153.51251">Flap Jammed</tspan></text>
 </svg>
