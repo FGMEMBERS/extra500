@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 14.12.2015            
+#      Date: 20.12.2015            
 #
 # 
 
@@ -189,10 +189,31 @@ var set_failure = func(fail) {
 	}
 }
 
+# Engine and propeller: separate listeners for propeller and engine failures
+
+setlistener("/gear/gear[13]/wow", func {
+	var contact = getprop("/gear/gear[13]/wow");
+	
+	if (contact == 1) {
+		setprop("/fdm/jsbsim/aircraft/propeller/contact",1);
+	}
+},1,0);
+
+setlistener("/gear/gear[6]/wow", func {
+	var contact = getprop("/gear/gear[6]/wow");
+	
+	if (contact == 1) {
+		setprop("/systems/engine/failure-fast",1);
+	}
+},1,0);
+
+
 # FAILURE RESET
 
 var failure_reset = func() {
 
+# Engine
+	setprop("/systems/engine/failure-fast",0);
 # Propellor
 	setprop("/fdm/jsbsim/aircraft/propeller/contact",0);
 

@@ -20,7 +20,7 @@
       Date: 2015-05-08
 
       Last change: Eric van den Berg     
-      Date: 2015-12-08           
+      Date: 2015-12-20           
 -->
 
 <!--
@@ -514,6 +514,15 @@ i=0-6 left to right
 						/extra500/system/fuel/SelectValve eq 2
 					</test>	
 				</test>		
+			</test>
+			<output>propulsion/tank[3]/external-flow-rate-pps</output>
+		</switch>
+
+<!--used for fast/immediate engine failures, so other than 'normal' fuel cut-off things, see above -->
+		<switch name="tank3 empty">
+			<default value="propulsion/tank[3]/external-flow-rate-pps"/>
+			<test logic="OR" value="-10">
+				/systems/engine/failure-fast eq 1
 			</test>
 			<output>propulsion/tank[3]/external-flow-rate-pps</output>
 		</switch>

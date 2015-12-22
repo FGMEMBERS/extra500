@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2015-12-13
+      Date:             2015-12-22
 -->
 
 <autopilot name="STEC55X">
@@ -2726,6 +2726,22 @@
 			<output>/autopilot/mode/trim-down</output>
 		</switch>
 
+<!-- wind-up of auto trim speed--> 
+		<kinematic name="fcs/electrimspeed">
+			<input>/autopilot/mode/trim</input>
+			<traverse>
+				<setting>
+					<position>0</position>
+					<time>0</time>
+				</setting>
+				<setting>
+					<position>1</position>
+					<time>3</time>
+				</setting>
+			</traverse>
+			<output>/autopilot/pitchtrim-channel/electrimspeed</output>
+		</kinematic>
+
 <!-- this moves the trim tab if needed and possible--> 
 		<fcs_function name="/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm-raw">
 			<function>
@@ -2758,6 +2774,7 @@
 								<property>/autopilot/mode/electrim</property>
 							</product>
 						</sum>
+						<property>/autopilot/pitchtrim-channel/electrimspeed</property>
 						<property>sim-dt-sec</property>
 					</product>
 				</sum>

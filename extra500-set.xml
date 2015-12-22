@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:	Eric van den Berg
-	Date:			14.12.15
+	Date:			20.12.15
 
 
 ************************************************************************
@@ -536,6 +536,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<path>/extra500/log/fuel</path>
 		<path>/extra500/dialog/fuel</path>
 		<path>/extra500/config</path>
+		<path>/extra500/yokes/visible</path>
 
 	</aircraft-data>
 
@@ -1205,6 +1206,9 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			</aux>
 		</RHtank>
 	</fuel>
+	<engine>
+		<failure-fast type="bool">0</failure-fast>
+	</engine>
  </systems>
 
  <instrumentation>
