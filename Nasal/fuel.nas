@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             05.12.15
+#      Date:             24.12.15
 #
 
 var FuelSystemClass = {
@@ -67,6 +67,8 @@ var FuelSystemClass = {
 			me._selectValve = global.clamp(me._selectValve,0,4);
 			me._nSelectValve.setValue(me._selectValve);
 			me.setFlowBalance();
+		} else {
+			UI.msg.info("The Fuel Selector Valve seems to be blocked...");
 		}
 	},	
 	onValveSet : func(value){
@@ -75,6 +77,8 @@ var FuelSystemClass = {
 			me._selectValve = global.clamp(me._selectValve,0,4);
 			me._nSelectValve.setValue(me._selectValve);
 			me.setFlowBalance();
+		} else {
+			UI.msg.info("The Fuel Selector Valve seems to be blocked...");
 		}
 	},	
 	setFlowBalance : func(){

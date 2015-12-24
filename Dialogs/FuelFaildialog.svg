@@ -29,7 +29,7 @@
      id="namedview8"
      showgrid="false"
      inkscape:zoom="1.7940592"
-     inkscape:cx="425.09328"
+     inkscape:cx="426.20807"
      inkscape:cy="720.68301"
      inkscape:window-x="0"
      inkscape:window-y="21"
@@ -403,7 +403,7 @@
        sodipodi:cy="369.55304"
        sodipodi:rx="9.7544165"
        sodipodi:ry="9.4757185"
-       d="m 385.71749,369.55304 a 9.7544165,9.4757185 0 1 1 -19.50883,0 9.7544165,9.4757185 0 1 1 19.50883,0 z"
+       d="m 385.71749,369.55304 c 0,5.23329 -4.3672,9.47572 -9.75442,9.47572 -5.38721,0 -9.75441,-4.24243 -9.75441,-9.47572 0,-5.2333 4.3672,-9.47572 9.75441,-9.47572 5.38722,0 9.75442,4.24242 9.75442,9.47572 z"
        transform="matrix(0.77038533,0,0,0.79001357,80.667972,62.830152)"
        inkscape:label="#path4189" />
     <text
@@ -715,7 +715,7 @@
        sodipodi:cy="215.74678"
        sodipodi:rx="4.1804643"
        sodipodi:ry="4.006278"
-       d="m 350.11387,215.74678 a 4.1804643,4.006278 0 1 1 -8.36092,0 4.1804643,4.006278 0 1 1 8.36092,0 z"
+       d="m 350.11387,215.74678 c 0,2.21261 -1.87165,4.00628 -4.18046,4.00628 -2.30881,0 -4.18046,-1.79367 -4.18046,-4.00628 0,-2.21261 1.87165,-4.00628 4.18046,-4.00628 2.30881,0 4.18046,1.79367 4.18046,4.00628 z"
        transform="matrix(0,-1.5372168,1.5005493,0,31.892536,855.78711)"
        inkscape:label="#path3278-4" />
     <path
@@ -732,7 +732,7 @@
        sodipodi:cy="215.74678"
        sodipodi:rx="4.1804643"
        sodipodi:ry="4.006278"
-       d="m 350.11387,215.74678 a 4.1804643,4.006278 0 1 1 -8.36092,0 4.1804643,4.006278 0 1 1 8.36092,0 z"
+       d="m 350.11387,215.74678 c 0,2.21261 -1.87165,4.00628 -4.18046,4.00628 -2.30881,0 -4.18046,-1.79367 -4.18046,-4.00628 0,-2.21261 1.87165,-4.00628 4.18046,-4.00628 2.30881,0 4.18046,1.79367 4.18046,4.00628 z"
        transform="matrix(0,-1.5372168,1.5005493,0,61.184107,855.98419)"
        inkscape:label="#path3278-4-0" />
     <path
@@ -1001,44 +1001,6 @@
          y="347.05426"
          style="font-size:11.88603592px;text-align:center;text-anchor:middle"
          id="tspan3163-4">Blocked</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:39.620121px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="441.72931"
-       y="362.33545"
-       id="text_fftransd"
-       sodipodi:linespacing="125%"
-       inkscape:label="#text_pump1"
-       transform="scale(0.99050305,1.009588)"><tspan
-         sodipodi:role="line"
-         id="tspan3130-1-4-7-9-5"
-         x="441.72931"
-         y="362.33545"
-         style="font-size:11.88603592px;text-align:center;text-anchor:middle">Fuel Flow</tspan><tspan
-         sodipodi:role="line"
-         x="443.62134"
-         y="377.19299"
-         style="font-size:11.88603592px;text-align:center;text-anchor:middle"
-         id="tspan3153-9-1-7">Transducer </tspan><tspan
-         sodipodi:role="line"
-         x="441.72931"
-         y="392.05054"
-         style="font-size:11.88603592px;text-align:center;text-anchor:middle"
-         id="tspan3163-9">Blocked</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:39.620121px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="442.63254"
-       y="267.28073"
-       id="text_filter"
-       sodipodi:linespacing="125%"
-       inkscape:label="#text_pump1"
-       transform="scale(0.99050305,1.009588)"><tspan
-         sodipodi:role="line"
-         x="442.63254"
-         y="267.28073"
-         style="font-size:11.88603592px;text-align:center;text-anchor:middle"
-         id="tspan3163-9-6">Filter Clogged</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
