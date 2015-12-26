@@ -287,12 +287,19 @@
 			<output>aircraft/engine/FF-lbs_h</output>
 		</switch>
 
+<!-- for indication only -->
 		<fcs_function name="aircraft/engine/FF-l_h">
     			<function>
       			<description>fuel flow in liter per hour</description>
 				<product>
 					<property>aircraft/engine/FF-lbs_h</property>   
-					<property>/extra500/const/JETA_LB2L</property>   
+					<property>/extra500/const/JETA_LB2L</property> 
+					<abs>
+						<sum>
+							<property>/systems/fuel/FFtransducer/blocked</property>  
+							<value>-1</value> 
+						</sum>
+					</abs>
 				</product>
     			</function>
 		</fcs_function>
