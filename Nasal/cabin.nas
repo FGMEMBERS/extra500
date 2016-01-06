@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jul 02 2013
 #
-#      Last change:      Eric van den Berg
-#      Date:             10.04.15
+#       Last change:      Dirk Dittmann
+#       Date:             06.01.2016
 #
 # MM Page 563
 
@@ -30,7 +30,7 @@ var TemperatureSurface = {
 			]
 		};
 		m._mass = 12 ; # kg
-		m._specificHeatCapacity = 1470 ;# kJ / (kg*K) acryl
+		m._specificHeatCapacity = 1470 ;# J / (kg*K) acryl
 #		m._energie = 0.0 ;# J
 		m._temperature = temp; #°C
 		m._deltaTemp = 0;
@@ -108,6 +108,11 @@ var CabinClass = {
 		m._windShieldHeated 	=  TemperatureSurface.new(root~"/windShieldHeated","windshieldHeated",environment._temperature);
 		m._windShieldHeated._mass = 0.756 ; # kg
 		m._windShieldHeated.setTemperatur(environment._temperature);
+		
+		m._propeller 	=  TemperatureSurface.new(root~"/propeller","propeller",environment._temperature);
+		m._propeller._mass = 2.0 ; # kg
+		m._propeller._specificHeatCapacity = 896 ;# J / (kg*K) Aluminium
+		m._propeller.setTemperatur(environment._temperature);
 		
 		m._absoluteHumidity = 0;
 		

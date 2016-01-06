@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jul 03 2013
 #
-#	Last change:	Dirk Dittmann
-#	Date:		10.05.15
+#       Last change:      Dirk Dittmann
+#       Date:             06.01.2016
 #
 
 # MM page 
@@ -71,6 +71,7 @@ var ElectricHeatClass = {
 		};
 		m._resistor = 28*28 / watt;
 		m._nResistor	= m._nRoot.initNode("resistor",m._resistor,"DOUBLE");
+		m._nResistorOut	= m._nRoot.initNode("resistorOut",m._resistor,"DOUBLE");
 		
 		m._value = 0;
 		return m;
@@ -95,7 +96,7 @@ var ElectricHeatClass = {
 		me._nState.setValue(me._state);
 		me._nAmpere.setValue(me._ampere);
 		me._nWatt.setValue(me._watt);
-		
+		me._nResistorOut.setValue(me._resistor);
 	},
 	_onWattChange : func(){},
 	_onResitorChange : func(n){
@@ -255,10 +256,11 @@ var DeicingSystemClass = {
 		return m;
 	},
 	setListeners : func(instance) {
-		append(me._listeners, setlistener(me._WindshieldCtrl._nState,func(n){instance._checkWindshieldHeat();},1,0) );
-		append(me._listeners, setlistener(me._nWowNose,func(n){instance._checkPitot();},1,0) );
-		append(me._listeners, setlistener("/fdm/jsbsim/aircraft/stallwarner/state",func(n){instance._onStallWarning(n);},1,0) );
-		append(me._listeners, setlistener(eSystem.circuitBreaker.PROP_HT._nVoltOut,func(n){instance.update();},1,0) );
+		append(me._listeners, setlistener(me._WindshieldCtrl._nState, func(n){instance._checkWindshieldHeat();},1,0) );
+		append(me._listeners, setlistener(me._nWowNose, func(n){instance._checkPitot();},1,0) );
+		append(me._listeners, setlistener("/fdm/jsbsim/aircraft/stallwarner/state", func(n){instance._onStallWarning(n);},1,0) );
+		append(me._listeners, setlistener(eSystem.circuitBreaker.PROP_HT._nVoltOut, func(n){instance.update();},1,0) );
+		append(me._listeners, setlistener("/systems/pneumatic/boots-safe-oper", func(n){instance._onBoots(n);},1,0) );
 		
 	},
 	init : func(instance=nil){
@@ -424,37 +426,48 @@ var DeicingSystemClass = {
 			
 			# resistor min 1.3 max 1.742
 			var resistor = 1.742;
-			var rate = 0;
-			
-			rate += global.norm(getprop("/engines/engine/rpm"),0,2030) * -0.025;
-			rate += global.norm(me._temperature,0,-50) * -0.375;
-			
-			rate = global.clamp(rate,-0.4,0.4);
-			
-			resistor += 1.742 * rate;
-			
-# 			print(sprintf("DeicingSystemClass::update() rate: %0.3f resistor: %0.03f"
-# 				,rate
-# 				,resistor
-# 			));
-			
+						
+			resistor = 1.3 + global.norm((cabin._propeller._temperature),-3,30) * 0.442;
+		
 			resistor = global.clamp(resistor,1.3,1.742);
 						
 			me._PropellerHeat._resistor = resistor;
 			me._PropellerHeat.electricWork();
+			
 						
 		}
 	},
-	_checkBoots : func(){
-			#Boots
-	# boots timer implemented in systems/extra500-pneumatic.xml: pls remove!	
-#		if (eSystem.switch.Boots._state == 1){
-#			if (me._bootsTimer <= 0.0){
-#				me._Boots.setOn( (!me._Boots._state) );
-#				me._bootsTimer = 60.0;
-#			}
-#			me._bootsTimer -= me._dt;
-#		}
+	_onBoots : func(n){
+		print("DeicingSystemClass::_onBoots() ...");
+		if(n.getValue() == 1){
+			var amount = 0.25;
+			
+			var frostWingLeft 	= getprop("/environment/aircraft-effects/frost-level-WingLeft");
+			var frostWingRight 	= getprop("/environment/aircraft-effects/frost-level-WingRight");
+			var frostVStab 		= getprop("/environment/aircraft-effects/frost-level-VStab", );
+			var frostHStabLeft	= getprop("/environment/aircraft-effects/frost-level-HStabLeft", );
+			var frostHStabRight	= getprop("/environment/aircraft-effects/frost-level-HStabRight", );
+		
+			frostWingLeft 	-= frostWingLeft > amount ? amount : frostWingLeft; 
+			frostWingRight 	-= frostWingRight > amount ? amount : frostWingRight; 
+			frostVStab 	-= frostVStab > amount ? amount : frostVStab; 
+			frostHStabLeft 	-= frostHStabLeft > amount ? amount : frostHStabLeft; 
+			frostHStabRight -= frostHStabRight > amount ? amount : frostHStabRight; 
+						
+# 			setprop("/environment/aircraft-effects/frost-level-WingLeft", frostWingLeft);
+# 			setprop("/environment/aircraft-effects/frost-level-WingRight", frostWingRight);
+# 			setprop("/environment/aircraft-effects/frost-level-HStab", frostVStab);
+# 			setprop("/environment/aircraft-effects/frost-level-VStabLeft", frostHStabLeft);
+# 			setprop("/environment/aircraft-effects/frost-level-VStabRight", frostHStabRight);
+		
+			interpolate("/environment/aircraft-effects/frost-level-WingLeft", frostWingLeft, 0.3);
+			interpolate("/environment/aircraft-effects/frost-level-WingRight", frostWingRight, 0.3);
+			interpolate("/environment/aircraft-effects/frost-level-VStab", frostVStab, 0.3);
+			interpolate("/environment/aircraft-effects/frost-level-HStabLeft", frostHStabLeft, 0.3);
+			interpolate("/environment/aircraft-effects/frost-level-HStabRight", frostHStabRight, 0.3);
+		
+			
+		}
 	},
 	update : func(){
 		me._now 	= systime();
@@ -484,8 +497,9 @@ var DeicingSystemClass = {
 		
 		
 		me._checkPropellerHeat();
-		me._checkBoots();
 		
+		cabin._propeller.addWatt( me._PropellerHeat.heatPower() ,me._dt);
+				
 		environment.update(me._dt);
 	}
 };

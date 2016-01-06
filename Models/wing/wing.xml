@@ -18,8 +18,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: 05.01.14
 
-      Last change: Eric van den Berg     
-      Date: 14.12.15            
+      Last change:      Dirk Dittmann
+      Date:             06.01.2016           
 
 -->
 
@@ -377,4 +377,10 @@
     </emission>
   </animation>
 
+<!-- ICE for wing boots -->
+<model>
+	<name>wing.ice</name>
+	<path>wing.ice.xml</path>
+</model>
+  
 </PropertyList>
