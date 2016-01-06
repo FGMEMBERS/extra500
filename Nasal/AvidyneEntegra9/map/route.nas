@@ -25,11 +25,11 @@ var RouteItemClass = {
 	new : func(canvasGroup,index){
 		var m = {parents:[RouteItemClass]};
 		m._index = index;
-		m._group = canvasGroup.createChild("group", "Waypoint_"~index).setVisible(0);
-		m._groupTrack = canvasGroup.createChild("group", "Waypoint_Track"~index).setVisible(0);
+		m._group = canvasGroup.createChild("group", "Waypoint-"~index).setVisible(0);
+		#m._groupTrack = canvasGroup.createChild("group", "Waypoint_Track-"~index).setVisible(0);
 		
 		m._can = {
-			Waypoint : m._group.createChild("path","icon")
+			Waypoint : m._group.createChild("path","icon-" ~ index)
 				.setStrokeLineWidth(3)
 				.setScale(1)
 				.setColor("#FFFFFF")
@@ -50,22 +50,23 @@ var RouteItemClass = {
 				.setColor("#FFFFFF")
 				.setColorFill("#FFFFFF")
 				,
-			track : m._groupTrack.createChild("path","track")
+			track : canvasGroup.createChild("path","track-"~index)
 				.setStrokeLineWidth(3)
 				.setScale(1)
-				.setColor("#FFFFFF")
+				.setColor("#FFFFFF").setVisible(1)
 			,
 		};
 		 return m;
 	},
 	setVisible : func(v){
 		me._group.setVisible(v);
-		me._groupTrack.setVisible(v);
+		#me._groupTrack.setVisible(v);
+		me._can.track.setVisible(v);
 	},
 	draw : func(wpt){
-		me._group.setGeoPosition(wpt.lat,wpt.lon);
 		me._can.Label.setText(wpt.name);
 		me.setColor("#FFFFFF");
+		me._group.setGeoPosition(wpt.lat,wpt.lon);
 		me._group.setVisible(1);
 	},
 	drawTrack : func(wpt){
@@ -77,6 +78,8 @@ var RouteItemClass = {
 # 				wpt.name,
 # 				size(wpt.path)
 # 			     ));
+		me._can.track.setVisible(1);
+		#me._groupTrack.setVisible(1);
 		
 		foreach (var pt; wpt.path) {
 			append(coords,"N"~pt.lat);
@@ -85,7 +88,8 @@ var RouteItemClass = {
 			cmd = canvas.Path.VG_LINE_TO;
 		}
 		me._can.track.setDataGeo(cmds,coords);
-		me._groupTrack.setVisible(1);
+		
+		
 		
 	},
 	
@@ -386,6 +390,7 @@ var RouteLayer = {
 			me._item[me._itemIndex].setVisible(0);
 		}
 # 		print("\n");
+		#me._can.track.setVisible(me._visibility and (me._obsMode == 0));
 		me._groupTrack.setVisible(me._visibility and (me._obsMode == 0));
 	},
 	_drawLegs : func(){
