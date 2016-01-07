@@ -43,6 +43,22 @@ var Environment = {
 		m._nFrostExchangeFactor		= m._nRoot.initNode("frost/exchangeFactor",50,"DOUBLE",1);
 		m._nAbsoluteHumidityMin		= m._nRoot.initNode("frost/absoluteHumidityMin",0.005,"DOUBLE",1);
 		
+		# windshield
+		m._frost 		= getprop("/environment/aircraft-effects/frost-level");
+		m._frostFront 		= getprop("/environment/aircraft-effects/frost-level-front");
+		m._frostHeated 		= getprop("/environment/aircraft-effects/frost-level-heated");
+		m._frostNoice 		= getprop("/environment/aircraft-effects/frost-level-noice");
+		# propeller
+		m._frostPropeller 	= getprop("/environment/aircraft-effects/frost-level-Propeller");
+		# boots		
+		m._frostWingLeft 	= getprop("/environment/aircraft-effects/frost-level-WingLeft");
+		m._frostWingRight 	= getprop("/environment/aircraft-effects/frost-level-WingRight");
+		m._frostVStab 		= getprop("/environment/aircraft-effects/frost-level-VStab", );
+		m._frostHStabLeft	= getprop("/environment/aircraft-effects/frost-level-HStabLeft", );
+		m._frostHStabRight	= getprop("/environment/aircraft-effects/frost-level-HStabRight", );
+		
+		
+		
 		m._cloudEffect = 0; # 0-1 intersection clouds
 		
 		m._electricWatt = 0;
@@ -175,8 +191,8 @@ var Environment = {
 		
 	},
 	
-	
-	# returns water(ice)/sec
+	# param : surfaceTemperature 
+	# returns : water(ice)/sec
 	surfaceWaterCatchEffect : func(surfaceTemperature=0.0){
 		var waterCatchEffect = 0;
 		
@@ -206,18 +222,6 @@ var Environment = {
 		print("Environment::frost() ...");
 		
 		
-		var frost 	= getprop("/environment/aircraft-effects/frost-level");
-		var frostFront 	= getprop("/environment/aircraft-effects/frost-level-front");
-		var frostHeated = getprop("/environment/aircraft-effects/frost-level-heated");
-		var frostNoice 	= getprop("/environment/aircraft-effects/frost-level-noice");
-		
-		var frostPropeller 	= getprop("/environment/aircraft-effects/frost-level-Propeller");
-		# boots		
-		var frostWingLeft 	= getprop("/environment/aircraft-effects/frost-level-WingLeft");
-		var frostWingRight 	= getprop("/environment/aircraft-effects/frost-level-WingRight");
-		var frostVStab 		= getprop("/environment/aircraft-effects/frost-level-VStab", );
-		var frostHStabLeft	= getprop("/environment/aircraft-effects/frost-level-HStabLeft", );
-		var frostHStabRight	= getprop("/environment/aircraft-effects/frost-level-HStabRight", );
 		
 
 		# cooling the windshield
@@ -251,18 +255,18 @@ var Environment = {
 		
 		
 		waterCatchEffectFront = me.surfaceWaterCatchEffect(cabin._windShield._temperature);
-		frostFront 	-= waterCatchEffectFront * me._dt;
-		frostFront 	= global.clamp(frostFront,0.0,1.0);
+		me._frostFront 	-= waterCatchEffectFront * me._dt;
+		me._frostFront 	= global.clamp(me._frostFront,0.0,1.0);
 		
 		waterCatchEffectHeated = me.surfaceWaterCatchEffect(cabin._windShieldHeated._temperature);
-		frostHeated 	-= waterCatchEffectHeated * me._dt;
-		frostHeated 	= global.clamp(frostHeated,0.0,1.0);
+		me._frostHeated 	-= waterCatchEffectHeated * me._dt;
+		me._frostHeated 	= global.clamp(me._frostHeated,0.0,1.0);
 		
-		#print("frost| ",sprintf("windshield: %0.2f, T: %0.2f, F: %0.2f,  a: %0.2f",me._windshieldTemperature,temperature,frost,adjust));
+		#print("frost| ",sprintf("windshield: %0.2f, T: %0.2f, F: %0.2f,  a: %0.2f",me._windshieldTemperature,temperature,me._frost,adjust));
 		
-		interpolate("/environment/aircraft-effects/frost-level", frost ,me._dt);
-		interpolate("/environment/aircraft-effects/frost-level-front", frostFront ,me._dt);
-		interpolate("/environment/aircraft-effects/frost-level-heated", frostHeated ,me._dt);
+		interpolate("/environment/aircraft-effects/frost-level", me._frost ,me._dt);
+		interpolate("/environment/aircraft-effects/frost-level-front", me._frostFront ,me._dt);
+		interpolate("/environment/aircraft-effects/frost-level-heated", me._frostHeated ,me._dt);
 		
 		
 # freeze propeller
@@ -278,10 +282,10 @@ var Environment = {
 		var waterCatchEffectPropeller 	= 0;
 		
 		waterCatchEffectPropeller = me.surfaceWaterCatchEffect(cabin._propeller._temperature);
-		frostPropeller 	-= waterCatchEffectPropeller * me._dt;
-		frostPropeller 	= global.clamp(frostPropeller,0.0,1.0);
+		me._frostPropeller 	-= waterCatchEffectPropeller * me._dt;
+		me._frostPropeller 	= global.clamp(me._frostPropeller,0.0,1.0);
 		
-		interpolate("/environment/aircraft-effects/frost-level-Propeller", frostPropeller ,me._dt);
+		interpolate("/environment/aircraft-effects/frost-level-Propeller", me._frostPropeller ,me._dt);
 		
 		
 # freeze all boots 
@@ -291,32 +295,32 @@ var Environment = {
 		waterCatchEffectBoots = me.surfaceWaterCatchEffect(me._temperature);
 		
 		
-		frostWingLeft 		-= waterCatchEffectBoots * me._dt;
-		frostWingLeft 		= global.clamp(frostWingLeft,0.0,1.0);
+		me._frostWingLeft 		-= waterCatchEffectBoots * me._dt;
+		me._frostWingLeft 		= global.clamp(me._frostWingLeft,0.0,1.0);
 		
-		frostWingRight 		-= waterCatchEffectBoots * me._dt;
-		frostWingRight 		= global.clamp(frostWingRight,0.0,1.0);
+		me._frostWingRight 		-= waterCatchEffectBoots * me._dt;
+		me._frostWingRight 		= global.clamp(me._frostWingRight,0.0,1.0);
 		
-		frostVStab 		-= waterCatchEffectBoots * me._dt;
-		frostVStab 		= global.clamp(frostVStab,0.0,1.0);
+		me._frostVStab 		-= waterCatchEffectBoots * me._dt;
+		me._frostVStab 		= global.clamp(me._frostVStab,0.0,1.0);
 		
-		frostHStabLeft 		-= waterCatchEffectBoots * me._dt;
-		frostHStabLeft 		= global.clamp(frostHStabLeft,0.0,1.0);
+		me._frostHStabLeft 		-= waterCatchEffectBoots * me._dt;
+		me._frostHStabLeft 		= global.clamp(me._frostHStabLeft,0.0,1.0);
 		
-		frostHStabRight 	-= waterCatchEffectBoots * me._dt;
-		frostHStabRight 	= global.clamp(frostHStabRight,0.0,1.0);
+		me._frostHStabRight 	-= waterCatchEffectBoots * me._dt;
+		me._frostHStabRight 	= global.clamp(me._frostHStabRight,0.0,1.0);
 		
 				
-		interpolate("/environment/aircraft-effects/frost-level-WingLeft", frostWingLeft, me._dt);
-		interpolate("/environment/aircraft-effects/frost-level-WingRight", frostWingRight, me._dt);
-		interpolate("/environment/aircraft-effects/frost-level-VStab", frostVStab, me._dt);
-		interpolate("/environment/aircraft-effects/frost-level-HStabLeft", frostHStabLeft, me._dt);
-		interpolate("/environment/aircraft-effects/frost-level-HStabRight", frostHStabRight, me._dt);
+		interpolate("/environment/aircraft-effects/frost-level-WingLeft", me._frostWingLeft, me._dt);
+		interpolate("/environment/aircraft-effects/frost-level-WingRight", me._frostWingRight, me._dt);
+		interpolate("/environment/aircraft-effects/frost-level-VStab", me._frostVStab, me._dt);
+		interpolate("/environment/aircraft-effects/frost-level-HStabLeft", me._frostHStabLeft, me._dt);
+		interpolate("/environment/aircraft-effects/frost-level-HStabRight", me._frostHStabRight, me._dt);
 		
 		
 		
 		
-		#interpolate("/environment/aircraft-effects/frost-level-noice", frostNoice ,me._dt);
+		#interpolate("/environment/aircraft-effects/frost-level-noice", me._frostNoice ,me._dt);
 		
 # 		print("frost| ",sprintf("windshield %0.3fJ (%0.1f°C),  %0.3fJ (%0.1f°C)",
 # #				cabin._windShield._energy,

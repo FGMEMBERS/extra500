@@ -442,30 +442,11 @@ var DeicingSystemClass = {
 		if(n.getValue() == 1){
 			var amount = 0.25;
 			
-			var frostWingLeft 	= getprop("/environment/aircraft-effects/frost-level-WingLeft");
-			var frostWingRight 	= getprop("/environment/aircraft-effects/frost-level-WingRight");
-			var frostVStab 		= getprop("/environment/aircraft-effects/frost-level-VStab", );
-			var frostHStabLeft	= getprop("/environment/aircraft-effects/frost-level-HStabLeft", );
-			var frostHStabRight	= getprop("/environment/aircraft-effects/frost-level-HStabRight", );
-		
-			frostWingLeft 	-= frostWingLeft > amount ? amount : frostWingLeft; 
-			frostWingRight 	-= frostWingRight > amount ? amount : frostWingRight; 
-			frostVStab 	-= frostVStab > amount ? amount : frostVStab; 
-			frostHStabLeft 	-= frostHStabLeft > amount ? amount : frostHStabLeft; 
-			frostHStabRight -= frostHStabRight > amount ? amount : frostHStabRight; 
-						
-# 			setprop("/environment/aircraft-effects/frost-level-WingLeft", frostWingLeft);
-# 			setprop("/environment/aircraft-effects/frost-level-WingRight", frostWingRight);
-# 			setprop("/environment/aircraft-effects/frost-level-HStab", frostVStab);
-# 			setprop("/environment/aircraft-effects/frost-level-VStabLeft", frostHStabLeft);
-# 			setprop("/environment/aircraft-effects/frost-level-VStabRight", frostHStabRight);
-		
-			interpolate("/environment/aircraft-effects/frost-level-WingLeft", frostWingLeft, 0.3);
-			interpolate("/environment/aircraft-effects/frost-level-WingRight", frostWingRight, 0.3);
-			interpolate("/environment/aircraft-effects/frost-level-VStab", frostVStab, 0.3);
-			interpolate("/environment/aircraft-effects/frost-level-HStabLeft", frostHStabLeft, 0.3);
-			interpolate("/environment/aircraft-effects/frost-level-HStabRight", frostHStabRight, 0.3);
-		
+			environment._frostWingLeft 	-= environment._frostWingLeft > amount ? amount : environment._frostWingLeft; 
+			environment._frostWingRight 	-= environment._frostWingRight > amount ? amount : environment._frostWingRight; 
+			environment._frostVStab 	-= environment._frostVStab > amount ? amount : environment._frostVStab; 
+			environment._frostHStabLeft 	-= environment._frostHStabLeft > amount ? amount : environment._frostHStabLeft; 
+			environment._frostHStabRight	-= environment._frostHStabRight > amount ? amount : environment._frostHStabRight; 
 			
 		}
 	},
