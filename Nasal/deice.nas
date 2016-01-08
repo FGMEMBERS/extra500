@@ -17,7 +17,7 @@
 #      Date: Jul 03 2013
 #
 #       Last change:      Dirk Dittmann
-#       Date:             06.01.2016
+#       Date:             08.01.2016
 #
 
 # MM page 
@@ -73,6 +73,12 @@ var ElectricHeatClass = {
 		m._nResistor	= m._nRoot.initNode("resistor",m._resistor,"DOUBLE");
 		m._nResistorOut	= m._nRoot.initNode("resistorOut",m._resistor,"DOUBLE");
 		
+		m._resistorMin		= 1.3;
+		m._resistorMax		= 1.742;
+		m._temperatureMin 	= -3;
+		m._temperatureMax 	= 30;
+		
+		
 		m._value = 0;
 		return m;
 	},
@@ -111,7 +117,16 @@ var ElectricHeatClass = {
 	heatPower : func(){
 		return me._watt * me._state;
 	},
-	
+	setResitorByTemperature : func(temperature){
+		
+		var resistor = me._resistorMin;
+		resistor +=  global.norm(temperature,me._temperatureMin,me._temperatureMax) * (me._resistorMax-me._resistorMin);
+		
+		resistor = global.clamp(resistor,me._resistorMin,me._resistorMax);
+					
+		me._resistor = resistor;
+		me.electricWork();
+	},
 	
 };
 
@@ -218,9 +233,17 @@ var DeicingSystemClass = {
 		eSystem.circuitBreaker.WSH_CTRL.outputAdd(m._WindshieldCtrl);
 		
 		m._PitotHeatLeft 		= ElectricHeatClass.new("/extra500/system/deice/PitotHeatLeft","Pitot Heat Left",112.0);
+		m._PitotHeatLeft._resistorMin		= 7;
+		m._PitotHeatLeft._resistorMax		= 13;
+		m._PitotHeatLeft._temperatureMin 	= -3;
+		m._PitotHeatLeft._temperatureMax 	= 30;
 		eSystem.circuitBreaker.PITOT_L.outputAdd(m._PitotHeatLeft);
 		
 		m._PitotHeatRight 		= ElectricHeatClass.new("/extra500/system/deice/PitotHeatRight","Pitot Heat Right",112.0);
+		m._PitotHeatRight._resistorMin		= 7;
+		m._PitotHeatRight._resistorMax		= 13;
+		m._PitotHeatRight._temperatureMin 	= -3;
+		m._PitotHeatRight._temperatureMax 	= 30;
 		eSystem.circuitBreaker.PITOT_R.outputAdd(m._PitotHeatRight);
 		
 		m._StaticHeatLeft 		= ElectricHeatClass.new("/extra500/system/deice/StaticHeatLeft","Static Heat Left",17.0);
@@ -241,6 +264,11 @@ var DeicingSystemClass = {
 		
 # uhm, below some other calc is made? 
 		m._PropellerHeat 	= ElectricHeatClass.new("/extra500/system/deice/Propeller","Propeller Heat",450.0);
+		m._PropellerHeat._resistorMin		= 1.3;
+		m._PropellerHeat._resistorMax		= 1.742;
+		m._PropellerHeat._temperatureMin 	= -3;
+		m._PropellerHeat._temperatureMax 	= 30;
+		
 		eSystem.circuitBreaker.PROP_HT.outputAdd(m._PropellerHeat);
 		
 		m._StallWarner 		= ElectricHeatClass.new("/extra500/system/pitot/StallWarn","Stall Warner",0.4);
@@ -421,22 +449,6 @@ var DeicingSystemClass = {
 		me._intakeHeat  = value;
 		me._nIntakeHeat.setOn(me._intakeHeat);
 	},
-	_checkPropellerHeat : func(){
-		if (eSystem.switch.Propeller._state == 1){
-			
-			# resistor min 1.3 max 1.742
-			var resistor = 1.742;
-						
-			resistor = 1.3 + global.norm((cabin._propeller._temperature),-3,30) * 0.442;
-		
-			resistor = global.clamp(resistor,1.3,1.742);
-						
-			me._PropellerHeat._resistor = resistor;
-			me._PropellerHeat.electricWork();
-			
-						
-		}
-	},
 	_onBoots : func(n){
 		print("DeicingSystemClass::_onBoots() ...");
 		if(n.getValue() == 1){
@@ -474,12 +486,18 @@ var DeicingSystemClass = {
 		cabin._windShield.addWatt( energyWindShield ,me._dt);
 		cabin._windShieldHeated.addWatt( energyWindShieldHeated ,me._dt);
 		
+		
 		#print("deice| ",sprintf("windshield %0.3f W %0.3f W",energyWindShield,energyWindShieldHeated));
 		
 		
-		me._checkPropellerHeat();
-		
+		me._PropellerHeat.setResitorByTemperature(cabin._propeller._temperature);
 		cabin._propeller.addWatt( me._PropellerHeat.heatPower() ,me._dt);
+				
+		me._PitotHeatLeft.setResitorByTemperature(cabin._pitotLH._temperature);
+		cabin._pitotLH.addWatt( me._PitotHeatLeft.heatPower() ,me._dt);
+		
+		me._PitotHeatRight.setResitorByTemperature(cabin._pitotRH._temperature);
+		cabin._pitotRH.addWatt( me._PitotHeatRight.heatPower() ,me._dt);
 				
 		environment.update(me._dt);
 	}

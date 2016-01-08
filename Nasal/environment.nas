@@ -17,7 +17,7 @@
 #      Date: 20.03.2015
 #
 #       Last change:      Dirk Dittmann
-#       Date:             06.01.2016
+#       Date:             08.01.2016
 #
 
 
@@ -56,6 +56,8 @@ var Environment = {
 		m._frostVStab 		= getprop("/environment/aircraft-effects/frost-level-VStab", );
 		m._frostHStabLeft	= getprop("/environment/aircraft-effects/frost-level-HStabLeft", );
 		m._frostHStabRight	= getprop("/environment/aircraft-effects/frost-level-HStabRight", );
+		m._frostPitotLH		= getprop("/environment/aircraft-effects/frost-level-PitotLH", );
+		m._frostPitotRH		= getprop("/environment/aircraft-effects/frost-level-PitotRH", );
 		
 		
 		
@@ -154,8 +156,9 @@ var Environment = {
 		var station_alt = getprop("/environment/metar/station-elevation-ft");
 		
 		
-		print (sprintf("aircraft alt %5.0f",aircraftAlt));
-		
+		print (sprintf("aircraft alt %5.0f altitude-ft",aircraftAlt));
+		print (sprintf("\t%s %12s %s %s %s = %s","type","name","elevation","thickness","elevationMax","effect"));
+			
 		foreach(var layer; nClouds.getChildren("layer")){
 			var elevation 	= layer.getNode("elevation-ft").getValue();
 			var thickness 	= layer.getNode("thickness-ft").getValue();
@@ -170,7 +173,7 @@ var Environment = {
 			
 			
 			
-			var strRow = sprintf("\t%2i %12s %5.0f %5.0f %5.0f %5.0f",type,name,elevation,thickness,elevationMin,elevationMax);
+			var strRow = sprintf("\t%4i %12s %9.0f %9.0f %12.0f",type,name,elevation,thickness,elevationMax);
 			
 			if (aircraftAlt > elevation and aircraftAlt < elevationMax){
 				
@@ -179,7 +182,7 @@ var Environment = {
 				
 				cloudEffectSum += eff;
 				
-				strRow ~= sprintf(" =  %1.5f",eff);
+				strRow ~= sprintf(" =  %6.5f",eff);
 								
 			}
 			
@@ -187,7 +190,7 @@ var Environment = {
 		}
 		me._cloudEffect = global.clamp(cloudEffectSum,0.0,1.0);
 		
-		print (sprintf("Cloud effect %1.5f",me._cloudEffect));
+		print (sprintf("Cloud effect sum %1.5f",me._cloudEffect));
 		
 	},
 	
@@ -270,7 +273,9 @@ var Environment = {
 		
 		
 # freeze propeller
-		
+		 
+		# heating 600 W 
+		# delta T  60 °C
 		# max cooling capacity 10W / °C
 		var energyPropeller 		= 2  ;# W static exchange
 		energyPropeller 		+= 1 * global.norm(flowSpeed,0,350); # W airflow
@@ -286,6 +291,36 @@ var Environment = {
 		me._frostPropeller 	= global.clamp(me._frostPropeller,0.0,1.0);
 		
 		interpolate("/environment/aircraft-effects/frost-level-Propeller", me._frostPropeller ,me._dt);
+
+# freeze pitot
+		var energyPitot = 0;
+		# heating 110W 
+		# delta T  60°C
+		# max cooling capacity 1,8W / °C
+		energyPitot 		= 0.1  ;# W static exchange
+		energyPitot 		+= 1.7 * global.norm(flowSpeed,0,350); # W airflow
+		energyPitot 		*= (me._temperature - cabin._pitotLH._temperature); # Delta °C
+		
+		cabin._pitotLH.addWatt( energyPitot ,me._dt);
+		
+		energyPitot 		= 0.1  ;# W static exchange
+		energyPitot 		+= 1.7 * global.norm(flowSpeed,0,350); # W airflow
+		energyPitot 		*= (me._temperature - cabin._pitotRH._temperature); # Delta °C
+		cabin._pitotRH.addWatt( energyPitot ,me._dt);
+		
+		var waterCatchEffectPitot 	= 0;
+		
+		waterCatchEffectPitot = me.surfaceWaterCatchEffect(cabin._pitotLH._temperature);
+		me._frostPitotLH 	-= waterCatchEffectPitot * me._dt;
+		me._frostPitotLH 	= global.clamp(me._frostPitotLH,0.0,1.0);
+		
+		waterCatchEffectPitot = me.surfaceWaterCatchEffect(cabin._pitotRH._temperature);
+		me._frostPitotRH 	-= waterCatchEffectPitot * me._dt;
+		me._frostPitotRH 	= global.clamp(me._frostPitotRH,0.0,1.0);
+		
+		interpolate("/environment/aircraft-effects/frost-level-PitotLH", me._frostPitotLH ,me._dt);
+		interpolate("/environment/aircraft-effects/frost-level-PitotRH", me._frostPitotRH ,me._dt);
+		
 		
 		
 # freeze all boots 

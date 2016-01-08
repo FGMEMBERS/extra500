@@ -17,7 +17,7 @@
 #      Date: Jul 02 2013
 #
 #       Last change:      Dirk Dittmann
-#       Date:             06.01.2016
+#       Date:             08.01.2016
 #
 # MM Page 563
 
@@ -113,6 +113,17 @@ var CabinClass = {
 		m._propeller._mass = 2.0 ; # kg
 		m._propeller._specificHeatCapacity = 896 ;# J / (kg*K) Aluminium
 		m._propeller.setTemperatur(environment._temperature);
+		
+		m._pitotLH 	=  TemperatureSurface.new(root~"/pitotLH","pitotLH",environment._temperature);
+		m._pitotLH._mass = 0.1 ; # kg
+		m._pitotLH._specificHeatCapacity = 896 ;# J / (kg*K) Aluminium
+		m._pitotLH.setTemperatur(environment._temperature);
+		
+		m._pitotRH 	=  TemperatureSurface.new(root~"/pitotRH","pitotRH",environment._temperature);
+		m._pitotRH._mass = 0.1 ; # kg
+		m._pitotRH._specificHeatCapacity = 896 ;# J / (kg*K) Aluminium
+		m._pitotRH.setTemperatur(environment._temperature);
+		
 		
 		m._absoluteHumidity = 0;
 		

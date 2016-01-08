@@ -1489,6 +1489,9 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		 <frost-level-VStab type="double">0.0</frost-level-VStab>
 		 <frost-level-HStabLeft type="double">0.0</frost-level-HStabLeft>
 		 <frost-level-HStabRight type="double">0.0</frost-level-HStabRight>
+		 <frost-level-PitotLH type="double">0.0</frost-level-PitotLH>
+		 <frost-level-PitotRH type="double">0.0</frost-level-PitotRH>
+		 <frost-level-intake type="double">0.0</frost-level-intake>
 		 
 		 <fog-level-noice type="double">0.0</fog-level-noice>
 		 <fog-level-heated type="double">0.0</fog-level-heated>
