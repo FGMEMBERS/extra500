@@ -149,45 +149,49 @@ var Environment = {
 			6 : 0,  	# MAX_CLOUD_COVERAGES ??
 		};	
 		
+		if(getprop("/environment/metar/valid")){
 		
-		var nClouds 	= props.globals.getNode("/environment/metar/clouds");
-		
-		var aircraftAlt = getprop("/position/altitude-ft");
-		var station_alt = getprop("/environment/metar/station-elevation-ft");
-		
-		
-		print (sprintf("aircraft alt %5.0f altitude-ft",aircraftAlt));
-		print (sprintf("\t%s %12s %s %s %s = %s","type","name","elevation","thickness","elevationMax","effect"));
+			var nClouds 	= props.globals.getNode("/environment/metar/clouds");
 			
-		foreach(var layer; nClouds.getChildren("layer")){
-			var elevation 	= layer.getNode("elevation-ft").getValue();
-			var thickness 	= layer.getNode("thickness-ft").getValue();
-			var type 	= layer.getNode("coverage-type").getValue();
-			var name 	= layer.getNode("coverage").getValue();
+			var aircraftAlt = getprop("/position/altitude-ft");
+			var station_alt = getprop("/environment/metar/station-elevation-ft");
 			
 			
-			var thicknessRadius 	= thickness/2;
-			#var elevationMsl	= elevation;
-			var elevationMin 	= elevation;
-			var elevationMax 	= elevation + thickness;
-			
-			
-			
-			var strRow = sprintf("\t%4i %12s %9.0f %9.0f %12.0f",type,name,elevation,thickness,elevationMax);
-			
-			if (aircraftAlt > elevation and aircraftAlt < elevationMax){
+			print (sprintf("aircraft alt %5.0f altitude-ft",aircraftAlt));
+			print (sprintf("\t%s %12s %s %s %s = %s","type","name","elevation","thickness","elevationMax","effect"));
 				
-				var cloudCenterDistanceEffect = (1.5-(math.abs(aircraftAlt - (elevation + thicknessRadius)) / thicknessRadius));
-				var eff = cloudCenterDistanceEffect * cloudTypeEffect[type];
+			foreach(var layer; nClouds.getChildren("layer")){
+				var elevation 	= layer.getNode("elevation-ft").getValue();
+				var thickness 	= layer.getNode("thickness-ft").getValue();
+				var type 	= layer.getNode("coverage-type").getValue();
+				var name 	= layer.getNode("coverage").getValue();
 				
-				cloudEffectSum += eff;
 				
-				strRow ~= sprintf(" =  %6.5f",eff);
-								
+				var thicknessRadius 	= thickness/2;
+				#var elevationMsl	= elevation;
+				var elevationMin 	= elevation;
+				var elevationMax 	= elevation + thickness;
+				
+				
+				
+				var strRow = sprintf("\t%4i %12s %9.0f %9.0f %12.0f",type,name,elevation,thickness,elevationMax);
+				
+				if (aircraftAlt > elevation and aircraftAlt < elevationMax){
+					
+					var cloudCenterDistanceEffect = (1.5-(math.abs(aircraftAlt - (elevation + thicknessRadius)) / thicknessRadius));
+					var eff = cloudCenterDistanceEffect * cloudTypeEffect[type];
+					
+					cloudEffectSum += eff;
+					
+					strRow ~= sprintf(" =  %6.5f",eff);
+									
+				}
+				
+				print(strRow);
 			}
-			
-			print(strRow);
+		
 		}
+		
 		me._cloudEffect = global.clamp(cloudEffectSum,0.0,1.0);
 		
 		print (sprintf("Cloud effect sum %1.5f",me._cloudEffect));
