@@ -429,8 +429,11 @@ var Environment = {
 		var effectFront = 0;
 		var effectHeated = 0;
 		
-		var deltaHumidity = cabin._absoluteHumidity - 0.003;
+		var deltaHumidity = 0;
 		
+		if (cabin._absoluteHumidity > 0.003){
+			deltaHumidity = cabin._absoluteHumidity - 0.003;
+		}
 			
 		effectFront 	+=  deltaHumidity * (cabin._windShield._temperature - 12.0);
 		effectHeated 	+=  deltaHumidity * (cabin._windShieldHeated._temperature - 12.0);
