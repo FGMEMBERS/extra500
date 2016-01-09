@@ -17,7 +17,7 @@
 #      Date: Jul 02 2013
 #
 #       Last change:      Dirk Dittmann
-#       Date:             08.01.2016
+#       Date:             09.01.2016
 #
 # MM Page 563
 
@@ -84,6 +84,9 @@ var CabinClass = {
 				ServiceClass.new(root,name)
 			]
 		};
+		
+		var initTemperature = environment._temperature;
+		initTemperature = 0;	
 		m._nCabinPressure	= m._nRoot.initNode("hasPressureWarning",0,"BOOL");
 		m._nBleedOvertemp	= m._nRoot.initNode("hasBleedOvertempWarning",0,"BOOL");
 		
@@ -101,29 +104,45 @@ var CabinClass = {
 		m._dt 	= 1.0;
 		m._timerLoop = nil;
 		
-		m._windShield 		=  TemperatureSurface.new(root~"/windShield","windshield",environment._temperature);
+		m._windShield 		=  TemperatureSurface.new(root~"/windShield","windshield",initTemperature);
 		m._windShield._mass = 11.244 ; # kg
-		m._windShield.setTemperatur(environment._temperature);
+		m._windShield._specificHeatCapacity = 1470 ;# J / (kg*K) acryl
+		m._windShield.setTemperatur(initTemperature);
 		
-		m._windShieldHeated 	=  TemperatureSurface.new(root~"/windShieldHeated","windshieldHeated",environment._temperature);
+		m._windShieldHeated 	=  TemperatureSurface.new(root~"/windShieldHeated","windshieldHeated",initTemperature);
 		m._windShieldHeated._mass = 0.756 ; # kg
-		m._windShieldHeated.setTemperatur(environment._temperature);
+		m._windShieldHeated._specificHeatCapacity = 1470 ;# J / (kg*K) acryl
+		m._windShieldHeated.setTemperatur(initTemperature);
 		
-		m._propeller 	=  TemperatureSurface.new(root~"/propeller","propeller",environment._temperature);
+		m._propeller 	=  TemperatureSurface.new(root~"/propeller","propeller",initTemperature);
 		m._propeller._mass = 2.0 ; # kg
 		m._propeller._specificHeatCapacity = 896 ;# J / (kg*K) Aluminium
-		m._propeller.setTemperatur(environment._temperature);
+		m._propeller.setTemperatur(initTemperature);
 		
-		m._pitotLH 	=  TemperatureSurface.new(root~"/pitotLH","pitotLH",environment._temperature);
+		m._pitotLH 	=  TemperatureSurface.new(root~"/pitotLH","pitotLH",initTemperature);
 		m._pitotLH._mass = 0.1 ; # kg
 		m._pitotLH._specificHeatCapacity = 896 ;# J / (kg*K) Aluminium
-		m._pitotLH.setTemperatur(environment._temperature);
+		m._pitotLH.setTemperatur(initTemperature);
 		
-		m._pitotRH 	=  TemperatureSurface.new(root~"/pitotRH","pitotRH",environment._temperature);
+		m._pitotRH 	=  TemperatureSurface.new(root~"/pitotRH","pitotRH",initTemperature);
 		m._pitotRH._mass = 0.1 ; # kg
 		m._pitotRH._specificHeatCapacity = 896 ;# J / (kg*K) Aluminium
-		m._pitotRH.setTemperatur(environment._temperature);
+		m._pitotRH.setTemperatur(initTemperature);
 		
+		m._staticLH 	=  TemperatureSurface.new(root~"/staticLH","staticLH",initTemperature);
+		m._staticLH._mass = 0.05 ; # kg
+		m._staticLH._specificHeatCapacity = 896 ;# J / (kg*K) Aluminium
+		m._staticLH.setTemperatur(initTemperature);
+		
+		m._staticRH 	=  TemperatureSurface.new(root~"/staticRH","staticRH",initTemperature);
+		m._staticRH._mass = 0.05 ; # kg
+		m._staticRH._specificHeatCapacity = 896 ;# J / (kg*K) Aluminium
+		m._staticRH.setTemperatur(initTemperature);
+		
+		m._stallWarnHeat 	=  TemperatureSurface.new(root~"/stallWarnHeat","stallWarnHeat",initTemperature);
+		m._stallWarnHeat._mass = 0.1 ; # kg
+		m._stallWarnHeat._specificHeatCapacity = 896 ;# J / (kg*K) Aluminium
+		m._stallWarnHeat.setTemperatur(initTemperature);
 		
 		m._absoluteHumidity = 0;
 		

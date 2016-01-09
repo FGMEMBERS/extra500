@@ -19,13 +19,14 @@
       Date: 03.01.2016
 
       Last change:      Dirk Dittmann
-      Date:             06.01.2016
+      Date:             09.01.2016
 
 -->
 <PropertyList>
 	
 	<path>ice.stab.ac</path> 
-	<!---->
+	
+	<!-- VStab ICE -->
 	<animation>
 		<object-name>ICE.VStab</object-name>
 		<type>select</type>
@@ -36,6 +37,15 @@
 			</greater-than>
 		</condition>
 	</animation>
+	<effect>
+		<inherits-from>Aircraft/extra500/Models/Effects/extra500-ice</inherits-from>
+		<object-name>ICE.VStab</object-name>
+		<parameters>
+			<frost-level><use>/environment/aircraft-effects/frost-level-VStab</use></frost-level>
+		</parameters>
+	</effect>
+	
+	<!-- HStab left ICE -->
 	<animation>
 		<object-name>ICE.HStab.LEFT</object-name>
 		<type>select</type>
@@ -46,6 +56,15 @@
 			</greater-than>
 		</condition>
 	</animation>
+	<effect>
+		<inherits-from>Aircraft/extra500/Models/Effects/extra500-ice</inherits-from>
+		<object-name>ICE.HStab.LEFT</object-name>
+		<parameters>
+			<frost-level><use>/environment/aircraft-effects/frost-level-HStabLeft</use></frost-level>
+		</parameters>
+	</effect>
+	
+	<!-- HStab right ICE -->
 	<animation>
 		<object-name>ICE.HStab.RIGHT</object-name>
 		<type>select</type>
@@ -56,26 +75,68 @@
 			</greater-than>
 		</condition>
 	</animation>
-	
-	<effect>
-		<inherits-from>Aircraft/extra500/Models/Effects/extra500-ice</inherits-from>
-		<object-name>ICE.VStab</object-name>
-		<parameters>
-			<frost-level><use>/environment/aircraft-effects/frost-level-VStab</use></frost-level>
-		</parameters>
-	</effect>
-	<effect>
-		<inherits-from>Aircraft/extra500/Models/Effects/extra500-ice</inherits-from>
-		<object-name>ICE.HStab.LEFT</object-name>
-		<parameters>
-			<frost-level><use>/environment/aircraft-effects/frost-level-HStabLeft</use></frost-level>
-		</parameters>
-	</effect>
 	<effect>
 		<inherits-from>Aircraft/extra500/Models/Effects/extra500-ice</inherits-from>
 		<object-name>ICE.HStab.RIGHT</object-name>
 		<parameters>
 			<frost-level><use>/environment/aircraft-effects/frost-level-HStabRight</use></frost-level>
+		</parameters>
+	</effect>
+	
+	<!-- inlet ICE -->
+	<animation>
+		<object-name>ICE.inlet</object-name>
+		<type>select</type>
+		<condition>
+			<greater-than>
+				<property>/environment/aircraft-effects/frost-level-Inlet</property>
+				<value>0</value>
+			</greater-than>
+		</condition>
+	</animation>
+	<effect>
+		<inherits-from>Aircraft/extra500/Models/Effects/extra500-ice</inherits-from>
+		<object-name>ICE.inlet</object-name>
+		<parameters>
+			<frost-level><use>/environment/aircraft-effects/frost-level-Inlet</use></frost-level>
+		</parameters>
+	</effect>
+	
+	<!-- static left ICE -->
+	<animation>
+		<object-name>ICE.static.LH</object-name>
+		<type>select</type>
+		<condition>
+			<greater-than>
+				<property>/environment/aircraft-effects/frost-level-StaticLH</property>
+				<value>0</value>
+			</greater-than>
+		</condition>
+	</animation>
+	<effect>
+		<inherits-from>Aircraft/extra500/Models/Effects/extra500-ice</inherits-from>
+		<object-name>ICE.static.LH</object-name>
+		<parameters>
+			<frost-level><use>/environment/aircraft-effects/frost-level-StaticLH</use></frost-level>
+		</parameters>
+	</effect>
+	
+	<!-- static right ICE -->
+	<animation>
+		<object-name>ICE.static.RH</object-name>
+		<type>select</type>
+		<condition>
+			<greater-than>
+				<property>/environment/aircraft-effects/frost-level-StaticRH</property>
+				<value>0</value>
+			</greater-than>
+		</condition>
+	</animation>
+	<effect>
+		<inherits-from>Aircraft/extra500/Models/Effects/extra500-ice</inherits-from>
+		<object-name>ICE.static.RH</object-name>
+		<parameters>
+			<frost-level><use>/environment/aircraft-effects/frost-level-StaticRH</use></frost-level>
 		</parameters>
 	</effect>
 	

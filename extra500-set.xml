@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:      Dirk Dittmann
-	Date:             06.01.2016
+	Date:             09.01.2016
 
 
 ************************************************************************
@@ -1491,7 +1491,10 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		 <frost-level-HStabRight type="double">0.0</frost-level-HStabRight>
 		 <frost-level-PitotLH type="double">0.0</frost-level-PitotLH>
 		 <frost-level-PitotRH type="double">0.0</frost-level-PitotRH>
-		 <frost-level-intake type="double">0.0</frost-level-intake>
+		 <frost-level-Inlet type="double">0.0</frost-level-Inlet>
+		 <frost-level-StaticLH type="double">0.0</frost-level-StaticLH>
+		 <frost-level-StaticRH type="double">0.0</frost-level-StaticRH>
+		 <frost-level-StallWarnHeat type="double">0.0</frost-level-StallWarnHeat>
 		 
 		 <fog-level-noice type="double">0.0</fog-level-noice>
 		 <fog-level-heated type="double">0.0</fog-level-heated>

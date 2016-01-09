@@ -17,7 +17,7 @@
 #      Date: 20.03.2015
 #
 #       Last change:      Dirk Dittmann
-#       Date:             08.01.2016
+#       Date:             09.01.2016
 #
 
 
@@ -29,7 +29,9 @@ var Environment = {
 			_nRoot		: props.globals.initNode(root),
 			_name		: name
 		};
+				
 		m._temperature 	= getprop("/environment/temperature-degc");
+		
 		m._airspeed 	= getprop("/velocities/airspeed-kt");
 		m._humidity 	= getprop("/environment/relative-humidity");
 		m._rainNorm 	= getprop("/environment/rain-norm");
@@ -56,9 +58,14 @@ var Environment = {
 		m._frostVStab 		= getprop("/environment/aircraft-effects/frost-level-VStab", );
 		m._frostHStabLeft	= getprop("/environment/aircraft-effects/frost-level-HStabLeft", );
 		m._frostHStabRight	= getprop("/environment/aircraft-effects/frost-level-HStabRight", );
+		# pitot
 		m._frostPitotLH		= getprop("/environment/aircraft-effects/frost-level-PitotLH", );
 		m._frostPitotRH		= getprop("/environment/aircraft-effects/frost-level-PitotRH", );
-		
+		# static
+		m._frostStaticLH	= getprop("/environment/aircraft-effects/frost-level-StaticLH", );
+		m._frostStaticRH	= getprop("/environment/aircraft-effects/frost-level-StaticRH", );
+		# stall
+		m._frostStallWarnHeat	= getprop("/environment/aircraft-effects/frost-level-StallWarnHeat", );
 		
 		
 		m._cloudEffect = 0; # 0-1 intersection clouds
@@ -228,9 +235,9 @@ var Environment = {
 	frost : func(){
 		print("Environment::frost() ...");
 		
+		var energyFlow = 0;
 		
-		
-
+# freeze windshield
 		# cooling the windshield
 		
 		
@@ -244,30 +251,26 @@ var Environment = {
 		# exchange Factor between Air and Windshield default 0.1 for V = 0
 		var exchangeFactor = me._nFrostExchangeFactor.getValue() ;
 		var eff = eff_min + flowSpeed * density * eff_factor;
-
-# freeze windshield
-		#	energie flow		= (exchange factor) * (massflow) * (Delta Temp)
-		var  energyWindShield 		= eff * exchangeFactor * 0.937 * (me._temperature - cabin._windShield._temperature) ;# W
-		
-		var  energyWindShieldHeated 	= eff * exchangeFactor * 0.063 * (me._temperature - cabin._windShieldHeated._temperature) ;# W
-		
-		#print("frost| ",sprintf("windshield %0.3f W %0.3f W",energyWindShield,energyWindShieldHeated));
-		
+				
 		# put the energie flow onto the windshield
-		cabin._windShield.addWatt( energyWindShield ,me._dt);
-		cabin._windShieldHeated.addWatt( energyWindShieldHeated ,me._dt);
+		#	energie flow		= (exchange factor) * (massflow) * (Delta Temp)
 		
-		var waterCatchEffectFront = 0;
-		var waterCatchEffectHeated = 0;
+		#var debugText = "frost| windshield ";
+		var  energyFlow 		= eff * exchangeFactor * 0.937 * (me._temperature - cabin._windShield._temperature) ;# W
+		cabin._windShield.addWatt( energyFlow ,me._dt);
+		#debugText ~= sprintf("%0.3f W ",energyFlow);
 		
+		var  energyFlow 	= eff * exchangeFactor * 0.063 * (me._temperature - cabin._windShieldHeated._temperature) ;# W
+		cabin._windShieldHeated.addWatt( energyFlow ,me._dt);
+		#debugText ~= sprintf("%0.3f W ",energyFlow);
+		#print(debugText);
 		
-		waterCatchEffectFront = me.surfaceWaterCatchEffect(cabin._windShield._temperature);
-		me._frostFront 	-= waterCatchEffectFront * me._dt;
-		me._frostFront 	= global.clamp(me._frostFront,0.0,1.0);
+		# put the water(ice) on the surface
+		me._frostFront 	-= me.surfaceWaterCatchEffect(cabin._windShield._temperature) * me._dt;
+		me._frostFront 	 = global.clamp(me._frostFront,0.0,1.0);
 		
-		waterCatchEffectHeated = me.surfaceWaterCatchEffect(cabin._windShieldHeated._temperature);
-		me._frostHeated 	-= waterCatchEffectHeated * me._dt;
-		me._frostHeated 	= global.clamp(me._frostHeated,0.0,1.0);
+		me._frostHeated -= me.surfaceWaterCatchEffect(cabin._windShieldHeated._temperature) * me._dt;
+		me._frostHeated  = global.clamp(me._frostHeated,0.0,1.0);
 		
 		#print("frost| ",sprintf("windshield: %0.2f, T: %0.2f, F: %0.2f,  a: %0.2f",me._windshieldTemperature,temperature,me._frost,adjust));
 		
@@ -281,50 +284,82 @@ var Environment = {
 		# heating 600 W 
 		# delta T  60 °C
 		# max cooling capacity 10W / °C
-		var energyPropeller 		= 2  ;# W static exchange
-		energyPropeller 		+= 1 * global.norm(flowSpeed,0,350); # W airflow
-		energyPropeller 		+= 7 * global.norm(getprop("/engines/engine/rpm"),0,2030); # W PRM
-		energyPropeller 		*= (me._temperature - cabin._propeller._temperature); # Delta °C
+		eff 	= 2  ;# W static exchange
+		eff 	+= 1 * global.norm(flowSpeed,0,350); # W airflow
+		eff 	+= 7 * global.norm(getprop("/engines/engine/rpm"),0,2030); # W PRM
 		
-		cabin._propeller.addWatt( energyPropeller ,me._dt);
+		energyFlow 	= eff * (me._temperature - cabin._propeller._temperature); # Delta °C
+		cabin._propeller.addWatt( energyFlow ,me._dt);
 		
-		var waterCatchEffectPropeller 	= 0;
-		
-		waterCatchEffectPropeller = me.surfaceWaterCatchEffect(cabin._propeller._temperature);
-		me._frostPropeller 	-= waterCatchEffectPropeller * me._dt;
+		# put the water(ice) on the surface
+		me._frostPropeller 	-= me.surfaceWaterCatchEffect(cabin._propeller._temperature) * me._dt;
 		me._frostPropeller 	= global.clamp(me._frostPropeller,0.0,1.0);
 		
 		interpolate("/environment/aircraft-effects/frost-level-Propeller", me._frostPropeller ,me._dt);
 
 # freeze pitot
-		var energyPitot = 0;
 		# heating 110W 
 		# delta T  60°C
 		# max cooling capacity 1,8W / °C
-		energyPitot 		= 0.1  ;# W static exchange
-		energyPitot 		+= 1.7 * global.norm(flowSpeed,0,350); # W airflow
-		energyPitot 		*= (me._temperature - cabin._pitotLH._temperature); # Delta °C
+		eff 		=  0.1  ;# W static exchange
+		eff 		+= 1.7 * global.norm(flowSpeed,0,350); # W airflow
 		
-		cabin._pitotLH.addWatt( energyPitot ,me._dt);
 		
-		energyPitot 		= 0.1  ;# W static exchange
-		energyPitot 		+= 1.7 * global.norm(flowSpeed,0,350); # W airflow
-		energyPitot 		*= (me._temperature - cabin._pitotRH._temperature); # Delta °C
-		cabin._pitotRH.addWatt( energyPitot ,me._dt);
+		energyFlow 		= eff * (me._temperature - cabin._pitotLH._temperature); # Delta °C
+		cabin._pitotLH.addWatt( energyFlow ,me._dt);
 		
-		var waterCatchEffectPitot 	= 0;
+		energyFlow 		= eff * (me._temperature - cabin._pitotRH._temperature); # Delta °C
+		cabin._pitotRH.addWatt( energyFlow ,me._dt);
 		
-		waterCatchEffectPitot = me.surfaceWaterCatchEffect(cabin._pitotLH._temperature);
-		me._frostPitotLH 	-= waterCatchEffectPitot * me._dt;
-		me._frostPitotLH 	= global.clamp(me._frostPitotLH,0.0,1.0);
+		# put the water(ice) on the surface
+		me._frostPitotLH 	-= me.surfaceWaterCatchEffect(cabin._pitotLH._temperature) * me._dt;
+		me._frostPitotLH 	 = global.clamp(me._frostPitotLH,0.0,1.0);
 		
-		waterCatchEffectPitot = me.surfaceWaterCatchEffect(cabin._pitotRH._temperature);
-		me._frostPitotRH 	-= waterCatchEffectPitot * me._dt;
-		me._frostPitotRH 	= global.clamp(me._frostPitotRH,0.0,1.0);
+		me._frostPitotRH 	-= me.surfaceWaterCatchEffect(cabin._pitotRH._temperature) * me._dt;
+		me._frostPitotRH 	 = global.clamp(me._frostPitotRH,0.0,1.0);
 		
 		interpolate("/environment/aircraft-effects/frost-level-PitotLH", me._frostPitotLH ,me._dt);
 		interpolate("/environment/aircraft-effects/frost-level-PitotRH", me._frostPitotRH ,me._dt);
 		
+# freeze static
+		# heating 16W 
+		# delta T  60°C
+		# max cooling capacity 0,25W / °C
+		eff 		=  0.01  ;# W static exchange
+		eff 		+= 0.24 * global.norm(flowSpeed,0,350); # W airflow
+		
+		energyFlow 		= eff * (me._temperature - cabin._staticLH._temperature); # Delta °C
+		cabin._staticLH.addWatt( energyFlow ,me._dt);
+		
+		energyFlow 		= eff * (me._temperature - cabin._staticRH._temperature); # Delta °C
+		cabin._staticRH.addWatt( energyFlow ,me._dt);
+		
+		# put the water(ice) on the surface
+		me._frostStaticLH 	-= me.surfaceWaterCatchEffect(cabin._staticLH._temperature) * me._dt;
+		me._frostStaticLH 	 = global.clamp(me._frostStaticLH,0.0,1.0);
+		
+		me._frostStaticRH 	-= me.surfaceWaterCatchEffect(cabin._staticRH._temperature) * me._dt;
+		me._frostStaticRH 	 = global.clamp(me._frostStaticRH,0.0,1.0);
+		
+		interpolate("/environment/aircraft-effects/frost-level-StaticLH", me._frostStaticLH ,me._dt);
+		interpolate("/environment/aircraft-effects/frost-level-StaticRH", me._frostStaticRH ,me._dt);
+		
+# freeze stall warner
+		# heating 130W 
+		# delta T  60°C
+		# max cooling capacity 2,1W / °C
+		eff 		=  0.01  ;# W static exchange
+		eff 		+= 2.09 * global.norm(flowSpeed,0,350); # W airflow
+		
+		energyFlow 		= eff * (me._temperature - cabin._stallWarnHeat._temperature); # Delta °C
+		cabin._stallWarnHeat.addWatt( energyFlow ,me._dt);
+		
+		
+		# put the water(ice) on the surface
+		me._frostStallWarnHeat 	-= me.surfaceWaterCatchEffect(cabin._stallWarnHeat._temperature) * me._dt;
+		me._frostStallWarnHeat 	 = global.clamp(me._frostStallWarnHeat,0.0,1.0);
+		
+		interpolate("/environment/aircraft-effects/frost-level-StallWarnHeat", me._frostStallWarnHeat ,me._dt);
 		
 		
 # freeze all boots 
@@ -333,21 +368,23 @@ var Environment = {
 		# surface temperature is environment temperature
 		waterCatchEffectBoots = me.surfaceWaterCatchEffect(me._temperature);
 		
+		# put the water(ice) on the surface
+		waterCatchEffectBoots *= me._dt;
 		
-		me._frostWingLeft 		-= waterCatchEffectBoots * me._dt;
-		me._frostWingLeft 		= global.clamp(me._frostWingLeft,0.0,1.0);
+		me._frostWingLeft 	-= waterCatchEffectBoots;
+		me._frostWingLeft 	 = global.clamp(me._frostWingLeft,0.0,1.0);
 		
-		me._frostWingRight 		-= waterCatchEffectBoots * me._dt;
-		me._frostWingRight 		= global.clamp(me._frostWingRight,0.0,1.0);
+		me._frostWingRight 	-= waterCatchEffectBoots;
+		me._frostWingRight 	 = global.clamp(me._frostWingRight,0.0,1.0);
 		
-		me._frostVStab 		-= waterCatchEffectBoots * me._dt;
-		me._frostVStab 		= global.clamp(me._frostVStab,0.0,1.0);
+		me._frostVStab 		-= waterCatchEffectBoots;
+		me._frostVStab 		 = global.clamp(me._frostVStab,0.0,1.0);
 		
-		me._frostHStabLeft 		-= waterCatchEffectBoots * me._dt;
-		me._frostHStabLeft 		= global.clamp(me._frostHStabLeft,0.0,1.0);
+		me._frostHStabLeft 	-= waterCatchEffectBoots;
+		me._frostHStabLeft 	 = global.clamp(me._frostHStabLeft,0.0,1.0);
 		
-		me._frostHStabRight 	-= waterCatchEffectBoots * me._dt;
-		me._frostHStabRight 	= global.clamp(me._frostHStabRight,0.0,1.0);
+		me._frostHStabRight 	-= waterCatchEffectBoots;
+		me._frostHStabRight 	 = global.clamp(me._frostHStabRight,0.0,1.0);
 		
 				
 		interpolate("/environment/aircraft-effects/frost-level-WingLeft", me._frostWingLeft, me._dt);
@@ -369,6 +406,17 @@ var Environment = {
 # 			  energyWindShieldHeated,
 # 				cabin._windShieldHeated._temperature
 # 				       ));
+	
+		
+		print(sprintf("environment   %3.3f°C",me._temperature));
+		print(sprintf("windschild    %3.3f°C",cabin._windShield._temperature));
+		print(sprintf("windschild he %3.3f°C",cabin._windShieldHeated._temperature));
+		print(sprintf("propeller     %3.3f°C",cabin._propeller._temperature));
+		print(sprintf("pitot LH      %3.3f°C",cabin._pitotLH._temperature));
+		print(sprintf("pitot RH      %3.3f°C",cabin._pitotRH._temperature));
+		print(sprintf("static LH     %3.3f°C",cabin._staticLH._temperature));
+		print(sprintf("static RH     %3.3f°C",cabin._staticRH._temperature));
+		print(sprintf("stall warner  %3.3f°C",cabin._stallWarnHeat._temperature));
 		
 	},
 	fog : func(){

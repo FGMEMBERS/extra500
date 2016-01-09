@@ -19,7 +19,7 @@
       Date: 03.01.2016
 
       Last change:      Dirk Dittmann
-      Date:             08.01.2016
+      Date:             09.01.2016
 
 -->
 <PropertyList>
@@ -121,6 +121,25 @@
 		<object-name>wing.pitotRH.ICE</object-name>
 		<parameters>
 			<frost-level><use>/environment/aircraft-effects/frost-level-PitotRH</use></frost-level>
+		</parameters>
+	</effect>
+	
+	<!-- stall warn ice -->
+	<animation>
+		<object-name>wing.stallwarn.ICE</object-name>
+		<type>select</type>
+		<condition>
+			<greater-than>
+				<property>/environment/aircraft-effects/frost-level-StallWarnHeat</property>
+				<value>0</value>
+			</greater-than>
+		</condition>
+	</animation>
+	<effect>
+		<inherits-from>Aircraft/extra500/Models/Effects/extra500-ice</inherits-from>
+		<object-name>wing.stallwarn.ICE</object-name>
+		<parameters>
+			<frost-level><use>/environment/aircraft-effects/frost-level-StallWarnHeat</use></frost-level>
 		</parameters>
 	</effect>
 	

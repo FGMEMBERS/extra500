@@ -17,7 +17,7 @@
 #      Date: Jul 03 2013
 #
 #       Last change:      Dirk Dittmann
-#       Date:             08.01.2016
+#       Date:             09.01.2016
 #
 
 # MM page 
@@ -130,58 +130,6 @@ var ElectricHeatClass = {
 	
 };
 
-#var BootsClass = {
-#	new : func(root,name,watt){
-#		var m = { 
-#			parents : [
-#				BootsClass, 
-#				ConsumerClass.new(root,name,watt)
-#			]
-#		};
-#		m._PneumaticPressure	= 1.0;
-#		m._nPneumaticPressure 	= m._nRoot.initNode("PneumaticPressure",m._PneumaticPressure,"DOUBLE");
-#		m._nPneumaticLow	= m._nRoot.initNode("PneumaticLow",0,"BOOL");
-#		m._nBootsPosition	= m._nRoot.initNode("position-norm",0.0,"DOUBLE");
-#		m._value = 0;
-		
-#		return m;
-#	},
-#	init : func(instance=nil){
-#		if (instance==nil){instance=me;}
-#		me.parents[1].init(instance);
-#		me.setListeners(instance);
-#	},
-#	setListeners : func(instance){
-#		append(me._listeners, setlistener(me._nPneumaticPressure,func(n){instance._onPneumaticPressureChange(n);},1,0) );
-		
-#	},
-#	electricWork : func(){
-		
-#		if ((me._value == 1 ) and (me._volt >= me._voltMin) ){
-#			me._ampere = me._watt / me._volt;
-#			me._state  = 1;
-#		}else{
-#			me._state  = 0;
-#			me._ampere = 0;
-#		}
-#		interpolate(me._nBootsPosition,me._PneumaticPressure * me._state,10.0);
-#		me._nState.setValue(me._state);
-#		me._nAmpere.setValue(me._ampere);
-#	},
-#	_onPneumaticPressureChange : func(n){
-#		me._PneumaticPressure = n.getValue();	
-#		if(me._PneumaticPressure <= 0.5){
-#			me._nPneumaticLow.setValue(1);
-#		}else{
-#			me._nPneumaticLow.setValue(0);
-#		}
-#	},
-#	setOn : func(value){
-#		me._value = value;
-#		me.electricWork();
-#	}
-#};
-
 var DeicingSystemClass = {
 	new : func(root,name){
 		var m = { 
@@ -247,33 +195,39 @@ var DeicingSystemClass = {
 		eSystem.circuitBreaker.PITOT_R.outputAdd(m._PitotHeatRight);
 		
 		m._StaticHeatLeft 		= ElectricHeatClass.new("/extra500/system/deice/StaticHeatLeft","Static Heat Left",17.0);
+		m._StaticHeatLeft._resistorMin		= 46;
+		m._StaticHeatLeft._resistorMax		= 130;
+		m._StaticHeatLeft._temperatureMin 	= -3;
+		m._StaticHeatLeft._temperatureMax 	= 30;
 		eSystem.circuitBreaker.PITOT_L.outputAdd(m._StaticHeatLeft);
 		
 		m._StaticHeatRight 		= ElectricHeatClass.new("/extra500/system/deice/StaticHeatRight","Static Heat Right",17.0);
+		m._StaticHeatRight._resistorMin		= 46;
+		m._StaticHeatRight._resistorMax		= 130;
+		m._StaticHeatRight._temperatureMin 	= -3;
+		m._StaticHeatRight._temperatureMax 	= 30;
 		eSystem.circuitBreaker.PITOT_R.outputAdd(m._StaticHeatRight);
 		
-		m._StallHeat 		= ElectricHeatClass.new("/extra500/system/deice/StallHeat","Stall Heat",140.0);
-		eSystem.circuitBreaker.PITOT_R.outputAdd(m._StallHeat);
 		
 		m._WindshieldDefrost		= AirHeatClass.new("/extra500/system/deice/WindshieldDeforst","Windshield Deforst",450.0);
 		
-# this does not include the ejector valves (6 sec 14W, 6sec 14W, 48s 0W): added in /systems/extra500-electrical-system.xml
-#		m._Boots 		= BootsClass.new("/extra500/system/deice/Boots","Boots",0.4);
-#		eSystem.circuitBreaker.BOOTS.outputAdd(m._Boots);
-#		m._bootsTimer = 0;
-		
-# uhm, below some other calc is made? 
 		m._PropellerHeat 	= ElectricHeatClass.new("/extra500/system/deice/Propeller","Propeller Heat",450.0);
 		m._PropellerHeat._resistorMin		= 1.3;
 		m._PropellerHeat._resistorMax		= 1.742;
 		m._PropellerHeat._temperatureMin 	= -3;
 		m._PropellerHeat._temperatureMax 	= 30;
-		
 		eSystem.circuitBreaker.PROP_HT.outputAdd(m._PropellerHeat);
 		
+# TODO : find a more suitable place for the StallWarn Switch
 		m._StallWarner 		= ElectricHeatClass.new("/extra500/system/pitot/StallWarn","Stall Warner",0.4);
 		eSystem.circuitBreaker.STALL_WARN.outputAdd(m._StallWarner);
 		
+		m._StallHeat 		= ElectricHeatClass.new("/extra500/system/deice/StallHeat","Stall Heat",140.0);
+		m._StallHeat._resistorMin		= 5.6; #140W
+		m._StallHeat._resistorMax		= 13; #60W
+		m._StallHeat._temperatureMin 	= -3;
+		m._StallHeat._temperatureMax 	= 30;
+		eSystem.circuitBreaker.PITOT_R.outputAdd(m._StallHeat);
 		
 		
 		m._dt = 0;
@@ -347,13 +301,6 @@ var DeicingSystemClass = {
 			deiceSystem._checkWindshieldHeat();
 		};
 		
-#		eSystem.switch.Boots.onStateChange = func(n){
-#			me._state = n.getValue();
-#			deiceSystem._Boots.setOn(me._state);
-#			deiceSystem._bootsTimer = 60.0;
-#			deiceSystem.update();
-#		};
-
 # 		eSystem.switch.Propeller.onStateChange(eSystem.switch.Propeller._nState);
 # 		eSystem.switch.PitotL.onStateChange(eSystem.switch.PitotL._nState);
 # 		eSystem.switch.PitotR.onStateChange(eSystem.switch.PitotR._nState);
@@ -492,12 +439,25 @@ var DeicingSystemClass = {
 		
 		me._PropellerHeat.setResitorByTemperature(cabin._propeller._temperature);
 		cabin._propeller.addWatt( me._PropellerHeat.heatPower() ,me._dt);
-				
+		
+		# pitot		
 		me._PitotHeatLeft.setResitorByTemperature(cabin._pitotLH._temperature);
 		cabin._pitotLH.addWatt( me._PitotHeatLeft.heatPower() ,me._dt);
 		
 		me._PitotHeatRight.setResitorByTemperature(cabin._pitotRH._temperature);
 		cabin._pitotRH.addWatt( me._PitotHeatRight.heatPower() ,me._dt);
+		
+		# static
+		me._StaticHeatLeft.setResitorByTemperature(cabin._staticLH._temperature);
+		cabin._staticLH.addWatt( me._StaticHeatLeft.heatPower() ,me._dt);
+		
+		me._StaticHeatRight.setResitorByTemperature(cabin._staticRH._temperature);
+		cabin._staticRH.addWatt( me._StaticHeatRight.heatPower() ,me._dt);
+		
+		# stall warner heat
+		me._StallHeat.setResitorByTemperature(cabin._stallWarnHeat._temperature);
+		cabin._stallWarnHeat.addWatt( me._StallHeat.heatPower() ,me._dt);
+		
 				
 		environment.update(me._dt);
 	}
