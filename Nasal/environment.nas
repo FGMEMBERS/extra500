@@ -132,7 +132,7 @@ var Environment = {
 
 	},
 	detectClouds : func(){
-		print("Environment::detectClouds() ...");
+		print("\nEnvironment::detectClouds() ...");
 		var cloudEffectSum 	= 0; # norm 0-1
 		
 		
@@ -408,15 +408,17 @@ var Environment = {
 # 				       ));
 	
 		
-		print(sprintf("environment   %3.3f°C",me._temperature));
-		print(sprintf("windschild    %3.3f°C",cabin._windShield._temperature));
-		print(sprintf("windschild he %3.3f°C",cabin._windShieldHeated._temperature));
-		print(sprintf("propeller     %3.3f°C",cabin._propeller._temperature));
-		print(sprintf("pitot LH      %3.3f°C",cabin._pitotLH._temperature));
-		print(sprintf("pitot RH      %3.3f°C",cabin._pitotRH._temperature));
-		print(sprintf("static LH     %3.3f°C",cabin._staticLH._temperature));
-		print(sprintf("static RH     %3.3f°C",cabin._staticRH._temperature));
-		print(sprintf("stall warner  %3.3f°C",cabin._stallWarnHeat._temperature));
+		print(sprintf("environment   %7.3f°C",me._temperature));
+		print(sprintf("              %7s %7s","surface","frost"));
+		
+		print(sprintf("windschild    %7.3f°C %2.5f",cabin._windShield._temperature, me._frostFront));
+		print(sprintf("windschild he %7.3f°C %2.5f",cabin._windShieldHeated._temperature, me._frostHeated));
+		print(sprintf("propeller     %7.3f°C %2.5f",cabin._propeller._temperature, me._frostPropeller));
+		print(sprintf("pitot LH      %7.3f°C %2.5f",cabin._pitotLH._temperature, me._frostPitotLH));
+		print(sprintf("pitot RH      %7.3f°C %2.5f",cabin._pitotRH._temperature, me._frostPitotRH));
+		print(sprintf("static LH     %7.3f°C %2.5f",cabin._staticLH._temperature, me._frostStaticLH));
+		print(sprintf("static RH     %7.3f°C %2.5f",cabin._staticRH._temperature, me._frostStaticRH));
+		print(sprintf("stall warner  %7.3f°C %2.5f",cabin._stallWarnHeat._temperature, me._frostStallWarnHeat));
 		
 	},
 	fog : func(){
