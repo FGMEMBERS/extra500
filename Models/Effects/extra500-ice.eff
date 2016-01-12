@@ -35,6 +35,7 @@ along with extra500.  If not, see <http://www.gnu.org/licenses/>.
 		</texture>
 		<use-mask type="int">0</use-mask>
 		<overlay-color type="vec3d" n="0">1.0 1.0 1.0</overlay-color>
+		<overlay-glare type="float">0.8</overlay-glare>
 		<frost-level><use>/environment/aircraft-effects/frost-level-front</use></frost-level>
 		<glass-tint type="vec4d" n="0"> 1.0 1.0 1.0 1.0</glass-tint>
 		
