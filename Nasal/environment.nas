@@ -411,6 +411,15 @@ var Environment = {
 		print(sprintf("environment   %7.3f°C",me._temperature));
 		print(sprintf("              %7s %7s","surface","frost"));
 		
+		
+		print(sprintf("front         %7.3f°C %2.5f",me._temperature, me._frostFront));
+		print(sprintf("WingLeft      %7.3f°C %2.5f",me._temperature, me._frostWingLeft));
+		print(sprintf("WingRight     %7.3f°C %2.5f",me._temperature, me._frostWingRight));
+		print(sprintf("VStab         %7.3f°C %2.5f",me._temperature, me._frostVStab));
+		print(sprintf("HStabLeft     %7.3f°C %2.5f",me._temperature, me._frostHStabLeft));
+		print(sprintf("HStabRight    %7.3f°C %2.5f",me._temperature, me._frostHStabRight));
+		
+		print(sprintf("windschild    %7.3f°C %2.5f",cabin._windShield._temperature, me._frostFront));
 		print(sprintf("windschild    %7.3f°C %2.5f",cabin._windShield._temperature, me._frostFront));
 		print(sprintf("windschild he %7.3f°C %2.5f",cabin._windShieldHeated._temperature, me._frostHeated));
 		print(sprintf("propeller     %7.3f°C %2.5f",cabin._propeller._temperature, me._frostPropeller));
@@ -462,7 +471,7 @@ var Environment = {
 				
 				
 		
-		interpolate("/environment/aircraft-effects/fog-level", fogFront ,me._dt);
+		#interpolate("/environment/aircraft-effects/fog-level", fogFront ,me._dt);
 		interpolate("/environment/aircraft-effects/fog-level-front", fogFront ,me._dt);
 		interpolate("/environment/aircraft-effects/fog-level-heated", fogHeated ,me._dt);
 		

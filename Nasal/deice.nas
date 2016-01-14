@@ -399,7 +399,7 @@ var DeicingSystemClass = {
 	_onBoots : func(n){
 		print("DeicingSystemClass::_onBoots() ...");
 		if(n.getValue() == 1){
-			var amount = 0.25;
+			var amount = 0.8;
 			
 			environment._frostWingLeft 	-= environment._frostWingLeft > amount ? amount : environment._frostWingLeft; 
 			environment._frostWingRight 	-= environment._frostWingRight > amount ? amount : environment._frostWingRight; 
