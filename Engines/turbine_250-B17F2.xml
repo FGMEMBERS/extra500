@@ -19,7 +19,7 @@
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             29.04.13
+      Date:             14.01.16
 -->
 <!--
     
@@ -55,9 +55,10 @@
 	<itt_delay>                     0.05  </itt_delay>
 	<betarangeend>                 70     </betarangeend>
 	<reversemaxpower>              30     </reversemaxpower>
-	
-	
-	<table name="EnginePowerVC">
+
+
+    	<function name="EnginePowerVC">	
+	<table>
 	<description> Engine power, function of airspeed and pressure </description>
 		<independentVar lookup="row">atmosphere/pressure-altitude</independentVar>
 		<independentVar lookup="column">velocities/vtrue-kts</independentVar>
@@ -67,6 +68,8 @@
 			25000		1	1	1
 		</tableData>
 	</table>
+    	</function>
+
 	
 	<table name="EnginePowerRPM_N1" type="internal">
 	<description> Engine Power, function of RPM and N1 </description>
