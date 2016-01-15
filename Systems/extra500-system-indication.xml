@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2015-05-19
+      Date:             2016-01-11
 -->
 
 <system name="indication">
@@ -287,12 +287,19 @@
 			<output>aircraft/engine/FF-lbs_h</output>
 		</switch>
 
+<!-- for indication only -->
 		<fcs_function name="aircraft/engine/FF-l_h">
     			<function>
       			<description>fuel flow in liter per hour</description>
 				<product>
 					<property>aircraft/engine/FF-lbs_h</property>   
-					<property>/extra500/const/JETA_LB2L</property>   
+					<property>/extra500/const/JETA_LB2L</property> 
+					<abs>
+						<sum>
+							<property>/systems/fuel/FFtransducer/blocked</property>  
+							<value>-1</value> 
+						</sum>
+					</abs>
 				</product>
     			</function>
 		</fcs_function>
@@ -1247,6 +1254,22 @@
 				/extra500/electric/source/ExternalGenerator/isPluged eq 1
 			</test>
 			<output>aircraft/events/EXTERNALPOWER</output>
+		</switch>
+
+		<switch name="Lpitoticing">
+			<default value="1"/>
+			<test logic="AND" value="0">
+				/environment/aircraft-effects/frost-level-PitotLH gt 0.3
+			</test>
+			<output>/systems/pitotL/serviceable</output>
+		</switch>
+
+		<switch name="Rpitoticing">
+			<default value="1"/>
+			<test logic="AND" value="0">
+				/environment/aircraft-effects/frost-level-PitotRH gt 0.3
+			</test>
+			<output>/systems/pitotR/serviceable</output>
 		</switch>
 
 		<fcs_function name="/instrumentation/airspeed-IFD-RH/indicated-airspeed-kt">

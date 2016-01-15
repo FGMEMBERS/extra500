@@ -110,6 +110,7 @@
 		<object-name>PropellerBroken</object-name>
 		<object-name>PropFast</object-name>
 		<object-name>PropFastBroken</object-name>
+		<object-name>propeller.ice</object-name>
 		<property>sim/multiplay/generic/int[12]</property>
 		<factor>1</factor>
 		<axis>
@@ -122,4 +123,10 @@
 		</axis>
 	</animation>
 	
+	<!-- ICE for propeller -->
+	<model>
+		<name>propeller.ice</name>
+		<path>propeller.ice.xml</path>
+	</model>
+
 </PropertyList>

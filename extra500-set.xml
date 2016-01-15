@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger
       Date: March 13 2013
 
-	Last change:	Eric van den Berg
-	Date:			20.12.15
+	Last change:      Dirk Dittmann
+	Date:             09.01.2016
 
 
 ************************************************************************
@@ -1483,9 +1483,24 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		 <frost-level-noice type="double">0.0</frost-level-noice>
 		 <frost-level-heated type="double">0.0</frost-level-heated>
 		 <frost-level-front type="double">0.0</frost-level-front>
+		 <frost-level-Propeller type="double">0.0</frost-level-Propeller>
+		 <frost-level-WingLeft type="double">0.0</frost-level-WingLeft>
+		 <frost-level-WingRight type="double">0.0</frost-level-WingRight>
+		 <frost-level-VStab type="double">0.0</frost-level-VStab>
+		 <frost-level-HStabLeft type="double">0.0</frost-level-HStabLeft>
+		 <frost-level-HStabRight type="double">0.0</frost-level-HStabRight>
+		 <frost-level-PitotLH type="double">0.0</frost-level-PitotLH>
+		 <frost-level-PitotRH type="double">0.0</frost-level-PitotRH>
+		 <frost-level-Inlet type="double">0.0</frost-level-Inlet>
+		 <frost-level-StaticLH type="double">0.0</frost-level-StaticLH>
+		 <frost-level-StaticRH type="double">0.0</frost-level-StaticRH>
+		 <frost-level-StallWarnHeat type="double">0.0</frost-level-StallWarnHeat>
+		 
 		 <fog-level-noice type="double">0.0</fog-level-noice>
 		 <fog-level-heated type="double">0.0</fog-level-heated>
 		 <fog-level-front type="double">0.0</fog-level-front>
+		 
+		 
 	 </aircraft-effects>
  </environment>
        <consumables>

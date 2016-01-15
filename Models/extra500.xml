@@ -18,8 +18,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Eric van den Berg
-      Date:             12.12.2015
+      Last change:      Dirk Dittmann
+      Date:             06.01.2016
 
 -->
 
@@ -1045,5 +1045,13 @@
     <z2-m>1.16420</z2-m>
   </axis>
 </animation>
+
+
+<!-- ICE for VStab HStab -->
+<model>
+	<name>ice.stab</name>
+	<path>ice.stab.xml</path>
+</model>
+
 
 </PropertyList>
