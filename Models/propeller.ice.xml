@@ -19,7 +19,7 @@
       Date: 03.01.2016
 
       Last change:      Dirk Dittmann
-      Date:             12.01.2016
+      Date:             15.01.2016
 
 -->
 <PropertyList>
@@ -33,7 +33,7 @@
 		<condition>
 			<and>
 				<greater-than>
-					<property>/environment/aircraft-effects/frost-level-Propeller</property>
+					<property>/environment/aircraft-effects/frost-level-PropellerBlade</property>
 					<value>0</value>
 				</greater-than>
 				
@@ -51,7 +51,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>ICE.Propeller</object-name>
-		<property>/environment/aircraft-effects/frost-level-Propeller</property>
+		<property>/environment/aircraft-effects/frost-level-PropellerBlade</property>
 		<factor>-0.025</factor>
 		<offset-m>0.0001</offset-m>
 		<axis>
@@ -65,7 +65,7 @@
 	<animation>
 		<type>scale</type>
 		<object-name>ICE.Propeller</object-name>
-		<property>/environment/aircraft-effects/frost-level-Propeller</property>
+		<property>/environment/aircraft-effects/frost-level-PropellerBlade</property>
 		<x-min>0.1</x-min>
 		<y-min>0.1</y-min>
 		<z-min>0.1</z-min>
@@ -83,7 +83,7 @@
 		<inherits-from>Aircraft/extra500/Models/Effects/extra500-ice</inherits-from>
 		<object-name>ICE.Propeller</object-name>
 		<parameters>
-			<frost-level><use>/environment/aircraft-effects/frost-level-Propeller</use></frost-level>
+			<frost-level><use>/environment/aircraft-effects/frost-level-PropellerBlade</use></frost-level>
 		</parameters>
 	</effect>
 	
@@ -93,7 +93,7 @@
 		<type>select</type>
 		<condition>
 			<greater-than>
-				<property>/environment/aircraft-effects/frost-level-front</property>
+				<property>/environment/aircraft-effects/frost-level-FuslageFront</property>
 				<value>0</value>
 			</greater-than>
 		</condition>
@@ -101,19 +101,29 @@
 	<!----><animation>
 		<type>scale</type>
 		<object-name>ICE.Spinner</object-name>
-		<property>/environment/aircraft-effects/frost-level-front</property>
+		<property>/environment/aircraft-effects/frost-level-FuslageFront</property>
 		<x-min>0.1</x-min>
 		<y-min>0.1</y-min>
 		<z-min>0.1</z-min>
-		<x-factor>1.0</x-factor>
-		<y-factor>1.0</y-factor>
-		<z-factor>1.0</z-factor>
+		
+		<x-offset>0.3</x-offset>
+		<y-offset>0.3</y-offset>
+		<z-offset>0.3</z-offset>
+		
+		<x-factor>0.7</x-factor>
+		<y-factor>0.7</y-factor>
+		<z-factor>0.7</z-factor>
+		
+		<x-max>1.0</x-max>
+		<y-max>1.0</y-max>
+		<z-max>1.0</z-max>
+		
 	</animation>
 	<effect>
 		<inherits-from>Aircraft/extra500/Models/Effects/extra500-ice</inherits-from>
 		<object-name>ICE.Spinner</object-name>
 		<parameters>
-			<frost-level><use>/environment/aircraft-effects/frost-level-front</use></frost-level>
+			<frost-level><use>/environment/aircraft-effects/frost-level-FuslageFront</use></frost-level>
 		</parameters>
 	</effect>
 	

@@ -19,7 +19,7 @@ Authors: 		Dirk Dittmann
 Date: 		02.04.2015
 
 	Last change:	Dirk Dittmann
-	Date:		22.04.15
+	Date:		15.01.2016
 -->
 <PropertyList>
 	<name>extra500-interior-glass-reflection-front</name>
@@ -56,8 +56,8 @@ Date: 		02.04.2015
 		</texture>
 		<use-reflection type="int">1</use-reflection>
 		<reflection-strength type="float">0.25</reflection-strength>
-		<frost-level><use>/environment/aircraft-effects/frost-level-front</use></frost-level>
-		<fog-level><use>/environment/aircraft-effects/fog-level-front</use></fog-level>
+		<frost-level><use>/environment/aircraft-effects/frost-level-WindshieldFront</use></frost-level>
+		<fog-level><use>/environment/aircraft-effects/fog-level-WindshieldFront</use></fog-level>
 		<rnorm><use>/extra500/environment/rain-norm</use></rnorm>
 	</parameters>
 </PropertyList>

@@ -19,7 +19,7 @@
       Date: 03.01.2016
 
       Last change:      Dirk Dittmann
-      Date:             09.01.2016
+      Date:             15.01.2016
 
 -->
 <PropertyList>
@@ -33,7 +33,7 @@
 		<object-name>wing.ICE.front</object-name>
 		<condition>
 			<greater-than>
-				<property>/environment/aircraft-effects/frost-level-front</property>
+				<property>/environment/aircraft-effects/frost-level-FuslageFront</property>
 				<value>0</value>
 			</greater-than>
 		</condition>
@@ -41,7 +41,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>wing.ICE.front</object-name>
-		<property>/environment/aircraft-effects/frost-level-front</property>
+		<property>/environment/aircraft-effects/frost-level-FuslageFront</property>
 		<factor>0.05</factor>
 		<offset-m>0.10</offset-m>
 		<axis>
@@ -54,7 +54,7 @@
 		<inherits-from>Aircraft/extra500/Models/Effects/extra500-ice</inherits-from>
 		<object-name>wing.ICE.front</object-name>
 		<parameters>
-			<frost-level><use>/environment/aircraft-effects/frost-level-front</use></frost-level>
+			<frost-level><use>/environment/aircraft-effects/frost-level-FuslageFront</use></frost-level>
 		</parameters>
 	</effect>
 	
@@ -63,11 +63,10 @@
 <!-- wing LH boots ice -->
 	<animation>
 		<object-name>wing.ICE.LH.boot.inner</object-name>
-		<object-name>wing.ICE.LH.boot.outer</object-name>
 		<type>select</type>
 		<condition>
 			<greater-than>
-				<property>/environment/aircraft-effects/frost-level-WingLeft</property>
+				<property>/environment/aircraft-effects/frost-level-WingLHBootInner</property>
 				<value>0</value>
 			</greater-than>
 		</condition>
@@ -75,8 +74,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>wing.ICE.LH.boot.inner</object-name>
-		<object-name>wing.ICE.LH.boot.outer</object-name>
-		<property>/environment/aircraft-effects/frost-level-WingLeft</property>
+		<property>/environment/aircraft-effects/frost-level-WingLHBootInner</property>
 		<factor>0.05</factor>
 		<offset-m>0.10</offset-m>
 		<axis>
@@ -88,9 +86,37 @@
 	<effect>
 		<inherits-from>Aircraft/extra500/Models/Effects/extra500-ice</inherits-from>
 		<object-name>wing.ICE.LH.boot.inner</object-name>
+		<parameters>
+			<frost-level><use>/environment/aircraft-effects/frost-level-WingLHBootInner</use></frost-level>
+		</parameters>
+	</effect>
+	<animation>
+		<object-name>wing.ICE.LH.boot.outer</object-name>
+		<type>select</type>
+		<condition>
+			<greater-than>
+				<property>/environment/aircraft-effects/frost-level-WingLHBootOuter</property>
+				<value>0</value>
+			</greater-than>
+		</condition>
+	</animation>
+	<animation>
+		<type>translate</type>
+		<object-name>wing.ICE.LH.boot.outer</object-name>
+		<property>/environment/aircraft-effects/frost-level-WingLHBootOuter</property>
+		<factor>0.05</factor>
+		<offset-m>0.10</offset-m>
+		<axis>
+			<x>-1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<effect>
+		<inherits-from>Aircraft/extra500/Models/Effects/extra500-ice</inherits-from>
 		<object-name>wing.ICE.LH.boot.outer</object-name>
 		<parameters>
-			<frost-level><use>/environment/aircraft-effects/frost-level-WingLeft</use></frost-level>
+			<frost-level><use>/environment/aircraft-effects/frost-level-WingLHBootOuter</use></frost-level>
 		</parameters>
 	</effect>
 
@@ -99,11 +125,10 @@
 <!-- wing RH boots ice -->
 	<animation>
 		<object-name>wing.ICE.RH.boot.inner</object-name>
-		<object-name>wing.ICE.RH.boot.outer</object-name>
 		<type>select</type>
 		<condition>
 			<greater-than>
-				<property>/environment/aircraft-effects/frost-level-WingLeft</property>
+				<property>/environment/aircraft-effects/frost-level-WingRHBootInner</property>
 				<value>0</value>
 			</greater-than>
 		</condition>
@@ -111,8 +136,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>wing.ICE.RH.boot.inner</object-name>
-		<object-name>wing.ICE.RH.boot.outer</object-name>
-		<property>/environment/aircraft-effects/frost-level-WingLeft</property>
+		<property>/environment/aircraft-effects/frost-level-WingRHBootInner</property>
 		<factor>0.05</factor>
 		<offset-m>0.10</offset-m>
 		<axis>
@@ -124,9 +148,37 @@
 	<effect>
 		<inherits-from>Aircraft/extra500/Models/Effects/extra500-ice</inherits-from>
 		<object-name>wing.ICE.RH.boot.inner</object-name>
+		<parameters>
+			<frost-level><use>/environment/aircraft-effects/frost-level-WingRHBootInner</use></frost-level>
+		</parameters>
+	</effect>
+	<animation>
+		<object-name>wing.ICE.RH.boot.outer</object-name>
+		<type>select</type>
+		<condition>
+			<greater-than>
+				<property>/environment/aircraft-effects/frost-level-WingRHBootOuter</property>
+				<value>0</value>
+			</greater-than>
+		</condition>
+	</animation>
+	<animation>
+		<type>translate</type>
+		<object-name>wing.ICE.RH.boot.outer</object-name>
+		<property>/environment/aircraft-effects/frost-level-WingRHBootOuter</property>
+		<factor>0.05</factor>
+		<offset-m>0.10</offset-m>
+		<axis>
+			<x>-1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<effect>
+		<inherits-from>Aircraft/extra500/Models/Effects/extra500-ice</inherits-from>
 		<object-name>wing.ICE.RH.boot.outer</object-name>
 		<parameters>
-			<frost-level><use>/environment/aircraft-effects/frost-level-WingLeft</use></frost-level>
+			<frost-level><use>/environment/aircraft-effects/frost-level-WingRHBootOuter</use></frost-level>
 		</parameters>
 	</effect>
 	
@@ -137,7 +189,7 @@
 		<type>select</type>
 		<condition>
 			<greater-than>
-				<property>/environment/aircraft-effects/frost-level-front</property>
+				<property>/environment/aircraft-effects/frost-level-WindshieldFront</property>
 				<value>0</value>
 			</greater-than>
 		</condition>
@@ -145,7 +197,7 @@
 	<animation>
 		<type>scale</type>
 		<object-name>wing.ICE.LH.pitot.front</object-name>
-		<property>/environment/aircraft-effects/frost-level-front</property>
+		<property>/environment/aircraft-effects/frost-level-WindshieldFront</property>
 		<x-min>0.1</x-min>
 		<y-min>0.1</y-min>
 		<z-min>0.1</z-min>
@@ -170,7 +222,7 @@
 		<inherits-from>Aircraft/extra500/Models/Effects/extra500-ice</inherits-from>
 		<object-name>wing.ICE.LH.pitot.front</object-name>
 		<parameters>
-			<frost-level><use>/environment/aircraft-effects/frost-level-front</use></frost-level>
+			<frost-level><use>/environment/aircraft-effects/frost-level-WindshieldFront</use></frost-level>
 		</parameters>
 	</effect>
 	
@@ -222,7 +274,7 @@
 		<type>select</type>
 		<condition>
 			<greater-than>
-				<property>/environment/aircraft-effects/frost-level-front</property>
+				<property>/environment/aircraft-effects/frost-level-WindshieldFront</property>
 				<value>0</value>
 			</greater-than>
 		</condition>
@@ -230,7 +282,7 @@
 	<animation>
 		<type>scale</type>
 		<object-name>wing.ICE.RH.pitot.front</object-name>
-		<property>/environment/aircraft-effects/frost-level-front</property>
+		<property>/environment/aircraft-effects/frost-level-WindshieldFront</property>
 		<x-min>0.1</x-min>
 		<y-min>0.1</y-min>
 		<z-min>0.1</z-min>
@@ -255,7 +307,7 @@
 		<inherits-from>Aircraft/extra500/Models/Effects/extra500-ice</inherits-from>
 		<object-name>wing.ICE.RH.pitot.front</object-name>
 		<parameters>
-			<frost-level><use>/environment/aircraft-effects/frost-level-front</use></frost-level>
+			<frost-level><use>/environment/aircraft-effects/frost-level-WindshieldFront</use></frost-level>
 		</parameters>
 	</effect>
 	
@@ -288,7 +340,7 @@
 		<z-max>1.0</z-max>
 		<center>
 			<x-m> 0.27844  </x-m>
-			<y-m> -4.23628 </y-m>
+			<y-m> 4.23628 </y-m>
 			<z-m> -0.3099  </z-m>
 		</center>
 	</animation>

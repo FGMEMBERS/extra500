@@ -17,7 +17,7 @@
 #      Date: Jul 03 2013
 #
 #       Last change:      Dirk Dittmann
-#       Date:             09.01.2016
+#       Date:             15.01.2016
 #
 
 # MM page 
@@ -29,7 +29,7 @@
 
 
 
-
+# TODO: get the hot air from bleed air and generate the watts
 var AirHeatClass = {
 	new : func(root,name,watt){
 		var m = { 
@@ -171,6 +171,10 @@ var DeicingSystemClass = {
 		m._nIntakeHeat 		= ElectricHeatClass.new("/extra500/system/deice/IntakeHeat","Intake Heat",30.0);
 		eSystem.circuitBreaker.INTAKE_AI.outputAdd(m._nIntakeHeat);
 # FIXME: intake heat uses power when OFF and none when ON
+		
+		# heat power Intake
+		
+		m._inletHeat		= AirHeatClass.new("/extra500/system/deice/IntakeHeat","Intake Heat",605.0);
 		
 		m._WindshieldHeatFail		= m._nRoot.initNode("WindshieldHeat/Fail",0,"BOOL");
 		m._WindshieldHeat 		= ElectricHeatClass.new("/extra500/system/deice/WindshieldHeat","Windshield Heat",473.0);
@@ -395,18 +399,23 @@ var DeicingSystemClass = {
 	setIntakeHeat : func(value){
 		me._intakeHeat  = value;
 		me._nIntakeHeat.setOn(me._intakeHeat);
+		me._inletHeat.setOn(me._intakeHeat);
 	},
 	_onBoots : func(n){
 		print("DeicingSystemClass::_onBoots() ...");
 		if(n.getValue() == 1){
 			var amount = 0.8;
-			
-			environment._frostWingLeft 	-= environment._frostWingLeft > amount ? amount : environment._frostWingLeft; 
-			environment._frostWingRight 	-= environment._frostWingRight > amount ? amount : environment._frostWingRight; 
-			environment._frostVStab 	-= environment._frostVStab > amount ? amount : environment._frostVStab; 
-			environment._frostHStabLeft 	-= environment._frostHStabLeft > amount ? amount : environment._frostHStabLeft; 
-			environment._frostHStabRight	-= environment._frostHStabRight > amount ? amount : environment._frostHStabRight; 
-			
+			if (getprop("/systems/pneumatic/switches/ejectorvalve1-active") == 1 ){
+				environment._frostWingLHBootInner 	-= environment._frostWingLHBootInner > amount ? amount : environment._frostWingLHBootInner; 
+				environment._frostWingRHBootInner 	-= environment._frostWingRHBootInner > amount ? amount : environment._frostWingRHBootInner; 
+			}
+			if (getprop("/systems/pneumatic/switches/ejectorvalve2-active") == 1 ){
+				environment._frostWingLHBootOuter 	-= environment._frostWingLHBootOuter > amount ? amount : environment._frostWingLHBootOuter; 
+				environment._frostWingRHBootOuter 	-= environment._frostWingRHBootOuter > amount ? amount : environment._frostWingRHBootOuter; 
+				environment._frostVStab 	-= environment._frostVStab > amount ? amount : environment._frostVStab; 
+				environment._frostHStabLH 	-= environment._frostHStabLH > amount ? amount : environment._frostHStabLH; 
+				environment._frostHStabRH	-= environment._frostHStabRH > amount ? amount : environment._frostHStabRH; 
+			}
 		}
 	},
 	update : func(){
@@ -458,6 +467,8 @@ var DeicingSystemClass = {
 		me._StallHeat.setResitorByTemperature(cabin._stallWarnHeat._temperature);
 		cabin._stallWarnHeat.addWatt( me._StallHeat.heatPower() ,me._dt);
 		
+		# inlet 
+		cabin._inlet.addWatt( me._inletHeat.heatPower() ,me._dt);
 				
 		environment.update(me._dt);
 	}
