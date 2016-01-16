@@ -471,7 +471,31 @@ var DeicingSystemClass = {
 		cabin._inlet.addWatt( me._inletHeat.heatPower() ,me._dt);
 				
 		environment.update(me._dt);
+	},
+	
+	manualDeciceAircraft : func(){
+		
+		if(me._nWowNose.getValue() == 1){
+			extra500.environment._frostFuslageFront = 0.0;
+			extra500.environment._frostWingLHBootInner = 0.0;
+			extra500.environment._frostWingLHBootOuter = 0.0;
+			extra500.environment._frostWingRHBootInner = 0.0;
+			extra500.environment._frostWingRHBootOuter = 0.0;
+			extra500.environment._frostVStab = 0.0;
+			extra500.environment._frostHStabLH = 0.0;
+			extra500.environment._frostHStabRH = 0.0;
+			extra500.environment._frostWindshieldFront = 0.0;
+			extra500.environment._frostWindshieldHeated = 0.0;
+			extra500.environment._frostPropellerBlade = 0.0;
+			extra500.environment._frostPitotLH = 0.0;
+			extra500.environment._frostPitotRH = 0.0;
+			extra500.environment._frostStallWarnHeat = 0.0;
+			extra500.environment._frostInlet = 0.0;
+		}else{
+			UI.msg.info("Manual deicing can only performed on ground.");
+		}
 	}
+	
 };
 
 var deiceSystem = DeicingSystemClass.new("/extra500/system/deice","Deice System");
