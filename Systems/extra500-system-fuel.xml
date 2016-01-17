@@ -20,7 +20,7 @@
       Date: 2015-05-08
 
       Last change: Eric van den Berg     
-      Date: 2015-12-20           
+      Date: 2016-01-16           
 -->
 
 <!--
@@ -523,6 +523,7 @@ i=0-6 left to right
 			<default value="propulsion/tank[3]/external-flow-rate-pps"/>
 			<test logic="OR" value="-10">
 				/systems/engine/failure-fast eq 1
+				/environment/aircraft-effects/frost-level-Inlet gt 0.2
 			</test>
 			<output>propulsion/tank[3]/external-flow-rate-pps</output>
 		</switch>

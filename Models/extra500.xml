@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Dirk Dittmann
-      Date:             06.01.2016
+      Date:             16.01.2016
 
 -->
 
@@ -1049,8 +1049,8 @@
 
 <!-- ICE for VStab HStab -->
 <model>
-	<name>ice.stab</name>
-	<path>ice.stab.xml</path>
+	<name>frame.ice</name>
+	<path>frame.ice.xml</path>
 </model>
 
 

@@ -17,7 +17,7 @@
 #      Date: Jul 02 2013
 #
 #       Last change:      Dirk Dittmann
-#       Date:             09.01.2016
+#       Date:             15.01.2016
 #
 # MM Page 563
 
@@ -143,6 +143,11 @@ var CabinClass = {
 		m._stallWarnHeat._mass = 0.1 ; # kg
 		m._stallWarnHeat._specificHeatCapacity = 896 ;# J / (kg*K) Aluminium
 		m._stallWarnHeat.setTemperatur(initTemperature);
+		
+		m._inlet 	=  TemperatureSurface.new(root~"/inlet","inlet",initTemperature);
+		m._inlet._mass = 2.0 ; # kg
+		m._inlet._specificHeatCapacity = 896 ;# J / (kg*K) Aluminium
+		m._inlet.setTemperatur(initTemperature);
 		
 		m._absoluteHumidity = 0;
 		

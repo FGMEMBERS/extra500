@@ -160,11 +160,53 @@
       </table>
     </function>
 
+    <function name="aero/coefficients/cd_ice">
+       <description>CD0 increment due to icing on complete aircraft</description>
+		<product>
+			<property>aero/coefficients/cd_ice_all</property>
+ 			<sum>
+				<product>
+					<value>0.224</value>
+					<property>/environment/aircraft-effects/frost-level-FuslageFront</property>
+				</product>
+				<product>
+					<value>0.161</value>
+					<property>/environment/aircraft-effects/frost-level-WingLHBootInner</property>
+				</product>
+				<product>
+					<value>0.106</value>
+					<property>/environment/aircraft-effects/frost-level-WingLHBootOuter</property>
+				</product>
+				<product>
+					<value>0.161</value>
+					<property>/environment/aircraft-effects/frost-level-WingRHBootInner</property>
+				</product>
+				<product>
+					<value>0.106</value>
+					<property>/environment/aircraft-effects/frost-level-WingRHBootOuter</property>
+				</product>
+				<product>
+					<value>0.055</value>
+					<property>/environment/aircraft-effects/frost-level-VStab</property>
+				</product>
+				<product>
+					<value>0.0935</value>
+					<property>/environment/aircraft-effects/frost-level-HStabLH</property>
+				</product>
+				<product>
+					<value>0.0935</value>
+					<property>/environment/aircraft-effects/frost-level-HStabRH</property>
+				</product>
+			</sum>
+		</product>
+    </function>
+
     <function name="aero/coefficients/cd_ac-h">
        <description>CD of aircraft less tail</description>
 		<sum>
 			<property>aircraft/wing/cd0</property>
 			<property>aero/coefficients/cd_df</property>
+			<property>aero/coefficients/cd_ice</property>
             	<table>
                   	<independentVar lookup="row">aero/coefficients/cl_ac-h</independentVar>
                   	<tableData>

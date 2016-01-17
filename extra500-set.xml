@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:      Dirk Dittmann
-	Date:             09.01.2016
+	Date:             15.01.2016
 
 
 ************************************************************************
@@ -1481,14 +1481,17 @@ of the RR 250-B17F/2 engine is best.</long-description>
 	<temperature-degK type="double">15</temperature-degK>
 	 <aircraft-effects>
 		 <frost-level-noice type="double">0.0</frost-level-noice>
-		 <frost-level-heated type="double">0.0</frost-level-heated>
-		 <frost-level-front type="double">0.0</frost-level-front>
-		 <frost-level-Propeller type="double">0.0</frost-level-Propeller>
-		 <frost-level-WingLeft type="double">0.0</frost-level-WingLeft>
-		 <frost-level-WingRight type="double">0.0</frost-level-WingRight>
+		 <frost-level-FuslageFront type="double">0.0</frost-level-FuslageFront>
+		 <frost-level-WindshieldHeated type="double">0.0</frost-level-WindshieldHeated>
+		 <frost-level-WindshieldFront type="double">0.0</frost-level-WindshieldFront>
+		 <frost-level-PropellerBlade type="double">0.0</frost-level-PropellerBlade>
+		 <frost-level-WingLHBootInner type="double">0.0</frost-level-WingLHBootInner>
+		 <frost-level-WingLHBootOuter type="double">0.0</frost-level-WingLHBootOuter>
+		 <frost-level-WingRHBootInner type="double">0.0</frost-level-WingRHBootInner>
+		 <frost-level-WingRHBootOuter type="double">0.0</frost-level-WingRHBootOuter>
 		 <frost-level-VStab type="double">0.0</frost-level-VStab>
-		 <frost-level-HStabLeft type="double">0.0</frost-level-HStabLeft>
-		 <frost-level-HStabRight type="double">0.0</frost-level-HStabRight>
+		 <frost-level-HStabLH type="double">0.0</frost-level-HStabLH>
+		 <frost-level-HStabRH type="double">0.0</frost-level-HStabRH>
 		 <frost-level-PitotLH type="double">0.0</frost-level-PitotLH>
 		 <frost-level-PitotRH type="double">0.0</frost-level-PitotRH>
 		 <frost-level-Inlet type="double">0.0</frost-level-Inlet>
@@ -1497,8 +1500,8 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		 <frost-level-StallWarnHeat type="double">0.0</frost-level-StallWarnHeat>
 		 
 		 <fog-level-noice type="double">0.0</fog-level-noice>
-		 <fog-level-heated type="double">0.0</fog-level-heated>
-		 <fog-level-front type="double">0.0</fog-level-front>
+		 <fog-level-WindshieldHeated type="double">0.0</fog-level-WindshieldHeated>
+		 <fog-level-WindshieldFront type="double">0.0</fog-level-WindshieldFront>
 		 
 		 
 	 </aircraft-effects>
@@ -2098,6 +2101,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<aero>
 			<coefficients>
 				<cl_aileron type="double">0.01385</cl_aileron>  <!--one aileron -->
+				<cd_ice_all type="double">0.05</cd_ice_all>
 			</coefficients>
 		</aero>
 		<atmosphere>

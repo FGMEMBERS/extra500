@@ -134,6 +134,16 @@
 			</item>
 			
 			<item>
+			       <name>deice_aircraft</name>
+			       <label>Manual Deice Aircraft</label>
+				<binding>
+				       <command>nasal</command>
+				       <script><![CDATA[
+					       extra500.deiceSystem.manualDeciceAircraft();
+				       ]]></script>
+			       </binding>
+			</item>
+			<item>
 				<name>aircraft-checklists</name>
 				<label>Checklists</label>
 				<binding>
