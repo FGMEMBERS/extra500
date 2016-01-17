@@ -341,6 +341,21 @@
 	<pitch-deg>-3.2</pitch-deg>
 	</offsets>
 </model>
+<animation><!-- spin the propeller here that all parts rotate the same -->
+	<type>spin</type>
+	<object-name>Propellix</object-name>
+	<property>sim/multiplay/generic/int[12]</property>
+	<factor>1</factor>
+	<axis>
+		<x1-m>-3.31</x1-m>
+		<y1-m>0</y1-m>
+		<z1-m>-0.5v</z1-m>
+		<x2-m>-3.53398</x2-m>
+		<y2-m>0</y2-m>
+		<z2-m>-0.51252</z2-m>
+	</axis>
+</animation>
+
 
 <model>
   <name>MagneticCompass</name>

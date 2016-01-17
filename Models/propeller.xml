@@ -102,7 +102,7 @@
 			</and>
 		</condition>
 	</animation>
-
+<!-- no spinning inside the propeller the let the frame do this
 	<animation>
 		<type>spin</type>
 		<object-name>Spinner</object-name>
@@ -122,7 +122,7 @@
 			<z2-m>0</z2-m>
 		</axis>
 	</animation>
-	
+	-->
 	<!-- ICE for propeller -->
 	<model>
 		<name>propeller.ice</name>
