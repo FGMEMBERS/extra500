@@ -476,6 +476,13 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<name>disable generic autopilot helper</name>
 			<path>Aircraft/extra500/Systems/disabled.xml</path>
 		</autopilot>
+
+		<!-- drives at fps-->
+		<property-rule n="3">
+			<name>shaking the inside View</name>
+			<path>Aircraft/extra500/Systems/shake-effect.xml</path>
+		</property-rule>
+		
 	</systems>
 
       <instrumentation>
