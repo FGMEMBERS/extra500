@@ -2101,6 +2101,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<aero>
 			<coefficients>
 				<cl_aileron type="double">0.01385</cl_aileron>  <!--one aileron -->
+				<cd_ice_all type="double">0.05</cd_ice_all>
 			</coefficients>
 		</aero>
 		<atmosphere>
