@@ -222,7 +222,7 @@ var Environment = {
 		}else	if ( (me._cloudEffect > 0) ){
 			
 			# in the clouds layer the cloud-type and cloud-thickness drive the effect
-			waterCatchEffect = surfaceTemperature * me._absoluteHumidity * me._cloudEffect;
+			waterCatchEffect = surfaceTemperature * me._absoluteHumidity * me._cloudEffect * me._nFrostWaterCatchFactor.getValue();
 			
 		}else	if ( (me._absoluteHumidity > me._nAbsoluteHumidityMin.getValue()) and (me._temperature > -18) and (me._humidity == 100 ) ){
 			
