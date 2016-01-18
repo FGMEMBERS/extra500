@@ -538,7 +538,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<path>/fdm/jsbsim/gear/unit[11]/pos-norm</path>
 		<path>/fdm/jsbsim/gear/unit[12]/pos-norm</path>
 		<path>/fdm/jsbsim/state/controls-fixed</path>
-
+		<path>/environment/aircraft-effects</path>
 		<!---->
 		<path>/extra500/log/fuel</path>
 		<path>/extra500/dialog/fuel</path>
