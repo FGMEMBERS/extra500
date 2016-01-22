@@ -42,7 +42,6 @@
 	<!-- 
 		livery in high resolution
 	-->
-	
 	<animation>
 		<type>material</type>
 		<condition>
@@ -96,6 +95,43 @@
 		<object-name>HRlinks</object-name>
 		<object-name>HRrechts</object-name>
 		<object-name>HRtrim</object-name>
+
+		<property-base>sim/model/livery</property-base>
+		<texture-prop>paintkit</texture-prop>
+		<texture>Liveries/extra500_low.png</texture>
+		
+	</animation>
+	<!-- 
+		livery in high resolution
+	-->
+	<animation>
+		<type>material</type>
+		<condition>
+			<or>
+				<and><!-- lokal player -->
+					<not>
+						<equals>
+							<property>type</property>
+							<value>AI</value>
+						</equals>
+					</not>
+					<equals>
+						<property>/extra500/config/livery/resolution</property>
+						<value>1</value>
+					</equals>
+				</and>
+				<and><!-- ai multiplayer -->
+					<equals>
+						<property>type</property>
+						<value>AI</value>
+					</equals>
+					<equals>
+						<property>/extra500/config/livery/resolution-ai</property>
+						<value>1</value>
+					</equals>
+				</and>
+			</or>
+		</condition>
 		
 		<!-- wing objects using paintkit.png -->
 		<object-name>AilLH</object-name>
@@ -107,11 +143,15 @@
 		<object-name>winglet.RH</object-name>
 		
 		<property-base>sim/model/livery</property-base>
-		<texture-prop>paintkit</texture-prop>
-		<texture>Liveries/extra500_low.png</texture>
+		<texture-prop>wing</texture-prop>
+		<texture>wing/wing.png</texture>
 		
 	</animation>
-	<!-- 
+	
+	
+	
+	
+	<!-- frame
 		livery in low resolution
 	-->
 	<animation>
@@ -168,6 +208,43 @@
 		<object-name>HRrechts</object-name>
 		<object-name>HRtrim</object-name>
 		
+		<property-base>sim/model/livery</property-base>
+		<texture-prop>paintkit_low</texture-prop>
+		<texture>Liveries/extra500_low.png</texture>
+		
+	</animation>
+	<!--  wing
+		livery in low resolution
+	-->
+	<animation>
+		<type>material</type>
+		<condition>
+			<or>
+				<and><!-- lokal player -->
+					<not>
+						<equals>
+							<property>type</property>
+							<value>AI</value>
+						</equals>
+					</not>
+					<less-than>
+						<property>/extra500/config/livery/resolution</property>
+						<value>1</value>
+					</less-than>
+				</and>
+				<and><!-- ai multiplayer -->
+					<equals>
+						<property>type</property>
+						<value>AI</value>
+					</equals>
+					<less-than>
+						<property>/extra500/config/livery/resolution-ai</property>
+						<value>1</value>
+					</less-than>
+				</and>
+			</or>
+		</condition>
+		
 		<!-- wing objects using paintkit.png -->
 		<object-name>AilLH</object-name>
 		<object-name>AilRH</object-name>
@@ -178,11 +255,10 @@
 		<object-name>winglet.RH</object-name>
 		
 		<property-base>sim/model/livery</property-base>
-		<texture-prop>paintkit_low</texture-prop>
-		<texture>Liveries/extra500_low.png</texture>
+		<texture-prop>wing_low</texture-prop>
+		<texture>wing/wing.png</texture>
 		
 	</animation>
-	
 	
 
 	<offsets>
