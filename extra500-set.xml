@@ -1509,6 +1509,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		 <fog-level-noice type="double">0.0</fog-level-noice>
 		 <fog-level-WindshieldHeated type="double">0.0</fog-level-WindshieldHeated>
 		 <fog-level-WindshieldFront type="double">0.0</fog-level-WindshieldFront>
+		 <fog-level-IceNoFog type="double">0.0</fog-level-IceNoFog>
 		 
 		 
 	 </aircraft-effects>
