@@ -23,12 +23,12 @@
 	var onClickUpperDoor = func(value = nil){
 		var doorState = getprop("/extra500/door/upperpass/state");
 		if (value == nil) {
-			#interpolate("/extra500/door/upperpass/state",!(doorState>0)?1000:0, 1.0);
-			setprop("/extra500/door/upperpass/state",!(doorState>0)?1000:0);
+			interpolate("/extra500/door/upperpass/state",!(doorState>0)?1000:0, 1.0);
+			#setprop("/extra500/door/upperpass/state",!(doorState>0)?1000:0);
 			
 		} else if (doorState == 1) {
-			#interpolate("/extra500/door/upperpass/state",value?1000:0, 1.0);
-			setprop("/extra500/door/upperpass/state",value?1000:0);
+			interpolate("/extra500/door/upperpass/state",value?1000:0, 1.0);
+			#setprop("/extra500/door/upperpass/state",value?1000:0);
 			
 		}
 	}
@@ -48,12 +48,12 @@
 		}
 		
 		if (value == nil) {
-			#interpolate("/extra500/door/lowerpass/state",((doorStateLower<=0) and (doorStateUpper>0.0))?1000:0,1.0);
-			setprop("/extra500/door/lowerpass/state",((doorStateLower<=0) and (doorStateUpper>0.0))?1000:0);
+			interpolate("/extra500/door/lowerpass/state",((doorStateLower<=0) and (doorStateUpper>0.0))?1000:0,1.0);
+			#setprop("/extra500/door/lowerpass/state",((doorStateLower<=0) and (doorStateUpper>0.0))?1000:0);
 			
 		}else{
-			#interpolate("/extra500/door/lowerpass/state",(value and doorStateUpper)?1000:0,1.0);
-			setprop("/extra500/door/lowerpass/state",(value and doorStateUpper)?1000:0);
+			interpolate("/extra500/door/lowerpass/state",(value and doorStateUpper)?1000:0,1.0);
+			#setprop("/extra500/door/lowerpass/state",(value and doorStateUpper)?1000:0);
 			
 		}
 	}

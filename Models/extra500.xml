@@ -567,79 +567,239 @@
   </action>
 </animation>
 
- <animation>
-  <type>rotate</type>
-  <object-name>door.upper</object-name>
-  <object-name>interior.doorUpper</object-name>
-  <object-name>window.pass.middle.LH</object-name>
-  <object-name>doorhandleinner</object-name>
-  <property>sim/multiplay/generic/int[0]</property>
-  <interpolation>
-   <entry><ind>0</ind><dep>0</dep></entry>
-   <entry><ind>1000</ind><dep>-80</dep></entry>
-  </interpolation>   
-  <axis>
-    <x1-m>1.12560</x1-m>
-    <y1-m>-0.54382</y1-m>
-    <z1-m>0.18990</z1-m>
-    <x2-m>1.60932</x2-m>
-    <y2-m>-0.49167</y2-m>
-    <z2-m>0.19002</z2-m>
-  </axis>
+
+
+<!-- Door Upper animation with gas spring -->
+
+<animation>
+	<type>rotate</type>
+	<object-name>door.upper</object-name>
+	<object-name>interior.doorUpper</object-name>
+	<object-name>window.pass.middle.LH</object-name>
+	<object-name>doorhandleinner</object-name>
+	<property>sim/multiplay/generic/int[0]</property>
+	<interpolation>
+		<entry><ind>    0 </ind><dep>   0 </dep></entry>
+		<entry><ind>  300 </ind><dep> -10 </dep></entry>
+		<entry><ind>  600 </ind><dep> -70 </dep></entry>
+		<entry><ind> 1000 </ind><dep> -80 </dep></entry>
+	</interpolation>   
+	<axis>
+		<x1-m>1.12560</x1-m>
+		<y1-m>-0.54382</y1-m>
+		<z1-m>0.18990</z1-m>
+		<x2-m>1.60932</x2-m>
+		<y2-m>-0.49167</y2-m>
+		<z2-m>0.19002</z2-m>
+	</axis>
+</animation>
+<animation>
+	<type>locked-track</type>
+	
+	<object-name>door.gasspring.outer</object-name>
+	<center>
+		<x-m>1.01912</x-m>
+		<y-m>-0.5982579</y-m>
+		<z-m>0.0434249</z-m>
+	</center>
+	
+	<lock-axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</lock-axis>
+	<track-axis>
+		<x>0.00003</x>
+		<y>-0.07754</y>
+		<z>-0.2114</z>
+	</track-axis>
+	
+	<target-name>door.gasspring.inner</target-name>
+	<target-center>
+		<x-m>1.01915</x-m>
+		<y-m>-0.6758005</y-m>
+		<z-m>-0.1679713</z-m>
+	</target-center>
+	
+</animation>
+<animation>
+	<type>locked-track</type>
+	
+	<object-name>door.gasspring.outer</object-name>
+	<center>
+		<x-m>1.01912</x-m>
+		<y-m>-0.5982579</y-m>
+		<z-m>0.0434249</z-m>
+	</center>
+	
+	<lock-axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</lock-axis>
+	<track-axis>
+		<x>0.00003</x>
+		<y>-0.07754</y>
+		<z>-0.2114</z>
+	</track-axis>
+	
+	<target-name>door.gasspring.inner</target-name>
+	<target-center>
+		<x-m>1.01915</x-m>
+		<y-m>-0.6758005</y-m>
+		<z-m>-0.1679713</z-m>
+	</target-center>
+	
+</animation>
+<animation>
+	<type>locked-track</type>
+	
+	<object-name>door.gasspring.inner</object-name>
+	<center>
+		<x-m>1.01915</x-m>
+		<y-m>-0.6758005</y-m>
+		<z-m>-0.1679713</z-m>
+	</center>
+	<lock-axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</lock-axis>
+	<track-axis>
+		<x>-0.00003</x>
+		<y>0.07754</y>
+		<z>0.2114</z>
+	</track-axis>
+	
+	<target-name>door.gasspring.outer</target-name>
+	<target-center>
+		<x-m>1.01912</x-m>
+		<y-m>-0.5982579</y-m>
+		<z-m>0.0434249</z-m>
+	</target-center>
+	
+</animation>
+<animation>
+	<type>locked-track</type>
+	
+	<object-name>door.gasspring.inner</object-name>
+	<center>
+		<x-m>1.01915</x-m>
+		<y-m>-0.6758005</y-m>
+		<z-m>-0.1679713</z-m>
+	</center>
+	<lock-axis>
+		<x>0</x>
+		<y>1</y>
+		<z>0</z>
+	</lock-axis>
+	<track-axis>
+		<x>-0.00003</x>
+		<y>0.07754</y>
+		<z>0.2114</z>
+	</track-axis>
+	
+	<target-name>door.gasspring.outer</target-name>
+	<target-center>
+		<x-m>1.01912</x-m>
+		<y-m>-0.5982579</y-m>
+		<z-m>0.0434249</z-m>
+	</target-center>
+	
+</animation>
+
+
+<!-- Door lower animation -->
+<animation>
+	<type>rotate</type>
+	<object-name>door.lower</object-name>
+	<object-name>interior.door</object-name>
+	<property>sim/multiplay/generic/int[1]</property>
+	<interpolation>
+		<entry><ind>0</ind><dep>0</dep></entry>
+		<entry><ind>1000</ind><dep>120</dep></entry>
+	</interpolation>   
+	<axis>
+		<x1-m>1.12973</x1-m>
+		<y1-m>-0.46505</y1-m>
+		<z1-m>-1.00034</z1-m>
+		<x2-m>1.61088</x2-m>
+		<y2-m>-0.40880</y2-m>
+		<z2-m>-1.00043</z2-m>
+	</axis>
+</animation>
+<!---->
+
+<animation>
+	<type>locked-track</type>
+	
+	<object-name>door.lower.cable.front.upper</object-name>
+	<center>
+		<x-m>1.0182</x-m>
+		<y-m>-0.69524</y-m>
+		<z-m>-0.49216</z-m>
+	</center>
+	<lock-axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</lock-axis>
+	<track-axis>
+		<x> 0.0</x>
+		<y>-0.02414</y>
+		<z> 0.0</z>
+	</track-axis>
+	
+	<target-name>door.lower</target-name>
+	<target-center>
+		<x-m>1.01821</x-m>
+		<y-m>-0.71938</y-m>
+		<z-m>-0.49215</z-m>
+	</target-center>
+	
+	<slave-name>door.lower.cable.front.lower</slave-name>
+	<slave-center>
+		<x-m>1.0182</x-m>
+		<y-m>-0.50762</y-m>
+		<z-m>-0.91807</z-m>
+	</slave-center><!---->
 </animation>
 
 <animation>
-  <object-name>door.gas.spring.open</object-name>
-  <type>select</type>
-  <condition>
-   <equals>
-    <property>sim/multiplay/generic/int[0]</property>
-    <value>1000</value>
-   </equals>
-  </condition>
- </animation>
-
-<animation>
-  <object-name>door.gas.spring.closed</object-name>
-  <type>select</type>
-  <condition>
-   <equals>
-    <property>sim/multiplay/generic/int[0]</property>
-    <value>0</value>
-   </equals>
-  </condition>
-  </animation>
-
- <animation>
-  <type>rotate</type>
-  <object-name>door.lower</object-name>
-  <object-name>interior.door</object-name>
-  <property>sim/multiplay/generic/int[1]</property>
-  <interpolation>
-   <entry><ind>0</ind><dep>0</dep></entry>
-   <entry><ind>1000</ind><dep>120</dep></entry>
-  </interpolation>   
-  <axis>
-    <x1-m>1.12973</x1-m>
-    <y1-m>-0.46505</y1-m>
-    <z1-m>-1.00034</z1-m>
-    <x2-m>1.61088</x2-m>
-    <y2-m>-0.40880</y2-m>
-    <z2-m>-1.00043</z2-m>
-  </axis>
+	<type>locked-track</type>
+	
+	<object-name>door.lower.cable.back.upper</object-name>
+	<center>
+		<x-m>1.72206</x-m>
+		<y-m>-0.65934</y-m>
+		<z-m>-0.49216</z-m>
+	</center>
+	<lock-axis>
+		<x>1</x>
+		<y>0</y>
+		<z>0</z>
+	</lock-axis>
+	<track-axis>
+		<x> 0.0</x>
+		<y>-0.02414</y>
+		<z> 0.0</z>
+	</track-axis>
+	
+	<target-name>door.lower</target-name>
+	<target-center>
+		<x-m>1.72206</x-m>
+		<y-m>-0.68348</y-m>
+		<z-m>-0.49216</z-m>
+	</target-center>
+	
+	<slave-name>door.lower.cable.back.lower</slave-name>
+	<slave-center>
+		<x-m>1.72206</x-m>
+		<y-m>-0.47172</y-m>
+		<z-m>-0.91807</z-m>
+	</slave-center><!---->
 </animation>
 
-<animation>
-  <object-name>door.lower.cable.aft</object-name>
-  <object-name>door.lower.cable.forward</object-name>
-  <type>select</type>
-  <condition>
-   <equals>
-    <property>sim/multiplay/generic/int[1]</property>
-    <value>1000</value>
-   </equals>
-  </condition>
- </animation>
 <!--
 <animation>
   <type>translate</type>
