@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: 20.03.2015
 #
-#       Last change:      Dirk Dittmann
-#       Date:             15.01.2016
+#       Last change:      Eric van den Berg
+#       Date:             31.01.2016
 #
 
 
@@ -37,13 +37,19 @@ var Environment = {
 		m._rainNorm 	= getprop("/environment/rain-norm");
 		m._rainLevel 	= getprop("/environment/params/precipitation-level-ft");
 		
-		
+# windshield		
 		m._nFrostWaterCatchFactor 	= m._nRoot.initNode("frost/waterCatchFactor",0.25,"DOUBLE",1);
-		m._nDeFrostFactor	 	= m._nRoot.initNode("frost/deFrostFactor",0.001,"DOUBLE",1);
+		m._nDeFrostFactor	 		= m._nRoot.initNode("frost/deFrostFactor",0.001,"DOUBLE",1);
 		m._nFrostAirEffectFactor 	= m._nRoot.initNode("frost/airEffectFactor",5.0,"DOUBLE",1);
 		m._nFrostAirEffectMin 		= m._nRoot.initNode("frost/airEffectMin",0.1,"DOUBLE",1);
 		m._nFrostExchangeFactor		= m._nRoot.initNode("frost/exchangeFactor",50,"DOUBLE",1);
 		m._nAbsoluteHumidityMin		= m._nRoot.initNode("frost/absoluteHumidityMin",0.005,"DOUBLE",1);
+# prop
+		m._nPropFrostAirEffectFactor 	= m._nRoot.initNode("frost/prop/airEffectFactor",0.005,"DOUBLE",1);
+		m._nPropFrostAirEffectMin 	= m._nRoot.initNode("frost/prop/airEffectMin",0.0075,"DOUBLE",1);
+# pitot
+		m._nPitFrostAirEffectFactor 	= m._nRoot.initNode("frost/pitot/airEffectFactor",0.025,"DOUBLE",1);
+		m._nPitFrostAirEffectMin 	= m._nRoot.initNode("frost/pitot/airEffectMin",0.014,"DOUBLE",1);
 		
 		# all front faceing surfaces not heated catching ice 
 		m._frostFuslageFront 		= getprop("/environment/aircraft-effects/frost-level-FuslageFront");
@@ -245,7 +251,6 @@ var Environment = {
 # freeze windshield
 		# cooling the windshield
 		
-		
 		# Air effect factor 0.001 and min 0.1
 		var eff_factor 	= me._nFrostAirEffectFactor.getValue() ;
 		var eff_min	= me._nFrostAirEffectMin.getValue() ;
@@ -288,11 +293,16 @@ var Environment = {
 		# heating 600 W 
 		# delta T  60 °C
 		# max cooling capacity 10W / °C
-		eff 	= 2  ;# W static exchange
-		eff 	+= 1 * global.norm(flowSpeed,0,350); # W airflow
-		eff 	+= 7 * global.norm(getprop("/engines/engine/rpm"),0,2030); # W PRM
+		eff_factor 	= me._nPropFrostAirEffectFactor.getValue() ;
+		eff_min	= me._nPropFrostAirEffectMin.getValue() ;
+		var prop_rot = getprop("/engines/engine/rpm") * 0.1047 * 0.25 / 0.3048; # rpm to rad/s, radius and m/s to ft/s
+		var prop_flowSpeed = (flowSpeed*flowSpeed + prop_rot*prop_rot)^0.5; 
+		var prop_eff = eff_min + prop_flowSpeed * density * eff_factor;
+#		eff 	= 2  ;# W static exchange
+#		eff 	+= 1 * global.norm(flowSpeed,0,350); # W airflow
+#		eff 	+= 7 * global.norm(getprop("/engines/engine/rpm"),0,2030); # W PRM
 		
-		energyFlow 	= eff * (me._temperature - cabin._propeller._temperature); # Delta °C
+		energyFlow 	= prop_eff * exchangeFactor * (me._temperature - cabin._propeller._temperature); # Delta °C
 		cabin._propeller.addWatt( energyFlow ,me._dt);
 		
 		# put the water(ice) on the surface
@@ -305,14 +315,16 @@ var Environment = {
 		# heating 110W 
 		# delta T  60°C
 		# max cooling capacity 1,8W / °C
-		eff 		=  0.1  ;# W static exchange
-		eff 		+= 1.7 * global.norm(flowSpeed,0,350); # W airflow
+#		eff 		=  0.1  ;# W static exchange
+#		eff 		+= 1.7 * global.norm(flowSpeed,0,350); # W airflow
+		eff_factor 	= me._nPitFrostAirEffectFactor.getValue() ;
+		eff_min	= me._nPitFrostAirEffectMin.getValue() ;
+		eff = eff_min + flowSpeed * density * eff_factor;
 		
-		
-		energyFlow 		= eff * (me._temperature - cabin._pitotLH._temperature); # Delta °C
+		energyFlow 		= eff * exchangeFactor * (me._temperature - cabin._pitotLH._temperature); # Delta °C
 		cabin._pitotLH.addWatt( energyFlow ,me._dt);
 		
-		energyFlow 		= eff * (me._temperature - cabin._pitotRH._temperature); # Delta °C
+		energyFlow 		= eff * exchangeFactor * (me._temperature - cabin._pitotRH._temperature); # Delta °C
 		cabin._pitotRH.addWatt( energyFlow ,me._dt);
 		
 		# put the water(ice) on the surface

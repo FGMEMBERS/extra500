@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jul 03 2013
 #
-#       Last change:      Dirk Dittmann
-#       Date:             15.01.2016
+#       Last change:      Eric van den Berg
+#       Date:             31.01.2016
 #
 
 # MM page 
