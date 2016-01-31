@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Dirk Dittmann
-      Date:             16.01.2016
+      Date:             31.01.2016
 
 -->
 
@@ -101,55 +101,6 @@
 		<texture>Liveries/extra500_low.png</texture>
 		
 	</animation>
-	<!-- 
-		livery in high resolution
-	-->
-	<animation>
-		<type>material</type>
-		<condition>
-			<or>
-				<and><!-- lokal player -->
-					<not>
-						<equals>
-							<property>type</property>
-							<value>AI</value>
-						</equals>
-					</not>
-					<equals>
-						<property>/extra500/config/livery/resolution</property>
-						<value>1</value>
-					</equals>
-				</and>
-				<and><!-- ai multiplayer -->
-					<equals>
-						<property>type</property>
-						<value>AI</value>
-					</equals>
-					<equals>
-						<property>/extra500/config/livery/resolution-ai</property>
-						<value>1</value>
-					</equals>
-				</and>
-			</or>
-		</condition>
-		
-		<!-- wing objects using paintkit.png -->
-		<object-name>AilLH</object-name>
-		<object-name>AilRH</object-name>
-		<object-name>FlapLH</object-name>
-		<object-name>FlapRH</object-name>
-		<object-name>wing</object-name>
-		<object-name>winglet.LH</object-name>
-		<object-name>winglet.RH</object-name>
-		
-		<property-base>sim/model/livery</property-base>
-		<texture-prop>wing</texture-prop>
-		<texture>wing/wing.png</texture>
-		
-	</animation>
-	
-	
-	
 	
 	<!-- frame
 		livery in low resolution
@@ -189,7 +140,7 @@
 		<object-name>door.lower</object-name>
 		<object-name>door.upper</object-name>
 		<object-name>emergency.exit</object-name>
-		<object-name>frame</object-name>
+		<object-name>frame</object-name>paintkit
 		<object-name>gear.doors.lower.left</object-name>
 		<object-name>gear.doors.lower.right</object-name>
 		<object-name>gear.doors.nose.left</object-name>
@@ -213,6 +164,73 @@
 		<texture>Liveries/extra500_low.png</texture>
 		
 	</animation>
+
+	<!-- wing
+		livery in high resolution
+	-->
+	<animation>
+		<type>material</type>
+		<condition>
+			<or>
+				<and><!-- lokal player -->
+					<not>
+						<equals>
+							<property>type</property>
+							<value>AI</value>
+						</equals>
+					</not>
+					<equals>
+						<property>/extra500/config/livery/resolution</property>
+						<value>1</value>
+					</equals>
+				</and>
+				<and><!-- ai multiplayer -->
+					<equals>
+						<property>type</property>
+						<value>AI</value>
+					</equals>
+					<equals>
+						<property>/extra500/config/livery/resolution-ai</property>
+						<value>1</value>
+					</equals>
+				</and>
+			</or>
+		</condition>
+		
+
+		<!-- wing objects using wing.png -->
+		<object-name>AilLH</object-name>
+		<object-name>AilRH</object-name>
+		<object-name>antenna.gps1</object-name>
+		<object-name>antenna.gps2</object-name>
+		<object-name>antenna.TAS</object-name>
+		<object-name>antenna.twx</object-name>
+		<object-name>FlapLH</object-name>
+		<object-name>FlapRH</object-name>
+		<object-name>pitot.LH</object-name>
+		<object-name>pitot.RH</object-name>
+		<!--<object-name>reco.LH.cone</object-name>
+		<object-name>reco.RH.cone</object-name>-->
+		<object-name>recolight.LH</object-name>
+		<object-name>recolight.RH</object-name>
+		<object-name>recolight.window.LH</object-name>
+		<object-name>recolight.window.RH</object-name>
+		<object-name>stall.warner</object-name>
+		<object-name>stall.warner.switch</object-name>
+		<object-name>strobe.window.LH</object-name>
+		<object-name>strobe.window.RH</object-name>
+		<object-name>wing.LH</object-name>
+		<object-name>wing.RH</object-name>
+		<object-name>winglet.LH</object-name>
+		<object-name>winglet.RH</object-name>
+		
+		
+		<property-base>sim/model/livery</property-base>
+		<texture-prop>wing</texture-prop>
+		<texture>wing/wing_low.png</texture>
+		
+	</animation>
+
 	<!--  wing
 		livery in low resolution
 	-->
@@ -245,21 +263,39 @@
 			</or>
 		</condition>
 		
-		<!-- wing objects using paintkit.png -->
+		<!-- wing objects using wing.png -->
 		<object-name>AilLH</object-name>
 		<object-name>AilRH</object-name>
+		<object-name>antenna.gps1</object-name>
+		<object-name>antenna.gps2</object-name>
+		<object-name>antenna.TAS</object-name>
+		<object-name>antenna.twx</object-name>
 		<object-name>FlapLH</object-name>
 		<object-name>FlapRH</object-name>
-		<object-name>wing</object-name>
+		<object-name>pitot.LH</object-name>
+		<object-name>pitot.RH</object-name>
+		<!--<object-name>reco.LH.cone</object-name>
+		<object-name>reco.RH.cone</object-name>-->
+		<object-name>recolight.LH</object-name>
+		<object-name>recolight.RH</object-name>
+		<object-name>recolight.window.LH</object-name>
+		<object-name>recolight.window.RH</object-name>
+		<object-name>stall.warner</object-name>
+		<object-name>stall.warner.switch</object-name>
+		<object-name>strobe.window.LH</object-name>
+		<object-name>strobe.window.RH</object-name>
+		<object-name>wing.LH</object-name>
+		<object-name>wing.RH</object-name>
 		<object-name>winglet.LH</object-name>
 		<object-name>winglet.RH</object-name>
 		
+		
+		
 		<property-base>sim/model/livery</property-base>
 		<texture-prop>wing_low</texture-prop>
-		<texture>wing/wing.png</texture>
+		<texture>wing/wing_low.png</texture>
 		
 	</animation>
-	
 
 	<offsets>
 		<pitch-deg>1.39</pitch-deg>

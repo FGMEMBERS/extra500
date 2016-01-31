@@ -74,6 +74,9 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<file type="string">extra500</file>
 			<name type="string">extra 500</name>
 			<paintkit type="string">Liveries/extra500.png</paintkit>
+			<paintkit_low type="string">Liveries/extra500_low.png</paintkit_low>
+			<wing type="string">wing/wing.png</wing>
+			<wing_low type="string">wing/wing_low.png</wing_low>
 		</livery>
 	</model>
 

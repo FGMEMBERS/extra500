@@ -30,7 +30,7 @@
             <paintkit>Liveries/extra500.png</paintkit>
 	    <paintkit_low>Liveries/extra500_low.png</paintkit_low>
 	    <wing>wing/wing.png</wing>
-	    <wing_low>wing/wing.png</wing_low>
+	    <wing_low>wing/wing_low.png</wing_low>
 	    
         </livery>
     </model>
