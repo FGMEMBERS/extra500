@@ -238,7 +238,7 @@
 <!-- Submodels -->
 
 <!-- registration label-->
-<!-- left on fus-->
+<!-- left on fus
     <model>
         <path>registration.xml</path>
         <offsets>
@@ -261,8 +261,8 @@
             </params>
         </overlay>
     </model>
-
-<!-- right on fus-->
+-->
+<!-- right on fus
     <model>
         <path>registration.xml</path>
         <offsets>
@@ -285,8 +285,8 @@
             </params>
         </overlay>
     </model>
-
-<!-- under wing-->
+-->
+<!-- under wing
     <model>
         <path>registration.xml</path>
         <offsets>
@@ -309,7 +309,12 @@
             </params>
         </overlay>
     </model>
-
+   -->
+<!--
+    
+    TODO : improve the window seal (new solidify frame)
+    
+    
 <model>
   <name>Interior</name>
   <path>Aircraft/extra500/Models/interior/interior.xml</path>
@@ -319,7 +324,9 @@
 		<z-m>0.0</z-m>
 	</offsets>
 </model>
-
+    -->
+    
+    <!--
 <model>
   <name>Wing</name>
   <path>Aircraft/extra500/Models/wing/wing.xml</path>
@@ -330,7 +337,8 @@
 		<roll-deg>0</roll-deg>
 	</offsets>
 </model>
-
+-->    
+<!--
 <model>
   <name>Propellix</name>
   <path>Aircraft/extra500/Models/propeller.xml</path>
@@ -341,6 +349,8 @@
 	<pitch-deg>-3.2</pitch-deg>
 	</offsets>
 </model>
+-->
+
 <animation><!-- spin the propeller here that all parts rotate the same -->
 	<type>spin</type>
 	<object-name>Propellix</object-name>
@@ -356,7 +366,7 @@
 	</axis>
 </animation>
 
-
+<!--
 <model>
   <name>MagneticCompass</name>
   <path>Aircraft/extra500/Models/instruments/MagneticCompass.xml</path>
@@ -367,8 +377,8 @@
 	<pitch-deg>0</pitch-deg>
 	</offsets>
 </model>
-
-<!-- panels -->
+-->
+<!-- panels 
 <model>
   <name>MainPanel</name>
   <path>Aircraft/extra500/Models/panels/MainPanel.xml</path>
@@ -379,6 +389,8 @@
 	<pitch-deg>-8</pitch-deg>
 	</offsets>
 </model>
+
+
 <model>
   <name>FlapsGear</name>
   <path>Aircraft/extra500/Models/instruments/InstrumentFlapsGear.xml</path>
@@ -401,7 +413,8 @@
 	<heading-deg>-2.65</heading-deg>
 	</offsets>
 </model>
-
+-->
+<!--
 <model>
   <name>CircuitBreakerPanel</name>
   <path>Aircraft/extra500/Models/panels/CircuitBreakerPanel.xml</path>
@@ -411,11 +424,12 @@
 		<z-m>-0.46267</z-m>
 		<roll-deg>-40</roll-deg>
 		<pitch-deg>2.65</pitch-deg>
-		<heading-deg>-1</heading-deg> <!--kapier ich nicht ganz warum -1 statt -2.65-->
+		<heading-deg>-1</heading-deg> --><!--kapier ich nicht ganz warum -1 statt -2.65--><!--
 
 	</offsets>
 </model>
-
+-->
+<!--
 <model>
   <name>Trimpanel</name>
   <path>Aircraft/extra500/Models/panels/trimpanel.xml</path>
@@ -448,7 +462,7 @@
 	<heading-deg>180.0</heading-deg>
 	</offsets>
 </model>
-
+-->
 <!--lights-->
 <model>
   <name>Aftstrobe</name>
@@ -903,11 +917,11 @@
   </condition>
  </animation>
 
-<!--gear-->
+<!-- gear 
 <model>
   <path>Aircraft/extra500/Models/landinggear/LandingGearTotal.xml</path>	
 </model>
-
+-->
 <!--jacks-->
 <model>
   <name>jack-lh</name>
