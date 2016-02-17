@@ -103,10 +103,11 @@ var Environment = {
 		me._rainLevelFt		= getprop("/environment/params/precipitation-level-ft");
 		me._posAltitudeFt 	= getprop("/position/altitude-ft");
 		
-		me.detectClouds();
+		# TODO removed for release: me.detectClouds();
 		
 		me.rainSplashVector();
-		me.frost();
+		
+		# TODO removed for release: me.frost();
 		me.fog();
 	},
 	rainSplashVector : func(){
