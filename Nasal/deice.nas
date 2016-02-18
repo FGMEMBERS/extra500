@@ -402,7 +402,7 @@ var DeicingSystemClass = {
 		me._inletHeat.setOn(me._intakeHeat);
 	},
 	_onBoots : func(n){
-		print("DeicingSystemClass::_onBoots() ...");
+		#print("DeicingSystemClass::_onBoots() ...");
 		if(n.getValue() == 1){
 			var amount = 0.8;
 			if (getprop("/systems/pneumatic/switches/ejectorvalve1-active") == 1 ){
