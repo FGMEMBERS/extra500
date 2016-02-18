@@ -17,8 +17,14 @@
       Date: 2014-06-22
 
       Last change:      Eric van den Berg
-      Date:             2015.07.26
+      Date:             2016.02.18
 
+
+Release 3.0.1: use for Flightgear version 3.6
+* Environment: fixes and improvements for smooth weather
+* New failure system and dialog, lots of failures implemented
+* Controls: trim force indicator, 'force' pitch control mode
+* IFD: small fixes and improvements  
 
 Release 3.0.0: use for Flightgear version 3.6 and up
 * ALS: inside shadow
