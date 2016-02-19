@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             2015.06.07
+      Date:             2015.11.14
 -->
 <PropertyList>
 
@@ -44,7 +44,9 @@
 			 <desc>Toggle stick fixed</desc>
 			 <binding n="0">
 				 <command>nasal</command>
-				 <script>e1.bitswap("fdm/jsbsim/state/controls-fixed")</script>                        
+				 <script><![CDATA[
+						e1.bitswap("fdm/jsbsim/state/controls-fixed");
+						]]></script>                        
 			 </binding>
 		 </key>
 

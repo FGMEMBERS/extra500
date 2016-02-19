@@ -414,7 +414,7 @@ var MovingMap = {
 		me._can.CompassRose.setRotation(-me._mapOptions.orientation * global.CONST.DEG2RAD);
 		
 		me._can.trackTrueMagnetic.setRotation((me._trackTrueMagnetic - me._mapOptions.orientation) * global.CONST.DEG2RAD);
-		me._can.trackTrueMagnetic.setVisible(me._groundspeed >= 15);
+		me._can.trackTrueMagnetic.setVisible(me._groundspeed >= 35);
 		
 		me._can.BugHDG.setRotation((me._bugHeading - me._mapOptions.orientation) * global.CONST.DEG2RAD);
 		

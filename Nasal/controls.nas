@@ -16,11 +16,20 @@
 #      Authors: Dirk Dittmann
 #      Date: April 26 2013
 #
-#      Last change:      Thomas Grossberger
-#      Date:             10.05.13
+#      Last change:      Eric van den Berg
+#      Date:             29.11.15
 #
 #
 #
+# listener to handle proper switch from "force" to "direct" pitch control, see also extra500-flight-controls.xml 
+setlistener("/fdm/jsbsim/state/controls-fixed",func(){
+	if ((getprop("/fdm/jsbsim/state/controls-fixed") == 1)and(getprop("/autopilot/mode/alt") == 0)and(getprop("/autopilot/mode/vs") == 0)and(getprop("/autopilot/mode/gs-follow") == 0)) {
+		setprop("/controls/flight/elevator",getprop("/fdm/jsbsim/aircraft/hstab/elevator/d_e_free-norm"));
+	}	
+},1,0);
+
+
+
 # overloaded functions from Flightgear $fgdata/Nasal/controls.nas
 
 var flapsDown = func(step) {

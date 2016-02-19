@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Date: 03.01.2016
+
+      Last change:      Dirk Dittmann
+      Date:             15.01.2016
+
+-->
+<PropertyList>
+	
+	<path>frame.ice.ac</path> 
+	
+	<!-- VStab ICE -->
+	<animation>
+		<object-name>ICE.VStab.front</object-name>
+		<type>select</type>
+		<condition>
+			<greater-than>
+				<property>/environment/aircraft-effects/frost-level-FuslageFront</property>
+				<value>0</value>
+			</greater-than>
+		</condition>
+	</animation>
+	<animation>
+		<type>translate</type>
+		<object-name>ICE.VStab.front</object-name>
+		<property>/environment/aircraft-effects/frost-level-FuslageFront</property>
+		<factor>0.05</factor>
+		<offset-m>0.00</offset-m>
+		<axis>
+			<x>-1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<effect>
+		<inherits-from>Aircraft/extra500/Models/Effects/extra500-ice</inherits-from>
+		<object-name>ICE.VStab.front</object-name>
+		<parameters>
+			<frost-level><use>/environment/aircraft-effects/frost-level-FuslageFront</use></frost-level>
+		</parameters>
+	</effect>
+	
+	<!-- VStab boot ICE -->
+	<animation>
+		<object-name>ICE.VStab.Boot</object-name>
+		<type>select</type>
+		<condition>
+			<greater-than>
+				<property>/environment/aircraft-effects/frost-level-VStab</property>
+				<value>0</value>
+			</greater-than>
+		</condition>
+	</animation>
+	<animation>
+		<type>translate</type>
+		<object-name>ICE.VStab.Boot</object-name>
+		<property>/environment/aircraft-effects/frost-level-VStab</property>
+		<factor>0.05</factor>
+		<offset-m>0.00</offset-m>
+		<axis>
+			<x>-1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<effect>
+		<inherits-from>Aircraft/extra500/Models/Effects/extra500-ice</inherits-from>
+		<object-name>ICE.VStab.Boot</object-name>
+		<parameters>
+			<frost-level><use>/environment/aircraft-effects/frost-level-VStab</use></frost-level>
+		</parameters>
+	</effect>
+	
+	<!-- HStab ICE -->
+	<animation>
+		<object-name>ICE.HStab.front</object-name>
+		<type>select</type>
+		<condition>
+			<greater-than>
+				<property>/environment/aircraft-effects/frost-level-FuslageFront</property>
+				<value>0</value>
+			</greater-than>
+		</condition>
+	</animation>
+	<animation>
+		<type>translate</type>
+		<object-name>ICE.HStab.front</object-name>
+		<property>/environment/aircraft-effects/frost-level-FuslageFront</property>
+		<factor>0.05</factor>
+		<offset-m>0.00</offset-m>
+		<axis>
+			<x>-1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<effect>
+		<inherits-from>Aircraft/extra500/Models/Effects/extra500-ice</inherits-from>
+		<object-name>ICE.HStab.front</object-name>
+		<parameters>
+			<frost-level><use>/environment/aircraft-effects/frost-level-FuslageFront</use></frost-level>
+		</parameters>
+	</effect>
+	
+	
+	<!-- HStab left ICE -->
+	<animation>
+		<object-name>ICE.HStab.LH.Boot</object-name>
+		<type>select</type>
+		<condition>
+			<greater-than>
+				<property>/environment/aircraft-effects/frost-level-HStabLH</property>
+				<value>0</value>
+			</greater-than>
+		</condition>
+	</animation>
+	<animation>
+		<type>translate</type>
+		<object-name>ICE.HStab.LH.Boot</object-name>
+		<property>/environment/aircraft-effects/frost-level-HStabLH</property>
+		<factor>0.05</factor>
+		<offset-m>0.00</offset-m>
+		<axis>
+			<x>-1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<effect>
+		<inherits-from>Aircraft/extra500/Models/Effects/extra500-ice</inherits-from>
+		<object-name>ICE.HStab.LH.Boot</object-name>
+		<parameters>
+			<frost-level><use>/environment/aircraft-effects/frost-level-HStabLH</use></frost-level>
+		</parameters>
+	</effect>
+	
+	<!-- HStab right ICE -->
+	<animation>
+		<object-name>ICE.HStab.RH.Boot</object-name>
+		<type>select</type>
+		<condition>
+			<greater-than>
+				<property>/environment/aircraft-effects/frost-level-HStabRH</property>
+				<value>0</value>
+			</greater-than>
+		</condition>
+	</animation>
+	<animation>
+		<type>translate</type>
+		<object-name>ICE.HStab.RH.Boot</object-name>
+		<property>/environment/aircraft-effects/frost-level-HStabRH</property>
+		<factor>0.05</factor>
+		<offset-m>0.00</offset-m>
+		<axis>
+			<x>-1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<effect>
+		<inherits-from>Aircraft/extra500/Models/Effects/extra500-ice</inherits-from>
+		<object-name>ICE.HStab.RH.Boot</object-name>
+		<parameters>
+			<frost-level><use>/environment/aircraft-effects/frost-level-HStabRH</use></frost-level>
+		</parameters>
+	</effect>
+	
+	<!-- inlet ICE -->
+	<animation>
+		<object-name>ICE.inlet</object-name>
+		<type>select</type>
+		<condition>
+			<greater-than>
+				<property>/environment/aircraft-effects/frost-level-Inlet</property>
+				<value>0</value>
+			</greater-than>
+		</condition>
+	</animation>
+	<animation>
+		<type>translate</type>
+		<object-name>ICE.inlet</object-name>
+		<property>/environment/aircraft-effects/frost-level-Inlet</property>
+		<factor>0.01</factor>
+		<offset-m>0.00</offset-m>
+		<axis>
+			<x>-1</x>
+			<y>0</y>
+			<z>0</z>
+		</axis>
+	</animation>
+	<effect>
+		<inherits-from>Aircraft/extra500/Models/Effects/extra500-ice</inherits-from>
+		<object-name>ICE.inlet</object-name>
+		<parameters>
+			<frost-level><use>/environment/aircraft-effects/frost-level-Inlet</use></frost-level>
+		</parameters>
+	</effect>
+	
+	<!-- static LH is catching no ICE -->
+	<!-- static RH is catching no ICE -->
+	
+</PropertyList>

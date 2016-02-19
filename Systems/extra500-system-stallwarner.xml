@@ -19,8 +19,8 @@
       Author: Eric van den Berg
       Date: 2013-06-08
 
-      Last change:      -
-      Date:             -
+      Last change:      Eric van den Berg
+      Date:             2016-01-16
 -->
 
 <system name="stall-warning">
@@ -43,6 +43,7 @@
 			<test logic="AND" value="1">
 				aircraft/wing/alpha-deg ge aircraft/stallwarner/alpha-stall-warn
 				velocities/vtrue-kts gt 30
+				/environment/aircraft-effects/frost-level-StallWarnHeat lt 0.1
 			</test>
 			<output>aircraft/stallwarner/state</output>
 		</switch>

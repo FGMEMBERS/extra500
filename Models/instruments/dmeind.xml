@@ -20,7 +20,7 @@
       Date: August 08 2013
 
       Last change:      Eric van den Berg
-      Date:             27.04.14
+      Date:             10.01.16
 
 -->
 
@@ -497,10 +497,12 @@
 		<type>select</type>
 		<condition>
 			<and>
-				<equals>
-					<property>/instrumentation/dme/in-range</property>
-					<value>0</value>
-				</equals>
+				<not>
+					<equals>
+						<property>/instrumentation/dme/in-range</property>
+						<value>1</value>
+					</equals>
+				</not>
 				<greater-than>
 					<property>extra500/instrumentation/dmeInd/state</property>
 					<value>0</value>

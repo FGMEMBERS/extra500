@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jul 02 2013
 #
-#      Last change:      Eric van den Berg
-#      Date:             10.04.15
+#       Last change:      Eric van den Berg
+#       Date:             31.01.2016
 #
 # MM Page 563
 
@@ -29,13 +29,9 @@ var TemperatureSurface = {
 				ServiceClass.new(root,name)
 			]
 		};
-		m._mass = 12 ; # kg
-		m._specificHeatCapacity = 1470 ;# kJ / (kg*K) acryl
-#		m._energie = 0.0 ;# J
 		m._temperature = temp; #°C
 		m._deltaTemp = 0;
 		m._nTemperature = m._nRoot.initNode("temperature-degc",m._temperature,"DOUBLE",1);
-#		m._nEnergie = m._nRoot.initNode("energie-kJ",m._energie,"DOUBLE",1);
 		
 		return m;
 	},
@@ -43,35 +39,15 @@ var TemperatureSurface = {
 		me._temperature = temp;
 		me._nTemperature.setValue(me._temperature);
 		
-#		me._energie = me._specificHeatCapacity * (me._mass * me._temperature);
-#		me._nEnergie.setValue(me._energie);
 	},
 	addTemperature : func(temp){
 		me._temperature += temp;
 		me._nTemperature.setValue(me._temperature);
-		
-#		me._energie = me._specificHeatCapacity * (me._mass * me._temperature);
-#		me._nEnergie.setValue(me._energie);
 	},
 	addWatt : func(watt=0.0,dt=1.0){
-		var energieFlow = (watt) * dt;
-#		me._energie += energieFlow;
-#		me._nEnergie.setValue(me._energie);
-		
-		me._deltaTemp = energieFlow / (me._mass * me._specificHeatCapacity);
+		me._deltaTemp = watt * dt / (me._mass * me._specificHeatCapacity);
 		me.addTemperature(me._deltaTemp);
-		
 	},
-#	setEnergie : func(kJ){
-		
-#		me._energie =kJ;
-#		me._nEnergie.setValue(me._energie);
-		
-#		me._temperature = me._energie / (me._mass * me._specificHeatCapacity);
-#		me._nTemperature.setValue(me._temperature);
-		
-#	},
-	
 		
 };
 
@@ -84,6 +60,9 @@ var CabinClass = {
 				ServiceClass.new(root,name)
 			]
 		};
+		
+		var initTemperature = environment._temperature;
+		initTemperature = 0;	
 		m._nCabinPressure	= m._nRoot.initNode("hasPressureWarning",0,"BOOL");
 		m._nBleedOvertemp	= m._nRoot.initNode("hasBleedOvertempWarning",0,"BOOL");
 		
@@ -101,13 +80,50 @@ var CabinClass = {
 		m._dt 	= 1.0;
 		m._timerLoop = nil;
 		
-		m._windShield 		=  TemperatureSurface.new(root~"/windShield","windshield",environment._temperature);
+		m._windShield 		=  TemperatureSurface.new(root~"/windShield","windshield",initTemperature);
 		m._windShield._mass = 11.244 ; # kg
-		m._windShield.setTemperatur(environment._temperature);
+		m._windShield._specificHeatCapacity = 1470 ;# J / (kg*K) acryl
+		m._windShield.setTemperatur(initTemperature);
 		
-		m._windShieldHeated 	=  TemperatureSurface.new(root~"/windShieldHeated","windshieldHeated",environment._temperature);
+		m._windShieldHeated 	=  TemperatureSurface.new(root~"/windShieldHeated","windshieldHeated",initTemperature);
 		m._windShieldHeated._mass = 0.756 ; # kg
-		m._windShieldHeated.setTemperatur(environment._temperature);
+		m._windShieldHeated._specificHeatCapacity = 1470 ;# J / (kg*K) acryl
+		m._windShieldHeated.setTemperatur(initTemperature);
+		
+		m._propeller 	=  TemperatureSurface.new(root~"/propeller","propeller",initTemperature);
+		m._propeller._mass = 1.5 ; # kg, heated part (5 blades, inner front part; prop = 46kg, one blade about 8kg, heat boot per blade ~0.3kg)
+		m._propeller._specificHeatCapacity = 1000 ;# J / (kg*K) general plastic
+		m._propeller.setTemperatur(initTemperature);
+		
+		m._pitotLH 	=  TemperatureSurface.new(root~"/pitotLH","pitotLH",initTemperature);
+		m._pitotLH._mass = 0.1 ; # kg, heated part
+		m._pitotLH._specificHeatCapacity = 500 ;# J / (kg*K) Stainless steel
+		m._pitotLH.setTemperatur(initTemperature);
+		
+		m._pitotRH 	=  TemperatureSurface.new(root~"/pitotRH","pitotRH",initTemperature);
+		m._pitotRH._mass = 0.1 ; # kg
+		m._pitotRH._specificHeatCapacity = 500 ;# J / (kg*K) Stainless steel
+		m._pitotRH.setTemperatur(initTemperature);
+		
+		m._staticLH 	=  TemperatureSurface.new(root~"/staticLH","staticLH",initTemperature);
+		m._staticLH._mass = 0.05 ; # kg, heated part
+		m._staticLH._specificHeatCapacity = 920 ;# J / (kg*K) aluminum alloy
+		m._staticLH.setTemperatur(initTemperature);
+		
+		m._staticRH 	=  TemperatureSurface.new(root~"/staticRH","staticRH",initTemperature);
+		m._staticRH._mass = 0.05 ; # kg
+		m._staticRH._specificHeatCapacity = 920 ;# J / (kg*K) aluminum alloy
+		m._staticRH.setTemperatur(initTemperature);
+		
+		m._stallWarnHeat 	=  TemperatureSurface.new(root~"/stallWarnHeat","stallWarnHeat",initTemperature);
+		m._stallWarnHeat._mass = 0.1 ; # kg
+		m._stallWarnHeat._specificHeatCapacity = 920 ;# J / (kg*K) aluminum alloy
+		m._stallWarnHeat.setTemperatur(initTemperature);
+		
+		m._inlet 	=  TemperatureSurface.new(root~"/inlet","inlet",initTemperature);
+		m._inlet._mass = 1.8 ; # kg, heated part
+		m._inlet._specificHeatCapacity = 500 ;# J / (kg*K) Stainless steel
+		m._inlet.setTemperatur(initTemperature);
 		
 		m._absoluteHumidity = 0;
 		

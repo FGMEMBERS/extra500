@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg4605"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="MenuFaildialog.svg">
+  <defs
+     id="defs4607" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="3.959798"
+     inkscape:cx="201.70003"
+     inkscape:cy="1053.6062"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1440"
+     inkscape:window-height="836"
+     inkscape:window-x="0"
+     inkscape:window-y="21"
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true" />
+  <metadata
+     id="metadata4610">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-size:24.64098549px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="66.851913"
+       y="25.507067"
+       id="text5216"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5218"
+         x="66.851913"
+         y="25.507067">GEAR</tspan></text>
+    <path
+       style="fill:#ff0000;fill-opacity:1;stroke:none"
+       d="m 102.14285,17.140284 8.21429,0 0,11.607143 -8.39286,0 z"
+       id="gearfailind"
+       inkscape:connector-curvature="0"
+       inkscape:label="#path2994" />
+    <path
+       style="fill:#009400;fill-opacity:0.19736843;stroke:none"
+       d="M 22.895479,2.4278249 111.38397,2.3114188 c 1.76049,9.4383912 1.6052,18.8767822 0,28.3151732 l -88.571431,0 C 21.458283,21.651657 21.22403,12.332548 22.895479,2.4278249 z"
+       id="field_gear"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="#path4706" />
+    <text
+       xml:space="preserve"
+       style="font-size:24.64098549px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="160.53661"
+       y="25.081837"
+       id="text5216-9"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5218-7"
+         x="160.53661"
+         y="25.081837">FUEL</tspan></text>
+    <path
+       style="fill:#ff0000;fill-opacity:1;stroke:none"
+       d="m 194.55357,17.157462 8.21429,0 0,11.607143 -8.39286,0 z"
+       id="fuelfailind"
+       inkscape:connector-curvature="0"
+       inkscape:label="#path2994" />
+    <path
+       style="fill:#009400;fill-opacity:0.19736843;stroke:none"
+       d="m 115.31686,2.292271 88.48849,-0.1164061 c 1.76049,9.4383911 1.6052,18.8767821 0,28.3151731 l -88.57143,0 c -1.35425,-8.974935 -1.58851,-18.294044 0.0829,-28.198767 z"
+       id="field_fuel"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="#path4706" />
+    <path
+       style="fill:#ff0000;fill-opacity:1;stroke:none"
+       d="m 342.94642,17.198931 8.21429,0 0,11.607143 -8.39286,0 z"
+       id="controlsfailind"
+       inkscape:connector-curvature="0"
+       inkscape:label="#path2994" />
+    <text
+       xml:space="preserve"
+       style="font-size:24.64098549px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="280.68356"
+       y="25.227337"
+       id="text5216-9-5"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5218-7-1"
+         x="280.68356"
+         y="25.227337">CONTROLS</tspan></text>
+    <path
+       style="fill:#009400;fill-opacity:0.19736843;stroke:none"
+       d="M 208.60422,2.1716902 352.1435,2.0552841 c 2.85573,9.4383909 2.60383,18.8767819 0,28.3151729 l -143.67382,0 c -2.19676,-8.974935 -2.57676,-18.294044 0.13447,-28.1987668 z"
+       id="field_controls"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="#path4706" />
+    <text
+       xml:space="preserve"
+       style="font-size:23.80834961px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="677.54388"
+       y="25.049438"
+       id="text5216-9-5-7"
+       sodipodi:linespacing="125%"
+       transform="scale(0.96620935,1.0349724)"><tspan
+         sodipodi:role="line"
+         id="tspan5218-7-1-7"
+         x="677.54388"
+         y="25.049438">REPAIR ALL</tspan></text>
+    <path
+       style="fill:#009400;fill-opacity:0.19736843;stroke:none"
+       d="M 583.31907,2.6373534 726.85835,2.5209473 c 2.85573,9.4383907 2.60383,18.8767817 0,28.3151727 l -143.67382,0 C 580.98777,21.861185 580.60777,12.542076 583.319,2.6373534 z"
+       id="field_repairall"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="#path4706" />
+  </g>
+</svg>
