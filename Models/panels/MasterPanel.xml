@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             11.05.14
+      Date:             23.08.15
 -->
 <PropertyList>
 
@@ -232,7 +232,16 @@
   <type>rotate</type>
   <object-name>MasterPanel.Autopilot.YawTrim</object-name>
   <property>extra500/panel/Master/Autopilot/YawTrim/state</property>
-  <factor>-120</factor>
+  <interpolation>
+            <entry>
+                <ind>-1</ind>
+                <dep>120</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-120</dep>
+            </entry>
+        </interpolation>
   <axis>
     <x1-m>0</x1-m>
     <y1-m>-0.12248</y1-m>

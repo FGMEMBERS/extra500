@@ -775,7 +775,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<acc-offset-gain type="double">0.18</acc-offset-gain>
 		<target-alt-ft type="double">0.0</target-alt-ft>
 		<vs-target-gain type="double">6.0</vs-target-gain>
-		<accel-rate-gain type="double">6000.0</accel-rate-gain>
+		<accel-rate-gain type="double">5000.0</accel-rate-gain>
 		<pitch-error-gain type="double">-0.000015</pitch-error-gain>
 	</alt-channel>
 	<pitchtrim-channel>
@@ -783,10 +783,10 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<servo-gain type="double">-0.05</servo-gain>
 	</pitchtrim-channel>
 	<yawtrim-channel>
-		<poti-gain>0.01</poti-gain>
-		<servo-gain type="double">-2.5</servo-gain>
-		<accel-min type="double">-0.001</accel-min>
-		<accel-max type="double">0.001</accel-max>
+		<poti-gain>0.02</poti-gain>
+		<servo-gain type="double">-2</servo-gain>
+		<accel-min type="double">-0.01</accel-min>
+		<accel-max type="double">0.01</accel-max>
 	</yawtrim-channel>
 	<cws-channel>
 		<target-turn-rate type="double">0</target-turn-rate>
@@ -2009,7 +2009,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<Master>
 			<Autopilot>
 				<YawTrim>
-					<state type="int">0</state>
+					<state type="double">0</state>
 				</YawTrim>
 			</Autopilot>
 			<Fuel>
