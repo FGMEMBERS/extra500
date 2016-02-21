@@ -286,7 +286,7 @@
         </overlay>
     </model>
 -->
-<!-- under wing
+<!-- under wing 
     <model>
         <path>registration.xml</path>
         <offsets>
@@ -309,12 +309,12 @@
             </params>
         </overlay>
     </model>
-   -->
+ --> 
 <!--
     
     TODO : improve the window seal (new solidify frame)
-    
-    
+     
+     
 <model>
   <name>Interior</name>
   <path>Aircraft/extra500/Models/interior/interior.xml</path>
@@ -324,9 +324,9 @@
 		<z-m>0.0</z-m>
 	</offsets>
 </model>
-    -->
+  -->
     
-    <!--
+    <!----> 
 <model>
   <name>Wing</name>
   <path>Aircraft/extra500/Models/wing/wing.xml</path>
@@ -337,7 +337,7 @@
 		<roll-deg>0</roll-deg>
 	</offsets>
 </model>
--->    
+   
 <!--
 <model>
   <name>Propellix</name>
@@ -350,8 +350,8 @@
 	</offsets>
 </model>
 -->
-
-<animation><!-- spin the propeller here that all parts rotate the same -->
+<!-- spin the propeller here that all parts rotate the same 
+<animation>
 	<type>spin</type>
 	<object-name>Propellix</object-name>
 	<property>sim/multiplay/generic/int[12]</property>
@@ -365,8 +365,8 @@
 		<z2-m>-0.51252</z2-m>
 	</axis>
 </animation>
-
-<!--
+-->
+<!-- 
 <model>
   <name>MagneticCompass</name>
   <path>Aircraft/extra500/Models/instruments/MagneticCompass.xml</path>
@@ -389,8 +389,8 @@
 	<pitch-deg>-8</pitch-deg>
 	</offsets>
 </model>
-
-
+-->
+<!-- panels 
 <model>
   <name>FlapsGear</name>
   <path>Aircraft/extra500/Models/instruments/InstrumentFlapsGear.xml</path>
@@ -401,7 +401,8 @@
 	<pitch-deg>-32</pitch-deg>
 	</offsets>
 </model>
-
+-->
+<!-- panels 
 <model>
   <name>SidePanel</name>
   <path>Aircraft/extra500/Models/panels/SidePanel.xml</path>
@@ -424,7 +425,7 @@
 		<z-m>-0.46267</z-m>
 		<roll-deg>-40</roll-deg>
 		<pitch-deg>2.65</pitch-deg>
-		<heading-deg>-1</heading-deg> --><!--kapier ich nicht ganz warum -1 statt -2.65--><!--
+		<heading-deg>-1</heading-deg>--> <!--kapier ich nicht ganz warum -1 statt -2.65--><!--
 
 	</offsets>
 </model>
@@ -893,8 +894,27 @@
 	 </axis>
  </animation>
  
+ <!-- door external power -->
+ <animation>
+	 <type>rotate</type>
+	 <object-name>door.externalPower</object-name>
+	 <property>sim/multiplay/generic/int[11]</property>
+	 <interpolation>
+		 <entry><ind>0</ind><dep>0</dep></entry>
+		 <entry><ind>1</ind><dep>95</dep></entry>
+	 </interpolation>
+	 <axis>
+		 <x1-m>-1.46244</x1-m>
+		 <y1-m>0.61351</y1-m>
+		 <z1-m>-0.31153</z1-m>
+		 <x2-m>-1.380602</x2-m>
+		 <y2-m>0.62004</y2-m>
+		 <z2-m>-0.30638</z2-m>
+	 </axis>
+ </animation>
 
-<!--external power unit-->
+ 
+<!--external power unit
 <model>
   <name>extpowerunit</name>
   <path>Aircraft/extra500/Models/externalpower/extpowunit.ac</path>
@@ -916,13 +936,13 @@
    </equals>
   </condition>
  </animation>
-
+-->
 <!-- gear 
 <model>
   <path>Aircraft/extra500/Models/landinggear/LandingGearTotal.xml</path>	
 </model>
 -->
-<!--jacks-->
+<!--jacks
 <model>
   <name>jack-lh</name>
   <path>Aircraft/extra500/Models/landinggear/jack-large.ac</path>
@@ -965,7 +985,7 @@
    </equals>
   </condition>
  </animation>
-
+-->
 <!--for gear test purposes only -->
 <!--animation>
   <object-name>gear.doors.upper.left</object-name>
