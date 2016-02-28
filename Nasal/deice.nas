@@ -30,6 +30,7 @@
 
 
 # TODO: get the hot air from bleed air and generate the watts
+# REMARK: work around for engine inlet in place. Heating power calculated in environment.nas
 var AirHeatClass = {
 	new : func(root,name,watt){
 		var m = { 
@@ -293,35 +294,27 @@ var DeicingSystemClass = {
 		};
 
 		me._WindshieldCtrl._onStateChange = func(n){
-			#print("DeicingSystemClass::_WindshieldCtrl::_onStateChange ... ");
 			me._state = n.getValue();
 			deiceSystem._checkWindshieldHeatFail();	
 			deiceSystem._checkWindshieldHeat();	
 		};
 		
 		me._WindshieldHeat._onStateChange = func(n){
-			#print("DeicingSystemClass::_WindshieldHeat::_onStateChange ... ");
 			me._state = n.getValue();
 			deiceSystem._checkWindshieldHeatFail();	
 			deiceSystem._checkWindshieldHeat();
 		};
 		
-# 		eSystem.switch.Propeller.onStateChange(eSystem.switch.Propeller._nState);
-# 		eSystem.switch.PitotL.onStateChange(eSystem.switch.PitotL._nState);
-# 		eSystem.switch.PitotR.onStateChange(eSystem.switch.PitotR._nState);
-# 		eSystem.switch.Windshield.onStateChange(eSystem.switch.Windshield._nState);
+
 		me._PropellerHeat._nWatt.setValue(456);
 		deiceSystem.update();
 		me._timerLoop = maketimer(1.0,me,DeicingSystemClass.update);
 		me._timerLoop.start();
 	},
 	_onStallWarning : func(n){
-# 		var warning = n.getBoolValue();
-# 		print("We have a Stall Warning. "~warning);
 		me._StallWarner.setOn(n.getBoolValue());
 	},
 	_checkWindshieldHeatFail : func(){
-		#print("DeicingSystemClass::_checkWindshieldHeatFail ... ");
 		var fail = (me._WindshieldCtrl._state == 1) 
 				and (eSystem.switch.Windshield._state == 1)
 				and ((cabin._windShieldHeated._temperature >= 50.0) or (me._WindshieldHeat._volt <= 0.0));
@@ -435,16 +428,8 @@ var DeicingSystemClass = {
 		
 		energyWindShield *= (0.937) * (0.1);
 		
-# 		cabin._windShield.addWatt(me._WindshieldDefrost.heatPower()*(0.937),me._dt);
-# 		
-# 		cabin._windShieldHeated.addWatt(me._WindshieldDefrost.heatPower()*(0.063),me._dt); #  mass part of cabin._windShield
-# 		cabin._windShieldHeated.addWatt(me._WindshieldHeat.heatPower(),me._dt);
-# 		
 		cabin._windShield.addWatt( energyWindShield ,me._dt);
 		cabin._windShieldHeated.addWatt( energyWindShieldHeated ,me._dt);
-		
-		
-		#print("deice| ",sprintf("windshield %0.3f W %0.3f W",energyWindShield,energyWindShieldHeated));
 		
 		
 		me._PropellerHeat.setResitorByTemperature(cabin._propeller._temperature);

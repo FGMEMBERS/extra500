@@ -169,7 +169,8 @@ var Environment = {
 # 	SG_MAX_CLOUD_COVERAGES
 
 		
-		var cloudTypeEffect = {
+# cloud coverage
+		var cloudTypeEffect1 = {
 			0 : 1,  	# OVERCAST
 			1 : 0.75,  	# BROKEN
 			2 : 0.5,  	# SCATTERED
@@ -177,7 +178,17 @@ var Environment = {
 			4 : 0.1,  	# CIRRUS
 			5 : 0,  	# CLEAR
 			6 : 0,  	# MAX_CLOUD_COVERAGES ??
-		};	
+		};
+# cloud icing intensity	
+		var cloudTypeEffect2 = {
+			0 : 0.5,  	# OVERCAST
+			1 : 0.5,  	# BROKEN
+			2 : 1.5,  	# SCATTERED
+			3 : 0.75,  	# FEW
+			4 : 0.25,  	# CIRRUS
+			5 : 0,  	# CLEAR
+			6 : 0,  	# MAX_CLOUD_COVERAGES ??
+		};
 		
 		if(getprop("/environment/metar/valid")){
 		
@@ -209,7 +220,7 @@ var Environment = {
 				if (aircraftAlt > elevation and aircraftAlt < elevationMax){
 					
 					var cloudCenterDistanceEffect = (1.5-(math.abs(aircraftAlt - (elevation + thicknessRadius)) / thicknessRadius));
-					var eff = cloudCenterDistanceEffect * cloudTypeEffect[type];
+					var eff = cloudCenterDistanceEffect * cloudTypeEffect1[type] * cloudTypeEffect2[type];
 					
 					cloudEffectSum += eff;
 					
@@ -240,13 +251,13 @@ var Environment = {
 		}else	if ( (me._cloudEffect > 0) ){
 			
 			# in the clouds layer the cloud-type and cloud-thickness drive the effect
-			waterCatchEffect = surfaceTemperature * me._absoluteHumidity * me._cloudEffect * me._nFrostWaterCatchFactor.getValue();
+			waterCatchEffect = -me._absoluteHumidity * me._cloudEffect * me._nFrostWaterCatchFactor.getValue() * getprop("/fdm/jsbsim/velocities/vtrue-kts")/150;
 			
 		}else	if ( (me._absoluteHumidity > me._nAbsoluteHumidityMin.getValue()) and (me._temperature > -18) and (me._humidity == 100 ) ){
 			
 			# no liquid water below -18degC, so no icing. Only liquid water in air if dewpoint is below temperature (=rel humidity 100%).
 			# cannot detect clouds sadly. So only use absolute humidity as 'indication' of ice accretion. Is wrong, I know...
-			waterCatchEffect = surfaceTemperature * me._absoluteHumidity * me._nFrostWaterCatchFactor.getValue();
+			waterCatchEffect = -me._absoluteHumidity * me._nFrostWaterCatchFactor.getValue() * getprop("/fdm/jsbsim/velocities/vtrue-kts")/150;
 			
 		}else{
 			waterCatchEffect = 0;
