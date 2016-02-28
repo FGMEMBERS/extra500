@@ -17,7 +17,7 @@
 #      Date: 20.03.2015
 #
 #       Last change:      Eric van den Berg
-#       Date:             22.02.2016
+#       Date:             28.02.2016
 #
 
 
@@ -433,15 +433,28 @@ var Environment = {
 		
 # freeze inlet
 		
-		# heating 600 W 
-		# delta T  60 °C
-		# max cooling capacity 10W / °C
-		eff 	= 2  ;# W static exchange
-		eff 	+= 3 * global.norm(flowSpeed,0,350); # W airflow
-		eff 	+= 5 * global.norm(getprop("/engines/engine/rpm"),0,2030); # W PRM
-		
-		energyFlow 	= eff * (me._temperature - cabin._inlet._temperature); # Delta °C
+		heat_on = getprop("/extra500/system/deice/IntakeHeat/state");
+		airtemp_R = (me._temperature + 273.15) / 5 * 9;		
+		exhausttemp_C = getprop("/fdm/jsbsim/aircraft/engine/TOT-target-degC") - getprop("/fdm/jsbsim/propulsion/engine/power-hp")*745.7/1004.68;		
+		exhausttemp_R = (exhausttemp_C + 273.15) / 5 * 9;
+		inlettemp_R = (cabin._inlet._temperature + 273.15) / 5 * 9;
+
+		if (heat_on != 1 ) { exhausttemp_R = inlettemp_R };
+
+		deltaT_R = exhausttemp_R - airtemp_R;
+		h = 0.27 * math.pow(math.abs(deltaT_R) / 2 ,0.25);
+		q1 = 2.52 * h * deltaT_R; # BTU/h
+		q2 = 2.52 * 0.000000001713 * 0.85 * (math.pow(exhausttemp_R,4) - math.pow(airtemp_R,4)); # BTU/h
+		q3 = 22 * (math.pow( math.abs(576 - airtemp_R) , 0.5 ) * math.abs(576 - airtemp_R) / (576 - airtemp_R) - math.pow( math.abs(576 - inlettemp_R) , 0.5 ) * math.abs(576 - inlettemp_R) / (576 - inlettemp_R) ) * 60 ; # BTU/h
+
+		energyFlow = -0.2931 * (q1 + q2 + q3); # W
 		cabin._inlet.addWatt( energyFlow ,me._dt);
+
+		# heating with exhaust air
+		q_in = 0.043 * 0.241 * getprop("/fdm/jsbsim/aircraft/engine/massflow-lbs-sec") * (exhausttemp_R - inlettemp_R) * 3600; # BTU/h
+		setprop("/extra500/system/deice/IntakeHeat/airwatt",0.2931*q_in); # W
+
+
 		
 		# put the water(ice) on the surface
 		me._frostInlet 	-= me.surfaceWaterCatchEffect(cabin._inlet._temperature) * me._dt;

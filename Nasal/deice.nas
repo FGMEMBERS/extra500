@@ -17,7 +17,7 @@
 #      Date: Jul 03 2013
 #
 #       Last change:      Eric van den Berg
-#       Date:             31.01.2016
+#       Date:             28.02.2016
 #
 
 # MM page 
@@ -42,6 +42,7 @@ var AirHeatClass = {
 		m._nState		= m._nRoot.initNode("state",m._state,"BOOL");
 		m._watt			= watt;	# watt
 		m._nWatt		= m._nRoot.initNode("watt",m._watt,"DOUBLE");
+		m._airWatt		= m._nRoot.initNode("airwatt",m._watt,"DOUBLE");
 		
 		return m;
 	},
@@ -468,7 +469,8 @@ var DeicingSystemClass = {
 		cabin._stallWarnHeat.addWatt( me._StallHeat.heatPower() ,me._dt);
 		
 		# inlet 
-		cabin._inlet.addWatt( me._inletHeat.heatPower() ,me._dt);
+		#cabin._inlet.addWatt( me._inletHeat.heatPower() ,me._dt);
+		cabin._inlet.addWatt( getprop("/extra500/system/deice/IntakeHeat/airwatt") ,me._dt);
 				
 		environment.update(me._dt);
 	},
