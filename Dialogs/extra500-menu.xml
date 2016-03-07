@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             13.05.14
+      Date:             20.10.15
 -->
 
 <PropertyList>
@@ -59,6 +59,25 @@
 					<property>/extra500/yokes/visible</property>
 				</binding>
 			</item>
+			<item>
+				<name>smooth-weather-toggle</name>
+				<label>Toggle Smooth Weather</label>
+				<binding>
+					<command>property-toggle</command>
+					<property>/extra500/weather/smooth</property>
+				</binding>
+			</item>
+			<item>
+				<name>Failure-dialog</name>
+				<label>Failure Dialog</label>
+				<binding>
+					<command>nasal</command>
+					<script><![CDATA[
+						Dialogs.Failuredialog.openDialog();
+					]]></script>
+				</binding>
+			</item>
+
 			<!--
 			<item>
 				<name>events-toggle</name>
@@ -114,6 +133,16 @@
 				<enabled>false</enabled>
 			</item>
 			
+			<item>
+			       <name>deice_aircraft</name>
+			       <label>Manual Deice Aircraft</label>
+				<binding>
+				       <command>nasal</command>
+				       <script><![CDATA[
+					       extra500.deiceSystem.manualDeciceAircraft();
+				       ]]></script>
+			       </binding>
+			</item>
 			<item>
 				<name>aircraft-checklists</name>
 				<label>Checklists</label>

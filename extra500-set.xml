@@ -16,11 +16,11 @@
     You should have received a copy of the GNU General Public License
     along with extra500.  If not, see <http://www.gnu.org/licenses/>.
 
-      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
+      Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger
       Date: March 13 2013
 
-	Last change:	Dirk Dittmann
-	Date:		02.05.15
+	Last change:      Dirk Dittmann
+	Date:             15.01.2016
 
 
 ************************************************************************
@@ -32,10 +32,10 @@ JSBSim Extra Aircraft - Extra 500.
 <PropertyList>
 
 <sim>
-	
+
 	<license-description>Extra500 is free and open source software, licensed
-under the GNU General Public License Version 2.</license-description>	
-	
+under the GNU General Public License Version 2.</license-description>
+
 	<description>Extra 500</description>
 	<long-description>The Extra500 is a small business turboprop powered, six seat aircraft.
 It is a derivative of the piston powered Extra400 and shares the fully
@@ -51,7 +51,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 
 	<author>Dirk Dittmann, Eric van den Berg, Thomas Grossberger</author>
 	<author-callsign>D-EKEW, D-LEON, D-STHO</author-callsign>
-	
+
 	<status>production</status>
 	<rating>
 		<FDM type="int">4</FDM>
@@ -59,15 +59,15 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<model type="int">4</model>
 		<cockpit type="int">4</cockpit>
 	</rating>
-	<extra500-version>2.1.0</extra500-version>
+	<extra500-version>3.0.0</extra500-version>
 	<extra500-git>https://gitlab.com/extra500/extra500</extra500-git>
 	<extra500-wiki>http://wiki.flightgear.org/Extra_EA-500</extra500-wiki>
-	
+
 	<flight-model archive="y">jsb</flight-model>
 	<aero archive="y">extra500</aero>
-	
+
 	<allow-toggle-cockpit type="bool">true</allow-toggle-cockpit>
-	
+
 	<model>
 		<path archive="y">Aircraft/extra500/Models/extra500.xml</path>
 		<livery>
@@ -95,7 +95,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		</key>
      	      <key>
 			<name>Ctrl-F</name>
-			<desc>Pitch control by pitch trim only</desc>
+			<desc>Toggle pitch control mode</desc>
 		</key>
      	      <key>
 			<name>W</name>
@@ -118,11 +118,15 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<desc>Arm and engage CWS</desc>
 		</key>
      	      <key>
+			<name>O</name>
+			<desc>Hold to Overpower Autopilot</desc>
+		</key>
+     	      <key>
 			<name>Ctrl-G</name>
 			<desc>Put the Aircraft on Jacks</desc>
 		</key>
 	</help>
-	
+
 	<!-- position the pilot viewpoint and angle -->
 	<view>
 		<internal type="bool" archive="y">true</internal>
@@ -134,7 +138,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<default-field-of-view-deg type="double">75.0</default-field-of-view-deg>  <!--this somehow does not work, why??? does not work on other aircraft either: flightgear bug? yes bugs 1110 and 1111-->
 		</config>
 	</view>
-	
+
 	<view n="101">
 		<name>Model Front View</name>
 		<enabled type="bool">true</enabled>
@@ -142,7 +146,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<internal type="bool">true</internal>
 		<config>
 			<from-model type="bool">true</from-model>
-			<from-model-idx type="int">true</from-model-idx>
+		  <from-model-idx type="int">0</from-model-idx>
 			<!-- x/y/z == right/up/back -->
 			<x-offset-m archive="y"> 0.0</x-offset-m>
 			<y-offset-m archive="y"> 0.0</y-offset-m>
@@ -159,7 +163,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<internal type="bool">true</internal>
 		<config>
 			<from-model type="bool">true</from-model>
-			<from-model-idx type="int">true</from-model-idx>
+			<from-model-idx type="int">0</from-model-idx>
 			<!-- x/y/z == right/up/back -->
 			<x-offset-m archive="y"> 10.0</x-offset-m>
 			<y-offset-m archive="y"> 0.0</y-offset-m>
@@ -176,7 +180,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<internal type="bool">true</internal>
 		<config>
 			<from-model type="bool">true</from-model>
-			<from-model-idx type="int">true</from-model-idx>
+			<from-model-idx type="int">0</from-model-idx>
 			<!-- x/y/z == right/up/back -->
 			<x-offset-m archive="y"> -10.0</x-offset-m>
 			<y-offset-m archive="y"> 0.0</y-offset-m>
@@ -195,7 +199,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<internal type="bool">true</internal>
 		<config>
 			<from-model type="bool">true</from-model>
-			<from-model-idx type="int">true</from-model-idx>
+			<from-model-idx type="int">0</from-model-idx>
 			<!-- x/y/z == right/up/back -->
 			<x-offset-m archive="y"> 0.0</x-offset-m>
 			<y-offset-m archive="y"> 0.0</y-offset-m>
@@ -270,7 +274,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<config>
 			<from-model type="bool">false</from-model>
 			<from-model-idx type="int">0</from-model-idx>
-			
+
 			<eye-lat-deg-path>/position/latitude-deg</eye-lat-deg-path>
 			<eye-lon-deg-path>/position/longitude-deg</eye-lon-deg-path>
 			<eye-alt-ft-path>/position/altitude-ft</eye-alt-ft-path>
@@ -290,7 +294,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<x-offset-m type="double">0.0</x-offset-m>
 			<y-offset-m type="double">2.0</y-offset-m>
 			<z-offset-m type="double">-7.0</z-offset-m>
-			
+
 		</config>
 	</view>
 
@@ -301,7 +305,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<config>
 			<from-model type="bool">false</from-model>
 			<from-model-idx type="int">0</from-model-idx>
-			
+
 			<eye-lat-deg-path>/position/latitude-deg</eye-lat-deg-path>
 			<eye-lon-deg-path>/position/longitude-deg</eye-lon-deg-path>
 			<eye-alt-ft-path>/position/altitude-ft</eye-alt-ft-path>
@@ -321,7 +325,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<x-offset-m type="double">0.0</x-offset-m>
 			<y-offset-m type="double">2.0</y-offset-m>
 			<z-offset-m type="double">-7.0</z-offset-m>
-			
+
 		</config>
 	</view>
 <!-- Passenger Seat 5 view-->
@@ -388,12 +392,12 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<x-offset-m archive="y" type="double">-0.37</x-offset-m>
 			<y-offset-m archive="y" type="double">-0.3</y-offset-m>
 			<z-offset-m archive="y" type="double">-0.45</z-offset-m>
-			
+
 			<heading-offset-deg type="double">72.0</heading-offset-deg>
 			<pitch-offset-deg type="double">-30.0</pitch-offset-deg>
 			<default-field-of-view-deg type="double">96.0</default-field-of-view-deg>
 		</config>
-	</view>	
+	</view>
 
 	<view n="113">
 	<!-- x=rechts y=hoch z=zurueck -->
@@ -426,7 +430,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<pitch-offset-deg archive="y">-50</pitch-offset-deg>
 			<default-field-of-view-deg type="double">75.0</default-field-of-view-deg>
 		</config>
-	</view>	
+	</view>
 
 	<view n="115">
 	<!-- x=rechts y=hoch z=zurueck -->
@@ -442,7 +446,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<pitch-offset-deg archive="y">-70</pitch-offset-deg>
 			<default-field-of-view-deg type="double">75.0</default-field-of-view-deg>
 		</config>
-	</view>	
+	</view>
 
 	<view n="116">
 	<!-- x=rechts y=hoch z=zurueck -->
@@ -459,11 +463,26 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<heading-offset-deg archive="y">30</heading-offset-deg>
 			<default-field-of-view-deg type="double">37.0</default-field-of-view-deg>
 		</config>
-	</view>	
+	</view>
 
 
 	<systems>
-            <path>Aircraft/extra500/Systems/systems.xml</path>
+		<path>Aircraft/extra500/Systems/systems.xml</path>
+		<autopilot n="0">
+			<name>disable generic autopilot</name>
+			<path>Aircraft/extra500/Systems/disabled.xml</path>
+		</autopilot>
+		<autopilot n="1">
+			<name>disable generic autopilot helper</name>
+			<path>Aircraft/extra500/Systems/disabled.xml</path>
+		</autopilot>
+
+		<!-- drives at fps-->
+		<property-rule n="3">
+			<name>shaking the inside View</name>
+			<path>Aircraft/extra500/Systems/shake-effect.xml</path>
+		</property-rule>
+		
 	</systems>
 
       <instrumentation>
@@ -485,8 +504,8 @@ of the RR 250-B17F/2 engine is best.</long-description>
 	       <click n="3" type="bool">0</click>
 	       <click n="4" type="bool">0</click>
 	       <click n="5" type="bool">0</click>
-       </sound> 
-       
+       </sound>
+
 	<aircraft-data>
 		<path>extra500/panel</path>
 		<path>/extra500/electric/source/Battery</path>
@@ -503,6 +522,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<path>/extra500/instrumentation/Audiopanel/knobs</path>
 		<path>/extra500/instrumentation/Audiopanel/volsettings</path>
 		<path>/extra500/instrumentation/dmeSwitch/pressed</path>
+		<path>/extra500/system/fuel/SelectValve</path>
 		<path>/extra500/door</path>
 		<path>/extra500/interior</path>
 		<path>/systems/pressurization/airport-alt</path>
@@ -517,16 +537,18 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<path>/fdm/jsbsim/gear/unit[10]/pos-norm</path>
 		<path>/fdm/jsbsim/gear/unit[11]/pos-norm</path>
 		<path>/fdm/jsbsim/gear/unit[12]/pos-norm</path>
-
+		<path>/fdm/jsbsim/state/controls-fixed</path>
+		<path>/environment/aircraft-effects</path>
 		<!---->
 		<path>/extra500/log/fuel</path>
 		<path>/extra500/dialog/fuel</path>
 		<path>/extra500/config</path>
-		
-	</aircraft-data> 
-	
+		<path>/extra500/yokes/visible</path>
+
+	</aircraft-data>
+
   <!-- <help include="extra500-help.xml"/> -->
-  
+
    <checklists include="checklist/extra500-checklists.xml"/>
 <!--	  <checklists>
 		  <checklist include="checklist/engine-start.xml"/>
@@ -555,7 +577,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<float n="11" alias="/gear/gear[0]/rollspeed-ms">0</float><!-- gear-->
 			<float n="12" alias="/gear/gear[1]/rollspeed-ms">0</float><!-- gear-->
 			<float n="13" alias="/gear/gear[2]/rollspeed-ms">0</float><!-- gear & speed-->
-			
+
 			<int n="0" alias="/extra500/door/upperpass/state">0</int>
 			<int n="1" alias="/extra500/door/lowerpass/state">0</int>
 			<int n="2" alias="/extra500/door/emergencyexit/state">0</int>
@@ -570,6 +592,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<int n="11" alias="/extra500/electric/source/ExternalGenerator/isPluged">0</int><!-- external power-->
 			<int n="12" alias="/engines/engine[0]/thruster/rpm"/>
 			<int n="13" alias="/fdm/jsbsim/propulsion/engine/set-running">0</int><!-- mp sound-->
+			<int n="14" alias="/fdm/jsbsim/aircraft/propeller/contact">0</int><!-- broken propeller-->
 
 			<string n="0" alias="/sim/multiplay/callsign">callsign</string>
 		</generic>
@@ -583,9 +606,8 @@ of the RR 250-B17F/2 engine is best.</long-description>
        </flight-recorder>
 
   <menubar include="Dialogs/extra500-menu.xml"/>
- 
-</sim>
 
+</sim>
        <controls>
 	       <engines>
 		       <engine n="0">
@@ -649,13 +671,18 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<electrim type="int">0</electrim>
 		<cap type="int">0</cap>
 		<soft type="int">0</soft>
+		<overpower type="int">0</overpower>
 	</mode>
 	<indication>
 		<heading type="int">0</heading>
 		<nav type="int">0</nav>
 		<vs type="int">0</vs>
 	</indication>
-	<hdg-channel>	
+	<overpower>
+		<rollSpeedFactor type="double">1</rollSpeedFactor>
+		<pitchSpeedFactor type="double">0.5</pitchSpeedFactor>
+	</overpower>
+	<hdg-channel>
 		<turn-rate-error-kp type="double">0.0003</turn-rate-error-kp>
 		<turn-rate-error-ki type="double">0.00</turn-rate-error-ki>
 		<turn-rate-error-kd type="double">0.0025</turn-rate-error-kd>
@@ -663,6 +690,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<lmd-hdg-error-ki type="double">0.0</lmd-hdg-error-ki>
 		<lmd-hdg-error-kd type="double">0.05</lmd-hdg-error-kd>
 		<cmd-ap-ail-pos-norm-raw type="double">0.0</cmd-ap-ail-pos-norm-raw>
+		<fail type="double">0</fail>
 	</hdg-channel>
 	<radionav-channel>
 		<timer-cap>0</timer-cap>
@@ -673,11 +701,12 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<gain-cs type="double">0.8</gain-cs>
 			<gain-s type="double">0.6</gain-s>
 		</gains>
+		<fail>0</fail>
 		<tgt-hdg-kp type="double">0</tgt-hdg-kp>
 		<tgt-hdg-kd-n type="double">0.5</tgt-hdg-kd-n>
 		<tgt-hdg-ki type="double">0</tgt-hdg-ki>
 		<rel-hdg-min type="double">-45</rel-hdg-min>
-		<rel-hdg-max type="double">45</rel-hdg-max>	
+		<rel-hdg-max type="double">45</rel-hdg-max>
 		<turn-rate-error-kp type="double">0.0003</turn-rate-error-kp>
 		<turn-rate-error-ki type="double">0.00</turn-rate-error-ki>
 		<turn-rate-error-kd type="double">0.0025</turn-rate-error-kd>
@@ -690,7 +719,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<radials>
 			<diff>0</diff>
 			<old-radial>0</old-radial>
-			<reciprocal-radial>0</reciprocal-radial>		
+			<reciprocal-radial>0</reciprocal-radial>
 		</radials>
 		<nav-distance-nm type="double">0</nav-distance-nm>
 	</radionav-channel>
@@ -723,7 +752,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<rel-hdg-max type="double">45</rel-hdg-max>
 		<lmd-hdg-error-kp type="double">9.0</lmd-hdg-error-kp>			<!--180deg/min devided by 20deg -->
 		<lmd-hdg-error-ki type="double">0.0</lmd-hdg-error-ki>
-		<lmd-hdg-error-kd type="double">0.05</lmd-hdg-error-kd>	
+		<lmd-hdg-error-kd type="double">0.05</lmd-hdg-error-kd>
 		<turn-rate-error-kp type="double">0.0003</turn-rate-error-kp>
 		<turn-rate-error-ki type="double">0.00</turn-rate-error-ki>
 		<turn-rate-error-kd type="double">0.0025</turn-rate-error-kd>
@@ -733,30 +762,31 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<acc-offset-gain type="double">0.24</acc-offset-gain>
 		<accel-rate-gain type="double">8000.0</accel-rate-gain>
 		<pitch-error-gain type="double">-0.00005</pitch-error-gain>
+		<fail type="double">0</fail>
 	</vs-channel>
 	<gs-channel>
 		<gs-ndefl-gain-kd type="double">2.0</gs-ndefl-gain-kd>
-		<accel-rate-gain type="double">5.0</accel-rate-gain> 
+		<accel-rate-gain type="double">5.0</accel-rate-gain>
 		<pitch-error-gain type="double">-0.2</pitch-error-gain>
 		<fd-gain type="double">10</fd-gain>
 	</gs-channel>
-	<alt-channel>	
+	<alt-channel>
 		<turnrate-gain type="double">10.0</turnrate-gain>
 		<acc-offset-gain type="double">0.18</acc-offset-gain>
 		<target-alt-ft type="double">0.0</target-alt-ft>
 		<vs-target-gain type="double">6.0</vs-target-gain>
-		<accel-rate-gain type="double">6000.0</accel-rate-gain>
+		<accel-rate-gain type="double">5000.0</accel-rate-gain>
 		<pitch-error-gain type="double">-0.000015</pitch-error-gain>
 	</alt-channel>
 	<pitchtrim-channel>
 		<servo-gain2 type="double">-0.05</servo-gain2>
-		<servo-gain type="double">-0.05</servo-gain>			
+		<servo-gain type="double">-0.05</servo-gain>
 	</pitchtrim-channel>
 	<yawtrim-channel>
-		<poti-gain>0.01</poti-gain>
-		<servo-gain type="double">-2.5</servo-gain>
-		<accel-min type="double">-0.001</accel-min>
-		<accel-max type="double">0.001</accel-max>
+		<poti-gain>0.02</poti-gain>
+		<servo-gain type="double">-2</servo-gain>
+		<accel-min type="double">-0.01</accel-min>
+		<accel-max type="double">0.01</accel-max>
 	</yawtrim-channel>
 	<cws-channel>
 		<target-turn-rate type="double">0</target-turn-rate>
@@ -801,37 +831,40 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<cabin-pressure-inhg type="double">29.92</cabin-pressure-inhg>
 	</pressurization>
 	<gear>
-		<LMG-pos>1</LMG-pos>
-		<RMG-pos>1</RMG-pos>
-		<NG-pos>1</NG-pos>
-		<Lupperdoor-pos>0.8</Lupperdoor-pos>
-		<Rupperdoor-pos>0.8</Rupperdoor-pos>
-		<Lowerdoor-pos>1</Lowerdoor-pos>
-		<Nosegeardoor-pos>1</Nosegeardoor-pos>
-		<pressure-bar>0</pressure-bar>
+		<LMG-pos type="double">1</LMG-pos>
+		<RMG-pos type="double">1</RMG-pos>
+		<NG-pos type="double">1</NG-pos>
+		<LMG-free type="double">1</LMG-free>
+		<RMG-free type="double">1</RMG-free>
+		<NG-free type="double">1</NG-free>
+		<Lupperdoor-pos type="double">0.8</Lupperdoor-pos>
+		<Rupperdoor-pos type="double">0.8</Rupperdoor-pos>
+		<Lowerdoor-pos type="double">1</Lowerdoor-pos>
+		<Nosegeardoor-pos type="double">1</Nosegeardoor-pos>
+		<pressure-bar type="double">0</pressure-bar>
 		<pressure>
-			<dpress-p-sec>50</dpress-p-sec>
-			<dpress-mov-p-sec>-60</dpress-mov-p-sec>
-			<dpress-mov2-p-sec>-30</dpress-mov2-p-sec>
-			<leakrate-p-press>-0.000833333333333</leakrate-p-press>
+			<dpress-p-sec type="double">50</dpress-p-sec>
+			<dpress-mov-p-sec type="double">-60</dpress-mov-p-sec>
+			<dpress-mov2-p-sec type="double">-30</dpress-mov2-p-sec>
+			<leakrate-p-press type="double">-0.000833333333333</leakrate-p-press>
 		</pressure>
 		<actuators>
-			<upperdoorspeed>0.00833333333333</upperdoorspeed>
-			<lowerdoorspeed>0.00833333333333</lowerdoorspeed>
-			<nosegearspeed>0.010</nosegearspeed>
-			<maingearspeed>0.00222222222222</maingearspeed>
-			<Rupperdoor-pos-old></Rupperdoor-pos-old>
-			<Lupperdoor-pos-old></Lupperdoor-pos-old>
-			<Lowerdoor-pos-old></Lowerdoor-pos-old>
-			<Rupperdoor-moving>0</Rupperdoor-moving>
-			<Lupperdoor-moving>0</Lupperdoor-moving>
-			<Lowerdoor-moving>0</Lowerdoor-moving>
-			<LMG-pos-old>0</LMG-pos-old>
-			<RMG-pos-old>0</RMG-pos-old>
-			<NG-pos-old>0</NG-pos-old>
-			<LMG-moving>0</LMG-moving>
-			<RMG-moving>0</RMG-moving>
-			<NG-moving>0</NG-moving>
+			<upperdoorspeed type="double">0.00833333333333</upperdoorspeed>
+			<lowerdoorspeed type="double">0.00833333333333</lowerdoorspeed>
+			<nosegearspeed type="double">0.010</nosegearspeed>
+			<maingearspeed type="double">0.00222222222222</maingearspeed>
+			<Rupperdoor-pos-old type="double"></Rupperdoor-pos-old>
+			<Lupperdoor-pos-old type="double"></Lupperdoor-pos-old>
+			<Lowerdoor-pos-old type="double"></Lowerdoor-pos-old>
+			<Rupperdoor-moving type="double">0</Rupperdoor-moving>
+			<Lupperdoor-moving type="double">0</Lupperdoor-moving>
+			<Lowerdoor-moving type="double">0</Lowerdoor-moving>
+			<LMG-pos-old type="double">0</LMG-pos-old>
+			<RMG-pos-old type="double">0</RMG-pos-old>
+			<NG-pos-old type="double">0</NG-pos-old>
+			<LMG-moving type="double">0</LMG-moving>
+			<RMG-moving type="double">0</RMG-moving>
+			<NG-moving type="double">0</NG-moving>
 		</actuators>
 		<annunciators>
 			<hydcaution>0</hydcaution>
@@ -966,6 +999,223 @@ of the RR 250-B17F/2 engine is best.</long-description>
         		<serviceable type="bool">true</serviceable>
 		</motor>
 	</gear>
+	<fuel>
+		<FlowbalanceLR type="double">0.5</FlowbalanceLR>
+		<FT-degC type="double">0</FT-degC>					<!--dummy value -->
+		<Fpress-too-low type="bool">0</Fpress-too-low>
+
+		<selectorValve>
+        		<serviceable type="bool">true</serviceable>
+		</selectorValve>
+		<F-filter-prloss-psid type="double">0</F-filter-prloss-psid>
+		<fuelfilter>
+			<clogged type="double">0</clogged>
+			<bypass>
+				<state type="bool">0</state>
+				<switch>
+					<state type="bool">0</state>
+        				<serviceable type="bool">true</serviceable>
+				</switch>
+			</bypass>
+		</fuelfilter>
+		<FuelPump1>
+			<state type="bool">0</state>
+        		<serviceable type="bool">true</serviceable>
+		</FuelPump1>
+		<FP1checkvalve>
+        		<serviceable type="bool">true</serviceable>
+		</FP1checkvalve>
+		<FuelPump2>
+			<state type="bool">0</state>
+        		<serviceable type="bool">true</serviceable>
+		</FuelPump2>
+		<FP2checkvalve>
+        		<serviceable type="bool">true</serviceable>
+		</FP2checkvalve>
+		<FFtransducer>
+			<blocked type="double">0</blocked>
+		</FFtransducer>
+
+		<LHtank>
+			<checkvalve>
+        			<serviceable type="bool">true</serviceable>
+			</checkvalve>
+			<motivepump>
+				<press>0</press>
+        			<serviceable type="bool">true</serviceable>
+			</motivepump>
+			<motivefilter>
+				<clogged type="double">0</clogged>
+			</motivefilter>
+			<prswitch>
+				<state type="bool">1</state> <!-- normally closed: 1 = low press, 0=high press -->
+        			<serviceable type="bool">true</serviceable>
+			</prswitch>
+			<collector>
+				<pickupscreen>
+					<clogged type="double">0</clogged>
+				</pickupscreen>
+				<flappervalves>
+					<leakrate-raw type="double">0.00044</leakrate-raw>  <!-- collector to main -->
+				</flappervalves>
+				<drain>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</drain>
+				<leakage>
+					<flow type="double">0</flow>
+					<state type="bool">0</state>
+				</leakage>
+				<overflow-raw type="double">0.2</overflow-raw>
+			</collector>
+			<main>
+				<innerjetpump>
+					<effectiveness type="double">3</effectiveness>
+					<clogged type="double">0</clogged>
+				</innerjetpump>
+				<outerjetpump>
+					<effectiveness type="double">3</effectiveness>
+					<clogged type="double">0</clogged>
+				</outerjetpump>
+				<overprvalve>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+				</overprvalve>
+				<ventssys>
+				</ventssys>
+				<draininboard>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</draininboard>
+				<drainoutboard>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</drainoutboard>
+				<leakage>
+					<flow type="double">0</flow>
+					<state type="bool">0</state>
+				</leakage>
+			</main>
+			<aux>
+				<motiveoprvalve>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</motiveoprvalve>
+				<jetpump>
+					<effectiveness type="double">3</effectiveness>
+					<clogged type="double">0</clogged>
+				</jetpump>
+				<overprvalve>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</overprvalve>
+				<ventssys>
+				</ventssys>
+				<draininboard>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</draininboard>
+				<drainoutboard>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</drainoutboard>
+				<leakage>
+					<flow type="double">0</flow>
+					<state type="bool">0</state>
+				</leakage>
+			</aux>
+		</LHtank>
+		<RHtank>
+			<checkvalve>
+        			<serviceable type="bool">true</serviceable>
+			</checkvalve>
+			<motivepump>
+				<press>0</press>
+        			<serviceable type="bool">true</serviceable>
+			</motivepump>
+			<motivefilter>
+				<clogged type="double">0</clogged>
+			</motivefilter>
+			<prswitch>
+				<state type="bool">1</state> <!-- normally closed: 1 = low press, 0=high press -->
+        			<serviceable type="bool">true</serviceable>
+			</prswitch>
+			<collector>
+				<pickupscreen>
+					<clogged type="double">0</clogged>
+				</pickupscreen>
+				<flappervalves>
+					<leakrate-raw type="double">0.00044</leakrate-raw>  <!-- collector to main -->
+				</flappervalves>
+				<drain>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</drain>
+				<leakage>
+					<flow type="double">0</flow>
+					<state type="bool">0</state>
+				</leakage>
+				<overflow-raw type="double">0.2</overflow-raw>
+			</collector>
+			<main>
+				<innerjetpump>
+					<effectiveness type="double">3</effectiveness>
+					<clogged type="double">0</clogged>
+				</innerjetpump>
+				<outerjetpump>
+					<effectiveness type="double">3</effectiveness>
+					<clogged type="double">0</clogged>
+				</outerjetpump>
+				<overprvalve>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+				</overprvalve>
+				<ventssys>
+				</ventssys>
+				<draininboard>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</draininboard>
+				<drainoutboard>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</drainoutboard>
+				<leakage>
+					<flow type="double">0</flow>
+					<state type="bool">0</state>
+				</leakage>
+			</main>
+			<aux>
+				<motiveoprvalve>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</motiveoprvalve>
+				<jetpump>
+					<effectiveness type="double">3</effectiveness>
+					<clogged type="double">0</clogged>
+				</jetpump>
+				<overprvalve>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</overprvalve>
+				<ventssys>
+				</ventssys>
+				<draininboard>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</draininboard>
+				<drainoutboard>
+					<state type="bool">0</state>  <!-- 0 = closed, 1 = open -->
+        				<serviceable type="bool">true</serviceable>
+				</drainoutboard>
+				<leakage>
+					<flow type="double">0</flow>
+					<state type="bool">0</state>
+				</leakage>
+			</aux>
+		</RHtank>
+	</fuel>
+	<engine>
+		<failure-fast type="bool">0</failure-fast>
+	</engine>
  </systems>
 
  <instrumentation>
@@ -1032,15 +1282,15 @@ of the RR 250-B17F/2 engine is best.</long-description>
         <pressure-alt-ft type="double">0</pressure-alt-ft>
     </cabin-altitude>
 
-    <dme>                                                             
+    <dme>
       <frequencies>
-            <source>/instrumentation/dme/frequencies/keypad-selected-mhz</source>	<!--may be set to nav-RH-IFD on keyboard with aux button-->        
+            <source>/instrumentation/dme/frequencies/keypad-selected-mhz</source>	<!--may be set to nav-RH-IFD on keyboard with aux button-->
 		<!--<nav1-selected type="int">1</nav1-selected>
 		<nav2-selected type="int">0</nav2-selected>-->
       </frequencies>
 	<indicated-time-min>0</indicated-time-min>
-      <selector type="int">0</selector>  
-      <volume type="double">0.0</volume>    	<!--may be set to larger value by audiopanel (mon2 button)-->                                   
+      <selector type="int">0</selector>
+      <volume type="double">0.0</volume>    	<!--may be set to larger value by audiopanel (mon2 button)-->
     </dme>
 
     <heading-indicator-IFD-LH>
@@ -1113,7 +1363,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
         <groundradar>
             <range type="double">1.2</range>
         </groundradar>
-        
+
        <tcas>
 	       <serviceable type="bool">true</serviceable>
 	       <inputs>
@@ -1125,7 +1375,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<reference-dist type="double"> 2 </reference-dist>	<!-- Distance to pilot -->
 			<volume type="double"> 1 </volume>			<!-- Volume at reference distance -->
             </speaker>
-          
+
     </tcas>
 
     <transponder>
@@ -1234,9 +1484,38 @@ of the RR 250-B17F/2 engine is best.</long-description>
 
 
  </instrumentation>
-
+ <environment>
+	<temperature-degK type="double">15</temperature-degK>
+	 <aircraft-effects>
+		 <frost-level-noice type="double">0.0</frost-level-noice>
+		 <frost-level-FuslageFront type="double">0.0</frost-level-FuslageFront>
+		 <frost-level-WindshieldHeated type="double">0.0</frost-level-WindshieldHeated>
+		 <frost-level-WindshieldFront type="double">0.0</frost-level-WindshieldFront>
+		 <frost-level-PropellerBlade type="double">0.0</frost-level-PropellerBlade>
+		 <frost-level-WingLHBootInner type="double">0.0</frost-level-WingLHBootInner>
+		 <frost-level-WingLHBootOuter type="double">0.0</frost-level-WingLHBootOuter>
+		 <frost-level-WingRHBootInner type="double">0.0</frost-level-WingRHBootInner>
+		 <frost-level-WingRHBootOuter type="double">0.0</frost-level-WingRHBootOuter>
+		 <frost-level-VStab type="double">0.0</frost-level-VStab>
+		 <frost-level-HStabLH type="double">0.0</frost-level-HStabLH>
+		 <frost-level-HStabRH type="double">0.0</frost-level-HStabRH>
+		 <frost-level-PitotLH type="double">0.0</frost-level-PitotLH>
+		 <frost-level-PitotRH type="double">0.0</frost-level-PitotRH>
+		 <frost-level-Inlet type="double">0.0</frost-level-Inlet>
+		 <frost-level-StaticLH type="double">0.0</frost-level-StaticLH>
+		 <frost-level-StaticRH type="double">0.0</frost-level-StaticRH>
+		 <frost-level-StallWarnHeat type="double">0.0</frost-level-StallWarnHeat>
+		 
+		 <fog-level-noice type="double">0.0</fog-level-noice>
+		 <fog-level-WindshieldHeated type="double">0.0</fog-level-WindshieldHeated>
+		 <fog-level-WindshieldFront type="double">0.0</fog-level-WindshieldFront>
+		 <fog-level-IceNoFog type="double">0.0</fog-level-IceNoFog>
+		 
+		 
+	 </aircraft-effects>
+ </environment>
        <consumables>
-	       
+
 	       <fuel>
 		       <tank n="0">
 			       <level-gal_us type="double">20</level-gal_us>
@@ -1250,17 +1529,17 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			       <level-gal_us type="double">20</level-gal_us>
 			       <selected type="bool">true</selected>
 		       </tank>
-		       
+
 		       <tank n="3">
 			       <level-gal_us type="double">20</level-gal_us>
 			       <selected type="bool">true</selected>
 		       </tank>
-		       
+
 		       <tank n="4">
 			       <level-gal_us type="double">20</level-gal_us>
 			       <selected type="bool">true</selected>
 		       </tank>
-		       
+
 		       <tank n="5">
 			       <level-gal_us type="double">20</level-gal_us>
 			       <selected type="bool">true</selected>
@@ -1270,7 +1549,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			       <selected type="bool">true</selected>
 		       </tank>
 	       </fuel>
-	       
+
        </consumables>
 
        <engines>
@@ -1283,9 +1562,14 @@ of the RR 250-B17F/2 engine is best.</long-description>
        </engines>
 
 <nasal>
-      <canvas>
-      	<enabled type="bool">true</enabled>
-    	</canvas>
+	<!-- make sure fgdata namespaces are enabled-->
+	<std>
+		<enabled type="bool">true</enabled>
+	</std>
+	<canvas>
+		<enabled type="bool">true</enabled>
+	</canvas>
+
 	<global>
 		<file>Aircraft/extra500/Nasal/global.nas</file>
 		<file>Aircraft/extra500/Nasal/global.debug.nas</file>
@@ -1310,7 +1594,9 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<file>Aircraft/extra500/Nasal/autopilot.nas</file>
 		<file>Aircraft/extra500/Nasal/audiopanel.nas</file>
 		<file>Aircraft/extra500/Nasal/instrument.nas</file>
-		
+
+		<file>Aircraft/extra500/Nasal/environment.nas</file>
+
 		<file>Aircraft/extra500/Nasal/annunciator.nas</file>
 		<file>Aircraft/extra500/Nasal/door.nas</file>
 		<file>Aircraft/extra500/Nasal/cabin.nas</file>
@@ -1324,10 +1610,12 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<file>Aircraft/extra500/Nasal/interior.nas</file>
 		<file>Aircraft/extra500/Nasal/readinglightswitch.nas</file>
 		<file>Aircraft/extra500/Nasal/yokes.nas</file>
-		
+
 		<file>Aircraft/extra500/Nasal/route_manager.nas</file>
 		<file>Aircraft/extra500/Nasal/trimindication.nas</file>
-		
+		<file>Aircraft/extra500/Nasal/smoothweather.nas</file>
+
+
 	</extra500>
 	<IFD>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/debug.nas</file>
@@ -1335,29 +1623,30 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/widget.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/gui/listview.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/gui/dialog.nas</file>
-		
+
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/map.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/movingMap.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/tcas.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/route.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/positioned.nas</file>
-		
+
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/keypad.nas</file>
-		
+
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/page_PFD.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/page_FMS.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/page_MAP.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/page_Test.nas</file>
-		
+
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/AvidyneIFD.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/fms.nas</file>
-		
+
 	</IFD>
 	<Checklist>
 		<file>Aircraft/extra500/Dialogs/checklist.nas</file>
 	</Checklist>
 	<Dialogs>
             <file>Aircraft/extra500/Dialogs/fuelpayload.nas</file>
+            <file>Aircraft/extra500/Dialogs/failuredialog.nas</file>
             <file>Aircraft/extra500/Nasal/dialogs.nas</file>
         </Dialogs>
 	<View>
@@ -1377,10 +1666,11 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<file>Aircraft/extra500/Nasal/controls.nas</file>
 	</controls>
 	<events>
-		<file>Nasal/eventmessages.nas</file>
+		<file>Aircraft/extra500/Nasal/eventmessages.nas</file>
+		<file>Aircraft/extra500/Nasal/failurescenarios.nas</file>
 	</events>
 </nasal>
- 
+
  <payload>
   <weight>
    <name type="string">Pilot</name>
@@ -1441,11 +1731,18 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<KELVIN2RANKINE type="double">1.8</KELVIN2RANKINE>		<!-- exact factor: to be used with priority -->
 		<LBM2KG type="double">0.5144</LBM2KG>				<!-- exact factor: to be used with priority -->
 		<JETA_LBGAL type="double">6.7898</JETA_LBGAL>
-		<JETA_LB2L type="double">0.557518</JETA_LB2L>	
+		<JETA_LB2L type="double">0.557518</JETA_LB2L>
+		<JETA_USG2L type="double">3.785412</JETA_USG2L>
 		<PSI2INHG type="double">2.03602</PSI2INHG>
 		<PA2PSI type="double">0.0001450377</PA2PSI>
 		<SEC2MIN type="double">0.0166666666667</SEC2MIN>
-		<G0 type="double">9.80665</G0>		
+		<G0 type="double">9.80665</G0>
+		<P0 type="double">1013.25</P0>
+		<T0 type="double">288.15</T0>
+		<G0 type="double">9.80665</G0>
+		<R type="double">287.05</R>
+		<lambda type="double">-0.0065</lambda>
+		<Re type="double">63781550</Re>
 	</const>
 	<config>
 		<ui>
@@ -1477,7 +1774,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				<field-of-view type="double">40</field-of-view>
 				<goal-heading-offset-deg type="double">346.0</goal-heading-offset-deg>
 				<goal-pitch-offset-deg type="double">-23.0</goal-pitch-offset-deg>
-			</quickZoom>	
+			</quickZoom>
 		</view>
 	</config>
 	<door>
@@ -1491,6 +1788,26 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<state type="int">0</state>
 		</emergencyexit>
 	</door>
+	<environment>
+		<rain-norm type="double">0.0</rain-norm>
+	</environment>
+	<failurescenarios>
+		<activate type="double">0</activate>
+		<name type="string"></name>
+		<!--welcome type="int">1</welcome-->
+		<gear type="int">0</gear>
+		<fuel type="int">0</fuel>
+		<contr type="int">0</contr>
+		<controls>
+			<L-aileron type="bool">0</L-aileron>
+			<R-aileron type="bool">0</R-aileron>
+			<rudder type="bool">0</rudder>
+			<elevator type="bool">0</elevator>
+			<trim type="bool">0</trim>
+			<L-flap type="bool">0</L-flap>
+			<R-flap type="bool">0</R-flap>
+		</controls>
+	</failurescenarios>
 	<instrumentation>
 		<Audiopanel>
 			<knobs>
@@ -1531,12 +1848,12 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<pressed type="int">0</pressed>
 		</dmeSwitch>
 		<elt>
-			<accel-fps_sec type="double">0.0</accel-fps_sec> 
-			<switch-remote type="int">0</switch-remote> 
-			<switch-elt type="int">0</switch-elt> 
-			<switch-G type="bool">0</switch-G> 
+			<accel-fps_sec type="double">0.0</accel-fps_sec>
+			<switch-remote type="int">0</switch-remote>
+			<switch-elt type="int">0</switch-elt>
+			<switch-G type="bool">0</switch-G>
 			<led type="bool">0</led>
-			
+
 		</elt>
 		<TurnCoordinator>
 			<volt type="double">0</volt>
@@ -1604,6 +1921,12 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				<CabinLight>
 					<voltOut type="double">0</voltOut>
 				</CabinLight>
+				<FuelTransferR>
+					<voltOut type="double">0</voltOut>
+				</FuelTransferR>
+				<FuelTransferL>
+					<voltOut type="double">0</voltOut>
+				</FuelTransferL>
 			</BankB>
 			<BankC>
 				<Boots>
@@ -1612,6 +1935,9 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				<EnvironmentalBleed>
 					<voltOut type="double">0</voltOut>
 				</EnvironmentalBleed>
+				<FuelPump2>
+					<voltOut type="double">0</voltOut>
+				</FuelPump2>
 				<GearControl>
 					<state type="bool">1</state>
 				</GearControl>
@@ -1629,6 +1955,9 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				<Dump>
 					<voltOut type="double">0</voltOut>
 				</Dump>
+				<FuelPump1>
+					<voltOut type="double">0</voltOut>
+				</FuelPump1>
 				<GearAux1>
 					<state type="bool">1</state>
 				</GearAux1>
@@ -1680,9 +2009,23 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<Master>
 			<Autopilot>
 				<YawTrim>
-					<state type="int">0.0</state>
+					<state type="double">0</state>
 				</YawTrim>
 			</Autopilot>
+			<Fuel>
+				<Pump1>
+					<state type="int">0</state>
+				</Pump1>
+				<Pump2>
+					<state type="int">0</state>
+				</Pump2>
+				<TransferLeft>
+					<state type="int">0</state>
+				</TransferLeft>
+				<TransferRight>
+					<state type="int">0</state>
+				</TransferRight>
+			</Fuel>
 		</Master>
 	</panel>
 	<system>
@@ -1746,12 +2089,29 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<pressed type="int">0</pressed>
 		</trim>
 	</yokes>
+	<weather>
+		<debug type="bool">0</debug>
+		<interval-sec type="double">60.0</interval-sec>
+		<smooth type="bool">0</smooth>
+		<noruns type="int">0</noruns>
+		<filter-c1 type="double">0.1</filter-c1>
+		<avgmetar>
+			<pressure-sea-level-inhg type="double">29.92</pressure-sea-level-inhg>
+			<temperature-sea-level-degc type="double">15.0</temperature-sea-level-degc>
+		</avgmetar>
+	</weather>
  </extra500>
 
  <fdm>
 	<jsbsim>
 		<sim-time-sec-old>0</sim-time-sec-old>
 		<sim-dt-sec>0.008333</sim-dt-sec>
+		<aero>
+			<coefficients>
+				<cl_aileron type="double">0.01385</cl_aileron>  <!--one aileron -->
+				<cd_ice_all type="double">0.05</cd_ice_all>
+			</coefficients>
+		</aero>
 		<atmosphere>
 			<T-degC>1</T-degC>					<!--dummy value -->
 		</atmosphere>
@@ -1764,10 +2124,13 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<flap-pos-norm type="double">0.0</flap-pos-norm>		<!-- from flaps.nas -->
 			<flap-wp-cmd-norm type="double">0.0</flap-wp-cmd-norm>		<!-- from flaps.nas -->
 		</fcs>
-            	<state>
-                  	<controls-fixed type="int">1</controls-fixed>
-            	</state>
-            	<aircraft>
+           	<state>
+                 	<controls-fixed type="int">1</controls-fixed>
+            </state>
+            <aircraft>
+			<propeller>
+				<contact type="bool">0</contact>				
+			</propeller>
                   	<wing>
                         	<x_ac-ft>11.01</x_ac-ft>      				<!--dummy value -->
                         	<y_ac-ft>8.018</y_ac-ft>
@@ -1777,7 +2140,9 @@ of the RR 250-B17F/2 engine is best.</long-description>
 					<b-ft>36.089</b-ft>
 					<cd0>0.024</cd0>
 					<alpha-deg>0.0</alpha-deg>				<!--dummy value -->
-					<CX_ind type="double">0.000002</CX_ind>		<!--prop induced moment of wing coefficient -->		
+					<CX_ind type="double">0.000002</CX_ind>		<!--prop induced moment of wing coefficient -->
+					<Laileron-pos-norm-free type="double">0</Laileron-pos-norm-free>	<!--dummy value -->
+					<Raileron-pos-norm-free type="double">0</Raileron-pos-norm-free>	<!--dummy value -->
                   	</wing>
                   	<hstab>
                         	<S-ft2>30.268</S-ft2>
@@ -1796,7 +2161,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
                               	<downspring0-lbsft>16.5</downspring0-lbsft>
                               	<downspring-lbsftprad>0.5</downspring-lbsftprad>
                               	<bobweight-lbsft>0</bobweight-lbsft>
-						<Ip-lbsft2>1</Ip-lbsft2>		
+						<Ip-lbsft2>1</Ip-lbsft2>
                               	<chord-frac>0.24</chord-frac>
                               	<S-ft2>7.264</S-ft2>
                               	<c_aero-ft>2.5796</c_aero-ft>
@@ -1806,20 +2171,23 @@ of the RR 250-B17F/2 engine is best.</long-description>
                               	<elevator-pos-rad>0</elevator-pos-rad>    		<!--dummy value -->
                               	<elevator-pos-deg>0</elevator-pos-deg>    		<!--dummy value -->
 						<d_e_free-rad>0</d_e_free-rad>				<!--dummy value -->
+						<d_e_free-norm>0</d_e_free-norm>				<!--dummy value -->
                               	<trim>
                                     	<S-ft2>1.114</S-ft2>
                                     	<c_aero-ft>0.4019</c_aero-ft>
                                     	<coeff-norm>6.0</coeff-norm>        <!--this is multiplied with normalized trim position to get hinge moment of elevator -->
                               	</trim>
+                              	<yoke-force-ratio>30.0</yoke-force-ratio>
                         	</elevator>
-				<alpha-deg>0.0</alpha-deg>					<!--dummy value -->	
+				<alpha-deg>0.0</alpha-deg>					<!--dummy value -->
                   	</hstab>
 		 	 	<vstab>
                         	<S-ft2 type="double">30.236</S-ft2>
                         	<x_ac-ft type="double">27.128</x_ac-ft>
                         	<z_ac-ft type="double">8.294</z_ac-ft>
-					<cd0 type="double">0.021</cd0>	
-					<ind-rot-speed-factor type="double">-0.075</ind-rot-speed-factor>			
+					<cd0 type="double">0.021</cd0>
+					<ind-rot-speed-factor type="double">-0.075</ind-rot-speed-factor>
+					<rudder-pos-norm-free type="double">0</rudder-pos-norm-free>	<!--dummy value -->
 		  		</vstab>
 		  	<engine>
 				<OP-maxsetting-psi type="double">128</OP-maxsetting-psi>
@@ -1830,14 +2198,12 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				</OT>
 				<OT-degC type="double">0</OT-degC>					<!--dummy value -->
 				<OT-true-degC type="double">0</OT-true-degC>				<!--dummy value -->
-				<FT-degC type="double">0</FT-degC>					<!--dummy value -->
 				<motoring type="double">0</motoring>
 				<spooling-up type="double">0</spooling-up>
 				<spooling-down type="double">0</spooling-down>
 				<N1-old type="double">0.0</N1-old>					<!--dummy value -->
 				<N1-par type="double">0.0</N1-par>					<!--dummy value -->
 				<TOT-target-degC>0.0</TOT-target-degC>				<!--dummy value -->
-				<Fpress-too-low>0</Fpress-too-low>					<!--dummy value -->
 		 	</engine>
 			<events>
 				<show-events type="bool">1</show-events>				<!--set to 0 if you are fed up with those stupid messages -->
@@ -1851,8 +2217,20 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				<FLAPS30>0</FLAPS30>
 				<FLAPS15>0</FLAPS15>
 			</events>
-            	</aircraft>
-		<gear>  <!-- jack points -->
+            </aircraft>
+		<gear>  
+			<unit n="0">
+				<flatTire type="bool">0</flatTire>
+			</unit>
+			<unit n="1">
+				<flatTire type="bool">0</flatTire>
+				<brakeFail type="bool">0</brakeFail>
+			</unit>
+			<unit n="2">
+				<flatTire type="bool">0</flatTire>
+				<brakeFail type="bool">0</brakeFail>
+			</unit>
+			<!-- jack points -->
 			<unit n="10">
 				<pos-norm>0</pos-norm>
 			</unit>

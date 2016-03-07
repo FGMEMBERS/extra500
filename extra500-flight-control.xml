@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2014-05-11
+      Date:             2015-12-14
 -->
 
 <flight_control name="FCS: extra500">
@@ -141,6 +141,25 @@
     	</function>
 	</fcs_function>
 
+	<fcs_function name="aircraft/hstab/elevator/H-pilot-lbsft">
+    		<function>
+      		<product>
+            		<property>/controls/flight/elevator</property>
+            		<property>aircraft/hstab/elevator/yoke-force-ratio</property>
+       		</product>
+    		</function>
+	</fcs_function>
+
+	<switch name="elevnotfixed2">
+		<default value="aircraft/hstab/elevator/H-pilot-lbsft"/>
+		<test logic="OR" value="0">
+			state/controls-fixed eq 1
+			/extra500/failurescenarios/controls/elevator eq 1
+		</test>
+		<output>aircraft/hstab/elevator/H-pilot2-lbsft</output>
+	</switch>
+
+
 	<fcs_function name="aircraft/hstab/elevator/d_e_free-rad">
     	<function>
       	<description>stick-free elevator deflection rad</description>
@@ -164,7 +183,8 @@
                   		<property>aircraft/hstab/elevator/H-ds-lbsft</property>
                   		<property>aircraft/hstab/elevator/H-bw-lbsft</property>
                   		<property>aircraft/hstab/elevator/H-alpha-lbsft</property>
-                  		<property>aircraft/hstab/elevator/H-trim-lbsft</property>                 
+                  		<property>aircraft/hstab/elevator/H-trim-lbsft</property>  
+					<property>aircraft/hstab/elevator/H-pilot2-lbsft</property>           
             		</sum>
       		</product>
     	</function>
@@ -197,7 +217,8 @@
    		</aerosurface_scale>	
 
 <!--this makes the elevator pilot input to move along, so when the pitch trim controls the elevator position, the elevator is in the correct position-->
-		<switch name="fixedoff">
+<!-- NOTE: since the implementation of 'force control', this function is taken over by a listener in controls.nas-->
+		<!--switch name="fixedoff">
 			<default value="/controls/flight/elevator"/>
 			<test logic="AND" value="aircraft/hstab/elevator/d_e_free-norm">
 				state/controls-fixed eq 0
@@ -206,16 +227,21 @@
 				/autopilot/mode/gs-follow eq 0
 			</test>
 			<output>/controls/flight/elevator</output>
-		</switch>
+		</switch-->
 
 <!-- control choices for elevator-->
 		<switch name="elevnotfixed">
 			<default value="fcs/elevator-cmd-norm"/>
-			<test logic="AND" value="aircraft/hstab/elevator/d_e_free-norm">
-				state/controls-fixed eq 0
-				/autopilot/mode/alt eq 0
-				/autopilot/mode/vs eq 0
-				/autopilot/mode/gs-follow eq 0
+			<test logic="OR" value="aircraft/hstab/elevator/d_e_free-norm">
+				<test logic="AND">
+					/extra500/failurescenarios/controls/elevator eq 1
+				</test>
+				<test logic="AND">
+					state/controls-fixed eq 0
+					/autopilot/mode/alt eq 0
+					/autopilot/mode/vs eq 0
+					/autopilot/mode/gs-follow eq 0
+				</test>
 			</test>
 			<output>fcs/elevator-cmd-tot-nc1</output>
 		</switch>
@@ -223,6 +249,7 @@
 		<switch name="elevaltmode">
 			<default value="fcs/elevator-cmd-tot-nc1"/>
 			<test logic="AND" value="/autopilot/alt-channel/cmd-ap-elev-pos-norm">
+				/extra500/failurescenarios/controls/elevator ne 1
 				/autopilot/mode/alt eq 1
 				/autopilot/settings/ap eq 1
 				/autopilot/mode/cws-armed eq 0
@@ -233,6 +260,7 @@
 		<switch name="elevvsmode">
 			<default value="fcs/elevator-cmd-tot-nc2"/>
 			<test logic="AND" value="/autopilot/vs-channel/cmd-ap-elev-pos-norm">
+				/extra500/failurescenarios/controls/elevator ne 1
 				/autopilot/mode/vs eq 1
 				/autopilot/settings/ap eq 1
 				/autopilot/mode/cws-armed eq 0
@@ -243,6 +271,7 @@
 		<switch name="elevgsmode">
 			<default value="fcs/elevator-cmd-tot-nc3"/>
 			<test logic="AND" value="/autopilot/gs-channel/cmd-ap-elev-pos-norm">
+				/extra500/failurescenarios/controls/elevator ne 1
 				/autopilot/mode/gs eq 1
 				/autopilot/settings/ap eq 1
 				/autopilot/mode/cws-armed eq 0
@@ -256,7 +285,7 @@
               			<min>-1</min>
                			<max>1</max>
        			 </clipto>
-       		</summer>	
+       	</summer>	
 
 
      	 	<aerosurface_scale name="Elevator Control">
@@ -280,6 +309,15 @@
       			</range>
       			<output>fcs/elevator-pos-norm</output>
    		</aerosurface_scale>
+
+<!--controls yoke position: different then elevator when control system failed -->
+		<switch name="yokepos">
+			<default value="fcs/elevator-pos-norm"/>
+			<test logic="AND" value="/controls/flight/elevator">
+				/extra500/failurescenarios/controls/elevator eq 1
+			</test>
+			<output>fcs/yoke-pos-norm</output>
+		</switch>
 
 	<fcs_function name="aircraft/hstab/elevator/H-de-lbsft">
     	<function>
@@ -314,8 +352,16 @@
 
   	<channel name="Pitch trim">
 
-		<switch name="autotrim">
+		<switch name="trimfail">
 			<default value="fcs/pitch-trim-cmd-norm"/>
+			<test logic="OR" value="fcs/pitch-trim-cmd-norm1">
+				/extra500/failurescenarios/controls/trim eq 1
+			</test>
+			<output>fcs/pitch-trim-cmd-norm1</output>
+		</switch>
+
+		<switch name="autotrim">
+			<default value="fcs/pitch-trim-cmd-norm1"/>
 			<test logic="OR" value="/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm">
 				<test logic="AND" value="1">
 					<test logic="AND" value="1">
@@ -445,8 +491,16 @@
 				<min> -1 </min>
 				<max>  1 </max>
 			</range>
-			<output>fcs/left-aileron-pos-norm</output>
+			<output>fcs/left-aileron-pos-norm1</output>
 		</aerosurface_scale>
+
+		<switch name="left-aileron-free">
+			<default value="fcs/left-aileron-pos-norm1"/>
+			<test logic="AND" value="aircraft/wing/Laileron-pos-norm-free">
+				/extra500/failurescenarios/controls/L-aileron eq 1
+			</test>
+			<output>fcs/left-aileron-pos-norm</output>
+		</switch>
 			
 		<aerosurface_scale name="right aileron normalization">
 			<input>fcs/right-aileron-pos-rad</input>
@@ -458,8 +512,17 @@
 				<min> -1 </min>
 				<max>  1 </max>
 			</range>
-			<output>fcs/right-aileron-pos-norm</output>
+			<output>fcs/right-aileron-pos-norm1</output>
 		</aerosurface_scale>
+
+		<switch name="right-aileron-free">
+			<default value="fcs/right-aileron-pos-norm1"/>
+			<test logic="AND" value="aircraft/wing/Raileron-pos-norm-free">
+				/extra500/failurescenarios/controls/R-aileron eq 1
+			</test>
+			<output>fcs/right-aileron-pos-norm</output>
+		</switch>
+
 			
 	</channel>
 		
@@ -528,6 +591,14 @@
 				</range>
 				<output>fcs/rudder-pos-norm</output>
 			</aerosurface_scale>
+
+			<switch name="fcs/rudder-pos-norm1">
+				<default value="fcs/rudder-pos-norm"/>
+				<test logic="AND" value="aircraft/vstab/rudder-pos-norm-free">
+					/extra500/failurescenarios/controls/rudder eq 1
+				</test>
+			<output>fcs/rudder-pos-norm1</output>
+			</switch>
 			
 		</channel>
 		

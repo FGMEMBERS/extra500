@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg 
-#      Date:             04.04.2015
+#      Date:             15.07.2015
 #
 
 var AutopilotClass = {
@@ -192,9 +192,11 @@ var AutopilotClass = {
 		me.nModeDiseng.setValue(1);
 		me.nModeGSArmed.setValue(0);
 		me.nModeGSFollow.setValue(0);
+		setprop("/autopilot/mode/gs",0);
 		setprop("/autopilot/mode/cws-armed",0);
 		setprop("/autopilot/mode/cws",0);
 		setprop("/autopilot/settings/fly-vector",0);
+		setprop("/autopilot/mode/overpower",0);
 	},
 # checks is a roll mode (HDG or NAV) is active. Must be active to engage any pitch mode or yaw damper
 	_CheckRollModeActive : func(){
@@ -455,6 +457,20 @@ var AutopilotClass = {
 		setprop("/autopilot/mode/electrim",value);
 		}			
 	},
+	onClickOverpower : func(value){
+		if (me._CheckRollModeActive() == 1) {
+			if (value == nil) {
+				if (getprop("/autopilot/mode/overpower") == 0) {
+					setprop("/autopilot/mode/overpower",1);
+				} else {
+					setprop("/autopilot/mode/overpower",0);
+				}
+			} else {
+				setprop("/autopilot/mode/overpower",value);
+			}
+		}
+
+	},
 	initUI : func(){
 		UI.register("Autopilot HDG", 		func{extra500.autopilot.onClickHDG(); } 	);
 		UI.register("Autopilot HDG+NAV", 	func{extra500.autopilot.onClickHDGNAV(); } 	);
@@ -481,6 +497,10 @@ var AutopilotClass = {
 		UI.register("Autopilot Pitch Command down",	func{extra500.autopilot.onClickPitchCommand(-1); } 	);
 		UI.register("Autopilot Pitch Command off",	func{extra500.autopilot.onClickPitchCommand(0); } 	);
 		UI.register("Autopilot Pitch Command up",	func{extra500.autopilot.onClickPitchCommand(1); } 	);
+
+		UI.register("Autopilot Overpower",	func{extra500.autopilot.onClickOverpower(nil); } 	);
+		UI.register("Autopilot Overpower on",	func{extra500.autopilot.onClickOverpower(1); } 	);
+		UI.register("Autopilot Overpower off",	func{extra500.autopilot.onClickOverpower(0); } 	);
 		
 	},
 	

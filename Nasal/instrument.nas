@@ -17,7 +17,7 @@
 #      Date: Jun 27 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             01.02.15
+#      Date:             17.05.15
 #
 
 var DigitalInstrumentPackageClass = {
@@ -36,8 +36,8 @@ var DigitalInstrumentPackageClass = {
 		
 				
 		m.nIAT = props.globals.initNode("/fdm/jsbsim/aircraft/engine/IAT-degC",0.0,"DOUBLE");
-		m.nFuelTemp = props.globals.initNode("/fdm/jsbsim/aircraft/engine/FT-degC",0.0,"DOUBLE");
-		m.nFuelPress = props.globals.initNode("/fdm/jsbsim/aircraft/engine/FP-psi",0.0,"DOUBLE");
+		m.nFuelTemp = props.globals.initNode("/systems/fuel/FT-degC",0.0,"DOUBLE");
+		m.nFuelPress = props.globals.initNode("/systems/fuel/FP-psi",0.0,"DOUBLE");
 		
 		m.nIndicatedVDC = m._nRoot.initNode("indicatedVDC",0.0,"DOUBLE");
 		m.nIndicatedGEN = m._nRoot.initNode("indicatedGEN",0.0,"DOUBLE");

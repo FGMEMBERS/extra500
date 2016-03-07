@@ -24,7 +24,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             11.01.15
+      Date:             17.10.15
 -->
 
 	<fileheader>
@@ -35,6 +35,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	
 	<autopilot file="extra500-autopilot"/>
 	<flight_control file="extra500-flight-control"/>
+	<system file="extra500-atmosphere.xml"/>
 	<system file="extra500-system-indication.xml"/>
 	<system file="extra500-system-stallwarner.xml"/>
 	<system file="extra500-system-transponder.xml"/>
@@ -42,9 +43,11 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	<system file="extra500-system-pneumatic.xml"/>
 	<system file="extra500-system-strobe.xml"/>
 	<system file="extra500-system-gear.xml"/>
+	<system file="extra500-system-fuel.xml"/>
 	<system file="extra500-system-electric.xml"/>
 	<aerodynamics file="extra500-aerodynamics.xml"/>
 	<system file="extra500-system-elt.xml"/>
+	<system file="extra500-weather.xml"/>
 	
 	<metrics>
 		<wingarea  unit="M2">  14.025 </wingarea>
@@ -176,7 +179,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				<y>  0.00 </y>
 				<z>  0.146 </z>				
 			</location>
-			<static_friction>  0.60 </static_friction>
+			<static_friction>  0.70 </static_friction>
 			<dynamic_friction> 0.40 </dynamic_friction>
 			<rolling_friction> 0.03 </rolling_friction>
 			<spring_coeff unit="N/M">        60000 </spring_coeff>
@@ -192,7 +195,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				<y> -1.06 </y>
 				<z> 0.21 </z>
 			</location>
-			<static_friction>  0.60 </static_friction>
+			<static_friction>  0.70 </static_friction>
 			<dynamic_friction> 0.40 </dynamic_friction>
 			<rolling_friction> 0.03 </rolling_friction>
 			<spring_coeff unit="N/M">        183000 </spring_coeff>
@@ -208,7 +211,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				<y>  1.06 </y>
 				<z> 0.210 </z>
 			</location>
-			<static_friction>  0.60 </static_friction>
+			<static_friction>  0.70 </static_friction>
 			<dynamic_friction> 0.40 </dynamic_friction>
 			<rolling_friction> 0.03 </rolling_friction>
 			<spring_coeff unit="N/M">        183000 </spring_coeff>
@@ -217,7 +220,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<brake_group>RIGHT</brake_group>
 			<retractable>1</retractable>
 		</contact>
-		
+
 		<contact type="STRUCTURE" name="LEFT_WING">
 			<location unit="M">
 				<x> 4.5 </x>
@@ -350,6 +353,23 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			<brake_group>NONE</brake_group>
 			<retractable>1</retractable>
 		</contact>
+
+<!--propeller: used to dertemine if prop is broken-->
+		<contact type="BOGEY" name="PROP">
+			<location unit="M">
+				<x>  0.388 </x>
+				<y>  0.00 </y>
+				<z>  0.451 </z>				
+			</location>
+			<static_friction>  0.0001 </static_friction>
+			<dynamic_friction> 0.0001 </dynamic_friction>
+			<rolling_friction> 0.0001 </rolling_friction>
+			<spring_coeff unit="N/M">        1 </spring_coeff>
+			<damping_coeff unit="N/M/SEC">  1 </damping_coeff>
+			<max_steer unit="DEG"> 0 </max_steer>
+			<brake_group>NONE</brake_group>
+			<retractable>0</retractable>
+		</contact>
 		
 	</ground_reactions>
 							
@@ -428,8 +448,8 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 			</location>
 			<priority> 1 </priority>
 			<type>JET-A</type> 
-			<capacity unit="KG"> 0.25 </capacity>
-			<contents unit="KG"> 0.25 </contents>
+			<capacity unit="KG"> 0.15 </capacity>
+			<contents unit="KG"> 0.15 </contents>
 		</tank>
 		<tank type="FUEL" number="4">
 			<!-- right collector compartment -->

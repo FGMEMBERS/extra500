@@ -1,0 +1,1267 @@
+<?xml version="1.0" encoding="utf-8" ?>
+	
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Eric van den Berg
+      Date: 2015-05-08
+
+      Last change: Eric van den Berg     
+      Date: 2016-01-16           
+-->
+
+<!--
+
+all flows in Pounds per second (pps) except when explicitly mentioned
+
+/fdm/jsbsim/aircraft/engine/FF-lbs_h
+/fdm/jsbsim/aircraft/engine/FF-l_h
+
+/fdm/jsbsim/aircraft/engine/Fpress-too-low
+/accelerations/n-z-cg-fps_sec
+
+propulsion/tank[i]/contents-lbs
+propulsion/tank[i]/pct-full
+
+
+control switches:
+/extra500/panel/Master/Fuel/Pump1/state
+/extra500/panel/Master/Fuel/Pump2/state
+
+/extra500/panel/Master/Fuel/TransferLeft/state
+/extra500/panel/Master/Fuel/TransferRight/state
+
+
+CB-s:
+
+/extra500/panel/CircuitBreaker/BankC/FuelPump2/voltOut
+/extra500/panel/CircuitBreaker/BankD/FuelPump1/voltOut
+/extra500/panel/CircuitBreaker/BankB/FuelTransferL/voltOut
+/extra500/panel/CircuitBreaker/BankB/FuelTransferR/voltOut
+
+
+output: 
+propulsion/tank[i]/external-flow-rate-pps
+i=0-6 left to right
+
+
+
+
+
+-->
+<system name="fuel">
+
+<!-- FUEL TEMP -->
+	<channel name="fuel temperature">>
+
+		<fcs_function name="/systems/fuel/FT-1-degC">
+    			<function>
+       			<description>new fuel temp due to energy transfer to outside air</description>
+			<sum>
+				<property>/systems/fuel/FT-degC</property>
+				<product>
+					<value>0.028</value>
+					<difference>
+						<property>atmosphere/T-degC</property>
+						<property>/systems/fuel/FT-degC</property>
+					</difference>
+					<property>sim-dt-sec</property>
+					<pow>
+						<max>
+							<value>0.1</value>
+							<product>
+								<property>propulsion/total-fuel-lbs</property>
+								<property>/extra500/const/LBM2KG</property>
+								<sum>							<!-- Jet-A1 fuel specific energy kJ/kg-K -->
+									<product>
+										<value>0.00481</value>
+										<property>/systems/fuel/FT-degC</property>
+									</product>
+									<value>1.7833</value>
+								</sum>
+							</product>
+						</max>
+						<value>-1</value>
+					</pow>
+				</product>
+			</sum>
+    			</function>
+		</fcs_function>
+
+		<switch name="FTinit">
+			<default value="atmosphere/T-degC"/>
+			<test logic="OR" value="/systems/fuel/FT-1-degC">
+				simulation/sim-time-sec gt 100
+				aircraft/engine/start-latch ne 0
+			</test>
+			<output>/systems/fuel/FT-degC</output>
+		</switch>
+
+	</channel>
+
+	<channel name="fuel pressure">>
+
+		<fcs_function name="/systems/fuel/Fdensity-kgm3">
+   			 <function>
+      			 <description>Fuel Density</description>
+					<table>
+            				<independentVar lookup="row">/systems/fuel/FT-degC</independentVar>
+            					<tableData>
+								-40	841
+								90	750	
+            					</tableData>
+      				</table>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="/systems/fuel/Fvis-m2ps">
+   			 <function>
+      			 <description>Fuel kinematic visc</description>
+					<product>
+						<value>0.000001</value>
+						<sum>
+							<value>-2.09519711241635</value>
+							<product>
+								<value>311.396772184257</value>
+								<pow>
+									<sum>
+										<property>/systems/fuel/FT-degC</property>
+										<value>66.8358944387488</value>
+									</sum>
+									<value>-1</value>
+								</pow>
+							</product>
+							<product>
+								<value>0.00788931550858887</value>
+								<property>/systems/fuel/FT-degC</property>
+							</product>
+						</sum>
+					</product>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="/systems/fuel/F-RE">
+   			 <function>
+      			 <description>Fuel Reynolds number</description>
+	 				<product>
+						<value>0.00223864522485714</value>
+						<pow>
+							<property>/systems/fuel/Fvis-m2ps</property>
+							<value>-1</value>
+						</pow>
+					</product>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="/systems/fuel/F-lambda">
+   			 <function>
+      			 <description>Fuel lambda laminar</description>
+	 				<product>
+						<value>64</value>
+						<pow>
+							<property>/systems/fuel/F-RE</property>
+							<value>-1</value>
+						</pow>
+					</product>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="/systems/fuel/F-tube-prloss-psid">
+   			 <function>
+      			 <description>Fuel pressure loss in tubing</description>
+	 				<product>
+						<property>/extra500/const/PA2PSI</property>
+						<value>-0.00372</value>
+						<property>/systems/fuel/F-lambda</property>
+						<property>/systems/fuel/Fdensity-kgm3</property>
+						<property>aircraft/engine/FF-l_h</property>
+						<property>aircraft/engine/FF-l_h</property>
+					</product>
+   			 </function>
+		</fcs_function>
+
+<!-- Fuel filter pressure loss (including opening of bypass and indication switch) -->
+		<switch name="fuelfilter-bypass">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/systems/fuel/F-filter-prloss-psid lt -1.2
+				/systems/fuel/fuelfilter/bypass/state eq 1
+			</test>
+			<output>/systems/fuel/fuelfilter/bypass/state</output>
+		</switch>
+
+		<fcs_function name="/systems/fuel/fuelfilter/zeta">
+   			 <function>
+      			 <description>zeta fuel fliter</description>
+					<table>
+            				<independentVar lookup="row">/systems/fuel/fuelfilter/clogged</independentVar>
+						<independentVar lookup="column">/systems/fuel/fuelfilter/bypass/state</independentVar>
+            					<tableData>
+									0			1
+								0	-0.000000034	-0.00000032
+								1	-0.000055		-0.00000032
+            					</tableData>
+      				</table>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="/systems/fuel/F-filter-prloss-psid">
+   			 <function>
+      			 <description>Fuel pressure loss in fuel filter</description>
+	 				<product>
+						<property>/systems/fuel/fuelfilter/zeta</property>
+						<property>/systems/fuel/F-lambda</property>
+						<property>/systems/fuel/Fdensity-kgm3</property>
+						<property>aircraft/engine/FF-l_h</property>
+						<property>aircraft/engine/FF-l_h</property>
+					</product>
+   			 </function>
+		</fcs_function>
+
+		<switch name="FF-bypass-switch">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fuel/F-filter-prloss-psid lt -0.8
+				/systems/fuel/fuelfilter/bypass/switch/serviceable eq 1
+			</test>
+			<output>/systems/fuel/fuelfilter/bypass/switch/state</output>
+		</switch>
+
+<!-- fuel flow transducer pressure loss (including blocked turbine) -->
+
+		<fcs_function name="/systems/fuel/FFtransducer/zeta">
+   			 <function>
+      			 <description>zeta fuel fliter</description>
+					<table>
+            				<independentVar lookup="row">/systems/fuel/FFtransducer/blocked</independentVar>
+            					<tableData>			
+								0	-0.000000029	
+								1	-0.0000000577	
+            					</tableData>
+      				</table>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="/systems/fuel/F-fftrans-prloss-psid">
+   			 <function>
+      			 <description>Fuel pressure loss in fuel flow transducer</description>
+	 				<product>
+						<property>/systems/fuel/FFtransducer/zeta</property>
+						<property>/systems/fuel/F-lambda</property>
+						<property>/systems/fuel/Fdensity-kgm3</property>
+						<property>aircraft/engine/FF-l_h</property>
+						<property>aircraft/engine/FF-l_h</property>
+					</product>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="/systems/fuel/F-hydr-press-psid">
+   			 <function>
+      			 <description>Fuel pressure hydrostatic</description>
+	 				<product>
+						<property>accelerations/Nz</property>
+						<value>1.4</value>
+					</product>
+   			 </function>
+		</fcs_function>
+
+		<switch name="FuelPump1state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/extra500/panel/Master/Fuel/Pump1/state eq 1
+				/extra500/panel/CircuitBreaker/BankD/FuelPump1/voltOut ge 10
+				/systems/fuel/FuelPump1/serviceable eq 1
+			</test>
+			<output>/systems/fuel/FuelPump1/state</output>
+		</switch>
+
+		<switch name="FuelPump2state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/extra500/panel/Master/Fuel/Pump2/state eq 1
+				/extra500/panel/CircuitBreaker/BankC/FuelPump2/voltOut ge 10
+				/systems/fuel/FuelPump2/serviceable eq 1
+			</test>
+			<output>/systems/fuel/FuelPump2/state</output>
+		</switch>
+
+		<switch name="FuelPump1press">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fuel/FuelPump1/state eq 1
+				/systems/fuel/FP1checkvalve/serviceable eq 1
+			</test>
+			<output>/systems/fuel/FuelPump1/press</output>
+		</switch>
+
+		<switch name="FuelPump2press">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fuel/FuelPump2/state eq 1
+				/systems/fuel/FP2checkvalve/serviceable eq 1
+			</test>
+			<output>/systems/fuel/FuelPump2/press</output>
+		</switch>
+
+		<fcs_function name="/systems/fuel/F-pumppress-psid">
+   			 <function>
+      			 <description>fuel pump Fuel Pressure</description>
+	 				<product>
+						<max>	
+							<property>/systems/fuel/FuelPump1/press</property>
+							<property>/systems/fuel/FuelPump2/press</property>
+						</max>
+						<table>
+            					<independentVar lookup="row">atmosphere/pressure-altitude</independentVar>
+            					<tableData>
+								-1000	20	
+								9000	19.5	
+								17500	19	
+								20100	18.5	
+								22000	18	
+								22500	17.5	
+								23100	17	
+								23500	16.5	
+								25000	14.5	
+            					</tableData>
+      					</table>
+					</product>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="/systems/fuel/F-press-psig">
+   			 <function>
+      			 <description>Fuel pressure loss</description>
+	 				<sum>
+						<property>/systems/fuel/F-pumppress-psid</property>
+						<property>/systems/fuel/F-hydr-press-psid</property>
+						<property>/systems/fuel/F-tube-prloss-psid</property>
+						<property>/systems/fuel/F-filter-prloss-psid</property>
+						<property>/systems/fuel/F-fftrans-prloss-psid</property>
+					</sum>
+   			 </function>
+		</fcs_function>
+
+		<fcs_function name="/systems/fuel/FPmin-psig">
+   			 <function>
+      			 <description>minimum Fuel Pressure</description>
+					<table>
+            				<independentVar lookup="row">atmosphere/pressure-altitude</independentVar>
+            					<tableData>
+								0	-4.42
+								6000	-2.7
+								10000	-1.62
+								15000	-0.392
+								20000	0.737
+								25000	1.47
+            					</tableData>
+      				</table>
+   			 </function>
+		</fcs_function>
+
+		<switch name="toolowfuelpress">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND" value="1">
+					/systems/fuel/FPmin-psig gt /systems/fuel/F-press-psig
+				</test>
+				<test logic="AND" value="1">
+					/systems/fuel/Fpress-too-low eq 1
+					aircraft/engine/N1-par gt 10
+				</test>
+			</test>
+			<output>/systems/fuel/Fpress-too-low</output>
+		</switch>
+
+	</channel>
+
+
+
+	<channel name="indication">
+
+		<!-- for annunciator panel -->
+		<switch name="llowfuel">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				propulsion/tank[2]/pct-full lt 68
+			</test>
+			<output>/systems/fuel/LHtank/lowfuel/state</output>
+		</switch>
+
+		<!-- for annunciator panel -->
+		<switch name="rlowfuel">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				propulsion/tank[4]/pct-full lt 68
+			</test>
+			<output>/systems/fuel/RHtank/lowfuel/state</output>
+		</switch>
+
+		<!-- for annunciator panel -->
+		<switch name="fuelfilterbypass">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fuel/fuelfilter/bypass/state eq 1
+				/systems/fuel/fuelfilter/bypass/switch/serviceable eq 1
+			</test>
+			<output>/systems/fuel/fuelfilter/bypass/switch/state</output>
+		</switch>
+
+		<!-- for indication on engine instrument -->
+		<lag_filter name ="/systems/fuel/FP-psi">
+ 			<input>/systems/fuel/F-press-psig</input>
+			<c1>1.0</c1>
+		</lag_filter>
+
+		<!-- for annunciator panel -->
+		<switch name="lowfuelpress">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fuel/FP-psi lt 1.5
+			</test>
+			<output>/systems/fuel/lowFuelPressure</output>
+		</switch>
+
+
+	</channel>
+
+	<channel name="engine flow">
+
+		<!-- /systems/fuel/FlowbalanceLR: 1 = all fuel from left tank; 0 = all fuel from RH tank -->
+
+		<fcs_function name="LHengfuelflow">
+			<function>
+				<product>
+					<value>0.000277777777778</value>
+					<property>aircraft/engine/FF-lbs_h</property>
+					<property>/systems/fuel/FlowbalanceLR</property>
+				</product>
+			</function>
+			<output>/systems/fuel/LHtank/collector/engine/outflow</output>
+		</fcs_function>
+
+		<fcs_function name="RHengfuelflow">
+			<function>
+				<product>
+					<value>0.000277777777778</value>
+					<property>aircraft/engine/FF-lbs_h</property>
+					<abs>	
+						<sum>		
+							<value>-1</value>		
+							<property>/systems/fuel/FlowbalanceLR</property>
+						</sum>
+					</abs>			
+				</product>
+			</function>
+			<output>/systems/fuel/RHtank/collector/engine/outflow</output>
+		</fcs_function>
+
+<!-- netflow for 'engine' tank -->
+		<switch name="tank3 flow">
+			<default value="0.1"/>
+			<test logic="OR" value="0">
+				<test logic="OR">	
+					/systems/fuel/Fpress-too-low eq 1	
+					accelerations/Nz lt 0	
+					/extra500/system/fuel/SelectValve eq 0	
+					/extra500/system/fuel/SelectValve eq 4	
+				</test>
+				<test logic="AND">
+					<test logic="OR">			
+						propulsion/tank[2]/contents-lbs lt 15
+						/systems/fuel/LHtank/collector/pickupscreen/clogged eq 1
+						/systems/fuel/LHtank/checkvalve/serviceable eq 0	
+					</test>
+					<test logic="OR">		
+						/extra500/system/fuel/SelectValve eq 1	
+					</test>
+				</test>
+				<test logic="AND">
+					<test logic="OR">		
+						propulsion/tank[4]/contents-lbs lt 15
+						/systems/fuel/RHtank/collector/pickupscreen/clogged eq 1
+						/systems/fuel/RHtank/checkvalve/serviceable eq 0
+					</test>
+					<test logic="OR">			
+						/extra500/system/fuel/SelectValve eq 3	
+					</test>
+				</test>
+				<test logic="AND">
+					<test logic="OR">				
+						propulsion/tank[4]/contents-lbs lt 15
+						/systems/fuel/RHtank/collector/pickupscreen/clogged eq 1
+						/systems/fuel/RHtank/checkvalve/serviceable eq 0	
+					</test>
+					<test logic="OR">			
+						propulsion/tank[2]/contents-lbs lt 15
+						/systems/fuel/LHtank/collector/pickupscreen/clogged eq 1
+						/systems/fuel/LHtank/checkvalve/serviceable eq 0	
+					</test>
+					<test logic="OR">			
+						/extra500/system/fuel/SelectValve eq 2
+					</test>	
+				</test>		
+			</test>
+			<output>propulsion/tank[3]/external-flow-rate-pps</output>
+		</switch>
+
+<!--used for fast/immediate engine failures, so other than 'normal' fuel cut-off things, see above -->
+		<switch name="tank3 empty">
+			<default value="propulsion/tank[3]/external-flow-rate-pps"/>
+			<test logic="OR" value="-10">
+				/systems/engine/failure-fast eq 1
+				/environment/aircraft-effects/frost-level-Inlet gt 0.2
+			</test>
+			<output>propulsion/tank[3]/external-flow-rate-pps</output>
+		</switch>
+
+	</channel>
+
+	<channel name="LHmotiveflow">
+
+		<switch name="/systems/fuel/LHtank/motivepump/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/extra500/panel/CircuitBreaker/BankB/FuelTransferL/voltOut gt 10
+				/extra500/panel/Master/Fuel/TransferLeft/state eq 1
+				/systems/fuel/LHtank/motivepump/serviceable eq 1
+			</test>
+		</switch>
+
+		<fcs_function name="LHmotivepress">
+			<function>
+				<product>
+					<property>/extra500/panel/CircuitBreaker/BankB/FuelTransferL/voltOut</property>
+					<property>/extra500/panel/Master/Fuel/TransferLeft/state</property>
+					<abs>	
+						<sum>				
+							<property>/systems/fuel/LHtank/motivefilter/clogged</property>
+							<value>-1</value>
+						</sum>
+					</abs>
+					<pow>
+						<value>24.5</value>
+						<value>-1</value>
+					</pow>
+				</product>
+			</function>
+			<output>/systems/fuel/LHtank/motivepump/press</output>
+		</fcs_function>
+
+		<switch name="/systems/fuel/LHtank/motivepump/press2">
+			<default value="/systems/fuel/LHtank/motivepump/press"/>
+			<test logic="OR" value="0">
+				propulsion/tank[2]/contents-lbs lt 6.8
+				/systems/fuel/LHtank/motivepump/serviceable eq 0
+			</test>
+			<output>/systems/fuel/LHtank/motivepump/press</output>
+		</switch>
+
+<!-- aux tank overpressure valve 0 = closed, 1 = open-->
+		<switch name="/systems/fuel/LHtank/aux/motiveoprvalve/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fuel/LHtank/aux/motiveoprvalve/serviceable eq 1
+				/systems/fuel/LHtank/motivepump/press ge 1
+			</test>
+		</switch>
+
+<!-- pressure switch for fuel transfer light 0 = high press, light off; 1 = low press, light on-->
+		<switch name="/systems/fuel/LHtank/prswitch/state1">
+			<default value="1"/>
+			<test logic="AND" value="0">
+				<test logic="AND">
+					/systems/fuel/LHtank/prswitch/serviceable eq 1
+				</test>
+				<test logic="OR">
+					/systems/fuel/LHtank/motivepump/press ge 1
+				</test>
+			</test>
+			<output>/systems/fuel/LHtank/prswitch/state</output>
+		</switch>
+
+<!-- motive (high pressure) flow of main tank inner jet pump -->
+		<fcs_function name="/systems/fuel/LHtank/main/innerjetpump/motiveflow">
+			<function>
+				<product>
+					<value>0.0266</value>
+					<pow>
+						<property>/systems/fuel/LHtank/motivepump/press</property>
+						<value>0.5</value>
+					</pow>
+					<abs>	
+						<sum>				
+							<property>/systems/fuel/LHtank/main/innerjetpump/clogged</property>
+							<value>-1</value>
+						</sum>
+					</abs>
+				</product>
+			</function>
+		</fcs_function>
+
+<!-- outflow (low pressure) of main tank inner jet pump (to collector compartment) -->
+		<fcs_function name="/systems/fuel/LHtank/main/innerjetpump/outflow-raw">
+			<function>
+				<product>
+					<property>/systems/fuel/LHtank/main/innerjetpump/effectiveness</property>
+					<property>/systems/fuel/LHtank/main/innerjetpump/motiveflow</property>
+				</product>
+			</function>
+		</fcs_function>
+
+		<switch name="/systems/fuel/LHtank/main/innerjetpump/outflow">
+			<default value="/systems/fuel/LHtank/main/innerjetpump/outflow-raw"/>
+			<test logic="OR" value="0">
+				propulsion/tank[1]/contents-lbs lt 0.34
+				propulsion/tank[1]/pct-full gt 99
+			</test>
+		</switch>
+
+<!-- motive (high pressure) flow of main tank outer jet pump -->
+		<fcs_function name="/systems/fuel/LHtank/main/outerjetpump/motiveflow">
+			<function>
+				<product>
+					<value>0.0266</value>
+					<pow>
+						<property>/systems/fuel/LHtank/motivepump/press</property>
+						<value>0.5</value>
+					</pow>
+					<abs>	
+						<sum>				
+							<property>/systems/fuel/LHtank/main/outerjetpump/clogged</property>
+							<value>-1</value>
+						</sum>
+					</abs>
+				</product>
+			</function>
+		</fcs_function>
+
+<!-- outflow (low pressure) of main tank outer jet pump (to collector compartment) -->
+		<fcs_function name="/systems/fuel/LHtank/main/outerjetpump/outflow-raw">
+			<function>
+				<product>
+					<property>/systems/fuel/LHtank/main/outerjetpump/effectiveness</property>
+					<property>/systems/fuel/LHtank/main/outerjetpump/motiveflow</property>
+				</product>
+			</function>
+		</fcs_function>
+
+		<switch name="/systems/fuel/LHtank/main/outerjetpump/outflow">
+			<default value="/systems/fuel/LHtank/main/outerjetpump/outflow-raw"/>
+			<test logic="OR" value="0">
+				propulsion/tank[1]/contents-lbs lt 2.6
+				propulsion/tank[1]/pct-full gt 99
+			</test>
+		</switch>
+
+<!-- motive (high pressure) flow of aux tank jet pump -->
+		<fcs_function name="/systems/fuel/LHtank/aux/jetpump/motiveflow">
+			<function>
+				<product>
+					<value>0.0266</value>
+					<pow>
+						<property>/systems/fuel/LHtank/motivepump/press</property>
+						<value>0.5</value>
+					</pow>
+					<abs>	
+						<sum>				
+							<property>/systems/fuel/LHtank/aux/jetpump/clogged</property>
+							<value>-1</value>
+						</sum>
+					</abs>
+					<property>/systems/fuel/LHtank/aux/motiveoprvalve/state</property>
+				</product>
+			</function>
+		</fcs_function>
+
+<!-- outflow (low pressure) of aux tank jet pump (to main tank) -->
+		<fcs_function name="/systems/fuel/LHtank/aux/jetpump/outflow-raw">
+			<function>
+				<product>
+					<property>/systems/fuel/LHtank/aux/jetpump/effectiveness</property>
+					<property>/systems/fuel/LHtank/aux/jetpump/motiveflow</property>
+				</product>
+			</function>
+		</fcs_function>
+
+		<switch name="/systems/fuel/LHtank/aux/jetpump/outflow">
+			<default value="/systems/fuel/LHtank/aux/jetpump/outflow-raw"/>
+			<test logic="OR" value="0">
+				propulsion/tank[0]/contents-lbs lt 0.48
+				propulsion/tank[1]/pct-full gt 99
+			</test>
+		</switch>
+
+<!-- flow from collector tank to main tank through flapper valves -->
+
+		<switch name="/systems/fuel/LHtank/collector/flappervalves/leakrate">
+			<default value="/systems/fuel/LHtank/collector/flappervalves/leakrate-raw"/>
+			<test logic="OR" value="0">
+				propulsion/tank[2]/contents-lbs lt 0.068
+			</test>
+		</switch>
+
+<!-- flow from main tank to collector through flapper valves -->
+		<fcs_function name="/systems/fuel/LHtank/collector/flappervalves/flow-raw">
+			<function>
+				<product>
+					<value>0.0285</value>
+					<difference>
+						<property>propulsion/tank[1]/pct-full</property>
+						<property>propulsion/tank[2]/pct-full</property>
+					</difference>
+				</product>
+			</function>
+		</fcs_function>
+
+		<switch name="/systems/fuel/LHtank/collector/flappervalves/flow">
+			<default value="/systems/fuel/LHtank/collector/flappervalves/flow-raw"/>
+			<test logic="OR" value="0">
+				propulsion/tank[1]/pct-full lt propulsion/tank[2]/pct-full
+			</test>
+		</switch>
+
+<!--DRAINS-->
+<!--sump drain -->
+		<fcs_function name="/systems/fuel/LHtank/collector/drain/flow-raw">
+    			<function>
+       			<description>sump drain flow</description>
+       				<table>
+            				<independentVar lookup="row">propulsion/tank[2]/pct-full</independentVar>
+            				<tableData>
+						0	0
+						100	0.03
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<switch name="/systems/fuel/LHtank/collector/drain/flow">
+			<default value="0"/>
+			<test logic="OR" value="/systems/fuel/LHtank/collector/drain/flow-raw">
+				/systems/fuel/LHtank/collector/drain/state eq 1
+				/systems/fuel/LHtank/collector/drain/serviceable eq 0
+			</test>
+		</switch>
+
+<!--main tank drains -->
+		<fcs_function name="/systems/fuel/LHtank/main/draininboard/flow-raw">
+    			<function>
+       			<description>main tank inner drain flow</description>
+       				<table>
+            				<independentVar lookup="row">propulsion/tank[1]/pct-full</independentVar>
+            				<tableData>
+						1	0
+						100	0.06
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<switch name="/systems/fuel/LHtank/main/draininboard/flow">
+			<default value="0"/>
+			<test logic="OR" value="/systems/fuel/LHtank/main/draininboard/flow-raw">
+				/systems/fuel/LHtank/main/draininboard/state eq 1
+				/systems/fuel/LHtank/main/draininboard/serviceable eq 0
+			</test>
+		</switch>
+
+		<fcs_function name="/systems/fuel/LHtank/main/drainoutboard/flow-raw">
+    			<function>
+       			<description>main tank out drain flow</description>
+       				<table>
+            				<independentVar lookup="row">propulsion/tank[1]/pct-full</independentVar>
+            				<tableData>
+						10	0
+						100	0.06
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<switch name="/systems/fuel/LHtank/main/drainoutboard/flow">
+			<default value="0"/>
+			<test logic="OR" value="/systems/fuel/LHtank/main/drainoutboard/flow-raw">
+				/systems/fuel/LHtank/main/drainoutboard/state eq 1
+				/systems/fuel/LHtank/main/drainoutboard/serviceable eq 0
+			</test>
+		</switch>
+
+<!--aux tank drains -->
+		<fcs_function name="/systems/fuel/LHtank/aux/draininboard/flow-raw">
+    			<function>
+       			<description>aux tank inner drain flow</description>
+       				<table>
+            				<independentVar lookup="row">propulsion/tank[0]/pct-full</independentVar>
+            				<tableData>
+						1	0
+						100	0.06
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<switch name="/systems/fuel/LHtank/aux/draininboard/flow">
+			<default value="0"/>
+			<test logic="OR" value="/systems/fuel/LHtank/aux/draininboard/flow-raw">
+				/systems/fuel/LHtank/aux/draininboard/state eq 1
+				/systems/fuel/LHtank/aux/draininboard/serviceable eq 0
+			</test>
+		</switch>
+
+		<fcs_function name="/systems/fuel/LHtank/aux/drainoutboard/flow-raw">
+    			<function>
+       			<description>aux tank out drain flow</description>
+       				<table>
+            				<independentVar lookup="row">propulsion/tank[0]/pct-full</independentVar>
+            				<tableData>
+						10	0
+						100	0.06
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<switch name="/systems/fuel/LHtank/aux/drainoutboard/flow">
+			<default value="0"/>
+			<test logic="OR" value="/systems/fuel/LHtank/aux/drainoutboard/flow-raw">
+				/systems/fuel/LHtank/aux/drainoutboard/state eq 1
+				/systems/fuel/LHtank/aux/drainoutboard/serviceable eq 0
+			</test>
+		</switch>
+
+<!-- ADDING ALL FLOWS -->
+<!-- possible overflow collector tank to main tank -->
+		<switch name="/systems/fuel/LHtank/collector/overflow">
+			<default value="0"/>
+			<test logic="AND" value="/systems/fuel/LHtank/collector/overflow-raw">
+				propulsion/tank[2]/pct-full ge 95
+				propulsion/tank[2]/pct-full gt propulsion/tank[1]/pct-full
+			</test>
+		</switch>
+
+<!-- netflow for auxtank -->
+		<summer name="/systems/fuel/LHtank/aux/netflow">
+			<input>/systems/fuel/LHtank/aux/jetpump/motiveflow</input>
+			<input>-/systems/fuel/LHtank/aux/jetpump/outflow</input>
+			<input>-/systems/fuel/LHtank/aux/draininboard/flow</input>
+			<input>-/systems/fuel/LHtank/aux/drainoutboard/flow</input>
+			<input>-/systems/fuel/LHtank/aux/leakage/flow</input>
+			<output>propulsion/tank[0]/external-flow-rate-pps</output>
+		</summer>
+
+<!-- netflow for maintank -->
+		<summer name="/systems/fuel/LHtank/main/netflow">
+			<input>/systems/fuel/LHtank/main/innerjetpump/motiveflow</input>
+			<input>/systems/fuel/LHtank/main/outerjetpump/motiveflow</input>
+			<input>-/systems/fuel/LHtank/main/innerjetpump/outflow</input>
+			<input>-/systems/fuel/LHtank/main/outerjetpump/outflow</input>
+			<input>/systems/fuel/LHtank/collector/flappervalves/leakrate</input>
+			<input>-/systems/fuel/LHtank/collector/flappervalves/flow</input>
+			<input>/systems/fuel/LHtank/aux/jetpump/outflow</input>
+			<input>/systems/fuel/LHtank/collector/overflow</input>
+			<input>-/systems/fuel/LHtank/main/draininboard/flow</input>
+			<input>-/systems/fuel/LHtank/main/drainoutboard/flow</input>
+			<input>-/systems/fuel/LHtank/main/leakage/flow</input>
+			<output>propulsion/tank[1]/external-flow-rate-pps</output>
+		</summer>
+
+<!-- netflow for collector tank -->
+		<summer name="/systems/fuel/LHtank/collector/netflow">
+			<input>-/systems/fuel/LHtank/main/innerjetpump/motiveflow</input>
+			<input>-/systems/fuel/LHtank/main/outerjetpump/motiveflow</input>
+			<input>-/systems/fuel/LHtank/aux/jetpump/motiveflow</input>
+			<input>/systems/fuel/LHtank/main/innerjetpump/outflow</input>
+			<input>/systems/fuel/LHtank/main/outerjetpump/outflow</input>
+			<input>-/systems/fuel/LHtank/collector/flappervalves/leakrate</input>
+			<input>/systems/fuel/LHtank/collector/flappervalves/flow</input>
+			<input>-/systems/fuel/LHtank/collector/overflow</input>
+			<input>-/systems/fuel/LHtank/collector/drain/flow</input>
+			<input>-/systems/fuel/LHtank/collector/engine/outflow</input>
+			<input>-/systems/fuel/LHtank/collector/leakage/flow</input>
+			<output>propulsion/tank[2]/external-flow-rate-pps</output>
+		</summer>
+
+	</channel>
+
+	<channel name="RHmotiveflow">
+
+		<switch name="/systems/fuel/RHtank/motivepump/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/extra500/panel/CircuitBreaker/BankB/FuelTransferR/voltOut gt 10
+				/extra500/panel/Master/Fuel/TransferRight/state eq 1
+				/systems/fuel/RHtank/motivepump/serviceable eq 1
+			</test>
+		</switch>
+
+		<fcs_function name="RHmotivepress">
+			<function>
+				<product>
+					<property>/extra500/panel/CircuitBreaker/BankB/FuelTransferR/voltOut</property>
+					<property>/extra500/panel/Master/Fuel/TransferRight/state</property>
+					<abs>	
+						<sum>				
+							<property>/systems/fuel/RHtank/motivefilter/clogged</property>
+							<value>-1</value>
+						</sum>
+					</abs>
+					<pow>
+						<value>24.5</value>
+						<value>-1</value>
+					</pow>
+				</product>
+			</function>
+			<output>/systems/fuel/RHtank/motivepump/press</output>
+		</fcs_function>
+
+		<switch name="/systems/fuel/RHtank/motivepump/press2">
+			<default value="/systems/fuel/RHtank/motivepump/press"/>
+			<test logic="OR" value="0">
+				propulsion/tank[4]/contents-lbs lt 6.8
+				/systems/fuel/RHtank/motivepump/serviceable eq 0
+			</test>
+			<output>/systems/fuel/RHtank/motivepump/press</output>
+		</switch>
+
+<!-- aux tank overpressure valve 0 = closed, 1 = open-->
+		<switch name="/systems/fuel/RHtank/aux/motiveoprvalve/state">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fuel/RHtank/aux/motiveoprvalve/serviceable eq 1
+				/systems/fuel/RHtank/motivepump/press ge 1
+			</test>
+		</switch>
+
+<!-- pressure switch for fuel transfer light 0 = high press, light off; 1 = low press, light on-->
+		<switch name="/systems/fuel/RHtank/prswitch/state1">
+			<default value="1"/>
+			<test logic="AND" value="0">
+				<test logic="AND">
+					/systems/fuel/RHtank/prswitch/serviceable eq 1
+				</test>
+				<test logic="OR">
+					/systems/fuel/RHtank/motivepump/press ge 1
+				</test>
+			</test>
+			<output>/systems/fuel/RHtank/prswitch/state</output>
+		</switch>
+
+<!-- motive (high pressure) flow of main tank inner jet pump -->
+		<fcs_function name="/systems/fuel/RHtank/main/innerjetpump/motiveflow">
+			<function>
+				<product>
+					<value>0.0266</value>
+					<pow>
+						<property>/systems/fuel/RHtank/motivepump/press</property>
+						<value>0.5</value>
+					</pow>
+					<abs>	
+						<sum>				
+							<property>/systems/fuel/RHtank/main/innerjetpump/clogged</property>
+							<value>-1</value>
+						</sum>
+					</abs>
+				</product>
+			</function>
+		</fcs_function>
+
+<!-- outflow (low pressure) of main tank inner jet pump (to collector compartment) -->
+		<fcs_function name="/systems/fuel/RHtank/main/innerjetpump/outflow-raw">
+			<function>
+				<product>
+					<property>/systems/fuel/RHtank/main/innerjetpump/effectiveness</property>
+					<property>/systems/fuel/RHtank/main/innerjetpump/motiveflow</property>
+				</product>
+			</function>
+		</fcs_function>
+
+		<switch name="/systems/fuel/RHtank/main/innerjetpump/outflow">
+			<default value="/systems/fuel/RHtank/main/innerjetpump/outflow-raw"/>
+			<test logic="OR" value="0">
+				propulsion/tank[5]/contents-lbs lt 0.34
+				propulsion/tank[5]/pct-full gt 99
+			</test>
+		</switch>
+
+<!-- motive (high pressure) flow of main tank outer jet pump -->
+		<fcs_function name="/systems/fuel/RHtank/main/outerjetpump/motiveflow">
+			<function>
+				<product>
+					<value>0.0266</value>
+					<pow>
+						<property>/systems/fuel/RHtank/motivepump/press</property>
+						<value>0.5</value>
+					</pow>
+					<abs>	
+						<sum>				
+							<property>/systems/fuel/RHtank/main/outerjetpump/clogged</property>
+							<value>-1</value>
+						</sum>
+					</abs>
+				</product>
+			</function>
+		</fcs_function>
+
+<!-- outflow (low pressure) of main tank outer jet pump (to collector compartment) -->
+		<fcs_function name="/systems/fuel/RHtank/main/outerjetpump/outflow-raw">
+			<function>
+				<product>
+					<property>/systems/fuel/RHtank/main/outerjetpump/effectiveness</property>
+					<property>/systems/fuel/RHtank/main/outerjetpump/motiveflow</property>
+				</product>
+			</function>
+		</fcs_function>
+
+		<switch name="/systems/fuel/RHtank/main/outerjetpump/outflow">
+			<default value="/systems/fuel/RHtank/main/outerjetpump/outflow-raw"/>
+			<test logic="OR" value="0">
+				propulsion/tank[5]/contents-lbs lt 2.6
+				propulsion/tank[5]/pct-full gt 99
+			</test>
+		</switch>
+
+<!-- motive (high pressure) flow of aux tank jet pump -->
+		<fcs_function name="/systems/fuel/RHtank/aux/jetpump/motiveflow">
+			<function>
+				<product>
+					<value>0.0266</value>
+					<pow>
+						<property>/systems/fuel/RHtank/motivepump/press</property>
+						<value>0.5</value>
+					</pow>
+					<abs>	
+						<sum>				
+							<property>/systems/fuel/RHtank/aux/jetpump/clogged</property>
+							<value>-1</value>
+						</sum>
+					</abs>
+					<property>/systems/fuel/RHtank/aux/motiveoprvalve/state</property>
+				</product>
+			</function>
+		</fcs_function>
+
+<!-- outflow (low pressure) of aux tank jet pump (to main tank) -->
+		<fcs_function name="/systems/fuel/RHtank/aux/jetpump/outflow-raw">
+			<function>
+				<product>
+					<property>/systems/fuel/RHtank/aux/jetpump/effectiveness</property>
+					<property>/systems/fuel/RHtank/aux/jetpump/motiveflow</property>
+				</product>
+			</function>
+		</fcs_function>
+
+		<switch name="/systems/fuel/RHtank/aux/jetpump/outflow">
+			<default value="/systems/fuel/RHtank/aux/jetpump/outflow-raw"/>
+			<test logic="OR" value="0">
+				propulsion/tank[6]/contents-lbs lt 0.48
+				propulsion/tank[5]/pct-full gt 99
+			</test>
+		</switch>
+
+<!-- flow from collector tank to main tank through flapper valves -->
+
+		<switch name="/systems/fuel/RHtank/collector/flappervalves/leakrate">
+			<default value="/systems/fuel/RHtank/collector/flappervalves/leakrate-raw"/>
+			<test logic="OR" value="0">
+				propulsion/tank[4]/contents-lbs lt 0.068
+			</test>
+		</switch>
+
+<!-- flow from main tank to collector through flapper valves -->
+		<fcs_function name="/systems/fuel/RHtank/collector/flappervalves/flow-raw">
+			<function>
+				<product>
+					<value>0.0285</value>
+					<difference>
+						<property>propulsion/tank[5]/pct-full</property>
+						<property>propulsion/tank[4]/pct-full</property>
+					</difference>
+				</product>
+			</function>
+		</fcs_function>
+
+		<switch name="/systems/fuel/RHtank/collector/flappervalves/flow">
+			<default value="/systems/fuel/RHtank/collector/flappervalves/flow-raw"/>
+			<test logic="OR" value="0">
+				propulsion/tank[5]/pct-full lt propulsion/tank[4]/pct-full
+			</test>
+		</switch>
+
+<!--DRAINS-->
+<!--sump drain -->
+		<fcs_function name="/systems/fuel/RHtank/collector/drain/flow-raw">
+    			<function>
+       			<description>sump drain flow</description>
+       				<table>
+            				<independentVar lookup="row">propulsion/tank[4]/pct-full</independentVar>
+            				<tableData>
+						0	0
+						100	0.03
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<switch name="/systems/fuel/RHtank/collector/drain/flow">
+			<default value="0"/>
+			<test logic="OR" value="/systems/fuel/RHtank/collector/drain/flow-raw">
+				/systems/fuel/RHtank/collector/drain/state eq 1
+				/systems/fuel/RHtank/collector/drain/serviceable eq 0
+			</test>
+		</switch>
+
+<!--main tank drains -->
+		<fcs_function name="/systems/fuel/RHtank/main/draininboard/flow-raw">
+    			<function>
+       			<description>main tank inner drain flow</description>
+       				<table>
+            				<independentVar lookup="row">propulsion/tank[5]/pct-full</independentVar>
+            				<tableData>
+						1	0
+						100	0.06
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<switch name="/systems/fuel/RHtank/main/draininboard/flow">
+			<default value="0"/>
+			<test logic="OR" value="/systems/fuel/RHtank/main/draininboard/flow-raw">
+				/systems/fuel/RHtank/main/draininboard/state eq 1
+				/systems/fuel/RHtank/main/draininboard/serviceable eq 0
+			</test>
+		</switch>
+
+		<fcs_function name="/systems/fuel/RHtank/main/drainoutboard/flow-raw">
+    			<function>
+       			<description>main tank out drain flow</description>
+       				<table>
+            				<independentVar lookup="row">propulsion/tank[5]/pct-full</independentVar>
+            				<tableData>
+						10	0
+						100	0.06
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<switch name="/systems/fuel/RHtank/main/drainoutboard/flow">
+			<default value="0"/>
+			<test logic="OR" value="/systems/fuel/RHtank/main/drainoutboard/flow-raw">
+				/systems/fuel/RHtank/main/drainoutboard/state eq 1
+				/systems/fuel/RHtank/main/drainoutboard/serviceable eq 0
+			</test>
+		</switch>
+
+<!--aux tank drains -->
+		<fcs_function name="/systems/fuel/RHtank/aux/draininboard/flow-raw">
+    			<function>
+       			<description>aux tank inner drain flow</description>
+       				<table>
+            				<independentVar lookup="row">propulsion/tank[6]/pct-full</independentVar>
+            				<tableData>
+						1	0
+						100	0.06
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<switch name="/systems/fuel/RHtank/aux/draininboard/flow">
+			<default value="0"/>
+			<test logic="OR" value="/systems/fuel/RHtank/aux/draininboard/flow-raw">
+				/systems/fuel/RHtank/aux/draininboard/state eq 1
+				/systems/fuel/RHtank/aux/draininboard/serviceable eq 0
+			</test>
+		</switch>
+
+		<fcs_function name="/systems/fuel/RHtank/aux/drainoutboard/flow-raw">
+    			<function>
+       			<description>aux tank out drain flow</description>
+       				<table>
+            				<independentVar lookup="row">propulsion/tank[6]/pct-full</independentVar>
+            				<tableData>
+						10	0
+						100	0.06
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<switch name="/systems/fuel/RHtank/aux/drainoutboard/flow">
+			<default value="0"/>
+			<test logic="OR" value="/systems/fuel/RHtank/aux/drainoutboard/flow-raw">
+				/systems/fuel/RHtank/aux/drainoutboard/state eq 1
+				/systems/fuel/RHtank/aux/drainoutboard/serviceable eq 0
+			</test>
+		</switch>
+
+<!-- ADDING ALL FLOWS -->
+<!-- possible overflow collector tank to main tank -->
+		<switch name="/systems/fuel/RHtank/collector/overflow">
+			<default value="0"/>
+			<test logic="AND" value="/systems/fuel/RHtank/collector/overflow-raw">
+				propulsion/tank[4]/pct-full gt 95
+				propulsion/tank[4]/pct-full gt propulsion/tank[5]/pct-full
+			</test>
+		</switch>
+
+<!-- netflow for auxtank -->
+		<summer name="/systems/fuel/RHtank/aux/netflow">
+			<input>/systems/fuel/RHtank/aux/jetpump/motiveflow</input>
+			<input>-/systems/fuel/RHtank/aux/jetpump/outflow</input>
+			<input>-/systems/fuel/RHtank/aux/draininboard/flow</input>
+			<input>-/systems/fuel/RHtank/aux/drainoutboard/flow</input>
+			<input>-/systems/fuel/RHtank/aux/leakage/flow</input>
+			<output>propulsion/tank[6]/external-flow-rate-pps</output>
+		</summer>
+
+<!-- netflow for maintank -->
+		<summer name="/systems/fuel/RHtank/main/netflow">
+			<input>/systems/fuel/RHtank/main/innerjetpump/motiveflow</input>
+			<input>/systems/fuel/RHtank/main/outerjetpump/motiveflow</input>
+			<input>-/systems/fuel/RHtank/main/innerjetpump/outflow</input>
+			<input>-/systems/fuel/RHtank/main/outerjetpump/outflow</input>
+			<input>/systems/fuel/RHtank/collector/flappervalves/leakrate</input>
+			<input>-/systems/fuel/RHtank/collector/flappervalves/flow</input>
+			<input>/systems/fuel/RHtank/aux/jetpump/outflow</input>
+			<input>/systems/fuel/RHtank/collector/overflow</input>
+			<input>-/systems/fuel/RHtank/main/draininboard/flow</input>
+			<input>-/systems/fuel/RHtank/main/drainoutboard/flow</input>
+			<input>-/systems/fuel/RHtank/main/leakage/flow</input>
+			<output>propulsion/tank[5]/external-flow-rate-pps</output>
+		</summer>
+
+<!-- netflow for collector tank -->
+		<summer name="/systems/fuel/RHtank/collector/netflow">
+			<input>-/systems/fuel/RHtank/main/innerjetpump/motiveflow</input>
+			<input>-/systems/fuel/RHtank/main/outerjetpump/motiveflow</input>
+			<input>-/systems/fuel/RHtank/aux/jetpump/motiveflow</input>
+			<input>/systems/fuel/RHtank/main/innerjetpump/outflow</input>
+			<input>/systems/fuel/RHtank/main/outerjetpump/outflow</input>
+			<input>-/systems/fuel/RHtank/collector/flappervalves/leakrate</input>
+			<input>/systems/fuel/RHtank/collector/flappervalves/flow</input>
+			<input>-/systems/fuel/RHtank/collector/overflow</input>
+			<input>-/systems/fuel/RHtank/collector/drain/flow</input>
+			<input>-/systems/fuel/RHtank/collector/engine/outflow</input>
+			<input>-/systems/fuel/RHtank/collector/leakage/flow</input>
+			<output>propulsion/tank[4]/external-flow-rate-pps</output>
+		</summer>
+
+	</channel>
+
+</system>

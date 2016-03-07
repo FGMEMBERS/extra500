@@ -20,7 +20,7 @@
       Date: 2013-09-16
 
       Last change:      Eric van den Berg
-      Date:             2014-05-29
+      Date:             2015-05-17
 -->
 
 <system name="electrics">
@@ -341,6 +341,51 @@
 				</sum>
 			</function>
 			<output>/extra500/panel/CircuitBreaker/GearAux2/ampere</output>
+		</fcs_function>
+
+	</channel>
+
+<!-- fuel -->
+	<channel name="fuel">
+
+		<fcs_function name="fuelpump1amp">
+			<function>
+				<product>
+					<property>/systems/fuel/FuelPump1/state</property>
+					<value>5</value>			
+				</product>
+			</function>
+			<output>/extra500/panel/CircuitBreaker/BankD/FuelPump1/ampere</output>
+		</fcs_function>
+
+		<fcs_function name="fuelpump2amp">
+			<function>
+				<product>
+					<property>/systems/fuel/FuelPump2/state</property>
+					<value>5</value>			
+				</product>
+			</function>
+			<output>/extra500/panel/CircuitBreaker/BankC/FuelPump2/ampere</output>
+		</fcs_function>
+
+		<fcs_function name="LHmotfuelpumpamp">
+			<function>
+				<product>
+					<property>/systems/fuel/LHtank/motivepump/state</property>
+					<value>1.5</value>			
+				</product>
+			</function>
+			<output>/extra500/panel/CircuitBreaker/BankB/FuelTransferL/ampere</output>
+		</fcs_function>
+
+		<fcs_function name="RHmotfuelpumpamp">
+			<function>
+				<product>
+					<property>/systems/fuel/RHtank/motivepump/state</property>
+					<value>1.5</value>			
+				</product>
+			</function>
+			<output>/extra500/panel/CircuitBreaker/BankB/FuelTransferR/ampere</output>
 		</fcs_function>
 
 	</channel>

@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: 07.06.2014
 #
-#	Last change:	Dirk Dittmann
-#	Date:		30.04.15
+#	Last change:	Eric van den Berg
+#	Date:		18.05.15
 #
 
 # internal flightplan
@@ -386,27 +386,29 @@ var FlightManagementSystemClass = {
 				var freq = nil;
 				var course = nil;
 				var currentWP = me._nasalFlightPlan.currentWP();
-				if (currentWP.wp_role == "approach") {
-# is approach, looking for ILS freq
-					var apt = airportinfo(getprop("/autopilot/route-manager/destination/airport"));
-					var ils = apt.runways[getprop("/autopilot/route-manager/destination/runway")].ils;
-					if(ils != nil){
-						freq = ils.frequency;
-						course = ils.course ;
-# set course
-						if (course != nil) {
-							course = geo.normdeg( course- getprop("/environment/magnetic-variation-deg"));
-							setprop("/autopilot/fms-channel/autotuning/approach",1);
-							setprop("/instrumentation/nav/radials/selected-deg",course);
+				if(currentWP != nil){
+					if (currentWP.wp_role == "approach") {
+	# is approach, looking for ILS freq
+						var apt = airportinfo(getprop("/autopilot/route-manager/destination/airport"));
+						var ils = apt.runways[getprop("/autopilot/route-manager/destination/runway")].ils;
+						if(ils != nil){
+							freq = ils.frequency;
+							course = ils.course ;
+	# set course
+							if (course != nil) {
+								course = geo.normdeg( course- getprop("/environment/magnetic-variation-deg"));
+								setprop("/autopilot/fms-channel/autotuning/approach",1);
+								setprop("/instrumentation/nav/radials/selected-deg",course);
+							}
 						}
-					}
-				
-				} else {
-					setprop("/autopilot/fms-channel/autotuning/approach",0);
-# looking for VOR 
-					var navaid = navinfo("vor",currentWP.id);
-					if (size(navaid) != 0 ) {
-						freq = navaid[0].frequency;
+					
+					} else {
+						setprop("/autopilot/fms-channel/autotuning/approach",0);
+	# looking for VOR 
+						var navaid = navinfo("vor",currentWP.id);
+						if (size(navaid) != 0 ) {
+							freq = navaid[0].frequency;
+						}
 					}
 				}
 # set frequency
@@ -658,11 +660,13 @@ var FlightManagementSystemClass = {
 		me._constraint.VSR.visible	= 0;
 		
 		var gs 			= getprop("/velocities/groundspeed-kt");
-		me._fuelLiter		= getprop("/consumables/fuel/total-fuel-lbs") * global.CONST.JETA_LB2L;
-		me._fuelFlow		= extra500.fuelSystem._nFuelFlowLph.getValue();
+		me._fuelLiter		= getprop("consumables/fuel/total-fuel-m3") * 1000 - 28;
+		me._fuelFlow		= getprop("fdm/jsbsim/aircraft/engine/FF-l_h");
 		var fuelFlowLpSec 	= me._fuelFlow / 3600.0;
 		
 		# Fuel calculation
+# FIXME: the fuel remaining (and subsequent range calculation is dependent on the initial fuel volume (inputted by pilot) and integrated fuel flow.
+# The actual fuel quantity measurement (by sensors in tank) is not available to IFD-s
 		if (extra500.engine.nIsRunning.getValue()){
 			me._engineRunTime += 1;
 			me._node.EngineRunTime.setValue(me._engineRunTime);
@@ -715,8 +719,8 @@ var FlightManagementSystemClass = {
 				var gsSec = gs / 3600;
 				var gsMin = gs / 60;
 				var time 		= systime() + getprop("/sim/time/warp");
-				var fuelGalUs 		= getprop("/consumables/fuel/total-fuel-gal_us");
-				var fuelFlowGalUSpSec 	= extra500.fuelSystem._nFuelFlowGalUSpSec.getValue();
+#				var fuelGalUs 		= getprop("/consumables/fuel/total-fuel-gal_us");
+#				var fuelFlowGalUSpSec 	= extra500.fuelSystem._nFuelFlowGalUSpSec.getValue();
 				
 				
 				var currentAlt 		= getprop("/instrumentation/altimeter-IFD-LH/indicated-altitude-ft");

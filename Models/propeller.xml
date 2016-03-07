@@ -19,77 +19,114 @@
       Date: June 03 2013
 
       Last change:      Eric van den Berg
-      Date:             17.01.15
+      Date:             31.10.15
 
 -->
 
 <PropertyList>
+	
+	<path>propeller.ac</path>
+	
+	<!-- Transparent Surfaces for Rembrandt rendering & rain -->
+	<effect>
+		<inherits-from>Effects/model-transparent</inherits-from>
+		<object-name>PropFast</object-name>
+		<object-name>PropFastBroken</object-name>
+	</effect>
+	
+	<!--Propeller-->
+	<animation>
+		<type>select</type>
+		<object-name>Propeller</object-name>
+		<condition>
+			<and>
+				<less-than>
+					<property>sim/multiplay/generic/int[12]</property>
+					<value>700</value>
+				</less-than>
+  				 <equals>
+    					<property>sim/multiplay/generic/int[14]</property>
+   			 		<value>0</value>
+   				</equals>
+			</and>
+		</condition>
+	</animation>
 
-<path>propeller.ac</path>
+	<animation>
+		<type>select</type>
+		<object-name>PropellerBroken</object-name>
+		<condition>
+			<and>
+				<less-than>
+					<property>sim/multiplay/generic/int[12]</property>
+					<value>700</value>
+				</less-than>
+  				 <equals>
+    					<property>sim/multiplay/generic/int[14]</property>
+   			 		<value>1</value>
+   				</equals>
+			</and>
+		</condition>
+	</animation>
+	
+	<animation>
+		<type>select</type>
+		<object-name>PropFast</object-name>
+		<condition>
+			<and>
+				<greater-than-equals>
+					<property>sim/multiplay/generic/int[12]</property>
+					<value>700</value>
+				</greater-than-equals>
+  				 <equals>
+    					<property>sim/multiplay/generic/int[14]</property>
+   			 		<value>0</value>
+   				</equals>
+			</and>
+		</condition>
+	</animation>
 
-<!-- Transparent Surfaces for Rembrandt rendering & rain -->
-   <effect>
-       <inherits-from>Effects/model-transparent</inherits-from>
-       <object-name>PropSlow</object-name>
-       <object-name>PropFast</object-name>
-   </effect>
-   
-<!--Propeller-->
-<animation>
-  <type>select</type>
-  <object-name>Propeller</object-name>
-  <condition>
-    <less-than>
-      <property>sim/multiplay/generic/int[12]</property>
-      <value>700</value>
-    </less-than>
-  </condition>
-</animation>
-
-<animation>
-  <type>select</type>
-  <object-name>PropSlow</object-name>
-  <condition>
-    <and>
-      <greater-than-equals>
-      <property>sim/multiplay/generic/int[12]</property>
-        <value>700</value>
-      </greater-than-equals>
-      <less-than>
-      <property>sim/multiplay/generic/int[12]</property>
-        <value>1500</value>
-      </less-than>
-    </and>
-  </condition>
-</animation>
-
-<animation>
-  <type>select</type>
-  <object-name>PropFast</object-name>
-  <condition>
-    <greater-than-equals>
-      <property>sim/multiplay/generic/int[12]</property>
-      <value>1500</value>
-    </greater-than-equals>
-  </condition>
-</animation>
-
-<animation>
-  <type>spin</type>
-  <object-name>Spinner</object-name>
-  <object-name>Propeller</object-name>
-  <object-name>PropSlow</object-name>
-  <object-name>PropFast</object-name>
-      <property>sim/multiplay/generic/int[12]</property>
-  <factor>1</factor>
-  <axis>
-   <x1-m>1</x1-m>
-   <y1-m>0</y1-m>
-   <z1-m>0</z1-m>
-   <x2-m>-1</x2-m>
-   <y2-m>0</y2-m>
-   <z2-m>0</z2-m>
-  </axis>
- </animation>
+	<animation>
+		<type>select</type>
+		<object-name>PropFastBroken</object-name>
+		<condition>
+			<and>
+				<greater-than-equals>
+					<property>sim/multiplay/generic/int[12]</property>
+					<value>700</value>
+				</greater-than-equals>
+  				 <equals>
+    					<property>sim/multiplay/generic/int[14]</property>
+   			 		<value>1</value>
+   				</equals>
+			</and>
+		</condition>
+	</animation>
+<!-- no spinning inside the propeller the let the frame do this
+	<animation>
+		<type>spin</type>
+		<object-name>Spinner</object-name>
+		<object-name>Propeller</object-name>
+		<object-name>PropellerBroken</object-name>
+		<object-name>PropFast</object-name>
+		<object-name>PropFastBroken</object-name>
+		<object-name>propeller.ice</object-name>
+		<property>sim/multiplay/generic/int[12]</property>
+		<factor>1</factor>
+		<axis>
+			<x1-m>1</x1-m>
+			<y1-m>0</y1-m>
+			<z1-m>0</z1-m>
+			<x2-m>-1</x2-m>
+			<y2-m>0</y2-m>
+			<z2-m>0</z2-m>
+		</axis>
+	</animation>
+	-->
+	<!-- ICE for propeller -->
+	<model>
+		<name>propeller.ice</name>
+		<path>propeller.ice.xml</path>
+	</model>
 
 </PropertyList>

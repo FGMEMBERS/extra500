@@ -17,7 +17,7 @@
 #      Date: Sep 10 2013
 #
 #	Last change:	Dirk Dittmann
-#	Date:		30.04.15
+#	Date:		28.05.15
 #
 
 # var RouteLayer = {
@@ -171,6 +171,7 @@ var MovingMap = {
 			reports		: 0,
 			overlay		: 0,
 			range		: 30,
+			rangeLow	: 15,
 			runwayLength    : -1,
 			orientation	: 0,
 		};
@@ -413,7 +414,7 @@ var MovingMap = {
 		me._can.CompassRose.setRotation(-me._mapOptions.orientation * global.CONST.DEG2RAD);
 		
 		me._can.trackTrueMagnetic.setRotation((me._trackTrueMagnetic - me._mapOptions.orientation) * global.CONST.DEG2RAD);
-		me._can.trackTrueMagnetic.setVisible(me._groundspeed >= 15);
+		me._can.trackTrueMagnetic.setVisible(me._groundspeed >= 35);
 		
 		me._can.BugHDG.setRotation((me._bugHeading - me._mapOptions.orientation) * global.CONST.DEG2RAD);
 		
@@ -447,6 +448,7 @@ var MovingMap = {
 		me._can.CompassRangeMax.setText(sprintf("%.0f",nm));
 		me._can.CompassRangeMid.setText(sprintf("%.0f",nm/2));
 		me._mapOptions.range = nm;
+		me._mapOptions.rangeLow = nm/2;
 		me._layer.positioned.setMapOptions(me._mapOptions);
 		
 	},
