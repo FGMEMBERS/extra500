@@ -60,3 +60,10 @@ var quickZoomView = func(){
 	
 
 };
+
+setlistener("/sim/current-view/view-number", func(n) {
+	var v = view.current.getNode("config");
+	var yOffset = v.getNode("y-offset-m", 1).getValue() or 0;
+	#print("yOffset",yOffset);
+	setprop("/sim/current-view/y-offset-m-config", yOffset);
+}, 1);

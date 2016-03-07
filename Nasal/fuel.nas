@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             06.06.15
+#      Date:             24.12.15
 #
 
 var FuelSystemClass = {
@@ -36,6 +36,7 @@ var FuelSystemClass = {
 		me.parents[1].init(instance);
 		me.initUI();
 		me.initBal();
+		me.setFlowBalance();
 			
 		append(me._listeners, setlistener(me._nSelectValve,func(n){me._selectValve = n.getValue();},1,0) );		
 	},
@@ -61,20 +62,51 @@ var FuelSystemClass = {
 	},
 
 	onValveClick : func(value){
-		me._selectValve += value;
-		me._selectValve = global.clamp(me._selectValve,0,4);
-		me._nSelectValve.setValue(me._selectValve);
+		if (getprop("/systems/fuel/selectorValve/serviceable")==1){
+			me._selectValve += value;
+			me._selectValve = global.clamp(me._selectValve,0,4);
+			me._nSelectValve.setValue(me._selectValve);
+			me.setFlowBalance();
+		} else {
+			UI.msg.info("The Fuel Selector Valve seems to be blocked...");
+		}
 	},	
 	onValveSet : func(value){
-		me._selectValve = value;
-		me._selectValve = global.clamp(me._selectValve,0,4);
-		me._nSelectValve.setValue(me._selectValve);
+		if (getprop("/systems/fuel/selectorValve/serviceable")==1){
+			me._selectValve = value;
+			me._selectValve = global.clamp(me._selectValve,0,4);
+			me._nSelectValve.setValue(me._selectValve);
+			me.setFlowBalance();
+		} else {
+			UI.msg.info("The Fuel Selector Valve seems to be blocked...");
+		}
 	},	
+	setFlowBalance : func(){
+#	/systems/fuel/FlowbalanceLR: 1 = all fuel from left tank; 0 = all fuel from RH tank
+
+		var valvepos = getprop("/extra500/system/fuel/SelectValve");
+		var LHcheckValve = getprop("/systems/fuel/LHtank/checkvalve/serviceable");
+		var RHcheckValve = getprop("/systems/fuel/RHtank/checkvalve/serviceable");
+
+		if (valvepos == 1 ) {
+			setprop("/systems/fuel/FlowbalanceLR",1);
+		} else if (valvepos == 3 ) {
+			setprop("/systems/fuel/FlowbalanceLR",0);
+		} else {
+			if (LHcheckValve == 0){
+				setprop("/systems/fuel/FlowbalanceLR",0);
+			} else if (RHcheckValve == 0) {
+				setprop("/systems/fuel/FlowbalanceLR",1);
+			} else {
+				setprop("/systems/fuel/FlowbalanceLR",0.5);
+			}
+		}
+	},
 	
 	initUI : func(){
 		UI.register("Fuel Select Valve <", 	func{me.onValveClick(-1);} 	);
 		UI.register("Fuel Select Valve >", 	func{me.onValveClick(1);} 	);
-		UI.register("Fuel Select Off", 		func{me.onValveSet(0);} 	);
+		UI.register("Fuel Select Off", 	func{me.onValveSet(0);} 	);
 		UI.register("Fuel Select Left", 	func{me.onValveSet(1);} 	);
 		UI.register("Fuel Select Both", 	func{me.onValveSet(2);} 	);
 		UI.register("Fuel Select Right", 	func{me.onValveSet(3);} 	);
@@ -82,4 +114,4 @@ var FuelSystemClass = {
 	
 };
 
-var fuelSystem= FuelSystemClass.new("extra500/system/fuel","Fuel System");
+var fuelSystem = FuelSystemClass.new("extra500/system/fuel","Fuel System");

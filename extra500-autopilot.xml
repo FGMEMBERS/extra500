@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2015-07-19
+      Date:             2015-12-22
 -->
 
 <autopilot name="STEC55X">
@@ -42,8 +42,22 @@
   			</orientation>
 			<axis>Z</axis>
 			<gain>0.0310809970784</gain>	<!--1/32.174 -->
-			<output>/autopilot/accsens-channel/ap-z-accel</output>
+			<output>/autopilot/accsens-channel/ap-z-accel-raw</output>
 		</accelerometer>
+
+	<fcs_function name="/autopilot/accsens-channel/output">
+    		<function>
+           		<table>
+                 		<independentVar lookup="row">/autopilot/accsens-channel/ap-z-accel-raw</independentVar>
+                 		 <tableData>
+					-11	-10
+                  		-1	0
+					 9	10
+                 		</tableData>
+            	</table>
+    		</function>
+		<output>/autopilot/accsens-channel/ap-z-accel</output>
+	</fcs_function>
 
 	</channel>
 
@@ -2712,12 +2726,34 @@
 			<output>/autopilot/mode/trim-down</output>
 		</switch>
 
+<!-- wind-up of auto trim speed--> 
+		<kinematic name="fcs/electrimspeed">
+			<input>/autopilot/mode/trim</input>
+			<traverse>
+				<setting>
+					<position>0</position>
+					<time>0</time>
+				</setting>
+				<setting>
+					<position>1</position>
+					<time>3</time>
+				</setting>
+			</traverse>
+			<output>/autopilot/pitchtrim-channel/electrimspeed</output>
+		</kinematic>
+
 <!-- this moves the trim tab if needed and possible--> 
 		<fcs_function name="/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm-raw">
 			<function>
 				<sum>
 					<property>fcs/pitch-trim-cmd-tot-norm</property>	
 					<product>
+						<abs>
+							<sum>
+								<property>/extra500/failurescenarios/controls/trim</property>
+								<value>-1</value>
+							</sum>
+						</abs>
 						<sum>
 							<product>
 								<property>/autopilot/settings/trim</property>
@@ -2738,6 +2774,7 @@
 								<property>/autopilot/mode/electrim</property>
 							</product>
 						</sum>
+						<property>/autopilot/pitchtrim-channel/electrimspeed</property>
 						<property>sim-dt-sec</property>
 					</product>
 				</sum>
@@ -2779,7 +2816,7 @@
 
 <!--****************************YAW TRIM*****************************************************************************-->
 
-	<channel name="yawtrim" execute="/autopilot/mode/yawtrim">
+	<channel name="yawtrim">
 
 <!--lateral acceleronmeter in the tailcone-->
 		<accelerometer name="/autopilot/yawtrim-channel/ap-y-accelsensor">
@@ -2798,27 +2835,10 @@
 			<output>/autopilot/yawtrim-channel/ap-y-accel</output>
 		</accelerometer>
 
-		<fcs_function name="/autopilot/yawtrim-channel/ap-y-accelsensor-incl-gforce">
-			<function>
-				<sum>
-					<property>/autopilot/yawtrim-channel/ap-y-accelsensor</property>	
-					<product>
-						<cos>
-							<property>attitude/pitch-rad</property>
-						</cos>
-						<sin>
-							<property>attitude/phi-rad</property>
-						</sin>
-					</product>
-				</sum>
-			</function>
-			<output>/autopilot/yawtrim-channel/ap-y-accelsensor-incl-gforce</output>
-		</fcs_function>
-
 		<fcs_function name="/autopilot/yawtrim-channel/ap-y-accel-incl-input">
 			<function>
 				<sum>
-					<property>/autopilot/yawtrim-channel/ap-y-accelsensor-incl-gforce</property>
+					<property>/autopilot/yawtrim-channel/ap-y-accelsensor</property>
 					<product>
 						<property>/autopilot/yawtrim-channel/poti-gain</property>	
 						<property>/extra500/panel/Master/Autopilot/YawTrim/state</property>
@@ -2830,11 +2850,11 @@
 
 		<deadband name="/autopilot/yawtrim-channel/ap-y-accel-clipped">
 			<input>/autopilot/yawtrim-channel/ap-y-accel-incl-input</input>
-			<width>0.002</width>
+			<width>0.001</width>
 			<clipto>
 		     		<min>/autopilot/yawtrim-channel/accel-min</min>
-                    		<max>/autopilot/yawtrim-channel/accel-max</max>
-               		 </clipto>
+                    	<max>/autopilot/yawtrim-channel/accel-max</max>
+               	 </clipto>
 		</deadband>
 
 <!-- this moves the rudder if needed and possible--> 

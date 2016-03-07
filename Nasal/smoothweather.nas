@@ -17,7 +17,7 @@
 #      Date:   12.06.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 19.07.2015            
+#      Date: 22.09.2015            
 #
 # note: some parts are taken from fgdata/gui/dialogs/weather.xml
 
@@ -98,7 +98,7 @@ var local_metar = func() {
 		var vweight = [];
 		var no_valid = 0;
 		for (var i = 0 ; i <= 19; i+=1){
-			if (getprop("/extra500/weather/station["~i~"]/metar/valid") == 1) {
+			if ( (getprop("/extra500/weather/station["~i~"]/metar/valid") == 1) and (getprop("/extra500/weather/station["~i~"]/distance-m") != -1) ) {
 				no_valid = no_valid +1; 		# counting valid metars
 				append( vvalid , i);			# vector of valid metar stations
 
@@ -274,9 +274,19 @@ var buildMetar = func() {
 	}
 
 # rain
-	setprop("environment/metar/rain-norm",getprop("/extra500/weather/avgmetar/rain-norm"));
+	var rain_norm = getprop("/extra500/weather/avgmetar/rain-norm");
+	if (rain_norm < 0.1 ) {
+		setprop("environment/metar/rain-norm",0);
+	} else {
+		setprop("environment/metar/rain-norm",rain_norm);
+	}
 # snow
-	setprop("environment/metar/snow-norm",getprop("/extra500/weather/avgmetar/snow-norm"));
+	var snow_norm = getprop("/extra500/weather/avgmetar/snow-norm");
+	if (snow_norm < 0.1 ) {
+		setprop("environment/metar/snow-norm",0);
+	} else {
+		setprop("environment/metar/snow-norm",snow_norm);
+	}
 
 };
 
@@ -352,7 +362,7 @@ var WeatherStation = {
 		me._lon		= 0;
 		me._elevation	= 0;
 		me._ready	= 0;
-		me._distance	= 0;
+		me._distance	= -1; #setting -1 to signal METAR is no longer to be used.
 		
 	},
 	publish : func(){
@@ -397,7 +407,7 @@ var WeatherService = {
 		return m;
 	},
 	init : func(){
-		for (var i = 0 ; i <= me._maxWeatherStations; i+=1){
+		for (var i = 0 ; i < me._maxWeatherStations; i+=1){
 			var station = WeatherStation.new(me._root ~ "/station["~i~"]");
 			append(me._weatherStation,station);
 		}
@@ -411,7 +421,7 @@ var WeatherService = {
 	},
 	publish : func(){
 		
-		for (var i = 0 ; i <= me._maxWeatherStations; i+=1){
+		for (var i = 0 ; i < me._maxWeatherStations; i+=1){
 			me._weatherStation[i].publish();
 		}
 				
@@ -446,6 +456,9 @@ var WeatherService = {
 		
 		me._geoAircraft = geo.aircraft_position();
 		me._elevation = geo.elevation(me._geoAircraft.lat(),me._geoAircraft.lon());
+		if(me._elevation == nil){
+			me._elevation = 0.001;
+		}
 		
 		var geoStation = geo.Coord.new().set_latlon(0, 0, 0);
 
@@ -478,7 +491,7 @@ var WeatherService = {
 		}
 		me._stationsRecieved = stationIndex;
 
-		for (var i = stationIndex ; i <= me._maxWeatherStations; i+=1){
+		for (var i = stationIndex ; i < me._maxWeatherStations; i+=1){
 			me._weatherStation[i].clearMetar();
 		}
 			

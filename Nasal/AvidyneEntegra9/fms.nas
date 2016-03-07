@@ -386,27 +386,29 @@ var FlightManagementSystemClass = {
 				var freq = nil;
 				var course = nil;
 				var currentWP = me._nasalFlightPlan.currentWP();
-				if (currentWP.wp_role == "approach") {
-# is approach, looking for ILS freq
-					var apt = airportinfo(getprop("/autopilot/route-manager/destination/airport"));
-					var ils = apt.runways[getprop("/autopilot/route-manager/destination/runway")].ils;
-					if(ils != nil){
-						freq = ils.frequency;
-						course = ils.course ;
-# set course
-						if (course != nil) {
-							course = geo.normdeg( course- getprop("/environment/magnetic-variation-deg"));
-							setprop("/autopilot/fms-channel/autotuning/approach",1);
-							setprop("/instrumentation/nav/radials/selected-deg",course);
+				if(currentWP != nil){
+					if (currentWP.wp_role == "approach") {
+	# is approach, looking for ILS freq
+						var apt = airportinfo(getprop("/autopilot/route-manager/destination/airport"));
+						var ils = apt.runways[getprop("/autopilot/route-manager/destination/runway")].ils;
+						if(ils != nil){
+							freq = ils.frequency;
+							course = ils.course ;
+	# set course
+							if (course != nil) {
+								course = geo.normdeg( course- getprop("/environment/magnetic-variation-deg"));
+								setprop("/autopilot/fms-channel/autotuning/approach",1);
+								setprop("/instrumentation/nav/radials/selected-deg",course);
+							}
 						}
-					}
-				
-				} else {
-					setprop("/autopilot/fms-channel/autotuning/approach",0);
-# looking for VOR 
-					var navaid = navinfo("vor",currentWP.id);
-					if (size(navaid) != 0 ) {
-						freq = navaid[0].frequency;
+					
+					} else {
+						setprop("/autopilot/fms-channel/autotuning/approach",0);
+	# looking for VOR 
+						var navaid = navinfo("vor",currentWP.id);
+						if (size(navaid) != 0 ) {
+							freq = navaid[0].frequency;
+						}
 					}
 				}
 # set frequency

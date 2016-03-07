@@ -20,7 +20,7 @@
       Date: 2015-05-08
 
       Last change: Eric van den Berg     
-      Date: 2015-05-25           
+      Date: 2016-01-16           
 -->
 
 <!--
@@ -194,12 +194,13 @@ i=0-6 left to right
 		</fcs_function>
 
 <!-- Fuel filter pressure loss (including opening of bypass and indication switch) -->
-		<switch name="/systems/fuel/fuelfilter/bypass/state">
+		<switch name="fuelfilter-bypass">
 			<default value="0"/>
 			<test logic="OR" value="1">
 				/systems/fuel/F-filter-prloss-psid lt -1.2
 				/systems/fuel/fuelfilter/bypass/state eq 1
 			</test>
+			<output>/systems/fuel/fuelfilter/bypass/state</output>
 		</switch>
 
 		<fcs_function name="/systems/fuel/fuelfilter/zeta">
@@ -297,13 +298,31 @@ i=0-6 left to right
 			<output>/systems/fuel/FuelPump2/state</output>
 		</switch>
 
+		<switch name="FuelPump1press">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fuel/FuelPump1/state eq 1
+				/systems/fuel/FP1checkvalve/serviceable eq 1
+			</test>
+			<output>/systems/fuel/FuelPump1/press</output>
+		</switch>
+
+		<switch name="FuelPump2press">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/systems/fuel/FuelPump2/state eq 1
+				/systems/fuel/FP2checkvalve/serviceable eq 1
+			</test>
+			<output>/systems/fuel/FuelPump2/press</output>
+		</switch>
+
 		<fcs_function name="/systems/fuel/F-pumppress-psid">
    			 <function>
       			 <description>fuel pump Fuel Pressure</description>
 	 				<product>
 						<max>	
-							<property>/systems/fuel/FuelPump1/state</property>
-							<property>/systems/fuel/FuelPump2/state</property>
+							<property>/systems/fuel/FuelPump1/press</property>
+							<property>/systems/fuel/FuelPump2/press</property>
 						</max>
 						<table>
             					<independentVar lookup="row">atmosphere/pressure-altitude</independentVar>
@@ -421,26 +440,14 @@ i=0-6 left to right
 
 	<channel name="engine flow">
 
-		<!-- balance: 1 = all fuel from left tank; 2 = all fuel from RH tank -->
-		<fcs_function name="fuelflowbalance">
-			<function>
-				<sum>
-					<product>
-						<value>-0.5</value>
-						<property>/extra500/system/fuel/SelectValve</property>
-					</product>
-					<value>1.5</value>
-				</sum>
-			</function>
-			<output>/systems/fuel/balanceLR</output>
-		</fcs_function>
+		<!-- /systems/fuel/FlowbalanceLR: 1 = all fuel from left tank; 0 = all fuel from RH tank -->
 
 		<fcs_function name="LHengfuelflow">
 			<function>
 				<product>
 					<value>0.000277777777778</value>
 					<property>aircraft/engine/FF-lbs_h</property>
-					<property>/systems/fuel/balanceLR</property>
+					<property>/systems/fuel/FlowbalanceLR</property>
 				</product>
 			</function>
 			<output>/systems/fuel/LHtank/collector/engine/outflow</output>
@@ -454,9 +461,9 @@ i=0-6 left to right
 					<abs>	
 						<sum>		
 							<value>-1</value>		
-							<property>/systems/fuel/balanceLR</property>
+							<property>/systems/fuel/FlowbalanceLR</property>
 						</sum>
-					</abs>					
+					</abs>			
 				</product>
 			</function>
 			<output>/systems/fuel/RHtank/collector/engine/outflow</output>
@@ -507,6 +514,16 @@ i=0-6 left to right
 						/extra500/system/fuel/SelectValve eq 2
 					</test>	
 				</test>		
+			</test>
+			<output>propulsion/tank[3]/external-flow-rate-pps</output>
+		</switch>
+
+<!--used for fast/immediate engine failures, so other than 'normal' fuel cut-off things, see above -->
+		<switch name="tank3 empty">
+			<default value="propulsion/tank[3]/external-flow-rate-pps"/>
+			<test logic="OR" value="-10">
+				/systems/engine/failure-fast eq 1
+				/environment/aircraft-effects/frost-level-Inlet gt 0.2
 			</test>
 			<output>propulsion/tank[3]/external-flow-rate-pps</output>
 		</switch>
@@ -842,6 +859,7 @@ i=0-6 left to right
 			<input>-/systems/fuel/LHtank/aux/jetpump/outflow</input>
 			<input>-/systems/fuel/LHtank/aux/draininboard/flow</input>
 			<input>-/systems/fuel/LHtank/aux/drainoutboard/flow</input>
+			<input>-/systems/fuel/LHtank/aux/leakage/flow</input>
 			<output>propulsion/tank[0]/external-flow-rate-pps</output>
 		</summer>
 
@@ -857,6 +875,7 @@ i=0-6 left to right
 			<input>/systems/fuel/LHtank/collector/overflow</input>
 			<input>-/systems/fuel/LHtank/main/draininboard/flow</input>
 			<input>-/systems/fuel/LHtank/main/drainoutboard/flow</input>
+			<input>-/systems/fuel/LHtank/main/leakage/flow</input>
 			<output>propulsion/tank[1]/external-flow-rate-pps</output>
 		</summer>
 
@@ -872,6 +891,7 @@ i=0-6 left to right
 			<input>-/systems/fuel/LHtank/collector/overflow</input>
 			<input>-/systems/fuel/LHtank/collector/drain/flow</input>
 			<input>-/systems/fuel/LHtank/collector/engine/outflow</input>
+			<input>-/systems/fuel/LHtank/collector/leakage/flow</input>
 			<output>propulsion/tank[2]/external-flow-rate-pps</output>
 		</summer>
 
@@ -1206,6 +1226,7 @@ i=0-6 left to right
 			<input>-/systems/fuel/RHtank/aux/jetpump/outflow</input>
 			<input>-/systems/fuel/RHtank/aux/draininboard/flow</input>
 			<input>-/systems/fuel/RHtank/aux/drainoutboard/flow</input>
+			<input>-/systems/fuel/RHtank/aux/leakage/flow</input>
 			<output>propulsion/tank[6]/external-flow-rate-pps</output>
 		</summer>
 
@@ -1221,6 +1242,7 @@ i=0-6 left to right
 			<input>/systems/fuel/RHtank/collector/overflow</input>
 			<input>-/systems/fuel/RHtank/main/draininboard/flow</input>
 			<input>-/systems/fuel/RHtank/main/drainoutboard/flow</input>
+			<input>-/systems/fuel/RHtank/main/leakage/flow</input>
 			<output>propulsion/tank[5]/external-flow-rate-pps</output>
 		</summer>
 
@@ -1236,6 +1258,7 @@ i=0-6 left to right
 			<input>-/systems/fuel/RHtank/collector/overflow</input>
 			<input>-/systems/fuel/RHtank/collector/drain/flow</input>
 			<input>-/systems/fuel/RHtank/collector/engine/outflow</input>
+			<input>-/systems/fuel/RHtank/collector/leakage/flow</input>
 			<output>propulsion/tank[4]/external-flow-rate-pps</output>
 		</summer>
 
