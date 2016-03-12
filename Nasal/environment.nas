@@ -17,7 +17,7 @@
 #      Date: 20.03.2015
 #
 #       Last change:      Eric van den Berg
-#       Date:             28.02.2016
+#       Date:             12.03.2016
 #
 
 
@@ -129,19 +129,9 @@ var Environment = {
 	},
 	rainSplashVector : func(){
 		var airspeed = getprop("/fdm/jsbsim/aircraft/propeller/Vind-fps") + getprop("/fdm/jsbsim/velocities/u-aero-fps");
-#		var airspeed_max = 100;
-
-#		if (airspeed > airspeed_max) airspeed = airspeed_max;
-
-#		var airspeed = math.sqrt(math.abs(airspeed)/airspeed_max);
-
-#		var splash_x = -0.1 - 2.0 * airspeed;
-#		var splash_y = 0.0;
-#		var splash_z = 1.0 - 1.35 * airspeed;
 		var splash_x = 0.35 - 0.015 * airspeed;
 		var splash_y = 0.15 + 0.001 * airspeed;
 		var splash_z = 1.0 - 0.002 * airspeed;
-
 		
 		if(me._posAltitudeFt > me._rainLevelFt){
 			me._rainNorm = 0.0;
@@ -155,7 +145,8 @@ var Environment = {
 
 	},
 	detectClouds : func(){
-		print("\nEnvironment::detectClouds() ...");
+		var debug = getprop("/environment/aircraft-effects/debug");
+		if (debug==1) {print("\nEnvironment::detectClouds() ...");}
 		var cloudEffectSum 	= 0; # norm 0-1
 		
 		
@@ -197,10 +188,11 @@ var Environment = {
 			var aircraftAlt = getprop("/position/altitude-ft");
 			var station_alt = getprop("/environment/metar/station-elevation-ft");
 			
+			if (debug==1) {
+				print (sprintf("aircraft alt %5.0f altitude-ft",aircraftAlt));
+				print (sprintf("\t%s %12s %s %s %s = %s","type","name","elevation","thickness","elevationMax","effect"));
+			}	
 			
-			print (sprintf("aircraft alt %5.0f altitude-ft",aircraftAlt));
-			print (sprintf("\t%s %12s %s %s %s = %s","type","name","elevation","thickness","elevationMax","effect"));
-				
 			foreach(var layer; nClouds.getChildren("layer")){
 				var elevation 	= layer.getNode("elevation-ft").getValue();
 				var thickness 	= layer.getNode("thickness-ft").getValue();
@@ -228,14 +220,14 @@ var Environment = {
 									
 				}
 				
-				print(strRow);
+				if (debug==1) {print(strRow);}
 			}
 		
 		}
 		
 		me._cloudEffect = global.clamp(cloudEffectSum,0.0,1.0);
 		
-		print (sprintf("Cloud effect sum %1.5f",me._cloudEffect));
+		if (debug==1) {print (sprintf("Cloud effect sum %1.5f",me._cloudEffect));}
 		
 	},
 	
@@ -267,7 +259,8 @@ var Environment = {
 	},
 	
 	frost : func(){
-		print("Environment::frost() ...");
+		var debug = getprop("/environment/aircraft-effects/debug");
+		if (debug==1) {print("Environment::frost() ...");}
 		
 		var energyFlow = 0;
 		
@@ -473,44 +466,30 @@ var Environment = {
 		
 		interpolate("/environment/aircraft-effects/frost-level-Inlet", me._frostInlet ,me._dt);
 
+		if (debug==1) {
+			print(sprintf("environment   %7.3f°C",me._temperature));
+			print(sprintf("              %7s %7s","surface","frost"));
 		
 		
+			print(sprintf("Fuslage front %7.3f°C %2.5f",me._temperature, me._frostFuslageFront));
+			print(sprintf("WingLH Boot I %7.3f°C %2.5f",me._temperature, me._frostWingLHBootInner));
+			print(sprintf("WingLH Boot O %7.3f°C %2.5f",me._temperature, me._frostWingLHBootOuter));
+			print(sprintf("WingRH Boot I %7.3f°C %2.5f",me._temperature, me._frostWingRHBootInner));
+			print(sprintf("WingRH Boot O %7.3f°C %2.5f",me._temperature, me._frostWingRHBootOuter));
+			print(sprintf("VStab         %7.3f°C %2.5f",me._temperature, me._frostVStab));
+			print(sprintf("HStabLH       %7.3f°C %2.5f",me._temperature, me._frostHStabLH));
+			print(sprintf("HStabRH       %7.3f°C %2.5f",me._temperature, me._frostHStabRH));
 		
-		#interpolate("/environment/aircraft-effects/frost-level-noice", me._frostNoice ,me._dt);
-		
-# 		print("frost| ",sprintf("windshield %0.3fJ (%0.1f°C),  %0.3fJ (%0.1f°C)",
-# #				cabin._windShield._energy,
-# 			  energyWindShield,
-# 				cabin._windShield._temperature,
-# #				cabin._windShieldHeated._energy,
-# 			  energyWindShieldHeated,
-# 				cabin._windShieldHeated._temperature
-# 				       ));
-	
-		
-		print(sprintf("environment   %7.3f°C",me._temperature));
-		print(sprintf("              %7s %7s","surface","frost"));
-		
-		
-		print(sprintf("Fuslage front %7.3f°C %2.5f",me._temperature, me._frostFuslageFront));
-		print(sprintf("WingLH Boot I %7.3f°C %2.5f",me._temperature, me._frostWingLHBootInner));
-		print(sprintf("WingLH Boot O %7.3f°C %2.5f",me._temperature, me._frostWingLHBootOuter));
-		print(sprintf("WingRH Boot I %7.3f°C %2.5f",me._temperature, me._frostWingRHBootInner));
-		print(sprintf("WingRH Boot O %7.3f°C %2.5f",me._temperature, me._frostWingRHBootOuter));
-		print(sprintf("VStab         %7.3f°C %2.5f",me._temperature, me._frostVStab));
-		print(sprintf("HStabLH       %7.3f°C %2.5f",me._temperature, me._frostHStabLH));
-		print(sprintf("HStabRH       %7.3f°C %2.5f",me._temperature, me._frostHStabRH));
-		
-		print(sprintf("windschild    %7.3f°C %2.5f",cabin._windShield._temperature, me._frostWindshieldFront));
-		print(sprintf("windschild he %7.3f°C %2.5f",cabin._windShieldHeated._temperature, me._frostWindshieldHeated));
-		print(sprintf("propeller     %7.3f°C %2.5f",cabin._propeller._temperature, me._frostPropellerBlade));
-		print(sprintf("pitot LH      %7.3f°C %2.5f",cabin._pitotLH._temperature, me._frostPitotLH));
-		print(sprintf("pitot RH      %7.3f°C %2.5f",cabin._pitotRH._temperature, me._frostPitotRH));
-		print(sprintf("static LH     %7.3f°C %2.5f",cabin._staticLH._temperature, me._frostStaticLH));
-		print(sprintf("static RH     %7.3f°C %2.5f",cabin._staticRH._temperature, me._frostStaticRH));
-		print(sprintf("stall warner  %7.3f°C %2.5f",cabin._stallWarnHeat._temperature, me._frostStallWarnHeat));
-		print(sprintf("inlet         %7.3f°C %2.5f",cabin._inlet._temperature, me._frostInlet));
-		
+			print(sprintf("windschild    %7.3f°C %2.5f",cabin._windShield._temperature, me._frostWindshieldFront));
+			print(sprintf("windschild he %7.3f°C %2.5f",cabin._windShieldHeated._temperature, me._frostWindshieldHeated));
+			print(sprintf("propeller     %7.3f°C %2.5f",cabin._propeller._temperature, me._frostPropellerBlade));
+			print(sprintf("pitot LH      %7.3f°C %2.5f",cabin._pitotLH._temperature, me._frostPitotLH));
+			print(sprintf("pitot RH      %7.3f°C %2.5f",cabin._pitotRH._temperature, me._frostPitotRH));
+			print(sprintf("static LH     %7.3f°C %2.5f",cabin._staticLH._temperature, me._frostStaticLH));
+			print(sprintf("static RH     %7.3f°C %2.5f",cabin._staticRH._temperature, me._frostStaticRH));
+			print(sprintf("stall warner  %7.3f°C %2.5f",cabin._stallWarnHeat._temperature, me._frostStallWarnHeat));
+			print(sprintf("inlet         %7.3f°C %2.5f",cabin._inlet._temperature, me._frostInlet));
+		}	
 	},
 	fog : func(){
 		#var fog 	= getprop("/environment/aircraft-effects/fog-level");

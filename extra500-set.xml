@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger
       Date: March 13 2013
 
-	Last change:      Dirk Dittmann
-	Date:             15.01.2016
+	Last change:      Eric van den Berg
+	Date:             12.03.2016
 
 
 ************************************************************************
@@ -59,7 +59,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<model type="int">4</model>
 		<cockpit type="int">4</cockpit>
 	</rating>
-	<extra500-version>3.0.0</extra500-version>
+	<extra500-version>4.0.0</extra500-version>
 	<extra500-git>https://gitlab.com/extra500/extra500</extra500-git>
 	<extra500-wiki>http://wiki.flightgear.org/Extra_EA-500</extra500-wiki>
 
@@ -1487,6 +1487,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
  <environment>
 	<temperature-degK type="double">15</temperature-degK>
 	 <aircraft-effects>
+		 <debug type="bool">false</debug>
 		 <frost-level-noice type="double">0.0</frost-level-noice>
 		 <frost-level-FuslageFront type="double">0.0</frost-level-FuslageFront>
 		 <frost-level-WindshieldHeated type="double">0.0</frost-level-WindshieldHeated>
