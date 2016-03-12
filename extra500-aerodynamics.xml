@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2016-03-06
+      Date:             2016-03-12
 -->
 
 <aerodynamics>
@@ -496,7 +496,34 @@
             </table>
     </function>
 
+<!--aileron reduced effectivity due to icing -->
+  <function name="aero/coefficients/cl_Laileron">
+       <description>left aileron roll coefficient</description>      
+		<product>
+            	<property>aero/coefficients/cl_aileron</property> 
+            	<table>
+            		<independentVar lookup="row">/environment/aircraft-effects/frost-level-WingLHBootOuter</independentVar>
+                        <tableData>
+					0	1
+					1	0.6
+                  	</tableData>
+            	</table>
+		</product>
+    </function>
 
+  <function name="aero/coefficients/cl_Raileron">
+       <description>right aileron roll coefficient</description>      
+		<product>
+            	<property>aero/coefficients/cl_aileron</property> 
+            	<table>
+            		<independentVar lookup="row">/environment/aircraft-effects/frost-level-WingRHBootOuter</independentVar>
+                        <tableData>
+					0	1
+					1	0.6
+                  	</tableData>
+            	</table>
+		</product>
+    </function>
 
 <!--horizontal stab coefficients-->
 
@@ -1013,7 +1040,7 @@
 			<property>metrics/Sw-sqft</property>
 			<property>metrics/bw-ft</property>
 			<property>fcs/left-aileron-pos-norm</property>
-			<property>aero/coefficients/cl_aileron</property>
+			<property>aero/coefficients/cl_Laileron</property>
 		</product>
 	</function>
 
@@ -1024,7 +1051,7 @@
 			<property>metrics/Sw-sqft</property>
 			<property>metrics/bw-ft</property>
 			<property>fcs/right-aileron-pos-norm</property>
-			<property>aero/coefficients/cl_aileron</property>
+			<property>aero/coefficients/cl_Raileron</property>
 		</product>
 	</function>
 
