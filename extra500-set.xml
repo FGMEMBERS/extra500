@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:      Eric van den Berg
-	Date:             12.03.2016
+	Date:             17.03.2016
 
 
 ************************************************************************
@@ -2092,6 +2092,12 @@ of the RR 250-B17F/2 engine is best.</long-description>
 	</yokes>
 	<weather>
 		<debug type="bool">0</debug>
+		<range-nm type="double">30</range-nm>
+		<min-range-nm type="double">30</min-range-nm>
+		<max-range-nm type="double">200</max-range-nm>
+		<range-adjust-factor type="double">1.5</range-adjust-factor>
+		<max-stations type="int">10</max-stations>
+		<min-stations type="int">6</min-stations>
 		<interval-sec type="double">60.0</interval-sec>
 		<smooth type="bool">0</smooth>
 		<noruns type="int">0</noruns>
