@@ -19,6 +19,11 @@
       Last change:      Eric van den Berg
       Date:             2016.03.20
 
+Release 4.1.0: use for Flightgear version 2016.1.x and up
+Includes 3.2.0 improvements
+
+Release 4.0.0: use for Flightgear version 2016.1.x and up
+* JSBsim: adjust to changed accelerometer implementation, get rid of nuisance warnings
 
 Release 3.2.0: use for Flightgear version 3.6
 * Environment: variable METAR scan range to improve performance
