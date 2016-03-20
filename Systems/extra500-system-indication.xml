@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2016-01-11
+      Date:             2016-02-26
 -->
 
 <system name="indication">
@@ -1151,6 +1151,29 @@
 			<output>aircraft/events/TOT752</output>
 		</switch>
 
+	</channel>
+
+	<channel name="eng">
+		<fcs_function name="aircraft/engine/massflow-lbs-sec">
+			<function>
+       			<description>engine air massflow lbs/sec</description>
+       				<table>
+            				<independentVar lookup="row">/fdm/jsbsim/atmosphere/pressure-altitude</independentVar>
+            				<independentVar lookup="column">/fdm/jsbsim/propulsion/engine/power-hp</independentVar>
+            				<tableData>
+							0	35	100	200	300	380	450
+						0	0	2.035	2.414	2.876	3.329	3.668	3.955
+						2000	0	1.93	2.302	2.757	3.214	3.557	3.815
+						5000	0	1.781	2.143	2.589	3.055	3.389	3.541
+						8000	0	1.643	1.996	2.459	2.911	3.17	3.261
+						10000	0	1.556	1.906	2.377	2.816	3.003	3.261
+						15000	0	1.356	1.694	2.166	2.504	2.586	3.261
+						20000	0	1.178	1.501	1.982	2.149	2.586 3.261
+						25000	0	1.02	1.355	1.734	2.149	2.586	3.261
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
 	</channel>
 
 	<channel name="TOT">
