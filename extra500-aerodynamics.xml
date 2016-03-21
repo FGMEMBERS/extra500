@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2015-12-14
+      Date:             2016-03-12
 -->
 
 <aerodynamics>
@@ -110,8 +110,8 @@
 
 <!--wing and fuselage coefficients-->
 
-    <function name="aero/coefficients/cl_ac-h">
-       <description>CL of aircraft less tail</description>
+    <function name="aero/coefficients/cl_ac-h-no_ice">
+       <description>CL of aircraft less tail and no ice</description>
        <table>
             <independentVar lookup="row">aircraft/wing/alpha-deg</independentVar>
             <independentVar lookup="column">fcs/flap-aero-pos-deg</independentVar>
@@ -145,6 +145,40 @@
                   16    0.7   0.9   0.7
               </tableData>
       </table>
+    </function>
+
+    <function name="aero/coefficients/d_cl_ice">
+       <description>delta cl due to ice</description>
+	 <product>
+		 <property>/environment/aircraft-effects/frost-level-WingLHBootInner</property>
+      	 <table>
+          	  	<independentVar lookup="row">aircraft/wing/alpha-deg</independentVar>
+            	<independentVar lookup="column">fcs/flap-aero-pos-deg</independentVar>
+            	<tableData >
+             	           0 		15 		30
+				3.55	0		0		0
+				6.043	0		0		-0.8334
+				8.708	0		-0.7		-1.57
+				10	-0.473	-1.06		-1.93
+				11	-0.76		-1.37		-2.07	
+				11.5	-0.905	-1.25		-2.12	
+				12	-1.0		-1.1		-2.0
+				13	-0.85		-0.85		-1.5
+				14	-0.65		-0.65		-1.1
+				15	-0.45		-0.55		-0.8
+				16	-0.35		-0.45		-0.6
+				17	-0.35		-0.45		-0.5
+            	</tableData>
+      	</table>
+	 </product>
+    </function>
+
+   <function name="aero/coefficients/cl_ac-h">
+       <description>CL of aircraft less tail</description>
+ 	<sum>
+		<property>aero/coefficients/cl_ac-h-no_ice</property>
+		<property>aero/coefficients/d_cl_ice</property>
+	</sum>
     </function>
 
     <function name="aero/coefficients/cd_df">
@@ -462,7 +496,34 @@
             </table>
     </function>
 
+<!--aileron reduced effectivity due to icing -->
+  <function name="aero/coefficients/cl_Laileron">
+       <description>left aileron roll coefficient</description>      
+		<product>
+            	<property>aero/coefficients/cl_aileron</property> 
+            	<table>
+            		<independentVar lookup="row">/environment/aircraft-effects/frost-level-WingLHBootOuter</independentVar>
+                        <tableData>
+					0	1
+					1	0.6
+                  	</tableData>
+            	</table>
+		</product>
+    </function>
 
+  <function name="aero/coefficients/cl_Raileron">
+       <description>right aileron roll coefficient</description>      
+		<product>
+            	<property>aero/coefficients/cl_aileron</property> 
+            	<table>
+            		<independentVar lookup="row">/environment/aircraft-effects/frost-level-WingRHBootOuter</independentVar>
+                        <tableData>
+					0	1
+					1	0.6
+                  	</tableData>
+            	</table>
+		</product>
+    </function>
 
 <!--horizontal stab coefficients-->
 
@@ -979,7 +1040,7 @@
 			<property>metrics/Sw-sqft</property>
 			<property>metrics/bw-ft</property>
 			<property>fcs/left-aileron-pos-norm</property>
-			<property>aero/coefficients/cl_aileron</property>
+			<property>aero/coefficients/cl_Laileron</property>
 		</product>
 	</function>
 
@@ -990,7 +1051,7 @@
 			<property>metrics/Sw-sqft</property>
 			<property>metrics/bw-ft</property>
 			<property>fcs/right-aileron-pos-norm</property>
-			<property>aero/coefficients/cl_aileron</property>
+			<property>aero/coefficients/cl_Raileron</property>
 		</product>
 	</function>
 
