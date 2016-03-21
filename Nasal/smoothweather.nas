@@ -17,7 +17,7 @@
 #      Date:   12.06.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 22.09.2015            
+#      Date: 17.03.2016            
 #
 # note: some parts are taken from fgdata/gui/dialogs/weather.xml
 
@@ -66,6 +66,7 @@ var init_weather = func() {
 		setprop("/extra500/weather/ready",0);
 		setprop("/environment/params/metar-updates-environment",1);
 		weatherService.stop();
+		setprop("/extra500/weather/range-nm",getprop("/extra500/weather/min-range-nm"));
 		UI.msg.info("Smooth weather is de-activated");
     }
 }
@@ -97,12 +98,14 @@ var local_metar = func() {
 		var vvalid = [];
 		var vweight = [];
 		var no_valid = 0;
-		for (var i = 0 ; i <= 19; i+=1){
-			if ( (getprop("/extra500/weather/station["~i~"]/metar/valid") == 1) and (getprop("/extra500/weather/station["~i~"]/distance-m") != -1) ) {
+		var scanRange = getprop("/extra500/weather/range-nm");
+
+		for (var i = 0 ; i <= 14; i+=1){
+			var dist = getprop("/extra500/weather/station["~i~"]/distance-m");
+			if ( (getprop("/extra500/weather/station["~i~"]/metar/valid") == 1) and (dist != -1) ) {
 				no_valid = no_valid +1; 		# counting valid metars
 				append( vvalid , i);			# vector of valid metar stations
 
-				var dist = getprop("/extra500/weather/station["~i~"]/distance-m");
 				if (dist <	1) {dist = 1;}	
 				append( vweight ,math.pow(dist,-2) );
 				total_weight = total_weight + vweight[i];
@@ -169,6 +172,23 @@ var local_metar = func() {
 		} else {
 			if (debug) {print("no valid METARs in range"); }
 		}
+
+		# variable range
+		var maxStations = getprop("/extra500/weather/max-stations");
+		var minStations = getprop("/extra500/weather/min-stations");
+
+		var rangeAdjustFactor = getprop("/extra500/weather/range-adjust-factor");
+
+		if (no_valid > maxStations) { 
+			if (debug) {print("valid stations is more than needed...reducing range"); }
+			scanRange = math.max(scanRange / rangeAdjustFactor,getprop("/extra500/weather/min-range-nm") ); 
+		} else if (	no_valid < minStations) {
+			if (debug) {print("valid stations is less than needed...increasing range"); }
+			scanRange = math.min(scanRange * rangeAdjustFactor,getprop("/extra500/weather/max-range-nm") ); 
+		}
+
+		setprop("/extra500/weather/range-nm",scanRange);
+
 };
 
 var buildMetar = func() {
@@ -383,7 +403,7 @@ var WeatherService = {
 			_root		: root,
 			_nRoot		: props.globals.initNode(root),
 		};
-		m._maxWeatherStations 	= 20;
+#		m._maxWeatherStations 	= 20;
 		m._weatherStation 	= [];
 		m._listeners 		= [];
 		m._stationsReady 	= 0;
@@ -407,7 +427,7 @@ var WeatherService = {
 		return m;
 	},
 	init : func(){
-		for (var i = 0 ; i < me._maxWeatherStations; i+=1){
+		for (var i = 0 ; i < 15; i+=1){
 			var station = WeatherStation.new(me._root ~ "/station["~i~"]");
 			append(me._weatherStation,station);
 		}
@@ -421,7 +441,7 @@ var WeatherService = {
 	},
 	publish : func(){
 		
-		for (var i = 0 ; i < me._maxWeatherStations; i+=1){
+		for (var i = 0 ; i < 15; i+=1){
 			me._weatherStation[i].publish();
 		}
 				
@@ -448,7 +468,11 @@ var WeatherService = {
 	},
 	fetchMetar : func(){
 		if (getprop("/extra500/weather/debug")) {print("WeatherService::fetchMetar() ... ");}
-		var listAirports = positioned.findAirportsWithinRange(100);
+
+		var scanRange = getprop("/extra500/weather/range-nm");
+		var maxStations = getprop("/extra500/weather/max-stations");
+
+		var listAirports = positioned.findAirportsWithinRange(scanRange);
 		me._stationsReady = 0;
 		var stationIndex = 0;
 		me._ready = 0;
@@ -485,16 +509,15 @@ var WeatherService = {
 				stationIndex += 1;
 			}
 			
-			if (stationIndex >= me._maxWeatherStations){
+			if (stationIndex >= maxStations){
 				break;
 			}
 		}
 		me._stationsRecieved = stationIndex;
 
-		for (var i = stationIndex ; i < me._maxWeatherStations; i+=1){
+		for (var i = stationIndex ; i < 15; i+=1){
 			me._weatherStation[i].clearMetar();
 		}
-			
 
 	},
 };

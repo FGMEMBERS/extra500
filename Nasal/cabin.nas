@@ -62,7 +62,7 @@ var CabinClass = {
 		};
 		
 		var initTemperature = environment._temperature;
-		initTemperature = 0;	
+		#initTemperature = 0;	
 		m._nCabinPressure	= m._nRoot.initNode("hasPressureWarning",0,"BOOL");
 		m._nBleedOvertemp	= m._nRoot.initNode("hasBleedOvertempWarning",0,"BOOL");
 		
