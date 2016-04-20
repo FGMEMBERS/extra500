@@ -16,8 +16,8 @@
 #      Authors: Eric van den Berg
 #      Date: 04.04.2016
 #
-#      Last change:      
-#      Date:             
+#      Last change: Eric van den Berg     
+#      Date: 20.04.2016            
 #
 
 var PerfClass = {
@@ -50,32 +50,41 @@ var PerfClass = {
 # calculates the time, distance and fuel for a complete trip or while enroute
 #
 # phase: "off"=calc whole trip, "taxi"=startup and taxi, "climb"=climb to cruise, "cruise"=cruise, "descent"=descent
+# startupfuel: fuel used for startup and taxi (lbs). Only used when phase is 'off'.
 # power: "minpow" or "maxpow", only used in cruise
 # flightMode: is "distance", "time" or "fuel"
 # currentAlt is used for the airport altitude when phase is 'off'
 # it is also used for the phase that is current. So if the phase is 'cruise', currentAlt is used as the cruise altitude, not cruiseALT 
 # totalFlight: is total available trip-distance (nm), -time (sec) or -fuel (lbs) dependent on flightMode
-# currentGS (knots) and currentFF (lbs/h) are only used for the current flight phase, else it is neglected
+# currentGS (knots) and currentFF (lbs/h) are only used for the _current_ flight phase, else it is neglected
 
 # return code 1: cruise distance/time/fuel negative
+# return code 2: cruise fuel negative (enroute), range cannot be calculated
 
-	trip : func(phase,power,flightMode,currentAlt,cruiseAlt,destAlt,totalFlight,currentGS,currentFF) {
-		me.startupTaxi(phase,30);
+	trip : func(phase,startupfuel,power,flightMode,currentAlt,cruiseAlt,destAlt,totalFlight,currentGS,currentFF) {
+		me.startupTaxi(phase,startupfuel);
 		me.climb(phase,currentAlt,cruiseAlt,currentGS,currentFF);
 		me.descent(phase,cruiseAlt,destAlt,currentAlt,currentGS,currentFF);
 		if ( flightMode == "distance" ) {cruiseFlight = totalFlight - getprop(me._root,"climb/distanceToAlt-nm") - getprop(me._root,"descent/distanceToDes-nm")}
 		if ( flightMode == "time" ) {cruiseFlight = totalFlight - getprop(me._root,"climb/timeToAlt-s") - getprop(me._root,"descent/timeToDes-s")}
 		if ( flightMode == "fuel" ) {cruiseFlight = totalFlight - getprop(me._root,"climb/fuelToAlt-lbs") - getprop(me._root,"descent/fuelToDes-lbs") - getprop(me._root,"startupTaxi/fuel-lbs")}
-		if ( ( cruiseFlight < 0 ) and ( phase != "descent" ) ) {
+
+		if ( ( cruiseFlight < 0 ) and ( phase == "off") ) {
 			print("cruise distance/time/fuel negative, reduce cruise altitude");
 			return 1
 		}
+
+		if ( ( cruiseFlight < 0 ) and ( phase != "off") and ( flightMode == "fuel" ) ) { # not enough fuel to finish the trip
+			return 2
+		}
+
 		if ( phase == "descent" ) {    # in descent the "rest" distance is assumed 5000ft over destination altitude with low power
 			cruiseFlight = math.abs(cruiseFlight);	# in case the descent is longer as the destination, it is assumed the 'overshoot' is done in cruise 
 			cruiseAlt = destAlt + 5000;
 			if ( cruiseAlt > currentAlt) { cruiseAlt = currentAlt }
 			power = "minpow";
 		}
+
 		if ( phase == "cruise" ) { cruiseAlt = currentAlt; }
 
 		me.cruise(phase,power,flightMode,cruiseFlight,cruiseAlt,currentGS,currentFF);
@@ -89,7 +98,7 @@ var PerfClass = {
 # calculates the time, distance and fuel for the cruise phase 
 #
 # phase: "off"=calc whole trip, "taxi"=startup and taxi, "climb"=climb to cruise, "cruise"=cruise, "descent"=descent
-# if phase in NOT "off", mode2 must be set to "distance"!
+# if phase in NOT "off", mode2 must be set to "distance" or "fuel"!
 # 'powerMode' is either "minpow" or "maxpow"
 # 'mode2' is "distance", "time" or "fuel"
 # depending on mode2, cruiseInput is the cruise distance (nm), cruise time (sec) or cruise fuel (lbs)
@@ -123,7 +132,7 @@ var PerfClass = {
 		var cruiseTime = 0;
 		var cruiseFuel = 0;
 
-		if ( ( phase!="off" ) and ( mode2!="distance" ) ) {print("WARNING: when in flight, mode2 must be 'distance'") } 
+		if ( ( phase!="off" ) and (mode2!="distance" ) and (mode2!="fuel") ) {print("WARNING: when in flight, mode2 must be 'distance' or 'fuel'") } 
 
 		if ( (phase=="off") or (phase=="taxi") or (phase=="climb") or (phase=="descent") ) {
 			if (powerMode=="maxpow"){
@@ -155,11 +164,19 @@ var PerfClass = {
 			}
 
 		} else if (phase=="cruise") { 
-			cruiseDist = cruiseInput; #nm
+
 			cruiseSpeed = currentGS; #knots
 			cruiseFF = currentFF; # lbs/h
-			cruiseTime = cruiseDist / cruiseSpeed; # hours
-			cruiseFuel = cruiseFF * cruiseTime; # lbs
+
+			if (mode2=="distance") {
+				cruiseDist = cruiseInput; #nm
+				cruiseTime = cruiseDist / cruiseSpeed; # hours
+				cruiseFuel = cruiseFF * cruiseTime; # lbs
+			} else if (mode2 == "fuel") {
+				cruiseFuel = cruiseInput; #lbs
+				cruiseTime = cruiseFuel / cruiseFF; #hours
+				cruiseDist = cruiseSpeed * cruiseTime; # nm
+			}
 		}
 
 		setprop(me._root,"cruise/distance-nm",cruiseDist);
