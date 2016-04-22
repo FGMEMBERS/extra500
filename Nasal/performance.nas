@@ -20,6 +20,17 @@
 #      Date: 20.04.2016            
 #
 
+var loadPerformanceTables = func(path=""){
+	if(path == ""){
+		path = getprop("/sim/aircraft-dir") ~ "/Nasal/performanceTables.nas";
+	}
+	
+	io.load_nasal(path,"extra500");
+		
+}
+# load the default Performance Tables file. into var performanceTable
+loadPerformanceTables();
+
 var PerfClass = {
 	new : func(root,name){
 		var m = {parents:[PerfClass],
@@ -109,22 +120,22 @@ var PerfClass = {
 
 	cruise : func(phase="off",powerMode="maxpow",mode2="distance",cruiseInput=0,cruiseAlt=0,currentGS=0,currentFF=0) {
 		var NUMBER=0; var ALTITUDE=1; var maxSPEED=2; var maxFFLOW=3; var minSPEED=4; var minFFLOW=5;
-		var cruise = [
-				[1,0,199,242,145,155],
-				[2,2000,202,238,147,150],
-				[3,4000,206,234,149,145],
-				[4,6000,210,232,151,141],	
-				[5,8000,213,230,153,136],
-				[6,10000,217,229,156,132],
-				[7,12000,221,227,158,129],
-				[8,14000,218,211,161,125],
-				[9,16000,216,200,163,123],
-				[10,18000,214,190,166,120],
-				[11,20000,203,166,158,108],
-				[12,22000,199,152,161,107],
-				[13,24000,193,140,154,105],
-				[14,25000,186,128,165,105]
-				];
+# 		var cruise = [
+# 				[1,0,199,242,145,155],
+# 				[2,2000,202,238,147,150],
+# 				[3,4000,206,234,149,145],
+# 				[4,6000,210,232,151,141],	
+# 				[5,8000,213,230,153,136],
+# 				[6,10000,217,229,156,132],
+# 				[7,12000,221,227,158,129],
+# 				[8,14000,218,211,161,125],
+# 				[9,16000,216,200,163,123],
+# 				[10,18000,214,190,166,120],
+# 				[11,20000,203,166,158,108],
+# 				[12,22000,199,152,161,107],
+# 				[13,24000,193,140,154,105],
+# 				[14,25000,186,128,165,105]
+# 				];
 
 		var cruiseDist = 0;
 		var cruiseSpeed = 0;
@@ -136,11 +147,11 @@ var PerfClass = {
 
 		if ( (phase=="off") or (phase=="taxi") or (phase=="climb") or (phase=="descent") ) {
 			if (powerMode=="maxpow"){
-				cruiseSpeed = me.matrixinterp(cruise,14,cruiseAlt,ALTITUDE,maxSPEED);
-				cruiseFF = me.matrixinterp(cruise,14,cruiseAlt,ALTITUDE,maxFFLOW);
+				cruiseSpeed = me.matrixinterp(performanceTable.cruise,14,cruiseAlt,ALTITUDE,maxSPEED);
+				cruiseFF = me.matrixinterp(performanceTable.cruise,14,cruiseAlt,ALTITUDE,maxFFLOW);
 			} else if (powerMode=="minpow") {
-				cruiseSpeed = me.matrixinterp(cruise,14,cruiseAlt,ALTITUDE,minSPEED);
-				cruiseFF = me.matrixinterp(cruise,14,cruiseAlt,ALTITUDE,minFFLOW);
+				cruiseSpeed = me.matrixinterp(performanceTable.cruise,14,cruiseAlt,ALTITUDE,minSPEED);
+				cruiseFF = me.matrixinterp(performanceTable.cruise,14,cruiseAlt,ALTITUDE,minFFLOW);
 			} else {
 				print("ERROR: powerMode variable in cruise is not defined (correctly)");
 				return 1
@@ -208,42 +219,42 @@ var PerfClass = {
 		}
 
 		var NUMBER=0; var ALTITUDE=1; var SECONDS=2; var FUELLBS=3; var DIST=4;
-		var climb = [
-				[1,0,0,0,0],
-				[2,1000,42,3,1],
-				[3,2000,90,6,3],
-				[4,3000,132,9,4],
-				[5,4000,180,12,6],	
-				[6,5000,222,15,7],
-				[7,6000,270,18,9],
-				[8,7000,312,20,10],
-				[9,8000,360,23,12],
-				[10,9000,402,26,13],
-				[11,10000,444,29,15],
-				[12,11000,492,32,16],
-				[13,12000,534,35,18],
-				[14,13000,582,38,20],
-				[15,14000,630,41,21],
-				[16,15000,684,44,23],
-				[17,16000,744,47,26],
-				[18,17000,810,50,28],
-				[19,18000,876,54,31],
-				[20,19000,960,58,34],
-				[21,20000,1050,63,38],
-				[22,21000,1152,67,42],
-				[23,22000,1272,73,48],
-				[24,23000,1422,79,54],
-				[25,24000,1620,87,63],
-				[26,25000,1976,98,75]
-				];
+# 		var climb = [
+# 				[1,0,0,0,0],
+# 				[2,1000,42,3,1],
+# 				[3,2000,90,6,3],
+# 				[4,3000,132,9,4],
+# 				[5,4000,180,12,6],	
+# 				[6,5000,222,15,7],
+# 				[7,6000,270,18,9],
+# 				[8,7000,312,20,10],
+# 				[9,8000,360,23,12],
+# 				[10,9000,402,26,13],
+# 				[11,10000,444,29,15],
+# 				[12,11000,492,32,16],
+# 				[13,12000,534,35,18],
+# 				[14,13000,582,38,20],
+# 				[15,14000,630,41,21],
+# 				[16,15000,684,44,23],
+# 				[17,16000,744,47,26],
+# 				[18,17000,810,50,28],
+# 				[19,18000,876,54,31],
+# 				[20,19000,960,58,34],
+# 				[21,20000,1050,63,38],
+# 				[22,21000,1152,67,42],
+# 				[23,22000,1272,73,48],
+# 				[24,23000,1422,79,54],
+# 				[25,24000,1620,87,63],
+# 				[26,25000,1976,98,75]
+# 				];
 
 		if ( (phase == "off") or (phase == "taxi") ) {
-			timeToAlt = me.matrixinterp(climb,26,desAlt,ALTITUDE,SECONDS) - me.matrixinterp(climb,26,currentAlt,ALTITUDE,SECONDS);
-			fuelToAlt = me.matrixinterp(climb,26,desAlt,ALTITUDE,FUELLBS) - me.matrixinterp(climb,26,currentAlt,ALTITUDE,FUELLBS);
-			distanceToAlt = me.matrixinterp(climb,26,desAlt,ALTITUDE,DIST) - me.matrixinterp(climb,26,currentAlt,ALTITUDE,DIST);
+			timeToAlt = me.matrixinterp(performanceTable.climb,26,desAlt,ALTITUDE,SECONDS) - me.matrixinterp(performanceTable.climb,26,currentAlt,ALTITUDE,SECONDS);
+			fuelToAlt = me.matrixinterp(performanceTable.climb,26,desAlt,ALTITUDE,FUELLBS) - me.matrixinterp(performanceTable.climb,26,currentAlt,ALTITUDE,FUELLBS);
+			distanceToAlt = me.matrixinterp(performanceTable.climb,26,desAlt,ALTITUDE,DIST) - me.matrixinterp(performanceTable.climb,26,currentAlt,ALTITUDE,DIST);
 		} else if ( (phase == "climb") ) {
-			timeToAlt = me.matrixinterp(climb,26,desAlt,ALTITUDE,SECONDS) - me.matrixinterp(climb,26,currentAlt,ALTITUDE,SECONDS);
-			fuelToAlt = me.matrixinterp(climb,26,desAlt,ALTITUDE,FUELLBS) - me.matrixinterp(climb,26,currentAlt,ALTITUDE,FUELLBS);
+			timeToAlt = me.matrixinterp(performanceTable.climb,26,desAlt,ALTITUDE,SECONDS) - me.matrixinterp(performanceTable.climb,26,currentAlt,ALTITUDE,SECONDS);
+			fuelToAlt = me.matrixinterp(performanceTable.climb,26,desAlt,ALTITUDE,FUELLBS) - me.matrixinterp(performanceTable.climb,26,currentAlt,ALTITUDE,FUELLBS);
 			distanceToAlt = currentGS * timeToAlt / 3600;
 		} else if ( (phase=="cruise") or (phase=="descent") ) {
 			# all stays 0
@@ -276,46 +287,46 @@ var PerfClass = {
 		}
 
 		var NUMBER=0; var ALTITUDE=1; var SECONDS=2; var FUELLBS=3; var DIST=4;
-		var descent = [
-				[1,0,0,0,0],
-				[2,1000,30,1,2],
-				[3,2000,60,2,4],
-				[4,3000,90,3,6],
-				[5,4000,120,4,8],	
-				[6,5000,150,5,10],
-				[7,6000,180,6,12],
-				[8,7000,210,8,14],
-				[9,8000,240,9,16],
-				[10,9000,270,10,18],
-				[11,10000,300,11,20],
-				[12,11000,330,12,22],
-				[13,12000,360,13,24],
-				[14,13000,390,14,26],
-				[15,14000,420,16,28],
-				[16,15000,450,17,30],
-				[17,16000,480,18,32],
-				[18,17000,510,19,34],
-				[19,18000,540,20,36],
-				[20,19000,570,22,37],
-				[21,20000,600,23,39],
-				[22,21000,630,24,41],
-				[23,22000,660,25,43],
-				[24,23000,690,27,44],
-				[25,24000,720,28,46],
-				[26,25000,750,29,48]
-				];
+# 		var descent = [
+# 				[1,0,0,0,0],
+# 				[2,1000,30,1,2],
+# 				[3,2000,60,2,4],
+# 				[4,3000,90,3,6],
+# 				[5,4000,120,4,8],	
+# 				[6,5000,150,5,10],
+# 				[7,6000,180,6,12],
+# 				[8,7000,210,8,14],
+# 				[9,8000,240,9,16],
+# 				[10,9000,270,10,18],
+# 				[11,10000,300,11,20],
+# 				[12,11000,330,12,22],
+# 				[13,12000,360,13,24],
+# 				[14,13000,390,14,26],
+# 				[15,14000,420,16,28],
+# 				[16,15000,450,17,30],
+# 				[17,16000,480,18,32],
+# 				[18,17000,510,19,34],
+# 				[19,18000,540,20,36],
+# 				[20,19000,570,22,37],
+# 				[21,20000,600,23,39],
+# 				[22,21000,630,24,41],
+# 				[23,22000,660,25,43],
+# 				[24,23000,690,27,44],
+# 				[25,24000,720,28,46],
+# 				[26,25000,750,29,48]
+# 				];
 
 		if ( (phase == "off") or (phase == "taxi") or (phase == "climb") ) {
-			var timeToDes = me.matrixinterp(descent,26,cruiseAlt,ALTITUDE,SECONDS) - me.matrixinterp(descent,26,desAlt,ALTITUDE,SECONDS);
-			var fuelToDes = me.matrixinterp(descent,26,cruiseAlt,ALTITUDE,FUELLBS) - me.matrixinterp(descent,26,desAlt,ALTITUDE,FUELLBS);
-			var distanceToDes = me.matrixinterp(descent,26,cruiseAlt,ALTITUDE,DIST) - me.matrixinterp(descent,26,desAlt,ALTITUDE,DIST);
+			var timeToDes = me.matrixinterp(performanceTable.descent,26,cruiseAlt,ALTITUDE,SECONDS) - me.matrixinterp(performanceTable.descent,26,desAlt,ALTITUDE,SECONDS);
+			var fuelToDes = me.matrixinterp(performanceTable.descent,26,cruiseAlt,ALTITUDE,FUELLBS) - me.matrixinterp(performanceTable.descent,26,desAlt,ALTITUDE,FUELLBS);
+			var distanceToDes = me.matrixinterp(performanceTable.descent,26,cruiseAlt,ALTITUDE,DIST) - me.matrixinterp(performanceTable.descent,26,desAlt,ALTITUDE,DIST);
 		} else if ( phase == "cruise" ) {
-			var timeToDes = me.matrixinterp(descent,26,currentAlt,ALTITUDE,SECONDS) - me.matrixinterp(descent,26,desAlt,ALTITUDE,SECONDS);
-			var fuelToDes = me.matrixinterp(descent,26,currentAlt,ALTITUDE,FUELLBS) - me.matrixinterp(descent,26,desAlt,ALTITUDE,FUELLBS);
-			var distanceToDes = me.matrixinterp(descent,26,currentAlt,ALTITUDE,DIST) - me.matrixinterp(descent,26,desAlt,ALTITUDE,DIST);
+			var timeToDes = me.matrixinterp(performanceTable.descent,26,currentAlt,ALTITUDE,SECONDS) - me.matrixinterp(performanceTable.descent,26,desAlt,ALTITUDE,SECONDS);
+			var fuelToDes = me.matrixinterp(performanceTable.descent,26,currentAlt,ALTITUDE,FUELLBS) - me.matrixinterp(performanceTable.descent,26,desAlt,ALTITUDE,FUELLBS);
+			var distanceToDes = me.matrixinterp(performanceTable.descent,26,currentAlt,ALTITUDE,DIST) - me.matrixinterp(performanceTable.descent,26,desAlt,ALTITUDE,DIST);
 		} else if ( phase == "descent" ) {
-			var timeToDes = me.matrixinterp(descent,26,currentAlt,ALTITUDE,SECONDS) - me.matrixinterp(descent,26,desAlt,ALTITUDE,SECONDS);
-			var fuelToDes = me.matrixinterp(descent,26,currentAlt,ALTITUDE,FUELLBS) - me.matrixinterp(descent,26,desAlt,ALTITUDE,FUELLBS);
+			var timeToDes = me.matrixinterp(performanceTable.descent,26,currentAlt,ALTITUDE,SECONDS) - me.matrixinterp(performanceTable.descent,26,desAlt,ALTITUDE,SECONDS);
+			var fuelToDes = me.matrixinterp(performanceTable.descent,26,currentAlt,ALTITUDE,FUELLBS) - me.matrixinterp(performanceTable.descent,26,desAlt,ALTITUDE,FUELLBS);
 			var distanceToDes = currentGS * timeToDes / 3600;
 		}
 
