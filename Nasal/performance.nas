@@ -17,7 +17,7 @@
 #      Date: 04.04.2016
 #
 #      Last change: Eric van den Berg     
-#      Date: 20.04.2016            
+#      Date: 04.04.2016            
 #
 
 var loadPerformanceTables = func(path=""){
@@ -36,7 +36,41 @@ var PerfClass = {
 		var m = {parents:[PerfClass],
 		_root		: root,
 		};
-
+		# output structure to hold the calculated values 
+		m.data = {
+			rCode: -1 , # of trip
+			# flight the sum of all phases
+			flight	: {
+				time	 	: 0,	# sec
+				fuel	 	: 0,	# lbs
+				distance 	: 0	# nm
+			},
+			startupTaxi :  {
+				rCode		: -1,
+				fuel		: 30	# lbs
+			},
+			climb : {
+				rCode		: -1,
+				time	 	: 0,	# sec
+				fuel	 	: 0,	# lbs
+				distance 	: 0	# nm
+			},
+			cruise : {
+				rCode		: -1,
+				speed		: 0,	# kts
+				fuelFlow	: 0,
+				time	 	: 0,	# sec
+				fuel	 	: 0,	# lbs
+				distance 	: 0	# nm
+			},
+			descent : {
+				rCode		: -1,
+				time	 	: 0,	# sec
+				fuel	 	: 0,	# lbs
+				distance 	: 0	# nm
+			}
+		};
+		
 		return m;
 	},
 
@@ -54,7 +88,36 @@ var PerfClass = {
 		setprop(me._root,"trip/flightFuel-lbs",flightFuel);
 		setprop(me._root,"trip/flightDist-nm",flightDist);
 	},
+	
+	updateTrip2 : func() {
+		var flightTime = me.data.cruise.time + me.data.climb.time + me.data.descent.time ;
+		var flightFuel = me.data.startupTaxi.fuel + me.data.cruise.fuel + me.data.climb.fuel + me.data.descent.fuel; 
+		var flightDist = me.data.cruise.distance + me.data.climb.distance + me.data.descent.distance;
 
+		me.data.flight.time 	= flightTime;
+		me.data.flight.fuel 	= flightFuel;
+		me.data.flight.distance = flightDist;
+
+	},
+	
+	# publish the calculated value to the property tree
+	publish : func(phase="all"){
+		if (phase == "flight" or phase == "all"){
+			setprop(me._root,"trip/flightTime-s",me.data.flight.time);
+			setprop(me._root,"trip/flightFuel-lbs",me.data.flight.fuel);
+			setprop(me._root,"trip/flightDist-nm",me.data.flight.distance);
+		}elsif (phase == "climb" or phase == "all"){
+			
+		}elsif (phase == "cruise" or phase == "all"){
+			
+		}elsif (phase == "descent" or phase == "all"){
+			
+		}elsif (phase == "startupTaxi" or phase == "all"){
+			
+		}else{
+			
+		}
+	},
 #-----------------------------------------------------------------------
 # CALCULATE TRIP -------------------------------------------------------
 #-----------------------------------------------------------------------
@@ -359,6 +422,8 @@ var PerfClass = {
 
 	matrixinterp : func(matrix,length,x,x1,y1){ 
 
+		##### DD : length = size(matrix) ?? could reduce parameters and make the matrix size dynamic ??  
+				
 		if ( x <= matrix[0][x1] ) { return matrix[0][y1] }
 		if ( x >= matrix[length-1][x1] ) { return matrix[length-1][y1] }
 
