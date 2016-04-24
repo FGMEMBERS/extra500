@@ -17,7 +17,7 @@
 #      Date: 04.04.2016
 #
 #      Last change: Eric van den Berg     
-#      Date: 04.04.2016            
+#      Date: 24.04.2016            
 #
 
 var loadPerformanceTables = func(path=""){
@@ -40,7 +40,7 @@ var PerfClass = {
 		m.data = {
 			rCode: -1 , # of trip
 			# flight the sum of all phases
-			flight	: {
+			trip	: {
 				time	 	: 0,	# sec
 				fuel	 	: 0,	# lbs
 				distance 	: 0	# nm
@@ -79,43 +79,56 @@ var PerfClass = {
 #-----------------------------------------------------------------------
 # adds parameters (time, distance, fuel) from all flight phases and publishes
 
-	updateTrip : func() {
-		var flightTime = getprop(me._root,"cruise/time-s") + getprop(me._root,"climb/timeToAlt-s") + getprop(me._root,"descent/timeToDes-s");
-		var flightFuel = getprop(me._root,"startupTaxi/fuel-lbs") + getprop(me._root,"cruise/fuel-lbs") + getprop(me._root,"climb/fuelToAlt-lbs") + getprop(me._root,"descent/fuelToDes-lbs");
-		var flightDist = getprop(me._root,"cruise/distance-nm") + getprop(me._root,"climb/distanceToAlt-nm") + getprop(me._root,"descent/distanceToDes-nm");
+#	updateTrip : func() {
+#		var flightTime = getprop(me._root,"cruise/time-s") + getprop(me._root,"climb/timeToAlt-s") + getprop(me._root,"descent/timeToDes-s");
+#		var flightFuel = getprop(me._root,"startupTaxi/fuel-lbs") + getprop(me._root,"cruise/fuel-lbs") + getprop(me._root,"climb/fuelToAlt-lbs") + getprop(me._root,"descent/fuelToDes-lbs");
+#		var flightDist = getprop(me._root,"cruise/distance-nm") + getprop(me._root,"climb/distanceToAlt-nm") + getprop(me._root,"descent/distanceToDes-nm");
 
-		setprop(me._root,"trip/flightTime-s",flightTime);
-		setprop(me._root,"trip/flightFuel-lbs",flightFuel);
-		setprop(me._root,"trip/flightDist-nm",flightDist);
-	},
+#		setprop(me._root,"trip/flightTime-s",flightTime);
+#		setprop(me._root,"trip/flightFuel-lbs",flightFuel);
+#		setprop(me._root,"trip/flightDist-nm",flightDist);
+#	},
 	
-	updateTrip2 : func() {
-		var flightTime = me.data.cruise.time + me.data.climb.time + me.data.descent.time ;
-		var flightFuel = me.data.startupTaxi.fuel + me.data.cruise.fuel + me.data.climb.fuel + me.data.descent.fuel; 
-		var flightDist = me.data.cruise.distance + me.data.climb.distance + me.data.descent.distance;
+	updateTrip : func() {
+		var flightTime = me.data.cruise.time + me.data.climb.time + me.data.descent.time ; #sec
+		var flightFuel = me.data.startupTaxi.fuel + me.data.cruise.fuel + me.data.climb.fuel + me.data.descent.fuel; #lbs
+		var flightDist = me.data.cruise.distance + me.data.climb.distance + me.data.descent.distance; # nm
 
-		me.data.flight.time 	= flightTime;
-		me.data.flight.fuel 	= flightFuel;
-		me.data.flight.distance = flightDist;
+		me.data.trip.time 	= flightTime;
+		me.data.trip.fuel 	= flightFuel;
+		me.data.trip.distance 	= flightDist;
 
 	},
 	
 	# publish the calculated value to the property tree
 	publish : func(phase="all"){
-		if (phase == "flight" or phase == "all"){
-			setprop(me._root,"trip/flightTime-s",me.data.flight.time);
-			setprop(me._root,"trip/flightFuel-lbs",me.data.flight.fuel);
-			setprop(me._root,"trip/flightDist-nm",me.data.flight.distance);
-		}elsif (phase == "climb" or phase == "all"){
-			
-		}elsif (phase == "cruise" or phase == "all"){
-			
-		}elsif (phase == "descent" or phase == "all"){
-			
-		}elsif (phase == "startupTaxi" or phase == "all"){
-			
-		}else{
-			
+		if (phase == "startupTaxi" or phase == "all"){
+			setprop(me._root,"startupTaxi/fuel-lbs",me.data.startupTaxi.fuel);
+		}
+		if (phase == "climb" or phase == "all"){
+			setprop(me._root,"climb/timeToAlt-s",me.data.climb.time);
+			setprop(me._root,"climb/fuelToAlt-lbs",me.data.climb.fuel);
+			setprop(me._root,"climb/distanceToAlt-nm",me.data.climb.distance);
+		}	
+		if (phase == "descent" or phase == "all"){
+			setprop(me._root,"descent/timeToDes-s",me.data.descent.time);
+			setprop(me._root,"descent/fuelToDes-lbs",me.data.descent.fuel);
+			setprop(me._root,"descent/distanceToDes-nm",me.data.descent.distance);
+		}
+		if (phase == "cruise" or phase == "all"){
+			setprop(me._root,"cruise/distance-nm",me.data.cruise.distance);
+			setprop(me._root,"cruise/speed-ktas",me.data.cruise.speed);
+			setprop(me._root,"cruise/fflow-lbs-h",me.data.cruise.fuelFlow);
+			setprop(me._root,"cruise/time-s",me.data.cruise.time);
+			setprop(me._root,"cruise/fuel-lbs",me.data.cruise.fuel);
+		}
+		if (phase == "trip" or phase == "all"){
+			setprop(me._root,"trip/flightTime-s",me.data.trip.time);
+			setprop(me._root,"trip/flightFuel-lbs",me.data.trip.fuel);
+			setprop(me._root,"trip/flightDist-nm",me.data.trip.distance);
+		}
+		if ( (phase != "startupTaxi") and (phase != "climb") and (phase != "descent") and (phase != "cruise") and (phase != "trip") and (phase != "all") ){
+			print("performance.publish: input not correct");
 		}
 	},
 #-----------------------------------------------------------------------
@@ -139,9 +152,14 @@ var PerfClass = {
 		me.startupTaxi(phase,startupfuel);
 		me.climb(phase,currentAlt,cruiseAlt,currentGS,currentFF);
 		me.descent(phase,cruiseAlt,destAlt,currentAlt,currentGS,currentFF);
-		if ( flightMode == "distance" ) {cruiseFlight = totalFlight - getprop(me._root,"climb/distanceToAlt-nm") - getprop(me._root,"descent/distanceToDes-nm")}
-		if ( flightMode == "time" ) {cruiseFlight = totalFlight - getprop(me._root,"climb/timeToAlt-s") - getprop(me._root,"descent/timeToDes-s")}
-		if ( flightMode == "fuel" ) {cruiseFlight = totalFlight - getprop(me._root,"climb/fuelToAlt-lbs") - getprop(me._root,"descent/fuelToDes-lbs") - getprop(me._root,"startupTaxi/fuel-lbs")}
+		if ( flightMode == "distance" ) {cruiseFlight = totalFlight - ( me.data.climb.distance + me.data.descent.distance) }
+		if ( flightMode == "time" ) {cruiseFlight = totalFlight - ( me.data.climb.time + me.data.descent.time) }
+		if ( flightMode == "fuel" ) {cruiseFlight = totalFlight - ( me.data.climb.fuel + me.data.descent.fuel + me.data.startupTaxi.fuel ) }
+
+#		if ( flightMode == "distance" ) {cruiseFlight = totalFlight - getprop(me._root,"climb/distanceToAlt-nm") - getprop(me._root,"descent/distanceToDes-nm")}
+#		if ( flightMode == "time" ) {cruiseFlight = totalFlight - getprop(me._root,"climb/timeToAlt-s") - getprop(me._root,"descent/timeToDes-s")}
+#		if ( flightMode == "fuel" ) {cruiseFlight = totalFlight - getprop(me._root,"climb/fuelToAlt-lbs") - getprop(me._root,"descent/fuelToDes-lbs") - getprop(me._root,"startupTaxi/fuel-lbs")}
+
 
 		if ( ( cruiseFlight < 0 ) and ( phase == "off") ) {
 			print("cruise distance/time/fuel negative, reduce cruise altitude");
@@ -183,22 +201,6 @@ var PerfClass = {
 
 	cruise : func(phase="off",powerMode="maxpow",mode2="distance",cruiseInput=0,cruiseAlt=0,currentGS=0,currentFF=0) {
 		var NUMBER=0; var ALTITUDE=1; var maxSPEED=2; var maxFFLOW=3; var minSPEED=4; var minFFLOW=5;
-# 		var cruise = [
-# 				[1,0,199,242,145,155],
-# 				[2,2000,202,238,147,150],
-# 				[3,4000,206,234,149,145],
-# 				[4,6000,210,232,151,141],	
-# 				[5,8000,213,230,153,136],
-# 				[6,10000,217,229,156,132],
-# 				[7,12000,221,227,158,129],
-# 				[8,14000,218,211,161,125],
-# 				[9,16000,216,200,163,123],
-# 				[10,18000,214,190,166,120],
-# 				[11,20000,203,166,158,108],
-# 				[12,22000,199,152,161,107],
-# 				[13,24000,193,140,154,105],
-# 				[14,25000,186,128,165,105]
-# 				];
 
 		var cruiseDist = 0;
 		var cruiseSpeed = 0;
@@ -253,11 +255,17 @@ var PerfClass = {
 			}
 		}
 
-		setprop(me._root,"cruise/distance-nm",cruiseDist);
-		setprop(me._root,"cruise/speed-ktas",cruiseSpeed);
-		setprop(me._root,"cruise/fflow-lbs-h",cruiseFF);
-		setprop(me._root,"cruise/time-s",cruiseTime*3600);
-		setprop(me._root,"cruise/fuel-lbs",cruiseFuel);
+		me.data.cruise.distance 	= cruiseDist;
+		me.data.cruise.speed 		= cruiseSpeed;
+		me.data.cruise.fuelFlow 	= cruiseFF;
+		me.data.cruise.time 		= cruiseTime*3600;
+		me.data.cruise.fuel 		= cruiseFuel;
+
+#		setprop(me._root,"cruise/distance-nm",cruiseDist);
+#		setprop(me._root,"cruise/speed-ktas",cruiseSpeed);
+#		setprop(me._root,"cruise/fflow-lbs-h",cruiseFF);
+#		setprop(me._root,"cruise/time-s",cruiseTime*3600);
+#		setprop(me._root,"cruise/fuel-lbs",cruiseFuel);
 	},
 
 #-----------------------------------------------------------------------
@@ -275,41 +283,17 @@ var PerfClass = {
 
 		if ((currentAlt >= desAlt) and (phase=="cruise") and (phase=="descent") ) {
 			print("this is not a climb!");
-			setprop(me._root,"climb/timeToAlt-s",timeToAlt);
-			setprop(me._root,"climb/fuelToAlt-lbs",fuelToAlt);
-			setprop(me._root,"climb/distanceToAlt-nm",0);
+#			setprop(me._root,"climb/timeToAlt-s",timeToAlt);
+#			setprop(me._root,"climb/fuelToAlt-lbs",fuelToAlt);
+#			setprop(me._root,"climb/distanceToAlt-nm",0);
+
+			me.data.climb.time = timeToAlt;
+			me.data.climb.fuel = fuelToAlt;
+			me.data.climb.distance = distanceToAlt;
 			return 1
 		}
 
 		var NUMBER=0; var ALTITUDE=1; var SECONDS=2; var FUELLBS=3; var DIST=4;
-# 		var climb = [
-# 				[1,0,0,0,0],
-# 				[2,1000,42,3,1],
-# 				[3,2000,90,6,3],
-# 				[4,3000,132,9,4],
-# 				[5,4000,180,12,6],	
-# 				[6,5000,222,15,7],
-# 				[7,6000,270,18,9],
-# 				[8,7000,312,20,10],
-# 				[9,8000,360,23,12],
-# 				[10,9000,402,26,13],
-# 				[11,10000,444,29,15],
-# 				[12,11000,492,32,16],
-# 				[13,12000,534,35,18],
-# 				[14,13000,582,38,20],
-# 				[15,14000,630,41,21],
-# 				[16,15000,684,44,23],
-# 				[17,16000,744,47,26],
-# 				[18,17000,810,50,28],
-# 				[19,18000,876,54,31],
-# 				[20,19000,960,58,34],
-# 				[21,20000,1050,63,38],
-# 				[22,21000,1152,67,42],
-# 				[23,22000,1272,73,48],
-# 				[24,23000,1422,79,54],
-# 				[25,24000,1620,87,63],
-# 				[26,25000,1976,98,75]
-# 				];
 
 		if ( (phase == "off") or (phase == "taxi") ) {
 			timeToAlt = me.matrixinterp(performanceTable.climb,26,desAlt,ALTITUDE,SECONDS) - me.matrixinterp(performanceTable.climb,26,currentAlt,ALTITUDE,SECONDS);
@@ -323,9 +307,13 @@ var PerfClass = {
 			# all stays 0
 		}
 
-		setprop(me._root,"climb/timeToAlt-s",timeToAlt);
-		setprop(me._root,"climb/fuelToAlt-lbs",fuelToAlt);
-		setprop(me._root,"climb/distanceToAlt-nm",distanceToAlt);
+		me.data.climb.time = timeToAlt; #sec
+		me.data.climb.fuel = fuelToAlt; # lbs
+		me.data.climb.distance = distanceToAlt; # nm
+#
+#		setprop(me._root,"climb/timeToAlt-s",timeToAlt);
+#		setprop(me._root,"climb/fuelToAlt-lbs",fuelToAlt);
+#		setprop(me._root,"climb/distanceToAlt-nm",distanceToAlt);
 	},
 
 #-----------------------------------------------------------------------
@@ -343,41 +331,16 @@ var PerfClass = {
 
 		if (currentAlt <= desAlt) {
 			print("This is not a descent!");
-			setprop(me._root,"descent/timeToDes-s",timeToDes);
-			setprop(me._root,"descent/fuelToDes-lbs",fuelToDes);
-			setprop(me._root,"descent/distanceToDes-nm",distanceToDes);
+			me.data.descent.time = timeToDes;
+			me.data.descent.fuel = fuelToDes;
+			me.data.descent.distance = distanceToDes;
+#			setprop(me._root,"descent/timeToDes-s",timeToDes);
+#			setprop(me._root,"descent/fuelToDes-lbs",fuelToDes);
+#			setprop(me._root,"descent/distanceToDes-nm",distanceToDes);
 			return
 		}
 
 		var NUMBER=0; var ALTITUDE=1; var SECONDS=2; var FUELLBS=3; var DIST=4;
-# 		var descent = [
-# 				[1,0,0,0,0],
-# 				[2,1000,30,1,2],
-# 				[3,2000,60,2,4],
-# 				[4,3000,90,3,6],
-# 				[5,4000,120,4,8],	
-# 				[6,5000,150,5,10],
-# 				[7,6000,180,6,12],
-# 				[8,7000,210,8,14],
-# 				[9,8000,240,9,16],
-# 				[10,9000,270,10,18],
-# 				[11,10000,300,11,20],
-# 				[12,11000,330,12,22],
-# 				[13,12000,360,13,24],
-# 				[14,13000,390,14,26],
-# 				[15,14000,420,16,28],
-# 				[16,15000,450,17,30],
-# 				[17,16000,480,18,32],
-# 				[18,17000,510,19,34],
-# 				[19,18000,540,20,36],
-# 				[20,19000,570,22,37],
-# 				[21,20000,600,23,39],
-# 				[22,21000,630,24,41],
-# 				[23,22000,660,25,43],
-# 				[24,23000,690,27,44],
-# 				[25,24000,720,28,46],
-# 				[26,25000,750,29,48]
-# 				];
 
 		if ( (phase == "off") or (phase == "taxi") or (phase == "climb") ) {
 			var timeToDes = me.matrixinterp(performanceTable.descent,26,cruiseAlt,ALTITUDE,SECONDS) - me.matrixinterp(performanceTable.descent,26,desAlt,ALTITUDE,SECONDS);
@@ -393,9 +356,13 @@ var PerfClass = {
 			var distanceToDes = currentGS * timeToDes / 3600;
 		}
 
-		setprop(me._root,"descent/timeToDes-s",timeToDes);
-		setprop(me._root,"descent/fuelToDes-lbs",fuelToDes);
-		setprop(me._root,"descent/distanceToDes-nm",distanceToDes);
+		me.data.descent.time = timeToDes; # sec
+		me.data.descent.fuel = fuelToDes; # lbs
+		me.data.descent.distance = distanceToDes; #nm
+
+#		setprop(me._root,"descent/timeToDes-s",timeToDes);
+#		setprop(me._root,"descent/fuelToDes-lbs",fuelToDes);
+#		setprop(me._root,"descent/distanceToDes-nm",distanceToDes);
 
 	},
 
@@ -407,7 +374,8 @@ var PerfClass = {
 	startupTaxi : func(phase="off",fuel_lbs=nil){
 		if (fuel_lbs == nil) {var fuel_lbs = 30}
 		if (phase != "off") {var fuel_lbs = 0}
-		setprop(me._root,"startupTaxi/fuel-lbs",fuel_lbs);
+		me.data.startupTaxi.fuel = fuel_lbs;
+#		setprop(me._root,"startupTaxi/fuel-lbs",fuel_lbs);
 	},
 
 #-----------------------------------------------------------------------
