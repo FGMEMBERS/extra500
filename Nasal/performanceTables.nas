@@ -17,7 +17,7 @@
 #      Date: 04.04.2016
 #
 #      Last change: Eric van den Berg     
-#      Date: 20.04.2016            
+#      Date: 25.04.2016            
 #
 
 # The performance Table Data loaded by performance.nas
@@ -98,4 +98,4 @@ var performanceTable = {
 	taxi : []
 };
 
-print("performanceTable loaded.")
+#print("performanceTable loaded.")
