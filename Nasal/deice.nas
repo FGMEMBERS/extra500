@@ -71,15 +71,18 @@ var ElectricHeatClass = {
 				ConsumerClass.new(root,name,watt)
 			]
 		};
-		m._resistor = 28*28 / watt;
-		m._nResistor	= m._nRoot.initNode("resistor",m._resistor,"DOUBLE");
-		m._nResistorOut	= m._nRoot.initNode("resistorOut",m._resistor,"DOUBLE");
+		m._resistor 		= 28*28 / watt;
+		m._nResistor		= m._nRoot.initNode("resistor",m._resistor,"DOUBLE");
+		m._nResistorOut		= m._nRoot.initNode("resistorOut",m._resistor,"DOUBLE");
+
+		m._serviceable		= 1;
+		m._nServiceable		= m._nRoot.initNode("serviceable",m._serviceable,"DOUBLE");
 		
 		m._resistorMin		= 1.3;
 		m._resistorMax		= 1.742;
 		m._temperatureMin 	= -3;
 		m._temperatureMax 	= 30;
-		
+
 		
 		m._value = 0;
 		return m;
@@ -87,11 +90,15 @@ var ElectricHeatClass = {
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
 		me.parents[1].init(instance);
+		me.setListeners(instance);
+	},
+	setListeners : func(instance) {
 		append(me._listeners, setlistener(me._nResistor,func(n){instance._onResitorChange(n);},1,0) );
-		
+#		append(me._listeners, setlistener(me._nServiceable,func(n){instance._onServiceableChange(n);},1,0) );
 	},
 	electricWork : func(){
-		if ((me._value == 1 ) and (me._volt >= me._voltMin) ){
+		if ((me._value == 1 ) and (me._volt >= me._voltMin) and (me._nServiceable.getValue() == 1) ){
+#print(me._nServiceable);
 			#me._ampere 	= me._watt / me._volt;
 			me._ampere 	= me._volt / me._resistor;
 			me._watt 	= me._volt * me._ampere;
@@ -99,6 +106,7 @@ var ElectricHeatClass = {
 		}else{
 			me._state  = 0;
 			me._ampere = 0;
+			me._watt 	= 0;
 		}
 		
 		me._nState.setValue(me._state);
@@ -110,6 +118,9 @@ var ElectricHeatClass = {
 	_onResitorChange : func(n){
 		#print("HeatClass::_onResitorChange() ...");
 		me._resistor = n.getValue();
+		me.electricWork();
+	},
+	_onServiceableChange : func(n){
 		me.electricWork();
 	},
 	setOn : func(value){
@@ -191,6 +202,7 @@ var DeicingSystemClass = {
 		m._PitotHeatLeft._resistorMax		= 13;
 		m._PitotHeatLeft._temperatureMin 	= -3;
 		m._PitotHeatLeft._temperatureMax 	= 30;
+		m._PitotHeatLeft._nServicable 	= 1;
 		eSystem.circuitBreaker.PITOT_L.outputAdd(m._PitotHeatLeft);
 		
 		m._PitotHeatRight 		= ElectricHeatClass.new("/extra500/system/deice/PitotHeatRight","Pitot Heat Right",112.0);
