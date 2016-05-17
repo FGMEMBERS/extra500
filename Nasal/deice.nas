@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jul 03 2013
 #
-#       Last change:      Eric van den Berg
-#       Date:             28.02.2016
+#       Last change:      Dirk Dittmann
+#       Date:             17.05.2016
 #
 
 # MM page 
@@ -74,38 +74,36 @@ var ElectricHeatClass = {
 		m._resistor 		= 28*28 / watt;
 		m._nResistor		= m._nRoot.initNode("resistor",m._resistor,"DOUBLE");
 		m._nResistorOut		= m._nRoot.initNode("resistorOut",m._resistor,"DOUBLE");
-
-		m._serviceable		= 1;
-		m._nServiceable		= m._nRoot.initNode("serviceable",m._serviceable,"DOUBLE");
 		
 		m._resistorMin		= 1.3;
 		m._resistorMax		= 1.742;
 		m._temperatureMin 	= -3;
 		m._temperatureMax 	= 30;
 
+		m._maxWatt		= 150;
 		
 		m._value = 0;
 		return m;
 	},
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
-		me.parents[1].init(instance);
+		me.parents[1].init(instance); # ConsumerClass.init
 		me.setListeners(instance);
 	},
 	setListeners : func(instance) {
 		append(me._listeners, setlistener(me._nResistor,func(n){instance._onResitorChange(n);},1,0) );
-#		append(me._listeners, setlistener(me._nServiceable,func(n){instance._onServiceableChange(n);},1,0) );
 	},
+	
+	### working loop minimized property tree action
 	electricWork : func(){
-		if ((me._value == 1 ) and (me._volt >= me._voltMin) and (me._nServiceable.getValue() == 1) ){
-#print(me._nServiceable);
-			#me._ampere 	= me._watt / me._volt;
+		#print("ElectricHeatClass::electricWork() ... ", me._name," serviceable ",me._serviceable);
+		if ((me._value == 1 ) and (me._volt >= me._voltMin) and (me._serviceable == 1) ){
 			me._ampere 	= me._volt / me._resistor;
 			me._watt 	= me._volt * me._ampere;
 			me._state  = 1;
 		}else{
-			me._state  = 0;
-			me._ampere = 0;
+			me._state  	= 0;
+			me._ampere 	= 0;
 			me._watt 	= 0;
 		}
 		
@@ -114,13 +112,36 @@ var ElectricHeatClass = {
 		me._nWatt.setValue(me._watt);
 		me._nResistorOut.setValue(me._resistor);
 	},
+	### override ServiceClass::_onServiceableChange
+	_onServiceableChange : func(n){
+		#print("ElectricHeatClass::_onServiceableChange() ...");
+		
+		#get the value from property tree into nasal
+		me._serviceable = n.getValue();
+		me.electricWork();
+	},
+	### override ServiceClass::_qualityCheck
+	_qualityCheck : func(){
+		### reduce the working resistor unitl it burns 
+		if ( me._qos > 0.8){
+			
+		}elsif (me._qos > 0.5){
+			me._resistor *= 0.45;
+			
+		}elsif (me._qos > 0.25){
+			me._resistor *= 0.15;
+			
+		}else{
+			me._resistor = 100000000000 ; # infinite ;-)
+		}
+		#print("ElectricHeatClass::_qualityCheck() ... resistor ", me._resistor);
+		
+	},
 	_onWattChange : func(){},
 	_onResitorChange : func(n){
 		#print("HeatClass::_onResitorChange() ...");
 		me._resistor = n.getValue();
-		me.electricWork();
-	},
-	_onServiceableChange : func(n){
+		me._qualityCheck();
 		me.electricWork();
 	},
 	setOn : func(value){
@@ -131,6 +152,7 @@ var ElectricHeatClass = {
 		return me._watt * me._state;
 	},
 	setResitorByTemperature : func(temperature){
+		#print("ElectricHeatClass::setResitorByTemperature() ...");
 		
 		var resistor = me._resistorMin;
 		resistor +=  global.norm(temperature,me._temperatureMin,me._temperatureMax) * (me._resistorMax-me._resistorMin);
@@ -138,6 +160,7 @@ var ElectricHeatClass = {
 		resistor = global.clamp(resistor,me._resistorMin,me._resistorMax);
 					
 		me._resistor = resistor;
+		me._qualityCheck();
 		me.electricWork();
 	},
 	
