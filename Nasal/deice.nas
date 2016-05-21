@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jul 03 2013
 #
-#       Last change:      Dirk Dittmann
-#       Date:             17.05.2016
+#       Last change:      Eric van den Berg
+#       Date:             21.05.2016
 #
 
 # MM page 
@@ -41,6 +41,8 @@ var AirHeatClass = {
 		};
 		m._state		= 0 ;	# bool
 		m._nState		= m._nRoot.initNode("state",m._state,"BOOL");
+		m._serviceable	= 0 ;	# bool
+		m._nServiceable	= m._nRoot.initNode("serviceable",m._serviceable,"BOOL");
 		m._watt			= watt;	# watt
 		m._nWatt		= m._nRoot.initNode("watt",m._watt,"DOUBLE");
 		m._airWatt		= m._nRoot.initNode("airwatt",m._watt,"DOUBLE");
@@ -225,7 +227,6 @@ var DeicingSystemClass = {
 		m._PitotHeatLeft._resistorMax		= 13;
 		m._PitotHeatLeft._temperatureMin 	= -3;
 		m._PitotHeatLeft._temperatureMax 	= 30;
-		m._PitotHeatLeft._nServicable 	= 1;
 		eSystem.circuitBreaker.PITOT_L.outputAdd(m._PitotHeatLeft);
 		
 		m._PitotHeatRight 		= ElectricHeatClass.new("/extra500/system/deice/PitotHeatRight","Pitot Heat Right",112.0);
@@ -283,7 +284,9 @@ var DeicingSystemClass = {
 		append(me._listeners, setlistener(me._nWowNose, func(n){instance._checkPitot();},1,0) );
 		append(me._listeners, setlistener("/fdm/jsbsim/aircraft/stallwarner/state", func(n){instance._onStallWarning(n);},1,0) );
 		append(me._listeners, setlistener(eSystem.circuitBreaker.PROP_HT._nVoltOut, func(n){instance.update();},1,0) );
-		append(me._listeners, setlistener("/systems/pneumatic/boots-safe-oper", func(n){instance._onBoots(n);},1,0) );
+		append(me._listeners, setlistener("/systems/pneumatic/switches/ejectorvalve1-active", func(n){instance._onBoots(n);},1,0) );
+		append(me._listeners, setlistener("/systems/pneumatic/switches/ejectorvalve2-active", func(n){instance._onBoots(n);},1,0) );
+		append(me._listeners, setlistener("/systems/pneumatic/switches/bootsdeice", func(n){instance._onBootsDeice(n);},1,0) );
 		
 	},
 	init : func(instance=nil){
@@ -431,20 +434,41 @@ var DeicingSystemClass = {
 		me._inletHeat.setOn(me._intakeHeat);
 	},
 	_onBoots : func(n){
-		#print("DeicingSystemClass::_onBoots() ...");
+# setting leakage if boots are not alright: this will lower the pneumatic pressure as calculated in /Sytems/extra500-system-pneumatic.xml
 		if(n.getValue() == 1){
-			var amount = 0.8;
 			if (getprop("/systems/pneumatic/switches/ejectorvalve1-active") == 1 ){
-				environment._frostWingLHBootInner 	-= environment._frostWingLHBootInner > amount ? amount : environment._frostWingLHBootInner; 
-				environment._frostWingRHBootInner 	-= environment._frostWingRHBootInner > amount ? amount : environment._frostWingRHBootInner; 
+				if ( (getprop("/systems/pneumatic/LHinnerBoot/serviceable") ==0) or (getprop("/systems/pneumatic/RHinnerBoot/serviceable") ==0) ) 	{
+					setprop("/systems/pneumatic/leak", 0.2);
+				}
 			}
+
 			if (getprop("/systems/pneumatic/switches/ejectorvalve2-active") == 1 ){
-				environment._frostWingLHBootOuter 	-= environment._frostWingLHBootOuter > amount ? amount : environment._frostWingLHBootOuter; 
-				environment._frostWingRHBootOuter 	-= environment._frostWingRHBootOuter > amount ? amount : environment._frostWingRHBootOuter; 
-				environment._frostVStab 	-= environment._frostVStab > amount ? amount : environment._frostVStab; 
-				environment._frostHStabLH 	-= environment._frostHStabLH > amount ? amount : environment._frostHStabLH; 
-				environment._frostHStabRH	-= environment._frostHStabRH > amount ? amount : environment._frostHStabRH; 
+				if ( (getprop("/systems/pneumatic/RHHStabBoot/serviceable") ==0) or (getprop("/systems/pneumatic/LHHStabBoot/serviceable") ==0) or (getprop("/systems/pneumatic/VStabBoot/serviceable") ==0) or (getprop("/systems/pneumatic/LHouterBoot/serviceable") ==0) or (getprop("/systems/pneumatic/RHouterBoot/serviceable") ==0) ) 	{
+					setprop("/systems/pneumatic/leak", 0.2);
+				} 
 			}
+		} else {
+			setprop("/systems/pneumatic/leak", 0.0);
+		}
+	},
+	_onBootsDeice : func(n){
+		#print("DeicingSystemClass::_onBoots() ...");
+		var press = getprop("/systems/pneumatic/pneumatic-pressure-psig")/18;
+
+		if( (n.getValue() == 1) and (press > 0.01) ){
+			var amount = 0.05;
+
+			if (getprop("/systems/pneumatic/switches/ejectorvalve1-active") == 1 ){
+				environment._frostWingLHBootInner 	= environment._frostWingLHBootInner > amount ? (1-press)*environment._frostWingLHBootInner+amount*press : (1-0.1*press) * environment._frostWingLHBootInner; 
+				environment._frostWingRHBootInner 	= environment._frostWingRHBootInner > amount ? (1-press)*environment._frostWingRHBootInner+amount*press : (1-0.1*press) * environment._frostWingRHBootInner; 
+			} 
+			if (getprop("/systems/pneumatic/switches/ejectorvalve2-active") == 1 ){			
+				environment._frostWingLHBootOuter 	= environment._frostWingLHBootOuter > amount ? (1-press)*environment._frostWingLHBootOuter+amount*press : (1-0.1*press) * environment._frostWingLHBootOuter; 
+				environment._frostWingRHBootOuter 	= environment._frostWingRHBootOuter > amount ? (1-press)*environment._frostWingRHBootOuter+amount*press : (1-0.1*press) * environment._frostWingRHBootOuter; 
+				environment._frostVStab 		= environment._frostVStab > amount ? (1-press)*environment._frostVStab+amount*press : (1-0.1*press) * environment._frostVStab; 
+				environment._frostHStabLH 		= environment._frostHStabLH > amount ? (1-press)*environment._frostHStabLH+amount*press : (1-0.1*press) * environment._frostHStabLH; 
+				environment._frostHStabRH		= environment._frostHStabRH > amount ? (1-press)*environment._frostHStabRH+amount*press : (1-0.1*press) * environment._frostHStabRH; 
+			} 
 		}
 	},
 	update : func(){

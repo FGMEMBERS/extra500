@@ -17,7 +17,7 @@
 #      Date: 20.03.2015
 #
 #       Last change:      Eric van den Berg
-#       Date:             12.03.2016
+#       Date:             16.05.2016
 #
 
 
@@ -443,7 +443,7 @@ var Environment = {
 		exhausttemp_R = (exhausttemp_C + 273.15) / 5 * 9;
 		inlettemp_R = (cabin._inlet._temperature + 273.15) / 5 * 9;
 
-		if (heat_on != 1 ) { exhausttemp_R = inlettemp_R };
+		if ( (heat_on != 1) or (getprop("/extra500/system/deice/IntakeHeat/serviceable") == 0) ) { exhausttemp_R = inlettemp_R };
 
 		deltaT_R = exhausttemp_R - airtemp_R;
 		h = 0.27 * math.pow(math.abs(deltaT_R) / 2 ,0.25);

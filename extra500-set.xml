@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:      Eric van den Berg
-	Date:             04.04.2016
+	Date:             17.05.2016
 
 
 ************************************************************************
@@ -821,8 +821,30 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<serviceable>1</serviceable>
 	</staticAP>
 	<pneumatic>
-		<boots-timer-sec>0</boots-timer-sec>
-		<c1-boots-filter>1</c1-boots-filter>
+		<boots-timer-sec type="double">0</boots-timer-sec>
+		<c1-boots-filter type="double">1</c1-boots-filter>
+		<leak type="double">0</leak>
+		<LHinnerBoot>
+			<serviceable type="bool">1</serviceable>
+		</LHinnerBoot>
+		<RHinnerBoot>
+			<serviceable type="bool">1</serviceable>
+		</RHinnerBoot>
+		<LHouterBoot>
+			<serviceable type="bool">1</serviceable>
+		</LHouterBoot>
+		<RHouterBoot>
+			<serviceable type="bool">1</serviceable>
+		</RHouterBoot>
+		<VStabBoot>
+			<serviceable type="bool">1</serviceable>
+		</VStabBoot>
+		<LHHStabBoot>
+			<serviceable type="bool">1</serviceable>
+		</LHHStabBoot>
+		<RHHStabBoot>
+			<serviceable type="bool">1</serviceable>
+		</RHHStabBoot>
 	</pneumatic>
 	<pressurization>
 		<cabin-climb-rate-fpm type="double">500</cabin-climb-rate-fpm>
