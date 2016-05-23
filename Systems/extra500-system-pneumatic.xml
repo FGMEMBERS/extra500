@@ -20,7 +20,7 @@
       Date: 2013-10-13
 
       Last change:      Eric van den Berg
-      Date:             2016-05-21
+      Date:             2016-05-22
 -->
 
 <!--
@@ -28,7 +28,7 @@
 /extra500/panel/Side/Deicing/Boots/state
 -->
 <system name="pneumatic">
-	<channel name="pressure">
+	<channel name="pressure" execrate="12">
 
 <!-- engine bleed air pressure as a function of pressure altitude and engine compressor speed -->
 		<fcs_function name="/systems/pneumatic/functions/bleedairpressure">
@@ -103,7 +103,7 @@
 					<property>/systems/pneumatic/switches/reset</property>
 					<sum>
 						<property>/systems/pneumatic/boots-timer-sec</property>
-						<property>sim-dt-sec</property> 
+						<property>sim12-dt-sec</property> 
 					</sum>
 				</product>
 			</function>

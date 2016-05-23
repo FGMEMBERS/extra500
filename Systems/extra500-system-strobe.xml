@@ -19,7 +19,7 @@
       Author: Eric van den Berg
       Date: 2014-01-08
 
-      Last change:      2014-01-11
+      Last change:      2016-05-22
       Date:             Eric van den Berg
 -->
 
@@ -27,7 +27,7 @@
 
 -->
 <system name="strobe">
-	<channel name="timer">
+	<channel name="timer" execrate="12">
 
 <!-- strobe timer -->
 		<fcs_function name="/extra500/light/strobe/timer-sec">
@@ -37,7 +37,7 @@
 					<property>/extra500/light/strobe/reset</property>
 					<sum>
 						<property>/extra500/light/strobe/timer-sec</property>
-						<property>sim-dt-sec</property> 
+						<property>sim12-dt-sec</property> 
 					</sum>
 				</product>
 			</function>
@@ -56,16 +56,16 @@
 			<default value="0"/>
 			<test logic="OR" value="1">
 				<test logic="AND">
-					/extra500/light/strobe/timer-sec gt 0.0
-					/extra500/light/strobe/timer-sec lt 0.1
+					/extra500/light/strobe/timer-sec ge 0.0
+					/extra500/light/strobe/timer-sec le 0.1
 				</test>
 				<test logic="AND">
-					/extra500/light/strobe/timer-sec gt 0.4
-					/extra500/light/strobe/timer-sec lt 0.5
+					/extra500/light/strobe/timer-sec ge 0.4
+					/extra500/light/strobe/timer-sec le 0.5
 				</test>
 				<test logic="AND">
-					/extra500/light/strobe/timer-sec gt 0.8
-					/extra500/light/strobe/timer-sec lt 0.9
+					/extra500/light/strobe/timer-sec ge 0.8
+					/extra500/light/strobe/timer-sec le 0.9
 				</test>
 			</test>
 		</switch>

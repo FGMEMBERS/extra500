@@ -20,7 +20,7 @@
       Date: 2013-10-16
 
       Last change:      Eric van den Berg
-      Date:             2015-10-09
+      Date:             2016-05-23
 -->
 
 <!--
@@ -50,7 +50,7 @@ for lights:
 -->
 <system name="gear">
 
-	<channel name="hydraulic">
+	<channel name="hydraulic" execrate="12">
 
 		<switch name="/systems/gear/pressureswitch/state">
 			<default value="0"/>
@@ -112,7 +112,7 @@ for lights:
 				<product>
 					<property>/systems/gear/pressure/leakrate-p-press</property>
 					<property>/systems/gear/pressure-bar</property>
-					<property>sim-dt-sec</property> 
+					<property>sim12-dt-sec</property> 
 				</product>
 			</function>
 		</fcs_function>
@@ -152,7 +152,7 @@ for lights:
 							<property>/systems/gear/pressure/dpress-mov2-p-sec</property>
 						</product>
 					</sum>					
-					<property>sim-dt-sec</property> 
+					<property>sim12-dt-sec</property> 
 				</product>
 			</function>
 		</fcs_function>
@@ -177,7 +177,7 @@ for lights:
 	</channel>
 
 <!-- actuators -->
-	<channel name="actuators">
+	<channel name="actuators" execrate="12">
 
 		<fcs_function name="/systems/gear/actuators/NG-pos-raw">
 			<function>
@@ -192,7 +192,7 @@ for lights:
 							</product>
 							<value>0.5</value> <!--gas springs for emergency extension -->
 						</sum>
-						<property>sim-dt-sec</property> 
+						<property>sim12-dt-sec</property> 
 					</product>
 				</sum>
 			</function>
@@ -242,7 +242,7 @@ for lights:
 						<property>/systems/gear/solenoids/mainvalve/state</property>
 						<property>/systems/gear/actuators/maingearspeed</property>
 						<property>/systems/gear/pressure-bar</property>
-						<property>sim-dt-sec</property> 
+						<property>sim12-dt-sec</property> 
 					</product>
 				</sum>
 			</function>
@@ -267,7 +267,7 @@ for lights:
 						<property>/systems/gear/solenoids/mainvalve/state</property>
 						<property>/systems/gear/actuators/maingearspeed</property>
 						<property>/systems/gear/pressure-bar</property>
-						<property>sim-dt-sec</property> 
+						<property>sim12-dt-sec</property> 
 					</product>
 				</sum>
 			</function>
@@ -291,7 +291,7 @@ for lights:
 						<property>/systems/gear/solenoids/upperdoorvalve/state</property>
 						<property>/systems/gear/actuators/upperdoorspeed</property>
 						<property>/systems/gear/pressure-bar</property>
-						<property>sim-dt-sec</property> 
+						<property>sim12-dt-sec</property> 
 					</product>
 				</sum>
 			</function>
@@ -314,7 +314,7 @@ for lights:
 						<property>/systems/gear/solenoids/upperdoorvalve/state</property>
 						<property>/systems/gear/actuators/upperdoorspeed</property>
 						<property>/systems/gear/pressure-bar</property>
-						<property>sim-dt-sec</property> 
+						<property>sim12-dt-sec</property> 
 					</product>
 				</sum>
 			</function>
@@ -337,7 +337,7 @@ for lights:
 						<property>/systems/gear/solenoids/lowerdoorvalve/state</property>
 						<property>/systems/gear/actuators/lowerdoorspeed</property>
 						<property>/systems/gear/pressure-bar</property>
-						<property>sim-dt-sec</property> 
+						<property>sim12-dt-sec</property> 
 					</product>
 				</sum>
 			</function>
@@ -436,7 +436,7 @@ for lights:
 
 	</channel>
 
-	<channel name="gearelectric">
+	<channel name="gearelectric" execrate="12">
 
 		<switch name="/systems/gear/power/tocontrolswitch">
 			<default value="0"/>
@@ -541,7 +541,7 @@ for lights:
 
 	</channel>
 
-	<channel name="gearswitches">
+	<channel name="gearswitches" execrate="12">
 
 		<switch name="/systems/gear/switches/squat/state">
 			<default value="0"/>
@@ -652,7 +652,7 @@ for lights:
 
 	</channel>
 
-	<channel name="moving-mass">
+	<channel name="moving-mass" execrate="12">
 
 		<fcs_function name="/systems/gear/mass/x-LMG">
 			<function>
@@ -709,7 +709,7 @@ for lights:
 
 
 
-	<channel name="gear-warning">
+	<channel name="gear-warning" execrate="12">
 
 		<switch name="/systems/gear/gearwarn/relayK1/state">
 			<default value="0"/>
