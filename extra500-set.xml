@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:      Eric van den Berg
-	Date:             17.05.2016
+	Date:             26.05.2016
 
 
 ************************************************************************
@@ -1822,6 +1822,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<gear type="int">0</gear>
 		<fuel type="int">0</fuel>
 		<contr type="int">0</contr>
+		<deice type="int">0</deice>
 		<controls>
 			<L-aileron type="bool">0</L-aileron>
 			<R-aileron type="bool">0</R-aileron>
@@ -2053,6 +2054,11 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		</Master>
 	</panel>
 	<system>
+		<deice>
+			<IntakeHeat>
+        			<serviceable>1</serviceable>
+			</IntakeHeat>
+		</deice>
 		<fuel>
 			<SelectValve type="int">2</SelectValve>
 		</fuel>

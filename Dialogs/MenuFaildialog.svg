@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.959798"
-     inkscape:cx="201.70003"
-     inkscape:cy="1053.6062"
+     inkscape:zoom="2.8"
+     inkscape:cx="417.87221"
+     inkscape:cy="974.22665"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -53,6 +53,13 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <rect
+       style="fill:#e6e6e6;fill-opacity:1;fill-rule:nonzero;stroke:#0040ad;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;opacity:1"
+       id="rect3822"
+       width="798.57141"
+       height="64.285713"
+       x="-24.285713"
+       y="-14.780666" />
     <text
        xml:space="preserve"
        style="font-size:24.64098549px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -120,7 +127,7 @@
          y="25.227337">CONTROLS</tspan></text>
     <path
        style="fill:#009400;fill-opacity:0.19736843;stroke:none"
-       d="M 208.60422,2.1716902 352.1435,2.0552841 c 2.85573,9.4383909 2.60383,18.8767819 0,28.3151729 l -143.67382,0 c -2.19676,-8.974935 -2.57676,-18.294044 0.13447,-28.1987668 z"
+       d="m 209.1093,2.1716898 143.53928,-0.116406 c 2.85573,9.4383912 2.60383,18.8767822 0,28.3151732 l -143.67382,0 C 206.778,21.395522 206.398,12.076413 209.10923,2.1716898 z"
        id="field_controls"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
@@ -141,6 +148,30 @@
        style="fill:#009400;fill-opacity:0.19736843;stroke:none"
        d="M 583.31907,2.6373534 726.85835,2.5209473 c 2.85573,9.4383907 2.60383,18.8767817 0,28.3151727 l -143.67382,0 C 580.98777,21.861185 580.60777,12.542076 583.319,2.6373534 z"
        id="field_repairall"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="#path4706" />
+    <text
+       xml:space="preserve"
+       style="font-size:24.64098549px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="402.33057"
+       y="24.915337"
+       id="text5216-9-5-3"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5218-7-1-8"
+         x="402.33057"
+         y="24.915337">DE-ICE</tspan></text>
+    <path
+       style="fill:#ff0000;fill-opacity:1;stroke:none"
+       d="m 448.36152,17.141386 8.21429,0 0,11.607143 -8.39286,0 z"
+       id="deicefailind"
+       inkscape:connector-curvature="0"
+       inkscape:label="#path2994" />
+    <path
+       style="fill:#009400;fill-opacity:0.19736843;stroke:none"
+       d="m 358.53259,2.0307678 99.6002,-0.1164061 c 1.98155,9.4383903 1.80677,18.8767813 0,28.3151723 l -99.69354,0 c -1.52432,-8.974935 -1.78799,-18.294044 0.0934,-28.1987662 z"
+       id="field_deice"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
        inkscape:label="#path4706" />

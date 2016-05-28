@@ -2,6 +2,7 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -29,14 +30,34 @@
      id="namedview8"
      showgrid="false"
      inkscape:zoom="0.89702958"
-     inkscape:cx="483.76947"
+     inkscape:cx="288.12375"
      inkscape:cy="835.35418"
      inkscape:window-x="0"
      inkscape:window-y="21"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
-     id="defs3653" />
+     id="defs3653">
+    <linearGradient
+       id="linearGradient5215">
+      <stop
+         style="stop-color:#e6e6e6;stop-opacity:1;"
+         offset="0"
+         id="stop5217" />
+      <stop
+         style="stop-color:#e6e6e6;stop-opacity:0;"
+         offset="1"
+         id="stop5219" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient5209"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#e6e6e6;stop-opacity:1;"
+         offset="0"
+         id="stop5211" />
+    </linearGradient>
+  </defs>
   <metadata
      id="metadata3656">
     <rdf:RDF>
@@ -53,7 +74,7 @@
      id="layer1"
      transform="matrix(1.019268,0,0,1,-0.38535967,0)">
     <rect
-       style="fill:#ffffff;fill-opacity:1"
+       style="fill:#e6e6e6;fill-opacity:1"
        id="rect3059"
        width="741.53998"
        height="453.7197"
