@@ -19,7 +19,7 @@
       Author: Eric van den Berg
       Date: 2014-01-08
 
-      Last change:      2016-05-22
+      Last change:      2016-05-31
       Date:             Eric van den Berg
 -->
 
@@ -56,8 +56,8 @@
 			<default value="0"/>
 			<test logic="OR" value="1">
 				<test logic="AND">
-					/extra500/light/strobe/timer-sec ge 0.0
-					/extra500/light/strobe/timer-sec le 0.1
+					/extra500/light/strobe/timer-sec gt 0.0
+					/extra500/light/strobe/timer-sec le 0.11
 				</test>
 				<test logic="AND">
 					/extra500/light/strobe/timer-sec ge 0.4
