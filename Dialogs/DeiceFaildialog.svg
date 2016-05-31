@@ -30,8 +30,8 @@
      id="namedview8"
      showgrid="false"
      inkscape:zoom="0.8970296"
-     inkscape:cx="549.91048"
-     inkscape:cy="727.03903"
+     inkscape:cx="468.16076"
+     inkscape:cy="734.44604"
      inkscape:window-x="0"
      inkscape:window-y="21"
      inkscape:window-maximized="1"
@@ -118,7 +118,7 @@
        style="fill:#e6e6e6;fill-opacity:1"
        id="rect3059"
        width="764.50806"
-       height="453.7197"
+       height="532.86981"
        x="-13.904973"
        y="44.197475" />
     <path
@@ -644,11 +644,11 @@
        sodipodi:nodetypes="ccccc" />
     <path
        style="fill:#3296b5;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="m 368.22337,281.03423 -3.64578,5.32087 1.77362,5.715 3.44871,2.95603 7.48863,1.77362 7.68568,-1.47802 4.13845,-3.94137 0.78827,-5.91207 -3.35017,-4.33552 -4.63112,1.47801 -4.82818,0.59122 -4.03992,-0.88682 z"
+       d="m 368.22337,281.03423 c 0,0 -3.3247,3.19496 -3.64578,5.32087 -0.29787,1.97226 0.67794,4.04826 1.77362,5.715 0.8317,1.26518 2.09922,2.26953 3.44871,2.95603 2.28642,1.16312 4.92395,1.71903 7.48863,1.77362 2.60824,0.0555 5.36626,-0.28374 7.68568,-1.47802 1.69367,-0.87208 3.27372,-2.24394 4.13845,-3.94137 0.90247,-1.7715 1.30451,-3.99213 0.78827,-5.91207 -0.47423,-1.76372 -3.35017,-4.33552 -3.35017,-4.33552 l -4.63112,1.47801 c 0,0 0.0239,3.11775 -0.88681,4.23699 -0.88193,1.08388 -2.44929,1.77808 -3.84284,1.67509 -1.39057,-0.10276 -2.78352,-1.05042 -3.54724,-2.21703 -0.73654,-1.12509 -0.59121,-3.99065 -0.59121,-3.99065 z"
        id="EngInletHeat"
        inkscape:connector-curvature="0"
        transform="matrix(0.98109624,0,0,1,0.37807492,0)"
-       sodipodi:nodetypes="ccccccccccccc"
+       sodipodi:nodetypes="csssssssccssscc"
        inkscape:label="#path4418" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"

@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 17.05.2016            
+#      Date: 28.05.2016            
 #
 # 
 
@@ -182,6 +182,15 @@ var set_failure = func(fail) {
 	# transfer system failures
 		else if (failure == "LtransferPumpFail") { setprop("/systems/fuel/LHtank/motivepump/serviceable", math.abs(fail-1) ); }
 		else if (failure == "RtransferPumpFail") { setprop("/systems/fuel/RHtank/motivepump/serviceable", math.abs(fail-1) ); }
+		else if (failure == "LtransfilterFail") { setprop("/systems/fuel/LHtank/motivefilter/clogged", fail ); }
+		else if (failure == "RtransfilterFail") { setprop("/systems/fuel/RHtank/motivefilter/clogged", fail ); }
+		else if (failure == "LMinnerjetpumpFail") { setprop("/systems/fuel/LHtank/main/innerjetpump/clogged", fail ); }
+		else if (failure == "RMinnerjetpumpFail") { setprop("/systems/fuel/RHtank/main/innerjetpump/clogged", fail ); }
+		else if (failure == "LMouterjetpumpFail") { setprop("/systems/fuel/LHtank/main/outerjetpump/clogged", fail ); }
+		else if (failure == "RMouterjetpumpFail") { setprop("/systems/fuel/RHtank/main/outerjetpump/clogged", fail ); }
+		else if (failure == "LAjetpumpFail") { setprop("/systems/fuel/LHtank/aux/jetpump/clogged", fail ); }
+		else if (failure == "RAjetpumpFail") { setprop("/systems/fuel/RHtank/aux/jetpump/clogged", fail ); }
+
 # de- and anti-ice
 		else if (failure == "InletAntiIceFail") { setprop("/extra500/system/deice/IntakeHeat/serviceable", math.abs(fail-1) ); }
 	# electric systems
@@ -279,6 +288,14 @@ var failure_reset = func() {
 	setprop("/systems/fuel/FFtransducer/blocked", 0 );
 	setprop("/systems/fuel/LHtank/motivepump/serviceable", 1 );
 	setprop("/systems/fuel/RHtank/motivepump/serviceable", 1 );
+	setprop("/systems/fuel/LHtank/motivefilter/clogged", 0 );
+	setprop("/systems/fuel/RHtank/motivefilter/clogged", 0 );
+	setprop("/systems/fuel/LHtank/main/innerjetpump/clogged", 0 );
+	setprop("/systems/fuel/LHtank/main/outerjetpump/clogged", 0 );
+	setprop("/systems/fuel/LHtank/aux/jetpump/clogged", 0 );
+	setprop("/systems/fuel/RHtank/main/innerjetpump/clogged", 0 );
+	setprop("/systems/fuel/RHtank/main/outerjetpump/clogged", 0 );
+	setprop("/systems/fuel/RHtank/aux/jetpump/clogged", 0 );
 #DEICE
 	setprop("/systems/pneumatic/leak", 0.0);
 	setprop("/extra500/system/deice/IntakeHeat/serviceable", 1 );

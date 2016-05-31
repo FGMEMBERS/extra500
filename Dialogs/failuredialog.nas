@@ -17,7 +17,7 @@
 #	Date: 	10.10.2015
 #
 #	Last change: Eric van den Berg	
-#	Date:	27.05.2016	
+#	Date:	29.05.2016	
 #
 
 var COLORfd = {};
@@ -139,6 +139,16 @@ var FailureClass = {
 		me._pumpcv1		= me._svg_fuel.getElementById("pumpcv1");
 		me._pumpcv2		= me._svg_fuel.getElementById("pumpcv2");
 		me._FFtransd	= me._svg_fuel.getElementById("fftransd");
+		me._LMFilter	= me._svg_fuel.getElementById("LHmotivefilter");
+		me._RMFilter	= me._svg_fuel.getElementById("RHmotivefilter");
+		me._LMpump		= me._svg_fuel.getElementById("LHmotivepump");
+		me._RMpump		= me._svg_fuel.getElementById("RHmotivepump");
+		me._LauxJpump	= me._svg_fuel.getElementById("LHauxjetpump");
+		me._RauxJpump	= me._svg_fuel.getElementById("RHauxjetpump");
+		me._LmainOutJpump	= me._svg_fuel.getElementById("LHmainoutjetpump");
+		me._RmainOutJpump	= me._svg_fuel.getElementById("RHmainoutjetpump");
+		me._LmainInJpump	= me._svg_fuel.getElementById("LHmaininjetpump");
+		me._RmainInJpump	= me._svg_fuel.getElementById("RHmaininjetpump");
 
 		me._Text_Laux		= me._svg_fuel.getElementById("text_Laux").hide();
 		me._Text_Lmain		= me._svg_fuel.getElementById("text_Lmain").hide();
@@ -153,6 +163,8 @@ var FailureClass = {
 		me._Text_pump2		= me._svg_fuel.getElementById("text_pump2").hide();
 		me._Text_pumpcv1		= me._svg_fuel.getElementById("text_pumpcv1").hide();
 		me._Text_pumpcv2		= me._svg_fuel.getElementById("text_pumpcv2").hide();
+		me._Text_LMpump		= me._svg_fuel.getElementById("text_LMpump").hide();
+		me._Text_RMpump		= me._svg_fuel.getElementById("text_RMpump").hide();
 
 	# control system
 		me._LAileron	= me._svg_contr.getElementById("LAileron");
@@ -229,13 +241,61 @@ var FailureClass = {
 		me._Text_Filter = me._root.createChild("text")
       		.setFontSize(12, 1.5)  
       		.setAlignment("left-center") 
-      		.setTranslation(410, 265) 
+      		.setTranslation(410, 325) 
 			.setColor(0,0,0,1);
 
 		me._Text_FFtransd = me._root.createChild("text")
       		.setFontSize(12, 1.5)  
       		.setAlignment("left-center") 
-      		.setTranslation(410, 355) 
+      		.setTranslation(410, 415) 
+			.setColor(0,0,0,1);
+
+		me._Text_LMFilter = me._root.createChild("text")
+      		.setFontSize(12, 1.5)  
+      		.setAlignment("left-center") 
+      		.setTranslation(200, 50) 
+			.setColor(0,0,0,1);
+
+		me._Text_RMFilter = me._root.createChild("text")
+      		.setFontSize(12, 1.5)  
+      		.setAlignment("left-center") 
+      		.setTranslation(400, 50) 
+			.setColor(0,0,0,1);
+
+		me._Text_LmainInJpump = me._root.createChild("text")
+     			.setFontSize(12, 1.5)  
+      		.setAlignment("left-center") 
+      		.setTranslation(150, 250) 
+			.setColor(0,0,0,1);
+
+		me._Text_RmainInJpump = me._root.createChild("text")
+     			.setFontSize(12, 1.5)  
+      		.setAlignment("left-center") 
+      		.setTranslation(450, 250) 
+			.setColor(0,0,0,1);
+
+		me._Text_LmainOutJpump = me._root.createChild("text")
+     			.setFontSize(12, 1.5)  
+      		.setAlignment("left-center") 
+      		.setTranslation(100, 270) 
+			.setColor(0,0,0,1);
+
+		me._Text_RmainOutJpump = me._root.createChild("text")
+     			.setFontSize(12, 1.5)  
+      		.setAlignment("left-center") 
+      		.setTranslation(525, 270) 
+			.setColor(0,0,0,1);
+
+		me._Text_LauxJpump = me._root.createChild("text")
+     			.setFontSize(12, 1.5)  
+      		.setAlignment("left-center") 
+      		.setTranslation(50, 290) 
+			.setColor(0,0,0,1);
+
+		me._Text_RauxJpump = me._root.createChild("text")
+     			.setFontSize(12, 1.5)  
+      		.setAlignment("left-center") 
+      		.setTranslation(560, 290) 
 			.setColor(0,0,0,1);
 
 # listeners
@@ -291,6 +351,17 @@ var FailureClass = {
 		me._pumpcv2.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/FP2checkvalve/serviceable",0,"fuelPumpCV2Fail","fuel");});
 		me._FFtransd.addEventListener("click",func(){me._onValueClick("/systems/fuel/FFtransducer/blocked","fftransdFail","fuel");});
 
+		me._LMFilter.addEventListener("click",func(){me._onValueClick("/systems/fuel/LHtank/motivefilter/clogged","LtransfilterFail","fuel");});	
+		me._RMFilter.addEventListener("click",func(){me._onValueClick("/systems/fuel/RHtank/motivefilter/clogged","RtransfilterFail","fuel");});	
+		me._LMpump.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/LHtank/motivepump/serviceable",0,"LtransferPumpFail","fuel");});		
+		me._RMpump.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/RHtank/motivepump/serviceable",0,"RtransferPumpFail","fuel");});		
+		me._LmainInJpump.addEventListener("click",func(){me._onValueClick("/systems/fuel/LHtank/main/innerjetpump/clogged","LMinnerjetpumpFail","fuel");});	
+		me._RmainInJpump.addEventListener("click",func(){me._onValueClick("/systems/fuel/RHtank/main/innerjetpump/clogged","RMinnerjetpumpFail","fuel");});	
+		me._LmainOutJpump.addEventListener("click",func(){me._onValueClick("/systems/fuel/LHtank/main/outerjetpump/clogged","LMouterjetpumpFail","fuel");});	
+		me._RmainOutJpump.addEventListener("click",func(){me._onValueClick("/systems/fuel/RHtank/main/outerjetpump/clogged","RMouterjetpumpFail","fuel");});	
+		me._LauxJpump.addEventListener("click",func(){me._onValueClick("/systems/fuel/LHtank/aux/jetpump/clogged","LAjetpumpFail","fuel");});	
+		me._RauxJpump.addEventListener("click",func(){me._onValueClick("/systems/fuel/RHtank/aux/jetpump/clogged","RAjetpumpFail","fuel");});	
+
 	# control system
 		me._LAileron.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/L-aileron",1,"LAil","contr");});
 		me._RAileron.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/R-aileron",1,"RAil","contr");});
@@ -330,6 +401,14 @@ var FailureClass = {
 
 		me._Text_Filter.hide();
 		me._Text_FFtransd.hide();
+		me._Text_LMFilter.hide();
+		me._Text_RMFilter.hide();
+		me._Text_LmainInJpump.hide();
+		me._Text_RmainInJpump.hide();
+		me._Text_LmainOutJpump.hide();
+		me._Text_RmainOutJpump.hide();
+		me._Text_LauxJpump.hide();
+		me._Text_RauxJpump.hide();
 	},
 	_updateMenu : func() {
 		me._gearButtons_update();
@@ -404,8 +483,18 @@ var FailureClass = {
 		me._genButtons_update("/systems/fuel/FP1checkvalve/serviceable",1,me._pumpcv1,me._Text_pumpcv1,"CVOk","/extra500/failurescenarios/fuel");
 		me._genButtons_update("/systems/fuel/FP2checkvalve/serviceable",1,me._pumpcv2,me._Text_pumpcv2,"CVOk","/extra500/failurescenarios/fuel");
 		me._valButtons_update("/systems/fuel/FFtransducer/blocked",me._FFtransd,me._Text_FFtransd,"CVOk","/extra500/failurescenarios/fuel","Fuel flow transducer is ","% blocked");
+		me._valButtons_update("/systems/fuel/LHtank/motivefilter/clogged",me._LMFilter,me._Text_LMFilter,"CVOk","/extra500/failurescenarios/fuel","Motive flow filter is ","% blocked");
+		me._valButtons_update("/systems/fuel/RHtank/motivefilter/clogged",me._RMFilter,me._Text_RMFilter,"CVOk","/extra500/failurescenarios/fuel","Motive flow filter is ","% blocked");
+		me._genButtons_update("/systems/fuel/LHtank/motivepump/serviceable",1,me._LMpump,me._Text_LMpump,"CVOk","/extra500/failurescenarios/fuel");
+		me._genButtons_update("/systems/fuel/RHtank/motivepump/serviceable",1,me._RMpump,me._Text_RMpump,"CVOk","/extra500/failurescenarios/fuel");
+		me._valButtons_update("/systems/fuel/LHtank/main/innerjetpump/clogged",me._LmainInJpump,me._Text_LmainInJpump,"CVOk","/extra500/failurescenarios/fuel","Inner Jetpump is ","% clogged");
+		me._valButtons_update("/systems/fuel/RHtank/main/innerjetpump/clogged",me._RmainInJpump,me._Text_RmainInJpump,"CVOk","/extra500/failurescenarios/fuel","Inner Jetpump is ","% clogged");
+		me._valButtons_update("/systems/fuel/LHtank/main/outerjetpump/clogged",me._LmainOutJpump,me._Text_LmainOutJpump,"CVOk","/extra500/failurescenarios/fuel","Middle Jetpump is ","% clogged");
+		me._valButtons_update("/systems/fuel/RHtank/main/outerjetpump/clogged",me._RmainOutJpump,me._Text_RmainOutJpump,"CVOk","/extra500/failurescenarios/fuel","Middle Jetpump is ","% clogged");
+		me._valButtons_update("/systems/fuel/LHtank/aux/jetpump/clogged",me._LauxJpump,me._Text_LauxJpump,"CVOk","/extra500/failurescenarios/fuel","Outer Jetpump is ","% clogged");
+		me._valButtons_update("/systems/fuel/RHtank/aux/jetpump/clogged",me._RauxJpump,me._Text_RauxJpump,"CVOk","/extra500/failurescenarios/fuel","Outer Jetpump is ","% clogged");	
 
-		# setting fail indication in menu
+	# setting fail indication in menu
 		if (getprop("/extra500/failurescenarios/fuel") > 0) {
 			me._fuel_ind.show();
 			me._fuelfailnumber.setText(getprop("/extra500/failurescenarios/fuel"))
