@@ -21,6 +21,12 @@
 #
 # 
 
+#var failureset = [
+#	[1,"RMG_jammed","RMG(fail)"],
+#	[2,"LMG_jammed","LMG(fail)"],
+#	[3,"NG_jammed","NG(fail)"]
+#];
+
 setlistener("/extra500/failurescenarios/activate", func {
 	var fail = getprop("/extra500/failurescenarios/activate");
 	set_failure(fail);
@@ -131,6 +137,10 @@ var set_failure = func(fail) {
 	var failure = getprop("/extra500/failurescenarios/name");	# getting failure name
 	if (failure != "") {
 # gear
+#		foreach(var fault; failureset) {
+#	print(fault[0],fault[1],fault[2]);
+#			if (failure == fault[1] ) { call(fault[2],[fail],nil,nil); }
+#		}
 		if (failure == "RMG_jammed") { RMG(fail); }
 		else if (failure == "LMG_jammed") { LMG(fail); }
 		else if (failure == "NG_jammed") { NG(fail); }

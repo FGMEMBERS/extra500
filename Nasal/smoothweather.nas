@@ -17,7 +17,7 @@
 #      Date:   12.06.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 04.04.2016            
+#      Date: 03.06.2016            
 #
 # note: some parts are taken from fgdata/gui/dialogs/weather.xml
 
@@ -246,7 +246,12 @@ var buildMetar = func() {
 
 	foreach(var lay; vlayer) {
 		var cl_type = math.round (getprop("/extra500/weather/avgmetar/clouds/layer["~lay~"]/coverage-type"));
-		var cl_alt = sprintf("%03d",( getprop("/extra500/weather/avgmetar/clouds/layer["~lay~"]/elevation-ft") - airp_elev_m * global.CONST.METER2FEET ) / 100);
+		var cl_alt = ( getprop("/extra500/weather/avgmetar/clouds/layer["~lay~"]/elevation-ft") - airp_elev_m * global.CONST.METER2FEET ) / 100;
+		if (cl_alt <= 0) {
+			cl_alt = 0;
+		} else {
+			cl_alt = sprintf("%03d",cl_alt);
+		}
 
 		if (cl_type == 0 ) { append (layer, "OVC"~cl_alt~" "); }
 		if (cl_type == 1 ) { append (layer, "BKN"~cl_alt~" "); }
