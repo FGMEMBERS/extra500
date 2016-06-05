@@ -562,10 +562,10 @@ var TabWidget = {
 	
 };
 
-var WightWidget = {
+var WeightWidget = {
 	new: func(dialog,canvasGroup,name,widgets){
-		var m = {parents:[WightWidget,SvgWidget.new(dialog,canvasGroup,name)]};
-		m._class = "WightWidget";
+		var m = {parents:[WeightWidget,SvgWidget.new(dialog,canvasGroup,name)]};
+		m._class = "WeightWidget";
 		m._widget = {};
 		
 		foreach(w;keys(widgets)){
@@ -696,7 +696,7 @@ var WightWidget = {
 		foreach(w;keys(me._widget)){
 			me._payload	+= me._widget[w]._level;
 		}
-		#print("WightWidget._onNotifyChange() ... _payload="~me._payload);
+		#print("WeightWidget._onNotifyChange() ... _payload="~me._payload);
 		me._cWeightPayload.setText(sprintf("%.2f",me._payload));
 		
 		
@@ -1487,7 +1487,7 @@ var FuelPayloadClass = {
 		me._widget.Seat3B		= PayloadWidget.new(me,me._group,"Seat_3B","Seat 3B",5,{"Cat1":0.6,"Cat2":0.4,"Cat3":0.1});
 		me._widget.Seat4A		= PayloadWidget.new(me,me._group,"Seat_4A","Baggage",6,{"Cat1":0.8,"Cat2":0.5,"Cat3":0.2});
 		
-		me._widget.weight = WightWidget.new(me,me._group,"Weight",me._widget);
+		me._widget.weight = WeightWidget.new(me,me._group,"Weight",me._widget);
 		me._widget.trip = TripWidget.new(me,me._group,"Trip");
 		
 		foreach(widget;keys(me._widget)){

@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:      Eric van den Berg
-	Date:             03.06.2016
+	Date:             05.06.2016
 
 
 ************************************************************************
@@ -1952,6 +1952,9 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				<FuelTransferL>
 					<voltOut type="double">0</voltOut>
 				</FuelTransferL>
+				<TAS>
+					<voltOut type="double">0</voltOut>
+				</TAS>
 			</BankB>
 			<BankC>
 				<Boots>
