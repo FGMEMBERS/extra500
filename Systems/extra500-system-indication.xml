@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2016-05-22
+      Date:             2016-06-18
 -->
 
 <system name="indication">
@@ -1501,7 +1501,7 @@
 
 	</channel>
 
-	<channel name="dme">
+	<channel name="dme" execrate="60">
 		<switch name="dmeminmax">
 			<default value="/instrumentation/dme/indicated-time-min"/>
 			<test logic="AND" value="99">
@@ -1595,7 +1595,7 @@
 	</channel>
 
 	<channel name="shadow">
-
+<!-- this is for the "3D" shadow -->
 		<fcs_function name="shadow">
 			<function>
 			<sum>
@@ -1607,6 +1607,18 @@
 			</sum>
 			</function>			
 			<output>/position/altitude-agl-m</output>
+		</fcs_function>
+	</channel>
+
+	<channel name="weight" execrate="60">
+<!-- this is for the weight listener in the nasal/fuel payload.nas -->
+		<fcs_function name="weight-lbs">
+			<function>
+			<sum>
+				<property>/fdm/jsbsim/inertia/weight-lbs</property>
+			</sum>
+			</function>			
+			<output>/fdm/jsbsim/inertia/nt-weight-lbs</output>
 		</fcs_function>
 	</channel>
 

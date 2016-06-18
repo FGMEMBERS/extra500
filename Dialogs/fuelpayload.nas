@@ -13,11 +13,11 @@
 #    You should have received a copy of the GNU General Public License
 #    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
 #
-#	Authors: 	Dirk Dittmann
+#	Authors: 		Dirk Dittmann
 #	Date: 		Mai 02 2015
 #
-#	Last change:	Dirk Dittmann
-#	Date:		02.05.15
+#	Last change:	Eric van den Berg
+#	Date:			18.06.16
 #
 
 var MyWindow = {
@@ -662,6 +662,7 @@ var WeightWidget = {
 	},
 	setListeners : func(instance) {
 		append(me._listeners, setlistener(fuelPayload._nNotify,func(n){me._onNotifyChange(n);},1,0) );
+		append(me._listeners, setlistener("/fdm/jsbsim/inertia/nt-weight-lbs",func(n){me._onNotifyChange(n);},1,0) );
 		
 	},
 	init : func(instance=me){
