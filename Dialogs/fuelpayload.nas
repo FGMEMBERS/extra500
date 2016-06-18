@@ -289,9 +289,9 @@ var TankWidget = {
 		m._cDataPercent	= m._group.getElementById(m._name~"_Data_Percent");
 				
 		m._cDataName.setText(m._lable);
-		m._cDataMax.setText(sprintf("%3.2f",m._capacity * global.CONST.JETA_LBGAL));
-		m._cDataLevel.setText(sprintf("%3.2f",m._level * global.CONST.JETA_LBGAL));
-		m._cDataPercent.setText(sprintf("%3.2f",m._fraction*100.0));
+		m._cDataMax.setText(sprintf("%3.0f",m._capacity * global.CONST.JETA_LBGAL));
+		m._cDataLevel.setText(sprintf("%3.0f",m._level * global.CONST.JETA_LBGAL));
+		m._cDataPercent.setText(sprintf("%3.1f",m._fraction*100.0));
 		
 		
 		m._bottom	= m._cFrame.get("coord[3]");
@@ -322,8 +322,8 @@ var TankWidget = {
 		me._level	= n.getValue();
 		me._fraction	= me._level / me._capacity;
 		
-		me._cDataLevel.setText(sprintf("%3.2f",me._level * global.CONST.JETA_LBGAL));
-		me._cDataPercent.setText(sprintf("%3.2f",me._fraction*100.0));
+		me._cDataLevel.setText(sprintf("%3.0f",me._level * global.CONST.JETA_LBGAL));
+		me._cDataPercent.setText(sprintf("%3.1f",me._fraction*100.0));
 		
 		me._cLevel.set("coord[1]", me._bottom - (me._height * me._fraction));
 		fuelPayload._nNotify.setValue(systime());
@@ -394,14 +394,14 @@ var TankerWidget = {
 		m._cWeightFuel		 	= m._group.getElementById("Weight_Fuel");
 		
 		m._cDataName.setText(m._lable);
-		m._cDataMax.setText(sprintf("%3.2f",m._capacity * global.CONST.JETA_LBGAL));
-		m._cDataLevel.setText(sprintf("%3.2f",m._level * global.CONST.JETA_LBGAL));
-		m._cDataPercent.setText(sprintf("%3.2f",m._fraction*100.0));
+		m._cDataMax.setText(sprintf("%3.0f",m._capacity * global.CONST.JETA_LBGAL));
+		m._cDataLevel.setText(sprintf("%3.0f",m._level * global.CONST.JETA_LBGAL));
+		m._cDataPercent.setText(sprintf("%3.1f",m._fraction*100.0));
 		
 		m._cTotalDataName.setText("Total");
-		m._cTotalDataMax.setText(sprintf("%3.2f",m._capacityTotal * global.CONST.JETA_LBGAL));
-		m._cTotalDataLevel.setText(sprintf("%3.2f",m._levelTotal * global.CONST.JETA_LBGAL));
-		m._cTotalDataPercent.setText(sprintf("%3.2f",m._fractionTotal*100.0));
+		m._cTotalDataMax.setText(sprintf("%3.0f",m._capacityTotal * global.CONST.JETA_LBGAL));
+		m._cTotalDataLevel.setText(sprintf("%3.0f",m._levelTotal * global.CONST.JETA_LBGAL));
+		m._cTotalDataPercent.setText(sprintf("%3.1f",m._fractionTotal*100.0));
 		
 		
 		m._bottom	= m._cFrame.get("coord[3]");
@@ -438,13 +438,13 @@ var TankerWidget = {
 		me._fraction		= me._level / me._capacity;
 		me._fractionTotal	= me._levelTotal / me._capacityTotal;
 		
-		me._cDataLevel.setText(sprintf("%3.2f",me._level * global.CONST.JETA_LBGAL));
-		me._cDataPercent.setText(sprintf("%3.2f",me._fraction*100.0));
+		me._cDataLevel.setText(sprintf("%3.0f",me._level * global.CONST.JETA_LBGAL));
+		me._cDataPercent.setText(sprintf("%3.1f",me._fraction*100.0));
 		
-		me._cTotalDataLevel.setText(sprintf("%3.2f",me._levelTotal * global.CONST.JETA_LBGAL));
-		me._cTotalDataPercent.setText(sprintf("%3.2f",me._fractionTotal*100.0));
+		me._cTotalDataLevel.setText(sprintf("%3.0f",me._levelTotal * global.CONST.JETA_LBGAL));
+		me._cTotalDataPercent.setText(sprintf("%3.1f",me._fractionTotal*100.0));
 		
-		me._cWeightFuel.setText(sprintf("%3.2f",me._levelTotal * global.CONST.JETA_LBGAL));
+		me._cWeightFuel.setText(sprintf("%3.0f",me._levelTotal * global.CONST.JETA_LBGAL));
 		
 		me._cLevel.set("coord[1]", me._bottom - (me._height * me._fraction));
 	
@@ -641,19 +641,19 @@ var WeightWidget = {
 		
 		
 		m._ramp = m._nRamp.getValue();
-		m._cWeightMaxRamp.setText(sprintf("%.2f",m._ramp));
+		m._cWeightMaxRamp.setText(sprintf("%.0f",m._ramp));
 		m._takeoff = m._nTakeoff.getValue();
-		m._cWeightMaxTakeoff.setText(sprintf("%.2f",m._takeoff));
+		m._cWeightMaxTakeoff.setText(sprintf("%.0f",m._takeoff));
 		m._landing = m._nLanding.getValue();
-		m._cWeightMaxLanding.setText(sprintf("%.2f",m._landing));
+		m._cWeightMaxLanding.setText(sprintf("%.0f",m._landing));
 		
 # 		m._cCenterGravityXMax.setText(sprintf("%.2f",m._cgXMax));
 # 		m._cCenterGravityXMin.setText(sprintf("%.2f",m._cgXMin));
 # 		m._cCenterGravityYMax.setText(sprintf("%.2f",m._cgYMax));
 # 		m._cCenterGravityYMin.setText(sprintf("%.2f",m._cgYMin));
 		
-		m._empty = m._nEmpty.getValue();
-		m._cWeightEmpty.setText(sprintf("%.2f",m._empty));
+		m._empty = m._nEmpty.getValue() + getprop("/fdm/jsbsim/inertia/pointmass-weight-lbs[7]") + getprop("/fdm/jsbsim/inertia/pointmass-weight-lbs[8]");
+		m._cWeightEmpty.setText(sprintf("%.0f",m._empty));
 		
 		
 		m._cWeightMACPercent.setText(sprintf("%.2f",m._MACPercent));
@@ -673,15 +673,13 @@ var WeightWidget = {
 	},
 	_onNotifyChange : func(n){
 		
-		# TODO: point mass 7 & 8(gear) zu Empty hinzufügen
-		
 		me._cgX = me._nCGx.getValue();
 # 		me._cCenterGravityX.setText(sprintf("%.2f",me._cgX));
 # 		me._cgY = me._nCGy.getValue();
 # 		me._cCenterGravityY.setText(sprintf("%.2f",me._cgY));
 		
 		me._gross = me._nGross.getValue();
-		me._cWeightGross.setText(sprintf("%.2f",me._gross));
+		me._cWeightGross.setText(sprintf("%.0f",me._gross));
 		
 		me._WeightLimit_lbs_pixel 	= ((me._gross - 3000) * (21.0 / 250.0));
 		me._WeightLimit_in_pixel 	= ((me._cgX - 133.7913) * (51.0 / 2.602362205));
@@ -698,7 +696,7 @@ var WeightWidget = {
 			me._payload	+= me._widget[w]._level;
 		}
 		#print("WeightWidget._onNotifyChange() ... _payload="~me._payload);
-		me._cWeightPayload.setText(sprintf("%.2f",me._payload));
+		me._cWeightPayload.setText(sprintf("%.0f",me._payload));
 		
 		
 		#me._cCenterGravityBall.setTranslation(me._cgX * (64/13), (me._cgY - 136.0) * (64/13) );
@@ -764,7 +762,7 @@ var PayloadWidget = {
 				m._cCats[cat]	= m._group.getElementById(m._name~"_"~cat);
 			}
 		}
-		m._cLBS.setText(sprintf("%3.2f",m._level));
+		m._cLBS.setText(sprintf("%3.0f",m._level));
 		m._cName.setText(m._lable);
 				
 		m._bottom	= m._cFrame.get("coord[3]");
@@ -868,7 +866,7 @@ var PayloadWidget = {
 		me._level	= me._nLevel.getValue();
 		me._fraction	= me._level / me._capacity;
 		
-		me._cLBS.setText(sprintf("%3.2f",me._level));
+		me._cLBS.setText(sprintf("%3.0f",me._level));
 		
 		me._cLevel.set("coord[1]", me._bottom - (me._height * me._fraction));
 		
@@ -1248,29 +1246,29 @@ var TripWidget = {
 		me._can.climb.gs.setText(sprintf("%3i",me._data.climb.gs));
 		me._can.climb.nm.setText(sprintf("%i",me._data.climb.nm));
 		me._can.climb.time.setText(me.getTime(me._data.climb.time));
-		me._can.climb.fuel.setText(sprintf("%.2f",me._data.climb.fuel));
+		me._can.climb.fuel.setText(sprintf("%.0f",me._data.climb.fuel));
 		
 		me._can.cruise.fl.setText(sprintf("%3i",me._data.cruise.fl));
 		me._can.cruise.gs.setText(sprintf("%3i",me._data.cruise.gs));
 		me._can.cruise.nm.setText(sprintf("%i",me._data.cruise.nm));
 		me._can.cruise.time.setText(me.getTime(me._data.cruise.time));
-		me._can.cruise.fuel.setText(sprintf("%.2f",me._data.cruise.fuel));
+		me._can.cruise.fuel.setText(sprintf("%.0f",me._data.cruise.fuel));
 		
 		me._can.descent.vs.setText(sprintf("%4i",me._data.descent.vs));
 		me._can.descent.gs.setText(sprintf("%3i",me._data.descent.gs));
 		me._can.descent.nm.setText(sprintf("%i",me._data.descent.nm));
 		me._can.descent.time.setText(me.getTime(me._data.descent.time));
-		me._can.descent.fuel.setText(sprintf("%.2f",me._data.descent.fuel));
+		me._can.descent.fuel.setText(sprintf("%.0f",me._data.descent.fuel));
 		
 		me._can.reserve.fl.setText(sprintf("%3i",me._data.reserve.fl));
 		me._can.reserve.gs.setText(sprintf("%3i",me._data.reserve.gs));
 		me._can.reserve.nm.setText(sprintf("%i",me._data.reserve.nm));
 		me._can.reserve.time.setText(me.getTime(me._data.reserve.time));
-		me._can.reserve.fuel.setText(sprintf("%.2f",me._data.reserve.fuel));
+		me._can.reserve.fuel.setText(sprintf("%.0f",me._data.reserve.fuel));
 		
 		me._can.trip.nm.setText(sprintf("%i",me._data.trip.nm));
 		me._can.trip.time.setText(me.getTime(me._data.trip.time));
-		me._can.trip.fuel.setText(sprintf("%.2f",me._data.trip.fuel));
+		me._can.trip.fuel.setText(sprintf("%.0f",me._data.trip.fuel));
 		
 		
 		me._can.graph.x0.setText(sprintf("%i",me._data.graph.x0));
