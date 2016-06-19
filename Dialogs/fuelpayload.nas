@@ -326,7 +326,6 @@ var TankWidget = {
 		me._cDataPercent.setText(sprintf("%3.1f",me._fraction*100.0));
 		
 		me._cLevel.set("coord[1]", me._bottom - (me._height * me._fraction));
-		fuelPayload._nNotify.setValue(systime());
 			
 	},
 	_onFuelInputChange : func(e){
@@ -348,7 +347,7 @@ var TankerWidget = {
 		m._class = "TankerWidget";
 		m._lable 	= lable;
 		m._widget	= {};
-		m._nLevel 	= props.globals.initNode("/consumables/fuel/total-fuel-norm",0.0,"DOUBLE");
+		m._nLevel 	= props.globals.initNode("/fdm/jsbsim/propulsion/total-fuel-lbs",0.0,"DOUBLE");
 		
 		m._level		= 0;
 		m._capacity		= 0;
@@ -412,7 +411,8 @@ var TankerWidget = {
 		return m;
 	},
 	setListeners : func(instance) {
-		append(me._listeners, setlistener(fuelPayload._nNotify,func(n){me._onNotifyChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nLevel,func(n){me._onLevelChange(n);},1,0) );
+		
 		me._cFrame.addEventListener("drag",func(e){me._onFuelInputChange(e);});
 		me._cLevel.addEventListener("drag",func(e){me._onFuelInputChange(e);});
 		me._cFrame.addEventListener("wheel",func(e){me._onFuelInputChange(e);});
@@ -425,7 +425,7 @@ var TankerWidget = {
 	deinit : func(){
 		me.removeListeners();	
 	},
-	_onNotifyChange : func(n){
+	_onLevelChange : func(n){
 		me._level 	= 0;
 		me._levelTotal 	= 0;
 		foreach(tank;keys(me._widget)){
@@ -481,10 +481,6 @@ var TankerWidget = {
 			me._widget.RightAux._nLevel.setValue(0);
 			
 		}
-		
-		
-		fuelPayload._nNotify.setValue(systime());
-		
 	},
 };
 
@@ -661,8 +657,7 @@ var WeightWidget = {
 		return m;
 	},
 	setListeners : func(instance) {
-		append(me._listeners, setlistener(fuelPayload._nNotify,func(n){me._onNotifyChange(n);},1,0) );
-		append(me._listeners, setlistener("/fdm/jsbsim/inertia/nt-weight-lbs",func(n){me._onNotifyChange(n);},1,0) );
+		append(me._listeners, setlistener(fuelPayload._nGrossWeight,func(n){me._onGrossWeightChange(n);},1,0) );
 		
 	},
 	init : func(instance=me){
@@ -671,7 +666,7 @@ var WeightWidget = {
 	deinit : func(){
 		me.removeListeners();	
 	},
-	_onNotifyChange : func(n){
+	_onGrossWeightChange : func(n){
 		
 		me._cgX = me._nCGx.getValue();
 # 		me._cCenterGravityX.setText(sprintf("%.2f",me._cgX));
@@ -693,9 +688,9 @@ var WeightWidget = {
 		
 		me._payload = 0;
 		foreach(w;keys(me._widget)){
-			me._payload	+= me._widget[w]._level;
+			me._payload	+= me._widget[w]._weight;
 		}
-		#print("WeightWidget._onNotifyChange() ... _payload="~me._payload);
+		#print("WeightWidget._onGrossWeightChange() ... _payload="~me._payload);
 		me._cWeightPayload.setText(sprintf("%.0f",me._payload));
 		
 		
@@ -734,16 +729,24 @@ var PayloadWidget = {
 		m._index 	= index;
 		m._lable 	= lable;
 		m._listCategory	= listCategory;
+		m._listCategoryKeys = sort(keys(m._listCategory),func(a, b){return -cmp(a,b)} );
+		
+		#debug.dump(m._listCategoryKeys);
 		
 		m._nRoot	= props.globals.getNode("/payload/weight["~m._index~"]");
 		m._nLable 	= m._nRoot.initNode("name","","STRING");
-		m._nLevel 	= m._nRoot.initNode("weight-lb",0.0,"DOUBLE");
+		
+		### HACK : listener on /payload/weight[0]/weight-lb not working
+		###	   two props one for fdm(weight-lb) one for dialog(nt-weight-lb) listener
+		m._nWeightFdm 	= m._nRoot.initNode("weight-lb",0.0,"DOUBLE");
+		m._weight	= m._nWeightFdm.getValue(); # lbs
+		m._nWeight 	= m._nRoot.initNode("nt-weight-lb",m._weight,"DOUBLE");
+		
 		m._nCapacity 	= m._nRoot.initNode("max-lb",0.0,"DOUBLE");
 		m._nCategory 	= m._nRoot.initNode("category","","STRING");
 		
-		m._level	= m._nLevel.getValue();
 		m._capacity	= m._nCapacity.getValue();
-		m._fraction	= m._level / m._capacity;
+		m._fraction	= m._weight / m._capacity;
 		m._category	= m._nCategory.getValue();
 		
 		m._cFrame 	= m._group.getElementById(m._name~"_Frame");
@@ -762,7 +765,7 @@ var PayloadWidget = {
 				m._cCats[cat]	= m._group.getElementById(m._name~"_"~cat);
 			}
 		}
-		m._cLBS.setText(sprintf("%3.0f",m._level));
+		m._cLBS.setText(sprintf("%3.0f",m._weight));
 		m._cName.setText(m._lable);
 				
 		m._bottom	= m._cFrame.get("coord[3]");
@@ -772,10 +775,9 @@ var PayloadWidget = {
 		return m;
 	},
 	setListeners : func(instance) {
-		
-		#append(me._listeners, setlistener(me._nLevel,func(n){me._onLevelChange(n);},1,0) );
-		append(me._listeners, setlistener(fuelPayload._nNotify,func(n){me._onNotifyChange(n);},1,0) );
-		
+		### FIXME : use one property remove the HACK
+		append(me._listeners, setlistener(me._nWeight,func(n){me._onWeightChange(n);},1,0) );
+				
 		me._cFrame.addEventListener("drag",func(e){me._onInputChange(e);});
 		me._cLevel.addEventListener("drag",func(e){me._onInputChange(e);});
 		me._cFrame.addEventListener("wheel",func(e){me._onInputChange(e);});
@@ -802,7 +804,19 @@ var PayloadWidget = {
 		me.removeListeners();	
 	},
 	_checkCat : func(){
-						
+		
+		me._category = "";
+		if(me._weight > 0){
+			me._category = me._listCategoryKeys[-1];
+			foreach(cat;me._listCategoryKeys){
+				if (me._weight <= me._listCategory[cat]*me._capacity){
+					me._category = cat;
+					me._nCategory.setValue(me._category);
+					break;
+				}
+			}
+		}
+		
 		if(me._category == "Cat1"){
 			if(me._cCats["Cat1"] != nil){
 				me._cCats["Cat1"].set("fill",COLOR["Green"]);
@@ -848,6 +862,14 @@ var PayloadWidget = {
 			
 		}
 	},
+	setWeight : func(weight){
+		me._weight = weight;
+		
+		### HACK : set two props 
+		me._nWeight.setValue(me._weight);
+		me._nWeightFdm.setValue(me._weight);
+		
+	},
 	_onCatClick : func(e,cat){
 		#print("PayloadWidget._onCatClick() ... "~cat);
 		if(me._category == cat){
@@ -856,21 +878,28 @@ var PayloadWidget = {
 			me._category = cat;
 		}
 		if(me._category != ""){
-			me._nLevel.setValue(me._listCategory[me._category]*me._capacity);
+			me._weight = me._listCategory[me._category]*me._capacity;
+		}else{
+			me._weight = 0;
 		}
 		me._nCategory.setValue(me._category);
-		me._checkCat();
-		fuelPayload._nNotify.setValue(systime());
-	},
-	_onNotifyChange : func(n){
-		me._level	= me._nLevel.getValue();
-		me._fraction	= me._level / me._capacity;
 		
-		me._cLBS.setText(sprintf("%3.0f",me._level));
+		me.setWeight(me._weight);
+				
+	},
+	_onWeightChange : func(n){
+		me._weight	= me._nWeight.getValue();
+		#print("PayloadWidget._onWeightChange() ... "~me._weight);
+		
+		me._fraction	= me._weight / me._capacity;
+		
+		me._cLBS.setText(sprintf("%3.0f",me._weight));
 		
 		me._cLevel.set("coord[1]", me._bottom - (me._height * me._fraction));
 		
 		
+		
+		me._checkCat();
 			
 	},
 	_onInputChange : func(e){
@@ -881,9 +910,10 @@ var PayloadWidget = {
 			newFraction = me._fraction - (e.deltaY/me._height);
 		}
 		newFraction = global.clamp(newFraction,0.0,1.0);
-		me._nLevel.setValue(me._capacity * newFraction);
-		fuelPayload._nNotify.setValue(systime());
+		me._weight = me._capacity * newFraction;
 		
+		me.setWeight(me._weight);
+
 	},
 };
 
@@ -1312,7 +1342,8 @@ var FuelPayloadClass = {
 	new : func(){
 		var m = {parents:[FuelPayloadClass]};
 		m._nRoot 	= props.globals.initNode("/extra500/dialog/fuel");
-		m._nNotify 	= m._nRoot.initNode("dialogNotify",0.0,"DOUBLE");
+		
+		m._nGrossWeight	= props.globals.initNode("/fdm/jsbsim/inertia/nt-weight-lbs",0.0,"DOUBLE");
 		
 		m._name  = "Fuel and Payload";
 		m._title = "Fuel and Payload Settings";
@@ -1386,7 +1417,8 @@ var FuelPayloadClass = {
 		me._listeners = [];
 	},
 	setListeners : func(instance) {
-		append(me._listeners, setlistener(me._nNotify,func(n){me._onNotifyChange(n);},1,0) );
+	
+		
 	},
 	_onClose : func(){
 		#print("FuelPayloadClass._onClose() ... ");
