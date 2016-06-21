@@ -1253,14 +1253,14 @@ var TripWidget = {
 				me._data.cruise.power,		# power
 				"distance",			# flightMode
 				me._data.trip.departure.alt,	# currentAlt
-				me._data.cruise.fl,		# cruiseAlt
+				me._data.cruise.fl*100,		# cruiseAlt
 				me._data.trip.destination.alt,  # destAlt
 				me._data.trip.nm,		# totalFlight
 				0,				# currentGS
 				0				# currentFF
      			);
 		
-		me._data.climb.nm	= -me._perf.data.climb.distance;
+		me._data.climb.nm	= me._perf.data.climb.distance;
 		me._data.climb.time	= me._perf.data.climb.time;
 		me._data.climb.fuel	= me._perf.data.climb.fuel;
 		
@@ -1268,7 +1268,7 @@ var TripWidget = {
 		me._data.cruise.time	= me._perf.data.cruise.time;
 		me._data.cruise.fuel	= me._perf.data.cruise.fuel;
 		
-		me._data.descent.nm	= -me._perf.data.descent.distance;
+		me._data.descent.nm	= me._perf.data.descent.distance;
 		me._data.descent.time	= me._perf.data.descent.time;
 		me._data.descent.fuel	= me._perf.data.descent.fuel;
 		
