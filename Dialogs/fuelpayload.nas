@@ -475,11 +475,14 @@ var TankerWidget = {
 	orderFuel : func(amount){
 		var fuelamount  = (amount) /2;
 		var fuelAux	= fuelamount - me._widget.LeftMain._capacity;
+		if (fuelAux > me._widget.LeftAux._capacity){
+			fuelAux = me._widget.LeftAux._capacity;
+		}
 		
 		if (fuelAux > 0){
 			me._widget.LeftMain._nLevel.setValue(me._widget.LeftMain._capacity);
 			me._widget.RightMain._nLevel.setValue(me._widget.RightMain._capacity);
-			
+						
 			me._widget.LeftAux._nLevel.setValue(fuelAux);
 			me._widget.RightAux._nLevel.setValue(fuelAux);
 		}else{
@@ -1200,11 +1203,15 @@ var TripWidget = {
 		me._draw();
 	},
 	_onFromFplClicked: func(e){
-		me._data.trip.nm = 300;
-		me._data.cruise.fl = global.clamp(120,0,250.0);
-		me._data.trip.departure.alt = 284;
-		me._data.trip.destination.alt = 3215;
 		
+		var totalDistance = getprop("/autopilot/route-manager/total-distance");
+		
+		if (totalDistance > 0){
+			me._data.trip.nm = totalDistance;
+			me._data.cruise.fl = global.clamp(math.floor(getprop("/autopilot/route-manager/cruise/altitude-ft")/100),0,250.0);
+			me._data.trip.departure.alt = getprop("/autopilot/route-manager/departure/field-elevation-ft");
+			me._data.trip.destination.alt = getprop("/autopilot/route-manager/destination/field-elevation-ft");
+		}
 		me._draw();
 	},
 	_onOrderFuelClicked: func(e){
