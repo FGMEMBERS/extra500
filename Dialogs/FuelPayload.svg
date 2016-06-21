@@ -64,15 +64,15 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="22.627417"
-     inkscape:cx="723.73143"
-     inkscape:cy="26.840546"
+     inkscape:zoom="1"
+     inkscape:cx="397.94138"
+     inkscape:cy="296.08851"
      inkscape:document-units="px"
-     inkscape:current-layer="layer5"
+     inkscape:current-layer="layer6"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1025"
-     inkscape:window-x="-2"
+     inkscape:window-x="1918"
      inkscape:window-y="-3"
      inkscape:window-maximized="1"
      inkscape:snap-bbox="true"
@@ -117,10 +117,6 @@
        orientation="0,1"
        position="-40.652841,24"
        id="guide5068" />
-    <sodipodi:guide
-       orientation="0,1"
-       position="682.57396,217.99999"
-       id="guide5070" />
     <sodipodi:guide
        orientation="1,0"
        position="677,-46.07322"
@@ -2320,7 +2316,7 @@
              inkscape:connector-curvature="0"
              id="path3624"
              d="m 773.14349,738 277.73731,0"
-             style="fill:none;stroke:#666666;stroke-width:0.99999987999999995px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
+             style="fill:none;stroke:#666666;stroke-width:0.99999988px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
           <text
              xml:space="preserve"
              style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
@@ -2337,7 +2333,7 @@
            id="g3814"
            transform="translate(0,140)">
           <path
-             style="fill:none;stroke:#666666;stroke-width:0.99999987999999995px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+             style="fill:none;stroke:#666666;stroke-width:0.99999988px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
              d="m 773.14349,577 277.73731,0"
              id="path3816"
              inkscape:connector-curvature="0" />
@@ -2357,7 +2353,7 @@
            id="g3798"
            transform="translate(0,116)">
           <path
-             style="fill:none;stroke:#666666;stroke-width:0.99999987999999995px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+             style="fill:none;stroke:#666666;stroke-width:0.99999988px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
              d="m 773.14349,580 277.73731,0"
              id="path3800"
              inkscape:connector-curvature="0" />
@@ -2380,7 +2376,7 @@
              inkscape:connector-curvature="0"
              id="path3792"
              d="m 773.14349,585 277.73731,0"
-             style="fill:none;stroke:#666666;stroke-width:0.99999987999999995px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
+             style="fill:none;stroke:#666666;stroke-width:0.99999988px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
           <text
              xml:space="preserve"
              style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
@@ -2397,7 +2393,7 @@
            id="g3782"
            transform="translate(0,70)">
           <path
-             style="fill:none;stroke:#666666;stroke-width:0.99999987999999995px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+             style="fill:none;stroke:#666666;stroke-width:0.99999988px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
              d="m 773.14349,584 277.73731,0"
              id="path3784"
              inkscape:connector-curvature="0" />
@@ -2420,7 +2416,7 @@
              inkscape:connector-curvature="0"
              id="path3776"
              d="m 773.14349,589 277.73731,0"
-             style="fill:none;stroke:#666666;stroke-width:0.99999987999999995px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
+             style="fill:none;stroke:#666666;stroke-width:0.99999988px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
           <text
              xml:space="preserve"
              style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
@@ -2436,7 +2432,7 @@
         <g
            id="g3852">
           <path
-             style="fill:none;stroke:#666666;stroke-width:0.99999987999999995px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+             style="fill:none;stroke:#666666;stroke-width:0.99999988px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline"
              d="m 773.14349,612 277.73731,0"
              id="path3768"
              inkscape:connector-curvature="0" />
@@ -2459,7 +2455,7 @@
              inkscape:connector-curvature="0"
              id="path3822"
              d="m 773.14349,571 277.73731,0"
-             style="fill:none;stroke:#666666;stroke-width:0.99999987999999995px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
+             style="fill:none;stroke:#666666;stroke-width:0.99999988px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
           <text
              sodipodi:linespacing="125%"
              id="text3824"
@@ -2478,7 +2474,7 @@
              inkscape:connector-curvature="0"
              id="path3661"
              d="m 773.14349,570 277.73731,0"
-             style="fill:none;stroke:#666666;stroke-width:0.99999987999999995px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
+             style="fill:none;stroke:#666666;stroke-width:0.99999988px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;display:inline" />
           <text
              xml:space="preserve"
              style="font-size:12px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
@@ -2767,7 +2763,7 @@
          rx="4" />
       <path
          transform="matrix(1.6583022,0,0,1.6583022,-657.75255,-436.01639)"
-         d="m 954.36387,656.21039 a 37.689068,37.689068 0 1 1 -75.37813,0 37.689068,37.689068 0 1 1 75.37813,0 z"
+         d="m 954.36387,656.21039 c 0,20.8151 -16.87397,37.68907 -37.68907,37.68907 -20.81509,0 -37.68906,-16.87397 -37.68906,-37.68907 0,-20.8151 16.87397,-37.68907 37.68906,-37.68907 20.8151,0 37.68907,16.87397 37.68907,37.68907 z"
          sodipodi:ry="37.689068"
          sodipodi:rx="37.689068"
          sodipodi:cy="656.21039"
@@ -2783,11 +2779,11 @@
          sodipodi:cy="656.21039"
          sodipodi:rx="37.689068"
          sodipodi:ry="37.689068"
-         d="m 954.36387,656.21039 a 37.689068,37.689068 0 1 1 -75.37813,0 37.689068,37.689068 0 1 1 75.37813,0 z"
+         d="m 954.36387,656.21039 c 0,20.8151 -16.87397,37.68907 -37.68907,37.68907 -20.81509,0 -37.68906,-16.87397 -37.68906,-37.68907 0,-20.8151 16.87397,-37.68907 37.68906,-37.68907 20.8151,0 37.68907,16.87397 37.68907,37.68907 z"
          transform="matrix(0.80925267,0,0,0.80925267,120.54977,121.13873)" />
       <path
          transform="matrix(0.35411848,0,0,0.35411848,537.75981,419.80251)"
-         d="m 954.36387,656.21039 a 37.689068,37.689068 0 1 1 -75.37813,0 37.689068,37.689068 0 1 1 75.37813,0 z"
+         d="m 954.36387,656.21039 c 0,20.8151 -16.87397,37.68907 -37.68907,37.68907 -20.81509,0 -37.68906,-16.87397 -37.68906,-37.68907 0,-20.8151 16.87397,-37.68907 37.68906,-37.68907 20.8151,0 37.68907,16.87397 37.68907,37.68907 z"
          sodipodi:ry="37.689068"
          sodipodi:rx="37.689068"
          sodipodi:cy="656.21039"
@@ -2986,29 +2982,6 @@
      id="layer6"
      inkscape:label="Trip"
      style="display:inline">
-    <g
-       id="Trip_Reserve_FL"
-       transform="translate(-18,0)">
-      <rect
-         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-         id="rect5101"
-         width="44.266426"
-         height="20.100571"
-         x="679.71667"
-         y="670.14148"
-         ry="2.6635487" />
-      <text
-         sodipodi:linespacing="125%"
-         id="Trip_Reserve_FL_Value"
-         y="685.01111"
-         x="713.28302"
-         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-         xml:space="preserve"><tspan
-           y="685.01111"
-           x="713.28302"
-           id="tspan4251"
-           sodipodi:role="line">100</tspan></text>
-    </g>
     <path
        style="fill:none;stroke:#cccccc;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
        d="m 64.52148,744 511.84903,0"
@@ -3158,12 +3131,6 @@
          d="m 64.5,550 0,194"
          style="fill:none;stroke:#cccccc;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline" />
     </g>
-    <path
-       style="fill:none;stroke:#225500;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="m 64.500001,744.00001 52.986129,0 310.40694,0 148.48726,0"
-       id="Trip_FlightProfile"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccc" />
     <g
        id="Trip_FL"
        transform="matrix(1.2762815,0,0,1.2762815,-229.44833,-54.472035)">
@@ -3200,7 +3167,7 @@
     </g>
     <g
        id="Trip_TOD"
-       transform="matrix(1.2762815,0,0,1.2762815,-161.37943,-237.31323)"
+       transform="matrix(1.2762815,0,0,1.2762815,-161.37943,-67.498282)"
        style="opacity:0.86000001">
       <text
          xml:space="preserve"
@@ -3216,7 +3183,7 @@
     </g>
     <g
        id="Trip_TOC"
-       transform="matrix(1.2762815,0,0,1.2762815,-161.44175,-237.2478)"
+       transform="matrix(1.2762815,0,0,1.2762815,-161.44175,-67.498282)"
        style="opacity:0.86000001">
       <text
          sodipodi:linespacing="125%"
@@ -3233,253 +3200,138 @@
     <text
        xml:space="preserve"
        style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-       x="929.91199"
-       y="608.93933"
+       x="861.91199"
+       y="627.81885"
        id="Trip_Climb_Time_Value"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan5371"
-         x="929.91199"
-         y="608.93933">00:00:00</tspan></text>
+         x="861.91199"
+         y="627.81885">00:00:00</tspan></text>
     <text
        sodipodi:linespacing="125%"
        id="Trip_Climb_Fuel_Value"
-       y="608.93933"
-       x="989.91199"
+       y="627.81885"
+       x="921.91199"
        style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
        xml:space="preserve"><tspan
-         y="608.93933"
-         x="989.91199"
+         y="627.81885"
+         x="921.91199"
          id="tspan5375"
          sodipodi:role="line">1000.00</tspan></text>
     <text
        sodipodi:linespacing="125%"
        id="Trip_Cruise_Time_Value"
-       y="635.19568"
-       x="929.91199"
+       y="646.88293"
+       x="861.91199"
        style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
        xml:space="preserve"><tspan
-         y="635.19568"
-         x="929.91199"
+         y="646.88293"
+         x="861.91199"
          id="tspan5383"
          sodipodi:role="line">00:00:00</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-       x="989.91199"
-       y="635.19568"
+       x="921.91199"
+       y="646.88293"
        id="Trip_Cruise_Fuel_Value"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan5387"
-         x="989.91199"
-         y="635.19568">1000.00</tspan></text>
+         x="921.91199"
+         y="646.88293">1000.00</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-       x="929.91199"
-       y="661.01111"
+       x="861.91199"
+       y="665.94702"
        id="Trip_Descent_Time_Value"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan5395"
-         x="929.91199"
-         y="661.01111">00:00:00</tspan></text>
+         x="861.91199"
+         y="665.94702">00:00:00</tspan></text>
     <text
        sodipodi:linespacing="125%"
        id="Trip_Descent_Fuel_Value"
-       y="661.01111"
-       x="989.91199"
+       y="665.94702"
+       x="921.91199"
        style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
        xml:space="preserve"><tspan
-         y="661.01111"
-         x="989.91199"
+         y="665.94702"
+         x="921.91199"
          id="tspan5399"
          sodipodi:role="line">1000.00</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:14px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
-       x="989.91199"
+       x="921.91199"
        y="731.01111"
        id="Trip_Fuel_Value"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan5409"
-         x="989.91199"
+         x="921.91199"
          y="731.01111">1000.00</tspan></text>
     <text
        sodipodi:linespacing="125%"
        id="Trip_Climb_NM_Value"
-       y="608.93933"
-       x="843.91199"
+       y="627.81885"
+       x="775.91199"
        style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
        xml:space="preserve"><tspan
-         y="608.93933"
-         x="843.91199"
+         y="627.81885"
+         x="775.91199"
          id="tspan4054"
          sodipodi:role="line">1000</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-       x="843.91199"
-       y="635.19568"
+       x="775.91199"
+       y="646.88293"
        id="Trip_Cruise_NM_Value"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4058"
-         x="843.91199"
-         y="635.19568">1000</tspan></text>
+         x="775.91199"
+         y="646.88293">1000</tspan></text>
     <text
        sodipodi:linespacing="125%"
        id="Trip_Descent_NM_Value"
-       y="661.01111"
-       x="843.91199"
+       y="665.94702"
+       x="775.91199"
        style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
        xml:space="preserve"><tspan
-         y="661.01111"
-         x="843.91199"
+         y="665.94702"
+         x="775.91199"
          id="tspan4062"
          sodipodi:role="line">1000</tspan></text>
-    <g
-       id="Trip_NM"
-       transform="translate(-18,0)">
-      <rect
-         ry="2.6635487"
-         y="716.14148"
-         x="840.0351"
-         height="20.100571"
-         width="44.266426"
-         id="rect5115"
-         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
-      <text
-         sodipodi:linespacing="125%"
-         id="Trip_NM_Value"
-         y="731.01111"
-         x="877.49792"
-         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-         xml:space="preserve"><tspan
-           y="731.01111"
-           x="877.49792"
-           id="tspan4066"
-           sodipodi:role="line">1000</tspan></text>
-    </g>
-    <g
-       id="Trip_Climb_VS"
-       transform="translate(-18,0)">
-      <rect
-         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-         id="rect5105"
-         width="44.266426"
-         height="20.100571"
-         x="737.71667"
-         y="593.88513"
-         ry="2.6635487" />
-      <text
-         sodipodi:linespacing="125%"
-         id="Trip_Climb_VS_Value"
-         y="608.75476"
-         x="775.1795"
-         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-         xml:space="preserve"><tspan
-           y="608.75476"
-           x="775.1795"
-           id="tspan4066-2"
-           sodipodi:role="line">1000</tspan></text>
-    </g>
-    <g
-       id="Trip_Climb_GS"
-       transform="translate(-18,0)">
-      <rect
-         ry="2.6635487"
-         y="593.88513"
-         x="791.3382"
-         height="20.100571"
-         width="44.266426"
-         id="rect5107"
-         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
-      <text
-         sodipodi:linespacing="125%"
-         id="Trip_Climb_GS_Value"
-         y="608.75476"
-         x="824.90454"
-         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-         xml:space="preserve"><tspan
-           y="608.75476"
-           x="824.90454"
-           id="tspan4066-4"
-           sodipodi:role="line">100</tspan></text>
-    </g>
-    <g
-       id="Trip_Cruise_GS"
-       transform="translate(-18,0)">
-      <rect
-         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-         id="rect5109"
-         width="44.266426"
-         height="20.100571"
-         x="791.3382"
-         y="620.32605"
-         ry="2.6635487" />
-      <text
-         xml:space="preserve"
-         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-         x="824.90454"
-         y="635.19568"
-         id="Trip_Cruise_GS_Value"
-         sodipodi:linespacing="125%"><tspan
-           sodipodi:role="line"
-           id="tspan4158"
-           x="824.90454"
-           y="635.19568">100</tspan></text>
-    </g>
-    <g
-       id="Trip_Descent_GS"
-       transform="translate(-18,0)">
-      <rect
-         ry="2.6635487"
-         y="646.14148"
-         x="791.3382"
-         height="20.100571"
-         width="44.266426"
-         id="rect5111"
-         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
-      <text
-         sodipodi:linespacing="125%"
-         id="Trip_Descent_GS_Value"
-         y="661.01111"
-         x="824.90454"
-         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-         xml:space="preserve"><tspan
-           y="661.01111"
-           x="824.90454"
-           id="tspan4170"
-           sodipodi:role="line">100</tspan></text>
-    </g>
     <text
        sodipodi:linespacing="125%"
        id="Trip_Reserve_Time_Value"
        y="685.01111"
-       x="929.91199"
+       x="861.91199"
        style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
        xml:space="preserve"><tspan
          y="685.01111"
-         x="929.91199"
+         x="861.91199"
          id="tspan4184"
          sodipodi:role="line">00:00:00</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-       x="989.91199"
+       x="921.91199"
        y="685.01111"
        id="Trip_Reserve_Fuel_Value"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan4188"
-         x="989.91199"
+         x="921.91199"
          y="685.01111">1000.00</tspan></text>
     <g
        id="Trip_Reserve_NM"
-       transform="translate(-18,0)">
+       transform="translate(-86,0)">
       <rect
          style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
          id="rect5115-6"
@@ -3501,61 +3353,39 @@
            sodipodi:role="line">1000</tspan></text>
     </g>
     <g
-       id="Trip_Reserve_GS"
-       transform="translate(-18,0)">
-      <rect
-         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-         id="rect5113"
-         width="44.266426"
-         height="20.100571"
-         x="791.3382"
-         y="670.14148"
-         ry="2.6635487" />
-      <text
-         xml:space="preserve"
-         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-         x="824.90454"
-         y="685.01111"
-         id="Trip_Reserve_GS_Value"
-         sodipodi:linespacing="125%"><tspan
-           sodipodi:role="line"
-           id="tspan4202"
-           x="824.90454"
-           y="685.01111">100</tspan></text>
-    </g>
-    <g
-       id="Trip_Table">
+       id="Trip_Table"
+       transform="translate(-68,0)">
       <text
          sodipodi:linespacing="125%"
          id="text5349"
          y="608.93933"
-         x="649.91199"
+         x="813.16034"
          style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
          xml:space="preserve"><tspan
            y="608.93933"
-           x="649.91199"
+           x="813.16034"
            id="tspan5351"
-           sodipodi:role="line">Climb</tspan></text>
+           sodipodi:role="line">Taxi</tspan></text>
       <text
          xml:space="preserve"
          style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-         x="649.94617"
-         y="635.19568"
+         x="813.19452"
+         y="647.0675"
          id="text5353"
          sodipodi:linespacing="125%"><tspan
            sodipodi:role="line"
            id="tspan5355"
-           x="649.94617"
-           y="635.19568">Cruise</tspan></text>
+           x="813.19452"
+           y="647.0675">Cruise</tspan></text>
       <text
          sodipodi:linespacing="125%"
          id="text5357"
-         y="660.93933"
-         x="649.41296"
+         y="665.87524"
+         x="812.66132"
          style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
          xml:space="preserve"><tspan
-           y="660.93933"
-           x="649.41296"
+           y="665.87524"
+           x="812.66132"
            id="tspan5359"
            sodipodi:role="line">Descent</tspan></text>
       <text
@@ -3583,11 +3413,11 @@
       <text
          sodipodi:linespacing="125%"
          id="text5377"
-         y="608.93933"
+         y="628.00342"
          x="993.91199"
          style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
          xml:space="preserve"><tspan
-           y="608.93933"
+           y="628.00342"
            x="993.91199"
            id="tspan5379"
            sodipodi:role="line">lbs</tspan></text>
@@ -3595,28 +3425,28 @@
          xml:space="preserve"
          style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
          x="993.91199"
-         y="635.19568"
+         y="647.0675"
          id="text5389"
          sodipodi:linespacing="125%"><tspan
            sodipodi:role="line"
            id="tspan5391"
            x="993.91199"
-           y="635.19568">lbs</tspan></text>
+           y="647.0675">lbs</tspan></text>
       <text
          sodipodi:linespacing="125%"
          id="text5401"
-         y="661.19568"
+         y="666.13159"
          x="993.91199"
          style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
          xml:space="preserve"><tspan
-           y="661.19568"
+           y="666.13159"
            x="993.91199"
            id="tspan5403"
            sodipodi:role="line">lbs</tspan></text>
       <path
          inkscape:connector-curvature="0"
          id="path5405"
-         d="m 597.64021,706.88488 410.02759,0"
+         d="m 727.2412,699.87487 280.9347,0"
          style="fill:none;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
       <text
          xml:space="preserve"
@@ -3642,25 +3472,14 @@
            sodipodi:role="line">nm</tspan></text>
       <text
          xml:space="preserve"
-         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-         x="797.91199"
-         y="586.93933"
-         id="text4150"
-         sodipodi:linespacing="125%"><tspan
-           sodipodi:role="line"
-           id="tspan4152"
-           x="797.91199"
-           y="586.93933">GS</tspan></text>
-      <text
-         xml:space="preserve"
          style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-         x="649.41296"
+         x="813.19452"
          y="684.93933"
          id="text4178"
          sodipodi:linespacing="125%"><tspan
            sodipodi:role="line"
            id="tspan4180"
-           x="649.41296"
+           x="813.19452"
            y="684.93933">Reserve</tspan></text>
       <text
          xml:space="preserve"
@@ -3674,84 +3493,306 @@
            x="993.91199"
            y="685.19568">lbs</tspan></text>
       <text
-         sodipodi:linespacing="125%"
-         id="text4227"
-         y="587.1239"
-         x="753.36304"
-         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-         xml:space="preserve"><tspan
-           y="587.1239"
-           x="753.36304"
-           id="tspan4229"
-           sodipodi:role="line">VS</tspan></text>
-      <text
-         sodipodi:linespacing="125%"
-         id="text4231"
-         y="586.93933"
-         x="685.91199"
-         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-         xml:space="preserve"><tspan
-           y="586.93933"
-           x="685.91199"
-           id="tspan4233"
-           sodipodi:role="line">FL</tspan></text>
-    </g>
-    <g
-       id="Trip_Cruise_FL"
-       transform="translate(-18,0)">
-      <rect
-         ry="2.6635487"
-         y="620.14148"
-         x="679.71667"
-         height="20.100571"
-         width="44.266426"
-         id="rect5282"
-         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
-      <text
          xml:space="preserve"
          style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-         x="713.28302"
-         y="635.01111"
-         id="Trip_Cruise_FL_Value"
+         x="813.16034"
+         y="628.00342"
+         id="text3659"
          sodipodi:linespacing="125%"><tspan
            sodipodi:role="line"
-           id="tspan4239"
-           x="713.28302"
-           y="635.01111">100</tspan></text>
-    </g>
-    <g
-       id="Trip_Descent_VS"
-       transform="translate(-18,0)">
-      <rect
-         ry="2.6635487"
-         y="646.14148"
-         x="737.71667"
-         height="20.100571"
-         width="44.266426"
-         id="rect5103"
-         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+           id="tspan3661"
+           x="813.16034"
+           y="628.00342">Climb</tspan></text>
       <text
          xml:space="preserve"
-         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-         x="775.1795"
-         y="661.01111"
-         id="Trip_Descent_VS_Value"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="993.91199"
+         y="610.32361"
+         id="text3676"
          sodipodi:linespacing="125%"><tspan
            sodipodi:role="line"
-           id="tspan4263"
-           x="775.1795"
-           y="661.01111">1000</tspan></text>
+           id="tspan3678"
+           x="993.91199"
+           y="610.32361">lbs</tspan></text>
     </g>
     <text
        xml:space="preserve"
        style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-       x="929.91199"
+       x="861.91199"
        y="731.01111"
        id="Trip_Time_Value"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan5203"
-         x="929.91199"
+         x="861.91199"
          y="731.01111">00:00:00</tspan></text>
+    <g
+       style="display:inline"
+       id="Trip_Taxi_Fuel"
+       transform="translate(34.67971,-74.872063)"
+       inkscape:label="#Trip_Taxi_Fuel">
+      <rect
+         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect5115-6-7"
+         width="44.266426"
+         height="20.100571"
+         x="840.0351"
+         y="670.14148"
+         ry="2.6635487" />
+      <text
+         sodipodi:linespacing="125%"
+         id="Trip_Taxi_Fuel_Value"
+         y="685.01111"
+         x="861.91199"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"
+         inkscape:label="#Trip_Taxi_Fuel_Value"><tspan
+           y="685.01111"
+           x="861.91199"
+           id="tspan4196-2"
+           sodipodi:role="line">1000</tspan></text>
+    </g>
+    <g
+       transform="translate(122.19848,-61.11908)"
+       id="Trip_From_FPL"
+       inkscape:label="#g3723">
+      <rect
+         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:#0000ff;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect3725"
+         width="44.266426"
+         height="37.071133"
+         x="840.0351"
+         y="716.14148"
+         ry="4.9123368" />
+      <text
+         xml:space="preserve"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+         x="862.13074"
+         y="731.01111"
+         id="text3727"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan3729"
+           x="862.13074"
+           y="731.01111">From</tspan><tspan
+           sodipodi:role="line"
+           x="862.13074"
+           y="748.51111"
+           id="tspan3735">FPL</tspan></text>
+    </g>
+    <g
+       inkscape:label="#g3723"
+       id="Trip_Order_Fuel"
+       transform="translate(122.19848,-8.4852734)">
+      <rect
+         ry="4.9123368"
+         y="716.14148"
+         x="840.0351"
+         height="37.071133"
+         width="44.266426"
+         id="rect3739"
+         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:#0000ff;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text3741"
+         y="731.01111"
+         x="862.13074"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+         xml:space="preserve"><tspan
+           y="731.01111"
+           x="862.13074"
+           id="tspan3743"
+           sodipodi:role="line">Order</tspan><tspan
+           id="tspan3745"
+           y="748.51111"
+           x="862.13074"
+           sodipodi:role="line">Fuel</tspan></text>
+    </g>
+    <g
+       id="g3785"
+       transform="translate(-22.75,-73.968449)">
+      <g
+         transform="translate(-220.80152,-91.11908)"
+         id="g3747"
+         inkscape:label="#g3723">
+        <rect
+           style="color:#000000;fill:none;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="rect3749"
+           width="79.282852"
+           height="14.160566"
+           x="830.89374"
+           y="720.01648"
+           ry="1.8764323" />
+        <text
+           xml:space="preserve"
+           style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+           x="870.40332"
+           y="731.01111"
+           id="text3751"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             x="870.40332"
+             y="731.01111"
+             id="tspan3755">Cruise Power</tspan></text>
+      </g>
+      <g
+         transform="translate(-229.94289,-71.083514)"
+         id="Trip_CruisePower_Max"
+         inkscape:label="#g3723">
+        <rect
+           style="color:#000000;fill:#9ec5ff;fill-opacity:1;fill-rule:nonzero;stroke:#0000ff;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           id="Trip_CruisePower_Max_Frame"
+           width="38.141426"
+           height="19.571133"
+           x="840.0351"
+           y="716.14148"
+           ry="2.5933924"
+           inkscape:label="#rect3765" />
+        <text
+           xml:space="preserve"
+           style="font-size:14px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+           x="858.69226"
+           y="730.67462"
+           id="text3767"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             x="858.69226"
+             y="730.67462"
+             id="tspan3771">Max</tspan></text>
+      </g>
+      <g
+         inkscape:label="#g3723"
+         id="Trip_CruisePower_Min"
+         transform="translate(-188.80146,-71.083514)">
+        <rect
+           ry="2.5933924"
+           y="716.14148"
+           x="840.0351"
+           height="19.571133"
+           width="38.141426"
+           id="Trip_CruisePower_Min_Frame"
+           style="color:#000000;fill:#003ea2;fill-opacity:1;fill-rule:nonzero;stroke:#0000ff;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           inkscape:label="#rect3779" />
+        <text
+           sodipodi:linespacing="125%"
+           id="text3781"
+           y="730.67462"
+           x="858.69226"
+           style="font-size:14px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+           xml:space="preserve"><tspan
+             id="tspan3783"
+             y="730.67462"
+             x="858.69226"
+             sodipodi:role="line">Min</tspan></text>
+      </g>
+    </g>
+    <g
+       id="Trip_NM"
+       transform="translate(-208.29779,17.754029)">
+      <rect
+         ry="2.6635487"
+         y="716.14148"
+         x="840.0351"
+         height="20.100571"
+         width="44.266426"
+         id="rect5115"
+         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         sodipodi:linespacing="125%"
+         id="Trip_NM_Value"
+         y="731.01111"
+         x="877.49792"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           y="731.01111"
+           x="877.49792"
+           id="tspan4066"
+           sodipodi:role="line">1000</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="905.49792"
+         y="731.01111"
+         id="text3719"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan3721"
+           x="905.49792"
+           y="731.01111">nm</tspan></text>
+    </g>
+    <g
+       transform="matrix(1.2762815,0,0,1.2762815,-224.47604,-54.472035)"
+       id="Trip_Departure"
+       inkscape:label="#g4589">
+      <rect
+         ry="2.6635487"
+         y="619.20703"
+         x="183.04004"
+         height="12.833464"
+         width="44.454506"
+         id="rect4591"
+         style="color:#000000;fill:#2d7000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         sodipodi:linespacing="125%"
+         id="Trip_Departure_Value"
+         y="629.06616"
+         x="214.76671"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"
+         inkscape:label="#text4593"><tspan
+           y="629.06616"
+           x="214.76671"
+           id="tspan4595"
+           sodipodi:role="line">00000</tspan></text>
+      <text
+         inkscape:label="#text4593"
+         xml:space="preserve"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="222.60194"
+         y="629.06616"
+         id="text4609"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4611"
+           x="222.60194"
+           y="629.06616">ft</tspan></text>
+    </g>
+    <g
+       inkscape:label="#g4589"
+       id="Trip_Destination"
+       transform="matrix(1.2762815,0,0,1.2762815,325.52396,-54.472035)">
+      <rect
+         style="color:#000000;fill:#2d7000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect4603"
+         width="39.913418"
+         height="12.833464"
+         x="195.80815"
+         y="619.20703"
+         ry="2.6635487" />
+      <text
+         inkscape:label="#text4593"
+         xml:space="preserve"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="225.73604"
+         y="629.06616"
+         id="Trip_Destination_Value"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4607"
+           x="225.73604"
+           y="629.06616">00000</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text4613"
+         y="629.06616"
+         x="233.57127"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"
+         inkscape:label="#text4593"><tspan
+           y="629.06616"
+           x="233.57127"
+           id="tspan4615"
+           sodipodi:role="line">ft</tspan></text>
+    </g>
   </g>
 </svg>

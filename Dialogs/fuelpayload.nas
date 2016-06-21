@@ -238,6 +238,9 @@ var COLOR = {};
 COLOR["Red"] = "rgb(244,28,33)";
 COLOR["Green"] = "#008000";
 COLOR["Black"] = "#000000";
+COLOR["btnActive"] = "#9ec5ffff";
+COLOR["btnPassive"] = "#003ea2ff";
+
 
 var SvgWidget = {
 	new: func(dialog,canvasGroup,name){
@@ -464,7 +467,13 @@ var TankerWidget = {
 # 			}
 # 			
 # 		}
-		var fuelamount  = (me._capacity * newFraction) /2;
+		
+		me.orderFuel(me._capacity * newFraction);
+		
+	},
+	
+	orderFuel : func(amount){
+		var fuelamount  = (amount) /2;
 		var fuelAux	= fuelamount - me._widget.LeftMain._capacity;
 		
 		if (fuelAux > 0){
@@ -481,7 +490,8 @@ var TankerWidget = {
 			me._widget.RightAux._nLevel.setValue(0);
 			
 		}
-	},
+		
+	}
 };
 
 COLOR["TabActive"] = "#f2f2f2";
@@ -924,6 +934,9 @@ var TripWidget = {
 		m._class = "TripWidget";
 		
 		m._ptree = {
+			taxi : {
+				fuel 	: m._dialog._nRoot.initNode("taxi/fuel",30.0,"DOUBLE"),
+			},
 			climb : {
 				vs	: m._dialog._nRoot.initNode("climb/vs",1000.0,"DOUBLE"),
 				gs	: m._dialog._nRoot.initNode("climb/gs",150.0,"DOUBLE"),
@@ -942,53 +955,49 @@ var TripWidget = {
 				nm	: m._dialog._nRoot.initNode("reserve/nm",50.0,"DOUBLE"),
 			},
 			trip : {
-				nm	: m._dialog._nRoot.initNode("trip/nm",250.0,"DOUBLE"),
+				nm		: m._dialog._nRoot.initNode("trip/nm",250.0,"DOUBLE"),
+				departureAlt 	: m._dialog._nRoot.initNode("trip/departure/alt",250.0,"DOUBLE"),
+				destinationAlt 	: m._dialog._nRoot.initNode("trip/destination/alt",250.0,"DOUBLE"),
+				
 			},
 		};
 		
 		m._can = {
+			taxi : {
+				fuelFrame: m._group.getElementById(m._name~"_Taxi_Fuel"),
+				fuel	: m._group.getElementById(m._name~"_Taxi_Fuel_Value"),
+			},
 			climb : {
-				vsFrame	: m._group.getElementById(m._name~"_Climb_VS"),
-				vs	: m._group.getElementById(m._name~"_Climb_VS_Value"),
-				gsFrame	: m._group.getElementById(m._name~"_Climb_GS"),
-				gs	: m._group.getElementById(m._name~"_Climb_GS_Value"),
 				nm	: m._group.getElementById(m._name~"_Climb_NM_Value"),
 				time	: m._group.getElementById(m._name~"_Climb_Time_Value"),
 				fuel	: m._group.getElementById(m._name~"_Climb_Fuel_Value"),
 			},
 			cruise : {
-				flFrame	: m._group.getElementById(m._name~"_Cruise_FL"),
-				fl	: m._group.getElementById(m._name~"_Cruise_FL_Value"),
-				gsFrame	: m._group.getElementById(m._name~"_Cruise_GS"),
-				gs	: m._group.getElementById(m._name~"_Cruise_GS_Value"),
 				nm	: m._group.getElementById(m._name~"_Cruise_NM_Value"),
 				time	: m._group.getElementById(m._name~"_Cruise_Time_Value"),
 				fuel	: m._group.getElementById(m._name~"_Cruise_Fuel_Value"),
 			},
 			descent : {
-				vsFrame	: m._group.getElementById(m._name~"_Descent_VS"),
-				vs	: m._group.getElementById(m._name~"_Descent_VS_Value"),
-				gsFrame	: m._group.getElementById(m._name~"_Descent_GS"),
-				gs	: m._group.getElementById(m._name~"_Descent_GS_Value"),
 				nm	: m._group.getElementById(m._name~"_Descent_NM_Value"),
 				time	: m._group.getElementById(m._name~"_Descent_Time_Value"),
 				fuel	: m._group.getElementById(m._name~"_Descent_Fuel_Value"),
 			},
 			reserve : {
-				flFrame	: m._group.getElementById(m._name~"_Reserve_FL"),
-				fl	: m._group.getElementById(m._name~"_Reserve_FL_Value"),
-				gsFrame	: m._group.getElementById(m._name~"_Reserve_GS"),
-				gs	: m._group.getElementById(m._name~"_Reserve_GS_Value"),
 				nmFrame	: m._group.getElementById(m._name~"_Reserve_NM"),
 				nm	: m._group.getElementById(m._name~"_Reserve_NM_Value"),
 				time	: m._group.getElementById(m._name~"_Reserve_Time_Value"),
 				fuel	: m._group.getElementById(m._name~"_Reserve_Fuel_Value"),
 			},
 			trip : {
-				nmFrame	: m._group.getElementById(m._name~"_NM"),
-				nm	: m._group.getElementById(m._name~"_NM_Value"),
-				time	: m._group.getElementById(m._name~"_Time_Value"),
-				fuel	: m._group.getElementById(m._name~"_Fuel_Value"),
+				nmFrame		: m._group.getElementById(m._name~"_NM"),
+				nm		: m._group.getElementById(m._name~"_NM_Value"),
+				time		: m._group.getElementById(m._name~"_Time_Value"),
+				fuel		: m._group.getElementById(m._name~"_Fuel_Value"),
+				departureFrame 	: m._group.getElementById(m._name~"_Departure"),
+				departure 	: m._group.getElementById(m._name~"_Departure_Value"),
+				destinationFrame: m._group.getElementById(m._name~"_Destination"),
+				destination 	: m._group.getElementById(m._name~"_Destination_Value"),
+				
 			},
 			graph : {
 				x0	: m._group.getElementById(m._name~"_NM_000"),
@@ -1000,49 +1009,75 @@ var TripWidget = {
 				fl	: m._group.getElementById(m._name~"_FL_Value"),
 				toc	: m._group.getElementById(m._name~"_TOC"),
 				tod	: m._group.getElementById(m._name~"_TOD"),
-				profile	: m._group.getElementById(m._name~"_FlightProfile"),
+				profile	: m._group.getElementById("layer6").createChild("path",m._name~"_FlightProfile")
+				.setStrokeLineWidth(3)
+				.setColor("#225500ff")
+				.moveTo(64,24)
+				.lineTo(100,100)
+				.lineTo(300,100)
+				.lineTo(578,24)
+				.set("z-index",-1)
+				,
+				grid	: m._group.getElementById(m._name~"_Graph").set("z-index",-2),
 			},
+			btn : {
+				fromFpl 	: m._group.getElementById(m._name~"_From_FPL"),
+				orderFuel 	: m._group.getElementById(m._name~"_Order_Fuel"),
+				powerMin	: m._group.getElementById(m._name~"_CruisePower_Min"),
+				powerMinFrame	: m._group.getElementById(m._name~"_CruisePower_Min_Frame"),
+				powerMax	: m._group.getElementById(m._name~"_CruisePower_Max"),
+				powerMaxFrame	: m._group.getElementById(m._name~"_CruisePower_Max_Frame"),
+				
+			}
 		};
 		
 		
 		
 		m._data = {
+			
+			taxi : {
+				fuel	: m._ptree.taxi.fuel.getValue()
+			},
 			climb : {
-				vs	: m._ptree.climb.vs.getValue(),
-				gs	: m._ptree.climb.gs.getValue(),
+# 				vs	: m._ptree.climb.vs.getValue(),
+# 				gs	: m._ptree.climb.gs.getValue(),
 				nm	: 65,
 				time	: 0,
 				fuel	: 0,
-				burnrate: 230/3600, # lbs/sec
+# 				burnrate: 230/3600, # lbs/sec
 			},
 			cruise : {
 				fl	: m._ptree.cruise.fl.getValue(),
-				gs	: m._ptree.cruise.gs.getValue(),
+# 				gs	: m._ptree.cruise.gs.getValue(),
 				nm	: 0,
 				time	: 0,
 				fuel	: 0,
-				burnrate: 221/3600,
+# 				burnrate: 221/3600,
+				power 	: "maxpow"
 			},
 			descent : {
-				vs	: m._ptree.descent.vs.getValue(),
-				gs	: m._ptree.descent.gs.getValue(),
+# 				vs	: m._ptree.descent.vs.getValue(),
+# 				gs	: m._ptree.descent.gs.getValue(),
 				nm	: 50,
 				time	: 0,
 				fuel	: 0,
-				burnrate: 145/3600, # lbs/sec
+# 				burnrate: 145/3600, # lbs/sec
 			},
 			reserve : {
-				fl	: m._ptree.reserve.fl.getValue(),
-				gs	: m._ptree.reserve.gs.getValue(),
+# 				fl	: m._ptree.reserve.fl.getValue(),
+# 				gs	: m._ptree.reserve.gs.getValue(),
 				nm	: m._ptree.reserve.nm.getValue(),
 				time	: 0,
 				fuel	: 0,
-				burnrate: 180/3600, # lbs/sec
+# 				burnrate: 180/3600, # lbs/sec
 			},
 			trip : {
-				nm	: m._ptree.trip.nm.getValue(),
-				time	: 0,
-				fuel	: 0,
+				nm		: m._ptree.trip.nm.getValue(),
+				time		: 0,
+				fuel		: 0,
+				departure	: {alt : m._ptree.trip.departureAlt.getValue()},
+				destination	: {alt : m._ptree.trip.destinationAlt.getValue()},
+				cruisePower 	: "maxpow"
 			},
 			graph : {
 				x0	: 0,
@@ -1052,45 +1087,45 @@ var TripWidget = {
 				x100	: 0,
 				toc	: 0,
 				tod	: 0,
-				flScale : 196/300,
-				nmScale : 512/100,
+				axisX	: {min:64,max:578},
+				axisY	: {min:744,max:550},
+				flScale : (744-550)/300,
+				nmScale : (578-64)/100,
+				
 			},
 			
 			
 		};
 		
-		
+		m._perf = extra500.PerfClass.new(m._dialog._nRoot.getPath() ~"/perf","performance");
 		
 		
 		return m;
 	},
 	setListeners : func(instance) {
+		
 		me._can.graph.flFrame.addEventListener("drag",func(e){me._onCruiseFlChange(e);});
-		me._can.cruise.flFrame.addEventListener("drag",func(e){me._onCruiseFlChange(e);});
-		me._can.cruise.flFrame.addEventListener("wheel",func(e){me._onCruiseFlChange(e);});
-		me._can.cruise.gsFrame.addEventListener("drag",func(e){me._onCruiseGsChange(e);});
-		me._can.cruise.gsFrame.addEventListener("wheel",func(e){me._onCruiseGsChange(e);});
-		
-		me._can.climb.gsFrame.addEventListener("drag",func(e){me._onClimbGsChange(e);});
-		me._can.climb.gsFrame.addEventListener("wheel",func(e){me._onClimbGsChange(e);});
-		me._can.climb.vsFrame.addEventListener("drag",func(e){me._onClimbVsChange(e);});
-		me._can.climb.vsFrame.addEventListener("wheel",func(e){me._onClimbVsChange(e);});
-		
-		me._can.descent.gsFrame.addEventListener("drag",func(e){me._onDescentGsChange(e);});
-		me._can.descent.gsFrame.addEventListener("wheel",func(e){me._onDescentGsChange(e);});
-		me._can.descent.vsFrame.addEventListener("drag",func(e){me._onDescentVsChange(e);});
-		me._can.descent.vsFrame.addEventListener("wheel",func(e){me._onDescentVsChange(e);});
-		
-		me._can.reserve.flFrame.addEventListener("drag",func(e){me._onReserveFlChange(e);});
-		me._can.reserve.flFrame.addEventListener("wheel",func(e){me._onReserveFlChange(e);});
-		me._can.reserve.gsFrame.addEventListener("drag",func(e){me._onReserveGsChange(e);});
-		me._can.reserve.gsFrame.addEventListener("wheel",func(e){me._onReserveGsChange(e);});
 		
 		me._can.trip.nmFrame.addEventListener("drag",func(e){me._onTripNmChange(e);});
 		me._can.trip.nmFrame.addEventListener("wheel",func(e){me._onTripNmChange(e);});
+		
+		me._can.trip.departureFrame.addEventListener("drag",func(e){me._onDepartureAltChange(e);});
+		me._can.trip.destinationFrame.addEventListener("drag",func(e){me._onDestinationAltChange(e);});
+		
+		
 		me._can.reserve.nmFrame.addEventListener("drag",func(e){me._onReserveNmChange(e);});
 		me._can.reserve.nmFrame.addEventListener("wheel",func(e){me._onReserveNmChange(e);});
 		
+		me._can.taxi.fuelFrame.addEventListener("drag",func(e){me._onTaxiFuelChange(e);});
+		me._can.taxi.fuelFrame.addEventListener("wheel",func(e){me._onTaxiFuelChange(e);});
+		
+		me._can.btn.fromFpl.addEventListener("click",func(e){me._onFromFplClicked(e);});
+		me._can.btn.orderFuel.addEventListener("click",func(e){me._onOrderFuelClicked(e);});
+		
+		me._can.btn.powerMin.addEventListener("click",func(e){me._onPowerClicked(e);});
+		me._can.btn.powerMax.addEventListener("click",func(e){me._onPowerClicked(e);});
+		
+				
 	},
 	init : func(instance=me){
 		me.setListeners(instance);
@@ -1107,84 +1142,30 @@ var TripWidget = {
 		me._ptree.cruise.fl.setValue(me._data.cruise.fl);
 		me._draw();
 	},
-	_onCruiseGsChange : func(e){
+	_onDepartureAltChange : func(e){
 		if(e.type == "wheel"){
-			me._data.cruise.gs += e.deltaY;
+			me._data.trip.departure.alt += e.deltaY / me._data.graph.flScale*100;
 		}else{
-			me._data.cruise.gs -= e.deltaY;
+			me._data.trip.departure.alt -= e.deltaY / me._data.graph.flScale*100;
 		}
-		me._data.cruise.gs = global.clamp(me._data.cruise.gs,80,250.0);
-		me._ptree.cruise.gs.setValue(me._data.cruise.gs);
-		
+		me._data.trip.departure.alt = math.floor(me._data.trip.departure.alt);
+		me._data.trip.departure.alt = global.clamp(me._data.trip.departure.alt,0,25000.0);
+		me._ptree.trip.departureAlt.setValue(me._data.trip.departure.alt);
 		me._draw();
 	},
-	_onClimbGsChange : func(e){
+	_onDestinationAltChange : func(e){
 		if(e.type == "wheel"){
-			me._data.climb.gs += e.deltaY;
+			me._data.trip.destination.alt += e.deltaY / me._data.graph.flScale*100;
 		}else{
-			me._data.climb.gs -= e.deltaY;
+			me._data.trip.destination.alt -= e.deltaY / me._data.graph.flScale*100;
 		}
-		me._data.climb.gs = global.clamp(me._data.climb.gs,80,250.0);
-		me._ptree.climb.gs.setValue(me._data.climb.gs);
-		
+		me._data.trip.destination.alt = math.floor(me._data.trip.destination.alt);
+		me._data.trip.destination.alt = global.clamp(me._data.trip.destination.alt,0,25000.0);
+		me._ptree.trip.destinationAlt.setValue(me._data.trip.destination.alt);
 		me._draw();
 	},
-	_onClimbVsChange : func(e){
-		if(e.type == "wheel"){
-			me._data.climb.vs += e.deltaY * 100;
-		}else{
-			me._data.climb.vs -= e.deltaY * 100;
-		}
-		me._data.climb.vs = global.clamp(me._data.climb.vs,100,1600.0);
-		me._ptree.climb.vs.setValue(me._data.climb.vs);
-		
-		me._draw();
-	},
-	_onDescentGsChange : func(e){
-		if(e.type == "wheel"){
-			me._data.descent.gs += e.deltaY;
-		}else{
-			me._data.descent.gs -= e.deltaY;
-		}
-		me._data.descent.gs = global.clamp(me._data.descent.gs,80,250.0);
-		me._ptree.descent.gs.setValue(me._data.descent.gs);
-		
-		me._draw();
-	},
-	_onDescentVsChange : func(e){
-		if(e.type == "wheel"){
-			me._data.descent.vs += e.deltaY * 100;
-		}else{
-			me._data.descent.vs -= e.deltaY * 100;
-		}
-		me._data.descent.vs = global.clamp(me._data.descent.vs,-1600,-100);
-		me._ptree.descent.vs.setValue(me._data.descent.vs);
-		
-		me._draw();
-	},
-	_onReserveFlChange : func(e){
-		if(e.type == "wheel"){
-			me._data.reserve.fl += e.deltaY / me._data.graph.flScale;
-		}else{
-			me._data.reserve.fl -= e.deltaY / me._data.graph.flScale;
-		}
-		me._data.reserve.fl = math.floor(me._data.reserve.fl);
-		me._data.reserve.fl = global.clamp(me._data.reserve.fl,0,250.0);
-		me._ptree.reserve.fl.setValue(me._data.reserve.fl);
-		
-		me._draw();
-	},
-	_onReserveGsChange : func(e){
-		if(e.type == "wheel"){
-			me._data.reserve.gs += e.deltaY;
-		}else{
-			me._data.reserve.gs -= e.deltaY;
-		}
-		me._data.reserve.gs = global.clamp(me._data.reserve.gs,80,250.0);
-		me._ptree.reserve.gs.setValue(me._data.reserve.gs);
-		
-		me._draw();
-	},
+	
+	
 	_onTripNmChange: func(e){
 		if(e.type == "wheel"){
 			me._data.trip.nm += e.deltaY;
@@ -1207,6 +1188,40 @@ var TripWidget = {
 		
 		me._draw();
 	},
+	_onTaxiFuelChange: func(e){
+		if(e.type == "wheel"){
+			me._data.taxi.fuel += e.deltaY;
+		}else{
+			me._data.taxi.fuel -= e.deltaY;
+		}
+		me._data.taxi.fuel = global.clamp(me._data.taxi.fuel,20,150.0);
+		me._ptree.taxi.fuel.setValue(me._data.taxi.fuel);
+		
+		me._draw();
+	},
+	_onFromFplClicked: func(e){
+		me._data.trip.nm = 300;
+		me._data.cruise.fl = global.clamp(120,0,250.0);
+		me._data.trip.departure.alt = 284;
+		me._data.trip.destination.alt = 3215;
+		
+		me._draw();
+	},
+	_onOrderFuelClicked: func(e){
+		me._draw();
+		me._dialog._widget.tanker.orderFuel(me._data.trip.fuel / global.CONST.JETA_LBGAL);
+		
+	},
+	_onPowerClicked: func(e){
+		if (me._data.cruise.power == "maxpow"){
+			me._data.cruise.power = "minpow"	
+		}else{
+			me._data.cruise.power = "maxpow"
+		}
+		me._draw();
+		
+	},
+	
 	
 	getTime : func(time){
 		var text = "00:00";
@@ -1225,38 +1240,33 @@ var TripWidget = {
 	},
 	_calculate : func(){
 		
-		me._data.climb.nm 	= me._data.climb.gs * (( (me._data.cruise.fl*100) / me._data.climb.vs) / 60) ;
-		me._data.climb.time	= (me._data.climb.nm / me._data.climb.gs) * 3600;
-		me._data.climb.burnrate = extra500.fuelFlowLog.getBurnRate(me._data.cruise.fl,me._data.climb.gs,me._data.climb.vs);
-		me._data.climb.burnrate += extra500.fuelFlowLog.getBurnRate(30,me._data.climb.gs,me._data.climb.vs);
-		me._data.climb.burnrate /=2;
-		me._data.climb.burnrate /=3600;
-		me._data.climb.fuel	= me._data.climb.time * me._data.climb.burnrate;
+		me._perf.trip(
+				"off",				# phase
+				me._data.taxi.fuel, 		# startupfuel
+				me._data.cruise.power,		# power
+				"distance",			# flightMode
+				me._data.trip.departure.alt,	# currentAlt
+				me._data.cruise.fl,		# cruiseAlt
+				me._data.trip.destination.alt,  # destAlt
+				me._data.trip.nm,		# totalFlight
+				0,				# currentGS
+				0				# currentFF
+     			);
 		
-		me._data.descent.nm 	= math.abs(me._data.descent.gs * (( (me._data.cruise.fl*100) / me._data.descent.vs) / 60) );
-		me._data.descent.time	= (me._data.descent.nm / me._data.descent.gs) * 3600;
-		me._data.descent.burnrate = extra500.fuelFlowLog.getBurnRate(me._data.cruise.fl,me._data.descent.gs,me._data.descent.vs);
-		me._data.descent.burnrate += extra500.fuelFlowLog.getBurnRate(30,me._data.descent.gs,me._data.descent.vs);
-		me._data.descent.burnrate /=2;
-		me._data.descent.burnrate /=3600;
-		me._data.descent.fuel	= me._data.descent.time * me._data.descent.burnrate;
+		me._data.climb.nm	= -me._perf.data.climb.distance;
+		me._data.climb.time	= me._perf.data.climb.time;
+		me._data.climb.fuel	= me._perf.data.climb.fuel;
 		
+		me._data.cruise.nm	= me._perf.data.cruise.distance;
+		me._data.cruise.time	= me._perf.data.cruise.time;
+		me._data.cruise.fuel	= me._perf.data.cruise.fuel;
 		
-		me._data.reserve.time	= (me._data.reserve.nm / me._data.reserve.gs) * 3600;
-		me._data.reserve.burnrate = extra500.fuelFlowLog.getBurnRate(me._data.reserve.fl,me._data.reserve.gs,0);
-		me._data.reserve.burnrate /=3600;
-		me._data.reserve.fuel	= me._data.reserve.time * me._data.reserve.burnrate;
-		
-		
-		me._data.cruise.nm 	= me._data.trip.nm - me._data.climb.nm - me._data.descent.nm;
-		me._data.cruise.time	= (me._data.cruise.nm / me._data.cruise.gs) * 3600;
-		me._data.cruise.burnrate = extra500.fuelFlowLog.getBurnRate(me._data.cruise.fl,me._data.cruise.gs,0);
-		me._data.cruise.burnrate /=3600;
-		me._data.cruise.fuel	= me._data.cruise.time * me._data.cruise.burnrate;
+		me._data.descent.nm	= -me._perf.data.descent.distance;
+		me._data.descent.time	= me._perf.data.descent.time;
+		me._data.descent.fuel	= me._perf.data.descent.fuel;
 		
 		me._data.trip.time	= me._data.climb.time + me._data.cruise.time + me._data.descent.time;
-		me._data.trip.fuel	= me._data.climb.fuel + me._data.cruise.fuel + me._data.descent.fuel;
-		
+		me._data.trip.fuel	= me._data.taxi.fuel + me._data.climb.fuel + me._data.cruise.fuel + me._data.descent.fuel;
 		
 		me._data.graph.x25	= me._data.trip.nm * 0.25;
 		me._data.graph.x50	= me._data.trip.nm * 0.50;
@@ -1269,29 +1279,33 @@ var TripWidget = {
 		
 		me._calculate();
 		
+		
+		if (me._data.cruise.power == "maxpow"){
+			me._can.btn.powerMinFrame.set("fill",COLOR["btnPassive"]);
+			me._can.btn.powerMaxFrame.set("fill",COLOR["btnActive"]);
+		}else{
+			me._can.btn.powerMinFrame.set("fill",COLOR["btnActive"]);
+			me._can.btn.powerMaxFrame.set("fill",COLOR["btnPassive"]);
+		}
+		
+		
 		me._can.graph.flFrame.setTranslation(0,-me._data.cruise.fl*me._data.graph.flScale);
 		me._can.graph.fl.setText(sprintf("%3i",me._data.cruise.fl));
 		
-		me._can.climb.vs.setText(sprintf("%4i",me._data.climb.vs));
-		me._can.climb.gs.setText(sprintf("%3i",me._data.climb.gs));
+		me._can.taxi.fuel.setText(sprintf("%.0f",me._data.taxi.fuel));
+				
 		me._can.climb.nm.setText(sprintf("%i",me._data.climb.nm));
 		me._can.climb.time.setText(me.getTime(me._data.climb.time));
 		me._can.climb.fuel.setText(sprintf("%.0f",me._data.climb.fuel));
 		
-		me._can.cruise.fl.setText(sprintf("%3i",me._data.cruise.fl));
-		me._can.cruise.gs.setText(sprintf("%3i",me._data.cruise.gs));
 		me._can.cruise.nm.setText(sprintf("%i",me._data.cruise.nm));
 		me._can.cruise.time.setText(me.getTime(me._data.cruise.time));
 		me._can.cruise.fuel.setText(sprintf("%.0f",me._data.cruise.fuel));
 		
-		me._can.descent.vs.setText(sprintf("%4i",me._data.descent.vs));
-		me._can.descent.gs.setText(sprintf("%3i",me._data.descent.gs));
 		me._can.descent.nm.setText(sprintf("%i",me._data.descent.nm));
 		me._can.descent.time.setText(me.getTime(me._data.descent.time));
 		me._can.descent.fuel.setText(sprintf("%.0f",me._data.descent.fuel));
 		
-		me._can.reserve.fl.setText(sprintf("%3i",me._data.reserve.fl));
-		me._can.reserve.gs.setText(sprintf("%3i",me._data.reserve.gs));
 		me._can.reserve.nm.setText(sprintf("%i",me._data.reserve.nm));
 		me._can.reserve.time.setText(me.getTime(me._data.reserve.time));
 		me._can.reserve.fuel.setText(sprintf("%.0f",me._data.reserve.fuel));
@@ -1299,6 +1313,9 @@ var TripWidget = {
 		me._can.trip.nm.setText(sprintf("%i",me._data.trip.nm));
 		me._can.trip.time.setText(me.getTime(me._data.trip.time));
 		me._can.trip.fuel.setText(sprintf("%.0f",me._data.trip.fuel));
+		
+		me._can.trip.departure.setText(sprintf("%i",me._data.trip.departure.alt));
+		me._can.trip.destination.setText(sprintf("%i",me._data.trip.destination.alt));
 		
 		
 		me._can.graph.x0.setText(sprintf("%i",me._data.graph.x0));
@@ -1308,33 +1325,32 @@ var TripWidget = {
 		me._can.graph.x100.setText(sprintf("%i",me._data.graph.x100));
 		
 		
-		me._can.graph.profile.set("coord[3]",-me._data.cruise.fl * me._data.graph.flScale);
-		me._can.graph.profile.set("coord[7]",me._data.cruise.fl * me._data.graph.flScale);
+		var departureFL = (me._data.trip.departure.alt/100);
+		var destinationFL = (me._data.trip.destination.alt/100);
 		
-		me._can.graph.profile.set("coord[2]",me._data.climb.nm * me._data.graph.nmScale);
-		me._can.graph.profile.set("coord[4]",me._data.cruise.nm * me._data.graph.nmScale);
-		me._can.graph.profile.set("coord[6]",me._data.descent.nm * me._data.graph.nmScale);
+		# Departure
+		me._can.graph.profile.set("coord[1]",me._data.graph.axisY.min - (departureFL)*me._data.graph.flScale);
 		
-		me._can.graph.toc.setTranslation(me._data.climb.nm * me._data.graph.nmScale,0);
-		me._can.graph.tod.setTranslation((me._data.climb.nm+me._data.cruise.nm) * me._data.graph.nmScale,0);
+		# TOC
+		me._can.graph.profile.set("coord[2]",me._data.graph.axisX.min + (me._data.climb.nm) * me._data.graph.nmScale);
+		me._can.graph.profile.set("coord[3]",me._data.graph.axisY.min - (me._data.cruise.fl) * me._data.graph.flScale);
 		
+		# TOD
+		me._can.graph.profile.set("coord[4]",me._data.graph.axisX.min + (me._data.climb.nm + me._data.cruise.nm) * me._data.graph.nmScale);
+		me._can.graph.profile.set("coord[5]",me._data.graph.axisY.min - (me._data.cruise.fl) * me._data.graph.flScale);
+		
+		# Destination
+		#me._can.graph.profile.set("coord[6]",me._data.graph.axisX.min + (me._data.climb.nm + me._data.cruise.nm + me._data.descent.nm) * me._data.graph.nmScale);
+		me._can.graph.profile.set("coord[7]",me._data.graph.axisY.min - (destinationFL) * me._data.graph.flScale);
+		
+				
+		me._can.graph.toc.setTranslation(me._data.climb.nm * me._data.graph.nmScale,-me._data.cruise.fl*me._data.graph.flScale);
+		me._can.graph.tod.setTranslation((me._data.climb.nm+me._data.cruise.nm) * me._data.graph.nmScale,-me._data.cruise.fl*me._data.graph.flScale);
+		
+		me._can.trip.departureFrame.setTranslation(0,-(departureFL)*me._data.graph.flScale);
+		me._can.trip.destinationFrame.setTranslation(0,-(destinationFL)*me._data.graph.flScale);
 		
 	},
-	_draw2 : func(){
-		me._cFL.setTranslation(me._pFL.x,-me._pFL.y);
-		me._cTOC.setTranslation(me._pTOC.x,me._pTOC.y);
-		me._cTOD.setTranslation(me._pTOC.x + me._pTOD.x,me._pTOD.y);
-		me._cNM.setTranslation(me._pTOC.x + me._pTOD.x + me._pNM.x,me._pNM.y);
-		
-		me._cFlightProfile.set("coord[3]",-me._pFL.y);
-		me._cFlightProfile.set("coord[7]",me._pFL.y);
-		
-		me._cFlightProfile.set("coord[2]",me._pTOC.coordX + me._pTOC.x);
-		me._cFlightProfile.set("coord[4]",me._pTOD.coordX + me._pTOD.x);
-		me._cFlightProfile.set("coord[6]",me._pNM.coordX  + me._pNM.x);
-		
-	}
-	
 };
 
 
