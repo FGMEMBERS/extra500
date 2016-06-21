@@ -299,8 +299,8 @@ var PerfClass = {
 		var fuelToAlt = 0;
 		var distanceToAlt = 0;
 
-		if ((currentAlt >= desAlt) and (phase!="cruise") and (phase!="descent") ) {
-			print("this is not a climb!");
+		if ((currentAlt >= desAlt) or (phase=="cruise") or (phase=="descent") ) {
+			if (currentAlt >= desAlt) {print("this is not a climb!")};
 			me.data.climb.time = timeToAlt;
 			me.data.climb.fuel = fuelToAlt;
 			me.data.climb.distance = distanceToAlt;
