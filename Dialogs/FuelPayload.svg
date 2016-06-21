@@ -64,9 +64,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="397.94138"
-     inkscape:cy="296.08851"
+     inkscape:zoom="5.6568543"
+     inkscape:cx="1017.2215"
+     inkscape:cy="93.88455"
      inkscape:document-units="px"
      inkscape:current-layer="layer6"
      showgrid="false"
@@ -3554,16 +3554,17 @@
     </g>
     <g
        transform="translate(122.19848,-61.11908)"
-       id="Trip_From_FPL"
+       id="Trip_FromFPL"
        inkscape:label="#g3723">
       <rect
-         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:#0000ff;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-         id="rect3725"
+         style="color:#000000;fill:#8c939d;fill-opacity:1;fill-rule:nonzero;stroke:#69697b;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;stroke-opacity:1"
+         id="Trip_FromFPL_Frame"
          width="44.266426"
          height="37.071133"
          x="840.0351"
          y="716.14148"
-         ry="4.9123368" />
+         ry="4.9123368"
+         inkscape:label="#rect3725" />
       <text
          xml:space="preserve"
          style="font-size:14px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
@@ -3582,7 +3583,7 @@
     </g>
     <g
        inkscape:label="#g3723"
-       id="Trip_Order_Fuel"
+       id="Trip_OrderFuel"
        transform="translate(122.19848,-8.4852734)">
       <rect
          ry="4.9123368"
@@ -3590,8 +3591,9 @@
          x="840.0351"
          height="37.071133"
          width="44.266426"
-         id="rect3739"
-         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:#0000ff;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+         id="Trip_OrderFuel_Frame"
+         style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:#0000ff;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         inkscape:label="#rect3739" />
       <text
          sodipodi:linespacing="125%"
          id="text3741"

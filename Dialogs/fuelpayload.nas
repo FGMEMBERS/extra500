@@ -235,11 +235,15 @@ var MyWindow = {
 };
 
 var COLOR = {};
-COLOR["Red"] = "rgb(244,28,33)";
-COLOR["Green"] = "#008000";
-COLOR["Black"] = "#000000";
-COLOR["btnActive"] = "#9ec5ffff";
-COLOR["btnPassive"] = "#003ea2ff";
+COLOR["Red"] 			= "rgb(244,28,33)";
+COLOR["Green"] 			= "#008000";
+COLOR["Black"] 			= "#000000";
+COLOR["btnActive"] 		= "#9ec5ffff";
+COLOR["btnPassive"] 		= "#003ea2ff";
+COLOR["btnEnable"] 		= "#2a7fffff";
+COLOR["btnBorderEnable"] 	= "#0000ffff";
+COLOR["btnDisable"] 		= "#8c939dff";
+COLOR["btnBorderDisable"] 	= "#69697bff";
 
 
 var SvgWidget = {
@@ -1024,8 +1028,10 @@ var TripWidget = {
 				grid	: m._group.getElementById(m._name~"_Graph").set("z-index",-2),
 			},
 			btn : {
-				fromFpl 	: m._group.getElementById(m._name~"_From_FPL"),
-				orderFuel 	: m._group.getElementById(m._name~"_Order_Fuel"),
+				fromFpl 	: m._group.getElementById(m._name~"_FromFPL"),
+				fromFplFrame 	: m._group.getElementById(m._name~"_FromFPL_Frame"),
+				orderFuel 	: m._group.getElementById(m._name~"_OrderFuel"),
+				orderFuelFrame 	: m._group.getElementById(m._name~"_OrderFuel_Frame"),
 				powerMin	: m._group.getElementById(m._name~"_CruisePower_Min"),
 				powerMinFrame	: m._group.getElementById(m._name~"_CruisePower_Min_Frame"),
 				powerMax	: m._group.getElementById(m._name~"_CruisePower_Max"),
@@ -1128,7 +1134,9 @@ var TripWidget = {
 		me._can.btn.powerMin.addEventListener("click",func(e){me._onPowerClicked(e);});
 		me._can.btn.powerMax.addEventListener("click",func(e){me._onPowerClicked(e);});
 		
-				
+		
+		append(me._listeners, setlistener("/autopilot/route-manager/total-distance",func(n){me._onFlightPlanChange(n);},1,0) );
+		
 	},
 	init : func(instance=me){
 		me.setListeners(instance);
@@ -1228,6 +1236,17 @@ var TripWidget = {
 		me._draw();
 		
 	},
+	_onFlightPlanChange : func(n){
+		var totalDistance = getprop("/autopilot/route-manager/total-distance");
+		if (totalDistance > 0 ){
+			me._can.btn.fromFplFrame.set("fill",COLOR["btnEnable"]);
+			me._can.btn.fromFplFrame.set("stroke",COLOR["btnBorderEnable"]);
+		}else{
+			me._can.btn.fromFplFrame.set("fill",COLOR["btnDisable"]);
+			me._can.btn.fromFplFrame.set("stroke",COLOR["btnBorderDisable"]);
+			
+		}
+	},
 	
 	
 	getTime : func(time){
@@ -1294,6 +1313,8 @@ var TripWidget = {
 			me._can.btn.powerMinFrame.set("fill",COLOR["btnActive"]);
 			me._can.btn.powerMaxFrame.set("fill",COLOR["btnPassive"]);
 		}
+		
+		
 		
 		
 		me._can.graph.flFrame.setTranslation(0,-me._data.cruise.fl*me._data.graph.flScale);
