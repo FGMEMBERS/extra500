@@ -1131,8 +1131,8 @@ var TripWidget = {
 		me._can.btn.fromFpl.addEventListener("click",func(e){me._onFromFplClicked(e);});
 		me._can.btn.orderFuel.addEventListener("click",func(e){me._onOrderFuelClicked(e);});
 		
-		me._can.btn.powerMin.addEventListener("click",func(e){me._onPowerClicked(e);});
-		me._can.btn.powerMax.addEventListener("click",func(e){me._onPowerClicked(e);});
+		me._can.btn.powerMin.addEventListener("click",func(e){me._onPowerMinClicked(e);});
+		me._can.btn.powerMax.addEventListener("click",func(e){me._onPowerMaxClicked(e);});
 		
 		
 		append(me._listeners, setlistener("/autopilot/route-manager/total-distance",func(n){me._onFlightPlanChange(n);},1,0) );
@@ -1148,8 +1148,11 @@ var TripWidget = {
 		}else{
 			me._data.cruise.fl -= e.deltaY / me._data.graph.flScale;
 		}
-		me._data.cruise.fl = math.floor(me._data.cruise.fl);
+		
+		
 		me._data.cruise.fl = global.clamp(me._data.cruise.fl,0,250.0);
+		me._data.cruise.fl = math.floor(me._data.cruise.fl);
+		
 		me._ptree.cruise.fl.setValue(me._data.cruise.fl);
 		me._draw();
 	},
@@ -1160,7 +1163,7 @@ var TripWidget = {
 			me._data.trip.departure.alt -= e.deltaY / me._data.graph.flScale*100;
 		}
 		me._data.trip.departure.alt = math.floor(me._data.trip.departure.alt);
-		me._data.trip.departure.alt = global.clamp(me._data.trip.departure.alt,0,25000.0);
+		me._data.trip.departure.alt = global.clamp(me._data.trip.departure.alt,0,14000.0);
 		me._ptree.trip.departureAlt.setValue(me._data.trip.departure.alt);
 		me._draw();
 	},
@@ -1171,17 +1174,22 @@ var TripWidget = {
 			me._data.trip.destination.alt -= e.deltaY / me._data.graph.flScale*100;
 		}
 		me._data.trip.destination.alt = math.floor(me._data.trip.destination.alt);
-		me._data.trip.destination.alt = global.clamp(me._data.trip.destination.alt,0,25000.0);
+		me._data.trip.destination.alt = global.clamp(me._data.trip.destination.alt,0,14000.0);
 		me._ptree.trip.destinationAlt.setValue(me._data.trip.destination.alt);
 		me._draw();
 	},
 	
 	
 	_onTripNmChange: func(e){
+		
+		var factor = 1;
+		factor = e.shiftKey ? 10 : factor;
+		factor = e.shiftKey and e.ctrlKey ? 100 : factor;
+		
 		if(e.type == "wheel"){
-			me._data.trip.nm += e.deltaY;
+			me._data.trip.nm += e.deltaY * factor;
 		}else{
-			me._data.trip.nm -= e.deltaY;
+			me._data.trip.nm -= e.deltaY * factor;
 		}
 		me._data.trip.nm = global.clamp(me._data.trip.nm,20,8000.0);
 		me._ptree.trip.nm.setValue(me._data.trip.nm);
@@ -1227,12 +1235,13 @@ var TripWidget = {
 		me._dialog._widget.tanker.orderFuel(me._data.trip.fuel / global.CONST.JETA_LBGAL);
 		
 	},
-	_onPowerClicked: func(e){
-		if (me._data.cruise.power == "maxpow"){
-			me._data.cruise.power = "minpow"	
-		}else{
-			me._data.cruise.power = "maxpow"
-		}
+	_onPowerMinClicked: func(e){
+		me._data.cruise.power = "minpow";	
+		me._draw();
+		
+	},
+	_onPowerMaxClicked: func(e){
+		me._data.cruise.power = "maxpow";
 		me._draw();
 		
 	},
@@ -1266,6 +1275,11 @@ var TripWidget = {
 	},
 	_calculate : func(){
 		
+		var minFL = (math.max(me._data.trip.departure.alt,me._data.trip.destination.alt) / 100) + 15;
+		
+		me._data.cruise.fl = global.clamp(me._data.cruise.fl,minFL,250.0);
+		me._data.cruise.fl = math.floor(me._data.cruise.fl);
+				
 		me._perf.trip(
 				"off",				# phase
 				me._data.taxi.fuel, 		# startupfuel
@@ -1300,6 +1314,29 @@ var TripWidget = {
 		me._data.graph.x100	= me._data.trip.nm;
 		
 		me._data.graph.nmScale =  512 / me._data.trip.nm;
+		
+		
+		### calcucate the reserve Trip
+		
+		me._perf.trip(
+				"off",				# phase
+				0, 				# startupfuel
+				me._data.cruise.power,		# power
+				"distance",			# flightMode
+				me._data.trip.destination.alt,	# currentAlt
+				me._data.cruise.fl*100,		# cruiseAlt
+				me._data.trip.destination.alt,  # destAlt
+				me._data.reserve.nm,		# totalFlight
+				0,				# currentGS
+				0				# currentFF
+     			);
+		
+		
+		me._data.reserve.time	= me._perf.data.climb.time +  me._perf.data.cruise.time + me._perf.data.descent.time;
+		me._data.reserve.fuel	= me._perf.data.climb.fuel +  me._perf.data.cruise.fuel + me._perf.data.descent.fuel;
+		
+		
+		
 	},
 	_draw : func(){
 		
@@ -1307,11 +1344,22 @@ var TripWidget = {
 		
 		
 		if (me._data.cruise.power == "maxpow"){
-			me._can.btn.powerMinFrame.set("fill",COLOR["btnPassive"]);
+			
 			me._can.btn.powerMaxFrame.set("fill",COLOR["btnActive"]);
+			#me._can.btn.powerMaxFrame.set("stroke",COLOR["btnBorderEnable"]);
+			
+			me._can.btn.powerMinFrame.set("fill",COLOR["btnPassive"]);
+			#me._can.btn.powerMinFrame.set("stroke",COLOR["btnBorderDisable"]);
+			
+			
 		}else{
+			
 			me._can.btn.powerMinFrame.set("fill",COLOR["btnActive"]);
+			#me._can.btn.powerMinFrame.set("stroke",COLOR["btnBorderEnable"]);
+			
 			me._can.btn.powerMaxFrame.set("fill",COLOR["btnPassive"]);
+			#me._can.btn.powerMaxFrame.set("stroke",COLOR["btnBorderDisable"]);
+			
 		}
 		
 		
