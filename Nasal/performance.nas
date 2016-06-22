@@ -17,7 +17,7 @@
 #      Date: 04.04.2016
 #
 #      Last change: Eric van den Berg     
-#      Date: 21.06.2016            
+#      Date: 22.06.2016            
 #
 
 var loadPerformanceTables = func(path=""){
@@ -340,8 +340,16 @@ var PerfClass = {
 		var fuelToDes = 0;
 		var distanceToDes = 0;
 
-		if (currentAlt <= desAlt) {
+		if ( ( (phase=="descent") or (phase=="cruise") ) and (currentAlt <= desAlt)) {
 			print("This is not a descent!");
+			me.data.descent.time = timeToDes;
+			me.data.descent.fuel = fuelToDes;
+			me.data.descent.distance = distanceToDes;
+			return
+		}
+
+		if (( (phase=="off") or (phase=="taxi") or (phase=="climb") ) and (cruiseAlt <= desAlt)) {
+			print("Cruise altitude above destination airport!");
 			me.data.descent.time = timeToDes;
 			me.data.descent.fuel = fuelToDes;
 			me.data.descent.distance = distanceToDes;
