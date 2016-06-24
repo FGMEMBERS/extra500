@@ -1318,13 +1318,15 @@ var TripWidget = {
 		
 		### calcucate the reserve Trip
 		
+		var cruiseAlt = me._perf.RecomAlt(me._data.reserve.nm,me._data.trip.destination.alt,me._data.trip.destination.alt);
+		
 		me._perf.trip(
 				"off",				# phase
 				0, 				# startupfuel
 				me._data.cruise.power,		# power
 				"distance",			# flightMode
 				me._data.trip.destination.alt,	# currentAlt
-				me._data.cruise.fl*100,		# cruiseAlt
+				cruiseAlt,			# cruiseAlt
 				me._data.trip.destination.alt,  # destAlt
 				me._data.reserve.nm,		# totalFlight
 				0,				# currentGS
