@@ -1202,7 +1202,7 @@ var TripWidget = {
 		}else{
 			me._data.reserve.nm -= e.deltaY;
 		}
-		me._data.reserve.nm = global.clamp(me._data.reserve.nm,20,150.0);
+		me._data.reserve.nm = global.clamp(me._data.reserve.nm,0,1000.0);
 		me._ptree.reserve.nm.setValue(me._data.reserve.nm);
 		
 		me._draw();
@@ -1213,7 +1213,7 @@ var TripWidget = {
 		}else{
 			me._data.taxi.fuel -= e.deltaY;
 		}
-		me._data.taxi.fuel = global.clamp(me._data.taxi.fuel,20,150.0);
+		me._data.taxi.fuel = global.clamp(me._data.taxi.fuel,0,150.0);
 		me._ptree.taxi.fuel.setValue(me._data.taxi.fuel);
 		
 		me._draw();
@@ -1306,7 +1306,6 @@ var TripWidget = {
 		me._data.descent.fuel	= me._perf.data.descent.fuel;
 		
 		me._data.trip.time	= me._data.climb.time + me._data.cruise.time + me._data.descent.time;
-		me._data.trip.fuel	= me._data.taxi.fuel + me._data.climb.fuel + me._data.cruise.fuel + me._data.descent.fuel;
 		
 		me._data.graph.x25	= me._data.trip.nm * 0.25;
 		me._data.graph.x50	= me._data.trip.nm * 0.50;
@@ -1337,6 +1336,7 @@ var TripWidget = {
 		me._data.reserve.time	= me._perf.data.climb.time +  me._perf.data.cruise.time + me._perf.data.descent.time;
 		me._data.reserve.fuel	= me._perf.data.climb.fuel +  me._perf.data.cruise.fuel + me._perf.data.descent.fuel;
 		
+		me._data.trip.fuel	= me._data.taxi.fuel + me._data.climb.fuel + me._data.cruise.fuel + me._data.descent.fuel + me._data.reserve.fuel;
 		
 		
 	},
