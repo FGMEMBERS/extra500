@@ -17,7 +17,7 @@
 #      Date: 04.04.2016
 #
 #      Last change: Eric van den Berg     
-#      Date: 22.06.2016            
+#      Date: 24.06.2016            
 #
 
 var loadPerformanceTables = func(path=""){
@@ -387,6 +387,27 @@ var PerfClass = {
 		if (fuel_lbs == nil) {var fuel_lbs = 30}
 		if (phase != "off") {var fuel_lbs = 0}
 		me.data.startupTaxi.fuel = fuel_lbs;
+	},
+#-----------------------------------------------------------------------
+# RECOMMENDED TRIP ALTITUDE---------------------------------------------
+#-----------------------------------------------------------------------
+# calculates a recommended altitude based on trip distance and airport altitudes 
+#
+	RecomAlt : func(tripDistance,airportAlt,desAlt){
+		var recomalt = 0;
+		if (tripDistance == nil) {return recomalt}
+		if (airportAlt == nil) {airportAlt = 0}
+		if (desAlt == nil) {desAlt = 0}
+		
+		var maxAirportAlt = math.max(airportAlt,desAlt) + 5000;
+
+		if ( tripDistance <= 80 ) {
+			recomalt = 275 * tripDistance - 6000;
+		} else {
+			recomalt = 90 * tripDistance + 8800;
+		}
+		
+		return recomalt = math.round( math.clamp(recomalt,maxAirportAlt,25000),100);		
 	},
 
 #-----------------------------------------------------------------------
