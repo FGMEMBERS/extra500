@@ -949,7 +949,7 @@ var TripWidget = {
 				gs	: m._dialog._nRoot.initNode("climb/gs",150.0,"DOUBLE"),
 			},
 			cruise : {
-				fl	: m._dialog._nRoot.initNode("cruise/fl",120.0,"DOUBLE"),
+				alt	: m._dialog._nRoot.initNode("cruise/alt",12000.0,"DOUBLE"),
 				gs	: m._dialog._nRoot.initNode("cruise/gs",200.0,"DOUBLE"),
 			},
 			descent : {
@@ -1036,6 +1036,8 @@ var TripWidget = {
 				powerMinFrame	: m._group.getElementById(m._name~"_CruisePower_Min_Frame"),
 				powerMax	: m._group.getElementById(m._name~"_CruisePower_Max"),
 				powerMaxFrame	: m._group.getElementById(m._name~"_CruisePower_Max_Frame"),
+				advisedFL	: m._group.getElementById(m._name~"_AdvisedFL"),
+				advisedFLFrame	: m._group.getElementById(m._name~"_AdvisedFL_Frame"),
 				
 			}
 		};
@@ -1056,7 +1058,7 @@ var TripWidget = {
 # 				burnrate: 230/3600, # lbs/sec
 			},
 			cruise : {
-				fl	: m._ptree.cruise.fl.getValue(),
+				alt	: m._ptree.cruise.alt.getValue(),
 # 				gs	: m._ptree.cruise.gs.getValue(),
 				nm	: 0,
 				time	: 0,
@@ -1098,7 +1100,7 @@ var TripWidget = {
 				tod	: 0,
 				axisX	: {min:64,max:578},
 				axisY	: {min:744,max:550},
-				flScale : (744-550)/300,
+				altScale : (744-550)/30000,
 				nmScale : (578-64)/100,
 				
 			},
@@ -1134,6 +1136,8 @@ var TripWidget = {
 		me._can.btn.powerMin.addEventListener("click",func(e){me._onPowerMinClicked(e);});
 		me._can.btn.powerMax.addEventListener("click",func(e){me._onPowerMaxClicked(e);});
 		
+		me._can.btn.advisedFL.addEventListener("click",func(e){me._onAdvisedFlClicked(e);});
+		
 		
 		append(me._listeners, setlistener("/autopilot/route-manager/total-distance",func(n){me._onFlightPlanChange(n);},1,0) );
 		
@@ -1144,23 +1148,23 @@ var TripWidget = {
 	},
 	_onCruiseFlChange : func(e){
 		if(e.type == "wheel"){
-			me._data.cruise.fl += e.deltaY / me._data.graph.flScale;
+			me._data.cruise.alt += e.deltaY / me._data.graph.altScale;
 		}else{
-			me._data.cruise.fl -= e.deltaY / me._data.graph.flScale;
+			me._data.cruise.alt -= e.deltaY / me._data.graph.altScale;
 		}
 		
 		
-		me._data.cruise.fl = global.clamp(me._data.cruise.fl,0,250.0);
-		me._data.cruise.fl = math.floor(me._data.cruise.fl);
+		me._data.cruise.alt = global.clamp(me._data.cruise.alt,0,25000.0);
+		me._data.cruise.alt = math.floor(me._data.cruise.alt/100) * 100 ;
 		
-		me._ptree.cruise.fl.setValue(me._data.cruise.fl);
+		me._ptree.cruise.alt.setValue(me._data.cruise.alt);
 		me._draw();
 	},
 	_onDepartureAltChange : func(e){
 		if(e.type == "wheel"){
-			me._data.trip.departure.alt += e.deltaY / me._data.graph.flScale*100;
+			me._data.trip.departure.alt += e.deltaY / me._data.graph.altScale;
 		}else{
-			me._data.trip.departure.alt -= e.deltaY / me._data.graph.flScale*100;
+			me._data.trip.departure.alt -= e.deltaY / me._data.graph.altScale;
 		}
 		me._data.trip.departure.alt = math.floor(me._data.trip.departure.alt);
 		me._data.trip.departure.alt = global.clamp(me._data.trip.departure.alt,0,14000.0);
@@ -1169,9 +1173,9 @@ var TripWidget = {
 	},
 	_onDestinationAltChange : func(e){
 		if(e.type == "wheel"){
-			me._data.trip.destination.alt += e.deltaY / me._data.graph.flScale*100;
+			me._data.trip.destination.alt += e.deltaY / me._data.graph.altScale;
 		}else{
-			me._data.trip.destination.alt -= e.deltaY / me._data.graph.flScale*100;
+			me._data.trip.destination.alt -= e.deltaY / me._data.graph.altScale;
 		}
 		me._data.trip.destination.alt = math.floor(me._data.trip.destination.alt);
 		me._data.trip.destination.alt = global.clamp(me._data.trip.destination.alt,0,14000.0);
@@ -1224,7 +1228,7 @@ var TripWidget = {
 		
 		if (totalDistance > 0){
 			me._data.trip.nm = totalDistance;
-			me._data.cruise.fl = global.clamp(math.floor(getprop("/autopilot/route-manager/cruise/altitude-ft")/100),0,250.0);
+			me._data.cruise.alt = global.clamp(math.floor(getprop("/autopilot/route-manager/cruise/altitude-ft")),0,25000.0);
 			me._data.trip.departure.alt = getprop("/autopilot/route-manager/departure/field-elevation-ft");
 			me._data.trip.destination.alt = getprop("/autopilot/route-manager/destination/field-elevation-ft");
 		}
@@ -1256,6 +1260,14 @@ var TripWidget = {
 			
 		}
 	},
+	_onAdvisedFlClicked : func(e){
+		var cruiseAlt = me._perf.RecomAlt(me._data.trip.nm,me._data.trip.departure.alt,me._data.trip.destination.alt);
+		
+		me._data.cruise.alt = cruiseAlt;
+		
+		me._draw();
+	},
+	
 	
 	
 	getTime : func(time){
@@ -1275,10 +1287,10 @@ var TripWidget = {
 	},
 	_calculate : func(){
 		
-		var minFL = (math.max(me._data.trip.departure.alt,me._data.trip.destination.alt) / 100) + 15;
+		var minFL = (math.max(me._data.trip.departure.alt,me._data.trip.destination.alt)) + 1500;
 		
-		me._data.cruise.fl = global.clamp(me._data.cruise.fl,minFL,250.0);
-		me._data.cruise.fl = math.floor(me._data.cruise.fl);
+		me._data.cruise.alt = math.floor(me._data.cruise.alt/100) * 100 ;
+		me._data.cruise.alt = global.clamp(me._data.cruise.alt,minFL,25000.0);
 				
 		me._perf.trip(
 				"off",				# phase
@@ -1286,7 +1298,7 @@ var TripWidget = {
 				me._data.cruise.power,		# power
 				"distance",			# flightMode
 				me._data.trip.departure.alt,	# currentAlt
-				me._data.cruise.fl*100,		# cruiseAlt
+				me._data.cruise.alt,		# cruiseAlt
 				me._data.trip.destination.alt,  # destAlt
 				me._data.trip.nm,		# totalFlight
 				0,				# currentGS
@@ -1367,8 +1379,8 @@ var TripWidget = {
 		
 		
 		
-		me._can.graph.flFrame.setTranslation(0,-me._data.cruise.fl*me._data.graph.flScale);
-		me._can.graph.fl.setText(sprintf("%3i",me._data.cruise.fl));
+		me._can.graph.flFrame.setTranslation(0,-me._data.cruise.alt*me._data.graph.altScale);
+		me._can.graph.fl.setText(sprintf("%3i",math.floor(me._data.cruise.alt/100)));
 		
 		me._can.taxi.fuel.setText(sprintf("%.0f",me._data.taxi.fuel));
 				
@@ -1403,30 +1415,30 @@ var TripWidget = {
 		me._can.graph.x100.setText(sprintf("%i",me._data.graph.x100));
 		
 		
-		var departureFL = (me._data.trip.departure.alt/100);
-		var destinationFL = (me._data.trip.destination.alt/100);
+		var departureAlt = (me._data.trip.departure.alt);
+		var destinationAlt = (me._data.trip.destination.alt);
 		
 		# Departure
-		me._can.graph.profile.set("coord[1]",me._data.graph.axisY.min - (departureFL)*me._data.graph.flScale);
+		me._can.graph.profile.set("coord[1]",me._data.graph.axisY.min - (departureAlt)*me._data.graph.altScale);
 		
 		# TOC
 		me._can.graph.profile.set("coord[2]",me._data.graph.axisX.min + (me._data.climb.nm) * me._data.graph.nmScale);
-		me._can.graph.profile.set("coord[3]",me._data.graph.axisY.min - (me._data.cruise.fl) * me._data.graph.flScale);
+		me._can.graph.profile.set("coord[3]",me._data.graph.axisY.min - (me._data.cruise.alt) * me._data.graph.altScale);
 		
 		# TOD
 		me._can.graph.profile.set("coord[4]",me._data.graph.axisX.min + (me._data.climb.nm + me._data.cruise.nm) * me._data.graph.nmScale);
-		me._can.graph.profile.set("coord[5]",me._data.graph.axisY.min - (me._data.cruise.fl) * me._data.graph.flScale);
+		me._can.graph.profile.set("coord[5]",me._data.graph.axisY.min - (me._data.cruise.alt) * me._data.graph.altScale);
 		
 		# Destination
 		#me._can.graph.profile.set("coord[6]",me._data.graph.axisX.min + (me._data.climb.nm + me._data.cruise.nm + me._data.descent.nm) * me._data.graph.nmScale);
-		me._can.graph.profile.set("coord[7]",me._data.graph.axisY.min - (destinationFL) * me._data.graph.flScale);
+		me._can.graph.profile.set("coord[7]",me._data.graph.axisY.min - (destinationAlt) * me._data.graph.altScale);
 		
 				
-		me._can.graph.toc.setTranslation(me._data.climb.nm * me._data.graph.nmScale,-me._data.cruise.fl*me._data.graph.flScale);
-		me._can.graph.tod.setTranslation((me._data.climb.nm+me._data.cruise.nm) * me._data.graph.nmScale,-me._data.cruise.fl*me._data.graph.flScale);
+		me._can.graph.toc.setTranslation(me._data.climb.nm * me._data.graph.nmScale,-me._data.cruise.alt*me._data.graph.altScale);
+		me._can.graph.tod.setTranslation((me._data.climb.nm+me._data.cruise.nm) * me._data.graph.nmScale,-me._data.cruise.alt*me._data.graph.altScale);
 		
-		me._can.trip.departureFrame.setTranslation(0,-(departureFL)*me._data.graph.flScale);
-		me._can.trip.destinationFrame.setTranslation(0,-(destinationFL)*me._data.graph.flScale);
+		me._can.trip.departureFrame.setTranslation(0,-(departureAlt)*me._data.graph.altScale);
+		me._can.trip.destinationFrame.setTranslation(0,-(destinationAlt)*me._data.graph.altScale);
 		
 	},
 };
