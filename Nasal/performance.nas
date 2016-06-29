@@ -17,7 +17,7 @@
 #      Date: 04.04.2016
 #
 #      Last change: Eric van den Berg     
-#      Date: 24.06.2016            
+#      Date: 29.06.2016            
 #
 
 var loadPerformanceTables = func(path=""){
@@ -394,18 +394,16 @@ var PerfClass = {
 # calculates a recommended altitude based on trip distance and airport altitudes 
 #
 	RecomAlt : func(tripDistance,airportAlt,desAlt){
+		var NUMBER=0; var DISTANCE=1; var ALTITUDE=2;
+
 		var recomalt = 0;
 		if (tripDistance == nil) {return recomalt}
 		if (airportAlt == nil) {airportAlt = 0}
 		if (desAlt == nil) {desAlt = 0}
 		
-		var maxAirportAlt = math.max(airportAlt,desAlt) + 5000;
+		var maxAirportAlt = math.max(airportAlt,desAlt);
 
-		if ( tripDistance <= 80 ) {
-			recomalt = 275 * tripDistance - 6000;
-		} else {
-			recomalt = 90 * tripDistance + 8800;
-		}
+		recomalt = me.matrixinterp(performanceTable.ReconAlt,4,tripDistance,DISTANCE,ALTITUDE);
 		
 		return recomalt = math.round( math.clamp(recomalt,maxAirportAlt,25000),100);		
 	},

@@ -17,7 +17,7 @@
 #      Date: 04.04.2016
 #
 #      Last change: Eric van den Berg     
-#      Date: 25.04.2016            
+#      Date: 29.06.2016            
 #
 
 # The performance Table Data loaded by performance.nas
@@ -95,7 +95,13 @@ var performanceTable = {
 			[25,24000,720,28,46],
 			[26,25000,750,29,48]
 		],
-	taxi : []
+	taxi : [],
+	ReconAlt : [
+				[1,0,0],
+				[2,45,5000],
+				[3,80,16000],
+				[4,180,25000]
+		]
 };
 
 #print("performanceTable loaded.")
