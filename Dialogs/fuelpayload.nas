@@ -17,7 +17,7 @@
 #	Date: 		Mai 02 2015
 #
 #	Last change:	Eric van den Berg
-#	Date:			18.06.16
+#	Date:			30.06.16
 #
 
 var MyWindow = {
@@ -1257,9 +1257,10 @@ var TripWidget = {
 		if (totalDistance > 0){
 						
 			me.setTripNm(totalDistance);
-			me.setCruiseAlt(getprop("/autopilot/route-manager/cruise/altitude-ft"));
+#			me.setCruiseAlt(getprop("/autopilot/route-manager/cruise/altitude-ft"));
 			me.setDepartureAlt(getprop("/autopilot/route-manager/departure/field-elevation-ft"));
 			me.setDestinationAlt(getprop("/autopilot/route-manager/destination/field-elevation-ft"));
+			me.setCruiseAlt(me._perf.RecomAlt(me._data.trip.nm,me._data.trip.departure.alt,me._data.trip.destination.alt));
 			
 		}
 		me._draw();
