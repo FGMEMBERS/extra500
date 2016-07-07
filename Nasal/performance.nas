@@ -17,7 +17,7 @@
 #      Date: 04.04.2016
 #
 #      Last change: Eric van den Berg     
-#      Date: 29.06.2016            
+#      Date: 07.07.2016            
 #
 
 var loadPerformanceTables = func(path=""){
@@ -172,14 +172,15 @@ var PerfClass = {
 # it is also used for the phase that is current. So if the phase is 'cruise', currentAlt is used as the cruise altitude, not cruiseALT 
 # totalFlight: is total available trip-distance (nm), -time (sec) or -fuel (lbs) dependent on flightMode
 # currentGS (knots) and currentFF (lbs/h) are only used for the _current_ flight phase, else it is neglected
+# windSp (knots), positive for tail wind, negative for head wind. Only used for the _not_ current flight phase, else neglected (since ground speed is used then!)
 
 # return code 1: cruise distance/time/fuel negative
 # return code 2: cruise fuel negative (enroute), range cannot be calculated
 
-	trip : func(phase,startupfuel,power,flightMode,currentAlt,cruiseAlt,destAlt,totalFlight,currentGS,currentFF) {
+	trip : func(phase,startupfuel,power,flightMode,currentAlt,cruiseAlt,destAlt,totalFlight,currentGS,currentFF,windSp) {
 		me.startupTaxi(phase,startupfuel);
-		me.climb(phase,currentAlt,cruiseAlt,currentGS,currentFF);
-		me.descent(phase,cruiseAlt,destAlt,currentAlt,currentGS,currentFF);
+		me.climb(phase,currentAlt,cruiseAlt,currentGS,currentFF,windSp);
+		me.descent(phase,cruiseAlt,destAlt,currentAlt,currentGS,currentFF,windSp);
 		if ( flightMode == "distance" ) {cruiseFlight = totalFlight - ( me.data.climb.distance + me.data.descent.distance) }
 		if ( flightMode == "time" ) {cruiseFlight = totalFlight - ( me.data.climb.time + me.data.descent.time) }
 		if ( flightMode == "fuel" ) {cruiseFlight = totalFlight - ( me.data.climb.fuel + me.data.descent.fuel + me.data.startupTaxi.fuel ) }
@@ -202,7 +203,7 @@ var PerfClass = {
 
 		if ( phase == "cruise" ) { cruiseAlt = currentAlt; }
 
-		me.cruise(phase,power,flightMode,cruiseFlight,cruiseAlt,currentGS,currentFF);
+		me.cruise(phase,power,flightMode,cruiseFlight,cruiseAlt,currentGS,currentFF,windSp);
 		me.updateTrip();
 	
 	},
@@ -222,7 +223,7 @@ var PerfClass = {
 # return code 1: power mode is not set correctly
 # return code 2: time or distance mode is not set correctly
 
-	cruise : func(phase="off",powerMode="maxpow",mode2="distance",cruiseInput=0,cruiseAlt=0,currentGS=0,currentFF=0) {
+	cruise : func(phase="off",powerMode="maxpow",mode2="distance",cruiseInput=0,cruiseAlt=0,currentGS=0,currentFF=0,windSp=0) {
 		var NUMBER=0; var ALTITUDE=1; var maxSPEED=2; var maxFFLOW=3; var minSPEED=4; var minFFLOW=5;
 
 		var cruiseDist = 0;
@@ -235,11 +236,11 @@ var PerfClass = {
 
 		if ( (phase=="off") or (phase=="taxi") or (phase=="climb") or (phase=="descent") ) {
 			if (powerMode=="maxpow"){
-				cruiseSpeed = me.matrixinterp(performanceTable.cruise,14,cruiseAlt,ALTITUDE,maxSPEED);
-				cruiseFF = me.matrixinterp(performanceTable.cruise,14,cruiseAlt,ALTITUDE,maxFFLOW);
+				cruiseSpeed = me.matrixinterp(performanceTable.cruise,cruiseAlt,ALTITUDE,maxSPEED) + windSp;
+				cruiseFF = me.matrixinterp(performanceTable.cruise,cruiseAlt,ALTITUDE,maxFFLOW);
 			} else if (powerMode=="minpow") {
-				cruiseSpeed = me.matrixinterp(performanceTable.cruise,14,cruiseAlt,ALTITUDE,minSPEED);
-				cruiseFF = me.matrixinterp(performanceTable.cruise,14,cruiseAlt,ALTITUDE,minFFLOW);
+				cruiseSpeed = me.matrixinterp(performanceTable.cruise,cruiseAlt,ALTITUDE,minSPEED) + windSp;
+				cruiseFF = me.matrixinterp(performanceTable.cruise,cruiseAlt,ALTITUDE,minFFLOW);
 			} else {
 				print("ERROR: powerMode variable in cruise is not defined (correctly)");
 				return 1
@@ -293,7 +294,7 @@ var PerfClass = {
 #
 # return code 1: the current altitude is higher as destination altitude, not a climb!
 
-	climb : func(phase="off",currentAlt=0,desAlt=0,currentGS=0,currentFF=0){
+	climb : func(phase="off",currentAlt=0,desAlt=0,currentGS=0,currentFF=0,windSp=0){
 
 		var timeToAlt = 0;
 		var fuelToAlt = 0;
@@ -310,12 +311,12 @@ var PerfClass = {
 		var NUMBER=0; var ALTITUDE=1; var SECONDS=2; var FUELLBS=3; var DIST=4;
 
 		if ( (phase == "off") or (phase == "taxi") ) {
-			timeToAlt = me.matrixinterp(performanceTable.climb,26,desAlt,ALTITUDE,SECONDS) - me.matrixinterp(performanceTable.climb,26,currentAlt,ALTITUDE,SECONDS);
-			fuelToAlt = me.matrixinterp(performanceTable.climb,26,desAlt,ALTITUDE,FUELLBS) - me.matrixinterp(performanceTable.climb,26,currentAlt,ALTITUDE,FUELLBS);
-			distanceToAlt = me.matrixinterp(performanceTable.climb,26,desAlt,ALTITUDE,DIST) - me.matrixinterp(performanceTable.climb,26,currentAlt,ALTITUDE,DIST);
+			timeToAlt = me.matrixinterp(performanceTable.climb,desAlt,ALTITUDE,SECONDS) - me.matrixinterp(performanceTable.climb,currentAlt,ALTITUDE,SECONDS);
+			fuelToAlt = me.matrixinterp(performanceTable.climb,desAlt,ALTITUDE,FUELLBS) - me.matrixinterp(performanceTable.climb,currentAlt,ALTITUDE,FUELLBS);
+			distanceToAlt = me.matrixinterp(performanceTable.climb,desAlt,ALTITUDE,DIST) - me.matrixinterp(performanceTable.climb,currentAlt,ALTITUDE,DIST) + windSp * timeToAlt / 3600;
 		} else if ( (phase == "climb") ) {
-			timeToAlt = me.matrixinterp(performanceTable.climb,26,desAlt,ALTITUDE,SECONDS) - me.matrixinterp(performanceTable.climb,26,currentAlt,ALTITUDE,SECONDS);
-			fuelToAlt = me.matrixinterp(performanceTable.climb,26,desAlt,ALTITUDE,FUELLBS) - me.matrixinterp(performanceTable.climb,26,currentAlt,ALTITUDE,FUELLBS);
+			timeToAlt = me.matrixinterp(performanceTable.climb,desAlt,ALTITUDE,SECONDS) - me.matrixinterp(performanceTable.climb,currentAlt,ALTITUDE,SECONDS);
+			fuelToAlt = me.matrixinterp(performanceTable.climb,desAlt,ALTITUDE,FUELLBS) - me.matrixinterp(performanceTable.climb,currentAlt,ALTITUDE,FUELLBS);
 			distanceToAlt = currentGS * timeToAlt / 3600;
 		} else if ( (phase=="cruise") or (phase=="descent") ) {
 			# all stays 0
@@ -334,7 +335,7 @@ var PerfClass = {
 #
 # desAlt; so this is the altitude your descending to
 
-	descent : func(phase="off",cruiseAlt=0,desAlt=0,currentAlt=0,currentGS=0,currentFF=0){
+	descent : func(phase="off",cruiseAlt=0,desAlt=0,currentAlt=0,currentGS=0,currentFF=0,windSp=0){
 
 		var timeToDes = 0;
 		var fuelToDes = 0;
@@ -359,16 +360,16 @@ var PerfClass = {
 		var NUMBER=0; var ALTITUDE=1; var SECONDS=2; var FUELLBS=3; var DIST=4;
 
 		if ( (phase == "off") or (phase == "taxi") or (phase == "climb") ) {
-			var timeToDes = me.matrixinterp(performanceTable.descent,26,cruiseAlt,ALTITUDE,SECONDS) - me.matrixinterp(performanceTable.descent,26,desAlt,ALTITUDE,SECONDS);
-			var fuelToDes = me.matrixinterp(performanceTable.descent,26,cruiseAlt,ALTITUDE,FUELLBS) - me.matrixinterp(performanceTable.descent,26,desAlt,ALTITUDE,FUELLBS);
-			var distanceToDes = me.matrixinterp(performanceTable.descent,26,cruiseAlt,ALTITUDE,DIST) - me.matrixinterp(performanceTable.descent,26,desAlt,ALTITUDE,DIST);
+			var timeToDes = me.matrixinterp(performanceTable.descent,cruiseAlt,ALTITUDE,SECONDS) - me.matrixinterp(performanceTable.descent,desAlt,ALTITUDE,SECONDS);
+			var fuelToDes = me.matrixinterp(performanceTable.descent,cruiseAlt,ALTITUDE,FUELLBS) - me.matrixinterp(performanceTable.descent,desAlt,ALTITUDE,FUELLBS);
+			var distanceToDes = me.matrixinterp(performanceTable.descent,cruiseAlt,ALTITUDE,DIST) - me.matrixinterp(performanceTable.descent,desAlt,ALTITUDE,DIST) + windSp * timeToDes / 3600;
 		} else if ( phase == "cruise" ) {
-			var timeToDes = me.matrixinterp(performanceTable.descent,26,currentAlt,ALTITUDE,SECONDS) - me.matrixinterp(performanceTable.descent,26,desAlt,ALTITUDE,SECONDS);
-			var fuelToDes = me.matrixinterp(performanceTable.descent,26,currentAlt,ALTITUDE,FUELLBS) - me.matrixinterp(performanceTable.descent,26,desAlt,ALTITUDE,FUELLBS);
-			var distanceToDes = me.matrixinterp(performanceTable.descent,26,currentAlt,ALTITUDE,DIST) - me.matrixinterp(performanceTable.descent,26,desAlt,ALTITUDE,DIST);
+			var timeToDes = me.matrixinterp(performanceTable.descent,currentAlt,ALTITUDE,SECONDS) - me.matrixinterp(performanceTable.descent,desAlt,ALTITUDE,SECONDS);
+			var fuelToDes = me.matrixinterp(performanceTable.descent,currentAlt,ALTITUDE,FUELLBS) - me.matrixinterp(performanceTable.descent,desAlt,ALTITUDE,FUELLBS);
+			var distanceToDes = me.matrixinterp(performanceTable.descent,currentAlt,ALTITUDE,DIST) - me.matrixinterp(performanceTable.descent,desAlt,ALTITUDE,DIST) + windSp * timeToDes / 3600;
 		} else if ( phase == "descent" ) {
-			var timeToDes = me.matrixinterp(performanceTable.descent,26,currentAlt,ALTITUDE,SECONDS) - me.matrixinterp(performanceTable.descent,26,desAlt,ALTITUDE,SECONDS);
-			var fuelToDes = me.matrixinterp(performanceTable.descent,26,currentAlt,ALTITUDE,FUELLBS) - me.matrixinterp(performanceTable.descent,26,desAlt,ALTITUDE,FUELLBS);
+			var timeToDes = me.matrixinterp(performanceTable.descent,currentAlt,ALTITUDE,SECONDS) - me.matrixinterp(performanceTable.descent,desAlt,ALTITUDE,SECONDS);
+			var fuelToDes = me.matrixinterp(performanceTable.descent,currentAlt,ALTITUDE,FUELLBS) - me.matrixinterp(performanceTable.descent,desAlt,ALTITUDE,FUELLBS);
 			var distanceToDes = currentGS * timeToDes / 3600;
 		}
 
@@ -403,7 +404,7 @@ var PerfClass = {
 		
 		var maxAirportAlt = math.max(airportAlt,desAlt);
 
-		recomalt = me.matrixinterp(performanceTable.ReconAlt,4,tripDistance,DISTANCE,ALTITUDE);
+		recomalt = me.matrixinterp(performanceTable.ReconAlt,tripDistance,DISTANCE,ALTITUDE);
 		
 		return recomalt = math.round( math.clamp(recomalt,maxAirportAlt,25000),100);		
 	},
@@ -418,10 +419,9 @@ var PerfClass = {
 # returns a value from vector y1 corresponding to x, linear interpolated from vector x1 
 #
 
-	matrixinterp : func(matrix,length,x,x1,y1){ 
+	matrixinterp : func(matrix,x,x1,y1){ 
 
-		##### DD : length = size(matrix) ?? could reduce parameters and make the matrix size dynamic ??  
-				
+		var length = size(matrix);				
 		if ( x <= matrix[0][x1] ) { return matrix[0][y1] }
 		if ( x >= matrix[length-1][x1] ) { return matrix[length-1][y1] }
 
