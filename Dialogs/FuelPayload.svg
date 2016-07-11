@@ -64,11 +64,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4142136"
-     inkscape:cx="593.53994"
-     inkscape:cy="248.47098"
+     inkscape:zoom="4.0000001"
+     inkscape:cx="936.75193"
+     inkscape:cy="100.74598"
      inkscape:document-units="px"
-     inkscape:current-layer="layer6"
+     inkscape:current-layer="layer3"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1025"
@@ -2783,7 +2783,7 @@
          rx="4" />
       <path
          transform="matrix(1.6583022,0,0,1.6583022,-657.75255,-436.01639)"
-         d="m 954.36387,656.21039 c 0,20.8151 -16.87397,37.68907 -37.68907,37.68907 -20.81509,0 -37.68906,-16.87397 -37.68906,-37.68907 0,-20.8151 16.87397,-37.68907 37.68906,-37.68907 20.8151,0 37.68907,16.87397 37.68907,37.68907 z"
+         d="m 954.36387,656.21039 a 37.689068,37.689068 0 1 1 -75.37813,0 37.689068,37.689068 0 1 1 75.37813,0 z"
          sodipodi:ry="37.689068"
          sodipodi:rx="37.689068"
          sodipodi:cy="656.21039"
@@ -2799,11 +2799,11 @@
          sodipodi:cy="656.21039"
          sodipodi:rx="37.689068"
          sodipodi:ry="37.689068"
-         d="m 954.36387,656.21039 c 0,20.8151 -16.87397,37.68907 -37.68907,37.68907 -20.81509,0 -37.68906,-16.87397 -37.68906,-37.68907 0,-20.8151 16.87397,-37.68907 37.68906,-37.68907 20.8151,0 37.68907,16.87397 37.68907,37.68907 z"
+         d="m 954.36387,656.21039 a 37.689068,37.689068 0 1 1 -75.37813,0 37.689068,37.689068 0 1 1 75.37813,0 z"
          transform="matrix(0.80925267,0,0,0.80925267,120.54977,121.13873)" />
       <path
          transform="matrix(0.35411848,0,0,0.35411848,537.75981,419.80251)"
-         d="m 954.36387,656.21039 c 0,20.8151 -16.87397,37.68907 -37.68907,37.68907 -20.81509,0 -37.68906,-16.87397 -37.68906,-37.68907 0,-20.8151 16.87397,-37.68907 37.68906,-37.68907 20.8151,0 37.68907,16.87397 37.68907,37.68907 z"
+         d="m 954.36387,656.21039 a 37.689068,37.689068 0 1 1 -75.37813,0 37.689068,37.689068 0 1 1 75.37813,0 z"
          sodipodi:ry="37.689068"
          sodipodi:rx="37.689068"
          sodipodi:cy="656.21039"
@@ -3574,7 +3574,8 @@
     </g>
     <g
        id="Trip_FromFPL"
-       inkscape:label="#g6136">
+       inkscape:label="#g6136"
+       transform="translate(0,-20)">
       <rect
          style="color:#000000;fill:#8c939d;fill-opacity:1;fill-rule:nonzero;stroke:#69697b;stroke-width:3;stroke-opacity:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
          id="Trip_FromFPL_Frame"
@@ -3599,7 +3600,7 @@
     <g
        inkscape:label="#g3723"
        id="Trip_OrderFuel"
-       transform="matrix(0.94782364,0,0,1,117.9502,-20.128302)">
+       transform="matrix(0.94782364,0,0,1,117.9502,-4.1283033)">
       <rect
          ry="2.7827332"
          y="715.24207"
@@ -3614,7 +3615,7 @@
          id="text3741"
          y="730.74597"
          x="881.18933"
-         style="font-size:14.38017819px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+         style="font-size:14.38017845px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
          xml:space="preserve"><tspan
            id="tspan3745"
            y="730.74597"
@@ -3623,7 +3624,7 @@
     </g>
     <g
        id="g3785"
-       transform="translate(303.14137,-20.861873)">
+       transform="translate(303.14137,-42.862197)">
       <g
          transform="translate(-220.80152,-91.11908)"
          id="g3747"
@@ -3801,7 +3802,7 @@
     </g>
     <g
        style="display:inline"
-       transform="translate(303.14137,18.017221)"
+       transform="translate(303.14137,-1.5717461)"
        id="g4618">
       <g
          inkscape:label="#g3723"
@@ -3848,6 +3849,60 @@
          transform="translate(-188.80146,-71.083514)"
          id="g4636"
          inkscape:label="#g3723" />
+    </g>
+    <g
+       id="g3674"
+       transform="translate(303.14137,32.84057)"
+       style="display:inline">
+      <g
+         transform="translate(-220.80152,-91.11908)"
+         id="g3676"
+         inkscape:label="#g3723" />
+      <g
+         inkscape:label="#g3723"
+         id="g3691"
+         transform="translate(-188.80146,-71.083514)" />
+    </g>
+    <g
+       id="g3722"
+       transform="translate(1.5556789,6.8781263)">
+      <text
+         sodipodi:linespacing="125%"
+         id="text3678"
+         y="672.39246"
+         x="951.68805"
+         style="font-size:10px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+         xml:space="preserve"><tspan
+           id="tspan3680"
+           y="672.39246"
+           x="951.68805"
+           sodipodi:role="line">Tail Wind</tspan></text>
+      <g
+         inkscape:label="#Trip_Taxi_Fuel"
+         transform="translate(89.243841,4.026491)"
+         id="Trip_Wind"
+         style="display:inline">
+        <rect
+           ry="2.6635487"
+           y="670.14148"
+           x="840.0351"
+           height="20.100571"
+           width="44.266426"
+           id="rect5115-6-7-3"
+           style="color:#000000;fill:#2a7fff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        <text
+           inkscape:label="#Trip_Taxi_Fuel_Value"
+           xml:space="preserve"
+           style="font-size:14px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           x="861.91199"
+           y="685.01111"
+           id="Trip_Wind_Value"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan4196-2-7"
+             x="861.91199"
+             y="685.01111">1000</tspan></text>
+      </g>
     </g>
   </g>
 </svg>

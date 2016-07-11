@@ -967,6 +967,7 @@ var TripWidget = {
 				nm		: m._dialog._nRoot.initNode("trip/nm",250.0,"DOUBLE"),
 				departureAlt 	: m._dialog._nRoot.initNode("trip/departure/alt",250.0,"DOUBLE"),
 				destinationAlt 	: m._dialog._nRoot.initNode("trip/destination/alt",250.0,"DOUBLE"),
+				wind	: m._dialog._nRoot.initNode("trip/wind",0.0,"DOUBLE"),
 				
 			},
 		};
@@ -1006,6 +1007,9 @@ var TripWidget = {
 				departure 	: m._group.getElementById(m._name~"_Departure_Value"),
 				destinationFrame: m._group.getElementById(m._name~"_Destination"),
 				destination 	: m._group.getElementById(m._name~"_Destination_Value"),
+				windFrame	: m._group.getElementById(m._name~"_Wind"),
+				wind 		: m._group.getElementById(m._name~"_Wind_Value"),
+				
 				
 			},
 			graph : {
@@ -1090,7 +1094,8 @@ var TripWidget = {
 				fuel		: 0,
 				departure	: {alt : m._ptree.trip.departureAlt.getValue()},
 				destination	: {alt : m._ptree.trip.destinationAlt.getValue()},
-				cruisePower 	: "maxpow"
+				cruisePower 	: "maxpow",
+				wind		: m._ptree.trip.wind.getValue()
 			},
 			graph : {
 				x0	: 0,
@@ -1125,12 +1130,15 @@ var TripWidget = {
 		me._can.trip.departureFrame.addEventListener("drag",func(e){me._onDepartureAltChange(e);});
 		me._can.trip.destinationFrame.addEventListener("drag",func(e){me._onDestinationAltChange(e);});
 		
+		me._can.trip.windFrame.addEventListener("drag",func(e){me._onWindChange(e);});
+		me._can.trip.windFrame.addEventListener("wheel",func(e){me._onWindChange(e);});
 		
 		me._can.reserve.nmFrame.addEventListener("drag",func(e){me._onReserveNmChange(e);});
 		me._can.reserve.nmFrame.addEventListener("wheel",func(e){me._onReserveNmChange(e);});
 		
 		me._can.taxi.fuelFrame.addEventListener("drag",func(e){me._onTaxiFuelChange(e);});
 		me._can.taxi.fuelFrame.addEventListener("wheel",func(e){me._onTaxiFuelChange(e);});
+				
 		
 		me._can.btn.fromFpl.addEventListener("click",func(e){me._onFromFplClicked(e);});
 		me._can.btn.orderFuel.addEventListener("click",func(e){me._onOrderFuelClicked(e);});
@@ -1148,6 +1156,7 @@ var TripWidget = {
 		me.setListeners(instance);
 		me._draw();
 	},
+	
 	
 	setCruiseAlt : func(v){
 		me._data.cruise.alt = v;
@@ -1188,6 +1197,13 @@ var TripWidget = {
 		me._data.cruise.power = v;
 		me._ptree.cruise.power.setValue(me._data.cruise.power);
 	},
+	setWind : func(v){
+		me._data.trip.wind = v;
+		me._data.trip.wind = global.clamp(me._data.trip.wind,-100.0,100.0);
+		
+		me._ptree.trip.wind.setValue(me._data.trip.wind);
+	},
+	
 	
 	_onCruiseAltChange : func(e){
 		if(e.type == "wheel"){
@@ -1298,6 +1314,15 @@ var TripWidget = {
 		
 		me._draw();
 	},
+	_onWindChange : func(e){
+		if(e.type == "wheel"){
+			me._data.trip.wind += e.deltaY;
+		}else{
+			me._data.trip.wind -= e.deltaY;
+		}
+		me.setWind(me._data.trip.wind);
+		me._draw();
+	},
 	
 	
 	
@@ -1334,7 +1359,7 @@ var TripWidget = {
 				me._data.trip.nm,		# totalFlight
 				0,				# currentGS
 				0,				# currentFF
-				0				# windSp
+				me._data.trip.wind		# windSp
      			);
 		
 		me._data.climb.nm	= me._perf.data.climb.distance;
@@ -1374,7 +1399,7 @@ var TripWidget = {
 				me._data.reserve.nm,		# totalFlight
 				0,				# currentGS
 				0,				# currentFF
-				0				# windSp
+				me._data.trip.wind		# windSp
      			);
 		
 		
@@ -1411,7 +1436,6 @@ var TripWidget = {
 		
 		
 		
-		
 		me._can.graph.flFrame.setTranslation(0,-me._data.cruise.alt*me._data.graph.altScale);
 		me._can.graph.fl.setText(sprintf("%3i",math.floor(me._data.cruise.alt/100)));
 		
@@ -1440,6 +1464,7 @@ var TripWidget = {
 		me._can.trip.departure.setText(sprintf("%i",me._data.trip.departure.alt));
 		me._can.trip.destination.setText(sprintf("%i",me._data.trip.destination.alt));
 		
+		me._can.trip.wind.setText(sprintf("%i",me._data.trip.wind));
 		
 		me._can.graph.x0.setText(sprintf("%i",me._data.graph.x0));
 		me._can.graph.x25.setText(sprintf("%i",me._data.graph.x25));
