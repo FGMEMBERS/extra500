@@ -17,7 +17,7 @@
 #      Date: 04.04.2016
 #
 #      Last change: Eric van den Berg     
-#      Date: 07.07.2016            
+#      Date: 12.07.2016            
 #
 
 var loadPerformanceTables = func(path=""){
@@ -232,15 +232,24 @@ var PerfClass = {
 		var cruiseTime = 0;
 		var cruiseFuel = 0;
 
+var DISAtemp = 15;
+		var legendLenght = size(performanceTable.legend);
+		var index = me.findIndex(DISAtemp,legendLenght,performanceTable.legend,0);
+print(index);
+
+		var table = performanceTable.legend[index][1];
+print(table);
+#		var table = performanceTable.cruise2130ISA0;
+
 		if ( ( phase!="off" ) and (mode2!="distance" ) and (mode2!="fuel") ) {print("WARNING: when in flight, mode2 must be 'distance' or 'fuel'") } 
 
 		if ( (phase=="off") or (phase=="taxi") or (phase=="climb") or (phase=="descent") ) {
 			if (powerMode=="maxpow"){
-				cruiseSpeed = me.matrixinterp(performanceTable.cruise,cruiseAlt,ALTITUDE,maxSPEED) + windSp;
-				cruiseFF = me.matrixinterp(performanceTable.cruise,cruiseAlt,ALTITUDE,maxFFLOW);
+				cruiseSpeed = me.matrixinterp(table,cruiseAlt,ALTITUDE,maxSPEED) + windSp;
+				cruiseFF = me.matrixinterp(table,cruiseAlt,ALTITUDE,maxFFLOW);
 			} else if (powerMode=="minpow") {
-				cruiseSpeed = me.matrixinterp(performanceTable.cruise,cruiseAlt,ALTITUDE,minSPEED) + windSp;
-				cruiseFF = me.matrixinterp(performanceTable.cruise,cruiseAlt,ALTITUDE,minFFLOW);
+				cruiseSpeed = me.matrixinterp(table,cruiseAlt,ALTITUDE,minSPEED) + windSp;
+				cruiseFF = me.matrixinterp(table,cruiseAlt,ALTITUDE,minFFLOW);
 			} else {
 				print("ERROR: powerMode variable in cruise is not defined (correctly)");
 				return 1
@@ -308,15 +317,15 @@ var PerfClass = {
 			return 1
 		}
 
-		var NUMBER=0; var ALTITUDE=1; var SECONDS=2; var FUELLBS=3; var DIST=4;
+		var NUMBER=0; var ALTITUDE=1; var SECISAm20=2; var FUELLBSISAm20=3; var DISTISAm20=4; var SECISA0=5; var FUELLBSISA0=6; var DISTISA0=7; var SECISAp30=8; var FUELLBSISAp30=9; var DISTISAp30=10;
 
 		if ( (phase == "off") or (phase == "taxi") ) {
-			timeToAlt = me.matrixinterp(performanceTable.climb,desAlt,ALTITUDE,SECONDS) - me.matrixinterp(performanceTable.climb,currentAlt,ALTITUDE,SECONDS);
-			fuelToAlt = me.matrixinterp(performanceTable.climb,desAlt,ALTITUDE,FUELLBS) - me.matrixinterp(performanceTable.climb,currentAlt,ALTITUDE,FUELLBS);
-			distanceToAlt = me.matrixinterp(performanceTable.climb,desAlt,ALTITUDE,DIST) - me.matrixinterp(performanceTable.climb,currentAlt,ALTITUDE,DIST) + windSp * timeToAlt / 3600;
+			timeToAlt = me.matrixinterp(performanceTable.climb2130,desAlt,ALTITUDE,SECISA0) - me.matrixinterp(performanceTable.climb2130,currentAlt,ALTITUDE,SECISA0);
+			fuelToAlt = me.matrixinterp(performanceTable.climb2130,desAlt,ALTITUDE,FUELLBSISA0) - me.matrixinterp(performanceTable.climb2130,currentAlt,ALTITUDE,FUELLBSISA0);
+			distanceToAlt = me.matrixinterp(performanceTable.climb2130,desAlt,ALTITUDE,DISTISA0) - me.matrixinterp(performanceTable.climb2130,currentAlt,ALTITUDE,DISTISA0) + windSp * timeToAlt / 3600;
 		} else if ( (phase == "climb") ) {
-			timeToAlt = me.matrixinterp(performanceTable.climb,desAlt,ALTITUDE,SECONDS) - me.matrixinterp(performanceTable.climb,currentAlt,ALTITUDE,SECONDS);
-			fuelToAlt = me.matrixinterp(performanceTable.climb,desAlt,ALTITUDE,FUELLBS) - me.matrixinterp(performanceTable.climb,currentAlt,ALTITUDE,FUELLBS);
+			timeToAlt = me.matrixinterp(performanceTable.climb2130,desAlt,ALTITUDE,SECISA0) - me.matrixinterp(performanceTable.climb2130,currentAlt,ALTITUDE,SECISA0);
+			fuelToAlt = me.matrixinterp(performanceTable.climb2130,desAlt,ALTITUDE,FUELLBSISA0) - me.matrixinterp(performanceTable.climb2130,currentAlt,ALTITUDE,FUELLBSISA0);
 			distanceToAlt = currentGS * timeToAlt / 3600;
 		} else if ( (phase=="cruise") or (phase=="descent") ) {
 			# all stays 0
@@ -425,13 +434,44 @@ var PerfClass = {
 		if ( x <= matrix[0][x1] ) { return matrix[0][y1] }
 		if ( x >= matrix[length-1][x1] ) { return matrix[length-1][y1] }
 
+#		for(var index=0; index <= length-1; index=index+1) {
+#			if ( (x > matrix[index][x1]) and (x <= matrix[index+1][x1]) ) {
+		var index = me.findIndex(x,length,matrix,x1);
+		return me.lininterp(x,matrix[index][x1],matrix[index+1][x1],matrix[index][y1],matrix[index+1][y1])
+#			}
+#		}
+	},
+#-----------------------------------------------------------------------
+# LINEAR INTERPOLATION--------------------------------------------------
+#-----------------------------------------------------------------------
+# x = search value;  
+# x0 <= x <= x1
+# y0 corresponds to x0, y1 corresponds to x1, 
+# returns a value y linear interpolated between y0 and y1, depending on x 
+#
+
+	lininterp : func(x,x0,x1,y0,y1){
+		if (x<=x0) {return y0}
+		if (x>=x1) {return y1}
+		return y0 + ( y1 - y0 ) / (x1 - x0 ) * (x - x0) 
+	},
+#-----------------------------------------------------------------------
+# INDEX of MATRIX--------------------------------------------------
+#-----------------------------------------------------------------------
+# x = search value;  
+# returns the (row-) index of the matrix when matrix[index][column] <= x <= matrix[index+1][column] 
+#
+
+	findIndex : func(x,length,matrix,column){
+		if (x <= matrix[0][column]) { return 0 }
+		if (x >= matrix[length-1][column]) { return length-1 }
+
 		for(var index=0; index <= length-1; index=index+1) {
-			if ( (x > matrix[index][x1]) and (x <= matrix[index+1][x1]) ) {
-				return matrix[index][y1] + (x - matrix[index][x1]) / (matrix[index+1][x1] - matrix[index][x1] ) * (matrix[index+1][y1] - matrix[index][y1])
+			if ( (x >= matrix[index][column]) and (x <= matrix[index+1][column]) ) {
+				return index
 			}
 		}
 	},
-
 	
 };
 
