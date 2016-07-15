@@ -17,7 +17,7 @@
 #	Date: 		Mai 02 2015
 #
 #	Last change:	Eric van den Berg
-#	Date:			07.07.16
+#	Date:			15.07.16
 #
 
 var MyWindow = {
@@ -1359,7 +1359,8 @@ var TripWidget = {
 				me._data.trip.nm,		# totalFlight
 				0,				# currentGS
 				0,				# currentFF
-				me._data.trip.wind		# windSp
+				me._data.trip.wind,		# windSp
+				0				# Delta ISA in degC
      			);
 		
 		me._data.climb.nm	= me._perf.data.climb.distance;
@@ -1399,7 +1400,8 @@ var TripWidget = {
 				me._data.reserve.nm,		# totalFlight
 				0,				# currentGS
 				0,				# currentFF
-				me._data.trip.wind		# windSp
+				me._data.trip.wind,		# windSp
+				0				# Delta ISA in degC
      			);
 		
 		
