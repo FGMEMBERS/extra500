@@ -968,6 +968,7 @@ var TripWidget = {
 				departureAlt 	: m._dialog._nRoot.initNode("trip/departure/alt",250.0,"DOUBLE"),
 				destinationAlt 	: m._dialog._nRoot.initNode("trip/destination/alt",250.0,"DOUBLE"),
 				wind	: m._dialog._nRoot.initNode("trip/wind",0.0,"DOUBLE"),
+				isa	: m._dialog._nRoot.initNode("trip/isa",0.0,"DOUBLE"),
 				
 			},
 		};
@@ -1009,6 +1010,8 @@ var TripWidget = {
 				destination 	: m._group.getElementById(m._name~"_Destination_Value"),
 				windFrame	: m._group.getElementById(m._name~"_Wind"),
 				wind 		: m._group.getElementById(m._name~"_Wind_Value"),
+				isaFrame	: m._group.getElementById(m._name~"_ISA"),
+				isa 		: m._group.getElementById(m._name~"_ISA_Value"),
 				
 				
 			},
@@ -1095,7 +1098,9 @@ var TripWidget = {
 				departure	: {alt : m._ptree.trip.departureAlt.getValue()},
 				destination	: {alt : m._ptree.trip.destinationAlt.getValue()},
 				cruisePower 	: "maxpow",
-				wind		: m._ptree.trip.wind.getValue()
+				wind		: m._ptree.trip.wind.getValue(),
+				isa		: m._ptree.trip.isa.getValue(),
+				
 			},
 			graph : {
 				x0	: 0,
@@ -1132,6 +1137,10 @@ var TripWidget = {
 		
 		me._can.trip.windFrame.addEventListener("drag",func(e){me._onWindChange(e);});
 		me._can.trip.windFrame.addEventListener("wheel",func(e){me._onWindChange(e);});
+		
+		me._can.trip.isaFrame.addEventListener("drag",func(e){me._onIsaChange(e);});
+		me._can.trip.isaFrame.addEventListener("wheel",func(e){me._onIsaChange(e);});
+		
 		
 		me._can.reserve.nmFrame.addEventListener("drag",func(e){me._onReserveNmChange(e);});
 		me._can.reserve.nmFrame.addEventListener("wheel",func(e){me._onReserveNmChange(e);});
@@ -1202,6 +1211,12 @@ var TripWidget = {
 		me._data.trip.wind = global.clamp(me._data.trip.wind,-100.0,100.0);
 		
 		me._ptree.trip.wind.setValue(me._data.trip.wind);
+	},
+	setISA : func(v){
+		me._data.trip.isa = v;
+		me._data.trip.isa = global.clamp(me._data.trip.isa,-30,30);
+		
+		me._ptree.trip.isa.setValue(me._data.trip.isa);
 	},
 	
 	
@@ -1278,6 +1293,9 @@ var TripWidget = {
 			me.setDestinationAlt(getprop("/autopilot/route-manager/destination/field-elevation-ft"));
 			me.setCruiseAlt(me._perf.RecomAlt(me._data.trip.nm,me._data.trip.departure.alt,me._data.trip.destination.alt));
 			
+
+			me.setISA(me._perf.D_ISA(getprop("/instrumentation/altimeter/pressure-alt-ft"),getprop("/environment/temperature-degc")));
+			
 		}
 		me._draw();
 	},
@@ -1323,6 +1341,15 @@ var TripWidget = {
 		me.setWind(me._data.trip.wind);
 		me._draw();
 	},
+	_onIsaChange : func(e){
+		if(e.type == "wheel"){
+			me._data.trip.isa += e.deltaY;
+		}else{
+			me._data.trip.isa -= e.deltaY;
+		}
+		me.setISA(me._data.trip.isa);
+		me._draw();
+	},
 	
 	
 	
@@ -1360,7 +1387,7 @@ var TripWidget = {
 				0,				# currentGS
 				0,				# currentFF
 				me._data.trip.wind,		# windSp
-				0				# Delta ISA in degC
+				me._data.trip.isa		# Delta ISA in degC
      			);
 		
 		me._data.climb.nm	= me._perf.data.climb.distance;
@@ -1401,7 +1428,7 @@ var TripWidget = {
 				0,				# currentGS
 				0,				# currentFF
 				me._data.trip.wind,		# windSp
-				0				# Delta ISA in degC
+				me._data.trip.isa		# Delta ISA in degC
      			);
 		
 		
@@ -1467,6 +1494,7 @@ var TripWidget = {
 		me._can.trip.destination.setText(sprintf("%i",me._data.trip.destination.alt));
 		
 		me._can.trip.wind.setText(sprintf("%i",me._data.trip.wind));
+		me._can.trip.isa.setText(sprintf("%i",me._data.trip.isa));
 		
 		me._can.graph.x0.setText(sprintf("%i",me._data.graph.x0));
 		me._can.graph.x25.setText(sprintf("%i",me._data.graph.x25));
