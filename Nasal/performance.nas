@@ -17,7 +17,7 @@
 #      Date: 04.04.2016
 #
 #      Last change: Eric van den Berg     
-#      Date: 15.07.2016            
+#      Date: 17.07.2016            
 #
 
 var loadPerformanceTables = func(path=""){
@@ -452,7 +452,15 @@ var PerfClass = {
 		
 		return recomalt = math.round( math.clamp(recomalt,maxAirportAlt,25000),100);		
 	},
-
+#-----------------------------------------------------------------------
+# Delta ISA ------------------------------------------------------------
+#-----------------------------------------------------------------------
+# calculates the ISA+ value dependent on pressure altitude and local temperature (ft and degC)
+# Tropospere (up to 11000m) only! Although it can be easily extended...
+#
+	D_ISA : func(pressAlt_ft=0,Temp_degC=15){
+		return Temp_degC -(15 - 0.0065 * pressAlt_ft * 0.3048);		
+	},
 #-----------------------------------------------------------------------
 # MATRIX INTERPOLATION--------------------------------------------------
 #-----------------------------------------------------------------------
