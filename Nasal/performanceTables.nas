@@ -17,16 +17,16 @@
 #      Date: 04.04.2016
 #
 #      Last change: Eric van den Berg     
-#      Date: 15.07.2016            
+#      Date: 21.07.2016            
 #
 
 # The performance Table Data loaded by performance.nas
 
 var performanceTable = {
 	legend : [
-			[ -20 ,"performanceTable.cruise2130ISAm20","performanceTable.climb2130ISAm20" ],
-			[ 0   ,"performanceTable.cruise2130ISA0",  "performanceTable.climb2130ISA0" ],
-			[ 30  ,"performanceTable.cruise2130ISAp30","performanceTable.climb2130ISAp30" ]
+			[ -20 ,"performanceTable.cruise2130ISAm20","performanceTable.climb2130ISAm20","performanceTable.ReconAltISAm20" ],
+			[ 0   ,"performanceTable.cruise2130ISA0",  "performanceTable.climb2130ISA0","performanceTable.ReconAltISA0" ],
+			[ 30  ,"performanceTable.cruise2130ISAp30","performanceTable.climb2130ISAp30","performanceTable.ReconAltISAp30" ]
 		],
 	cruise2130ISA0 : [
 			[1,0,199,242,145,155],
@@ -189,11 +189,28 @@ var performanceTable = {
 			[26,25000,750,29,48]
 		],
 	taxi : [],
-	ReconAlt : [
+	ReconAltISA0 : [
 				[1,0,0],
 				[2,45,5000],
 				[3,80,16000],
 				[4,180,25000]
+		],
+	ReconAltISAm20 : [
+				[1,0,0],
+				[2,30,1500],
+				[3,80,13000],
+				[4,130,20500],
+				[5,180,25000]
+		],
+	ReconAltISAp30 : [
+				[1,0,0],
+				[2,30,4000],
+				[3,80,11500],
+				[4,130,14500],
+				[5,180,17000],
+				[5,230,21600],
+				[5,280,24000],
+				[5,330,25000]
 		]
 };
 

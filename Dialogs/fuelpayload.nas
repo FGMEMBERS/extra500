@@ -17,7 +17,7 @@
 #	Date: 		Mai 02 2015
 #
 #	Last change:	Eric van den Berg
-#	Date:			15.07.16
+#	Date:			21.07.16
 #
 
 var MyWindow = {
@@ -1214,7 +1214,7 @@ var TripWidget = {
 	},
 	setISA : func(v){
 		me._data.trip.isa = v;
-		me._data.trip.isa = global.clamp(me._data.trip.isa,-30,30);
+		me._data.trip.isa = global.clamp(me._data.trip.isa,-20,30);
 		
 		me._ptree.trip.isa.setValue(me._data.trip.isa);
 	},
@@ -1291,7 +1291,7 @@ var TripWidget = {
 #			me.setCruiseAlt(getprop("/autopilot/route-manager/cruise/altitude-ft"));
 			me.setDepartureAlt(getprop("/autopilot/route-manager/departure/field-elevation-ft"));
 			me.setDestinationAlt(getprop("/autopilot/route-manager/destination/field-elevation-ft"));
-			me.setCruiseAlt(me._perf.RecomAlt(me._data.trip.nm,me._data.trip.departure.alt,me._data.trip.destination.alt));
+			me.setCruiseAlt(me._perf.RecomAlt(me._data.trip.nm,me._data.trip.departure.alt,me._data.trip.destination.alt,me._data.trip.isa));
 			
 			
 			me.setWind(me.getTailWind(getprop("/autopilot/route-manager/departure/airport"),getprop("/autopilot/route-manager/destination/airport")));
@@ -1328,7 +1328,7 @@ var TripWidget = {
 		}
 	},
 	_onAdvisedFlClicked : func(e){
-		var cruiseAlt = me._perf.RecomAlt(me._data.trip.nm,me._data.trip.departure.alt,me._data.trip.destination.alt);
+		var cruiseAlt = me._perf.RecomAlt(me._data.trip.nm,me._data.trip.departure.alt,me._data.trip.destination.alt,me._data.trip.isa);
 		
 		me.setCruiseAlt(cruiseAlt);
 		
@@ -1459,7 +1459,7 @@ var TripWidget = {
 		
 		### calcucate the reserve Trip
 		
-		var cruiseAlt = me._perf.RecomAlt(me._data.reserve.nm,me._data.trip.destination.alt,me._data.trip.destination.alt);
+		var cruiseAlt = me._perf.RecomAlt(me._data.reserve.nm,me._data.trip.destination.alt,me._data.trip.destination.alt,me._data.trip.isa);
 		
 		me._perf.trip(
 				"off",				# phase

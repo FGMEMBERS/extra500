@@ -17,7 +17,7 @@
 #      Date: 04.04.2016
 #
 #      Last change: Eric van den Berg     
-#      Date: 17.07.2016            
+#      Date: 21.07.2016            
 #
 
 var loadPerformanceTables = func(path=""){
@@ -438,7 +438,17 @@ var PerfClass = {
 #-----------------------------------------------------------------------
 # calculates a recommended altitude based on trip distance and airport altitudes 
 #
-	RecomAlt : func(tripDistance,airportAlt,desAlt){
+	RecomAlt : func(tripDistance,airportAlt,desAlt,TDISA){
+
+		var legendLenght = size(performanceTable.legend);
+		var index0 = me.findIndex(TDISA,legendLenght,performanceTable.legend,0);
+		var index1 = math.min(index0+1,legendLenght-1);
+
+		var table0a = compile(performanceTable.legend[index0][3]);
+		var table0 = table0a();
+		var table1a = compile(performanceTable.legend[index1][3]);
+		var table1 = table1a();
+
 		var NUMBER=0; var DISTANCE=1; var ALTITUDE=2;
 
 		var recomalt = 0;
@@ -448,7 +458,9 @@ var PerfClass = {
 		
 		var maxAirportAlt = math.max(airportAlt,desAlt);
 
-		recomalt = me.matrixinterp(performanceTable.ReconAlt,tripDistance,DISTANCE,ALTITUDE);
+		var recomalt0 = me.matrixinterp(table0,tripDistance,DISTANCE,ALTITUDE);
+		var recomalt1 = me.matrixinterp(table1,tripDistance,DISTANCE,ALTITUDE);
+		recomalt = me.lininterp(TDISA,performanceTable.legend[index0][0],performanceTable.legend[index1][0],recomalt0,recomalt1);
 		
 		return recomalt = math.round( math.clamp(recomalt,maxAirportAlt,25000),100);		
 	},
@@ -477,8 +489,6 @@ var PerfClass = {
 		if ( x <= matrix[0][x1] ) { return matrix[0][y1] }
 		if ( x >= matrix[length-1][x1] ) { return matrix[length-1][y1] }
 
-#		for(var index=0; index <= length-1; index=index+1) {
-#			if ( (x > matrix[index][x1]) and (x <= matrix[index+1][x1]) ) {
 		var index = me.findIndex(x,length,matrix,x1);
 		return me.lininterp(x,matrix[index][x1],matrix[index+1][x1],matrix[index][y1],matrix[index+1][y1])
 #			}
