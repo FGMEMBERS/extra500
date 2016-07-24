@@ -21,22 +21,43 @@
 #
 # note: some parts are taken from fgdata/gui/dialogs/weather.xml
 
+
+# a Box to collect/remove the unique listener id returned by setlistener()
+### TODO: move to a better place in a more global namespace 
+var ListenerBox = {
+	new: func(){
+		var m = { parents: [ListenerBox] };
+		m._listeners = [];
+		return m;
+	},
+	append : func(l){
+		append(me._listeners,l);
+	},
+	removeAll : func(){
+		foreach(var l;me._listeners){
+			removelistener(l);
+		}
+		me._listeners = [];
+	}
+};
+
+var weatherListenerBox = ListenerBox.new();
+
 setlistener("/extra500/weather/smooth", func {
 	init_weather();
-});
+},0,0);
 
-setlistener("/environment/metar/valid", func {
+
+var onMetarValidChange = func(n){
 	if (getprop("/environment/metar/valid")==0) {
 		setprop("/environment/params/metar-updates-environment",0);
 	} else if (getprop("/extra500/weather/ready") == 1) {
 		buildMetar();
 		setprop("/environment/params/metar-updates-environment",1);
 	}
+};
 
-});
-
-
-setlistener("/extra500/weather/ready", func {
+var onWeatherReadyChange = func(n){
 	if (getprop("/extra500/weather/ready") == 1) {
 
 		var noruns = getprop("extra500/weather/noruns");
@@ -51,23 +72,31 @@ setlistener("/extra500/weather/ready", func {
 			setprop("/nasal/local_weather/enabled", "false");          
 		} 
 	}
-});
+};
+
 
 var init_weather = func() {
     if (getprop("/extra500/weather/smooth") == 1)  {
-            setprop( "/environment/params/metar-updates-environment", 1 ); # makes sure it follows (new) metar set in /environment/metar/data
-            setprop( "/environment/realwx/enabled", 1 ); # make sure metars can be picked up
-            setprop( "/environment/config/enabled", 1 );
-		weatherService.init();
-		weatherService.start();
-		UI.msg.info("Smooth weather is now active");
+
+	weatherListenerBox.append(setlistener("/environment/metar/valid",onMetarValidChange ,0,0));
+	weatherListenerBox.append(setlistener("/extra500/weather/ready",onWeatherReadyChange ,0,0));
+
+	setprop( "/environment/params/metar-updates-environment", 1 ); # makes sure it follows (new) metar set in /environment/metar/data
+	setprop( "/environment/realwx/enabled", 1 ); # make sure metars can be picked up
+	setprop( "/environment/config/enabled", 1 );
+	weatherService.init();
+	weatherService.start();
+	UI.msg.info("Smooth weather is now active");
     } else {
-		setprop("extra500/weather/noruns",0);
-		setprop("/extra500/weather/ready",0);
-		setprop("/environment/params/metar-updates-environment",1);
-		weatherService.stop();
-		setprop("/extra500/weather/range-nm",getprop("/extra500/weather/min-range-nm"));
-		UI.msg.info("Smooth weather is de-activated");
+	    
+	weatherListenerBox.removeAll();
+
+	setprop("extra500/weather/noruns",0);
+	setprop("/extra500/weather/ready",0);
+	setprop("/environment/params/metar-updates-environment",1);
+	weatherService.stop();
+	setprop("/extra500/weather/range-nm",getprop("/extra500/weather/min-range-nm"));
+	UI.msg.info("Smooth weather is de-activated");
     }
 }
 
