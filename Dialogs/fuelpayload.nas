@@ -1287,6 +1287,15 @@ var TripWidget = {
 		
 		if (totalDistance > 0){
 						
+			var groundTemp = 15.0;
+			groundTemp = getprop("/environment/temperature-degc");
+			# target for /environment/temperature-degc interpolation 
+			groundTemp = getprop("/environment/config/boundary/entry[0]/temperature-degc");
+						
+			me.setISA(me._perf.D_ISA(getprop("/instrumentation/altimeter/pressure-alt-ft"),groundTemp));
+			me.setWind(me.getTailWind(getprop("/autopilot/route-manager/departure/airport"),getprop("/autopilot/route-manager/destination/airport")));
+			
+			
 			me.setTripNm(totalDistance);
 #			me.setCruiseAlt(getprop("/autopilot/route-manager/cruise/altitude-ft"));
 			me.setDepartureAlt(getprop("/autopilot/route-manager/departure/field-elevation-ft"));
@@ -1294,9 +1303,8 @@ var TripWidget = {
 			me.setCruiseAlt(me._perf.RecomAlt(me._data.trip.nm,me._data.trip.departure.alt,me._data.trip.destination.alt,me._data.trip.isa));
 			
 			
-			me.setWind(me.getTailWind(getprop("/autopilot/route-manager/departure/airport"),getprop("/autopilot/route-manager/destination/airport")));
-
-			me.setISA(me._perf.D_ISA(getprop("/instrumentation/altimeter/pressure-alt-ft"),getprop("/environment/temperature-degc")));
+			
+			
 			
 		}
 		me._draw();
@@ -1355,45 +1363,47 @@ var TripWidget = {
 	
 	getTailWind : func(departure,destination) {
 		var tailWind = 0;
-		
-		var depInfo 	= airportinfo(departure);
-		var destInfo 	= airportinfo(destination);
-		
-		# course is reverse to get tail wind
-		var (course, dist) 	= courseAndDistance(destInfo, depInfo);
-		
-		var windDirection	= getprop("/environment/wind-from-heading-deg");
-		var windSpeed		= getprop("/environment/wind-speed-kt");
-		var temperature_C 	= getprop("/environment/temperature-degc");
-		var elevation_ft 	= 0;
-		
-		var aloftTable = props.globals.getNode("/environment/config/aloft");
-		
-		print("--- aloft table ---");
-		print("\t  Alt\ttemp\twind\tspeed");
-		
-		foreach(var entry ; aloftTable.getChildren("entry")){
+		if (getprop("/environment/metar/valid") == 1){
+			var depInfo 	= airportinfo(departure);
+			var destInfo 	= airportinfo(destination);
 			
-			if (entry.getNode("elevation-ft").getValue() >= me._data.cruise.alt){
-				break;
+			# course is reverse to get tail wind
+			var (course, dist) 	= courseAndDistance(destInfo, depInfo);
+			
+			var windDirection	= getprop("/environment/wind-from-heading-deg");
+			var windSpeed		= getprop("/environment/wind-speed-kt");
+			var temperature_C 	= getprop("/environment/temperature-degc");
+			var elevation_ft 	= 0;
+			
+			var aloftTable = props.globals.getNode("/environment/config/aloft");
+			
+			print("--- aloft table ---");
+			print("\t  Alt\ttemp\twind\tspeed");
+			
+			foreach(var entry ; aloftTable.getChildren("entry")){
+				
+				if (entry.getNode("elevation-ft").getValue() >= me._data.cruise.alt){
+					break;
+				}
+				elevation_ft 	= entry.getNode("elevation-ft").getValue();
+				temperature_C	= entry.getNode("temperature-degc").getValue();
+				windDirection 	= entry.getNode("wind-from-heading-deg").getValue();
+				windSpeed	= entry.getNode("wind-speed-kt").getValue();
+				print (sprintf("\t%5ift\t%3.1f°C\t%3i°\t%3.1fkn",elevation_ft,temperature_C,windDirection,windSpeed));
+				
+				
 			}
-			elevation_ft 	= entry.getNode("elevation-ft").getValue();
-			temperature_C	= entry.getNode("temperature-degc").getValue();
-			windDirection 	= entry.getNode("wind-from-heading-deg").getValue();
-			windSpeed	= entry.getNode("wind-speed-kt").getValue();
-			print (sprintf("\t%5ift\t%3.1f°C\t%3i°\t%3.1fkn",elevation_ft,temperature_C,windDirection,windSpeed));
 			
+			var distanceSpeedError = (0.5 * dist/100);
+			distanceSpeedError = 0;
 			
+			tailWind = (windSpeed * math.cos((windDirection - course) * D2R)) - distanceSpeedError;
+			
+			print (sprintf("cruise aloft: alt: %5ift, temp: %3.1f°C, direction: %3i°, speed: %3.1fkn, course: %3i° = TailWind: %3.1fkn ",elevation_ft,temperature_C,windDirection,windSpeed,course,tailWind));
+		
+		}else{
+			print("aloft : metar not valid. no TailWind calculation.");
 		}
-		
-		var distanceSpeedError = (0.5 * dist/100);
-		distanceSpeedError = 0;
-		
-		tailWind = (windSpeed * math.cos((windDirection - course) * D2R)) - distanceSpeedError;
-		
-		print (sprintf("cruise aloft: alt: %5ift, temp: %3.1f°C, direction: %3i°, speed: %3.1fkn, course: %3i° = TailWind: %3.1fkn ",elevation_ft,temperature_C,windDirection,windSpeed,course,tailWind));
-		
-		
 		
 		return tailWind;
 	},
