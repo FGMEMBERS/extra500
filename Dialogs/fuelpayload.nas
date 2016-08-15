@@ -17,7 +17,7 @@
 #	Date: 		Mai 02 2015
 #
 #	Last change:	Eric van den Berg
-#	Date:			21.07.16
+#	Date:			15.08.16
 #
 
 var MyWindow = {
@@ -1377,8 +1377,8 @@ var TripWidget = {
 			
 			var aloftTable = props.globals.getNode("/environment/config/aloft");
 			
-			print("--- aloft table ---");
-			print("\t  Alt\ttemp\twind\tspeed");
+#			print("--- aloft table ---");
+#			print("\t  Alt\ttemp\twind\tspeed");
 			
 			foreach(var entry ; aloftTable.getChildren("entry")){
 				
@@ -1389,7 +1389,7 @@ var TripWidget = {
 				temperature_C	= entry.getNode("temperature-degc").getValue();
 				windDirection 	= entry.getNode("wind-from-heading-deg").getValue();
 				windSpeed	= entry.getNode("wind-speed-kt").getValue();
-				print (sprintf("\t%5ift\t%3.1f°C\t%3i°\t%3.1fkn",elevation_ft,temperature_C,windDirection,windSpeed));
+#				print (sprintf("\t%5ift\t%3.1f°C\t%3i°\t%3.1fkn",elevation_ft,temperature_C,windDirection,windSpeed));
 				
 				
 			}
@@ -1399,10 +1399,10 @@ var TripWidget = {
 			
 			tailWind = (windSpeed * math.cos((windDirection - course) * D2R)) - distanceSpeedError;
 			
-			print (sprintf("cruise aloft: alt: %5ift, temp: %3.1f°C, direction: %3i°, speed: %3.1fkn, course: %3i° = TailWind: %3.1fkn ",elevation_ft,temperature_C,windDirection,windSpeed,course,tailWind));
+#			print (sprintf("cruise aloft: alt: %5ift, temp: %3.1f°C, direction: %3i°, speed: %3.1fkn, course: %3i° = TailWind: %3.1fkn ",elevation_ft,temperature_C,windDirection,windSpeed,course,tailWind));
 		
 		}else{
-			print("aloft : metar not valid. no TailWind calculation.");
+#			print("aloft : metar not valid. no TailWind calculation.");
 		}
 		
 		return tailWind;
