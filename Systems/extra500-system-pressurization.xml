@@ -20,7 +20,7 @@
       Date: 2013-08-02
 
       Last change:      Eric van den Berg
-      Date:             2014-01-17
+      Date:             2016-05-23
 -->
 
 <!--
@@ -34,7 +34,7 @@
 /gear/gear/wow
 -->
 <system name="pressurization">
-	<channel name="controlvalve">
+	<channel name="controlvalve" execrate="12">
 
 		<switch name="/systems/pressurization/switches/bleedairin">
 			<default value="0"/>
@@ -128,7 +128,7 @@
 							</sum>
 							<value>0.1</value>
 						</pow>
-						<property>sim-dt-sec</property>
+						<property>sim12-dt-sec</property>
 						<property>/extra500/const/SEC2MIN</property>
 					</product>
 				</sum>
@@ -210,7 +210,7 @@ EDIT:
 
 	</channel>
 
-	<channel name="safetyvalve">
+	<channel name="safetyvalve" execrate="12">
 
 		<switch name="/systems/pressurization/switches/dumping">
 			<default value="0"/>

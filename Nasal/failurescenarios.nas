@@ -17,9 +17,15 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 20.12.2015            
+#      Date: 28.05.2016            
 #
 # 
+
+#var failureset = [
+#	[1,"RMG_jammed","RMG(fail)"],
+#	[2,"LMG_jammed","LMG(fail)"],
+#	[3,"NG_jammed","NG(fail)"]
+#];
 
 setlistener("/extra500/failurescenarios/activate", func {
 	var fail = getprop("/extra500/failurescenarios/activate");
@@ -131,6 +137,10 @@ var set_failure = func(fail) {
 	var failure = getprop("/extra500/failurescenarios/name");	# getting failure name
 	if (failure != "") {
 # gear
+#		foreach(var fault; failureset) {
+#	print(fault[0],fault[1],fault[2]);
+#			if (failure == fault[1] ) { call(fault[2],[fail],nil,nil); }
+#		}
 		if (failure == "RMG_jammed") { RMG(fail); }
 		else if (failure == "LMG_jammed") { LMG(fail); }
 		else if (failure == "NG_jammed") { NG(fail); }
@@ -182,7 +192,33 @@ var set_failure = func(fail) {
 	# transfer system failures
 		else if (failure == "LtransferPumpFail") { setprop("/systems/fuel/LHtank/motivepump/serviceable", math.abs(fail-1) ); }
 		else if (failure == "RtransferPumpFail") { setprop("/systems/fuel/RHtank/motivepump/serviceable", math.abs(fail-1) ); }
+		else if (failure == "LtransfilterFail") { setprop("/systems/fuel/LHtank/motivefilter/clogged", fail ); }
+		else if (failure == "RtransfilterFail") { setprop("/systems/fuel/RHtank/motivefilter/clogged", fail ); }
+		else if (failure == "LMinnerjetpumpFail") { setprop("/systems/fuel/LHtank/main/innerjetpump/clogged", fail ); }
+		else if (failure == "RMinnerjetpumpFail") { setprop("/systems/fuel/RHtank/main/innerjetpump/clogged", fail ); }
+		else if (failure == "LMouterjetpumpFail") { setprop("/systems/fuel/LHtank/main/outerjetpump/clogged", fail ); }
+		else if (failure == "RMouterjetpumpFail") { setprop("/systems/fuel/RHtank/main/outerjetpump/clogged", fail ); }
+		else if (failure == "LAjetpumpFail") { setprop("/systems/fuel/LHtank/aux/jetpump/clogged", fail ); }
+		else if (failure == "RAjetpumpFail") { setprop("/systems/fuel/RHtank/aux/jetpump/clogged", fail ); }
 
+# de- and anti-ice
+		else if (failure == "InletAntiIceFail") { setprop("/extra500/system/deice/IntakeHeat/serviceable", math.abs(fail-1) ); }
+	# electric systems
+		else if (failure == "LHPitotHeatFail") { setprop("/extra500/system/deice/PitotHeatLeft/service/serviceable", math.abs(fail-1) ); }
+		else if (failure == "RHPitotHeatFail") { setprop("/extra500/system/deice/PitotHeatRight/service/serviceable", math.abs(fail-1) ); }
+		else if (failure == "StallHeatFail") { setprop("/extra500/system/deice/StallHeat/service/serviceable", math.abs(fail-1) ); }
+		else if (failure == "LHStaticHeatFail") { setprop("/extra500/system/deice/StaticHeatLeft/service/serviceable", math.abs(fail-1) ); }
+		else if (failure == "RHStaticHeatFail") { setprop("/extra500/system/deice/StaticHeatRight/service/serviceable", math.abs(fail-1) ); }
+		else if (failure == "WindshieldHeatFail") { setprop("/extra500/system/deice/WindshieldHeat/service/serviceable", math.abs(fail-1) ); }
+		else if (failure == "PropHeatFail") { setprop("/extra500/system/deice/Propeller/service/serviceable", math.abs(fail-1) ); }
+	# boots
+		else if (failure == "LHinnerBootFail") { setprop("/systems/pneumatic/LHinnerBoot/serviceable", math.abs(fail-1) ); }
+		else if (failure == "RHinnerBootFail") { setprop("/systems/pneumatic/RHinnerBoot/serviceable", math.abs(fail-1) ); }
+		else if (failure == "LHouterBootFail") { setprop("/systems/pneumatic/LHouterBoot/serviceable", math.abs(fail-1) ); }
+		else if (failure == "RHouterBootFail") { setprop("/systems/pneumatic/RHouterBoot/serviceable", math.abs(fail-1) ); }
+		else if (failure == "VStabBootFail") { setprop("/systems/pneumatic/VStabBoot/serviceable", math.abs(fail-1) ); }
+		else if (failure == "LHHStabBootFail") { setprop("/systems/pneumatic/LHHStabBoot/serviceable", math.abs(fail-1) ); }
+		else if (failure == "RHHStabBootFail") { setprop("/systems/pneumatic/RHHStabBoot/serviceable", math.abs(fail-1) ); }
 	} else {
 		print("Error: No failure scenario name set");
 		setprop("/extra500/failurescenarios/activate",0);
@@ -262,7 +298,31 @@ var failure_reset = func() {
 	setprop("/systems/fuel/FFtransducer/blocked", 0 );
 	setprop("/systems/fuel/LHtank/motivepump/serviceable", 1 );
 	setprop("/systems/fuel/RHtank/motivepump/serviceable", 1 );
-
+	setprop("/systems/fuel/LHtank/motivefilter/clogged", 0 );
+	setprop("/systems/fuel/RHtank/motivefilter/clogged", 0 );
+	setprop("/systems/fuel/LHtank/main/innerjetpump/clogged", 0 );
+	setprop("/systems/fuel/LHtank/main/outerjetpump/clogged", 0 );
+	setprop("/systems/fuel/LHtank/aux/jetpump/clogged", 0 );
+	setprop("/systems/fuel/RHtank/main/innerjetpump/clogged", 0 );
+	setprop("/systems/fuel/RHtank/main/outerjetpump/clogged", 0 );
+	setprop("/systems/fuel/RHtank/aux/jetpump/clogged", 0 );
+#DEICE
+	setprop("/systems/pneumatic/leak", 0.0);
+	setprop("/extra500/system/deice/IntakeHeat/serviceable", 1 );
+	setprop("/extra500/system/deice/PitotHeatLeft/service/serviceable", 1 );
+	setprop("/extra500/system/deice/PitotHeatRight/service/serviceable", 1 );
+	setprop("/extra500/system/deice/StallHeat/service/serviceable", 1 ); 
+	setprop("/extra500/system/deice/StaticHeatLeft/service/serviceable", 1 ); 
+	setprop("/extra500/system/deice/StaticHeatRight/service/serviceable", 1 ); 
+	setprop("/extra500/system/deice/WindshieldHeat/service/serviceable", 1 ); 
+	setprop("/extra500/system/deice/Propeller/service/serviceable", 1 ); 
+	setprop("/systems/pneumatic/LHinnerBoot/serviceable", 1 );
+	setprop("/systems/pneumatic/RHinnerBoot/serviceable", 1 ); 
+	setprop("/systems/pneumatic/LHouterBoot/serviceable", 1 ); 
+	setprop("/systems/pneumatic/RHouterBoot/serviceable", 1 ); 
+	setprop("/systems/pneumatic/VStabBoot/serviceable", 1 ); 
+	setprop("/systems/pneumatic/LHHStabBoot/serviceable", 1 ); 
+	setprop("/systems/pneumatic/RHHStabBoot/serviceable", 1 ); 
 #GEAR
      	setprop("/systems/gear/RMG-free", 1 ); 
      	setprop("/systems/gear/LMG-free", 1 ); 
