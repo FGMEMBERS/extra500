@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2016-06-18
+      Date:             2016-08-16
 -->
 
 <system name="indication">
@@ -1620,6 +1620,40 @@
 			</function>			
 			<output>/fdm/jsbsim/inertia/nt-weight-lbs</output>
 		</fcs_function>
+	</channel>
+
+	<channel name="gloadwarnings" execrate="60">
+
+		<switch name="overgflup">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="AND">
+					/fdm/jsbsim/fcs/flap-pos-norm eq 0
+					/sim/signals/fdm-initialized eq 1
+				</test>
+				<test logic="OR">
+					/fdm/jsbsim/accelerations/n-pilot-z-norm lt -3.8
+					/fdm/jsbsim/accelerations/n-pilot-z-norm gt 1.5
+				</test>
+			</test>
+			<output>/fdm/jsbsim/aircraft/events/overgflup</output>
+		</switch>
+
+		<switch name="overgflext">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="AND">
+					/fdm/jsbsim/fcs/flap-pos-norm gt 0
+					/sim/signals/fdm-initialized eq 1
+				</test>
+				<test logic="OR">
+					/fdm/jsbsim/accelerations/n-pilot-z-norm lt -2.0
+					/fdm/jsbsim/accelerations/n-pilot-z-norm gt 0
+				</test>
+			</test>
+			<output>/fdm/jsbsim/aircraft/events/overgflext</output>
+		</switch>
+
 	</channel>
 
 </system>

@@ -17,7 +17,7 @@
 #      Date: 2013-06-16
 #
 #      Last change:      Eric van den Berg
-#      Date:             2014-02-03
+#      Date:             2016-08-16
 #
 
 # NOTE: AP messages are in the autopilot nasal file
@@ -81,6 +81,19 @@ setlistener("/fdm/jsbsim/aircraft/events/FLAPS15", func {
 	}
  }, 1, 0);
 
+# over-g messages: event properties are set in extra500-system-indication.xml
+
+setlistener("/fdm/jsbsim/aircraft/events/overgflup", func {
+	if ( getprop("/fdm/jsbsim/aircraft/events/overgflup") == 1 ) {
+		UI.msg.warning("Over-g! With flaps up you must stay between -1.5 and +3.8g or one day your wing will break off");
+	}
+ }, 1, 0);
+
+setlistener("/fdm/jsbsim/aircraft/events/overgflext", func {
+	if ( getprop("/fdm/jsbsim/aircraft/events/overgflext") == 1 ) {
+		UI.msg.warning("Over-g! With flaps extended you must stay between 0.0 and +2.0g or one day your flaps (or your wing...or both) will break off");
+	}
+ }, 1, 0);
 
 # Other messages
 

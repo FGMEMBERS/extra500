@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:      Eric van den Berg
-	Date:             15.08.2016
+	Date:             17.08.2016
 
 
 ************************************************************************
@@ -606,6 +606,10 @@ of the RR 250-B17F/2 engine is best.</long-description>
        </flight-recorder>
 
   <menubar include="Dialogs/extra500-menu.xml"/>
+
+	<signals>
+		<fdm-initialized></fdm-initialized>
+	</signals>
 
 </sim>
        <controls>
