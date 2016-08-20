@@ -76,7 +76,7 @@
 					<pow>
 						<max>
 							<value>0.0001</value>	
-							<property>sim-dt-sec</property>
+							<property>simulation/dt</property>
 						</max>
 						<value>-1.0</value>	
 					</pow>
@@ -113,7 +113,7 @@
 					<property>/autopilot/indication/reset</property>
 					<sum>
 						<property>/autopilot/indication/timer-sec</property>
-						<property>sim-dt-sec</property> 
+						<property>simulation/dt</property> 
 					</sum>
 				</product>
 			</function>
@@ -307,7 +307,7 @@
                                   	<property>/autopilot/mode/heading</property>
 						<value>1.0</value>
 						<property>/autopilot/hdg-channel/cmd-ail-change</property>
-						<property>sim-dt-sec</property>
+						<property>simulation/dt</property>
 					</product>
 				</sum>
 			</function>
@@ -446,7 +446,7 @@
 					<property>/autopilot/radionav-channel/needle-defl-gt-half</property>
 					<sum> 
 						<property>/autopilot/radionav-channel/timer-soft-lnd</property> 
-						<property>sim-dt-sec</property>
+						<property>simulation/dt</property>
 					</sum>
 				</product>
 			</function>
@@ -467,7 +467,7 @@
 					<property>/autopilot/radionav-channel/needle-defl-full</property>
 					<sum> 
 						<property>/autopilot/radionav-channel/timer-full-defl</property> 
-						<property>sim-dt-sec</property>
+						<property>simulation/dt</property>
 					</sum>
 				</product>
 			</function>
@@ -550,7 +550,7 @@
 					<property>/autopilot/radionav-channel/gain-mode</property>
 					<sum> 
 						<property>/autopilot/radionav-channel/timer-cap</property> 
-						<property>sim-dt-sec</property>
+						<property>simulation/dt</property>
 					</sum>
 				</product>
 			</function>
@@ -957,7 +957,7 @@
                                   	<property>/autopilot/mode/nav</property>
 						<value>1.0</value>
 						<property>/autopilot/radionav-channel/cmd-ail-change</property>
-						<property>sim-dt-sec</property>
+						<property>simulation/dt</property>
 					</product>
 				</sum>
 			</function>
@@ -1266,7 +1266,7 @@
                                   	<property>/autopilot/mode/gs-follow</property>
 						<value>1.0</value>
 						<property>/autopilot/gs-channel/pitch-error</property>
-						<property>sim-dt-sec</property>
+						<property>simulation/dt</property>
 					</product>
 				</sum>
 			</function>
@@ -1929,7 +1929,7 @@
 					<property>/autopilot/fms-channel/gpss/in-turn2</property>
 					<sum>
 						<property>/autopilot/fms-channel/gpss/turn-timer</property>
-						<property>sim-dt-sec</property> 
+						<property>simulation/dt</property> 
 					</sum>
 				</product>
 			</function>
@@ -2086,7 +2086,7 @@
                                   		<property>/autopilot/mode/nav</property>
 						<value>1.0</value>
 						<property>/autopilot/fms-channel/cmd-ail-change</property>
-						<property>sim-dt-sec</property>
+						<property>simulation/dt</property>
 					</product>
 				</sum>
 			</function>
@@ -2324,7 +2324,7 @@
                                   	<property>/autopilot/mode/vs</property>
 						<value>1.0</value>
 						<property>/autopilot/vs-channel/pitch-error</property>
-						<property>sim-dt-sec</property>
+						<property>simulation/dt</property>
 					</product>
 				</sum>
 			</function>
@@ -2524,7 +2524,7 @@
 					<property>fcs/elevator-cmd-tot</property>	
 					<product>
 						<property>/autopilot/alt-channel/pitch-error</property>
-						<property>sim-dt-sec</property>
+						<property>simulation/dt</property>
 					</product>
 				</sum>
 			</function>
@@ -2775,7 +2775,7 @@
 							</product>
 						</sum>
 						<property>/autopilot/pitchtrim-channel/electrimspeed</property>
-						<property>sim-dt-sec</property>
+						<property>simulation/dt</property>
 					</product>
 				</sum>
 			</function>
@@ -2866,7 +2866,7 @@
 						<property>/autopilot/mode/yawtrim</property>
 						<property>/autopilot/yawtrim-channel/servo-gain</property>
 						<property>/autopilot/yawtrim-channel/ap-y-accel-clipped</property>
-						<property>sim-dt-sec</property>
+						<property>simulation/dt</property>
 					</product>
 				</sum>
 			</function>
@@ -3034,7 +3034,7 @@
                                   	<property>/autopilot/mode/cws</property>
 						<value>1.0</value>
 						<property>/autopilot/cws-channel/cmd-ail-change</property>
-						<property>sim-dt-sec</property>
+						<property>simulation/dt</property>
 					</product>
 				</sum>
 			</function>

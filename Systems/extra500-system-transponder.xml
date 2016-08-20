@@ -19,12 +19,12 @@
       Author: Eric van den Berg
       Date: 2013-06-19
 
-      Last change:      -
-      Date:             -
+      Last change:      Eric van den Berg
+      Date:             2016-05-22
 -->
 
 <system name="transponder">
-	<channel name="autoselection">
+	<channel name="autoselection" execrate="60">
 
 <!--pre-selecting mode-S transponder mode 3 or 5 (GND or ALT) -->
 		<switch name="autoselection">

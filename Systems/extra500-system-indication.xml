@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2016-02-26
+      Date:             2016-06-18
 -->
 
 <system name="indication">
@@ -468,7 +468,7 @@
     			<function>
        		<description>cowling temperature change</description>
 				<product>
-					<property>sim-dt-sec</property>
+					<property>simulation/dt</property>
 					<difference>
 						<property>aircraft/engine/OT/eng-cowling-W</property>
 						<property>aircraft/engine/OT/cowl-air-W</property>
@@ -645,7 +645,7 @@
     			<function>
        			<description>Oil temp change</description>
 	 			<product>
-					<property>sim-dt-sec</property>
+					<property>simulation/dt</property>
 					<difference>
 						<property>aircraft/engine/OT/Heat-rejection-W</property>
 						<sum>
@@ -854,7 +854,7 @@
      			  <description>dN1 when starting the engine</description>
 				<product>
 					<value>3.433</value>
-					<property>sim-dt-sec</property>
+					<property>simulation/dt</property>
 				</product>
     			</function>
 		</fcs_function>
@@ -929,7 +929,7 @@
     			<function>
        			<description>TOT change when spooling down</description>
 				<product>
-					<property>sim-dt-sec</property>
+					<property>simulation/dt</property>
 					<value>0.005</value>
 					<max>
 						<value>0.1</value>
@@ -1037,7 +1037,7 @@
 						<property>aircraft/engine/TOT-target-degC</property>
 						<property>aircraft/engine/TOT/TOTr-degC</property>
 					</difference>
-					<property>sim-dt-sec</property>
+					<property>simulation/dt</property>
 				</product>
     			</function>
 		</fcs_function>
@@ -1398,7 +1398,7 @@
 					<pow>
 						<max>
 							<value>0.0001</value>	
-							<property>sim-dt-sec</property>
+							<property>simulation/dt</property>
 						</max>
 						<value>-1.0</value>	
 					</pow>
@@ -1438,7 +1438,7 @@
 					<pow>
 						<max>
 							<value>0.0001</value>	
-							<property>sim-dt-sec</property>
+							<property>simulation/dt</property>
 						</max>
 						<value>-1.0</value>	
 					</pow>
@@ -1501,7 +1501,7 @@
 
 	</channel>
 
-	<channel name="dme">
+	<channel name="dme" execrate="60">
 		<switch name="dmeminmax">
 			<default value="/instrumentation/dme/indicated-time-min"/>
 			<test logic="AND" value="99">
@@ -1595,7 +1595,7 @@
 	</channel>
 
 	<channel name="shadow">
-
+<!-- this is for the "3D" shadow -->
 		<fcs_function name="shadow">
 			<function>
 			<sum>
@@ -1607,6 +1607,18 @@
 			</sum>
 			</function>			
 			<output>/position/altitude-agl-m</output>
+		</fcs_function>
+	</channel>
+
+	<channel name="weight" execrate="60">
+<!-- this is for the weight listener in the nasal/fuel payload.nas -->
+		<fcs_function name="weight-lbs">
+			<function>
+			<sum>
+				<property>/fdm/jsbsim/inertia/weight-lbs</property>
+			</sum>
+			</function>			
+			<output>/fdm/jsbsim/inertia/nt-weight-lbs</output>
 		</fcs_function>
 	</channel>
 

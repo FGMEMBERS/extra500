@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+	
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Eric van den Berg
+      Date: 2016-05-22
+
+      Last change:      -
+      Date:             -
+-->
+
+<!--
+
+-->
+<system name="deltatime">
+
+	<channel name="rate60" execrate="60">
+
+		<fcs_function name="sim60-dt-sec">
+    			<function >
+			<sum>
+				<property>simulation/sim-time-sec</property>
+				<property>simulation/sim60-time-sec-old</property>
+			</sum>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="simulation/sim60-time-sec-old">
+  			 <function>
+				<product>
+					<value>-1</value>
+					<property>simulation/sim-time-sec</property>
+				</product>
+    			</function>
+		</fcs_function>
+
+	</channel>
+
+
+
+	<channel name="rate12" execrate="12">
+		<fcs_function name="sim12-dt-sec">
+    			<function >
+			<sum>
+				<property>simulation/sim-time-sec</property>
+				<property>simulation/sim12-time-sec-old</property>
+			</sum>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="simulation/sim12-time-sec-old">
+  			 <function>
+				<product>
+					<value>-1</value>
+					<property>simulation/sim-time-sec</property>
+				</product>
+    			</function>
+		</fcs_function>
+
+
+	</channel>
+</system>
