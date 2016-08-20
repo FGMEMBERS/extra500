@@ -27,12 +27,19 @@
 
 <!--GENERAL STUFF -->
 
-    <function name="sim-dt-sec">
+    <!--function name="sim-dt-sec">
 	<sum>
-		<property>sim-time-sec</property>
+		<property>simulation/sim-time-sec</property>
 		<property>sim-time-sec-old</property>
 	</sum>
     </function>
+
+   <function name="sim-time-sec-old">
+	<product>
+		<value>-1</value>
+		<property>sim-time-sec</property>
+	</product>
+    </function-->
 
     <function name="atmosphere/T-degC">
 	<sum>
@@ -598,14 +605,6 @@
       </pow>
     </function>
 
-
-
-    <function name="sim-time-sec-old">
-	<product>
-		<value>-1</value>
-		<property>sim-time-sec</property>
-	</product>
-    </function>
 
     <function name="aero/coefficients/cl_hstab-noice">
        <description>Stabilizer liftcoeff without icing</description>      

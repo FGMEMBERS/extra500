@@ -19,8 +19,8 @@
       Author: Eric van den Berg
       Date: 2015-04-08
 
-      Last change:      -
-      Date:             -
+      Last change:      Eric van den Berg
+      Date:             2016-05-23
 -->
 
 <!--
@@ -28,7 +28,7 @@
 -->
 <system name="atmosphere">
 
-	<channel name="temperature">
+	<channel name="temperature" execrate="60">
 
 <!-- temperature in Kelvin -->
 		<fcs_function name="/environment/temperature-degK">
@@ -44,7 +44,7 @@
 
 
 
-	<channel name="liquid water content">
+	<channel name="liquid water content" execrate="60">
 
 <!-- saturation water pressure -->
 		<fcs_function name="/environment/e-max-pa">

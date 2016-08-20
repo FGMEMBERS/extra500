@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jun 06 2013
 #
-#      Last change:      Eric van den Berg
-#      Date:             22.01.15
+#      Last change:      Dirk Dittmann
+#      Date:             17.05.2016
 #
 
 
@@ -99,13 +99,15 @@ var ServiceClass = {
 		};
 		m._listeners = [];
 		m._nService = m._nRoot.getNode("service",1);
-		m._qos = 1.0;
+		m._qos = 1.0; # 0-1.0 represents the working part quality over time
 		
 		m._nQos  		= m._nService.initNode("qos",1.0,"DOUBLE");
 		m._nLifetime 		= m._nService.initNode("lifetime",72000000,"INT");
 		m._nBuildin 		= m._nService.initNode("buildin",0,"INT");
 		m._nSerialNumber 	= m._nService.initNode("SerialNumber","","STRING");
 		
+		m._serviceable		= 1;
+		m._nServiceable		= m._nService.initNode("serviceable",m._serviceable,"BOOL");
 		
 		
 		return m;
@@ -126,6 +128,9 @@ var ServiceClass = {
 	},
 	setListeners  :func(instance){
 		#print("ServiceClass.setListeners() ... " ~me._name);
+		append(me._listeners, setlistener(me._nServiceable,func(n){instance._onServiceableChange(n);},1,0) );
+		append(me._listeners, setlistener(me._nQos,func(n){instance._onQosChange(n);},1,0) );
+		
 	},
 	removeListeners  :func(){
 		foreach(var l;me._listeners){
@@ -133,6 +138,23 @@ var ServiceClass = {
 		}
 		me._listeners = [];
 	},
+	_qualityCheck :func(){},
+	_onServiceableChange : func(n){
+		#print("ServiceClass::_onServiceableChange() ...");
+		me._serviceable = n.getValue();
+	},
+	_onQosChange : func(n){
+		#print("ServiceClass::_onQosChange() ...");
+		me._qos = n.getValue();
+	},
+	### sets the wear of componets by the simulation time should called at start
+	setQosByTime : func(time){
+		### qos = (time - buildin) / lifetime
+	},
+	setQosToBuildin : func(){
+		me._qos = 1.0;
+	}
+	
 	
 };
 

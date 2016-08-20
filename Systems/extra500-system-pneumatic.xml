@@ -19,8 +19,8 @@
       Author: Eric van den Berg
       Date: 2013-10-13
 
-      Last change:      -
-      Date:             -
+      Last change:      Eric van den Berg
+      Date:             2016-05-22
 -->
 
 <!--
@@ -28,7 +28,7 @@
 /extra500/panel/Side/Deicing/Boots/state
 -->
 <system name="pneumatic">
-	<channel name="pressure">
+	<channel name="pressure" execrate="12">
 
 <!-- engine bleed air pressure as a function of pressure altitude and engine compressor speed -->
 		<fcs_function name="/systems/pneumatic/functions/bleedairpressure">
@@ -51,16 +51,30 @@
 			<output>/systems/pneumatic/bleedairpressure-psig</output>
 		</fcs_function>
 
-<!-- pneumatic pressure for de-ice boots. Regulated to 19 psig --> 
-		<pure_gain name="/systems/pneumatic/functions/pneumatic-pressure">
+<!-- pneumatic pressure for de-ice boots. Regulated to 19 psig, no leakage assumed --> 
+		<pure_gain name="/systems/pneumatic/functions/pneumatic-pressure-noleakage">
 			<input>/systems/pneumatic/bleedairpressure-psig</input>
 			<gain>1.0</gain>
 			<clipto>
 				<min>0</min>
 				<max>19</max>
 			</clipto>
-			<output>/systems/pneumatic/pneumatic-pressure-psig</output>
+			<output>/systems/pneumatic/pneumatic-pressure-noleak</output>
 		</pure_gain>
+
+<!-- pneumatic pressure for de-ice boots. Regulated to 19 psig and leakage if any-->
+		<fcs_function name="/systems/pneumatic/functions/pneumatic-pressure-psig">
+			<function>
+				<product>
+					<property>/systems/pneumatic/pneumatic-pressure-noleak</property>
+					<difference>
+						<value>1</value>
+						<property>/systems/pneumatic/leak</property>
+					</difference>
+				</product>
+			</function>
+			<output>/systems/pneumatic/pneumatic-pressure-psig</output>
+		</fcs_function>
 
 <!-- for low pressure caution in warning panel -->
 		<switch name="/systems/pneumatic/switches/low-pressure-caution">
@@ -89,7 +103,7 @@
 					<property>/systems/pneumatic/switches/reset</property>
 					<sum>
 						<property>/systems/pneumatic/boots-timer-sec</property>
-						<property>sim-dt-sec</property> 
+						<property>sim12-dt-sec</property> 
 					</sum>
 				</product>
 			</function>
@@ -104,21 +118,39 @@
 		</switch>
 
 <!-- ejector valve1 active -->
-		<switch name="/systems/pneumatic/switches/ejectorvalve1-active">
+		<switch name="/systems/pneumatic/functions/ejectorvalve1-active">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/pneumatic/boots-timer-sec gt 0
 				/systems/pneumatic/boots-timer-sec le 6
 			</test>
+			<output>/systems/pneumatic/switches/ejectorvalve1-active</output>
 		</switch>
 
 <!-- ejector valve2 active -->
-		<switch name="/systems/pneumatic/switches/ejectorvalve2-active">
+		<switch name="/systems/pneumatic/functions/ejectorvalve2-active">
 			<default value="0"/>
 			<test logic="AND" value="1">
 				/systems/pneumatic/boots-timer-sec gt 6
 				/systems/pneumatic/boots-timer-sec le 12
 			</test>
+			<output>/systems/pneumatic/switches/ejectorvalve2-active</output>
+		</switch>
+
+<!-- signal for deice boots -->
+		<switch name="/systems/pneumatic/functions/bootsdeice">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				<test logic="AND" value="1">
+					/systems/pneumatic/boots-timer-sec gt 2
+					/systems/pneumatic/boots-timer-sec le 3
+				</test>
+				<test logic="AND" value="1">
+					/systems/pneumatic/boots-timer-sec gt 8
+					/systems/pneumatic/boots-timer-sec le 9
+				</test>
+			</test>
+			<output>/systems/pneumatic/switches/bootsdeice</output>
 		</switch>
 
 <!-- boots circuit 1 pressure -->

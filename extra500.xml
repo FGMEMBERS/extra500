@@ -48,6 +48,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	<aerodynamics file="extra500-aerodynamics.xml"/>
 	<system file="extra500-system-elt.xml"/>
 	<system file="extra500-weather.xml"/>
+	<system file="extra500-channelrates.xml"/>
 	
 	<metrics>
 		<wingarea  unit="M2">  14.025 </wingarea>
@@ -83,9 +84,9 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		
 		<!--
 			max weight 		:	2130	KG
-			max emtpy		:	1445	KG
+			empty			:	1445	KG
 			max fuel		:	553.3	KG
-			max pax			:	500	KG
+			max pax		:	500	KG
 		-->
 		
 		<ixx unit="SLUG*FT2">      2891 </ixx>

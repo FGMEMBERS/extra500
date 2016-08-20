@@ -17,7 +17,7 @@
 #      Date: Jul 03 2013
 #
 #       Last change:      Eric van den Berg
-#       Date:             28.02.2016
+#       Date:             21.05.2016
 #
 
 # MM page 
@@ -41,6 +41,8 @@ var AirHeatClass = {
 		};
 		m._state		= 0 ;	# bool
 		m._nState		= m._nRoot.initNode("state",m._state,"BOOL");
+		m._serviceable	= 0 ;	# bool
+		m._nServiceable	= m._nRoot.initNode("serviceable",m._serviceable,"BOOL");
 		m._watt			= watt;	# watt
 		m._nWatt		= m._nRoot.initNode("watt",m._watt,"DOUBLE");
 		m._airWatt		= m._nRoot.initNode("airwatt",m._watt,"DOUBLE");
@@ -71,34 +73,40 @@ var ElectricHeatClass = {
 				ConsumerClass.new(root,name,watt)
 			]
 		};
-		m._resistor = 28*28 / watt;
-		m._nResistor	= m._nRoot.initNode("resistor",m._resistor,"DOUBLE");
-		m._nResistorOut	= m._nRoot.initNode("resistorOut",m._resistor,"DOUBLE");
+		m._resistor 		= 28*28 / watt;
+		m._nResistor		= m._nRoot.initNode("resistor",m._resistor,"DOUBLE");
+		m._nResistorOut		= m._nRoot.initNode("resistorOut",m._resistor,"DOUBLE");
 		
 		m._resistorMin		= 1.3;
 		m._resistorMax		= 1.742;
 		m._temperatureMin 	= -3;
 		m._temperatureMax 	= 30;
-		
+
+		m._maxWatt		= 150;
 		
 		m._value = 0;
 		return m;
 	},
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
-		me.parents[1].init(instance);
-		append(me._listeners, setlistener(me._nResistor,func(n){instance._onResitorChange(n);},1,0) );
-		
+		me.parents[1].init(instance); # ConsumerClass.init
+		me.setListeners(instance);
 	},
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._nResistor,func(n){instance._onResitorChange(n);},1,0) );
+	},
+	
+	### working loop minimized property tree action
 	electricWork : func(){
-		if ((me._value == 1 ) and (me._volt >= me._voltMin) ){
-			#me._ampere 	= me._watt / me._volt;
+		#print("ElectricHeatClass::electricWork() ... ", me._name," serviceable ",me._serviceable);
+		if ((me._value == 1 ) and (me._volt >= me._voltMin) and (me._serviceable == 1) ){
 			me._ampere 	= me._volt / me._resistor;
 			me._watt 	= me._volt * me._ampere;
 			me._state  = 1;
 		}else{
-			me._state  = 0;
-			me._ampere = 0;
+			me._state  	= 0;
+			me._ampere 	= 0;
+			me._watt 	= 0;
 		}
 		
 		me._nState.setValue(me._state);
@@ -106,10 +114,36 @@ var ElectricHeatClass = {
 		me._nWatt.setValue(me._watt);
 		me._nResistorOut.setValue(me._resistor);
 	},
+	### override ServiceClass::_onServiceableChange
+	_onServiceableChange : func(n){
+		#print("ElectricHeatClass::_onServiceableChange() ...");
+		
+		#get the value from property tree into nasal
+		me._serviceable = n.getValue();
+		me.electricWork();
+	},
+	### override ServiceClass::_qualityCheck
+	_qualityCheck : func(){
+		### reduce the working resistor unitl it burns 
+		if ( me._qos > 0.8){
+			
+		}elsif (me._qos > 0.5){
+			me._resistor *= 0.45;
+			
+		}elsif (me._qos > 0.25){
+			me._resistor *= 0.15;
+			
+		}else{
+			me._resistor = 100000000000 ; # infinite ;-)
+		}
+		#print("ElectricHeatClass::_qualityCheck() ... resistor ", me._resistor);
+		
+	},
 	_onWattChange : func(){},
 	_onResitorChange : func(n){
 		#print("HeatClass::_onResitorChange() ...");
 		me._resistor = n.getValue();
+		me._qualityCheck();
 		me.electricWork();
 	},
 	setOn : func(value){
@@ -120,6 +154,7 @@ var ElectricHeatClass = {
 		return me._watt * me._state;
 	},
 	setResitorByTemperature : func(temperature){
+		#print("ElectricHeatClass::setResitorByTemperature() ...");
 		
 		var resistor = me._resistorMin;
 		resistor +=  global.norm(temperature,me._temperatureMin,me._temperatureMax) * (me._resistorMax-me._resistorMin);
@@ -127,6 +162,7 @@ var ElectricHeatClass = {
 		resistor = global.clamp(resistor,me._resistorMin,me._resistorMax);
 					
 		me._resistor = resistor;
+		me._qualityCheck();
 		me.electricWork();
 	},
 	
@@ -248,7 +284,9 @@ var DeicingSystemClass = {
 		append(me._listeners, setlistener(me._nWowNose, func(n){instance._checkPitot();},1,0) );
 		append(me._listeners, setlistener("/fdm/jsbsim/aircraft/stallwarner/state", func(n){instance._onStallWarning(n);},1,0) );
 		append(me._listeners, setlistener(eSystem.circuitBreaker.PROP_HT._nVoltOut, func(n){instance.update();},1,0) );
-		append(me._listeners, setlistener("/systems/pneumatic/boots-safe-oper", func(n){instance._onBoots(n);},1,0) );
+		append(me._listeners, setlistener("/systems/pneumatic/switches/ejectorvalve1-active", func(n){instance._onBoots(n);},1,0) );
+		append(me._listeners, setlistener("/systems/pneumatic/switches/ejectorvalve2-active", func(n){instance._onBoots(n);},1,0) );
+		append(me._listeners, setlistener("/systems/pneumatic/switches/bootsdeice", func(n){instance._onBootsDeice(n);},1,0) );
 		
 	},
 	init : func(instance=nil){
@@ -396,20 +434,41 @@ var DeicingSystemClass = {
 		me._inletHeat.setOn(me._intakeHeat);
 	},
 	_onBoots : func(n){
-		#print("DeicingSystemClass::_onBoots() ...");
+# setting leakage if boots are not alright: this will lower the pneumatic pressure as calculated in /Sytems/extra500-system-pneumatic.xml
 		if(n.getValue() == 1){
-			var amount = 0.8;
 			if (getprop("/systems/pneumatic/switches/ejectorvalve1-active") == 1 ){
-				environment._frostWingLHBootInner 	-= environment._frostWingLHBootInner > amount ? amount : environment._frostWingLHBootInner; 
-				environment._frostWingRHBootInner 	-= environment._frostWingRHBootInner > amount ? amount : environment._frostWingRHBootInner; 
+				if ( (getprop("/systems/pneumatic/LHinnerBoot/serviceable") ==0) or (getprop("/systems/pneumatic/RHinnerBoot/serviceable") ==0) ) 	{
+					setprop("/systems/pneumatic/leak", 0.2);
+				}
 			}
+
 			if (getprop("/systems/pneumatic/switches/ejectorvalve2-active") == 1 ){
-				environment._frostWingLHBootOuter 	-= environment._frostWingLHBootOuter > amount ? amount : environment._frostWingLHBootOuter; 
-				environment._frostWingRHBootOuter 	-= environment._frostWingRHBootOuter > amount ? amount : environment._frostWingRHBootOuter; 
-				environment._frostVStab 	-= environment._frostVStab > amount ? amount : environment._frostVStab; 
-				environment._frostHStabLH 	-= environment._frostHStabLH > amount ? amount : environment._frostHStabLH; 
-				environment._frostHStabRH	-= environment._frostHStabRH > amount ? amount : environment._frostHStabRH; 
+				if ( (getprop("/systems/pneumatic/RHHStabBoot/serviceable") ==0) or (getprop("/systems/pneumatic/LHHStabBoot/serviceable") ==0) or (getprop("/systems/pneumatic/VStabBoot/serviceable") ==0) or (getprop("/systems/pneumatic/LHouterBoot/serviceable") ==0) or (getprop("/systems/pneumatic/RHouterBoot/serviceable") ==0) ) 	{
+					setprop("/systems/pneumatic/leak", 0.2);
+				} 
 			}
+		} else {
+			setprop("/systems/pneumatic/leak", 0.0);
+		}
+	},
+	_onBootsDeice : func(n){
+		#print("DeicingSystemClass::_onBoots() ...");
+		var press = getprop("/systems/pneumatic/pneumatic-pressure-psig")/18;
+
+		if( (n.getValue() == 1) and (press > 0.01) ){
+			var amount = 0.05;
+
+			if (getprop("/systems/pneumatic/switches/ejectorvalve1-active") == 1 ){
+				environment._frostWingLHBootInner 	= environment._frostWingLHBootInner > amount ? (1-press)*environment._frostWingLHBootInner+amount*press : (1-0.1*press) * environment._frostWingLHBootInner; 
+				environment._frostWingRHBootInner 	= environment._frostWingRHBootInner > amount ? (1-press)*environment._frostWingRHBootInner+amount*press : (1-0.1*press) * environment._frostWingRHBootInner; 
+			} 
+			if (getprop("/systems/pneumatic/switches/ejectorvalve2-active") == 1 ){			
+				environment._frostWingLHBootOuter 	= environment._frostWingLHBootOuter > amount ? (1-press)*environment._frostWingLHBootOuter+amount*press : (1-0.1*press) * environment._frostWingLHBootOuter; 
+				environment._frostWingRHBootOuter 	= environment._frostWingRHBootOuter > amount ? (1-press)*environment._frostWingRHBootOuter+amount*press : (1-0.1*press) * environment._frostWingRHBootOuter; 
+				environment._frostVStab 		= environment._frostVStab > amount ? (1-press)*environment._frostVStab+amount*press : (1-0.1*press) * environment._frostVStab; 
+				environment._frostHStabLH 		= environment._frostHStabLH > amount ? (1-press)*environment._frostHStabLH+amount*press : (1-0.1*press) * environment._frostHStabLH; 
+				environment._frostHStabRH		= environment._frostHStabRH > amount ? (1-press)*environment._frostHStabRH+amount*press : (1-0.1*press) * environment._frostHStabRH; 
+			} 
 		}
 	},
 	update : func(){

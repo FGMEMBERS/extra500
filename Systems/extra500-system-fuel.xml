@@ -20,7 +20,7 @@
       Date: 2015-05-08
 
       Last change: Eric van den Berg     
-      Date: 2016-01-16           
+      Date: 2016-05-23           
 -->
 
 <!--
@@ -65,7 +65,7 @@ i=0-6 left to right
 <system name="fuel">
 
 <!-- FUEL TEMP -->
-	<channel name="fuel temperature">>
+	<channel name="fuel temperature" execrate="12">
 
 		<fcs_function name="/systems/fuel/FT-1-degC">
     			<function>
@@ -78,7 +78,7 @@ i=0-6 left to right
 						<property>atmosphere/T-degC</property>
 						<property>/systems/fuel/FT-degC</property>
 					</difference>
-					<property>sim-dt-sec</property>
+					<property>sim12-dt-sec</property>
 					<pow>
 						<max>
 							<value>0.1</value>
@@ -112,7 +112,7 @@ i=0-6 left to right
 
 	</channel>
 
-	<channel name="fuel pressure">>
+	<channel name="fuel pressure" execrate="12">
 
 		<fcs_function name="/systems/fuel/Fdensity-kgm3">
    			 <function>
@@ -390,7 +390,7 @@ i=0-6 left to right
 
 
 
-	<channel name="indication">
+	<channel name="indication" execrate="12">
 
 		<!-- for annunciator panel -->
 		<switch name="llowfuel">
@@ -423,7 +423,7 @@ i=0-6 left to right
 		<!-- for indication on engine instrument -->
 		<lag_filter name ="/systems/fuel/FP-psi">
  			<input>/systems/fuel/F-press-psig</input>
-			<c1>1.0</c1>
+			<c1>10</c1>
 		</lag_filter>
 
 		<!-- for annunciator panel -->
@@ -438,7 +438,7 @@ i=0-6 left to right
 
 	</channel>
 
-	<channel name="engine flow">
+	<channel name="engine flow" execrate="12">
 
 		<!-- /systems/fuel/FlowbalanceLR: 1 = all fuel from left tank; 0 = all fuel from RH tank -->
 
@@ -530,7 +530,7 @@ i=0-6 left to right
 
 	</channel>
 
-	<channel name="LHmotiveflow">
+	<channel name="LHmotiveflow" execrate="12">
 
 		<switch name="/systems/fuel/LHtank/motivepump/state">
 			<default value="0"/>
@@ -897,7 +897,7 @@ i=0-6 left to right
 
 	</channel>
 
-	<channel name="RHmotiveflow">
+	<channel name="RHmotiveflow" execrate="12">
 
 		<switch name="/systems/fuel/RHtank/motivepump/state">
 			<default value="0"/>

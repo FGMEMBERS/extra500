@@ -17,7 +17,7 @@
 #	Date: 	10.10.2015
 #
 #	Last change: Eric van den Berg	
-#	Date:	24.12.2015	
+#	Date:	29.05.2016	
 #
 
 var COLORfd = {};
@@ -36,6 +36,13 @@ COLORfd["mainOk"] = "#ffcc00";
 COLORfd["colOk"] = "#ffdd55";
 COLORfd["CVOk"] = "#00ff004a";
 COLORfd["SVok"] = "#00800059";
+COLORfd["pitotOk"] = "#bc9be3ff";
+COLORfd["stallwOk"] = "#7248d9ff";
+COLORfd["inletOk"] = "#3296b5ff";
+COLORfd["propOk"] = "#aa9bb5ff";
+COLORfd["windShOk"] = "#9b48b5ff";
+COLORfd["boot1Ok"] = "#80b3f1ff";
+COLORfd["boot2Ok"] = "#1d79e8ff";
 COLORfd["Failed"] = "#ff8080ff";
 
 var FailureClass = {
@@ -78,6 +85,10 @@ var FailureClass = {
 		me._svg_contr = me._root.createChild('group');
 		canvas.parsesvg(me._svg_contr, me._filename);
 
+		me._filename = "/Dialogs/DeiceFaildialog.svg";
+		me._svg_deice = me._root.createChild('group');
+		canvas.parsesvg(me._svg_deice, me._filename);
+
 # defining clickable fields and other elements from svg files
 	# menu
 		me._gear		= me._svg_menu.getElementById("field_gear");
@@ -86,6 +97,8 @@ var FailureClass = {
 		me._fuel_ind	= me._svg_menu.getElementById("fuelfailind").hide();
 		me._controls	= me._svg_menu.getElementById("field_controls");
 		me._controls_ind	= me._svg_menu.getElementById("controlsfailind").hide();
+		me._deice		= me._svg_menu.getElementById("field_deice");
+		me._deice_ind	= me._svg_menu.getElementById("deicefailind").hide();
 
 		me._repair		= me._svg_menu.getElementById("field_repairall");
 
@@ -126,6 +139,16 @@ var FailureClass = {
 		me._pumpcv1		= me._svg_fuel.getElementById("pumpcv1");
 		me._pumpcv2		= me._svg_fuel.getElementById("pumpcv2");
 		me._FFtransd	= me._svg_fuel.getElementById("fftransd");
+		me._LMFilter	= me._svg_fuel.getElementById("LHmotivefilter");
+		me._RMFilter	= me._svg_fuel.getElementById("RHmotivefilter");
+		me._LMpump		= me._svg_fuel.getElementById("LHmotivepump");
+		me._RMpump		= me._svg_fuel.getElementById("RHmotivepump");
+		me._LauxJpump	= me._svg_fuel.getElementById("LHauxjetpump");
+		me._RauxJpump	= me._svg_fuel.getElementById("RHauxjetpump");
+		me._LmainOutJpump	= me._svg_fuel.getElementById("LHmainoutjetpump");
+		me._RmainOutJpump	= me._svg_fuel.getElementById("RHmainoutjetpump");
+		me._LmainInJpump	= me._svg_fuel.getElementById("LHmaininjetpump");
+		me._RmainInJpump	= me._svg_fuel.getElementById("RHmaininjetpump");
 
 		me._Text_Laux		= me._svg_fuel.getElementById("text_Laux").hide();
 		me._Text_Lmain		= me._svg_fuel.getElementById("text_Lmain").hide();
@@ -140,6 +163,8 @@ var FailureClass = {
 		me._Text_pump2		= me._svg_fuel.getElementById("text_pump2").hide();
 		me._Text_pumpcv1		= me._svg_fuel.getElementById("text_pumpcv1").hide();
 		me._Text_pumpcv2		= me._svg_fuel.getElementById("text_pumpcv2").hide();
+		me._Text_LMpump		= me._svg_fuel.getElementById("text_LMpump").hide();
+		me._Text_RMpump		= me._svg_fuel.getElementById("text_RMpump").hide();
 
 	# control system
 		me._LAileron	= me._svg_contr.getElementById("LAileron");
@@ -160,6 +185,36 @@ var FailureClass = {
 		me._Text_Rudder	= me._svg_contr.getElementById("text_Rudder").hide();
 		me._Text_Trim	= me._svg_contr.getElementById("text_Trim").hide();
 
+	# deice system
+		me._ROBoot		= me._svg_deice.getElementById("RHouterB");
+		me._LOBoot		= me._svg_deice.getElementById("LHouterB");
+		me._RIBoot		= me._svg_deice.getElementById("RHinnerB");
+		me._LIBoot		= me._svg_deice.getElementById("LHinnerB");
+		me._RHSBoot		= me._svg_deice.getElementById("RHhstabB");
+		me._LHSBoot		= me._svg_deice.getElementById("LHhstabB");
+		me._VSBoot		= me._svg_deice.getElementById("VstabB");
+		me._RPitot		= me._svg_deice.getElementById("RHpitot");
+		me._LPitot		= me._svg_deice.getElementById("LHpitot");
+		me._StallWarner	= me._svg_deice.getElementById("StallWarner");
+		me._WindshHeat	= me._svg_deice.getElementById("WindshHeat");
+		me._PropH		= me._svg_deice.getElementById("propH");
+		me._EngInletHeat	= me._svg_deice.getElementById("EngInletHeat");
+
+		me._Text_ROBoot	= me._svg_deice.getElementById("text_ROBoot").hide();
+		me._Text_LOBoot	= me._svg_deice.getElementById("text_LOBoot").hide();
+		me._Text_RIBoot	= me._svg_deice.getElementById("text_RIBoot").hide();
+		me._Text_LIBoot	= me._svg_deice.getElementById("text_LIBoot").hide();
+		me._Text_RHSBoot	= me._svg_deice.getElementById("text_RHSBoot").hide();
+		me._Text_LHSBoot	= me._svg_deice.getElementById("text_LHSBoot").hide();
+		me._Text_VSBoot	= me._svg_deice.getElementById("text_VSBoot").hide();
+		me._Text_LPitot	= me._svg_deice.getElementById("text_LPitot").hide();
+		me._Text_RPitot	= me._svg_deice.getElementById("text_RPitot").hide();
+		me._Text_WindSh	= me._svg_deice.getElementById("text_WindSh").hide();
+		me._Text_PropH	= me._svg_deice.getElementById("text_PropH").hide();
+		me._Text_StallWarner	= me._svg_deice.getElementById("text_StallWarner");
+		me._Text_EngInletHeat	= me._svg_deice.getElementById("text_EngInletHeat");
+
+
 # additional elements
 	#number of failure indication in menu
 		me._gearfailnumber = me._root.createChild("text")
@@ -175,19 +230,72 @@ var FailureClass = {
 		me._controlsfailnumber = me._root.createChild("text")
       		.setFontSize(10, 0.9)  
       		.setAlignment("center-center") 
-      		.setTranslation(346, 23);  
+      		.setTranslation(346, 23);
+
+		me._deicefailnumber = me._root.createChild("text")
+      		.setFontSize(10, 0.9)  
+      		.setAlignment("center-center") 
+      		.setTranslation(452, 23);  
 
 	# fuel text elements
 		me._Text_Filter = me._root.createChild("text")
       		.setFontSize(12, 1.5)  
       		.setAlignment("left-center") 
-      		.setTranslation(410, 265) 
+      		.setTranslation(410, 325) 
 			.setColor(0,0,0,1);
 
 		me._Text_FFtransd = me._root.createChild("text")
       		.setFontSize(12, 1.5)  
       		.setAlignment("left-center") 
-      		.setTranslation(410, 355) 
+      		.setTranslation(410, 415) 
+			.setColor(0,0,0,1);
+
+		me._Text_LMFilter = me._root.createChild("text")
+      		.setFontSize(12, 1.5)  
+      		.setAlignment("left-center") 
+      		.setTranslation(200, 50) 
+			.setColor(0,0,0,1);
+
+		me._Text_RMFilter = me._root.createChild("text")
+      		.setFontSize(12, 1.5)  
+      		.setAlignment("left-center") 
+      		.setTranslation(400, 50) 
+			.setColor(0,0,0,1);
+
+		me._Text_LmainInJpump = me._root.createChild("text")
+     			.setFontSize(12, 1.5)  
+      		.setAlignment("left-center") 
+      		.setTranslation(150, 250) 
+			.setColor(0,0,0,1);
+
+		me._Text_RmainInJpump = me._root.createChild("text")
+     			.setFontSize(12, 1.5)  
+      		.setAlignment("left-center") 
+      		.setTranslation(450, 250) 
+			.setColor(0,0,0,1);
+
+		me._Text_LmainOutJpump = me._root.createChild("text")
+     			.setFontSize(12, 1.5)  
+      		.setAlignment("left-center") 
+      		.setTranslation(100, 270) 
+			.setColor(0,0,0,1);
+
+		me._Text_RmainOutJpump = me._root.createChild("text")
+     			.setFontSize(12, 1.5)  
+      		.setAlignment("left-center") 
+      		.setTranslation(525, 270) 
+			.setColor(0,0,0,1);
+
+		me._Text_LauxJpump = me._root.createChild("text")
+     			.setFontSize(12, 1.5)  
+      		.setAlignment("left-center") 
+      		.setTranslation(50, 290) 
+			.setColor(0,0,0,1);
+
+		me._Text_RauxJpump = me._root.createChild("text")
+     			.setFontSize(12, 1.5)  
+      		.setAlignment("left-center") 
+      		.setTranslation(560, 290) 
 			.setColor(0,0,0,1);
 
 # listeners
@@ -196,9 +304,7 @@ var FailureClass = {
 # initialisation
 		me._menuReset();
 		me._updateMenu();
-
 		me._hideAll();
-
 		me._svg_welcome.show();
 		me._svg_menu.show();
 
@@ -211,68 +317,104 @@ var FailureClass = {
 		me._gear.addEventListener("click",func(){me._onGearClick();});
 		me._fuel.addEventListener("click",func(){me._onFuelClick();});
 		me._controls.addEventListener("click",func(){me._onControlsClick();});
+		me._deice.addEventListener("click",func(){me._onDeiceClick();});
 		me._repair.addEventListener("click",func(){
 			events.failure_reset();					# nasal/failurescenarios.nas
-			me._fuelButtons_update();
-			me._gearButtons_update();
-			me._contrButtons_update();
+			me._updateMenu();
 		});
 
 
 	# gear
-		me._LHgear.addEventListener("click",func(){me._onGeneralClick("/systems/gear/LMG-free",0,"LMG_jammed","GeaOk",me._LHgear,me._Text_LHgear);});
-		me._RHgear.addEventListener("click",func(){me._onGeneralClick("/systems/gear/RMG-free",0,"RMG_jammed","GeaOk",me._RHgear,me._Text_RHgear);});
-		me._Ngear.addEventListener("click",func(){me._onGeneralClick("/systems/gear/NG-free",0,"NG_jammed","GeaOk",me._Ngear,me._Text_Ngear);});
-		me._LHbrake.addEventListener("click",func(){me._onGeneralClick("/fdm/jsbsim/gear/unit[1]/brakeFail",1,"Lbrake","BraOk",me._LHbrake,me._Text_LHbrake);});
-		me._RHbrake.addEventListener("click",func(){me._onGeneralClick("/fdm/jsbsim/gear/unit[2]/brakeFail",1,"Rbrake","BraOk",me._RHbrake,me._Text_RHbrake);});
-		me._LHtyre.addEventListener("click",func(){me._onGeneralClick("/fdm/jsbsim/gear/unit[1]/flatTire",1,"LMG_flat","TyrOk",me._LHtyre,me._Text_LHtyre);});
-		me._RHtyre.addEventListener("click",func(){me._onGeneralClick("/fdm/jsbsim/gear/unit[2]/flatTire",1,"RMG_flat","TyrOk",me._RHtyre,me._Text_RHtyre);});
-		me._Ntyre.addEventListener("click",func(){me._onGeneralClick("/fdm/jsbsim/gear/unit[0]/flatTire",1,"NG_flat","TyrOk",me._Ntyre,me._Text_Ntyre);});
+		me._LHgear.addEventListener("click",func(){me._onGeneralClick("/systems/gear/LMG-free",0,"LMG_jammed","gear");});
+		me._RHgear.addEventListener("click",func(){me._onGeneralClick("/systems/gear/RMG-free",0,"RMG_jammed","gear");});
+		me._Ngear.addEventListener("click",func(){me._onGeneralClick("/systems/gear/NG-free",0,"NG_jammed","gear");});
+		me._LHbrake.addEventListener("click",func(){me._onGeneralClick("/fdm/jsbsim/gear/unit[1]/brakeFail",1,"Lbrake","gear");});
+		me._RHbrake.addEventListener("click",func(){me._onGeneralClick("/fdm/jsbsim/gear/unit[2]/brakeFail",1,"Rbrake","gear");});
+		me._LHtyre.addEventListener("click",func(){me._onGeneralClick("/fdm/jsbsim/gear/unit[1]/flatTire",1,"LMG_flat","gear");});
+		me._RHtyre.addEventListener("click",func(){me._onGeneralClick("/fdm/jsbsim/gear/unit[2]/flatTire",1,"RMG_flat","gear");});
+		me._Ntyre.addEventListener("click",func(){me._onGeneralClick("/fdm/jsbsim/gear/unit[0]/flatTire",1,"NG_flat","gear");});
 
 	# fuel
-		me._Laux.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/LHtank/aux/leakage/state",1,"LAux_leakage","auxOk",me._Laux,me._Text_Laux);});
-		me._Lmain.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/LHtank/main/leakage/state",1,"LMain_leakage","mainOk",me._Lmain,me._Text_Lmain);});
-		me._Lcol.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/LHtank/collector/leakage/state",1,"LCol_leakage","colOk",me._Lcol,me._Text_Lcol);});
-		me._Raux.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/RHtank/aux/leakage/state",1,"RAux_leakage","auxOk",me._Raux,me._Text_Raux);});
-		me._Rmain.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/RHtank/main/leakage/state",1,"RMain_leakage","mainOk",me._Rmain,me._Text_Rmain);});
-		me._Rcol.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/RHtank/collector/leakage/state",1,"RCol_leakage","colOk",me._Rcol,me._Text_Rcol);});
-		me._LCV.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/LHtank/checkvalve/serviceable",0,"LcheckvalveFail","CVOk",me._LCV_field,me._Text_LCV);});
-		me._RCV.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/RHtank/checkvalve/serviceable",0,"RcheckvalveFail","CVOk",me._RCV_field,me._Text_RCV);});
-		me._Filter.addEventListener("click",func(){me._onValueClick("/systems/fuel/fuelfilter/clogged","filterFail","CVOk",me._Filter,me._Text_Filter);});
-		me._SelValve.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/selectorValve/serviceable",0,"SelectorValveFail","CVOk",me._SelValve,me._Text_SelValve);});
-		me._pump1.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/FuelPump1/serviceable",0,"fuelPump1Fail","CVOk",me._pump1,me._Text_pump1);});
-		me._pump2.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/FuelPump2/serviceable",0,"fuelPump2Fail","CVOk",me._pump2,me._Text_pump2);});
-		me._pumpcv1.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/FP1checkvalve/serviceable",0,"fuelPumpCV1Fail","CVOk",me._pumpcv1,me._Text_pumpcv1);});
-		me._pumpcv2.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/FP2checkvalve/serviceable",0,"fuelPumpCV2Fail","CVOk",me._pumpcv2,me._Text_pumpcv2);});
-		me._FFtransd.addEventListener("click",func(){me._onValueClick("/systems/fuel/FFtransducer/blocked","fftransdFail","CVOk",me._FFtransd,me._Text_FFtransd);});
+		me._Laux.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/LHtank/aux/leakage/state",1,"LAux_leakage","fuel");});
+		me._Lmain.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/LHtank/main/leakage/state",1,"LMain_leakage","fuel");});
+		me._Lcol.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/LHtank/collector/leakage/state",1,"LCol_leakage","fuel");});
+		me._Raux.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/RHtank/aux/leakage/state",1,"RAux_leakage","fuel");});
+		me._Rmain.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/RHtank/main/leakage/state",1,"RMain_leakage","fuel");});
+		me._Rcol.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/RHtank/collector/leakage/state",1,"RCol_leakage","fuel");});
+		me._LCV.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/LHtank/checkvalve/serviceable",0,"LcheckvalveFail","fuel");});
+		me._RCV.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/RHtank/checkvalve/serviceable",0,"RcheckvalveFail","fuel");});
+		me._Filter.addEventListener("click",func(){me._onValueClick("/systems/fuel/fuelfilter/clogged","filterFail","fuel");});
+		me._SelValve.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/selectorValve/serviceable",0,"SelectorValveFail","fuel");});
+		me._pump1.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/FuelPump1/serviceable",0,"fuelPump1Fail","fuel");});
+		me._pump2.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/FuelPump2/serviceable",0,"fuelPump2Fail","fuel");});
+		me._pumpcv1.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/FP1checkvalve/serviceable",0,"fuelPumpCV1Fail","fuel");});
+		me._pumpcv2.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/FP2checkvalve/serviceable",0,"fuelPumpCV2Fail","fuel");});
+		me._FFtransd.addEventListener("click",func(){me._onValueClick("/systems/fuel/FFtransducer/blocked","fftransdFail","fuel");});
+
+		me._LMFilter.addEventListener("click",func(){me._onValueClick("/systems/fuel/LHtank/motivefilter/clogged","LtransfilterFail","fuel");});	
+		me._RMFilter.addEventListener("click",func(){me._onValueClick("/systems/fuel/RHtank/motivefilter/clogged","RtransfilterFail","fuel");});	
+		me._LMpump.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/LHtank/motivepump/serviceable",0,"LtransferPumpFail","fuel");});		
+		me._RMpump.addEventListener("click",func(){me._onGeneralClick("/systems/fuel/RHtank/motivepump/serviceable",0,"RtransferPumpFail","fuel");});		
+		me._LmainInJpump.addEventListener("click",func(){me._onValueClick("/systems/fuel/LHtank/main/innerjetpump/clogged","LMinnerjetpumpFail","fuel");});	
+		me._RmainInJpump.addEventListener("click",func(){me._onValueClick("/systems/fuel/RHtank/main/innerjetpump/clogged","RMinnerjetpumpFail","fuel");});	
+		me._LmainOutJpump.addEventListener("click",func(){me._onValueClick("/systems/fuel/LHtank/main/outerjetpump/clogged","LMouterjetpumpFail","fuel");});	
+		me._RmainOutJpump.addEventListener("click",func(){me._onValueClick("/systems/fuel/RHtank/main/outerjetpump/clogged","RMouterjetpumpFail","fuel");});	
+		me._LauxJpump.addEventListener("click",func(){me._onValueClick("/systems/fuel/LHtank/aux/jetpump/clogged","LAjetpumpFail","fuel");});	
+		me._RauxJpump.addEventListener("click",func(){me._onValueClick("/systems/fuel/RHtank/aux/jetpump/clogged","RAjetpumpFail","fuel");});	
 
 	# control system
-		me._LAileron.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/L-aileron",1,"LAil","AilOk",me._LAileron,me._Text_LAil);});
-		me._RAileron.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/R-aileron",1,"RAil","AilOk",me._RAileron,me._Text_RAil);});
+		me._LAileron.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/L-aileron",1,"LAil","contr");});
+		me._RAileron.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/R-aileron",1,"RAil","contr");});
 		me._Elevator.addEventListener("click",func(){me._onElevatorClick();});
-		me._LFlap.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/L-flap",1,"LFlap","FlaOk",me._LFlap,me._Text_LFlap);});
-		me._RFlap.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/R-flap",1,"RFlap","FlaOk",me._RFlap,me._Text_RFlap);});
-		me._Rudder.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/rudder",1,"Rudder","RudOk",me._Rudder,me._Text_Rudder);});
-		me._ElevatorTrim.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/trim",1,"Trim","TriOk",me._ElevatorTrim,me._Text_Trim);});
+		me._LFlap.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/L-flap",1,"LFlap","contr");});
+		me._RFlap.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/R-flap",1,"RFlap","contr");});
+		me._Rudder.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/rudder",1,"Rudder","contr");});
+		me._ElevatorTrim.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/trim",1,"Trim","contr");});
+	# deice system
+		me._ROBoot.addEventListener("click",func(){me._onGeneralClick("/systems/pneumatic/RHouterBoot/serviceable",0,"RHouterBootFail","deice");});		
+		me._LOBoot.addEventListener("click",func(){me._onGeneralClick("/systems/pneumatic/LHouterBoot/serviceable",0,"LHouterBootFail","deice");});		
+		me._RIBoot.addEventListener("click",func(){me._onGeneralClick("/systems/pneumatic/RHinnerBoot/serviceable",0,"RHinnerBootFail","deice");});		
+		me._LIBoot.addEventListener("click",func(){me._onGeneralClick("/systems/pneumatic/LHinnerBoot/serviceable",0,"LHinnerBootFail","deice");});
+		me._RHSBoot.addEventListener("click",func(){me._onGeneralClick("/systems/pneumatic/RHHStabBoot/serviceable",0,"RHHStabBootFail","deice");});		
+		me._LHSBoot.addEventListener("click",func(){me._onGeneralClick("/systems/pneumatic/LHHStabBoot/serviceable",0,"LHHStabBootFail","deice");});		
+		me._VSBoot.addEventListener("click",func(){me._onGeneralClick("/systems/pneumatic/VStabBoot/serviceable",0,"VStabBootFail","deice");});		
+		me._LPitot.addEventListener("click",func(){me._onGeneralClick("/extra500/system/deice/PitotHeatLeft/service/serviceable",0,"LHPitotHeatFail","deice");});		
+		me._RPitot.addEventListener("click",func(){me._onGeneralClick("/extra500/system/deice/PitotHeatRight/service/serviceable",0,"RHPitotHeatFail","deice");});		
+		me._WindshHeat.addEventListener("click",func(){me._onGeneralClick("/extra500/system/deice/WindshieldHeat/service/serviceable",0,"WindshieldHeatFail","deice");});	
+		me._StallWarner.addEventListener("click",func(){me._onGeneralClick("/extra500/system/deice/StallHeat/service/serviceable",0,"StallHeatFail","deice");});
+		me._PropH.addEventListener("click",func(){me._onGeneralClick("/extra500/system/deice/Propeller/service/serviceable",0,"PropHeatFail","deice");});		
+		me._EngInletHeat.addEventListener("click",func(){me._onGeneralClick("/extra500/system/deice/IntakeHeat/serviceable",0,"InletAntiIceFail","deice");});		
+
 	},
 	_menuReset : func() {
 		me._gear.setColorFill(COLORfd["menuns"]);
 		me._fuel.setColorFill(COLORfd["menuns"]);
 		me._controls.setColorFill(COLORfd["menuns"]);
+		me._deice.setColorFill(COLORfd["menuns"]);
 	},
 	_hideAll : func() {   # except for menu
 		me._svg_gear.hide();
 		me._svg_fuel.hide();
 		me._svg_contr.hide();
+		me._svg_deice.hide();
 		me._svg_welcome.hide();
 
 		me._Text_Filter.hide();
 		me._Text_FFtransd.hide();
+		me._Text_LMFilter.hide();
+		me._Text_RMFilter.hide();
+		me._Text_LmainInJpump.hide();
+		me._Text_RmainInJpump.hide();
+		me._Text_LmainOutJpump.hide();
+		me._Text_RmainOutJpump.hide();
+		me._Text_LauxJpump.hide();
+		me._Text_RauxJpump.hide();
 	},
 	_updateMenu : func() {
 		me._gearButtons_update();
 		me._fuelButtons_update();
 		me._contrButtons_update();
+		me._deiceButtons_update();
 	},
 	_onGearClick : func() {
 		me._menuReset();
@@ -294,6 +436,13 @@ var FailureClass = {
 		me._hideAll();
 		me._svg_contr.show();
 		me._contrButtons_update();
+	},
+	_onDeiceClick : func() {
+		me._menuReset();
+		me._deice.setColorFill(COLORfd["menuse"]);
+		me._hideAll();
+		me._svg_deice.show();
+		me._deiceButtons_update();
 	},
 	_genButtons_update : func(gfailprop,glogic,gfield,gtext,gcolor,gfail) {			# for 'servicable' values, so glogic 0 or 1
 		if ( getprop(gfailprop) == glogic ) {
@@ -334,8 +483,18 @@ var FailureClass = {
 		me._genButtons_update("/systems/fuel/FP1checkvalve/serviceable",1,me._pumpcv1,me._Text_pumpcv1,"CVOk","/extra500/failurescenarios/fuel");
 		me._genButtons_update("/systems/fuel/FP2checkvalve/serviceable",1,me._pumpcv2,me._Text_pumpcv2,"CVOk","/extra500/failurescenarios/fuel");
 		me._valButtons_update("/systems/fuel/FFtransducer/blocked",me._FFtransd,me._Text_FFtransd,"CVOk","/extra500/failurescenarios/fuel","Fuel flow transducer is ","% blocked");
+		me._valButtons_update("/systems/fuel/LHtank/motivefilter/clogged",me._LMFilter,me._Text_LMFilter,"CVOk","/extra500/failurescenarios/fuel","Motive flow filter is ","% blocked");
+		me._valButtons_update("/systems/fuel/RHtank/motivefilter/clogged",me._RMFilter,me._Text_RMFilter,"CVOk","/extra500/failurescenarios/fuel","Motive flow filter is ","% blocked");
+		me._genButtons_update("/systems/fuel/LHtank/motivepump/serviceable",1,me._LMpump,me._Text_LMpump,"CVOk","/extra500/failurescenarios/fuel");
+		me._genButtons_update("/systems/fuel/RHtank/motivepump/serviceable",1,me._RMpump,me._Text_RMpump,"CVOk","/extra500/failurescenarios/fuel");
+		me._valButtons_update("/systems/fuel/LHtank/main/innerjetpump/clogged",me._LmainInJpump,me._Text_LmainInJpump,"CVOk","/extra500/failurescenarios/fuel","Inner Jetpump is ","% clogged");
+		me._valButtons_update("/systems/fuel/RHtank/main/innerjetpump/clogged",me._RmainInJpump,me._Text_RmainInJpump,"CVOk","/extra500/failurescenarios/fuel","Inner Jetpump is ","% clogged");
+		me._valButtons_update("/systems/fuel/LHtank/main/outerjetpump/clogged",me._LmainOutJpump,me._Text_LmainOutJpump,"CVOk","/extra500/failurescenarios/fuel","Middle Jetpump is ","% clogged");
+		me._valButtons_update("/systems/fuel/RHtank/main/outerjetpump/clogged",me._RmainOutJpump,me._Text_RmainOutJpump,"CVOk","/extra500/failurescenarios/fuel","Middle Jetpump is ","% clogged");
+		me._valButtons_update("/systems/fuel/LHtank/aux/jetpump/clogged",me._LauxJpump,me._Text_LauxJpump,"CVOk","/extra500/failurescenarios/fuel","Outer Jetpump is ","% clogged");
+		me._valButtons_update("/systems/fuel/RHtank/aux/jetpump/clogged",me._RauxJpump,me._Text_RauxJpump,"CVOk","/extra500/failurescenarios/fuel","Outer Jetpump is ","% clogged");	
 
-		# setting fail indication in menu
+	# setting fail indication in menu
 		if (getprop("/extra500/failurescenarios/fuel") > 0) {
 			me._fuel_ind.show();
 			me._fuelfailnumber.setText(getprop("/extra500/failurescenarios/fuel"))
@@ -401,6 +560,34 @@ var FailureClass = {
 		}
 
 	},
+	_deiceButtons_update : func() {
+		setprop("/extra500/failurescenarios/deice",0);
+
+		me._genButtons_update("/systems/pneumatic/RHouterBoot/serviceable",1,me._ROBoot,me._Text_ROBoot,"boot2Ok","/extra500/failurescenarios/deice");		
+		me._genButtons_update("/systems/pneumatic/LHouterBoot/serviceable",1,me._LOBoot,me._Text_LOBoot,"boot2Ok","/extra500/failurescenarios/deice");		
+		me._genButtons_update("/systems/pneumatic/RHinnerBoot/serviceable",1,me._RIBoot,me._Text_RIBoot,"boot1Ok","/extra500/failurescenarios/deice");		
+		me._genButtons_update("/systems/pneumatic/LHinnerBoot/serviceable",1,me._LIBoot,me._Text_LIBoot,"boot1Ok","/extra500/failurescenarios/deice");
+		me._genButtons_update("/systems/pneumatic/RHHStabBoot/serviceable",1,me._RHSBoot,me._Text_RHSBoot,"boot2Ok","/extra500/failurescenarios/deice");		
+		me._genButtons_update("/systems/pneumatic/LHHStabBoot/serviceable",1,me._LHSBoot,me._Text_LHSBoot,"boot2Ok","/extra500/failurescenarios/deice");		
+		me._genButtons_update("/systems/pneumatic/VStabBoot/serviceable",1,me._VSBoot,me._Text_VSBoot,"boot2Ok","/extra500/failurescenarios/deice");		
+		me._genButtons_update("/extra500/system/deice/PitotHeatLeft/service/serviceable",1,me._LPitot,me._Text_LPitot,"pitotOk","/extra500/failurescenarios/deice");		
+		me._genButtons_update("/extra500/system/deice/PitotHeatRight/service/serviceable",1,me._RPitot,me._Text_RPitot,"pitotOk","/extra500/failurescenarios/deice");		
+		me._genButtons_update("/extra500/system/deice/WindshieldHeat/service/serviceable",1,me._WindshHeat,me._Text_WindSh,"windShOk","/extra500/failurescenarios/deice");	
+		me._genButtons_update("/extra500/system/deice/StallHeat/service/serviceable",1,me._StallWarner,me._Text_StallWarner,"stallwOk","/extra500/failurescenarios/deice");
+		me._genButtons_update("/extra500/system/deice/Propeller/service/serviceable",1,me._PropH,me._Text_PropH,"propOk","/extra500/failurescenarios/deice");		
+		me._genButtons_update("/extra500/system/deice/IntakeHeat/serviceable",1,me._EngInletHeat,me._Text_EngInletHeat,"inletOk","/extra500/failurescenarios/deice");	
+
+		# setting fail indication in menu
+		if (getprop("/extra500/failurescenarios/deice") > 0) {
+			me._deice_ind.show();
+			me._deicefailnumber.setText(getprop("/extra500/failurescenarios/deice"))
+				.setColor(1,1,1,1);		
+		} else {
+			me._deice_ind.hide();
+			me._deicefailnumber.setColor(1,1,1,0);
+		}
+
+	},
 	_onElevatorClick : func(){
 		if (getprop("/extra500/failurescenarios/controls/elevator") == 1) {
 			setprop("/extra500/failurescenarios/name","Elevator");
@@ -408,42 +595,37 @@ var FailureClass = {
 			me._LElevator.setColorFill(COLORfd["EleOk"]);
 			me._RElevator.setColorFill(COLORfd["EleOk"]);
 			me._Text_Elevator.hide();
-			me._updateMenu();
+			me._contrButtons_update();
 		} else {
 			setprop("/extra500/failurescenarios/name","Elevator");
 			setprop("/extra500/failurescenarios/activate",1);
 			me._LElevator.setColorFill(COLORfd["Failed"]);
 			me._RElevator.setColorFill(COLORfd["Failed"]);
 			me._Text_Elevator.show();
-			me._updateMenu();
+			me._contrButtons_update();
 		}
 	},
-	_onGeneralClick : func(property,logic,failname,color,field,text){			# for 'servicable' values, so logic 0 or 1
+	_onGeneralClick : func(property,logic,failname,system){			# for 'servicable' values, so logic 0 or 1
 		setprop("/extra500/failurescenarios/name",failname);
 		if (getprop(property) == logic) {
 			setprop("/extra500/failurescenarios/activate",0);
-			field.setColorFill(COLORfd[color]);
-			text.hide();
 		} else {
 			setprop("/extra500/failurescenarios/activate",1);
-			field.setColorFill(COLORfd["Failed"]);
-			text.show();
 		}
-		me._updateMenu();
+		me._update_page(system);
 	},
-	_onValueClick : func(property,failname,color,field,text){				# for step values between 0-1
+	_onValueClick : func(property,failname,system){				# for step values between 0-1
 		setprop("/extra500/failurescenarios/name",failname);
 		var value = getprop(property) + 0.1;
 		if (value>1) {value = 0;}
 		setprop("/extra500/failurescenarios/activate",value);
-		if (value==0) {
-			field.setColorFill(COLORfd[color]);
-			text.hide();
-		} else {
-			field.setColorFill(COLORfd["Failed"]);
-			text.show();
-		}
-		me._updateMenu();
+		me._update_page(system);
+	},
+	_update_page : func(system) {
+		if (system == "deice") {me._deiceButtons_update(); } 
+		else if (system == "fuel") {me._fuelButtons_update(); } 
+		else if (system == "gear") {me._gearButtons_update(); }
+		else if (system == "contr") {me._contrButtons_update();}
 	}
 
 };
