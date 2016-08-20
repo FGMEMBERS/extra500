@@ -17,20 +17,48 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 28.05.2016            
+#      Date: 20.08.2016            
 #
 # 
 
-#var failureset = [
-#	[1,"RMG_jammed","RMG(fail)"],
-#	[2,"LMG_jammed","LMG(fail)"],
-#	[3,"NG_jammed","NG(fail)"]
-#];
+# this is the failure matrix as used by the random failure function:
+# 1: index
+# 2: failure name
+# 3: failure type (digital, analog (0.1 steps) and progressive)
+var failureset = [
+	[1,"RMG_jammed","dig"],
+	[2,"LMG_jammed","dig"],
+	[3,"NG_jammed","dig"],
+	[4,"LAux_leakage","ana"],
+	[5,"filterFail","prg"]
+];
 
 setlistener("/extra500/failurescenarios/activate", func {
 	var fail = getprop("/extra500/failurescenarios/activate");
 	set_failure(fail);
 });
+
+# RANDOM FAILURE MANAGER
+
+var randomfail = func() {
+	if ( getprop("/extra500/failurescenarios/random_active") == 0 ) {
+		setprop("/extra500/failurescenarios/random_active",1);
+		var nofailures = size(failureset);
+		var failureno = math.round( rand() * nofailures + 0.5 ) -1 ;
+		var maxdelay = getprop("/extra500/failurescenarios/randommaxdelay");
+
+		if (failureset[failureno][2] == "dig") {
+			var fail = 1;
+		} else if (failureset[failureno][2] == "ana") {
+			var fail = (math.round(rand() * 10 + 0.5 ))/10;
+		} else if (failureset[failureno][2] == "prg") {
+			var fail = 0.1;
+		}
+
+		setprop("/extra500/failurescenarios/name",failureset[failureno][1] );
+		setprop("/extra500/failurescenarios/activate",fail);
+	}
+}
 
 # CONTROL SYSTEM FAILURES
 
@@ -344,5 +372,7 @@ var failure_reset = func() {
 	setprop("/fdm/jsbsim/gear/unit[2]/dynamic_friction_coeff", 0.4 ); 
 	setprop("/fdm/jsbsim/gear/unit[1]/brakeFail", 0 ); 
 	setprop("/fdm/jsbsim/gear/unit[2]/brakeFail", 0 ); 
+
+	setprop("/extra500/failurescenarios/random_active",0);
 }
 

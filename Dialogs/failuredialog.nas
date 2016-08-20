@@ -17,7 +17,7 @@
 #	Date: 	10.10.2015
 #
 #	Last change: Eric van den Berg	
-#	Date:	29.05.2016	
+#	Date:	20.08.2016	
 #
 
 var COLORfd = {};
@@ -44,6 +44,7 @@ COLORfd["windShOk"] = "#9b48b5ff";
 COLORfd["boot1Ok"] = "#80b3f1ff";
 COLORfd["boot2Ok"] = "#1d79e8ff";
 COLORfd["Failed"] = "#ff8080ff";
+COLORfd["randomA"] = "#d45d00ff";
 
 var FailureClass = {
 	new : func(){
@@ -101,6 +102,12 @@ var FailureClass = {
 		me._deice_ind	= me._svg_menu.getElementById("deicefailind").hide();
 
 		me._repair		= me._svg_menu.getElementById("field_repairall");
+
+	# welcome
+		me._ranfail		= me._svg_welcome.getElementById("field_ranfail");
+		me._randombackgr	= me._svg_welcome.getElementById("backgr_ranfail");
+		me._fielddelay	= me._svg_welcome.getElementById("field_faildelay");
+		me._valuedelay 	= me._svg_welcome.getElementById("value_faildelay");
 
 	# gear
 		me._LHgear		= me._svg_gear.getElementById("LHgear");
@@ -306,6 +313,7 @@ var FailureClass = {
 		me._updateMenu();
 		me._hideAll();
 		me._svg_welcome.show();
+		me._welcome_update();
 		me._svg_menu.show();
 
 	},
@@ -321,8 +329,12 @@ var FailureClass = {
 		me._repair.addEventListener("click",func(){
 			events.failure_reset();					# nasal/failurescenarios.nas
 			me._updateMenu();
+			me._welcome_update();
 		});
 
+	# welcome
+		me._ranfail.addEventListener("click",func(){me._onRandomClick();});	
+		me._fielddelay.addEventListener("wheel",func(e){me._onDelayChange(e);});
 
 	# gear
 		me._LHgear.addEventListener("click",func(){me._onGeneralClick("/systems/gear/LMG-free",0,"LMG_jammed","gear");});
@@ -385,6 +397,16 @@ var FailureClass = {
 		me._PropH.addEventListener("click",func(){me._onGeneralClick("/extra500/system/deice/Propeller/service/serviceable",0,"PropHeatFail","deice");});		
 		me._EngInletHeat.addEventListener("click",func(){me._onGeneralClick("/extra500/system/deice/IntakeHeat/serviceable",0,"InletAntiIceFail","deice");});		
 
+	},
+	_onRandomClick : func() {
+		events.randomfail(); # nasal/failurescenarios.nas
+		me._welcome_update();
+	},
+	_onDelayChange : func(e){
+		var delay = getprop("/extra500/failurescenarios/randommaxdelay") + e.deltaY;
+		delay = math.clamp(delay,0,60);
+		setprop("/extra500/failurescenarios/randommaxdelay",delay);
+		me._welcome_update();
 	},
 	_menuReset : func() {
 		me._gear.setColorFill(COLORfd["menuns"]);
@@ -465,6 +487,16 @@ var FailureClass = {
 			gtext.setText(full_text);					
 			setprop(gfail,getprop(gfail) + 1);
 		}
+	},
+	_welcome_update : func() {
+		var randomactive = getprop("/extra500/failurescenarios/random_active");
+		me._valuedelay.setText(sprintf("%i",getprop("/extra500/failurescenarios/randommaxdelay")));
+		if (randomactive == 1) {
+			me._randombackgr.setColorFill(COLORfd["randomA"]);
+		} else {
+			me._randombackgr.setColorFill(COLORfd["menuns"]);
+		}
+
 	},
 	_fuelButtons_update : func() {
 		setprop("/extra500/failurescenarios/fuel",0);
@@ -627,6 +659,7 @@ var FailureClass = {
 		else if (system == "gear") {me._gearButtons_update(); }
 		else if (system == "contr") {me._contrButtons_update();}
 	}
+
 
 };
 
