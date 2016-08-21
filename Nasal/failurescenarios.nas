@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 20.08.2016            
+#      Date: 21.08.2016            
 #
 # 
 
@@ -29,8 +29,75 @@ var failureset = [
 	[1,"RMG_jammed","dig"],
 	[2,"LMG_jammed","dig"],
 	[3,"NG_jammed","dig"],
-	[4,"LAux_leakage","ana"],
-	[5,"filterFail","prg"]
+	[4,"mainvalve_solenoid_fail","dig"],
+	[5,"upperdoorvalve_solenoid_fail","dig"],
+	[6,"lowerdoorvalve_solenoid_fail","dig"],
+	[7,"NG_flat","dig"],
+	[8,"LMG_flat","dig"],
+	[9,"RMG_flat","dig"],
+	[10,"Lbrake","dig"],
+	[11,"Rbrake","dig"],
+	[12,"RAil","dig"],
+	[13,"LAil","dig"],
+	[14,"Elevator","dig"],
+	[15,"Rudder","dig"],
+	[16,"Trim","dig"],
+	[17,"LFlap","dig"],
+	[18,"RFlap","dig"],
+	[19,"LAux_leakage","ana"],
+	[20,"RAux_leakage","ana"],
+	[21,"LMain_leakage","ana"],
+	[22,"RMain_leakage","ana"],
+	[23,"LCol_leakage","ana"],
+	[24,"RCol_leakage","ana"],
+	[25,"LCol_drainFail","dig"],
+	[26,"RCol_drainFail","dig"],
+	[27,"LMain_inbDrainFail","dig"],
+	[28,"LMain_outbDrainFail","dig"],
+	[29,"RMain_inbDrainFail","dig"],
+	[30,"RMain_outbDrainFail","dig"],
+	[31,"LAux_inbDrainFail","dig"],
+	[32,"LAux_outbDrainFail","dig"],
+	[33,"RAux_inbDrainFail","dig"],
+	[34,"RAux_outbDrainFail","dig"],
+	[35,"LcheckvalveFail","dig"],
+	[36,"RcheckvalveFail","dig"],
+	[37,"filterFail","ana"],
+	[38,"SelectorValveFail","dig"],
+	[39,"fuelPump1Fail","dig"],
+	[40,"fuelPump2Fail","dig"],
+	[41,"fuelPumpCV1Fail","dig"],
+	[42,"fuelPumpCV2Fail","dig"],
+	[43,"fftransdFail","dig"],
+	[44,"LtransferPumpFail","dig"],
+	[45,"RtransferPumpFail","dig"],
+	[46,"LtransfilterFail","ana"],
+	[47,"RtransfilterFail","ana"],
+	[48,"LMinnerjetpumpFail","ana"],
+	[49,"RMinnerjetpumpFail","ana"],
+	[50,"LMouterjetpumpFail","ana"],
+	[51,"RMouterjetpumpFail","ana"],
+	[52,"LAjetpumpFail","ana"],
+	[53,"RAjetpumpFail","ana"],
+	[54,"InletAntiIceFail","dig"],
+	[55,"LHPitotHeatFail","dig"],
+	[56,"RHPitotHeatFail","dig"],
+	[57,"StallHeatFail","dig"],
+	[58,"LHStaticHeatFail","dig"],
+	[59,"RHStaticHeatFail","dig"],
+	[60,"WindshieldHeatFail","dig"],
+	[61,"PropHeatFail","dig"]
+#	[62,
+#	[63,
+#	[64,
+#	[65,
+#	[66,
+#	[67,
+#	[68,
+#	[69,
+#	[70,	
+	
+
 ];
 
 setlistener("/extra500/failurescenarios/activate", func {
@@ -43,21 +110,31 @@ setlistener("/extra500/failurescenarios/activate", func {
 var randomfail = func() {
 	if ( getprop("/extra500/failurescenarios/random_active") == 0 ) {
 		setprop("/extra500/failurescenarios/random_active",1);
-		var nofailures = size(failureset);
-		var failureno = math.round( rand() * nofailures + 0.5 ) -1 ;
-		var maxdelay = getprop("/extra500/failurescenarios/randommaxdelay");
-
-		if (failureset[failureno][2] == "dig") {
-			var fail = 1;
-		} else if (failureset[failureno][2] == "ana") {
-			var fail = (math.round(rand() * 10 + 0.5 ))/10;
-		} else if (failureset[failureno][2] == "prg") {
-			var fail = 0.1;
+		var maxdelay = 60 * getprop("/extra500/failurescenarios/randommaxdelay");
+		if (maxdelay == 0) {
+			me.randomfail2();
+		} else { 
+			var delay = math.round( rand() * maxdelay + 0.5 );
+			settimer(func(){ me.randomfail2();},delay);
 		}
-
-		setprop("/extra500/failurescenarios/name",failureset[failureno][1] );
-		setprop("/extra500/failurescenarios/activate",fail);
 	}
+}
+
+var randomfail2 = func() {
+	var nofailures = size(failureset);
+	var failureno = math.round( rand() * nofailures + 0.5 ) -1 ;
+
+	if (failureset[failureno][2] == "dig") {
+		var fail = 1;
+	} else if (failureset[failureno][2] == "ana") {
+		var fail = (math.round(rand() * 10 + 0.5 ))/10;
+	} else if (failureset[failureno][2] == "prg") {
+		var fail = 0.1; # not yet implemented
+	}
+
+	setprop("/extra500/failurescenarios/name",failureset[failureno][1] );
+	setprop("/extra500/failurescenarios/activate",fail);
+	
 }
 
 # CONTROL SYSTEM FAILURES
