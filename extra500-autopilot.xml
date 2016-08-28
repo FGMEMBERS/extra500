@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2015-12-22
+      Date:             2016-08-28
 -->
 
 <autopilot name="STEC55X">
@@ -2211,10 +2211,31 @@
 		</fcs_function>
 
 <!-- vs fail used for indication: aircraft cannot maintain climb rate (stall "protection")-->
-		<switch name="vsfail">
+		<switch name="vsprefail">
 			<default value="0"/>
 			<test logic="OR" value="1">
 				/autopilot/vs-channel/vs-error-fpm gt 150
+			</test>
+			<output>/autopilot/vs-channel/pre-fail</output>
+		</switch>
+
+<!-- vs fail timer -->
+		<fcs_function name="/autopilot/vs-channel/vs-fail-timer-sec">
+			<function>
+				<product>
+					<property>/autopilot/vs-channel/pre-fail</property>
+					<sum>
+						<property>/autopilot/vs-channel/vs-fail-timer-sec</property>
+						<property>simulation/dt</property> 
+					</sum>
+				</product>
+			</function>
+		</fcs_function>
+
+		<switch name="vsfail">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/autopilot/vs-channel/vs-fail-timer-sec gt 5
 			</test>
 			<output>/autopilot/vs-channel/fail</output>
 		</switch>
