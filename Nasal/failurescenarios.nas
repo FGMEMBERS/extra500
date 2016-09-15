@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 21.08.2016            
+#      Date: 11.09.2016            
 #
 # 
 
@@ -86,16 +86,26 @@ var failureset = [
 	[58,"LHStaticHeatFail","dig"],
 	[59,"RHStaticHeatFail","dig"],
 	[60,"WindshieldHeatFail","dig"],
-	[61,"PropHeatFail","dig"]
-#	[62,
-#	[63,
-#	[64,
-#	[65,
-#	[66,
-#	[67,
-#	[68,
+	[61,"PropHeatFail","dig"],
+	[62,"LHStaticLeak","ana"],
+	[63,"RHStaticLeak","ana"],
+	[64,"LHPitotLeak1","ana"],
+	[65,"RHPitotLeak1","ana"],
+	[66,"LHPitotLeak2","ana"],
+	[67,"RHPitotLeak2","ana"],
+	[68,"BackupAttInd","dig"]
 #	[69,
 #	[70,	
+#	[71,
+#	[72,
+#	[73,
+#	[74,
+#	[75,
+#	[76,
+#	[77,
+#	[78,
+#	[79,
+#	[80,
 	
 
 ];
@@ -324,6 +334,14 @@ var set_failure = func(fail) {
 		else if (failure == "VStabBootFail") { setprop("/systems/pneumatic/VStabBoot/serviceable", math.abs(fail-1) ); }
 		else if (failure == "LHHStabBootFail") { setprop("/systems/pneumatic/LHHStabBoot/serviceable", math.abs(fail-1) ); }
 		else if (failure == "RHHStabBootFail") { setprop("/systems/pneumatic/RHHStabBoot/serviceable", math.abs(fail-1) ); }
+	# instrumentation
+		else if (failure == "LHStaticLeak") { setprop("/systems/staticL/leaking", fail ); }
+		else if (failure == "RHStaticLeak") { setprop("/systems/staticR/leaking", fail ); }
+		else if (failure == "LHPitotLeak1") { setprop("/systems/pitotL/leaking1", fail ); }
+		else if (failure == "RHPitotLeak1") { setprop("/systems/pitotR/leaking1", fail ); }
+		else if (failure == "LHPitotLeak2") { setprop("/systems/pitotL/leaking2", fail ); }
+		else if (failure == "RHPitotLeak2") { setprop("/systems/pitotR/leaking2", fail ); }
+		else if (failure == "BackupAttInd") { setprop("/instrumentation/attitude-indicator/serviceable", math.abs(fail-1) ); }
 	} else {
 		print("Error: No failure scenario name set");
 		setprop("/extra500/failurescenarios/activate",0);
@@ -449,6 +467,13 @@ var failure_reset = func() {
 	setprop("/fdm/jsbsim/gear/unit[2]/dynamic_friction_coeff", 0.4 ); 
 	setprop("/fdm/jsbsim/gear/unit[1]/brakeFail", 0 ); 
 	setprop("/fdm/jsbsim/gear/unit[2]/brakeFail", 0 ); 
+# Instruments
+	setprop("/systems/staticL/leaking", 0 );
+	setprop("/systems/staticR/leaking", 0 );
+	setprop("/systems/pitotL/leaking1", 0 );
+	setprop("/systems/pitotR/leaking1", 0 );
+	setprop("/systems/pitotL/leaking2", 0 );
+	setprop("/systems/pitotR/leaking2", 0 );
 
 	setprop("/extra500/failurescenarios/random_active",0);
 }

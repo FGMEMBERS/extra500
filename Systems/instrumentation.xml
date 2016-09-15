@@ -20,7 +20,7 @@
       Date: 21.04.13
 
       Last change:      Eric van den Berg
-      Date:             2013-09-16
+      Date:             2016-09-11
 -->
 
 <PropertyList>
@@ -36,31 +36,43 @@
     <suction>/extra500/instrumentation/StbyHSI/volt</suction>
   </attitude-indicator>
 
+  <attitude-indicator>
+    <name>attitude-indicator-IFD-LH</name>
+    <number>0</number>
+    <suction>/extra500/instrumentation/IFD-LH/state</suction>
+  </attitude-indicator>
+
+  <attitude-indicator>
+    <name>attitude-indicator-IFD-RH</name>
+    <number>0</number>
+    <suction>/extra500/instrumentation/IFD-RH/state</suction>
+  </attitude-indicator>
+
   <airspeed-indicator>                                                       
     <name>airspeed-IFD-LH</name>
     <number>0</number>
-    <total-pressure>/systems/pitotL/total-pressure-inhg</total-pressure>
-    <static-pressure>/systems/staticL/pressure-inhg</static-pressure>
+    <total-pressure>/systems/pitotL/total-pressure2-inhg</total-pressure>
+    <static-pressure>/systems/staticL/pressure2-inhg</static-pressure>
   </airspeed-indicator>
 
   <airspeed-indicator>                                                       
     <name>airspeed-IFD-RH</name>
     <number>0</number>
-    <total-pressure>/systems/pitotR/total-pressure-inhg</total-pressure>
-    <static-pressure>/systems/staticR/pressure-inhg</static-pressure>
+    <total-pressure>/systems/pitotR/total-pressure2-inhg</total-pressure>
+    <static-pressure>/systems/staticR/pressure2-inhg</static-pressure>
   </airspeed-indicator>
 
   <airspeed-indicator>
     <name>airspeed-backup</name>
     <number>0</number>
-    <total-pressure>/systems/pitotL/total-pressure-inhg</total-pressure>
-    <static-pressure>/systems/staticL/pressure-inhg</static-pressure>
+    <total-pressure>/systems/pitotL/total-pressure3-inhg</total-pressure>
+    <static-pressure>/systems/staticL/pressure2-inhg</static-pressure>
   </airspeed-indicator>
 
   <altimeter>                                                                
     <name>altimeter</name>
     <number>0</number>
-    <static-pressure>/systems/staticL/pressure-inhg</static-pressure>
+    <static-pressure>/systems/staticL/pressure2-inhg</static-pressure>
     <encode-mode-s>true</encode-mode-s>
     <encode-mode-c>false</encode-mode-c>
   </altimeter>
@@ -68,13 +80,13 @@
   <altimeter>                                                                
     <name>altimeter-IFD-LH</name>
     <number>0</number>
-    <static-pressure>/systems/staticL/pressure-inhg</static-pressure>
+    <static-pressure>/systems/staticL/pressure2-inhg</static-pressure>
   </altimeter>
 
   <altimeter>                                                                
     <name>altimeter-IFD-RH</name>
     <number>0</number>
-    <static-pressure>/systems/staticR/pressure-inhg</static-pressure>
+    <static-pressure>/systems/staticR/pressure2-inhg</static-pressure>
     <encode-mode-s>true</encode-mode-s>
     <encode-mode-c>false</encode-mode-c>
   </altimeter>
@@ -82,7 +94,7 @@
   <altimeter>
     <name>altimeter-backup</name>
     <number>0</number>
-    <static-pressure>/systems/staticL/pressure-inhg</static-pressure>
+    <static-pressure>/systems/staticL/pressure2-inhg</static-pressure>
   </altimeter>
 
   <altimeter>

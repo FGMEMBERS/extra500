@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:      Eric van den Berg
-	Date:             20.08.2016
+	Date:             11.09.2016
 
 
 ************************************************************************
@@ -810,19 +810,25 @@ of the RR 250-B17F/2 engine is best.</long-description>
 
  <systems>
 	<pitotL>
-        	<serviceable>1</serviceable>
+        	<serviceable type="bool">1</serviceable>
+		<leaking1 type="double">0</leaking1>
+		<leaking2 type="double">0</leaking2>
 	</pitotL>
 	<pitotR>
-		<serviceable>1</serviceable>
+		<serviceable type="bool">1</serviceable>
+		<leaking1 type="double">0</leaking1>
+		<leaking2 type="double">0</leaking2>
 	</pitotR>
 	<staticL>
-		<serviceable>1</serviceable>
+		<serviceable type="bool">1</serviceable>
+		<leaking type="double">0</leaking>
 	</staticL>
 	<staticR>
-		<serviceable>1</serviceable>
+		<serviceable type="bool">1</serviceable>
+		<leaking type="double">0</leaking>
 	</staticR>
 	<staticAP>
-		<serviceable>1</serviceable>
+		<serviceable type="bool">1</serviceable>
 	</staticAP>
 	<pneumatic>
 		<boots-timer-sec type="double">0</boots-timer-sec>
