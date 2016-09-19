@@ -20,7 +20,7 @@
       Date: 21.04.13
 
       Last change:      Eric van den Berg
-      Date:             2016-09-11
+      Date:             2016-09-19
 -->
 
 <PropertyList>
@@ -39,13 +39,13 @@
   <attitude-indicator>
     <name>attitude-indicator-IFD-LH</name>
     <number>0</number>
-    <suction>/extra500/instrumentation/IFD-LH/state</suction>
+    <suction>/extra500/instrumentation/IFD-LH/power</suction>
   </attitude-indicator>
 
   <attitude-indicator>
     <name>attitude-indicator-IFD-RH</name>
     <number>0</number>
-    <suction>/extra500/instrumentation/IFD-RH/state</suction>
+    <suction>/extra500/instrumentation/IFD-RH/power</suction>
   </attitude-indicator>
 
   <airspeed-indicator>                                                       
@@ -124,7 +124,7 @@
     <number>1</number>
   </gps>
 
-  <heading-indicator-fg>
+  <!--heading-indicator-fg>
     <name>heading-indicator-IFD-LH</name>
     <number>0</number>
   </heading-indicator-fg>
@@ -132,7 +132,7 @@
   <heading-indicator-fg>
     <name>heading-indicator-IFD-RH</name>
     <number>0</number>
-  </heading-indicator-fg>
+  </heading-indicator-fg-->
 
   <magnetic-compass>
     <name>magnetic-compass</name>

@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2016-08-28
+      Date:             2016-09-19
 -->
 
 <autopilot name="STEC55X">
@@ -181,8 +181,8 @@
 		<switch name="hdgfail">
 			<default value="0"/>
 			<test value="1">
-				/instrumentation/heading-indicator-IFD-LH/serviceable eq 0
-				/instrumentation/heading-indicator-IFD-RH/serviceable eq 0
+				/extra500/instrumentation/IFD-LH/heading/serviceable eq 0
+				/extra500/instrumentation/IFD-RH/heading/serviceable eq 0
 			</test>
 			<output>/autopilot/hdg-channel/fail</output>
 		</switch>
@@ -198,11 +198,54 @@
 
 <!-- heading source is selected -->
 		<switch name="hdgselect">
-			<default value="/instrumentation/heading-indicator-IFD-LH/heading-bug-error-deg"/>
-			<test value="/instrumentation/heading-indicator-IFD-RH/heading-bug-error-deg">
+			<default value="/extra500/instrumentation/IFD-LH/heading/ind-heading"/>
+			<test value="/extra500/instrumentation/IFD-RH/heading/ind-heading">
 				/instrumentation/hdg-source eq 1
 			</test>
-			<output>/autopilot/hdg-channel/heading-bug-error-deg</output>
+			<output>/autopilot/hdg-channel/bug/ind-heading</output>
+		</switch>
+
+		<fcs_function name="/autopilot/hdg-channel/bug/hdg-bug-error-1">
+			<function>
+				<difference> 
+						<property>/autopilot/settings/heading-bug-deg</property> 
+						<property>/autopilot/hdg-channel/bug/ind-heading</property> 
+				</difference>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/autopilot/hdg-channel/bug/hdg-bug-error-2">
+			<function>
+				<sum>
+					<property>/autopilot/hdg-channel/bug/hdg-bug-error-1</property> 
+					<value>360</value> 
+				</sum>
+			</function>
+		</fcs_function>
+
+		<fcs_function name="/autopilot/hdg-channel/bug/hdg-bug-error-3">
+			<function>
+				<difference>
+					<property>/autopilot/hdg-channel/bug/hdg-bug-error-1</property> 
+					<value>360</value> 
+				</difference>
+			</function>
+		</fcs_function>
+
+		<switch name="hdgbugangle">
+			<default value="/autopilot/hdg-channel/bug/hdg-bug-error-1"/>
+			<test value="/autopilot/hdg-channel/bug/hdg-bug-error-2">
+				/autopilot/hdg-channel/bug/hdg-bug-error-1 le -180
+			</test>
+			<output>/autopilot/hdg-channel/bug/hdg-bug-error-4</output>
+		</switch>
+
+		<switch name="hdgbugangle2">
+			<default value="/autopilot/hdg-channel/bug/hdg-bug-error-4"/>
+			<test value="/autopilot/hdg-channel/bug/hdg-bug-error-3">
+				/autopilot/hdg-channel/bug/hdg-bug-error-1 ge 180
+			</test>
+			<output>/autopilot/hdg-channel/hdg-bug-error</output>
 		</switch>
 	</channel>
 
@@ -210,7 +253,7 @@
 
 <!--the heading error is clipped to -20 to 20 deg -->
 		<pure_gain name="/autopilot/hdg-channel/lmd-hdg-error">
-			<input>/autopilot/hdg-channel/heading-bug-error-deg</input>
+			<input>/autopilot/hdg-channel/hdg-bug-error</input>
 			<gain>1.0</gain>
 			<clipto>
 				<min>-20</min>
@@ -797,8 +840,8 @@
 		</switch>
 
 		<switch name="hdgselect2">
-			<default value="/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg"/>
-			<test value="/instrumentation/heading-indicator-IFD-RH/indicated-heading-deg">
+			<default value="/extra500/instrumentation/IFD-LH/heading/ind-heading"/>
+			<test value="/extra500/instrumentation/IFD-RH/heading/ind-heading">
 				/instrumentation/hdg-source eq 1
 			</test>
 			<output>/autopilot/radionav-channel/heading-deg</output>
@@ -1800,7 +1843,7 @@
 
 		<switch name="crsdirection3">
 			<default value="/autopilot/fms-channel/crs-error/course-5-error-deg"/>
-			<test value="/autopilot/hdg-channel/heading-bug-error-deg">
+			<test value="/autopilot/hdg-channel/hdg-bug-error">
 				/autopilot/settings/fly-vector eq 1
 			</test>
 			<output>/autopilot/fms-channel/crs-error/course-error-deg</output>

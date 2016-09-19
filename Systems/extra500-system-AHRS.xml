@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+	
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Eric van den Berg
+      Date: 2016-09-16
+
+      Last change: Eric van den Berg      
+      Date: 2016-09-19             
+-->
+
+<system name="AHRS">
+
+	<channel name="heading">
+
+		<fcs_function name="/extra500/instrumentation/IFD-LH/heading/ind-heading">
+    			<function>
+				<sum>
+       				<table>
+       					<description>LH magnetometer calibration error</description>
+            				<independentVar lookup="row">/orientation/heading-magnetic-deg</independentVar>
+            				<tableData>
+						0	1
+						90	92	
+						180	181
+						270	269
+						359	360
+						360	1
+						</tableData>
+      				</table>
+					<property>/extra500/instrumentation/IFD-LH/heading/error</property>
+				</sum>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="/extra500/instrumentation/IFD-RH/heading/ind-heading">
+    			<function>
+				<sum>
+       				<table>
+       					<description>RH magnetometer calibration error</description>
+            				<independentVar lookup="row">/orientation/heading-magnetic-deg</independentVar>
+            				<tableData>
+						0	0
+						90	89	
+						180	182
+						270	272
+						360	360
+						</tableData>
+      				</table>
+					<property>/extra500/instrumentation/IFD-RH/heading/error</property>
+				</sum>
+    			</function>
+		</fcs_function>
+
+		<switch name="indhdgLHIFD">
+			<default value="/extra500/instrumentation/IFD-LH/heading/ind-heading"/>
+			<test logic="OR" value="/extra500/instrumentation/IFD-RH/heading/ind-heading">
+				/extra500/instrumentation/IFD-LH/heading/serviceable eq 0
+			</test>
+			<output>/extra500/instrumentation/IFD-LH/heading/ind-heading</output>
+		</switch>
+
+		<switch name="indhdgRHIFD">
+			<default value="/extra500/instrumentation/IFD-RH/heading/ind-heading"/>
+			<test logic="OR" value="/extra500/instrumentation/IFD-LH/heading/ind-heading">
+				/extra500/instrumentation/IFD-RH/heading/serviceable eq 0
+			</test>
+			<output>/extra500/instrumentation/IFD-RH/heading/ind-heading</output>
+		</switch>
+
+
+		<fcs_function name="/extra500/instrumentation/IFD-miscompares/hdg-diff-abs">
+    			<function>
+				<abs>	
+					<difference>
+						<property>/extra500/instrumentation/IFD-LH/heading/ind-heading</property>
+						<property>/extra500/instrumentation/IFD-RH/heading/ind-heading</property>
+					</difference>
+				</abs>
+    			</function>
+		</fcs_function>
+
+		<switch name="hdgmiscompare">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/extra500/instrumentation/IFD-miscompares/hdg-diff-abs gt 5
+				/extra500/instrumentation/IFD-miscompares/hdg-diff-abs lt 355
+			</test>
+			<output>/extra500/instrumentation/IFD-miscompares/heading</output>
+		</switch>
+
+
+	</channel>
+
+</system>
+
+
+

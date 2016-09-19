@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Sep 10 2013
 #
-#	Last change:	Dirk Dittmann
-#	Date:		28.05.15
+#	Last change:	Eric van den Berg
+#	Date:		19.09.16
 #
 
 # var RouteLayer = {
@@ -74,7 +74,7 @@ var MovingMap = {
 		m._name		= name;
 		m._tree	= {
 			MagVar		: props.globals.initNode("/environment/magnetic-variation-deg",0.0,"DOUBLE"),
-			Heading		: props.globals.initNode("/instrumentation/heading-indicator-IFD-"~m.IFD.name~"/indicated-heading-deg",0.0,"DOUBLE"),
+			Heading		: props.globals.initNode("extra500/instrumentation/IFD-"~m.IFD.name~"/heading/ind-heading",0.0,"DOUBLE"),
 			TrackTrue	: props.globals.initNode("/autopilot/fms-channel/indicated-track-true-deg",0.0,"DOUBLE"),
 			FmsHeading	: props.globals.initNode("/autopilot/fms-channel/course-target-deg",0.0,"DOUBLE"),
 			groundSpeed	: props.globals.initNode("/autopilot/fms-channel/indicated-ground-speed-kt",0.0,"DOUBLE"),

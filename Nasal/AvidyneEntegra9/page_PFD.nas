@@ -17,7 +17,7 @@
 #      Date: Jul 20 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             20.07.14
+#      Date:             19.09.16
 #
 
 
@@ -1534,7 +1534,7 @@ var HeadingSituationIndicatorWidget = {
 		var m = {parents:[HeadingSituationIndicatorWidget,IfdWidget.new(page,canvasGroup,name)]};
 		m._class 	= "HeadingSituationIndicatorWidget";
 		m._ptree	= {
-			Heading		: props.globals.initNode("/instrumentation/heading-indicator-IFD-"~m._ifd.name~"/indicated-heading-deg",0.0,"DOUBLE"),
+			Heading		: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/heading/ind-heading",0.0,"DOUBLE"),
 # 			HeadingTrue	: props.globals.initNode("/orientation/heading-deg",0.0,"DOUBLE"),
 			TrunRate	: props.globals.initNode("/instrumentation/turn-indicator/indicated-turn-rate",0.0,"DOUBLE"),
 # 			FmsHeading	: props.globals.initNode("/autopilot/fms-channel/course-target-deg",0.0,"DOUBLE"),
