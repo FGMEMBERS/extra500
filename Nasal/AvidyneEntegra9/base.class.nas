@@ -144,6 +144,7 @@ var PageClass = {
 	_onVisibiltyChange : func(){
 		me.page.setVisible(me._visibility);
 	},
+	boot : func(warm = nil){},
 	hide : func(){
 		me.page.setVisible(0);
 	},
