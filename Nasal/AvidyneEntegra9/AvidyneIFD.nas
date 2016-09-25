@@ -395,7 +395,132 @@ var IFDPageNavigator = {
 	},
 };
 
-
+var ADAHRS_System = {
+	new: func(ifd){
+		var m = {parents:[ADAHRS_System,ListenerClass.new()]};
+		m._class 	= "ADAHRS_System";
+		m._ifd = ifd;
+		m._ptree	= {
+			ready	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/ADAHRS/ready",0,"BOOL"),
+			readyEnv	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/env/ready",0,"BOOL"),
+			readyIAS	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/airspeed/ready",0,"BOOL"),
+			readyALT	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/altimeter/ready",0,"BOOL"),
+			readyVS		: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/ivsi/ready",0,"BOOL"),
+			
+		};
+		
+		m._h1 = "";
+		m._h2 = "";
+		m._h3 = "";
+		m._h4 = "";
+		m._h5 = "";
+		
+		
+		m._ready = 0;
+		m._toGo = 30;
+		m._warm = 0;
+		
+		return m;
+	},
+	init : func(instance=me){
+		me.setListeners(instance);
+	},
+	deinit : func(){
+		me.removeListeners();	
+	},
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._ptree.ready,func(n){me._onReadyChange(n)},1,0));
+		
+	},
+	boot : func(warm=nil){
+		if(warm != nil){
+			me._warm = warm;
+		}
+		if(me._warm){
+			me._toGo = 12;
+		}else{
+			me._toGo = 30;	
+		}
+		
+		me._h1 = "";
+		me._h2 = "";
+		me._h3 = "Booting";
+		me._h4 = "";
+		me._h5 = "";
+		
+		
+		me._ptree.ready.setBoolValue(0);
+	},
+	_onReadyChange : func(n){
+		me._ready = n.getValue();
+		if(me._ready){
+						
+		}else{
+			me.boot();
+		}
+	},
+	update2Hz : func(now,dt){
+		if(!me._ready){
+			if(me._warm){
+				if (me._toGo >= 12){
+					me._h1 = "Warm Start";
+					me._h2 = "AHRS Allignment";
+					me._h3 = "Please Standby";
+				}elsif(me._toGo >= 10){
+					me._h3 = "Attempting Quick Restart";
+					me._h4 = "Ready To Go";
+					me._h5 = sprintf("In %i Seconds",me._toGo);
+				}elsif(me._toGo >= 5){
+					
+					me._h5 = sprintf("In %i Seconds",me._toGo);
+				}else{
+					#boot finished
+					me._ptree.ready.setBoolValue(1);
+					me._warm = 1;
+				}
+					
+				
+			}else{
+				if (me._toGo >= 30){
+					me._h1 = "Initial";
+					me._h2 = "AHRS Allignment";
+					me._h3 = "Please Standby";
+					
+				}elsif(me._toGo >= 25){
+					me._ptree.readyEnv.setBoolValue(1);
+					me._h3 = "Remain Stationary";
+					me._h4 = "OK To Taxi";
+					me._h5 = sprintf("In %i Seconds",me._toGo);
+				}elsif(me._toGo >= 22){
+					me._ptree.readyIAS.setBoolValue(1);
+					
+					me._h5 = sprintf("In %i Seconds",me._toGo);
+				}elsif(me._toGo >= 18){
+					me._ptree.readyALT.setBoolValue(1);
+					
+					me._h5 = sprintf("In %i Seconds",me._toGo);
+				}elsif(me._toGo >= 15){
+					me._ptree.readyVS.setBoolValue(1);
+					
+					me._h5 = sprintf("In %i Seconds",me._toGo);
+				}elsif(me._toGo >= 5){
+					
+					me._h5 = sprintf("In %i Seconds",me._toGo);
+				}else{
+					#boot finished
+					me._ptree.ready.setBoolValue(1);
+					me._warm = 1;
+				}
+					
+			}
+			
+			me._toGo -=1;
+		}
+	},
+	update20Hz : func(now,dt){
+		
+	},
+};
 
 var AvidyneIFD = {
 	new: func(root,name,acPlace,startPage="none"){
@@ -452,6 +577,8 @@ var AvidyneIFD = {
 		m._widget = {
 			Headline	: HeadlineWidget.new(m,m._group.getElementById("Headline"),"Headline"),
 			PlusData	: PlusDataWidget.new(m,m._group.getElementById("PlusData"),"PlusData"),
+			
+			
 		};
 		
 		m._can = {
@@ -466,7 +593,7 @@ var AvidyneIFD = {
 			
 		};
 		
-		
+		m.ADAHRS = ADAHRS_System.new(m);
 		m.data 	= AvidyneData.new(m.name);
 		m.ui 	= IFDUserInterface.new(m);
 		
@@ -560,6 +687,7 @@ var AvidyneIFD = {
 		
 		me._widget.Headline.init();
 		me._widget.PlusData.init();
+		me.ADAHRS.init();
 		
 		me.page["none"].init();
 		me.page["PFD"].init();
@@ -675,10 +803,15 @@ var AvidyneIFD = {
 				me._voltNorm = me._powerB._voltNorm;
 			}
 			me.gotoPage(me._startPage);
+			me.boot();
 		}else{
 			me.gotoPage("none");
 			me._voltNorm = 0;
 		}
+	},
+	boot : func(warm = nil){
+		me.ADAHRS.boot(warm);
+		me.page[me.pageSelected].boot(warm);
 	},
 	connectDataBus : func(ifd){
 		me.data.link = ifd;
@@ -690,6 +823,7 @@ var AvidyneIFD = {
 			me._last2Hz = me._now2Hz;
 					
 			me.data.load2Hz(me._now2Hz,me._dt2Hz);
+			me.ADAHRS.update2Hz(me._now2Hz,me._dt2Hz);
 			me.page[me.pageSelected].update2Hz(me._now2Hz,me._dt2Hz);
 			
 		}		
