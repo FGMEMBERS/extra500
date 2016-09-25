@@ -17,7 +17,7 @@
 #      Date: Sep 10 2013
 #
 #	Last change:	Eric van den Berg
-#	Date:		19.09.16
+#	Date:		25.09.16
 #
 
 # var RouteLayer = {
@@ -213,6 +213,13 @@ var MovingMap = {
 	},
 	setHdg : func(deg){
 		me._heading = deg;
+
+		if (me._heading >= 359.5 ) {
+			me._heading = me._heading - 360; 
+		} else if (me._heading < -0.5) {
+			me._heading = me._heading + 360;
+		}
+
 		if(me._view == MAP_VIEW.NORTH_UP){ # North up
 			me._mapOptions.orientation = 0;
 		}else{

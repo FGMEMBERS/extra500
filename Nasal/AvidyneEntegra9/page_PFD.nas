@@ -17,7 +17,7 @@
 #      Date: Jul 20 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             19.09.16
+#      Date:             25.09.16
 #
 
 
@@ -706,8 +706,8 @@ var AttitudeIndicatorWidget = {
 		var m = {parents:[AttitudeIndicatorWidget,IfdWidget.new(page,canvasGroup,name)]};
 		m._class 	= "AttitudeIndicatorWidget";
 		m._ptree	= {
-			pitch	: props.globals.initNode("/orientation/pitch-deg",0.0,"DOUBLE"),
-			roll	: props.globals.initNode("/orientation/roll-deg",0.0,"DOUBLE"),
+			pitch	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/attitude/ind-pitch",0.0,"DOUBLE"),
+			roll	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/attitude/ind-roll",0.0,"DOUBLE"),
 			SlipSkid: props.globals.initNode("/instrumentation/slip-skid-ball/indicated-slip-skid",0.0,"DOUBLE"),
 			fdroll: props.globals.initNode("/autopilot/flight-director/fld-bank-deg",0.0,"DOUBLE"),
 			fdpitch: props.globals.initNode("/autopilot/flight-director/fld-pitch-deg",0.0,"DOUBLE"),
@@ -1586,6 +1586,11 @@ var HeadingSituationIndicatorWidget = {
 		me._trunRate 		= me._ptree.TrunRate.getValue();
 # 		me._fmsHeading 		= me._ptree.FmsHeading.getValue();
 		
+		if (me._heading >= 359.5 ) {
+			me._heading = me._heading - 360; 
+		} else if (me._heading < -0.5) {
+			me._heading = me._heading + 360;
+		}
 		
 		me._can.Heading_Text.setText(sprintf("%03i",tool.course( me._heading)));
 # 		me._can.CompassRose.setRotation(-me._heading * global.CONST.DEG2RAD);
