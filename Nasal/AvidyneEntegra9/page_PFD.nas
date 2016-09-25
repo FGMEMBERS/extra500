@@ -714,6 +714,7 @@ var AttitudeIndicatorWidget = {
 		};
 		m._can		= {
 			PitchLadder	: m._group.getElementById("PitchLadder").updateCenter().set("clip","rect(144px, 1293px, 671px, 750px)"),
+			AttitudeChevrons: m._group.getElementById("AttitudeChevrons").setVisible(0),
 			BankAngle	: m._group.getElementById("BankAngleIndicator").updateCenter(),
 			SlipSkid	: m._group.getElementById("SlipSkidIndicator").updateCenter(),
 			Horizon		: m._group.getElementById("Horizon"),
@@ -754,16 +755,19 @@ var AttitudeIndicatorWidget = {
 		me._slipskid	= me._ptree.SlipSkid.getValue();
 		me._fdroll	= me._ptree.fdroll.getValue();
 		me._fdpitch	= me._ptree.fdpitch.getValue();
+		
+		
+		me._can.AttitudeChevrons.setVisible( (-30 > me._pitch ) or (me._pitch > 50) );
 
 		me._can.PitchLadder.setRotation(-me._roll * global.CONST.DEG2RAD);
-		me._can.PitchLadder.setTranslation(0,me._pitch * 10);
+		me._can.PitchLadder.setTranslation(0,me._pitch * 9.5);
 		me._can.SlipSkid.setTranslation(-me._slipskid * 50,0);
 		me._can.BankAngle.setRotation(-me._roll * global.CONST.DEG2RAD);
 		
-		me._can.Horizon.setTranslation(0,me._pitch * 10);
+		me._can.Horizon.setTranslation(0,me._pitch * 9.5);
 		me._can.Horizon.setRotation(-me._roll * global.CONST.DEG2RAD);
 
-		me._can.FDBug.setTranslation(0,-me._fdpitch * 10);
+		me._can.FDBug.setTranslation(0,-me._fdpitch * 9.5);
 		me._can.FDBug.setRotation(me._fdroll * global.CONST.DEG2RAD);
 		
 	},
