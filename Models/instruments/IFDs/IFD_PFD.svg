@@ -26,11 +26,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.50980392"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7071068"
-     inkscape:cx="743.41171"
-     inkscape:cy="1269.4509"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="910.61999"
+     inkscape:cy="985.15449"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer5"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1025"
@@ -40,13 +40,13 @@
      borderlayer="true"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:snap-bbox="true"
+     inkscape:snap-bbox="false"
      inkscape:bbox-paths="true"
      inkscape:snap-bbox-midpoints="false"
      inkscape:snap-grids="false"
      inkscape:snap-page="false"
      inkscape:snap-object-midpoints="true"
-     inkscape:snap-global="true"
+     inkscape:snap-global="false"
      inkscape:bbox-nodes="false"
      inkscape:snap-center="true"
      inkscape:snap-bbox-edge-midpoints="true"
@@ -230,7 +230,7 @@
        id="guide7269" />
     <sodipodi:guide
        orientation="0,1"
-       position="1728.625,787"
+       position="738.5,788.25"
        id="guide7273" />
     <sodipodi:guide
        orientation="1,0"
@@ -240,6 +240,10 @@
        orientation="1,0"
        position="27,778.43618"
        id="guide7322" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="1467.5586,1143.2149"
+       id="guide7014" />
   </sodipodi:namedview>
   <defs
      id="defs4">
@@ -2887,6 +2891,90 @@
          id="path5249"
          inkscape:connector-curvature="0" />
     </g>
+    <g
+       style="display:inline"
+       id="ROLLPITCH_Miscompare"
+       transform="matrix(1,0,0,0.86202032,-5.1226872,340.06323)">
+      <rect
+         ry="11.559226"
+         y="480.28958"
+         x="919.94592"
+         height="81.936249"
+         width="217.08179"
+         id="rect7069"
+         style="color:#000000;fill:#000000;stroke:#ffcc00;stroke-width:3.23118997;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <g
+         id="g7121"
+         transform="translate(0,-267.6759)">
+        <text
+           sodipodi:linespacing="125%"
+           id="text7037-0"
+           y="699.46967"
+           x="1054.4065"
+           style="font-size:35.82416916px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+           xml:space="preserve"
+           transform="scale(0.8854193,1.1294084)"><tspan
+             style="font-size:35.82416916px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffcc00;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+             y="699.46967"
+             x="1054.4065"
+             id="tspan7039-9"
+             sodipodi:role="line">ROLL PITCH</tspan></text>
+        <text
+           xml:space="preserve"
+           style="font-size:31.19038752px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans;font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr"
+           x="945.95062"
+           y="817.23334"
+           id="text7041-3"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan7043-6"
+             x="945.95062"
+             y="817.23334"
+             style="fill:#ffcc00;-inkscape-font-specification:Liberation Sans;font-family:Liberation Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-size:31.19038752px;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%">Miscompare</tspan></text>
+      </g>
+    </g>
+    <g
+       transform="matrix(1,0,0,0.86202032,-291.85449,340.41679)"
+       id="ATTITUDE_Crosscheck"
+       style="display:inline">
+      <rect
+         style="color:#000000;fill:#000000;stroke:#ffcc00;stroke-width:3.23118997;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect7169"
+         width="217.08179"
+         height="71.324738"
+         x="919.94592"
+         y="486.23669"
+         ry="10.062198" />
+      <g
+         transform="translate(0,-267.6759)"
+         id="g7171">
+        <text
+           transform="scale(0.8854193,1.1294084)"
+           xml:space="preserve"
+           style="font-size:31.19038773px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+           x="1050.1003"
+           y="697.97418"
+           id="text7173"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan7175"
+             x="1050.1003"
+             y="697.97418"
+             style="font-size:31.19038773px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffcc00;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold">CROSSCHECK</tspan></text>
+        <text
+           sodipodi:linespacing="125%"
+           id="text7177"
+           y="817.23334"
+           x="953.99841"
+           style="font-size:31.19038773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           xml:space="preserve"><tspan
+             style="font-size:31.19038773px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffcc00;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+             y="817.23334"
+             x="953.99841"
+             id="tspan7179"
+             sodipodi:role="line">ATTITUDE</tspan></text>
+      </g>
+    </g>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -3559,6 +3647,45 @@
          d="m 527.78125,383.375 c -2.7955,0 -5.47384,0.5078 -7.9375,1.4375 l -13,13 c -0.9297,2.46366 -1.4375,5.142 -1.4375,7.9375 l 0,1.96875 24.34375,-24.34375 -1.96875,0 z m 28.03125,0 -50.40625,50.40625 0,8.5 58.46875,-58.46875 c -1.41073,-0.27742 -2.88017,-0.4375 -4.375,-0.4375 l -3.6875,0 z M 579,394.75 444.09375,529.65625 l 8.4375,0 L 581.3125,400.875 c -0.47871,-2.17427 -1.25536,-4.24153 -2.3125,-6.125 z m 2.84375,31.65625 -103.25,103.25 8.5,0 94.75,-94.75 0,-8.5 z m -95.8125,26.75 -76.5,76.5 8.5,0 76.5,-76.5 -8.5,0 z m -34.5625,0.0313 -68.25,68.25 c 1.26328,1.55363 2.74211,2.92928 4.375,4.09375 l 72.34375,-72.34375 -8.46875,0 z m -34.5625,0.0313 -38.6875,38.6875 0,8.5 47.1875,-47.1875 -8.5,0 z m 164.9375,7.75 -76.4375,76.4375 0,8.46875 77.09375,-77.09375 -0.65625,-0.59375 0,-7.21875 z m 14.3125,20.1875 -90.75,90.75 0,5.21875 c 0,1.04346 0.0816,2.05808 0.21875,3.0625 l 95,-95 -4.46875,-4.03125 z m -14.3125,48.875 -66,66 c 1.79819,1.13038 3.77674,2.03987 5.875,2.625 l 60.125,-60.125 0,-8.5 z m 0,34.53125 -34.90625,34.90625 8.46875,0 26.4375,-26.4375 0,-8.46875 z"
          style="fill:#d4aa00;fill-opacity:1;stroke:none;display:inline" />
     </g>
+    <g
+       id="IAS_Miscompare"
+       transform="translate(-14.33227,-9.4999998)">
+      <path
+         sodipodi:nodetypes="sssscsssss"
+         inkscape:connector-curvature="0"
+         id="rect5936"
+         d="m 253.6286,524.24847 167.72934,0 c 13.58742,0 24.52602,6.11099 24.52602,13.70179 l 0,49.55333 c 0,3.79539 2.30304,17.11503 16.10004,25.52122 -17.41531,5.33732 -26.08235,-11.81943 -40.62606,-11.81943 l -167.72934,0 c -13.58741,0 -24.52602,-6.11099 -24.52602,-13.70179 l 0,-49.55333 c 0,-7.5908 10.93861,-13.70179 24.52602,-13.70179 z"
+         style="color:#000000;fill:#000000;stroke:#ffcc00;stroke-width:3;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text5938"
+         y="560.96954"
+         x="241.64989"
+         style="font-size:36.384758px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+         xml:space="preserve"><tspan
+           style="font-size:36.384758px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffcc00;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+           y="560.96954"
+           x="241.64989"
+           id="tspan5940"
+           sodipodi:role="line">AIRSPEED</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:28.9587307px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans;font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr"
+         x="254.95708"
+         y="589.99396"
+         id="text5942"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan5944"
+           x="254.95708"
+           y="589.99396"
+           style="fill:#ffcc00;-inkscape-font-specification:Liberation Sans;font-family:Liberation Sans;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-size:28.9587307px;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%">Miscompare</tspan></text>
+      <path
+         inkscape:connector-curvature="0"
+         id="path6893"
+         d="m 478.73834,608.68415 c -10.52811,0 -19.01377,8.48566 -19.01377,19.01377 l 0,40.28477 -89.09386,0.0531 c -10.5281,10e-6 -18.98722,8.45912 -18.98722,18.98723 l 0,26.95388 c 0,10.52811 8.45912,19.01377 18.98722,19.01377 l 89.09386,0 0,40.33788 c 0,10.52812 8.48566,18.98722 19.01377,18.98722 l 26.95389,0 c 10.52811,0 18.98721,-8.4591 18.98721,-18.98722 l 0,-53.1111 21.82866,-19.70421 -21.82866,-19.75733 0,-53.05799 c 0,-10.52811 -8.4591,-19.01377 -18.98721,-19.01377 l -26.95389,0 z"
+         style="fill:none;stroke:#ffcc00;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline" />
+    </g>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -3734,9 +3861,10 @@
     </g>
     <path
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.69955492;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-       d="m 1635.7976,594.98841 c -4.6966,0 -8.4712,3.77462 -8.4712,8.47122 l 0,51.1991 -157.9258,0 -31.2559,36.35455 31.2559,35.84999 157.9258,0 0,51.6771 c 0,4.6966 3.7746,8.47122 8.4712,8.47122 l 73.7182,0 c 4.6966,0 8.4713,-3.77462 8.4713,-8.47122 l 0,-175.08073 c 0,-4.6966 -3.7747,-8.47122 -8.4713,-8.47122 l -73.7182,0 z"
+       d="m 1635.7976,594.98841 c -4.6966,0 -8.4712,3.77462 -8.4712,8.47122 l 0,51.1991 -159.7678,0 0,9.30002 -27.7345,27.04125 27.7345,26.8949 0,8.96837 159.7675,0 0,51.6771 c 0,4.6966 3.7746,8.47122 8.4712,8.47122 l 73.7182,0 c 4.6966,0 8.4713,-3.77462 8.4713,-8.47122 l 0,-175.08073 c 0,-4.6966 -3.7747,-8.47122 -8.4713,-8.47122 l -73.7182,0 z"
        id="AltBlackPlade"
-       inkscape:connector-curvature="0" />
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cscccccccsssssscc" />
     <g
        id="AltBarPlus10"
        transform="matrix(0.84977755,0,0,0.84977755,-18.002198,273.40072)">
@@ -4576,14 +4704,6 @@
            x="1922.0367"
            sodipodi:role="line">2</tspan></text>
     </g>
-    <path
-       sodipodi:nodetypes="cccccccc"
-       inkscape:connector-curvature="0"
-       id="ALT_Bug"
-       d="m 1463.1357,648.23975 0.174,13.92138 -29.6414,28.84457 29.6414,28.67886 -0.174,14.0871 -46.501,0 0,-85.53191 z"
-       style="fill:none;stroke:#ff0eeb;stroke-width:8.49777603;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
-       inkscape:transform-center-x="1089.7885"
-       inkscape:transform-center-y="3.2044815e-05" />
     <text
        inkscape:label="#text5341-2"
        transform="scale(0.94283424,1.0606318)"
@@ -4635,6 +4755,55 @@
        x="1454.999"
        y="685.078"
        ry="3.5213013" />
+    <path
+       sodipodi:nodetypes="cccccccc"
+       inkscape:connector-curvature="0"
+       id="ALT_Bug"
+       d="m 1463.1357,648.23975 0.174,13.92138 -29.6414,28.84457 29.6414,28.67886 -0.174,14.0871 -46.501,0 0,-85.53191 z"
+       style="fill:none;stroke:#ff0eeb;stroke-width:8.49777603;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       inkscape:transform-center-x="1089.7885"
+       inkscape:transform-center-y="3.2044815e-05" />
+    <g
+       transform="translate(1167.2497,-22.942741)"
+       id="ALT_Miscompare">
+      <path
+         style="color:#000000;fill:#000000;stroke:#ffcc00;stroke-width:3;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         d="m 253.6286,524.24847 167.72934,0 c 13.58742,0 24.52602,6.11099 24.52602,13.70179 l 0,49.55333 c 0,3.79539 2.30304,17.11503 16.10004,25.52122 -17.41531,5.33732 -26.08235,-11.81943 -40.62606,-11.81943 l -167.72934,0 c -13.58741,0 -24.52602,-6.11099 -24.52602,-13.70179 l 0,-49.55333 c 0,-7.5908 10.93861,-13.70179 24.52602,-13.70179 z"
+         id="path6933"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="sssscsssss" />
+      <text
+         transform="scale(0.95950745,1.0422014)"
+         xml:space="preserve"
+         style="font-size:36.49111557px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+         x="263.04712"
+         y="535.59668"
+         id="text6935"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan6937"
+           x="263.04712"
+           y="535.59668"
+           style="font-size:36.49111557px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffcc00;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold">ALTITUDE</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text6939"
+         y="589.99396"
+         x="257.97507"
+         style="font-size:28.9587307px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           style="font-size:28.9587307px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffcc00;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           y="589.99396"
+           x="257.97507"
+           id="tspan6941"
+           sodipodi:role="line">Miscompare</tspan></text>
+      <path
+         inkscape:connector-curvature="0"
+         id="path7011"
+         d="m 468.5479,617.93115 c -4.6966,0 -8.4712,3.77462 -8.4712,8.47122 l 0,51.1991 -159.7678,0 0,8.93237 -27.73452,27.42218 27.73452,26.82987 0,9.02012 159.7678,0 0,51.6771 c 0,4.6966 3.7746,8.47122 8.4712,8.47122 l 73.7182,0 c 4.6966,0 8.4713,-3.77462 8.4713,-8.47122 l 0,-175.08073 c 0,-4.6966 -3.7747,-8.47122 -8.4713,-8.47122 z"
+         style="fill:none;stroke:#ffcc00;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+         sodipodi:nodetypes="sscccccccsssssss" />
+    </g>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -5249,16 +5418,16 @@
          ry="18.701109" />
       <text
          xml:space="preserve"
-         style="font-size:69.24008942px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
-         x="1246.7197"
-         y="909.63757"
+         style="font-size:73.30615234px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Sans Bold"
+         x="1247.3998"
+         y="909.59192"
          id="HDG_Value"
          sodipodi:linespacing="125%"
          transform="scale(0.82085227,1.218246)"
          inkscape:label="#text5341-2"><tspan
            sodipodi:role="line"
-           x="1246.7197"
-           y="909.63757"
+           x="1247.3998"
+           y="909.59192"
            id="HeadingText">340</tspan></text>
     </g>
     <g
@@ -5459,7 +5628,7 @@
            style="fill:#ffffff;stroke:#ffffff;stroke-width:1.64769566">Warning</tspan></text>
     </g>
     <g
-       transform="matrix(1.2393617,0,0,1.2393617,-159.07181,-497.5436)"
+       transform="matrix(1.2393617,0,0,1.2393617,-159.07181,-511.5436)"
        id="Marker">
       <rect
          style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:0.89279342;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
@@ -5480,6 +5649,140 @@
            id="tspan6248"
            x="686.51953"
            y="922.58148">MM</tspan></text>
+    </g>
+    <g
+       id="LOC_Miscompare"
+       transform="translate(356.20731,127.10682)">
+      <path
+         sodipodi:nodetypes="sssscsssss"
+         inkscape:connector-curvature="0"
+         id="rect5936-2"
+         d="m 253.6286,524.24847 167.72934,0 c 13.58742,0 24.52602,6.11099 24.52602,13.70179 l 0,49.55333 c 0,3.79539 2.30304,17.11503 16.10004,25.52122 -17.41531,5.33732 -26.08235,-11.81943 -40.62606,-11.81943 l -167.72934,0 c -13.58741,0 -24.52602,-6.11099 -24.52602,-13.70179 l 0,-49.55333 c 0,-7.5908 10.93861,-13.70179 24.52602,-13.70179 z"
+         style="color:#000000;fill:#000000;stroke:#ffcc00;stroke-width:3;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text5938-9"
+         y="536.41858"
+         x="251.26454"
+         style="font-size:35.15271378px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+         xml:space="preserve"
+         transform="scale(0.95950745,1.0422014)"><tspan
+           style="font-size:35.15271378px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffcc00;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+           y="536.41858"
+           x="251.26454"
+           id="tspan5940-1"
+           sodipodi:role="line">LOCALIZER</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-size:28.9587307px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         x="256.20706"
+         y="587.74396"
+         id="text5942-2"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan5944-7"
+           x="256.20706"
+           y="587.74396"
+           style="font-size:28.9587307px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffcc00;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans">Miscompare</tspan></text>
+      <rect
+         ry="12.868484"
+         y="555.26636"
+         x="463.48401"
+         height="58.269863"
+         width="407.89322"
+         id="rect6020"
+         style="fill:none;stroke:#ffcc00;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline" />
+    </g>
+    <g
+       transform="translate(868.93839,76.124278)"
+       id="GS_Miscompare">
+      <rect
+         transform="matrix(0,-1,1,0,0,0)"
+         ry="12.868484"
+         y="458.48975"
+         x="-545.29254"
+         height="58.269863"
+         width="407.89322"
+         id="rect7047"
+         style="fill:none;stroke:#ffcc00;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline" />
+      <path
+         style="color:#000000;fill:#000000;stroke:#ffcc00;stroke-width:3;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         d="m 261.6286,619.80413 167.72934,0 c 13.58742,0 24.52602,-5.5496 24.52602,-12.44308 l 0,-45.00111 c 0,-3.44672 2.30304,-15.54275 16.10004,-23.17671 -17.41531,-4.84701 -26.08235,10.73364 -40.62606,10.73364 l -167.72934,0 c -13.58741,0 -24.52602,5.5496 -24.52602,12.44307 l 0,45.00111 c 0,6.89348 10.93861,12.44308 24.52602,12.44308 z"
+         id="path7035"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="sssscsssss" />
+      <text
+         transform="scale(0.88831141,1.1257313)"
+         xml:space="preserve"
+         style="font-size:32.1584549px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+         x="279.29843"
+         y="517.67639"
+         id="text7037"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan7039"
+           x="279.29843"
+           y="517.67639"
+           style="font-size:32.1584549px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffcc00;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold">GLIDE SLOPE</tspan></text>
+      <text
+         sodipodi:linespacing="125%"
+         id="text7041"
+         y="609.99396"
+         x="264.72903"
+         style="font-size:28.9587307px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+         xml:space="preserve"><tspan
+           style="font-size:28.9587307px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffcc00;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           y="609.99396"
+           x="264.72903"
+           id="tspan7043"
+           sodipodi:role="line">Miscompare</tspan></text>
+    </g>
+    <g
+       id="HDG_Miscompare"
+       transform="translate(852.66278,301.16452)">
+      <rect
+         ry="18.701109"
+         y="468.25992"
+         x="103.64191"
+         height="68.233467"
+         width="134.13608"
+         id="rect7164"
+         style="fill:none;stroke:#ffcc00;stroke-width:4.24888754;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:100;display:inline" />
+      <path
+         sodipodi:nodetypes="sssscsssss"
+         inkscape:connector-curvature="0"
+         id="path7148"
+         d="m 412.08635,619.80413 -140.86466,0 c -11.41117,0 -20.59776,-5.5496 -20.59776,-12.44308 l 0,-45.00111 c 0,-3.44672 -1.93417,-15.54275 -13.52135,-23.17671 14.62595,-4.84701 21.90482,10.73364 34.11911,10.73364 l 140.86466,0 c 11.41116,0 20.59777,5.5496 20.59777,12.44307 l 0,45.00111 c 0,6.89348 -9.18661,12.44308 -20.59777,12.44308 z"
+         style="color:#000000;fill:#000000;stroke:#ffcc00;stroke-width:3;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <g
+         id="g7158"
+         transform="translate(-1.949997,-1.308204)">
+        <text
+           transform="scale(0.91116108,1.0975008)"
+           xml:space="preserve"
+           style="font-size:32.98565292px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+           x="301.21509"
+           y="532.28094"
+           id="text7150"
+           sodipodi:linespacing="125%"><tspan
+             sodipodi:role="line"
+             id="tspan7152"
+             x="301.21509"
+             y="532.28094"
+             style="font-size:32.98565292px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffcc00;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold">HEADING</tspan></text>
+        <text
+           sodipodi:linespacing="125%"
+           id="text7154"
+           y="609.99396"
+           x="264.396"
+           style="font-size:28.9587307px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           xml:space="preserve"><tspan
+             style="font-size:28.9587307px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffcc00;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+             y="609.99396"
+             x="264.396"
+             id="tspan7156"
+             sodipodi:role="line">Miscompare</tspan></text>
+      </g>
     </g>
   </g>
 </svg>
