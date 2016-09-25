@@ -375,7 +375,7 @@ var AirspeedSpeedWidget = {
 			ias	: props.globals.initNode("/instrumentation/airspeed-IFD-"~m._ifd.name~"/indicated-airspeed-kt",0.0,"DOUBLE"),
 			iasRate	: props.globals.initNode("/instrumentation/airspeed-IFD-"~m._ifd.name~"/airspeed-change-ktps",0.0,"DOUBLE"),
 			tas	: props.globals.initNode("/instrumentation/airspeed-IFD-"~m._ifd.name~"/true-speed-kt",0.0,"DOUBLE"),
-			miscompare	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/airspeed/miscompare",1,"BOOL"),
+			miscompare	: props.globals.initNode("/extra500/instrumentation/IFD-miscompares/airspeed",1,"BOOL"),
 			
 		};
 		m._can		= {
@@ -531,7 +531,7 @@ var AltitudeWidget = {
 		m._ptree	= {
 			ready	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/altimeter/ready",0,"BOOL"),
 			alt	: props.globals.initNode("/instrumentation/altimeter-IFD-"~m._ifd.name~"/indicated-altitude-ft",0.0,"DOUBLE"),
-			miscompare	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/altimeter/miscompare",1,"BOOL"),
+			miscompare	: props.globals.initNode("/extra500/instrumentation/IFD-miscompares/altitude",1,"BOOL"),
 			
 		};
 		m._can		= {
@@ -844,7 +844,8 @@ var AttitudeIndicatorWidget = {
 			SlipSkid: props.globals.initNode("/instrumentation/slip-skid-ball/indicated-slip-skid",0.0,"DOUBLE"),
 			fdroll: props.globals.initNode("/autopilot/flight-director/fld-bank-deg",0.0,"DOUBLE"),
 			fdpitch: props.globals.initNode("/autopilot/flight-director/fld-pitch-deg",0.0,"DOUBLE"),
-			miscompare : props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/attitude/miscompareRollPitch",1,"BOOL"),
+			miscomparePitch : props.globals.initNode("/extra500/instrumentation/IFD-miscompares/pitch",1,"BOOL"),
+			miscompareRoll : props.globals.initNode("/extra500/instrumentation/IFD-miscompares/roll",1,"BOOL"),
 			crosscheck : props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/attitude/crosscheckAttitiude",1,"BOOL"),
 			
 		};
@@ -863,6 +864,8 @@ var AttitudeIndicatorWidget = {
 			FDBugColor	: m._group.getElementById("path5241"),
 			
 		};
+		m._miscompareRoll = 0;
+		m._miscomparePitch = 0;
 		
 		m._pitch	= 0;
 		m._roll		= 0;
@@ -872,9 +875,11 @@ var AttitudeIndicatorWidget = {
 		return m;
 	},
 	setListeners : func(instance) {
-		append(me._listeners, setlistener(me._ptree.miscompare,func(n){me._onMiscompareChange(n)},1,0));
+		append(me._listeners, setlistener(me._ptree.miscomparePitch,func(n){me._onMiscomparePitchChange(n)},1,0));
+		append(me._listeners, setlistener(me._ptree.miscompareRoll,func(n){me._onMiscompareRollChange(n)},1,0));
 		append(me._listeners, setlistener(me._ptree.crosscheck,func(n){me._onCrosscheckChange(n)},1,0));
 		append(me._listeners, setlistener(me._ptree.ready,func(n){me._onReadyChange(n)},1,0));
+		
 	},
 	init : func(instance=me){
  		#me.setListeners(instance);
@@ -902,8 +907,13 @@ var AttitudeIndicatorWidget = {
 		}
 	},
 	
-	_onMiscompareChange : func(n){
-		me._can.miscompare.setVisible(n.getValue());
+	_onMiscompareRollChange : func(n){
+		me._miscompareRoll = n.getValue();
+		me._can.miscompare.setVisible(me._miscomparePitch or me._miscompareRoll);
+	},
+	_onMiscomparePitchChange : func(n){
+		me._miscomparePitch = n.getValue();
+		me._can.miscompare.setVisible(me._miscomparePitch or me._miscompareRoll);
 	},
 	_onCrosscheckChange : func(n){
 		me._can.crosscheck.setVisible(n.getValue());
@@ -1701,9 +1711,9 @@ var HeadingSituationIndicatorWidget = {
 		m._class 	= "HeadingSituationIndicatorWidget";
 		m._ptree	= {
 			ready	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/ADAHRS/ready",0,"BOOL"),
-			miscompareLOC  : props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/HSI/miscompareLOC",1,"BOOL"),
-			miscompareGS   : props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/HSI/miscompareGS",1,"BOOL"),
-			miscompareHDG  : props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/HSI/miscompareHDG",1,"BOOL"),
+			miscompareLOC  : props.globals.initNode("/extra500/instrumentation/IFD-miscompares/LOC",1,"BOOL"),
+			miscompareGS   : props.globals.initNode("/extra500/instrumentation/IFD-miscompares/GS",1,"BOOL"),
+			miscompareHDG  : props.globals.initNode("/extra500/instrumentation/IFD-miscompares/heading",1,"BOOL"),
 			Heading		: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/heading/ind-heading",0.0,"DOUBLE"),
 # 			HeadingTrue	: props.globals.initNode("/orientation/heading-deg",0.0,"DOUBLE"),
 			TrunRate	: props.globals.initNode("/instrumentation/turn-indicator/indicated-turn-rate",0.0,"DOUBLE"),
