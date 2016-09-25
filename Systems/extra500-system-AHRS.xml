@@ -163,25 +163,6 @@
 			<output>/extra500/instrumentation/IFD-miscompares/pitch</output>
 		</switch>
 
-		<switch name="pitchhighLH">
-			<default value="0"/>
-			<test logic="OR" value="1">
-				/extra500/instrumentation/IFD-LH/attitude/ind-pitch gt 50
-				/extra500/instrumentation/IFD-LH/attitude/ind-pitch lt -30
-			</test>
-			<output>/extra500/instrumentation/IFD-LH/attitude/high-pitch</output>
-		</switch>
-
-		<switch name="pitchhighRH">
-			<default value="0"/>
-			<test logic="OR" value="1">
-				/extra500/instrumentation/IFD-RH/attitude/ind-pitch gt 50
-				/extra500/instrumentation/IFD-RH/attitude/ind-pitch lt -30
-			</test>
-			<output>/extra500/instrumentation/IFD-RH/attitude/high-pitch</output>
-		</switch>
-
-
 	</channel>
 
 	<channel name="roll">
