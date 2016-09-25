@@ -17,7 +17,7 @@
 #      Date: 04.04.2016
 #
 #      Last change: Eric van den Berg     
-#      Date: 21.07.2016            
+#      Date: 25.09.2016            
 #
 
 var loadPerformanceTables = func(path=""){
@@ -77,7 +77,7 @@ var PerfClass = {
 # DETECT FLIGHT PHASE-----------------------------------------------------
 #
 # detects taxi/startup, climb, cruise or descent
-# sets it after 60 seconds to root/phase
+# sets it every 60 seconds to root/phase: ONLY CALL ONCE!!!
 # input: the altitude and airspeed source properties
 #
 	detectFlightPhase : func(altitude="/instrumentation/altimeter/pressure-alt-ft",airspeed="/instrumentation/airspeed/indicated-airspeed-kt") {
@@ -108,7 +108,10 @@ var PerfClass = {
 			setprop(me._root,"phase","climb" ); 
 		} else {
 			setprop(me._root,"phase","descent" ); 
-		}	 
+		}
+
+		setprop(me._root,"data/old-altitude",new_altitude);
+		settimer(func(){ me._detectFlightPhase2();},60);	 
 	},
 
 
