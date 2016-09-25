@@ -358,8 +358,11 @@ var AirspeedSpeedWidget = {
 			ias	: props.globals.initNode("/instrumentation/airspeed-IFD-"~m._ifd.name~"/indicated-airspeed-kt",0.0,"DOUBLE"),
 			iasRate	: props.globals.initNode("/instrumentation/airspeed-IFD-"~m._ifd.name~"/airspeed-change-ktps",0.0,"DOUBLE"),
 			tas	: props.globals.initNode("/instrumentation/airspeed-IFD-"~m._ifd.name~"/true-speed-kt",0.0,"DOUBLE"),
+			miscompare	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/airspeed/miscompare",1,"BOOL"),
+			
 		};
 		m._can		= {
+			miscompare	: m._group.getElementById("IAS_Miscompare").setVisible(0),
 			IAS_Ladder	: m._group.getElementById("IAS_Ladder").set("clip","rect(84px, 639px, 688px, 320px)"),
 			IAS_001		: m._group.getElementById("IAS_001").set("clip","rect(327px, 639px, 506px, 320px)"),
 			IAS_010		: m._group.getElementById("IAS_010").set("clip","rect(385px, 639px, 449px, 320px)"),
@@ -384,10 +387,11 @@ var AirspeedSpeedWidget = {
 		return m;
 	},
 	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._ptree.miscompare,func(n){me._onMiscompareChange(n)},1,0));
 		
 	},
 	init : func(instance=me){
-# 		me.setListeners(instance);
+ 		me.setListeners(instance);
 	},
 	deinit : func(){
 		me.removeListeners();
@@ -398,6 +402,9 @@ var AirspeedSpeedWidget = {
 		}else{
 			me.removeListeners();
 		}
+	},
+	_onMiscompareChange : func(n){
+		me._can.miscompare.setVisible(n.getValue());
 	},
 	
 	update20Hz : func(now,dt){
@@ -490,8 +497,11 @@ var AltitudeWidget = {
 		m._class 	= "AltitudeWidget";
 		m._ptree	= {
 			alt	: props.globals.initNode("/instrumentation/altimeter-IFD-"~m._ifd.name~"/indicated-altitude-ft",0.0,"DOUBLE"),
+			miscompare	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/altimeter/miscompare",1,"BOOL"),
+			
 		};
 		m._can		= {
+			miscompare	: m._group.getElementById("ALT_Miscompare").setVisible(1),
 			Ladder		: m._group.getElementById("ALT_Ladder").set("clip","rect(145px, 1718px, 688px, 1410px)"),
 			U300T		: m._group.getElementById("ALT_LAD_U300T"),
 			U300H		: m._group.getElementById("ALT_LAD_U300H"),
@@ -529,13 +539,14 @@ var AltitudeWidget = {
 		return m;
 	},
 	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._ptree.miscompare,func(n){me._onMiscompareChange(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/alt-channel/alt-bug-ft",func(n){me._onBugChange1(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/settings/tgt-altitude-ft",func(n){me._onBugChange2(n)},1,0));	
 		append(me._listeners, setlistener("/instrumentation/altimeter-IFD-"~me._ifd.name~"/setting-hpa",func(n){me._onHpaChange(n)},1,0));	
 	
 	},
 	init : func(instance=me){
-# 		me.setListeners(instance);
+ 		#me.setListeners(instance);
 	},
 	deinit : func(){
 		me.removeListeners();	
@@ -547,7 +558,9 @@ var AltitudeWidget = {
 			me.removeListeners();
 		}
 	},
-	
+	_onMiscompareChange : func(n){
+		me._can.miscompare.setVisible(n.getValue());
+	},
 	_onHpaChange : func(n){
 		me._hpa		= n.getValue();
 		me._can.HPA.setText(sprintf("%4i",me._hpa));
@@ -576,6 +589,7 @@ var AltitudeWidget = {
 		me._bugDiff = global.clamp(me._bugDiff,-272,254);
 		me._can.Bug.setTranslation(0,me._bugDiff);
 		
+				
 		me._tmpAlt	= me._alt + 300;
 		if(me._tmpAlt>=0){
 			me._can.U300T.setText(sprintf("%i",math.floor((me._tmpAlt/1000))));
@@ -711,8 +725,14 @@ var AttitudeIndicatorWidget = {
 			SlipSkid: props.globals.initNode("/instrumentation/slip-skid-ball/indicated-slip-skid",0.0,"DOUBLE"),
 			fdroll: props.globals.initNode("/autopilot/flight-director/fld-bank-deg",0.0,"DOUBLE"),
 			fdpitch: props.globals.initNode("/autopilot/flight-director/fld-pitch-deg",0.0,"DOUBLE"),
+			miscompare : props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/attitude/miscompareRollPitch",1,"BOOL"),
+			crosscheck : props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/attitude/crosscheckAttitiude",1,"BOOL"),
+			
 		};
 		m._can		= {
+			miscompare: m._group.getElementById("ROLLPITCH_Miscompare").setVisible(0),
+			crosscheck: m._group.getElementById("ATTITUDE_Crosscheck").setVisible(0),
+			AttitudeChevrons: m._group.getElementById("AttitudeChevrons").setVisible(0),
 			PitchLadder	: m._group.getElementById("PitchLadder").updateCenter().set("clip","rect(144px, 1293px, 671px, 750px)"),
 			AttitudeChevrons: m._group.getElementById("AttitudeChevrons").setVisible(0),
 			BankAngle	: m._group.getElementById("BankAngleIndicator").updateCenter(),
@@ -731,11 +751,11 @@ var AttitudeIndicatorWidget = {
 		return m;
 	},
 	setListeners : func(instance) {
-	
-		
+		append(me._listeners, setlistener(me._ptree.miscompare,func(n){me._onMiscompareChange(n)},1,0));
+		append(me._listeners, setlistener(me._ptree.crosscheck,func(n){me._onCrosscheckChange(n)},1,0));
 	},
 	init : func(instance=me){
-# 		me.setListeners(instance);
+ 		#me.setListeners(instance);
 	},
 	deinit : func(){
 		me.removeListeners();
@@ -747,6 +767,13 @@ var AttitudeIndicatorWidget = {
 			me.removeListeners();
 		}
 	},
+	_onMiscompareChange : func(n){
+		me._can.miscompare.setVisible(n.getValue());
+	},
+	_onCrosscheckChange : func(n){
+		me._can.crosscheck.setVisible(n.getValue());
+	},
+	
 	
 	update20Hz : func(now,dt){
 		
@@ -1538,12 +1565,19 @@ var HeadingSituationIndicatorWidget = {
 		var m = {parents:[HeadingSituationIndicatorWidget,IfdWidget.new(page,canvasGroup,name)]};
 		m._class 	= "HeadingSituationIndicatorWidget";
 		m._ptree	= {
+			miscompareLOC  : props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/HSI/miscompareLOC",1,"BOOL"),
+			miscompareGS   : props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/HSI/miscompareGS",1,"BOOL"),
+			miscompareHDG  : props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/HSI/miscompareHDG",1,"BOOL"),
 			Heading		: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/heading/ind-heading",0.0,"DOUBLE"),
 # 			HeadingTrue	: props.globals.initNode("/orientation/heading-deg",0.0,"DOUBLE"),
 			TrunRate	: props.globals.initNode("/instrumentation/turn-indicator/indicated-turn-rate",0.0,"DOUBLE"),
 # 			FmsHeading	: props.globals.initNode("/autopilot/fms-channel/course-target-deg",0.0,"DOUBLE"),
 		};
 		m._can		= {
+			
+			miscompareLOC  : m._group.getElementById("LOC_Miscompare").setVisible(1),
+			miscompareGS   : m._group.getElementById("GS_Miscompare").setVisible(1),
+			miscompareHDG  : m._group.getElementById("HDG_Miscompare").setVisible(1),
 			CoursePointer	: m._group.getElementById("CoursePointer").updateCenter(),
 			CDI		: m._group.getElementById("CDI").updateCenter(),
 			FromFlag	: m._group.getElementById("CDI_FromFlag"),
@@ -1566,13 +1600,29 @@ var HeadingSituationIndicatorWidget = {
 	},
 	setListeners : func(instance) {
 		append(me._listeners, setlistener("/autopilot/settings/heading-bug-deg",func(n){me._onHdgBugChange(n)},1,0));	
+		append(me._listeners, setlistener(me._ptree.miscompareLOC,func(n){me._onMiscompareLocChange(n)},1,0));
+		append(me._listeners, setlistener(me._ptree.miscompareGS,func(n){me._onMiscompareGsChange(n)},1,0));
+		append(me._listeners, setlistener(me._ptree.miscompareHDG,func(n){me._onMiscompareHdgChange(n)},1,0));
+		
+		
 	},
+	_onMiscompareLocChange : func(n){
+		me._can.miscompareLOC.setVisible(n.getValue());
+	},
+	_onMiscompareGsChange : func(n){
+		me._can.miscompareGS.setVisible(n.getValue());
+	},
+	_onMiscompareHdgChange : func(n){
+		me._can.miscompareHDG.setVisible(n.getValue());
+	},
+	
+	
 	_onHdgBugChange : func(n){
 		me._headingBug		= n.getValue();
 		me._can.HeadingBug_Text.setText(sprintf("%03i",tool.course(me._headingBug)));
 	},
 	init : func(instance=me){
-# 		me.setListeners(instance);
+ 		#me.setListeners(instance);
 		#me._movingMap.init();
 		
 	},
