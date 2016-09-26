@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2016-09-25
+      Date:             2016-09-26
 -->
 
 <system name="indication">
@@ -1687,24 +1687,24 @@
 
 	<channel name="magvariation">
 
-		<fcs_function name="/instrumentation/heading-indicator-IFD-LH/offset-deg">
+		<fcs_function name="/extra500/instrumentation/heading-indicator-IFD-LH/offset-deg">
 			<function>
 				<product>
 					<property>/environment/magnetic-variation-deg</property>
 					<value>-1.0</value>
 				</product>
 			</function>
-			<output>/instrumentation/heading-indicator-IFD-LH/offset-deg</output>
+			<output>/extra500/instrumentation/heading-indicator-IFD-LH/offset-deg</output>
 		</fcs_function>
 
-		<fcs_function name="/instrumentation/heading-indicator-IFD-RH/offset-deg">
+		<fcs_function name="/extra500/instrumentation/heading-indicator-IFD-RH/offset-deg">
 			<function>
 				<product>
 					<property>/environment/magnetic-variation-deg</property>
 					<value>-1.0</value>
 				</product>
 			</function>
-			<output>/instrumentation/heading-indicator-IFD-RH/offset-deg</output>
+			<output>/extra500/instrumentation/heading-indicator-IFD-RH/offset-deg</output>
 		</fcs_function>
 
 	</channel>

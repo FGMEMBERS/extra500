@@ -17,7 +17,7 @@
 #      Date: Jul 20 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             25.09.16
+#      Date:             26.09.16
 #
 
 
@@ -844,9 +844,9 @@ var AttitudeIndicatorWidget = {
 			SlipSkid: props.globals.initNode("/instrumentation/slip-skid-ball/indicated-slip-skid",0.0,"DOUBLE"),
 			fdroll: props.globals.initNode("/autopilot/flight-director/fld-bank-deg",0.0,"DOUBLE"),
 			fdpitch: props.globals.initNode("/autopilot/flight-director/fld-pitch-deg",0.0,"DOUBLE"),
-			miscomparePitch : props.globals.initNode("/extra500/instrumentation/IFD-miscompares/pitch",1,"BOOL"),
-			miscompareRoll : props.globals.initNode("/extra500/instrumentation/IFD-miscompares/roll",1,"BOOL"),
-			crosscheck : props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/attitude/crosscheckAttitiude",1,"BOOL"),
+			miscomparePitch : props.globals.initNode("/extra500/instrumentation/IFD-miscompares/pitch",0,"BOOL"),
+			miscompareRoll : props.globals.initNode("/extra500/instrumentation/IFD-miscompares/roll",0,"BOOL"),
+			crosscheck : props.globals.initNode("/extra500/instrumentation/IFD-miscompares/crosscheckAttitiude",0,"BOOL"),
 			
 		};
 		m._can		= {

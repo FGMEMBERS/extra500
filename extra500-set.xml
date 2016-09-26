@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:      Eric van den Berg
-	Date:             19.09.2016
+	Date:             26.09.2016
 
 
 ************************************************************************
@@ -1911,7 +1911,6 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				<ind-pitch type="double"></ind-pitch>
 				<pitch-error type="double">0</pitch-error>
 				<roll-error type="double">0</roll-error>
-				<high-pitch type="bool">0</high-pitch>
 				<serviceable type="bool">true</serviceable>
 			</attitude>
 		</IFD-LH>
@@ -1926,7 +1925,6 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				<ind-pitch type="double"></ind-pitch>
 				<pitch-error type="double">0</pitch-error>
 				<roll-error type="double">0</roll-error>
-				<high-pitch type="bool">0</high-pitch>
 				<serviceable type="bool">true</serviceable>
 			</attitude>
 		</IFD-RH>
