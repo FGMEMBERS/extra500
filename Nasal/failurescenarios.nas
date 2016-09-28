@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 11.09.2016            
+#      Date: 28.09.2016            
 #
 # 
 
@@ -110,10 +110,69 @@ var failureset = [
 
 ];
 
+# empty matrix for progressive failures. [failurename,speed per minute,fail-number (0-1)]
+var progressiveset = [];
+
 setlistener("/extra500/failurescenarios/activate", func {
 	var fail = getprop("/extra500/failurescenarios/activate");
 	set_failure(fail);
 });
+
+# PROGRESSIVE FAILURES
+# yes this is running all the time...
+setlistener("/sim/time/real/second", func { updateProgFailures();},0,0);
+
+var updateProgFailures = func() {
+	var noProgFailures = size(progressiveset);
+#print(noProgFailures);
+#debug.dump(progressiveset);
+	if (noProgFailures!=0) {
+		for (var i=0; i < noProgFailures; i = i+1) {
+			var fail = math.clamp(progressiveset[i][2] + progressiveset[i][1],0,1);
+			progressiveset[i][2] = fail;
+			setprop("/extra500/failurescenarios/name",progressiveset[i][0] );
+			setprop("/extra500/failurescenarios/activate",fail);	
+		}
+	}
+}
+
+var addProgFailure =  func(name,speed,startValue) {
+	var supvector = [name,speed,startValue];
+	append(progressiveset,supvector);
+} 
+
+var delProgFailure =  func(name) {
+	var found = 0;
+	var noProgFailures = size(progressiveset);
+	if (noProgFailures!=0) {
+		for (var i=0; i < noProgFailures; i = i+1) {
+			if (progressiveset[i][0] = name ) {	found = 1;	}
+			if ((found == 1) and ( i < noProgFailures-1)) {
+				progressiveset[i][0] = progressiveset[i+1][0];
+				progressiveset[i][1] = progressiveset[i+1][1];
+				progressiveset[i][2] = progressiveset[i+1][2];
+			}	
+		}
+		if (found == 1) {	
+			pop(progressiveset);
+			setprop("/extra500/failurescenarios/name",name );
+			setprop("/extra500/failurescenarios/activate",0);
+		}	
+	}
+} 
+
+var delProgAllFailure =  func() {
+	var noProgFailures = size(progressiveset);
+	if (noProgFailures!=0) {
+		for (var i=0; i < noProgFailures; i = i+1) {
+			setprop("/extra500/failurescenarios/name",progressiveset[i][0] );
+			setprop("/extra500/failurescenarios/activate",0);
+		}
+		for (var i=0; i < noProgFailures; i = i+1) {
+			pop(progressiveset);
+		}
+	}
+}
 
 # RANDOM FAILURE MANAGER
 
@@ -371,6 +430,8 @@ setlistener("/gear/gear[6]/wow", func {
 
 var failure_reset = func() {
 
+# progressive failures
+	delProgAllFailure();
 # Engine
 	setprop("/systems/engine/failure-fast",0);
 # Propellor
