@@ -779,6 +779,8 @@ var ADAHRSDisplay_Widget = {
 			H3	: m._group.getElementById("Boot_H3"),
 			H4	: m._group.getElementById("Boot_H4"),
 			H5	: m._group.getElementById("Boot_H5"),
+			warning : m._group.getElementById("SystemWarning").setVisible(0),
+			caution : m._group.getElementById("SystemCaution").setVisible(0),
 			
 		};
 		m._warm = 0;
@@ -787,6 +789,9 @@ var ADAHRSDisplay_Widget = {
 	},
 	setListeners : func(instance) {
 		append(me._listeners, setlistener(me._ptree.ready,func(n){me._onReadyChange(n)},1,0));
+		append(me._listeners, setlistener(me._ifd._cas._level.warning.nActive,func(n){me._onWarningChange(n)},1,0));
+		append(me._listeners, setlistener(me._ifd._cas._level.caution.nActive,func(n){me._onCautionChange(n)},1,0));
+		
 		
 	},
 	_onVisibiltyChange : func(){
@@ -803,6 +808,13 @@ var ADAHRSDisplay_Widget = {
 		me._can.H4.setText("");
 		me._can.H5.setText("");
 	},
+	_onWarningChange : func(n){
+		me._can.warning.setVisible(n.getValue());
+	},
+	_onCautionChange : func(n){
+		me._can.caution.setVisible(n.getValue());
+	},
+	
 	_onReadyChange : func(n){
 		me._ready = n.getValue();
 		if(me._ready){

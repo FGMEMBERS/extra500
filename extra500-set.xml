@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger
       Date: March 13 2013
 
-	Last change:      Eric van den Berg
-	Date:             26.09.2016
+	Last change:      Dirk Dittmann
+	Date:             01.10.16
 
 
 ************************************************************************
@@ -1598,13 +1598,16 @@ of the RR 250-B17F/2 engine is best.</long-description>
 	<!-- make sure fgdata namespaces are enabled-->
 	<std>
 		<enabled type="bool">true</enabled>
+		
 	</std>
 	<canvas>
 		<enabled type="bool">true</enabled>
 	</canvas>
 
 	<global>
+		
 		<file>Aircraft/extra500/Nasal/global.nas</file>
+		<file>Aircraft/extra500/Nasal/std/Vector.nas</file>
 		<file>Aircraft/extra500/Nasal/global.debug.nas</file>
 		<file>Aircraft/extra500/Nasal/global.constant.nas</file>
 		<file>Aircraft/extra500/Nasal/global.canvas.nas</file>
@@ -1657,6 +1660,9 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/widget.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/gui/listview.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/gui/dialog.nas</file>
+		
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/systemCAS.nas</file>
+		
 
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/map.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/movingMap.nas</file>

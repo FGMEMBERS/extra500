@@ -26,11 +26,11 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.50980392"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.70710678"
-     inkscape:cx="255.34912"
-     inkscape:cy="903.14098"
+     inkscape:zoom="0.5"
+     inkscape:cx="938.50586"
+     inkscape:cy="579.52892"
      inkscape:document-units="px"
-     inkscape:current-layer="layer11"
+     inkscape:current-layer="layer12"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1025"
@@ -244,6 +244,10 @@
        orientation="1,0"
        position="1467.5586,1143.2149"
        id="guide7014" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="640,1340"
+       id="guide4883" />
   </sodipodi:namedview>
   <defs
      id="defs4">
@@ -5988,5 +5992,62 @@
        y="356.5"
        ry="24"
        rx="24" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer12"
+     inkscape:label="SytemAlerts">
+    <g
+       id="SystemWarning"
+       transform="translate(23,1.6438904)"
+       inkscape:label="#g4870">
+      <rect
+         ry="12.384444"
+         y="83.85611"
+         x="1182.7229"
+         height="49.537777"
+         width="198.7771"
+         id="rect4007"
+         style="color:#000000;fill:#d40000;fill-opacity:1;fill-rule:nonzero;stroke:#800000;stroke-width:3;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+      <text
+         sodipodi:linespacing="125%"
+         id="text7041-3-3"
+         y="124.65852"
+         x="1249.8479"
+         style="font-size:38.13191605px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+         xml:space="preserve"
+         transform="scale(1.0267623,0.97393526)"><tspan
+           style="font-size:38.13191605px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+           y="124.65852"
+           x="1249.8479"
+           id="tspan7043-6-6"
+           sodipodi:role="line">WARNING</tspan></text>
+    </g>
+    <g
+       inkscape:label="#g4870"
+       transform="translate(-541.2229,1.6438904)"
+       id="SystemCaution">
+      <rect
+         style="color:#000000;fill:#ffff00;fill-opacity:1;fill-rule:nonzero;stroke:#aa8800;stroke-width:3;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+         id="rect4877"
+         width="198.7771"
+         height="49.537777"
+         x="1182.7229"
+         y="83.85611"
+         ry="12.384444" />
+      <text
+         transform="scale(1.0267623,0.97393526)"
+         xml:space="preserve"
+         style="font-size:38.13191605px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold"
+         x="1249.8479"
+         y="124.65852"
+         id="text4879"
+         sodipodi:linespacing="125%"><tspan
+           sodipodi:role="line"
+           id="tspan4881"
+           x="1249.8479"
+           y="124.65852"
+           style="font-size:38.13191605px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans Bold">CAUTION</tspan></text>
+    </g>
   </g>
 </svg>

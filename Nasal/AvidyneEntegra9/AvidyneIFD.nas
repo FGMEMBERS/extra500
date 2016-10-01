@@ -17,7 +17,7 @@
 #      Date: April 27 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             20.07.13
+#      Date:             01.10.16
 #
 
 
@@ -395,10 +395,10 @@ var IFDPageNavigator = {
 	},
 };
 
-var ADAHRS_System = {
+var SystemADAHRS = {
 	new: func(ifd){
-		var m = {parents:[ADAHRS_System,ListenerClass.new()]};
-		m._class 	= "ADAHRS_System";
+		var m = {parents:[SystemADAHRS,ListenerClass.new()]};
+		m._class 	= "SystemADAHRS";
 		m._ifd = ifd;
 		m._ptree	= {
 			ready	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/ADAHRS/ready",0,"BOOL"),
@@ -522,8 +522,189 @@ var ADAHRS_System = {
 	},
 };
 
+var SystemCASWidget = {
+	new : func(page,canvasGroup,name){
+		var m = {parents:[SystemCASWidget,IfdWidget.new(page,canvasGroup,name)]};
+		m._class 	= "SystemCASWidget";
+				
+		m._can		= {
+			casLeft			: m._group.getElementById("CAS_Left").setVisible(1),
+			casLeftMessage		: m._group.getElementById("CAS_Left_Message").setVisible(0),
+			casLeftReminder		: m._group.getElementById("CAS_Left_Reminder").setVisible(0),
+			casLeftCount		: m._group.getElementById("CAS_Left_Count"),
+			casLeftText		: m._group.getElementById("CAS_Left_Text"),
+			casLeftKeyL		: m._group.getElementById("CAS_Left_KeyL"),
+			casLeftKeyR		: m._group.getElementById("CAS_Left_KeyR"),
+			
+			casRight		: m._group.getElementById("CAS_Right").setVisible(1),
+			casRightBackground	: m._group.getElementById("CAS_Right_Background"),
+			casRightMessage		: m._group.getElementById("CAS_Right_Message").setVisible(0),
+			casRightReminder	: m._group.getElementById("CAS_Right_Reminder").setVisible(0),
+			casRightReminderBackground	: m._group.getElementById("CAS_Right_Reminder_Background"),
+			
+			casRightCautionCount	: m._group.getElementById("CAS_Right_Caution_Count"),
+			casRightWarningCount	: m._group.getElementById("CAS_Right_Warning_Count"),
+			casRightReminderWarningCount	: m._group.getElementById("CAS_Right_Reminder_Warning_Count"),
+						
+			casRightText		: m._group.getElementById("CAS_Right_Text"),
+			casRightKeyL		: m._group.getElementById("CAS_Right_KeyL"),
+			casRightKeyR		: m._group.getElementById("CAS_Right_KeyR"),
+			
+			
+		};
+		
+		m._color = {};
+		m._color[CAS_LEVEL.ADVISORY] = {fill : "#00ffff", stroke : "#00d6d8"};
+		m._color[CAS_LEVEL.CAUTION]  = {fill : "#ffff00", stroke : "#808000"};
+		m._color[CAS_LEVEL.WARNING]  = {fill : "#ff0000", stroke : "#aa0000"};
+		
+		m._advisoryCount = 0;
+		m._cautionCount = 0;
+		m._warningCount = 0;
+		m._advisoryAckCount = 0;
+		m._cautionAckCount = 0;
+		m._warningAckCount = 0;
+		
+		
+		return m;
+	},
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._ifd._cas._level.advisory.nCount,func(n){me._onAdvisoryCountChange(n)},1,0));
+		append(me._listeners, setlistener(me._ifd._cas._level.caution.nCount,func(n){me._onCautionCountChange(n)},1,0));
+		append(me._listeners, setlistener(me._ifd._cas._level.warning.nCount,func(n){me._onWarningCountChange(n)},1,0));
+		append(me._listeners, setlistener(me._ifd._cas._level.advisory.nToAck,func(n){me._onAdvisoryAckCountChange(n)},1,0));
+		append(me._listeners, setlistener(me._ifd._cas._level.caution.nToAck,func(n){me._onCautionAckCountChange(n)},1,0));
+		append(me._listeners, setlistener(me._ifd._cas._level.warning.nToAck,func(n){me._onWarningAckCountChange(n)},1,0));
+		
+		
+	},
+	init : func(instance=me){
+		me.setListeners(instance);
+		me._group.setVisible(1);
+	},
+	_onAdvisoryCountChange : func(n){
+		me._advisoryCount = n.getValue();
+		me._can.casLeftCount.setText(sprintf("%i",me._advisoryCount));
+		me._checkLeft();
+	},
+	_onCautionCountChange : func(n){
+		me._cautionCount = n.getValue();
+		me._can.casRightCautionCount.setText(sprintf("%i",me._cautionCount));
+		me._checkRight();
+	},
+	_onWarningCountChange : func(n){
+		me._warningCount = n.getValue();
+		me._can.casRightReminderWarningCount.setText(sprintf("%i",me._warningCount));
+		me._can.casRightWarningCount.setText(sprintf("%i",me._warningCount));
+		me._checkRight();
+
+	},
+	_onAdvisoryAckCountChange : func(n){
+		me._advisoryAckCount = n.getValue();
+		#print(sprintf("SystemCASWidget::_onAdvisoryAckCountChange(%i) ...",me._advisoryAckCount));
+		me._checkLeft();
+	},
+	_onCautionAckCountChange : func(n){
+		me._cautionAckCount = n.getValue();
+		#print(sprintf("SystemCASWidget::_onCautionAckCountChange(%i) ...",me._cautionAckCount));
+		me._checkRight();
+	},
+	_onWarningAckCountChange : func(n){
+		me._warningAckCount = n.getValue();
+		#print(sprintf("SystemCASWidget::_onWarningAckCountChange(%i) ...",me._warningAckCount));
+		me._checkRight();
+	},
+	_checkLeft : func(){
+		if( me._advisoryCount + me._advisoryAckCount > 0 ){
+			me._can.casLeft.setVisible(1);
+			if( me._advisoryAckCount > 0 ){
+				me._can.casLeft.setVisible(1);	
+				me._can.casLeftReminder.setVisible(0);	
+				me._can.casLeftMessage.setVisible(1);	
+				
+				var alert = me._ifd._cas.getLeftAckAlert();
+				
+				me._LeftAlert(alert);
+				
+				me._ifd.ui.bindKey("L6",{
+					"<"	: func(){me.ack(CAS_LEVEL.ADVISORY);},
+					">"	: func(){me.show(CAS_LEVEL.ADVISORY);},
+				});
+				
+			}else{
+				me._can.casLeftReminder.setVisible(1);	
+				me._can.casLeftMessage.setVisible(0);
+					
+				me._ifd.ui.bindKey("L6",{
+					"<"	: func(){me.show(CAS_LEVEL.CAUTION);},
+					">"	: func(){me.show(CAS_LEVEL.CAUTION);},
+				});
+			}
+			
+		}else{
+			me._can.casLeft.setVisible(0);
+		}
+	},
+	_checkRight : func(){
+		if(me._cautionCount + me._warningCount + me._cautionAckCount + me._warningAckCount > 0 ){
+			me._can.casRight.setVisible(1);	
+				
+			if( me._cautionAckCount + me._warningAckCount > 0 ){
+				me._can.casRightReminder.setVisible(0);	
+				me._can.casRightMessage.setVisible(1);
+							
+				var alert = me._ifd._cas.getRightAckAlert();
+				
+				me._RightAlert(alert);
+				
+				me._ifd.ui.bindKey("R6",{
+					"<"	: func(){me.ack(alert._type);},
+					">"	: func(){me.show(alert._type);},
+				});
+			}else{
+				me._can.casRightReminder.setVisible(1);	
+				me._can.casRightMessage.setVisible(0);	
+				
+				var alert = me._ifd._cas.getRightAlert();
+				
+				me._ifd.ui.bindKey("R6",{
+					"<"	: func(){me.show(alert._type);},
+					">"	: func(){me.show(alert._type);},
+				});
+			}
+		}else{
+			me._can.casRight.setVisible(0);
+		}
+	},
+	
+	_RightAlert : func(alert){
+		me._can.casRightText.setText(alert._headline);
+		me._can.casRightBackground.set("fill",me._color[alert._type].fill);
+		me._can.casRightBackground.set("stroke",me._color[alert._type].stroke);
+		me._can.casRightReminderBackground.set("fill",me._color[alert._type].fill);
+		me._can.casRightReminderBackground.set("stroke",me._color[alert._type].stroke);
+		
+	},
+	_LeftAlert : func(alert){
+		me._can.casLeftText.setText(alert._headline);
+	},
+	
+	
+	ack : func(type=nil){
+		#print(sprintf("SystemCASWidget::ack(%s) ...",type));
+		me._ifd._cas.ack(type);
+	},
+	show : func(type=nil){
+		#print(sprintf("SystemCASWidget::show(%s) ...",type));
+		me._ifd._cas.show(type);
+	}
+	
+	
+};
+
+
 var AvidyneIFD = {
-	new: func(root,name,acPlace,startPage="none"){
+	new: func(root,name,acPlace,startPage="none",cas=nil){
 		var m = { parents: [
 			AvidyneIFD,
 			extra500.ServiceClass.new(root,name)
@@ -532,6 +713,8 @@ var AvidyneIFD = {
 		m.keys 			= {};
 		m.nBacklight  		= m._nRoot.initNode("Backlight/state",1.0,"DOUBLE");
 		m.nBacklightMode	= m._nRoot.initNode("Backlight/mode",0,"BOOL");
+		m._cas 			= cas;
+		
 		m._backlight		= 0;
 		m._backlightMode	= 0;
 		
@@ -577,6 +760,7 @@ var AvidyneIFD = {
 		m._widget = {
 			Headline	: HeadlineWidget.new(m,m._group.getElementById("Headline"),"Headline"),
 			PlusData	: PlusDataWidget.new(m,m._group.getElementById("PlusData"),"PlusData"),
+			CAS		: SystemCASWidget.new(m,m._group.getElementById("layer14"),"PlusData"),
 			
 			
 		};
@@ -593,7 +777,7 @@ var AvidyneIFD = {
 			
 		};
 		
-		m.ADAHRS = ADAHRS_System.new(m);
+		m.ADAHRS = SystemADAHRS.new(m);
 		m.data 	= AvidyneData.new(m.name);
 		m.ui 	= IFDUserInterface.new(m);
 		
@@ -687,6 +871,8 @@ var AvidyneIFD = {
 		
 		me._widget.Headline.init();
 		me._widget.PlusData.init();
+		me._widget.CAS.init();
+		
 		me.ADAHRS.init();
 		
 		me.page["none"].init();
@@ -978,9 +1164,12 @@ var AvidyneIFD = {
 	}
 };
 
+var cas = SystemCAS.new();
+cas.init();
 
-var LH = AvidyneIFD.new("extra500/instrumentation/IFD-LH","LH","LH_IFD","PFD");
-var RH = AvidyneIFD.new("extra500/instrumentation/IFD-RH","RH","RH_IFD","FMS");
+var LH = AvidyneIFD.new("extra500/instrumentation/IFD-LH","LH","LH_IFD","PFD",cas);
+var RH = AvidyneIFD.new("extra500/instrumentation/IFD-RH","RH","RH_IFD","FMS",cas);
+
 
 extra500.eSystem.circuitBreaker.IFD_LH_A.outputAdd(LH._powerA);
 extra500.eSystem.circuitBreaker.IFD_LH_B.outputAdd(LH._powerB);
