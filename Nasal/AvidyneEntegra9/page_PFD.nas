@@ -795,7 +795,9 @@ var ADAHRSDisplay_Widget = {
 			
 		};
 		m._warm = 0;
-		
+		m._blinker = 0;
+		m._warning = 0;
+		m._caution = 0;
 		return m;
 	},
 	setListeners : func(instance) {
@@ -820,10 +822,13 @@ var ADAHRSDisplay_Widget = {
 		me._can.H5.setText("");
 	},
 	_onWarningChange : func(n){
-		me._can.warning.setVisible(n.getValue());
+		me._warning = n.getValue();
+		me._can.warning.setVisible((me._warning));
+		
 	},
 	_onCautionChange : func(n){
-		me._can.caution.setVisible(n.getValue());
+		me._caution = n.getValue();
+		me._can.caution.setVisible((me._caution));
 	},
 	
 	_onReadyChange : func(n){
@@ -844,11 +849,13 @@ var ADAHRSDisplay_Widget = {
 			me._can.H3.setText(me._ifd.ADAHRS._h3);
 			me._can.H4.setText(me._ifd.ADAHRS._h4);
 			me._can.H5.setText(me._ifd.ADAHRS._h5);
-			
-
-
+		
 		}
-
+		me._blinker = me._blinker == 1 ? 0 : 1 ;
+		
+		me._can.warning.setVisible((me._warning and me._blinker));
+		me._can.caution.setVisible((me._caution and me._blinker));
+		
 	},
 	update20Hz : func(now,dt){
 		
@@ -1756,7 +1763,6 @@ var DeviationIndicatorWidget = {
 	
 };
 
-
 var HeadingSituationIndicatorWidget = {
 	new: func(page,canvasGroup,name){
 		var m = {parents:[HeadingSituationIndicatorWidget,IfdWidget.new(page,canvasGroup,name)]};
@@ -1883,7 +1889,6 @@ var HeadingSituationIndicatorWidget = {
 	
 };
 
-
 var EnvironmentWidget = {
 	new: func(page,canvasGroup,name){
 		var m = {parents:[EnvironmentWidget,IfdWidget.new(page,canvasGroup,name)]};
@@ -1948,7 +1953,6 @@ var EnvironmentWidget = {
 		me._can.GroundSpeed.setText(sprintf("%2i",groundSpeed));	
 	},
 };
-
 
 var FlyVectorsWidget = {
 	new: func(page,canvasGroup,name){

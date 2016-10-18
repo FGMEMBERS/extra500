@@ -666,9 +666,10 @@ var SystemCASWidget = {
 			casRightReminder	: m._group.getElementById("CAS_Right_Reminder").setVisible(0),
 			casRightReminderBackground	: m._group.getElementById("CAS_Right_Reminder_Background"),
 			
+			casRightCaution		: m._group.getElementById("CAS_Right_Caution"),
 			casRightCautionCount	: m._group.getElementById("CAS_Right_Caution_Count"),
+			casRightWarning		: m._group.getElementById("CAS_Right_Warning"),
 			casRightWarningCount	: m._group.getElementById("CAS_Right_Warning_Count"),
-			casRightReminderWarningCount	: m._group.getElementById("CAS_Right_Reminder_Warning_Count"),
 						
 			casRightText		: m._group.getElementById("CAS_Right_Text"),
 			casRightKeyL		: m._group.getElementById("CAS_Right_KeyL"),
@@ -679,8 +680,8 @@ var SystemCASWidget = {
 		
 		m._color = {};
 		m._color[CAS_LEVEL.ADVISORY] = {fill : "#00ffff", stroke : "#00d6d8"};
-		m._color[CAS_LEVEL.CAUTION]  = {fill : "#ffff00", stroke : "#808000"};
-		m._color[CAS_LEVEL.WARNING]  = {fill : "#ff0000", stroke : "#aa0000"};
+		m._color[CAS_LEVEL.CAUTION]  = {fill : COLOR["Amber"], stroke : "#808000"};
+		m._color[CAS_LEVEL.WARNING]  = {fill : COLOR["Red"], stroke : "#aa0000"};
 		
 		m._advisoryCount = 0;
 		m._cautionCount = 0;
@@ -718,10 +719,8 @@ var SystemCASWidget = {
 	},
 	_onWarningCountChange : func(n){
 		me._warningCount = n.getValue();
-		me._can.casRightReminderWarningCount.setText(sprintf("%i",me._warningCount));
 		me._can.casRightWarningCount.setText(sprintf("%i",me._warningCount));
 		me._checkRight();
-
 	},
 	_onAdvisoryAckCountChange : func(n){
 		me._advisoryAckCount = n.getValue();
@@ -776,6 +775,15 @@ var SystemCASWidget = {
 			if( me._cautionAckCount + me._warningAckCount > 0 ){
 				me._can.casRightReminder.setVisible(0);	
 				me._can.casRightMessage.setVisible(1);
+				
+				
+				if(me._cautionCount>0){
+					me._can.casRightWarning.setTranslation(-50,0);
+				}else{
+					me._can.casRightWarning.setTranslation(0,0);
+				}
+					
+				
 							
 				var alert = me._ifd._cas.getRightAckAlert();
 				
@@ -788,14 +796,28 @@ var SystemCASWidget = {
 			}else{
 				me._can.casRightReminder.setVisible(1);	
 				me._can.casRightMessage.setVisible(0);	
+													
+				if(me._cautionCount>0){
+					me._can.casRightWarning.setTranslation(0,-50);
+				}else{
+					me._can.casRightWarning.setTranslation(0,0);
+				}
+				
 				
 				var alert = me._ifd._cas.getRightAlert();
+				
+				me._RightAlert(alert);
 				
 				me._ifd.ui.bindKey("R6",{
 					"<"	: func(){me.show(alert._type);},
 					">"	: func(){me.show(alert._type);},
 				});
 			}
+			
+			me._can.casRightCaution.setVisible((me._cautionCount>0));
+			me._can.casRightWarning.setVisible((me._warningCount>0));
+				
+			
 		}else{
 			me._can.casRight.setVisible(0);
 		}

@@ -257,14 +257,22 @@ var SystemCAS = {
 			}else{
 				if(level.listAlert.contains(name)){
 					level.listAlert.remove(name);
+					
+				}
+				if(level.type != CAS_LEVEL.WARNING){
+					if(level.stackAck.contains(name)){
+						casAlert.setAcknowledged(1);
+						level.stackAck.remove(name);
+					}
 				}
 			}
 			
-			level.count = level.listAlert.size();
-			level.nCount.setValue(level.count);
-			
+			### Important: first fire acknowledge listeners then Count Active listeners 
 			level.toAck = level.stackAck.size();
 			level.nToAck.setValue(level.toAck);
+			
+			level.count = level.listAlert.size();
+			level.nCount.setValue(level.count);
 			
 			me._checkMasterLamps(level);
 			
@@ -287,6 +295,18 @@ var SystemCAS = {
 		var alert = nil;
 
 		index = me._level[CAS_LEVEL.ADVISORY].stackAck.first();
+	
+		if( index != nil){
+			alert = me._alert[index];
+		}
+		
+		return alert;
+	},
+	getLeftAlert : func(){
+		var index = nil;
+		var alert = nil;
+
+		index = me._level[CAS_LEVEL.ADVISORY].listAlert.first();
 	
 		if( index != nil){
 			alert = me._alert[index];
@@ -329,12 +349,14 @@ var SystemCAS = {
 	ack : func(type){
 		#print(sprintf("SystemCAS::ack(%s) ... ",type));
 		var level = me._level[type];
-		var casAlert = me._alert[level.stackAck.first()];
-		casAlert.setAcknowledged(1);
-		level.stackAck.pop(0);
-		level.toAck = level.stackAck.size();
-		level.nToAck.setValue(level.toAck);
-		
+		var index = level.stackAck.first();
+		if(index){
+			var casAlert = me._alert[index];
+			casAlert.setAcknowledged(1);
+			level.stackAck.pop(0);
+			level.toAck = level.stackAck.size();
+			level.nToAck.setValue(level.toAck);
+		}
 		me._checkMasterLamps(level);
 		
 	},

@@ -91,7 +91,6 @@ var TabWidget = {
 	},
 };
 
-
 var HeadlineWidget = {
 	new : func(page,canvasGroup,name){
 		var m = {parents:[HeadlineWidget,IfdWidget.new(page,canvasGroup,name)]};
@@ -220,9 +219,6 @@ var HeadlineWidget = {
 		me._can.Time.setText(getprop("/sim/time/gmt-string"));
 	},
 };
-
-
-
 
 var PlusDataWidget = {
 	new : func(page,canvasGroup,name){

@@ -39,8 +39,8 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
-     inkscape:cx="1865.3742"
-     inkscape:cy="120.83769"
+     inkscape:cx="1841.4306"
+     inkscape:cy="55.968952"
      inkscape:document-units="px"
      inkscape:current-layer="layer14"
      showgrid="false"
@@ -1795,62 +1795,6 @@
              x="370.92618"
              sodipodi:role="line"
              style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:end;line-height:125%;writing-mode:lr-tb;text-anchor:end;fill:#000000;stroke:#000000;stroke-width:1.35956383;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans">Show</tspan></text>
-        <g
-           id="g6188"
-           inkscape:label="#g6148"
-           style="fill:#ff0000"
-           transform="translate(299.77282,0)">
-          <rect
-             ry="18.257208"
-             y="1488.0367"
-             x="1.4999996"
-             height="46.005283"
-             width="47.11359"
-             id="rect6150"
-             style="color:#000000;fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#aa0000;stroke-width:3;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
-          <text
-             xml:space="preserve"
-             style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.35956383;stroke-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-             x="23.538763"
-             y="1620.5714"
-             id="CAS_Right_Warning_Count"
-             sodipodi:linespacing="125%"
-             transform="scale(1.0651978,0.93879278)"
-             inkscape:label="#text5341-2"><tspan
-               style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;stroke:#000000;stroke-width:1.35956383;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-               sodipodi:role="line"
-               x="23.538763"
-               y="1620.5714"
-               id="tspan6154">99</tspan></text>
-        </g>
-      </g>
-      <g
-         style="fill:#ffff00;stroke:#808000"
-         inkscape:label="#g6148"
-         id="g6190"
-         transform="translate(349.88641,-4.9471855e-5)">
-        <rect
-           style="color:#000000;fill:#ffff00;fill-opacity:1;fill-rule:nonzero;stroke:#808000;stroke-width:3;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-           id="rect6158"
-           width="47.11359"
-           height="46.005283"
-           x="1.4999996"
-           y="1488.0367"
-           ry="18.257208" />
-        <text
-           inkscape:label="#text5341-2"
-           transform="scale(1.0651978,0.93879278)"
-           sodipodi:linespacing="125%"
-           id="text6204"
-           y="1620.5714"
-           x="23.538763"
-           style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.35956383;stroke-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-           xml:space="preserve"><tspan
-             id="tspan6162"
-             y="1620.5714"
-             x="23.538763"
-             sodipodi:role="line"
-             style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;stroke:#000000;stroke-width:1.35956383;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans">99</tspan></text>
       </g>
       <g
          inkscape:label="#g6067"
@@ -1879,38 +1823,38 @@
              x="87.28849"
              y="1526.9611"
              id="tspan6146">Show</tspan></text>
-        <g
-           transform="translate(47.756169,-49.005333)"
-           style="fill:#ff0000"
-           inkscape:label="#g6148"
-           id="g6164">
-          <rect
-             style="color:#000000;fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#aa0000;stroke-width:3;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-             id="rect6166"
-             width="47.11359"
-             height="46.005283"
-             x="1.4999996"
-             y="1488.0367"
-             ry="18.257208" />
-          <text
-             inkscape:label="#text5341-2"
-             transform="scale(1.0651978,0.93879278)"
-             sodipodi:linespacing="125%"
-             id="CAS_Right_Reminder_Warning_Count"
-             y="1620.5714"
+      </g>
+      <g
+         id="CAS_Right_Warning"
+         inkscape:label="#g6148"
+         style="fill:#ff0000"
+         transform="translate(349.88641,-4.9471855e-5)">
+        <rect
+           ry="18.257208"
+           y="1488.0367"
+           x="1.4999996"
+           height="46.005283"
+           width="47.11359"
+           id="rect6150"
+           style="color:#000000;fill:#ff0000;fill-opacity:1;fill-rule:nonzero;stroke:#aa0000;stroke-width:3;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+        <text
+           xml:space="preserve"
+           style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.35956383;stroke-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+           x="23.538763"
+           y="1620.5714"
+           id="CAS_Right_Warning_Count"
+           sodipodi:linespacing="125%"
+           transform="scale(1.0651978,0.93879278)"
+           inkscape:label="#text5341-2"><tspan
+             style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;stroke:#000000;stroke-width:1.35956383;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
+             sodipodi:role="line"
              x="23.538763"
-             style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.35956383;stroke-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
-             xml:space="preserve"><tspan
-               id="tspan6170"
-               y="1620.5714"
-               x="23.538763"
-               sodipodi:role="line"
-               style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;stroke:#000000;stroke-width:1.35956383;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans">99</tspan></text>
-        </g>
+             y="1620.5714"
+             id="tspan6154">99</tspan></text>
       </g>
       <g
          transform="translate(349.88641,-4.9471855e-5)"
-         id="g6172"
+         id="CAS_Right_Caution"
          inkscape:label="#g6148"
          style="fill:#ffff00;stroke:#808000">
         <rect
@@ -1920,7 +1864,7 @@
            height="46.005283"
            width="47.11359"
            id="rect6174"
-           style="color:#000000;fill:#ffff00;fill-opacity:1;fill-rule:nonzero;stroke:#808000;stroke-width:3;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
+           style="color:#000000;fill:#ffcc00;fill-opacity:1;fill-rule:nonzero;stroke:#808000;stroke-width:3;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
         <text
            xml:space="preserve"
            style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1.35956383;stroke-opacity:1;display:inline;font-family:Liberation Sans;-inkscape-font-specification:Liberation Sans"
