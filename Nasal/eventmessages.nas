@@ -103,7 +103,7 @@ setlistener("/fdm/jsbsim/aircraft/events/FLAPS15", func(n) {
 
 setlistener("/fdm/jsbsim/aircraft/events/overgflup", func(n) {
 	var value = n.getValue();
-	print(sprintf("event.overgflup(%d) ... ",value));
+	#print(sprintf("event.overgflup(%d) ... ",value));
 	if ( value == 1 ) {
 		UI.msg.warning("Over-g! With flaps up you must stay between -1.5 and +3.8g or one day your wing will break off");
 	}
@@ -112,7 +112,7 @@ setlistener("/fdm/jsbsim/aircraft/events/overgflup", func(n) {
 
 setlistener("/fdm/jsbsim/aircraft/events/overgflext", func(n) {
 	var value = n.getValue();
-	print(sprintf("event.overgflext(%d) ... ",value));
+	#print(sprintf("event.overgflext(%d) ... ",value));
 	if ( value == 1 ) {
 		UI.msg.warning("Over-g! With flaps extended you must stay between 0.0 and +2.0g or one day your flaps (or your wing...or both) will break off");
 	}

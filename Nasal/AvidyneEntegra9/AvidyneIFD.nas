@@ -406,6 +406,8 @@ var SystemADAHRS = {
 			readyIAS	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/airspeed/ready",0,"BOOL"),
 			readyALT	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/altimeter/ready",0,"BOOL"),
 			readyVS		: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/ivsi/ready",0,"BOOL"),
+			cfgBootIntervall	: props.globals.initNode("/extra500/config/ifd/bootIntervall",0.1,"DOUBLE"),
+			gs		: props.globals.initNode("/velocities/groundspeed-kt",0.0,"DOUBLE"),
 			
 		};
 		
@@ -420,10 +422,26 @@ var SystemADAHRS = {
 		m._toGo = 30;
 		m._warm = 0;
 		
+		
+		m._countInitialAlignment = 15;
+		m._countWarmUp	= 90;
+		m._countFinalAlignment = 42;
+		
+		m._timer = nil;
+		
+		m._lastPower = 0;
+		m._failBoot = 0;
+		
+		
 		return m;
 	},
 	init : func(instance=me){
+		
+		me._timer = maketimer(me._ptree.cfgBootIntervall.getValue(),me,SystemADAHRS.update);
+		
 		me.setListeners(instance);
+		
+		
 	},
 	deinit : func(){
 		me.removeListeners();	
@@ -432,24 +450,55 @@ var SystemADAHRS = {
 		append(me._listeners, setlistener(me._ptree.ready,func(n){me._onReadyChange(n)},1,0));
 		
 	},
-	boot : func(warm=nil){
-		if(warm != nil){
-			me._warm = warm;
-		}
-		if(me._warm){
-			me._toGo = 12;
-		}else{
-			me._toGo = 30;	
-		}
-		
+	
+	_bootstart : func(){
+				
 		me._h1 = "";
 		me._h2 = "";
 		me._h3 = "Booting";
 		me._h4 = "";
 		me._h5 = "";
 		
-		
+		me._ptree.readyEnv.setBoolValue(0);
+		me._ptree.readyIAS.setBoolValue(0);
+		me._ptree.readyALT.setBoolValue(0);
+		me._ptree.readyVS.setBoolValue(0);
 		me._ptree.ready.setBoolValue(0);
+		
+		me._timer.restart(me._ptree.cfgBootIntervall.getValue());
+		
+	},
+	_bootDone : func(){
+		me._timer.stop();
+		
+		me._ptree.ready.setBoolValue(1);
+		me._warm = 1;
+		me._failBoot = 0;
+	},
+	boot : func(warm=nil){
+		if(warm != nil){
+			me._warm = warm;
+		}else{
+			me._warm = ( (me._warm==1) and ((systime() - me._lastPower) <= 30) and (me._failBoot <= 2 ) );
+		}
+		#print(sprintf("SystemADAHRS::boot() ... %i",me._warm));
+		if(me._warm){
+			me._failBoot += 1;
+			me._countInitialAlignment 	= 3;
+			me._countWarmUp			= 0;
+			me._countFinalAlignment 	= 10;
+		}else{
+			me._failBoot += 1;
+			me._countInitialAlignment 	= 17;
+			me._countWarmUp			= 90;
+			me._countFinalAlignment 	= 42;
+		}
+		
+		me._bootstart();
+	},
+	shutdown : func(){
+		#print("SystemADAHRS::shutdown() ...");
+		me._lastPower = systime();
 	},
 	_onReadyChange : func(n){
 		me._ready = n.getValue();
@@ -459,67 +508,142 @@ var SystemADAHRS = {
 			me.boot();
 		}
 	},
-	update2Hz : func(now,dt){
+	
+	update : func(){
 		if(!me._ready){
+			
 			if(me._warm){
-				if (me._toGo >= 12){
-					me._h1 = "Warm Start";
-					me._h2 = "AHRS Allignment";
-					me._h3 = "Please Standby";
-				}elsif(me._toGo >= 10){
-					me._h3 = "Attempting Quick Restart";
-					me._h4 = "Ready To Go";
-					me._h5 = sprintf("In %i Seconds",me._toGo);
-				}elsif(me._toGo >= 5){
+								
+				if(me._countInitialAlignment > 0){ ### Phase 1 : Initial Alignment
 					
-					me._h5 = sprintf("In %i Seconds",me._toGo);
+					
+					if(me._countInitialAlignment >= 3){
+						me._h1 = "Warm Start";
+						me._h2 = "";
+						me._h3 = "Please Standby";
+						me._h4 = "";
+						me._h5 = "";
+						
+					}else{
+						
+						if(me._countInitialAlignment >= 2){ ### Environment Airspeed ready
+							me._ptree.readyEnv.setBoolValue(1);
+							me._ptree.readyIAS.setBoolValue(1);
+						}elsif(me._countInitialAlignment >= 1){ ### Verticalspeed Alt ready
+							me._ptree.readyVS.setBoolValue(1);
+							me._ptree.readyALT.setBoolValue(1);
+						}else{
+							
+						}
+						
+					}
+					
+					me._countInitialAlignment -= 1 ;
 				}else{
-					#boot finished
-					me._ptree.ready.setBoolValue(1);
-					me._warm = 1;
+				
+					if(me._countWarmUp > 0){
+						me._h1 = "";
+						me._h2 = "";
+						me._h3 = "Attempting Quick Restart";
+						me._h4 = "Ready To Go";
+						me._h5 = sprintf("In %i Seconds",me._countWarmUp);
+												
+						me._countWarmUp -= 1 ;
+					}else{
+						if(me._countFinalAlignment > 0){
+							me._h1 = "";
+							me._h2 = "";
+							me._h3 = "Attempting Quick Restart";
+							me._h4 = "Ready To Go";
+							me._h5 = sprintf("In %i Seconds",me._countFinalAlignment);
+						
+													
+							me._countFinalAlignment -= 1 ;
+						}else{
+							### Boot Sequenz done.
+							me._bootDone();
+						}
+						
+					}
 				}
-					
+				
+				
 				
 			}else{
-				if (me._toGo >= 30){
-					me._h1 = "Initial";
-					me._h2 = "AHRS Allignment";
-					me._h3 = "Please Standby";
+				if(me._countInitialAlignment > 0){ ### Phase 1 : Initial Alignment
 					
-				}elsif(me._toGo >= 25){
-					me._ptree.readyEnv.setBoolValue(1);
-					me._h3 = "Remain Stationary";
-					me._h4 = "OK To Taxi";
-					me._h5 = sprintf("In %i Seconds",me._toGo);
-				}elsif(me._toGo >= 22){
-					me._ptree.readyIAS.setBoolValue(1);
 					
-					me._h5 = sprintf("In %i Seconds",me._toGo);
-				}elsif(me._toGo >= 18){
-					me._ptree.readyALT.setBoolValue(1);
+					if(me._countInitialAlignment > 15){
+						me._h1 = "Initial";
+						me._h2 = "AHRS Allignment";
+						me._h3 = "Please Standby";
+						me._h4 = "";
+						me._h5 = "";
+						
+					}else{
+						
+						me._h3 = "Remain Stationary";
+						me._h4 = "OK To Taxi";
+						me._h5 = sprintf("In %i Seconds",me._countInitialAlignment);
+						
+						if(me._countInitialAlignment >= 10){ ### Environment ready
+							me._ptree.readyEnv.setBoolValue(1);
+						}elsif(me._countInitialAlignment >= 8){ ### Airspeed ready
+							me._ptree.readyIAS.setBoolValue(1);
+						}elsif(me._countInitialAlignment >= 6){ ### Verticalspeed ready
+							me._ptree.readyVS.setBoolValue(1);
+						}elsif(me._countInitialAlignment >= 4){ ### Alt ready
+							me._ptree.readyALT.setBoolValue(1);
+						}else{
+							
+						}
+						
+					}
 					
-					me._h5 = sprintf("In %i Seconds",me._toGo);
-				}elsif(me._toGo >= 15){
-					me._ptree.readyVS.setBoolValue(1);
-					
-					me._h5 = sprintf("In %i Seconds",me._toGo);
-				}elsif(me._toGo >= 5){
-					
-					me._h5 = sprintf("In %i Seconds",me._toGo);
+					me._countInitialAlignment -= 1 ;
 				}else{
-					#boot finished
-					me._ptree.ready.setBoolValue(1);
-					me._warm = 1;
+				
+					if(me._countWarmUp > 0){
+						me._h1 = "AHRS";
+						me._h2 = "Warming Up";
+						me._h3 = "OK To Taxi";
+						me._h4 = "";
+						me._h5 = "";
+						
+						me._countWarmUp -= 1 ;
+					}else{
+						if(me._countFinalAlignment > 0){
+							me._h1 = "Final";
+							me._h2 = "AHRS Allignment";
+							me._h3 = "Remain Stationary";
+							me._h4 = "";
+							me._h5 = "";
+							
+							var gs = me._ptree.gs.getValue();
+
+							if(gs < 0.001){
+								me._h4 = "OK To Taxi";
+								me._h5 = sprintf("In %i Seconds",me._countFinalAlignment);
+								me._countFinalAlignment -= 1 ;
+							}else{
+								me._countFinalAlignment = 42;
+								me._h4 = "";
+								me._h5 = sprintf("For %i Seconds",me._countFinalAlignment);
+							}
+							
+						}else{
+							### Boot Sequenz done.
+							me._bootDone();
+						}
+						
+					}
 				}
-					
+									
 			}
-			
-			me._toGo -=1;
+		
 		}
 	},
-	update20Hz : func(now,dt){
-		
-	},
+	
 };
 
 var SystemCASWidget = {
@@ -822,6 +946,7 @@ var AvidyneIFD = {
 		me.initUI();
 		me.data.init();
 		
+		
 		me._powerA.init();
 		me._powerB.init();
 		
@@ -989,15 +1114,20 @@ var AvidyneIFD = {
 				me._voltNorm = me._powerB._voltNorm;
 			}
 			me.gotoPage(me._startPage);
-			me.boot();
+			me._boot();
 		}else{
 			me.gotoPage("none");
 			me._voltNorm = 0;
+			me._shutdown();
+			
 		}
 	},
-	boot : func(warm = nil){
+	_boot : func(warm = nil){
 		me.ADAHRS.boot(warm);
 		me.page[me.pageSelected].boot(warm);
+	},
+	_shutdown : func(){
+		me.ADAHRS.shutdown();
 	},
 	connectDataBus : func(ifd){
 		me.data.link = ifd;
@@ -1009,7 +1139,7 @@ var AvidyneIFD = {
 			me._last2Hz = me._now2Hz;
 					
 			me.data.load2Hz(me._now2Hz,me._dt2Hz);
-			me.ADAHRS.update2Hz(me._now2Hz,me._dt2Hz);
+			
 			me.page[me.pageSelected].update2Hz(me._now2Hz,me._dt2Hz);
 			
 		}		

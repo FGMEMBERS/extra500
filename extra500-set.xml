@@ -1816,6 +1816,9 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				<goal-pitch-offset-deg type="double">-23.0</goal-pitch-offset-deg>
 			</quickZoom>
 		</view>
+		<ifd>
+			<bootIntervall type="double">0.1</bootIntervall>
+		</ifd>
 	</config>
 	<door>
 		<upperpass>
