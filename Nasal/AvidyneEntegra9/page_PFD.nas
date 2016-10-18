@@ -437,7 +437,13 @@ var AirspeedSpeedWidget = {
 	},
 	
 	_onMiscompareChange : func(n){
-		me._can.miscompare.setVisible(n.getValue());
+		var v = n.getValue();
+		if(v){
+			me._can.Plade.set("stroke",COLOR["Amber"]);
+		}else{
+			me._can.Plade.set("stroke",COLOR["Black"]);
+		}
+		me._can.miscompare.setVisible(v);
 	},
 	
 	update20Hz : func(now,dt){
@@ -451,14 +457,14 @@ var AirspeedSpeedWidget = {
 			me._can.IAS_100.setVisible(0);
 			me._can.IAS_010.setVisible(0);
 			me._can.IAS_001.setVisible(0);
-			me._can.Plade.setVisible(0);
+			#me._can.Plade.setVisible(0);
 			me._can.Rate.setVisible(0);
 			me._can.Zero.setVisible(1);
 			me._can.TAS.setText("---");
 		}else{
 			me._can.Zero.setVisible(0);
 			me._can.Rate.setVisible(1);
-			me._can.Plade.setVisible(1);
+			#me._can.Plade.setVisible(1);
 			me._can.IAS_001.setVisible(1);
 			
 			me._can.Rate.set("coord[1]",me._RATE_OFFSET+(-me._rate*58));
@@ -607,7 +613,13 @@ var AltitudeWidget = {
 		}
 	},
 	_onMiscompareChange : func(n){
-		me._can.miscompare.setVisible(n.getValue());
+		var v = n.getValue();
+		if(v){
+			me._can.Plade.set("stroke",COLOR["Amber"]);
+		}else{
+			me._can.Plade.set("stroke",COLOR["Black"]);
+		}
+		me._can.miscompare.setVisible(v);
 	},
 	_onHpaChange : func(n){
 		me._hpa		= n.getValue();
@@ -763,7 +775,6 @@ var AltitudeWidget = {
 	
 };
 
-
 var ADAHRSDisplay_Widget = {
 	new: func(page,canvasGroup,name){
 		var m = {parents:[ADAHRSDisplay_Widget,IfdWidget.new(page,canvasGroup,name)]};
@@ -843,7 +854,6 @@ var ADAHRSDisplay_Widget = {
 		
 	},
 };
-
 
 var AttitudeIndicatorWidget = {
 	new: func(page,canvasGroup,name){
@@ -957,7 +967,6 @@ var AttitudeIndicatorWidget = {
 	},
 	
 };
-
 
 var MarkerWidget = {
 	new: func(page,canvasGroup,name){
@@ -1624,6 +1633,12 @@ var DeviationIndicatorWidget = {
 	new: func(page,canvasGroup,name){
 		var m = {parents:[DeviationIndicatorWidget,IfdWidget.new(page,canvasGroup,name)]};
 		m._class 	= "DeviationIndicatorWidget";
+		m._ptree	= {
+			miscompareLOC  : props.globals.initNode("/extra500/instrumentation/IFD-miscompares/LOC",1,"BOOL"),
+			miscompareGS   : props.globals.initNode("/extra500/instrumentation/IFD-miscompares/GS",1,"BOOL"),
+			
+		};
+		
 		m._can		= {
 			DI		: m._group.getElementById("DI"),
 			DI_Source_Text	: m._group.getElementById("DI_Source_Text"),
@@ -1631,12 +1646,19 @@ var DeviationIndicatorWidget = {
 			HDI_Needle	: m._group.getElementById("HDI_Needle"),
 			VDI		: m._group.getElementById("VDI"),
 			VDI_Needle	: m._group.getElementById("VDI_Needle"),
+			HDIBackground  : m._group.getElementById("HDI_Bar_Background"),
+			VDIBackground  : m._group.getElementById("VDI_BAR_Background"),
+			miscompareLOC  : m._group.getElementById("LOC_Miscompare").setVisible(1),
+			miscompareGS   : m._group.getElementById("GS_Miscompare").setVisible(1),
+			
+			
 		};
 		m._apModeRev = 0;
 		return m;
 	},
 	setListeners : func(instance) {
-
+		append(me._listeners, setlistener(me._ptree.miscompareLOC,func(n){me._onMiscompareLocChange(n)},1,0));
+		append(me._listeners, setlistener(me._ptree.miscompareGS,func(n){me._onMiscompareGsChange(n)},1,0));
 		append(me._listeners, setlistener(extra500.autopilot.nModeRev,func(n){me._onApModeRevChange(n);},1,0));
 		
 	},
@@ -1646,6 +1668,24 @@ var DeviationIndicatorWidget = {
 		}else{
 			me.removeListeners();
 		}
+	},
+	_onMiscompareLocChange : func(n){
+		var v = n.getValue();
+		if(v){
+			me._can.HDIBackground.set("stroke",COLOR["Amber"]);
+		}else{
+			me._can.HDIBackground.set("stroke",COLOR["Black"]);
+		}
+		me._can.miscompareLOC.setVisible(v);
+	},
+	_onMiscompareGsChange : func(n){
+		var v = n.getValue();
+		if(v){
+			me._can.VDIBackground.set("stroke",COLOR["Amber"]);
+		}else{
+			me._can.VDIBackground.set("stroke",COLOR["Black"]);
+		}
+		me._can.miscompareGS.setVisible(v);
 	},
 	
 	_onApModeRevChange : func(n){
@@ -1723,8 +1763,6 @@ var HeadingSituationIndicatorWidget = {
 		m._class 	= "HeadingSituationIndicatorWidget";
 		m._ptree	= {
 			ready	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/ADAHRS/ready",0,"BOOL"),
-			miscompareLOC  : props.globals.initNode("/extra500/instrumentation/IFD-miscompares/LOC",1,"BOOL"),
-			miscompareGS   : props.globals.initNode("/extra500/instrumentation/IFD-miscompares/GS",1,"BOOL"),
 			miscompareHDG  : props.globals.initNode("/extra500/instrumentation/IFD-miscompares/heading",1,"BOOL"),
 			Heading		: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/heading/ind-heading",0.0,"DOUBLE"),
 # 			HeadingTrue	: props.globals.initNode("/orientation/heading-deg",0.0,"DOUBLE"),
@@ -1735,8 +1773,7 @@ var HeadingSituationIndicatorWidget = {
 			
 			ready 		: m._group.getElementById("layer15").setVisible(0),
 			loss 		: m._group.getElementById("layer11").setVisible(1),
-			miscompareLOC  : m._group.getElementById("LOC_Miscompare").setVisible(1),
-			miscompareGS   : m._group.getElementById("GS_Miscompare").setVisible(1),
+			HDGBackground  : m._group.getElementById("HDG_Background"),
 			miscompareHDG  : m._group.getElementById("HDG_Miscompare").setVisible(1),
 			CoursePointer	: m._group.getElementById("CoursePointer").updateCenter(),
 			CDI		: m._group.getElementById("CDI").updateCenter(),
@@ -1760,8 +1797,6 @@ var HeadingSituationIndicatorWidget = {
 	},
 	setListeners : func(instance) {
 		append(me._listeners, setlistener("/autopilot/settings/heading-bug-deg",func(n){me._onHdgBugChange(n)},1,0));	
-		append(me._listeners, setlistener(me._ptree.miscompareLOC,func(n){me._onMiscompareLocChange(n)},1,0));
-		append(me._listeners, setlistener(me._ptree.miscompareGS,func(n){me._onMiscompareGsChange(n)},1,0));
 		append(me._listeners, setlistener(me._ptree.miscompareHDG,func(n){me._onMiscompareHdgChange(n)},1,0));
 		append(me._listeners, setlistener(me._ptree.ready,func(n){me._onReadyChange(n)},1,0));
 		
@@ -1778,14 +1813,14 @@ var HeadingSituationIndicatorWidget = {
 		}
 	},
 	
-	_onMiscompareLocChange : func(n){
-		me._can.miscompareLOC.setVisible(n.getValue());
-	},
-	_onMiscompareGsChange : func(n){
-		me._can.miscompareGS.setVisible(n.getValue());
-	},
 	_onMiscompareHdgChange : func(n){
-		me._can.miscompareHDG.setVisible(n.getValue());
+		var v = n.getValue();
+		if(v){
+			me._can.HDGBackground.set("stroke",COLOR["Amber"]);
+		}else{
+			me._can.HDGBackground.set("stroke",COLOR["Blue"]);
+		}
+		me._can.miscompareHDG.setVisible(v);
 	},
 	
 	
