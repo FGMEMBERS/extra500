@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 28.09.2016            
+#      Date: 19.10.2016            
 #
 # 
 
@@ -62,7 +62,7 @@ var failureset = [
 	[34,"RAux_outbDrainFail","dig"],
 	[35,"LcheckvalveFail","dig"],
 	[36,"RcheckvalveFail","dig"],
-	[37,"filterFail","ana"],
+	[37,"filterFail","pro",0.001],
 	[38,"SelectorValveFail","dig"],
 	[39,"fuelPump1Fail","dig"],
 	[40,"fuelPump2Fail","dig"],
@@ -71,8 +71,8 @@ var failureset = [
 	[43,"fftransdFail","dig"],
 	[44,"LtransferPumpFail","dig"],
 	[45,"RtransferPumpFail","dig"],
-	[46,"LtransfilterFail","ana"],
-	[47,"RtransfilterFail","ana"],
+	[46,"LtransfilterFail","pro",0.001],
+	[47,"RtransfilterFail","pro",0.001],
 	[48,"LMinnerjetpumpFail","ana"],
 	[49,"RMinnerjetpumpFail","ana"],
 	[50,"LMouterjetpumpFail","ana"],
@@ -93,19 +93,29 @@ var failureset = [
 	[65,"RHPitotLeak1","ana"],
 	[66,"LHPitotLeak2","ana"],
 	[67,"RHPitotLeak2","ana"],
-	[68,"BackupAttInd","dig"]
-#	[69,
-#	[70,	
-#	[71,
-#	[72,
-#	[73,
-#	[74,
-#	[75,
-#	[76,
-#	[77,
-#	[78,
-#	[79,
-#	[80,
+	[68,"BackupAttInd","dig"],
+	[69,"GPS1Fail","dig"],
+	[70,"GPS2Fail","dig"],
+	[71,"DMEFail","dig"],
+	[72,"NAV1Fail","dig"],
+	[73,"NAV2Fail","dig"],
+	[74,"GS1Fail","dig"],
+	[75,"GS2Fail","dig"],
+	[76,"RHHeading","pro",1],
+	[77,"LHHeading","pro",1],
+	[78,"RHPitch","pro",1],
+	[79,"LHPitch","pro",1],
+	[80,"RHRoll","pro",1],
+	[81,"LHRoll","pro",1],
+	[82,"RHHeading","pro",-1],
+	[83,"LHHeading","pro",-1],
+	[84,"RHPitch","pro",-1],
+	[85,"LHPitch","pro",-1],
+	[86,"RHRoll","pro",-1],
+	[87,"LHRoll","pro",-1]
+#	[88,
+#	[89,
+#	[90,
 	
 
 ];
@@ -197,13 +207,15 @@ var randomfail2 = func() {
 		var fail = 1;
 	} else if (failureset[failureno][2] == "ana") {
 		var fail = (math.round(rand() * 10 + 0.5 ))/10;
-	} else if (failureset[failureno][2] == "prg") {
-		var fail = 0.1; # not yet implemented
-	}
-
-	setprop("/extra500/failurescenarios/name",failureset[failureno][1] );
-	setprop("/extra500/failurescenarios/activate",fail);
-	
+	} 
+	if (failureset[failureno][2] == "pro") {
+		# for progressive failure, the listener will take care of setting the failure. 
+		addProgFailure(failureset[failureno][1],failureset[failureno][3],0);
+	} else {
+		# for digital and analog failures we set them here
+		setprop("/extra500/failurescenarios/name",failureset[failureno][1] );
+		setprop("/extra500/failurescenarios/activate",fail);
+	}	
 }
 
 # CONTROL SYSTEM FAILURES
@@ -401,6 +413,19 @@ var set_failure = func(fail) {
 		else if (failure == "LHPitotLeak2") { setprop("/systems/pitotL/leaking2", fail ); }
 		else if (failure == "RHPitotLeak2") { setprop("/systems/pitotR/leaking2", fail ); }
 		else if (failure == "BackupAttInd") { setprop("/instrumentation/attitude-indicator/serviceable", math.abs(fail-1) ); }
+		else if (failure == "NAV1Fail") 	{ setprop("/instrumentation/nav/serviceable", math.abs(fail-1) ); }
+		else if (failure == "NAV2Fail") 	{ setprop("/instrumentation/nav[1]/serviceable", math.abs(fail-1) ); }
+		else if (failure == "GS1Fail") 	{ setprop("/instrumentation/nav/gs/serviceable", math.abs(fail-1) ); }
+		else if (failure == "GS2Fail") 	{ setprop("/instrumentation/nav[1]/gs/serviceable", math.abs(fail-1) ); }
+		else if (failure == "GPS1Fail") 	{ setprop("/instrumentation/gps/serviceable", math.abs(fail-1) ); }
+		else if (failure == "GPS2Fail") 	{ setprop("/instrumentation/gps[1]/serviceable", math.abs(fail-1) ); }
+		else if (failure == "DMEFail") 	{ setprop("/instrumentation/dme/serviceable", math.abs(fail-1) ); }
+		else if (failure == "RHHeading") 	{ setprop("/extra500/instrumentation/IFD-RH/heading/error", fail); }
+		else if (failure == "LHHeading") 	{ setprop("/extra500/instrumentation/IFD-LH/heading/error", fail); }
+		else if (failure == "RHPitch") 	{ setprop("/extra500/instrumentation/IFD-RH/attitude/pitch-error", fail); }
+		else if (failure == "LHPitch") 	{ setprop("/extra500/instrumentation/IFD-LH/attitude/pitch-error", fail); }
+		else if (failure == "RHRoll") 	{ setprop("/extra500/instrumentation/IFD-RH/attitude/roll-error", fail); }
+		else if (failure == "LHRoll") 	{ setprop("/extra500/instrumentation/IFD-LH/attitude/roll-error", fail); }
 	} else {
 		print("Error: No failure scenario name set");
 		setprop("/extra500/failurescenarios/activate",0);
@@ -535,6 +560,20 @@ var failure_reset = func() {
 	setprop("/systems/pitotR/leaking1", 0 );
 	setprop("/systems/pitotL/leaking2", 0 );
 	setprop("/systems/pitotR/leaking2", 0 );
+	setprop("/instrumentation/attitude-indicator/serviceable", 1 );
+	setprop("/instrumentation/nav/serviceable", 1 );
+	setprop("/instrumentation/nav[1]/serviceable", 1 );
+	setprop("/instrumentation/nav/gs/serviceable", 1 );
+	setprop("/instrumentation/nav[1]/gs/serviceable", 1 );
+	setprop("/instrumentation/gps/serviceable", 1 );
+	setprop("/instrumentation/gps[1]/serviceable", 1 );
+	setprop("/instrumentation/dme/serviceable", 1 );
+	setprop("/extra500/instrumentation/IFD-RH/heading/error", 0); 
+	setprop("/extra500/instrumentation/IFD-LH/heading/error", 0); 
+	setprop("/extra500/instrumentation/IFD-RH/attitude/pitch-error", 0); 
+	setprop("/extra500/instrumentation/IFD-LH/attitude/pitch-error", 0); 
+	setprop("/extra500/instrumentation/IFD-RH/attitude/roll-error", 0); 
+	setprop("/extra500/instrumentation/IFD-LH/attitude/roll-error", 0); 
 
 	setprop("/extra500/failurescenarios/random_active",0);
 }
