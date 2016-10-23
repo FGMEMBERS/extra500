@@ -51,6 +51,8 @@ COLORfd["gpsOk"] = "#97bcdaaa";
 COLORfd["navOk"] = "#1897ffaa";
 COLORfd["dmeOk"] = "#0a6ab8aa";
 COLORfd["insOk"] = "#00ccffff";
+COLORfd["black"] = "#000000ff";
+COLORfd["attOK"] = "#1ec6f60a";
 
 var FailureClass = {
 	new : func(){
@@ -242,6 +244,9 @@ var FailureClass = {
 		me._NAV1		= me._svg_avionic.getElementById("LHNAV");
 		me._GS1		= me._svg_avionic.getElementById("LHGS");
 		me._DME		= me._svg_avionic.getElementById("DME");
+		me._HDG1		= me._svg_avionic.getElementById("LHHDG");
+		me._PITCH1		= me._svg_avionic.getElementById("LHPITCH");
+		me._ROLL1		= me._svg_avionic.getElementById("LHROLL");
 
 		me._Text_AttInd	= me._svg_avionic.getElementById("text_STBYATTIND").hide();
 		me._Text_LHStatic	= me._svg_avionic.getElementById("text_LHSTATIC").hide();
@@ -251,6 +256,9 @@ var FailureClass = {
 		me._Text_NAV1	= me._svg_avionic.getElementById("text_LHNAV").hide();
 		me._Text_GS1	= me._svg_avionic.getElementById("text_LHGS").hide();
 		me._Text_DME	= me._svg_avionic.getElementById("text_DME").hide();
+		me._Text_HDG1	= me._svg_avionic.getElementById("text_LHHDG").hide();
+		me._Text_PITCH1	= me._svg_avionic.getElementById("text_LHPITCH").hide();
+		me._Text_ROLL1	= me._svg_avionic.getElementById("text_LHROLL").hide();
 
 # additional elements
 	#number of failure indication in menu
@@ -441,7 +449,9 @@ var FailureClass = {
 		me._NAV1.addEventListener("click",func(){me._onGeneralClick("/instrumentation/nav/serviceable",0,"NAV1Fail","avionic");});			
 		me._GS1.addEventListener("click",func(){me._onGeneralClick("/instrumentation/nav/gs/serviceable",0,"GS1Fail","avionic");});			
 		me._DME.addEventListener("click",func(){me._onGeneralClick("/instrumentation/dme/serviceable",0,"DMEFail","avionic");});			
-
+		me._HDG1.addEventListener("click",func(){me._onProgessiveClick("LHHeading",0.05,0,30,"/extra500/instrumentation/IFD-LH/heading/error","avionic");});			
+		me._PITCH1.addEventListener("click",func(){me._onProgessiveClick("LHPitch",0.05,0,30,"/extra500/instrumentation/IFD-LH/attitude/pitch-error","avionic");});			
+		me._ROLL1.addEventListener("click",func(){me._onProgessiveClick("LHRoll",0.05,0,30,"/extra500/instrumentation/IFD-LH/attitude/roll-error","avionic");});			
 	},
 	_onRandomClick : func() {
 		events.randomfail(); # nasal/failurescenarios.nas
@@ -686,7 +696,9 @@ var FailureClass = {
 		me._genButtons_update("/instrumentation/nav/serviceable",1,me._NAV1,me._Text_NAV1,"navOk","/extra500/failurescenarios/avionic");		
 		me._genButtons_update("/instrumentation/nav/gs/serviceable",1,me._GS1,me._Text_GS1,"navOk","/extra500/failurescenarios/avionic");			
 		me._genButtons_update("/instrumentation/dme/serviceable",1,me._DME,me._Text_DME,"dmeOk","/extra500/failurescenarios/avionic");		
-
+		me._genButtons_update("/extra500/instrumentation/IFD-LH/heading/error",0,me._HDG1,me._Text_HDG1,"black","/extra500/failurescenarios/avionic");		
+		me._genButtons_update("/extra500/instrumentation/IFD-LH/attitude/pitch-error",0,me._PITCH1,me._Text_PITCH1,"attOK","/extra500/failurescenarios/avionic");		
+		me._genButtons_update("/extra500/instrumentation/IFD-LH/attitude/roll-error",0,me._ROLL1,me._Text_ROLL1,"attOK","/extra500/failurescenarios/avionic");		
 
 		# setting fail indication in menu
 		if (getprop("/extra500/failurescenarios/avionic") > 0) {
@@ -730,6 +742,16 @@ var FailureClass = {
 		var value = getprop(property) + 0.1;
 		if (value>1) {value = 0;}
 		setprop("/extra500/failurescenarios/activate",value);
+		me._update_page(system);
+	},
+	_onProgessiveClick : func(failname,speed,initial,maxValue,property,system){			# for 'progressive' failures
+		if (getprop(property) == initial) {
+			setprop("/extra500/failurescenarios/name",failname);				# FIXME:
+			setprop("/extra500/failurescenarios/activate",0.001);				# FIXME: evil hack only to trick the detection system there is a failure
+			events.addProgFailure(failname,speed,initial,maxValue);
+		} else {
+			events.delProgFailure(failname);
+		}
 		me._update_page(system);
 	},
 	_update_page : func(system) {

@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 19.10.2016            
+#      Date: 23.10.2016            
 #
 # 
 
@@ -25,6 +25,8 @@
 # 1: index
 # 2: failure name
 # 3: failure type (digital, analog (0.1 steps) and progressive)
+# 4: only for progressive: speed/s
+# 5: only for progressive: max value
 var failureset = [
 	[1,"RMG_jammed","dig"],
 	[2,"LMG_jammed","dig"],
@@ -62,7 +64,7 @@ var failureset = [
 	[34,"RAux_outbDrainFail","dig"],
 	[35,"LcheckvalveFail","dig"],
 	[36,"RcheckvalveFail","dig"],
-	[37,"filterFail","pro",0.001],
+	[37,"filterFail","pro",0.001,1],
 	[38,"SelectorValveFail","dig"],
 	[39,"fuelPump1Fail","dig"],
 	[40,"fuelPump2Fail","dig"],
@@ -71,8 +73,8 @@ var failureset = [
 	[43,"fftransdFail","dig"],
 	[44,"LtransferPumpFail","dig"],
 	[45,"RtransferPumpFail","dig"],
-	[46,"LtransfilterFail","pro",0.001],
-	[47,"RtransfilterFail","pro",0.001],
+	[46,"LtransfilterFail","pro",0.001,1],
+	[47,"RtransfilterFail","pro",0.001,1],
 	[48,"LMinnerjetpumpFail","ana"],
 	[49,"RMinnerjetpumpFail","ana"],
 	[50,"LMouterjetpumpFail","ana"],
@@ -101,18 +103,18 @@ var failureset = [
 	[73,"NAV2Fail","dig"],
 	[74,"GS1Fail","dig"],
 	[75,"GS2Fail","dig"],
-	[76,"RHHeading","pro",1],
-	[77,"LHHeading","pro",1],
-	[78,"RHPitch","pro",1],
-	[79,"LHPitch","pro",1],
-	[80,"RHRoll","pro",1],
-	[81,"LHRoll","pro",1],
-	[82,"RHHeading","pro",-1],
-	[83,"LHHeading","pro",-1],
-	[84,"RHPitch","pro",-1],
-	[85,"LHPitch","pro",-1],
-	[86,"RHRoll","pro",-1],
-	[87,"LHRoll","pro",-1]
+	[76,"RHHeading","pro",1,30],
+	[77,"LHHeading","pro",1,30],
+	[78,"RHPitch","pro",1,30],
+	[79,"LHPitch","pro",1,30],
+	[80,"RHRoll","pro",1,30],
+	[81,"LHRoll","pro",1,30],
+	[82,"RHHeading","pro",-1,-30],
+	[83,"LHHeading","pro",-1,-30],
+	[84,"RHPitch","pro",-1,-30],
+	[85,"LHPitch","pro",-1,-30],
+	[86,"RHRoll","pro",-1,-30],
+	[87,"LHRoll","pro",-1,-30]
 #	[88,
 #	[89,
 #	[90,
@@ -138,7 +140,7 @@ var updateProgFailures = func() {
 #debug.dump(progressiveset);
 	if (noProgFailures!=0) {
 		for (var i=0; i < noProgFailures; i = i+1) {
-			var fail = math.clamp(progressiveset[i][2] + progressiveset[i][1],0,1);
+			var fail = math.clamp(progressiveset[i][2] + progressiveset[i][1],0,progressiveset[i][3]);
 			progressiveset[i][2] = fail;
 			setprop("/extra500/failurescenarios/name",progressiveset[i][0] );
 			setprop("/extra500/failurescenarios/activate",fail);	
@@ -146,8 +148,8 @@ var updateProgFailures = func() {
 	}
 }
 
-var addProgFailure =  func(name,speed,startValue) {
-	var supvector = [name,speed,startValue];
+var addProgFailure =  func(name,speed,startValue,maxValue) {
+	var supvector = [name,speed,startValue,maxValue];
 	append(progressiveset,supvector);
 } 
 
@@ -161,6 +163,7 @@ var delProgFailure =  func(name) {
 				progressiveset[i][0] = progressiveset[i+1][0];
 				progressiveset[i][1] = progressiveset[i+1][1];
 				progressiveset[i][2] = progressiveset[i+1][2];
+				progressiveset[i][3] = progressiveset[i+1][3];
 			}	
 		}
 		if (found == 1) {	
@@ -210,7 +213,7 @@ var randomfail2 = func() {
 	} 
 	if (failureset[failureno][2] == "pro") {
 		# for progressive failure, the listener will take care of setting the failure. 
-		addProgFailure(failureset[failureno][1],failureset[failureno][3],0);
+		addProgFailure(failureset[failureno][1],failureset[failureno][3],0,failureset[failureno][4]);
 	} else {
 		# for digital and analog failures we set them here
 		setprop("/extra500/failurescenarios/name",failureset[failureno][1] );

@@ -30,8 +30,8 @@
      id="namedview8"
      showgrid="false"
      inkscape:zoom="7.1762369"
-     inkscape:cx="258.20307"
-     inkscape:cy="888.21125"
+     inkscape:cx="268.48911"
+     inkscape:cy="855.34588"
      inkscape:window-x="0"
      inkscape:window-y="21"
      inkscape:window-maximized="1"
@@ -296,15 +296,6 @@
        height="20.800886"
        x="273.48352"
        y="196.59813" />
-    <rect
-       style="fill:none;stroke:#0084d7;stroke-width:1.98100603;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-       id="LHPITCH"
-       width="33.061756"
-       height="40.793278"
-       x="272.66599"
-       y="177.24113"
-       ry="3.7443101"
-       inkscape:label="#rect3835" />
     <g
        id="g4250-7-3"
        transform="matrix(0.71608179,0,0,0.69774445,54.09419,90.89566)"
@@ -320,6 +311,15 @@
          d="m 333.14049,143.90583 -4.48298,-7.91434 0,25.22483 4.43811,-7.83513"
          style="fill:none;stroke:#0084d7;stroke-width:1.40128446px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     </g>
+    <rect
+       style="fill:#1ec6f6;stroke:#0084d7;stroke-width:1.98100603000000008;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;fill-opacity:0.03930131"
+       id="LHPITCH"
+       width="33.061756"
+       height="40.793278"
+       x="272.66599"
+       y="177.24113"
+       ry="3.7443101"
+       inkscape:label="#rect3835" />
     <rect
        style="fill:#1ec6f6;fill-opacity:1;stroke:none"
        id="rect3883-9"
@@ -341,15 +341,6 @@
        id="path3921"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc" />
-    <rect
-       style="fill:none;stroke:#0084d7;stroke-width:1.98100603;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
-       id="LHROLL"
-       width="33.061756"
-       height="40.793278"
-       x="232.81728"
-       y="177.06099"
-       ry="3.7443101"
-       inkscape:label="#rect3835-7" />
     <g
        id="g4250-7-3-0"
        transform="matrix(0.34812387,0.1930917,-0.21168323,0.39649108,156.55118,66.546285)"
@@ -365,6 +356,15 @@
          d="m 333.14049,143.90583 -4.48298,-7.91434 0,25.22483 4.43811,-7.83513"
          style="fill:none;stroke:#0084d7;stroke-width:1.40128446px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     </g>
+    <rect
+       style="fill:#1ec6f6;stroke:#0084d7;stroke-width:1.98100603000000008;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;fill-opacity:0.03930131"
+       id="LHROLL"
+       width="33.061756"
+       height="40.793278"
+       x="232.81728"
+       y="177.06099"
+       ry="3.7443101"
+       inkscape:label="#rect3835-7" />
     <path
        style="fill:none;stroke:#ffffff;stroke-width:0.99050301px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 266.55075,228.51609 3.84271,-5.37012 3.77019,5.22232"
@@ -660,6 +660,45 @@
        id="path5415-7"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccc" />
+    <text
+       xml:space="preserve"
+       style="font-size:10.10992336px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="323.82339"
+       y="231.81042"
+       id="text_LHHDG"
+       sodipodi:linespacing="125%"
+       transform="scale(0.85589904,1.1683621)"
+       inkscape:label="#text4485"><tspan
+         sodipodi:role="line"
+         x="323.82339"
+         y="231.81042"
+         id="tspan4575-7-2-2">Heading misleading</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.10992336px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="342.4534"
+       y="199.82074"
+       id="text_LHPITCH"
+       sodipodi:linespacing="125%"
+       transform="scale(0.85589904,1.1683621)"
+       inkscape:label="#text4485"><tspan
+         sodipodi:role="line"
+         x="342.4534"
+         y="199.82074"
+         id="tspan4575-7-2-2-3">Pitch misleading</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:10.10992336px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="161.63663"
+       y="176.92117"
+       id="text_LHROLL"
+       sodipodi:linespacing="125%"
+       transform="scale(0.85589904,1.1683621)"
+       inkscape:label="#text4485"><tspan
+         sodipodi:role="line"
+         x="161.63663"
+         y="176.92117"
+         id="tspan4575-7-2-2-9">Roll misleading</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
