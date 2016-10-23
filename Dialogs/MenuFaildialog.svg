@@ -25,8 +25,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.8"
-     inkscape:cx="417.87221"
-     inkscape:cy="974.22665"
+     inkscape:cx="428.61044"
+     inkscape:cy="1005.184"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -172,6 +172,31 @@
        style="fill:#009400;fill-opacity:0.19736843;stroke:none"
        d="m 358.53259,2.0307678 99.6002,-0.1164061 c 1.98155,9.4383903 1.80677,18.8767813 0,28.3151723 l -99.69354,0 c -1.52432,-8.974935 -1.78799,-18.294044 0.0934,-28.1987662 z"
        id="field_deice"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="#path4706" />
+    <path
+       style="fill:#ff0000;fill-opacity:1;stroke:none"
+       d="m 554.19643,17.272897 8.21429,0 0,11.607143 -8.39286,0 z"
+       id="avionicfailind"
+       inkscape:connector-curvature="0"
+       inkscape:label="#path2994" />
+    <text
+       xml:space="preserve"
+       style="font-size:22.38460732px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="560.64905"
+       y="22.622871"
+       id="text5216-9-5-3-7"
+       sodipodi:linespacing="125%"
+       transform="scale(0.90842989,1.1008004)"><tspan
+         sodipodi:role="line"
+         id="tspan5218-7-1-8-5"
+         x="560.64905"
+         y="22.622871">AVIONIC</tspan></text>
+    <path
+       style="fill:#009400;fill-opacity:0.19736843;stroke:none"
+       d="m 464.08008,1.892431 99.6002,-0.116406 c 1.98155,9.43839 1.80677,18.876781 0,28.315172 l -99.69354,0 c -1.52432,-8.974935 -1.78799,-18.294044 0.0934,-28.198766 z"
+       id="field_avionic"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
        inkscape:label="#path4706" />

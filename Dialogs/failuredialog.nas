@@ -17,7 +17,7 @@
 #	Date: 	10.10.2015
 #
 #	Last change: Eric van den Berg	
-#	Date:	20.08.2016	
+#	Date:	23.10.2016	
 #
 
 var COLORfd = {};
@@ -45,6 +45,12 @@ COLORfd["boot1Ok"] = "#80b3f1ff";
 COLORfd["boot2Ok"] = "#1d79e8ff";
 COLORfd["Failed"] = "#ff8080ff";
 COLORfd["randomA"] = "#d45d00ff";
+COLORfd["pitotOk"] = "#2bb200ff";
+COLORfd["staticOk"] = "#75c3ffff";
+COLORfd["gpsOk"] = "#97bcdaaa";
+COLORfd["navOk"] = "#1897ffaa";
+COLORfd["dmeOk"] = "#0a6ab8aa";
+COLORfd["insOk"] = "#00ccffff";
 
 var FailureClass = {
 	new : func(){
@@ -90,6 +96,10 @@ var FailureClass = {
 		me._svg_deice = me._root.createChild('group');
 		canvas.parsesvg(me._svg_deice, me._filename);
 
+		me._filename = "/Dialogs/AvionicFaildialog.svg";
+		me._svg_avionic = me._root.createChild('group');
+		canvas.parsesvg(me._svg_avionic, me._filename);
+
 # defining clickable fields and other elements from svg files
 	# menu
 		me._gear		= me._svg_menu.getElementById("field_gear");
@@ -100,6 +110,8 @@ var FailureClass = {
 		me._controls_ind	= me._svg_menu.getElementById("controlsfailind").hide();
 		me._deice		= me._svg_menu.getElementById("field_deice");
 		me._deice_ind	= me._svg_menu.getElementById("deicefailind").hide();
+		me._avionic		= me._svg_menu.getElementById("field_avionic");
+		me._avionic_ind	= me._svg_menu.getElementById("avionicfailind").hide();
 
 		me._repair		= me._svg_menu.getElementById("field_repairall");
 
@@ -221,6 +233,24 @@ var FailureClass = {
 		me._Text_StallWarner	= me._svg_deice.getElementById("text_StallWarner");
 		me._Text_EngInletHeat	= me._svg_deice.getElementById("text_EngInletHeat");
 
+	# avionic system
+		me._AttInd		= me._svg_avionic.getElementById("STBYATTIND");
+		me._LHStatic	= me._svg_avionic.getElementById("LHSTATIC");
+		me._LHPitot1	= me._svg_avionic.getElementById("LHPITOT1");
+		me._LHPitot2	= me._svg_avionic.getElementById("LHPITOT2");
+		me._GPS1		= me._svg_avionic.getElementById("LHGPS");
+		me._NAV1		= me._svg_avionic.getElementById("LHNAV");
+		me._GS1		= me._svg_avionic.getElementById("LHGS");
+		me._DME		= me._svg_avionic.getElementById("DME");
+
+		me._Text_AttInd	= me._svg_avionic.getElementById("text_STBYATTIND").hide();
+		me._Text_LHStatic	= me._svg_avionic.getElementById("text_LHSTATIC").hide();
+		me._Text_LHPitot1	= me._svg_avionic.getElementById("text_LHPITOT1").hide();
+		me._Text_LHPitot2	= me._svg_avionic.getElementById("text_LHPITOT2").hide();
+		me._Text_GPS1	= me._svg_avionic.getElementById("text_LHGPS").hide();
+		me._Text_NAV1	= me._svg_avionic.getElementById("text_LHNAV").hide();
+		me._Text_GS1	= me._svg_avionic.getElementById("text_LHGS").hide();
+		me._Text_DME	= me._svg_avionic.getElementById("text_DME").hide();
 
 # additional elements
 	#number of failure indication in menu
@@ -243,6 +273,11 @@ var FailureClass = {
       		.setFontSize(10, 0.9)  
       		.setAlignment("center-center") 
       		.setTranslation(452, 23);  
+
+		me._avionicfailnumber = me._root.createChild("text")
+      		.setFontSize(10, 0.9)  
+      		.setAlignment("center-center") 
+      		.setTranslation(558, 23);  
 
 	# fuel text elements
 		me._Text_Filter = me._root.createChild("text")
@@ -326,6 +361,7 @@ var FailureClass = {
 		me._fuel.addEventListener("click",func(){me._onFuelClick();});
 		me._controls.addEventListener("click",func(){me._onControlsClick();});
 		me._deice.addEventListener("click",func(){me._onDeiceClick();});
+		me._avionic.addEventListener("click",func(){me._onAvionicClick();});
 		me._repair.addEventListener("click",func(){
 			events.failure_reset();					# nasal/failurescenarios.nas
 			me._updateMenu();
@@ -396,6 +432,15 @@ var FailureClass = {
 		me._StallWarner.addEventListener("click",func(){me._onGeneralClick("/extra500/system/deice/StallHeat/service/serviceable",0,"StallHeatFail","deice");});
 		me._PropH.addEventListener("click",func(){me._onGeneralClick("/extra500/system/deice/Propeller/service/serviceable",0,"PropHeatFail","deice");});		
 		me._EngInletHeat.addEventListener("click",func(){me._onGeneralClick("/extra500/system/deice/IntakeHeat/serviceable",0,"InletAntiIceFail","deice");});		
+	# avionic system
+		me._AttInd.addEventListener("click",func(){me._onGeneralClick("/instrumentation/attitude-indicator/serviceable",0,"BackupAttInd","avionic");});		
+		me._LHStatic.addEventListener("click",func(){me._onGeneralClick("/systems/staticL/leaking",1,"LHStaticLeak","avionic");});		
+		me._LHPitot1.addEventListener("click",func(){me._onGeneralClick("/systems/pitotL/leaking1",1,"LHPitotLeak1","avionic");});		
+		me._LHPitot2.addEventListener("click",func(){me._onGeneralClick("/systems/pitotL/leaking2",1,"LHPitotLeak2","avionic");});		
+		me._GPS1.addEventListener("click",func(){me._onGeneralClick("/instrumentation/gps/serviceable",0,"GPS1Fail","avionic");});		
+		me._NAV1.addEventListener("click",func(){me._onGeneralClick("/instrumentation/nav/serviceable",0,"NAV1Fail","avionic");});			
+		me._GS1.addEventListener("click",func(){me._onGeneralClick("/instrumentation/nav/gs/serviceable",0,"GS1Fail","avionic");});			
+		me._DME.addEventListener("click",func(){me._onGeneralClick("/instrumentation/dme/serviceable",0,"DMEFail","avionic");});			
 
 	},
 	_onRandomClick : func() {
@@ -413,12 +458,14 @@ var FailureClass = {
 		me._fuel.setColorFill(COLORfd["menuns"]);
 		me._controls.setColorFill(COLORfd["menuns"]);
 		me._deice.setColorFill(COLORfd["menuns"]);
+		me._avionic.setColorFill(COLORfd["menuns"]);
 	},
 	_hideAll : func() {   # except for menu
 		me._svg_gear.hide();
 		me._svg_fuel.hide();
 		me._svg_contr.hide();
 		me._svg_deice.hide();
+		me._svg_avionic.hide();
 		me._svg_welcome.hide();
 
 		me._Text_Filter.hide();
@@ -437,6 +484,7 @@ var FailureClass = {
 		me._fuelButtons_update();
 		me._contrButtons_update();
 		me._deiceButtons_update();
+		me._avionicButtons_update();
 	},
 	_onGearClick : func() {
 		me._menuReset();
@@ -465,6 +513,13 @@ var FailureClass = {
 		me._hideAll();
 		me._svg_deice.show();
 		me._deiceButtons_update();
+	},
+	_onAvionicClick : func() {
+		me._menuReset();
+		me._avionic.setColorFill(COLORfd["menuse"]);
+		me._hideAll();
+		me._svg_avionic.show();
+		me._avionicButtons_update();
 	},
 	_genButtons_update : func(gfailprop,glogic,gfield,gtext,gcolor,gfail) {			# for 'servicable' values, so glogic 0 or 1
 		if ( getprop(gfailprop) == glogic ) {
@@ -620,6 +675,30 @@ var FailureClass = {
 		}
 
 	},
+	_avionicButtons_update : func() {
+		setprop("/extra500/failurescenarios/avionic",0);
+
+		me._genButtons_update("/instrumentation/attitude-indicator/serviceable",1,me._AttInd,me._Text_AttInd,"insOk","/extra500/failurescenarios/avionic");	
+		me._genButtons_update("/systems/staticL/leaking",0,me._LHStatic,me._Text_LHStatic,"staticOk","/extra500/failurescenarios/avionic");		
+		me._genButtons_update("/systems/pitotL/leaking1",0,me._LHPitot1,me._Text_LHPitot1,"pitotOk","/extra500/failurescenarios/avionic");		
+		me._genButtons_update("/systems/pitotL/leaking2",0,me._LHPitot2,me._Text_LHPitot2,"pitotOk","/extra500/failurescenarios/avionic");		
+		me._genButtons_update("/instrumentation/gps/serviceable",1,me._GPS1,me._Text_GPS1,"gpsOk","/extra500/failurescenarios/avionic");		
+		me._genButtons_update("/instrumentation/nav/serviceable",1,me._NAV1,me._Text_NAV1,"navOk","/extra500/failurescenarios/avionic");		
+		me._genButtons_update("/instrumentation/nav/gs/serviceable",1,me._GS1,me._Text_GS1,"navOk","/extra500/failurescenarios/avionic");			
+		me._genButtons_update("/instrumentation/dme/serviceable",1,me._DME,me._Text_DME,"dmeOk","/extra500/failurescenarios/avionic");		
+
+
+		# setting fail indication in menu
+		if (getprop("/extra500/failurescenarios/avionic") > 0) {
+			me._avionic_ind.show();
+			me._avionicfailnumber.setText(getprop("/extra500/failurescenarios/avionic"))
+				.setColor(1,1,1,1);		
+		} else {
+			me._avionic_ind.hide();
+			me._avionicfailnumber.setColor(1,1,1,0);
+		}
+
+	},
 	_onElevatorClick : func(){
 		if (getprop("/extra500/failurescenarios/controls/elevator") == 1) {
 			setprop("/extra500/failurescenarios/name","Elevator");
@@ -658,6 +737,7 @@ var FailureClass = {
 		else if (system == "fuel") {me._fuelButtons_update(); } 
 		else if (system == "gear") {me._gearButtons_update(); }
 		else if (system == "contr") {me._contrButtons_update();}
+		else if (system == "avionic") {me._avionicButtons_update();}
 	}
 
 
