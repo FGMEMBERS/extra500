@@ -17,7 +17,7 @@
 #	Date: 	10.10.2015
 #
 #	Last change: Eric van den Berg	
-#	Date:	23.10.2016	
+#	Date:	25.10.2016	
 #
 
 var COLORfd = {};
@@ -248,6 +248,16 @@ var FailureClass = {
 		me._PITCH1		= me._svg_avionic.getElementById("LHPITCH");
 		me._ROLL1		= me._svg_avionic.getElementById("LHROLL");
 
+		me._RHStatic	= me._svg_avionic.getElementById("RHSTATIC");
+		me._RHPitot1	= me._svg_avionic.getElementById("RHPITOT1");
+		me._RHPitot2	= me._svg_avionic.getElementById("RHPITOT2");
+		me._GPS2		= me._svg_avionic.getElementById("RHGPS");
+		me._NAV2		= me._svg_avionic.getElementById("RHNAV");
+		me._GS2		= me._svg_avionic.getElementById("RHGS");
+		me._HDG2		= me._svg_avionic.getElementById("RHHDG");
+		me._PITCH2		= me._svg_avionic.getElementById("RHPITCH");
+		me._ROLL2		= me._svg_avionic.getElementById("RHROLL");
+
 		me._Text_AttInd	= me._svg_avionic.getElementById("text_STBYATTIND").hide();
 		me._Text_LHStatic	= me._svg_avionic.getElementById("text_LHSTATIC").hide();
 		me._Text_LHPitot1	= me._svg_avionic.getElementById("text_LHPITOT1").hide();
@@ -259,6 +269,17 @@ var FailureClass = {
 		me._Text_HDG1	= me._svg_avionic.getElementById("text_LHHDG").hide();
 		me._Text_PITCH1	= me._svg_avionic.getElementById("text_LHPITCH").hide();
 		me._Text_ROLL1	= me._svg_avionic.getElementById("text_LHROLL").hide();
+
+		me._Text_RHStatic	= me._svg_avionic.getElementById("text_RHSTATIC").hide();
+		me._Text_RHPitot1	= me._svg_avionic.getElementById("text_RHPITOT1").hide();
+		me._Text_RHPitot2	= me._svg_avionic.getElementById("text_RHPITOT2").hide();
+		me._Text_GPS2	= me._svg_avionic.getElementById("text_RHGPS").hide();
+		me._Text_NAV2	= me._svg_avionic.getElementById("text_RHNAV").hide();
+		me._Text_GS2	= me._svg_avionic.getElementById("text_RHGS").hide();
+		me._Text_HDG2	= me._svg_avionic.getElementById("text_RHHDG").hide();
+		me._Text_PITCH2	= me._svg_avionic.getElementById("text_RHPITCH").hide();
+		me._Text_ROLL2	= me._svg_avionic.getElementById("text_RHROLL").hide();
+
 
 # additional elements
 	#number of failure indication in menu
@@ -452,6 +473,17 @@ var FailureClass = {
 		me._HDG1.addEventListener("click",func(){me._onProgessiveClick("LHHeading",0.05,0,30,"/extra500/instrumentation/IFD-LH/heading/error","avionic");});			
 		me._PITCH1.addEventListener("click",func(){me._onProgessiveClick("LHPitch",0.05,0,30,"/extra500/instrumentation/IFD-LH/attitude/pitch-error","avionic");});			
 		me._ROLL1.addEventListener("click",func(){me._onProgessiveClick("LHRoll",0.05,0,30,"/extra500/instrumentation/IFD-LH/attitude/roll-error","avionic");});			
+		me._RHStatic.addEventListener("click",func(){me._onGeneralClick("/systems/staticR/leaking",1,"RHStaticLeak","avionic");});		
+		me._RHPitot1.addEventListener("click",func(){me._onGeneralClick("/systems/pitotR/leaking1",1,"RHPitotLeak1","avionic");});		
+		me._RHPitot2.addEventListener("click",func(){me._onGeneralClick("/systems/pitotR/leaking2",1,"RHPitotLeak2","avionic");});		
+		me._GPS2.addEventListener("click",func(){me._onGeneralClick("/instrumentation/gps[1]/serviceable",0,"GPS2Fail","avionic");});		
+		me._NAV2.addEventListener("click",func(){me._onGeneralClick("/instrumentation/nav[1]/serviceable",0,"NAV2Fail","avionic");});			
+		me._GS2.addEventListener("click",func(){me._onGeneralClick("/instrumentation/nav[1]/gs/serviceable",0,"GS2Fail","avionic");});			
+		me._HDG2.addEventListener("click",func(){me._onProgessiveClick("RHHeading",0.05,0,30,"/extra500/instrumentation/IFD-RH/heading/error","avionic");});			
+		me._PITCH2.addEventListener("click",func(){me._onProgessiveClick("RHPitch",0.05,0,30,"/extra500/instrumentation/IFD-RH/attitude/pitch-error","avionic");});			
+		me._ROLL2.addEventListener("click",func(){me._onProgessiveClick("RHRoll",0.05,0,30,"/extra500/instrumentation/IFD-RH/attitude/roll-error","avionic");});			
+
+
 	},
 	_onRandomClick : func() {
 		events.randomfail(); # nasal/failurescenarios.nas
@@ -699,6 +731,16 @@ var FailureClass = {
 		me._genButtons_update("/extra500/instrumentation/IFD-LH/heading/error",0,me._HDG1,me._Text_HDG1,"black","/extra500/failurescenarios/avionic");		
 		me._genButtons_update("/extra500/instrumentation/IFD-LH/attitude/pitch-error",0,me._PITCH1,me._Text_PITCH1,"attOK","/extra500/failurescenarios/avionic");		
 		me._genButtons_update("/extra500/instrumentation/IFD-LH/attitude/roll-error",0,me._ROLL1,me._Text_ROLL1,"attOK","/extra500/failurescenarios/avionic");		
+
+		me._genButtons_update("/systems/staticR/leaking",0,me._RHStatic,me._Text_RHStatic,"staticOk","/extra500/failurescenarios/avionic");		
+		me._genButtons_update("/systems/pitotR/leaking1",0,me._RHPitot1,me._Text_RHPitot1,"pitotOk","/extra500/failurescenarios/avionic");		
+		me._genButtons_update("/systems/pitotR/leaking2",0,me._RHPitot2,me._Text_RHPitot2,"pitotOk","/extra500/failurescenarios/avionic");		
+		me._genButtons_update("/instrumentation/gps[1]/serviceable",1,me._GPS2,me._Text_GPS2,"gpsOk","/extra500/failurescenarios/avionic");		
+		me._genButtons_update("/instrumentation/nav[1]/serviceable",1,me._NAV2,me._Text_NAV2,"navOk","/extra500/failurescenarios/avionic");		
+		me._genButtons_update("/instrumentation/nav[1]/gs/serviceable",1,me._GS2,me._Text_GS2,"navOk","/extra500/failurescenarios/avionic");			
+		me._genButtons_update("/extra500/instrumentation/IFD-RH/heading/error",0,me._HDG2,me._Text_HDG2,"black","/extra500/failurescenarios/avionic");		
+		me._genButtons_update("/extra500/instrumentation/IFD-RH/attitude/pitch-error",0,me._PITCH2,me._Text_PITCH2,"attOK","/extra500/failurescenarios/avionic");		
+		me._genButtons_update("/extra500/instrumentation/IFD-RH/attitude/roll-error",0,me._ROLL2,me._Text_ROLL2,"attOK","/extra500/failurescenarios/avionic");		
 
 		# setting fail indication in menu
 		if (getprop("/extra500/failurescenarios/avionic") > 0) {
