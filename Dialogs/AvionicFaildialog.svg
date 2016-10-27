@@ -29,9 +29,9 @@
      inkscape:window-height="836"
      id="namedview8"
      showgrid="false"
-     inkscape:zoom="0.89702961"
-     inkscape:cx="249.73456"
-     inkscape:cy="866.27892"
+     inkscape:zoom="1.7940592"
+     inkscape:cx="404.04865"
+     inkscape:cy="708.95926"
      inkscape:window-x="0"
      inkscape:window-y="21"
      inkscape:window-maximized="1"
@@ -444,63 +444,66 @@
          id="flowPara4329-0">GPSNAV</flowPara></flowRoot>    <text
        xml:space="preserve"
        style="font-size:19.32077599px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="231.44452"
-       y="323.3107"
+       x="232.92235"
+       y="325.11545"
        id="text4403"
        sodipodi:linespacing="125%"
-       transform="scale(0.92510128,1.0809627)"><tspan
+       transform="scale(0.92510129,1.0809627)"><tspan
          sodipodi:role="line"
          id="tspan4405"
-         x="231.44452"
-         y="323.3107">NAV</tspan></text>
+         x="232.92235"
+         y="325.11545">NAV</tspan></text>
     <rect
-       style="fill:#1897ff;fill-opacity:0.66666669;fill-rule:nonzero;stroke:none"
+       style="fill:#1897ff;fill-opacity:0.66666667000000002;fill-rule:nonzero;stroke:#1897ff;stroke-opacity:1;stroke-width:2.97150907;stroke-miterlimit:4;stroke-dasharray:none"
        id="LHNAV"
        width="46.40247"
        height="33.107586"
        x="210.68533"
        y="329.03128"
-       inkscape:label="#rect4313-3" />
+       inkscape:label="#rect4313-3"
+       ry="12.820089" />
     <text
        xml:space="preserve"
        style="font-size:19.32077408px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="286.14081"
-       y="323.4621"
+       x="287.0275"
+       y="325.26688"
        id="text4403-3"
        sodipodi:linespacing="125%"
        transform="scale(0.9251013,1.0809627)"><tspan
          sodipodi:role="line"
          id="tspan4405-6"
-         x="286.14081"
-         y="323.4621">GS</tspan></text>
+         x="287.0275"
+         y="325.26688">GS</tspan></text>
     <rect
-       style="fill:#1897ff;fill-opacity:0.66666669;fill-rule:nonzero;stroke:none"
+       style="fill:#1897ff;fill-opacity:0.66666667000000002;fill-rule:nonzero;stroke:#1897ff;stroke-opacity:1;stroke-width:2.97150907;stroke-miterlimit:4;stroke-dasharray:none;stroke-linejoin:round"
        id="LHGS"
        width="31.090437"
        height="33.107586"
        x="262.69754"
        y="329.06512"
-       inkscape:label="#rect4313-3-9" />
+       inkscape:label="#rect4313-3-9"
+       ry="11.705299" />
     <text
        xml:space="preserve"
        style="font-size:19.32077408px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="229.39203"
-       y="366.56827"
+       x="230.5743"
+       y="367.85739"
        id="text4403-6"
        sodipodi:linespacing="125%"
        transform="scale(0.9251013,1.0809627)"><tspan
          sodipodi:role="line"
          id="tspan4405-2"
-         x="229.39203"
-         y="366.56827">DME</tspan></text>
+         x="230.5743"
+         y="367.85739">DME</tspan></text>
     <rect
-       style="fill:#0a6ab8;fill-opacity:0.66666669;fill-rule:nonzero;stroke:none"
+       style="fill:#0a6ab8;fill-opacity:0.66666667000000002;fill-rule:nonzero;stroke:#0a6ab8;stroke-opacity:1;stroke-width:2.97150907;stroke-miterlimit:4;stroke-dasharray:none;stroke-linejoin:round"
        id="DME"
        width="46.40247"
        height="33.107586"
        x="210.52518"
        y="375.29507"
-       inkscape:label="#rect4313-3-0" />
+       inkscape:label="#rect4313-3-0"
+       ry="9.1970205" />
     <text
        xml:space="preserve"
        style="font-size:10.10992336px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -560,15 +563,15 @@
     <text
        xml:space="preserve"
        style="font-size:10.10992336px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="172.88829"
-       y="253.10899"
+       x="168.41579"
+       y="253.58607"
        id="text_LHGPS"
        sodipodi:linespacing="125%"
        transform="scale(0.85589904,1.1683621)"
        inkscape:label="#text4485"><tspan
          sodipodi:role="line"
-         x="172.88829"
-         y="253.10899"
+         x="168.41579"
+         y="253.58607"
          id="tspan4575">GPS 1 failed</tspan></text>
     <text
        xml:space="preserve"
@@ -637,24 +640,25 @@
     <text
        xml:space="preserve"
        style="font-size:19.32077408px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="230.3653"
-       y="281.88239"
+       x="232.72983"
+       y="283.94498"
        id="text4403-8"
        sodipodi:linespacing="125%"
        transform="scale(0.9251013,1.0809627)"><tspan
          sodipodi:role="line"
          id="tspan4405-9"
-         x="230.3653"
-         y="281.88239">GPS</tspan></text>
+         x="232.72983"
+         y="283.94498">GPS</tspan></text>
     <rect
-       style="fill:#97bcda;fill-opacity:0.66812229;fill-rule:nonzero;stroke:none"
+       style="fill:#97bcda;fill-opacity:0.6681223;fill-rule:nonzero;stroke:#97bcda;stroke-width:3;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="LHGPS"
        width="47.296551"
        height="33.107586"
        x="214.41103"
        y="284.58151"
        transform="matrix(0.98109624,0,0,1,0.37807492,0)"
-       inkscape:label="#rect4313" />
+       inkscape:label="#rect4313"
+       ry="11.705299" />
     <path
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 124.49826,72.119031 -3.51599,8.79966 -3.23573,-8.828583 z"
@@ -715,7 +719,7 @@
        sodipodi:cy="147.70976"
        sodipodi:rx="15.04967"
        sodipodi:ry="15.04967"
-       d="m 316.60048,147.70976 a 15.04967,15.04967 0 1 1 -30.09934,0 15.04967,15.04967 0 1 1 30.09934,0 z"
+       d="m 316.60048,147.70976 c 0,8.31171 -6.73796,15.04967 -15.04967,15.04967 -8.3117,0 -15.04967,-6.73796 -15.04967,-15.04967 0,-8.3117 6.73797,-15.04967 15.04967,-15.04967 8.31171,0 15.04967,6.73797 15.04967,15.04967 z"
        transform="matrix(-1.1288371,0,0,1.128699,815.46776,72.440042)"
        inkscape:label="#path3440-1" />
     <path
@@ -777,16 +781,16 @@
     <text
        xml:space="preserve"
        style="font-size:10.10992336px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="636.93054"
+       x="641.40302"
        y="253.70525"
        id="text_RHGPS"
        sodipodi:linespacing="125%"
        transform="scale(0.85589904,1.1683621)"
        inkscape:label="#text4485"><tspan
          sodipodi:role="line"
-         x="636.93054"
+         x="641.40302"
          y="253.70525"
-         id="tspan4575-2">GPS 1 failed</tspan></text>
+         id="tspan4575-2">GPS 2 failed</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:10.10992336px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -799,20 +803,20 @@
          sodipodi:role="line"
          x="642.86713"
          y="292.04095"
-         id="tspan4575-7-1">NAV 1 failed</tspan></text>
+         id="tspan4575-7-1">NAV 2 failed</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:10.10992336px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="461.68423"
+       x="454.01709"
        y="291.56387"
        id="text_RHGS"
        sodipodi:linespacing="125%"
        transform="scale(0.85589904,1.1683621)"
        inkscape:label="#text4485"><tspan
          sodipodi:role="line"
-         x="461.68423"
+         x="454.01709"
          y="291.56387"
-         id="tspan4575-7-2-7">GS 1 failed</tspan></text>
+         id="tspan4575-7-2-7">GS 2 failed</tspan></text>
     <path
        style="fill:#2bb200;fill-opacity:1;stroke:none"
        d="m 476.87933,172.65035 0,-65.96449 91.25819,0 0,2.9546 -88.71529,0 0,62.94034 z"
@@ -1018,66 +1022,69 @@
     <text
        xml:space="preserve"
        style="font-size:19.32077217px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="536.61658"
-       y="282.38858"
+       x="533.66089"
+       y="283.16205"
        id="text4403-8-3"
        sodipodi:linespacing="125%"
        transform="scale(0.92510131,1.0809627)"><tspan
          sodipodi:role="line"
          id="tspan4405-9-2"
-         x="536.61658"
-         y="282.38858">GPS</tspan></text>
+         x="533.66089"
+         y="283.16205">GPS</tspan></text>
     <rect
-       style="fill:#97bcda;fill-opacity:0.6681223;fill-rule:nonzero;stroke:none"
+       style="fill:#97bcda;fill-opacity:0.6681223;fill-rule:nonzero;stroke:#97bcda;stroke-width:2.97150898;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="RHGPS"
        width="46.40247"
        height="33.107586"
        x="-534.49573"
        y="285.27817"
        inkscape:label="#rect4313"
-       transform="scale(-1,1)" />
+       transform="scale(-1,1)"
+       ry="8.6710348" />
     <text
        xml:space="preserve"
        style="font-size:19.32077408px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="535.39014"
-       y="323.13412"
+       x="533.02557"
+       y="325.45453"
        id="text4403-0"
        sodipodi:linespacing="125%"
        transform="scale(0.9251013,1.0809627)"><tspan
          sodipodi:role="line"
          id="tspan4405-61"
-         x="535.39014"
-         y="323.13412">NAV</tspan></text>
+         x="533.02557"
+         y="325.45453">NAV</tspan></text>
     <rect
-       style="fill:#1897ff;fill-opacity:0.66666667;fill-rule:nonzero;stroke:none"
+       style="fill:#1897ff;fill-opacity:0.66666667000000002;fill-rule:nonzero;stroke:#1897ff;stroke-width:2.97150907;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:0.99563316999999996;stroke-dasharray:none"
        id="RHNAV"
        width="46.40247"
        height="33.107586"
        x="-534.54633"
        y="329.72791"
        inkscape:label="#rect4313-3"
-       transform="scale(-1,1)" />
+       transform="scale(-1,1)"
+       ry="8.6396255" />
     <text
        xml:space="preserve"
        style="font-size:19.32077217px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="492.20044"
-       y="322.60907"
+       x="491.60931"
+       y="325.18732"
        id="text4403-3-5"
        sodipodi:linespacing="125%"
        transform="scale(0.92510131,1.0809627)"><tspan
          sodipodi:role="line"
          id="tspan4405-6-5"
-         x="492.20044"
-         y="322.60907">GS</tspan></text>
+         x="491.60931"
+         y="325.18732">GS</tspan></text>
     <rect
-       style="fill:#1897ff;fill-opacity:0.66666667;fill-rule:nonzero;stroke:none"
+       style="fill:#1897ff;fill-opacity:0.66666667;fill-rule:nonzero;stroke:#1897ff;stroke-width:2.97150898;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="RHGS"
-       width="31.090437"
-       height="33.107586"
-       x="-482.53418"
-       y="329.76175"
+       width="31.910723"
+       height="33.386284"
+       x="-483.35449"
+       y="329.48306"
        inkscape:label="#rect4313-3-9"
-       transform="scale(-1,1)" />
+       transform="scale(-1,1)"
+       ry="10.679659" />
   </g>
   <g
      inkscape:groupmode="layer"
