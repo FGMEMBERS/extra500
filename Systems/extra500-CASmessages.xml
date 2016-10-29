@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+	
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Eric van den Berg
+      Date: 2016-10-30
+
+      Last change:      -
+      Date:             -
+-->
+
+<system name="Events">
+
+	<channel name="CASmessages">
+
+		<switch name="GPS1fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/instrumentation/gps/serviceable eq 0
+				/instrumentation/gps[1]/serviceable eq 1
+			</test>
+			<output>/extra500/instrumentation/IFD/messages/GPS1</output>
+		</switch>
+
+		<switch name="GPS2fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/instrumentation/gps/serviceable eq 1
+				/instrumentation/gps[1]/serviceable eq 0
+			</test>
+			<output>/extra500/instrumentation/IFD/messages/GPS2</output>
+		</switch>
+
+		<switch name="GPS1and2fault">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/instrumentation/gps/serviceable eq 0
+				/instrumentation/gps[1]/serviceable eq 0
+			</test>
+			<output>/extra500/instrumentation/IFD/messages/GPS1AND2</output>
+		</switch>
+
+	</channel>
+
+</system>
+
+
+

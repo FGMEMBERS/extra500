@@ -24,7 +24,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             16.09.16
+      Date:             30.10.16
 -->
 
 	<fileheader>
@@ -37,6 +37,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	<flight_control file="extra500-flight-control"/>
 	<system file="extra500-atmosphere.xml"/>
 	<system file="extra500-system-indication.xml"/>
+	<system file="extra500-CASmessages.xml"/>
 	<system file="extra500-system-AHRS.xml"/>
 	<system file="extra500-system-stallwarner.xml"/>
 	<system file="extra500-system-transponder.xml"/>
