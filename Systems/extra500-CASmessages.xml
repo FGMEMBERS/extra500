@@ -25,7 +25,7 @@
 
 <system name="Events">
 
-	<channel name="CASmessages">
+	<channel name="CASmessages" execrate="60">
 
 		<switch name="GPS1fault">
 			<default value="0"/>
