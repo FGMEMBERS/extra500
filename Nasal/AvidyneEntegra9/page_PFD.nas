@@ -17,7 +17,7 @@
 #      Date: Jul 20 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             26.09.16
+#      Date:             31.10.16
 #
 
 
@@ -1179,6 +1179,7 @@ var NavSourceWidget = {
 		m._isInRange		= 0;
 		m._isLOC		= 0;
 		m._isGSinRange		= 0;
+		m._hasGS		= 0; 
 		m._fromFlag		= 0;
 		m._toFlag		= 0;
 		m._Pointer		= 0;
