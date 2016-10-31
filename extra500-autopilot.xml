@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2016-10-30
+      Date:             2016-10-31
 -->
 
 <autopilot name="STEC55X">
@@ -397,6 +397,7 @@
 						/instrumentation/nav-source eq 0
 					</test>
 					<test logic="OR">
+						/instrumentation/nav[0]/serviceable eq 0
 						/instrumentation/nav[0]/operable eq 0 
 						/instrumentation/nav[0]/in-range eq 0
 					</test>
@@ -406,6 +407,7 @@
 						/instrumentation/nav-source eq 1
 					</test>
 					<test logic="OR">
+						/instrumentation/nav[1]/serviceable eq 0
 						/instrumentation/nav[1]/operable eq 0 
 						/instrumentation/nav[1]/in-range eq 0
 					</test>
@@ -1183,6 +1185,24 @@
 			<output>/autopilot/gs-channel/gs-needle-deflection-norm</output>
 		</switch>
 
+		<switch name="gsselect4">
+			<default value="/instrumentation/nav/gs/serviceable"/>
+			<test value="/instrumentation/nav[1]/gs/serviceable">
+				/instrumentation/nav-source eq 1
+			</test>
+			<output>/autopilot/gs-channel/serviceable</output>
+		</switch>
+
+	<!--detecting a problem with the GS --> 
+		<switch name="gslost">
+			<default value="0"/>
+			<test logic="OR" value="1">
+				/autopilot/gs-channel/serviceable eq 0
+				/autopilot/gs-channel/gs-in-range eq 0
+			</test>
+			<output>/autopilot/gs-channel/gs-signal-lost</output>
+		</switch>
+
 	<!-- arming GS -->
 		<switch name="armgs">
 			<default value="/autopilot/mode/gs-armed"/>
@@ -1192,6 +1212,7 @@
 				/autopilot/mode/rev eq 0
 				/autopilot/mode/alt eq 1
 				/autopilot/mode/vs eq 0
+				/autopilot/gs-channel/serviceable eq 1
 				/autopilot/gs-channel/gs-in-range eq 1
 				/autopilot/radionav-channel/is-localizer-frequency eq 1
 				/autopilot/radionav-channel/needle-defl-gt-half eq 0

@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2016-09-26
+      Date:             2016-10-31
 -->
 
 <system name="indication">
@@ -1417,6 +1417,10 @@
     			<function>
 				<abs>	
 					<difference>
+<!--FIXME: this is complete bullsh*t since the IFD-s cannot display nav1 and nav2 simultaniously and even then, who tunes nav1 and 2 to the same frequency???
+the reason for a LOC (or GS) miscompare can only be a misinterpretation of the data on the databus of a central processor failure
+In RL I have seen this only at the edge of viable data reception where the one IFD sees the data as valid and the other not,
+in effect when the LOC or GS is running to the side as is normal when being on that edge --> 
 						<property>/instrumentation/nav[0]/heading-needle-deflection-norm</property>
 						<property>/instrumentation/nav[1]/heading-needle-deflection-norm</property>
 					</difference>
@@ -1427,11 +1431,24 @@
 		<switch name="locmiscompare">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/extra500/instrumentation/IFD-miscompares/loc-diff-abs gt 0.1
-				/instrumentation/nav[0]/operable eq 1 
-				/instrumentation/nav[0]/in-range eq 1
-				/instrumentation/nav[1]/operable eq 1 
-				/instrumentation/nav[1]/in-range eq 1
+				<test logic="AND">
+<!-- this is set to 2 to suppress the message, should be 0.1 when correctly implemented --> 
+					/extra500/instrumentation/IFD-miscompares/loc-diff-abs gt 2
+				</test>
+				<test logic="OR">
+					<test logic="AND">
+						/instrumentation/nav-source eq 0
+						/instrumentation/nav[0]/serviceable eq 1
+						/instrumentation/nav[0]/operable eq 1 
+						/instrumentation/nav[0]/in-range eq 1
+					</test>
+					<test logic="AND">
+						/instrumentation/nav-source eq 1
+						/instrumentation/nav[1]/serviceable eq 1
+						/instrumentation/nav[1]/operable eq 1 
+						/instrumentation/nav[1]/in-range eq 1
+					</test>
+				</test>
 			</test>
 			<output>/extra500/instrumentation/IFD-miscompares/LOC</output>
 		</switch>
@@ -1450,9 +1467,22 @@
 		<switch name="gsmiscompare">
 			<default value="0"/>
 			<test logic="AND" value="1">
-				/extra500/instrumentation/IFD-miscompares/gs-diff-abs gt 0.1
-				/instrumentation/nav[0]/gs-in-range eq 1 
-				/instrumentation/nav[1]/gs-in-range eq 1
+				<test logic="AND">
+<!-- this is set to 2 to suppress the message, should be 0.1 when correctly implemented --> 
+					/extra500/instrumentation/IFD-miscompares/gs-diff-abs gt 2
+				</test>
+				<test logic="OR">
+					<test logic="AND">
+						/instrumentation/nav-source eq 0
+						/instrumentation/nav[0]/gs/serviceable eq 1
+						/instrumentation/nav[0]/gs-in-range eq 1
+					</test>
+					<test logic="AND">
+						/instrumentation/nav-source eq 1
+						/instrumentation/nav[1]/gs/serviceable eq 1
+						/instrumentation/nav[1]/gs-in-range eq 1
+					</test>
+				</test>
 			</test>
 			<output>/extra500/instrumentation/IFD-miscompares/GS</output>
 		</switch>
