@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 23.10.2016            
+#      Date: 01.11.2016            
 #
 # 
 
@@ -114,10 +114,10 @@ var failureset = [
 	[84,"RHPitch","pro",-1,-30],
 	[85,"LHPitch","pro",-1,-30],
 	[86,"RHRoll","pro",-1,-30],
-	[87,"LHRoll","pro",-1,-30]
-#	[88,
-#	[89,
-#	[90,
+	[87,"LHRoll","pro",-1,-30],
+	[88,"TASFail","dig"],
+#	[89,"KBDFail","dig"],
+	[89,"XPDRFail","dig"]
 	
 
 ];
@@ -429,6 +429,9 @@ var set_failure = func(fail) {
 		else if (failure == "LHPitch") 	{ setprop("/extra500/instrumentation/IFD-LH/attitude/pitch-error", fail); }
 		else if (failure == "RHRoll") 	{ setprop("/extra500/instrumentation/IFD-RH/attitude/roll-error", fail); }
 		else if (failure == "LHRoll") 	{ setprop("/extra500/instrumentation/IFD-LH/attitude/roll-error", fail); }
+		else if (failure == "TASFail") 	{ setprop("/instrumentation/tcas/fail", fail ); }
+#		else if (failure == "KBDFail") 	{ setprop("/instrumentation/???", fail ); }
+		else if (failure == "XPDRFail") 	{ setprop("/extra500/instrumentation/xpdr/fail", fail ); }
 	} else {
 		print("Error: No failure scenario name set");
 		setprop("/extra500/failurescenarios/activate",0);
@@ -577,6 +580,8 @@ var failure_reset = func() {
 	setprop("/extra500/instrumentation/IFD-LH/attitude/pitch-error", 0); 
 	setprop("/extra500/instrumentation/IFD-RH/attitude/roll-error", 0); 
 	setprop("/extra500/instrumentation/IFD-LH/attitude/roll-error", 0); 
+	setprop("/instrumentation/tcas/fail", 0 );
+	setprop("/extra500/instrumentation/xpdr/fail", 0 );
 
 	setprop("/extra500/failurescenarios/random_active",0);
 }

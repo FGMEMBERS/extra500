@@ -20,7 +20,7 @@
       Date: 2013-09-16
 
       Last change:      Eric van den Berg
-      Date:             2016-09-15
+      Date:             2016-11-01
 -->
 
 <system name="electrics">
@@ -453,6 +453,7 @@
 			<default value="0"/>
 			<test logic="AND" value="24">
 				/extra500/instrumentation/xpdr/volt gt 10
+				/extra500/instrumentation/xpdr/fail eq 0
 			</test>
 			<output>/systems/electrical/outputs/transponder</output>
 		</switch>
@@ -468,8 +469,9 @@
 
 		<switch name="taspower">
 			<default value="0"/>
-			<test logic="OR" value="1">
+			<test logic="AND" value="1">
 				/extra500/panel/CircuitBreaker/BankB/TAS/voltOut gt 10
+				/instrumentation/tcas/fail eq 0
 			</test>
 			<output>/instrumentation/tcas/serviceable</output>
 		</switch>

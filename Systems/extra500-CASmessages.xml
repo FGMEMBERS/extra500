@@ -19,8 +19,8 @@
       Author: Eric van den Berg
       Date: 2016-10-30
 
-      Last change:      -
-      Date:             -
+      Last change:      Eric van den Berg
+      Date:             2016-11-01
 -->
 
 <system name="Events">
@@ -52,6 +52,58 @@
 				/instrumentation/gps[1]/serviceable eq 0
 			</test>
 			<output>/extra500/instrumentation/IFD/messages/GPS1AND2</output>
+		</switch>
+
+		<switch name="notinGPSS">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/instrumentation/nav-source eq 2
+				/autopilot/mode/nav eq 1
+				/autopilot/mode/gpss eq 0
+			</test>
+			<output>/extra500/instrumentation/IFD/messages/notinGPSS</output>
+		</switch>
+
+		<switch name="noComwAP">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/extra500/instrumentation/IFD-LH/state eq 1
+					/extra500/instrumentation/IFD-RH/state eq 1
+				</test>
+				<test logic="AND">
+					/extra500/instrumentation/Autopilot/state eq 0
+				</test>
+			</test>
+			<output>/extra500/instrumentation/IFD/messages/noComwAP</output>
+		</switch>
+
+		<switch name="noComwKBD">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/extra500/instrumentation/IFD-LH/state eq 1
+					/extra500/instrumentation/IFD-RH/state eq 1
+				</test>
+				<test logic="AND">
+					/extra500/instrumentation/Keypad/state eq 0
+				</test>
+			</test>
+			<output>/extra500/instrumentation/IFD/messages/noComwKBD</output>
+		</switch>
+
+		<switch name="TASfail">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="OR">
+					/extra500/instrumentation/IFD-LH/state eq 1
+					/extra500/instrumentation/IFD-RH/state eq 1
+				</test>
+				<test logic="AND">
+					/instrumentation/tcas/serviceable eq 0
+				</test>
+			</test>
+			<output>/extra500/instrumentation/IFD/messages/TASfail</output>
 		</switch>
 
 	</channel>

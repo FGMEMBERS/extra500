@@ -17,7 +17,7 @@
 #	Date: 	10.10.2015
 #
 #	Last change: Eric van den Berg	
-#	Date:	25.10.2016	
+#	Date:		01.11.2016	
 #
 
 var COLORfd = {};
@@ -247,6 +247,9 @@ var FailureClass = {
 		me._HDG1		= me._svg_avionic.getElementById("LHHDG");
 		me._PITCH1		= me._svg_avionic.getElementById("LHPITCH");
 		me._ROLL1		= me._svg_avionic.getElementById("LHROLL");
+		me._TAS		= me._svg_avionic.getElementById("TAS");
+		me._KBD		= me._svg_avionic.getElementById("KBD").hide();
+		me._XPDR		= me._svg_avionic.getElementById("XPDR");
 
 		me._RHStatic	= me._svg_avionic.getElementById("RHSTATIC");
 		me._RHPitot1	= me._svg_avionic.getElementById("RHPITOT1");
@@ -269,6 +272,9 @@ var FailureClass = {
 		me._Text_HDG1	= me._svg_avionic.getElementById("text_LHHDG").hide();
 		me._Text_PITCH1	= me._svg_avionic.getElementById("text_LHPITCH").hide();
 		me._Text_ROLL1	= me._svg_avionic.getElementById("text_LHROLL").hide();
+		me._Text_TAS	= me._svg_avionic.getElementById("text_TAS").hide();
+		me._Text_KBD	= me._svg_avionic.getElementById("text_KBD").hide();
+		me._Text_XPDR	= me._svg_avionic.getElementById("text_XPDR").hide();
 
 		me._Text_RHStatic	= me._svg_avionic.getElementById("text_RHSTATIC").hide();
 		me._Text_RHPitot1	= me._svg_avionic.getElementById("text_RHPITOT1").hide();
@@ -482,7 +488,9 @@ var FailureClass = {
 		me._HDG2.addEventListener("click",func(){me._onProgessiveClick("RHHeading",0.05,0,30,"/extra500/instrumentation/IFD-RH/heading/error","avionic");});			
 		me._PITCH2.addEventListener("click",func(){me._onProgessiveClick("RHPitch",0.05,0,30,"/extra500/instrumentation/IFD-RH/attitude/pitch-error","avionic");});			
 		me._ROLL2.addEventListener("click",func(){me._onProgessiveClick("RHRoll",0.05,0,30,"/extra500/instrumentation/IFD-RH/attitude/roll-error","avionic");});			
-
+		me._TAS.addEventListener("click",func(){me._onGeneralClick("/instrumentation/tcas/fail",1,"TASFail","avionic");});			
+#		me._KBD.addEventListener("click",func(){me._onGeneralClick("/extra500/instrumentation/Keypad/serviceable",0,"KBDFail","avionic");});			
+		me._XPDR.addEventListener("click",func(){me._onGeneralClick("/extra500/instrumentation/xpdr/fail",1,"XPDRFail","avionic");});			
 
 	},
 	_onRandomClick : func() {
@@ -727,7 +735,6 @@ var FailureClass = {
 		me._genButtons_update("/instrumentation/gps/serviceable",1,me._GPS1,me._Text_GPS1,"gpsOk","/extra500/failurescenarios/avionic");		
 		me._genButtons_update("/instrumentation/nav/serviceable",1,me._NAV1,me._Text_NAV1,"navOk","/extra500/failurescenarios/avionic");		
 		me._genButtons_update("/instrumentation/nav/gs/serviceable",1,me._GS1,me._Text_GS1,"navOk","/extra500/failurescenarios/avionic");			
-		me._genButtons_update("/instrumentation/dme/serviceable",1,me._DME,me._Text_DME,"dmeOk","/extra500/failurescenarios/avionic");		
 		me._genButtons_update("/extra500/instrumentation/IFD-LH/heading/error",0,me._HDG1,me._Text_HDG1,"black","/extra500/failurescenarios/avionic");		
 		me._genButtons_update("/extra500/instrumentation/IFD-LH/attitude/pitch-error",0,me._PITCH1,me._Text_PITCH1,"attOK","/extra500/failurescenarios/avionic");		
 		me._genButtons_update("/extra500/instrumentation/IFD-LH/attitude/roll-error",0,me._ROLL1,me._Text_ROLL1,"attOK","/extra500/failurescenarios/avionic");		
@@ -741,6 +748,11 @@ var FailureClass = {
 		me._genButtons_update("/extra500/instrumentation/IFD-RH/heading/error",0,me._HDG2,me._Text_HDG2,"black","/extra500/failurescenarios/avionic");		
 		me._genButtons_update("/extra500/instrumentation/IFD-RH/attitude/pitch-error",0,me._PITCH2,me._Text_PITCH2,"attOK","/extra500/failurescenarios/avionic");		
 		me._genButtons_update("/extra500/instrumentation/IFD-RH/attitude/roll-error",0,me._ROLL2,me._Text_ROLL2,"attOK","/extra500/failurescenarios/avionic");		
+
+		me._genButtons_update("/instrumentation/dme/serviceable",1,me._DME,me._Text_DME,"dmeOk","/extra500/failurescenarios/avionic");	
+		me._genButtons_update("/instrumentation/tcas/fail",0,me._TAS,me._Text_TAS,"dmeOk","/extra500/failurescenarios/avionic");		
+#		me._genButtons_update("/extra500/instrumentation/Keypad/serviceable",1,me._KBD,me._Text_KBD,"dmeOk","/extra500/failurescenarios/avionic");			
+		me._genButtons_update("/extra500/instrumentation/xpdr/fail",0,me._XPDR,me._Text_XPDR,"dmeOk","/extra500/failurescenarios/avionic");		
 
 		# setting fail indication in menu
 		if (getprop("/extra500/failurescenarios/avionic") > 0) {

@@ -530,6 +530,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<path>/systems/pressurization/cabin-climb-rate-fpm</path>
 		<path>/instrumentation/altimeter-backup/setting-inhg</path>
 		<path>/instrumentation/altimeter-IFD-LH/setting-inhg</path>
+		<path>/instrumentation/altimeter-IFD-RH/setting-inhg</path>
 		<path>/instrumentation/comm/frequencies</path>
 		<path>/instrumentation/comm[1]/frequencies</path>
 		<path>/instrumentation/nav/frequencies</path>
@@ -1398,6 +1399,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 
        <tcas>
 	       <serviceable type="bool">true</serviceable>
+	       <fail type="bool">false</fail>
 	       <inputs>
 			<mode type="int">3</mode>	<!-- 0=off, 1=standby, 2=TA-only, 3=auto(TA/RA) -->
 	       </inputs>
@@ -1890,6 +1892,12 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				<spk type="double">0.2</spk>
 			</volsetting>
 		</Audiopanel>
+		<Autopilot>
+			<state type="bool">false</state>
+		</Autopilot>
+		<Keypad>
+			<state type="bool">false</state>
+		</Keypad>
 		<dmeSwitch>
 			<pressed type="int">0</pressed>
 		</dmeSwitch>
@@ -1942,6 +1950,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		</dmeInd>
 		<xpdr>
 			<volt type="double">0</volt>
+			<fail type="bool">false</fail>
 		</xpdr>
 		<EIP>
 			<state type="bool">false</state>
