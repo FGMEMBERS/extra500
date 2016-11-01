@@ -20,7 +20,7 @@
       Date: 2016-09-16
 
       Last change: Eric van den Berg      
-      Date: 2016-09-25             
+      Date: 2016-11-01             
 -->
 
 <system name="AHRS">
@@ -39,7 +39,7 @@
 						180	181
 						270	269
 						359	360
-						360	1
+						360	361
 						</tableData>
       				</table>
 					<property>/extra500/instrumentation/IFD-LH/heading/error</property>
