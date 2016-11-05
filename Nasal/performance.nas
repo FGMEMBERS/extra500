@@ -70,9 +70,17 @@ var PerfClass = {
 				distance 	: 0	# nm
 			}
 		};
-		
+#		m._listeners = [];
+
 		return m;
 	},
+#	init : func(instance=nil){
+#		if (instance==nil){instance=me;}
+#		me.setListeners(instance);
+#	},
+#	setListeners : func(instance) {
+#		append(me._listeners, setlistener("/sim/time/real/minute",func(){print("ok");},0,0) );
+#	},
 #-------------------------------------------------------------------------
 # DETECT FLIGHT PHASE-----------------------------------------------------
 #

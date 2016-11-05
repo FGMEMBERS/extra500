@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8"
-     inkscape:cx="428.61044"
-     inkscape:cy="1005.184"
+     inkscape:zoom="1.979899"
+     inkscape:cx="263.44586"
+     inkscape:cy="1039.8797"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -54,7 +54,7 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:#e6e6e6;fill-opacity:1;fill-rule:nonzero;stroke:#0040ad;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;opacity:1"
+       style="fill:#e6e6e6;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;opacity:1"
        id="rect3822"
        width="798.57141"
        height="64.285713"
@@ -62,76 +62,88 @@
        y="-14.780666" />
     <text
        xml:space="preserve"
-       style="font-size:24.64098549px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="66.851913"
-       y="25.507067"
+       style="font-size:22.99707031px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="58.958702"
+       y="23.805372"
        id="text5216"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       transform="scale(0.93328538,1.0714836)"><tspan
          sodipodi:role="line"
          id="tspan5218"
-         x="66.851913"
-         y="25.507067">GEAR</tspan></text>
+         x="58.958702"
+         y="23.805372">GEAR</tspan></text>
     <path
        style="fill:#ff0000;fill-opacity:1;stroke:none"
-       d="m 102.14285,17.140284 8.21429,0 0,11.607143 -8.39286,0 z"
+       d="m 86.738024,17.140284 8.21429,0 0,11.607143 -8.39286,0 z"
        id="gearfailind"
        inkscape:connector-curvature="0"
        inkscape:label="#path2994" />
     <path
        style="fill:#009400;fill-opacity:0.19736843;stroke:none"
-       d="M 22.895479,2.4278249 111.38397,2.3114188 c 1.76049,9.4383912 1.6052,18.8767822 0,28.3151732 l -88.571431,0 C 21.458283,21.651657 21.22403,12.332548 22.895479,2.4278249 z"
+       d="M 22.692837,2.4278249 95.944054,2.3114188 c 1.457343,9.4383912 1.328793,18.8767822 0,28.3151732 l -73.319875,0 c -1.12106,-8.974935 -1.314976,-18.294044 0.06866,-28.1987671 z"
        id="field_gear"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
        inkscape:label="#path4706" />
     <text
        xml:space="preserve"
-       style="font-size:24.64098549px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="160.53661"
-       y="25.081837"
+       style="font-size:23.28567505px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="138.61017"
+       y="23.702278"
        id="text5216-9"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       transform="scale(0.94499771,1.0582036)"><tspan
          sodipodi:role="line"
          id="tspan5218-7"
-         x="160.53661"
-         y="25.081837">FUEL</tspan></text>
+         x="138.61017"
+         y="23.702278">FUEL</tspan></text>
     <path
        style="fill:#ff0000;fill-opacity:1;stroke:none"
-       d="m 194.55357,17.157462 8.21429,0 0,11.607143 -8.39286,0 z"
+       d="m 161.21854,17.157462 8.21429,0 0,11.607143 -8.39286,0 z"
        id="fuelfailind"
        inkscape:connector-curvature="0"
        inkscape:label="#path2994" />
     <path
        style="fill:#009400;fill-opacity:0.19736843;stroke:none"
-       d="m 115.31686,2.292271 88.48849,-0.1164061 c 1.76049,9.4383911 1.6052,18.8767821 0,28.3151731 l -88.57143,0 c -1.35425,-8.974935 -1.58851,-18.294044 0.0829,-28.198767 z"
+       d="m 100.68686,2.292271 70.7936,-0.1164061 c 1.40844,9.4383911 1.28421,18.8767821 0,28.3151731 l -70.85995,0 c -1.083448,-8.974935 -1.270864,-18.294044 0.0663,-28.198767 z"
        id="field_fuel"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
        inkscape:label="#path4706" />
     <path
        style="fill:#ff0000;fill-opacity:1;stroke:none"
-       d="m 342.94642,17.198931 8.21429,0 0,11.607143 -8.39286,0 z"
+       d="m 272.99336,17.198931 8.21429,0 0,11.607143 -8.39286,0 z"
        id="controlsfailind"
        inkscape:connector-curvature="0"
        inkscape:label="#path2994" />
     <text
        xml:space="preserve"
-       style="font-size:24.64098549px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="280.68356"
-       y="25.227337"
+       style="font-size:20.59643173px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="268.88232"
+       y="21.08654"
        id="text5216-9-5"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       transform="scale(0.83586073,1.1963716)"><tspan
          sodipodi:role="line"
          id="tspan5218-7-1"
-         x="280.68356"
-         y="25.227337">CONTROLS</tspan></text>
+         x="268.88232"
+         y="21.08654">CONTROLS</tspan></text>
     <path
        style="fill:#009400;fill-opacity:0.19736843;stroke:none"
-       d="m 209.1093,2.1716898 143.53928,-0.116406 c 2.85573,9.4383912 2.60383,18.8767822 0,28.3151732 l -143.67382,0 C 206.778,21.395522 206.398,12.076413 209.10923,2.1716898 z"
+       d="m 175.29708,2.1716898 107.65796,-0.116406 c 2.14186,9.4383912 1.95293,18.8767822 0,28.3151732 l -107.75887,0 c -1.64762,-8.974935 -1.93263,-18.294044 0.10086,-28.1987672 z"
        id="field_controls"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
        inkscape:label="#path4706" />
+    <rect
+       style="fill:#0055d4;fill-opacity:0.19607843;fill-rule:nonzero;stroke:none"
+       id="controls_active"
+       width="107.4924"
+       height="6.7077665"
+       x="175.43214"
+       y="30.332594"
+       inkscape:label="#rect3006"
+       ry="0" />
     <text
        xml:space="preserve"
        style="font-size:23.80834961px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -153,52 +165,89 @@
        inkscape:label="#path4706" />
     <text
        xml:space="preserve"
-       style="font-size:24.64098549px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="402.33057"
-       y="24.915337"
+       style="font-size:20.26127434px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="384.7298"
+       y="20.486862"
        id="text5216-9-5-3"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       transform="scale(0.82225907,1.2161617)"><tspan
          sodipodi:role="line"
          id="tspan5218-7-1-8"
-         x="402.33057"
-         y="24.915337">DE-ICE</tspan></text>
+         x="384.7298"
+         y="20.486862">DE-ICE</tspan></text>
     <path
        style="fill:#ff0000;fill-opacity:1;stroke:none"
-       d="m 448.36152,17.141386 8.21429,0 0,11.607143 -8.39286,0 z"
+       d="m 345.83104,17.141386 8.21429,0 0,11.607143 -8.39286,0 z"
        id="deicefailind"
        inkscape:connector-curvature="0"
        inkscape:label="#path2994" />
     <path
        style="fill:#009400;fill-opacity:0.19736843;stroke:none"
-       d="m 358.53259,2.0307678 99.6002,-0.1164061 c 1.98155,9.4383903 1.80677,18.8767813 0,28.3151723 l -99.69354,0 c -1.52432,-8.974935 -1.78799,-18.294044 0.0934,-28.1987662 z"
+       d="m 286.41302,2.0307678 69.61717,-0.1164061 c 1.38504,9.4383903 1.26287,18.8767813 0,28.3151723 l -69.68241,0 c -1.06545,-8.974935 -1.24975,-18.294044 0.0653,-28.1987662 z"
        id="field_deice"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
        inkscape:label="#path4706" />
     <path
        style="fill:#ff0000;fill-opacity:1;stroke:none"
-       d="m 554.19643,17.272897 8.21429,0 0,11.607143 -8.39286,0 z"
+       d="m 432.97812,17.272897 8.21429,0 0,11.607143 -8.39286,0 z"
        id="avionicfailind"
        inkscape:connector-curvature="0"
        inkscape:label="#path2994" />
     <text
        xml:space="preserve"
-       style="font-size:22.38460732px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="560.64905"
-       y="22.622871"
+       style="font-size:20.52919006px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="476.03726"
+       y="20.747705"
        id="text5216-9-5-3-7"
        sodipodi:linespacing="125%"
-       transform="scale(0.90842989,1.1008004)"><tspan
+       transform="scale(0.8331319,1.2002901)"><tspan
          sodipodi:role="line"
          id="tspan5218-7-1-8-5"
-         x="560.64905"
-         y="22.622871">AVIONIC</tspan></text>
+         x="476.03726"
+         y="20.747705">AVIONIC</tspan></text>
     <path
        style="fill:#009400;fill-opacity:0.19736843;stroke:none"
-       d="m 464.08008,1.892431 99.6002,-0.116406 c 1.98155,9.43839 1.80677,18.876781 0,28.315172 l -99.69354,0 c -1.52432,-8.974935 -1.78799,-18.294044 0.0934,-28.198766 z"
+       d="m 359.82519,1.892431 83.8714,-0.116406 c 1.66863,9.43839 1.52145,18.876781 0,28.315172 l -83.95,0 c -1.2836,-8.974935 -1.50563,-18.294044 0.0786,-28.198766 z"
        id="field_avionic"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
        inkscape:label="#path4706" />
+    <rect
+       style="fill:#0055d4;fill-opacity:0.19607843;fill-rule:nonzero;stroke:none"
+       id="gear_active"
+       width="73.147224"
+       height="6.7077665"
+       x="22.809832"
+       y="30.598141"
+       inkscape:label="#rect3006"
+       ry="0" />
+    <rect
+       style="fill:#0055d4;fill-opacity:0.19607843;fill-rule:nonzero;stroke:none"
+       id="fuel_active"
+       width="70.621841"
+       height="6.7077665"
+       x="100.82331"
+       y="30.541475"
+       inkscape:label="#rect3006"
+       ry="0" />
+    <rect
+       style="fill:#0055d4;fill-opacity:0.19607843;fill-rule:nonzero;stroke:none"
+       id="deice_active"
+       width="69.645142"
+       height="6.7077665"
+       x="286.38834"
+       y="30.233564"
+       inkscape:label="#rect3006"
+       ry="0" />
+    <rect
+       style="fill:#0055d4;fill-opacity:0.19607843;fill-rule:nonzero;stroke:none"
+       id="avionic_active"
+       width="83.848526"
+       height="7.2128429"
+       x="359.78497"
+       y="30.080055"
+       inkscape:label="#rect3006"
+       ry="0" />
   </g>
 </svg>

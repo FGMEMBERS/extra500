@@ -17,7 +17,7 @@
 #	Date: 	10.10.2015
 #
 #	Last change: Eric van den Berg	
-#	Date:		01.11.2016	
+#	Date:		03.11.2016	
 #
 
 var COLORfd = {};
@@ -106,14 +106,19 @@ var FailureClass = {
 	# menu
 		me._gear		= me._svg_menu.getElementById("field_gear");
 		me._gear_ind	= me._svg_menu.getElementById("gearfailind").hide();
+		me._gear_active	= me._svg_menu.getElementById("gear_active").hide();
 		me._fuel		= me._svg_menu.getElementById("field_fuel");
 		me._fuel_ind	= me._svg_menu.getElementById("fuelfailind").hide();
+		me._fuel_active	= me._svg_menu.getElementById("fuel_active").hide();
 		me._controls	= me._svg_menu.getElementById("field_controls");
 		me._controls_ind	= me._svg_menu.getElementById("controlsfailind").hide();
+		me._controls_active 	= me._svg_menu.getElementById("controls_active").hide();
 		me._deice		= me._svg_menu.getElementById("field_deice");
 		me._deice_ind	= me._svg_menu.getElementById("deicefailind").hide();
+		me._deice_active	= me._svg_menu.getElementById("deice_active").hide();
 		me._avionic		= me._svg_menu.getElementById("field_avionic");
 		me._avionic_ind	= me._svg_menu.getElementById("avionicfailind").hide();
+		me._avionic_active	= me._svg_menu.getElementById("avionic_active").hide();
 
 		me._repair		= me._svg_menu.getElementById("field_repairall");
 
@@ -292,27 +297,27 @@ var FailureClass = {
 		me._gearfailnumber = me._root.createChild("text")
       		.setFontSize(10, 0.9)         
       		.setAlignment("center-center") 
-      		.setTranslation(106, 23);
+      		.setTranslation(91, 23);
 
 		me._fuelfailnumber = me._root.createChild("text")
       		.setFontSize(10, 0.9)        
       		.setAlignment("center-center") 
-      		.setTranslation(198, 23);
+      		.setTranslation(165, 23);
 
 		me._controlsfailnumber = me._root.createChild("text")
       		.setFontSize(10, 0.9)  
       		.setAlignment("center-center") 
-      		.setTranslation(346, 23);
+      		.setTranslation(277, 23);
 
 		me._deicefailnumber = me._root.createChild("text")
       		.setFontSize(10, 0.9)  
       		.setAlignment("center-center") 
-      		.setTranslation(452, 23);  
+      		.setTranslation(350, 23);  
 
 		me._avionicfailnumber = me._root.createChild("text")
       		.setFontSize(10, 0.9)  
       		.setAlignment("center-center") 
-      		.setTranslation(558, 23);  
+      		.setTranslation(437, 23);  
 
 	# fuel text elements
 		me._Text_Filter = me._root.createChild("text")
@@ -518,6 +523,12 @@ var FailureClass = {
 		me._svg_avionic.hide();
 		me._svg_welcome.hide();
 
+		me._gear_active.hide();
+		me._fuel_active.hide();
+		me._controls_active.hide();
+		me._deice_active.hide();
+		me._avionic_active.hide();
+
 		me._Text_Filter.hide();
 		me._Text_FFtransd.hide();
 		me._Text_LMFilter.hide();
@@ -540,6 +551,7 @@ var FailureClass = {
 		me._menuReset();
 		me._gear.setColorFill(COLORfd["menuse"]);
 		me._hideAll();
+		me._gear_active.show();
 		me._svg_gear.show();
 		me._gearButtons_update();
 	},
@@ -547,6 +559,7 @@ var FailureClass = {
 		me._menuReset();
 		me._fuel.setColorFill(COLORfd["menuse"]);
 		me._hideAll();
+		me._fuel_active.show();
 		me._svg_fuel.show();
 		me._fuelButtons_update();
 	},
@@ -554,6 +567,7 @@ var FailureClass = {
 		me._menuReset();
 		me._controls.setColorFill(COLORfd["menuse"]);
 		me._hideAll();
+		me._controls_active.show();
 		me._svg_contr.show();
 		me._contrButtons_update();
 	},
@@ -561,6 +575,7 @@ var FailureClass = {
 		me._menuReset();
 		me._deice.setColorFill(COLORfd["menuse"]);
 		me._hideAll();
+		me._deice_active.show();
 		me._svg_deice.show();
 		me._deiceButtons_update();
 	},
@@ -568,6 +583,7 @@ var FailureClass = {
 		me._menuReset();
 		me._avionic.setColorFill(COLORfd["menuse"]);
 		me._hideAll();
+		me._avionic_active.show();
 		me._svg_avionic.show();
 		me._avionicButtons_update();
 	},

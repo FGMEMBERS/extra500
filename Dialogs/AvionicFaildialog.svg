@@ -29,9 +29,9 @@
      inkscape:window-height="836"
      id="namedview8"
      showgrid="false"
-     inkscape:zoom="3.5881184"
-     inkscape:cx="321.30977"
-     inkscape:cy="657.22935"
+     inkscape:zoom="28.704947"
+     inkscape:cx="393.59942"
+     inkscape:cy="1020.6543"
      inkscape:window-x="0"
      inkscape:window-y="21"
      inkscape:window-maximized="1"
@@ -165,9 +165,9 @@
        style="fill:#e6e6e6;fill-opacity:1"
        id="rect3059"
        width="764.50806"
-       height="532.86981"
+       height="532.24274"
        x="0.17426212"
-       y="32.809448" />
+       y="33.43652" />
     <rect
        style="fill:#008686;fill-opacity:0.87058824;fill-rule:nonzero;stroke:#000000;stroke-width:0.99999994;stroke-opacity:1"
        id="rect3438-6"
@@ -197,27 +197,27 @@
        x="20"
        y="33.452339"
        id="rect3659"
-       style="fill:#123b00;fill-opacity:1" />
+       style="fill:#0055d4;fill-opacity:0.19607843" />
     <rect
        width="8.8691587"
        height="416.98117"
        x="705.41656"
        y="33.394772"
        id="rect5872"
-       style="fill:#123b00;fill-opacity:1" />
+       style="fill:#0055d4;fill-opacity:0.19607843" />
     <rect
-       style="fill:#123b00;fill-opacity:1"
+       style="fill:#0055d4;fill-opacity:0.19607843"
        id="rect2987"
-       width="685.76038"
+       width="676.5282"
        height="5.5739522"
-       x="25.533558"
+       x="28.868736"
        y="444.80139" />
     <rect
-       style="fill:#123b00;fill-opacity:1"
+       style="fill:#0055d4;fill-opacity:0.19607843"
        id="rect2985"
-       width="683.57294"
+       width="676.51593"
        height="4.4591618"
-       x="27.720993"
+       x="28.881054"
        y="33.443714" />
     <rect
        style="fill:#1ec6f6;fill-opacity:1;stroke:none"
@@ -688,15 +688,15 @@
     <text
        xml:space="preserve"
        style="font-size:10.10992336px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="342.4534"
-       y="199.82074"
+       x="370.56625"
+       y="183.83876"
        id="text_LHPITCH"
        sodipodi:linespacing="125%"
        transform="scale(0.85589904,1.1683621)"
        inkscape:label="#text4485"><tspan
          sodipodi:role="line"
-         x="342.4534"
-         y="199.82074"
+         x="370.56625"
+         y="183.83876"
          id="tspan4575-7-2-2-3">Pitch misleading</tspan></text>
     <text
        xml:space="preserve"
@@ -864,15 +864,15 @@
     <text
        xml:space="preserve"
        style="font-size:10.10992336px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="445.10184"
-       y="200.41701"
+       x="415.28366"
+       y="162.97202"
        id="text_RHPITCH"
        sodipodi:linespacing="125%"
        transform="scale(0.85589904,1.1683621)"
        inkscape:label="#text4485"><tspan
          sodipodi:role="line"
-         x="445.10184"
-         y="200.41701"
+         x="415.28366"
+         y="162.97202"
          id="tspan4575-7-2-2-3-8">Pitch misleading</tspan></text>
     <text
        xml:space="preserve"
