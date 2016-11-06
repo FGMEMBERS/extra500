@@ -70,38 +70,47 @@ var PerfClass = {
 				distance 	: 0	# nm
 			}
 		};
-#		m._listeners = [];
+		m._listeners = [];
 
 		return m;
 	},
-#	init : func(instance=nil){
-#		if (instance==nil){instance=me;}
-#		me.setListeners(instance);
-#	},
-#	setListeners : func(instance) {
-#		append(me._listeners, setlistener("/sim/time/real/minute",func(){print("ok");},0,0) );
-#	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.setListeners(instance);
+	},
+	setListeners : func(instance) {
+		append(me._listeners, setlistener("/sim/time/real/minute",func(){me._detectFlightPhase();},0,0) );
+	},
 #-------------------------------------------------------------------------
 # DETECT FLIGHT PHASE-----------------------------------------------------
 #
 # detects taxi/startup, climb, cruise or descent
-# sets it every 60 seconds to root/phase: ONLY CALL ONCE!!!
 # input: the altitude and airspeed source properties
 #
-	detectFlightPhase : func(altitude="/instrumentation/altimeter/pressure-alt-ft",airspeed="/instrumentation/airspeed/indicated-airspeed-kt") {
+	initFlightPhase : func(altitude="/position/altitude-ft",airspeed="/velocities/airspeed-kt") {
 		setprop(me._root,"data/altitude-source",altitude);
 		setprop(me._root,"data/airspeed-source",airspeed);
 		setprop(me._root,"data/old-altitude",getprop(altitude));
-		settimer(func(){ me._detectFlightPhase2();},60);
 	},
-	_detectFlightPhase2 : func() {
+	_detectFlightPhase : func() {
 
 		var source_prop_alt = getprop(me._root,"data/altitude-source");
 		var source_prop_speed = getprop(me._root,"data/airspeed-source");
 
+		if (source_prop_alt == nil){ 
+			source_prop_alt = "/position/altitude-ft";
+			setprop(me._root,"data/altitude-source",source_prop_alt);
+		 }
+		if (source_prop_speed == nil){ 
+			source_prop_speed = "/velocities/airspeed-kt"; 
+			setprop(me._root,"data/airspeed-source",source_prop_speed);
+		}
+
 		var old_altitude = getprop(me._root,"data/old-altitude");
 		var new_altitude = getprop(source_prop_alt);
 		setprop(me._root,"data/new-altitude",new_altitude );
+
+		if (old_altitude == nil) {old_altitude = new_altitude;}
 
 		var phase = "off";
 
@@ -119,7 +128,6 @@ var PerfClass = {
 		}
 
 		setprop(me._root,"data/old-altitude",new_altitude);
-		settimer(func(){ me._detectFlightPhase2();},60);	 
 	},
 
 
