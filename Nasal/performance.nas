@@ -17,7 +17,7 @@
 #      Date: 04.04.2016
 #
 #      Last change: Eric van den Berg     
-#      Date: 25.09.2016            
+#      Date: 07.11.2016            
 #
 
 var loadPerformanceTables = func(path=""){
@@ -116,7 +116,9 @@ var PerfClass = {
 
 		var alt_diff = new_altitude-old_altitude;
 		if ( math.abs(alt_diff) < 100 ) {
-			if (getprop(source_prop_speed) < 40) {
+			if (getprop(source_prop_speed) < 1) {
+				setprop(me._root,"phase","off" ); 
+			} else if (getprop(source_prop_speed) < 40) {
 				setprop(me._root,"phase","startupTaxi" ); 
 			} else {
 				setprop(me._root,"phase","cruise" ); 
@@ -197,6 +199,21 @@ var PerfClass = {
 # return code 2: cruise fuel negative (enroute), range cannot be calculated
 
 	trip : func(phase,startupfuel,power,flightMode,currentAlt,cruiseAlt,destAlt,totalFlight,currentGS,currentFF,windSp,TDISA) {
+print(phase);
+#print(startupfuel);
+#print(power);
+#print(flightMode);
+#print(currentAlt);
+#print(cruiseAlt);
+#print(destAlt);
+#print(totalFlight);
+#print(currentGS);
+#print(currentFF);
+#print(windSp);
+#print(TDISA);
+
+		if (phase == nil) {phase = "off";}
+
 		me.startupTaxi(phase,startupfuel);
 		me.climb(phase,currentAlt,cruiseAlt,currentGS,currentFF,windSp,TDISA);
 		me.descent(phase,cruiseAlt,destAlt,currentAlt,currentGS,currentFF,windSp);
@@ -262,7 +279,7 @@ var PerfClass = {
 
 		if ( ( phase!="off" ) and (mode2!="distance" ) and (mode2!="fuel") ) {print("WARNING: when in flight, mode2 must be 'distance' or 'fuel'") } 
 
-		if ( (phase=="off") or (phase=="taxi") or (phase=="climb") or (phase=="descent") ) {
+		if ( (phase=="off") or (phase=="startupTaxi") or (phase=="climb") or (phase=="descent") ) {
 			if (powerMode=="maxpow"){
 				var cruiseSpeed0 = me.matrixinterp(table0,cruiseAlt,ALTITUDE,maxSPEED); 
 				var cruiseSpeed1 = me.matrixinterp(table1,cruiseAlt,ALTITUDE,maxSPEED);
@@ -339,7 +356,7 @@ var PerfClass = {
 		var distanceToAlt = 0;
 
 		if ((currentAlt >= desAlt) or (phase=="cruise") or (phase=="descent") ) {
-			if (currentAlt >= desAlt) {print("this is not a climb!")};
+			if ((currentAlt >= desAlt) and (phase=="climb")) {print("this is not a climb!")};
 			me.data.climb.time = timeToAlt;
 			me.data.climb.fuel = fuelToAlt;
 			me.data.climb.distance = distanceToAlt;
@@ -357,7 +374,7 @@ var PerfClass = {
 
 		var NUMBER=0; var ALTITUDE=1; var SEC=2; var FUELLBS=3; var DIST=4;
 
-		if ( (phase == "off") or (phase == "taxi") ) {
+		if ( (phase == "off") or (phase == "startupTaxi") ) {
 			var timeToAlt0 = me.matrixinterp(table0,desAlt,ALTITUDE,SEC) - me.matrixinterp(table0,currentAlt,ALTITUDE,SEC);
 			var timeToAlt1 = me.matrixinterp(table1,desAlt,ALTITUDE,SEC) - me.matrixinterp(table1,currentAlt,ALTITUDE,SEC);
 			timeToAlt = me.lininterp(TDISA,performanceTable.legend[index0][0],performanceTable.legend[index1][0],timeToAlt0,timeToAlt1);
@@ -412,7 +429,7 @@ var PerfClass = {
 			return
 		}
 
-		if (( (phase=="off") or (phase=="taxi") or (phase=="climb") ) and (cruiseAlt <= desAlt)) {
+		if (( (phase=="off") or (phase=="startupTaxi") or (phase=="climb") ) and (cruiseAlt <= desAlt)) {
 			print("Cruise altitude above destination airport!");
 			me.data.descent.time = timeToDes;
 			me.data.descent.fuel = fuelToDes;
@@ -422,7 +439,7 @@ var PerfClass = {
 
 		var NUMBER=0; var ALTITUDE=1; var SECONDS=2; var FUELLBS=3; var DIST=4;
 
-		if ( (phase == "off") or (phase == "taxi") or (phase == "climb") ) {
+		if ( (phase == "off") or (phase == "startupTaxi") or (phase == "climb") ) {
 			var timeToDes = me.matrixinterp(performanceTable.descent,cruiseAlt,ALTITUDE,SECONDS) - me.matrixinterp(performanceTable.descent,desAlt,ALTITUDE,SECONDS);
 			var fuelToDes = me.matrixinterp(performanceTable.descent,cruiseAlt,ALTITUDE,FUELLBS) - me.matrixinterp(performanceTable.descent,desAlt,ALTITUDE,FUELLBS);
 			var distanceToDes = me.matrixinterp(performanceTable.descent,cruiseAlt,ALTITUDE,DIST) - me.matrixinterp(performanceTable.descent,desAlt,ALTITUDE,DIST) + windSp * timeToDes / 3600;
@@ -548,4 +565,5 @@ var PerfClass = {
 };
 
 var perf = PerfClass.new("/extra500/perf","performance");
+var perfIFD = PerfClass.new("/extra500/instrumentation/IFD/perf","performanceIFD");
 

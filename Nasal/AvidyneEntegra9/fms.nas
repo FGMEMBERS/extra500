@@ -17,7 +17,7 @@
 #      Date: 07.06.2014
 #
 #	Last change:	Eric van den Berg
-#	Date:		18.05.15
+#	Date:		07.11.16
 #
 
 # internal flightplan
@@ -660,34 +660,51 @@ var FlightManagementSystemClass = {
 		me._constraint.VSR.visible	= 0;
 		
 		var gs 			= getprop("/velocities/groundspeed-kt");
-		me._fuelLiter		= getprop("consumables/fuel/total-fuel-m3") * 1000 - 28;
-		me._fuelFlow		= getprop("fdm/jsbsim/aircraft/engine/FF-l_h");
+		me._fuelLiter		= getprop("/consumables/fuel/total-fuel-m3") * 1000 - 28;
+		me._fuellbs			= getprop("/fdm/jsbsim/propulsion/total-fuel-lbs");
+		me._fuelFlow		= getprop("/fdm/jsbsim/aircraft/engine/FF-l_h");
+		me._fuelFlowlbsh		= getprop("/fdm/jsbsim/aircraft/engine/FF-lbs_h");
 		var fuelFlowLpSec 	= me._fuelFlow / 3600.0;
+		var phase 			= getprop("/extra500/instrumentation/IFD/perf/phase");
+		var currentAlt 		= getprop("/instrumentation/altimeter-IFD-LH/indicated-altitude-ft");
+		var altBug 			= getprop("/autopilot/settings/tgt-altitude-ft");
+		var distance 		= getprop("/autopilot/route-manager/wp/dist");
+		var destAlt 		= getprop("/autopilot/route-manager/destination/field-elevation-ft");
 		
 		# Fuel calculation
 # FIXME: the fuel remaining (and subsequent range calculation is dependent on the initial fuel volume (inputted by pilot) and integrated fuel flow.
 # The actual fuel quantity measurement (by sensors in tank) is not available to IFD-s
+
+		# for max range calculations (green range circle)
+		extra500.perfIFD.trip(phase,30,"maxpow","fuel",currentAlt,altBug,destAlt,me._fuellbs,gs,me._fuelFlowlbsh,0,0);
+		extra500.perfIFD.publish();
+
 		if (extra500.engine.nIsRunning.getValue()){
 			me._engineRunTime += 1;
 			me._node.EngineRunTime.setValue(me._engineRunTime);
 			
-			if (gs > 15 and fuelFlowLpSec > 0){
-				me._fuelTime = me._fuelLiter / fuelFlowLpSec;
-				me._fuelRange = gs * me._fuelTime / 3600.0;
-				me._fuelRangeReserve = gs * me._fuelTimeReserve / 3600.0;
+#			if (gs > 15 and fuelFlowLpSec > 0){
 
-			}else{
-				me._fuelTime = 0;
-				me._fuelRange = 0;
-				me._fuelRangeReserve = 0;
-			}
 
-		}else{
-			me._fuelTime = 0;
-			me._fuelRange = 0;
-			me._fuelRangeReserve = 0;
+#				me._fuelTime = me._fuelLiter / fuelFlowLpSec;
+#				me._fuelRange = gs * me._fuelTime / 3600.0;
+#				me._fuelRangeReserve = gs * me._fuelTimeReserve / 3600.0;
+
+#			}else{
+#				me._fuelTime = 0;
+#				me._fuelRange = 0;
+#				me._fuelRangeReserve = 0;
+#			}
+
+#		}else{
+#			me._fuelTime = 0;
+#			me._fuelRange = 0;
+#			me._fuelRangeReserve = 0;
 		}
-		
+		me._fuelTime = extra500.perfIFD.data.trip.time;
+		me._fuelRange = extra500.perfIFD.data.trip.distance;
+		me._fuelRangeReserve = 0;
+
 		me._node.FuelTime.setValue(me._fuelTime);
 		me._node.FuelRange.setValue(me._fuelRange);
 		me._node.FuelRangeReserve.setValue(me._fuelRangeReserve);
@@ -723,10 +740,10 @@ var FlightManagementSystemClass = {
 #				var fuelFlowGalUSpSec 	= extra500.fuelSystem._nFuelFlowGalUSpSec.getValue();
 				
 				
-				var currentAlt 		= getprop("/instrumentation/altimeter-IFD-LH/indicated-altitude-ft");
-				var altBug 		= getprop("/autopilot/settings/tgt-altitude-ft");
+#				var currentAlt 		= getprop("/instrumentation/altimeter-IFD-LH/indicated-altitude-ft");
+#				var altBug 		= getprop("/autopilot/settings/tgt-altitude-ft");
 				
-				var distance 		= getprop("/autopilot/route-manager/wp/dist");
+#				var distance 		= getprop("/autopilot/route-manager/wp/dist");
 				var distanceToGo 	= 0;
 				var ete 		= 0;
 				var eta 		= 0;

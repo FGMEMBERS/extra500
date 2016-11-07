@@ -83,6 +83,7 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		extra500.environment.init();
 
 		extra500.perf.init();
+		extra500.perfIFD.init();
 		
 #		extra500.weatherService.init();
 #		extra500.weatherService.start();
