@@ -143,6 +143,10 @@ var PerfClass = {
 		var flightFuel = me.data.startupTaxi.fuel + me.data.cruise.fuel 		+ me.data.climb.fuel + me.data.descent.fuel; #lbs
 		var flightDist = me.data.cruise.distance 	+ me.data.climb.distance 	+ me.data.descent.distance; # nm
 
+		if (flightTime < 0) {flightTime=0;}
+		if (flightFuel < 0) {flightFuel=0;}
+		if (flightDist < 0) {flightDist=0;}
+
 		me.data.trip.time 	= flightTime;
 		me.data.trip.fuel 	= flightFuel;
 		me.data.trip.distance 	= flightDist;
@@ -223,10 +227,17 @@ print(phase);
 
 		if ( ( cruiseFlight < 0 ) and ( phase == "off") ) {
 			print("cruise distance/time/fuel negative, reduce cruise altitude");
+			me.data.trip.distance = 0;
+			me.data.trip.time = 0;
+			me.data.trip.fuel = 0;
+
 			return 1
 		}
 
 		if ( ( cruiseFlight < 0 ) and ( phase != "off") and ( flightMode == "fuel" ) ) { # not enough fuel to finish the trip
+			me.data.trip.distance = 0;
+			me.data.trip.time = 0;
+			me.data.trip.fuel = 0;
 			return 2
 		}
 
@@ -237,7 +248,7 @@ print(phase);
 			power = "minpow";
 		}
 
-		if ( phase == "cruise" ) { cruiseAlt = currentAlt; }
+		if ( (phase == "cruise") or (currentAlt > cruiseAlt) ) { cruiseAlt = currentAlt; }
 
 		me.cruise(phase,power,flightMode,cruiseFlight,cruiseAlt,currentGS,currentFF,windSp,TDISA);
 		me.updateTrip();

@@ -675,9 +675,10 @@ var FlightManagementSystemClass = {
 # FIXME: the fuel remaining (and subsequent range calculation is dependent on the initial fuel volume (inputted by pilot) and integrated fuel flow.
 # The actual fuel quantity measurement (by sensors in tank) is not available to IFD-s
 
-		# for max range calculations (green range circle)
-		extra500.perfIFD.trip(phase,30,"maxpow","fuel",currentAlt,altBug,destAlt,me._fuellbs,gs,me._fuelFlowlbsh,0,0);
-		extra500.perfIFD.publish();
+		# for max range calculations (green range circle), the -50.2 is the unusable fuel as the total fuel is total capacity
+#TODO: get the current head/tail wind in here!
+		extra500.perfIFD.trip(phase,30,"maxpow","fuel",currentAlt,altBug,destAlt,me._fuellbs-50.2,gs,me._fuelFlowlbsh,0,0);
+		extra500.perfIFD.publish(); # only for debug, remove later
 
 		if (extra500.engine.nIsRunning.getValue()){
 			me._engineRunTime += 1;
