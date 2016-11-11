@@ -17,7 +17,7 @@
 #      Date: 07.06.2014
 #
 #	Last change:	Eric van den Berg
-#	Date:		07.11.16
+#	Date:		11.11.16
 #
 
 # internal flightplan
@@ -675,7 +675,7 @@ var FlightManagementSystemClass = {
 # FIXME: the fuel remaining (and subsequent range calculation is dependent on the initial fuel volume (inputted by pilot) and integrated fuel flow.
 # The actual fuel quantity measurement (by sensors in tank) is not available to IFD-s
 
-		# for max range calculations (green range circle), the -50.2 is the unusable fuel as the total fuel is total capacity
+		# for max range calculations (green range circle), the -50.2 (lbs) is the unusable fuel as the total fuel is total capacity
 #TODO: get the current head/tail wind in here!
 		extra500.perfIFD.trip(phase,30,"maxpow","fuel",currentAlt,altBug,destAlt,me._fuellbs-50.2,gs,me._fuelFlowlbsh,0,0);
 		extra500.perfIFD.publish(); # only for debug, remove later
@@ -683,25 +683,8 @@ var FlightManagementSystemClass = {
 		if (extra500.engine.nIsRunning.getValue()){
 			me._engineRunTime += 1;
 			me._node.EngineRunTime.setValue(me._engineRunTime);
-			
-#			if (gs > 15 and fuelFlowLpSec > 0){
-
-
-#				me._fuelTime = me._fuelLiter / fuelFlowLpSec;
-#				me._fuelRange = gs * me._fuelTime / 3600.0;
-#				me._fuelRangeReserve = gs * me._fuelTimeReserve / 3600.0;
-
-#			}else{
-#				me._fuelTime = 0;
-#				me._fuelRange = 0;
-#				me._fuelRangeReserve = 0;
-#			}
-
-#		}else{
-#			me._fuelTime = 0;
-#			me._fuelRange = 0;
-#			me._fuelRangeReserve = 0;
 		}
+
 		me._fuelTime = extra500.perfIFD.data.trip.time;
 		me._fuelRange = extra500.perfIFD.data.trip.distance;
 		me._fuelRangeReserve = 0;
@@ -721,7 +704,16 @@ var FlightManagementSystemClass = {
 				me._flightPlan.destination.bearingDistance 	= result[1];
 			}
 		
-						
+			# for trip ete,eta and fuel remaining
+			var time 				= systime() + getprop("/sim/time/warp");
+			var distanceToDest 		= getprop("/autopilot/route-manager/distance-remaining-nm");				
+			me._flightPlan.distanceToGo	= distanceToDest;
+			extra500.perfIFD.trip(phase,30,"maxpow","distance",currentAlt,altBug,destAlt,distanceToDest,gs,me._fuelFlowlbsh,0,0);
+			me._flightPlan.ete 		= extra500.perfIFD.data.trip.time;
+			me._flightPlan.eta		= time + me._flightPlan.ete;
+			me._flightPlan.fuelAt		= (me._fuellbs - 50.2 - extra500.perfIFD.data.trip.fuel)* global.CONST.JETA_LB2L;				
+
+		
 			if(gs > 15){
 				
 				me._dynamicPoint.TOC.distance	= 0;
@@ -736,7 +728,7 @@ var FlightManagementSystemClass = {
 # 				dP.bulk("FlightManagementSystemClass.calcRoute() ... ");
 				var gsSec = gs / 3600;
 				var gsMin = gs / 60;
-				var time 		= systime() + getprop("/sim/time/warp");
+#				var time 		= systime() + getprop("/sim/time/warp");
 #				var fuelGalUs 		= getprop("/consumables/fuel/total-fuel-gal_us");
 #				var fuelFlowGalUSpSec 	= extra500.fuelSystem._nFuelFlowGalUSpSec.getValue();
 				
@@ -799,11 +791,11 @@ var FlightManagementSystemClass = {
 					}
 						
 				}
-				
-				me._flightPlan.distanceToGo	= distanceToGo;
-				me._flightPlan.ete		= distanceToGo / gsSec ;
-				me._flightPlan.eta		= time + (distanceToGo / gsSec);
-				me._flightPlan.fuelAt		= me._fuelLiter;
+#				me._flightPlan.distanceToGo	= distanceToGo;
+#				me._flightPlan.ete		= distanceToGo / gsSec ;
+#				me._flightPlan.eta		= time + me._flightPlan.ete;
+#				me._flightPlan.fuelAt		= me._fuelLiter;
+
 							
 				
 				if(me._constraint.VSR.distance == 0){
