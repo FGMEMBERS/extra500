@@ -17,7 +17,7 @@
 #      Date: 07.06.2014
 #
 #	Last change:	Eric van den Berg
-#	Date:		11.11.16
+#	Date:		27.11.16
 #
 
 # internal flightplan
@@ -177,6 +177,7 @@ var FlightManagementSystemClass = {
 			FlyVector	: props.globals.initNode("/autopilot/settings/fly-vector",0,"BOOL"),
 			CurrentWp	: props.globals.initNode("/autopilot/route-manager/current-wp",0,"INT"),
 			vsrRate		: props.globals.initNode("/instrumentation/fms[0]/vsr",0,"INT"),
+			vsrVisible	: props.globals.initNode("/instrumentation/fms[0]/vsrVisible",0,"INT"),
 			
 			RouteManagerSelection		: props.globals.initNode("/sim/gui/dialogs/route-manager/selection",-1,"INT"),
 			
@@ -678,7 +679,7 @@ var FlightManagementSystemClass = {
 		# for max range calculations (green range circle), the -50.2 (lbs) is the unusable fuel as the total fuel is total capacity
 #TODO: get the current head/tail wind in here!
 		extra500.perfIFD.trip(phase,30,"maxpow","fuel",currentAlt,altBug,destAlt,me._fuellbs-50.2,gs,me._fuelFlowlbsh,0,0);
-		extra500.perfIFD.publish(); # only for debug, remove later
+#		extra500.perfIFD.publish(); # only for debug, remove later
 
 		if (extra500.engine.nIsRunning.getValue()){
 			me._engineRunTime += 1;
@@ -709,25 +710,35 @@ var FlightManagementSystemClass = {
 			var distanceToDest 		= getprop("/autopilot/route-manager/distance-remaining-nm");				
 			me._flightPlan.distanceToGo	= distanceToDest;
 			extra500.perfIFD.trip(phase,30,"maxpow","distance",currentAlt,altBug,destAlt,distanceToDest,gs,me._fuelFlowlbsh,0,0);
+extra500.perfIFD.publish(); # debug only, remove later
 			me._flightPlan.ete 		= extra500.perfIFD.data.trip.time;
 			me._flightPlan.eta		= time + me._flightPlan.ete;
 			me._flightPlan.fuelAt		= (me._fuellbs - 50.2 - extra500.perfIFD.data.trip.fuel)* global.CONST.JETA_LB2L;				
 
+			# fuel and time to each wp in flightplan
+			for (var i = 0 ; i < me._flightPlan.planSize ; i+=1){
+				if (i >= me._flightPlan.currentWpIndex){
+					me._flightPlan.wp[i].distanceTo = getprop("/autopilot/route-manager/route/wp["~i~"]/distance-along-route-nm") - getprop("/autopilot/route-manager/total-distance") + distanceToDest;
+					extra500.perfIFD.waypoint(me._flightPlan.wp[i].distanceTo,phase,currentAlt,altBug,gs,me._fuelFlowlbsh,0,0);
+					me._flightPlan.wp[i].ete	= extra500.perfIFD.data.waypoint.time;
+					me._flightPlan.wp[i].eta 	= time + me._flightPlan.wp[i].ete;
+					me._flightPlan.wp[i].fuelAt 	= (me._fuellbs-50.2 - extra500.perfIFD.data.waypoint.fuel)* global.CONST.JETA_LB2L;
+				}
+			}
+
 		
 			if(gs > 15){
-				
+
 				me._dynamicPoint.TOC.distance	= 0;
-				
-				me._dynamicPoint.TOC.distance	= 0;
-				me._dynamicPoint.TOC.rate	= getprop("/instrumentation/ivsi-IFD-LH/indicated-speed-fpm");
+#				me._dynamicPoint.TOC.rate	= getprop("/instrumentation/ivsi-IFD-LH/indicated-speed-fpm");
 				
 				me._dynamicPoint.RTA.distance	= 0;
-				me._dynamicPoint.RTA.rate	= me._dynamicPoint.TOC.rate;
+#				me._dynamicPoint.RTA.rate	= me._dynamicPoint.TOC.rate;
 							
 				
 # 				dP.bulk("FlightManagementSystemClass.calcRoute() ... ");
-				var gsSec = gs / 3600;
-				var gsMin = gs / 60;
+#				var gsSec = gs / 3600;
+#				var gsMin = gs / 60;
 #				var time 		= systime() + getprop("/sim/time/warp");
 #				var fuelGalUs 		= getprop("/consumables/fuel/total-fuel-gal_us");
 #				var fuelFlowGalUSpSec 	= extra500.fuelSystem._nFuelFlowGalUSpSec.getValue();
@@ -738,37 +749,37 @@ var FlightManagementSystemClass = {
 				
 #				var distance 		= getprop("/autopilot/route-manager/wp/dist");
 				var distanceToGo 	= 0;
-				var ete 		= 0;
-				var eta 		= 0;
-				var fuelAt 		= 0;
-				var fuelLiter 		= me._fuelLiter;
+#				var ete 		= 0;
+#				var eta 		= 0;
+#				var fuelAt 		= 0;
+#				var fuelLiter 	= me._fuelLiter;
 				
-				me._constraint.VSR.alt = getprop("/autopilot/route-manager/destination/field-elevation-ft");
+				me._constraint.VSR.alt = destAlt;
 				
 				for (var i = 0 ; i < me._flightPlan.planSize ; i+=1){
 # 					
 					if (i >= me._flightPlan.currentWpIndex){
 					
-						if(i == me._flightPlan.currentWpIndex){
-							me._flightPlan.wp[i].distanceTo 	= distance;
-						}else{
-							me._flightPlan.wp[i].distanceTo 	= me._flightPlan.wp[i].distance;
-						}
+			#			if(i == me._flightPlan.currentWpIndex){
+			#				me._flightPlan.wp[i].distanceTo 	= distance;
+			#			}else{
+			#				me._flightPlan.wp[i].distanceTo 	= me._flightPlan.wp[i].distance;
+			#			}
 						
-						distanceToGo 	+= me._flightPlan.wp[i].distanceTo;
-						ete 		 = me._flightPlan.wp[i].distanceTo / gsSec ;
-						eta 		 = time + (distanceToGo / gsSec);
-						fuelAt 		 = (fuelLiter -= fuelFlowLpSec * ete);
+#						distanceToGo 	+= me._flightPlan.wp[i].distanceTo;
+#						ete 		 = me._flightPlan.wp[i].distanceTo / gsSec ;
+#						eta 		 = time + (distanceToGo / gsSec);
+#						fuelAt 		 = (fuelLiter -= fuelFlowLpSec * ete);
 						
 						
-						me._flightPlan.wp[i].ete	= ete;
-						me._flightPlan.wp[i].eta 	= eta;
-						me._flightPlan.wp[i].fuelAt 	= fuelAt;
+#						me._flightPlan.wp[i].ete	= ete;
+#						me._flightPlan.wp[i].eta 	= eta;
+#						me._flightPlan.wp[i].fuelAt 	= fuelAt;
 						
 						
 						if ((me._flightPlan.wp[i].constraint.alt.type != nil) and ( me._constraint.VSR.distance == 0 ) ) {
 							me._constraint.VSR.alt = me._flightPlan.wp[i].constraint.alt.value;
-							me._constraint.VSR.distance = distanceToGo;
+							me._constraint.VSR.distance = me._flightPlan.wp[i].distanceTo ;
 							me._constraint.VSR.wptIndex = i;
 							
 							if (me._flightPlan.wp[i].constraint.before.type != nil){
@@ -781,12 +792,12 @@ var FlightManagementSystemClass = {
 						
 					
 						
-					}else{
+#					}else{
 						
-						me._flightPlan.wp[i].distanceTo 	= 0;
-						me._flightPlan.wp[i].ete		= 0;
-						me._flightPlan.wp[i].eta 	= 0;
-						me._flightPlan.wp[i].fuelAt 	= 0;
+#						me._flightPlan.wp[i].distanceTo 	= 0;
+#						me._flightPlan.wp[i].ete		= 0;
+#						me._flightPlan.wp[i].eta 	= 0;
+#						me._flightPlan.wp[i].fuelAt 	= 0;
 						
 					}
 						
@@ -800,10 +811,10 @@ var FlightManagementSystemClass = {
 				
 				if(me._constraint.VSR.distance == 0){
 					me._constraint.VSR.wptIndex = me._flightPlan.planSize-1;
-					me._constraint.VSR.distance = distanceToGo;
+					me._constraint.VSR.distance = me._flightPlan.wp[me._constraint.VSR.wptIndex].distanceTo ;
 				}
 				var altToGo = (me._constraint.VSR.alt - currentAlt);
-				
+						
 				#			ft	/	min
 				if(altToGo <= -100 or altToGo >= 100){
 					me._constraint.VSR.rate =  altToGo / ((me._constraint.VSR.distance / gs) * 60 );
@@ -811,30 +822,48 @@ var FlightManagementSystemClass = {
 					me._constraint.VSR.rate = global.clamp(me._constraint.VSR.rate,-1600,1600);
 					me._constraint.VSR.visible = 1;
 				}
-				
+
 				var legMode = (me._obsMode == 0) and (me._directTo == 0) and (me._flyVectors == 0);
 				
 				# me._dynamicPoint.TOD 
 				if(altToGo <= -150){
-					me._dynamicPoint.TOD.distance = (altToGo / me._dynamicPoint.TOD.rate) * gsMin ;
+					extra500.perfIFD.descent(phase,altBug,me._constraint.VSR.alt,currentAlt,gs,currentFF=0,windSp=0); # calculating distance to of the descent to the waypoint (with altitude restraint)
+					me._dynamicPoint.TOD.distance = extra500.perfIFD.data.descent.distance ;
+#					me._dynamicPoint.TOD.distance = (altToGo / me._dynamicPoint.TOD.rate) * gsMin ;
 					me._dynamicPoint.TOD.position = me._nasalFlightPlan.pathGeod(me._constraint.VSR.wptIndex, -me._dynamicPoint.TOD.distance);
 					me._dynamicPoint.TOD.visible = legMode;
 				}
 				
 				# me._dynamicPoint.TOC 
-				if (me._dynamicPoint.TOC.rate > 0 and altToGo >= 150){
-					me._dynamicPoint.TOC.distance = me._constraint.VSR.distance - (altToGo / me._dynamicPoint.TOC.rate) * gsMin ;
+#				if (me._dynamicPoint.TOC.rate > 0 and altToGo >= 150){
+				if (altToGo >= 150){
+					extra500.perfIFD.climb(phase,currentAlt,me._constraint.VSR.alt,gs,currentFF=0,windSp=0,TDISA=0); # calculating distance to of the climb to the waypoint (with altitude restraint)
+					me._dynamicPoint.TOC.distance = extra500.perfIFD.data.climb.distance ;
+#					me._dynamicPoint.TOC.distance = me._constraint.VSR.distance - (altToGo / me._dynamicPoint.TOC.rate) * gsMin ;
 					me._dynamicPoint.TOC.position = me._nasalFlightPlan.pathGeod(me._constraint.VSR.wptIndex, -me._dynamicPoint.TOC.distance);
-					me._dynamicPoint.TOC.visible = legMode;
+					me._dynamicPoint.TOC.visible = legMode and (me._dynamicPoint.TOC.distance < me._flightPlan.wp[me._constraint.VSR.wptIndex].distanceTo);
 				}
 				
 				# me._dynamicPoint.RTA Range to Altitude
 				var difAltBug = altBug - currentAlt;
-				if ((me._dynamicPoint.RTA.rate <= -100 or me._dynamicPoint.RTA.rate >= 100) and (difAltBug >= 150 or difAltBug <= -150)){
-					me._dynamicPoint.RTA.distance = distanceToGo - math.abs((difAltBug / me._dynamicPoint.RTA.rate) * gsMin) ;
+				if ( ( phase == "climb") and (difAltBug >= 150) ) {
+					me._dynamicPoint.RTA.distance = distanceToDest - extra500.perfIFD.data.trip.distToAlt ;
 					me._dynamicPoint.RTA.position = me._nasalFlightPlan.pathGeod(me._flightPlan.planSize-1, -me._dynamicPoint.RTA.distance);
 					me._dynamicPoint.RTA.visible = legMode and (me._dynamicPoint.RTA.distance > 0);
-				}
+				} else if (	( phase == "descent") and (difAltBug <= -150) ) {
+					extra500.perfIFD.descent(phase,0,altBug,currentAlt,gs,currentFF=0,windSp=0); # calculating distance to where in the descent the alt bug altitude is reached
+					me._dynamicPoint.RTA.distance = distanceToDest - extra500.perfIFD.data.descent.distance ; # distance calculated backwards from end of flightplan
+					me._dynamicPoint.RTA.position = me._nasalFlightPlan.pathGeod(me._flightPlan.planSize-1, -me._dynamicPoint.RTA.distance);
+					me._dynamicPoint.RTA.visible = legMode and (me._dynamicPoint.RTA.distance > 0);
+				}	
+
+#				var difAltBug = altBug - currentAlt;
+#				if ((me._dynamicPoint.RTA.rate <= -100 or me._dynamicPoint.RTA.rate >= 100) and (difAltBug >= 150 or difAltBug <= -150)){
+#					me._dynamicPoint.RTA.distance = distanceToDest - extra500.perfIFD.data.trip.distToAlt ;
+#					me._dynamicPoint.RTA.distance = distanceToDest - math.abs((difAltBug / me._dynamicPoint.RTA.rate) * gsMin) ;
+#					me._dynamicPoint.RTA.position = me._nasalFlightPlan.pathGeod(me._flightPlan.planSize-1, -me._dynamicPoint.RTA.distance);
+#					me._dynamicPoint.RTA.visible = legMode and (me._dynamicPoint.RTA.distance > 0);
+#				}
 				
 				
 				me._flightPlan.isUpdated = 1;
@@ -846,7 +875,8 @@ var FlightManagementSystemClass = {
 			}
 			
 		}
-		
+
+		me._node.vsrVisible.setValue(me._constraint.VSR.visible);	
 		me._node.vsrRate.setValue(me._constraint.VSR.rate);
 		
 		me._signal.fplReady.setValue(me._flightPlan.isReady);

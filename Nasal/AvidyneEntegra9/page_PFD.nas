@@ -17,7 +17,7 @@
 #      Date: Jul 20 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             31.10.16
+#      Date:             27.11.16
 #
 
 
@@ -296,6 +296,7 @@ var VerticalSpeedWidget = {
 		append(me._listeners, setlistener("/autopilot/settings/vertical-speed-fpm",func(n){me._onBugChange(n)},1,0));	
 		append(me._listeners, setlistener(fms._node.vsrRate,func(n){me._onVsrChange(n)},1,0));
 		append(me._listeners, setlistener(me._ptree.ready,func(n){me._onReadyChange(n)},1,0));
+		append(me._listeners, setlistener(fms._node.vsrVisible,func(n){me._onVsrVisibleChange(n)},1,0));
 		
 	},
 	_onReadyChange : func(n){
@@ -323,9 +324,9 @@ var VerticalSpeedWidget = {
 		
 	},
 	_onVsrChange : func(n){
-		if(fms._constraint.VSR.rate != 0){
-			me._can.BugFMS.setRotation(me._rotateScale(fms._constraint.VSR.rate));
-		}
+		me._can.BugFMS.setRotation(me._rotateScale(fms._constraint.VSR.rate));
+	},
+	_onVsrVisibleChange : func(n){
 		me._can.BugFMS.setVisible(fms._constraint.VSR.visible);
 	},
 	_onFplReadyChange : func(n){
