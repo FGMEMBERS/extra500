@@ -17,7 +17,7 @@
 #      Date: 04.04.2016
 #
 #      Last change: Eric van den Berg     
-#      Date: 26.11.2016            
+#      Date: 02.12.2016            
 #
 
 var loadPerformanceTables = func(path=""){
@@ -435,7 +435,7 @@ var PerfClass = {
 		var distanceToAlt = 0;
 
 		if ((currentAlt >= desAlt) or (phase=="cruise") or (phase=="descent") ) {
-			if ((currentAlt >= desAlt) and (phase=="climb")) {print("this is not a climb!")};
+#			if ((currentAlt >= desAlt) and (phase=="climb")) {print("this is not a climb!")};
 			me.data.climb.time = timeToAlt;
 			me.data.climb.fuel = fuelToAlt;
 			me.data.climb.distance = distanceToAlt;
@@ -501,7 +501,7 @@ var PerfClass = {
 		var distanceToDes = 0;
 
 		if ( ( (phase=="descent") or (phase=="cruise") ) and (currentAlt <= desAlt)) {
-			print("This is not a descent!");
+#			print("This is not a descent!");
 			me.data.descent.time = timeToDes;
 			me.data.descent.fuel = fuelToDes;
 			me.data.descent.distance = distanceToDes;
