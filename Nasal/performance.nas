@@ -17,7 +17,7 @@
 #      Date: 04.04.2016
 #
 #      Last change: Eric van den Berg     
-#      Date: 02.12.2016            
+#      Date: 04.12.2016            
 #
 
 var loadPerformanceTables = func(path=""){
@@ -286,9 +286,9 @@ var PerfClass = {
 		} else if (distance < me.data.trip.distToTOD) {			# assumed phase is off\starupTaxi, climb or cruise
 #			print("waypoint is in cruise segment");
 			var cruiseDist = distance - me.data.trip.distToAlt;
-			me.cruise(phase,"maxpow","distance",cruiseDist,cruiseAlt,currentGS,currentFF,windSp,TDISA);
-			fuelToWaypoint = me.data.startupTaxi.fuel + me.data.climb.fuel + me.data.cruise.fuel; #lbs
-			timeToWaypoint = me.data.climb.time + me.data.cruise.time; # sec
+			var cruiseFraction = (distance - me.data.trip.distToAlt) / math.max(me.data.cruise.distance,0.01);
+			fuelToWaypoint = me.data.startupTaxi.fuel + me.data.climb.fuel + cruiseFraction*me.data.cruise.fuel; #lbs
+			timeToWaypoint = me.data.climb.time + cruiseFraction*me.data.cruise.time; # sec
 
 		} else if (distance < me.data.trip.distance) {
 #			print("waypoint is in descent segment");
@@ -300,6 +300,7 @@ var PerfClass = {
 			} else {
 				Alt = cruiseAlt;
 			}
+
 			var distTo0 = me.matrixinterp(performanceTable.descent,Alt,ALTITUDE,DIST); # distance to SL from current (or cruise ) altitude
 			var wpDistTo0 = distTo0 - distDescent;
 			fuelToWaypoint = me.matrixinterp(performanceTable.descent,Alt,ALTITUDE,FUELLBS) - me.matrixinterp(performanceTable.descent,wpDistTo0,DIST,FUELLBS);
