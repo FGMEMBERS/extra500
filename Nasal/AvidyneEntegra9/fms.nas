@@ -801,14 +801,14 @@ var FlightManagementSystemClass = {
 					me._dynamicPoint.RTA.visible = legMode and (me._dynamicPoint.RTA.distance > 0);
 				}	
 				
-				me._flightPlan.isUpdated = 1;
+#				me._flightPlan.isUpdated = 1;
 				
 				#for debug deploy to property-tree not needed
 				#me._nFlightPan.setValues(me._flightPlan);
 			}else{
 				
 			}
-			
+			me._flightPlan.isUpdated = 1;
 		}
 
 		me._node.vsrVisible.setValue(me._constraint.VSR.visible);	
