@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2016-10-31
+      Date:             2016-12-10
 -->
 
 <autopilot name="STEC55X">
@@ -173,6 +173,54 @@
 
 	</channel>
 
+
+<!--***************************************RUNAWAY********************************************************************-->
+
+	<channel name="runaway">
+
+<!-- aileron position change while the roll servo experiences a runway-->
+		<fcs_function name="/autopilot/runaway/speed/roll">
+			<function>
+				<product>
+					<property>/autopilot/runaway/roll</property>	
+					<property>/autopilot/runaway/maxspeed/roll</property>	
+				</product>
+			</function>
+		</fcs_function>
+
+<!-- elevator position change while the pitch servo experiences a runway-->
+		<fcs_function name="/autopilot/runaway/speed/pitch">
+			<function>
+				<product>
+					<property>/autopilot/runaway/pitch</property>	
+					<property>/autopilot/runaway/maxspeed/pitch</property>	
+				</product>
+			</function>
+		</fcs_function>
+
+<!-- rudder position change while the rudder servo experiences a runway-->
+		<fcs_function name="/autopilot/runaway/speed/yaw">
+			<function>
+				<product>
+					<property>/autopilot/runaway/yaw</property>	
+					<property>/autopilot/runaway/maxspeed/yaw</property>	
+				</product>
+			</function>
+		</fcs_function>
+
+<!-- trim tab position change while the pitchtrim servo experiences a runway-->
+		<fcs_function name="/autopilot/runaway/speed/pitchtrim">
+			<function>
+				<product>
+					<property>/autopilot/runaway/pitchtrim</property>	
+					<property>/autopilot/runaway/maxspeed/pitchtrim</property>	
+				</product>
+			</function>
+		</fcs_function>
+
+
+	</channel>
+
 <!--***************************************HEADING**********************************************************************-->
 
 <!-- this is the heading channel. when the hdg mode is active, the hdg bug of the LH IFD is followed-->
@@ -308,7 +356,7 @@
 		</fcs_function>
 
 <!-- the commanded aileron position change using the turn rate error -->
-		<pid name="/autopilot/hdg-channel/cmd-ail-change-ap">
+		<pid name="/autopilot/hdg-channel/cmd-ail-change-ap1">
 			<input>/autopilot/hdg-channel/turn-rate-error</input>
 			<kp>/autopilot/hdg-channel/turn-rate-error-kp</kp>							
 			<ki>/autopilot/hdg-channel/turn-rate-error-ki</ki>
@@ -318,6 +366,15 @@
 				<max>0.2</max>
 			</clipto>
 		</pid>
+
+<!-- aileron position change while the roll servo experiences a runway-->
+		<switch name="runawayon">
+			<default value="/autopilot/hdg-channel/cmd-ail-change-ap1"/>
+			<test logic="AND" value="/autopilot/runaway/speed/roll">
+				/autopilot/runaway/roll ne 0
+			</test>
+			<output>/autopilot/hdg-channel/cmd-ail-change-ap</output>
+		</switch>
 
 <!-- aileron position change while overpowering the roll servo-->
 		<fcs_function name="/autopilot/hdg-channel/cmd-ail-change-overp">
@@ -960,7 +1017,7 @@
 
 
 <!-- the commanded aileron position change using the turn rate error -->
-		<pid name="/autopilot/radionav-channel/cmd-ail-change-ap">
+		<pid name="/autopilot/radionav-channel/cmd-ail-change-ap1">
 			<input>/autopilot/radionav-channel/turn-rate-error</input>
 			<kp>/autopilot/radionav-channel/turn-rate-error-kp</kp>							
 			<ki>/autopilot/radionav-channel/turn-rate-error-ki</ki>
@@ -970,6 +1027,15 @@
 				<max>0.05</max>
 			</clipto>
 		</pid>
+
+<!-- aileron position change while the roll servo experiences a runway-->
+		<switch name="navrunawayon">
+			<default value="/autopilot/radionav-channel/cmd-ail-change-ap1"/>
+			<test logic="AND" value="/autopilot/runaway/speed/roll">
+				/autopilot/runaway/roll ne 0
+			</test>
+			<output>/autopilot/radionav-channel/cmd-ail-change-ap</output>
+		</switch>
 
 <!-- aileron position change while overpowering the roll servo-->
 		<fcs_function name="/autopilot/radionav-channel/cmd-ail-change-overp">
@@ -2111,7 +2177,7 @@
 		</fcs_function>
 
 <!-- the commanded aileron position change using the turn rate error -->
-		<pid name="/autopilot/fms-channel/cmd-ail-change-ap">
+		<pid name="/autopilot/fms-channel/cmd-ail-change-ap1">
 			<input>/autopilot/fms-channel/turn-rate-error</input>
 			<kp>/autopilot/fms-channel/turn-rate-error-kp</kp>							
 			<ki>/autopilot/fms-channel/turn-rate-error-ki</ki>
@@ -2121,6 +2187,15 @@
 				<max>0.05</max>
 			</clipto>
 		</pid>
+
+<!-- aileron position change while the roll servo experiences a runway-->
+		<switch name="fmsrunawayon">
+			<default value="/autopilot/fms-channel/cmd-ail-change-ap1"/>
+			<test logic="AND" value="/autopilot/runaway/speed/roll">
+				/autopilot/runaway/roll ne 0
+			</test>
+			<output>/autopilot/fms-channel/cmd-ail-change-ap</output>
+		</switch>
 
 <!-- aileron position change while overpowering the roll servo-->
 		<fcs_function name="/autopilot/fms-channel/cmd-ail-change-overp">
@@ -2814,9 +2889,23 @@
 			<output>/autopilot/mode/trim-down</output>
 		</switch>
 
+
+		<fcs_function name="/autopilot/mode/trimming">
+			<function>
+				<sum>
+					<abs>
+						<property>/autopilot/mode/electrim</property>	
+					</abs>
+					<property>/autopilot/mode/trim</property>	
+				</sum>
+			</function>
+			<output>/autopilot/mode/trimming</output>
+		</fcs_function>
+
+
 <!-- wind-up of auto trim speed--> 
 		<kinematic name="fcs/electrimspeed">
-			<input>/autopilot/mode/trim</input>
+			<input>/autopilot/mode/trimming</input>
 			<traverse>
 				<setting>
 					<position>0</position>
@@ -3079,7 +3168,7 @@
 		</fcs_function>
 
 <!-- the commanded aileron position change using the turn rate error -->
-		<pid name="/autopilot/cws-channel/cmd-ail-change-ap">
+		<pid name="/autopilot/cws-channel/cmd-ail-change-ap1">
 			<input>/autopilot/cws-channel/turn-rate-error</input>
 			<kp>/autopilot/cws-channel/turn-rate-error-kp</kp>							
 			<ki>/autopilot/cws-channel/turn-rate-error-ki</ki>
@@ -3089,6 +3178,16 @@
 				<max>0.2</max>
 			</clipto>
 		</pid>
+
+
+<!-- aileron position change while the roll servo experiences a runway-->
+		<switch name="cwsrunawayon">
+			<default value="/autopilot/cws-channel/cmd-ail-change-ap1"/>
+			<test logic="AND" value="/autopilot/runaway/speed/roll">
+				/autopilot/runaway/roll ne 0
+			</test>
+			<output>/autopilot/cws-channel/cmd-ail-change-ap</output>
+		</switch>
 
 <!-- aileron position change while overpowering the roll servo-->
 		<fcs_function name="/autopilot/cws-channel/cmd-ail-change-overp">

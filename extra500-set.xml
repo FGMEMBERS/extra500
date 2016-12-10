@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger
       Date: March 13 2013
 
-	Last change:      Dirk Dittmann
-	Date:             01.10.16
+	Last change:      Eric van den Berg
+	Date:             10.12.16
 
 
 ************************************************************************
@@ -687,6 +687,24 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<rollSpeedFactor type="double">1</rollSpeedFactor>
 		<pitchSpeedFactor type="double">0.5</pitchSpeedFactor>
 	</overpower>
+	<runaway>
+		<roll type="int">0</roll>
+		<pitch type="int">0</pitch>
+		<yaw type="int">0</yaw>
+		<pitchtrim type="int">0</pitchtrim>
+		<maxspeed>
+			<roll type="double">0.05</roll>
+			<pitch type="double">0.08</pitch>
+			<yaw type="double">0</yaw> <!--TBD-->
+			<pitchtrim type="double">1</pitchtrim>
+		</maxspeed>
+		<speed>
+			<roll type="double">0</roll>
+			<pitch type="double">0</pitch>
+			<yaw type="double">0</yaw> <!--TBD-->
+			<pitchtrim type="double">0</pitchtrim>
+		</speed>
+	</runaway>
 	<hdg-channel>
 		<turn-rate-error-kp type="double">0.0003</turn-rate-error-kp>
 		<turn-rate-error-ki type="double">0.00</turn-rate-error-ki>

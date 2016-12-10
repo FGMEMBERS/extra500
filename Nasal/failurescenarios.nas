@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 01.11.2016            
+#      Date: 10.12.2016            
 #
 # 
 
@@ -117,7 +117,11 @@ var failureset = [
 	[87,"LHRoll","pro",-1,-30],
 	[88,"TASFail","dig"],
 #	[89,"KBDFail","dig"],
-	[89,"XPDRFail","dig"]
+	[89,"XPDRFail","dig"],
+	[90,"RollRunaway","dig"],
+	[91,"PitchRunaway","dig"], 
+	[92,"YawRunaway","dig"],	
+	[93,"PitchtrimRunaway","dig"] 	
 	
 
 ];
@@ -322,6 +326,16 @@ var RMG_nobrake = func(n) {
 	}
 }
 
+# AUTOPILOT FAILURES
+var PlusMinusFail = func(fail,property){
+	if (fail == 0 ) {
+		fail2 = 0;
+	} else {
+		fail2 = 2*math.round( rand() ) -1;  #random -1 or 1
+	}
+	setprop(property,fail2);
+}
+
 var set_failure = func(fail) {
 	var failure = getprop("/extra500/failurescenarios/name");	# getting failure name
 	if (failure != "") {
@@ -432,6 +446,10 @@ var set_failure = func(fail) {
 		else if (failure == "TASFail") 	{ setprop("/instrumentation/tcas/fail", fail ); }
 #		else if (failure == "KBDFail") 	{ setprop("/instrumentation/???", fail ); }
 		else if (failure == "XPDRFail") 	{ setprop("/extra500/instrumentation/xpdr/fail", fail ); }
+		else if (failure == "RollRunaway") 	{ PlusMinusFail(fail,"/autopilot/runaway/roll");}
+		else if (failure == "PitchRunaway") { PlusMinusFail(fail,"/autopilot/runaway/pitch");}
+		else if (failure == "YawRunaway") 	{ PlusMinusFail(fail,"/autopilot/runaway/yaw");}
+		else if (failure == "PitchtrimRunaway") 	{ PlusMinusFail(fail,"/autopilot/runaway/pitchtrim");}
 	} else {
 		print("Error: No failure scenario name set");
 		setprop("/extra500/failurescenarios/activate",0);
@@ -582,6 +600,11 @@ var failure_reset = func() {
 	setprop("/extra500/instrumentation/IFD-LH/attitude/roll-error", 0); 
 	setprop("/instrumentation/tcas/fail", 0 );
 	setprop("/extra500/instrumentation/xpdr/fail", 0 );
+# Autopilot
+	setprop("/autopilot/runaway/roll",0);
+	setprop("/autopilot/runaway/pitch",0);
+	setprop("/autopilot/runaway/yaw",0);
+	setprop("/autopilot/runaway/pitchtrim",0);
 
 	setprop("/extra500/failurescenarios/random_active",0);
 }
