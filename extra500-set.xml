@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:      Eric van den Berg
-	Date:             10.12.16
+	Date:             11.12.16
 
 
 ************************************************************************
@@ -696,7 +696,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<roll type="double">0.05</roll>
 			<pitch type="double">0.08</pitch>
 			<yaw type="double">0</yaw> <!--TBD-->
-			<pitchtrim type="double">1</pitchtrim>
+			<pitchtrim type="double">0.000417</pitchtrim>
 		</maxspeed>
 		<speed>
 			<roll type="double">0</roll>

@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2016-12-10
+      Date:             2016-12-11
 -->
 
 <autopilot name="STEC55X">
@@ -1338,7 +1338,7 @@
 
 	
 <!-- pitch error (NOT in deg) using the glideslope deflection, dampened by the accel sensor inthe AP computer-->
-		<fcs_function name="/autopilot/gs-channel/pitch-error-ap">
+		<fcs_function name="/autopilot/gs-channel/pitch-error-ap1">
 			<function>
 				<product>
 					<property>/autopilot/mode/gs-follow</property>
@@ -1364,6 +1364,16 @@
 				</product>
 			</function>
 		</fcs_function>
+
+<!-- elevator position change while the pitch servo experiences a runway-->
+		<switch name="gsrunawayon">
+			<default value="/autopilot/gs-channel/pitch-error-ap1"/>
+			<test logic="AND" value="/autopilot/runaway/speed/pitch">
+				/autopilot/runaway/pitch ne 0
+			</test>
+			<output>/autopilot/gs-channel/pitch-error-ap</output>
+		</switch>
+
 
 <!-- elevator position change while overpowering the pitch servo-->
 		<fcs_function name="/autopilot/gs-channel/pitch-error-overp">
@@ -2433,7 +2443,7 @@
 		</fcs_function>	
 	
 <!-- pitch error (NOT in deg) using the vs error, dampened by the accel sensor inthe AP computer-->
-		<fcs_function name="/autopilot/vs-channel/pitch-error-ap">
+		<fcs_function name="/autopilot/vs-channel/pitch-error-ap1">
 			<function>
 				<product>
 					<property>/autopilot/mode/vs</property>
@@ -2455,6 +2465,15 @@
 				</product>
 			</function>
 		</fcs_function>
+
+<!-- elevator position change while the pitch servo experiences a runway-->
+		<switch name="vsrunawayon">
+			<default value="/autopilot/vs-channel/pitch-error-ap1"/>
+			<test logic="AND" value="/autopilot/runaway/speed/pitch">
+				/autopilot/runaway/pitch ne 0
+			</test>
+			<output>/autopilot/vs-channel/pitch-error-ap</output>
+		</switch>
 
 <!-- elevator position change while overpowering the pitch servo-->
 		<fcs_function name="/autopilot/vs-channel/pitch-error-overp">
@@ -2622,7 +2641,7 @@
 			</function>
 		</fcs_function>
 
-		<fcs_function name="/autopilot/alt-channel/pitch-error-ap">
+		<fcs_function name="/autopilot/alt-channel/pitch-error-ap1">
 			<function>
 				<product>
 					<property>/autopilot/alt-channel/pitch-error-gain</property>
@@ -2647,6 +2666,15 @@
 				<max>0.2</max>
 			</clipto>
 		</fcs_function>
+
+<!-- elevator position change while the pitch servo experiences a runway-->
+		<switch name="altrunawayon">
+			<default value="/autopilot/alt-channel/pitch-error-ap1"/>
+			<test logic="AND" value="/autopilot/runaway/speed/pitch">
+				/autopilot/runaway/pitch ne 0
+			</test>
+			<output>/autopilot/alt-channel/pitch-error-ap</output>
+		</switch>
 
 <!-- elevator position change while overpowering the pitch servo-->
 		<fcs_function name="/autopilot/alt-channel/pitch-error-overp">
@@ -2919,6 +2947,45 @@
 			<output>/autopilot/pitchtrim-channel/electrimspeed</output>
 		</kinematic>
 
+<!--trim tab speed -->
+		<fcs_function name="/autopilot/pitchtrim-channel/cmd-ap-trim-pos-change1">
+			<function>	
+				<product>
+					<sum>
+						<product>
+							<property>/autopilot/settings/trim</property>
+							<property>/autopilot/mode/trim</property>
+							<property>/autopilot/pitchtrim-channel/servo-gain</property>
+							<property>aircraft/hstab/elevator/H-total-lbsft</property>
+							<pow>
+								<max>
+									<property>/autopilot/pitchtrim-channel/trimmoment-abs</property>
+									<value>0.1</value>
+								</max>
+								<value>-1</value>
+							</pow>
+						</product>
+						<product>
+							<property>/autopilot/settings/trim</property>
+							<property>/autopilot/pitchtrim-channel/servo-gain2</property>
+							<property>/autopilot/mode/electrim</property>
+						</product>
+					</sum>
+					<property>/autopilot/pitchtrim-channel/electrimspeed</property>
+					<property>simulation/dt</property>
+				</product>
+			</function>
+		</fcs_function>	
+
+<!-- pitch trim tab position change while the pitch trim servo experiences a runway-->
+		<switch name="trimrunawayon">
+			<default value="/autopilot/pitchtrim-channel/cmd-ap-trim-pos-change1"/>
+			<test logic="AND" value="/autopilot/runaway/speed/pitchtrim">
+				/autopilot/runaway/pitchtrim ne 0
+			</test>
+			<output>/autopilot/pitchtrim-channel/cmd-ap-trim-pos-change</output>
+		</switch>
+
 <!-- this moves the trim tab if needed and possible--> 
 		<fcs_function name="/autopilot/pitchtrim-channel/cmd-ap-trim-pos-norm-raw">
 			<function>
@@ -2931,28 +2998,7 @@
 								<value>-1</value>
 							</sum>
 						</abs>
-						<sum>
-							<product>
-								<property>/autopilot/settings/trim</property>
-								<property>/autopilot/mode/trim</property>
-								<property>/autopilot/pitchtrim-channel/servo-gain</property>
-								<property>aircraft/hstab/elevator/H-total-lbsft</property>
-								<pow>
-									<max>
-										<property>/autopilot/pitchtrim-channel/trimmoment-abs</property>
-										<value>0.1</value>
-									</max>
-									<value>-1</value>
-								</pow>
-							</product>
-							<product>
-								<property>/autopilot/settings/trim</property>
-								<property>/autopilot/pitchtrim-channel/servo-gain2</property>
-								<property>/autopilot/mode/electrim</property>
-							</product>
-						</sum>
-						<property>/autopilot/pitchtrim-channel/electrimspeed</property>
-						<property>simulation/dt</property>
+						<property>/autopilot/pitchtrim-channel/cmd-ap-trim-pos-change</property>
 					</product>
 				</sum>
 			</function>
