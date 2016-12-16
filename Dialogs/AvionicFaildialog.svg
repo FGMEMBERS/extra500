@@ -29,9 +29,9 @@
      inkscape:window-height="836"
      id="namedview8"
      showgrid="false"
-     inkscape:zoom="28.704947"
-     inkscape:cx="393.59942"
-     inkscape:cy="1020.6543"
+     inkscape:zoom="20.297463"
+     inkscape:cx="305.08631"
+     inkscape:cy="905.117"
      inkscape:window-x="0"
      inkscape:window-y="21"
      inkscape:window-maximized="1"
@@ -168,6 +168,17 @@
        height="532.24274"
        x="0.17426212"
        y="33.43652" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#00ccff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       id="STBYATTIND-3"
+       sodipodi:cx="301.55081"
+       sodipodi:cy="147.70976"
+       sodipodi:rx="15.04967"
+       sodipodi:ry="15.04967"
+       d="m 316.60048,147.70976 a 15.04967,15.04967 0 1 1 -30.09934,0 15.04967,15.04967 0 1 1 30.09934,0 z"
+       transform="matrix(0.9810962,0,0,1.037037,0.24136941,-5.3229315)"
+       inkscape:label="#path3440" />
     <rect
        style="fill:#008686;fill-opacity:0.87058824;fill-rule:nonzero;stroke:#000000;stroke-width:0.99999994;stroke-opacity:1"
        id="rect3438-6"
@@ -235,17 +246,6 @@
        x="273.246"
        y="190.44476"
        ry="0" />
-    <path
-       sodipodi:type="arc"
-       style="fill:#00ccff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-opacity:1"
-       id="STBYATTIND"
-       sodipodi:cx="301.55081"
-       sodipodi:cy="147.70976"
-       sodipodi:rx="15.04967"
-       sodipodi:ry="15.04967"
-       d="m 316.60048,147.70976 c 0,8.31171 -6.73796,15.04967 -15.04967,15.04967 -8.3117,0 -15.04967,-6.73796 -15.04967,-15.04967 0,-8.3117 6.73797,-15.04967 15.04967,-15.04967 8.31171,0 15.04967,6.73797 15.04967,15.04967 z"
-       transform="matrix(0.9810962,0,0,1.037037,0.37807494,-4.9133369)"
-       inkscape:label="#path3440" />
     <path
        sodipodi:type="arc"
        style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:0.89361042;stroke-opacity:1"
@@ -1175,6 +1175,17 @@
        y="401.49261"
        inkscape:label="#rect4313-3-0"
        ry="9.1970205" />
+    <path
+       sodipodi:type="arc"
+       style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-opacity:1"
+       id="STBYATTIND"
+       sodipodi:cx="301.55081"
+       sodipodi:cy="147.70976"
+       sodipodi:rx="15.04967"
+       sodipodi:ry="15.04967"
+       d="m 316.60048,147.70976 c 0,8.31171 -6.73796,15.04967 -15.04967,15.04967 -8.3117,0 -15.04967,-6.73796 -15.04967,-15.04967 0,-8.3117 6.73797,-15.04967 15.04967,-15.04967 8.31171,0 15.04967,6.73797 15.04967,15.04967 z"
+       transform="matrix(0.9810962,0,0,1.037037,0.37807494,-4.9133369)"
+       inkscape:label="#path3440" />
   </g>
   <g
      inkscape:groupmode="layer"

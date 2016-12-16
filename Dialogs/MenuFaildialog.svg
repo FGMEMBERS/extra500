@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="263.44586"
-     inkscape:cy="1039.8797"
+     inkscape:zoom="5.6"
+     inkscape:cx="533.36306"
+     inkscape:cy="1013.3084"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -206,13 +206,6 @@
          id="tspan5218-7-1-8-5"
          x="476.03726"
          y="20.747705">AVIONIC</tspan></text>
-    <path
-       style="fill:#009400;fill-opacity:0.19736843;stroke:none"
-       d="m 359.82519,1.892431 83.8714,-0.116406 c 1.66863,9.43839 1.52145,18.876781 0,28.315172 l -83.95,0 c -1.2836,-8.974935 -1.50563,-18.294044 0.0786,-28.198766 z"
-       id="field_avionic"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccc"
-       inkscape:label="#path4706" />
     <rect
        style="fill:#0055d4;fill-opacity:0.19607843;fill-rule:nonzero;stroke:none"
        id="gear_active"
@@ -249,5 +242,46 @@
        y="30.080055"
        inkscape:label="#rect3006"
        ry="0" />
+    <path
+       style="fill:#009400;fill-opacity:0.19736843;stroke:none"
+       d="m 359.82519,1.892431 83.8714,-0.116406 c 1.66863,9.43839 1.52145,18.876781 0,28.315172 l -83.95,0 c -1.2836,-8.974935 -1.50563,-18.294044 0.0786,-28.198766 z"
+       id="field_avionic"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="#path4706" />
+    <path
+       style="fill:#ff0000;fill-opacity:1;stroke:none"
+       d="m 521.93985,17.213175 8.21429,0 0,11.607143 -8.39286,0 z"
+       id="autopilotfailind"
+       inkscape:connector-curvature="0"
+       inkscape:label="#path2994" />
+    <rect
+       style="fill:#0055d4;fill-opacity:0.19607843;fill-rule:nonzero;stroke:none"
+       id="autopilot_active"
+       width="83.848526"
+       height="7.2128429"
+       x="446.9057"
+       y="29.886333"
+       inkscape:label="#rect3006"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:18.4287529px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="649.72974"
+       y="18.63394"
+       id="text5216-9-5-3-7-5"
+       sodipodi:linespacing="125%"
+       transform="scale(0.7478903,1.3370945)"><tspan
+         sodipodi:role="line"
+         id="tspan5218-7-1-8-5-3"
+         x="649.72974"
+         y="18.63394">AUTOPILOT</tspan></text>
+    <path
+       style="fill:#009400;fill-opacity:0.19736843;stroke:none"
+       d="m 446.90674,1.7259316 83.8714,-0.11641 c 1.66863,9.4383904 1.52145,18.8767804 0,28.3151704 l -83.95,0 c -1.2836,-8.97493 -1.50563,-18.29404 0.0786,-28.1987604 z"
+       id="field_autopilot"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc"
+       inkscape:label="#path4706" />
   </g>
 </svg>

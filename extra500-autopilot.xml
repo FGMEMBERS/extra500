@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2016-12-11
+      Date:             2016-12-12
 -->
 
 <autopilot name="STEC55X">
@@ -64,8 +64,8 @@
 <!--*****************************************ALTITUDE SENSOR*****************************************************************-->
 
 	<channel name="altitudesensor">
-<!-- this is the dedicated AP altitude sensor (with its own static system) ,located in the tail cone. It is used to mnge vertical speed and altitude hold-->
-		<fcs_function name="/autopilot/altsensor/vs-fpm-unfiltered">
+<!-- this is the dedicated AP altitude sensor (with its own static system), located in the tail cone. It is used to manage vertical speed and altitude hold-->
+		<fcs_function name="/autopilot/altsensor/vs-fpm-unfiltered1">
 			<function>
 				<product>
 					<value>60.0</value>		
@@ -83,6 +83,14 @@
 				</product>
 			</function>
 		</fcs_function>
+
+<!--failure of altitude sensor -->
+		<switch name="/autopilot/altsensor/vs-fpm-unfiltered">
+			<default value="/autopilot/altsensor/vs-fpm-unfiltered1"/>
+			<test logic="OR" value="0">
+				/autopilot/altsensor/serviceable eq 0
+			</test>
+		</switch>
 
 		<lead_lag_filter name="/autopilot/altsensor/vs-fpm">
 			<input>/autopilot/altsensor/vs-fpm-unfiltered</input>

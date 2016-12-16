@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 10.12.2016            
+#      Date: 12.12.2016            
 #
 # 
 
@@ -121,7 +121,9 @@ var failureset = [
 	[90,"RollRunaway","dig"],
 	[91,"PitchRunaway","dig"], 
 	[92,"YawRunaway","dig"],	
-	[93,"PitchtrimRunaway","dig"] 	
+	[93,"PitchtrimRunaway","dig"],
+	[94,"APaltSensFail","dig"],
+	[95,"TurnInd","dig"]	 	
 	
 
 ];
@@ -446,10 +448,13 @@ var set_failure = func(fail) {
 		else if (failure == "TASFail") 	{ setprop("/instrumentation/tcas/fail", fail ); }
 #		else if (failure == "KBDFail") 	{ setprop("/instrumentation/???", fail ); }
 		else if (failure == "XPDRFail") 	{ setprop("/extra500/instrumentation/xpdr/fail", fail ); }
+	# autopilot
 		else if (failure == "RollRunaway") 	{ PlusMinusFail(fail,"/autopilot/runaway/roll");}
 		else if (failure == "PitchRunaway") { PlusMinusFail(fail,"/autopilot/runaway/pitch");}
 		else if (failure == "YawRunaway") 	{ PlusMinusFail(fail,"/autopilot/runaway/yaw");}
 		else if (failure == "PitchtrimRunaway") 	{ PlusMinusFail(fail,"/autopilot/runaway/pitchtrim");}
+		else if (failure == "APaltSensFail"){ setprop("/autopilot/altsensor/serviceable", math.abs(fail-1) ); }
+		else if (failure == "TurnInd")	{ setprop("/instrumentation/turn-indicator/serviceable", math.abs(fail-1) ); }
 	} else {
 		print("Error: No failure scenario name set");
 		setprop("/extra500/failurescenarios/activate",0);
@@ -605,6 +610,8 @@ var failure_reset = func() {
 	setprop("/autopilot/runaway/pitch",0);
 	setprop("/autopilot/runaway/yaw",0);
 	setprop("/autopilot/runaway/pitchtrim",0);
+	setprop("/autopilot/altsensor/serviceable",1);
+	setprop("/instrumentation/turn-indicator/serviceable",1);
 
 	setprop("/extra500/failurescenarios/random_active",0);
 }
