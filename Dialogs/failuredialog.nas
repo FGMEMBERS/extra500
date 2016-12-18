@@ -17,7 +17,7 @@
 #	Date: 	10.10.2015
 #
 #	Last change: Eric van den Berg	
-#	Date:		11.12.2016	
+#	Date:		18.12.2016	
 #
 
 var COLORfd = {};
@@ -54,6 +54,10 @@ COLORfd["dmeOk"] = "#0a6ab8aa";
 COLORfd["insOk"] = "#00ccffff";
 COLORfd["black"] = "#000000ff";
 COLORfd["attOK"] = "#1ec6f60a";
+COLORfd["ptsOK"] = "#a3e51eff";
+COLORfd["rtsOK"] = "#1ee55fff";
+COLORfd["pttsOK"] = "#1ee5d8ff";
+COLORfd["altsOK"] = "#1e71e5ff";
 
 var FailureClass = {
 	new : func(){
@@ -302,8 +306,16 @@ var FailureClass = {
 
 	# autopilot
 		me._TurnInd		= me._svg_ap.getElementById("TURNIND");
+		me._PitchServo	= me._svg_ap.getElementById("pitchServo");
+		me._RollServo	= me._svg_ap.getElementById("rollServo");
+		me._PitchTrimServo	= me._svg_ap.getElementById("pitchTrimServo");
+		me._altSens		= me._svg_ap.getElementById("altSens");
 
 		me._Text_TurnInd	= me._svg_ap.getElementById("text_TURNIND").hide();
+		me._Text_PitchServo	= me._svg_ap.getElementById("text_pitchServo").hide();
+		me._Text_RollServo	= me._svg_ap.getElementById("text_rollServo").hide();
+		me._Text_PitchTrimServo	= me._svg_ap.getElementById("text_pitchTrimServo").hide();
+		me._Text_altSens	= me._svg_ap.getElementById("text_altSens").hide();
 
 # additional elements
 	#number of failure indication in menu
@@ -518,7 +530,10 @@ var FailureClass = {
 
 	# autopilot
 		me._TurnInd.addEventListener("click",func(){me._onGeneralClick("/instrumentation/turn-indicator/serviceable",0,"TurnInd","autopilot");});
-
+		me._PitchServo.addEventListener("click",func(){me._onGeneralClick("/autopilot/runaway/pitch",1,"PitchRunaway","autopilot");});
+		me._RollServo.addEventListener("click",func(){me._onGeneralClick("/autopilot/runaway/roll",1,"RollRunaway","autopilot");});
+		me._PitchTrimServo.addEventListener("click",func(){me._onGeneralClick("/autopilot/runaway/pitchtrim",1,"PitchtrimRunaway","autopilot");});
+		me._altSens.addEventListener("click",func(){me._onGeneralClick("/autopilot/altsensor/serviceable",0,"APaltSensFail","autopilot");});
 	},
 	_onRandomClick : func() {
 		events.randomfail(); # nasal/failurescenarios.nas
@@ -819,6 +834,10 @@ var FailureClass = {
 		setprop("/extra500/failurescenarios/autopilot",0);
 
 		me._genButtons_update("/instrumentation/turn-indicator/serviceable",1,me._TurnInd,me._Text_TurnInd,"opaque","/extra500/failurescenarios/autopilot");		
+		me._genButtons_update("/autopilot/runaway/pitch",0,me._PitchServo,me._Text_PitchServo,"ptsOK","/extra500/failurescenarios/autopilot");		
+		me._genButtons_update("/autopilot/runaway/roll",0,me._RollServo,me._Text_RollServo,"rtsOK","/extra500/failurescenarios/autopilot");		
+		me._genButtons_update("/autopilot/runaway/pitchtrim",0,me._PitchTrimServo,me._Text_PitchTrimServo,"pttsOK","/extra500/failurescenarios/autopilot");		
+		me._genButtons_update("/autopilot/altsensor/serviceable",1,me._altSens,me._Text_altSens,"altsOK","/extra500/failurescenarios/autopilot");		
 
 		# setting fail indication in menu
 		if (getprop("/extra500/failurescenarios/autopilot") > 0) {
