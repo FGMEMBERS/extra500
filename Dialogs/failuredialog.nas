@@ -67,6 +67,7 @@ var FailureClass = {
 		m._title = 'Extra500 Failure Dialog';
 		m._gfd 	= nil;
 		m._canvas	= nil;
+		m._timer 	= maketimer(1.0,m,FailureClass._timerf );
 
 		return m;
 	},
@@ -549,6 +550,10 @@ var FailureClass = {
 		me._PitchTrimServo.addEventListener("click",func(){me._onGeneralClick("/autopilot/runaway/pitchtrim",1,"PitchtrimRunaway","autopilot");});
 		me._altSens.addEventListener("click",func(){me._onGeneralClick("/autopilot/altsensor/serviceable",0,"APaltSensFail","autopilot");});
 	},
+	_timerf : func(){
+			setprop("/extra500/failurescenarios/delay",getprop("/extra500/failurescenarios/delay")-1);
+			me._lm_update(getprop("/extra500/failurescenarios/delay"));
+	},
 	_onDelayChange : func(e){
 		var delay = getprop("/extra500/failurescenarios/delay")+ e.deltaY;
 		delay = math.clamp(delay,0,60);
@@ -691,8 +696,10 @@ var FailureClass = {
 			setprop(gfail,getprop(gfail) + 1);
 		}
 	},
-	_lm_update : func() {
-		var delay = getprop("/extra500/failurescenarios/delay");
+	_lm_update : func(delay=nil) {
+		if (delay == nil) {
+			var delay = getprop("/extra500/failurescenarios/delay");
+		}
 		me._lmvaluedelay.setText(sprintf("%i",delay));
 		if (delay != 0) {
 			me._lmfielddelay.setColorFill(COLORfd["randomB"]);
@@ -939,13 +946,17 @@ var FailureClass = {
 	_update_page : func(system) {
 		var delay = getprop("/extra500/failurescenarios/delay");
 		if (delay != 0) {
+			me._timer.start();
 			settimer(func(){
+				me._timer.stop();
 				if (system == "deice") {me._deiceButtons_update(); } 
 				else if (system == "fuel") {me._fuelButtons_update(); } 
 				else if (system == "gear") {me._gearButtons_update(); }
 				else if (system == "contr") {me._contrButtons_update();}
 				else if (system == "avionic") {me._avionicButtons_update();}
 				else if (system == "autopilot") {me._autopilotButtons_update();}
+				setprop("/extra500/failurescenarios/delay",0);
+				me._lm_update();
 			},delay+0.2);
 		} else {
 			if (system == "deice") {me._deiceButtons_update(); } 
@@ -955,8 +966,8 @@ var FailureClass = {
 			else if (system == "avionic") {me._avionicButtons_update();}
 			else if (system == "autopilot") {me._autopilotButtons_update();}
 		}
-	setprop("/extra500/failurescenarios/delay",0);
-	me._lm_update();
+
+
 	}
 
 
