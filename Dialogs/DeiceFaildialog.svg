@@ -30,8 +30,8 @@
      id="namedview8"
      showgrid="false"
      inkscape:zoom="0.8970296"
-     inkscape:cx="369.6313"
-     inkscape:cy="892.89606"
+     inkscape:cx="552.93616"
+     inkscape:cy="708.34236"
      inkscape:window-x="0"
      inkscape:window-y="21"
      inkscape:window-maximized="1"
@@ -114,47 +114,12 @@
   <g
      id="layer1"
      transform="matrix(1.019268,0,0,1,-0.38535967,0)">
-    <rect
-       style="fill:#e6e6e6;fill-opacity:1"
-       id="rect3059"
-       width="764.50806"
-       height="543.66937"
-       x="-13.904973"
-       y="33.397942" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.99050302;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        d="m 358.71178,288.4882 0.12468,0.1325 -8.81697,27.84911 -7.56619,27.52842 7.37417,2.57191 9.91134,-17.23945 3.84974,-8.98348 2.22109,-7.46923"
        id="path4353-73"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccccc" />
-    <rect
-       width="8.8887863"
-       height="416.92413"
-       x="20"
-       y="33.452339"
-       id="rect3659"
-       style="fill:#0055d4;fill-opacity:0.19607843" />
-    <rect
-       width="8.8691587"
-       height="416.98117"
-       x="705.41656"
-       y="33.394772"
-       id="rect5872"
-       style="fill:#0055d4;fill-opacity:0.19607843" />
-    <rect
-       style="fill:#0055d4;fill-opacity:0.19607843"
-       id="rect2987"
-       width="676.5282"
-       height="5.5739522"
-       x="28.868736"
-       y="444.80139" />
-    <rect
-       style="fill:#0055d4;fill-opacity:0.19607843"
-       id="rect2985"
-       width="676.51392"
-       height="4.4591618"
-       x="28.883066"
-       y="33.443714" />
     <path
        style="fill:#1d79e8;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        d="m 28.984551,199.82619 68.83831,-1.39349 0,13.65619 -68.625786,-0.60667 z"

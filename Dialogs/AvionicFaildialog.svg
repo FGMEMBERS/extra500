@@ -29,9 +29,9 @@
      inkscape:window-height="836"
      id="namedview8"
      showgrid="false"
-     inkscape:zoom="20.297463"
-     inkscape:cx="305.08631"
-     inkscape:cy="905.117"
+     inkscape:zoom="0.6342957"
+     inkscape:cx="578.66677"
+     inkscape:cy="711.31827"
      inkscape:window-x="0"
      inkscape:window-y="21"
      inkscape:window-maximized="1"
@@ -161,13 +161,6 @@
   <g
      id="layer1"
      transform="matrix(1.019268,0,0,1,-0.38535967,0)">
-    <rect
-       style="fill:#e6e6e6;fill-opacity:1"
-       id="rect3059"
-       width="764.50806"
-       height="532.24274"
-       x="0.17426212"
-       y="33.43652" />
     <path
        sodipodi:type="arc"
        style="fill:#00ccff;fill-opacity:1;fill-rule:nonzero;stroke:none"
@@ -176,7 +169,7 @@
        sodipodi:cy="147.70976"
        sodipodi:rx="15.04967"
        sodipodi:ry="15.04967"
-       d="m 316.60048,147.70976 a 15.04967,15.04967 0 1 1 -30.09934,0 15.04967,15.04967 0 1 1 30.09934,0 z"
+       d="m 316.60048,147.70976 c 0,8.31171 -6.73796,15.04967 -15.04967,15.04967 -8.3117,0 -15.04967,-6.73796 -15.04967,-15.04967 0,-8.3117 6.73797,-15.04967 15.04967,-15.04967 8.31171,0 15.04967,6.73797 15.04967,15.04967 z"
        transform="matrix(0.9810962,0,0,1.037037,0.24136941,-5.3229315)"
        inkscape:label="#path3440" />
     <rect
@@ -202,34 +195,6 @@
        x="272.90424"
        y="177.94984"
        ry="0.1885238" />
-    <rect
-       width="8.8887863"
-       height="416.92413"
-       x="20"
-       y="33.452339"
-       id="rect3659"
-       style="fill:#0055d4;fill-opacity:0.19607843" />
-    <rect
-       width="8.8691587"
-       height="416.98117"
-       x="705.41656"
-       y="33.394772"
-       id="rect5872"
-       style="fill:#0055d4;fill-opacity:0.19607843" />
-    <rect
-       style="fill:#0055d4;fill-opacity:0.19607843"
-       id="rect2987"
-       width="676.5282"
-       height="5.5739522"
-       x="28.868736"
-       y="444.80139" />
-    <rect
-       style="fill:#0055d4;fill-opacity:0.19607843"
-       id="rect2985"
-       width="676.51593"
-       height="4.4591618"
-       x="28.881054"
-       y="33.443714" />
     <rect
        style="fill:#1ec6f6;fill-opacity:1;stroke:none"
        id="rect3883-9-3"

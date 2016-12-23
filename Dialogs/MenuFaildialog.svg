@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.6"
-     inkscape:cx="533.36306"
-     inkscape:cy="1013.3084"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="439.92106"
+     inkscape:cy="899.27545"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -54,12 +54,12 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:#e6e6e6;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;opacity:1"
+       style="fill:#e6e6e6;fill-opacity:1;fill-rule:nonzero;stroke:none"
        id="rect3822"
        width="798.57141"
-       height="64.285713"
-       x="-24.285713"
-       y="-14.780666" />
+       height="870"
+       x="-19.280886"
+       y="-45.719028" />
     <text
        xml:space="preserve"
        style="font-size:22.99707031px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -139,7 +139,7 @@
        style="fill:#0055d4;fill-opacity:0.19607843;fill-rule:nonzero;stroke:none"
        id="controls_active"
        width="107.4924"
-       height="6.7077665"
+       height="3.1624892"
        x="175.43214"
        y="30.332594"
        inkscape:label="#rect3006"
@@ -210,7 +210,7 @@
        style="fill:#0055d4;fill-opacity:0.19607843;fill-rule:nonzero;stroke:none"
        id="gear_active"
        width="73.147224"
-       height="6.7077665"
+       height="2.7934253"
        x="22.809832"
        y="30.598141"
        inkscape:label="#rect3006"
@@ -219,7 +219,7 @@
        style="fill:#0055d4;fill-opacity:0.19607843;fill-rule:nonzero;stroke:none"
        id="fuel_active"
        width="70.621841"
-       height="6.7077665"
+       height="2.8729677"
        x="100.82331"
        y="30.541475"
        inkscape:label="#rect3006"
@@ -228,7 +228,7 @@
        style="fill:#0055d4;fill-opacity:0.19607843;fill-rule:nonzero;stroke:none"
        id="deice_active"
        width="69.645142"
-       height="6.7077665"
+       height="3.2985017"
        x="286.38834"
        y="30.233564"
        inkscape:label="#rect3006"
@@ -237,7 +237,7 @@
        style="fill:#0055d4;fill-opacity:0.19607843;fill-rule:nonzero;stroke:none"
        id="avionic_active"
        width="83.848526"
-       height="7.2128429"
+       height="3.3257418"
        x="359.78497"
        y="30.080055"
        inkscape:label="#rect3006"
@@ -259,7 +259,7 @@
        style="fill:#0055d4;fill-opacity:0.19607843;fill-rule:nonzero;stroke:none"
        id="autopilot_active"
        width="83.848526"
-       height="7.2128429"
+       height="3.5358806"
        x="446.9057"
        y="29.886333"
        inkscape:label="#rect3006"
@@ -283,5 +283,10 @@
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc"
        inkscape:label="#path4706" />
+    <path
+       style="fill:#0055d4;fill-opacity:0.19607843"
+       d="M 719.3125 33.375 L 719.3125 33.4375 L 29.75 33.4375 L 20.6875 33.4375 L 20.6875 450.375 L 29.75 450.375 L 719.3125 450.375 L 728.34375 450.375 L 728.34375 33.375 L 719.3125 33.375 z M 29.75 37.90625 L 719.3125 37.90625 L 719.3125 444.78125 L 29.75 444.78125 L 29.75 37.90625 z "
+       id="frame"
+       inkscape:label="#rect3659" />
   </g>
 </svg>

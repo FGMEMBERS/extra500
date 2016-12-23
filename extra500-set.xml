@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:      Eric van den Berg
-	Date:             12.12.16
+	Date:             21.12.16
 
 
 ************************************************************************
@@ -1874,6 +1874,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		</controls>
 		<random_active type="bool">0</random_active>
 		<randommaxdelay type="int">0</randommaxdelay>
+		<delay type="double">0</delay>
 	</failurescenarios>
 	<instrumentation>
 		<Audiopanel>

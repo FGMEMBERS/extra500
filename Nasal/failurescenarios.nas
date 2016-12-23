@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 12.12.2016            
+#      Date: 21.12.2016            
 #
 # 
 
@@ -133,7 +133,12 @@ var progressiveset = [];
 
 setlistener("/extra500/failurescenarios/activate", func {
 	var fail = getprop("/extra500/failurescenarios/activate");
-	set_failure(fail);
+	var delay = getprop("/extra500/failurescenarios/delay");
+	if (delay != 0) {
+		set_failurewdelay(delay,fail);
+	} else {
+		set_failure(fail);
+	}
 });
 
 # PROGRESSIVE FAILURES
@@ -149,7 +154,8 @@ var updateProgFailures = func() {
 			var fail = math.clamp(progressiveset[i][2] + progressiveset[i][1],0,progressiveset[i][3]);
 			progressiveset[i][2] = fail;
 			setprop("/extra500/failurescenarios/name",progressiveset[i][0] );
-			setprop("/extra500/failurescenarios/activate",fail);	
+#			setprop("/extra500/failurescenarios/activate",fail);
+			set_failure(fail);	
 		}
 	}
 }
@@ -197,6 +203,7 @@ var delProgAllFailure =  func() {
 
 var randomfail = func() {
 	if ( getprop("/extra500/failurescenarios/random_active") == 0 ) {
+		setprop("/extra500/failurescenarios/delay",0);	# no additional delay when doing a random failure
 		setprop("/extra500/failurescenarios/random_active",1);
 		var maxdelay = 60 * getprop("/extra500/failurescenarios/randommaxdelay");
 		if (maxdelay == 0) {
@@ -336,6 +343,10 @@ var PlusMinusFail = func(fail,property){
 		fail2 = 2*math.round( rand() ) -1;  #random -1 or 1
 	}
 	setprop(property,fail2);
+}
+
+var set_failurewdelay = func(delay,fail){
+	settimer(func(){set_failure(fail) },delay);
 }
 
 var set_failure = func(fail) {

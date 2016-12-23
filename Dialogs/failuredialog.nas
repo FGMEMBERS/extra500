@@ -17,7 +17,7 @@
 #	Date: 	10.10.2015
 #
 #	Last change: Eric van den Berg	
-#	Date:		18.12.2016	
+#	Date:		23.12.2016	
 #
 
 var COLORfd = {};
@@ -46,6 +46,7 @@ COLORfd["boot1Ok"] = "#80b3f1ff";
 COLORfd["boot2Ok"] = "#1d79e8ff";
 COLORfd["Failed"] = "#ff8080ff";
 COLORfd["randomA"] = "#d45d00ff";
+COLORfd["randomB"] = "#fffa005a";
 COLORfd["pitotOk"] = "#2bb200ff";
 COLORfd["staticOk"] = "#75c3ffff";
 COLORfd["gpsOk"] = "#97bcdaaa";
@@ -82,6 +83,10 @@ var FailureClass = {
 		me._filename = "/Dialogs/MenuFaildialog.svg";
 		me._svg_menu = me._root.createChild('group');
 		canvas.parsesvg(me._svg_menu, me._filename);
+
+		me._filename = "/Dialogs/LowerMenuFaildialog.svg";
+		me._svg_lmenu = me._root.createChild('group');
+		canvas.parsesvg(me._svg_lmenu, me._filename);
 
 		me._filename = "/Dialogs/welcomeFaildialog.svg";
 		me._svg_welcome = me._root.createChild('group');
@@ -132,8 +137,13 @@ var FailureClass = {
 		me._autopilot		= me._svg_menu.getElementById("field_autopilot");
 		me._autopilot_ind	= me._svg_menu.getElementById("autopilotfailind").hide();
 		me._autopilot_active	= me._svg_menu.getElementById("autopilot_active").hide();
+		me._frame		= me._svg_menu.getElementById("frame");	
 
 		me._repair		= me._svg_menu.getElementById("field_repairall");
+
+	# lower menu
+		me._lmfielddelay	= me._svg_lmenu.getElementById("field_delay");
+		me._lmvaluedelay 	= me._svg_lmenu.getElementById("value_delay");
 
 	# welcome
 		me._ranfail		= me._svg_welcome.getElementById("field_ranfail");
@@ -420,6 +430,7 @@ var FailureClass = {
 		me._svg_welcome.show();
 		me._welcome_update();
 		me._svg_menu.show();
+		me._frame.setColorFill(COLORfd["menuns"]);
 
 	},
 	_onClose : func(){
@@ -439,9 +450,12 @@ var FailureClass = {
 			me._welcome_update();
 		});
 
+	# lower menu
+		me._lmfielddelay.addEventListener("wheel",func(e){me._onDelayChange(e);});
+
 	# welcome
 		me._ranfail.addEventListener("click",func(){me._onRandomClick();});	
-		me._fielddelay.addEventListener("wheel",func(e){me._onDelayChange(e);});
+		me._fielddelay.addEventListener("wheel",func(e){me._onRandomDelayChange(e);});
 
 	# gear
 		me._LHgear.addEventListener("click",func(){me._onGeneralClick("/systems/gear/LMG-free",0,"LMG_jammed","gear");});
@@ -535,11 +549,17 @@ var FailureClass = {
 		me._PitchTrimServo.addEventListener("click",func(){me._onGeneralClick("/autopilot/runaway/pitchtrim",1,"PitchtrimRunaway","autopilot");});
 		me._altSens.addEventListener("click",func(){me._onGeneralClick("/autopilot/altsensor/serviceable",0,"APaltSensFail","autopilot");});
 	},
+	_onDelayChange : func(e){
+		var delay = getprop("/extra500/failurescenarios/delay")+ e.deltaY;
+		delay = math.clamp(delay,0,60);
+		setprop("/extra500/failurescenarios/delay",delay);
+		me._lm_update();
+	},
 	_onRandomClick : func() {
 		events.randomfail(); # nasal/failurescenarios.nas
 		me._welcome_update();
 	},
-	_onDelayChange : func(e){
+	_onRandomDelayChange : func(e){
 		var delay = getprop("/extra500/failurescenarios/randommaxdelay") + e.deltaY;
 		delay = math.clamp(delay,0,60);
 		setprop("/extra500/failurescenarios/randommaxdelay",delay);
@@ -553,7 +573,7 @@ var FailureClass = {
 		me._avionic.setColorFill(COLORfd["menuns"]);
 		me._autopilot.setColorFill(COLORfd["menuns"]);
 	},
-	_hideAll : func() {   # except for menu
+	_hideAll : func() {   # except for menu 
 		me._svg_gear.hide();
 		me._svg_fuel.hide();
 		me._svg_contr.hide();
@@ -561,6 +581,7 @@ var FailureClass = {
 		me._svg_avionic.hide();
 		me._svg_ap.hide();
 		me._svg_welcome.hide();
+		me._svg_lmenu.hide();
 
 		me._gear_active.hide();
 		me._fuel_active.hide();
@@ -591,7 +612,9 @@ var FailureClass = {
 	_onGearClick : func() {
 		me._menuReset();
 		me._gear.setColorFill(COLORfd["menuse"]);
+		me._frame.setColorFill(COLORfd["menuse"]);
 		me._hideAll();
+		me._svg_lmenu.show();
 		me._gear_active.show();
 		me._svg_gear.show();
 		me._gearButtons_update();
@@ -599,15 +622,19 @@ var FailureClass = {
 	_onFuelClick : func() {
 		me._menuReset();
 		me._fuel.setColorFill(COLORfd["menuse"]);
+		me._frame.setColorFill(COLORfd["menuse"]);
 		me._hideAll();
 		me._fuel_active.show();
 		me._svg_fuel.show();
+		me._svg_lmenu.show();
 		me._fuelButtons_update();
 	},
 	_onControlsClick : func() {
 		me._menuReset();
 		me._controls.setColorFill(COLORfd["menuse"]);
+		me._frame.setColorFill(COLORfd["menuse"]);
 		me._hideAll();
+		me._svg_lmenu.show();
 		me._controls_active.show();
 		me._svg_contr.show();
 		me._contrButtons_update();
@@ -615,7 +642,9 @@ var FailureClass = {
 	_onDeiceClick : func() {
 		me._menuReset();
 		me._deice.setColorFill(COLORfd["menuse"]);
+		me._frame.setColorFill(COLORfd["menuse"]);
 		me._hideAll();
+		me._svg_lmenu.show();
 		me._deice_active.show();
 		me._svg_deice.show();
 		me._deiceButtons_update();
@@ -623,7 +652,9 @@ var FailureClass = {
 	_onAvionicClick : func() {
 		me._menuReset();
 		me._avionic.setColorFill(COLORfd["menuse"]);
+		me._frame.setColorFill(COLORfd["menuse"]);
 		me._hideAll();
+		me._svg_lmenu.show();
 		me._avionic_active.show();
 		me._svg_avionic.show();
 		me._avionicButtons_update();
@@ -631,7 +662,9 @@ var FailureClass = {
 	_onAutopilotClick : func() {
 		me._menuReset();
 		me._autopilot.setColorFill(COLORfd["menuse"]);
+		me._frame.setColorFill(COLORfd["menuse"]);
 		me._hideAll();
+		me._svg_lmenu.show();
 		me._autopilot_active.show();
 		me._svg_ap.show();
 		me._autopilotButtons_update();
@@ -656,6 +689,15 @@ var FailureClass = {
 			gtext.show();
 			gtext.setText(full_text);					
 			setprop(gfail,getprop(gfail) + 1);
+		}
+	},
+	_lm_update : func() {
+		var delay = getprop("/extra500/failurescenarios/delay");
+		me._lmvaluedelay.setText(sprintf("%i",delay));
+		if (delay != 0) {
+			me._lmfielddelay.setColorFill(COLORfd["randomB"]);
+		} else {
+			me._lmfielddelay.setColorFill(COLORfd["menuns"]);
 		}
 	},
 	_welcome_update : func() {
@@ -884,6 +926,7 @@ var FailureClass = {
 		me._update_page(system);
 	},
 	_onProgessiveClick : func(failname,speed,initial,maxValue,property,system){			# for 'progressive' failures
+		setprop("/extra500/failurescenarios/delay",0);						# no delay possible on progressive failures
 		if (getprop(property) == initial) {
 			setprop("/extra500/failurescenarios/name",failname);				# FIXME:
 			setprop("/extra500/failurescenarios/activate",0.001);				# FIXME: evil hack only to trick the detection system there is a failure
@@ -894,12 +937,26 @@ var FailureClass = {
 		me._update_page(system);
 	},
 	_update_page : func(system) {
-		if (system == "deice") {me._deiceButtons_update(); } 
-		else if (system == "fuel") {me._fuelButtons_update(); } 
-		else if (system == "gear") {me._gearButtons_update(); }
-		else if (system == "contr") {me._contrButtons_update();}
-		else if (system == "avionic") {me._avionicButtons_update();}
-		else if (system == "autopilot") {me._autopilotButtons_update();}
+		var delay = getprop("/extra500/failurescenarios/delay");
+		if (delay != 0) {
+			settimer(func(){
+				if (system == "deice") {me._deiceButtons_update(); } 
+				else if (system == "fuel") {me._fuelButtons_update(); } 
+				else if (system == "gear") {me._gearButtons_update(); }
+				else if (system == "contr") {me._contrButtons_update();}
+				else if (system == "avionic") {me._avionicButtons_update();}
+				else if (system == "autopilot") {me._autopilotButtons_update();}
+			},delay+0.2);
+		} else {
+			if (system == "deice") {me._deiceButtons_update(); } 
+			else if (system == "fuel") {me._fuelButtons_update(); } 
+			else if (system == "gear") {me._gearButtons_update(); }
+			else if (system == "contr") {me._contrButtons_update();}
+			else if (system == "avionic") {me._avionicButtons_update();}
+			else if (system == "autopilot") {me._autopilotButtons_update();}
+		}
+	setprop("/extra500/failurescenarios/delay",0);
+	me._lm_update();
 	}
 
 

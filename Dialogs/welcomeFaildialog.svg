@@ -29,9 +29,9 @@
      inkscape:window-height="836"
      id="namedview8"
      showgrid="false"
-     inkscape:zoom="1.2685914"
-     inkscape:cx="202.04389"
-     inkscape:cy="915.12781"
+     inkscape:zoom="0.6342957"
+     inkscape:cx="474.06989"
+     inkscape:cy="830.33007"
      inkscape:window-x="0"
      inkscape:window-y="21"
      inkscape:window-maximized="1"
@@ -74,20 +74,6 @@
      id="layer1"
      transform="matrix(1.019268,0,0,1,-0.38535967,0)">
     <rect
-       style="fill:#e6e6e6;fill-opacity:1"
-       id="rect3059"
-       width="741.53998"
-       height="463.05701"
-       x="-21.970444"
-       y="34.563305" />
-    <rect
-       width="8.8887863"
-       height="416.92413"
-       x="20"
-       y="33.452339"
-       id="rect3659"
-       style="fill:#009400;fill-opacity:0.19607843" />
-    <rect
        style="fill:#d45d00;fill-opacity:1;fill-rule:nonzero;stroke:none"
        id="ranfail-5"
        width="63.569878"
@@ -96,13 +82,6 @@
        y="391.94543"
        ry="9.3020992"
        inkscape:label="#rect3002" />
-    <rect
-       width="8.8691587"
-       height="416.98117"
-       x="705.41656"
-       y="33.394772"
-       id="rect5872"
-       style="fill:#009400;fill-opacity:0.19607843" />
     <text
        xml:space="preserve"
        style="font-size:36.64861162px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -136,13 +115,6 @@
          y="287.85767"
          id="tspan3276" /></text>
     <rect
-       style="fill:#009400;fill-opacity:0.19607843"
-       id="rect2987"
-       width="676.5282"
-       height="5.5739522"
-       x="28.868736"
-       y="444.80139" />
-    <rect
        style="fill:#009400;fill-opacity:0.19607843;fill-rule:nonzero;stroke:none"
        id="backgr_ranfail"
        width="246.08626"
@@ -151,13 +123,6 @@
        y="392.40625"
        ry="9.3020992"
        inkscape:label="#rect3002" />
-    <rect
-       style="fill:#009400;fill-opacity:0.19607843"
-       id="rect2985"
-       width="676.61255"
-       height="4.4591618"
-       x="28.83272"
-       y="33.443714" />
     <text
        xml:space="preserve"
        style="font-size:30.16934776px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
