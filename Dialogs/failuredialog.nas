@@ -933,15 +933,19 @@ var FailureClass = {
 		me._update_page(system);
 	},
 	_onProgessiveClick : func(failname,speed,initial,maxValue,property,system){			# for 'progressive' failures
-		setprop("/extra500/failurescenarios/delay",0);						# no delay possible on progressive failures
 		if (getprop(property) == initial) {
-			setprop("/extra500/failurescenarios/name",failname);				# FIXME:
-			setprop("/extra500/failurescenarios/activate",0.001);				# FIXME: evil hack only to trick the detection system there is a failure
+#			setprop("/extra500/failurescenarios/name",failname);				# FIXME:
+#			setprop("/extra500/failurescenarios/activate",0.001);				# FIXME: evil hack only to trick the detection system there is a failure
 			events.addProgFailure(failname,speed,initial,maxValue);
 		} else {
 			events.delProgFailure(failname);
 		}
-		me._update_page(system);
+		me._update_page_prog(system);	# no delay possible on progressive failures
+	},
+	_update_page_prog : func(system) {
+		settimer(func(){
+			me._update_page_direct(system);
+			},1.2);			# waiting for at least 1 seconds so page update notices the failure
 	},
 	_update_page : func(system) {
 		var delay = getprop("/extra500/failurescenarios/delay");
@@ -949,27 +953,22 @@ var FailureClass = {
 			me._timer.start();
 			settimer(func(){
 				me._timer.stop();
-				if (system == "deice") {me._deiceButtons_update(); } 
-				else if (system == "fuel") {me._fuelButtons_update(); } 
-				else if (system == "gear") {me._gearButtons_update(); }
-				else if (system == "contr") {me._contrButtons_update();}
-				else if (system == "avionic") {me._avionicButtons_update();}
-				else if (system == "autopilot") {me._autopilotButtons_update();}
+				me._update_page_direct(system);
 				setprop("/extra500/failurescenarios/delay",0);
 				me._lm_update();
 			},delay+0.2);
 		} else {
-			if (system == "deice") {me._deiceButtons_update(); } 
-			else if (system == "fuel") {me._fuelButtons_update(); } 
-			else if (system == "gear") {me._gearButtons_update(); }
-			else if (system == "contr") {me._contrButtons_update();}
-			else if (system == "avionic") {me._avionicButtons_update();}
-			else if (system == "autopilot") {me._autopilotButtons_update();}
+			me._update_page_direct(system);
 		}
-
-
+	},
+	_update_page_direct : func(system) {
+		if (system == "deice") {me._deiceButtons_update(); } 
+		else if (system == "fuel") {me._fuelButtons_update(); } 
+		else if (system == "gear") {me._gearButtons_update(); }
+		else if (system == "contr") {me._contrButtons_update();}
+		else if (system == "avionic") {me._avionicButtons_update();}
+		else if (system == "autopilot") {me._autopilotButtons_update();}
 	}
-
 
 };
 

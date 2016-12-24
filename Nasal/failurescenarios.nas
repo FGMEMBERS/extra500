@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 21.12.2016            
+#      Date: 24.12.2016            
 #
 # 
 
@@ -133,11 +133,12 @@ var progressiveset = [];
 
 setlistener("/extra500/failurescenarios/activate", func {
 	var fail = getprop("/extra500/failurescenarios/activate");
+	var failure = getprop("/extra500/failurescenarios/name");	# getting failure name
 	var delay = getprop("/extra500/failurescenarios/delay");
 	if (delay != 0) {
-		set_failurewdelay(delay,fail);
+		set_failurewdelay(delay,fail,failure);
 	} else {
-		set_failure(fail);
+		set_failure(fail,failure);
 	}
 });
 
@@ -155,7 +156,7 @@ var updateProgFailures = func() {
 			progressiveset[i][2] = fail;
 			setprop("/extra500/failurescenarios/name",progressiveset[i][0] );
 #			setprop("/extra500/failurescenarios/activate",fail);
-			set_failure(fail);	
+			set_failure(fail,progressiveset[i][0]);	
 		}
 	}
 }
@@ -345,18 +346,14 @@ var PlusMinusFail = func(fail,property){
 	setprop(property,fail2);
 }
 
-var set_failurewdelay = func(delay,fail){
-	settimer(func(){set_failure(fail) },delay);
+var set_failurewdelay = func(delay,fail,failure){
+	settimer(func(){set_failure(fail,failure) },delay);
 }
 
-var set_failure = func(fail) {
-	var failure = getprop("/extra500/failurescenarios/name");	# getting failure name
+var set_failure = func(fail,failure) {
+#	var failure = getprop("/extra500/failurescenarios/name");	# getting failure name
 	if (failure != "") {
-# gear
-#		foreach(var fault; failureset) {
-#	print(fault[0],fault[1],fault[2]);
-#			if (failure == fault[1] ) { call(fault[2],[fail],nil,nil); }
-#		}
+
 		if (failure == "RMG_jammed") { RMG(fail); }
 		else if (failure == "LMG_jammed") { LMG(fail); }
 		else if (failure == "NG_jammed") { NG(fail); }
@@ -435,7 +432,7 @@ var set_failure = func(fail) {
 		else if (failure == "VStabBootFail") { setprop("/systems/pneumatic/VStabBoot/serviceable", math.abs(fail-1) ); }
 		else if (failure == "LHHStabBootFail") { setprop("/systems/pneumatic/LHHStabBoot/serviceable", math.abs(fail-1) ); }
 		else if (failure == "RHHStabBootFail") { setprop("/systems/pneumatic/RHHStabBoot/serviceable", math.abs(fail-1) ); }
-	# instrumentation
+# instrumentation
 		else if (failure == "LHStaticLeak") { setprop("/systems/staticL/leaking", fail ); }
 		else if (failure == "RHStaticLeak") { setprop("/systems/staticR/leaking", fail ); }
 		else if (failure == "LHPitotLeak1") { setprop("/systems/pitotL/leaking1", fail ); }
@@ -459,7 +456,7 @@ var set_failure = func(fail) {
 		else if (failure == "TASFail") 	{ setprop("/instrumentation/tcas/fail", fail ); }
 #		else if (failure == "KBDFail") 	{ setprop("/instrumentation/???", fail ); }
 		else if (failure == "XPDRFail") 	{ setprop("/extra500/instrumentation/xpdr/fail", fail ); }
-	# autopilot
+# autopilot
 		else if (failure == "RollRunaway") 	{ PlusMinusFail(fail,"/autopilot/runaway/roll");}
 		else if (failure == "PitchRunaway") { PlusMinusFail(fail,"/autopilot/runaway/pitch");}
 		else if (failure == "YawRunaway") 	{ PlusMinusFail(fail,"/autopilot/runaway/yaw");}
