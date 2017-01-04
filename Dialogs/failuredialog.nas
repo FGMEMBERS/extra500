@@ -47,6 +47,7 @@ COLORfd["boot2Ok"] = "#1d79e8ff";
 COLORfd["Failed"] = "#ff8080ff";
 COLORfd["randomA"] = "#d45d00ff";
 COLORfd["randomB"] = "#fffa005a";
+COLORfd["randomC"] = "#d400005a";
 COLORfd["pitotOk"] = "#2bb200ff";
 COLORfd["staticOk"] = "#75c3ffff";
 COLORfd["gpsOk"] = "#97bcdaaa";
@@ -551,13 +552,24 @@ var FailureClass = {
 		me._altSens.addEventListener("click",func(){me._onGeneralClick("/autopilot/altsensor/serviceable",0,"APaltSensFail","autopilot");});
 	},
 	_timerf : func(){
-			setprop("/extra500/failurescenarios/delay",getprop("/extra500/failurescenarios/delay")-1);
-			me._lm_update(getprop("/extra500/failurescenarios/delay"));
+		setprop("/extra500/failurescenarios/delay",getprop("/extra500/failurescenarios/delay")-1);
+		var delay = getprop("/extra500/failurescenarios/delay");
+		me._lm_update(delay);
+		if (delay != 0) {
+			me._lmfielddelay.setColorFill(COLORfd["randomB"]);
+		} else {
+			me._lmfielddelay.setColorFill(COLORfd["menuns"]);
+		}
 	},
 	_onDelayChange : func(e){
 		var delay = getprop("/extra500/failurescenarios/delay")+ e.deltaY;
 		delay = math.clamp(delay,0,60);
 		setprop("/extra500/failurescenarios/delay",delay);
+		if (delay != 0) {
+			me._lmfielddelay.setColorFill(COLORfd["randomC"]);
+		} else {
+			me._lmfielddelay.setColorFill(COLORfd["menuns"]);
+		}
 		me._lm_update();
 	},
 	_onRandomClick : func() {
@@ -701,11 +713,11 @@ var FailureClass = {
 			var delay = getprop("/extra500/failurescenarios/delay");
 		}
 		me._lmvaluedelay.setText(sprintf("%i",delay));
-		if (delay != 0) {
-			me._lmfielddelay.setColorFill(COLORfd["randomB"]);
-		} else {
-			me._lmfielddelay.setColorFill(COLORfd["menuns"]);
-		}
+#		if (delay != 0) {
+#			me._lmfielddelay.setColorFill(COLORfd["randomB"]);
+#		} else {
+#			me._lmfielddelay.setColorFill(COLORfd["menuns"]);
+#		}
 	},
 	_welcome_update : func() {
 		var randomactive = getprop("/extra500/failurescenarios/random_active");
@@ -955,6 +967,7 @@ var FailureClass = {
 				me._timer.stop();
 				me._update_page_direct(system);
 				setprop("/extra500/failurescenarios/delay",0);
+				me._lmfielddelay.setColorFill(COLORfd["menuns"]);
 				me._lm_update();
 			},delay+0.2);
 		} else {
