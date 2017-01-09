@@ -17,7 +17,7 @@
 #      Date:   23.11.2014
 #
 #      Last change:      Eric van den Berg 
-#      Date:             14.11.2015
+#      Date:             09.01.2017
 #
 
 var init_display = func() {
@@ -68,8 +68,9 @@ var TrimInd = {
 				Pushing	: m._group.getElementById("text_pushing").setVisible(0),
 				Trimmed	: m._group.getElementById("text_trimmed").setVisible(0),
 
-				Letgo		: m._group.getElementById("text_letgo").setVisible(0),
 				PContrFailed	: m._group.getElementById("text_PCFailed").setVisible(0),
+				ForceC	: m._group.getElementById("text_forcec").setVisible(0),
+				DirectC	: m._group.getElementById("text_directc").setVisible(0),
 
 			}
 			
@@ -89,112 +90,93 @@ var TrimInd = {
 			me._can.Layout.Pulling.setVisible(0);
 			me._can.Layout.Pushing.setVisible(0);
 			me._can.Layout.Trimmed.setVisible(0);
-			me._can.Layout.Letgo.setVisible(0);
 			me._can.Layout.PContrFailed.setVisible(1);
-		}else if (getprop("/fdm/jsbsim/state/controls-fixed")!=1) {
-			me._can.Layout.Force.setVisible(0);
-			me._can.Layout.Push1.setVisible(0);
-			me._can.Layout.Push2.setVisible(0);
-			me._can.Layout.Push3.setVisible(0);
-			me._can.Layout.Pull1.setVisible(0);
-			me._can.Layout.Pull2.setVisible(0);
-			me._can.Layout.Pull3.setVisible(0);
-			me._can.Layout.Pulling.setVisible(0);
-			me._can.Layout.Pushing.setVisible(0);
-			me._can.Layout.Trimmed.setVisible(0);
-			me._can.Layout.Letgo.setVisible(1);
-			me._can.Layout.PContrFailed.setVisible(0);
-		} else if (getprop("/fdm/jsbsim/aircraft/events/pitchtrim") == 1) {
+			me._can.Layout.DirectC.setVisible(0);
+			me._can.Layout.ForceC.setVisible(0);
+		}else {
 			me._can.Layout.Force.setVisible(1);
-			me._can.Layout.Push1.setVisible(1);
-			me._can.Layout.Push2.setVisible(0);
-			me._can.Layout.Push3.setVisible(0);
-			me._can.Layout.Pull1.setVisible(0);
-			me._can.Layout.Pull2.setVisible(0);
-			me._can.Layout.Pull3.setVisible(0);
-			me._can.Layout.Pulling.setVisible(0);
-			me._can.Layout.Pushing.setVisible(1);
-			me._can.Layout.Trimmed.setVisible(0);
-			me._can.Layout.Letgo.setVisible(0);
-			me._can.Layout.PContrFailed.setVisible(0);
-		} else if (getprop("/fdm/jsbsim/aircraft/events/pitchtrim") == 2){
-			me._can.Layout.Force.setVisible(1);
-			me._can.Layout.Push1.setVisible(1);
-			me._can.Layout.Push2.setVisible(1);
-			me._can.Layout.Push3.setVisible(0);
-			me._can.Layout.Pull1.setVisible(0);
-			me._can.Layout.Pull2.setVisible(0);
-			me._can.Layout.Pull3.setVisible(0);
-			me._can.Layout.Pulling.setVisible(0);
-			me._can.Layout.Pushing.setVisible(1);
-			me._can.Layout.Trimmed.setVisible(0);
-			me._can.Layout.Letgo.setVisible(0);
-			me._can.Layout.PContrFailed.setVisible(0);
-		} else if (getprop("/fdm/jsbsim/aircraft/events/pitchtrim") == 3){
-			me._can.Layout.Force.setVisible(1);
-			me._can.Layout.Push1.setVisible(1);
-			me._can.Layout.Push2.setVisible(1);
-			me._can.Layout.Push3.setVisible(1);
-			me._can.Layout.Pull1.setVisible(0);
-			me._can.Layout.Pull2.setVisible(0);
-			me._can.Layout.Pull3.setVisible(0);
-			me._can.Layout.Pulling.setVisible(0);
-			me._can.Layout.Pushing.setVisible(1);
-			me._can.Layout.Trimmed.setVisible(0);
-			me._can.Layout.Letgo.setVisible(0);
-			me._can.Layout.PContrFailed.setVisible(0);
-		} else if (getprop("/fdm/jsbsim/aircraft/events/pitchtrim") == -1){
-			me._can.Layout.Force.setVisible(1);
-			me._can.Layout.Push1.setVisible(0);
-			me._can.Layout.Push2.setVisible(0);
-			me._can.Layout.Push3.setVisible(0);
-			me._can.Layout.Pull1.setVisible(1);
-			me._can.Layout.Pull2.setVisible(0);
-			me._can.Layout.Pull3.setVisible(0);
-			me._can.Layout.Pulling.setVisible(1);
-			me._can.Layout.Pushing.setVisible(0);
-			me._can.Layout.Trimmed.setVisible(0);
-			me._can.Layout.Letgo.setVisible(0);
-			me._can.Layout.PContrFailed.setVisible(0);
-		} else if (getprop("/fdm/jsbsim/aircraft/events/pitchtrim") == -2){
-			me._can.Layout.Force.setVisible(1);
-			me._can.Layout.Push1.setVisible(0);
-			me._can.Layout.Push2.setVisible(0);
-			me._can.Layout.Push3.setVisible(0);
-			me._can.Layout.Pull1.setVisible(1);
-			me._can.Layout.Pull2.setVisible(1);
-			me._can.Layout.Pull3.setVisible(0);
-			me._can.Layout.Pulling.setVisible(1);
-			me._can.Layout.Pushing.setVisible(0);
-			me._can.Layout.Trimmed.setVisible(0);
-			me._can.Layout.Letgo.setVisible(0);
-			me._can.Layout.PContrFailed.setVisible(0);
-		} else if (getprop("/fdm/jsbsim/aircraft/events/pitchtrim") == -3){
-			me._can.Layout.Force.setVisible(1);
-			me._can.Layout.Push1.setVisible(0);
-			me._can.Layout.Push2.setVisible(0);
-			me._can.Layout.Push3.setVisible(0);
-			me._can.Layout.Pull1.setVisible(1);
-			me._can.Layout.Pull2.setVisible(1);
-			me._can.Layout.Pull3.setVisible(1);
-			me._can.Layout.Pulling.setVisible(1);
-			me._can.Layout.Pushing.setVisible(0);
-			me._can.Layout.Trimmed.setVisible(0);
-			me._can.Layout.Letgo.setVisible(0);
-			me._can.Layout.PContrFailed.setVisible(0);
-		} else {
-			me._can.Layout.Force.setVisible(1);
-			me._can.Layout.Push1.setVisible(0);
-			me._can.Layout.Push2.setVisible(0);
-			me._can.Layout.Push3.setVisible(0);
-			me._can.Layout.Pull1.setVisible(0);
-			me._can.Layout.Pull2.setVisible(0);
-			me._can.Layout.Pull3.setVisible(0);
-			me._can.Layout.Pulling.setVisible(0);
-			me._can.Layout.Pushing.setVisible(0);
-			me._can.Layout.Trimmed.setVisible(1);
-			me._can.Layout.Letgo.setVisible(0);
-			me._can.Layout.PContrFailed.setVisible(0);
+
+			if (getprop("/fdm/jsbsim/state/controls-fixed")!=1) {
+				me._can.Layout.DirectC.setVisible(0);
+				me._can.Layout.ForceC.setVisible(1);
+				me._can.Layout.PContrFailed.setVisible(0);
+			}else {
+				me._can.Layout.DirectC.setVisible(1);
+				me._can.Layout.ForceC.setVisible(0);
+				me._can.Layout.PContrFailed.setVisible(0);
+			}
+
+			if (getprop("/fdm/jsbsim/aircraft/events/pitchtrim") == 1) {
+				me._can.Layout.Push1.setVisible(1);
+				me._can.Layout.Push2.setVisible(0);
+				me._can.Layout.Push3.setVisible(0);
+				me._can.Layout.Pull1.setVisible(0);
+				me._can.Layout.Pull2.setVisible(0);
+				me._can.Layout.Pull3.setVisible(0);
+				me._can.Layout.Pulling.setVisible(0);
+				me._can.Layout.Pushing.setVisible(1);
+				me._can.Layout.Trimmed.setVisible(0);
+			} else if (getprop("/fdm/jsbsim/aircraft/events/pitchtrim") == 2){
+				me._can.Layout.Push1.setVisible(1);
+				me._can.Layout.Push2.setVisible(1);
+				me._can.Layout.Push3.setVisible(0);
+				me._can.Layout.Pull1.setVisible(0);
+				me._can.Layout.Pull2.setVisible(0);
+				me._can.Layout.Pull3.setVisible(0);
+				me._can.Layout.Pulling.setVisible(0);
+				me._can.Layout.Pushing.setVisible(1);
+				me._can.Layout.Trimmed.setVisible(0);
+			} else if (getprop("/fdm/jsbsim/aircraft/events/pitchtrim") == 3){
+				me._can.Layout.Push1.setVisible(1);
+				me._can.Layout.Push2.setVisible(1);
+				me._can.Layout.Push3.setVisible(1);
+				me._can.Layout.Pull1.setVisible(0);
+				me._can.Layout.Pull2.setVisible(0);
+				me._can.Layout.Pull3.setVisible(0);
+				me._can.Layout.Pulling.setVisible(0);
+				me._can.Layout.Pushing.setVisible(1);
+				me._can.Layout.Trimmed.setVisible(0);
+			} else if (getprop("/fdm/jsbsim/aircraft/events/pitchtrim") == -1){
+				me._can.Layout.Push1.setVisible(0);
+				me._can.Layout.Push2.setVisible(0);
+				me._can.Layout.Push3.setVisible(0);
+				me._can.Layout.Pull1.setVisible(1);
+				me._can.Layout.Pull2.setVisible(0);
+				me._can.Layout.Pull3.setVisible(0);
+				me._can.Layout.Pulling.setVisible(1);
+				me._can.Layout.Pushing.setVisible(0);
+				me._can.Layout.Trimmed.setVisible(0);
+			} else if (getprop("/fdm/jsbsim/aircraft/events/pitchtrim") == -2){
+				me._can.Layout.Push1.setVisible(0);
+				me._can.Layout.Push2.setVisible(0);
+				me._can.Layout.Push3.setVisible(0);
+				me._can.Layout.Pull1.setVisible(1);
+				me._can.Layout.Pull2.setVisible(1);
+				me._can.Layout.Pull3.setVisible(0);
+				me._can.Layout.Pulling.setVisible(1);
+				me._can.Layout.Pushing.setVisible(0);
+				me._can.Layout.Trimmed.setVisible(0);
+			} else if (getprop("/fdm/jsbsim/aircraft/events/pitchtrim") == -3){
+				me._can.Layout.Push1.setVisible(0);
+				me._can.Layout.Push2.setVisible(0);
+				me._can.Layout.Push3.setVisible(0);
+				me._can.Layout.Pull1.setVisible(1);
+				me._can.Layout.Pull2.setVisible(1);
+				me._can.Layout.Pull3.setVisible(1);
+				me._can.Layout.Pulling.setVisible(1);
+				me._can.Layout.Pushing.setVisible(0);
+				me._can.Layout.Trimmed.setVisible(0);
+			} else {
+				me._can.Layout.Push1.setVisible(0);
+				me._can.Layout.Push2.setVisible(0);
+				me._can.Layout.Push3.setVisible(0);
+				me._can.Layout.Pull1.setVisible(0);
+				me._can.Layout.Pull2.setVisible(0);
+				me._can.Layout.Pull3.setVisible(0);
+				me._can.Layout.Pulling.setVisible(0);
+				me._can.Layout.Pushing.setVisible(0);
+				me._can.Layout.Trimmed.setVisible(1);
+			}
 		}
 	},
 

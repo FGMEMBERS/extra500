@@ -17,7 +17,7 @@
 #	Date: 	10.10.2015
 #
 #	Last change: Eric van den Berg	
-#	Date:		23.12.2016	
+#	Date:		09.01.2017	
 #
 
 var COLORfd = {};
@@ -500,7 +500,7 @@ var FailureClass = {
 	# control system
 		me._LAileron.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/L-aileron",1,"LAil","contr");});
 		me._RAileron.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/R-aileron",1,"RAil","contr");});
-		me._Elevator.addEventListener("click",func(){me._onElevatorClick();});
+		me._Elevator.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/elevator",1,"Elevator","contr");});
 		me._LFlap.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/L-flap",1,"LFlap","contr");});
 		me._RFlap.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/R-flap",1,"RFlap","contr");});
 		me._Rudder.addEventListener("click",func(){me._onGeneralClick("/extra500/failurescenarios/controls/rudder",1,"Rudder","contr");});
@@ -713,11 +713,6 @@ var FailureClass = {
 			var delay = getprop("/extra500/failurescenarios/delay");
 		}
 		me._lmvaluedelay.setText(sprintf("%i",delay));
-#		if (delay != 0) {
-#			me._lmfielddelay.setColorFill(COLORfd["randomB"]);
-#		} else {
-#			me._lmfielddelay.setColorFill(COLORfd["menuns"]);
-#		}
 	},
 	_welcome_update : func() {
 		var randomactive = getprop("/extra500/failurescenarios/random_active");
@@ -910,23 +905,6 @@ var FailureClass = {
 			me._autopilotfailnumber.setColor(1,1,1,0);
 		}
 
-	},
-	_onElevatorClick : func(){
-		if (getprop("/extra500/failurescenarios/controls/elevator") == 1) {
-			setprop("/extra500/failurescenarios/name","Elevator");
-			setprop("/extra500/failurescenarios/activate",0);
-			me._LElevator.setColorFill(COLORfd["EleOk"]);
-			me._RElevator.setColorFill(COLORfd["EleOk"]);
-			me._Text_Elevator.hide();
-			me._contrButtons_update();
-		} else {
-			setprop("/extra500/failurescenarios/name","Elevator");
-			setprop("/extra500/failurescenarios/activate",1);
-			me._LElevator.setColorFill(COLORfd["Failed"]);
-			me._RElevator.setColorFill(COLORfd["Failed"]);
-			me._Text_Elevator.show();
-			me._contrButtons_update();
-		}
 	},
 	_onGeneralClick : func(property,logic,failname,system){			# for 'servicable' values, so logic 0 or 1
 		setprop("/extra500/failurescenarios/name",failname);
