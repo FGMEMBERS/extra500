@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 24.12.2016            
+#      Date: 12.01.2017            
 #
 # 
 
@@ -259,16 +259,6 @@ var RcheckvalveFail = func(fail) {
 
 # GEAR FAILURES
 
-#individual gears jammed
-var RMG = func(n) {setprop("/systems/gear/RMG-free", math.abs(n-1) ); }
-var LMG = func(n) {setprop("/systems/gear/LMG-free", math.abs(n-1) ); }
-var NG = func(n) {setprop("/systems/gear/NG-free", math.abs(n-1) ); }
-
-#solenoids failed
-var mainvalve_solenoid = func(n) {setprop("/systems/gear/solenoids/mainvalve/serviceable", math.abs(n-1) ); }
-var upperdoorvalve_solenoid = func(n) {setprop("/systems/gear/solenoids/upperdoorvalve/serviceable", math.abs(n-1) ); }
-var lowerdoorvalve_solenoid = func(n) {setprop("/systems/gear/solenoids/lowerdoorvalve/serviceable", math.abs(n-1) ); }
-
 #flat tire
 var NG_flat = func(n) {
 	if (n==1) {
@@ -336,6 +326,30 @@ var RMG_nobrake = func(n) {
 	}
 }
 
+# INSTRUMENT FAILURES
+
+var hang = func(fail,failProperty,hangProperty,delayTime,goodTime) {
+	setprop(failProperty, fail );
+	if (fail == 1) { hang2(failProperty,hangProperty,delayTime,goodTime); } 
+}
+
+var hang2 = func(failProperty,hangProperty,delayTime,goodTime) {
+# this is intended for mechanical indicators (airspeed, altitude, gyro-s etc)
+# It will let the indicator hang for "delayTime" (sec) and jump to the true value 
+# It will indicate good for "goodTime" (sec)
+# The hanging property is "hangProperty"
+# There is some variance on both "delayTime" and goodTime" to add some realism
+
+	if (getprop(failProperty) == 1) {
+		setprop(hangProperty, 1);
+		var delayTime1 = delayTime * (1 + 0.2*(rand()-0.5));
+		var totalTime = delayTime1 + goodTime * (1 + 0.2*(rand()-0.5)); 
+		settimer(func(){setprop(hangProperty, 0);},delayTime1);
+		settimer(func(){hang2(failProperty,hangProperty,delayTime,goodTime);},totalTime);
+	}
+
+}
+
 # AUTOPILOT FAILURES
 var PlusMinusFail = func(fail,property){
 	if (fail == 0 ) {
@@ -354,12 +368,12 @@ var set_failure = func(fail,failure) {
 #	var failure = getprop("/extra500/failurescenarios/name");	# getting failure name
 	if (failure != "") {
 
-		if (failure == "RMG_jammed") { RMG(fail); }
-		else if (failure == "LMG_jammed") { LMG(fail); }
-		else if (failure == "NG_jammed") { NG(fail); }
-		else if (failure == "mainvalve_solenoid_fail") { mainvalve_solenoid(fail); }
-		else if (failure == "upperdoorvalve_solenoid_fail") { upperdoorvalve_solenoid(fail); }
-		else if (failure == "lowerdoorvalve_solenoid_fail") { lowerdoorvalve_solenoid(fail); }
+		if (failure == "RMG_jammed") { setprop("/systems/gear/RMG-free", math.abs(fail-1) ); }
+		else if (failure == "LMG_jammed") { setprop("/systems/gear/LMG-free", math.abs(fail-1) ); }
+		else if (failure == "NG_jammed") { setprop("/systems/gear/NG-free", math.abs(fail-1) ); }
+		else if (failure == "mainvalve_solenoid_fail") { setprop("/systems/gear/solenoids/mainvalve/serviceable", math.abs(fail-1) ); }
+		else if (failure == "upperdoorvalve_solenoid_fail") { setprop("/systems/gear/solenoids/upperdoorvalve/serviceable", math.abs(fail-1) ); }
+		else if (failure == "lowerdoorvalve_solenoid_fail") { setprop("/systems/gear/solenoids/lowerdoorvalve/serviceable", math.abs(fail-1) ); }
 		else if (failure == "NG_flat") { NG_flat(fail); }
 		else if (failure == "LMG_flat") { LMG_flat(fail); }
 		else if (failure == "RMG_flat") { RMG_flat(fail); }
@@ -439,7 +453,8 @@ var set_failure = func(fail,failure) {
 		else if (failure == "RHPitotLeak1") { setprop("/systems/pitotR/leaking1", fail ); }
 		else if (failure == "LHPitotLeak2") { setprop("/systems/pitotL/leaking2", fail ); }
 		else if (failure == "RHPitotLeak2") { setprop("/systems/pitotR/leaking2", fail ); }
-		else if (failure == "BackupAttInd") { setprop("/instrumentation/attitude-indicator/serviceable", math.abs(fail-1) ); }
+#		else if (failure == "BackupAttInd") { setprop("/instrumentation/attitude-indicator/serviceable", math.abs(fail-1) ); }
+		else if (failure == "BackupAttInd") { hang(fail,"/extra500/instrumentation/StbyHSI/fail","/extra500/instrumentation/StbyHSI/hangs",0.4,0.5); }
 		else if (failure == "NAV1Fail") 	{ setprop("/instrumentation/nav/serviceable", math.abs(fail-1) ); }
 		else if (failure == "NAV2Fail") 	{ setprop("/instrumentation/nav[1]/serviceable", math.abs(fail-1) ); }
 		else if (failure == "GS1Fail") 	{ setprop("/instrumentation/nav/gs/serviceable", math.abs(fail-1) ); }

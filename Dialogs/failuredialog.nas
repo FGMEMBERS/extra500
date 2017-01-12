@@ -17,7 +17,7 @@
 #	Date: 	10.10.2015
 #
 #	Last change: Eric van den Berg	
-#	Date:		09.01.2017	
+#	Date:		12.01.2017	
 #
 
 var COLORfd = {};
@@ -520,7 +520,7 @@ var FailureClass = {
 		me._PropH.addEventListener("click",func(){me._onGeneralClick("/extra500/system/deice/Propeller/service/serviceable",0,"PropHeatFail","deice");});		
 		me._EngInletHeat.addEventListener("click",func(){me._onGeneralClick("/extra500/system/deice/IntakeHeat/serviceable",0,"InletAntiIceFail","deice");});		
 	# avionic system
-		me._AttInd.addEventListener("click",func(){me._onGeneralClick("/instrumentation/attitude-indicator/serviceable",0,"BackupAttInd","avionic");});		
+		me._AttInd.addEventListener("click",func(){me._onGeneralClick("/extra500/instrumentation/StbyHSI/fail",1,"BackupAttInd","avionic");});		
 		me._LHStatic.addEventListener("click",func(){me._onGeneralClick("/systems/staticL/leaking",1,"LHStaticLeak","avionic");});		
 		me._LHPitot1.addEventListener("click",func(){me._onGeneralClick("/systems/pitotL/leaking1",1,"LHPitotLeak1","avionic");});		
 		me._LHPitot2.addEventListener("click",func(){me._onGeneralClick("/systems/pitotL/leaking2",1,"LHPitotLeak2","avionic");});		
@@ -849,7 +849,7 @@ var FailureClass = {
 	_avionicButtons_update : func() {
 		setprop("/extra500/failurescenarios/avionic",0);
 
-		me._genButtons_update("/instrumentation/attitude-indicator/serviceable",1,me._AttInd,me._Text_AttInd,"opaque","/extra500/failurescenarios/avionic");	
+		me._genButtons_update("/extra500/instrumentation/StbyHSI/fail",0,me._AttInd,me._Text_AttInd,"opaque","/extra500/failurescenarios/avionic");	
 		me._genButtons_update("/systems/staticL/leaking",0,me._LHStatic,me._Text_LHStatic,"staticOk","/extra500/failurescenarios/avionic");		
 		me._genButtons_update("/systems/pitotL/leaking1",0,me._LHPitot1,me._Text_LHPitot1,"pitotOk","/extra500/failurescenarios/avionic");		
 		me._genButtons_update("/systems/pitotL/leaking2",0,me._LHPitot2,me._Text_LHPitot2,"pitotOk","/extra500/failurescenarios/avionic");		

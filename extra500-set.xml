@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:      Eric van den Berg
-	Date:             21.12.16
+	Date:             12.01.17
 
 
 ************************************************************************
@@ -1932,6 +1932,12 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<TurnCoordinator>
 			<volt type="double">0</volt>
 		</TurnCoordinator>
+		<StbyHSI>
+			<indicated-roll-deg type="double"></indicated-roll-deg>
+			<indicated-pitch-deg type="double"></indicated-pitch-deg>
+			<fail type="bool">0</fail>
+			<hangs type="bool">0</hangs>
+		</StbyHSI>
 		<IFD-LH>
 			<state type="bool">false</state>
 			<settings>

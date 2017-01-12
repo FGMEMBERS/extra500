@@ -24,7 +24,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       Date: 2013-03-13
 
       Last change:      Eric van den Berg
-      Date:             30.10.16
+      Date:             12.01.17
 -->
 
 	<fileheader>
@@ -39,6 +39,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	<system file="extra500-system-indication.xml"/>
 	<system file="extra500-CASmessages.xml"/>
 	<system file="extra500-system-AHRS.xml"/>
+	<system file="extra500-system-mechinstr.xml"/>
 	<system file="extra500-system-stallwarner.xml"/>
 	<system file="extra500-system-transponder.xml"/>
 	<system file="extra500-system-pressurization.xml"/>

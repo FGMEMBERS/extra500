@@ -25,13 +25,13 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1440"
-     inkscape:window-height="836"
+     inkscape:window-width="1900"
+     inkscape:window-height="1004"
      id="namedview8"
      showgrid="false"
-     inkscape:zoom="0.6342957"
-     inkscape:cx="578.66677"
-     inkscape:cy="711.31827"
+     inkscape:zoom="3.5881183"
+     inkscape:cx="364.55542"
+     inkscape:cy="882.68674"
      inkscape:window-x="0"
      inkscape:window-y="21"
      inkscape:window-maximized="1"
@@ -524,7 +524,7 @@
          sodipodi:role="line"
          id="tspan4487-2"
          x="329.25833"
-         y="107.74544">Backup attitude indicator failed</tspan></text>
+         y="107.74544">Back-up attitude indicator hangs</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:10.10992336px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"

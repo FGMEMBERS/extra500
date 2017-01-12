@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+	
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Eric van den Berg
+      Date: 2017-01-12
+
+      Last change:       
+      Date:              
+-->
+
+<system name="mechinstr">
+
+	<channel name="standbyind">
+
+		<switch name="stdbyindroll">
+			<default value="/instrumentation/attitude-indicator/indicated-roll-deg"/>
+			<test logic="OR" value="/extra500/instrumentation/StbyHSI/indicated-roll-deg">
+				/extra500/instrumentation/StbyHSI/hangs eq 1
+			</test>
+			<output>/extra500/instrumentation/StbyHSI/indicated-roll-deg</output>
+		</switch>
+
+		<switch name="stdbyindpitch">
+			<default value="/instrumentation/attitude-indicator/indicated-pitch-deg"/>
+			<test logic="OR" value="/extra500/instrumentation/StbyHSI/indicated-pitch-deg">
+				/extra500/instrumentation/StbyHSI/hangs eq 1
+			</test>
+			<output>/extra500/instrumentation/StbyHSI/indicated-pitch-deg</output>
+		</switch>
+
+	</channel>
+
+</system>
+
+
+
