@@ -19,8 +19,8 @@
       Author: Eric van den Berg
       Date: 2017-01-12
 
-      Last change:       
-      Date:              
+      Last change: Eric van den Berg      
+      Date: 2017-01-13             
 -->
 
 <system name="mechinstr">
@@ -41,6 +41,22 @@
 				/extra500/instrumentation/StbyHSI/hangs eq 1
 			</test>
 			<output>/extra500/instrumentation/StbyHSI/indicated-pitch-deg</output>
+		</switch>
+
+		<switch name="stdbyindalt">
+			<default value="/instrumentation/altimeter-backup/indicated-altitude-ft"/>
+			<test logic="OR" value="/extra500/instrumentation/StbyALT/indicated-altitude-ft">
+				/extra500/instrumentation/StbyALT/hangs eq 1
+			</test>
+			<output>/extra500/instrumentation/StbyALT/indicated-altitude-ft</output>
+		</switch>
+
+		<switch name="stdbyindairspeed">
+			<default value="/instrumentation/airspeed-backup/indicated-airspeed-kt"/>
+			<test logic="OR" value="/extra500/instrumentation/StbyASI/indicated-airspeed-kt">
+				/extra500/instrumentation/StbyASI/hangs eq 1
+			</test>
+			<output>/extra500/instrumentation/StbyASI/indicated-airspeed-kt</output>
 		</switch>
 
 	</channel>

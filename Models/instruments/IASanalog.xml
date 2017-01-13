@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Thomas Grossberger
-      Date:             01.07.13
+      Last change:      Eric van den Berg
+      Date:             13.01.17
 
 -->
 
@@ -32,7 +32,7 @@
 <animation>
   <type>rotate</type>
   <object-name>IASanalog.Needle</object-name>
-  <property>/instrumentation/airspeed-backup/indicated-airspeed-kt</property>
+  <property>/extra500/instrumentation/StbyASI/indicated-airspeed-kt</property>
 		<interpolation>
             <entry>
                 <ind>30</ind>

@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 12.01.2017            
+#      Date: 13.01.2017            
 #
 # 
 
@@ -95,35 +95,37 @@ var failureset = [
 	[65,"RHPitotLeak1","ana"],
 	[66,"LHPitotLeak2","ana"],
 	[67,"RHPitotLeak2","ana"],
-	[68,"BackupAttInd","dig"],
-	[69,"GPS1Fail","dig"],
-	[70,"GPS2Fail","dig"],
-	[71,"DMEFail","dig"],
-	[72,"NAV1Fail","dig"],
-	[73,"NAV2Fail","dig"],
-	[74,"GS1Fail","dig"],
-	[75,"GS2Fail","dig"],
-	[76,"RHHeading","pro",1,30],
-	[77,"LHHeading","pro",1,30],
-	[78,"RHPitch","pro",1,30],
-	[79,"LHPitch","pro",1,30],
-	[80,"RHRoll","pro",1,30],
-	[81,"LHRoll","pro",1,30],
-	[82,"RHHeading","pro",-1,-30],
-	[83,"LHHeading","pro",-1,-30],
-	[84,"RHPitch","pro",-1,-30],
-	[85,"LHPitch","pro",-1,-30],
-	[86,"RHRoll","pro",-1,-30],
-	[87,"LHRoll","pro",-1,-30],
-	[88,"TASFail","dig"],
-#	[89,"KBDFail","dig"],
-	[89,"XPDRFail","dig"],
-	[90,"RollRunaway","dig"],
-	[91,"PitchRunaway","dig"], 
-	[92,"YawRunaway","dig"],	
-	[93,"PitchtrimRunaway","dig"],
-	[94,"APaltSensFail","dig"],
-	[95,"TurnInd","dig"]	 	
+	[68,"BackupAirInd","dig"],
+	[69,"BackupAttInd","dig"],
+	[70,"BackupAltInd","dig"],
+	[71,"GPS1Fail","dig"],
+	[72,"GPS2Fail","dig"],
+	[73,"DMEFail","dig"],
+	[74,"NAV1Fail","dig"],
+	[75,"NAV2Fail","dig"],
+	[76,"GS1Fail","dig"],
+	[77,"GS2Fail","dig"],
+	[78,"RHHeading","pro",1,30],
+	[79,"LHHeading","pro",1,30],
+	[80,"RHPitch","pro",1,30],
+	[81,"LHPitch","pro",1,30],
+	[82,"RHRoll","pro",1,30],
+	[83,"LHRoll","pro",1,30],
+	[84,"RHHeading","pro",-1,-30],
+	[85,"LHHeading","pro",-1,-30],
+	[86,"RHPitch","pro",-1,-30],
+	[87,"LHPitch","pro",-1,-30],
+	[88,"RHRoll","pro",-1,-30],
+	[89,"LHRoll","pro",-1,-30],
+	[90,"TASFail","dig"],
+#	[91,"KBDFail","dig"],
+	[92,"XPDRFail","dig"],
+	[93,"RollRunaway","dig"],
+	[94,"PitchRunaway","dig"], 
+	[95,"YawRunaway","dig"],	
+	[96,"PitchtrimRunaway","dig"],
+	[97,"APaltSensFail","dig"],
+	[98,"TurnInd","dig"]	 	
 	
 
 ];
@@ -454,7 +456,9 @@ var set_failure = func(fail,failure) {
 		else if (failure == "LHPitotLeak2") { setprop("/systems/pitotL/leaking2", fail ); }
 		else if (failure == "RHPitotLeak2") { setprop("/systems/pitotR/leaking2", fail ); }
 #		else if (failure == "BackupAttInd") { setprop("/instrumentation/attitude-indicator/serviceable", math.abs(fail-1) ); }
+		else if (failure == "BackupAirInd") { hang(fail,"/extra500/instrumentation/StbyIAS/fail","/extra500/instrumentation/StbyIAS/hangs",0.3,0.3); }
 		else if (failure == "BackupAttInd") { hang(fail,"/extra500/instrumentation/StbyHSI/fail","/extra500/instrumentation/StbyHSI/hangs",0.4,0.5); }
+		else if (failure == "BackupAltInd") { hang(fail,"/extra500/instrumentation/StbyALT/fail","/extra500/instrumentation/StbyALT/hangs",0.3,0.4); }
 		else if (failure == "NAV1Fail") 	{ setprop("/instrumentation/nav/serviceable", math.abs(fail-1) ); }
 		else if (failure == "NAV2Fail") 	{ setprop("/instrumentation/nav[1]/serviceable", math.abs(fail-1) ); }
 		else if (failure == "GS1Fail") 	{ setprop("/instrumentation/nav/gs/serviceable", math.abs(fail-1) ); }
@@ -612,7 +616,9 @@ var failure_reset = func() {
 	setprop("/systems/pitotR/leaking1", 0 );
 	setprop("/systems/pitotL/leaking2", 0 );
 	setprop("/systems/pitotR/leaking2", 0 );
-	setprop("/instrumentation/attitude-indicator/serviceable", 1 );
+	setprop("/extra500/instrumentation/StbyASI/fail", 0 );
+	setprop("/extra500/instrumentation/StbyHSI/fail", 0 );
+	setprop("/extra500/instrumentation/StbyALT/fail", 0 );
 	setprop("/instrumentation/nav/serviceable", 1 );
 	setprop("/instrumentation/nav[1]/serviceable", 1 );
 	setprop("/instrumentation/nav/gs/serviceable", 1 );
