@@ -469,7 +469,7 @@ var AirspeedSpeedWidget = {
 			#me._can.Plade.setVisible(1);
 			me._can.IAS_001.setVisible(1);
 
-			me._can.Rate.set("rect/height",(-me._rate*58));
+			me._can.Rate.set("rect/height",(-me._rate*45));
 			
 			me._can.TAS.setText(sprintf("%3i",me._tas));
 			
