@@ -399,7 +399,8 @@ var AirspeedSpeedWidget = {
 		m._limitVso	= 58;
 		m._limitZero	= 20;
 		m._LADER_PX	= 63.463;
-		m._RATE_OFFSET	= m._can.Rate.get("coord[3]");
+		
+                
 		
 		m._speed	= 0;
 		m._speedAdd	= 0;
@@ -468,8 +469,8 @@ var AirspeedSpeedWidget = {
 			#me._can.Plade.setVisible(1);
 			me._can.IAS_001.setVisible(1);
 
-			me._can.Rate.set("coord[1]",me._RATE_OFFSET+(-me._rate*58));
-print(me._tas);					
+			me._can.Rate.set("rect/height",(-me._rate*58));
+			
 			me._can.TAS.setText(sprintf("%3i",me._tas));
 			
 			me._speed = math.mod(me._ias,10);
