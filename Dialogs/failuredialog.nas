@@ -17,7 +17,7 @@
 #	Date: 	10.10.2015
 #
 #	Last change: Eric van den Berg	
-#	Date:		12.01.2017	
+#	Date:		18.01.2017	
 #
 
 var COLORfd = {};
@@ -266,7 +266,9 @@ var FailureClass = {
 		me._Text_EngInletHeat	= me._svg_deice.getElementById("text_EngInletHeat");
 
 	# avionic system
+		me._ASInd		= me._svg_avionic.getElementById("STBYIASIND");
 		me._AttInd		= me._svg_avionic.getElementById("STBYATTIND");
+		me._AltInd		= me._svg_avionic.getElementById("STBYALTIND");
 		me._LHStatic	= me._svg_avionic.getElementById("LHSTATIC");
 		me._LHPitot1	= me._svg_avionic.getElementById("LHPITOT1");
 		me._LHPitot2	= me._svg_avionic.getElementById("LHPITOT2");
@@ -291,7 +293,9 @@ var FailureClass = {
 		me._PITCH2		= me._svg_avionic.getElementById("RHPITCH");
 		me._ROLL2		= me._svg_avionic.getElementById("RHROLL");
 
+		me._Text_ASInd	= me._svg_avionic.getElementById("text_STBYIASIND").hide();
 		me._Text_AttInd	= me._svg_avionic.getElementById("text_STBYATTIND").hide();
+		me._Text_AltInd	= me._svg_avionic.getElementById("text_STBYALTIND").hide();
 		me._Text_LHStatic	= me._svg_avionic.getElementById("text_LHSTATIC").hide();
 		me._Text_LHPitot1	= me._svg_avionic.getElementById("text_LHPITOT1").hide();
 		me._Text_LHPitot2	= me._svg_avionic.getElementById("text_LHPITOT2").hide();
@@ -520,7 +524,9 @@ var FailureClass = {
 		me._PropH.addEventListener("click",func(){me._onGeneralClick("/extra500/system/deice/Propeller/service/serviceable",0,"PropHeatFail","deice");});		
 		me._EngInletHeat.addEventListener("click",func(){me._onGeneralClick("/extra500/system/deice/IntakeHeat/serviceable",0,"InletAntiIceFail","deice");});		
 	# avionic system
-		me._AttInd.addEventListener("click",func(){me._onGeneralClick("/extra500/instrumentation/StbyHSI/fail",1,"BackupAttInd","avionic");});		
+		me._ASInd.addEventListener("click",func(){me._onGeneralClick("/extra500/instrumentation/StbyASI/fail",1,"BackupAirInd","avionic");});			
+		me._AttInd.addEventListener("click",func(){me._onGeneralClick("/extra500/instrumentation/StbyHSI/fail",1,"BackupAttInd","avionic");});	
+		me._AltInd.addEventListener("click",func(){me._onGeneralClick("/extra500/instrumentation/StbyALT/fail",1,"BackupAltInd","avionic");});			
 		me._LHStatic.addEventListener("click",func(){me._onGeneralClick("/systems/staticL/leaking",1,"LHStaticLeak","avionic");});		
 		me._LHPitot1.addEventListener("click",func(){me._onGeneralClick("/systems/pitotL/leaking1",1,"LHPitotLeak1","avionic");});		
 		me._LHPitot2.addEventListener("click",func(){me._onGeneralClick("/systems/pitotL/leaking2",1,"LHPitotLeak2","avionic");});		
@@ -849,7 +855,9 @@ var FailureClass = {
 	_avionicButtons_update : func() {
 		setprop("/extra500/failurescenarios/avionic",0);
 
+		me._genButtons_update("/extra500/instrumentation/StbyASI/fail",0,me._ASInd,me._Text_ASInd,"opaque","/extra500/failurescenarios/avionic");	
 		me._genButtons_update("/extra500/instrumentation/StbyHSI/fail",0,me._AttInd,me._Text_AttInd,"opaque","/extra500/failurescenarios/avionic");	
+		me._genButtons_update("/extra500/instrumentation/StbyALT/fail",0,me._AltInd,me._Text_AltInd,"opaque","/extra500/failurescenarios/avionic");	
 		me._genButtons_update("/systems/staticL/leaking",0,me._LHStatic,me._Text_LHStatic,"staticOk","/extra500/failurescenarios/avionic");		
 		me._genButtons_update("/systems/pitotL/leaking1",0,me._LHPitot1,me._Text_LHPitot1,"pitotOk","/extra500/failurescenarios/avionic");		
 		me._genButtons_update("/systems/pitotL/leaking2",0,me._LHPitot2,me._Text_LHPitot2,"pitotOk","/extra500/failurescenarios/avionic");		

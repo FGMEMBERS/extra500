@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 13.01.2017            
+#      Date: 18.01.2017            
 #
 # 
 
@@ -456,7 +456,7 @@ var set_failure = func(fail,failure) {
 		else if (failure == "LHPitotLeak2") { setprop("/systems/pitotL/leaking2", fail ); }
 		else if (failure == "RHPitotLeak2") { setprop("/systems/pitotR/leaking2", fail ); }
 #		else if (failure == "BackupAttInd") { setprop("/instrumentation/attitude-indicator/serviceable", math.abs(fail-1) ); }
-		else if (failure == "BackupAirInd") { hang(fail,"/extra500/instrumentation/StbyIAS/fail","/extra500/instrumentation/StbyIAS/hangs",0.3,0.3); }
+		else if (failure == "BackupAirInd") { hang(fail,"/extra500/instrumentation/StbyASI/fail","/extra500/instrumentation/StbyASI/hangs",0.3,0.3); }
 		else if (failure == "BackupAttInd") { hang(fail,"/extra500/instrumentation/StbyHSI/fail","/extra500/instrumentation/StbyHSI/hangs",0.4,0.5); }
 		else if (failure == "BackupAltInd") { hang(fail,"/extra500/instrumentation/StbyALT/fail","/extra500/instrumentation/StbyALT/hangs",0.3,0.4); }
 		else if (failure == "NAV1Fail") 	{ setprop("/instrumentation/nav/serviceable", math.abs(fail-1) ); }

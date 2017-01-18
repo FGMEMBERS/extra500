@@ -29,9 +29,9 @@
      inkscape:window-height="1004"
      id="namedview8"
      showgrid="false"
-     inkscape:zoom="3.5881183"
-     inkscape:cx="364.55542"
-     inkscape:cy="882.68674"
+     inkscape:zoom="1.7940592"
+     inkscape:cx="448.51416"
+     inkscape:cy="825.97562"
      inkscape:window-x="0"
      inkscape:window-y="21"
      inkscape:window-maximized="1"
@@ -162,6 +162,11 @@
      id="layer1"
      transform="matrix(1.019268,0,0,1,-0.38535967,0)">
     <path
+       style="fill:none;stroke:#75c3ff;stroke-width:2.97150898;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 337.11187,153.72767 -103.72618,0"
+       id="path5016-7"
+       inkscape:connector-curvature="0" />
+    <path
        sodipodi:type="arc"
        style="fill:#00ccff;fill-opacity:1;fill-rule:nonzero;stroke:none"
        id="STBYATTIND-3"
@@ -169,8 +174,8 @@
        sodipodi:cy="147.70976"
        sodipodi:rx="15.04967"
        sodipodi:ry="15.04967"
-       d="m 316.60048,147.70976 c 0,8.31171 -6.73796,15.04967 -15.04967,15.04967 -8.3117,0 -15.04967,-6.73796 -15.04967,-15.04967 0,-8.3117 6.73797,-15.04967 15.04967,-15.04967 8.31171,0 15.04967,6.73797 15.04967,15.04967 z"
-       transform="matrix(0.9810962,0,0,1.037037,0.24136941,-5.3229315)"
+       d="m 316.60048,147.70976 a 15.04967,15.04967 0 1 1 -30.09934,0 15.04967,15.04967 0 1 1 30.09934,0 z"
+       transform="matrix(0.9810962,0,0,1.037037,18.287695,-4.2081411)"
        inkscape:label="#path3440" />
     <rect
        style="fill:#008686;fill-opacity:0.87058824;fill-rule:nonzero;stroke:#000000;stroke-width:0.99999994;stroke-opacity:1"
@@ -224,17 +229,17 @@
        inkscape:label="#path3440-1" />
     <path
        style="fill:#580000;fill-opacity:1;stroke:none"
-       d="m 283.29591,147.89667 c -0.12937,1.95025 0.10719,3.82755 0.75317,5.58242 0.68838,1.86995 1.80719,3.63942 3.21809,4.95393 1.6369,1.52508 3.70757,2.49881 5.78572,3.14243 0.98887,0.30626 2.9474,0.33142 3.11538,0.33273 0.008,5e-5 0.10273,0 0.10273,0 0.16797,-9.2e-4 2.12648,-0.0265 3.11538,-0.33273 2.07815,-0.64362 4.14881,-1.61735 5.78573,-3.14243 1.41089,-1.31451 2.52971,-3.04701 3.21809,-4.91696 0.64599,-1.75487 0.88254,-3.66914 0.75316,-5.61939 -14.75461,0.0171 -12.85293,9.2e-4 -12.76965,0 0,0 -0.31012,-2e-5 -0.30813,0 0.0833,9.2e-4 1.98496,0.0171 -12.76965,0 z"
+       d="m 301.34224,149.01146 c -0.12937,1.95025 0.10719,3.82755 0.75317,5.58242 0.68838,1.86995 1.80719,3.63942 3.21809,4.95393 1.6369,1.52508 3.70757,2.49881 5.78572,3.14243 0.98887,0.30626 2.9474,0.33142 3.11538,0.33273 0.008,5e-5 0.10273,0 0.10273,0 0.16797,-9.2e-4 2.12648,-0.0265 3.11538,-0.33273 2.07815,-0.64362 4.14881,-1.61735 5.78573,-3.14243 1.41089,-1.31451 2.52971,-3.04701 3.21809,-4.91696 0.64599,-1.75487 0.88254,-3.66914 0.75316,-5.61939 -14.75461,0.0171 -12.85293,9.2e-4 -12.76965,0 0,0 -0.31012,-2e-5 -0.30813,0 0.0833,9.2e-4 1.98496,0.0171 -12.76965,0 z"
        id="path5435"
        inkscape:connector-curvature="0" />
     <path
        style="fill:#580000;fill-opacity:0.55458518;stroke:none"
-       d="m 285.90399,140.762 c -1.15682,1.55904 -1.96832,3.26146 -2.37154,5.09017 -0.42962,1.94865 -0.44519,4.0537 0.0282,5.94135 0.54919,2.19002 1.75767,4.16117 3.14988,5.86036 0.66248,0.80855 2.28718,1.92363 2.42698,2.01855 0.007,0.005 0.0859,0.0574 0.0859,0.0574 0.14099,0.0931 1.79295,1.16567 2.78477,1.46192 2.08435,0.62249 4.33991,0.96466 6.52911,0.60337 1.88693,-0.31141 3.75429,-1.13561 5.33553,-2.31521 1.48388,-1.10703 2.711,-2.57609 3.65138,-4.27966 -12.35076,-8.22753 -10.7514,-7.17881 -10.68124,-7.13305 0,0 -0.2594,-0.17325 -0.25773,-0.17212 0.0692,0.0473 1.65113,1.12309 -10.68125,-7.13305 z"
+       d="m 303.95032,141.87679 c -1.15682,1.55904 -1.96832,3.26146 -2.37154,5.09017 -0.42962,1.94865 -0.44519,4.0537 0.0282,5.94135 0.54919,2.19002 1.75767,4.16117 3.14988,5.86036 0.66248,0.80855 2.28718,1.92363 2.42698,2.01855 0.007,0.005 0.0859,0.0574 0.0859,0.0574 0.14099,0.0931 1.79295,1.16567 2.78477,1.46192 2.08435,0.62249 4.33991,0.96466 6.52911,0.60337 1.88693,-0.31141 3.75429,-1.13561 5.33553,-2.31521 1.48388,-1.10703 2.711,-2.57609 3.65138,-4.27966 -12.35076,-8.22753 -10.7514,-7.17881 -10.68124,-7.13305 0,0 -0.2594,-0.17325 -0.25773,-0.17212 0.0692,0.0473 1.65113,1.12309 -10.68125,-7.13305 z"
        id="path5435-6"
        inkscape:connector-curvature="0" />
     <g
        id="g4250"
-       transform="matrix(0.71608179,0,0,0.7351217,61.27548,38.881421)"
+       transform="matrix(0.71608179,0,0,0.7351217,79.321806,39.996211)"
        style="fill:none;stroke:#0084d7;stroke-opacity:1">
       <path
          inkscape:connector-curvature="0"
@@ -249,7 +254,7 @@
     </g>
     <g
        id="g4250-6"
-       transform="matrix(0.35669924,0.10578199,-0.11144972,0.39043272,188.34538,52.766371)"
+       transform="matrix(0.35669924,0.10578199,-0.11144972,0.39043272,206.39171,53.881161)"
        style="fill:none;stroke:#0084d7;stroke-opacity:1">
       <path
          inkscape:connector-curvature="0"
@@ -472,16 +477,16 @@
     <text
        xml:space="preserve"
        style="font-size:10.10992336px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="233.32489"
-       y="84.240822"
+       x="216.60863"
+       y="78.168663"
        id="text_LHPITOT1"
        sodipodi:linespacing="125%"
-       transform="scale(0.85589901,1.1683621)"
+       transform="scale(0.85589903,1.1683621)"
        inkscape:label="#text4485"><tspan
          sodipodi:role="line"
          id="tspan4487"
-         x="233.32489"
-         y="84.240822">Pitot leaking to pressure cabin</tspan></text>
+         x="216.60863"
+         y="78.168663">Pitot leaking to pressure cabin</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:10.10992336px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -497,8 +502,8 @@
          y="103.50965">Pitot leaking to static</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:10.10992336px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="208.02492"
+       style="font-size:10.10992336px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="252.87874"
        y="113.47034"
        id="text_LHSTATIC"
        sodipodi:linespacing="125%"
@@ -506,25 +511,25 @@
        inkscape:label="#text4485"><tspan
          sodipodi:role="line"
          id="tspan4487-1-7"
-         x="208.02492"
+         x="254.48804"
          y="113.47034">Static leaking to </tspan><tspan
          sodipodi:role="line"
-         x="208.02492"
-         y="126.10773"
+         x="252.87874"
+         y="126.10774"
          id="tspan4531">pressure cabin</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:10.10992336px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="329.25833"
-       y="107.74544"
+       x="355.45441"
+       y="108.69958"
        id="text_STBYATTIND"
        sodipodi:linespacing="125%"
        transform="scale(0.85589904,1.1683621)"
        inkscape:label="#text4485"><tspan
          sodipodi:role="line"
          id="tspan4487-2"
-         x="329.25833"
-         y="107.74544">Back-up attitude indicator hangs</tspan></text>
+         x="355.45441"
+         y="108.69958">Back-up attitude indicator hangs</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:10.10992336px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -578,8 +583,14 @@
          y="290.96759"
          id="tspan4575-7-2">GS 1 failed</tspan></text>
     <path
+       style="fill:none;stroke:#2bb200;stroke-width:2.97150898;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 272.62509,137.11923 -15.40856,0"
+       id="path5016-7-2"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
        style="fill:#2bb200;fill-opacity:1;stroke:none"
-       d="m 268.35233,171.9537 0,-65.96449 -91.25819,0 0,2.9546 88.71529,0 0,62.94034 z"
+       d="m 258.49181,171.9537 0,-65.96449 -81.39767,0 0,2.9546 79.12953,0 0,62.94034 z"
        id="LHPITOT1"
        inkscape:connector-curvature="0"
        inkscape:label="#path4630" />
@@ -702,17 +713,17 @@
        transform="scale(-1,1)" />
     <text
        xml:space="preserve"
-       style="font-size:10.10992336px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="483.56946"
-       y="84.837082"
+       style="font-size:10.10992336px;font-style:normal;font-weight:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="661.5871"
+       y="74.818535"
        id="text_RHPITOT1"
        sodipodi:linespacing="125%"
        transform="scale(0.85589904,1.1683621)"
        inkscape:label="#text4485"><tspan
          sodipodi:role="line"
          id="tspan4487-7"
-         x="483.56946"
-         y="84.837082">Pitot leaking to pressure cabin</tspan></text>
+         x="661.5871"
+         y="74.818535">Pitot leaking to pressure cabin</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:10.10992336px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -1142,15 +1153,113 @@
        ry="9.1970205" />
     <path
        sodipodi:type="arc"
-       style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-opacity:1"
+       style="fill:none;stroke:#000000;stroke-opacity:1"
        id="STBYATTIND"
        sodipodi:cx="301.55081"
        sodipodi:cy="147.70976"
        sodipodi:rx="15.04967"
        sodipodi:ry="15.04967"
-       d="m 316.60048,147.70976 c 0,8.31171 -6.73796,15.04967 -15.04967,15.04967 -8.3117,0 -15.04967,-6.73796 -15.04967,-15.04967 0,-8.3117 6.73797,-15.04967 15.04967,-15.04967 8.31171,0 15.04967,6.73797 15.04967,15.04967 z"
-       transform="matrix(0.9810962,0,0,1.037037,0.37807494,-4.9133369)"
+       d="m 316.60048,147.70976 a 15.04967,15.04967 0 1 1 -30.09934,0 15.04967,15.04967 0 1 1 30.09934,0 z"
+       transform="matrix(0.9810962,0,0,1.037037,18.424401,-3.7985465)"
        inkscape:label="#path3440" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#00ccff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       id="STBYATTIND-3-5"
+       sodipodi:cx="301.55081"
+       sodipodi:cy="147.70976"
+       sodipodi:rx="15.04967"
+       sodipodi:ry="15.04967"
+       d="m 316.60048,147.70976 a 15.04967,15.04967 0 1 1 -30.09934,0 15.04967,15.04967 0 1 1 30.09934,0 z"
+       transform="matrix(0.9810962,0,0,1.037037,54.653787,-4.7655534)"
+       inkscape:label="#path3440" />
+    <text
+       xml:space="preserve"
+       style="font-size:16.31577301px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="404.14462"
+       y="130.57382"
+       id="text3259"
+       sodipodi:linespacing="125%"
+       transform="scale(0.83863321,1.1924164)"><tspan
+         sodipodi:role="line"
+         id="tspan3261"
+         x="404.14462"
+         y="130.57382">ALT</tspan></text>
+    <path
+       sodipodi:type="arc"
+       style="fill:none;stroke:#000000;stroke-opacity:1"
+       id="STBYALTIND"
+       sodipodi:cx="301.55081"
+       sodipodi:cy="147.70976"
+       sodipodi:rx="15.04967"
+       sodipodi:ry="15.04967"
+       d="m 316.60048,147.70976 a 15.04967,15.04967 0 1 1 -30.09934,0 15.04967,15.04967 0 1 1 30.09934,0 z"
+       transform="matrix(0.9810962,0,0,1.037037,54.790497,-4.3559634)"
+       inkscape:label="#path3440" />
+    <text
+       xml:space="preserve"
+       style="font-size:10.10992336px;font-style:normal;font-weight:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="430.61636"
+       y="128.34145"
+       id="text_STBYALTIND"
+       sodipodi:linespacing="125%"
+       transform="scale(0.85589904,1.1683621)"
+       inkscape:label="#text4485"><tspan
+         sodipodi:role="line"
+         id="tspan4487-2-6"
+         x="430.61636"
+         y="128.34145">Back-up altitude </tspan><tspan
+         sodipodi:role="line"
+         x="430.61636"
+         y="140.97885"
+         id="tspan4168">indicator hangs</tspan></text>
+    <path
+       sodipodi:type="arc"
+       style="fill:#00ccff;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       id="STBYATTIND-3-5-0"
+       sodipodi:cx="301.55081"
+       sodipodi:cy="147.70976"
+       sodipodi:rx="15.04967"
+       sodipodi:ry="15.04967"
+       d="m 316.60048,147.70976 a 15.04967,15.04967 0 1 1 -30.09934,0 15.04967,15.04967 0 1 1 30.09934,0 z"
+       transform="matrix(0.9810962,0,0,1.037037,-17.194169,-4.7891282)"
+       inkscape:label="#path3440" />
+    <text
+       xml:space="preserve"
+       style="font-size:16.31577492px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="318.47195"
+       y="130.55405"
+       id="text3259-6"
+       sodipodi:linespacing="125%"
+       transform="scale(0.83863321,1.1924164)"><tspan
+         sodipodi:role="line"
+         id="tspan3261-2"
+         x="318.47195"
+         y="130.55405">IAS</tspan></text>
+    <path
+       sodipodi:type="arc"
+       style="fill:none;stroke:#000000;stroke-opacity:1"
+       id="STBYIASIND"
+       sodipodi:cx="301.55081"
+       sodipodi:cy="147.70976"
+       sodipodi:rx="15.04967"
+       sodipodi:ry="15.04967"
+       d="m 316.60048,147.70976 a 15.04967,15.04967 0 1 1 -30.09934,0 15.04967,15.04967 0 1 1 30.09934,0 z"
+       transform="matrix(0.9810962,0,0,1.037037,-17.057459,-4.3795382)"
+       inkscape:label="#path3440" />
+    <text
+       xml:space="preserve"
+       style="font-size:10.10992336px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="310.81232"
+       y="94.387329"
+       id="text_STBYIASIND"
+       sodipodi:linespacing="125%"
+       transform="scale(0.85589904,1.1683621)"
+       inkscape:label="#text4485"><tspan
+         sodipodi:role="line"
+         id="tspan4487-2-2"
+         x="310.81232"
+         y="94.387329">Back-up airspeed indicator hangs</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
