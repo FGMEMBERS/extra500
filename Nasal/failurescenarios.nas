@@ -17,20 +17,225 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 28.05.2016            
+#      Date: 18.01.2017            
 #
 # 
 
-#var failureset = [
-#	[1,"RMG_jammed","RMG(fail)"],
-#	[2,"LMG_jammed","LMG(fail)"],
-#	[3,"NG_jammed","NG(fail)"]
-#];
+# this is the failure matrix as used by the random failure function:
+# 1: index
+# 2: failure name
+# 3: failure type (digital, analog (0.1 steps) and progressive)
+# 4: only for progressive: speed/s
+# 5: only for progressive: max value
+var failureset = [
+	[1,"RMG_jammed","dig"],
+	[2,"LMG_jammed","dig"],
+	[3,"NG_jammed","dig"],
+	[4,"mainvalve_solenoid_fail","dig"],
+	[5,"upperdoorvalve_solenoid_fail","dig"],
+	[6,"lowerdoorvalve_solenoid_fail","dig"],
+	[7,"NG_flat","dig"],
+	[8,"LMG_flat","dig"],
+	[9,"RMG_flat","dig"],
+	[10,"Lbrake","dig"],
+	[11,"Rbrake","dig"],
+	[12,"RAil","dig"],
+	[13,"LAil","dig"],
+	[14,"Elevator","dig"],
+	[15,"Rudder","dig"],
+	[16,"Trim","dig"],
+	[17,"LFlap","dig"],
+	[18,"RFlap","dig"],
+	[19,"LAux_leakage","ana"],
+	[20,"RAux_leakage","ana"],
+	[21,"LMain_leakage","ana"],
+	[22,"RMain_leakage","ana"],
+	[23,"LCol_leakage","ana"],
+	[24,"RCol_leakage","ana"],
+	[25,"LCol_drainFail","dig"],
+	[26,"RCol_drainFail","dig"],
+	[27,"LMain_inbDrainFail","dig"],
+	[28,"LMain_outbDrainFail","dig"],
+	[29,"RMain_inbDrainFail","dig"],
+	[30,"RMain_outbDrainFail","dig"],
+	[31,"LAux_inbDrainFail","dig"],
+	[32,"LAux_outbDrainFail","dig"],
+	[33,"RAux_inbDrainFail","dig"],
+	[34,"RAux_outbDrainFail","dig"],
+	[35,"LcheckvalveFail","dig"],
+	[36,"RcheckvalveFail","dig"],
+	[37,"filterFail","pro",0.001,1],
+	[38,"SelectorValveFail","dig"],
+	[39,"fuelPump1Fail","dig"],
+	[40,"fuelPump2Fail","dig"],
+	[41,"fuelPumpCV1Fail","dig"],
+	[42,"fuelPumpCV2Fail","dig"],
+	[43,"fftransdFail","dig"],
+	[44,"LtransferPumpFail","dig"],
+	[45,"RtransferPumpFail","dig"],
+	[46,"LtransfilterFail","pro",0.001,1],
+	[47,"RtransfilterFail","pro",0.001,1],
+	[48,"LMinnerjetpumpFail","ana"],
+	[49,"RMinnerjetpumpFail","ana"],
+	[50,"LMouterjetpumpFail","ana"],
+	[51,"RMouterjetpumpFail","ana"],
+	[52,"LAjetpumpFail","ana"],
+	[53,"RAjetpumpFail","ana"],
+	[54,"InletAntiIceFail","dig"],
+	[55,"LHPitotHeatFail","dig"],
+	[56,"RHPitotHeatFail","dig"],
+	[57,"StallHeatFail","dig"],
+	[58,"LHStaticHeatFail","dig"],
+	[59,"RHStaticHeatFail","dig"],
+	[60,"WindshieldHeatFail","dig"],
+	[61,"PropHeatFail","dig"],
+	[62,"LHStaticLeak","ana"],
+	[63,"RHStaticLeak","ana"],
+	[64,"LHPitotLeak1","ana"],
+	[65,"RHPitotLeak1","ana"],
+	[66,"LHPitotLeak2","ana"],
+	[67,"RHPitotLeak2","ana"],
+	[68,"BackupAirInd","dig"],
+	[69,"BackupAttInd","dig"],
+	[70,"BackupAltInd","dig"],
+	[71,"GPS1Fail","dig"],
+	[72,"GPS2Fail","dig"],
+	[73,"DMEFail","dig"],
+	[74,"NAV1Fail","dig"],
+	[75,"NAV2Fail","dig"],
+	[76,"GS1Fail","dig"],
+	[77,"GS2Fail","dig"],
+	[78,"RHHeading","pro",1,30],
+	[79,"LHHeading","pro",1,30],
+	[80,"RHPitch","pro",1,30],
+	[81,"LHPitch","pro",1,30],
+	[82,"RHRoll","pro",1,30],
+	[83,"LHRoll","pro",1,30],
+	[84,"RHHeading","pro",-1,-30],
+	[85,"LHHeading","pro",-1,-30],
+	[86,"RHPitch","pro",-1,-30],
+	[87,"LHPitch","pro",-1,-30],
+	[88,"RHRoll","pro",-1,-30],
+	[89,"LHRoll","pro",-1,-30],
+	[90,"TASFail","dig"],
+#	[91,"KBDFail","dig"],
+	[92,"XPDRFail","dig"],
+	[93,"RollRunaway","dig"],
+	[94,"PitchRunaway","dig"], 
+	[95,"YawRunaway","dig"],	
+	[96,"PitchtrimRunaway","dig"],
+	[97,"APaltSensFail","dig"],
+	[98,"TurnInd","dig"]	 	
+	
+
+];
+
+# empty matrix for progressive failures. [failurename,speed per minute,fail-number (0-1)]
+var progressiveset = [];
 
 setlistener("/extra500/failurescenarios/activate", func {
 	var fail = getprop("/extra500/failurescenarios/activate");
-	set_failure(fail);
+	var failure = getprop("/extra500/failurescenarios/name");	# getting failure name
+	var delay = getprop("/extra500/failurescenarios/delay");
+	if (delay != 0) {
+		set_failurewdelay(delay,fail,failure);
+	} else {
+		set_failure(fail,failure);
+	}
 });
+
+# PROGRESSIVE FAILURES
+# yes this is running all the time...
+setlistener("/sim/time/real/second", func { updateProgFailures();},0,0);
+
+var updateProgFailures = func() {
+	var noProgFailures = size(progressiveset);
+#print(noProgFailures);
+#debug.dump(progressiveset);
+	if (noProgFailures!=0) {
+		for (var i=0; i < noProgFailures; i = i+1) {
+			var fail = math.clamp(progressiveset[i][2] + progressiveset[i][1],0,progressiveset[i][3]);
+			progressiveset[i][2] = fail;
+			setprop("/extra500/failurescenarios/name",progressiveset[i][0] );
+#			setprop("/extra500/failurescenarios/activate",fail);
+			set_failure(fail,progressiveset[i][0]);	
+		}
+	}
+}
+
+var addProgFailure =  func(name,speed,startValue,maxValue) {
+	var supvector = [name,speed,startValue,maxValue];
+	append(progressiveset,supvector);
+} 
+
+var delProgFailure =  func(name) {
+	var found = 0;
+	var noProgFailures = size(progressiveset);
+	if (noProgFailures!=0) {
+		for (var i=0; i < noProgFailures; i = i+1) {
+			if (progressiveset[i][0] = name ) {	found = 1;	}
+			if ((found == 1) and ( i < noProgFailures-1)) {
+				progressiveset[i][0] = progressiveset[i+1][0];
+				progressiveset[i][1] = progressiveset[i+1][1];
+				progressiveset[i][2] = progressiveset[i+1][2];
+				progressiveset[i][3] = progressiveset[i+1][3];
+			}	
+		}
+		if (found == 1) {	
+			pop(progressiveset);
+			setprop("/extra500/failurescenarios/name",name );
+			setprop("/extra500/failurescenarios/activate",0);
+		}	
+	}
+} 
+
+var delProgAllFailure =  func() {
+	var noProgFailures = size(progressiveset);
+	if (noProgFailures!=0) {
+		for (var i=0; i < noProgFailures; i = i+1) {
+			setprop("/extra500/failurescenarios/name",progressiveset[i][0] );
+			setprop("/extra500/failurescenarios/activate",0);
+		}
+		for (var i=0; i < noProgFailures; i = i+1) {
+			pop(progressiveset);
+		}
+	}
+}
+
+# RANDOM FAILURE MANAGER
+
+var randomfail = func() {
+	if ( getprop("/extra500/failurescenarios/random_active") == 0 ) {
+		setprop("/extra500/failurescenarios/delay",0);	# no additional delay when doing a random failure
+		setprop("/extra500/failurescenarios/random_active",1);
+		var maxdelay = 60 * getprop("/extra500/failurescenarios/randommaxdelay");
+		if (maxdelay == 0) {
+			me.randomfail2();
+		} else { 
+			var delay = math.round( rand() * maxdelay + 0.5 );
+			settimer(func(){ me.randomfail2();},delay);
+		}
+	}
+}
+
+var randomfail2 = func() {
+	var nofailures = size(failureset);
+	var failureno = math.round( rand() * nofailures + 0.5 ) -1 ;
+
+	if (failureset[failureno][2] == "dig") {
+		var fail = 1;
+	} else if (failureset[failureno][2] == "ana") {
+		var fail = (math.round(rand() * 10 + 0.5 ))/10;
+	} 
+	if (failureset[failureno][2] == "pro") {
+		# for progressive failure, the listener will take care of setting the failure. 
+		addProgFailure(failureset[failureno][1],failureset[failureno][3],0,failureset[failureno][4]);
+	} else {
+		# for digital and analog failures we set them here
+		setprop("/extra500/failurescenarios/name",failureset[failureno][1] );
+		setprop("/extra500/failurescenarios/activate",fail);
+	}	
+}
 
 # CONTROL SYSTEM FAILURES
 
@@ -55,16 +260,6 @@ var RcheckvalveFail = func(fail) {
 }
 
 # GEAR FAILURES
-
-#individual gears jammed
-var RMG = func(n) {setprop("/systems/gear/RMG-free", math.abs(n-1) ); }
-var LMG = func(n) {setprop("/systems/gear/LMG-free", math.abs(n-1) ); }
-var NG = func(n) {setprop("/systems/gear/NG-free", math.abs(n-1) ); }
-
-#solenoids failed
-var mainvalve_solenoid = func(n) {setprop("/systems/gear/solenoids/mainvalve/serviceable", math.abs(n-1) ); }
-var upperdoorvalve_solenoid = func(n) {setprop("/systems/gear/solenoids/upperdoorvalve/serviceable", math.abs(n-1) ); }
-var lowerdoorvalve_solenoid = func(n) {setprop("/systems/gear/solenoids/lowerdoorvalve/serviceable", math.abs(n-1) ); }
 
 #flat tire
 var NG_flat = func(n) {
@@ -133,20 +328,54 @@ var RMG_nobrake = func(n) {
 	}
 }
 
-var set_failure = func(fail) {
-	var failure = getprop("/extra500/failurescenarios/name");	# getting failure name
+# INSTRUMENT FAILURES
+
+var hang = func(fail,failProperty,hangProperty,delayTime,goodTime) {
+	setprop(failProperty, fail );
+	if (fail == 1) { hang2(failProperty,hangProperty,delayTime,goodTime); } 
+}
+
+var hang2 = func(failProperty,hangProperty,delayTime,goodTime) {
+# this is intended for mechanical indicators (airspeed, altitude, gyro-s etc)
+# It will let the indicator hang for "delayTime" (sec) and jump to the true value 
+# It will indicate good for "goodTime" (sec)
+# The hanging property is "hangProperty"
+# There is some variance on both "delayTime" and goodTime" to add some realism
+
+	if (getprop(failProperty) == 1) {
+		setprop(hangProperty, 1);
+		var delayTime1 = delayTime * (1 + 0.2*(rand()-0.5));
+		var totalTime = delayTime1 + goodTime * (1 + 0.2*(rand()-0.5)); 
+		settimer(func(){setprop(hangProperty, 0);},delayTime1);
+		settimer(func(){hang2(failProperty,hangProperty,delayTime,goodTime);},totalTime);
+	}
+
+}
+
+# AUTOPILOT FAILURES
+var PlusMinusFail = func(fail,property){
+	if (fail == 0 ) {
+		fail2 = 0;
+	} else {
+		fail2 = 2*math.round( rand() ) -1;  #random -1 or 1
+	}
+	setprop(property,fail2);
+}
+
+var set_failurewdelay = func(delay,fail,failure){
+	settimer(func(){set_failure(fail,failure) },delay);
+}
+
+var set_failure = func(fail,failure) {
+#	var failure = getprop("/extra500/failurescenarios/name");	# getting failure name
 	if (failure != "") {
-# gear
-#		foreach(var fault; failureset) {
-#	print(fault[0],fault[1],fault[2]);
-#			if (failure == fault[1] ) { call(fault[2],[fail],nil,nil); }
-#		}
-		if (failure == "RMG_jammed") { RMG(fail); }
-		else if (failure == "LMG_jammed") { LMG(fail); }
-		else if (failure == "NG_jammed") { NG(fail); }
-		else if (failure == "mainvalve_solenoid_fail") { mainvalve_solenoid(fail); }
-		else if (failure == "upperdoorvalve_solenoid_fail") { upperdoorvalve_solenoid(fail); }
-		else if (failure == "lowerdoorvalve_solenoid_fail") { lowerdoorvalve_solenoid(fail); }
+
+		if (failure == "RMG_jammed") { setprop("/systems/gear/RMG-free", math.abs(fail-1) ); }
+		else if (failure == "LMG_jammed") { setprop("/systems/gear/LMG-free", math.abs(fail-1) ); }
+		else if (failure == "NG_jammed") { setprop("/systems/gear/NG-free", math.abs(fail-1) ); }
+		else if (failure == "mainvalve_solenoid_fail") { setprop("/systems/gear/solenoids/mainvalve/serviceable", math.abs(fail-1) ); }
+		else if (failure == "upperdoorvalve_solenoid_fail") { setprop("/systems/gear/solenoids/upperdoorvalve/serviceable", math.abs(fail-1) ); }
+		else if (failure == "lowerdoorvalve_solenoid_fail") { setprop("/systems/gear/solenoids/lowerdoorvalve/serviceable", math.abs(fail-1) ); }
 		else if (failure == "NG_flat") { NG_flat(fail); }
 		else if (failure == "LMG_flat") { LMG_flat(fail); }
 		else if (failure == "RMG_flat") { RMG_flat(fail); }
@@ -219,6 +448,40 @@ var set_failure = func(fail) {
 		else if (failure == "VStabBootFail") { setprop("/systems/pneumatic/VStabBoot/serviceable", math.abs(fail-1) ); }
 		else if (failure == "LHHStabBootFail") { setprop("/systems/pneumatic/LHHStabBoot/serviceable", math.abs(fail-1) ); }
 		else if (failure == "RHHStabBootFail") { setprop("/systems/pneumatic/RHHStabBoot/serviceable", math.abs(fail-1) ); }
+# instrumentation
+		else if (failure == "LHStaticLeak") { setprop("/systems/staticL/leaking", fail ); }
+		else if (failure == "RHStaticLeak") { setprop("/systems/staticR/leaking", fail ); }
+		else if (failure == "LHPitotLeak1") { setprop("/systems/pitotL/leaking1", fail ); }
+		else if (failure == "RHPitotLeak1") { setprop("/systems/pitotR/leaking1", fail ); }
+		else if (failure == "LHPitotLeak2") { setprop("/systems/pitotL/leaking2", fail ); }
+		else if (failure == "RHPitotLeak2") { setprop("/systems/pitotR/leaking2", fail ); }
+#		else if (failure == "BackupAttInd") { setprop("/instrumentation/attitude-indicator/serviceable", math.abs(fail-1) ); }
+		else if (failure == "BackupAirInd") { hang(fail,"/extra500/instrumentation/StbyASI/fail","/extra500/instrumentation/StbyASI/hangs",0.4,0.4); }
+		else if (failure == "BackupAttInd") { hang(fail,"/extra500/instrumentation/StbyHSI/fail","/extra500/instrumentation/StbyHSI/hangs",0.4,0.5); }
+		else if (failure == "BackupAltInd") { hang(fail,"/extra500/instrumentation/StbyALT/fail","/extra500/instrumentation/StbyALT/hangs",0.3,0.4); }
+		else if (failure == "NAV1Fail") 	{ setprop("/instrumentation/nav/serviceable", math.abs(fail-1) ); }
+		else if (failure == "NAV2Fail") 	{ setprop("/instrumentation/nav[1]/serviceable", math.abs(fail-1) ); }
+		else if (failure == "GS1Fail") 	{ setprop("/instrumentation/nav/gs/serviceable", math.abs(fail-1) ); }
+		else if (failure == "GS2Fail") 	{ setprop("/instrumentation/nav[1]/gs/serviceable", math.abs(fail-1) ); }
+		else if (failure == "GPS1Fail") 	{ setprop("/instrumentation/gps/serviceable", math.abs(fail-1) ); }
+		else if (failure == "GPS2Fail") 	{ setprop("/instrumentation/gps[1]/serviceable", math.abs(fail-1) ); }
+		else if (failure == "DMEFail") 	{ setprop("/instrumentation/dme/serviceable", math.abs(fail-1) ); }
+		else if (failure == "RHHeading") 	{ setprop("/extra500/instrumentation/IFD-RH/heading/error", fail); }
+		else if (failure == "LHHeading") 	{ setprop("/extra500/instrumentation/IFD-LH/heading/error", fail); }
+		else if (failure == "RHPitch") 	{ setprop("/extra500/instrumentation/IFD-RH/attitude/pitch-error", fail); }
+		else if (failure == "LHPitch") 	{ setprop("/extra500/instrumentation/IFD-LH/attitude/pitch-error", fail); }
+		else if (failure == "RHRoll") 	{ setprop("/extra500/instrumentation/IFD-RH/attitude/roll-error", fail); }
+		else if (failure == "LHRoll") 	{ setprop("/extra500/instrumentation/IFD-LH/attitude/roll-error", fail); }
+		else if (failure == "TASFail") 	{ setprop("/instrumentation/tcas/fail", fail ); }
+#		else if (failure == "KBDFail") 	{ setprop("/instrumentation/???", fail ); }
+		else if (failure == "XPDRFail") 	{ setprop("/extra500/instrumentation/xpdr/fail", fail ); }
+# autopilot
+		else if (failure == "RollRunaway") 	{ PlusMinusFail(fail,"/autopilot/runaway/roll");}
+		else if (failure == "PitchRunaway") { PlusMinusFail(fail,"/autopilot/runaway/pitch");}
+		else if (failure == "YawRunaway") 	{ PlusMinusFail(fail,"/autopilot/runaway/yaw");}
+		else if (failure == "PitchtrimRunaway") 	{ PlusMinusFail(fail,"/autopilot/runaway/pitchtrim");}
+		else if (failure == "APaltSensFail"){ setprop("/autopilot/altsensor/serviceable", math.abs(fail-1) ); }
+		else if (failure == "TurnInd")	{ setprop("/instrumentation/turn-indicator/serviceable", math.abs(fail-1) ); }
 	} else {
 		print("Error: No failure scenario name set");
 		setprop("/extra500/failurescenarios/activate",0);
@@ -248,6 +511,8 @@ setlistener("/gear/gear[6]/wow", func {
 
 var failure_reset = func() {
 
+# progressive failures
+	delProgAllFailure();
 # Engine
 	setprop("/systems/engine/failure-fast",0);
 # Propellor
@@ -344,5 +609,39 @@ var failure_reset = func() {
 	setprop("/fdm/jsbsim/gear/unit[2]/dynamic_friction_coeff", 0.4 ); 
 	setprop("/fdm/jsbsim/gear/unit[1]/brakeFail", 0 ); 
 	setprop("/fdm/jsbsim/gear/unit[2]/brakeFail", 0 ); 
+# Instruments
+	setprop("/systems/staticL/leaking", 0 );
+	setprop("/systems/staticR/leaking", 0 );
+	setprop("/systems/pitotL/leaking1", 0 );
+	setprop("/systems/pitotR/leaking1", 0 );
+	setprop("/systems/pitotL/leaking2", 0 );
+	setprop("/systems/pitotR/leaking2", 0 );
+	setprop("/extra500/instrumentation/StbyASI/fail", 0 );
+	setprop("/extra500/instrumentation/StbyHSI/fail", 0 );
+	setprop("/extra500/instrumentation/StbyALT/fail", 0 );
+	setprop("/instrumentation/nav/serviceable", 1 );
+	setprop("/instrumentation/nav[1]/serviceable", 1 );
+	setprop("/instrumentation/nav/gs/serviceable", 1 );
+	setprop("/instrumentation/nav[1]/gs/serviceable", 1 );
+	setprop("/instrumentation/gps/serviceable", 1 );
+	setprop("/instrumentation/gps[1]/serviceable", 1 );
+	setprop("/instrumentation/dme/serviceable", 1 );
+	setprop("/extra500/instrumentation/IFD-RH/heading/error", 0); 
+	setprop("/extra500/instrumentation/IFD-LH/heading/error", 0); 
+	setprop("/extra500/instrumentation/IFD-RH/attitude/pitch-error", 0); 
+	setprop("/extra500/instrumentation/IFD-LH/attitude/pitch-error", 0); 
+	setprop("/extra500/instrumentation/IFD-RH/attitude/roll-error", 0); 
+	setprop("/extra500/instrumentation/IFD-LH/attitude/roll-error", 0); 
+	setprop("/instrumentation/tcas/fail", 0 );
+	setprop("/extra500/instrumentation/xpdr/fail", 0 );
+# Autopilot
+	setprop("/autopilot/runaway/roll",0);
+	setprop("/autopilot/runaway/pitch",0);
+	setprop("/autopilot/runaway/yaw",0);
+	setprop("/autopilot/runaway/pitchtrim",0);
+	setprop("/autopilot/altsensor/serviceable",1);
+	setprop("/instrumentation/turn-indicator/serviceable",1);
+
+	setprop("/extra500/failurescenarios/random_active",0);
 }
 

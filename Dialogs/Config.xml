@@ -258,7 +258,54 @@
 		
 		
 	</group>
-	
+	<hrule/>
+	<group>
+		<layout>vbox</layout>
+		<text>
+			<label>IFD realism</label>
+		</text>
+		<group>
+			<layout>table</layout>
+			<text>
+				<row>0</row><col>0</col>
+				<label>Boot Intervall</label>
+			</text>
+			<text>
+				<row>0</row><col>1</col>
+				<width>100</width>
+				
+				<label>fast</label>
+			</text>
+			<slider>
+				<row>0</row><col>2</col>
+				<width>200</width>
+				<property>/extra500/config/ifd/bootIntervall</property>
+				<step>0.05</step>
+				<pagestep>0.1</pagestep>
+				<fraction>0.05</fraction>
+				<min>0.05</min>
+				<max>1.0</max>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+			</slider>
+			<text>
+				<row>0</row><col>3</col>
+				<width>100</width>
+				
+				<label>real</label>
+			</text>
+			<text>
+				<row>0</row><col>4</col>
+				<label>9.99 sec </label> <!-- placeholder for width -->
+				<live>true</live>
+				<format>%-0.2f sec</format>
+				<property>/extra500/config/ifd/bootIntervall</property>
+			</text>
+			
+			
+		</group>
+	</group>
 	<hrule/>
 	<group>
 			<layout>vbox</layout>

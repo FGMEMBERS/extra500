@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg 
-#      Date:             15.07.2015
+#      Date:             31.10.2016
 #
 
 var AutopilotClass = {
@@ -48,6 +48,7 @@ var AutopilotClass = {
 		m.nModeGSDisable = props.globals.initNode("/autopilot/mode/gs-disable",0,"INT");
 		m.nModeGSArmed 	= props.globals.initNode("/autopilot/mode/gs-armed",0,"INT");
 		m.nModeGSFollow = props.globals.initNode("/autopilot/mode/gs-follow",0,"INT");
+		m.nModeGSLost = props.globals.initNode("/autopilot/gs-channel/gs-signal-lost",0,"INT");
 		
 		
 		m.nSetAP 		= props.globals.initNode("/autopilot/settings/ap",0,"BOOL");			# Master Panel AP
@@ -86,6 +87,7 @@ var AutopilotClass = {
 	setListeners : func(instance) {
 		append(me._listeners, setlistener(me._nBrightness,func(n){instance._onBrightnessChange(n);},1,0) );
 		append(me._listeners, setlistener("/instrumentation/gps/active-mode",func(n){instance._onGPSModeChange(n);},1,0) );
+		append(me._listeners, setlistener(me.nModeGSLost,func(n){instance._onGSSignalLost(n);},1,0) );
 	},
 	init : func(instance=nil){
 		if (instance==nil){instance=me;}
@@ -222,6 +224,14 @@ var AutopilotClass = {
 			me._APDisengage();
 			me.nModeFail.setValue(1);
 			me.nModeRdy.setValue(0);
+		}
+	},
+	_onGSSignalLost : func(n){
+		if (n.getValue() == 1) {
+			me.nModeGSArmed.setValue(0);
+			me.nModeGSFollow.setValue(0);
+			setprop("/autopilot/mode/gs",0);
+			me.onClickALT();
 		}
 	},
 # Events from the UI

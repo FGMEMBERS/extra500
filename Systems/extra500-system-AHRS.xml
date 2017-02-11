@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8" ?>
+	
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Author: Eric van den Berg
+      Date: 2016-09-16
+
+      Last change: Eric van den Berg      
+      Date: 2016-11-01             
+-->
+
+<system name="AHRS">
+
+	<channel name="heading">
+
+		<fcs_function name="/extra500/instrumentation/IFD-LH/heading/ind-heading">
+    			<function>
+				<sum>
+       				<table>
+       					<description>LH magnetometer calibration error</description>
+            				<independentVar lookup="row">/orientation/heading-magnetic-deg</independentVar>
+            				<tableData>			
+						0	1
+						90	92	
+						180	181
+						270	269
+						359	360
+						360	361
+						</tableData>
+      				</table>
+					<property>/extra500/instrumentation/IFD-LH/heading/error</property>
+				</sum>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="/extra500/instrumentation/IFD-RH/heading/ind-heading">
+    			<function>
+				<sum>
+       				<table>
+       					<description>RH magnetometer calibration error</description>
+            				<independentVar lookup="row">/orientation/heading-magnetic-deg</independentVar>
+            				<tableData>
+						-5	-5
+						0	0
+						90	89	
+						180	182
+						270	272
+						360	360
+						</tableData>
+      				</table>
+					<property>/extra500/instrumentation/IFD-RH/heading/error</property>
+				</sum>
+    			</function>
+		</fcs_function>
+
+		<switch name="indhdgLHIFD">
+			<default value="/extra500/instrumentation/IFD-LH/heading/ind-heading"/>
+			<test logic="OR" value="/extra500/instrumentation/IFD-RH/heading/ind-heading">
+				/extra500/instrumentation/IFD-LH/heading/serviceable eq 0
+			</test>
+			<output>/extra500/instrumentation/IFD-LH/heading/ind-heading</output>
+		</switch>
+
+		<switch name="indhdgRHIFD">
+			<default value="/extra500/instrumentation/IFD-RH/heading/ind-heading"/>
+			<test logic="OR" value="/extra500/instrumentation/IFD-LH/heading/ind-heading">
+				/extra500/instrumentation/IFD-RH/heading/serviceable eq 0
+			</test>
+			<output>/extra500/instrumentation/IFD-RH/heading/ind-heading</output>
+		</switch>
+
+
+		<fcs_function name="/extra500/instrumentation/IFD-miscompares/hdg-diff-abs">
+    			<function>
+				<abs>	
+					<difference>
+						<property>/extra500/instrumentation/IFD-LH/heading/ind-heading</property>
+						<property>/extra500/instrumentation/IFD-RH/heading/ind-heading</property>
+					</difference>
+				</abs>
+    			</function>
+		</fcs_function>
+
+		<switch name="hdgmiscompare">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/extra500/instrumentation/IFD-miscompares/hdg-diff-abs gt 5
+				/extra500/instrumentation/IFD-miscompares/hdg-diff-abs lt 355
+			</test>
+			<output>/extra500/instrumentation/IFD-miscompares/heading</output>
+		</switch>
+
+
+	</channel>
+
+	<channel name="pitch">
+
+		<fcs_function name="/extra500/instrumentation/IFD-LH/attitude/ind-pitch">
+    			<function>
+				<sum>
+					<property>/orientation/pitch-deg</property>
+ 					<property>/extra500/instrumentation/IFD-LH/attitude/pitch-error</property>
+				</sum>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="/extra500/instrumentation/IFD-RH/attitude/ind-pitch">
+    			<function>
+				<sum>
+					<property>/orientation/pitch-deg</property>
+ 					<property>/extra500/instrumentation/IFD-RH/attitude/pitch-error</property>
+				</sum>
+    			</function>
+		</fcs_function>
+
+		<switch name="indpitchLHIFD">
+			<default value="/extra500/instrumentation/IFD-LH/attitude/ind-pitch"/>
+			<test logic="OR" value="/extra500/instrumentation/IFD-RH/attitude/ind-pitch">
+				/extra500/instrumentation/IFD-LH/attitude/serviceable eq 0
+			</test>
+			<output>/extra500/instrumentation/IFD-LH/attitude/ind-pitch</output>
+		</switch>
+
+		<switch name="indpitchRHIFD">
+			<default value="/extra500/instrumentation/IFD-RH/attitude/ind-pitch"/>
+			<test logic="OR" value="/extra500/instrumentation/IFD-LH/attitude/ind-pitch">
+				/extra500/instrumentation/IFD-RH/attitude/serviceable eq 0
+			</test>
+			<output>/extra500/instrumentation/IFD-RH/attitude/ind-pitch</output>
+		</switch>
+
+
+		<fcs_function name="/extra500/instrumentation/IFD-miscompares/pitch-diff-abs">
+    			<function>
+				<abs>	
+					<difference>
+						<property>/extra500/instrumentation/IFD-LH/attitude/ind-pitch</property>
+						<property>/extra500/instrumentation/IFD-RH/attitude/ind-pitch</property>
+					</difference>
+				</abs>
+    			</function>
+		</fcs_function>
+
+		<switch name="pitchmiscompare">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/extra500/instrumentation/IFD-miscompares/pitch-diff-abs gt 5
+			</test>
+			<output>/extra500/instrumentation/IFD-miscompares/pitch</output>
+		</switch>
+
+	</channel>
+
+	<channel name="roll">
+
+		<fcs_function name="/extra500/instrumentation/IFD-LH/attitude/ind-roll">
+    			<function>
+				<sum>
+					<property>/orientation/roll-deg</property>
+ 					<property>/extra500/instrumentation/IFD-LH/attitude/roll-error</property>
+				</sum>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="/extra500/instrumentation/IFD-RH/attitude/ind-roll">
+    			<function>
+				<sum>
+					<property>/orientation/roll-deg</property>
+ 					<property>/extra500/instrumentation/IFD-RH/attitude/roll-error</property>
+				</sum>
+    			</function>
+		</fcs_function>
+
+		<switch name="indrollLHIFD">
+			<default value="/extra500/instrumentation/IFD-LH/attitude/ind-roll"/>
+			<test logic="OR" value="/extra500/instrumentation/IFD-RH/attitude/ind-roll">
+				/extra500/instrumentation/IFD-LH/attitude/serviceable eq 0
+			</test>
+			<output>/extra500/instrumentation/IFD-LH/attitude/ind-roll</output>
+		</switch>
+
+		<switch name="indrollRHIFD">
+			<default value="/extra500/instrumentation/IFD-RH/attitude/ind-roll"/>
+			<test logic="OR" value="/extra500/instrumentation/IFD-LH/attitude/ind-roll">
+				/extra500/instrumentation/IFD-RH/attitude/serviceable eq 0
+			</test>
+			<output>/extra500/instrumentation/IFD-RH/attitude/ind-roll</output>
+		</switch>
+
+
+		<fcs_function name="/extra500/instrumentation/IFD-miscompares/roll-diff-abs">
+    			<function>
+				<abs>	
+					<difference>
+						<property>/extra500/instrumentation/IFD-LH/attitude/ind-roll</property>
+						<property>/extra500/instrumentation/IFD-RH/attitude/ind-roll</property>
+					</difference>
+				</abs>
+    			</function>
+		</fcs_function>
+
+		<switch name="rollmiscompare">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/extra500/instrumentation/IFD-miscompares/roll-diff-abs gt 5
+			</test>
+			<output>/extra500/instrumentation/IFD-miscompares/roll</output>
+		</switch>
+
+	</channel>
+
+</system>
+
+
+

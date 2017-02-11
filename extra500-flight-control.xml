@@ -49,10 +49,10 @@
                   <product>
                         <property>aircraft/hstab/elevator/Ch_alpha2</property>
                         <abs>
-				<product>
-                              		<property>/extra500/const/DEG2RAD</property>
+					<product>
+                             		<property>/extra500/const/DEG2RAD</property>
                   			<property>aircraft/hstab/alpha-deg</property>
-				</product>
+					</product>
                         </abs>
                   </product>
             </sum>

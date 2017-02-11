@@ -20,7 +20,7 @@
       Date: 2013-09-16
 
       Last change:      Eric van den Berg
-      Date:             2016-06-05
+      Date:             2016-11-01
 -->
 
 <system name="electrics">
@@ -390,8 +390,32 @@
 
 	</channel>
 
+<!-- This channel determines if an IFD has power (and its components) -->
+	<channel name="powerIFD" execrate="60">
+
+		<switch name="LHIFD">
+			<default value="0"/>
+			<test logic="OR" value="24">
+				/extra500/panel/CircuitBreaker/BankD/IFD-LH-A/voltOut gt 15
+				/extra500/panel/CircuitBreaker/BankC/IFD-LH-B/voltOut gt 15
+			</test>
+			<output>/extra500/instrumentation/IFD-LH/power</output>
+		</switch>
+
+		<switch name="RHIFD">
+			<default value="0"/>
+			<test logic="OR" value="24">
+				/extra500/panel/CircuitBreaker/BankA/IFD-RH-A/voltOut gt 15
+				/extra500/panel/CircuitBreaker/BankB/IFD-RH-B/voltOut gt 15
+			</test>
+			<output>/extra500/instrumentation/IFD-RH/power</output>
+		</switch>
+
+	</channel>
+
+
 <!-- This "system" connects the extra500 electrical system to the hardcoded instrument power inputs -->
-	<channel name="power">
+	<channel name="power" execrate="60">
 
 		<switch name="turncoorpower">
 			<default value="0"/>
@@ -429,6 +453,7 @@
 			<default value="0"/>
 			<test logic="AND" value="24">
 				/extra500/instrumentation/xpdr/volt gt 10
+				/extra500/instrumentation/xpdr/fail eq 0
 			</test>
 			<output>/systems/electrical/outputs/transponder</output>
 		</switch>
@@ -444,8 +469,9 @@
 
 		<switch name="taspower">
 			<default value="0"/>
-			<test logic="OR" value="1">
+			<test logic="AND" value="1">
 				/extra500/panel/CircuitBreaker/BankB/TAS/voltOut gt 10
+				/instrumentation/tcas/fail eq 0
 			</test>
 			<output>/instrumentation/tcas/serviceable</output>
 		</switch>

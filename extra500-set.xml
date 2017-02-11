@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:      Eric van den Berg
-	Date:             15.08.2016
+	Date:             11.02.17
 
 
 ************************************************************************
@@ -59,7 +59,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<model type="int">4</model>
 		<cockpit type="int">4</cockpit>
 	</rating>
-	<extra500-version>4.2.0</extra500-version>
+	<extra500-version>4.3.0</extra500-version>
 	<extra500-git>https://gitlab.com/extra500/extra500</extra500-git>
 	<extra500-wiki>http://wiki.flightgear.org/Extra_EA-500</extra500-wiki>
 
@@ -530,6 +530,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<path>/systems/pressurization/cabin-climb-rate-fpm</path>
 		<path>/instrumentation/altimeter-backup/setting-inhg</path>
 		<path>/instrumentation/altimeter-IFD-LH/setting-inhg</path>
+		<path>/instrumentation/altimeter-IFD-RH/setting-inhg</path>
 		<path>/instrumentation/comm/frequencies</path>
 		<path>/instrumentation/comm[1]/frequencies</path>
 		<path>/instrumentation/nav/frequencies</path>
@@ -607,6 +608,10 @@ of the RR 250-B17F/2 engine is best.</long-description>
 
   <menubar include="Dialogs/extra500-menu.xml"/>
 
+	<signals>
+		<fdm-initialized></fdm-initialized>
+	</signals>
+
 </sim>
        <controls>
 	       <engines>
@@ -682,6 +687,24 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<rollSpeedFactor type="double">1</rollSpeedFactor>
 		<pitchSpeedFactor type="double">0.5</pitchSpeedFactor>
 	</overpower>
+	<runaway>
+		<roll type="int">0</roll>
+		<pitch type="int">0</pitch>
+		<yaw type="int">0</yaw>
+		<pitchtrim type="int">0</pitchtrim>
+		<maxspeed>
+			<roll type="double">0.05</roll>
+			<pitch type="double">0.08</pitch>
+			<yaw type="double">0</yaw> <!--TBD-->
+			<pitchtrim type="double">0.000417</pitchtrim>
+		</maxspeed>
+		<speed>
+			<roll type="double">0</roll>
+			<pitch type="double">0</pitch>
+			<yaw type="double">0</yaw> <!--TBD-->
+			<pitchtrim type="double">0</pitchtrim>
+		</speed>
+	</runaway>
 	<hdg-channel>
 		<turn-rate-error-kp type="double">0.0003</turn-rate-error-kp>
 		<turn-rate-error-ki type="double">0.00</turn-rate-error-ki>
@@ -796,6 +819,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<turn-rate-error-kd type="double">0.0025</turn-rate-error-kd>
 	</cws-channel>
 	<altsensor>
+        	<serviceable type="bool">1</serviceable>
 		<c1>0.0</c1>
 		<c2>1.0</c2>
 		<c3>0.075</c3>
@@ -806,19 +830,25 @@ of the RR 250-B17F/2 engine is best.</long-description>
 
  <systems>
 	<pitotL>
-        	<serviceable>1</serviceable>
+        	<serviceable type="bool">1</serviceable>
+		<leaking1 type="double">0</leaking1>
+		<leaking2 type="double">0</leaking2>
 	</pitotL>
 	<pitotR>
-		<serviceable>1</serviceable>
+		<serviceable type="bool">1</serviceable>
+		<leaking1 type="double">0</leaking1>
+		<leaking2 type="double">0</leaking2>
 	</pitotR>
 	<staticL>
-		<serviceable>1</serviceable>
+		<serviceable type="bool">1</serviceable>
+		<leaking type="double">0</leaking>
 	</staticL>
 	<staticR>
-		<serviceable>1</serviceable>
+		<serviceable type="bool">1</serviceable>
+		<leaking type="double">0</leaking>
 	</staticR>
 	<staticAP>
-		<serviceable>1</serviceable>
+		<serviceable type="bool">1</serviceable>
 	</staticAP>
 	<pneumatic>
 		<boots-timer-sec type="double">0</boots-timer-sec>
@@ -1262,6 +1292,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
     <airspeed-backup>
 	  <serviceable type="bool" archive="y">true</serviceable>
 	  <indicated-speed-kt>0</indicated-speed-kt>
+	  <indicated-airspeed-kt>0</indicated-airspeed-kt>
     </airspeed-backup>
 
     <altimeter>
@@ -1277,6 +1308,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 	  <pressure-alt-ft>0.0</pressure-alt-ft>
     </altimeter-IFD-RH>
     <altimeter-backup>
+	  <indicated-altitude-ft></indicated-altitude-ft>
 	  <serviceable type="bool" archive="y">true</serviceable>
     </altimeter-backup>
     <altimeter-AP>
@@ -1315,7 +1347,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
       <volume type="double">0.0</volume>    	<!--may be set to larger value by audiopanel (mon2 button)-->
     </dme>
 
-    <heading-indicator-IFD-LH>
+    <!--heading-indicator-IFD-LH>
 		<heading-bug-error-deg>0</heading-bug-error-deg>
 		<indicated-heading-deg>0</indicated-heading-deg>
             <serviceable type="bool">true</serviceable>
@@ -1324,7 +1356,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<heading-bug-error-deg>0</heading-bug-error-deg>
 		<indicated-heading-deg>0</indicated-heading-deg>
             <serviceable type="bool">true</serviceable>
-    </heading-indicator-IFD-RH>
+    </heading-indicator-IFD-RH-->
 
     <radar>
             <mode-control type="int" archive="y">1</mode-control>
@@ -1388,6 +1420,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 
        <tcas>
 	       <serviceable type="bool">true</serviceable>
+	       <fail type="bool">false</fail>
 	       <inputs>
 			<mode type="int">3</mode>	<!-- 0=off, 1=standby, 2=TA-only, 3=auto(TA/RA) -->
 	       </inputs>
@@ -1588,13 +1621,16 @@ of the RR 250-B17F/2 engine is best.</long-description>
 	<!-- make sure fgdata namespaces are enabled-->
 	<std>
 		<enabled type="bool">true</enabled>
+		
 	</std>
 	<canvas>
 		<enabled type="bool">true</enabled>
 	</canvas>
 
 	<global>
+		
 		<file>Aircraft/extra500/Nasal/global.nas</file>
+		<file>Aircraft/extra500/Nasal/std/Vector.nas</file>
 		<file>Aircraft/extra500/Nasal/global.debug.nas</file>
 		<file>Aircraft/extra500/Nasal/global.constant.nas</file>
 		<file>Aircraft/extra500/Nasal/global.canvas.nas</file>
@@ -1647,6 +1683,9 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/widget.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/gui/listview.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/gui/dialog.nas</file>
+		
+		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/systemCAS.nas</file>
+		
 
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/map.nas</file>
 		<file>Aircraft/extra500/Nasal/AvidyneEntegra9/map/movingMap.nas</file>
@@ -1800,6 +1839,9 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				<goal-pitch-offset-deg type="double">-23.0</goal-pitch-offset-deg>
 			</quickZoom>
 		</view>
+		<ifd>
+			<bootIntervall type="double">0.1</bootIntervall>
+		</ifd>
 	</config>
 	<door>
 		<upperpass>
@@ -1832,6 +1874,9 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<L-flap type="bool">0</L-flap>
 			<R-flap type="bool">0</R-flap>
 		</controls>
+		<random_active type="bool">0</random_active>
+		<randommaxdelay type="int">0</randommaxdelay>
+		<delay type="double">0</delay>
 	</failurescenarios>
 	<instrumentation>
 		<Audiopanel>
@@ -1869,6 +1914,12 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				<spk type="double">0.2</spk>
 			</volsetting>
 		</Audiopanel>
+		<Autopilot>
+			<state type="bool">false</state>
+		</Autopilot>
+		<Keypad>
+			<state type="bool">false</state>
+		</Keypad>
 		<dmeSwitch>
 			<pressed type="int">0</pressed>
 		</dmeSwitch>
@@ -1883,6 +1934,22 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<TurnCoordinator>
 			<volt type="double">0</volt>
 		</TurnCoordinator>
+		<StbyASI>
+			<indicated-airspeed-kts type="double"></indicated-airspeed-kts>
+			<fail type="bool">0</fail>
+			<hangs type="bool">0</hangs>
+		</StbyASI>
+		<StbyHSI>
+			<indicated-roll-deg type="double"></indicated-roll-deg>
+			<indicated-pitch-deg type="double"></indicated-pitch-deg>
+			<fail type="bool">0</fail>
+			<hangs type="bool">0</hangs>
+		</StbyHSI>
+		<StbyALT>
+			<indicated-altitude-ft type="double"></indicated-altitude-ft>
+			<fail type="bool">0</fail>
+			<hangs type="bool">0</hangs>
+		</StbyALT>
 		<IFD-LH>
 			<state type="bool">false</state>
 			<settings>
@@ -1890,15 +1957,38 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				<default-sqwuak type="int">7000</default-sqwuak>
 				<default-climb-rate-fpm type="double">700</default-climb-rate-fpm>
 			</settings>
+			<heading>
+				<ind-heading type="double"></ind-heading>
+				<error type="double">0</error>
+				<serviceable type="bool">true</serviceable>
+			</heading>
+			<attitude>
+				<ind-pitch type="double"></ind-pitch>
+				<pitch-error type="double">0</pitch-error>
+				<roll-error type="double">0</roll-error>
+				<serviceable type="bool">true</serviceable>
+			</attitude>
 		</IFD-LH>
 		<IFD-RH>
 			<state type="bool">false</state>
+			<heading>
+				<ind-heading type="double"></ind-heading>
+				<error type="double">0</error>
+				<serviceable type="bool">true</serviceable>
+			</heading>
+			<attitude>
+				<ind-pitch type="double"></ind-pitch>
+				<pitch-error type="double">0</pitch-error>
+				<roll-error type="double">0</roll-error>
+				<serviceable type="bool">true</serviceable>
+			</attitude>
 		</IFD-RH>
 		<dmeInd>
 			<volt type="double">0</volt>
 		</dmeInd>
 		<xpdr>
 			<volt type="double">0</volt>
+			<fail type="bool">false</fail>
 		</xpdr>
 		<EIP>
 			<state type="bool">false</state>
@@ -1941,6 +2031,9 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				<AirCondition>
 					<voltOut type="double">0</voltOut>
 				</AirCondition>
+				<IFD-RH-A>
+					<voltOut type="double">0</voltOut>
+				</IFD-RH-A>
 			</BankA>
 			<BankB>
 				<CabinLight>
@@ -1955,6 +2048,9 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				<TAS>
 					<voltOut type="double">0</voltOut>
 				</TAS>
+				<IFD-RH-B>
+					<voltOut type="double">0</voltOut>
+				</IFD-RH-B>
 			</BankB>
 			<BankC>
 				<Boots>
@@ -1975,6 +2071,9 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				<AutopilotServo>
 					<voltOut type="double">0</voltOut>
 				</AutopilotServo>
+				<IFD-LH-B>
+					<voltOut type="double">0</voltOut>
+				</IFD-LH-B>
 			</BankC>
 			<BankD>
 				<CabinPressure>
@@ -1992,6 +2091,9 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				<GearWarn>
 					<voltOut type="double">0</voltOut>
 				</GearWarn>
+				<IFD-LH-A>
+					<voltOut type="double">0</voltOut>
+				</IFD-LH-A>
 			</BankD>
 			<GearAux2>
 				<state type="bool">1</state>

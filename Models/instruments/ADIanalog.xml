@@ -20,7 +20,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             17.09.13
+      Date:             12.01.17
 
 -->
 
@@ -33,7 +33,7 @@
 	<object-name>ADIanalog.Scheibe.vorne</object-name>
 	<object-name>ADIanalog.Scheibe.hinten</object-name>
 	<object-name>ADIanalog.Scheibe.innen</object-name>
-		<property>/instrumentation/attitude-indicator/indicated-roll-deg</property>
+		<property>/extra500/instrumentation/StbyHSI/indicated-roll-deg</property>
 		<center>
 			<x-m>1</x-m>
 			<y-m>0.0</y-m>
@@ -61,7 +61,7 @@
 	<animation>
 		<type>translate</type>
 		<object-name>ADIanalog.Scheibe.innen</object-name>
-		<property>/instrumentation/attitude-indicator/indicated-pitch-deg</property>
+		<property>/extra500/instrumentation/StbyHSI/indicated-pitch-deg</property>
 		<interpolation>
         <entry>
            <ind>-30</ind>

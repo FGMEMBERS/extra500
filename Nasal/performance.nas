@@ -17,7 +17,7 @@
 #      Date: 04.04.2016
 #
 #      Last change: Eric van den Berg     
-#      Date: 21.07.2016            
+#      Date: 04.12.2016            
 #
 
 var loadPerformanceTables = func(path=""){
@@ -43,7 +43,9 @@ var PerfClass = {
 			trip	: {
 				time	 	: 0,	# sec
 				fuel	 	: 0,	# lbs
-				distance 	: 0	# nm
+				distance 	: 0,	# nm
+				distToAlt	: 0,	# distance to the Top Of Climb - nm
+				distToTOD	: 0	# distance to the Top Of Descent - nm
 			},
 			startupTaxi :  {
 				rCode		: -1,
@@ -68,38 +70,64 @@ var PerfClass = {
 				time	 	: 0,	# sec
 				fuel	 	: 0,	# lbs
 				distance 	: 0	# nm
+			},
+			waypoint : {
+				rCode		: -1,
+				time	 	: 0,	# sec
+				fuel	 	: 0,	# lbs
+				distance 	: 0	# nm
 			}
+			
 		};
-		
+		m._listeners = [];
+
 		return m;
+	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		me.setListeners(instance);
+	},
+	setListeners : func(instance) {
+		append(me._listeners, setlistener("/sim/time/real/minute",func(){me._detectFlightPhase();},0,0) );
 	},
 #-------------------------------------------------------------------------
 # DETECT FLIGHT PHASE-----------------------------------------------------
 #
 # detects taxi/startup, climb, cruise or descent
-# sets it after 60 seconds to root/phase
 # input: the altitude and airspeed source properties
 #
-	detectFlightPhase : func(altitude="/instrumentation/altimeter/pressure-alt-ft",airspeed="/instrumentation/airspeed/indicated-airspeed-kt") {
+	initFlightPhase : func(altitude="/position/altitude-ft",airspeed="/velocities/airspeed-kt") {
 		setprop(me._root,"data/altitude-source",altitude);
 		setprop(me._root,"data/airspeed-source",airspeed);
 		setprop(me._root,"data/old-altitude",getprop(altitude));
-		settimer(func(){ me._detectFlightPhase2();},60);
 	},
-	_detectFlightPhase2 : func() {
+	_detectFlightPhase : func() {
 
 		var source_prop_alt = getprop(me._root,"data/altitude-source");
 		var source_prop_speed = getprop(me._root,"data/airspeed-source");
+
+		if (source_prop_alt == nil){ 
+			source_prop_alt = "/position/altitude-ft";
+			setprop(me._root,"data/altitude-source",source_prop_alt);
+		 }
+		if (source_prop_speed == nil){ 
+			source_prop_speed = "/velocities/airspeed-kt"; 
+			setprop(me._root,"data/airspeed-source",source_prop_speed);
+		}
 
 		var old_altitude = getprop(me._root,"data/old-altitude");
 		var new_altitude = getprop(source_prop_alt);
 		setprop(me._root,"data/new-altitude",new_altitude );
 
+		if (old_altitude == nil) {old_altitude = new_altitude;}
+
 		var phase = "off";
 
 		var alt_diff = new_altitude-old_altitude;
 		if ( math.abs(alt_diff) < 100 ) {
-			if (getprop(source_prop_speed) < 40) {
+			if (getprop(source_prop_speed) < 1) {
+				setprop(me._root,"phase","off" ); 
+			} else if (getprop(source_prop_speed) < 40) {
 				setprop(me._root,"phase","startupTaxi" ); 
 			} else {
 				setprop(me._root,"phase","cruise" ); 
@@ -108,7 +136,9 @@ var PerfClass = {
 			setprop(me._root,"phase","climb" ); 
 		} else {
 			setprop(me._root,"phase","descent" ); 
-		}	 
+		}
+
+		setprop(me._root,"data/old-altitude",new_altitude);
 	},
 
 
@@ -118,17 +148,24 @@ var PerfClass = {
 # adds parameters (time, distance, fuel) from all flight phases and publishes
 
 	updateTrip : func() {
-		var flightTime = me.data.cruise.time 	+ me.data.climb.time 		+ me.data.descent.time ; #sec
-		var flightFuel = me.data.startupTaxi.fuel + me.data.cruise.fuel 		+ me.data.climb.fuel + me.data.descent.fuel; #lbs
-		var flightDist = me.data.cruise.distance 	+ me.data.climb.distance 	+ me.data.descent.distance; # nm
+			var flightTime = me.data.cruise.time 	+ me.data.climb.time 		+ me.data.descent.time ; #sec
+			var flightFuel = me.data.startupTaxi.fuel + me.data.cruise.fuel 		+ me.data.climb.fuel + me.data.descent.fuel; #lbs
+			var flightDist = me.data.cruise.distance 	+ me.data.climb.distance 	+ me.data.descent.distance; # nm
 
-		me.data.trip.time 	= flightTime;
-		me.data.trip.fuel 	= flightFuel;
-		me.data.trip.distance 	= flightDist;
+			if (flightTime < 0) {flightTime=0;}
+			if (flightFuel < 0) {flightFuel=0;}
+			if (flightDist < 0) {flightDist=0;}
 
+			me.data.trip.time 	= flightTime;
+			me.data.trip.fuel 	= flightFuel;
+			me.data.trip.distance 	= flightDist;
 	},
-	
-	# publish the calculated value to the property tree
+
+
+#-----------------------------------------------------------------------
+# PUBLISH DATA-----------------------------------------------------------
+#-----------------------------------------------------------------------	
+# publish the calculated values to the property tree
 	publish : func(phase="all"){
 		if (phase == "startupTaxi" or phase == "all"){
 			setprop(me._root,"startupTaxi/fuel-lbs",me.data.startupTaxi.fuel);
@@ -154,6 +191,8 @@ var PerfClass = {
 			setprop(me._root,"trip/flightTime-s",me.data.trip.time);
 			setprop(me._root,"trip/flightFuel-lbs",me.data.trip.fuel);
 			setprop(me._root,"trip/flightDist-nm",me.data.trip.distance);
+			setprop(me._root,"trip/distToAlt-nm",me.data.trip.distToAlt);		
+			setprop(me._root,"trip/distToTOD-nm",me.data.trip.distToTOD);
 		}
 		if ( (phase != "startupTaxi") and (phase != "climb") and (phase != "descent") and (phase != "cruise") and (phase != "trip") and (phase != "all") ){
 			print("performance.publish: input not correct");
@@ -178,6 +217,9 @@ var PerfClass = {
 # return code 2: cruise fuel negative (enroute), range cannot be calculated
 
 	trip : func(phase,startupfuel,power,flightMode,currentAlt,cruiseAlt,destAlt,totalFlight,currentGS,currentFF,windSp,TDISA) {
+
+		if (phase == nil) {phase = "off";}
+
 		me.startupTaxi(phase,startupfuel);
 		me.climb(phase,currentAlt,cruiseAlt,currentGS,currentFF,windSp,TDISA);
 		me.descent(phase,cruiseAlt,destAlt,currentAlt,currentGS,currentFF,windSp);
@@ -187,10 +229,17 @@ var PerfClass = {
 
 		if ( ( cruiseFlight < 0 ) and ( phase == "off") ) {
 			print("cruise distance/time/fuel negative, reduce cruise altitude");
+			me.data.trip.distance = 0;
+			me.data.trip.time = 0;
+			me.data.trip.fuel = 0;
+
 			return 1
 		}
 
 		if ( ( cruiseFlight < 0 ) and ( phase != "off") and ( flightMode == "fuel" ) ) { # not enough fuel to finish the trip
+			me.data.trip.distance = 0;
+			me.data.trip.time = 0;
+			me.data.trip.fuel = 0;
 			return 2
 		}
 
@@ -201,11 +250,74 @@ var PerfClass = {
 			power = "minpow";
 		}
 
-		if ( phase == "cruise" ) { cruiseAlt = currentAlt; }
+		if ( (phase == "cruise") or (currentAlt > cruiseAlt) ) { cruiseAlt = currentAlt; }
 
 		me.cruise(phase,power,flightMode,cruiseFlight,cruiseAlt,currentGS,currentFF,windSp,TDISA);
+
+		me.data.trip.distToAlt = me.data.climb.distance;		
+		me.data.trip.distToTOD = me.data.climb.distance + me.data.cruise.distance;		
+
 		me.updateTrip();
 	
+	},
+
+#-----------------------------------------------------------------------
+# WAYPOINT ---------------------------------------------------------------
+#-----------------------------------------------------------------------
+# calculates the time, distance and fuel to a waypoint 
+# you MUST invoke the trip() function immediately before invoking waypoint()!
+# you can invoke trip() once and then invoke waypoint() multiple times
+
+	waypoint : func(distance,phase,currentAlt,cruiseAlt,currentGS,currentFF,windSp,TDISA) {
+
+		var table0 = performanceTable.climb2130ISA0;
+		var NUMBER=0; var ALTITUDE=1; var SEC=2; var FUELLBS=3; var DIST=4;
+		var fuelToWaypoint = 0; #lbs
+		var timeToWaypoint = 0; #sec
+		var Alt = 0;
+
+		if (distance < me.data.trip.distToAlt) {					# assumed phase is off\startupTaxi or climb
+#			print("waypoint is in climb segment");
+			# find 'distance0' at current altitude from the table
+			var distance0 = me.matrixinterp(table0,currentAlt,ALTITUDE,DIST);
+			fuelToWaypoint = me.data.startupTaxi.fuel + me.matrixinterp(table0,distance0+distance,DIST,FUELLBS) - me.matrixinterp(table0,distance0,DIST,FUELLBS);
+			timeToWaypoint = me.matrixinterp(table0,distance0+distance,DIST,SEC) - me.matrixinterp(table0,distance0,DIST,SEC);	
+
+		} else if (distance < me.data.trip.distToTOD) {			# assumed phase is off\starupTaxi, climb or cruise
+#			print("waypoint is in cruise segment");
+			var cruiseDist = distance - me.data.trip.distToAlt;
+			var cruiseFraction = (distance - me.data.trip.distToAlt) / math.max(me.data.cruise.distance,0.01);
+			fuelToWaypoint = me.data.startupTaxi.fuel + me.data.climb.fuel + cruiseFraction*me.data.cruise.fuel; #lbs
+			timeToWaypoint = me.data.climb.time + cruiseFraction*me.data.cruise.time; # sec
+
+		} else if (distance < me.data.trip.distance) {
+#			print("waypoint is in descent segment");
+			# descent calcs
+
+			var distDescent = distance - me.data.trip.distToTOD; # distance left in descent segment
+			if ((phase == "cruise") or (phase == "descent")) { 
+				Alt = currentAlt;
+			} else {
+				Alt = cruiseAlt;
+			}
+
+			var distTo0 = me.matrixinterp(performanceTable.descent,Alt,ALTITUDE,DIST); # distance to SL from current (or cruise ) altitude
+			var wpDistTo0 = distTo0 - distDescent;
+			fuelToWaypoint = me.matrixinterp(performanceTable.descent,Alt,ALTITUDE,FUELLBS) - me.matrixinterp(performanceTable.descent,wpDistTo0,DIST,FUELLBS);
+			timeToWaypoint = me.matrixinterp(performanceTable.descent,Alt,ALTITUDE,SEC) - me.matrixinterp(performanceTable.descent,wpDistTo0,DIST,SEC);
+
+			fuelToWaypoint = fuelToWaypoint + me.data.startupTaxi.fuel + me.data.climb.fuel + me.data.cruise.fuel; #lbs
+			timeToWaypoint = timeToWaypoint + me.data.climb.time + me.data.cruise.time; # sec
+
+		} else {
+#			print("waypoint too far away");
+			fuelToWaypoint = me.data.trip.fuel;
+			timeToWaypoint = me.data.trip.time;
+		}
+
+		me.data.waypoint.time = timeToWaypoint; # sec
+		me.data.waypoint.fuel = fuelToWaypoint; # lbs
+		me.data.waypoint.distance = distance; # nm
 	},
 
 #-----------------------------------------------------------------------
@@ -243,7 +355,7 @@ var PerfClass = {
 
 		if ( ( phase!="off" ) and (mode2!="distance" ) and (mode2!="fuel") ) {print("WARNING: when in flight, mode2 must be 'distance' or 'fuel'") } 
 
-		if ( (phase=="off") or (phase=="taxi") or (phase=="climb") or (phase=="descent") ) {
+		if ( (phase=="off") or (phase=="startupTaxi") or (phase=="climb") or (phase=="descent") ) {
 			if (powerMode=="maxpow"){
 				var cruiseSpeed0 = me.matrixinterp(table0,cruiseAlt,ALTITUDE,maxSPEED); 
 				var cruiseSpeed1 = me.matrixinterp(table1,cruiseAlt,ALTITUDE,maxSPEED);
@@ -293,7 +405,11 @@ var PerfClass = {
 				cruiseFuel = cruiseFF * cruiseTime; # lbs
 			} else if (mode2 == "fuel") {
 				cruiseFuel = cruiseInput; #lbs
-				cruiseTime = cruiseFuel / cruiseFF; #hours
+				if (cruiseFF == 0) {
+					cruiseTime = 0;
+				} else {
+					cruiseTime = cruiseFuel / cruiseFF; #hours
+				}
 				cruiseDist = cruiseSpeed * cruiseTime; # nm
 			}
 		}
@@ -320,7 +436,7 @@ var PerfClass = {
 		var distanceToAlt = 0;
 
 		if ((currentAlt >= desAlt) or (phase=="cruise") or (phase=="descent") ) {
-			if (currentAlt >= desAlt) {print("this is not a climb!")};
+#			if ((currentAlt >= desAlt) and (phase=="climb")) {print("this is not a climb!")};
 			me.data.climb.time = timeToAlt;
 			me.data.climb.fuel = fuelToAlt;
 			me.data.climb.distance = distanceToAlt;
@@ -338,7 +454,7 @@ var PerfClass = {
 
 		var NUMBER=0; var ALTITUDE=1; var SEC=2; var FUELLBS=3; var DIST=4;
 
-		if ( (phase == "off") or (phase == "taxi") ) {
+		if ( (phase == "off") or (phase == "startupTaxi") ) {
 			var timeToAlt0 = me.matrixinterp(table0,desAlt,ALTITUDE,SEC) - me.matrixinterp(table0,currentAlt,ALTITUDE,SEC);
 			var timeToAlt1 = me.matrixinterp(table1,desAlt,ALTITUDE,SEC) - me.matrixinterp(table1,currentAlt,ALTITUDE,SEC);
 			timeToAlt = me.lininterp(TDISA,performanceTable.legend[index0][0],performanceTable.legend[index1][0],timeToAlt0,timeToAlt1);
@@ -386,15 +502,15 @@ var PerfClass = {
 		var distanceToDes = 0;
 
 		if ( ( (phase=="descent") or (phase=="cruise") ) and (currentAlt <= desAlt)) {
-			print("This is not a descent!");
+#			print("This is not a descent!");
 			me.data.descent.time = timeToDes;
 			me.data.descent.fuel = fuelToDes;
 			me.data.descent.distance = distanceToDes;
 			return
 		}
 
-		if (( (phase=="off") or (phase=="taxi") or (phase=="climb") ) and (cruiseAlt <= desAlt)) {
-			print("Cruise altitude above destination airport!");
+		if (( (phase=="off") or (phase=="startupTaxi") or (phase=="climb") ) and (cruiseAlt <= desAlt)) {
+			print("Cruise altitude below destination airport!");
 			me.data.descent.time = timeToDes;
 			me.data.descent.fuel = fuelToDes;
 			me.data.descent.distance = distanceToDes;
@@ -403,7 +519,7 @@ var PerfClass = {
 
 		var NUMBER=0; var ALTITUDE=1; var SECONDS=2; var FUELLBS=3; var DIST=4;
 
-		if ( (phase == "off") or (phase == "taxi") or (phase == "climb") ) {
+		if ( (phase == "off") or (phase == "startupTaxi") or (phase == "climb") ) {
 			var timeToDes = me.matrixinterp(performanceTable.descent,cruiseAlt,ALTITUDE,SECONDS) - me.matrixinterp(performanceTable.descent,desAlt,ALTITUDE,SECONDS);
 			var fuelToDes = me.matrixinterp(performanceTable.descent,cruiseAlt,ALTITUDE,FUELLBS) - me.matrixinterp(performanceTable.descent,desAlt,ALTITUDE,FUELLBS);
 			var distanceToDes = me.matrixinterp(performanceTable.descent,cruiseAlt,ALTITUDE,DIST) - me.matrixinterp(performanceTable.descent,desAlt,ALTITUDE,DIST) + windSp * timeToDes / 3600;
@@ -504,6 +620,7 @@ var PerfClass = {
 #
 
 	lininterp : func(x,x0,x1,y0,y1){
+		if (x1 == x0) {print("Error in lininterp of performance.nas: x1 equals x0");}
 		if (x<=x0) {return y0}
 		if (x>=x1) {return y1}
 		return y0 + ( y1 - y0 ) / (x1 - x0 ) * (x - x0) 
@@ -529,4 +646,5 @@ var PerfClass = {
 };
 
 var perf = PerfClass.new("/extra500/perf","performance");
+var perfIFD = PerfClass.new("/extra500/instrumentation/IFD/perf","performanceIFD");
 
