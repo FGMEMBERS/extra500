@@ -17,7 +17,15 @@
       Date: 2014-06-22
 
       Last change:      Eric van den Berg
-      Date:             2016.08.15
+      Date:             2017.02.11
+
+Release 4.3.0: use for flightgear version 2016.1.x and up, released for 2017.1
+* Failure dialog: Avionics and autopilot failures, possible delay on failure activation
+* IFD: miscompares added (needed because of LH or RH failures of indications)
+* Realism: possibility to experience the real boot time of the IFD-s.
+* Change IFD indicated flightplan calculations to improved performance calculations, fuel used predictions
+* Model: nicer panel vent -vents and -switches 
+* Trim indicator: also indicates when in 'force' mode
 
 Release 4.2.0: use for Flightgear version 2016.1.x and up
 * Fuel-payload dialog: Better and easier performance calculations, fuel used predictions

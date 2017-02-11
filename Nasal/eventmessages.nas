@@ -88,7 +88,7 @@ setlistener("/fdm/jsbsim/aircraft/events/FLAPS30", func(n) {
 	if ( value == 1 ) {
 		UI.msg.warning("At airspeeds > 109 KIAS, maximum flap deflection is 15deg");
 	}
-	IFD.cas.alert(IFD.CAS.FLAPS30,(value==1));
+	#IFD.cas.alert(IFD.CAS.FLAPS30,(value==1));
  }, 1, 0);
 
 setlistener("/fdm/jsbsim/aircraft/events/FLAPS15", func(n) {
