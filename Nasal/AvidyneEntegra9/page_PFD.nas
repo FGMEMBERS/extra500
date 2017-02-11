@@ -467,9 +467,9 @@ var AirspeedSpeedWidget = {
 			me._can.Rate.setVisible(1);
 			#me._can.Plade.setVisible(1);
 			me._can.IAS_001.setVisible(1);
-
-			me._can.Rate.set("coord[1]",me._RATE_OFFSET+(-me._rate*58));
-print(me._tas);					
+                        
+                        # speed change rate amplitude pixelPerRate factor : 45
+			me._can.Rate.set("coord[1]",me._RATE_OFFSET+(-me._rate*45));
 			me._can.TAS.setText(sprintf("%3i",me._tas));
 			
 			me._speed = math.mod(me._ias,10);
