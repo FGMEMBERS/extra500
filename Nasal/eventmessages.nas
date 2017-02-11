@@ -29,7 +29,7 @@ setlistener("/fdm/jsbsim/aircraft/events/OP130", func(n) {
 	if ( value == 1 ) {
 		UI.msg.warning("Oil pressure is above 130psi. Wait until pressure drops below before increasing power or engine damage will occur.");
 	}
-	IFD.cas.alert(IFD.CAS.HIGH_OIL_PRESS,(value==1));
+	#IFD.cas.alert(IFD.CAS.HIGH_OIL_PRESS,(value==1));
  }, 1, 0);
 
 setlistener("/fdm/jsbsim/aircraft/events/TRQ111", func(n) {
@@ -37,7 +37,7 @@ setlistener("/fdm/jsbsim/aircraft/events/TRQ111", func(n) {
 	if ( value == 1 ) {
 		UI.msg.warning("TRQ limit is 111%. Engine and propeller damage may occur.");
 	}
-	IFD.cas.alert(IFD.CAS.TRQ111,(value==1));
+	#IFD.cas.alert(IFD.CAS.TRQ111,(value==1));
  }, 1, 0);
 
 setlistener("/fdm/jsbsim/aircraft/events/TRQ92", func(n) {
@@ -45,7 +45,7 @@ setlistener("/fdm/jsbsim/aircraft/events/TRQ92", func(n) {
 	if ( value == 1 ) {
 		UI.msg.caution("Maximum continuous TRQ limit is 92%. Up to 111% is permissible for 5 minutes at take-off");
 	}
-	IFD.cas.alert(IFD.CAS.TRQ92,(value==1));
+	#IFD.cas.alert(IFD.CAS.TRQ92,(value==1));
  }, 1, 0);
 
 setlistener("/fdm/jsbsim/aircraft/events/TOT927", func(n) {
@@ -53,7 +53,7 @@ setlistener("/fdm/jsbsim/aircraft/events/TOT927", func(n) {
 	if ( value == 1 ) {
 		UI.msg.warning("Congratulations on your (~$300.000) overheated engine. Make sure TOT<100degC and add fuel N1 > 12%");
 	}
-	IFD.cas.alert(IFD.CAS.TOT927,(value==1));
+	#IFD.cas.alert(IFD.CAS.TOT927,(value==1));
  }, 1, 0);
 
 setlistener("/fdm/jsbsim/aircraft/events/TOT810", func(n) {
@@ -61,7 +61,7 @@ setlistener("/fdm/jsbsim/aircraft/events/TOT810", func(n) {
 	if ( value == 1 ) {
 		UI.msg.warning("TOT limit is 810degC. Engine damage will occur");
 	}
-	IFD.cas.alert(IFD.CAS.TOT810,(value==1));
+	#IFD.cas.alert(IFD.CAS.TOT810,(value==1));
  }, 1, 0);
 
 setlistener("/fdm/jsbsim/aircraft/events/TOT752", func(n) {
@@ -69,7 +69,7 @@ setlistener("/fdm/jsbsim/aircraft/events/TOT752", func(n) {
 	if ( value == 1 ) {
 		UI.msg.caution("Maximum continuous TOT limit is 752degC. Up to 810degC is permissible for 5 minutes at take-off");
 	}
-	IFD.cas.alert(IFD.CAS.TOT752,(value==1));
+	#IFD.cas.alert(IFD.CAS.TOT752,(value==1));
  }, 1, 0);
 
 
@@ -80,7 +80,7 @@ setlistener("/fdm/jsbsim/aircraft/events/GEAR140", func(n) {
 	if ( value == 1 ) {
 		UI.msg.warning("At airspeeds > 140 KIAS, the gear must be retracted");
 	}
-	IFD.cas.alert(IFD.CAS.GEAR140,value==1);
+	#IFD.cas.alert(IFD.CAS.GEAR140,value==1);
  }, 1, 0);
 
 setlistener("/fdm/jsbsim/aircraft/events/FLAPS30", func(n) {
@@ -96,7 +96,7 @@ setlistener("/fdm/jsbsim/aircraft/events/FLAPS15", func(n) {
 	if ( value == 1 ) {
 		UI.msg.warning("At airspeeds > 120 KIAS, the flaps must be retracted");
 	}
-	IFD.cas.alert(IFD.CAS.FLAPS15,(value==1));
+	#IFD.cas.alert(IFD.CAS.FLAPS15,(value==1));
  }, 1, 0);
 
 # over-g messages: event properties are set in extra500-system-indication.xml
@@ -107,7 +107,7 @@ setlistener("/fdm/jsbsim/aircraft/events/overgflup", func(n) {
 	if ( value == 1 ) {
 		UI.msg.warning("Over-g! With flaps up you must stay between -1.5 and +3.8g or one day your wing will break off");
 	}
-	IFD.cas.alert(IFD.CAS.OVER_G_FLUP,(value==1));
+	#IFD.cas.alert(IFD.CAS.OVER_G_FLUP,(value==1));
  }, 1, 0);
 
 setlistener("/fdm/jsbsim/aircraft/events/overgflext", func(n) {
@@ -116,7 +116,7 @@ setlistener("/fdm/jsbsim/aircraft/events/overgflext", func(n) {
 	if ( value == 1 ) {
 		UI.msg.warning("Over-g! With flaps extended you must stay between 0.0 and +2.0g or one day your flaps (or your wing...or both) will break off");
 	}
-	IFD.cas.alert(IFD.CAS.OVER_G_FLEXT,(value==1));
+	#IFD.cas.alert(IFD.CAS.OVER_G_FLEXT,(value==1));
  }, 1, 0);
 
 # Other messages
