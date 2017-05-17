@@ -36,6 +36,7 @@ COLOR["TCAS_LEVEL_2"] 	= "#ff7f2a";
 COLOR["TCAS_LEVEL_3"] 	= "#ff0000";
 COLOR["Keypad_Front"] 	= "#000000";
 COLOR["Keypad_Back"] 	= "#ffffff";
+COLOR["Amber"] 		= "#ffcc00";
 
 
 
@@ -144,6 +145,7 @@ var PageClass = {
 	_onVisibiltyChange : func(){
 		me.page.setVisible(me._visibility);
 	},
+	boot : func(warm = nil){},
 	hide : func(){
 		me.page.setVisible(0);
 	},

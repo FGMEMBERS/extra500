@@ -17,7 +17,7 @@
 #      Date: Jul 20 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             20.07.14
+#      Date:             27.11.16
 #
 
 
@@ -272,9 +272,13 @@ var VerticalSpeedWidget = {
 		var m = {parents:[VerticalSpeedWidget,IfdWidget.new(page,canvasGroup,name)]};
 		m._class 	= "VerticalSpeedWidget";
 		m._ptree	= {
+			ready	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/ivsi/ready",0,"BOOL"),
 			vs	: props.globals.initNode("/instrumentation/ivsi-IFD-"~m._ifd.name~"/indicated-speed-fpm",0.0,"DOUBLE"),
+			
 		};
 		m._can		= {
+			ready 		: m._group.getElementById("layer4").setVisible(0),
+			loss 		: m._group.getElementById("layer16").setVisible(1),
 			Needle		: m._group.getElementById("VS_Needle").updateCenter(),
 			Bug		: m._group.getElementById("VS_Bug").updateCenter(),
 			BugFMS		: m._group.getElementById("VS_Bug_FMS").updateCenter(),
@@ -291,6 +295,19 @@ var VerticalSpeedWidget = {
 		append(me._listeners, setlistener("/autopilot/mode/vs",func(n){me._onApChange(n)},1,0));	
 		append(me._listeners, setlistener("/autopilot/settings/vertical-speed-fpm",func(n){me._onBugChange(n)},1,0));	
 		append(me._listeners, setlistener(fms._node.vsrRate,func(n){me._onVsrChange(n)},1,0));
+		append(me._listeners, setlistener(me._ptree.ready,func(n){me._onReadyChange(n)},1,0));
+		append(me._listeners, setlistener(fms._node.vsrVisible,func(n){me._onVsrVisibleChange(n)},1,0));
+		
+	},
+	_onReadyChange : func(n){
+		if(n.getValue()){
+			me._can.loss.setVisible(0);
+			me._can.ready.setVisible(1);
+			
+		}else{
+			me._can.ready.setVisible(0);
+			me._can.loss.setVisible(1);
+		}
 	},
 	_onApChange : func(n){
 		me._ap = n.getValue();
@@ -307,9 +324,9 @@ var VerticalSpeedWidget = {
 		
 	},
 	_onVsrChange : func(n){
-		if(fms._constraint.VSR.rate != 0){
-			me._can.BugFMS.setRotation(me._rotateScale(fms._constraint.VSR.rate));
-		}
+		me._can.BugFMS.setRotation(me._rotateScale(fms._constraint.VSR.rate));
+	},
+	_onVsrVisibleChange : func(n){
 		me._can.BugFMS.setVisible(fms._constraint.VSR.visible);
 	},
 	_onFplReadyChange : func(n){
@@ -355,11 +372,17 @@ var AirspeedSpeedWidget = {
 		var m = {parents:[AirspeedSpeedWidget,IfdWidget.new(page,canvasGroup,name)]};
 		m._class 	= "AirspeedSpeedWidget";
 		m._ptree	= {
+			ready	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/airspeed/ready",0,"BOOL"),
 			ias	: props.globals.initNode("/instrumentation/airspeed-IFD-"~m._ifd.name~"/indicated-airspeed-kt",0.0,"DOUBLE"),
 			iasRate	: props.globals.initNode("/instrumentation/airspeed-IFD-"~m._ifd.name~"/airspeed-change-ktps",0.0,"DOUBLE"),
 			tas	: props.globals.initNode("/instrumentation/airspeed-IFD-"~m._ifd.name~"/true-speed-kt",0.0,"DOUBLE"),
+			miscompare	: props.globals.initNode("/extra500/instrumentation/IFD-miscompares/airspeed",1,"BOOL"),
+			
 		};
 		m._can		= {
+			ready 		: m._group.getElementById("layer2").setVisible(0),
+			loss 		: m._group.getElementById("layer13").setVisible(1),
+			miscompare	: m._group.getElementById("IAS_Miscompare").setVisible(0),
 			IAS_Ladder	: m._group.getElementById("IAS_Ladder").set("clip","rect(84px, 639px, 688px, 320px)"),
 			IAS_001		: m._group.getElementById("IAS_001").set("clip","rect(327px, 639px, 506px, 320px)"),
 			IAS_010		: m._group.getElementById("IAS_010").set("clip","rect(385px, 639px, 449px, 320px)"),
@@ -384,20 +407,44 @@ var AirspeedSpeedWidget = {
 		return m;
 	},
 	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._ptree.miscompare,func(n){me._onMiscompareChange(n)},1,0));
+		append(me._listeners, setlistener(me._ptree.ready,func(n){me._onReadyChange(n)},1,0));
+		
 		
 	},
 	init : func(instance=me){
-# 		me.setListeners(instance);
+ 		me.setListeners(instance);
 	},
 	deinit : func(){
 		me.removeListeners();
 	},
+	
 	_onVisibiltyChange : func(){
 		if(me._visibility == 1){
 			me.setListeners(me);
 		}else{
 			me.removeListeners();
 		}
+	},
+	_onReadyChange : func(n){
+		if(n.getValue()){
+			me._can.loss.setVisible(0);
+			me._can.ready.setVisible(1);
+			
+		}else{
+			me._can.ready.setVisible(0);
+			me._can.loss.setVisible(1);
+		}
+	},
+	
+	_onMiscompareChange : func(n){
+		var v = n.getValue();
+		if(v){
+			me._can.Plade.set("stroke",COLOR["Amber"]);
+		}else{
+			me._can.Plade.set("stroke",COLOR["Black"]);
+		}
+		me._can.miscompare.setVisible(v);
 	},
 	
 	update20Hz : func(now,dt){
@@ -411,18 +458,18 @@ var AirspeedSpeedWidget = {
 			me._can.IAS_100.setVisible(0);
 			me._can.IAS_010.setVisible(0);
 			me._can.IAS_001.setVisible(0);
-			me._can.Plade.setVisible(0);
+			#me._can.Plade.setVisible(0);
 			me._can.Rate.setVisible(0);
 			me._can.Zero.setVisible(1);
 			me._can.TAS.setText("---");
 		}else{
 			me._can.Zero.setVisible(0);
 			me._can.Rate.setVisible(1);
-			me._can.Plade.setVisible(1);
+			#me._can.Plade.setVisible(1);
 			me._can.IAS_001.setVisible(1);
-			
-			me._can.Rate.set("coord[1]",me._RATE_OFFSET+(-me._rate*58));
-		
+                        
+                        # speed change rate amplitude pixelPerRate factor : 45
+			me._can.Rate.set("coord[1]",me._RATE_OFFSET+(-me._rate*45));
 			me._can.TAS.setText(sprintf("%3i",me._tas));
 			
 			me._speed = math.mod(me._ias,10);
@@ -489,9 +536,15 @@ var AltitudeWidget = {
 		var m = {parents:[AltitudeWidget,IfdWidget.new(page,canvasGroup,name)]};
 		m._class 	= "AltitudeWidget";
 		m._ptree	= {
+			ready	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/altimeter/ready",0,"BOOL"),
 			alt	: props.globals.initNode("/instrumentation/altimeter-IFD-"~m._ifd.name~"/indicated-altitude-ft",0.0,"DOUBLE"),
+			miscompare	: props.globals.initNode("/extra500/instrumentation/IFD-miscompares/altitude",1,"BOOL"),
+			
 		};
 		m._can		= {
+			ready 		: m._group.getElementById("layer5").setVisible(0),
+			loss 		: m._group.getElementById("layer17").setVisible(1),
+			miscompare	: m._group.getElementById("ALT_Miscompare").setVisible(1),
 			Ladder		: m._group.getElementById("ALT_Ladder").set("clip","rect(145px, 1718px, 688px, 1410px)"),
 			U300T		: m._group.getElementById("ALT_LAD_U300T"),
 			U300H		: m._group.getElementById("ALT_LAD_U300H"),
@@ -529,13 +582,16 @@ var AltitudeWidget = {
 		return m;
 	},
 	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._ptree.miscompare,func(n){me._onMiscompareChange(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/alt-channel/alt-bug-ft",func(n){me._onBugChange1(n)},1,0));
 		append(me._listeners, setlistener("/autopilot/settings/tgt-altitude-ft",func(n){me._onBugChange2(n)},1,0));	
 		append(me._listeners, setlistener("/instrumentation/altimeter-IFD-"~me._ifd.name~"/setting-hpa",func(n){me._onHpaChange(n)},1,0));	
+		append(me._listeners, setlistener(me._ptree.ready,func(n){me._onReadyChange(n)},1,0));
+		
 	
 	},
 	init : func(instance=me){
-# 		me.setListeners(instance);
+ 		#me.setListeners(instance);
 	},
 	deinit : func(){
 		me.removeListeners();	
@@ -547,7 +603,25 @@ var AltitudeWidget = {
 			me.removeListeners();
 		}
 	},
-	
+	_onReadyChange : func(n){
+		if(n.getValue()){
+			me._can.loss.setVisible(0);
+			me._can.ready.setVisible(1);
+			
+		}else{
+			me._can.ready.setVisible(0);
+			me._can.loss.setVisible(1);
+		}
+	},
+	_onMiscompareChange : func(n){
+		var v = n.getValue();
+		if(v){
+			me._can.Plade.set("stroke",COLOR["Amber"]);
+		}else{
+			me._can.Plade.set("stroke",COLOR["Black"]);
+		}
+		me._can.miscompare.setVisible(v);
+	},
 	_onHpaChange : func(n){
 		me._hpa		= n.getValue();
 		me._can.HPA.setText(sprintf("%4i",me._hpa));
@@ -576,6 +650,7 @@ var AltitudeWidget = {
 		me._bugDiff = global.clamp(me._bugDiff,-272,254);
 		me._can.Bug.setTranslation(0,me._bugDiff);
 		
+				
 		me._tmpAlt	= me._alt + 300;
 		if(me._tmpAlt>=0){
 			me._can.U300T.setText(sprintf("%i",math.floor((me._tmpAlt/1000))));
@@ -701,19 +776,117 @@ var AltitudeWidget = {
 	
 };
 
+var ADAHRSDisplay_Widget = {
+	new: func(page,canvasGroup,name){
+		var m = {parents:[ADAHRSDisplay_Widget,IfdWidget.new(page,canvasGroup,name)]};
+		m._class 	= "ADAHRSDisplay_Widget";
+		m._ptree	= {
+			ready	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/ADAHRS/ready",0,"BOOL"),
+		};
+		m._can		= {
+			ready 		: m._group.getElementById("layer6").setVisible(0),
+			loss 		: m._group.getElementById("layer11").setVisible(1),
+			H1	: m._group.getElementById("Boot_H1"),
+			H2	: m._group.getElementById("Boot_H2"),
+			H3	: m._group.getElementById("Boot_H3"),
+			H4	: m._group.getElementById("Boot_H4"),
+			H5	: m._group.getElementById("Boot_H5"),
+			warning : m._group.getElementById("SystemWarning").setVisible(0),
+			caution : m._group.getElementById("SystemCaution").setVisible(0),
+			
+		};
+		m._warm = 0;
+		m._blinker = 0;
+		m._warning = 0;
+		m._caution = 0;
+		return m;
+	},
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._ptree.ready,func(n){me._onReadyChange(n)},1,0));
+		append(me._listeners, setlistener(me._ifd._cas._level.warning.nActive,func(n){me._onWarningChange(n)},1,0));
+		append(me._listeners, setlistener(me._ifd._cas._level.caution.nActive,func(n){me._onCautionChange(n)},1,0));
+		
+		
+	},
+	_onVisibiltyChange : func(){
+		if(me._visibility == 1){
+			me.setListeners(me);
+		}else{
+			me.removeListeners();
+		}
+	},
+	boot : func(warm=nil){
+		me._can.H1.setText("");
+		me._can.H2.setText("");
+		me._can.H3.setText("");
+		me._can.H4.setText("");
+		me._can.H5.setText("");
+	},
+	_onWarningChange : func(n){
+		me._warning = n.getValue();
+		me._can.warning.setVisible((me._warning));
+		
+	},
+	_onCautionChange : func(n){
+		me._caution = n.getValue();
+		me._can.caution.setVisible((me._caution));
+	},
+	
+	_onReadyChange : func(n){
+		me._ready = n.getValue();
+		if(me._ready){
+			
+			me._can.loss.setVisible(0);
+
+		}else{
+			me._can.loss.setVisible(1);
+		}
+	},
+	update2Hz : func(now,dt){
+		if(!me._ready){
+			
+			me._can.H1.setText(me._ifd.ADAHRS._h1);
+			me._can.H2.setText(me._ifd.ADAHRS._h2);
+			me._can.H3.setText(me._ifd.ADAHRS._h3);
+			me._can.H4.setText(me._ifd.ADAHRS._h4);
+			me._can.H5.setText(me._ifd.ADAHRS._h5);
+		
+		}
+		me._blinker = me._blinker == 1 ? 0 : 1 ;
+		
+		me._can.warning.setVisible((me._warning and me._blinker));
+		me._can.caution.setVisible((me._caution and me._blinker));
+		
+	},
+	update20Hz : func(now,dt){
+		
+	},
+};
+
 var AttitudeIndicatorWidget = {
 	new: func(page,canvasGroup,name){
 		var m = {parents:[AttitudeIndicatorWidget,IfdWidget.new(page,canvasGroup,name)]};
 		m._class 	= "AttitudeIndicatorWidget";
 		m._ptree	= {
-			pitch	: props.globals.initNode("/orientation/pitch-deg",0.0,"DOUBLE"),
-			roll	: props.globals.initNode("/orientation/roll-deg",0.0,"DOUBLE"),
+			ready	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/ADAHRS/ready",0,"BOOL"),
+			pitch	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/attitude/ind-pitch",0.0,"DOUBLE"),
+			roll	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/attitude/ind-roll",0.0,"DOUBLE"),
 			SlipSkid: props.globals.initNode("/instrumentation/slip-skid-ball/indicated-slip-skid",0.0,"DOUBLE"),
 			fdroll: props.globals.initNode("/autopilot/flight-director/fld-bank-deg",0.0,"DOUBLE"),
 			fdpitch: props.globals.initNode("/autopilot/flight-director/fld-pitch-deg",0.0,"DOUBLE"),
+			miscomparePitch : props.globals.initNode("/extra500/instrumentation/IFD-miscompares/pitch",0,"BOOL"),
+			miscompareRoll : props.globals.initNode("/extra500/instrumentation/IFD-miscompares/roll",0,"BOOL"),
+			crosscheck : props.globals.initNode("/extra500/instrumentation/IFD-miscompares/crosscheckAttitiude",0,"BOOL"),
+			
 		};
 		m._can		= {
+			ready 		: m._group.getElementById("layer1").setVisible(0),
+			loss 		: m._group.getElementById("layer11").setVisible(1),
+			miscompare: m._group.getElementById("ROLLPITCH_Miscompare").setVisible(0),
+			crosscheck: m._group.getElementById("ATTITUDE_Crosscheck").setVisible(0),
+			AttitudeChevrons: m._group.getElementById("AttitudeChevrons").setVisible(0),
 			PitchLadder	: m._group.getElementById("PitchLadder").updateCenter().set("clip","rect(144px, 1293px, 671px, 750px)"),
+			AttitudeChevrons: m._group.getElementById("AttitudeChevrons").setVisible(0),
 			BankAngle	: m._group.getElementById("BankAngleIndicator").updateCenter(),
 			SlipSkid	: m._group.getElementById("SlipSkidIndicator").updateCenter(),
 			Horizon		: m._group.getElementById("Horizon"),
@@ -721,6 +894,8 @@ var AttitudeIndicatorWidget = {
 			FDBugColor	: m._group.getElementById("path5241"),
 			
 		};
+		m._miscompareRoll = 0;
+		m._miscomparePitch = 0;
 		
 		m._pitch	= 0;
 		m._roll		= 0;
@@ -730,11 +905,14 @@ var AttitudeIndicatorWidget = {
 		return m;
 	},
 	setListeners : func(instance) {
-	
+		append(me._listeners, setlistener(me._ptree.miscomparePitch,func(n){me._onMiscomparePitchChange(n)},1,0));
+		append(me._listeners, setlistener(me._ptree.miscompareRoll,func(n){me._onMiscompareRollChange(n)},1,0));
+		append(me._listeners, setlistener(me._ptree.crosscheck,func(n){me._onCrosscheckChange(n)},1,0));
+		append(me._listeners, setlistener(me._ptree.ready,func(n){me._onReadyChange(n)},1,0));
 		
 	},
 	init : func(instance=me){
-# 		me.setListeners(instance);
+ 		#me.setListeners(instance);
 	},
 	deinit : func(){
 		me.removeListeners();
@@ -746,6 +924,31 @@ var AttitudeIndicatorWidget = {
 			me.removeListeners();
 		}
 	},
+	_onReadyChange : func(n){
+		if(n.getValue()){
+			me._can.loss.setVisible(0);
+			me._can.ready.setVisible(1);
+			me._can.Horizon.setVisible(1);
+			
+		}else{
+			me._can.ready.setVisible(0);
+			me._can.loss.setVisible(1);
+			me._can.Horizon.setVisible(0);
+		}
+	},
+	
+	_onMiscompareRollChange : func(n){
+		me._miscompareRoll = n.getValue();
+		me._can.miscompare.setVisible(me._miscomparePitch or me._miscompareRoll);
+	},
+	_onMiscomparePitchChange : func(n){
+		me._miscomparePitch = n.getValue();
+		me._can.miscompare.setVisible(me._miscomparePitch or me._miscompareRoll);
+	},
+	_onCrosscheckChange : func(n){
+		me._can.crosscheck.setVisible(n.getValue());
+	},
+	
 	
 	update20Hz : func(now,dt){
 		
@@ -754,22 +957,24 @@ var AttitudeIndicatorWidget = {
 		me._slipskid	= me._ptree.SlipSkid.getValue();
 		me._fdroll	= me._ptree.fdroll.getValue();
 		me._fdpitch	= me._ptree.fdpitch.getValue();
+		
+		
+		me._can.AttitudeChevrons.setVisible( (-30 > me._pitch ) or (me._pitch > 50) );
 
 		me._can.PitchLadder.setRotation(-me._roll * global.CONST.DEG2RAD);
-		me._can.PitchLadder.setTranslation(0,me._pitch * 10);
+		me._can.PitchLadder.setTranslation(0,me._pitch * 9.5);
 		me._can.SlipSkid.setTranslation(-me._slipskid * 50,0);
 		me._can.BankAngle.setRotation(-me._roll * global.CONST.DEG2RAD);
 		
-		me._can.Horizon.setTranslation(0,me._pitch * 10);
+		me._can.Horizon.setTranslation(0,me._pitch * 9.5);
 		me._can.Horizon.setRotation(-me._roll * global.CONST.DEG2RAD);
 
-		me._can.FDBug.setTranslation(0,-me._fdpitch * 10);
+		me._can.FDBug.setTranslation(0,-me._fdpitch * 9.5);
 		me._can.FDBug.setRotation(me._fdroll * global.CONST.DEG2RAD);
 		
 	},
 	
 };
-
 
 var MarkerWidget = {
 	new: func(page,canvasGroup,name){
@@ -975,6 +1180,7 @@ var NavSourceWidget = {
 		m._isInRange		= 0;
 		m._isLOC		= 0;
 		m._isGSinRange		= 0;
+		m._hasGS		= 0; 
 		m._fromFlag		= 0;
 		m._toFlag		= 0;
 		m._Pointer		= 0;
@@ -1436,6 +1642,12 @@ var DeviationIndicatorWidget = {
 	new: func(page,canvasGroup,name){
 		var m = {parents:[DeviationIndicatorWidget,IfdWidget.new(page,canvasGroup,name)]};
 		m._class 	= "DeviationIndicatorWidget";
+		m._ptree	= {
+			miscompareLOC  : props.globals.initNode("/extra500/instrumentation/IFD-miscompares/LOC",1,"BOOL"),
+			miscompareGS   : props.globals.initNode("/extra500/instrumentation/IFD-miscompares/GS",1,"BOOL"),
+			
+		};
+		
 		m._can		= {
 			DI		: m._group.getElementById("DI"),
 			DI_Source_Text	: m._group.getElementById("DI_Source_Text"),
@@ -1443,12 +1655,19 @@ var DeviationIndicatorWidget = {
 			HDI_Needle	: m._group.getElementById("HDI_Needle"),
 			VDI		: m._group.getElementById("VDI"),
 			VDI_Needle	: m._group.getElementById("VDI_Needle"),
+			HDIBackground  : m._group.getElementById("HDI_Bar_Background"),
+			VDIBackground  : m._group.getElementById("VDI_BAR_Background"),
+			miscompareLOC  : m._group.getElementById("LOC_Miscompare").setVisible(1),
+			miscompareGS   : m._group.getElementById("GS_Miscompare").setVisible(1),
+			
+			
 		};
 		m._apModeRev = 0;
 		return m;
 	},
 	setListeners : func(instance) {
-
+		append(me._listeners, setlistener(me._ptree.miscompareLOC,func(n){me._onMiscompareLocChange(n)},1,0));
+		append(me._listeners, setlistener(me._ptree.miscompareGS,func(n){me._onMiscompareGsChange(n)},1,0));
 		append(me._listeners, setlistener(extra500.autopilot.nModeRev,func(n){me._onApModeRevChange(n);},1,0));
 		
 	},
@@ -1458,6 +1677,24 @@ var DeviationIndicatorWidget = {
 		}else{
 			me.removeListeners();
 		}
+	},
+	_onMiscompareLocChange : func(n){
+		var v = n.getValue();
+		if(v){
+			me._can.HDIBackground.set("stroke",COLOR["Amber"]);
+		}else{
+			me._can.HDIBackground.set("stroke",COLOR["Black"]);
+		}
+		me._can.miscompareLOC.setVisible(v);
+	},
+	_onMiscompareGsChange : func(n){
+		var v = n.getValue();
+		if(v){
+			me._can.VDIBackground.set("stroke",COLOR["Amber"]);
+		}else{
+			me._can.VDIBackground.set("stroke",COLOR["Black"]);
+		}
+		me._can.miscompareGS.setVisible(v);
 	},
 	
 	_onApModeRevChange : func(n){
@@ -1528,18 +1765,24 @@ var DeviationIndicatorWidget = {
 	
 };
 
-
 var HeadingSituationIndicatorWidget = {
 	new: func(page,canvasGroup,name){
 		var m = {parents:[HeadingSituationIndicatorWidget,IfdWidget.new(page,canvasGroup,name)]};
 		m._class 	= "HeadingSituationIndicatorWidget";
 		m._ptree	= {
-			Heading		: props.globals.initNode("/instrumentation/heading-indicator-IFD-"~m._ifd.name~"/indicated-heading-deg",0.0,"DOUBLE"),
+			ready	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/ADAHRS/ready",0,"BOOL"),
+			miscompareHDG  : props.globals.initNode("/extra500/instrumentation/IFD-miscompares/heading",1,"BOOL"),
+			Heading		: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/heading/ind-heading",0.0,"DOUBLE"),
 # 			HeadingTrue	: props.globals.initNode("/orientation/heading-deg",0.0,"DOUBLE"),
 			TrunRate	: props.globals.initNode("/instrumentation/turn-indicator/indicated-turn-rate",0.0,"DOUBLE"),
 # 			FmsHeading	: props.globals.initNode("/autopilot/fms-channel/course-target-deg",0.0,"DOUBLE"),
 		};
 		m._can		= {
+			
+			ready 		: m._group.getElementById("layer15").setVisible(0),
+			loss 		: m._group.getElementById("layer11").setVisible(1),
+			HDGBackground  : m._group.getElementById("HDG_Background"),
+			miscompareHDG  : m._group.getElementById("HDG_Miscompare").setVisible(1),
 			CoursePointer	: m._group.getElementById("CoursePointer").updateCenter(),
 			CDI		: m._group.getElementById("CDI").updateCenter(),
 			FromFlag	: m._group.getElementById("CDI_FromFlag"),
@@ -1562,13 +1805,39 @@ var HeadingSituationIndicatorWidget = {
 	},
 	setListeners : func(instance) {
 		append(me._listeners, setlistener("/autopilot/settings/heading-bug-deg",func(n){me._onHdgBugChange(n)},1,0));	
+		append(me._listeners, setlistener(me._ptree.miscompareHDG,func(n){me._onMiscompareHdgChange(n)},1,0));
+		append(me._listeners, setlistener(me._ptree.ready,func(n){me._onReadyChange(n)},1,0));
+		
+		
 	},
+	_onReadyChange : func(n){
+		if(n.getValue()){
+			me._can.loss.setVisible(0);
+			me._can.ready.setVisible(1);
+			
+		}else{
+			me._can.ready.setVisible(0);
+			me._can.loss.setVisible(1);
+		}
+	},
+	
+	_onMiscompareHdgChange : func(n){
+		var v = n.getValue();
+		if(v){
+			me._can.HDGBackground.set("stroke",COLOR["Amber"]);
+		}else{
+			me._can.HDGBackground.set("stroke",COLOR["Blue"]);
+		}
+		me._can.miscompareHDG.setVisible(v);
+	},
+	
+	
 	_onHdgBugChange : func(n){
 		me._headingBug		= n.getValue();
 		me._can.HeadingBug_Text.setText(sprintf("%03i",tool.course(me._headingBug)));
 	},
 	init : func(instance=me){
-# 		me.setListeners(instance);
+ 		#me.setListeners(instance);
 		#me._movingMap.init();
 		
 	},
@@ -1586,6 +1855,11 @@ var HeadingSituationIndicatorWidget = {
 		me._trunRate 		= me._ptree.TrunRate.getValue();
 # 		me._fmsHeading 		= me._ptree.FmsHeading.getValue();
 		
+		if (me._heading >= 359.5 ) {
+			me._heading = me._heading - 360; 
+		} else if (me._heading < -0.5) {
+			me._heading = me._heading + 360;
+		}
 		
 		me._can.Heading_Text.setText(sprintf("%03i",tool.course( me._heading)));
 # 		me._can.CompassRose.setRotation(-me._heading * global.CONST.DEG2RAD);
@@ -1617,12 +1891,16 @@ var HeadingSituationIndicatorWidget = {
 	
 };
 
-
 var EnvironmentWidget = {
 	new: func(page,canvasGroup,name){
 		var m = {parents:[EnvironmentWidget,IfdWidget.new(page,canvasGroup,name)]};
 		m._class 	= "EnvironmentWidget";
+		m._ptree	= {
+			ready	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/env/ready",0,"BOOL"),
+		};
 		m._can		= {
+			ready 		: m._group.getElementById("layer6").setVisible(0),
+			loss 		: m._group.getElementById("layer18").setVisible(1),
 			WindVector	: m._group.getElementById("WindVector"),
 			WindArrow	: m._group.getElementById("WindArrow").updateCenter(),
 			OAT		: m._group.getElementById("OAT"),
@@ -1630,6 +1908,28 @@ var EnvironmentWidget = {
 			IceWarning	: m._group.getElementById("ICE_Warning").setVisible(0),	
 		};
 		return m;
+	},
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._ptree.ready,func(n){me._onReadyChange(n)},1,0));
+		
+	},
+	_onVisibiltyChange : func(){
+		if(me._visibility == 1){
+			me.setListeners(me);
+		}else{
+			me.removeListeners();
+		}
+	},
+	
+	_onReadyChange : func(n){
+		if(n.getValue()){
+			me._can.loss.setVisible(0);
+			me._can.ready.setVisible(1);
+			
+		}else{
+			me._can.ready.setVisible(0);
+			me._can.loss.setVisible(1);
+		}
 	},
 	update2Hz : func(now,dt){
 		me._can.IceWarning.setVisible(getprop("/extra500/system/deice/iceWarning"));
@@ -1656,11 +1956,13 @@ var EnvironmentWidget = {
 	},
 };
 
-
 var FlyVectorsWidget = {
 	new: func(page,canvasGroup,name){
 		var m = {parents:[FlyVectorsWidget,IfdWidget.new(page,canvasGroup,name)]};
 		m._class 	= "FlyVectorsWidget";
+		m._ptree	= {
+			ready	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/ADAHRS/ready",0,"BOOL"),
+		};
 		m._can		= {
 			FlyVector		: m._group.getElementById("FlyVector"),
 			FlyVector_label_up	: m._group.getElementById("FlyVector_label_up"),
@@ -1678,25 +1980,34 @@ var FlyVectorsWidget = {
 	},
 	setListeners : func(instance) {
 		append(me._listeners, setlistener(fms._node.FlyVector,func(n){me._onFlyVectorsChange(n);},1,0) );
+		append(me._listeners, setlistener(me._ptree.ready,func(n){me._onReadyChange(n)},1,0));
+		
 	},
 	_onVisibiltyChange : func(){
 		if(me._visibility == 1){
 			me.setListeners(me);
+			
+		}else{
+			me.removeListeners();
+			#me.registerKeyCDI();
+		}
+		me._checkReady();
+	},
+	_checkReady : func(){
+		if(me._ready and me._visibility){
 			me._ifd.ui.bindKey("L5",{
 				"<"	: func(){keypad.onV();},
 				">"	: func(){keypad.onV();},
 			});
 			me._can.FlyVector.setVisible(1);
 		}else{
-			me.removeListeners();
-
 			me._ifd.ui.bindKey("L5");
-			
-			#me.registerKeyCDI();
-			
-						
-			
+			me._can.FlyVector.setVisible(0);
 		}
+	},
+	_onReadyChange : func(n){
+		me._ready = n.getValue();
+		me._checkReady();
 	},
 	_onFlyVectorsChange : func(n){
 		me._flyVectors = n.getValue();
@@ -1720,6 +2031,9 @@ var NavSelectWidget = {
 	new: func(page,canvasGroup,name){
 		var m = {parents:[NavSelectWidget,IfdWidget.new(page,canvasGroup,name)]};
 		m._class 	= "NavSelectWidget";
+		m._ptree	= {
+			ready	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/ADAHRS/ready",0,"BOOL"),
+		};
 		m._can		= {
 			content		: m._group.getElementById("Tab_Nav_Content").setVisible(0),
 # 			SynVis		: m._group.getElementById("SynVis_State"),
@@ -1744,13 +2058,24 @@ var NavSelectWidget = {
 	deinit : func(){
 		me.removeListeners();
 	},
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._ptree.ready,func(n){me._onReadyChange(n)},1,0));
+		
+	},
+	
 	_onVisibiltyChange : func(){
 		if(me._visibility == 1){
 			me.setListeners(me);
-# 			me._ifd.ui.bindKey("R3",{
-# 				"<"	: func(){me.setSynVis();},
-# 				">"	: func(){me.setSynVis();},
-# 			});
+# 						
+		}else{
+			me.removeListeners();
+# 			
+		}
+		me._can.content.setVisible(me._visibility);
+		me._checkReady();
+	},
+	_checkReady : func(){
+		if(me._ready and me._visibility){
 			me._ifd.ui.bindKey("R4",{
 				"<"	: func(){me.setFlighPlan();},
 				">"	: func(){me.setFlighPlan();},
@@ -1765,10 +2090,8 @@ var NavSelectWidget = {
 # 			me._can.SynVis.setText(LABEL_OFFON[me._synVis]);
 			me._can.FlightPlan.setText(LABEL_OFFON[me._flightPlan]);
 			me._can.CDI.setText(LABEL_OFFON[me._cdi]);
-			
+
 		}else{
-			me.removeListeners();
-# 			me._ifd.ui.bindKey("R3");
 			me._ifd.ui.bindKey("R4");
 			
 			
@@ -1777,9 +2100,14 @@ var NavSelectWidget = {
 						
 			me._ifd.movingMap.setLayerVisible("route",1);
 		}
-		me._can.content.setVisible(me._visibility);
-		
+		me._can.content.setVisible(me._visibility and me._ready);
 	},
+	
+	_onReadyChange : func(n){
+		me._ready = n.getValue();
+		me._checkReady();
+	},
+	
 	registerKeyCDI : func(){
 		me._can.CDI_Button.setVisible( me._Page._widget.Tab._index == 0 and me._Page._widget.NavSource._source == 2);
 		if(me._Page._widget.Tab._index == 0){
@@ -1841,6 +2169,9 @@ var BugSelectWidget = {
 	new: func(page,canvasGroup,name){
 		var m = {parents:[BugSelectWidget,IfdWidget.new(page,canvasGroup,name)]};
 		m._class 	= "BugSelectWidget";
+		m._ptree	= {
+			ready	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/ADAHRS/ready",0,"BOOL"),
+		};
 		m._can		= {
 			content		: m._group.getElementById("Tab_Bug_Content").setVisible(0),
 			Heading		: m._group.getElementById("Set_Heading"),
@@ -1882,16 +2213,18 @@ var BugSelectWidget = {
 			
 		
 	},
-	_onVisibiltyChange : func(){
-		if(me._visibility == 1){
-			me.setListeners(me);
+	setListeners : func(instance) {
+		append(me._listeners, setlistener(me._ptree.ready,func(n){me._onReadyChange(n)},1,0));
+		
+	},
+	_checkReady: func(){
+		if(me._ready and me._visibility){
 			me.registerKeys();
 			#me._setModeRK(me._modeRK);
 			me._setModeRK("HDG");
+						
 			
 		}else{
-			me.removeListeners();
-
 			me._ifd.ui.bindKey("R3");
 			me._ifd.ui.bindKey("R4");
 			me._ifd.ui.bindKey("R5");
@@ -1900,7 +2233,24 @@ var BugSelectWidget = {
 			
 			me._ResetTimer.stop();
 		}
-		me._can.content.setVisible(me._visibility);
+		me._can.content.setVisible(me._visibility and me._ready);
+	},
+	
+	_onReadyChange : func(n){
+		me._ready = n.getValue();
+		me._checkReady();
+	},
+	_onVisibiltyChange : func(){
+		if(me._visibility == 1){
+			me.setListeners(me);
+			
+			
+		}else{
+			me.removeListeners();
+
+			
+		}
+		me._checkReady();
 	},
 	_setModeRK : func(value=nil){
 		
@@ -2163,6 +2513,7 @@ var AvidynePagePFD = {
 			Marker	 		: MarkerWidget.new(m,m.page,"Marker"),
 			ActiveCom	 	: ActiveComWidget.new(m,m.page,"ActiveCom"),
 			FlyVectors	 	: FlyVectorsWidget.new(m,m.page,"FlyVectors"),
+			ADAHRS	 		: ADAHRSDisplay_Widget.new(m,m.page,"ADAHRS"),
 			
 			
 			
@@ -2230,6 +2581,9 @@ var AvidynePagePFD = {
 		
 		me.page.setVisible(me._visibility);
 	},
+	boot : func(warm = nil){
+		me._widget.ADAHRS.boot(warm);
+	},
 	_initWidgetsForTab : func(index){
 			
 		if (index == 0){ # Tab NavDisplay
@@ -2255,6 +2609,7 @@ var AvidynePagePFD = {
 		me._widget.NavSource.update2Hz(now,dt);
 		me._widget.BearingSource.update2Hz(now,dt);
 		me._widget.Timer.update2Hz(now,dt);
+		me._widget.ADAHRS.update2Hz(now,dt);
 		
 	},
 	update20Hz : func(now,dt){

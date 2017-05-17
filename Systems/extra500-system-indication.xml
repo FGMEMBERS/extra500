@@ -20,7 +20,7 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2016-06-18
+      Date:             2016-10-31
 -->
 
 <system name="indication">
@@ -1208,8 +1208,110 @@
 
 	</channel>
 
-<!--AIRSPEED ANTI-CALIBRATION-->
-	<channel name="airspeed">
+<!--**************************PITOT and STATIC SYSTEM FAILURES******************************************************-->
+<!-- the static systems leak into the pressure cabin, a leak outside of the pressure cabin is not very exciting...-->
+<!-- the AP static system is routed outside of the pressure cabin, so it is not taken into account -->
+	<channel name="pitotstaticsystem">
+
+		<fcs_function name="/systems/staticL/pressure2-inhg">
+			<function>
+				<sum>
+					<property>/systems/staticL/pressure-inhg</property>
+					<product>
+						<property>/systems/staticL/leaking</property>
+						<difference>
+							<property>/systems/pressurization/cabin-pressure-inhg</property>
+							<property>/systems/staticL/pressure-inhg</property>
+						</difference>
+					</product>
+				</sum>
+   			</function>
+		</fcs_function>
+
+		<fcs_function name="/systems/staticR/pressure2-inhg">
+			<function>
+				<sum>
+					<property>/systems/staticR/pressure-inhg</property>
+					<product>
+						<property>/systems/staticR/leaking</property>
+						<difference>
+							<property>/systems/pressurization/cabin-pressure-inhg</property>
+							<property>/systems/staticR/pressure-inhg</property>
+						</difference>
+					</product>
+				</sum>
+   			</function>
+		</fcs_function>
+
+<!-- altitude miscompare -->
+		<fcs_function name="/extra500/instrumentation/IFD-miscompares/altitude-diff-abs">
+    			<function>
+				<abs>	
+					<difference>
+						<property>/instrumentation/altimeter-IFD-LH/indicated-altitude-ft</property>
+						<property>/instrumentation/altimeter-IFD-RH/indicated-altitude-ft</property>
+					</difference>
+				</abs>
+    			</function>
+		</fcs_function>
+
+		<switch name="altitudemiscompare">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/extra500/instrumentation/IFD-miscompares/altitude-diff-abs gt 20
+			</test>
+			<output>/extra500/instrumentation/IFD-miscompares/altitude</output>
+		</switch>
+
+<!-- the pitot system can leak to the pressure cabin (leaking1) or to static pressure (leaking2) -->
+		<fcs_function name="/systems/pitotL/total-pressure2-inhg">
+			<function>
+				<sum>
+					<property>/systems/pitotL/total-pressure-inhg</property>
+					<product>
+						<property>/systems/pitotL/leaking1</property>
+						<difference>
+							<property>/systems/pressurization/cabin-pressure-inhg</property>
+							<property>/systems/pitotL/total-pressure-inhg</property>
+						</difference>
+					</product>
+					<product>
+						<property>/systems/pitotL/leaking2</property>
+						<difference>
+							<property>/environment/pressure-inhg</property>
+							<property>/systems/pitotL/total-pressure-inhg</property>
+						</difference>
+					</product>
+				</sum>
+   			</function>
+		</fcs_function>
+
+		<fcs_function name="/systems/pitotR/total-pressure2-inhg">
+			<function>
+				<sum>
+					<property>/systems/pitotR/total-pressure-inhg</property>
+					<product>
+						<property>/systems/pitotR/leaking1</property>
+						<difference>
+							<property>/systems/pressurization/cabin-pressure-inhg</property>
+							<property>/systems/pitotR/total-pressure-inhg</property>
+						</difference>
+					</product>
+					<product>
+						<property>/systems/pitotR/leaking2</property>
+						<difference>
+							<property>/environment/pressure-inhg</property>
+							<property>/systems/pitotR/total-pressure-inhg</property>
+						</difference>
+					</product>
+				</sum>
+   			</function>
+		</fcs_function>
+
+
+
+<!--**************************AIRSPEED ANTI-CALIBRATION and MISCOMPARES******************************************************-->
+
 		<fcs_function name="/instrumentation/airspeed-IFD-LH/indicated-airspeed-kt">
 			<function>
        			<description>Calibrated to indicated airspeed</description>
@@ -1237,9 +1339,159 @@
     			</function>
 		</fcs_function>
 
+		<fcs_function name="/instrumentation/airspeed-IFD-RH/indicated-airspeed-kt">
+			<function>
+       			<description>Calibrated to indicated airspeed</description>
+       				<table>
+            				<independentVar lookup="row">/instrumentation/airspeed-IFD-RH/indicated-speed-kt</independentVar>
+            				<independentVar lookup="column">fcs/flap-aero-pos-deg</independentVar>
+            				<tableData>
+						0	15	30
+					0	0	0	0
+					55	58	54	51
+					60	62.2	59	57.5
+					70	72	69.5	68
+					80	80.5	79.7	69
+					90	90.1	89.8	89.5
+					100	100	100	99
+					110	109.5	110	108
+					120	119	120	120
+					130	128.5	130	130
+					140	138	140	140
+					210	208	210	210
+					222	220	222	222
+					260	258	260	260
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+		<fcs_function name="/extra500/instrumentation/IFD-miscompares/airspeed-diff-abs">
+    			<function>
+				<abs>	
+					<difference>
+						<property>/instrumentation/airspeed-IFD-LH/indicated-airspeed-kt</property>
+						<property>/instrumentation/airspeed-IFD-RH/indicated-airspeed-kt</property>
+					</difference>
+				</abs>
+    			</function>
+		</fcs_function>
+
+		<switch name="airspeedmiscompare">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/extra500/instrumentation/IFD-miscompares/airspeed-diff-abs gt 5
+			</test>
+			<output>/extra500/instrumentation/IFD-miscompares/airspeed</output>
+		</switch>
+
+		<fcs_function name="/instrumentation/airspeed-backup/indicated-airspeed-kt">
+			<function>
+       			<description>Calibrated to indicated airspeed</description>
+       				<table>
+            				<independentVar lookup="row">/instrumentation/airspeed-backup/indicated-speed-kt</independentVar>
+            				<independentVar lookup="column">fcs/flap-aero-pos-deg</independentVar>
+            				<tableData>
+						0	15	30
+					0	0	0	0
+					55	58	54	51
+					60	62.2	59	57.5
+					70	72	69.5	68
+					80	80.5	79.7	69
+					90	90.1	89.8	89.5
+					100	100	100	99
+					110	109.5	110	108
+					120	119	120	120
+					130	128.5	130	130
+					140	138	140	140
+					210	208	210	210
+					222	220	222	222
+					260	258	260	260
+            				</tableData>
+      				</table>
+    			</function>
+		</fcs_function>
+
+<!--**************************NAV MISCOMPARES*********************************************************-->
+		<fcs_function name="/extra500/instrumentation/IFD-miscompares/loc-diff-abs">
+    			<function>
+				<abs>	
+					<difference>
+<!--FIXME: this is complete bullsh*t since the IFD-s cannot display nav1 and nav2 simultaniously and even then, who tunes nav1 and 2 to the same frequency???
+the reason for a LOC (or GS) miscompare can only be a misinterpretation of the data on the databus of a central processor failure
+In RL I have seen this only at the edge of viable data reception where the one IFD sees the data as valid and the other not,
+in effect when the LOC or GS is running to the side as is normal when being on that edge --> 
+						<property>/instrumentation/nav[0]/heading-needle-deflection-norm</property>
+						<property>/instrumentation/nav[1]/heading-needle-deflection-norm</property>
+					</difference>
+				</abs>
+    			</function>
+		</fcs_function>
+
+		<switch name="locmiscompare">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="AND">
+<!-- this is set to 2 to suppress the message, should be 0.1 when correctly implemented --> 
+					/extra500/instrumentation/IFD-miscompares/loc-diff-abs gt 2
+				</test>
+				<test logic="OR">
+					<test logic="AND">
+						/instrumentation/nav-source eq 0
+						/instrumentation/nav[0]/serviceable eq 1
+						/instrumentation/nav[0]/operable eq 1 
+						/instrumentation/nav[0]/in-range eq 1
+					</test>
+					<test logic="AND">
+						/instrumentation/nav-source eq 1
+						/instrumentation/nav[1]/serviceable eq 1
+						/instrumentation/nav[1]/operable eq 1 
+						/instrumentation/nav[1]/in-range eq 1
+					</test>
+				</test>
+			</test>
+			<output>/extra500/instrumentation/IFD-miscompares/LOC</output>
+		</switch>
+
+		<fcs_function name="/extra500/instrumentation/IFD-miscompares/gs-diff-abs">
+    			<function>
+				<abs>	
+					<difference>
+						<property>/instrumentation/nav[0]/gs-needle-deflection-norm</property>
+						<property>/instrumentation/nav[1]/gs-needle-deflection-norm</property>
+					</difference>
+				</abs>
+    			</function>
+		</fcs_function>
+
+		<switch name="gsmiscompare">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="AND">
+<!-- this is set to 2 to suppress the message, should be 0.1 when correctly implemented --> 
+					/extra500/instrumentation/IFD-miscompares/gs-diff-abs gt 2
+				</test>
+				<test logic="OR">
+					<test logic="AND">
+						/instrumentation/nav-source eq 0
+						/instrumentation/nav[0]/gs/serviceable eq 1
+						/instrumentation/nav[0]/gs-in-range eq 1
+					</test>
+					<test logic="AND">
+						/instrumentation/nav-source eq 1
+						/instrumentation/nav[1]/gs/serviceable eq 1
+						/instrumentation/nav[1]/gs-in-range eq 1
+					</test>
+				</test>
+			</test>
+			<output>/extra500/instrumentation/IFD-miscompares/GS</output>
+		</switch>
+
+<!--**************************(OVER)LIMIT EVENTS******************************************************-->
 		<switch name="GEAR140limitevent">
 			<default value="0"/>
 			<test logic="AND" value="1">
+				simulation/sim-time-sec gt 2
 				aircraft/events/show-events eq 1
 				/fdm/jsbsim/gear/unit/pos-norm ne 0
 				/fdm/jsbsim/gear/unit[1]/pos-norm ne 0
@@ -1279,6 +1531,7 @@
 			<output>aircraft/events/EXTERNALPOWER</output>
 		</switch>
 
+<!--**************************ICING******************************************************-->
 		<switch name="Lpitoticing">
 			<default value="1"/>
 			<test logic="AND" value="0">
@@ -1295,59 +1548,6 @@
 			<output>/systems/pitotR/serviceable</output>
 		</switch>
 
-		<fcs_function name="/instrumentation/airspeed-IFD-RH/indicated-airspeed-kt">
-			<function>
-       			<description>Calibrated to indicated airspeed</description>
-       				<table>
-            				<independentVar lookup="row">/instrumentation/airspeed-IFD-RH/indicated-speed-kt</independentVar>
-            				<independentVar lookup="column">fcs/flap-aero-pos-deg</independentVar>
-            				<tableData>
-						0	15	30
-					0	0	0	0
-					55	58	54	51
-					60	62.2	59	57.5
-					70	72	69.5	68
-					80	80.5	79.7	69
-					90	90.1	89.8	89.5
-					100	100	100	99
-					110	109.5	110	108
-					120	119	120	120
-					130	128.5	130	130
-					140	138	140	140
-					210	208	210	210
-					222	220	222	222
-					260	258	260	260
-            				</tableData>
-      				</table>
-    			</function>
-		</fcs_function>
-
-		<fcs_function name="/instrumentation/airspeed-backup/indicated-airspeed-kt">
-			<function>
-       			<description>Calibrated to indicated airspeed</description>
-       				<table>
-            				<independentVar lookup="row">/instrumentation/airspeed-backup/indicated-speed-kt</independentVar>
-            				<independentVar lookup="column">fcs/flap-aero-pos-deg</independentVar>
-            				<tableData>
-						0	15	30
-					0	0	0	0
-					55	58	54	51
-					60	62.2	59	57.5
-					70	72	69.5	68
-					80	80.5	79.7	69
-					90	90.1	89.8	89.5
-					100	100	100	99
-					110	109.5	110	108
-					120	119	120	120
-					130	128.5	130	130
-					140	138	140	140
-					210	208	210	210
-					222	220	222	222
-					260	258	260	260
-            				</tableData>
-      				</table>
-    			</function>
-		</fcs_function>
 
 <!-- airspeed change indication on IFD-s (blue stripe) -->
 		<pid name="/instrumentation/airspeed-IFD-LH/airspeed-change">
@@ -1517,24 +1717,24 @@
 
 	<channel name="magvariation">
 
-		<fcs_function name="/instrumentation/heading-indicator-IFD-LH/offset-deg">
+		<fcs_function name="/extra500/instrumentation/heading-indicator-IFD-LH/offset-deg">
 			<function>
 				<product>
 					<property>/environment/magnetic-variation-deg</property>
 					<value>-1.0</value>
 				</product>
 			</function>
-			<output>/instrumentation/heading-indicator-IFD-LH/offset-deg</output>
+			<output>/extra500/instrumentation/heading-indicator-IFD-LH/offset-deg</output>
 		</fcs_function>
 
-		<fcs_function name="/instrumentation/heading-indicator-IFD-RH/offset-deg">
+		<fcs_function name="/extra500/instrumentation/heading-indicator-IFD-RH/offset-deg">
 			<function>
 				<product>
 					<property>/environment/magnetic-variation-deg</property>
 					<value>-1.0</value>
 				</product>
 			</function>
-			<output>/instrumentation/heading-indicator-IFD-RH/offset-deg</output>
+			<output>/extra500/instrumentation/heading-indicator-IFD-RH/offset-deg</output>
 		</fcs_function>
 
 	</channel>
@@ -1620,6 +1820,40 @@
 			</function>			
 			<output>/fdm/jsbsim/inertia/nt-weight-lbs</output>
 		</fcs_function>
+	</channel>
+
+	<channel name="gloadwarnings" execrate="60">
+
+		<switch name="overgflup">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="AND">
+					/fdm/jsbsim/fcs/flap-pos-norm eq 0
+					/sim/signals/fdm-initialized eq 1
+				</test>
+				<test logic="OR">
+					/fdm/jsbsim/accelerations/n-pilot-z-norm lt -3.8
+					/fdm/jsbsim/accelerations/n-pilot-z-norm gt 1.5
+				</test>
+			</test>
+			<output>/fdm/jsbsim/aircraft/events/overgflup</output>
+		</switch>
+
+		<switch name="overgflext">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				<test logic="AND">
+					/fdm/jsbsim/fcs/flap-pos-norm gt 0
+					/sim/signals/fdm-initialized eq 1
+				</test>
+				<test logic="OR">
+					/fdm/jsbsim/accelerations/n-pilot-z-norm lt -2.0
+					/fdm/jsbsim/accelerations/n-pilot-z-norm gt 0
+				</test>
+			</test>
+			<output>/fdm/jsbsim/aircraft/events/overgflext</output>
+		</switch>
+
 	</channel>
 
 </system>

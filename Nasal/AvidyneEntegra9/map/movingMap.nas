@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Sep 10 2013
 #
-#	Last change:	Dirk Dittmann
-#	Date:		28.05.15
+#	Last change:	Eric van den Berg
+#	Date:		25.09.16
 #
 
 # var RouteLayer = {
@@ -69,22 +69,24 @@ var MovingMap = {
 			ListenerClass.new(),
 		]};
 		#debug.dump(m);
-		m.IFD 		= ifd;
+		m._ifd 		= ifd;
 		m._group 	= parent;
 		m._name		= name;
 		m._tree	= {
 			MagVar		: props.globals.initNode("/environment/magnetic-variation-deg",0.0,"DOUBLE"),
-			Heading		: props.globals.initNode("/instrumentation/heading-indicator-IFD-"~m.IFD.name~"/indicated-heading-deg",0.0,"DOUBLE"),
+			Heading		: props.globals.initNode("extra500/instrumentation/IFD-"~m._ifd.name~"/heading/ind-heading",0.0,"DOUBLE"),
 			TrackTrue	: props.globals.initNode("/autopilot/fms-channel/indicated-track-true-deg",0.0,"DOUBLE"),
 			FmsHeading	: props.globals.initNode("/autopilot/fms-channel/course-target-deg",0.0,"DOUBLE"),
 			groundSpeed	: props.globals.initNode("/autopilot/fms-channel/indicated-ground-speed-kt",0.0,"DOUBLE"),
+			ready	: props.globals.initNode("/extra500/instrumentation/IFD-"~m._ifd.name~"/ADAHRS/ready",0,"BOOL"),
+			
 		};
 				
 		canvas.parsesvg(m._group, "Models/instruments/IFDs/IFD_MovingMap.svg",{
 			"font-mapper": global.canvas.FontMapper
 			}
 		);
-		
+		m._group.setVisible(0);
 		m._can = {
 			#plane		: m._group.getElementById("MovingMap_Plane").set("z-index",1),
 			plane		: m._group.getElementById("MovingMap_Plane"),
@@ -199,6 +201,7 @@ var MovingMap = {
 		append(me._listeners, setlistener("/autopilot/fms-channel/serviceable",func(n){me._onFmsServiceChange(n);},1,0));
 		append(me._listeners, setlistener(tcasModel._nObserver,func(n){me.onModelObserverNotify(n)},1,1));	
 		append(me._listeners, setlistener(fms._node.FlyVector,func(n){me._onFlyVectorsChange(n);},1,0) );
+		append(me._listeners, setlistener(me._tree.ready,func(n){me._onReadyChange(n)},1,0));
 			
 	},
 	
@@ -213,6 +216,13 @@ var MovingMap = {
 	},
 	setHdg : func(deg){
 		me._heading = deg;
+
+		if (me._heading >= 359.5 ) {
+			me._heading = me._heading - 360; 
+		} else if (me._heading < -0.5) {
+			me._heading = me._heading + 360;
+		}
+
 		if(me._view == MAP_VIEW.NORTH_UP){ # North up
 			me._mapOptions.orientation = 0;
 		}else{
@@ -226,11 +236,16 @@ var MovingMap = {
 
 	},
 	setVisible : func(visibility){
-		me._group.setVisible(visibility);
+		me._visibility = visibility;
+		me._group.setVisible(me._visibility and me._ready);
+	},
+	_onReadyChange : func(n){
+		me._ready = n.getValue();
+		me._group.setVisible(me._visibility and me._ready);
 	},
 	setLayout : func(layout){
 		me._layout = layout;
-		me._group.setVisible(0);
+		me._visibility = 0;
 	
 		if(me._layout == "map"){
 			me._layer.positioned.setVisible(1);
@@ -249,7 +264,7 @@ var MovingMap = {
 			
 # 			
 			#me._group.set("z-index",-1);
-			me._group.setVisible(1);
+			me._visibility = 1;
 		}elsif(me._layout == "map+"){
 			me._layer.positioned.setVisible(1);
 			me._layer.route.setVisible(1);
@@ -267,7 +282,7 @@ var MovingMap = {
 			me._can.LayerFront.setVisible(1);
 			
 # 			me._group.set("z-index",0);
-			me._group.setVisible(1);
+			me._visibility = 1;
 		}elsif(me._layout == "split-left"){
 			me._layer.positioned.setVisible(1);
 			me._layer.route.setVisible(1);
@@ -283,7 +298,7 @@ var MovingMap = {
 			me._can.LayerFront.setVisible(1);
 			
 # 			me._group.set("z-index",0);
-			me._group.setVisible(1);
+			me._visibility = 1;
 		}elsif(me._layout == "pfd"){
 			me._view = MAP_VIEW.HDG_UP_CENTER;
 			
@@ -310,11 +325,12 @@ var MovingMap = {
 # 			me._can.UpHDG.setTranslation(-625,0);
 			me._can.LayerFront.setVisible(0);
 # 			me._group.set("z-index",1);
-			me._group.setVisible(1);
+			me._visibility = 1;
 			
 		}else{
 			
 		}
+		me._group.setVisible(me._visibility and me._ready);
 		me._updateView();
 			
 		

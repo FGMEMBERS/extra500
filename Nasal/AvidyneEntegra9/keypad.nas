@@ -17,7 +17,7 @@
 #      Date: Jun 27 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             19.06.14
+#      Date:             19.09.16
 #
 
 
@@ -654,7 +654,7 @@ var KeypadClass = {
 		m.nTungingChannel = m._nRoot.initNode("tuningChannel",0,"INT");
 		
 		
-		m.nHeading = props.globals.initNode("/instrumentation/heading-indicator-IFD-LH/indicated-heading-deg",0,"DOUBLE");
+		m.nHeading = props.globals.initNode("/extra500/instrumentation/IFD-LH/heading/ind-heading",0,"DOUBLE");
 		m.nAltitude = props.globals.initNode("/instrumentation/altimeter-IFD-LH/indicated-altitude-ft",0,"DOUBLE");
 		
 		m._nCursorX 		= m._nRoot.initNode("cursorX",0,"INT");
