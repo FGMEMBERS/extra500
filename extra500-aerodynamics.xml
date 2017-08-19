@@ -20,26 +20,12 @@
       Date: 2013-05-23
 
       Last change:      Eric van den Berg
-      Date:             2016-03-12
+      Date:             2017-05-25
 -->
 
 <aerodynamics>
 
 <!--GENERAL STUFF -->
-
-    <!--function name="sim-dt-sec">
-	<sum>
-		<property>simulation/sim-time-sec</property>
-		<property>sim-time-sec-old</property>
-	</sum>
-    </function>
-
-   <function name="sim-time-sec-old">
-	<product>
-		<value>-1</value>
-		<property>sim-time-sec</property>
-	</product>
-    </function-->
 
     <function name="atmosphere/T-degC">
 	<sum>
@@ -961,6 +947,22 @@
 		<property>aero/qbar-psf</property>
 		<property>metrics/Sw-sqft</property>
 		<value>0.00006</value>
+	</product>
+	</function>
+
+	<function name="aero/force/X-brokenprop">
+	<product>
+		<value>-0.9</value>
+		<property>/fdm/jsbsim/aircraft/propeller/contact</property>
+		<property>/fdm/jsbsim/propulsion/engine/thrust-lbs</property>
+	</product>
+	</function>
+
+	<function name="aero/force/X-icedprop">
+	<product>
+		<value>-0.1</value>
+		<property>/environment/aircraft-effects/frost-level-PropellerBlade</property>
+		<property>/fdm/jsbsim/propulsion/engine/thrust-lbs</property>
 	</product>
 	</function>
 	

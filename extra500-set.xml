@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:      Eric van den Berg
-	Date:             11.02.17
+	Date:             12.08.17
 
 
 ************************************************************************
@@ -46,7 +46,13 @@ of the RR 250-B17F/2 engine is best.</long-description>
 	<tags>
 		<tag>Extra Aircraft</tag>
 		<tag>turboprop</tag>
-		<tag>single-engine</tag>
+		<tag>1-engine</tag>
+		<tag>ga</tag>
+   		<tag>glass-cockpit</tag>
+		<tag>ifr</tag>
+		<tag>retractable-gear</tag>
+		<tag>pressurised</tag>
+		<tag>rembrandt</tag>
 	</tags>
 
 	<author>Dirk Dittmann, Eric van den Berg, Thomas Grossberger</author>
@@ -59,7 +65,8 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<model type="int">4</model>
 		<cockpit type="int">4</cockpit>
 	</rating>
-	<extra500-version>4.3.0</extra500-version>
+	<extra500-version>4.4.0</extra500-version>
+	<minimum-fg-version>2016.1</minimum-fg-version>
 	<extra500-git>https://gitlab.com/extra500/extra500</extra500-git>
 	<extra500-wiki>http://wiki.flightgear.org/Extra_EA-500</extra500-wiki>
 
@@ -2387,6 +2394,11 @@ of the RR 250-B17F/2 engine is best.</long-description>
 				<pos-norm>0</pos-norm>
 			</unit>
 		</gear>
+		<propulsion>
+			<engine>
+				<thrust-lbs type="double">0</thrust-lbs>
+			</engine>
+		</propulsion>
 		<velocities>
 			<hstab>
 				<v-fps>0.0</v-fps>						<!--dummy value -->

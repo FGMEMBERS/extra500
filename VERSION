@@ -17,7 +17,14 @@
       Date: 2014-06-22
 
       Last change:      Eric van den Berg
-      Date:             2017.02.11
+      Date:             2017.08.13
+
+
+Release 4.4.0: use for flightgear version 2016.1.x and up, released for 2017.3
+* Failure dialog: reduce thrust when propeller is damaged or has icing on it
+* Exterior: procedural nav and strobe lights, ALS landing light
+* Interior: "MakeHuman" occupants, baggage, some small cosmatic changes to the panel
+* General: added more catalog tags
 
 Release 4.3.0: use for flightgear version 2016.1.x and up, released for 2017.1
 * Failure dialog: Avionics and autopilot failures, possible delay on failure activation

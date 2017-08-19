@@ -18,8 +18,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: 05.01.14
 
-      Last change:      Dirk Dittmann
-      Date:             06.01.2016           
+      Last change:      Eric van den Berg
+      Date:             05.03.2017           
 
 -->
 
@@ -30,7 +30,7 @@
 <!-- Submodels -->
 <model>
   <name>LHstrobe</name>
-  <path>Aircraft/extra500/Models/lights/strobe.xml</path>
+	<path>Aircraft/extra500/Models/lights/procedural_strobe_left.xml</path>
 	<offsets>
 		<x-m>0.21613</x-m>
 		<y-m>-5.625</y-m>	
@@ -40,7 +40,7 @@
 
 <model>
   <name>RHstrobe</name>
-  <path>Aircraft/extra500/Models/lights/strobe.xml</path>
+	<path>Aircraft/extra500/Models/lights/procedural_strobe_right.xml</path>
 	<offsets>
 		<x-m>0.21613</x-m>
 		<y-m>5.625</y-m>	
@@ -50,7 +50,7 @@
 
 <model>
   <name>LHnav</name>
-  <path>Aircraft/extra500/Models/lights/LHnav.xml</path>
+  <path>Aircraft/extra500/Models/lights/procedural_nav_left.xml</path>
 	<offsets>
 		<x-m>0.17</x-m>
 		<y-m>-5.6</y-m>	
@@ -60,7 +60,7 @@
 
 <model>
   <name>RHnav</name>
-  <path>Aircraft/extra500/Models/lights/RHnav.xml</path>
+  <path>Aircraft/extra500/Models/lights/procedural_nav_right.xml</path>
 	<offsets>
 		<x-m>0.17</x-m>
 		<y-m>5.6</y-m>	
