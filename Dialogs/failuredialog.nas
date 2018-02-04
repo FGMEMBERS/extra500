@@ -16,8 +16,8 @@
 #	Authors: 	Eric van den Berg
 #	Date: 	10.10.2015
 #
-#	Last change: Eric van den Berg	
-#	Date:		18.01.2017	
+#	Last change:	Dirk Dittmann
+#	Date:		08.01.18	
 #
 
 var COLORfd = {};
@@ -69,15 +69,48 @@ var FailureClass = {
 		m._gfd 	= nil;
 		m._canvas	= nil;
 		m._timer 	= maketimer(1.0,m,FailureClass._timerf );
-
+                m._listeners = [];
+                
 		return m;
+	},
+        toggle : func(){
+		if(me._gfd != nil){
+			me.close();
+		}else{
+			me.openDialog();
+		}
+	},
+	close : func(){
+#                 print("FailureClass.close() ... ");
+                
+                me._timer.stop();
+                
+		me.removeListeners();
+                        
+		me._gfd.del();
+                me._gfd = nil;
+	},
+	removeListeners  :func(){
+		foreach(l;me._listeners){
+			removelistener(l);
+		}
+		me._listeners = [];
 	},
 	openDialog : func(){
 		# making window
-		me._gfd = MyWindow.new([750,512],"dialog");
-		me._gfd._onClose = func(){Failuredialog._onClose();}
+                var scale = getprop("extra500/config/dialog/failure/scale");
+		var size = [750*scale,512*scale];
+                
+            
+		me._gfd = canvas.extra500Window.new(size,[750,512],"dialog");
+                me._gfd.onClose = func(){Failuredialog.close();}
+#  		me._gfd.onClose = func(){Failuredialog.onClose();}
+#		me._gfd.onClose = func(){me.onClose();}
+#		me._gfd.onClose = func(){me._gfd.del();}
 
 		me._gfd.set('title',me._title);
+                me._gfd.move(10,20);
+                
 		me._canvas = me._gfd.createCanvas().set("background", canvas.style.getColor("bg_color"));
            	me._root = me._canvas.createGroup();
 		
@@ -439,8 +472,8 @@ var FailureClass = {
 		me._frame.setColorFill(COLORfd["menuns"]);
 
 	},
-	_onClose : func(){
-		me._gfd.del();	
+	onClose : func(){
+		me.close();	
 	},
 	setListeners : func(instance) {
 	# menu

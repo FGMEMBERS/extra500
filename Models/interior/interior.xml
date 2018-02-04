@@ -58,6 +58,12 @@
     <object-name>interior.door</object-name>
     <object-name>storage4</object-name>
     <object-name>interior.Tisch</object-name>
+    <object-name>placard.emergexit</object-name>
+    <object-name>placard.open</object-name>
+    <object-name>placard.open.001</object-name>
+    <object-name>placard.door</object-name>
+    <object-name>placard.door.open</object-name>
+
 </effect>
 
 <model>

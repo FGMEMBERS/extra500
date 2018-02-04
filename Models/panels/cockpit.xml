@@ -1,0 +1,1314 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: E. van den Berg, Dirk Dittmann, Thomas Grossberger 
+      Date: 30.09.2017
+
+	Last change: E. van den Berg	
+	Date:	02.10.2017	
+-->
+<PropertyList>
+
+<!--path>cockpit.ac</path-->
+
+  <animation>
+    <type>range</type>
+    <min-m>0</min-m>
+    <max-m>50</max-m>
+  </animation>
+  
+  <!--Hide the yokes--> 
+
+  <animation>
+  	<object-name>copilot ppt</object-name>  
+ 	<object-name>pilot ppt</object-name>
+  	<object-name>pilot cws</object-name>   
+  	<object-name>pilot apdisc</object-name>  
+  	<object-name>pilot trimswitch</object-name> 
+	  <type>select</type>
+	  <condition>
+		  <equals>
+			  <property>/extra500/yokes/visible</property>
+			  <value>1</value>
+		  </equals>
+	  </condition>
+  </animation> 
+	
+  <animation>
+	  <type>material</type>
+  	<object-name>copilot ppt</object-name>  
+ 	<object-name>pilot ppt</object-name>
+  	<object-name>pilot cws</object-name>   
+  	<object-name>pilot apdisc</object-name>  
+  	<object-name>pilot trimswitch</object-name> 
+	  <transparency>
+		  <alpha-prop>/extra500/yokes/transparency</alpha-prop>
+		  <factor>1</factor>
+	  </transparency>
+  </animation>
+  
+  <effect>
+	  <inherits-from>Effects/model-transparent</inherits-from>
+  	<object-name>copilot ppt</object-name>  
+ 	<object-name>pilot ppt</object-name>
+  	<object-name>pilot cws</object-name>   
+  	<object-name>pilot apdisc</object-name>  
+  	<object-name>pilot trimswitch</object-name> 
+  </effect>
+
+
+<!-- Submodels -->
+
+<!-- external power -->
+
+<model>
+  <name>externalpower</name>
+  <path>Aircraft/extra500/Models/externalpower/externalpower.xml</path>
+	<offsets>
+		<x-m>0.0</x-m>
+		<y-m>-0.5</y-m>	
+		<z-m>0.4</z-m>
+		<pitch-deg>90</pitch-deg>
+		<roll-deg>180</roll-deg>
+	</offsets>
+</model>
+
+  <animation>
+	  <object-name>externalpower</object-name>
+	  <type>select</type>
+	  <condition>
+		  <equals>
+			  <property>sim/multiplay/generic/int[11]</property>
+			  <value>1</value>
+		  </equals>
+	  </condition>
+  </animation> 
+
+
+
+<!-- yoke switches -->
+
+<model>
+  <name>copilot ppt</name>
+  <path>Aircraft/extra500/Models/panels/PTTswitchco.xml</path>
+	<offsets>
+		<x-m>0.08592</x-m>
+		<y-m>0.43998</y-m>	
+		<z-m>0.16935</z-m>
+		<roll-deg>19.544</roll-deg>
+		<pitch-deg>-15.112</pitch-deg>
+		<yaw-deg>-0.221</yaw-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>pilot ppt</name>
+  <path>Aircraft/extra500/Models/panels/PTTswitchpi.xml</path>
+	<offsets>
+		<x-m>0.07037</x-m>
+		<y-m>-0.44328</y-m>	
+		<z-m>0.15615</z-m>
+		<roll-deg>-28.059</roll-deg>
+		<pitch-deg>-52.095</pitch-deg>
+		<yaw-deg>19.261</yaw-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>pilot cws</name>
+  <path>Aircraft/extra500/Models/panels/CWSswitch.xml</path>
+	<offsets>
+		<x-m>0.08542</x-m>
+		<y-m>-0.22961</y-m>	
+		<z-m>0.16914</z-m>
+		<roll-deg>18.401</roll-deg>
+		<pitch-deg>-16.871</pitch-deg>
+		<yaw-deg>0.422</yaw-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>pilot apdisc</name>
+  <path>Aircraft/extra500/Models/panels/APDiscswitch.xml</path>
+	<offsets>
+		<x-m>0.08593</x-m>
+		<y-m>-0.44009</y-m>	
+		<z-m>0.16905</z-m>
+		<roll-deg>-18.725</roll-deg>
+		<pitch-deg>-15.434</pitch-deg>
+		<yaw-deg>0.0</yaw-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>pilot trimswitch</name>
+  <path>Aircraft/extra500/Models/panels/trimswitch.xml</path>
+	<offsets>
+		<x-m>0.10990</x-m>
+		<y-m>-0.44357</y-m>	
+		<z-m>0.16109</z-m>
+		<roll-deg>-21.463</roll-deg>
+		<pitch-deg>27.625</pitch-deg>
+		<yaw-deg>-10.1</yaw-deg>
+	</offsets>
+</model>
+
+<!-- instruments -->
+
+<model>
+  <name>Autopilot</name>
+  <path>Aircraft/extra500/Models/instruments/Autopilot.xml</path>
+	<offsets>
+		<x-m>0.1302</x-m>
+		<y-m>0</y-m>	
+		<z-m>0.38944</z-m>
+		<pitch-deg>-5</pitch-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>PropAmmeter</name>
+  <path>Aircraft/extra500/Models/instruments/PropAmmeter.xml</path>
+	<offsets>
+		<x-m>0.005</x-m>
+		<y-m>-0.45198</y-m>	
+		<z-m>0.2651</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>IASanalog</name>
+  <path>Aircraft/extra500/Models/instruments/IASanalog.xml</path>
+	<offsets>
+		<x-m>0</x-m>
+		<y-m>-0.29183</y-m>	
+		<z-m>0.33695</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>ADIanalog</name>
+  <path>Aircraft/extra500/Models/instruments/ADIanalog.xml</path>
+	<offsets>
+		<x-m>0</x-m>
+		<y-m>-0.22518</y-m>	
+		<z-m>0.33695</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>ALTanalog</name>
+  <path>Aircraft/extra500/Models/instruments/ALTanalog.xml</path>
+	<offsets>
+		<x-m>0</x-m>
+		<y-m>-0.15838</y-m>	
+		<z-m>0.33695</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>FuelInstruments</name>
+  <path>Aircraft/extra500/Models/instruments/FuelInstruments.xml</path>
+	<offsets>
+		<x-m>0.001</x-m>
+		<y-m>0.20847</y-m>	
+		<z-m>0.213</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>FuelFlowind</name>
+  <path>Aircraft/extra500/Models/instruments/fuelflowind.xml</path>
+	<offsets>
+		<x-m>0</x-m>
+		<y-m>0.20847</y-m>	
+		<z-m>0.12711</z-m>
+		<pitch-deg>90</pitch-deg>
+		<roll-deg>90</roll-deg>
+	</offsets>
+</model>
+
+
+<model>
+  <name>EngineInstruments</name>
+  <path>Aircraft/extra500/Models/instruments/EngineInstruments.xml</path>
+	<offsets>
+		<x-m>0</x-m>
+		<y-m>-0.47982</y-m>
+		<z-m>0.13804</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>Audiopanel</name>
+  <path>Aircraft/extra500/Models/instruments/audiopanel.xml</path>
+	<offsets>
+		<x-m>0.015</x-m>
+		<y-m>0.0</y-m>	
+		<z-m>0.325</z-m>
+		<pitch-deg>90</pitch-deg>
+		<roll-deg>90</roll-deg>
+	</offsets>
+</model>
+
+
+<!-- yokes-->
+<!-- yoke movement -->
+
+<animation>
+  <type>translate</type>
+  <object-name>copilot ppt</object-name>  <!-- WOW THIS WORKS everything is relative-->
+  <object-name>pilot ppt</object-name>
+  <object-name>pilot cws</object-name>   
+  <object-name>pilot apdisc</object-name>  
+  <object-name>pilot trimswitch</object-name>           
+  <property>/fdm/jsbsim/fcs/yoke-pos-norm</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>.3</dep></entry>
+   <entry><ind>0</ind><dep>.125</dep></entry>
+   <entry><ind> 1</ind><dep>0</dep></entry>
+  </interpolation>
+  <axis>
+   <x>1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+<animation>
+  <type>rotate</type>
+  <object-name>pilot ppt</object-name>
+  <object-name>pilot cws</object-name>  
+  <object-name>pilot apdisc</object-name> 
+  <object-name>pilot trimswitch</object-name>                       
+  <property>/fdm/jsbsim/fcs/aileron-cmd-tot-nc</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>75</dep></entry>
+   <entry><ind> 1</ind><dep>-75</dep></entry>
+  </interpolation> 
+  <axis>
+    <x1-m>0</x1-m>
+    <y1-m>-0.33500</y1-m>
+    <z1-m>0.02693</z1-m>
+    <x2-m>1</x2-m>
+    <y2-m>-0.33500</y2-m>
+    <z2-m>0.02693</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>rotate</type>
+  <object-name>copilot ppt</object-name>
+  <property>/fdm/jsbsim/fcs/aileron-cmd-tot-nc</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>75</dep></entry>
+   <entry><ind> 1</ind><dep>-75</dep></entry>
+  </interpolation> 
+  <axis>
+    <x1-m>0</x1-m>
+    <y1-m>0.33500</y1-m>
+    <z1-m>0.02693</z1-m>
+    <x2-m>1</x2-m>
+    <y2-m>0.33500</y2-m>
+    <z2-m>0.02693</z2-m>
+  </axis>
+</animation>
+
+<!-- panels -->
+
+<model>
+  <name>MasterPaneloverspeedsw</name>
+  <path>Aircraft/extra500/Models/panels/MasterPanel.xml</path>
+	<offsets>
+		<x-m>0</x-m>
+		<y-m>0</y-m>	
+		<z-m>0.05389</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>AnnunciatorPanel</name>
+  <path>Aircraft/extra500/Models/panels/AnnunciatorPanel.xml</path>
+	<offsets>
+		<x-m>0</x-m>
+		<y-m>0.26308</y-m>
+		<z-m>0.33773</z-m>
+	</offsets>
+</model>
+
+
+<model>
+  <name>tc</name>
+  <path>Aircraft/extra500/Models/instruments/tc.xml</path>
+	<offsets>
+		<x-m>0.005</x-m>
+		<y-m>0.30010</y-m>
+		<z-m>0.2477</z-m>
+	</offsets>
+</model>
+
+<!-- IFDs -->
+<model>
+  <name>LH_IFD</name>
+  <path>Aircraft/extra500/Models/instruments/IFDs/LH-IFD.xml</path>
+	<offsets>
+		<x-m>0</x-m>
+		<y-m>-0.284</y-m>	
+		<z-m>0.19839</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>RH_IFD</name>
+  <path>Aircraft/extra500/Models/instruments/IFDs/RH-IFD.xml</path>
+	<offsets>
+		<x-m>0</x-m>
+		<y-m>0</y-m>	
+		<z-m>0.19839</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>panelventswitchL</name>
+  <path>Aircraft/extra500/Models/instruments/panelventswitchL.xml</path>
+	<offsets>
+		<x-m>0.000</x-m>
+		<y-m>-0.564</y-m>
+		<z-m>0.10815</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>panelventswitchR</name>
+  <path>Aircraft/extra500/Models/instruments/panelventswitchR.xml</path>
+	<offsets>
+		<x-m>0.000</x-m>
+		<y-m>0.534</y-m>
+		<z-m>0.10815</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>panelventL</name>
+  <path>Aircraft/extra500/Models/instruments/panelventL.xml</path>
+	<offsets>
+		<x-m>0.000</x-m>
+		<y-m>-0.57496</y-m>
+		<z-m>0.06185</z-m>
+	</offsets>
+</model>
+
+<model>
+  <name>panelventR</name>
+  <path>Aircraft/extra500/Models/instruments/panelventR.xml</path>
+	<offsets>
+		<x-m>0.000</x-m>
+		<y-m>0.54503</y-m>
+		<z-m>0.06185</z-m>
+	</offsets>
+</model>
+
+gear
+<!-- panel screws -->
+
+<model>
+  <name>screw1</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.0287</y-m>
+		<z-m>0.00715</z-m><roll-deg>-6</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw2</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.0287</y-m>
+		<z-m>0.00715</z-m><roll-deg>-10</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw3</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.1037</y-m>
+		<z-m>0.00715</z-m><roll-deg>-2</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw4</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.1037</y-m>
+		<z-m>0.00715</z-m><roll-deg>-7</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw5</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.1787</y-m>
+		<z-m>0.00715</z-m><roll-deg>6</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw6</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.1787</y-m>
+		<z-m>0.00715</z-m><roll-deg>10</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw7</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.2537</y-m>
+		<z-m>0.00715</z-m><roll-deg>5</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw8</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.2537</y-m>
+		<z-m>0.00715</z-m><roll-deg>4</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw9</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.4163</y-m>
+		<z-m>0.00715</z-m><roll-deg>3</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw10</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.4163</y-m>
+		<z-m>0.00715</z-m><roll-deg>0</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw11</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.4913</y-m>
+		<z-m>0.00715</z-m><roll-deg>6</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw12</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.4913</y-m>
+		<z-m>0.00715</z-m><roll-deg>-7</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw13</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.5563</y-m>
+		<z-m>0.00715</z-m><roll-deg>-4</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw14</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.5663</y-m>
+		<z-m>0.00715</z-m><roll-deg>3</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw15</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.115</y-m>
+		<z-m>0.3058</z-m><roll-deg>-2</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw16</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.115</y-m>
+		<z-m>0.3058</z-m><roll-deg>-10</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw15</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.115</y-m>
+		<z-m>0.3408</z-m><roll-deg>-2</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw16</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.115</y-m>
+		<z-m>0.3408</z-m><roll-deg>-4</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw17</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.15795</y-m>
+		<z-m>0.3986</z-m><roll-deg>-3</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw18</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.15795</y-m>
+		<z-m>0.3986</z-m><roll-deg>6</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw19</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.3637</y-m>
+		<z-m>0.3526</z-m><roll-deg>8</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw20</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.3637</y-m>
+		<z-m>0.3526</z-m><roll-deg>-12</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw21</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.5092</y-m>
+		<z-m>0.2445</z-m><roll-deg>6</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw22</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.5092</y-m>
+		<z-m>0.2619</z-m><roll-deg>4</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw23</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.5092</y-m>
+		<z-m>0.2619</z-m><roll-deg>-3</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw24</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.1421</y-m>
+		<z-m>0.140</z-m><roll-deg>-5</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw25</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.2842</y-m>
+		<z-m>0.1012</z-m><roll-deg>-12</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw26</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.3986</y-m>
+		<z-m>0.140</z-m><roll-deg>1</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw27</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.4308</y-m>
+		<z-m>0.1944</z-m><roll-deg>-2</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw28</name>
+  <path>Aircraft/extra500/Models/panels/CRS-95.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.5092</y-m>
+		<z-m>0.1944</z-m><roll-deg>3</roll-deg>
+	</offsets>
+</model>
+
+<!-- TC screws -->
+<model>
+  <name>screw29</name>
+  <path>Aircraft/extra500/Models/panels/CRS-843.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.2686</y-m>
+		<z-m>0.2162</z-m><roll-deg>-2</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw30</name>
+  <path>Aircraft/extra500/Models/panels/CRS-843.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.3314</y-m>
+		<z-m>0.2162</z-m><roll-deg>10</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw31</name>
+  <path>Aircraft/extra500/Models/panels/CRS-843.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.2686</y-m>
+		<z-m>0.2791</z-m><roll-deg>-10</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw32</name>
+  <path>Aircraft/extra500/Models/panels/CRS-843.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.3314</y-m>
+		<z-m>0.2791</z-m><roll-deg>-3</roll-deg>
+	</offsets>
+</model>
+
+<!-- standby instr screws -->
+<model>
+  <name>screw33</name>
+  <path>Aircraft/extra500/Models/panels/CRS-843.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.3154</y-m>
+		<z-m>0.3134</z-m><roll-deg>9</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw34</name>
+  <path>Aircraft/extra500/Models/panels/CRS-843.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.3154</y-m>
+		<z-m>0.3605</z-m><roll-deg>1</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw35</name>
+  <path>Aircraft/extra500/Models/panels/CRS-843.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.2682</y-m>
+		<z-m>0.3134</z-m><roll-deg>10</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw36</name>
+  <path>Aircraft/extra500/Models/panels/CRS-843.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.2682</y-m>
+		<z-m>0.3605</z-m><roll-deg>4</roll-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>screw37</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.2487</y-m>
+		<z-m>0.3134</z-m><roll-deg>-7</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw38</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.2487</y-m>
+		<z-m>0.3605</z-m><roll-deg>6</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw39</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.2015</y-m>
+		<z-m>0.3605</z-m><roll-deg>-5</roll-deg>
+	</offsets>
+</model>
+
+<model>
+  <name>screw40</name>
+  <path>Aircraft/extra500/Models/panels/CRS-843.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.182</y-m>
+		<z-m>0.3134</z-m><roll-deg>8</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw41</name>
+  <path>Aircraft/extra500/Models/panels/CRS-843.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.182</y-m>
+		<z-m>0.3605</z-m><roll-deg>9</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw42</name>
+  <path>Aircraft/extra500/Models/panels/CRS-843.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.1348</y-m>
+		<z-m>0.3605</z-m><roll-deg>6</roll-deg>
+	</offsets>
+</model>
+
+<!-- fuel ind screws -->
+<model>
+  <name>screw43</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.170</y-m>
+		<z-m>0.1596</z-m><roll-deg>-4</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw44</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.1977</y-m>
+		<z-m>0.1596</z-m><roll-deg>9</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw45</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.2188</y-m>
+		<z-m>0.1596</z-m><roll-deg>-1</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw46</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.2467</y-m>
+		<z-m>0.1596</z-m><roll-deg>-9</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw47</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.170</y-m>
+		<z-m>0.1876</z-m><roll-deg>-4</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw48</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.1977</y-m>
+		<z-m>0.1876</z-m><roll-deg>-7</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw49</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.2188</y-m>
+		<z-m>0.1876</z-m><roll-deg>-5</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw50</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.2467</y-m>
+		<z-m>0.1876</z-m><roll-deg>-3</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw51</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.170</y-m>
+		<z-m>0.2085</z-m><roll-deg>5</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw52</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.1977</y-m>
+		<z-m>0.2085</z-m><roll-deg>-8</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw53</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.2188</y-m>
+		<z-m>0.2085</z-m><roll-deg>-3</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw54</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.2467</y-m>
+		<z-m>0.2085</z-m><roll-deg>-5</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw55</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.170</y-m>
+		<z-m>0.2365</z-m><roll-deg>-7</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw56</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.1977</y-m>
+		<z-m>0.2365</z-m><roll-deg>4</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw57</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.2188</y-m>
+		<z-m>0.2365</z-m><roll-deg>-7</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw58</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.2467</y-m>
+		<z-m>0.2365</z-m><roll-deg>9</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw59</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.170</y-m>
+		<z-m>0.2572</z-m><roll-deg>-2</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw60</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.1977</y-m>
+		<z-m>0.2572</z-m><roll-deg>3</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw61</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.2188</y-m>
+		<z-m>0.2572</z-m><roll-deg>-1</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw62</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.2467</y-m>
+		<z-m>0.2572</z-m><roll-deg>9</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw63</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.170</y-m>
+		<z-m>0.2852</z-m><roll-deg>-4</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw64</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.1977</y-m>
+		<z-m>0.2852</z-m><roll-deg>-1</roll-deg> 
+	</offsets>
+</model>
+<model>
+  <name>screw65</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.2188</y-m>
+		<z-m>0.2852</z-m><roll-deg>5</roll-deg> 
+	</offsets>
+</model>
+<model>
+  <name>screw66</name>
+  <path>Aircraft/extra500/Models/panels/CRS-709.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.2467</y-m>
+		<z-m>0.2852</z-m><roll-deg>-5</roll-deg>
+	</offsets>
+</model>
+
+<!-- prop heat ind screws -->
+
+<model>
+  <name>screw67</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.4659</y-m>
+		<z-m>0.2511</z-m><roll-deg>-3</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw68</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.438</y-m>
+		<z-m>0.2511</z-m><roll-deg>-9</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw69</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.4659</y-m>
+		<z-m>0.2791</z-m><roll-deg>9</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw70</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.438</y-m>
+		<z-m>0.2791</z-m><roll-deg>5</roll-deg>
+	</offsets>
+</model>
+
+<!-- engine instr screws -->
+<model>
+  <name>screw71</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.530</y-m>
+		<z-m>0.0358</z-m><roll-deg>-2</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw72</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.4297</y-m>
+		<z-m>0.0358</z-m><roll-deg>-9</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw73</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.530</y-m>
+		<z-m>0.0815</z-m><roll-deg>3</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw74</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.4297</y-m>
+		<z-m>0.0815</z-m><roll-deg>-1</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw75</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.530</y-m>
+		<z-m>0.0915</z-m><roll-deg>9</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw76</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.4297</y-m>
+		<z-m>0.0915</z-m><roll-deg>-10</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw77</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.530</y-m>
+		<z-m>0.1601</z-m><roll-deg>-7</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw78</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.4297</y-m>
+		<z-m>0.1601</z-m><roll-deg>-2</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw79</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.530</y-m>
+		<z-m>0.2332</z-m><roll-deg>-3</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw80</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>-0.4297</y-m>
+		<z-m>0.2332</z-m><roll-deg>-12</roll-deg>
+	</offsets>
+</model>
+
+<!-- annunciator panel screws -->
+
+<model>
+  <name>screw81</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.1823</y-m>
+		<z-m>0.3115</z-m><roll-deg>3</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw82</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.3438</y-m>
+		<z-m>0.3115</z-m><roll-deg>10</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw83</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.1823</y-m>
+		<z-m>0.3308</z-m><roll-deg>4</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw84</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.3438</y-m>
+		<z-m>0.3308</z-m><roll-deg>-3</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw85</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.1823</y-m>
+		<z-m>0.3415</z-m><roll-deg>-7</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw86</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.3438</y-m>
+		<z-m>0.3415</z-m><roll-deg>-2</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw87</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.1823</y-m>
+		<z-m>0.3608</z-m><roll-deg>-10</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw88</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.3438</y-m>
+		<z-m>0.3608</z-m><roll-deg>8</roll-deg>
+	</offsets>
+</model>
+
+<!-- autopilot screws -->
+<model>
+  <name>screw89</name>
+  <path>Aircraft/extra500/Models/panels/CRS-843.xml</path>
+	<offsets>
+		<x-m>0.1327</x-m>
+		<y-m>0.087</y-m>
+		<z-m>0.3892</z-m><roll-deg>6</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw90</name>
+  <path>Aircraft/extra500/Models/panels/CRS-843.xml</path>
+	<offsets>
+		<x-m>0.1327</x-m>
+		<y-m>-0.087</y-m>
+		<z-m>0.3892</z-m><roll-deg>1</roll-deg>
+	</offsets>
+</model>
+
+<!-- fuel flow ind screws -->
+<model>
+  <name>screw91</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.1676</y-m>
+		<z-m>0.1139</z-m><roll-deg>-9</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw92</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.2494</y-m>
+		<z-m>0.1139</z-m><roll-deg>-7</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw93</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.1676</y-m>
+		<z-m>0.1403</z-m><roll-deg>-1</roll-deg>
+	</offsets>
+</model>
+<model>
+  <name>screw94</name>
+  <path>Aircraft/extra500/Models/panels/CRS-571.xml</path>
+	<offsets>
+		<x-m>0.0001</x-m>
+		<y-m>0.2494</y-m>
+		<z-m>0.1403</z-m><roll-deg>-7</roll-deg>
+	</offsets>
+</model>
+
+</PropertyList>

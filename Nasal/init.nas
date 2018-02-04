@@ -17,16 +17,30 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             13.04.14
+#      Date:             02.09.17
 #
+
 
 var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 	
 	removelistener(init_listener);
 	init_listener = nil;
+
+# setting saved position of last exit of program
+	var posAtLastKnownPos = getprop("extra500/exit/posAtLastKnownPos") or 0;
+	if (posAtLastKnownPos==1) {
+		setprop("/sim/presets/airport-id", "");
+		setprop("/sim/presets/latitude-deg", getprop("/extra500/exit/latitude-deg"));
+      	setprop("/sim/presets/longitude-deg", getprop("/extra500/exit/longitude-deg"));
+      	setprop("/sim/presets/heading-deg", getprop("/extra500/exit/heading-deg"));
+
+		fgcommand("reposition");
+	}
 	
+
 	settimer(func(){
-		
+
+	
 		#positioned.findWithinRange(600,"airport");
 		#positioned.findWithinRange(150,"vor");
 		
@@ -77,6 +91,7 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		extra500.centerConsole.init();
 		extra500.interior.init();
 		extra500.fuelFlowLog.init();
+		extra500.PositionLog.init();
 		
 		extra500.eSystem.init();
 		
@@ -101,5 +116,5 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 var exit_listener = setlistener("/sim/signals/exit", func {
 	#print("listener.exit() ... ");
 	extra500.audiopanel.restoreUserSoundVolume();
-		
+
 });

@@ -75,18 +75,18 @@ modified instruments-3d/tc from fgdata
   <property>/instrumentation/slip-skid-ball/indicated-slip-skid</property>
   <factor>5.729</factor>
 <!--
-   From the source for slip_skid_ball.cxx, the number returned is (-z_accel/y_accel)*10.
+   From the source for slip_skid_ball.cxx, the number returned is (y_accel/-z_accel)*10.
    For small theta, theta~=tan(theta) when theta is in radians.  So the angle of a "ball" 
    undergoing z_accel and y_accel hung on the end of a string makes with the verticle
-   will be approximately -z_accel/y_accel radians. Converting to degrees, multiply by
-   180/pi=57.29, or 5.729 times the returned value. Edited by Dave Perry, 2/26/06.
+   will be approximately -y_accel/z_accel radians. Converting to degrees, multiply by
+   180/pi=57.29, or 5.729 times the returned value. Edited by Eric van den Berg, 9/24/17.
 -->
-  <min-deg>-5</min-deg>
-  <max-deg>5</max-deg>
+  <min-deg>-9</min-deg>
+  <max-deg>9</max-deg>
   <center>
    <x-m>0</x-m>
    <y-m>0</y-m>
-   <z-m>0.25</z-m>  <!--  Makes the radius of curvature for the glass tube ~10 inches -->
+   <z-m>0.11</z-m>  <!--  Makes the radius of curvature for the glass tube ~10 inches -->
   </center>
   <axis>
    <x>-1</x>

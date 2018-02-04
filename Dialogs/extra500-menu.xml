@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Eric van den Berg
-      Date:             20.10.15
+	Last change:	Dirk Dittmann
+	Date:		08.01.18
 -->
 
 <PropertyList>
@@ -73,7 +73,7 @@
 				<binding>
 					<command>nasal</command>
 					<script><![CDATA[
-						Dialogs.Failuredialog.openDialog();
+						Dialogs.Failuredialog.toggle();
 					]]></script>
 				</binding>
 			</item>

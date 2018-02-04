@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger
       Date: March 13 2013
 
-	Last change:      Eric van den Berg
-	Date:             12.08.17
+	Last change:	Eric van den Berg
+	Date:		04.02.18
 
 
 ************************************************************************
@@ -65,8 +65,8 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<model type="int">4</model>
 		<cockpit type="int">4</cockpit>
 	</rating>
-	<extra500-version>4.4.0</extra500-version>
-	<minimum-fg-version>2016.1</minimum-fg-version>
+	<extra500-version>5.0.0</extra500-version>
+	<minimum-fg-version>2018.1</minimum-fg-version>
 	<extra500-git>https://gitlab.com/extra500/extra500</extra500-git>
 	<extra500-wiki>http://wiki.flightgear.org/Extra_EA-500</extra500-wiki>
 
@@ -88,8 +88,37 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<splash-texture>Aircraft/extra500/splash.png</splash-texture>
 	</startup>
 
+   	<previews>
+      	<preview>
+	 		<type>exterior</type>
+	 		<splash type="bool">true</splash>
+	 		<path>extra500-exterior1.png</path>
+      	</preview>
+     		<preview>
+	 		<type>exterior</type>
+	 		<splash type="bool">true</splash>
+	 		<path>extra500-exterior2.png</path>
+      	</preview>
+     		<preview>
+	 		<type>exterior</type>
+	 		<splash type="bool">true</splash>
+	 		<path>extra500-exterior3.png</path>
+      	</preview>
+      	<preview>
+	 		<type>panel</type>
+	 		<splash type="bool">false</splash>
+	 		<path>extra500-interior1.png</path>
+      	</preview>
+      	<preview>
+	 		<type>panel</type>
+	 		<splash type="bool">false</splash>
+	 		<path>extra500-interior2.png</path>
+      	</preview>
+    	</previews>
+
 	<dimensions>
 		<radius-m type="double">6</radius-m>
+		<parkpos-offset-m type="double">0.0</parkpos-offset-m>
 	</dimensions>
 	<aircraft-class type="string">ga</aircraft-class>
 	<aircraft-operator type="string">NONE</aircraft-operator>
@@ -547,11 +576,21 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<path>/fdm/jsbsim/gear/unit[12]/pos-norm</path>
 		<path>/fdm/jsbsim/state/controls-fixed</path>
 		<path>/environment/aircraft-effects</path>
+		<path>/extra500/exit/posAtLastKnownPos</path>
+		<path>/extra500/exit/heading-deg</path>
+		<path>/extra500/exit/longitude-deg</path>
+		<path>/extra500/exit/latitude-deg</path>
+
 		<!---->
 		<path>/extra500/log/fuel</path>
 		<path>/extra500/dialog/fuel</path>
 		<path>/extra500/config</path>
 		<path>/extra500/yokes/visible</path>
+
+   		<path>/sim/dimensions/radius-m</path>
+   		<path>/sim/dimensions/parkpos-offset-m</path>
+   		<path>/sim/aircraft-class</path>
+   		<path>/sim/aircraft-operator</path>
 
 	</aircraft-data>
 
@@ -1633,6 +1672,9 @@ of the RR 250-B17F/2 engine is best.</long-description>
 	<canvas>
 		<enabled type="bool">true</enabled>
 	</canvas>
+        <canvas>
+		<file>Aircraft/extra500/Dialogs/extra500Window.nas</file>
+	</canvas>
 
 	<global>
 		
@@ -1849,6 +1891,14 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<ifd>
 			<bootIntervall type="double">0.1</bootIntervall>
 		</ifd>
+                <dialog>
+                    <fuelpayload>
+                        <scale type="double">1.0</scale>
+                    </fuelpayload>
+                    <failure>
+                        <scale type="double">1.0</scale>
+                    </failure>
+                </dialog>
 	</config>
 	<door>
 		<upperpass>
@@ -1864,6 +1914,13 @@ of the RR 250-B17F/2 engine is best.</long-description>
 	<environment>
 		<rain-norm type="double">0.0</rain-norm>
 	</environment>
+	<exit>
+		<posAtLastKnownPos type="bool">0</posAtLastKnownPos>
+		<heading-deg type="double">40</heading-deg>
+		<longitude-deg type="double">30</longitude-deg>
+		<latitude-deg type="double">48</latitude-deg>
+		<airport-id type="string"></airport-id>
+	</exit>
 	<failurescenarios>
 		<activate type="double">0</activate>
 		<name type="string"></name>

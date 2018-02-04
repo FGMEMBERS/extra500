@@ -19,7 +19,7 @@
       Date: March 13 2013
 
       Last change:      Eric van den Berg
-      Date:             13.08.2017
+      Date:             05.11.2017
 
 
 -->
@@ -48,7 +48,7 @@
 		<type>material</type>
 		<condition>
 			<or>
-				<and><!-- lokal player -->
+				<and><!-- local player -->
 					<not>
 						<equals>
 							<property>type</property>
@@ -97,6 +97,9 @@
 		<object-name>HRlinks</object-name>
 		<object-name>HRrechts</object-name>
 		<object-name>HRtrim</object-name>
+		<object-name>light.ice.box</object-name>
+		<object-name>WingfusL</object-name>
+		<object-name>WingfusR</object-name>
 		
 		<!-- wing objects using paintkit.png -->
 		<object-name>AilLH</object-name>
@@ -119,7 +122,7 @@
 		<type>material</type>
 		<condition>
 			<or>
-				<and><!-- lokal player -->
+				<and><!-- local player -->
 					<not>
 						<equals>
 							<property>type</property>
@@ -168,6 +171,9 @@
 		<object-name>HRlinks</object-name>
 		<object-name>HRrechts</object-name>
 		<object-name>HRtrim</object-name>
+		<object-name>light.ice.box</object-name>
+		<object-name>WingfusL</object-name>
+		<object-name>WingfusR</object-name>
 		
 		<!-- wing objects using paintkit.png -->
 		<object-name>AilLH</object-name>
@@ -370,16 +376,7 @@
 </model>
 
 <!-- panels -->
-<model>
-  <name>MainPanel</name>
-  <path>Aircraft/extra500/Models/panels/MainPanel.xml</path>
-	<offsets>
-		<x-m>-0.81047</x-m>
-		<y-m>0</y-m>	
-		<z-m>-0.39889</z-m>
-	<pitch-deg>-8</pitch-deg>
-	</offsets>
-</model>
+
 <model>
   <name>FlapsGear</name>
   <path>Aircraft/extra500/Models/instruments/InstrumentFlapsGear.xml</path>
@@ -391,6 +388,20 @@
 	</offsets>
 </model>
 
+<model>
+  <name>cockpit</name>
+  <path>Aircraft/extra500/Models/panels/cockpit.xml</path>
+	<offsets>
+		<x-m>-0.81047</x-m>
+		<y-m>0</y-m>	
+		<z-m>-0.39889</z-m>
+	<pitch-deg>-8</pitch-deg>
+	</offsets>
+</model>
+<model>
+  <name>cockpitmodel</name>
+  <path>Aircraft/extra500/Models/panels/cockpitmodel.xml</path>
+</model>
 <model>
   <name>SidePanel</name>
   <path>Aircraft/extra500/Models/panels/SidePanel.xml</path>
@@ -574,6 +585,8 @@
   <object-name>interior.doorUpper</object-name>
   <object-name>window.pass.middle.LH</object-name>
   <object-name>doorhandleinner</object-name>
+  <object-name>placard.door.open</object-name>
+  <object-name>placard.doorhandle</object-name>
   <property>sim/multiplay/generic/int[0]</property>
   <interpolation>
    <entry><ind>0</ind><dep>0</dep></entry>
@@ -665,6 +678,12 @@
 	 <object-name>emergency.exit</object-name>
 	 <object-name>interior.emergency.exit</object-name>
 	 <object-name>window.pass.middle.RH</object-name>
+	 <object-name>placard.emergency.exit</object-name>
+	 <object-name>placard.open</object-name>
+	 <object-name>placard.open.001</object-name>
+	 <object-name>placard.emergency.operating</object-name>
+	 <object-name>placard.emergency.arrow1</object-name>
+	 <object-name>placard.emergency.arrow2</object-name>
 	 <property>sim/multiplay/generic/int[2]</property>
 	 <interpolation>
 		 <entry><ind>0</ind><dep>0</dep></entry>
@@ -686,6 +705,12 @@
 	 <object-name>emergency.exit</object-name>
 	 <object-name>interior.emergency.exit</object-name>
 	 <object-name>window.pass.middle.RH</object-name>
+	 <object-name>placard.emergency.exit</object-name>
+	 <object-name>placard.open</object-name>
+	 <object-name>placard.open.001</object-name>
+	 <object-name>placard.emergency.operating</object-name>
+	 <object-name>placard.emergency.arrow1</object-name>
+	 <object-name>placard.emergency.arrow2</object-name>
 	 <property>sim/multiplay/generic/int[2]</property>
 	 <interpolation>
 		 <entry><ind>0</ind><dep>0</dep></entry>
@@ -705,6 +730,12 @@
 	 <object-name>emergency.exit</object-name>
 	 <object-name>interior.emergency.exit</object-name>
 	 <object-name>window.pass.middle.RH</object-name>
+	 <object-name>placard.emergency.exit</object-name>
+	 <object-name>placard.open</object-name>
+	 <object-name>placard.open.001</object-name>
+	 <object-name>placard.emergency.operating</object-name>
+	 <object-name>placard.emergency.arrow1</object-name>
+	 <object-name>placard.emergency.arrow2</object-name>
 	 <property>sim/multiplay/generic/int[2]</property>
 	 <interpolation>
 		 <entry><ind>0</ind><dep>0</dep></entry>
@@ -905,106 +936,10 @@
 
 <!--Payload / People-->
 
-<model>
-      <path>Aircraft/extra500/Models/interior/pilotv2.xml</path>
-      <offsets>
-		<x-m>-0.13</x-m>
-		<y-m>-0.335</y-m>	
-		<z-m>-0.67</z-m>
-	<heading-deg>-90.0</heading-deg>
-      </offsets>
-
-      <condition>
- 		<greater-than>
-   			<property>/payload/weight[0]/weight-lb</property>
-   			<value>0</value>
-   		</greater-than>
-      </condition>
-</model>
 
 <model>
-      <path>Aircraft/extra500/Models/interior/copilotv2.xml</path>
-      <offsets>
-		<x-m>-0.125</x-m>
-		<y-m>0.335</y-m>	
-		<z-m>-1.05</z-m>
-	<heading-deg>-90.0</heading-deg>
-      </offsets>
+      <path>Aircraft/extra500/Models/interior/people.xml</path>
 
-      <condition>
- 		<greater-than>
-   			<property>/payload/weight[1]/weight-lb</property>
-   			<value>0</value>
-   		</greater-than>
-      </condition>
-</model>
-
-<model>
-      <path>Aircraft/extra500/Models/interior/pass1v2.xml</path>
-      <offsets>
-		<x-m>0.75</x-m>
-		<y-m>-0.32</y-m>	
-		<z-m>-0.72</z-m>
-	<heading-deg>90.0</heading-deg>
-      </offsets>
-
-      <condition>
- 		<greater-than>
-   			<property>/payload/weight[2]/weight-lb</property>
-   			<value>0</value>
-   		</greater-than>
-      </condition>
-</model>
-
-<model>
-      <path>Aircraft/extra500/Models/interior/pass2v2.xml</path>
-      <offsets>
-		<x-m>0.73</x-m>
-		<y-m>0.32</y-m>	
-		<z-m>-0.69</z-m>
-	<heading-deg>90.0</heading-deg>
-      </offsets>
-
-      <condition>
- 		<greater-than>
-   			<property>/payload/weight[3]/weight-lb</property>
-   			<value>0</value>
-   		</greater-than>
-      </condition>
-</model>
-
-<model>
-      <path>Aircraft/extra500/Models/interior/pass3v2.xml</path>
-      <offsets>
-		<x-m>2.0</x-m>
-		<y-m>-0.27</y-m>	
-		<z-m>-0.7</z-m>
-		<heading-deg>-90.0</heading-deg>
-      </offsets>
-
-      <condition>
- 		<greater-than>
-   			<property>/payload/weight[4]/weight-lb</property>
-   			<value>0</value>
-   		</greater-than>
-      </condition>
-</model>
-
-<model>
-      <path>Aircraft/extra500/Models/interior/pass4v2.xml</path>
-      <offsets>
-		<x-m>2.0</x-m>
-		<y-m>0.27</y-m>	
-		<z-m>-0.72</z-m>
-		<heading-deg>-90.0</heading-deg>
-      </offsets>
-
-      <condition>
- 		<greater-than>
-   			<property>/payload/weight[5]/weight-lb</property>
-   			<value>0</value>
-   		</greater-than>
-      </condition>
 </model>
 
 <model>
