@@ -17,7 +17,7 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             02.09.17
+#      Date:             25.06.18
 #
 
 
@@ -29,12 +29,7 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 # setting saved position of last exit of program
 	var posAtLastKnownPos = getprop("extra500/exit/posAtLastKnownPos") or 0;
 	if (posAtLastKnownPos==1) {
-		setprop("/sim/presets/airport-id", "");
-		setprop("/sim/presets/latitude-deg", getprop("/extra500/exit/latitude-deg"));
-      	setprop("/sim/presets/longitude-deg", getprop("/extra500/exit/longitude-deg"));
-      	setprop("/sim/presets/heading-deg", getprop("/extra500/exit/heading-deg"));
-
-		fgcommand("reposition");
+		Dialogs.Initdialog.openDialog();
 	}
 	
 
@@ -107,6 +102,12 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		
 # 		props.globals.getNode("/environment/metar").unalias();
 # 		props.globals.getNode("/environment/metar").alias(props.globals.getNode("environment/metar-nearest"));
+
+		var wow_listener = setlistener("/gear/gear/wow", func {
+			if (getprop("/gear/gear/wow") == 0) {
+				setprop("/extra500/exit/airport-id", getprop("/sim/airport/closest-airport-id"));
+			}
+		},0,0);
 		
 	},1);
 
@@ -118,3 +119,5 @@ var exit_listener = setlistener("/sim/signals/exit", func {
 	extra500.audiopanel.restoreUserSoundVolume();
 
 });
+
+

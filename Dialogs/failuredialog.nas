@@ -22,19 +22,19 @@
 
 var COLORfd = {};
 COLORfd["opaque"] = "#ffffff01";
-COLORfd["menuns"] = "#00940032";
-COLORfd["menuse"] = "#0055d432";
-COLORfd["AilOk"] = "#c7f291";
-COLORfd["EleOk"] = "#7af4b9";
-COLORfd["RudOk"] = "#00f4ff";
-COLORfd["TriOk"] = "#7ad2b9";
+COLORfd["menuns"] = "#009400ff";
+COLORfd["menuse"] = "#0055d4ff";
+COLORfd["AilOk"] = "#c7f291ff";
+COLORfd["EleOk"] = "#7af4b9ff";
+COLORfd["RudOk"] = "#00f4ffff";
+COLORfd["TriOk"] = "#7ad2b9ff";
 COLORfd["FlaOk"] = "#c7f2dfff";
-COLORfd["GeaOk"] = "#00a2ff";
-COLORfd["BraOk"] = "#bba9ff";
-COLORfd["TyrOk"] = "#8cd0ff";
-COLORfd["auxOk"] = "#d4aa00";
-COLORfd["mainOk"] = "#ffcc00";
-COLORfd["colOk"] = "#ffdd55";
+COLORfd["GeaOk"] = "#00a2ffff";
+COLORfd["BraOk"] = "#bba9ffff";
+COLORfd["TyrOk"] = "#8cd0ffff";
+COLORfd["auxOk"] = "#d4aa00ff";
+COLORfd["mainOk"] = "#ffcc00ff";
+COLORfd["colOk"] = "#ffdd55ff";
 COLORfd["CVOk"] = "#00ff004a";
 COLORfd["SVok"] = "#00800059";
 COLORfd["pitotOk"] = "#bc9be3ff";
@@ -46,8 +46,8 @@ COLORfd["boot1Ok"] = "#80b3f1ff";
 COLORfd["boot2Ok"] = "#1d79e8ff";
 COLORfd["Failed"] = "#ff8080ff";
 COLORfd["randomA"] = "#d45d00ff";
-COLORfd["randomB"] = "#fffa005a";
-COLORfd["randomC"] = "#d400005a";
+COLORfd["randomB"] = "#fffa00ff";
+COLORfd["randomC"] = "#d40000ff";
 COLORfd["pitotOk"] = "#2bb200ff";
 COLORfd["staticOk"] = "#75c3ffff";
 COLORfd["gpsOk"] = "#97bcdaaa";
@@ -111,7 +111,8 @@ var FailureClass = {
 		me._gfd.set('title',me._title);
                 me._gfd.move(10,20);
                 
-		me._canvas = me._gfd.createCanvas().set("background", canvas.style.getColor("bg_color"));
+		me._canvas = me._gfd.createCanvas().set("background", "dcdcdcff");
+#		me._canvas = me._gfd.createCanvas().set("background", canvas.style.getColor("bg_color"));
            	me._root = me._canvas.createGroup();
 		
 		# parsing svg-s
@@ -354,7 +355,7 @@ var FailureClass = {
 		me._Text_ROLL2	= me._svg_avionic.getElementById("text_RHROLL").hide();
 
 	# autopilot
-		me._TurnInd		= me._svg_ap.getElementById("TURNIND");
+		me._TurnInd		= me._svg_ap.getElementById("turnind");
 		me._PitchServo	= me._svg_ap.getElementById("pitchServo");
 		me._RollServo	= me._svg_ap.getElementById("rollServo");
 		me._PitchTrimServo	= me._svg_ap.getElementById("pitchTrimServo");

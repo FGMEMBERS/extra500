@@ -20,7 +20,7 @@
       Date: March 13 2013
 
 	Last change:	Eric van den Berg
-	Date:		04.02.18
+	Date:		07.09.18
 
 
 ************************************************************************
@@ -65,8 +65,8 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<model type="int">4</model>
 		<cockpit type="int">4</cockpit>
 	</rating>
-	<extra500-version>5.0.0</extra500-version>
-	<minimum-fg-version>2018.1</minimum-fg-version>
+	<extra500-version>5.1.0</extra500-version>
+	<minimum-fg-version>2018.3</minimum-fg-version>
 	<extra500-git>https://gitlab.com/extra500/extra500</extra500-git>
 	<extra500-wiki>http://wiki.flightgear.org/Extra_EA-500</extra500-wiki>
 
@@ -82,6 +82,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 			<name type="string">extra 500</name>
 			<paintkit type="string">Liveries/extra500.png</paintkit>
 		</livery>
+		<fallback-model-index>5</fallback-model-index> <!--really don't see anything better as c208 -->
 	</model>
 
 	<startup>
@@ -577,6 +578,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<path>/fdm/jsbsim/state/controls-fixed</path>
 		<path>/environment/aircraft-effects</path>
 		<path>/extra500/exit/posAtLastKnownPos</path>
+		<path>/extra500/exit/airport-id</path>
 		<path>/extra500/exit/heading-deg</path>
 		<path>/extra500/exit/longitude-deg</path>
 		<path>/extra500/exit/latitude-deg</path>
@@ -586,6 +588,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<path>/extra500/dialog/fuel</path>
 		<path>/extra500/config</path>
 		<path>/extra500/yokes/visible</path>
+		<path>/extra500/interior/showPeople</path>
 
    		<path>/sim/dimensions/radius-m</path>
    		<path>/sim/dimensions/parkpos-offset-m</path>
@@ -1759,6 +1762,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 	<Dialogs>
             <file>Aircraft/extra500/Dialogs/fuelpayload.nas</file>
             <file>Aircraft/extra500/Dialogs/failuredialog.nas</file>
+            <file>Aircraft/extra500/Dialogs/startupdialog.nas</file>
             <file>Aircraft/extra500/Nasal/dialogs.nas</file>
         </Dialogs>
 	<View>
@@ -1898,6 +1902,9 @@ of the RR 250-B17F/2 engine is best.</long-description>
                     <failure>
                         <scale type="double">1.0</scale>
                     </failure>
+                    <init>
+                        <scale type="double">1.0</scale>
+                    </init>
                 </dialog>
 	</config>
 	<door>
@@ -1919,7 +1926,8 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		<heading-deg type="double">40</heading-deg>
 		<longitude-deg type="double">30</longitude-deg>
 		<latitude-deg type="double">48</latitude-deg>
-		<airport-id type="string"></airport-id>
+		<airport-id type="string">EDLD</airport-id>
+		<updatePos type="bool">0</updatePos>
 	</exit>
 	<failurescenarios>
 		<activate type="double">0</activate>
@@ -2238,6 +2246,7 @@ of the RR 250-B17F/2 engine is best.</long-description>
 		</gear>
 	</system>
 	<interior>
+		<showPeople type="int">1</showPeople>
 		<readinglightpic>
 			<pressed type="int">0</pressed>
 			<updown>0</updown>

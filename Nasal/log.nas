@@ -17,7 +17,7 @@
 #      Date: Jul 20 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             02.09.2017
+#      Date:             05.07.2018
 #
 
 var FuelFlowLogClass = {
@@ -118,9 +118,11 @@ var PositionLogClass = {
 		
 	},
 	update : func(){
-		setprop("/extra500/exit/latitude-deg", getprop("/position/latitude-deg"));
-      	setprop("/extra500/exit/longitude-deg", getprop("/position/longitude-deg"));
-      	setprop("/extra500/exit/heading-deg", getprop("/orientation/heading-deg"));
+		if (getprop("/extra500/exit/updatePos") == 1) {  # do not update as long as the init dialog is open
+			setprop("/extra500/exit/latitude-deg", getprop("/position/latitude-deg"));
+      		setprop("/extra500/exit/longitude-deg", getprop("/position/longitude-deg"));
+      		setprop("/extra500/exit/heading-deg", getprop("/orientation/heading-deg"));
+		}
 	}
 
 };

@@ -17,7 +17,7 @@
 #      Date: 17.04.2014
 #
 #	Last change:	Dirk Dittmann
-#	Date:		28.05.15
+#	Date:		02.03.18
 #
 
 var MapIconCache = {
@@ -315,7 +315,7 @@ var VorItem = {
 	},
 	create : func(group){	
 		me._can.group = group.createChild("group", "vor_" ~ me._id);
-		
+		me._can.group.setGeoPosition(49.9211030, 9.0398110);
 
 		me._can.image = me._can.group.createChild("image", "vor-image_" ~ me._id)
 			.setFile(mapIconCache._canvas.getPath())
@@ -337,6 +337,7 @@ var VorItem = {
 	setData : func(vor){
 		mapIconCache.boundIconToImage("Navaid_VOR",me._can.image);
 		me._can.label.setText(vor.id);
+#                 debug.dump({id:vor.id,lat:vor.lat, lon:vor.lon});
 		me._can.group.setGeoPosition(vor.lat, vor.lon);
 	},
 	setVisible : func(visibility){
@@ -583,7 +584,6 @@ var PositionedLayer = {
 # 			settimer(func(){me.loadAirport()},0.05);
 			settimer(func(){me.loadVor()},0.05);
 			settimer(func(){me.loadTacan()},0.05);
-			settimer(func(){me.loadNdb()},0.05);
 			settimer(func(){me.loadNdb()},0.05);
 			settimer(func(){me.loadDme()},0.05);
 			

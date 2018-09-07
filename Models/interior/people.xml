@@ -18,8 +18,8 @@
       Authors: Eric van den Berg
       Date: 08.07.2017
 
-      Last change:     
-      Date:             
+      Last change: Eric van den Berg     
+      Date: 25.02.2018            
 
 -->
 
@@ -120,10 +120,16 @@
   		<object-name>pilot</object-name>
   		<type>select</type>
      		<condition>
- 			<greater-than>
-   				<property>/payload/weight[0]/weight-lb</property>
-   				<value>0</value>
-   			</greater-than>
+			<and>
+				<equals>
+					<property>/extra500/interior/showPeople</property>
+   					<value>1</value>
+				</equals>
+ 				<greater-than>
+   					<property>/payload/weight[0]/weight-lb</property>
+   					<value>0</value>
+   				</greater-than>
+			</and>
       	</condition>
  	</animation>
 
@@ -155,10 +161,16 @@
   		<object-name>copilot</object-name>
   		<type>select</type>
      		<condition>
- 			<greater-than>
-   				<property>/payload/weight[1]/weight-lb</property>
-   				<value>0</value>
-   			</greater-than>
+			<and>
+				<equals>
+					<property>/extra500/interior/showPeople</property>
+   					<value>1</value>
+				</equals>
+ 				<greater-than>
+   					<property>/payload/weight[1]/weight-lb</property>
+   					<value>0</value>
+   				</greater-than>
+			</and>
       	</condition>
  	</animation>
 
@@ -186,10 +198,16 @@
   		<object-name>pass1</object-name>
   		<type>select</type>
      		<condition>
- 			<greater-than>
-   				<property>/payload/weight[2]/weight-lb</property>
-   				<value>0</value>
-   			</greater-than>
+			<and>
+				<equals>
+					<property>/extra500/interior/showPeople</property>
+   					<value>1</value>
+				</equals>
+ 				<greater-than>
+   					<property>/payload/weight[2]/weight-lb</property>
+   					<value>0</value>
+   				</greater-than>
+			</and>
       	</condition>
  	</animation>
 
@@ -217,10 +235,16 @@
   		<object-name>pass2</object-name>
   		<type>select</type>
      		<condition>
- 			<greater-than>
-   				<property>/payload/weight[3]/weight-lb</property>
-   				<value>0</value>
-   			</greater-than>
+			<and>
+				<equals>
+					<property>/extra500/interior/showPeople</property>
+   					<value>1</value>
+				</equals>
+ 				<greater-than>
+   					<property>/payload/weight[3]/weight-lb</property>
+   					<value>0</value>
+   				</greater-than>
+			</and>
       	</condition>
  	</animation>
 
@@ -248,10 +272,16 @@
   		<object-name>pass3</object-name>
   		<type>select</type>
      		<condition>
- 			<greater-than>
-   				<property>/payload/weight[4]/weight-lb</property>
-   				<value>0</value>
-   			</greater-than>
+			<and>
+				<equals>
+					<property>/extra500/interior/showPeople</property>
+   					<value>1</value>
+				</equals>
+ 				<greater-than>
+   					<property>/payload/weight[4]/weight-lb</property>
+   					<value>0</value>
+   				</greater-than>
+			</and>
       	</condition>
  	</animation>
 
@@ -278,10 +308,16 @@
   		<object-name>pass4</object-name>
   		<type>select</type>
      		<condition>
- 			<greater-than>
-   				<property>/payload/weight[5]/weight-lb</property>
-   				<value>0</value>
-   			</greater-than>
+			<and>
+				<equals>
+					<property>/extra500/interior/showPeople</property>
+   					<value>1</value>
+				</equals>
+ 				<greater-than>
+   					<property>/payload/weight[5]/weight-lb</property>
+   					<value>0</value>
+   				</greater-than>
+			</and>
       	</condition>
  	</animation>
 

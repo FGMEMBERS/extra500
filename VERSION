@@ -17,8 +17,13 @@
       Date: 2014-06-22
 
       Last change:      Eric van den Berg
-      Date:             2018.02.14
+      Date:             2018.09.07
 
+
+Release 5.1.0: For flightgear version 2018.3 and up
+* Possibility to hide all human models
+* several fixes to canvas dialogs
+* Init menu
 
 Release 5.0.0: use for flightgear version 2018.1 and up
 * General: make it possible to startup at last shut-down, scalable Canvas dialogs
