@@ -17,16 +17,25 @@
 #      Date: Jun 26 2013
 #
 #      Last change:      Eric van den Berg
-#      Date:             13.04.14
+#      Date:             25.06.18
 #
+
 
 var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 	
 	removelistener(init_listener);
 	init_listener = nil;
+
+# setting saved position of last exit of program
+	var posAtLastKnownPos = getprop("extra500/exit/posAtLastKnownPos") or 0;
+	if (posAtLastKnownPos==1) {
+		Dialogs.Initdialog.openDialog();
+	}
 	
+
 	settimer(func(){
-		
+
+	
 		#positioned.findWithinRange(600,"airport");
 		#positioned.findWithinRange(150,"vor");
 		
@@ -77,6 +86,7 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		extra500.centerConsole.init();
 		extra500.interior.init();
 		extra500.fuelFlowLog.init();
+		extra500.PositionLog.init();
 		
 		extra500.eSystem.init();
 		
@@ -92,6 +102,12 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 		
 # 		props.globals.getNode("/environment/metar").unalias();
 # 		props.globals.getNode("/environment/metar").alias(props.globals.getNode("environment/metar-nearest"));
+
+		var wow_listener = setlistener("/gear/gear/wow", func {
+			if (getprop("/gear/gear/wow") == 0) {
+				setprop("/extra500/exit/airport-id", getprop("/sim/airport/closest-airport-id"));
+			}
+		},0,0);
 		
 	},1);
 
@@ -101,5 +117,7 @@ var init_listener = setlistener("/sim/signals/fdm-initialized", func {
 var exit_listener = setlistener("/sim/signals/exit", func {
 	#print("listener.exit() ... ");
 	extra500.audiopanel.restoreUserSoundVolume();
-		
+
 });
+
+

@@ -17,7 +17,7 @@
 #      Date:   09.10.2015
 #
 #      Last change: Eric van den Berg      
-#      Date: 18.01.2017            
+#      Date: 10.09.2017            
 #
 # 
 
@@ -643,5 +643,9 @@ var failure_reset = func() {
 	setprop("/instrumentation/turn-indicator/serviceable",1);
 
 	setprop("/extra500/failurescenarios/random_active",0);
+
+# Reset ELT
+	UI.click("ELT remote arm");
+
 }
 

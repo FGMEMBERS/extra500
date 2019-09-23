@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: Eric van den Berg
+      Date: 08.07.2017
+
+      Last change: Eric van den Berg     
+      Date: 25.02.2018            
+
+-->
+
+<PropertyList>
+
+ <path>people.ac</path>
+
+<effect>
+    <name>PeopleShadow</name>
+    <inherits-from>Aircraft/extra500/Models/Effects/interior/extra500-interior</inherits-from>
+		<object-name>shoes01.obj.sub</object-name>
+  		<object-name>male_casualsuit01.obj.sub</object-name>
+  		<object-name>base.obj.sub</object-name>
+  		<object-name>short02.obj.sub</object-name>
+  		<object-name>low-poly.obj.sub</object-name>
+  		<object-name>eyebrow012.obj.sub</object-name>
+  		<object-name>headset</object-name>
+  		<object-name>pilot.seatbelt.buckle</object-name>
+  		<object-name>pilot.belt1</object-name>
+  		<object-name>pilot.seatbelt2</object-name>
+  		<object-name>pilot.seatbelt3</object-name>
+  		<object-name>pilot.seatbelt4</object-name>
+		<object-name>shoes05.obj.sub</object-name>
+  		<object-name>male_casualsuit06.obj.sub</object-name>
+  		<object-name>base.obj.sub.001</object-name>
+  		<object-name>ponytail01.obj.sub</object-name>
+  		<object-name>high-poly.obj.sub</object-name>
+  		<object-name>eyebrow012.obj.sub.001</object-name>
+  		<object-name>headset.001</object-name>
+  		<object-name>copilot.seatbelt.buckle</object-name>
+  		<object-name>copilot.seatbelt1</object-name>
+  		<object-name>copilot.seatbelt2</object-name>
+  		<object-name>copilot.seatbelt3</object-name>
+  		<object-name>copilot.seatbelt4</object-name>
+		<object-name>eyelashes01.obj.sub</object-name>
+		<object-name>shoes06.obj</object-name>
+  		<object-name>female_casualsuit02.obj</object-name>
+  		<object-name>base.obj</object-name>
+  		<object-name>afro01.obj</object-name>
+  		<object-name>high-poly.obj</object-name>
+  		<object-name>eyebrow001.obj</object-name>
+  		<object-name>pass1.seatbelt.buckle</object-name>
+  		<object-name>pass1.seatbelt1</object-name>
+  		<object-name>pass1.seatbelt2</object-name>
+		<object-name>eyelashes02.obj</object-name>
+		<object-name>shoes04.obj</object-name>
+  		<object-name>male_casualsuit03.obj</object-name>
+  		<object-name>base.obj.001</object-name>
+  		<object-name>braid01.obj</object-name>
+  		<object-name>low-poly.obj</object-name>
+  		<object-name>eyebrow001.obj.001</object-name>
+  		<object-name>pass2.seatbelt.buckle</object-name>
+  		<object-name>pass2.seatbelt1</object-name>
+  		<object-name>pass2.seatbelt2</object-name>
+		<object-name>eyelashes02.obj.001</object-name>
+		<object-name>shoes05.obj</object-name>
+  		<object-name>male_worksuit01.obj</object-name>
+  		<object-name>base.obj.002</object-name>
+  		<object-name>short02.obj</object-name>
+  		<object-name>low-poly.obj.001</object-name>
+  		<object-name>eyebrow012.obj</object-name>
+  		<object-name>pass3.seatbelt.buckle</object-name>
+  		<object-name>pass3.seatbelt1</object-name>
+  		<object-name>pass3.seatbelt2</object-name>
+		<object-name>shoes03.obj</object-name>
+  		<object-name>male_elegantsuit01.obj</object-name>
+  		<object-name>base.obj.003</object-name>
+  		<object-name>low-poly.obj.002</object-name>
+  		<object-name>eyebrow009.obj</object-name>
+  		<object-name>pass4.seatbelt.buckle</object-name>
+  		<object-name>pass4.seatbelt1</object-name>
+  		<object-name>pass4.seatbelt2</object-name>
+</effect>
+
+ 	<animation>
+  		<name>pilot</name>
+		<object-name>shoes01.obj.sub</object-name>
+  		<object-name>male_casualsuit01.obj.sub</object-name>
+  		<object-name>base.obj.sub</object-name>
+  		<object-name>short02.obj.sub</object-name>
+  		<object-name>low-poly.obj.sub</object-name>
+  		<object-name>eyebrow012.obj.sub</object-name>
+  		<object-name>headset</object-name>
+  		<object-name>pilot.seatbelt.buckle</object-name>
+  		<object-name>pilot.belt1</object-name>
+  		<object-name>pilot.seatbelt2</object-name>
+  		<object-name>pilot.seatbelt3</object-name>
+  		<object-name>pilot.seatbelt4</object-name>
+ 	</animation>
+
+ 	<animation>
+  		<object-name>pilot</object-name>
+		<type>range</type>
+		<min-m>0.6</min-m>
+		<max-m>500</max-m>
+  	</animation>
+ 	<animation>
+  		<object-name>pilot</object-name>
+  		<type>select</type>
+     		<condition>
+			<and>
+				<equals>
+					<property>/extra500/interior/showPeople</property>
+   					<value>1</value>
+				</equals>
+ 				<greater-than>
+   					<property>/payload/weight[0]/weight-lb</property>
+   					<value>0</value>
+   				</greater-than>
+			</and>
+      	</condition>
+ 	</animation>
+
+
+ 	<animation>
+  		<name>copilot</name>
+		<object-name>shoes05.obj.sub</object-name>
+  		<object-name>male_casualsuit06.obj.sub</object-name>
+  		<object-name>base.obj.sub.001</object-name>
+  		<object-name>ponytail01.obj.sub</object-name>
+  		<object-name>high-poly.obj.sub</object-name>
+  		<object-name>eyebrow012.obj.sub.001</object-name>
+  		<object-name>headset.001</object-name>
+  		<object-name>copilot.seatbelt.buckle</object-name>
+  		<object-name>copilot.seatbelt1</object-name>
+  		<object-name>copilot.seatbelt2</object-name>
+  		<object-name>copilot.seatbelt3</object-name>
+  		<object-name>copilot.seatbelt4</object-name>
+		<object-name>eyelashes01.obj.sub</object-name>
+ 	</animation>
+
+ 	<animation>
+  		<object-name>copilot</object-name>
+		<type>range</type>
+		<min-m>0.6</min-m>
+		<max-m>500</max-m>
+  	</animation>
+ 	<animation>
+  		<object-name>copilot</object-name>
+  		<type>select</type>
+     		<condition>
+			<and>
+				<equals>
+					<property>/extra500/interior/showPeople</property>
+   					<value>1</value>
+				</equals>
+ 				<greater-than>
+   					<property>/payload/weight[1]/weight-lb</property>
+   					<value>0</value>
+   				</greater-than>
+			</and>
+      	</condition>
+ 	</animation>
+
+ 	<animation>
+  		<name>pass1</name>
+		<object-name>shoes06.obj</object-name>
+  		<object-name>female_casualsuit02.obj</object-name>
+  		<object-name>base.obj</object-name>
+  		<object-name>afro01.obj</object-name>
+  		<object-name>high-poly.obj</object-name>
+  		<object-name>eyebrow001.obj</object-name>
+  		<object-name>pass1.seatbelt.buckle</object-name>
+  		<object-name>pass1.seatbelt1</object-name>
+  		<object-name>pass1.seatbelt2</object-name>
+		<object-name>eyelashes02.obj</object-name>
+ 	</animation>
+
+ 	<animation>
+  		<object-name>pass1</object-name>
+		<type>range</type>
+		<min-m>0.6</min-m>
+		<max-m>500</max-m>
+  	</animation>
+ 	<animation>
+  		<object-name>pass1</object-name>
+  		<type>select</type>
+     		<condition>
+			<and>
+				<equals>
+					<property>/extra500/interior/showPeople</property>
+   					<value>1</value>
+				</equals>
+ 				<greater-than>
+   					<property>/payload/weight[2]/weight-lb</property>
+   					<value>0</value>
+   				</greater-than>
+			</and>
+      	</condition>
+ 	</animation>
+
+ 	<animation>
+  		<name>pass2</name>
+		<object-name>shoes04.obj</object-name>
+  		<object-name>male_casualsuit03.obj</object-name>
+  		<object-name>base.obj.001</object-name>
+  		<object-name>braid01.obj</object-name>
+  		<object-name>low-poly.obj</object-name>
+  		<object-name>eyebrow001.obj.001</object-name>
+  		<object-name>pass2.seatbelt.buckle</object-name>
+  		<object-name>pass2.seatbelt1</object-name>
+  		<object-name>pass2.seatbelt2</object-name>
+		<object-name>eyelashes02.obj.001</object-name>
+ 	</animation>
+
+ 	<animation>
+  		<object-name>pass2</object-name>
+		<type>range</type>
+		<min-m>0.6</min-m>
+		<max-m>500</max-m>
+  	</animation>
+ 	<animation>
+  		<object-name>pass2</object-name>
+  		<type>select</type>
+     		<condition>
+			<and>
+				<equals>
+					<property>/extra500/interior/showPeople</property>
+   					<value>1</value>
+				</equals>
+ 				<greater-than>
+   					<property>/payload/weight[3]/weight-lb</property>
+   					<value>0</value>
+   				</greater-than>
+			</and>
+      	</condition>
+ 	</animation>
+
+
+ 	<animation>
+  		<name>pass3</name>
+		<object-name>shoes05.obj</object-name>
+  		<object-name>male_worksuit01.obj</object-name>
+  		<object-name>base.obj.002</object-name>
+  		<object-name>short02.obj</object-name>
+  		<object-name>low-poly.obj.001</object-name>
+  		<object-name>eyebrow012.obj</object-name>
+  		<object-name>pass3.seatbelt.buckle</object-name>
+  		<object-name>pass3.seatbelt1</object-name>
+  		<object-name>pass3.seatbelt2</object-name>
+ 	</animation>
+
+ 	<animation>
+  		<object-name>pass3</object-name>
+		<type>range</type>
+		<min-m>0.6</min-m>
+		<max-m>500</max-m>
+  	</animation>
+ 	<animation>
+  		<object-name>pass3</object-name>
+  		<type>select</type>
+     		<condition>
+			<and>
+				<equals>
+					<property>/extra500/interior/showPeople</property>
+   					<value>1</value>
+				</equals>
+ 				<greater-than>
+   					<property>/payload/weight[4]/weight-lb</property>
+   					<value>0</value>
+   				</greater-than>
+			</and>
+      	</condition>
+ 	</animation>
+
+
+ 	<animation>
+  		<name>pass4</name>
+		<object-name>shoes03.obj</object-name>
+  		<object-name>male_elegantsuit01.obj</object-name>
+  		<object-name>base.obj.003</object-name>
+  		<object-name>low-poly.obj.002</object-name>
+  		<object-name>eyebrow009.obj</object-name>
+  		<object-name>pass4.seatbelt.buckle</object-name>
+  		<object-name>pass4.seatbelt1</object-name>
+  		<object-name>pass4.seatbelt2</object-name>
+ 	</animation>
+
+ 	<animation>
+  		<object-name>pass4</object-name>
+		<type>range</type>
+		<min-m>0.6</min-m>
+		<max-m>500</max-m>
+  	</animation>
+ 	<animation>
+  		<object-name>pass4</object-name>
+  		<type>select</type>
+     		<condition>
+			<and>
+				<equals>
+					<property>/extra500/interior/showPeople</property>
+   					<value>1</value>
+				</equals>
+ 				<greater-than>
+   					<property>/payload/weight[5]/weight-lb</property>
+   					<value>0</value>
+   				</greater-than>
+			</and>
+      	</condition>
+ 	</animation>
+
+
+</PropertyList>

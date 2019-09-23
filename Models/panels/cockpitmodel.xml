@@ -1,0 +1,1945 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!--
+    This file is part of extra500
+
+    The extra500 is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    The extra500 is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with extra500.  If not, see <http://www.gnu.org/licenses/>.
+
+      Authors: E. van den Berg, Dirk Dittmann, Thomas Grossberger 
+      Date: 02.10.2017
+
+	Last change: E. van den Berg
+	Date:	28.10.2017	
+-->
+<PropertyList>
+
+<path>cockpit.ac</path>
+
+  <animation>
+    <type>range</type>
+    <min-m>0</min-m>
+    <max-m>50</max-m>
+  </animation>
+<!--
+<effect>
+    <name>MainPanel</name>
+    <inherits-from>Aircraft/extra500/Models/Effects/panel</inherits-from>
+    <object-name>MainPanel</object-name>
+    <object-name>Glareshield.lower</object-name>
+    <parameters>
+		<grain-magnification type="float">2000</grain-magnification>
+    </parameters>
+</effect>
+<effect>
+    <name>AP</name>
+    <inherits-from>Aircraft/extra500/Models/Effects/panel</inherits-from>
+    <object-name>autopilot.case</object-name>
+    <parameters>
+		<grain-magnification type="float">4000</grain-magnification>
+    </parameters>
+</effect>
+<effect>
+    <name>yokecover</name>
+    <inherits-from>Aircraft/extra500/Models/Effects/panel</inherits-from>
+    <object-name>YokeFrameR</object-name>
+    <object-name>YokeFrameL</object-name>
+    <parameters>
+		<grain-magnification type="float">200</grain-magnification>
+    </parameters>
+</effect>
+-->
+  
+<!-- shadow -->
+  <effect>
+	  <name>InteriorShadow</name>
+	  <inherits-from>Aircraft/extra500/Models/Effects/interior/extra500-interior</inherits-from>
+	  <object-name>MasterPanel</object-name>
+	  <object-name>MainPanel</object-name>
+	  <object-name>Glareshield.upper</object-name>
+	  <object-name>Glareshield.lower</object-name>
+	  <object-name>autopilot.case</object-name>
+	  <object-name>lowerpanel</object-name>
+	  <object-name>YokeFrameL</object-name>
+	  <object-name>YokeFrameR</object-name>
+	  <object-name>GearPanel</object-name>
+	  <object-name>FlapPanel</object-name>
+	  <object-name>CenterConsoleFrame</object-name>
+	  <object-name>power.side.pl</object-name>
+	  <object-name>condition.side.pl</object-name>
+	  <object-name>power.pl</object-name>
+	  <object-name>condition.pl</object-name>
+	  <object-name>trim.scale</object-name>
+	  <object-name>yoke.pilot</object-name>
+	  <object-name>yoke.copilot</object-name>
+	  <object-name>yoke.tube.pilot</object-name>
+	  <object-name>yoke.tube.copilot</object-name>
+	  <object-name>pitotheat</object-name>
+	  <object-name>markingandplacards</object-name>
+	  <object-name>operations</object-name>
+	  <object-name>warning</object-name>
+	  <object-name>ventL</object-name>
+	  <object-name>ventR</object-name>
+	  <object-name>speeds</object-name>
+	  <object-name>speedavoid</object-name>
+	  <object-name>compasscomp</object-name>
+	  <object-name>compasswindsh</object-name>
+	  
+  </effect>
+
+
+  <!--hide the yokes--> 
+
+  <animation>
+	  <object-name>yoke.pilot</object-name>
+	  <object-name>yoke.copilot</object-name>
+	  <object-name>yoke.tube.pilot</object-name>
+	  <object-name>yoke.tube.copilot</object-name>
+	  <object-name>yoke.pilot.plate</object-name>
+	  <object-name>yoke.copilot.plate</object-name>
+	  <type>select</type>
+	  <condition>
+		  <equals>
+			  <property>/extra500/yokes/visible</property>
+			  <value>1</value>
+		  </equals>
+	  </condition>
+  </animation> 
+	
+  <animation>
+	  <type>material</type>
+	  <object-name>yoke.pilot</object-name>
+	  <object-name>yoke.copilot</object-name>
+	  <object-name>yoke.tube.pilot</object-name>
+	  <object-name>yoke.tube.copilot</object-name>
+	  <object-name>yoke.pilot.plate</object-name>
+	  <object-name>yoke.copilot.plate</object-name>
+	  <transparency>
+		  <alpha-prop>/extra500/yokes/transparency</alpha-prop>
+		  <factor>1</factor>
+	  </transparency>
+  </animation>
+  
+  <effect>
+	  <inherits-from>Effects/model-transparent</inherits-from>
+	  <object-name>yoke.pilot</object-name>
+	  <object-name>yoke.copilot</object-name>
+	  <object-name>yoke.tube.pilot</object-name>
+	  <object-name>yoke.tube.copilot</object-name>
+	  <object-name>yoke.pilot.plate</object-name>
+	  <object-name>yoke.copilot.plate</object-name>
+  </effect>
+
+
+<!--Gear lights-->
+<animation>
+	<type>material</type>
+	<object-name>LightGear0.Lampe</object-name>
+	<emission>	
+		<red>0.0</red>	
+		<green>0.5</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/light/GearNose/state</factor-prop>
+	</emission>
+</animation>
+<animation>
+	<type>material</type>
+	<object-name>LightGear1.Lampe</object-name>
+	<emission>	
+		<red>0.0</red>	
+		<green>0.5</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/light/GearLeft/state</factor-prop>
+	</emission>
+</animation>
+<animation>
+	<type>material</type>
+	<object-name>LightGear2.Lampe</object-name>
+	<emission>	
+		<red>0.0</red>	
+		<green>0.5</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/light/GearRight/state</factor-prop>
+	</emission>
+</animation>
+
+<!--Flap lights-->
+<animation>
+	<type>material</type>
+	<object-name>LightFlapTrans.Lampe</object-name>
+	<emission>	
+		<red>0.9</red>	
+		<green>0.4</green>	
+		<blue>0.1</blue>
+		<factor-prop>extra500/light/FlapTransition/state</factor-prop>
+	</emission>
+</animation>
+<animation>
+	<type>material</type>
+	<object-name>LightFlap15.Lampe</object-name>
+	<emission>	
+		<red>0.0</red>	
+		<green>0.5</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/light/Flap15/state</factor-prop>
+	</emission>
+</animation>
+<animation>
+	<type>material</type>
+	<object-name>LightFlap30.Lampe</object-name>
+	<emission>	
+		<red>0.0</red>	
+		<green>0.5</green>	
+		<blue>0.0</blue>
+		<factor-prop>extra500/light/Flap30/state</factor-prop>
+	</emission>
+</animation>
+
+<animation>
+      <type>pick</type>
+      <object-name>GearLever</object-name>
+      <visible>true</visible>
+      <action>
+        <button>0</button>
+        <repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("Gear");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+<animation>
+      <type>pick</type>
+      <object-name>GearLever</object-name>
+      <visible>true</visible>
+      <action>
+        <button>1</button>
+        <repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("Gear");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+<animation>
+      <type>pick</type>
+      <object-name>GearLever</object-name>
+      <visible>true</visible>
+      <action>
+        <button>3</button>
+        <repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("Gear up");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+<animation>
+      <type>pick</type>
+      <object-name>GearLever</object-name>
+      <visible>true</visible>
+      <action>
+        <button>4</button>
+        <repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("Gear down");
+				]]>
+			</script>
+		</binding>
+      </action>
+</animation>
+<animation>
+	<type>rotate</type>
+	<object-name>GearLever</object-name>
+	<property>/extra500/system/gear/MainGearSwitch/state</property> 
+	<interpolation>
+		<entry>
+			<ind>0</ind>
+			<dep>-15</dep>
+		</entry>
+		<entry>
+			<ind>1</ind>
+			<dep>15</dep>
+		</entry>
+	</interpolation>
+	<axis>
+		<x1-m>-0.79766</x1-m>
+		<y1-m>-1</y1-m>
+		<z1-m>-0.42425</z1-m>
+		<x2-m>-0.79766</x2-m>
+		<y2-m>1</y2-m>
+		<z2-m>-0.42425</z2-m>
+	</axis>
+</animation>
+
+<!--FlapControl-->
+<animation>
+	<type>pick</type>
+	<object-name>FlapControl</object-name>
+	<visible>true</visible>
+	<action>
+	<button>0</button>
+	<repeatable>false</repeatable>
+	<binding>
+		<command>nasal</command>
+		<script>
+			<![CDATA[
+			UI.click("Flaps down");
+				]]>
+			</script>
+		</binding>
+	</action>
+	<action>
+		<button>1</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("Flaps up");
+				]]>
+		</script>
+		</binding>
+	</action>
+	<action>
+		<button>4</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("Flaps down");
+				]]>
+			</script>
+		</binding>
+	</action>
+	<action>
+		<button>3</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+				UI.click("Flaps up");
+				]]>
+			</script>
+		</binding>
+	</action>
+</animation>
+<animation>
+	<type>rotate</type>
+	<object-name>FlapControl</object-name>
+	<property>/extra500/system/flap/Switch/state</property> 
+	<interpolation>
+		<entry>
+			<ind>-1</ind>
+			<dep>-19</dep>
+		</entry>
+		<entry>
+			<ind>1</ind>
+			<dep>19</dep>
+		</entry>
+	</interpolation>
+	<axis>
+		<x1-m>-0.82916</x1-m>
+		<y1-m>1</y1-m>
+		<z1-m>-0.44421</z1-m>
+		<x2-m>-0.82916</x2-m>
+		<y2-m>-1</y2-m>
+		<z2-m>-0.44421</z2-m>
+	</axis>
+</animation>
+
+<!-- Defrost -->
+<animation>
+  <type>translate</type>
+  <object-name>Defrost.Knob</object-name>
+  <object-name>Defrost.Axis</object-name>
+  <property>/extra500/panel/CenterConsole/Defrost/state</property>
+  <factor>0.055</factor>
+   <axis>
+   <x1-m>-0.55269</x1-m>
+   <y1-m>0</y1-m>
+   <z1-m>-0.64843</z1-m>
+   <x2-m>-0.46269</x2-m>
+   <y2-m>0</y2-m>
+   <z2-m>-0.64738</z2-m>
+  </axis>
+</animation>
+
+<animation>
+	<type>pick</type>
+	<object-name>Defrost.Knob</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("Defrost");
+				]]>
+			</script>
+		</binding>
+	</action>
+</animation>
+
+<!-- ParkingBrake -->
+<animation>
+  <type>translate</type>
+  <object-name>ParkingBrake.Knob</object-name>
+  <object-name>ParkingBrake.Axis</object-name>
+  <property>/extra500/panel/CenterConsole/Parkingbrake/state</property>
+  <factor>0.055</factor>
+   <axis>
+   <x1-m>-0.55269</x1-m>
+   <y1-m>0</y1-m>
+   <z1-m>-0.64843</z1-m>
+   <x2-m>-0.46269</x2-m>
+   <y2-m>0</y2-m>
+   <z2-m>-0.64738</z2-m>
+  </axis>
+</animation>
+
+<animation>
+	<type>pick</type>
+	<object-name>ParkingBrake.Knob</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("Parkingbrake");
+				]]>
+			</script>
+		</binding>
+	</action>
+</animation>
+
+<!-- Deice -->
+<animation>
+  <type>translate</type>
+  <object-name>AntiIce.Knob</object-name>
+  <object-name>AntiIce.Axis</object-name>
+  <property>/extra500/panel/CenterConsole/Deice/state</property>
+  <factor>0.055</factor>
+   <axis>
+   <x1-m>-0.55269</x1-m>
+   <y1-m>0</y1-m>
+   <z1-m>-0.64843</z1-m>
+   <x2-m>-0.46269</x2-m>
+   <y2-m>0</y2-m>
+   <z2-m>-0.64738</z2-m>
+  </axis>
+</animation>
+
+<animation>
+	<type>pick</type>
+	<object-name>AntiIce.Knob</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("Deice");
+				]]>
+			</script>
+		</binding>
+	</action>
+</animation>
+
+<!-- PowerLever -->
+<model>
+  <name>gear warn mute switch</name>
+  <path>Aircraft/extra500/Models/interior/gearwarnmute.xml</path>
+	<offsets>
+		<x-m>-0.61302</x-m>
+		<y-m>-0.04777</y-m>	
+		<z-m>-0.34039</z-m>
+		<roll-deg>90</roll-deg>
+		<pitch-deg>0</pitch-deg>
+		<yaw-deg>0</yaw-deg>
+	</offsets>
+</model>
+
+<animation>
+  <type>rotate</type>
+  <object-name>PowerLever</object-name>
+  <object-name>gear warn mute switch</object-name>
+  <property>controls/engines/engine/throttle</property>
+  <condition>
+    <equals>
+      <property>controls/engines/engine/reverser</property>
+      <value>1</value>
+    </equals>
+  </condition>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>-5.4</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-41.7</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>-0.6579</x1-m>
+    <y1-m>1</y1-m>
+    <z1-m>-0.4872</z1-m>
+    <x2-m>-0.6579</x2-m>
+    <y2-m>-1</y2-m>
+    <z2-m>-0.4872</z2-m>
+  </axis>
+</animation>
+<animation>
+  <type>rotate</type>
+  <object-name>PowerLever</object-name>
+  <object-name>gear warn mute switch</object-name>
+  <property>controls/engines/engine/throttle</property>
+  <condition>
+    <equals>
+      <property>controls/engines/engine/reverser</property>
+      <value>0</value>
+    </equals>
+  </condition>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>-5.4</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>40.5</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>-0.6579</x1-m>
+    <y1-m>1</y1-m>
+    <z1-m>-0.4872</z1-m>
+    <x2-m>-0.6579</x2-m>
+    <y2-m>-1</y2-m>
+    <z2-m>-0.4872</z2-m>
+  </axis>
+</animation>
+
+<animation>
+	<type>pick</type>
+	<object-name>PowerLever</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("Engine reverser");
+				]]>
+			</script>
+		</binding>
+	</action>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		setprop("/controls/engines/engine/throttle",getprop("/controls/engines/engine/throttle")+.0025);
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		setprop("/controls/engines/engine/throttle",getprop("/controls/engines/engine/throttle")-.0025);
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<animation>
+  <type>translate</type>
+  <object-name>PowerLever</object-name>
+  <object-name>gear warn mute switch</object-name>
+  <property>controls/engines/engine/reverser</property>
+  <factor>0.02</factor>
+  <axis>
+    <x1-m>-0.6579</x1-m>
+    <y1-m>0</y1-m>
+    <z1-m>-0.4872</z1-m>
+    <x2-m>-0.61302</x2-m>
+    <y2-m>0</y2-m>
+    <z2-m>-0.34039</z2-m>
+  </axis>
+</animation>
+
+<!-- ConditionLever  
+/controls/engines/engine[0]/condition-lever-norm is controlled by: 	
+		/extra500/engine/cutoff (press: s)
+		/controls/engines/engine[0]/propeller-pitch (press: n/N)
+in Systems/extra500-system-indication.xml-->
+<animation>
+  <type>rotate</type>
+  <object-name>ConditionLever</object-name>
+  <property>/controls/engines/engine[0]/condition-lever-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>22.7</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-18.2</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>-0.6579</x1-m>
+    <y1-m>-1</y1-m>
+    <z1-m>-0.4872</z1-m>
+    <x2-m>-0.6579</x2-m>
+    <y2-m>1</y2-m>
+    <z2-m>-0.4872</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>translate</type>
+  <object-name>ConditionLever</object-name>
+  <property>/controls/engines/engine[0]/condition-lever-norm</property>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>0</dep>
+            </entry>
+            <entry>
+                <ind>0.01</ind>
+                <dep>0.02</dep>
+            </entry>
+            <entry>
+                <ind>0.48</ind>
+                <dep>0.02</dep>
+            </entry>
+            <entry>
+                <ind>0.49</ind>
+                <dep>0.0</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>0.0</dep>
+            </entry>
+  </interpolation>
+  <axis>
+    <x1-m>-0.6579</x1-m>
+    <y1-m>0</y1-m>
+    <z1-m>-0.4872</z1-m>
+    <x2-m>-0.61302</x2-m>
+    <y2-m>0</y2-m>
+    <z2-m>-0.34039</z2-m>
+  </axis>
+</animation>
+
+<animation>
+	<type>pick</type>
+	<object-name>ConditionLever</object-name>
+	<action>
+		<button>0</button>
+		<repeatable>false</repeatable>
+		<binding>
+			<command>nasal</command>
+			<script>
+				<![CDATA[
+					UI.click("Engine cutoff");
+				]]>
+			</script>
+		</binding>
+	</action>
+</animation>
+
+
+<!-- PitchTrimWheel -->
+<animation>
+  <type>rotate</type>
+  <object-name>PitchTrimWheel</object-name>
+  <property>/fdm/jsbsim/fcs/pitch-trim-pos-deg</property>
+  <factor>10</factor>
+  <axis>
+    <x1-m>-0.6579</x1-m>
+    <y1-m>1</y1-m>
+    <z1-m>-0.4872</z1-m>
+    <x2-m>-0.6579</x2-m>
+    <y2-m>-1</y2-m>
+    <z2-m>-0.4872</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>pick</type>
+  <object-name>PitchTrimWheel</object-name>
+  <action>
+    <button>0</button>
+    <repeatable>true</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("PitchTrim >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>1</button>
+    <repeatable>true</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("PitchTrim <");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("PitchTrim >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("PitchTrim <");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<!-- Pitchindication -->
+<animation>
+  <type>rotate</type>
+  <object-name>trim.ind</object-name>
+  <property>/fdm/jsbsim/fcs/pitch-trim-pos-deg</property>
+  <factor>1.2</factor>
+  <axis>
+    <x1-m>-0.6579</x1-m>
+    <y1-m>1</y1-m>
+    <z1-m>-0.4872</z1-m>
+    <x2-m>-0.6579</x2-m>
+    <y2-m>-1</y2-m>
+    <z2-m>-0.4872</z2-m>
+  </axis>
+</animation>
+
+<!--masterpanel animations-->
+<!-- MasterPanel.Autopilot.Master -->
+<animation>
+  <type>rotate</type>
+  <object-name>MasterPanel.Autopilot.Master</object-name>
+  <property>extra500/panel/Master/Autopilot/Master/state</property>
+  <factor>-25</factor>
+  <axis>
+    <x1-m>-0.81402</x1-m>
+    <y1-m>-1</y1-m>
+    <z1-m>-0.34681</z1-m>
+    <x2-m>-0.81402</x2-m>
+    <y2-m>1</y2-m>
+    <z2-m>-0.34681</z2-m>
+  </axis>
+</animation>
+<animation>
+  <type>pick</type>
+  <object-name>MasterPanel.Autopilot.Master</object-name>
+  <object-name>MasterPanel.Autopilot.Master.Ring</object-name>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Autopilot Master >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>1</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Autopilot Master <");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Autopilot Master >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Autopilot Master <");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<!-- MasterPanel.Autopilot.PitchTrim -->
+<animation>
+  <type>rotate</type>
+  <object-name>MasterPanel.Autopilot.PitchTrim</object-name>
+  <property>extra500/panel/Master/Autopilot/PitchTrim/state</property>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>25</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-25</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>-0.81402</x1-m>
+    <y1-m>-1</y1-m>
+    <z1-m>-0.34681</z1-m>
+    <x2-m>-0.81402</x2-m>
+    <y2-m>1</y2-m>
+    <z2-m>-0.34681</z2-m>
+  </axis>
+</animation>
+<animation>
+  <type>pick</type>
+  <object-name>MasterPanel.Autopilot.PitchTrim</object-name>
+  <object-name>MasterPanel.Autopilot.PitchTrim.Ring</object-name>
+  <action>
+    <button>1</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Autopilot PitchTrim");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Autopilot PitchTrim");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Autopilot PitchTrim off");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Autopilot PitchTrim on");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<!-- MasterPanel.Autopilot.YawDamper -->
+<animation>
+  <type>rotate</type>
+  <object-name>MasterPanel.Autopilot.YawDamper</object-name>
+  <property>extra500/panel/Master/Autopilot/YawDamper/state</property>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>25</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-25</dep>
+            </entry>
+        </interpolation>
+   <axis>
+    <x1-m>-0.81402</x1-m>
+    <y1-m>-1</y1-m>
+    <z1-m>-0.34681</z1-m>
+    <x2-m>-0.81402</x2-m>
+    <y2-m>1</y2-m>
+    <z2-m>-0.34681</z2-m>
+  </axis>
+</animation>
+<animation>
+  <type>pick</type>
+  <object-name>MasterPanel.Autopilot.YawDamper</object-name>
+  <object-name>MasterPanel.Autopilot.YawDamper.Ring</object-name>
+  <action>
+    <button>1</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Autopilot YawDamper");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Autopilot YawDamper");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Autopilot YawDamper off");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Autopilot YawDamper on");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<!-- MasterPanel.Autopilot.YawTrim -->
+<animation>
+  <type>rotate</type>
+  <object-name>MasterPanel.Autopilot.YawTrim</object-name>
+  <property>extra500/panel/Master/Autopilot/YawTrim/state</property>
+  <interpolation>
+            <entry>
+                <ind>-1</ind>
+                <dep>120</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-120</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>-0.82174</x1-m>
+    <y1-m>-0.12248</y1-m>
+    <z1-m>-0.34795</z1-m>
+    <x2-m>-0.80362</x2-m>
+    <y2-m>-0.12248</y2-m>
+    <z2-m>-0.3454</z2-m>
+  </axis>
+</animation>
+<animation>
+  <type>pick</type>
+  <object-name>MasterPanel.Autopilot.YawTrim</object-name>
+  <action>
+    <button>0</button>
+    <repeatable>true</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Autopilot Yaw Trim >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>1</button>
+    <repeatable>true</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Autopilot Yaw Trim <");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Autopilot Yaw Trim >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Autopilot Yaw Trim <");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<!-- MasterPanel.Fuel.TransferLeft -->
+<animation>
+  <type>rotate</type>
+  <object-name>MasterPanel.Fuel.TransferLeft</object-name>
+  <property>extra500/panel/Master/Fuel/TransferLeft/state</property>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>25</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-25</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>-0.81402</x1-m>
+    <y1-m>-1</y1-m>
+    <z1-m>-0.34681</z1-m>
+    <x2-m>-0.81402</x2-m>
+    <y2-m>1</y2-m>
+    <z2-m>-0.34681</z2-m>
+  </axis>
+</animation>
+<animation>
+  <type>pick</type>
+  <object-name>MasterPanel.Fuel.TransferLeft</object-name>
+  <object-name>MasterPanel.Fuel.TransferLeft.Ring</object-name>
+  <action>
+    <button>1</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Fuel Transfer Left");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Fuel Transfer Left");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Fuel Transfer Left off");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Fuel Transfer Left on");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<!-- MasterPanel.Fuel.TransferRight -->
+<animation>
+  <type>rotate</type>
+  <object-name>MasterPanel.Fuel.TransferRight</object-name>
+  <property>extra500/panel/Master/Fuel/TransferRight/state</property>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>25</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-25</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>-0.81402</x1-m>
+    <y1-m>-1</y1-m>
+    <z1-m>-0.34681</z1-m>
+    <x2-m>-0.81402</x2-m>
+    <y2-m>1</y2-m>
+    <z2-m>-0.34681</z2-m>
+  </axis>
+</animation>
+<animation>
+  <type>pick</type>
+  <object-name>MasterPanel.Fuel.TransferRight</object-name>
+  <object-name>MasterPanel.Fuel.TransferRight.Ring</object-name>
+  <action>
+    <button>1</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Fuel Transfer Right");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Fuel Transfer Right");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Fuel Transfer Right off");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Fuel Transfer Right on");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<!-- MasterPanel.Fuel.Pump1 -->
+<animation>
+  <type>rotate</type>
+  <object-name>MasterPanel.Fuel.Pump1</object-name>
+  <property>extra500/panel/Master/Fuel/Pump1/state</property>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>25</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-25</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>-0.81402</x1-m>
+    <y1-m>-1</y1-m>
+    <z1-m>-0.34681</z1-m>
+    <x2-m>-0.81402</x2-m>
+    <y2-m>1</y2-m>
+    <z2-m>-0.34681</z2-m>
+  </axis>
+</animation>
+<animation>
+  <type>pick</type>
+  <object-name>MasterPanel.Fuel.Pump1</object-name>
+  <object-name>MasterPanel.Fuel.Pump1.Ring</object-name>
+  <action>
+    <button>1</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Fuel Pump 1");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Fuel Pump 1");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Fuel Pump 1 off");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Fuel Pump 1 on");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<!-- MasterPanel.Fuel.Pump2 -->
+<animation>
+  <type>rotate</type>
+  <object-name>MasterPanel.Fuel.Pump2</object-name>
+  <property>extra500/panel/Master/Fuel/Pump2/state</property>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>25</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-25</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>-0.81402</x1-m>
+    <y1-m>-1</y1-m>
+    <z1-m>-0.34681</z1-m>
+    <x2-m>-0.81402</x2-m>
+    <y2-m>1</y2-m>
+    <z2-m>-0.34681</z2-m>
+  </axis>
+</animation>
+<animation>
+  <type>pick</type>
+  <object-name>MasterPanel.Fuel.Pump2</object-name>
+  <object-name>MasterPanel.Fuel.Pump2.Ring</object-name>
+  <action>
+    <button>1</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Fuel Pump 2");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Fuel Pump 2");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Fuel Pump 2 off");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Fuel Pump 2 on");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+
+<!-- MasterPanel.Engine.Motoring -->
+<animation>
+  <type>rotate</type>
+  <object-name>MasterPanel.Engine.Motoring</object-name>
+  <property>extra500/panel/Master/Engine/Motoring/state</property>
+  <factor>-25</factor>
+  <axis>
+    <x1-m>-0.81402</x1-m>
+    <y1-m>-1</y1-m>
+    <z1-m>-0.34681</z1-m>
+    <x2-m>-0.81402</x2-m>
+    <y2-m>1</y2-m>
+    <z2-m>-0.34681</z2-m>
+  </axis>
+</animation>
+<animation>
+  <type>pick</type>
+  <object-name>MasterPanel.Engine.Motoring</object-name>
+  <object-name>MasterPanel.Engine.Motoring.Ring</object-name>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Engine Motoring >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>1</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Engine Motoring <");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Engine Motoring >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Engine Motoring <");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<!-- MasterPanel.Engine.Start -->
+<animation>
+  <type>rotate</type>
+  <object-name>MasterPanel.Engine.Start</object-name>
+  <property>extra500/panel/Master/Engine/Start/state</property>
+  <factor>-25</factor>
+  <axis>
+    <x1-m>-0.81402</x1-m>
+    <y1-m>-1</y1-m>
+    <z1-m>-0.34681</z1-m>
+    <x2-m>-0.81402</x2-m>
+    <y2-m>1</y2-m>
+    <z2-m>-0.34681</z2-m>
+  </axis>
+</animation>
+<animation>
+  <type>pick</type>
+  <object-name>MasterPanel.Engine.Start</object-name>
+  <object-name>MasterPanel.Engine.Start.Ring</object-name>
+  <action>
+    <button>0</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Engine Start >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>1</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Engine Start <");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Engine Start >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Engine Start <");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<!-- MasterPanel.Dimming.Keypad -->
+<animation>
+  <type>rotate</type>
+  <object-name>MasterPanel.Dimming.Keypad</object-name>
+  <property>extra500/panel/Master/Dimming/Keypad/state</property>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>120</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-120</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>-0.82174</x1-m>
+    <y1-m>0.09752</y1-m>
+    <z1-m>-0.34795</z1-m>
+    <x2-m>-0.80362</x2-m>
+    <y2-m>0.09752</y2-m>
+    <z2-m>-0.3454</z2-m>
+  </axis>
+</animation>
+<animation>
+  <type>pick</type>
+  <object-name>MasterPanel.Dimming.Keypad</object-name>
+  <action>
+    <button>0</button>
+    <repeatable>true</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Dimmer Keypad >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>1</button>
+    <repeatable>true</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Dimmer Keypad <");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Dimmer Keypad >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Dimmer Keypad <");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<!-- MasterPanel.Dimming.Glare -->
+<animation>
+  <type>rotate</type>
+  <object-name>MasterPanel.Dimming.Glare</object-name>
+  <property>extra500/panel/Master/Dimming/Glare/state</property>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>120</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-120</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>-0.82174</x1-m>
+    <y1-m>0.12251</y1-m>
+    <z1-m>-0.34795</z1-m>
+    <x2-m>-0.80362</x2-m>
+    <y2-m>0.12251</y2-m>
+    <z2-m>-0.3454</z2-m>
+  </axis>
+</animation>
+<animation>
+  <type>pick</type>
+  <object-name>MasterPanel.Dimming.Glare</object-name>
+  <action>
+    <button>0</button>
+    <repeatable>true</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Dimmer Glare >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>1</button>
+    <repeatable>true</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Dimmer Glare <");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Dimmer Glare >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Dimmer Glare <");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<!-- MasterPanel.Dimming.Instrument -->
+<animation>
+  <type>rotate</type>
+  <object-name>MasterPanel.Dimming.Instrument</object-name>
+  <property>extra500/panel/Master/Dimming/Instrument/state</property>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>120</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-120</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>-0.82174</x1-m>
+    <y1-m>0.14747</y1-m>
+    <z1-m>-0.34795</z1-m>
+    <x2-m>-0.80362</x2-m>
+    <y2-m>0.14747</y2-m>
+    <z2-m>-0.3454</z2-m>
+  </axis>
+</animation>
+<animation>
+  <type>pick</type>
+  <object-name>MasterPanel.Dimming.Instrument</object-name>
+  <action>
+    <button>0</button>
+    <repeatable>true</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Dimmer Instrument >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>1</button>
+    <repeatable>true</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Dimmer Instrument <");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Dimmer Instrument >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Dimmer Instrument <");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<!-- MasterPanel.Dimming.Switch -->
+<animation>
+  <type>rotate</type>
+  <object-name>MasterPanel.Dimming.Switch</object-name>
+  <property>extra500/panel/Master/Dimming/Switch/state</property>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>120</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-120</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>-0.82174</x1-m>
+    <y1-m>0.17247</y1-m>
+    <z1-m>-0.34795</z1-m>
+    <x2-m>-0.80362</x2-m>
+    <y2-m>0.17247</y2-m>
+    <z2-m>-0.3454</z2-m>
+  </axis>
+</animation>
+<animation>
+  <type>pick</type>
+  <object-name>MasterPanel.Dimming.Switch</object-name>
+  <action>
+    <button>0</button>
+    <repeatable>true</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Dimmer Switch >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>1</button>
+    <repeatable>true</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Dimmer Switch <");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Dimmer Switch >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Dimmer Switch <");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<!-- MasterPanel.Dimming.Annunciator -->
+<animation>
+  <type>rotate</type>
+  <object-name>MasterPanel.Dimming.Annunciator</object-name>
+  <property>extra500/panel/Master/Dimming/Annunciator/state</property>
+  <interpolation>
+            <entry>
+                <ind>0</ind>
+                <dep>120</dep>
+            </entry>
+            <entry>
+                <ind>1</ind>
+                <dep>-120</dep>
+            </entry>
+        </interpolation>
+  <axis>
+    <x1-m>-0.82174</x1-m>
+    <y1-m>0.19749</y1-m>
+    <z1-m>-0.34795</z1-m>
+    <x2-m>-0.80362</x2-m>
+    <y2-m>0.19749</y2-m>
+    <z2-m>-0.3454</z2-m>
+  </axis> 
+</animation>
+<animation>
+  <type>pick</type>
+  <object-name>MasterPanel.Dimming.Annunciator</object-name>
+  <action>
+    <button>0</button>
+    <repeatable>true</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Dimmer Annunciator >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>1</button>
+    <repeatable>true</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Dimmer Annunciator <");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>3</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Dimmer Annunciator >");
+	]]></script>
+    </binding>
+  </action>
+  <action>
+    <button>4</button>
+    <repeatable>false</repeatable>
+    <binding>
+      <command>nasal</command>
+      <script><![CDATA[
+		UI.click("Dimmer Annunciator <");
+	]]></script>
+    </binding>
+  </action>
+</animation>
+
+<!-- yokes-->
+<!-- yoke movement -->
+
+<animation>
+  <type>translate</type>
+  <object-name>yoke.tube.pilot</object-name>
+  <object-name>yoke.tube.copilot</object-name>
+  <object-name>yoke.pilot</object-name>
+  <object-name>yoke.copilot</object-name>
+  <object-name>yoke.pilot.plate</object-name>
+  <object-name>yoke.copilot.plate</object-name>       
+  <property>/fdm/jsbsim/fcs/yoke-pos-norm</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>.3</dep></entry>
+   <entry><ind>0</ind><dep>.125</dep></entry>
+   <entry><ind> 1</ind><dep>0</dep></entry>
+  </interpolation>
+  <axis>
+    <x1-m>-0.8887</x1-m>
+    <y1-m>-0.33500</y1-m>
+    <z1-m>-0.38269</z1-m>
+    <x2-m>-0.72531</x2-m>
+    <y2-m>-0.33500</y2-m>
+    <z2-m>-0.35973</z2-m>
+  </axis>
+ </animation>
+
+<animation>
+  <type>rotate</type>
+  <!--object-name>yoke.tube.pilot</object-name-->
+  <object-name>yoke.pilot</object-name>
+  <object-name>yoke.pilot.plate</object-name>                    
+  <property>/fdm/jsbsim/fcs/aileron-cmd-tot-nc</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>75</dep></entry>
+   <entry><ind> 1</ind><dep>-75</dep></entry>
+  </interpolation> 
+  <axis>
+    <x1-m>-0.8887</x1-m>
+    <y1-m>-0.33500</y1-m>
+    <z1-m>-0.38269</z1-m>
+    <x2-m>-0.72531</x2-m>
+    <y2-m>-0.33500</y2-m>
+    <z2-m>-0.35973</z2-m>
+  </axis>
+</animation>
+
+<animation>
+  <type>rotate</type>
+  <!--object-name>yoke.tube.copilot</object-name-->
+  <object-name>yoke.copilot</object-name>
+  <object-name>yoke.copilot.plate</object-name>
+  <property>/fdm/jsbsim/fcs/aileron-cmd-tot-nc</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>75</dep></entry>
+   <entry><ind> 1</ind><dep>-75</dep></entry>
+  </interpolation> 
+  <axis>
+    <x1-m>-0.8887</x1-m>
+    <y1-m>0.33500</y1-m>
+    <z1-m>-0.38269</z1-m>
+    <x2-m>-0.72531</x2-m>
+    <y2-m>0.33500</y2-m>
+    <z2-m>-0.35973</z2-m>
+  </axis>
+</animation>
+
+
+
+<!--Dimming Lumi Folie -->
+<animation>
+        <type>material</type>
+        <object-name>label</object-name>
+        <object-name>MasterPanel</object-name>
+        <object-name>GearPanel</object-name>
+        <object-name>FlapPanel</object-name>
+        <emission>
+	    <red>0.14</red>
+            <green>0.72</green>
+	    <blue>0.90</blue>
+	    <factor-prop>/extra500/light/Lumi/Backlight/state</factor-prop>
+        </emission>
+</animation>
+
+<!-- glarelights -->
+
+<animation>
+        <type>material</type>
+        <object-name>glare.face.middle</object-name>
+        <object-name>glare.face.outer</object-name>
+	  <emission>
+	    	<red>1</red>
+            <green>1</green>
+	    	<blue>1</blue>
+	    	<factor-prop>/extra500/light/glare/state</factor-prop>
+        </emission>
+</animation>
+
+      <animation>
+            <type>light</type>
+            <light-type>point</light-type>
+            <name>LightSrc200</name>
+            <object-name>glare.light</object-name>
+            <nopreview/>
+            <position>
+			<x>-0.2</x>
+			<y>0.0</y>	
+			<z>0.0</z>
+            </position>
+            <ambient>
+                  <r>0.9</r>
+                  <g>0.9</g>
+                  <b>0.9</b>
+                  <a>1.0</a>
+            </ambient>
+            <diffuse>
+                  <r>0.9</r>
+                  <g>0.9</g>
+                  <b>0.9</b>
+                  <a>1.0</a>
+            </diffuse>
+            <specular>
+                  <r>0.9</r>
+                  <g>0.9</g>
+                  <b>0.9</b>
+                  <a>1.0</a>
+            </specular>
+		<dim-factor>
+      		<property>/extra500/light/glare/state</property>
+   		</dim-factor>
+            <attenuation>
+                  <c>5.0</c>
+                  <l>0.2</l>
+                  <q>0.005</q>
+            </attenuation>
+            <near-m>0.1</near-m>
+            <far-m>5</far-m>
+      </animation>
+
+      <animation>
+            <type>select</type>
+            <object-name>LightSrc200</object-name>
+            <condition>
+                  <and>
+                        <property>/sim/rendering/rembrandt/enabled</property>
+                        <greater-than>
+                              <property>/sim/rendering/shaders/lights</property>
+                              <value>0</value>
+                        </greater-than>
+           			<greater-than>
+            			<property>/extra500/light/glare/state</property>
+                  		<value>0</value>
+            		</greater-than>
+                  </and>
+            </condition>
+      </animation>
+
+
+</PropertyList>

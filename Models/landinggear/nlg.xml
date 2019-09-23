@@ -20,7 +20,7 @@
       Date: 26.09.14
 
       Last change: Eric van den Berg     
-      Date: 14.12.14            
+      Date: 11.11.17            
 
 -->
 <PropertyList>
@@ -77,6 +77,7 @@
   <object-name>nlg-axle</object-name>
   <object-name>nlg-wheel</object-name>
   <object-name>torque.link</object-name>
+  <object-name>nlg.placard.tyre</object-name>
      <expression>
        <product>
          <property>gear/gear[0]/position-norm</property>
@@ -101,6 +102,7 @@
   <object-name>nlg-fork</object-name>
   <object-name>nlg-axle</object-name>
   <object-name>nlg-wheel</object-name>
+  <object-name>nlg.placard.tyre</object-name>
 <property>gear/gear/compression-norm</property>
 <interpolation>
             <entry>

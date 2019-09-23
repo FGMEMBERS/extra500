@@ -14,7 +14,7 @@
    width="744.09448"
    height="1052.3622"
    id="svg3651"
-   inkscape:version="0.48.5 r10040"
+   inkscape:version="0.92.1 r15371"
    sodipodi:docname="LowerMenuFaildialog.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
@@ -25,13 +25,13 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1440"
-     inkscape:window-height="836"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
      id="namedview8"
      showgrid="false"
-     inkscape:zoom="3.5881183"
-     inkscape:cx="117.41921"
-     inkscape:cy="547.52514"
+     inkscape:zoom="1.7940592"
+     inkscape:cx="219.24864"
+     inkscape:cy="577.80808"
      inkscape:window-x="0"
      inkscape:window-y="21"
      inkscape:window-maximized="1"
@@ -75,20 +75,19 @@
      transform="matrix(1.019268,0,0,1,-0.38535967,0)">
     <text
        xml:space="preserve"
-       style="font-size:39.620121px;font-style:normal;font-weight:normal;text-align:end;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none"
        x="82.360542"
        y="480.62729"
        id="value_delay"
-       sodipodi:linespacing="125%"
        transform="scale(0.99050305,1.009588)"
        inkscape:label="#text3846"><tspan
          sodipodi:role="line"
          id="tspan3848"
          x="82.360542"
          y="480.62729"
-         style="font-size:30.1608181px;text-align:end;text-anchor:end">0</tspan></text>
+         style="font-size:30.1608181px;line-height:1.25;font-family:sans-serif;text-align:end;text-anchor:end">0</tspan></text>
     <rect
-       style="fill:#009400;fill-opacity:0.19607843;fill-rule:nonzero;stroke:none"
+       style="fill:#009400;fill-opacity:0.19574468;fill-rule:nonzero;stroke:none"
        id="field_delay"
        width="63.569878"
        height="37.902874"
@@ -98,30 +97,28 @@
        inkscape:label="#rect3002" />
     <text
        xml:space="preserve"
-       style="font-size:39.620121px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
        x="89.368622"
        y="466.6734"
        id="text3846-3"
-       sodipodi:linespacing="125%"
        transform="scale(0.99050305,1.009588)"><tspan
          sodipodi:role="line"
          id="tspan3848-5"
          x="89.368622"
          y="466.6734"
-         style="font-size:17.82905388px">Seconds</tspan></text>
+         style="font-size:17.82905388px;line-height:1.25;font-family:sans-serif">Seconds</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:39.620121px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       style="font-style:normal;font-weight:normal;line-height:0%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
        x="89.569435"
        y="485.98511"
        id="text3846-3-2"
-       sodipodi:linespacing="125%"
        transform="scale(0.99050305,1.009588)"><tspan
          sodipodi:role="line"
          id="tspan3848-5-9"
          x="89.569435"
          y="485.98511"
-         style="font-size:17.82905388px">to failure</tspan></text>
+         style="font-size:17.82905388px;line-height:1.25;font-family:sans-serif">to failure</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"

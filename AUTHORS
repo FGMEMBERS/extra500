@@ -1,9 +1,16 @@
 Extra Aircraft - extra500
 
-Authors
+Authors:
 
 Dirk Dittmann		- jsbsim, Nasal
-
 Eric van den Berg		- jsbsim, Nasal, Autopilot
-
 Thomas Grossberger 	- 3D Model
+
+
+Main programs used (special thanks to the authors of those):
+
+Blender			- 3D models
+Inkscape			- Vector Graphics
+GIMP				- Textures
+Git				- Version control
+MakeHuman	 		- People 3D models and textures

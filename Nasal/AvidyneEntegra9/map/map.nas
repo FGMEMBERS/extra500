@@ -17,41 +17,54 @@
 #      Date: Sep 10 2013
 #
 #      Last change:      Dirk Dittmann
-#      Date:             14.09.2013
+#      Date:             02.03.18
 #
 
 var Map = {
 	new : func(parent,name){
-		var m = {parents:[Map,parent.createChild("map",name)]};
-		m._parent = parent;
-		m._name = name;
-		m.RANGENM	= 1.6;
-		m.RANGENM	= 1.852;
-		m.RANGENM	= 1.852;
-		m._screenSize	= 200;
-		return m;
+            var m = {parents:[Map,parent.createChild("map",name)]};
+            m._parent = parent;
+            m._name = name;
+            #m.RANGENM	= 1.6;
+            #m.RANGENM	= 1.852;
+            m.RANGENM	= 1.852;
+            m._screenSize	= 200;
+            m.setScreenRange(m._screenSize);
+            
+            return m;
 	},
 	setRefPos : func(lat, lon) {
 	# print("RefPos set");
-		me._node.getNode("ref-lat", 1).setDoubleValue(lat);
-		me._node.getNode("ref-lon", 1).setDoubleValue(lon);
-		me._can.plane.setGeoPosition(lat,lon);
-		me; # chainable
+            me.set("ref-lat", lat);
+            me.set("ref-lon", lon);
+# 		me._node.getNode("ref-lat", 1).setDoubleValue(lat);
+# 		me._node.getNode("ref-lon", 1).setDoubleValue(lon);
+            me; # chainable
 	},
 	setHdg : func(hdg) { 
-		me._node.getNode("hdg",1).setDoubleValue(hdg); 
-		me; # chainable
+            if (hdg != nil)
+                me.set("hdg", hdg);
+            me;
 	},
-	setZoom : func(zoom){
-		
-		me._node.getNode("range", 1).setDoubleValue(zoom);
+	setAltitude : func(alt) { 
+            if (alt != nil)
+                me.set("altitude", alt);
+            me;
 	},
+# 	setZoom : func(zoom){
+# 		
+#             #me._node.getNode("range", 1).setDoubleValue(zoom);
+# 	},
 	setScreenSize : func(pixel){
-		me._screenSize	= pixel;
+            me._screenSize	= pixel;
+            me.setScreenRange(me._screenSize);
+            me;
 	},
 	setRangeNm : func(nm){
-		var range = 200 / (me._screenSize / nm);
-		me._node.getNode("range", 1).setDoubleValue(range);
+            #var range = 200 / (me._screenSize / nm);
+            #me._node.getNode("range", 1).setDoubleValue(nm);
+            me.setRange(nm);
+            me;
 	},
 };
 
@@ -108,7 +121,7 @@ var Layer = {
 		if(me._model != nil){
 			removelistener(me._lModelObserver);
 			me._lModelObserver = nil;
-			me._model = nil;
+			me._model = nil;a
 		}
 	},
 	onModelObserverNotify : func(n){

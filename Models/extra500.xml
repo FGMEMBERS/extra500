@@ -18,8 +18,9 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: March 13 2013
 
-      Last change:      Dirk Dittmann
-      Date:             16.01.2016
+      Last change:      Eric van den Berg
+      Date:             05.11.2017
+
 
 -->
 
@@ -47,7 +48,7 @@
 		<type>material</type>
 		<condition>
 			<or>
-				<and><!-- lokal player -->
+				<and><!-- local player -->
 					<not>
 						<equals>
 							<property>type</property>
@@ -96,6 +97,9 @@
 		<object-name>HRlinks</object-name>
 		<object-name>HRrechts</object-name>
 		<object-name>HRtrim</object-name>
+		<object-name>light.ice.box</object-name>
+		<object-name>WingfusL</object-name>
+		<object-name>WingfusR</object-name>
 		
 		<!-- wing objects using paintkit.png -->
 		<object-name>AilLH</object-name>
@@ -118,7 +122,7 @@
 		<type>material</type>
 		<condition>
 			<or>
-				<and><!-- lokal player -->
+				<and><!-- local player -->
 					<not>
 						<equals>
 							<property>type</property>
@@ -167,6 +171,9 @@
 		<object-name>HRlinks</object-name>
 		<object-name>HRrechts</object-name>
 		<object-name>HRtrim</object-name>
+		<object-name>light.ice.box</object-name>
+		<object-name>WingfusL</object-name>
+		<object-name>WingfusR</object-name>
 		
 		<!-- wing objects using paintkit.png -->
 		<object-name>AilLH</object-name>
@@ -369,16 +376,7 @@
 </model>
 
 <!-- panels -->
-<model>
-  <name>MainPanel</name>
-  <path>Aircraft/extra500/Models/panels/MainPanel.xml</path>
-	<offsets>
-		<x-m>-0.81047</x-m>
-		<y-m>0</y-m>	
-		<z-m>-0.39889</z-m>
-	<pitch-deg>-8</pitch-deg>
-	</offsets>
-</model>
+
 <model>
   <name>FlapsGear</name>
   <path>Aircraft/extra500/Models/instruments/InstrumentFlapsGear.xml</path>
@@ -390,6 +388,20 @@
 	</offsets>
 </model>
 
+<model>
+  <name>cockpit</name>
+  <path>Aircraft/extra500/Models/panels/cockpit.xml</path>
+	<offsets>
+		<x-m>-0.81047</x-m>
+		<y-m>0</y-m>	
+		<z-m>-0.39889</z-m>
+	<pitch-deg>-8</pitch-deg>
+	</offsets>
+</model>
+<model>
+  <name>cockpitmodel</name>
+  <path>Aircraft/extra500/Models/panels/cockpitmodel.xml</path>
+</model>
 <model>
   <name>SidePanel</name>
   <path>Aircraft/extra500/Models/panels/SidePanel.xml</path>
@@ -452,7 +464,7 @@
 <!--lights-->
 <model>
   <name>Aftstrobe</name>
-  <path>Aircraft/extra500/Models/lights/strobe.xml</path>
+  <path>Aircraft/extra500/Models/lights/procedural_strobe_aft.xml</path>
 	<offsets>
 		<x-m>6.6</x-m>
 		<y-m>0</y-m>	
@@ -462,7 +474,7 @@
 
 <model>
   <name>aftnav</name>
-  <path>Aircraft/extra500/Models/lights/Aftnav.xml</path>
+  <path>Aircraft/extra500/Models/lights/procedural_nav_aft.xml</path>
 	<offsets>
 		<x-m>6.6</x-m>
 		<y-m>0</y-m>	
@@ -573,6 +585,8 @@
   <object-name>interior.doorUpper</object-name>
   <object-name>window.pass.middle.LH</object-name>
   <object-name>doorhandleinner</object-name>
+  <object-name>placard.door.open</object-name>
+  <object-name>placard.doorhandle</object-name>
   <property>sim/multiplay/generic/int[0]</property>
   <interpolation>
    <entry><ind>0</ind><dep>0</dep></entry>
@@ -664,6 +678,12 @@
 	 <object-name>emergency.exit</object-name>
 	 <object-name>interior.emergency.exit</object-name>
 	 <object-name>window.pass.middle.RH</object-name>
+	 <object-name>placard.emergency.exit</object-name>
+	 <object-name>placard.open</object-name>
+	 <object-name>placard.open.001</object-name>
+	 <object-name>placard.emergency.operating</object-name>
+	 <object-name>placard.emergency.arrow1</object-name>
+	 <object-name>placard.emergency.arrow2</object-name>
 	 <property>sim/multiplay/generic/int[2]</property>
 	 <interpolation>
 		 <entry><ind>0</ind><dep>0</dep></entry>
@@ -685,6 +705,12 @@
 	 <object-name>emergency.exit</object-name>
 	 <object-name>interior.emergency.exit</object-name>
 	 <object-name>window.pass.middle.RH</object-name>
+	 <object-name>placard.emergency.exit</object-name>
+	 <object-name>placard.open</object-name>
+	 <object-name>placard.open.001</object-name>
+	 <object-name>placard.emergency.operating</object-name>
+	 <object-name>placard.emergency.arrow1</object-name>
+	 <object-name>placard.emergency.arrow2</object-name>
 	 <property>sim/multiplay/generic/int[2]</property>
 	 <interpolation>
 		 <entry><ind>0</ind><dep>0</dep></entry>
@@ -704,6 +730,12 @@
 	 <object-name>emergency.exit</object-name>
 	 <object-name>interior.emergency.exit</object-name>
 	 <object-name>window.pass.middle.RH</object-name>
+	 <object-name>placard.emergency.exit</object-name>
+	 <object-name>placard.open</object-name>
+	 <object-name>placard.open.001</object-name>
+	 <object-name>placard.emergency.operating</object-name>
+	 <object-name>placard.emergency.arrow1</object-name>
+	 <object-name>placard.emergency.arrow2</object-name>
 	 <property>sim/multiplay/generic/int[2]</property>
 	 <interpolation>
 		 <entry><ind>0</ind><dep>0</dep></entry>
@@ -791,19 +823,6 @@
    </equals>
   </condition>
  </animation>
-
-<!--for gear test purposes only -->
-<!--animation>
-  <object-name>gear.doors.upper.left</object-name>
-  <object-name>gear.doors.lower.left</object-name>
-  <type>select</type>
-  <condition>
-   <equals>
-    <property>sim/multiplay/generic/int[0]</property>
-    <value>1</value>
-   </equals>
-  </condition>
- </animation-->
 
  <animation>
   <type>rotate</type>
@@ -915,38 +934,31 @@
   </axis>
 </animation>
 
-<!--test-->
+<!--Payload / People-->
+
 
 <model>
-      <path>Aircraft/Generic/Pilot/General/pilot.xml</path>
+      <path>Aircraft/extra500/Models/interior/people.xml</path>
+
+</model>
+
+<model>
+      <path>Aircraft/extra500/Models/interior/suitcase1.ac</path>
       <offsets>
-		<x-m>-0.4</x-m>
-		<y-m>-0.32</y-m>	
-		<z-m>-0.39</z-m>
-         <pitch-deg>0</pitch-deg>
+		<x-m>2.5</x-m>
+		<y-m>0.2</y-m>	
+		<z-m>-0.45</z-m>
       </offsets>
-<!--
+
       <condition>
-         <not>
-            <property>/sim/current-view/internal</property>
-         </not>
+ 		<greater-than>
+   			<property>/payload/weight[6]/weight-lb</property>
+   			<value>0</value>
+   		</greater-than>
       </condition>
--->
 </model>
 
 
-<!-- Start livery machine 
-<nasal>
-  <load>
-    var livery_update = aircraft.livery_update.new("Aircraft/extra500/Models/Liveries");
-  </load>
-  <unload>
-    livery_update.stop();
-  </unload>
-</nasal>
-
-<sound><path>Aircraft/extra500/Sounds/mp-sound.xml</path></sound>
--->
 
 <!--interior-->
 
@@ -986,7 +998,7 @@
 </animation>
 
 
-<!-- Seitenruder -->  
+<!-- Seitenruder / rudder-->  
  <animation>
   <type>rotate</type>
   <object-name>SR</object-name>
@@ -1006,7 +1018,7 @@
   </axis>
 </animation>
 
-<!-- Hoehenruder -->
+<!-- Hoehenruder / elevator-->
 <animation>
   <type>rotate</type>
   <object-name>HRlinks</object-name>
@@ -1045,7 +1057,7 @@
 	</axis>
 </animation>
 
-<!-- Hoehenruder TRIM-->
+<!-- Hoehenruder TRIM / elevator trim-->
 <animation>
   <type>rotate</type>
   <object-name>HRtrim</object-name>

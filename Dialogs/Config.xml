@@ -19,8 +19,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: 14.03.2014
 
-	Last change:	Dirk Dittmann
-	Date:		30.04.15
+	Last change:	Eric van den Berg
+	Date:		25.06.18
 -->
 
 <PropertyList>
@@ -254,6 +254,46 @@
 			</checkbox>
 			<empty><stretch>1</stretch></empty>
 		</group>
+
+		<text>
+			<row>5</row><col>0</col>
+			<label>Startup at last position</label>
+		</text>
+		<group>
+			<row>5</row><col>1</col>
+			<layout>hbox</layout>
+			<checkbox>
+				<name>msg_position</name>
+				<label>on / off</label>
+				<property>/extra500/exit/posAtLastKnownPos</property>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+					<object-name>msg_position</object-name>
+				</binding>
+			</checkbox>
+			<empty><stretch>1</stretch></empty>
+		</group>
+
+		<text>
+			<row>6</row><col>0</col>
+			<label>Show / hide people</label>
+		</text>
+		<group>
+			<row>6</row><col>1</col>
+			<layout>hbox</layout>
+			<checkbox>
+				<name>msg_people</name>
+				<label>show / hide</label>
+				<property>/extra500/interior/showPeople</property>
+				<live>true</live>
+				<binding>
+					<command>dialog-apply</command>
+					<object-name>msg_people</object-name>
+				</binding>
+			</checkbox>
+			<empty><stretch>1</stretch></empty>
+		</group>
 		
 		
 		
@@ -308,13 +348,14 @@
 	</group>
 	<hrule/>
 	<group>
-			<layout>vbox</layout>
+			<layout>table</layout>
 			<text>
 				<row>0</row><col>0</col>
-				<halign>right</halign>
+				<halign>center</halign>
 				<label>Quick zoom view</label>
 			</text>
 			<input>
+				<row>1</row><col>0</col>
 				<name>quickZoom_Field</name>
 				<width>150</width>
 				<height>25</height>
@@ -327,6 +368,7 @@
 				</binding>
 			</input>
 			<input>
+				<row>2</row><col>0</col>
 				<name>quickZoom_heading</name>
 				<width>150</width>
 				<height>25</height>
@@ -339,6 +381,7 @@
 				</binding>
 			</input>
 			<input>
+				<row>3</row><col>0</col>
 				<name>quickZoom_pitch</name>
 				<width>150</width>
 				<height>25</height>
@@ -350,6 +393,134 @@
 					<object-name>quickZoom_pitch</object-name>
 				</binding>
 			</input>
+	</group>
+        <hrule/>
+	<group>
+			<layout>table</layout>
+			<text>
+				<row>0</row><col>0</col>
+				<halign>right</halign>
+				<label>Dialog</label>
+			</text>
+                        <text>
+				<row>0</row><col>1</col>
+				<halign>center</halign>
+				<label>Scale Factor</label>
+			</text>
+                        
+                        <text>
+				<row>1</row><col>0</col>
+				<halign>right</halign>
+				<label>Fuel and Payload</label>
+			</text>
+                        <text>
+				<row>1</row><col>1</col>
+				<width>100</width>
+				
+				<label>half</label>
+			</text>
+			<slider>
+				<row>1</row><col>2</col>
+				<width>200</width>
+				<property>/extra500/config/dialog/fuelpayload/scale</property>
+				<step>0.05</step>
+				<pagestep>0.1</pagestep>
+				<fraction>0.05</fraction>
+				<min>0.5</min>
+				<max>1.0</max>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+			</slider>
+                        <text>
+				<row>1</row><col>3</col>
+				<width>100</width>
+				
+				<label>full</label>
+			</text>
+			<text>
+				<row>1</row><col>4</col>
+				<label>9.99 sec </label> <!-- placeholder for width -->
+				<live>true</live>
+				<format>%-0.2f</format>
+				<property>/extra500/config/dialog/fuelpayload/scale</property>
+			</text>
+                        
+			<text>
+				<row>2</row><col>0</col>
+				<halign>right</halign>
+				<label>Failure</label>
+			</text>
+                        <text>
+				<row>2</row><col>1</col>
+				<width>100</width>
+				
+				<label>half</label>
+			</text>
+			<slider>
+				<row>2</row><col>2</col>
+				<width>200</width>
+				<property>/extra500/config/dialog/failure/scale</property>
+				<step>0.05</step>
+				<pagestep>0.1</pagestep>
+				<fraction>0.05</fraction>
+				<min>0.5</min>
+				<max>1.0</max>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+			</slider>
+                        <text>
+				<row>2</row><col>3</col>
+				<width>100</width>
+				
+				<label>full</label>
+			</text>
+			<text>
+				<row>2</row><col>4</col>
+				<label>9.99 sec </label> <!-- placeholder for width -->
+				<live>true</live>
+				<format>%-0.2f</format>
+				<property>/extra500/config/dialog/failure/scale</property>
+			</text>
+
+			<text>
+				<row>3</row><col>0</col>
+				<halign>right</halign>
+				<label>Init</label>
+			</text>
+                        <text>
+				<row>3</row><col>1</col>
+				<width>100</width>
+				
+				<label>half</label>
+			</text>
+			<slider>
+				<row>3</row><col>2</col>
+				<width>200</width>
+				<property>/extra500/config/dialog/init/scale</property>
+				<step>0.05</step>
+				<pagestep>0.1</pagestep>
+				<fraction>0.05</fraction>
+				<min>0.5</min>
+				<max>1.0</max>
+				<binding>
+					<command>dialog-apply</command>
+				</binding>
+			</slider>
+                        <text>
+				<row>3</row><col>3</col>
+				<width>100</width>
+				
+				<label>full</label>
+			</text>
+			<text>
+				<row>3</row><col>4</col>
+				<label>9.99 sec </label> <!-- placeholder for width -->
+				<live>true</live>
+				<format>%-0.2f</format>
+				<property>/extra500/config/dialog/init/scale</property>
+			</text>
 	</group>
 	<hrule/>
 	<group>

@@ -16,8 +16,8 @@
 #      Authors: Dirk Dittmann
 #      Date: Jul 20 2013
 #
-#      Last change:      Dirk Dittmann
-#      Date:             20.07.13
+#      Last change:      Eric van den Berg
+#      Date:             05.07.2018
 #
 
 var FuelFlowLogClass = {
@@ -98,4 +98,34 @@ var FuelFlowLogClass = {
 	}
 };
 
+var PositionLogClass = {
+	new : func(){
+		var m = { 
+			parents : [
+				PositionLogClass
+			]
+		};
+		
+		m._timerLoop = nil;
+	
+		return m;
+	},
+	init : func(instance=nil){
+		if (instance==nil){instance=me;}
+		
+		me._timerLoop = maketimer(5.0,me,PositionLogClass.update);
+		me._timerLoop.start();
+		
+	},
+	update : func(){
+		if (getprop("/extra500/exit/updatePos") == 1) {  # do not update as long as the init dialog is open
+			setprop("/extra500/exit/latitude-deg", getprop("/position/latitude-deg"));
+      		setprop("/extra500/exit/longitude-deg", getprop("/position/longitude-deg"));
+      		setprop("/extra500/exit/heading-deg", getprop("/orientation/heading-deg"));
+		}
+	}
+
+};
+
 var fuelFlowLog = FuelFlowLogClass.new();
+var PositionLog = PositionLogClass.new();

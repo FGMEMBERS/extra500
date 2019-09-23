@@ -18,8 +18,8 @@
       Authors: Dirk Dittmann, Eric van den Berg, Thomas Grossberger 
       Date: 03.01.2016
 
-      Last change:      Dirk Dittmann
-      Date:             15.01.2016
+      Last change:      Eric van den Berg
+      Date:             03.04.2018
 
 -->
 <PropertyList>
@@ -213,9 +213,9 @@
 		<y-max>1.0</y-max>
 		<z-max>1.0</z-max>
 		<center>
-			<x-m> 0.35088  </x-m>
-			<y-m> -4.23622 </y-m>
-			<z-m> -0.26685  </z-m>
+			<x-m> 0.21447  </x-m>
+			<y-m> -4.5 </y-m>
+			<z-m> -0.2328  </z-m>
 		</center><!---->
 	</animation>
 	<effect>
@@ -254,9 +254,9 @@
 		<y-max>1.0</y-max>
 		<z-max>1.0</z-max>
 		<center>
-			<x-m> 0.27844  </x-m>
-			<y-m> -4.23628 </y-m>
-			<z-m> -0.3099  </z-m>
+			<x-m> 0.12  </x-m>
+			<y-m> -4.5 </y-m>
+			<z-m> -0.26841  </z-m>
 		</center>
 	</animation>
 	<effect>
@@ -298,9 +298,9 @@
 		<y-max>1.0</y-max>
 		<z-max>1.0</z-max>
 		<center>
-			<x-m> 0.35088  </x-m>
-			<y-m> 4.23622 </y-m>
-			<z-m> -0.26685  </z-m>
+			<x-m> 0.21447  </x-m>
+			<y-m> 4.5 </y-m>
+			<z-m> -0.2328  </z-m>
 		</center><!---->
 	</animation>
 	<effect>
@@ -339,9 +339,9 @@
 		<y-max>1.0</y-max>
 		<z-max>1.0</z-max>
 		<center>
-			<x-m> 0.27844  </x-m>
-			<y-m> 4.23628 </y-m>
-			<z-m> -0.3099  </z-m>
+			<x-m> 0.12  </x-m>
+			<y-m> 4.5 </y-m>
+			<z-m> -0.26841  </z-m>
 		</center>
 	</animation>
 	<effect>

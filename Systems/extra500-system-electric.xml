@@ -20,7 +20,7 @@
       Date: 2013-09-16
 
       Last change:      Eric van den Berg
-      Date:             2016-11-01
+      Date:             2017-03-02
 -->
 
 <system name="electrics">
@@ -177,6 +177,16 @@
 				/extra500/panel/Side/Light/Cabin/state eq 1
 			</test>
 			<output>/extra500/panel/CircuitBreaker/BankB/CabinLight/ampere</output>
+		</switch>
+
+<!-- ALS secondary lights -->
+
+		<switch name="landinglight">
+			<default value="0"/>
+			<test logic="AND" value="1">
+				/extra500/light/landing/state ne 0
+			</test>
+			<output>/sim/rendering/als-secondary-lights/use-landing-light</output>
 		</switch>
 
 <!-- Panel vents -->
